@@ -10,13 +10,13 @@ Describe your Posterior Distributions
 
 ## Goal
 
-The goal of `bayestestR` is to be a lightweight package containing utilities to describe and analyze posterior distributions and models under the Bayesian framework.
+`bayestestR` is a lightweight package providing utilities to describe posterior distributions and Bayesian models.
 
 
 ## Installation
 
 
-- Run the following:
+Run the following:
 
 ```R
 install.packages("devtools")

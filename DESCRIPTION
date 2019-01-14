@@ -12,7 +12,7 @@ Authors@R: c(
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
 URL: https://github.com/DominiqueMakowski/bayestestR
 BugReports: https://github.com/DominiqueMakowski/bayestestR/issues
-Description: Describe your posterior distributions.
+Description: A lightweight package providing utilities to describe posterior distributions and Bayesian models.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
