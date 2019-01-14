@@ -1,21 +1,21 @@
 {
     "collab_server" : "",
     "contents" : "",
-    "created" : 1547466734853.000,
+    "created" : 1547468614861.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1999953185",
-    "id" : "5F450BD2",
-    "lastKnownWriteTime" : 1547466824,
-    "last_content_update" : 1547466824923,
+    "hash" : "0",
+    "id" : "4ABFDDA3",
+    "lastKnownWriteTime" : 1547471901,
+    "last_content_update" : 1547471901386,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/vignettes/overview.Rmd",
     "project_path" : "vignettes/overview.Rmd",
     "properties" : {
-        "cursorPosition" : "22,0",
-        "scrollLine" : "6"
+        "cursorPosition" : "33,33",
+        "scrollLine" : "10"
     },
-    "relative_order" : 2,
+    "relative_order" : 3,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_markdown"

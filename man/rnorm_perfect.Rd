@@ -20,7 +20,6 @@ Generates a sample of size n with a near-perfect normal distribution.
 library(bayestestR)
 x <- rnorm_perfect(n = 10)
 plot(density(x))
-
 }
 \author{
 \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
