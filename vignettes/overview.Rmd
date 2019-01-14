@@ -1,0 +1,35 @@
+---
+title: "bayestestR"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+author: 
+- Dominique Makowski
+date: "`r Sys.Date()`"
+tags: [r, bayesian, posterior, test]
+abstract: |
+  Overview of bayestestR. 
+vignette: >
+  %\VignetteIndexEntry{Overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteDepends{ggplot2}
+  \usepackage[utf8]{inputenc}
+---
+
+
+
+------
+
+
+# Functions
+
+- **`rnorm_perfect()`**: Generates a sample of size n with a near-perfect normal distribution.
+
+```R
+x <- rnorm_perfect(n = 10)
+plot(density(x))
+```
+
+# Contribution
+
+Improve this vignette by modifying [this](https://github.com/DominiqueMakowski/bayestestR/blob/master/vignettes/overview.Rmd) file!

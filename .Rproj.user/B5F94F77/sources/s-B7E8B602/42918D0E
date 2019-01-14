@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1547466645033.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "42918D0E",
+    "lastKnownWriteTime" : 1547466659,
+    "last_content_update" : 1547466659755,
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/R/rnorm_perfect.R",
+    "project_path" : "R/rnorm_perfect.R",
+    "properties" : {
+        "cursorPosition" : "17,46",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

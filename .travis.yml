@@ -1,0 +1,25 @@
+language: r
+sudo: false
+
+r_build_args: '--no-build-vignettes'
+r_check_args: '--ignore-vignettes'
+
+
+# Using the package cache to store R package dependencies can significantly
+# speed up build times and is recommended for most builds.
+cache: packages
+
+r:
+  - release
+  - devel
+
+
+warnings_are_errors: true
+
+r_packages:
+  - covr
+  
+  
+after_success:
+  - Rscript -e 'library(covr); codecov()'
+#  - Rscript -e 'devtools::install();lintr::lint_package()'
