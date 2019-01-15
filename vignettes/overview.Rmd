@@ -9,48 +9,25 @@ output:
     toc: true
     fig_width: 10.08
     fig_height: 6
+author: 
+- Dominique Makowski
+date: "`r Sys.Date()`"
 tags: [r, bayesian, posterior, test]
 abstract: |
   bayestestR is a lightweight package providing utilities to describe posterior distributions and Bayesian models.
 vignette: >
-  %\VignetteIndexEntry{README}
+  %\VignetteIndexEntry{Overview}
+  %\VignetteDepends{ggplot2}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---
 
-[![Build Status](https://travis-ci.org/DominiqueMakowski/bayestestR.svg?branch=master)](https://travis-ci.org/DominiqueMakowski/bayestestR)
-[![codecov](https://codecov.io/gh/DominiqueMakowski/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/DominiqueMakowski/bayestestR)
-[![HitCount](http://hits.dwyl.io/DominiqueMakowski/bayestestR.svg)](http://hits.dwyl.io/DominiqueMakowski/bayestestR)
-
-Utilities for Analyzing Bayesian Posterior Distributions and Models.
 
 
----
+------
 
-
-# Goal
-
-`bayestestR` is a lightweight package providing utilities to describe posterior distributions and Bayesian models.
-
-
-# Installation
-
-
-Run the following:
-
-```{r eval=FALSE, message=FALSE, warning=FALSE}
-install.packages("devtools")
-library("devtools")
-install_github("DominiqueMakowski/bayestestR")
-```
-```{r message=FALSE, warning=FALSE}
-library("bayestestR")
-```
-
-
----
 
 # Functions
 
@@ -88,7 +65,7 @@ rope_test(posterior = rnorm(1000, 1, 0.01), rope = c(-0.1, 0.1))
 ```
 
 
-- **`pd()`**: Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50\% and 100\% and can be interpreted as the probability that a parameter (described by its posterior distribution) is positive or negative (following  the median's sign). It is defined as the proportion of the posterior distribution of the median's sign. It is used as an index of effect existence, i.e., whether the probability that the effect is in the same direction than the point-estimate (independently of the effect's size or significance).
+- **`pd()`**: Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50\% and 100\% and can be interpreted as the probability that a parameter (described by its posterior distribution) is positive or negative (following  the medianâ€™s sign). It is defined as the proportion of the posterior distribution of the median's sign.
 
 ```R
 # Compute the pdSimulate a posterior distribution of mean 1 and SD 1
@@ -124,15 +101,13 @@ plot(density(x))
 overlap(x=rnorm(1000, 0, 1), y=rnorm(1000, 1, 1))
 ```
 
----
-
 # Comparison of Indices
 
 
 ## Generate Regression Data with Noise
 
 
-```{r message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -198,28 +173,28 @@ write.csv(bayes_indices, "../data/bayes_indices.csv")
 
 
 
-## Comparison of Parameter's Point-Estimates
+## Comparison of Parameter Point-Estimates
 
-### Relationship with the theorethical true value
-
+### Relationship with the theorethical true value (0)
 ```{r, message=FALSE, warning=FALSE}
 df %>% 
   select(noise, beta, median, mean, map) %>% 
   gather(estimate, value, -noise) %>% 
   mutate(noise = as.factor(noise),
-         value = value) %>% 
+         value = value-1) %>% 
   ggplot(aes(x = noise, y = value, fill = estimate)) +
   geom_boxplot() +
-  geom_hline(yintercept = 1) +
+  geom_hline(yintercept = 0) +
   theme_classic() +
   scale_fill_manual(values = c("beta" = "grey", "map" = "red", "mean" = "green", "median" = "blue"))
 ```
 
-- **Frequentist beta**: `r paste0("median = ", round(median(df$beta), 5), ", 95% CI [", paste(round(hdi(df$beta, prob=0.95), 2), collapse = ", "), "]")`
-- **MAP estimate**: `r paste0("median = ", round(median(df$map), 5), ", 95% CI [", paste(round(hdi(df$map, prob=0.95), 2), collapse = ", "), "]")`
-- **Mean**: `r paste0("median = ", round(median(df$mean), 5), ", 95% CI [", paste(round(hdi(df$mean, prob=0.95), 2), collapse = ", "), "]")`
-- **Median**: `r paste0("median = ", round(median(df$median), 5), ", 95% CI [", paste(round(hdi(df$median, prob=0.95), 2), collapse = ", "), "]")`
-
+```{r message=FALSE, warning=FALSE}
+t.test(df$beta, mu = 1)
+t.test(df$map, mu = 1)
+t.test(df$mean, mu = 1)
+t.test(df$median, mu = 1)
+```
 
 
 ### Relationship with the frequentist beta
@@ -253,13 +228,14 @@ df %>%
   scale_color_manual(values = c("bayes_p" = "#f44336", "pd" = "#2196F3", "rope" = "#4CAF50", "rope_overlap" = "#FFC107"))
 ```
 
-### Relationship with frequentist's arbitrary clusters
+### Suggested cut-off values to mimic frequentist arbitrary clusters
+
+This is to be used as rules-of-thumb **reference** only not a stone-carved criterion.
 
 ```{r, message=FALSE, warning=FALSE}
-df$sig_1 <- factor(ifelse(df$p >= .1, "n.s.", "°"), levels=c("n.s.", "°"))
-df$sig_05 <- factor(ifelse(df$p >= .05, "n.s.", "*"), levels=c("n.s.", "*"))
-df$sig_01 <- factor(ifelse(df$p >= .01, "n.s.", "**"), levels=c("n.s.", "**"))
-df$sig_001 <- factor(ifelse(df$p >= .001, "n.s.", "***"), levels=c("n.s.", "***"))
+df$sig_05 <- factor(ifelse(df$p > .05, "n.s.", "*"), levels=c("n.s.", "*"))
+df$sig_01 <- factor(ifelse(df$p > .01, "n.s.", "**"), levels=c("n.s.", "**"))
+df$sig_001 <- factor(ifelse(df$p > .001, "n.s.", "***"), levels=c("n.s.", "***"))
 
 get_data <- function(predictor, outcome, lbound=0, ubound=0.3){
   fit <- glm(paste(outcome, "~", predictor), data=df, family = "binomial")
@@ -273,27 +249,6 @@ get_data <- function(predictor, outcome, lbound=0, ubound=0.3){
 
 ```
 
-
-#### Significant at .1
-
-```{r, message=FALSE, warning=FALSE}
-data <- rbind(
-  get_data(predictor="bayes_p", outcome="sig_1", lbound=0, ubound=0.5),
-  get_data(predictor="pd", outcome="sig_1", lbound=90, ubound=100),
-  get_data(predictor="rope", outcome="sig_1", lbound=0, ubound=0.1),
-  get_data(predictor="rope_overlap", outcome="sig_1", lbound=0, ubound=0.1))
-
-
-data %>% 
-  mutate(index = as.factor(index)) %>% 
-  ggplot(aes(x=value, y=sig_1, color=index)) +
-  geom_line(size=1) +
-  facet_wrap(~index, scales = "free") +
-  theme_classic() +
-  theme(strip.background = element_blank()) +
-  scale_color_manual(values = c("bayes_p" = "#f44336", "pd" = "#2196F3", "rope" = "#4CAF50", "rope_overlap" = "#FFC107")) +
-  ylab("Probability of being significant at p < .1\n")
-```
 
 #### Significant at .05
 
@@ -360,6 +315,7 @@ data %>%
 ```
 
 
+
 ### Relationship between the two ROPE indices
 ```{r, message=FALSE, warning=FALSE}
 df %>% 
@@ -398,37 +354,20 @@ df %>%
 
 From that, we can conclude:
 
-- The **MAP estimate** seems to be more biased than the mean and the median of the posterior distribution (larger CI).
-- Aside from being more robust, the **median** makes more sense than the **mean** in a probabilistic framework (*e.g.*, there is 50% chance that the true effect is either higher or lower than the median).
-- The **traditional ROPE** is not sensitive to delineate highly "significant" effects. While being relatively similar (and more straighforward in its definition), the **overlap-based ROPE** does not present the same flaw.
-- The **Probability of Direction (pd)** is the closest index to the frequentist *p* value.
+- The MAP estimate seems to be more biased than the mean and the median of the posterior distribution.
+- Beyond being more robust, the median makes more sense than the mean in a probabilistic framework (*e.g.*, there is 50% chance that the true effect is either higher or lower than the median).
+- The traditional ROPE is not sensitive to delineate highly "significant" effects. Use ROPE O instead (based on the overlap).
+- The Probability of Direction (pd) is the closest index to the frequentist *p* value.
 
-**To minimally describe the posterior distribution of a parameter, we suggest reporting the *median* and the *90% CI (the 90% HDI)* for parameter characterisation and, in the context of null-hypothesis testing, the Probability of Direction (*p*d) for effect existence and (especially in the context of confirmatory analyses) the ROPE (overlap based) with an explicitly specified range for effect significance.**
-
-## :warning::warning::warning: Frequentist-like Arbitrary Thresholds
-
-**The following thresholds are presented as landmarks only for comparison with the frequentist framework. Please consider with caution.**
-
-- ***p*d**
-
-    - pd \< 95% ≈ *p* \< .1: uncertain
-    - pd \> 95% ≈ *p* \< .1: possibly existing
-    - pd \> 97.5% ≈ *p* \< .05: likely existing
-    - pd \> 99% ≈ *p* \< .01: probably existing
-    - pd \> 99.9% ≈ *p* \< .001: certainly existing
-    - pd = 100%: definitely existing
-    
-- **ROPE (overlap)**
-    
-    - ROPE \> 0.95: definitely not significant
-    - ROPE \> 0.5: likely not significant
-    - ROPE \< 0.5: likely significant
-    - ROPE \< 0.05: definitely significant
+**To minimally describe a posterior distribution of a parameter in the context of null-hypothesis testing, we recommend reporting the Median, the 90% CI (the 90% HDI), the Probability of Direction and, especially in the context of confirmatory analyses, the ROPE (overlap based) with an explicitly specified range.**
 
 
-*Note: If you have any advice, opinion or such, we encourage you to let us know by opening an issue or making a pull request.*
 
 
 # Credits
 
 Parts of the code in this package was inspired / shamelessly copied from other great packages that you must check out and cite, such as [sjstats](https://github.com/strengejacke/sjstats) or [BayesTesting.jl](https://github.com/tszanalytics/BayesTesting.jl). All credits go to their authors.
+
+# Contribution
+
+Help us improve this vignette by modifying [this](https://github.com/DominiqueMakowski/bayestestR/blob/master/vignettes/overview.Rmd) file!
