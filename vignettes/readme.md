@@ -14,7 +14,7 @@ bayestestR
         -   [Relationship with frequentist's arbitrary clusters](#relationship-with-frequentists-arbitrary-clusters)
         -   [Relationship between the two ROPE indices](#relationship-between-the-two-rope-indices)
 -   [Conclusions and Guidelines](#conclusions-and-guidelines)
-    -   [:warning::warning::warning: Frequentist-like Arbitrary Thresholds](#warningwarningwarning-frequentist-like-arbitrary-thresholds)
+    -   [:warning: Frequentist-like Arbitrary Thresholds](#warning-frequentist-like-arbitrary-thresholds)
 -   [Credits](#credits)
 
 [![Build Status](https://travis-ci.org/DominiqueMakowski/bayestestR.svg?branch=master)](https://travis-ci.org/DominiqueMakowski/bayestestR) [![codecov](https://codecov.io/gh/DominiqueMakowski/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/DominiqueMakowski/bayestestR) [![HitCount](http://hits.dwyl.io/DominiqueMakowski/bayestestR.svg)](http://hits.dwyl.io/DominiqueMakowski/bayestestR)
@@ -82,7 +82,7 @@ rope_test(posterior = rnorm(1000, 1, 0.01), rope = c(-0.1, 0.1))
 -   **`pd()`**: Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% and can be interpreted as the probability that a parameter (described by its posterior distribution) is positive or negative (following the median's sign). It is defined as the proportion of the posterior distribution of the median's sign. It is used as an index of effect existence, i.e., whether the probability that the effect is in the same direction than the point-estimate (independently of the effect's size or significance).
 
 ``` r
-# Compute the pdSimulate a posterior distribution of mean 1 and SD 1
+# Compute the pd of a posterior distribution of mean 1 and SD 1
 pd(rnorm(1000, mean = 1, sd = 1))
 ```
 
@@ -402,18 +402,18 @@ From that, we can conclude:
 
 **To minimally describe the posterior distribution of a parameter, we suggest reporting the *median* and the *90% CI (the 90% HDI)* for parameter characterisation and, in the context of null-hypothesis testing, the Probability of Direction (*p*d) for effect existence and (especially in the context of confirmatory analyses) the ROPE (overlap based) with an explicitly specified range for effect significance.**
 
-:warning::warning::warning: Frequentist-like Arbitrary Thresholds
------------------------------------------------------------------
+:warning: Frequentist-like Arbitrary Thresholds
+-----------------------------------------------
 
 **The following thresholds are presented as landmarks only for comparison with the frequentist framework. Please consider with caution.**
 
 -   ***p*d**
 
-    -   pd &lt; 95% ≈ *p* &lt; .1: uncertain
-    -   pd &gt; 95% ≈ *p* &lt; .1: possibly existing
-    -   pd &gt; 97.5% ≈ *p* &lt; .05: likely existing
-    -   pd &gt; 99% ≈ *p* &lt; .01: probably existing
-    -   pd &gt; 99.9% ≈ *p* &lt; .001: certainly existing
+    -   pd &lt; 95% ~ *p* &lt; .1: uncertain
+    -   pd &gt; 95% ~ *p* &lt; .1: possibly existing
+    -   pd &gt; 97.5% ~ *p* &lt; .05: likely existing
+    -   pd &gt; 99% ~ *p* &lt; .01: probably existing
+    -   pd &gt; 99.9% ~ *p* &lt; .001: certainly existing
     -   pd = 100%: definitely existing
 
 -   **ROPE (overlap)**
@@ -423,7 +423,7 @@ From that, we can conclude:
     -   ROPE &lt; 0.5: likely significant
     -   ROPE &lt; 0.05: definitely significant
 
-*Note: If you have any advice, opinion or such, we encourage you to let us know by opening an issue or making a pull request.*
+*Note: If you have any advice, opinion or such, we encourage you to let us know by opening an [discussion thread](https://github.com/DominiqueMakowski/bayestestR/issues) or making a pull request.*
 
 Credits
 =======
