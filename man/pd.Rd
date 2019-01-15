@@ -2,15 +2,12 @@
 % Please edit documentation in R/pd.R
 \name{pd}
 \alias{pd}
-\title{Probability of Direction (pd).}
+\title{Probability of Direction (pd)}
 \usage{
 pd(posterior)
 }
 \arguments{
 \item{posterior}{vector representing a posterior distribution.}
-}
-\value{
-list containing the MPE and its values.
 }
 \description{
 Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% and can be interpreted as the probability that a parameter (described by its posterior distribution) is positive or negative (following  the median’s sign). It is defined as the proportion of the posterior distribution of the median's sign.
@@ -22,7 +19,6 @@ library(bayestestR)
 posterior <- rnorm(1000, mean = 1, sd = 1)
 # Compute the pd
 pd(posterior)
-
 }
 \author{
 \href{https://dominiquemakowski.github.io/}{Dominique Makowski}

@@ -7,13 +7,13 @@
     "folds" : "",
     "hash" : "0",
     "id" : "4ABFDDA3",
-    "lastKnownWriteTime" : 1547471901,
-    "last_content_update" : 1547471901386,
+    "lastKnownWriteTime" : 1547516953,
+    "last_content_update" : 1547516953494,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/vignettes/overview.Rmd",
     "project_path" : "vignettes/overview.Rmd",
     "properties" : {
-        "cursorPosition" : "33,33",
-        "scrollLine" : "10"
+        "cursorPosition" : "26,0",
+        "scrollLine" : "16"
     },
     "relative_order" : 3,
     "source_on_save" : false,

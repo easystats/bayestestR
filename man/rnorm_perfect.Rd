@@ -14,7 +14,7 @@ rnorm_perfect(n, mean = 0, sd = 1)
 \item{sd}{vector of standard deviations.}
 }
 \description{
-Generates a sample of size n with a near-perfect normal distribution.
+Generate a sample of size n with a near-perfect normal distribution.
 }
 \examples{
 library(bayestestR)
