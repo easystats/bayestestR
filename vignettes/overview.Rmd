@@ -98,24 +98,23 @@ overlap(x=rnorm(1000, 0, 1), y=rnorm(1000, 1, 1))
 # Comparison of Indices
 
 
-```{r message=FALSE, warning=FALSE}
-library(rstanarm)
-library(ggplot2)
-library(dplyr)
-library(tidyr)
-```
-
-
 ## Generate Regression Data with Noise
 
 
 ```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
 
+df <- read.csv("https://raw.github.com/DominiqueMakowski/bayestestR/master/data/bayes_indices.csv")
 ```
 
-For the sake of time and computational space, we download the data from github. However, you can find the code to generate it again below.
+For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it again below.
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+library(rstanarm)
+library(broom)
+
 set.seed(333)
 
 data <- data.frame(x = scale(rnorm(50, 0, 1)))
@@ -125,23 +124,23 @@ data$y <- scale(data$x)
 bayes_indices <- data.frame()
 for(noise in c(0.1, seq(0.5, 5, by=0.5))){
   print(noise)
-  for(i in 1:10){
+  for(i in 1:1000){
     cat(".")
     df <- data
     df$y <- df$y + rnorm(50, mean = 0, sd = noise)
-    
+
     freq_model <- lm(y ~ x, data=df)
     summary(freq_model)
     beta <- broom::tidy(freq_model)[2, ]$estimate
     p <- broom::tidy(freq_model)[2, ]$p.value
-    
+
     out <- capture.output(bayes_model <- rstanarm::stan_glm(y ~ x, data=df))
     posterior <- as.data.frame(bayes_model)$x
-    
+
     median <- median(posterior)
     mean <- mean(posterior)
     map <- map_estimate(posterior)[1]
-    
+
     pd <- pd(posterior)
     rope <- rope(posterior, rope = c(-0.1, 0.1))
     rope_overlap <- rope_overlap(posterior, rope = c(-0.1, 0.1))
@@ -162,7 +161,7 @@ for(noise in c(0.1, seq(0.5, 5, by=0.5))){
   }
 }
 
-write.csv(bayes_indices, "./data/bayes_indices.csv")
+write.csv(bayes_indices, "../data/bayes_indices.csv")
 ```
 
 
@@ -171,31 +170,39 @@ write.csv(bayes_indices, "./data/bayes_indices.csv")
 ## Comparison of Parameter Point-Estimates
 
 ### Relationship with the theorethical true value (0)
-```{r, eval=FALSE}
-bayes_indices %>% 
+```{r, message=FALSE, warning=FALSE}
+df %>% 
   select(noise, beta, median, mean, map) %>% 
   gather(estimate, value, -noise) %>% 
   mutate(noise = as.factor(noise),
          value = value-1) %>% 
-  ggplot(aes(x=noise, y=value, fill=estimate)) +
+  ggplot(aes(x = noise, y = value, fill = estimate)) +
   geom_boxplot() +
-  geom_hline(yintercept=0) +
+  geom_hline(yintercept = 0) +
   theme_classic() +
-  scale_fill_manual(values=c("beta"="grey", "map"="red", "mean"="green", "median"="blue"))
+  scale_fill_manual(values = c("beta" = "grey", "map" = "red", "mean" = "green", "median" = "blue"))
 ```
 
+```{r message=FALSE, warning=FALSE}
+t.test(df$beta, mu = 1)
+t.test(df$map, mu = 1)
+t.test(df$mean, mu = 1)
+t.test(df$median, mu = 1)
+```
+
+
 ### Relationship with the frequentist beta
-```{r, eval=FALSE}
-bayes_indices %>% 
+```{r, message=FALSE, warning=FALSE}
+df %>% 
   select(noise, beta, median, mean, map) %>% 
   gather(index, value, -noise, -beta) %>% 
-  ggplot(aes(x=beta, y=value, color=index)) +
-  geom_point() +
-  geom_smooth(method="loess") +
-  facet_wrap(~index, scales="free") +
+  ggplot(aes(x = beta, y = value, color = index)) +
+  geom_point(alpha = 0.1, shape = 16) +
+  geom_smooth(method = "loess") +
+  facet_wrap(~index, scales = "free") +
   theme_classic() +
   theme(strip.background = element_blank()) +
-  scale_color_manual(values=c("map"="red", "mean"="green", "median"="blue"))
+  scale_color_manual(values = c("map" = "red", "mean" = "green", "median" = "blue"))
 ```
 
 
@@ -203,52 +210,153 @@ bayes_indices %>%
 ## Comparison of Indices of Effect Existence
 
 ### Relationship with the Frequentist p value
-```{r, eval=FALSE}
-bayes_indices %>% 
+```{r, message=FALSE, warning=FALSE}
+df %>% 
   select(noise, p, pd, bayes_p, rope, rope_overlap) %>% 
   gather(index, value, -noise, -p) %>% 
-  ggplot(aes(x=p, y=value, color=index)) +
-  geom_point() +
-  geom_smooth(method="loess") +
-  facet_wrap(~index, scales="free") +
+  ggplot(aes(x = p, y = value, color = index)) +
+  geom_point(shape=16, alpha=0.1) +
+  facet_wrap(~index, scales = "free") +
   theme_classic() +
   theme(strip.background = element_blank()) +
-  scale_color_manual(values=c("bayes_p"="#f44336", "pd"="#2196F3", "rope"="#4CAF50", "rope_overlap"="#FFC107"))
+  scale_color_manual(values = c("bayes_p" = "#f44336", "pd" = "#2196F3", "rope" = "#4CAF50", "rope_overlap" = "#FFC107"))
 ```
 
+### Suggested cut-off values to mimic frequentist arbitrary clusters
+
+This is to be used as rules-of-thumb **reference** only not a stone-carved criterion.
+
+```{r, message=FALSE, warning=FALSE}
+df$sig_05 <- factor(ifelse(df$p > .05, "n.s.", "*"), levels=c("n.s.", "*"))
+df$sig_01 <- factor(ifelse(df$p > .01, "n.s.", "**"), levels=c("n.s.", "**"))
+df$sig_001 <- factor(ifelse(df$p > .001, "n.s.", "***"), levels=c("n.s.", "***"))
+
+get_data <- function(predictor, outcome, lbound=0, ubound=0.3){
+  fit <- glm(paste(outcome, "~", predictor), data=df, family = "binomial")
+  data <- data.frame(x=1:100) 
+  data[predictor] <- seq(lbound, ubound, length.out = 100)
+  data$index <- predictor
+  data[outcome] = predict(fit, newdata=data, type="response")
+  data <- select_(data, "value"=predictor, outcome, "index")
+  return(data)
+}
+
+```
+
+
+#### Significant at .05
+
+```{r, message=FALSE, warning=FALSE}
+data <- rbind(
+  get_data(predictor="bayes_p", outcome="sig_05", lbound=0, ubound=0.3),
+  get_data(predictor="pd", outcome="sig_05", lbound=95, ubound=100),
+  get_data(predictor="rope", outcome="sig_05", lbound=0, ubound=0.05),
+  get_data(predictor="rope_overlap", outcome="sig_05", lbound=0, ubound=0.05))
+
+
+data %>% 
+  mutate(index = as.factor(index)) %>% 
+  ggplot(aes(x=value, y=sig_05, color=index)) +
+  geom_line(size=1) +
+  facet_wrap(~index, scales = "free") +
+  theme_classic() +
+  theme(strip.background = element_blank()) +
+  scale_color_manual(values = c("bayes_p" = "#f44336", "pd" = "#2196F3", "rope" = "#4CAF50", "rope_overlap" = "#FFC107")) +
+  ylab("Probability of being significant at p < .05\n")
+```
+
+
+#### Significant at .01
+
+```{r, message=FALSE, warning=FALSE}
+data <- rbind(
+  get_data(predictor="bayes_p", outcome="sig_01", lbound=0, ubound=0.1),
+  get_data(predictor="pd", outcome="sig_01", lbound=98, ubound=100),
+  get_data(predictor="rope", outcome="sig_01", lbound=0, ubound=0.01),
+  get_data(predictor="rope_overlap", outcome="sig_01", lbound=0, ubound=0.02))
+
+
+data %>% 
+  mutate(index = as.factor(index)) %>% 
+  ggplot(aes(x=value, y=sig_01, color=index)) +
+  geom_line(size=1) +
+  facet_wrap(~index, scales = "free") +
+  theme_classic() +
+  theme(strip.background = element_blank()) +
+  scale_color_manual(values = c("bayes_p" = "#f44336", "pd" = "#2196F3", "rope" = "#4CAF50", "rope_overlap" = "#FFC107")) +
+  ylab("Probability of being significant at p < .01\n")
+```
+
+#### Significant at .001
+
+```{r, message=FALSE, warning=FALSE}
+data <- rbind(
+  get_data(predictor="bayes_p", outcome="sig_001", lbound=0, ubound=0.025),
+  get_data(predictor="pd", outcome="sig_001", lbound=99.5, ubound=100),
+  get_data(predictor="rope", outcome="sig_001", lbound=0, ubound=0.01),
+  get_data(predictor="rope_overlap", outcome="sig_001", lbound=0, ubound=0.01))
+
+
+data %>% 
+  mutate(index = as.factor(index)) %>% 
+  ggplot(aes(x=value, y=sig_001, color=index)) +
+  geom_line(size=1) +
+  facet_wrap(~index, scales = "free") +
+  theme_classic() +
+  theme(strip.background = element_blank()) +
+  scale_color_manual(values = c("bayes_p" = "#f44336", "pd" = "#2196F3", "rope" = "#4CAF50", "rope_overlap" = "#FFC107")) +
+  ylab("Probability of being significant at p < .001\n")
+```
+
+
+
 ### Relationship between the two ROPE indices
-```{r, eval=FALSE}
-bayes_indices %>% 
-  ggplot(aes(x=rope, y=rope_overlap)) +
-  geom_point() +
-  geom_smooth(method="loess") +
+```{r, message=FALSE, warning=FALSE}
+df %>% 
+  ggplot(aes(x = rope, y = rope_overlap, color=p)) +
+  geom_point(shape=16, alpha=0.2) +
   theme_classic() 
 ```
 
-### Relationship with Noise
+<!-- ### Relationship with Noise -->
 
-```{r, eval=FALSE}
-bayes_indices %>% 
-  select(noise, p, bayes_p, pd, rope, rope_overlap) %>% 
-  gather(index, value, -noise) %>% 
-  mutate(noise = as.factor(noise)) %>%
-  ggplot(aes(x=noise, y=value, fill=index)) +
-  geom_boxplot() +
-  # geom_point() +
-  # geom_smooth(method="loess") +
-  facet_wrap(~index, scales="free") +
-  theme_classic() +
-  theme(strip.background = element_blank()) +
-  scale_fill_manual(values=c("p"="#9C27B0", "bayes_p"="#f44336", "pd"="#2196F3", "rope"="#4CAF50", "rope_overlap"="#FFC107"))
-```
+<!-- ```{r, message=FALSE, warning=FALSE} -->
+<!-- df %>%  -->
+<!--   select(noise, p, bayes_p, pd, rope, rope_overlap) %>%  -->
+<!--   gather(index, value, -noise) %>%  -->
+<!--   mutate(noise = as.factor(noise)) %>% -->
+<!--   ggplot(aes(x=noise, y=value, fill=index)) + -->
+<!--   geom_boxplot() + -->
+<!--   # geom_point() + -->
+<!--   # geom_smooth(method="loess") + -->
+<!--   facet_wrap(~index, scales="free") + -->
+<!--   theme_classic() + -->
+<!--   theme(strip.background = element_blank()) + -->
+<!--   scale_fill_manual(values=c("p"="#9C27B0", "bayes_p"="#f44336", "pd"="#2196F3", "rope"="#4CAF50", "rope_overlap"="#FFC107")) -->
+<!-- ``` -->
 
-```{r, eval=FALSE}
-summary(lm(p ~ noise, data=bayes_indices))
-summary(lm(bayes_p ~ noise, data=bayes_indices))
-summary(lm(pd ~ noise, data=bayes_indices))
-summary(lm(rope ~ noise, data=bayes_indices))
-summary(lm(rope_overlap ~ noise, data=bayes_indices))
-```
+<!-- ```{r, message=FALSE, warning=FALSE} -->
+<!-- summary(lm(p ~ noise, data=df)) -->
+<!-- summary(lm(bayes_p ~ noise, data=df)) -->
+<!-- summary(lm(pd ~ noise, data=df)) -->
+<!-- summary(lm(rope ~ noise, data=df)) -->
+<!-- summary(lm(rope_overlap ~ noise, data=df)) -->
+<!-- ``` -->
+
+
+# Guidelines
+
+From that, we can conclude:
+
+- The MAP estimate seems to be more biased than the mean and the median of the posterior distribution.
+- Beyond being more robust, the median makes more sense than the mean in a probabilistic framework (*e.g.*, there is 50% chance that the true effect is either higher or lower than the median).
+- The traditional ROPE is not sensitive to delineate highly "significant" effects. Use ROPE O instead (based on the overlap).
+- The Probability of Direction (pd) is the closest index to the frequentist *p* value.
+
+**To minimally describe a posterior distribution of a parameter in the context of null-hypothesis testing, we recommend reporting the Median, the 90% CI (the 90% HDI), the Probability of Direction and, especially in the context of confirmatory analyses, the ROPE (overlap based) with an explicitly specified range.**
+
+
+
 
 # Credits
 

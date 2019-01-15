@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/DominiqueMakowski/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/DominiqueMakowski/bayestestR)
 [![HitCount](http://hits.dwyl.io/DominiqueMakowski/bayestestR.svg)](http://hits.dwyl.io/DominiqueMakowski/bayestestR)
 
-Describe your Posterior Distributions
+Utilities for Analyzing Bayesian Posterior Distributions and Models
 
 
 ---

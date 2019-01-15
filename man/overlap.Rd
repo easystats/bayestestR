@@ -23,12 +23,11 @@ Calculate the overlap coefficient between two kernel density estimates.
 \examples{
 library(bayestestR)
 
-overlap(x=rnorm(1000, 0, 1), y=rnorm(1000, 0, 1))
-overlap(x=rnorm(1000, 0, 1), y=rnorm(1000, 10, 1))
+overlap(x = rnorm(1000, 0, 1), y = rnorm(1000, 0, 1))
+overlap(x = rnorm(1000, 0, 1), y = rnorm(1000, 10, 1))
 
-overlap(x=rnorm(1000, 0, 0.1), y=rnorm(1000, 0, 1), normalize=TRUE, onesided=TRUE)
-overlap(x=rnorm(1000, 0, 1), y=rnorm(1000, 0, 0.1), normalize=TRUE, onesided=TRUE)
-
+overlap(x = rnorm(1000, 0, 0.1), y = rnorm(1000, 0, 1), normalize = TRUE, onesided = TRUE)
+overlap(x = rnorm(1000, 0, 1), y = rnorm(1000, 0, 0.1), normalize = TRUE, onesided = TRUE)
 }
 \author{
 S. Venne

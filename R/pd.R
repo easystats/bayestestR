@@ -7,7 +7,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' # Simulate a posterior distribution of mean 1 and SD 1
 #' posterior <- rnorm(1000, mean = 1, sd = 1)
 #' # Compute the pd

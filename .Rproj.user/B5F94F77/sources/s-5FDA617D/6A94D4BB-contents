@@ -10,18 +10,17 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
-#' overlap(x=rnorm(1000, 0, 1), y=rnorm(1000, 0, 1))
-#' overlap(x=rnorm(1000, 0, 1), y=rnorm(1000, 10, 1))
-#'
-#' overlap(x=rnorm(1000, 0, 0.1), y=rnorm(1000, 0, 1), normalize=TRUE, onesided=TRUE)
-#' overlap(x=rnorm(1000, 0, 1), y=rnorm(1000, 0, 0.1), normalize=TRUE, onesided=TRUE)
-#'
+#' 
+#' overlap(x = rnorm(1000, 0, 1), y = rnorm(1000, 0, 1))
+#' overlap(x = rnorm(1000, 0, 1), y = rnorm(1000, 10, 1))
+#' 
+#' overlap(x = rnorm(1000, 0, 0.1), y = rnorm(1000, 0, 1), normalize = TRUE, onesided = TRUE)
+#' overlap(x = rnorm(1000, 0, 1), y = rnorm(1000, 0, 0.1), normalize = TRUE, onesided = TRUE)
 #' @author S. Venne
 #'
 #' @importFrom stats density
 #' @export
-overlap <- function(x, y, precision = 2^10, normalize=FALSE, onesided=FALSE) {
+overlap <- function(x, y, precision = 2^10, normalize = FALSE, onesided = FALSE) {
 
   # define limits of a common grid, adding a buffer so that tails aren't cut off
   lower <- min(c(x, y)) - 1
@@ -29,12 +28,12 @@ overlap <- function(x, y, precision = 2^10, normalize=FALSE, onesided=FALSE) {
 
 
   # generate kernel densities
-  dx <- stats::density(x, from = lower, to = upper, n=precision)
-  dy <- stats::density(y, from = lower, to = upper, n=precision)
+  dx <- stats::density(x, from = lower, to = upper, n = precision)
+  dy <- stats::density(y, from = lower, to = upper, n = precision)
 
-  if(normalize){
+  if (normalize) {
     d <- data.frame(x = dx$x, a = .normalize(dx$y), b = .normalize(dy$y))
-  } else{
+  } else {
     d <- data.frame(x = dx$x, a = dx$y, b = dy$y)
   }
 
@@ -43,9 +42,9 @@ overlap <- function(x, y, precision = 2^10, normalize=FALSE, onesided=FALSE) {
   d$total <- pmax(d$a, d$b)
 
   # compute overlap coefficient
-  if(onesided){
+  if (onesided) {
     overlap <- .AUC(d$x, d$intersection) / .AUC(d$x, d$a)
-  } else{
+  } else {
     overlap <- .AUC(d$x, d$intersection) / .AUC(d$x, d$total)
   }
 
@@ -57,8 +56,8 @@ overlap <- function(x, y, precision = 2^10, normalize=FALSE, onesided=FALSE) {
 
 
 #' @keywords internal
-.normalize <- function(x){
-  return((x-min(x))/(max(x)-min(x)))
+.normalize <- function(x) {
+  return((x - min(x)) / (max(x) - min(x)))
 }
 
 
@@ -68,6 +67,6 @@ overlap <- function(x, y, precision = 2^10, normalize=FALSE, onesided=FALSE) {
 
 #' @importFrom utils head tail
 #' @keywords internal
-.AUC <- function(x, y){
-  sum(diff(x) * (head(y,-1)+tail(y,-1)))/2
+.AUC <- function(x, y) {
+  sum(diff(x) * (head(y, -1) + tail(y, -1))) / 2
 }

@@ -22,7 +22,6 @@ library(bayestestR)
 
 bayes_p(posterior = rnorm(1000, 0, 1))
 bayes_p(posterior = rnorm(1000, 10, 1))
-
 }
 \references{
 \href{https://www.youtube.com/watch?v=Ip8Ci5KUVRc}{Mill's talk}

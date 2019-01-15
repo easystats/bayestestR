@@ -1,6 +1,6 @@
 Package: bayestestR
 Type: Package
-Title: Describe your Posterior Distributions
+Title: Utilities for Analyzing Bayesian Posterior Distributions and Models
 Version: 0.1.0
 Authors@R: c(
     person("Dominique", 
@@ -24,7 +24,5 @@ Suggests:
     covr,
 	ggplot2,
 	dplyr,
-	tidyr,
-	rstanarm,
-	broom
+	tidyr
 RoxygenNote: 6.1.1

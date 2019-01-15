@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' rope(posterior = rnorm(1000, 0, 0.01), rope = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 0, 1), rope = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 0.01), rope = c(-0.1, 0.1))
@@ -44,7 +44,7 @@ rope <- function(posterior, rope = c(-0.1, 0.1), CI = 95) {
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' rope_test(posterior = rnorm(1000, 0, 0.01), rope = c(-0.1, 0.1))
 #' rope_test(posterior = rnorm(1000, 0, 1), rope = c(-0.1, 0.1))
 #' rope_test(posterior = rnorm(1000, 1, 0.01), rope = c(-0.1, 0.1))
@@ -75,7 +75,7 @@ rope_test <- function(posterior, rope = c(-0.1, 0.1), CI = 95) {
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' rope_overlap(posterior = rnorm(1000, 0, 0.01), rope = c(-0.1, 0.1))
 #' rope_overlap(posterior = rnorm(1000, 0, 1), rope = c(-0.1, 0.1))
 #' rope_overlap(posterior = rnorm(1000, 1, 0.01), rope = c(-0.1, 0.1))
@@ -86,5 +86,5 @@ rope_overlap <- function(posterior, rope = c(-0.1, 0.1)) {
   sd <- abs(rope[1] - rope[2]) / 6
 
   rope_area <- rnorm_perfect(length(posterior), 0, sd)
-  return(overlap(posterior, rope_area, normalize=TRUE, onesided=TRUE))
+  return(overlap(posterior, rope_area, normalize = TRUE, onesided = TRUE))
 }
