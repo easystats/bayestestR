@@ -7,10 +7,9 @@
 #' @return The x, y coordinates of the MAP, corresponding to the MAP (x) and its density (y).
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' posterior <- rnorm(1000)
 #' map_estimate(posterior)
-#'
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #' @importFrom stats density
 #' @export

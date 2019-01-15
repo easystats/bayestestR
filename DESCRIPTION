@@ -17,12 +17,14 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
-Imports:
-    dplyr
 Suggests:
     knitr,
     rmarkdown,
     testthat,
     covr,
-	ggplot2
+	ggplot2,
+	dplyr,
+	tidyr,
+	rstanarm,
+	broom
 RoxygenNote: 6.1.1

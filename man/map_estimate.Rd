@@ -22,7 +22,6 @@ library(bayestestR)
 
 posterior <- rnorm(1000)
 map_estimate(posterior)
-
 }
 \author{
 \href{https://dominiquemakowski.github.io/}{Dominique Makowski}

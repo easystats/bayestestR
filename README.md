@@ -31,11 +31,13 @@ library("bayestestR")
 ## Functions
 
 
-- **`odds_h0()`**: Compute the odds that a parameter (described by its posterior distribution) has againt the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm.
+- **`bayes_p()`**: Compute a Bayesian equivalent p value, related to the odds that a parameter (described by its posterior distribution) has againt the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm.
 
 ```R
-odds_h0(posterior = rnorm(1000, 1, 1))
+bayes_p(posterior = rnorm(1000, 0, 1))
+bayes_p(posterior = rnorm(1000, 10, 1))
 ```
+
 
 - **`rope()`**: Compute the proportion of the HDI of a posterior distribution that lies within a region of practical equivalence.
 
@@ -45,6 +47,13 @@ rope(posterior = rnorm(1000, 0, 1), rope = c(-0.1, 0.1))
 rope(posterior = rnorm(1000, 1, 0.01), rope = c(-0.1, 0.1))
 ```
 
+- **`rope_overlap()`**: Compute how much of the posterior distribution is within a distributed region of practical equivalence.
+
+```R
+rope_overlap(posterior = rnorm(1000, 0, 0.01), rope = c(-0.1, 0.1))
+rope_overlap(posterior = rnorm(1000, 0, 1), rope = c(-0.1, 0.1))
+rope_overlap(posterior = rnorm(1000, 1, 0.01), rope = c(-0.1, 0.1))
+```
 
 - **`rope_test()`**: Perform a Test for Practical Equivalence based on the "HDI+ROPE decision rule" (Kruschke 2018) to check whether parameter values should be accepted or rejected against an explicitely formulated "null hypothesis".
 
@@ -77,12 +86,18 @@ posterior <- rnorm(1000)
 map_estimate(posterior)
 ```
 
-
 - **`rnorm_perfect()`**: Generate a sample of size n with a near-perfect normal distribution.
 
 ```R
 x <- rnorm_perfect(n = 10)
 plot(density(x))
+```
+
+- **`overlap()`**: Calculate the overlap coefficient between two kernel density estimates.
+
+
+```R
+overlap(x=rnorm(1000, 0, 1), y=rnorm(1000, 1, 1))
 ```
 
 ## Credits

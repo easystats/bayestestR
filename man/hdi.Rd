@@ -17,7 +17,7 @@ hdi(posterior, prob = 0.9, verbose = TRUE)
 Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval.
 }
 \details{
-By default, hdi() returns the 90% intervals, deemed to be more stable than, for instance, 95% intervals (Kruschke 2015).
+By default, hdi() returns the 90\% intervals, deemed to be more stable than, for instance, 95\% intervals (Kruschke 2015).
 }
 \examples{
 library(bayestestR)

@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1547531923931.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "4A585CF0",
+    "lastKnownWriteTime" : 1547531954,
+    "last_content_update" : 1547531954407,
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/R/bayes_p.R",
+    "project_path" : "R/bayes_p.R",
+    "properties" : {
+        "cursorPosition" : "13,42",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
