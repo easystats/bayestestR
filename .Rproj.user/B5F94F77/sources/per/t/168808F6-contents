@@ -7,4 +7,5 @@ test_that("hdi", {
   testthat::expect_warning(hdi(c(2, 3, NA)))
   testthat::expect_warning(hdi(c(2, 3)))
   testthat::expect_warning(hdi(rnorm_perfect(1000), prob = 0.00001))
+  testthat::expect_warning(hdi(c(rnorm_perfect(1000, 0, 1), rnorm_perfect(1000, 6, 1), rnorm_perfect(1000, 12, 1)), prob = 0.1))
 })

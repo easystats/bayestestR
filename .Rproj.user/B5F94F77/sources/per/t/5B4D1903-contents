@@ -1,14 +1,20 @@
 ---
 title: "bayestestR"
 output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
   rmarkdown::html_vignette:
     toc: true
+    fig_width: 10.08
+    fig_height: 6
 author: 
 - Dominique Makowski
 date: "`r Sys.Date()`"
 tags: [r, bayesian, posterior, test]
 abstract: |
-  Overview of bayestestR. 
+  bayestestR is a lightweight package providing utilities to describe posterior distributions and Bayesian models.
 vignette: >
   %\VignetteIndexEntry{Overview}
   %\VignetteDepends{ggplot2}
@@ -101,7 +107,7 @@ overlap(x=rnorm(1000, 0, 1), y=rnorm(1000, 1, 1))
 ## Generate Regression Data with Noise
 
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -344,7 +350,7 @@ df %>%
 <!-- ``` -->
 
 
-# Guidelines
+# Conclusions and Guidelines
 
 From that, we can conclude:
 
@@ -364,4 +370,4 @@ Parts of the code in this package was inspired / shamelessly copied from other g
 
 # Contribution
 
-Improve this vignette by modifying [this](https://github.com/DominiqueMakowski/bayestestR/blob/master/vignettes/overview.Rmd) file!
+Help us improve this vignette by modifying [this](https://github.com/DominiqueMakowski/bayestestR/blob/master/vignettes/overview.Rmd) file!

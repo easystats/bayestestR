@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' posterior <- rnorm(1000)
 #' hdi(posterior, prob = 0.9)
 #' hdi(posterior, prob = c(0.8, 0.9, 0.95))

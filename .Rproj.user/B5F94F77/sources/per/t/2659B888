@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "3926087472",
     "id" : "2659B888",
-    "lastKnownWriteTime" : 1547535854,
-    "last_content_update" : 1547535854,
+    "lastKnownWriteTime" : 1547547248,
+    "last_content_update" : 1547547248,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/R/rope.R",
     "project_path" : "R/rope.R",
     "properties" : {
         "cursorPosition" : "68,106",
-        "scrollLine" : "57"
+        "scrollLine" : "0"
     },
     "relative_order" : 1,
     "source_on_save" : false,

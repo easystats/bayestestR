@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1547546910636.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "641909617",
+    "id" : "3FF30B04",
+    "lastKnownWriteTime" : 1547547245,
+    "last_content_update" : 1547547245,
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/R/hdi.R",
+    "project_path" : "R/hdi.R",
+    "properties" : {
+        "cursorPosition" : "43,24",
+        "scrollLine" : "64"
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
