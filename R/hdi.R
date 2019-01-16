@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' posterior <- rnorm(1000)
 #' hdi(posterior, prob = 0.9)
 #' hdi(posterior, prob = c(0.8, 0.9, 0.95))
@@ -42,6 +42,18 @@ hdi <- function(posterior, prob = 0.90, verbose = TRUE) {
 
 #' @keywords internal
 .hdi <- function(x, prob = 0.90, verbose = TRUE) {
+  if (prob > 1) {
+    if (verbose) {
+      warning("HDI: `prob` should be less than 1, returning NaNs.")
+    }
+    return(c(NA, NA))
+  }
+
+
+  if(prob == 1){
+    return(c(min(x), max(x)))
+  }
+
   if (anyNA(x)) {
     if (verbose) {
       warning("HDI: the posterior contains NaNs, returning NaNs.")

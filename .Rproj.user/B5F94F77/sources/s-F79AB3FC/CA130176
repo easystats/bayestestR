@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1547567613894.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "CA130176",
+    "lastKnownWriteTime" : 1547567630,
+    "last_content_update" : 1547567630579,
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/tests/testthat/test-p_map.R",
+    "project_path" : "tests/testthat/test-p_map.R",
+    "properties" : {
+        "cursorPosition" : "6,30",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

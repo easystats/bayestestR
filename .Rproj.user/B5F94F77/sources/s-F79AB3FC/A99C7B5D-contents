@@ -1,0 +1,13 @@
+context("hdi")
+
+test_that("hdi", {
+  testthat::expect_equal(hdi(rnorm_perfect(1000), prob = 0.9)[1], -1.64, tolerance = 0.02)
+  testthat::expect_equal(length(hdi(rnorm_perfect(1000), prob = c(0.8, 0.9, 0.95))), 3, tolerance = 0.01)
+  testthat::expect_equal(hdi(rnorm_perfect(1000), prob = 1)[1], -3.09, tolerance = 0.02)
+
+  testthat::expect_warning(hdi(c(2, 3, NA)))
+  testthat::expect_warning(hdi(c(2, 3)))
+  testthat::expect_warning(hdi(rnorm_perfect(1000), prob = 0.00001))
+  testthat::expect_warning(hdi(rnorm_perfect(1000), prob = 95))
+  testthat::expect_warning(hdi(c(rnorm_perfect(1000, 0, 1), rnorm_perfect(1000, 6, 1), rnorm_perfect(1000, 12, 1)), prob = 0.1))
+})

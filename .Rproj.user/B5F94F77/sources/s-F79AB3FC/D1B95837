@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1547567056561.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D1B95837",
+    "lastKnownWriteTime" : 1547567078,
+    "last_content_update" : 1547567078400,
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/tests/testthat/test-p_direction.R",
+    "project_path" : "tests/testthat/test-p_direction.R",
+    "properties" : {
+        "cursorPosition" : "3,2",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

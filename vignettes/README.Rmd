@@ -10,8 +10,6 @@ output:
     fig_width: 10.08
     fig_height: 6
 tags: [r, bayesian, posterior, test]
-abstract: |
-  bayestestR is a lightweight package providing utilities to describe posterior distributions and Bayesian models.
 vignette: >
   %\VignetteIndexEntry{README}
   \usepackage[utf8]{inputenc}
@@ -24,7 +22,7 @@ editor_options:
 [![codecov](https://codecov.io/gh/DominiqueMakowski/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/DominiqueMakowski/bayestestR)
 [![HitCount](http://hits.dwyl.io/DominiqueMakowski/bayestestR.svg)](http://hits.dwyl.io/DominiqueMakowski/bayestestR)
 
-Utilities for Analyzing Bayesian Posterior Distributions and Models.
+Understand and Describe Bayesian Models and Posterior Distributions.
 
 
 ---
@@ -55,11 +53,18 @@ library("bayestestR")
 # Functions
 
 
-- **`bayes_p()`**: Compute a Bayesian equivalent p value, related to the odds that a parameter (described by its posterior distribution) has againt the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm.
+- **`p_map()`**: Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has againt the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP).
 
 ```R
-bayes_p(posterior = rnorm(1000, 0, 1))
-bayes_p(posterior = rnorm(1000, 10, 1))
+p_map(posterior = rnorm(1000, 0, 1))
+p_map(posterior = rnorm(1000, 10, 1))
+```
+
+- **`p_direction()`**: Compute the Probability of Direction (p, also known as the Maximum Probability of Effect - MPE), a Bayesian equivalent of the p-value (altough differently expressed). It varies between 50\% and 100\% and can be interpreted as the probability that a parameter (described by its posterior distribution) is positive or negative (following  the median's sign). It is defined as the proportion of the posterior distribution of the median's sign. It is used as an index of effect existence, i.e., whether the probability that the effect is in the same direction than the point-estimate (independently of the effect's size or significance). This p-value is fairly similar to its frequentist counterpart (i.e., is strongly correlated).
+
+```R
+# Compute the pd of a posterior distribution of mean 1 and SD 1
+pd(rnorm(1000, mean = 1, sd = 1))
 ```
 
 
@@ -71,13 +76,6 @@ rope(posterior = rnorm(1000, 0, 1), rope = c(-0.1, 0.1))
 rope(posterior = rnorm(1000, 1, 0.01), rope = c(-0.1, 0.1))
 ```
 
-- **`rope_overlap()`**: Compute how much of the posterior distribution is within a distributed region of practical equivalence.
-
-```R
-rope_overlap(posterior = rnorm(1000, 0, 0.01), rope = c(-0.1, 0.1))
-rope_overlap(posterior = rnorm(1000, 0, 1), rope = c(-0.1, 0.1))
-rope_overlap(posterior = rnorm(1000, 1, 0.01), rope = c(-0.1, 0.1))
-```
 
 - **`rope_test()`**: Perform a Test for Practical Equivalence based on the "HDI+ROPE decision rule" (Kruschke 2018) to check whether parameter values should be accepted or rejected against an explicitely formulated "null hypothesis".
 
@@ -88,12 +86,7 @@ rope_test(posterior = rnorm(1000, 1, 0.01), rope = c(-0.1, 0.1))
 ```
 
 
-- **`pd()`**: Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50\% and 100\% and can be interpreted as the probability that a parameter (described by its posterior distribution) is positive or negative (following  the median's sign). It is defined as the proportion of the posterior distribution of the median's sign. It is used as an index of effect existence, i.e., whether the probability that the effect is in the same direction than the point-estimate (independently of the effect's size or significance).
 
-```R
-# Compute the pd of a posterior distribution of mean 1 and SD 1
-pd(rnorm(1000, mean = 1, sd = 1))
-```
 
 - **`hdi()`**: Compute the highest density interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval.
 
@@ -117,12 +110,6 @@ x <- rnorm_perfect(n = 10)
 plot(density(x))
 ```
 
-- **`overlap()`**: Calculate the overlap coefficient between two kernel density estimates.
-
-
-```R
-overlap(x=rnorm(1000, 0, 1), y=rnorm(1000, 1, 1))
-```
 
 ---
 
@@ -140,9 +127,10 @@ library(tidyr)
 df <- read.csv("https://raw.github.com/DominiqueMakowski/bayestestR/master/data/bayes_indices.csv")
 ```
 
-For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it again below.
+For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it again below (*takes about 1h*).
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
+library(bayestestR)
 library(rstanarm)
 library(broom)
 
@@ -155,44 +143,47 @@ data$y <- scale(data$x)
 bayes_indices <- data.frame()
 for(noise in c(0.1, seq(0.5, 5, by=0.5))){
   print(noise)
-  for(i in 1:1000){
-    cat(".")
-    df <- data
-    df$y <- df$y + rnorm(50, mean = 0, sd = noise)
-
-    freq_model <- lm(y ~ x, data=df)
-    summary(freq_model)
-    beta <- broom::tidy(freq_model)[2, ]$estimate
-    p <- broom::tidy(freq_model)[2, ]$p.value
-
-    out <- capture.output(bayes_model <- rstanarm::stan_glm(y ~ x, data=df))
-    posterior <- as.data.frame(bayes_model)$x
-
-    median <- median(posterior)
-    mean <- mean(posterior)
-    map <- map_estimate(posterior)[1]
-
-    pd <- pd(posterior)
-    rope <- rope(posterior, rope = c(-0.1, 0.1))
-    rope_overlap <- rope_overlap(posterior, rope = c(-0.1, 0.1))
-    bayes_p <- bayes_p(posterior)
-
-    bayes_indices <- rbind(bayes_indices,
-                       data.frame(noise=noise,
-                                  iteration=i,
-                                  beta = beta,
-                                  median = median,
-                                  mean = mean,
-                                  map = map,
-                                  p = p,
-                                  pd = pd,
-                                  rope = rope,
-                                  rope_overlap = rope_overlap,
-                                  bayes_p = bayes_p))
+  for(sample_size in c(25, 50, 100)){
+    for(i in 1:1000){
+      cat(".")
+      df <- data
+      df$y <- df$y + rnorm(50, mean = 0, sd = noise)
+  
+      freq_model <- lm(y ~ x, data=df)
+      summary(freq_model)
+      beta <- broom::tidy(freq_model)[2, ]$estimate
+      p_frequentist <- broom::tidy(freq_model)[2, ]$p.value
+  
+      out <- capture.output(bayes_model <- rstanarm::stan_glm(y ~ x, data=df))
+      posterior <- as.data.frame(bayes_model)$x
+  
+      median <- median(posterior)
+      mean <- mean(posterior)
+      map <- map_estimate(posterior)[1]
+  
+      p_direction <- p_direction(posterior)
+      rope <- rope(posterior, rope = c(-0.1, 0.1))
+      rope_full <- rope(posterior, rope = c(-0.1, 0.1), CI=100)
+      p_map <- p_map(posterior)
+  
+      bayes_indices <- rbind(bayes_indices,
+                         data.frame(noise=noise,
+                                    sample_size=sample_size,
+                                    iteration=i,
+                                    beta = beta,
+                                    median = median,
+                                    mean = mean,
+                                    map = map,
+                                    p_frequentist = p_frequentist,
+                                    p_direction = p_direction,
+                                    rope = rope,
+                                    rope_full = rope_full,
+                                    p_map = p_map))
+    }
   }
+  write.csv(bayes_indices, "../data/bayes_indices.csv")
 }
 
-write.csv(bayes_indices, "../data/bayes_indices.csv")
 ```
 
 
@@ -243,14 +234,14 @@ df %>%
 ### Relationship with the Frequentist p value
 ```{r, message=FALSE, warning=FALSE}
 df %>% 
-  select(noise, p, pd, bayes_p, rope, rope_overlap) %>% 
+  select(noise, p, p_direction, p_map, rope, rope_full) %>% 
   gather(index, value, -noise, -p) %>% 
   ggplot(aes(x = p, y = value, color = index)) +
   geom_point(shape=16, alpha=0.1) +
   facet_wrap(~index, scales = "free") +
   theme_classic() +
   theme(strip.background = element_blank()) +
-  scale_color_manual(values = c("bayes_p" = "#f44336", "pd" = "#2196F3", "rope" = "#4CAF50", "rope_overlap" = "#FFC107"))
+  scale_color_manual(values = c("p_map" = "#f44336", "p_direction" = "#2196F3", "rope" = "#4CAF50", "rope_full" = "#FFC107"))
 ```
 
 ### Relationship with frequentist's arbitrary clusters
@@ -278,10 +269,10 @@ get_data <- function(predictor, outcome, lbound=0, ubound=0.3){
 
 ```{r, message=FALSE, warning=FALSE}
 data <- rbind(
-  get_data(predictor="bayes_p", outcome="sig_1", lbound=0, ubound=0.5),
-  get_data(predictor="pd", outcome="sig_1", lbound=90, ubound=100),
+  get_data(predictor="p_map", outcome="sig_1", lbound=0, ubound=0.5),
+  get_data(predictor="p_direction", outcome="sig_1", lbound=90, ubound=100),
   get_data(predictor="rope", outcome="sig_1", lbound=0, ubound=0.1),
-  get_data(predictor="rope_overlap", outcome="sig_1", lbound=0, ubound=0.1))
+  get_data(predictor="rope_full", outcome="sig_1", lbound=0, ubound=0.1))
 
 
 data %>% 
@@ -291,7 +282,7 @@ data %>%
   facet_wrap(~index, scales = "free") +
   theme_classic() +
   theme(strip.background = element_blank()) +
-  scale_color_manual(values = c("bayes_p" = "#f44336", "pd" = "#2196F3", "rope" = "#4CAF50", "rope_overlap" = "#FFC107")) +
+  scale_color_manual(values = c("p_map" = "#f44336", "p_direction" = "#2196F3", "rope" = "#4CAF50", "rope_full" = "#FFC107")) +
   ylab("Probability of being significant at p < .1\n")
 ```
 
@@ -299,10 +290,10 @@ data %>%
 
 ```{r, message=FALSE, warning=FALSE}
 data <- rbind(
-  get_data(predictor="bayes_p", outcome="sig_05", lbound=0, ubound=0.3),
-  get_data(predictor="pd", outcome="sig_05", lbound=95, ubound=100),
+  get_data(predictor="p_map", outcome="sig_05", lbound=0, ubound=0.3),
+  get_data(predictor="p_direction", outcome="sig_05", lbound=95, ubound=100),
   get_data(predictor="rope", outcome="sig_05", lbound=0, ubound=0.05),
-  get_data(predictor="rope_overlap", outcome="sig_05", lbound=0, ubound=0.05))
+  get_data(predictor="rope_full", outcome="sig_05", lbound=0, ubound=0.05))
 
 
 data %>% 
@@ -312,7 +303,7 @@ data %>%
   facet_wrap(~index, scales = "free") +
   theme_classic() +
   theme(strip.background = element_blank()) +
-  scale_color_manual(values = c("bayes_p" = "#f44336", "pd" = "#2196F3", "rope" = "#4CAF50", "rope_overlap" = "#FFC107")) +
+  scale_color_manual(values = c("p_map" = "#f44336", "p_direction" = "#2196F3", "rope" = "#4CAF50", "rope_full" = "#FFC107")) +
   ylab("Probability of being significant at p < .05\n")
 ```
 
@@ -321,10 +312,10 @@ data %>%
 
 ```{r, message=FALSE, warning=FALSE}
 data <- rbind(
-  get_data(predictor="bayes_p", outcome="sig_01", lbound=0, ubound=0.1),
-  get_data(predictor="pd", outcome="sig_01", lbound=98, ubound=100),
+  get_data(predictor="p_map", outcome="sig_01", lbound=0, ubound=0.1),
+  get_data(predictor="p_direction", outcome="sig_01", lbound=98, ubound=100),
   get_data(predictor="rope", outcome="sig_01", lbound=0, ubound=0.01),
-  get_data(predictor="rope_overlap", outcome="sig_01", lbound=0, ubound=0.02))
+  get_data(predictor="rope_full", outcome="sig_01", lbound=0, ubound=0.02))
 
 
 data %>% 
@@ -334,7 +325,7 @@ data %>%
   facet_wrap(~index, scales = "free") +
   theme_classic() +
   theme(strip.background = element_blank()) +
-  scale_color_manual(values = c("bayes_p" = "#f44336", "pd" = "#2196F3", "rope" = "#4CAF50", "rope_overlap" = "#FFC107")) +
+  scale_color_manual(values = c("p_map" = "#f44336", "p_direction" = "#2196F3", "rope" = "#4CAF50", "rope_full" = "#FFC107")) +
   ylab("Probability of being significant at p < .01\n")
 ```
 
@@ -342,10 +333,10 @@ data %>%
 
 ```{r, message=FALSE, warning=FALSE}
 data <- rbind(
-  get_data(predictor="bayes_p", outcome="sig_001", lbound=0, ubound=0.025),
-  get_data(predictor="pd", outcome="sig_001", lbound=99.5, ubound=100),
+  get_data(predictor="p_map", outcome="sig_001", lbound=0, ubound=0.025),
+  get_data(predictor="p_direction", outcome="sig_001", lbound=99.5, ubound=100),
   get_data(predictor="rope", outcome="sig_001", lbound=0, ubound=0.01),
-  get_data(predictor="rope_overlap", outcome="sig_001", lbound=0, ubound=0.01))
+  get_data(predictor="rope_full", outcome="sig_001", lbound=0, ubound=0.01))
 
 
 data %>% 
@@ -355,7 +346,7 @@ data %>%
   facet_wrap(~index, scales = "free") +
   theme_classic() +
   theme(strip.background = element_blank()) +
-  scale_color_manual(values = c("bayes_p" = "#f44336", "pd" = "#2196F3", "rope" = "#4CAF50", "rope_overlap" = "#FFC107")) +
+  scale_color_manual(values = c("p_map" = "#f44336", "p_direction" = "#2196F3", "rope" = "#4CAF50", "rope_full" = "#FFC107")) +
   ylab("Probability of being significant at p < .001\n")
 ```
 
@@ -363,7 +354,7 @@ data %>%
 ### Relationship between the two ROPE indices
 ```{r, message=FALSE, warning=FALSE}
 df %>% 
-  ggplot(aes(x = rope, y = rope_overlap, color=p)) +
+  ggplot(aes(x = rope, y = rope_full, color=p)) +
   geom_point(shape=16, alpha=0.2) +
   theme_classic() 
 ```
@@ -372,7 +363,7 @@ df %>%
 
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>%  -->
-<!--   select(noise, p, bayes_p, pd, rope, rope_overlap) %>%  -->
+<!--   select(noise, p, p_map, p_direction, rope, rope_overlap) %>%  -->
 <!--   gather(index, value, -noise) %>%  -->
 <!--   mutate(noise = as.factor(noise)) %>% -->
 <!--   ggplot(aes(x=noise, y=value, fill=index)) + -->
@@ -382,13 +373,13 @@ df %>%
 <!--   facet_wrap(~index, scales="free") + -->
 <!--   theme_classic() + -->
 <!--   theme(strip.background = element_blank()) + -->
-<!--   scale_fill_manual(values=c("p"="#9C27B0", "bayes_p"="#f44336", "pd"="#2196F3", "rope"="#4CAF50", "rope_overlap"="#FFC107")) -->
+<!--   scale_fill_manual(values=c("p"="#9C27B0", "p_map"="#f44336", "p_direction"="#2196F3", "rope"="#4CAF50", "rope_overlap"="#FFC107")) -->
 <!-- ``` -->
 
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- summary(lm(p ~ noise, data=df)) -->
-<!-- summary(lm(bayes_p ~ noise, data=df)) -->
-<!-- summary(lm(pd ~ noise, data=df)) -->
+<!-- summary(lm(p_map ~ noise, data=df)) -->
+<!-- summary(lm(p_direction ~ noise, data=df)) -->
 <!-- summary(lm(rope ~ noise, data=df)) -->
 <!-- summary(lm(rope_overlap ~ noise, data=df)) -->
 <!-- ``` -->
@@ -401,7 +392,7 @@ From that, we can conclude:
 - The **MAP estimate** seems to be more biased than the mean and the median of the posterior distribution (larger CI).
 - Aside from being more robust, the **median** makes more sense than the **mean** in a probabilistic framework (*e.g.*, there is 50% chance that the true effect is either higher or lower than the median).
 - The **traditional ROPE** is not sensitive to delineate highly "significant" effects. While being relatively similar (and more straighforward in its definition), the **overlap-based ROPE** does not present the same flaw.
-- The **Probability of Direction (pd)** is the closest index to the frequentist *p* value.
+- The **Probability of Direction (p)** is the closest index to the frequentist *p* value.
 
 **To minimally describe the posterior distribution of a parameter, we suggest reporting the *median* and the *90% CI (the 90% HDI)* for parameter characterisation and, in the context of null-hypothesis testing, the Probability of Direction (*p*d) for effect existence and (especially in the context of confirmatory analyses) the ROPE (overlap based) with an explicitly specified range for effect significance.**
 
@@ -409,26 +400,29 @@ From that, we can conclude:
 
 **The following thresholds are presented as landmarks only for comparison with the frequentist framework. Please consider with caution.**
 
-- ***p*d**
+- **p (direction)**
 
-    - pd \< 95% ~ *p* \< .1: uncertain
-    - pd \> 95% ~ *p* \< .1: possibly existing
-    - pd \> 97.5% ~ *p* \< .05: likely existing
-    - pd \> 99% ~ *p* \< .01: probably existing
-    - pd \> 99.9% ~ *p* \< .001: certainly existing
-    - pd = 100%: definitely existing
+    - *p* (direction) \< 95% ~ *p* \< .1: uncertain
+    - *p* (direction) \> 95% ~ *p* \< .1: possibly existing
+    - *p* (direction) \> 97.5% ~ *p* \< .05: likely existing
+    - *p* (direction) \> 99% ~ *p* \< .01: probably existing
+    - *p* (direction) \> 99.9% ~ *p* \< .001: certainly existing
+    - *p* (direction) = 100%: definitely existing
     
-- **ROPE (overlap)**
+- **ROPE**
     
     - ROPE \> 0.95: definitely not significant
-    - ROPE \> 0.5: likely not significant
-    - ROPE \< 0.5: likely significant
+    - ROPE \> 0.9: likely not significant
+    - ROPE \< 0.1: likely significant
     - ROPE \< 0.05: definitely significant
 
 
 *Note: If you have any advice, opinion or such, we encourage you to let us know by opening an [discussion thread](https://github.com/DominiqueMakowski/bayestestR/issues) or making a pull request.*
 
-
 # Credits
 
-Parts of the code in this package was inspired / shamelessly copied from other great packages that you must check out and cite, such as [sjstats](https://github.com/strengejacke/sjstats) or [BayesTesting.jl](https://github.com/tszanalytics/BayesTesting.jl). All credits go to their authors.
+You can cite the package as following:
+- Makowski, (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. CRAN. doi: .
+
+
+Please remember that parts of the code in this package was inspired / shamelessly copied from other great packages that you must check out and cite, such as [sjstats](https://github.com/strengejacke/sjstats) or [BayesTesting.jl](https://github.com/tszanalytics/BayesTesting.jl). All credits go to their authors.

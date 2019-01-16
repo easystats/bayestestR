@@ -1,6 +1,6 @@
 Package: bayestestR
 Type: Package
-Title: Utilities for Analyzing Bayesian Posterior Distributions and Models
+Title: Understand and Describe Bayesian Models and Posterior Distributions
 Version: 0.1.0
 Authors@R: c(
     person("Dominique", 

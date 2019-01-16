@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1547565903975.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "EEB95B56",
+    "lastKnownWriteTime" : 1547568063,
+    "last_content_update" : 1547568063393,
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/vignettes/README.Rmd",
+    "project_path" : "vignettes/README.Rmd",
+    "properties" : {
+        "chunk_output_type" : "console",
+        "cursorPosition" : "194,0",
+        "scrollLine" : "177"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
