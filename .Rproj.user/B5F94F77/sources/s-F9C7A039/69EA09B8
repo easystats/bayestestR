@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1547650751074.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "69EA09B8",
+    "lastKnownWriteTime" : 1547650813,
+    "last_content_update" : 1547650813437,
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/tests/testthat/test-hdi.R",
+    "project_path" : "tests/testthat/test-hdi.R",
+    "properties" : {
+        "cursorPosition" : "11,123",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

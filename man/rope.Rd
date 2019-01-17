@@ -4,14 +4,16 @@
 \alias{rope}
 \title{Region of Practical Equivalence (ROPE)}
 \usage{
-rope(posterior, rope = c(-0.1, 0.1), CI = 90)
+rope(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TRUE)
 }
 \arguments{
 \item{posterior}{vector representing a posterior distribution.}
 
-\item{rope}{ROPE's lower and higher bounds.}
+\item{bounds}{ROPE's lower and higher bounds.}
 
 \item{CI}{the credible interval to use.}
+
+\item{verbose}{toggle off warnings.}
 }
 \description{
 Compute the proportion of the HDI of a posterior distribution that lies within a region of practical equivalence.
@@ -22,9 +24,11 @@ Statistically, the probability of a posterior distribution of being different fr
 \examples{
 library(bayestestR)
 
-rope(posterior = rnorm(1000, 0, 0.01), rope = c(-0.1, 0.1))
-rope(posterior = rnorm(1000, 0, 1), rope = c(-0.1, 0.1))
-rope(posterior = rnorm(1000, 1, 0.01), rope = c(-0.1, 0.1))
+rope(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
+rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
+rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
+rope(posterior = rnorm(1000, 1, 1), CI = c(90, 95))
+
 }
 \author{
 \href{https://dominiquemakowski.github.io/}{Dominique Makowski}

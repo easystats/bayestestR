@@ -18,6 +18,7 @@ Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
 Suggests:
+    spelling,
     knitr,
     rmarkdown,
     testthat,
@@ -26,3 +27,4 @@ Suggests:
 	dplyr,
 	tidyr
 RoxygenNote: 6.1.1
+Language: en-GB

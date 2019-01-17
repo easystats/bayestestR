@@ -1,11 +1,11 @@
 #' Highest Density Interval (HDI)
 #'
-#' Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval.
+#' Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
 #'
 #' @details By default, hdi() returns the 90\% intervals, deemed to be more stable than, for instance, 95\% intervals (Kruschke 2015).
 #'
 #' @param posterior vector representing a posterior distribution.
-#' @param prob value or vector between 0 and 1, indicating the interval that is to be estimated.
+#' @param CI the credible interval, value or vector between 0 and 100, indicating the probability that is to be estimated.
 #' @param verbose toggle off warnings.
 #'
 #'
@@ -13,20 +13,20 @@
 #' library(bayestestR)
 #'
 #' posterior <- rnorm(1000)
-#' hdi(posterior, prob = 0.9)
-#' hdi(posterior, prob = c(0.8, 0.9, 0.95))
+#' hdi(posterior, CI = 90)
+#' hdi(posterior, CI = c(80, 90, 95))
 #' @author All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.
 #'
 #' @export
-hdi <- function(posterior, prob = 0.90, verbose = TRUE) {
-  if (length(prob) > 1) {
+hdi <- function(posterior, CI = 90, verbose = TRUE) {
+  if (length(CI) > 1) {
     hdi_values <- list()
-    for (prob_value in prob) {
-      hdi_values[[as.character(prob_value)]] <- .hdi(posterior, prob = prob_value, verbose = verbose)
+    for (CI_value in CI) {
+      hdi_values[[paste0("CI_", CI_value)]] <- .hdi(posterior, CI = CI_value, verbose = verbose)
     }
     return(hdi_values)
   } else {
-    return(.hdi(posterior, prob = prob, verbose = verbose))
+    return(.hdi(posterior, CI = CI, verbose = verbose))
   }
 }
 
@@ -41,16 +41,17 @@ hdi <- function(posterior, prob = 0.90, verbose = TRUE) {
 
 
 #' @keywords internal
-.hdi <- function(x, prob = 0.90, verbose = TRUE) {
-  if (prob > 1) {
+.hdi <- function(x, CI = 90, verbose = TRUE) {
+  CI <- CI / 100
+  if (CI > 1) {
     if (verbose) {
-      warning("HDI: `prob` should be less than 1, returning NaNs.")
+      warning("HDI: `CI` should be less than 100, returning NaNs.")
     }
     return(c(NA, NA))
   }
 
 
-  if(prob == 1){
+  if(CI == 1){
     return(c(min(x), max(x)))
   }
 
@@ -70,11 +71,11 @@ hdi <- function(posterior, prob = 0.90, verbose = TRUE) {
   }
 
   x_sorted <- sort(x)
-  window_size <- floor(prob * length(x_sorted))
+  window_size <- floor(CI * length(x_sorted))
 
   if (window_size < 2) {
     if (verbose) {
-      warning("HDI: `prob` is too small or x does not contain enough data points, returning NaNs.")
+      warning("HDI: `CI` is too small or x does not contain enough data points, returning NaNs.")
     }
     return(c(NA, NA))
   }

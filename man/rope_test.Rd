@@ -4,14 +4,16 @@
 \alias{rope_test}
 \title{Test for Practical Equivalence}
 \usage{
-rope_test(posterior, rope = c(-0.1, 0.1), CI = 90)
+rope_test(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TRUE)
 }
 \arguments{
 \item{posterior}{vector representing a posterior distribution.}
 
-\item{rope}{ROPE's lower and higher bounds.}
+\item{bounds}{ROPE's lower and higher bounds.}
 
 \item{CI}{the credible interval to use.}
+
+\item{verbose}{toggle off warnings.}
 }
 \description{
 Perform a Test for Practical Equivalence based on the "HDI+ROPE decision rule" (Kruschke 2018) to check whether parameter values should be accepted or rejected against an explicitely formulated "null hypothesis".
@@ -22,9 +24,11 @@ Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2010, 2011, 201
 \examples{
 library(bayestestR)
 
-rope_test(posterior = rnorm(1000, 0, 0.01), rope = c(-0.1, 0.1))
-rope_test(posterior = rnorm(1000, 0, 1), rope = c(-0.1, 0.1))
-rope_test(posterior = rnorm(1000, 1, 0.01), rope = c(-0.1, 0.1))
+rope_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
+rope_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
+rope_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
+rope_test(posterior = rnorm(1000, 1, 1), CI = c(50, 99))
+
 }
 \references{
 \href{https://strengejacke.wordpress.com/2018/06/06/r-functions-for-bayesian-model-statistics-and-summaries-rstats-stan-brms/}{sjstats}

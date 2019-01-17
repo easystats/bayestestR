@@ -9,4 +9,7 @@ test_that("rope", {
 
   testthat::expect_equal(rope(rnorm_perfect(1000, 0, 0.001)), 1, tolerance = 0.01)
   testthat::expect_equal(rope_test(rnorm_perfect(1000, 0, 0.001)), "accepted")
+
+  testthat::expect_equal(rope(rnorm_perfect(1000, 1, 1), CI=c(50, 99))$CI_99, 0.05, tolerance = 0.01)
+  testthat::expect_equal(rope_test(rnorm_perfect(1000, 1, 1), CI=c(50, 99))$CI_99, "undecided")
 })

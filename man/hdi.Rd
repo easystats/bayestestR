@@ -4,17 +4,17 @@
 \alias{hdi}
 \title{Highest Density Interval (HDI)}
 \usage{
-hdi(posterior, prob = 0.9, verbose = TRUE)
+hdi(posterior, CI = 90, verbose = TRUE)
 }
 \arguments{
 \item{posterior}{vector representing a posterior distribution.}
 
-\item{prob}{value or vector between 0 and 1, indicating the interval that is to be estimated.}
+\item{CI}{the credible interval, value or vector between 0 and 100, indicating the probability that is to be estimated.}
 
 \item{verbose}{toggle off warnings.}
 }
 \description{
-Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval.
+Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
 }
 \details{
 By default, hdi() returns the 90\% intervals, deemed to be more stable than, for instance, 95\% intervals (Kruschke 2015).
@@ -23,8 +23,8 @@ By default, hdi() returns the 90\% intervals, deemed to be more stable than, for
 library(bayestestR)
 
 posterior <- rnorm(1000)
-hdi(posterior, prob = 0.9)
-hdi(posterior, prob = c(0.8, 0.9, 0.95))
+hdi(posterior, CI = 90)
+hdi(posterior, CI = c(80, 90, 95))
 }
 \author{
 All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.

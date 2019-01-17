@@ -5,6 +5,11 @@ sudo: false
 # speed up build times and is recommended for most builds.
 cache: packages
 
+os:
+  - windows
+  - linux
+  - osx
+  
 r:
   - release
   - devel
