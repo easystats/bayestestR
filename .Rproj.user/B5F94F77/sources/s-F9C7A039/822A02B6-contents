@@ -200,7 +200,7 @@ for(noise in c(0.1, seq(0.5, 5, by=0.5))){
       }
     }
   }
-  # write.csv(bayes_indices, "../data/bayes_indices.csv")
+  write.csv(bayes_indices, "../data/bayes_indices.csv")
 }
 ```
 
