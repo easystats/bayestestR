@@ -280,7 +280,7 @@ df %>%
   glm(effect ~ estimate/value * noise * sample_size * prior_correct, data=., family="binomial") %>% 
   broom::tidy() %>% 
   select(term, estimate, p=p.value) %>% 
-  filter(str_detect(term, 'value')) %>% 
+  filter(stringr::str_detect(term, 'value')) %>% 
   mutate(term = stringr::str_remove(term, ":value"),
          term = stringr::str_remove(term, "estimate"),
          p = ifelse(p < .001, "< .001***", ifelse(p < .01, "< .01**", ifelse(p < .05, "< .05*", "> .05")))) %>% 
@@ -384,7 +384,7 @@ df %>%
   glm(effect ~ index/value * noise * sample_size * prior_correct, data=., family="binomial") %>% 
   broom::tidy() %>% 
   select(term, estimate, p=p.value) %>% 
-  filter(str_detect(term, 'value')) %>%
+  filter(stringr::str_detect(term, 'value')) %>%
   mutate(term = stringr::str_remove(term, ":value"),
          term = stringr::str_remove(term, "index"),
          p = ifelse(p < .001, "< .001***", ifelse(p < .01, "< .01**", ifelse(p < .05, "< .05*", "> .05")))) %>%

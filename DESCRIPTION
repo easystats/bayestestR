@@ -26,6 +26,7 @@ Suggests:
 	ggplot2,
 	dplyr,
 	tidyr,
+	stringr,
 	broom
 RoxygenNote: 6.1.1
 Language: en-GB
