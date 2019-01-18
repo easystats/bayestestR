@@ -21,9 +21,9 @@ p_rope <- function(posterior, bounds = c(-0.1, 0.1), precision=0.1) {
 
   if(all(rope_values == min(rope_values))){
     if(rope_values[1] == 0){
-      return(0)
+      return(100)
     } else{
-      return(2)
+      return(-100)
     }
   }
 
@@ -31,11 +31,13 @@ p_rope <- function(posterior, bounds = c(-0.1, 0.1), precision=0.1) {
   if(rope_values[1] == min_rope){
     name_min2 <- names(rope_values[rope_values != min_rope][1])
     CI_position <- match(name_min2, names(rope_values))-1
+    if(CI_position>1) CI_position <- CI_position-1
     p <- names(rope_values[CI_position])
     h0 <- 1
   } else{
     name_max <- names(rope_values[rope_values != max(rope_values)][1])
-    CI_position <- match(name_max, names(rope_values))-1
+    CI_position <- match(name_max, names(rope_values))
+    if(CI_position>1) CI_position <- CI_position-1
     p <- names(rope_values[CI_position])
     h0 <- -1
   }

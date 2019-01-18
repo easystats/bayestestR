@@ -25,6 +25,7 @@ Suggests:
     covr,
 	ggplot2,
 	dplyr,
-	tidyr
+	tidyr,
+	broom
 RoxygenNote: 6.1.1
 Language: en-GB
