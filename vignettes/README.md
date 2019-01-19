@@ -1,148 +1,123 @@
----
-title: "bayestestR"
-output: 
-  github_document:
-    toc: true
-    fig_width: 10.08
-    fig_height: 6
-  rmarkdown::html_vignette:
-    toc: true
-    fig_width: 10.08
-    fig_height: 6
-tags: [r, bayesian, posterior, test]
-vignette: >
-  %\VignetteIndexEntry{README}
-  \usepackage[utf8]{inputenc}
-  %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
----
+bayestestR
+================
 
+-   [Goal](#goal)
+-   [Installation](#installation)
+-   [Functions](#functions)
+    -   [Posterior Description](#posterior-description)
+    -   [Null-Hypothesis Significance Testing (NHST)](#null-hypothesis-significance-testing-nhst)
+    -   [Utilities](#utilities)
+-   [Credits](#credits)
 
-
-[![Build Status](https://travis-ci.org/DominiqueMakowski/bayestestR.svg?branch=master)](https://travis-ci.org/DominiqueMakowski/bayestestR)
-[![codecov](https://codecov.io/gh/DominiqueMakowski/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/DominiqueMakowski/bayestestR)
-[![HitCount](http://hits.dwyl.io/DominiqueMakowski/bayestestR.svg)](http://hits.dwyl.io/DominiqueMakowski/bayestestR)
+[![Build Status](https://travis-ci.org/DominiqueMakowski/bayestestR.svg?branch=master)](https://travis-ci.org/DominiqueMakowski/bayestestR) [![codecov](https://codecov.io/gh/DominiqueMakowski/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/DominiqueMakowski/bayestestR) [![HitCount](http://hits.dwyl.io/DominiqueMakowski/bayestestR.svg)](http://hits.dwyl.io/DominiqueMakowski/bayestestR)
 
 Understand and Describe Bayesian Models and Posterior Distributions.
 
+------------------------------------------------------------------------
 
----
-
-
-# Goal
+Goal
+====
 
 `bayestestR` is a lightweight package providing utilities to describe posterior distributions and Bayesian models.
 
-
-# Installation
-
+Installation
+============
 
 Run the following:
 
-```{r eval=FALSE, message=FALSE, warning=FALSE}
+``` r
 install.packages("devtools")
 library("devtools")
 install_github("DominiqueMakowski/bayestestR")
 ```
-```{r message=FALSE, warning=FALSE}
+
+``` r
 library("bayestestR")
 ```
 
+------------------------------------------------------------------------
 
----
+Functions
+=========
 
-# Functions
+Posterior Description
+---------------------
 
+-   **`hdi()`**: Compute the highest density interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval.
 
-## Posterior Description
-
-- **`hdi()`**: Compute the highest density interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval.
-
-```{r message=FALSE, warning=FALSE, results='hide'}
+``` r
 posterior <- rnorm(1000)
 hdi(posterior, CI = 90)
 hdi(posterior, CI = c(80, 90, 95))
 ```
 
-- **`map_estimate()`**: Find the Highest Maximum A Posteriori (MAP) estimate of a posterior.
+-   **`map_estimate()`**: Find the Highest Maximum A Posteriori (MAP) estimate of a posterior.
 
-```{r message=FALSE, warning=FALSE, results='hide'}
+``` r
 map_estimate(rnorm(1000, 1, 1))
 ```
 
-- **`rope()`**: Compute the proportion of the HDI of a posterior distribution that lies within a region of practical equivalence.
+-   **`rope()`**: Compute the proportion of the HDI of a posterior distribution that lies within a region of practical equivalence.
 
-```{r message=FALSE, warning=FALSE, results='hide'}
+``` r
 rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 ```
 
-## Null-Hypothesis Significance Testing (NHST)
+Null-Hypothesis Significance Testing (NHST)
+-------------------------------------------
 
-- **`rope_test()`**: Perform a Test for Practical Equivalence based on the "HDI+ROPE decision rule" (Kruschke 2018) to check whether parameter values should be accepted or rejected against an explicitely formulated "null hypothesis".
+-   **`rope_test()`**: Perform a Test for Practical Equivalence based on the "HDI+ROPE decision rule" (Kruschke 2018) to check whether parameter values should be accepted or rejected against an explicitely formulated "null hypothesis".
 
-```{r message=FALSE, warning=FALSE, results='hide'}
+``` r
 rope_test(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 ```
 
+-   **`p_rope()`**: The ROPE-based p-value represents the maximum Credible Interval (HDI) that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the ROPE. A ROPE-based p of 97% means that there is a probability of .97 that a parameter (desccribed by its posterior distribution) is outside the ROPE.
 
-- **`p_rope()`**: The ROPE-based p-value represents the maximum Credible Interval (HDI) that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the ROPE. A ROPE-based p of 97% means that there is a probability of .97 that a parameter (desccribed by its posterior distribution) is outside the ROPE.
-
-```{r message=FALSE, warning=FALSE, results='hide'}
+``` r
 p_rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 ```
 
-- **`p_direction()`**: Compute the Probability of Direction (p, also known as the Maximum Probability of Effect - MPE), a Bayesian equivalent of the p-value (altough differently expressed). It varies between 50\% and 100\% and can be interpreted as the probability that a parameter (described by its posterior distribution) is positive or negative (following  the median's sign). It is defined as the proportion of the posterior distribution of the median's sign. It is used as an index of effect existence, i.e., whether the probability that the effect is in the same direction than the point-estimate (independently of the effect's size or significance). This p-value is fairly similar to its frequentist counterpart (i.e., is strongly correlated).
+-   **`p_direction()`**: Compute the Probability of Direction (p, also known as the Maximum Probability of Effect - MPE), a Bayesian equivalent of the p-value (altough differently expressed). It varies between 50% and 100% and can be interpreted as the probability that a parameter (described by its posterior distribution) is positive or negative (following the median's sign). It is defined as the proportion of the posterior distribution of the median's sign. It is used as an index of effect existence, i.e., whether the probability that the effect is in the same direction than the point-estimate (independently of the effect's size or significance). This p-value is fairly similar to its frequentist counterpart (i.e., is strongly correlated).
 
-```{r message=FALSE, warning=FALSE, results='hide'}
+``` r
 p_direction(rnorm(1000, mean = 1, sd = 1))
 ```
 
-- **`p_map()`**: Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has againt the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP).
+-   **`p_map()`**: Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has againt the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP).
 
-```{r message=FALSE, warning=FALSE, results='hide'}
+``` r
 p_map(posterior = rnorm(1000, 1, 1))
 ```
 
-## Utilities
+Utilities
+---------
 
-- **`rnorm_perfect()`**: Generate a sample of size n with a near-perfect normal distribution.
+-   **`rnorm_perfect()`**: Generate a sample of size n with a near-perfect normal distribution.
 
-```{r message=FALSE, warning=FALSE}
+``` r
 x <- rnorm_perfect(n = 10)
 plot(density(x))
 ```
 
-
-
-
+![](README_files/figure-markdown_github/unnamed-chunk-10-1.png)
 
 <!-- --- -->
-
 <!-- # Comparison of Indices for Parameter's Posteriors Description in the Bayesian Framework -->
-
-
 <!-- ## Generate Regression Data with Noise -->
-
-
 <!-- ```{r message=FALSE, warning=FALSE} -->
 <!-- library(ggplot2) -->
 <!-- library(dplyr) -->
 <!-- library(tidyr) -->
-
 <!-- df <- read.csv("https://raw.github.com/DominiqueMakowski/bayestestR/master/data/bayes_indices.csv") -->
 <!-- ``` -->
-
 <!-- For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it again below (*takes about 1h*). -->
-
 <!-- ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'} -->
 <!-- library(bayestestR) -->
 <!-- library(rstanarm) -->
 <!-- library(broom) -->
-
 <!-- # options(mc.cores = parallel::detectCores()) -->
 <!-- set.seed(333) -->
-
 <!-- generate_data <- function(sample_size, noise, correlation=1){ -->
 <!--   data <- data.frame(x = scale(rnorm(sample_size, 0, 1))) -->
 <!--   if(correlation==1){ -->
@@ -153,12 +128,9 @@ plot(density(x))
 <!--   } -->
 <!--   return(data) -->
 <!-- } -->
-
-
 <!-- # df <- read.csv("https://raw.github.com/DominiqueMakowski/bayestestR/master/data/bayes_indices.csv") -->
 <!-- # df <- read.csv("../data/bayes_indices.csv") -->
 <!-- df <- data.frame() # Uncomment this if you want to reset the data -->
-
 <!-- for(noise in c(0.1, seq(2.5, 5, by=2.5))){ -->
 <!--   for(sample_size in c(20, 40, 60)){ -->
 <!--     print(paste0(noise, "-", sample_size)) -->
@@ -167,28 +139,23 @@ plot(density(x))
 <!--         for(i in 1:1000){ -->
 <!--           cat(".") -->
 <!--           data <- generate_data(sample_size, noise, effect) -->
-
 <!--           freq_model <- lm(y ~ x, data=data) -->
 <!--           summary(freq_model) -->
 <!--           beta <- broom::tidy(freq_model)[2, ]$estimate -->
 <!--           p_frequentist <- broom::tidy(freq_model)[2, ]$p.value -->
-
 <!--           out <- capture.output(bayes_model <- rstanarm::stan_glm(y ~ x, -->
 <!--                                                                   data=data, -->
 <!--                                                                   chains=2, -->
 <!--                                                                   prior=normal(location=prior))) -->
 <!--           posterior <- as.data.frame(bayes_model)$x -->
-
 <!--           median <- median(posterior) -->
 <!--           mean <- mean(posterior) -->
 <!--           map <- map_estimate(posterior)[1] -->
-
 <!--           p_direction <- p_direction(posterior) -->
 <!--           rope <- rope(posterior, bounds = c(-0.1, 0.1)) -->
 <!--           rope_full <- rope(posterior, bounds = c(-0.1, 0.1), CI=100) -->
 <!--           p_rope <- p_rope(posterior, bounds = c(-0.1, 0.1)) -->
 <!--           p_map <- p_map(posterior) -->
-
 <!--           df <- rbind(df, -->
 <!--                        data.frame(effect=effect, -->
 <!--                                   noise=noise, -->
@@ -213,16 +180,9 @@ plot(density(x))
 <!--   write.csv(df, "../data/bayes_indices.csv", row.names = FALSE) -->
 <!-- } -->
 <!-- ``` -->
-
-
-
-
 <!-- ## Comparison of Parameter's Point-Estimates -->
-
 <!-- ### Relationship with the theorethical true value -->
-
 <!-- #### Sensitivity to Noise -->
-
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>% -->
 <!--   select(noise, beta, prior_correct, effect, median, mean, map) %>% -->
@@ -242,10 +202,7 @@ plot(density(x))
 <!--   ylab("\nNoise") + -->
 <!--   coord_cartesian(ylim=c(-1, 1)) -->
 <!-- ``` -->
-
-
 <!-- #### Sensitivity to Sample Size -->
-
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>% -->
 <!--   select(sample_size, beta, effect, prior_correct, median, mean, map) %>% -->
@@ -265,12 +222,7 @@ plot(density(x))
 <!--   xlab("\nSample Size") + -->
 <!--   coord_cartesian(ylim=c(-1, 1)) -->
 <!-- ``` -->
-
-
-
 <!-- #### Summary -->
-
-
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>% -->
 <!--   select(sample_size, beta, effect, prior_correct, median, mean, map, noise) %>% -->
@@ -287,21 +239,10 @@ plot(density(x))
 <!--          p = ifelse(p < .001, "< .001***", ifelse(p < .01, "< .01**", ifelse(p < .05, "< .05*", "> .05")))) %>% -->
 <!--   knitr::kable(digits=2) -->
 <!-- ``` -->
-
-
-
-
-
 <!-- ### Relationship with the frequentist beta -->
-
 <!-- ## Comparison of Indices of Effect Existence -->
-
-
 <!-- ### Effect Detection -->
-
-
 <!-- #### Sensitivity to Noise -->
-
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>% -->
 <!--   select(noise, effect, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full) %>% -->
@@ -320,10 +261,7 @@ plot(density(x))
 <!--   ylab("Noise\n") + -->
 <!--   xlab("\nSample Size") -->
 <!-- ``` -->
-
-
 <!-- #### Sensitivity to Sample Size -->
-
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>% -->
 <!--   select(noise, effect, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full) %>% -->
@@ -342,9 +280,7 @@ plot(density(x))
 <!--   ylab("Index Value\n") + -->
 <!--   xlab("\nSample Size") -->
 <!-- ``` -->
-
 <!-- #### Sensitivity to Priors -->
-
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>% -->
 <!--   select(noise, effect, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full, prior_correct) %>% -->
@@ -364,9 +300,7 @@ plot(density(x))
 <!--   ylab("Index Value\n") + -->
 <!--   xlab("\nEffect") -->
 <!-- ``` -->
-
 <!-- #### Summary -->
-
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>% -->
 <!--   mutate(p_frequentist = scale(p_frequentist), -->
@@ -391,11 +325,7 @@ plot(density(x))
 <!--          p = ifelse(p < .001, "< .001***", ifelse(p < .01, "< .01**", ifelse(p < .05, "< .05*", "> .05")))) %>% -->
 <!--   knitr::kable(digits=2) -->
 <!-- ``` -->
-
-
-
 <!-- ### Relationship with the frequentist's *p* value -->
-
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>% -->
 <!--   select(noise, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full, effect) %>% -->
@@ -412,15 +342,12 @@ plot(density(x))
 <!--   guides(colour = guide_legend(override.aes = list(alpha = 1)), -->
 <!--          shape = guide_legend(override.aes = list(alpha = 1), title="Sample Size")) -->
 <!-- ``` -->
-
 <!-- #### Relationship with frequentist's arbitrary clusters -->
-
 <!-- ```{r, message=FALSE, warning=FALSE} -->
-<!-- df$sig_1 <- factor(ifelse(df$p_frequentist >= .1, "n.s.", "-"), levels=c("n.s.", "-")) -->
+<!-- df$sig_1 <- factor(ifelse(df$p_frequentist >= .1, "n.s.", "°"), levels=c("n.s.", "°")) -->
 <!-- df$sig_05 <- factor(ifelse(df$p_frequentist >= .05, "n.s.", "*"), levels=c("n.s.", "*")) -->
 <!-- df$sig_01 <- factor(ifelse(df$p_frequentist >= .01, "n.s.", "**"), levels=c("n.s.", "**")) -->
 <!-- df$sig_001 <- factor(ifelse(df$p_frequentist >= .001, "n.s.", "***"), levels=c("n.s.", "***")) -->
-
 <!-- get_data <- function(predictor, outcome, lbound=0, ubound=0.3){ -->
 <!--   fit <- glm(paste(outcome, "~", predictor), data=df, family = "binomial") -->
 <!--   data <- data.frame(x=1:100) -->
@@ -430,12 +357,8 @@ plot(density(x))
 <!--   data <- select_(data, "value"=predictor, outcome, "index") -->
 <!--   return(data) -->
 <!-- } -->
-
 <!-- ``` -->
-
-
 <!-- ##### Significant at .1 -->
-
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- rbind( -->
 <!--   get_data(predictor="p_map", outcome="sig_1", lbound=0, ubound=0.5), -->
@@ -455,9 +378,7 @@ plot(density(x))
 <!--   ylab("Probability of being significant at p < .1\n") + -->
 <!--   xlab("\nIndex Value") -->
 <!-- ``` -->
-
 <!-- ##### Significant at .05 -->
-
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- rbind( -->
 <!--   get_data(predictor="p_map", outcome="sig_05", lbound=0, ubound=0.3), -->
@@ -477,10 +398,7 @@ plot(density(x))
 <!--   ylab("Probability of being significant at p < .05\n") + -->
 <!--   xlab("\nIndex Value") -->
 <!-- ``` -->
-
-
 <!-- ##### Significant at .01 -->
-
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- rbind( -->
 <!--   get_data(predictor="p_map", outcome="sig_01", lbound=0, ubound=0.1), -->
@@ -500,9 +418,7 @@ plot(density(x))
 <!--   ylab("Probability of being significant at p < .01\n") + -->
 <!--   xlab("\nIndex Value") -->
 <!-- ``` -->
-
 <!-- ##### Significant at .001 -->
-
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- rbind( -->
 <!--   get_data(predictor="p_map", outcome="sig_001", lbound=0, ubound=0.02), -->
@@ -522,44 +438,30 @@ plot(density(x))
 <!--   ylab("Probability of being significant at p < .001\n") + -->
 <!--   xlab("\nIndex Value") -->
 <!-- ``` -->
-
-
 <!-- ## Reporting Guidelines -->
-
 <!-- From that, we can conclude: -->
-
 <!-- - For simple models and normally distributed posteriors, the **MAP estimate** seems to be more biased than the mean and the median of the posterior distribution. -->
 <!-- - Aside from being more robust, the **median** makes more sense than the **mean** in a probabilistic framework (*e.g.*, there is 50% chance that the true effect is either higher or lower than the median). -->
 <!-- - The **traditional ROPE** is not sensitive to delineate highly "significant" effects. The full ROPE does not present the same flaw. -->
 <!-- - The **Probability of Direction (p)** is the closest index to the frequentist *p* value. -->
-
 <!-- **To minimally describe the posterior distribution of a parameter, we suggest reporting the *median* and the *90% CI (the 90% HDI)* for parameter characterisation and, in the context of null-hypothesis testing, the Probability of Direction (*p*d) for effect existence and, especially in the context of confirmatory analyses, the ROPE (full) with an explicitly specified range for effect significance.** -->
-
 <!-- ## :warning: Frequentist-like Arbitrary Thresholds -->
-
 <!-- **The following thresholds are presented as landmarks only for comparison with the frequentist framework. Please consider with caution.** -->
-
 <!-- - **p (direction)** -->
-
 <!--     - *p* (direction) \< 95% ~ *p* \< .1: uncertain -->
 <!--     - *p* (direction) \> 95% ~ *p* \< .1: possibly existing -->
 <!--     - *p* (direction) \> 97.5% ~ *p* \< .05: likely existing -->
 <!--     - *p* (direction) \> 99% ~ *p* \< .01: probably existing -->
 <!--     - *p* (direction) \> 99.9% ~ *p* \< .001: certainly existing -->
 <!--     - *p* (direction) = 100%: definitely existing -->
-
 <!-- - **ROPE (full)** -->
-
 <!--     - Depends on other parameters such as sample size and ROPE bounds -->
-
-
 <!-- *Note: If you have any advice, opinion or such, we encourage you to let us know by opening an [discussion thread](https://github.com/DominiqueMakowski/bayestestR/issues) or making a pull request.* -->
-
-# Credits
+Credits
+=======
 
 You can cite the package as following:
 
-- Makowski, (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. CRAN. doi: .
-
+-   Makowski, (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. CRAN. doi: .
 
 Please remember that parts of the code in this package was inspired / shamelessly copied from other great packages that you must check out and cite, such as [sjstats](https://github.com/strengejacke/sjstats) or [BayesTesting.jl](https://github.com/tszanalytics/BayesTesting.jl). All credits go to their authors.

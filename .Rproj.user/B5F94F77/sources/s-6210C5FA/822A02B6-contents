@@ -416,7 +416,7 @@ plot(density(x))
 <!-- #### Relationship with frequentist's arbitrary clusters -->
 
 <!-- ```{r, message=FALSE, warning=FALSE} -->
-<!-- df$sig_1 <- factor(ifelse(df$p_frequentist >= .1, "n.s.", "°"), levels=c("n.s.", "°")) -->
+<!-- df$sig_1 <- factor(ifelse(df$p_frequentist >= .1, "n.s.", "-"), levels=c("n.s.", "-")) -->
 <!-- df$sig_05 <- factor(ifelse(df$p_frequentist >= .05, "n.s.", "*"), levels=c("n.s.", "*")) -->
 <!-- df$sig_01 <- factor(ifelse(df$p_frequentist >= .01, "n.s.", "**"), levels=c("n.s.", "**")) -->
 <!-- df$sig_001 <- factor(ifelse(df$p_frequentist >= .001, "n.s.", "***"), levels=c("n.s.", "***")) -->

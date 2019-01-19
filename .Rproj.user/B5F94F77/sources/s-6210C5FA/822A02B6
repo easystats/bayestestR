@@ -5,16 +5,16 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "779700030",
     "id" : "822A02B6",
-    "lastKnownWriteTime" : 1547859187,
-    "last_content_update" : 1547859187324,
+    "lastKnownWriteTime" : 1547893748,
+    "last_content_update" : 1547893748010,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/vignettes/README.Rmd",
     "project_path" : "vignettes/README.Rmd",
     "properties" : {
         "chunk_output_type" : "console",
-        "cursorPosition" : "539,27",
-        "scrollLine" : "532"
+        "cursorPosition" : "564,311",
+        "scrollLine" : "541"
     },
     "relative_order" : 8,
     "source_on_save" : false,

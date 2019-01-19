@@ -5,14 +5,16 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "2046827748",
     "id" : "1961AFCA",
-    "lastKnownWriteTime" : 1545237636,
-    "last_content_update" : 1545237636,
+    "lastKnownWriteTime" : 1547893752,
+    "last_content_update" : 1547893752299,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/ARTICLES/VisArt_Database/wikiart_filtering/selection.Rmd",
     "project_path" : null,
     "properties" : {
-        "chunk_output_type" : "console"
+        "chunk_output_type" : "console",
+        "cursorPosition" : "109,0",
+        "scrollLine" : "87"
     },
     "relative_order" : 4,
     "source_on_save" : false,

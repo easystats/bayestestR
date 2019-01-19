@@ -78,10 +78,38 @@ minimum_resolution <- 1600*900
 df <- read.csv("Data/data_full.csv", row.names="X") %>% 
   mutate(WH_Ratio = Width / Height, # Format
          Quality = Width * Height,  # Resolution
-         File_Name = stringr::str_split_fixed(Path, "/", n=2)[,2]) 
+         File_Name = stringr::str_split_fixed(Path, "/", n=2)[,2])
 ```
 
 The original sample consisted in `r nrow(df)` items
+
+
+## Features Reduction
+
+```{r message=FALSE, warning=FALSE}
+df %>% 
+  dplyr::select(WH_Ratio,
+         Quality,
+         starts_with("LAB"),
+         Entropy,
+         Contrast,
+         Colorfulness,
+         Brightness,
+         Perceived_Brightness) %>% 
+  cor() %>% 
+  heatmap(cor)
+
+
+
+df <- df %>% 
+  dplyr::select(
+    Brightness = LAB_Luminance,
+    Contrast = LAB_Luminance_SD,
+    -Perceived_Brightness, -LAB_Luminance, -LAB_Luminance_SD,
+    dplyr::vars())
+```
+
+
 
 ## Original Properties Distribution
 
@@ -90,7 +118,10 @@ df %>%
   select(WH_Ratio,
          Quality,
          starts_with("LAB"),
-         Entropy) %>% 
+         Entropy,
+         Contrast,
+         Colorfulness,
+         Brightness) %>% 
   gather(Index, Value) %>% 
   ggplot(aes(x=Value, fill=Index)) +
   geom_density() +
