@@ -7,14 +7,14 @@
     "folds" : "",
     "hash" : "0",
     "id" : "822A02B6",
-    "lastKnownWriteTime" : 1547824401,
-    "last_content_update" : 1547824401450,
+    "lastKnownWriteTime" : 1547859187,
+    "last_content_update" : 1547859187324,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/vignettes/README.Rmd",
     "project_path" : "vignettes/README.Rmd",
     "properties" : {
         "chunk_output_type" : "console",
-        "cursorPosition" : "386,18",
-        "scrollLine" : "403"
+        "cursorPosition" : "539,27",
+        "scrollLine" : "532"
     },
     "relative_order" : 8,
     "source_on_save" : false,
