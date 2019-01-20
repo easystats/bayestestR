@@ -12,7 +12,7 @@ Authors@R: c(
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
 URL: https://github.com/DominiqueMakowski/bayestestR
 BugReports: https://github.com/DominiqueMakowski/bayestestR/issues
-Description: A lightweight package providing utilities to describe posterior distributions and Bayesian models.
+Description: Provides utilities to describe posterior distributions and Bayesian models. It includes point-estimates such as Maximum A Posteriori (MAP), measures of dispersion (Highest Density Interval - HDI) and indices used for null-hypothesis testing (such as the ROPE and pd).
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

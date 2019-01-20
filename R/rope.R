@@ -11,33 +11,32 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' rope(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 1), CI = c(90, 95))
-#'
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
 #' @export
-rope <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose=TRUE) {
+rope <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TRUE) {
   if (length(CI) > 1) {
     rope_values <- list()
     for (CI_value in CI) {
-      rope_values[[paste0("CI_", CI_value)]] <- .rope(posterior, bounds=bounds, CI=CI_value, verbose=verbose)
+      rope_values[[paste0("CI_", CI_value)]] <- .rope(posterior, bounds = bounds, CI = CI_value, verbose = verbose)
     }
     return(rope_values)
   } else {
-    return(.rope(posterior, bounds=bounds, CI=CI, verbose=verbose))
+    return(.rope(posterior, bounds = bounds, CI = CI, verbose = verbose))
   }
 }
 
 
 
-.rope <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose=TRUE) {
+.rope <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TRUE) {
   HDI_area <- hdi(posterior, CI, verbose)
 
-  if(anyNA(HDI_area)){
+  if (anyNA(HDI_area)) {
     return(NA)
   }
 
@@ -63,25 +62,23 @@ rope <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose=TRUE) {
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' rope_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 #' rope_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' rope_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
 #' rope_test(posterior = rnorm(1000, 1, 1), CI = c(50, 99))
-#'
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
 #' @export
-rope_test <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose=TRUE) {
-  rope_value <- rope(posterior, bounds=bounds, CI=CI)
+rope_test <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TRUE) {
+  rope_value <- rope(posterior, bounds = bounds, CI = CI)
   decision <- ifelse(rope_value == 0, "rejected",
     ifelse(rope_value == 1, "accepted", "undecided")
   )
 
-  if(length(CI) > 1){
-    decision <- split(unname(decision),names(decision))
+  if (length(CI) > 1) {
+    decision <- split(unname(decision), names(decision))
   }
 
   return(decision)
 }
-

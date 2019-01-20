@@ -8,41 +8,39 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
-#' p_rope(posterior=rnorm(1000, mean = 1, sd = 1), bounds = c(-0.1, 0.1))
-
+#' 
+#' p_rope(posterior = rnorm(1000, mean = 1, sd = 1), bounds = c(-0.1, 0.1))
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #' @importFrom stats na.omit
 #' @export
-p_rope <- function(posterior, bounds = c(-0.1, 0.1), precision=0.1) {
-
-  rope_values <- rope(posterior, bounds, CI=seq(0, 100, by=precision), verbose=FALSE)
+p_rope <- function(posterior, bounds = c(-0.1, 0.1), precision = 0.1) {
+  rope_values <- rope(posterior, bounds, CI = seq(0, 100, by = precision), verbose = FALSE)
   rope_values <- na.omit(unlist(rope_values))
 
-  if(all(rope_values == min(rope_values))){
-    if(rope_values[1] == 0){
+  if (all(rope_values == min(rope_values))) {
+    if (rope_values[1] == 0) {
       return(100)
-    } else{
+    } else {
       return(-100)
     }
   }
 
   min_rope <- min(rope_values)
-  if(rope_values[1] == min_rope){
+  if (rope_values[1] == min_rope) {
     name_min2 <- names(rope_values[rope_values != min_rope][1])
-    CI_position <- match(name_min2, names(rope_values))-1
-    if(CI_position>1) CI_position <- CI_position-1
+    CI_position <- match(name_min2, names(rope_values)) - 1
+    if (CI_position > 1) CI_position <- CI_position - 1
     p <- names(rope_values[CI_position])
     h0 <- 1
-  } else{
+  } else {
     name_max <- names(rope_values[rope_values != max(rope_values)][1])
     CI_position <- match(name_max, names(rope_values))
-    if(CI_position>1) CI_position <- CI_position-1
+    if (CI_position > 1) CI_position <- CI_position - 1
     p <- names(rope_values[CI_position])
     h0 <- -1
   }
 
-  p <- as.numeric(unlist(strsplit(p, "CI_", fixed=TRUE))[2])
+  p <- as.numeric(unlist(strsplit(p, "CI_", fixed = TRUE))[2])
   p <- h0 * p
   # p <- 1/p  # Convert to probability
   return(p)

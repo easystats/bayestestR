@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' posterior <- rnorm(1000)
 #' hdi(posterior, CI = 90)
 #' hdi(posterior, CI = c(80, 90, 95))
@@ -51,7 +51,7 @@ hdi <- function(posterior, CI = 90, verbose = TRUE) {
   }
 
 
-  if(CI == 1){
+  if (CI == 1) {
     return(c(min(x), max(x)))
   }
 

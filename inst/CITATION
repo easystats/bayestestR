@@ -3,7 +3,7 @@ bibentry(
 	title="Understand and Describe Bayesian Models and Posterior Distributions using BayestestR",
 	author=person("Dominique", "Makowski"),
     journal="CRAN",
-    doi="10.21105/joss.00470",
+    doi="",
 	year="2019",
 	note="R package",
 	url="https://github.com/DominiqueMakowski/bayestestR",

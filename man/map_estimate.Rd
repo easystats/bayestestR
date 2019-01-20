@@ -15,7 +15,7 @@ map_estimate(posterior, precision = 2^10)
 The x, y coordinates of the MAP, corresponding to the MAP (x) and its density (y).
 }
 \description{
-Find the Highest Maximum A Posteriori (MAP) estimate of a posterior.
+Find the Highest Maximum A Posteriori (MAP) estimate of a posterior. It corresponds to the 'peak' of the posterior distribution.
 }
 \examples{
 library(bayestestR)

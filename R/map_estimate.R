@@ -1,6 +1,6 @@
 #' Maximum A Posteriori (MAP) Estimate
 #'
-#' Find the Highest Maximum A Posteriori (MAP) estimate of a posterior.
+#' Find the Highest Maximum A Posteriori (MAP) estimate of a posterior. It corresponds to the 'peak' of the posterior distribution.
 #'
 #' @param posterior vector representing a posterior distribution.
 #' @param precision number of points for density estimation. See the `n` parameter in \link[=density]{density}.

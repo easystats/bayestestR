@@ -19,7 +19,7 @@ The ROPE-based p-value represents the maximum Credible Interval (\link[=hdi]{HDI
 \examples{
 library(bayestestR)
 
-p_rope(posterior=rnorm(1000, mean = 1, sd = 1), bounds = c(-0.1, 0.1))
+p_rope(posterior = rnorm(1000, mean = 1, sd = 1), bounds = c(-0.1, 0.1))
 }
 \author{
 \href{https://dominiquemakowski.github.io/}{Dominique Makowski}

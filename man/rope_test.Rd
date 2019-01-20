@@ -28,7 +28,6 @@ rope_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 rope_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 rope_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
 rope_test(posterior = rnorm(1000, 1, 1), CI = c(50, 99))
-
 }
 \references{
 \href{https://strengejacke.wordpress.com/2018/06/06/r-functions-for-bayesian-model-statistics-and-summaries-rstats-stan-brms/}{sjstats}

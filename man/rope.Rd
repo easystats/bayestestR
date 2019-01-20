@@ -28,7 +28,6 @@ rope(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
 rope(posterior = rnorm(1000, 1, 1), CI = c(90, 95))
-
 }
 \author{
 \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
