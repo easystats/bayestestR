@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1547978831480.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "18DE866F",
+    "lastKnownWriteTime" : 1547987904,
+    "last_content_update" : 1547987904,
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/R/as.data.frame.density.R",
+    "project_path" : "R/as.data.frame.density.R",
+    "properties" : {
+        "cursorPosition" : "7,50",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
