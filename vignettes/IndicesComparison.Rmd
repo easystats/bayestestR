@@ -1,5 +1,5 @@
 ---
-title: "Comparison of Indices for Parameter's Posteriors Description in the Bayesian Framework"
+title: "Indices Comparison"
 output: 
   github_document:
     toc: true
@@ -11,16 +11,14 @@ output:
     fig_height: 6
 tags: [r, bayesian, posterior, test]
 vignette: >
-  %\VignetteIndexEntry{README}
   \usepackage[utf8]{inputenc}
-  %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---
 
 
 
-
+# Comparison of Indices for Parameter’s Posteriors Description in the Bayesian Framework
 
 ## Generate Regression Data with Noise
 
@@ -435,7 +433,7 @@ From that, we can conclude:
 
 **To minimally describe the posterior distribution of a parameter, we suggest reporting the *median* and the *90% CI (the 90% HDI)* for parameter characterisation and, in the context of null-hypothesis testing, the Probability of Direction (*p*d) for effect existence and, especially in the context of confirmatory analyses, the ROPE (full) with an explicitly specified range for effect significance.**
 
-## :warning: Frequentist-like Arbitrary Thresholds
+## Frequentist-like Arbitrary Thresholds
 
 **The following thresholds are presented as landmarks only for comparison with the frequentist framework. Please consider with caution.**
 
