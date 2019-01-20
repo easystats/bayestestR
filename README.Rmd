@@ -77,8 +77,6 @@ s
 ```
 
 
-## Goal
-
 `bayestestR` is a lightweight package providing utilities to describe posterior distributions and Bayesian models.
 
 

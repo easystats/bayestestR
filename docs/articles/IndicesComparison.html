@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Comparison of Indices for Parameter’s Posteriors Description in the Bayesian Framework • bayestestR</title>
+<title>Indices Comparison • bayestestR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Comparison of Indices for Parameter’s Posteriors Description in the Bayesian Framework">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Indices Comparison">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -60,7 +60,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/IndicesComparison.html">Comparison of Indices for Parameter's Posteriors Description in the Bayesian Framework</a>
+      <a href="../articles/Guidelines.html">Guidelines</a>
+    </li>
+    <li>
+      <a href="../articles/IndicesComparison.html">Indices Comparison</a>
     </li>
   </ul>
 </li>
@@ -87,7 +90,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Comparison of Indices for Parameter’s Posteriors Description in the Bayesian Framework</h1>
+      <h1>Indices Comparison</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/DominiqueMakowski/bayestestR/blob/master/vignettes/IndicesComparison.Rmd"><code>vignettes/IndicesComparison.Rmd</code></a></small>
@@ -97,6 +100,9 @@
 
     
     
+<div id="comparison-of-indices-for-parameters-posteriors-description-in-the-bayesian-framework" class="section level1">
+<h1 class="hasAnchor">
+<a href="#comparison-of-indices-for-parameters-posteriors-description-in-the-bayesian-framework" class="anchor"></a>Comparison of Indices for Parameter’s Posteriors Description in the Bayesian Framework</h1>
 <div id="generate-regression-data-with-noise" class="section level2">
 <h2 class="hasAnchor">
 <a href="#generate-regression-data-with-noise" class="anchor"></a>Generate Regression Data with Noise</h2>
@@ -910,9 +916,9 @@ get_data &lt;-<span class="st"> </span><span class="cf">function</span>(predicto
 </ul>
 <p><strong>To minimally describe the posterior distribution of a parameter, we suggest reporting the <em>median</em> and the <em>90% CI (the 90% HDI)</em> for parameter characterisation and, in the context of null-hypothesis testing, the Probability of Direction (<em>p</em>d) for effect existence and, especially in the context of confirmatory analyses, the ROPE (full) with an explicitly specified range for effect significance.</strong></p>
 </div>
-<div id="warning-frequentist-like-arbitrary-thresholds" class="section level2">
+<div id="frequentist-like-arbitrary-thresholds" class="section level2">
 <h2 class="hasAnchor">
-<a href="#warning-frequentist-like-arbitrary-thresholds" class="anchor"></a>:warning: Frequentist-like Arbitrary Thresholds</h2>
+<a href="#frequentist-like-arbitrary-thresholds" class="anchor"></a>Frequentist-like Arbitrary Thresholds</h2>
 <p><strong>The following thresholds are presented as landmarks only for comparison with the frequentist framework. Please consider with caution.</strong></p>
 <ul>
 <li>
@@ -941,6 +947,7 @@ get_data &lt;-<span class="st"> </span><span class="cf">function</span>(predicto
 </ul>
 <p><em>Note: If you have any advice, opinion or such, we encourage you to let us know by opening an <a href="https://github.com/DominiqueMakowski/bayestestR/issues">discussion thread</a> or making a pull request.</em></p>
 </div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -948,11 +955,15 @@ get_data &lt;-<span class="st"> </span><span class="cf">function</span>(predicto
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+<li>
+<a href="#comparison-of-indices-for-parameters-posteriors-description-in-the-bayesian-framework">Comparison of Indices for Parameter’s Posteriors Description in the Bayesian Framework</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#generate-regression-data-with-noise">Generate Regression Data with Noise</a></li>
       <li><a href="#comparison-of-parameters-point-estimates">Comparison of Parameter’s Point-Estimates</a></li>
       <li><a href="#comparison-of-indices-of-effect-existence">Comparison of Indices of Effect Existence</a></li>
       <li><a href="#reporting-guidelines">Reporting Guidelines</a></li>
-      <li><a href="#warning-frequentist-like-arbitrary-thresholds">:warning: Frequentist-like Arbitrary Thresholds</a></li>
+      <li><a href="#frequentist-like-arbitrary-thresholds">Frequentist-like Arbitrary Thresholds</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>
