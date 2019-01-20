@@ -7,14 +7,14 @@
     "folds" : "",
     "hash" : "0",
     "id" : "B56EDA40",
-    "lastKnownWriteTime" : 1547987225,
-    "last_content_update" : 1547987225389,
+    "lastKnownWriteTime" : 1547988560,
+    "last_content_update" : 1547988560643,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/README.Rmd",
     "project_path" : "README.Rmd",
     "properties" : {
         "chunk_output_type" : "console",
-        "cursorPosition" : "155,21",
-        "scrollLine" : "0"
+        "cursorPosition" : "29,152",
+        "scrollLine" : "16"
     },
     "relative_order" : 4,
     "source_on_save" : false,
