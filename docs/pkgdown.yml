@@ -4,4 +4,5 @@ pkgdown_sha: ~
 articles:
   Guidelines: Guidelines.html
   IndicesComparison: IndicesComparison.html
+  IndicesDescription: IndicesDescription.html
 

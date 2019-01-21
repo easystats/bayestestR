@@ -65,6 +65,9 @@
     <li>
       <a href="../articles/IndicesComparison.html">Indices Comparison</a>
     </li>
+    <li>
+      <a href="../articles/IndicesDescription.html">Indices Description</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -455,8 +458,8 @@ df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocument
 <span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>, <span class="dt">name=</span><span class="st">"Effect"</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>=<span class="st">"#607D8B"</span>, <span class="st">"p_map"</span> =<span class="st"> "#E91E63"</span>, <span class="st">"p_direction"</span> =<span class="st"> "#2196F3"</span>,
                                <span class="st">"rope"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"rope_full"</span> =<span class="st"> "#FF5722"</span>, <span class="st">"p_rope"</span>=<span class="st">"#FFC107"</span>), <span class="dt">guide=</span><span class="ot">FALSE</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Noise</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Sample Size"</span>)</code></pre></div>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Index Value</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Noise"</span>)</code></pre></div>
 <p><img src="IndicesComparison_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div id="sensitivity-to-sample-size-1" class="section level4">
@@ -904,49 +907,6 @@ get_data &lt;-<span class="st"> </span><span class="cf">function</span>(predicto
 </div>
 </div>
 </div>
-<div id="reporting-guidelines" class="section level2">
-<h2 class="hasAnchor">
-<a href="#reporting-guidelines" class="anchor"></a>Reporting Guidelines</h2>
-<p>From that, we can conclude:</p>
-<ul>
-<li>For simple models and normally distributed posteriors, the <strong>MAP estimate</strong> seems to be more biased than the mean and the median of the posterior distribution.</li>
-<li>Aside from being more robust, the <strong>median</strong> makes more sense than the <strong>mean</strong> in a probabilistic framework (<em>e.g.</em>, there is 50% chance that the true effect is either higher or lower than the median).</li>
-<li>The <strong>traditional ROPE</strong> is not sensitive to delineate highly “significant” effects. The full ROPE does not present the same flaw.</li>
-<li>The <strong>Probability of Direction (p)</strong> is the closest index to the frequentist <em>p</em> value.</li>
-</ul>
-<p><strong>To minimally describe the posterior distribution of a parameter, we suggest reporting the <em>median</em> and the <em>90% CI (the 90% HDI)</em> for parameter characterisation and, in the context of null-hypothesis testing, the Probability of Direction (<em>p</em>d) for effect existence and, especially in the context of confirmatory analyses, the ROPE (full) with an explicitly specified range for effect significance.</strong></p>
-</div>
-<div id="frequentist-like-arbitrary-thresholds" class="section level2">
-<h2 class="hasAnchor">
-<a href="#frequentist-like-arbitrary-thresholds" class="anchor"></a>Frequentist-like Arbitrary Thresholds</h2>
-<p><strong>The following thresholds are presented as landmarks only for comparison with the frequentist framework. Please consider with caution.</strong></p>
-<ul>
-<li>
-<p><strong>p (direction)</strong></p>
-<ul>
-<li>
-<em>p</em> (direction) &lt; 95% ~ <em>p</em> &lt; .1: uncertain</li>
-<li>
-<em>p</em> (direction) &gt; 95% ~ <em>p</em> &lt; .1: possibly existing</li>
-<li>
-<em>p</em> (direction) &gt; 97.5% ~ <em>p</em> &lt; .05: likely existing</li>
-<li>
-<em>p</em> (direction) &gt; 99% ~ <em>p</em> &lt; .01: probably existing</li>
-<li>
-<em>p</em> (direction) &gt; 99.9% ~ <em>p</em> &lt; .001: certainly existing</li>
-<li>
-<em>p</em> (direction) = 100%: definitely existing</li>
-</ul>
-</li>
-<li>
-<p><strong>ROPE (full)</strong></p>
-<ul>
-<li>Depends on other parameters such as sample size and ROPE bounds</li>
-</ul>
-</li>
-</ul>
-<p><em>Note: If you have any advice, opinion or such, we encourage you to let us know by opening an <a href="https://github.com/DominiqueMakowski/bayestestR/issues">discussion thread</a> or making a pull request.</em></p>
-</div>
 </div>
   </div>
 
@@ -960,8 +920,6 @@ get_data &lt;-<span class="st"> </span><span class="cf">function</span>(predicto
 <li><a href="#generate-regression-data-with-noise">Generate Regression Data with Noise</a></li>
       <li><a href="#comparison-of-parameters-point-estimates">Comparison of Parameter’s Point-Estimates</a></li>
       <li><a href="#comparison-of-indices-of-effect-existence">Comparison of Indices of Effect Existence</a></li>
-      <li><a href="#reporting-guidelines">Reporting Guidelines</a></li>
-      <li><a href="#frequentist-like-arbitrary-thresholds">Frequentist-like Arbitrary Thresholds</a></li>
       </ul>
 </li>
       </ul>

@@ -65,6 +65,9 @@
     <li>
       <a href="articles/IndicesComparison.html">Indices Comparison</a>
     </li>
+    <li>
+      <a href="articles/IndicesDescription.html">Indices Description</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -110,7 +113,7 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <div id="functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#functions" class="anchor"></a>Functions</h2>
-<p>:boom: Check-out the <a href="https://dominiquemakowski.github.io/bayestestR/"><strong>documentation</strong></a> :boom:</p>
+<p>Check out the <a href="https://dominiquemakowski.github.io/bayestestR/"><strong>documentation</strong></a>!</p>
 <div id="posterior-description" class="section level3">
 <h3 class="hasAnchor">
 <a href="#posterior-description" class="anchor"></a>Posterior Description</h3>
@@ -126,7 +129,7 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/map_estimate.html">map_estimate</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</code></pre></div>
 <ul>
 <li>
-<strong><code><a href="reference/rope.html">rope()</a></code></strong>: Compute the proportion of the HDI of a posterior distribution that lies within a region of practical equivalence.</li>
+<strong><code><a href="reference/rope.html">rope()</a></code></strong>: Compute the proportion of the HDI of a posterior distribution that lies within a region of practical equivalence. Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are equivalent to the null value for practical purposes (2010, 2011, 2014). Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen). This could be generalized: For instance, for linear models, the ROPE could be set as 0 +/- .1 * sd(y). Kruschke (2010, 2011, 2014) suggest using the proportion of the 95% (or 90%, considered more stable) <em>HDI</em> that falls within the ROPE as an index for “null-hypothesis” testing (as understood under the Bayesian framework, see <code>rope_test</code>). Besides the ROPE-based decisions criteria, the proportion of the 95% CI that falls in the ROPE can be used as a continuous index.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rope.html">rope</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">bounds =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</code></pre></div>
 </div>
@@ -150,7 +153,7 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/p_direction.html">p_direction</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="dv">1</span>))</code></pre></div>
 <ul>
 <li>
-<strong><code><a href="reference/p_map.html">p_map()</a></code></strong>: Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has againt the null hypothesis (h0) using Mills’ (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP).</li>
+<strong><code><a href="reference/p_map.html">p_map()</a></code></strong>: Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has againt the null hypothesis (h0) using Mills’ (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP). It correponds to the density value at 0 divided by the density of the highest density point.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/p_map.html">p_map</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</code></pre></div>
 </div>
@@ -162,6 +165,11 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <strong><code><a href="reference/rnorm_perfect.html">rnorm_perfect()</a></code></strong>: Generate a sample of size n with a near-perfect normal distribution.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rnorm_perfect.html">rnorm_perfect</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</code></pre></div>
+<ul>
+<li>
+<strong><code><a href="reference/density_at.html">density_at()</a></code></strong>: Compute the density of a given point of a distribution.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/density_at.html">density_at</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</code></pre></div>
 </div>
 </div>
 <div id="credits" class="section level2">

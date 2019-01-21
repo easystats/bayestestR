@@ -5781,63 +5781,63 @@ find_season <- function(dates, winter = "12-21", spring = "3-20", summer = "6-21
 
 
 
-#' Format digits.
+#' #' Format digits.
+#' #'
+#' #' @param x A digit.
+#' #' @param digits Number of significant digits.
+#' #' @param null_treshold Treshold below which return 0.
+#' #' @param inf_treshold Treshold above which return Inf.
+#' #'
+#' #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
+#' #'
+#' #' @export
+#' format_digit <- function(x, digits = 2, null_treshold = 0.001, inf_treshold = 9e+8) {
+#'   if (length(x) > 1) {
+#'     return(sapply(x, .format_digit, digits = digits, null_treshold = null_treshold, inf_treshold = inf_treshold))
+#'   } else {
+#'     return(.format_digit(x, digits = digits, null_treshold = null_treshold, inf_treshold = inf_treshold))
+#'   }
+#' }
 #'
-#' @param x A digit.
-#' @param digits Number of significant digits.
-#' @param null_treshold Treshold below which return 0.
-#' @param inf_treshold Treshold above which return Inf.
 #'
-#' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
-#' @export
-format_digit <- function(x, digits = 2, null_treshold = 0.001, inf_treshold = 9e+8) {
-  if (length(x) > 1) {
-    return(sapply(x, .format_digit, digits = digits, null_treshold = null_treshold, inf_treshold = inf_treshold))
-  } else {
-    return(.format_digit(x, digits = digits, null_treshold = null_treshold, inf_treshold = inf_treshold))
-  }
-}
-
-
-
-#' @keywords internal
-.format_digit <- function(x, digits = 2, null_treshold = 0.001, inf_treshold = 9e+8) {
-
-  # if x is NA
-  if (is.na(x)) {
-    return("NA")
-  }
-
-  # if x is inf
-  if (x > inf_treshold) {
-    return("Inf.")
-  }
-
-  # If x is an Integer
-  if (all(x == as.integer(x))) {
-    formatted <- as.character(x)
-  } else {
-    # If x is close to zero
-    if (abs(x) < null_treshold) {
-      formatted <- "0"
-    } else {
-      x <- round(x, digits = 15) # Prevent edge cases where x is really close to 1
-      # If x is close to trailing zeros
-      if (abs(x) < 1) {
-        formatted <- as.character(signif(x, digits))
-        # If signif cut off trailing zero, add it
-        # TODO: that line of code is ugly
-        if (nchar(gsub("0|-|\\.", "", formatted)) < digits) {
-          formatted <- paste0(formatted, strrep("0", digits - 1))
-        }
-      } else {
-        formatted <- format_string(round(x, digits), paste0("%.", digits, "f"))
-      }
-    }
-  }
-  return(formatted)
-}
+#' #' @keywords internal
+#' .format_digit <- function(x, digits = 2, null_treshold = 0.001, inf_treshold = 9e+8) {
+#'
+#'   # if x is NA
+#'   if (is.na(x)) {
+#'     return("NA")
+#'   }
+#'
+#'   # if x is inf
+#'   if (x > inf_treshold) {
+#'     return("Inf.")
+#'   }
+#'
+#'   # If x is an Integer
+#'   if (all(x == as.integer(x))) {
+#'     formatted <- as.character(x)
+#'   } else {
+#'     # If x is close to zero
+#'     if (abs(x) < null_treshold) {
+#'       formatted <- "0"
+#'     } else {
+#'       x <- round(x, digits = 15) # Prevent edge cases where x is really close to 1
+#'       # If x is close to trailing zeros
+#'       if (abs(x) < 1) {
+#'         formatted <- as.character(signif(x, digits))
+#'         # If signif cut off trailing zero, add it
+#'         # TODO: that line of code is ugly
+#'         if (nchar(gsub("0|-|\\.", "", formatted)) < digits) {
+#'           formatted <- paste0(formatted, strrep("0", digits - 1))
+#'         }
+#'       } else {
+#'         formatted <- format_string(round(x, digits), paste0("%.", digits, "f"))
+#'       }
+#'     }
+#'   }
+#'   return(formatted)
+#' }
 
 
 #' Tidyverse-friendly sprintf.
