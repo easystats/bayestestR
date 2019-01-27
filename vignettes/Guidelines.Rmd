@@ -19,7 +19,7 @@ editor_options:
 
 # Reporting Guidelines
 
-Based on the previous **comparison of indices**, we can conclude:
+Based on the previous [**comparison of indices**](https://dominiquemakowski.github.io/bayestestR/articles/IndicesComparison.html), we can conclude that:
 
 - For simple models and normally distributed posteriors, the **MAP estimate** seems to be more biased than the mean and the median of the posterior distribution.
 - Aside from being more robust, the **median** makes more sense than the **mean** in a probabilistic framework (*e.g.*, there is 50% chance that the true effect is either higher or lower than the median).

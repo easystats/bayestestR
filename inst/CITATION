@@ -14,4 +14,4 @@ bibentry(
 		"doi: .",
         sep=" "),
 
-	mheader = "To cite psycho in publications use:")
+	mheader = "To cite bayestestR in publications use:")

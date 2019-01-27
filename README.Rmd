@@ -25,9 +25,7 @@ knitr::opts_chunk$set(
 
 [![Build Status](https://travis-ci.org/DominiqueMakowski/bayestestR.svg?branch=master)](https://travis-ci.org/DominiqueMakowski/bayestestR)
 [![codecov](https://codecov.io/gh/DominiqueMakowski/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/DominiqueMakowski/bayestestR)
-[![HitCount](http://hits.dwyl.io/DominiqueMakowski/bayestestR.svg)](http://hits.dwyl.io/DominiqueMakowski/bayestestR)
-<!-- Add this to the README manually! -->
-<!-- [![Documentation](https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63)](https://dominiquemakowski.github.io/bayestestR/) -->
+[![HitCount](http://hits.dwyl.io/DominiqueMakowski/bayestestR.svg)](http://hits.dwyl.io/DominiqueMakowski/bayestestR) [![Documentation](https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63)](https://dominiquemakowski.github.io/bayestestR/)
 
 
 
@@ -93,11 +91,16 @@ devtools::install_github("DominiqueMakowski/bayestestR")
 library("bayestestR")
 ```
 
+## Documentation
 
+The package documentation can be found [**here**](https://dominiquemakowski.github.io/bayestestR/). Check-out these posts:
+
+- [Indices Description](https://dominiquemakowski.github.io/bayestestR/articles/IndicesDescription.html)
+- [Indices Comparison](https://dominiquemakowski.github.io/bayestestR/articles/IndicesComparison.html)
+- [Guidelines](https://dominiquemakowski.github.io/bayestestR/articles/Guidelines.html)
 
 # Functions
 
-Check out the [**documentation**](https://dominiquemakowski.github.io/bayestestR/)!
 
 ## Posterior Description
 
@@ -110,7 +113,10 @@ hdi(posterior = rnorm(1000), CI = 90)
 ```
 
 ![](https://dominiquemakowski.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-3-1.png)
+
 ###  MAP estimate
+
+### MAP Estimate
 
 **`map_estimate()`** finds the Highest Maximum A Posteriori (MAP) estimate of a posterior. It corresponds to the 'peak' of the posterior distribution.
 

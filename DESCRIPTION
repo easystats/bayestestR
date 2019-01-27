@@ -18,11 +18,11 @@ Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
 Suggests:
-    spelling,
-    knitr,
-    rmarkdown,
-    testthat,
-    covr,
+	spelling,
+	knitr,
+	rmarkdown,
+	testthat,
+	covr,
 	ggplot2,
 	dplyr,
 	tidyr,
