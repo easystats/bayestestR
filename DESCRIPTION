@@ -10,8 +10,8 @@ Authors@R: c(
         comment = c(ORCID = "0000-0001-5375-9967"))
 	)
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
-URL: https://github.com/DominiqueMakowski/bayestestR
-BugReports: https://github.com/DominiqueMakowski/bayestestR/issues
+URL: https://github.com/easystats/bayestestR
+BugReports: https://github.com/easystats/bayestestR/issues
 Description: Provides utilities to describe posterior distributions and Bayesian models. It includes point-estimates such as Maximum A Posteriori (MAP), measures of dispersion (Highest Density Interval - HDI) and indices used for null-hypothesis testing (such as the ROPE and pd).
 License: MIT + file LICENSE
 Encoding: UTF-8
