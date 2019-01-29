@@ -2,10 +2,10 @@
 # bayestestR <img src='man/figures/logo.svg' align="right" height="139" />
 
 [![Build
-Status](https://travis-ci.org/DominiqueMakowski/bayestestR.svg?branch=master)](https://travis-ci.org/DominiqueMakowski/bayestestR)
-[![codecov](https://codecov.io/gh/DominiqueMakowski/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/DominiqueMakowski/bayestestR)
-[![HitCount](http://hits.dwyl.io/DominiqueMakowski/bayestestR.svg)](http://hits.dwyl.io/DominiqueMakowski/bayestestR)
-[![Documentation](https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63)](https://dominiquemakowski.github.io/bayestestR/)
+Status](https://travis-ci.org/easystats/bayestestR.svg?branch=master)](https://travis-ci.org/easystats/bayestestR)
+[![codecov](https://codecov.io/gh/easystats/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/easystats/bayestestR)
+[![HitCount](http://hits.dwyl.io/easystats/bayestestR.svg)](http://hits.dwyl.io/easystats/bayestestR)
+[![Documentation](https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63)](https://easystats.github.io/bayestestR/)
 
 `bayestestR` is a lightweight package providing utilities to describe
 posterior distributions and Bayesian models.
@@ -16,7 +16,7 @@ Run the following:
 
 ``` r
 install.packages("devtools")
-devtools::install_github("DominiqueMakowski/bayestestR")
+devtools::install_github("easystats/bayestestR")
 ```
 
 ``` r
@@ -26,14 +26,14 @@ library("bayestestR")
 ## Documentation
 
 The package documentation can be found
-[**here**](https://dominiquemakowski.github.io/bayestestR/). Check-out
-these posts:
+[**here**](https://easystats.github.io/bayestestR/). Check-out these
+posts:
 
   - [Indices
-    Description](https://dominiquemakowski.github.io/bayestestR/articles/IndicesDescription.html)
+    Description](https://easystats.github.io/bayestestR/articles/IndicesDescription.html)
   - [Indices
-    Comparison](https://dominiquemakowski.github.io/bayestestR/articles/IndicesComparison.html)
-  - [Guidelines](https://dominiquemakowski.github.io/bayestestR/articles/Guidelines.html)
+    Comparison](https://easystats.github.io/bayestestR/articles/IndicesComparison.html)
+  - [Guidelines](https://easystats.github.io/bayestestR/articles/Guidelines.html)
 
 # Functions
 
@@ -52,7 +52,7 @@ characterisation as Credible Interval
 hdi(posterior = rnorm(1000), CI = 90)
 ```
 
-![](https://dominiquemakowski.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-3-1.png)
+![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-3-1.png)
 
 ### MAP estimate
 
@@ -66,7 +66,7 @@ distribution.
 map_estimate(rnorm(1000, 1, 1))
 ```
 
-![](https://dominiquemakowski.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-5-1.png)
+![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-5-1.png)
 
 ### ROPE
 
@@ -93,7 +93,7 @@ index.
 rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 ```
 
-![](https://dominiquemakowski.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-7-1.png)
+![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-7-1.png)
 
 ## Null-Hypothesis Significance Testing (NHST)
 
@@ -140,7 +140,7 @@ correlated).
 p_direction(rnorm(1000, mean = 1, sd = 1))
 ```
 
-![](https://dominiquemakowski.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-11-1.png)
+![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-11-1.png)
 
 ### MAP-based *p*-value
 
@@ -156,7 +156,7 @@ point.
 p_map(posterior = rnorm(1000, 1, 1))
 ```
 
-![](https://dominiquemakowski.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-13-1.png)
+![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-13-1.png)
 
 ## Utilities
 

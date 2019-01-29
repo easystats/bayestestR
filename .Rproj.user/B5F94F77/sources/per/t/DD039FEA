@@ -9,12 +9,12 @@
     "id" : "DD039FEA",
     "lastKnownWriteTime" : 1548042948,
     "last_content_update" : 1548042948876,
-    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/bayestestR/vignettes/IndicesDescription.Rmd",
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/vignettes/IndicesDescription.Rmd",
     "project_path" : "vignettes/IndicesDescription.Rmd",
     "properties" : {
         "chunk_output_type" : "console",
         "cursorPosition" : "45,274",
-        "scrollLine" : "38"
+        "scrollLine" : "39"
     },
     "relative_order" : 2,
     "source_on_save" : false,
