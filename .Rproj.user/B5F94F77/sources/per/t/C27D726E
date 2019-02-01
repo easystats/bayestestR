@@ -5,16 +5,16 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "3235019993",
+    "hash" : "1976236856",
     "id" : "C27D726E",
-    "lastKnownWriteTime" : 1548037314,
-    "last_content_update" : 1548037314,
+    "lastKnownWriteTime" : 1548998455,
+    "last_content_update" : 1548998455104,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/vignettes/IndicesComparison.Rmd",
     "project_path" : "vignettes/IndicesComparison.Rmd",
     "properties" : {
         "chunk_output_type" : "console",
-        "cursorPosition" : "117,0",
-        "scrollLine" : "0"
+        "cursorPosition" : "379,47",
+        "scrollLine" : "359"
     },
     "relative_order" : 2,
     "source_on_save" : false,

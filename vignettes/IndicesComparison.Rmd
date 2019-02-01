@@ -28,6 +28,7 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 
+# df <- read.csv("data/bayes_indices.csv")
 df <- read.csv("https://raw.github.com/DominiqueMakowski/bayestestR/master/data/bayes_indices.csv")
 ```
 
@@ -324,8 +325,11 @@ get_data <- function(predictor, outcome, lbound=0, ubound=0.3){
   data <- data.frame(x=1:100)
   data[predictor] <- seq(lbound, ubound, length.out = 100)
   data$index <- predictor
-  data[outcome] = predict(fit, newdata=data, type="response")
-  data <- select_(data, "value"=predictor, outcome, "index")
+  predict_fit <- predict(fit, newdata=data, type="response", se.fit = TRUE)
+  data[outcome] <- predict_fit$fit 
+  data$CI_lower <- predict_fit$fit - (qnorm(0.95) * predict_fit$se.fit)
+  data$CI_upper <- predict_fit$fit + (qnorm(0.95) * predict_fit$se.fit)
+  data <- select_(data, "value"=predictor, outcome, "index", "CI_lower", "CI_upper")
   return(data)
 }
 
@@ -338,13 +342,14 @@ get_data <- function(predictor, outcome, lbound=0, ubound=0.3){
 rbind(
   get_data(predictor="p_map", outcome="sig_1", lbound=0, ubound=0.5),
   get_data(predictor="p_direction", outcome="sig_1", lbound=90, ubound=100),
-  get_data(predictor="rope", outcome="sig_1", lbound=0, ubound=0.2),
-  get_data(predictor="rope_full", outcome="sig_1", lbound=0, ubound=0.2),
+  get_data(predictor="rope", outcome="sig_1", lbound=0, ubound=20),
+  get_data(predictor="rope_full", outcome="sig_1", lbound=0, ubound=20),
   get_data(predictor="p_rope", outcome="sig_1", lbound=0, ubound=100)
   ) %>%
   mutate(index = as.factor(index)) %>%
-  ggplot(aes(x=value, y=sig_1, color=index)) +
-  geom_line(size=1) +
+  ggplot(aes(x=value, y=sig_1)) +
+  geom_ribbon(aes(ymin=CI_lower, ymax=CI_upper), alpha=0.1) +
+  geom_line(aes(color=index), size=1) +
   facet_wrap(~index, scales = "free") +
   theme_classic() +
   theme(strip.background = element_blank()) +
@@ -360,13 +365,14 @@ rbind(
 rbind(
   get_data(predictor="p_map", outcome="sig_05", lbound=0, ubound=0.3),
   get_data(predictor="p_direction", outcome="sig_05", lbound=95, ubound=100),
-  get_data(predictor="rope", outcome="sig_05", lbound=0, ubound=0.1),
-  get_data(predictor="rope_full", outcome="sig_05", lbound=0, ubound=0.1),
+  get_data(predictor="rope", outcome="sig_05", lbound=0, ubound=10),
+  get_data(predictor="rope_full", outcome="sig_05", lbound=0, ubound=10),
   get_data(predictor="p_rope", outcome="sig_05", lbound=70, ubound=100)
   ) %>%
   mutate(index = as.factor(index)) %>%
-  ggplot(aes(x=value, y=sig_05, color=index)) +
-  geom_line(size=1) +
+  ggplot(aes(x=value, y=sig_05)) +
+  geom_ribbon(aes(ymin=CI_lower, ymax=CI_upper), alpha=0.1) +
+  geom_line(aes(color=index), size=1) +
   facet_wrap(~index, scales = "free") +
   theme_classic() +
   theme(strip.background = element_blank()) +
@@ -383,13 +389,14 @@ rbind(
 rbind(
   get_data(predictor="p_map", outcome="sig_01", lbound=0, ubound=0.1),
   get_data(predictor="p_direction", outcome="sig_01", lbound=98, ubound=100),
-  get_data(predictor="rope", outcome="sig_01", lbound=0, ubound=0.02),
-  get_data(predictor="rope_full", outcome="sig_01", lbound=0, ubound=0.02),
+  get_data(predictor="rope", outcome="sig_01", lbound=0, ubound=2),
+  get_data(predictor="rope_full", outcome="sig_01", lbound=0, ubound=2),
   get_data(predictor="p_rope", outcome="sig_01", lbound=90, ubound=100)
   ) %>%
   mutate(index = as.factor(index)) %>%
-  ggplot(aes(x=value, y=sig_01, color=index)) +
-  geom_line(size=1) +
+  ggplot(aes(x=value, y=sig_01)) +
+  geom_ribbon(aes(ymin=CI_lower, ymax=CI_upper), alpha=0.1) +
+  geom_line(aes(color=index), size=1) +
   facet_wrap(~index, scales = "free") +
   theme_classic() +
   theme(strip.background = element_blank()) +
@@ -405,13 +412,14 @@ rbind(
 rbind(
   get_data(predictor="p_map", outcome="sig_001", lbound=0, ubound=0.02),
   get_data(predictor="p_direction", outcome="sig_001", lbound=99.5, ubound=100),
-  get_data(predictor="rope", outcome="sig_001", lbound=0, ubound=0.01),
-  get_data(predictor="rope_full", outcome="sig_001", lbound=0, ubound=0.005),
+  get_data(predictor="rope", outcome="sig_001", lbound=0, ubound=0.5),
+  get_data(predictor="rope_full", outcome="sig_001", lbound=0, ubound=0.5),
   get_data(predictor="p_rope", outcome="sig_001", lbound=95, ubound=100)
   ) %>%
   mutate(index = as.factor(index)) %>%
-  ggplot(aes(x=value, y=sig_001, color=index)) +
-  geom_line(size=1) +
+  ggplot(aes(x=value, y=sig_001)) +
+  geom_ribbon(aes(ymin=CI_lower, ymax=CI_upper), alpha=0.1) +
+  geom_line(aes(color=index), size=1) +
   facet_wrap(~index, scales = "free") +
   theme_classic() +
   theme(strip.background = element_blank()) +

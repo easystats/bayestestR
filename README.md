@@ -1,5 +1,5 @@
 
-# bayestestR <img src='man/figures/logo.svg' align="right" height="139" />
+# bayestestR <img src='man/figures/logo.png' align="right" height="139" />
 
 [![Build
 Status](https://travis-ci.org/easystats/bayestestR.svg?branch=master)](https://travis-ci.org/easystats/bayestestR)
@@ -113,9 +113,13 @@ rope_test(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 **`p_rope()`** computes the ROPE-based p-value that represents the
 maximum Credible Interval (HDI) that does not contain (positive values)
 or is entirely contained (negative values) in the negligible values
-space defined by the ROPE. A ROPE-based p of 97% means that there is a
-probability of .97 that a parameter (desccribed by its posterior
-distribution) is outside the ROPE.
+space defined by the ROPE. It differs from the ROPE, i.e., the
+proportion of a given CI in the ROPE, by representing the maximum CI to
+reach a ROPE proportion of 0% (positive values) or 100% (negative
+values). A ROPE-based p of 97% means that there is a probability of .97
+that a parameter (desccribed by its posterior distribution) is outside
+the ROPE. On the contrary, a ROPE-based p of -97% means that there is
+also a probability of 0.97 that the parameter is inside the ROPE.
 
 ``` r
 p_rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
