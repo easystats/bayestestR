@@ -28,7 +28,6 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 
-# df <- read.csv("data/bayes_indices.csv")
 df <- read.csv("https://raw.github.com/DominiqueMakowski/bayestestR/master/data/bayes_indices.csv")
 ```
 
