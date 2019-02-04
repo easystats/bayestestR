@@ -31,9 +31,12 @@ posts:
 
   - [Indices
     Description](https://easystats.github.io/bayestestR/articles/IndicesDescription.html)
-  - [Indices
-    Comparison](https://easystats.github.io/bayestestR/articles/IndicesComparison.html)
-  - [Guidelines](https://easystats.github.io/bayestestR/articles/Guidelines.html)
+  - [Comparison of
+    Point-Estimates](https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html)
+  - [Comparison of Indices of Effect
+    Existence](https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html)
+  - [Reporting
+    Guidelines](https://easystats.github.io/bayestestR/articles/4_Guidelines.html)
 
 # Functions
 
