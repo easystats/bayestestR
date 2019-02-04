@@ -7,15 +7,15 @@
     "folds" : "",
     "hash" : "0",
     "id" : "190E16FE",
-    "lastKnownWriteTime" : 1549263776,
-    "last_content_update" : 1549263776733,
+    "lastKnownWriteTime" : 1549267021,
+    "last_content_update" : 1549267021857,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/vignettes/2_IndicesEstimationComparison.Rmd",
     "project_path" : "vignettes/2_IndicesEstimationComparison.Rmd",
     "properties" : {
         "chunk_output_type" : "console",
-        "cursorPosition" : "232,119",
+        "cursorPosition" : "148,64",
         "ignored_words" : "frequentist,priors,github\n",
-        "scrollLine" : "202"
+        "scrollLine" : "134"
     },
     "relative_order" : 2,
     "source_on_save" : false,

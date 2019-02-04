@@ -7,14 +7,14 @@
     "folds" : "",
     "hash" : "0",
     "id" : "9C13D951",
-    "lastKnownWriteTime" : 1549264876,
-    "last_content_update" : 1549264876004,
+    "lastKnownWriteTime" : 1549267095,
+    "last_content_update" : 1549267095855,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/vignettes/4_Guidelines.Rmd",
     "project_path" : "vignettes/4_Guidelines.Rmd",
     "properties" : {
         "chunk_output_type" : "console",
-        "cursorPosition" : "48,41",
-        "scrollLine" : "27"
+        "cursorPosition" : "33,39",
+        "scrollLine" : "28"
     },
     "relative_order" : 4,
     "source_on_save" : false,

@@ -62,7 +62,7 @@ For all of the simulated models, we computed the following indices:
 - ***p*-direction**: the "Probability of Direction" corresponds to the probability that the effect is stricly positive or negative (consistently with the median's sign).
 - ***p*-MAP**: the MAP-based *p*-value is related to the odds that a parameter has againt the null hypothesis [@mills2014bayesian; @mills2017objective].
 - ***p*-ROPE**: the ROPE-based *p*-value that represents the maximum percentage of HDI that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the ROPE.
-- **ROPE (95\%)**: this index refers to the percentage of the 95\% HDI that lies within the Region of Practical Equivalence (ROPE) defined as ranging from -0.1 to 0.1.
+- **ROPE (90\%)**: this index refers to the percentage of the 90\% HDI that lies within the Region of Practical Equivalence (ROPE) defined as ranging from -0.1 to 0.1.
 - **ROPE (full)**: this index refers to the percentage of the whole posterior distribution that lies within the Region of Practical Equivalence (ROPE) defined as ranging from -0.1 to 0.1.
 
 

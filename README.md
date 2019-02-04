@@ -75,23 +75,23 @@ map_estimate(rnorm(1000, 1, 1))
 
 ### ROPE
 
-**`rope()`** computes the proportion of the HDI of a posterior
-distribution that lies within a region of practical equivalence.
-Statistically, the probability of a posterior distribution of being
-different from 0 does not make much sense (the probability of it being
-different from a single point being infinite). Therefore, the idea
-underlining ROPE is to let the user define an area around the null value
-enclosing values that are equivalent to the null value for practical
-purposes (2010, 2011, 2014). Kruschke (2018) suggests that such null
-value could be set, by default, to the -0.1 to 0.1 range of a
-standardized parameter (negligible effect size according to Cohen). This
-could be generalized: For instance, for linear models, the ROPE could be
-set as 0 +/- .1 \* sd(y). Kruschke (2010, 2011, 2014) suggest using the
-proportion of the 95% (or 90%, considered more stable) *HDI* that falls
-within the ROPE as an index for “null-hypothesis” testing (as understood
-under the Bayesian framework, see `rope_test`). Besides the ROPE-based
-decisions criteria, the proportion of the 95% CI that falls in the ROPE
-can be used as a continuous
+**`rope()`** computes the proportion (in percentage) of the HDI (default
+to the 90% HDI) of a posterior distribution that lies within a region of
+practical equivalence. Statistically, the probability of a posterior
+distribution of being different from 0 does not make much sense (the
+probability of it being different from a single point being infinite).
+Therefore, the idea underlining ROPE is to let the user define an area
+around the null value enclosing values that are equivalent to the null
+value for practical purposes (2010, 2011, 2014). Kruschke (2018)
+suggests that such null value could be set, by default, to the -0.1 to
+0.1 range of a standardized parameter (negligible effect size according
+to Cohen). This could be generalized: For instance, for linear models,
+the ROPE could be set as 0 +/- .1 \* sd(y). Kruschke (2010, 2011, 2014)
+suggest using the proportion of the 95% (or 90%, considered more stable)
+*HDI* that falls within the ROPE as an index for “null-hypothesis”
+testing (as understood under the Bayesian framework, see `rope_test`).
+Besides the ROPE-based decisions criteria, the proportion of the 95% CI
+that falls in the ROPE can be used as a continuous
 index.
 
 ``` r

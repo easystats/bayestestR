@@ -5,16 +5,16 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "3922421056",
     "id" : "51F48262",
-    "lastKnownWriteTime" : 1549253418,
-    "last_content_update" : 1549253418458,
+    "lastKnownWriteTime" : 1549267222,
+    "last_content_update" : 1549267222808,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/vignettes/1_IndicesDescription.Rmd",
     "project_path" : "vignettes/1_IndicesDescription.Rmd",
     "properties" : {
         "chunk_output_type" : "console",
-        "cursorPosition" : "19,0",
-        "scrollLine" : "0"
+        "cursorPosition" : "119,89",
+        "scrollLine" : "114"
     },
     "relative_order" : 1,
     "source_on_save" : false,
