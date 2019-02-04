@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guidelines • bayestestR</title>
+<title>Reporting Guidelines • bayestestR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Guidelines">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Reporting Guidelines">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -60,13 +60,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Guidelines.html">Guidelines</a>
-    </li>
-    <li>
-      <a href="../articles/IndicesComparison.html">Indices Comparison</a>
+      <a href="../articles/Guidelines.html">Reporting Guidelines</a>
     </li>
     <li>
       <a href="../articles/IndicesDescription.html">Indices Description</a>
+    </li>
+    <li>
+      <a href="../articles/IndicesEstimationComparison.html">Point-Estimates Comparison</a>
+    </li>
+    <li>
+      <a href="../articles/IndicesExistenceComparison.html">Indices of Effect Existence Comparison</a>
     </li>
   </ul>
 </li>
@@ -93,7 +96,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Guidelines</h1>
+      <h1>Reporting Guidelines</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/Guidelines.Rmd"><code>vignettes/Guidelines.Rmd</code></a></small>
@@ -106,7 +109,7 @@
 <div id="reporting-guidelines" class="section level1">
 <h1 class="hasAnchor">
 <a href="#reporting-guidelines" class="anchor"></a>Reporting Guidelines</h1>
-<p>Based on the previous <a href="https://dominiquemakowski.github.io/bayestestR/articles/IndicesComparison.html"><strong>comparison of indices</strong></a>, we can conclude that:</p>
+<p>Based on the previous <a href="https://easystats.github.io/bayestestR/articles/IndicesComparison.html"><strong>comparison of indices</strong></a>, we can conclude that:</p>
 <ul>
 <li>For simple models and normally distributed posteriors, the <strong>MAP estimate</strong> seems to be more biased than the mean and the median of the posterior distribution.</li>
 <li>Aside from being more robust, the <strong>median</strong> makes more sense than the <strong>mean</strong> in a probabilistic framework (<em>e.g.</em>, there is 50% chance that the true effect is either higher or lower than the median).</li>

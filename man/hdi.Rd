@@ -17,7 +17,7 @@ hdi(posterior, CI = 90, verbose = TRUE)
 Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
 }
 \details{
-By default, hdi() returns the 90\% intervals, deemed to be more stable than, for instance, 95\% intervals (Kruschke 2015).
+By default, hdi() returns the 90\% intervals, deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
 }
 \examples{
 library(bayestestR)
@@ -25,6 +25,9 @@ library(bayestestR)
 posterior <- rnorm(1000)
 hdi(posterior, CI = 90)
 hdi(posterior, CI = c(80, 90, 95))
+}
+\references{
+Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 }
 \author{
 All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.

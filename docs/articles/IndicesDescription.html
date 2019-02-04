@@ -60,13 +60,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Guidelines.html">Guidelines</a>
-    </li>
-    <li>
-      <a href="../articles/IndicesComparison.html">Indices Comparison</a>
+      <a href="../articles/Guidelines.html">Reporting Guidelines</a>
     </li>
     <li>
       <a href="../articles/IndicesDescription.html">Indices Description</a>
+    </li>
+    <li>
+      <a href="../articles/IndicesEstimationComparison.html">Point-Estimates Comparison</a>
+    </li>
+    <li>
+      <a href="../articles/IndicesExistenceComparison.html">Indices of Effect Existence Comparison</a>
     </li>
   </ul>
 </li>
@@ -135,7 +138,7 @@
 <li>The frequentist bloke tries to estimate “the real effect”. For instance, the “real” value of the correlation between <em>x</em> and <em>y</em>. Frequentist models return a “<strong>point-estimate</strong>” (<em>i.e.</em>, a single value) of the “real” correlation (<em>e.g.</em>, r = 0.42) estimated by the model under a number of obscure assumptions (at a minimum, considering that the data is sampled at random from a “parent”, usually normal distribution of data).</li>
 <li>
 <strong>The Bayesian master assumes no such thing</strong>. The data are what they are. Based on this observed data (and a <strong>prior</strong> belief about the result), the Bayesian sampling algorithm returns a probability distribution (called <strong>the posterior</strong>) of the effect that is compatible with the observed data. For the correlation between <em>x</em> and <em>y</em>, it will return a distribution that says, for example, “the most probable effect is 0.42, but this data is also compatible with correlations of 0.12 or 0.74”.</li>
-<li>To characterize our effects, <strong>no need of <em>p</em> values</strong> or other cryptic indices. We simply describe the posterior distribution of the effect. For example, we can report the median, the 90% <em>Credible</em> Interval (CI) and such.</li>
+<li>To characterize our effects, <strong>no need of <em>p</em> values</strong> or other cryptic indices. We simply describe the posterior distribution of the effect. For example, we can report the median, the 90% <em>Credible</em> Interval (CI; see <em>below</em>) and such.</li>
 </ul>
 </div>
 </div>
@@ -145,10 +148,10 @@
 <div id="posterior-description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#posterior-description" class="anchor"></a>Posterior Description</h2>
-<div id="hdi" class="section level3">
+<div id="hdi---the-credible-interval-ci" class="section level3">
 <h3 class="hasAnchor">
-<a href="#hdi" class="anchor"></a>HDI</h3>
-<p><strong><code><a href="../reference/hdi.html">hdi()</a></code></strong> computes the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).</p>
+<a href="#hdi---the-credible-interval-ci" class="anchor"></a>HDI - The <em>Credible</em> Interval (CI)</h3>
+<p><strong><code><a href="../reference/hdi.html">hdi()</a></code></strong> computes the Highest Density Interval (HDI) of a posterior distribution, <em>i.e.</em>, the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as <strong>Credible Interval (CI)</strong>. By default, hdi() returns the 90% intervals, deemed to be more stable than, for instance, 95% intervals (Kruschke, 2015).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="../reference/hdi.html">hdi</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>), <span class="dt">CI =</span> <span class="dv">90</span>)</a></code></pre></div>
 <p><img src="IndicesDescription_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
@@ -179,7 +182,7 @@
 <div id="rope-based-probability" class="section level3">
 <h3 class="hasAnchor">
 <a href="#rope-based-probability" class="anchor"></a>ROPE-based probability</h3>
-<p><strong><code><a href="../reference/p_rope.html">p_rope()</a></code></strong> computes the ROPE-based p-value that represents the maximum Credible Interval (HDI) that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the ROPE. It differs from the ROPE, i.e., the proportion of a given CI in the ROPE, by representing the maximum CI to reach a ROPE proportion of 0% (positive values) or 100% (negative values). A ROPE-based p of 97% means that there is a probability of .97 that a parameter (desccribed by its posterior distribution) is outside the ROPE. On the contrary, a ROPE-based p of -97% means that there is also a probability of 0.97 that the parameter is inside the ROPE.</p>
+<p><strong><code><a href="../reference/p_rope.html">p_rope()</a></code></strong> computes the ROPE-based p-value that represents the maximum percentage of HDI that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the ROPE. It differs from the ROPE, i.e., the proportion of a given CI in the ROPE, by representing the maximum CI to reach a ROPE proportion of 0% (positive values) or 100% (negative values). A ROPE-based p of 97% means that there is a probability of .97 that a parameter (desccribed by its posterior distribution) is outside the ROPE. On the contrary, a ROPE-based p of -97% means that there is also a probability of 0.97 that the parameter is inside the ROPE.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/p_rope.html">p_rope</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">bounds =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</a></code></pre></div>
 </div>
 <div id="probability-of-direction-pd" class="section level3">

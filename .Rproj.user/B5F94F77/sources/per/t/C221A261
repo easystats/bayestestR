@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1549262185230.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3622878048",
+    "id" : "C221A261",
+    "lastKnownWriteTime" : 1549117767,
+    "last_content_update" : 1549117767,
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/README.Rmd",
+    "project_path" : "README.Rmd",
+    "properties" : {
+        "chunk_output_type" : "console",
+        "cursorPosition" : "15,43",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

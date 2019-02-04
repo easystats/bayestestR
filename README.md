@@ -39,14 +39,16 @@ posts:
 
 ## Posterior Description
 
-### HDI
+### HDI - The *Credible* Interval (CI)
 
 **`hdi()`** computes the Highest Density Interval (HDI) of a posterior
-distribution, i.e., the interval which contains all points within the
+distribution, *i.e.*, the interval which contains all points within the
 interval have a higher probability density than points outside the
 interval. The HDI is used in the context of Bayesian posterior
-characterisation as Credible Interval
-(CI).
+characterisation as **Credible Interval (CI)**. By default, hdi()
+returns the 90% intervals, deemed to be more stable than, for instance,
+95% intervals (Kruschke,
+2015).
 
 ``` r
 hdi(posterior = rnorm(1000), CI = 90)
@@ -111,15 +113,15 @@ rope_test(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 ### ROPE-based probability
 
 **`p_rope()`** computes the ROPE-based p-value that represents the
-maximum Credible Interval (HDI) that does not contain (positive values)
-or is entirely contained (negative values) in the negligible values
-space defined by the ROPE. It differs from the ROPE, i.e., the
-proportion of a given CI in the ROPE, by representing the maximum CI to
-reach a ROPE proportion of 0% (positive values) or 100% (negative
-values). A ROPE-based p of 97% means that there is a probability of .97
-that a parameter (desccribed by its posterior distribution) is outside
-the ROPE. On the contrary, a ROPE-based p of -97% means that there is
-also a probability of 0.97 that the parameter is inside the ROPE.
+maximum percentage of HDI that does not contain (positive values) or is
+entirely contained (negative values) in the negligible values space
+defined by the ROPE. It differs from the ROPE, i.e., the proportion of a
+given CI in the ROPE, by representing the maximum CI to reach a ROPE
+proportion of 0% (positive values) or 100% (negative values). A
+ROPE-based p of 97% means that there is a probability of .97 that a
+parameter (desccribed by its posterior distribution) is outside the
+ROPE. On the contrary, a ROPE-based p of -97% means that there is also a
+probability of 0.97 that the parameter is inside the ROPE.
 
 ``` r
 p_rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
@@ -188,9 +190,3 @@ You can cite the package as following:
 
   - Makowski, (2019). *Understand and Describe Bayesian Models and
     Posterior Distributions using BayestestR*. CRAN. doi: .
-
-Please remember that parts of the code in this package was inspired /
-shamelessly copied from other great packages that you must check out and
-cite, such as [sjstats](https://github.com/strengejacke/sjstats) or
-[BayesTesting.jl](https://github.com/tszanalytics/BayesTesting.jl). All
-credits go to their authors.

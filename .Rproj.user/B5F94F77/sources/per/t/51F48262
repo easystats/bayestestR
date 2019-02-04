@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1549157430847.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2080095267",
+    "id" : "51F48262",
+    "lastKnownWriteTime" : 1549253418,
+    "last_content_update" : 1549253418458,
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/vignettes/1_IndicesDescription.Rmd",
+    "project_path" : "vignettes/1_IndicesDescription.Rmd",
+    "properties" : {
+        "chunk_output_type" : "console",
+        "cursorPosition" : "19,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

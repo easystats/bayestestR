@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1549157431487.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1072840265",
+    "id" : "190E16FE",
+    "lastKnownWriteTime" : 1549262280,
+    "last_content_update" : 1549262280792,
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/vignettes/2_IndicesEstimationComparison.Rmd",
+    "project_path" : "vignettes/2_IndicesEstimationComparison.Rmd",
+    "properties" : {
+        "chunk_output_type" : "console",
+        "cursorPosition" : "232,34",
+        "ignored_words" : "frequentist,priors,github\n",
+        "scrollLine" : "202"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
