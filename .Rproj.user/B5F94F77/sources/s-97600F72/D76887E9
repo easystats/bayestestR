@@ -5,14 +5,14 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "3926868061",
+    "hash" : "0",
     "id" : "D76887E9",
-    "lastKnownWriteTime" : 1549351675,
-    "last_content_update" : 1549351675774,
+    "lastKnownWriteTime" : 1549354003,
+    "last_content_update" : 1549354003666,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/tests/testthat/test-rope.R",
     "project_path" : "tests/testthat/test-rope.R",
     "properties" : {
-        "cursorPosition" : "12,90",
+        "cursorPosition" : "19,0",
         "scrollLine" : "0"
     },
     "relative_order" : 2,
