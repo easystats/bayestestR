@@ -1,10 +1,10 @@
 #' ROPE-based p-value
 #'
-#' The ROPE-based p-value represents the maximum percentage of \link[=hdi]{HDI} that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the \link[=rope]{ROPE}. It differs from the ROPE, i.e., the proportion of a given CI in the ROPE, by representing the maximum CI to reach a ROPE proportion of 0\% (positive values) or 100\% (negative values). A ROPE-based p of 97\% means that there is a probability of .97 that a parameter (desccribed by its posterior distribution) is outside the ROPE. On the contrary, a ROPE-based p of -97\% means that there is also a probability of 0.97 that the parameter is inside the ROPE.
+#' The ROPE-based p-value represents the maximum percentage of \link[=hdi]{HDI} that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the \link[=rope]{ROPE}. It differs from the ROPE, i.e., the proportion of a given CI in the ROPE, by representing the maximum CI to reach a ROPE proportion of 0\% (positive values) or 100\% (negative values). A ROPE-based p of 97\% means that there is a probability of .97 that a parameter (described by its posterior distribution) is outside the ROPE. On the contrary, a ROPE-based p of -97\% means that there is also a probability of 0.97 that the parameter is inside the ROPE.
 #'
 #' @param posterior vector representing a posterior distribution.
 #' @param bounds ROPE's lower and higher bounds.
-#' @param precision The precision by which to explore the ROPE space. Lower values increase the precision of the returned p value but can be quite computationnaly costly.
+#' @param precision The precision by which to explore the ROPE space. Lower values increase the precision of the returned p value but can be quite computationaly costly.
 #'
 #' @examples
 #' library(bayestestR)

@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1549351474801.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3926868061",
+    "id" : "D76887E9",
+    "lastKnownWriteTime" : 1549351675,
+    "last_content_update" : 1549351675774,
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/tests/testthat/test-rope.R",
+    "project_path" : "tests/testthat/test-rope.R",
+    "properties" : {
+        "cursorPosition" : "12,90",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

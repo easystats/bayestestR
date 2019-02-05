@@ -16,7 +16,11 @@ editor_options:
   chunk_output_type: console
 ---
 
-This vignette can be referred to by citing the package: **TODO**.
+This vignette can be referred to by citing the package:
+
+- Makowski, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI:10.5281/zenodo.2556486.
+
+
 
 # Effect Point-Estimates in the Bayesian Framework
 
@@ -180,7 +184,7 @@ df %>%
 
 
 
-#### Statistical Modeling
+#### Statistical Modelling
 
 We fitted a (frequentist) multiple linear regression to statistically test the effects and interactions of noise, sample size and priors on the effect estimates.
 

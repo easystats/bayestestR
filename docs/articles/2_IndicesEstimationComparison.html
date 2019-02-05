@@ -106,7 +106,10 @@
 
     
     
-<p>This vignette can be referred to by citing the package: <strong>TODO</strong>.</p>
+<p>This vignette can be referred to by citing the package:</p>
+<ul>
+<li>Makowski, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using BayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. <a href="DOI:10.5281/zenodo.2556486" class="uri">DOI:10.5281/zenodo.2556486</a>.</li>
+</ul>
 <div id="effect-point-estimates-in-the-bayesian-framework" class="section level1">
 <h1 class="hasAnchor">
 <a href="#effect-point-estimates-in-the-bayesian-framework" class="anchor"></a>Effect Point-Estimates in the Bayesian Framework</h1>
@@ -259,9 +262,9 @@
 <a class="sourceLine" id="cb4-17" title="17"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
 <p><img src="2_IndicesEstimationComparison_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
-<div id="statistical-modeling" class="section level4">
+<div id="statistical-modelling" class="section level4">
 <h4 class="hasAnchor">
-<a href="#statistical-modeling" class="anchor"></a>Statistical Modeling</h4>
+<a href="#statistical-modelling" class="anchor"></a>Statistical Modelling</h4>
 <p>We fitted a (frequentist) multiple linear regression to statistically test the effects and interactions of noise, sample size and priors on the effect estimates.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw">select</span>(sample_size, beta, effect, prior_correct, median, mean, map, noise) <span class="op">%&gt;%</span></a>

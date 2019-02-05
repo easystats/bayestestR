@@ -12,7 +12,7 @@ p_map(posterior, precision = 2^10)
 \item{precision}{number of points for density estimation. See the `n` parameter in \link[=density]{density}.}
 }
 \description{
-Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has againt the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP). It correponds to the density value at 0 divided by the density of the highest density point.
+Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP). It corresponds to the density value at 0 divided by the density of the highest density point.
 }
 \examples{
 library(bayestestR)

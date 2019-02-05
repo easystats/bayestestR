@@ -17,7 +17,10 @@ editor_options:
 bibliography: bibliography.bib
 ---
 
-This vignette can be referred to by citing the package: **TODO**.
+This vignette can be referred to by citing the package:
+
+- Makowski, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI:10.5281/zenodo.2556486.
+
 
 
 # Indices of Effect *Existence* in the Bayesian Framework
@@ -59,8 +62,8 @@ For the sake of time and computational space, we downloaded the data from github
 For all of the simulated models, we computed the following indices:
 
 - ***p*-value**: Based on the frequentist regression, this index represents the probability for a given statistical model that, when the null hypothesis is true, the statistical summary (such as the sample mean difference between two compared groups) would be greater than or equal to the actual observed results [@wasserstein2016asa].
-- ***p*-direction**: the "Probability of Direction" corresponds to the probability that the effect is stricly positive or negative (consistently with the median's sign).
-- ***p*-MAP**: the MAP-based *p*-value is related to the odds that a parameter has againt the null hypothesis [@mills2014bayesian; @mills2017objective].
+- ***p*-direction**: the "Probability of Direction" corresponds to the probability (expressed in percentage) that the effect is stricly positive or negative (consistently with the median's sign).
+- ***p*-MAP**: the MAP-based *p*-value is related to the odds that a parameter has against the null hypothesis [@mills2014bayesian; @mills2017objective].
 - ***p*-ROPE**: the ROPE-based *p*-value that represents the maximum percentage of HDI that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the ROPE.
 - **ROPE (90\%)**: this index refers to the percentage of the 90\% HDI that lies within the Region of Practical Equivalence (ROPE) defined as ranging from -0.1 to 0.1.
 - **ROPE (full)**: this index refers to the percentage of the whole posterior distribution that lies within the Region of Practical Equivalence (ROPE) defined as ranging from -0.1 to 0.1.

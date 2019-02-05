@@ -1,22 +1,23 @@
 {
     "collab_server" : "",
     "contents" : "",
-    "created" : 1549157430847.000,
+    "created" : 1549352104154.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "3922421056",
-    "id" : "51F48262",
-    "lastKnownWriteTime" : 1549267222,
-    "last_content_update" : 1549267222808,
+    "hash" : "0",
+    "id" : "140F98D7",
+    "lastKnownWriteTime" : 1549352121,
+    "last_content_update" : 1549352121605,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/vignettes/1_IndicesDescription.Rmd",
     "project_path" : "vignettes/1_IndicesDescription.Rmd",
     "properties" : {
         "chunk_output_type" : "console",
-        "cursorPosition" : "119,89",
-        "scrollLine" : "114"
+        "cursorPosition" : "103,4",
+        "ignored_words" : "frequentist,Frequentist,hdi,Kruschke,sd,i\n",
+        "scrollLine" : "100"
     },
-    "relative_order" : 1,
+    "relative_order" : 4,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_markdown"

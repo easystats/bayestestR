@@ -3,15 +3,15 @@ bibentry(
 	title="Understand and Describe Bayesian Models and Posterior Distributions using BayestestR",
 	author=person("Dominique", "Makowski"),
     journal="CRAN",
-    doi="",
+    doi="10.5281/zenodo.2556486",
 	year="2019",
 	note="R package",
-	url="https://github.com/DominiqueMakowski/bayestestR",
+	url="https://github.com/easystats/bayestestR",
 
 	textVersion =
   	paste("Makowski, D. (2019). Understand and Describe Bayesian Models and Posterior Distributions using BayestestR. CRAN.",
-        "Available from https://github.com/DominiqueMakowski/bayestestR.",
-		"doi: .",
+        "Available from https://github.com/easystats/bayestestR.",
+		"DOI: 10.5281/zenodo.2556486.",
         sep=" "),
 
 	mheader = "To cite bayestestR in publications use:")

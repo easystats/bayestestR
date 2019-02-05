@@ -39,7 +39,7 @@
 
 <meta property="og:title" content="Bayesian p-value based on the density at the Maximum A Priori (MAP) — p_map" />
 
-<meta property="og:description" content="Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has againt the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP). It correponds to the density value at 0 divided by the density of the highest density point." />
+<meta property="og:description" content="Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP). It corresponds to the density value at 0 divided by the density of the highest density point." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -139,7 +139,7 @@
 
     <div class="ref-description">
     
-    <p>Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has againt the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP). It correponds to the density value at 0 divided by the density of the highest density point.</p>
+    <p>Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP). It corresponds to the density value at 0 divided by the density of the highest density point.</p>
     
     </div>
 
@@ -166,7 +166,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
-<span class='fu'>p_map</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; [1] 0.9889283</div><div class='input'><span class='fu'>p_map</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>10</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; [1] 0</div></pre>
+<span class='fu'>p_map</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; [1] 0.9999869</div><div class='input'><span class='fu'>p_map</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>10</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; [1] 0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

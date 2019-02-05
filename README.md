@@ -6,6 +6,7 @@ Status](https://travis-ci.org/easystats/bayestestR.svg?branch=master)](https://t
 [![codecov](https://codecov.io/gh/easystats/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/easystats/bayestestR)
 [![HitCount](http://hits.dwyl.io/easystats/bayestestR.svg)](http://hits.dwyl.io/easystats/bayestestR)
 [![Documentation](https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63)](https://easystats.github.io/bayestestR/)
+[![DOI](https://zenodo.org/badge/165641861.svg)](https://zenodo.org/badge/latestdoi/165641861)
 
 `bayestestR` is a lightweight package providing utilities to describe
 posterior distributions and Bayesian models.
@@ -90,7 +91,7 @@ the ROPE could be set as 0 +/- .1 \* sd(y). Kruschke (2010, 2011, 2014)
 suggest using the proportion of the 95% (or 90%, considered more stable)
 *HDI* that falls within the ROPE as an index for “null-hypothesis”
 testing (as understood under the Bayesian framework, see `rope_test`).
-Besides the ROPE-based decisions criteria, the proportion of the 95% CI
+Besides the ROPE-based decision criteria, the proportion of the 95% CI
 that falls in the ROPE can be used as a continuous
 index.
 
@@ -102,15 +103,15 @@ rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 
 ## Null-Hypothesis Significance Testing (NHST)
 
-### ROPE-based test
+### Equivalence test
 
-**`rope_test()`** performs a Test for Practical Equivalence based on the
-“HDI+ROPE decision rule” (Kruschke 2018) to check whether parameter
-values should be accepted or rejected against an explicitely formulated
-“null hypothesis”.
+**`equivalence_test()`** performs a Test for Practical Equivalence based
+on the “HDI+ROPE decision rule” (Kruschke, 2018) to check whether
+parameter values should be accepted or rejected against an explicitly
+formulated “null hypothesis”.
 
 ``` r
-rope_test(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
+equivalence_test(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 ```
 
 ### ROPE-based probability
@@ -118,12 +119,12 @@ rope_test(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 **`p_rope()`** computes the ROPE-based p-value that represents the
 maximum percentage of HDI that does not contain (positive values) or is
 entirely contained (negative values) in the negligible values space
-defined by the ROPE. It differs from the ROPE, i.e., the proportion of a
-given CI in the ROPE, by representing the maximum CI to reach a ROPE
+defined by the ROPE. It differs from the ROPE, *i.e.*, the proportion of
+a given CI in the ROPE, by representing the maximum CI to reach a ROPE
 proportion of 0% (positive values) or 100% (negative values). A
 ROPE-based p of 97% means that there is a probability of .97 that a
-parameter (desccribed by its posterior distribution) is outside the
-ROPE. On the contrary, a ROPE-based p of -97% means that there is also a
+parameter (described by its posterior distribution) is outside the ROPE.
+On the contrary, a ROPE-based p of -97% means that there is also a
 probability of 0.97 that the parameter is inside the ROPE.
 
 ``` r
@@ -132,17 +133,14 @@ p_rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 
 ### Probability of Direction (*p*d)
 
-**`p_direction()`** computes the Probability of Direction (p, also known
-as the Maximum Probability of Effect - MPE), a Bayesian equivalent of
-the p-value (altough differently expressed). It varies between 50% and
-100% and can be interpreted as the probability that a parameter
-(described by its posterior distribution) is positive or negative
-(following the median’s sign). It is defined as the proportion of the
-posterior distribution of the median’s sign. It is used as an index of
-effect existence, i.e., whether the probability that the effect is in
-the same direction than the point-estimate (independently of the
-effect’s size or significance). This p-value is fairly similar to its
-frequentist counterpart (i.e., is strongly
+**`p_direction()`** computes the Probability of Direction (*p*d, also
+known as the Maximum Probability of Effect - MPE). It varies between 50%
+and 100% and can be interpreted as the probability (expressed in
+percentage) that a parameter (described by its posterior distribution)
+is strictly positive or negative (consistently with the median’s sign).
+It is defined as the proportion of the posterior distribution that is of
+the median’s sign. Altough differently expressed, this index is fairly
+similar to the frequentist p-value (*i.e.*, is strongly
 correlated).
 
 ``` r
@@ -155,9 +153,9 @@ p_direction(rnorm(1000, mean = 1, sd = 1))
 
 **`p_map()`** computes a Bayesian equivalent of the p-value, related to
 the odds that a parameter (described by its posterior distribution) has
-againt the null hypothesis (h0) using Mills’ (2014, 2017) Objective
+against the null hypothesis (h0) using Mills’ (2014, 2017) Objective
 Bayesian Hypothesis Testing paradigm. It is mathematically based on the
-density at the Maximum A Priori (MAP). It correponds to the density
+density at the Maximum A Priori (MAP). It corresponds to the density
 value at 0 divided by the density of the highest density
 point.
 
@@ -191,5 +189,7 @@ density_at(posterior = rnorm(1000, 1, 1))
 
 You can cite the package as following:
 
-  - Makowski, (2019). *Understand and Describe Bayesian Models and
-    Posterior Distributions using BayestestR*. CRAN. doi: .
+  - Makowski, D. (2019). *Understand and Describe Bayesian Models and
+    Posterior Distributions using BayestestR*. Available from
+    <https://github.com/easystats/bayestestR>.
+    <DOI:10.5281/zenodo.2556486>.

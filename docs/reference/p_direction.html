@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Probability of Direction (p) — p_direction • bayestestR</title>
+<title>Probability of Direction (pd) — p_direction • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,9 @@
 
 
 
-<meta property="og:title" content="Probability of Direction (p) — p_direction" />
+<meta property="og:title" content="Probability of Direction (pd) — p_direction" />
 
-<meta property="og:description" content="Compute the Probability of Direction (p, also known as the Maximum Probability of Effect - MPE), a Bayesian equivalent of the p-value (altough differently expressed). It varies between 50% and 100% and can be interpreted as the probability that a parameter (described by its posterior distribution) is positive or negative (following  the median's sign). It is defined as the proportion of the posterior distribution of the median's sign. It is used as an index of effect existence, i.e., whether the probability that the effect is in the same direction than the point-estimate (independently of the effect's size or significance). This p-value is fairly similar to its frequentist counterpart (i.e., is strongly correlated)." />
+<meta property="og:description" content="Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (consistently with the median's sign). It is defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar to the frequentist p-value (i.e., is strongly correlated)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -132,14 +132,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Probability of Direction (p)</h1>
+    <h1>Probability of Direction (pd)</h1>
     <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/p_direction.R'><code>R/p_direction.R</code></a></small>
     <div class="hidden name"><code>p_direction.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Compute the Probability of Direction (p, also known as the Maximum Probability of Effect - MPE), a Bayesian equivalent of the p-value (altough differently expressed). It varies between 50% and 100% and can be interpreted as the probability that a parameter (described by its posterior distribution) is positive or negative (following  the median's sign). It is defined as the proportion of the posterior distribution of the median's sign. It is used as an index of effect existence, i.e., whether the probability that the effect is in the same direction than the point-estimate (independently of the effect's size or significance). This p-value is fairly similar to its frequentist counterpart (i.e., is strongly correlated).</p>
+    <p>Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (consistently with the median's sign). It is defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar to the frequentist p-value (i.e., is strongly correlated).</p>
     
     </div>
 
@@ -160,8 +160,7 @@
 
 <span class='co'># Simulate a posterior distribution of mean 1 and SD 1</span>
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='co'># Compute the p</span>
-<span class='fu'>p_direction</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; [1] 84</div></pre>
+<span class='fu'>p_direction</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; pd = 85.10%</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

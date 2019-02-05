@@ -1,22 +1,23 @@
 {
     "collab_server" : "",
     "contents" : "",
-    "created" : 1549262185230.000,
+    "created" : 1549352074000.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
     "hash" : "0",
-    "id" : "C221A261",
-    "lastKnownWriteTime" : 1549267235,
-    "last_content_update" : 1549267235250,
+    "id" : "822A8FF2",
+    "lastKnownWriteTime" : 1549352134,
+    "last_content_update" : 1549352134707,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/README.Rmd",
     "project_path" : "README.Rmd",
     "properties" : {
         "chunk_output_type" : "console",
-        "cursorPosition" : "132,646",
-        "scrollLine" : "128"
+        "cursorPosition" : "147,115",
+        "ignored_words" : "Makowski,https,github,com,easystats,bayestestR,zenodo,travis,ci,org,codecov,io,gh,dwyl,latestdoi,hdi,Kruschke,sd,i,frequentist\n",
+        "scrollLine" : "145"
     },
-    "relative_order" : 5,
+    "relative_order" : 3,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_markdown"

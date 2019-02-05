@@ -16,7 +16,9 @@ editor_options:
   chunk_output_type: console
 ---
 
-These guidelines can be referred to by citing the package: **TODO**.
+These guidelines can be referred to by citing the package:
+
+- Makowski, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI:10.5281/zenodo.2556486.
 
 # Reporting Guidelines
 

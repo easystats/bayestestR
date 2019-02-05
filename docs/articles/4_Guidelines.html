@@ -106,7 +106,10 @@
 
     
     
-<p>These guidelines can be referred to by citing the package: <strong>TODO</strong>.</p>
+<p>These guidelines can be referred to by citing the package:</p>
+<ul>
+<li>Makowski, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using BayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. <a href="DOI:10.5281/zenodo.2556486" class="uri">DOI:10.5281/zenodo.2556486</a>.</li>
+</ul>
 <div id="reporting-guidelines" class="section level1">
 <h1 class="hasAnchor">
 <a href="#reporting-guidelines" class="anchor"></a>Reporting Guidelines</h1>
@@ -135,7 +138,7 @@
 <li>
 <em>p</em>d &gt; 99% ~ <em>p</em> &lt; .01: probably existing</li>
 <li>
-<em>p</em>d &gt; 99.9% ~ <em>p</em> &lt; .001: certainly existing</li>
+<em>p</em>d &gt; 99.9% ~ <em>p</em> &lt; .001: certainly existing</li>
 <li>
 <em>p</em>d = 100%: definitely existing</li>
 </ul>
@@ -143,16 +146,21 @@
 <li>
 <p><strong>ROPE (full)</strong>: Extra caution is required as tts interpretation highly depends on other parameters such as sample size and ROPE bounds.</p>
 <ul>
-<li>
-<em>ROPE</em> &lt; 5%: possibly significant</li>
-<li>
-<em>ROPE</em> &lt; 1%: likely significant</li>
-<li>
-<em>ROPE</em> = 0%: definitely significant</li>
+<li>&lt; 5% in ROPE: possibly significant</li>
+<li>&lt; 1% in ROPE: likely significant</li>
+<li>0% in ROPE: definitely significant</li>
 </ul>
 </li>
 </ul>
 <p><em>Note: If you have any advice, opinion or such, we encourage you to let us know by opening an <a href="https://github.com/easystats/bayestestR/issues">discussion thread</a> or making a pull request.</em></p>
+</div>
+<div id="template-sentence" class="section level2">
+<h2 class="hasAnchor">
+<a href="#template-sentence" class="anchor"></a>Template Sentence</h2>
+<p>Based on these suggestions, a template sentence for minimal reporting of a parameter based on its posterior distribution could be:</p>
+<ul>
+<li>“the effect of <em>X</em> has a probability of <strong><em>p</em>d</strong> of being <em>negative</em> (Median = <strong><em>median</em></strong>, 90% CI [<strong><em>…</em></strong>, <strong><em>…</em></strong>], <strong><em>ROPE</em></strong>% in ROPE).”</li>
+</ul>
 </div>
 </div>
   </div>
@@ -165,6 +173,7 @@
 <li>
 <a href="#reporting-guidelines">Reporting Guidelines</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#interpretation-rules-of-thumb">Interpretation Rules of Thumb</a></li>
+      <li><a href="#template-sentence">Template Sentence</a></li>
       </ul>
 </li>
       </ul>
