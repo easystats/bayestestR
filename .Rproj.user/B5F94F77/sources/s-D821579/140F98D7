@@ -15,7 +15,7 @@
         "chunk_output_type" : "console",
         "cursorPosition" : "103,4",
         "ignored_words" : "frequentist,Frequentist,hdi,Kruschke,sd,i\n",
-        "scrollLine" : "100"
+        "scrollLine" : "0"
     },
     "relative_order" : 4,
     "source_on_save" : false,

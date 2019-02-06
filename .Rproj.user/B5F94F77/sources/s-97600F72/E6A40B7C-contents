@@ -1,6 +1,0 @@
-context("p_direction")
-
-test_that("p_direction", {
-  p_direction <- bayestestR::p_direction(bayestestR::rnorm_perfect(1000, 1, 1))
-  testthat::expect_equal(as.numeric(p_direction), 84.2, tolerance = 0.1)
-})

@@ -1,3 +1,7 @@
 authors:
   Dominique Makowski:
     href: https://dominiquemakowski.github.io/
+
+template:
+  params:
+    ganalytics: UA-97457476-7

@@ -14,7 +14,7 @@
     "properties" : {
         "chunk_output_type" : "console",
         "cursorPosition" : "58,150",
-        "scrollLine" : "32"
+        "scrollLine" : "0"
     },
     "relative_order" : 6,
     "source_on_save" : false,
