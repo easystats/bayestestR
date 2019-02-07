@@ -10,7 +10,7 @@ equivalence_test(posterior, bounds = c(-0.1, 0.1), CI = 90,
 \arguments{
 \item{posterior}{vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
 
-\item{bounds}{ROPE's lower and higher bounds.}
+\item{bounds}{ROPE's lower and higher bounds. Shoudd be a list of two values (e.g., `c(-0.1, 0.1)`) or `"default"`. If `"default"`, the bounds are set to `c(0.1, 0.1)` if input is a vector and `x +- 0.1*SD(response)` if a Bayesian model is provided.}
 
 \item{CI}{The credible interval to use.}
 

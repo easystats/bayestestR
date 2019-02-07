@@ -17,6 +17,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
+Imports:
+	insight
 Suggests:
 	spelling,
 	knitr,

@@ -3,7 +3,7 @@
 #' Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 #'
 #' @param posterior vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.
-#' @param bounds ROPE's lower and higher bounds.
+#' @param bounds ROPE's lower and higher bounds. Shoudd be a list of two values (e.g., `c(-0.1, 0.1)`) or `"default"`. If `"default"`, the bounds are set to `c(0.1, 0.1)` if input is a vector and `x +- 0.1*SD(response)` if a Bayesian model is provided.
 #' @param CI The credible interval to use.
 #' @param verbose Toggle off warnings.
 #'
@@ -29,19 +29,45 @@
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
 #' @export
-rope <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TRUE) {
+rope <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
   UseMethod("rope")
 }
 
 
+#' @method as.numeric rope
 #' @export
-print.rope <- function(x, ...){
-  cat(sprintf("%.2f%% in ROPE", x))
+as.numeric.rope <- function(x, ...){
+  # Doesn't work for some reason
+  return(x$ROPE_Percentage)
 }
 
 
 #' @export
-rope.numeric <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TRUE) {
+as_numeric_rope <- function(x, ...){
+  # WAIT TO FIX THE OTHER
+  return(x$ROPE_Percentage)
+}
+
+#' @export
+print.rope <- function(x, ...){
+  cat(sprintf("%.2f%% of the %s%% CI is in ROPE [%.2f, %.2f]",
+              x$ROPE_Percentage,
+              x$ROPE_CI,
+              x$ROPE_Bounds[1],
+              x$ROPE_Bounds[2]))
+}
+
+
+
+
+#' @export
+rope.numeric <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
+  if(all(bounds == "default")){
+    bounds <- c(-0.1, 0.1)
+  } else if(!all(is.numeric(bounds)) | length(bounds) != 2){
+    stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+  }
+
   if (length(CI) > 1) {
     rope_values <- list()
     for (CI_value in CI) {
@@ -65,19 +91,35 @@ rope.numeric <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TR
   HDI_area <- posterior[posterior >= HDI_area[1] & posterior <= HDI_area[2]]
   area_within <- HDI_area[HDI_area >= min(bounds) & HDI_area <= max(bounds)]
 
-  rope <- length(area_within) / length(HDI_area) * 100
-  class(rope) <- c("rope", class(rope))
+  rope <- list("ROPE_Percentage"=length(area_within) / length(HDI_area) * 100,
+               "ROPE_Bounds"=bounds,
+               "ROPE_CI"=CI)
+
+  class(rope) <- c(class(rope), "rope")
 
   return(rope)
 }
 
-
+#' @importFrom stats sd
+#' @importFrom insight get_response
 #' @export
-rope.stanreg <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TRUE) {
+rope.stanreg <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
+  if(all(bounds == "default")){
+    bounds <- c(-0.1*sd(insight::get_response(posterior)), 0.1*sd(insight::get_response(posterior)))
+  } else if(!all(is.numeric(bounds)) | length(bounds) != 2){
+    stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+  }
   return(sapply(as.data.frame(posterior), rope, bounds=bounds, CI=CI, verbose=verbose, simplify = FALSE))
 }
 
+#' @importFrom stats sd
+#' @importFrom insight get_response
 #' @export
-rope.brmsfit <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TRUE) {
+rope.brmsfit <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
+  if(all(bounds == "default")){
+    bounds <- c(-0.1*sd(insight::get_response(posterior)), 0.1*sd(insight::get_response(posterior)))
+  } else if(!all(is.numeric(bounds)) | length(bounds) != 2){
+    stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+  }
   return(sapply(as.data.frame(posterior), rope, bounds=bounds, CI=CI, verbose=verbose, simplify = FALSE))
 }

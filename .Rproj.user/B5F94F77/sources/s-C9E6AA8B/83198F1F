@@ -7,15 +7,15 @@
     "folds" : "",
     "hash" : "0",
     "id" : "83198F1F",
-    "lastKnownWriteTime" : 1549505387,
-    "last_content_update" : 1549505387582,
+    "lastKnownWriteTime" : 1549536608,
+    "last_content_update" : 1549536608346,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/R/rope.R",
     "project_path" : "R/rope.R",
     "properties" : {
-        "cursorPosition" : "25,52",
-        "scrollLine" : "0"
+        "cursorPosition" : "17,54",
+        "scrollLine" : "10"
     },
-    "relative_order" : 7,
+    "relative_order" : 2,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_source"

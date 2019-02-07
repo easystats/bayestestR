@@ -30,7 +30,8 @@ p_rope <- function(posterior, bounds = c(-0.1, 0.1), precision = 0.1) {
 #' @export
 p_rope.numeric <- function(posterior, bounds = c(-0.1, 0.1), precision = 0.1) {
   rope_values <- rope(posterior, bounds, CI = seq(0, 100, by = precision), verbose = FALSE)
-  rope_values <- na.omit(unlist(rope_values))
+  rope_values <- rope_values[!is.na(rope_values)]
+  rope_values <- sapply(rope_values, as_numeric_rope)
 
   if (all(rope_values == min(rope_values))) {
     if (rope_values[1] == 0) {
