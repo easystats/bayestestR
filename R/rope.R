@@ -34,9 +34,9 @@ rope <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
 }
 
 
-#' @method as.numeric rope
+#' @method as.double rope
 #' @export
-as.numeric.rope <- function(x, ...) {
+as.double.rope <- function(x, ...) {
   # Doesn't work for some reason
   return(x$ROPE_Percentage)
 }
@@ -105,7 +105,7 @@ flatten_list <- function(l) {
     "ROPE_CI" = CI
   )
 
-  class(rope) <- c(class(rope), "rope")
+  class(rope) <- c("rope", class(rope))
 
   rope
 }
