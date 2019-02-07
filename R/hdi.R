@@ -15,6 +15,7 @@
 #' posterior <- rnorm(1000)
 #' hdi(posterior, CI = 90)
 #' hdi(posterior, CI = c(80, 90, 95))
+#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)

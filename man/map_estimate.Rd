@@ -7,9 +7,9 @@
 map_estimate(posterior, precision = 2^10)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
+\item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
-\item{precision}{Number of points for density estimation. See the `n` parameter in \link[=density]{density}.}
+\item{precision}{Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.}
 }
 \value{
 The x, y coordinates of the MAP, corresponding to the MAP (x) and its density (y).

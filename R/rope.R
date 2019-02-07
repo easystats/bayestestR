@@ -2,8 +2,8 @@
 #'
 #' Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 #'
-#' @param posterior vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.
-#' @param bounds ROPE's lower and higher bounds. Shoudd be a list of two values (e.g., `c(-0.1, 0.1)`) or `"default"`. If `"default"`, the bounds are set to `c(0.1, 0.1)` if input is a vector and `x +- 0.1*SD(response)` if a Bayesian model is provided.
+#' @param posterior vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
+#' @param bounds ROPE's lower and higher bounds. Shoudd be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
 #' @param CI The credible interval to use.
 #' @param verbose Toggle off warnings.
 #'
@@ -16,6 +16,7 @@
 #' rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 1), CI = c(90, 95))
+#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)

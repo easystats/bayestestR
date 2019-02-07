@@ -2,20 +2,21 @@
 #'
 #' Find the Highest Maximum A Posteriori (MAP) estimate of a posterior. It corresponds to the 'peak' of the posterior distribution.
 #'
-#' @param posterior Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.
-#' @param precision Number of points for density estimation. See the `n` parameter in \link[=density]{density}.
+#' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
+#' @param precision Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.
 #'
 #' @return The x, y coordinates of the MAP, corresponding to the MAP (x) and its density (y).
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' posterior <- rnorm(1000)
 #' map_estimate(posterior)
+#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
