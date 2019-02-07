@@ -34,3 +34,4 @@ Suggests:
 	brms
 RoxygenNote: 6.1.1
 Language: en-GB
+Remotes: easystats/insight
