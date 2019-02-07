@@ -1,0 +1,131 @@
+---
+title: "Supplementary Materials 2"
+author: "Dominique Makowski"
+output:
+  word_document:
+    fig_height: 6
+    fig_width: 12
+    toc: yes
+    toc_depth: '4'
+    df_print: "kable"
+    highlight: "pygments"
+    reference_docx: Template_Supplementary_Materials.docx
+  pdf_document:
+    fig_height: 6
+    fig_width: 12
+    number_sections: yes
+    theme: journal
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 12
+    number_sections: yes
+    theme: journal
+    toc: yes
+    toc_depth: 2
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+
+rstan::rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+```
+
+
+This report contains the full statistical analysis of the result section. It provides the full statistical models description, along with the R code to generate it. 
+
+# Packages and data
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(psycho)
+```
+
+
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+df <- read.csv("df_raw.csv") %>%
+  filter(Condition!="Distractor") %>%
+  mutate(Participant_Education=Participant_Current_Education_Level,
+         Subjective_Condition=Condition_Believed_2,
+         Subjective_Belief_Binary=Subjective_Belief_Dichotomous,
+         Interoception_Sensibility=Interoception_Sensibility/100) %>%
+  select(-Switch_Switching_Speed,
+         -Fiction_Stererotypes_Negative,
+         -Fiction_Stererotypes_Positive) %>%
+  rename(Switch_Switching_Speed=Switch_Switching_Speed.1) %>%
+  dplyr::select(Participant_ID,
+                Participant_Age,
+                Participant_Education,
+                Emotion,
+                Condition,
+                Item,
+                Order,
+                Conceptual_Relevance,
+                Subjective_Arousal=Z_Subjective_Arousal,
+                Subjective_Valence=Z_Subjective_Valence,
+                Subjective_Control=Z_Subjective_Control,
+                Subjective_Belief_Dichotomous=Subjective_Belief_Dichotomous,
+                SCR_Magnitude_Log,
+                ECG_Heart_Rate_MinDiff,
+                ERP_CP_400_700_TP9_det_mean,
+                ERP_CP_500_800_TP9_det_mean,
+                ERP_CP_550_800_TP9_det_mean,
+                ERP_FC_300_500_TP9_det_mean,
+                ERP_FC_350_550_TP9_det_mean,
+                Resting_HRV_DFA_1,
+                Resting_HRV_RMSSD,
+                Interoception_Accuracy,
+                Interoception_Sensibility,
+                Interoception_Awareness,
+                Interoception_Awareness_abs,
+                ASQ_Adjusting,
+                ASQ_Concealing,
+                ASQ_Tolerating,
+                Fiction_Stererotypes_Negative,
+                Fiction_Stererotypes_Positive,
+                Fiction_Stererotypes,
+                Persona_Empathy,
+                Switch_Switching_Speed,
+                SimAct_Capacity_Span,
+                SimAct_Updating_Span,
+                CoCon_Inhibition,
+                CoCon_Conflict,
+                CoCon_Response,
+                CoCon_Core_Speed,
+                Subjective_Belief,
+                Subjective_Belief_Certainty) %>%
+  mutate(Order=as.factor(Order)) %>%
+  psycho::standardize(except=c("Subjective_Belief", "Subjective_Belief_Certainty")) %>%
+  mutate(Emotion = relevel(Emotion, ref="Negative"),
+         Condition = relevel(Condition, ref="Reality"),
+         Subjective_Control=-1*Subjective_Control,
+         CoCon_Core_Speed=-1*CoCon_Core_Speed,
+         CoCon_Response=-1*CoCon_Response,
+         CoCon_Inhibition=-1*CoCon_Inhibition,
+         CoCon_Conflict=-1*CoCon_Conflict,
+         Switch_Switching_Speed=-1*Switch_Switching_Speed,
+         Resting_HRV_DFA_1=-1*Resting_HRV_DFA_1,
+         ECG_Heart_Rate_MinDiff=-1*ECG_Heart_Rate_MinDiff,
+         Subjective_Valence=-1*Subjective_Valence) %>%
+  filter(Subjective_Belief_Dichotomous == "Yes") %>%
+  droplevels()
+```
+
+
+# Descriptive
+
+
+# References
+
+```{r}
+report::show_packages(sessionInfo())
+```
+

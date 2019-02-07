@@ -1,11 +1,13 @@
-context("rstanarm")
+context("brms")
 
-test_that("rstanarm", {
+test_that("brms", {
+
+  testthat::skip_on_travis()
 
   set.seed(333)
 
-  library(rstanarm)
-  model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+  library(brms)
+  model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 
   testthat::expect_is(hdi(model), "list")
   testthat::expect_is(rope(model), "list")

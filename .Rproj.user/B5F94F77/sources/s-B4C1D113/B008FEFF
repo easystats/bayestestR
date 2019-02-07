@@ -7,12 +7,12 @@
     "folds" : "",
     "hash" : "0",
     "id" : "B008FEFF",
-    "lastKnownWriteTime" : 1549515518,
-    "last_content_update" : 1549515518714,
+    "lastKnownWriteTime" : 1549516410,
+    "last_content_update" : 1549516410548,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/tests/testthat/test-brms.R",
     "project_path" : "tests/testthat/test-brms.R",
     "properties" : {
-        "cursorPosition" : "2,15",
+        "cursorPosition" : "6,2",
         "scrollLine" : "0"
     },
     "relative_order" : 5,

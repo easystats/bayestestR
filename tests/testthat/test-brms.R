@@ -2,6 +2,8 @@ context("brms")
 
 test_that("brms", {
 
+  testthat::skip_on_travis()
+
   set.seed(333)
 
   library(brms)
