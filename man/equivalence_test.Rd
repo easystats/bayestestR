@@ -4,7 +4,7 @@
 \alias{equivalence_test}
 \title{Test for Practical Equivalence}
 \usage{
-equivalence_test(posterior, bounds = c(-0.1, 0.1), CI = 90,
+equivalence_test(posterior, bounds = "default", CI = 90,
   verbose = TRUE)
 }
 \arguments{

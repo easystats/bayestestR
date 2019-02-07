@@ -1,7 +1,6 @@
 context("brms")
 
 test_that("brms", {
-
   testthat::skip_on_travis()
 
   set.seed(333)
@@ -16,5 +15,4 @@ test_that("brms", {
   testthat::expect_is(p_map(model), "list")
   testthat::expect_is(p_rope(model), "list")
   testthat::expect_is(p_direction(model), "list")
-
 })

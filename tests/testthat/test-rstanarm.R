@@ -1,7 +1,6 @@
 context("rstanarm")
 
 test_that("rstanarm", {
-
   set.seed(333)
 
   library(rstanarm)
@@ -14,5 +13,4 @@ test_that("rstanarm", {
   testthat::expect_is(p_map(model), "list")
   testthat::expect_is(p_rope(model), "list")
   testthat::expect_is(p_direction(model), "list")
-
 })

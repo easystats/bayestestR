@@ -11,17 +11,16 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' equivalence_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 1), CI = c(50, 99))
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
@@ -37,9 +36,9 @@ equivalence_test <- function(posterior, bounds = "default", CI = 90, verbose = T
 #' @export
 equivalence_test.numeric <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
   rope_value <- rope(posterior, bounds = bounds, CI = CI)
-  if("rope" %in% class(rope_value)){
+  if ("rope" %in% class(rope_value)) {
     rope_value <- as_numeric_rope(rope_value)
-  } else{
+  } else {
     rope_value <- sapply(rope_value, as_numeric_rope)
   }
   decision <- ifelse(rope_value == 0, "rejected",
@@ -56,10 +55,10 @@ equivalence_test.numeric <- function(posterior, bounds = "default", CI = 90, ver
 
 #' @export
 equivalence_test.stanreg <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
-  return(sapply(as.data.frame(posterior), equivalence_test, bounds=bounds, CI=CI, verbose=verbose, simplify = FALSE))
+  return(sapply(as.data.frame(posterior), equivalence_test, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE))
 }
 
 #' @export
 equivalence_test.brmsfit <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
-  return(sapply(as.data.frame(posterior), equivalence_test, bounds=bounds, CI=CI, verbose=verbose, simplify = FALSE))
+  return(sapply(as.data.frame(posterior), equivalence_test, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE))
 }

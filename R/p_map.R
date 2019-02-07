@@ -7,15 +7,14 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' p_map(posterior = rnorm(1000, 0, 1))
 #' p_map(posterior = rnorm(1000, 10, 1))
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' p_map(model)
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' p_map(model)
@@ -46,10 +45,10 @@ p_map.numeric <- function(posterior, precision = 2^10) {
 
 #' @export
 p_map.stanreg <- function(posterior, precision = 2^10) {
-  return(sapply(as.data.frame(posterior), p_map, precision=precision, simplify = FALSE))
+  return(sapply(as.data.frame(posterior), p_map, precision = precision, simplify = FALSE))
 }
 
 #' @export
 p_map.brmsfit <- function(posterior, precision = 2^10) {
-  return(sapply(as.data.frame(posterior), p_map, precision=precision, simplify = FALSE))
+  return(sapply(as.data.frame(posterior), p_map, precision = precision, simplify = FALSE))
 }

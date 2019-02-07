@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "4278325088",
     "id" : "774DA6BA",
-    "lastKnownWriteTime" : 1549540261,
-    "last_content_update" : 1549540261786,
+    "lastKnownWriteTime" : 1549548164,
+    "last_content_update" : 1549548164,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/R/equivalence_test.R",
     "project_path" : "R/equivalence_test.R",
     "properties" : {
         "cursorPosition" : "62,66",
-        "scrollLine" : "31"
+        "scrollLine" : "0"
     },
     "relative_order" : 4,
     "source_on_save" : false,

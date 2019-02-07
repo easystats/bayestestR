@@ -11,21 +11,20 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' posterior <- rnorm(1000)
 #' hdi(posterior, CI = 90)
 #' hdi(posterior, CI = c(80, 90, 95))
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
 #' }
-#'
+#' 
 #' @author All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #' @export
@@ -49,12 +48,12 @@ hdi.numeric <- function(posterior, CI = 90, verbose = TRUE) {
 
 #' @export
 hdi.stanreg <- function(posterior, CI = 90, verbose = TRUE) {
-  return(sapply(as.data.frame(posterior), hdi, CI=CI, verbose=verbose, simplify = FALSE))
+  return(sapply(as.data.frame(posterior), hdi, CI = CI, verbose = verbose, simplify = FALSE))
 }
 
 #' @export
 hdi.brmsfit <- function(posterior, CI = 90, verbose = TRUE) {
-  return(sapply(as.data.frame(posterior), hdi, CI=CI, verbose=verbose, simplify = FALSE))
+  return(sapply(as.data.frame(posterior), hdi, CI = CI, verbose = verbose, simplify = FALSE))
 }
 
 

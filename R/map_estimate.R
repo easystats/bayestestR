@@ -8,15 +8,14 @@
 #' @return The x, y coordinates of the MAP, corresponding to the MAP (x) and its density (y).
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' posterior <- rnorm(1000)
 #' map_estimate(posterior)
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
@@ -41,10 +40,10 @@ map_estimate.numeric <- function(posterior, precision = 2^10) {
 
 #' @export
 map_estimate.stanreg <- function(posterior, precision = 2^10) {
-  return(sapply(as.data.frame(posterior), map_estimate, precision=precision, simplify = FALSE))
+  return(sapply(as.data.frame(posterior), map_estimate, precision = precision, simplify = FALSE))
 }
 
 #' @export
 map_estimate.brmsfit <- function(posterior, precision = 2^10) {
-  return(sapply(as.data.frame(posterior), map_estimate, precision=precision, simplify = FALSE))
+  return(sapply(as.data.frame(posterior), map_estimate, precision = precision, simplify = FALSE))
 }

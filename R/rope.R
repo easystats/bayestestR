@@ -11,17 +11,16 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' rope(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 1), CI = c(90, 95))
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
@@ -36,25 +35,29 @@ rope <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
 
 #' @method as.numeric rope
 #' @export
-as.numeric.rope <- function(x, ...){
+as.numeric.rope <- function(x, ...) {
   # Doesn't work for some reason
   return(x$ROPE_Percentage)
 }
 
-
+#' TEMPORARY FUNCTION
+#' @param x need to be documented
+#' @param ... need to be documented
 #' @export
-as_numeric_rope <- function(x, ...){
+as_numeric_rope <- function(x, ...) {
   # WAIT TO FIX THE OTHER
   return(x$ROPE_Percentage)
 }
 
 #' @export
-print.rope <- function(x, ...){
-  cat(sprintf("%.2f%% of the %s%% CI is in ROPE [%.2f, %.2f]",
-              x$ROPE_Percentage,
-              x$ROPE_CI,
-              x$ROPE_Bounds[1],
-              x$ROPE_Bounds[2]))
+print.rope <- function(x, ...) {
+  cat(sprintf(
+    "%.2f%% of the %s%% CI is in ROPE [%.2f, %.2f]",
+    x$ROPE_Percentage,
+    x$ROPE_CI,
+    x$ROPE_Bounds[1],
+    x$ROPE_Bounds[2]
+  ))
 }
 
 
@@ -62,9 +65,9 @@ print.rope <- function(x, ...){
 
 #' @export
 rope.numeric <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
-  if(all(bounds == "default")){
+  if (all(bounds == "default")) {
     bounds <- c(-0.1, 0.1)
-  } else if(!all(is.numeric(bounds)) | length(bounds) != 2){
+  } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
     stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
@@ -91,9 +94,11 @@ rope.numeric <- function(posterior, bounds = "default", CI = 90, verbose = TRUE)
   HDI_area <- posterior[posterior >= HDI_area[1] & posterior <= HDI_area[2]]
   area_within <- HDI_area[HDI_area >= min(bounds) & HDI_area <= max(bounds)]
 
-  rope <- list("ROPE_Percentage"=length(area_within) / length(HDI_area) * 100,
-               "ROPE_Bounds"=bounds,
-               "ROPE_CI"=CI)
+  rope <- list(
+    "ROPE_Percentage" = length(area_within) / length(HDI_area) * 100,
+    "ROPE_Bounds" = bounds,
+    "ROPE_CI" = CI
+  )
 
   class(rope) <- c(class(rope), "rope")
 
@@ -104,22 +109,22 @@ rope.numeric <- function(posterior, bounds = "default", CI = 90, verbose = TRUE)
 #' @importFrom insight get_response
 #' @export
 rope.stanreg <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
-  if(all(bounds == "default")){
-    bounds <- c(-0.1*sd(insight::get_response(posterior)), 0.1*sd(insight::get_response(posterior)))
-  } else if(!all(is.numeric(bounds)) | length(bounds) != 2){
+  if (all(bounds == "default")) {
+    bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
+  } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
     stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
-  return(sapply(as.data.frame(posterior), rope, bounds=bounds, CI=CI, verbose=verbose, simplify = FALSE))
+  return(sapply(as.data.frame(posterior), rope, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE))
 }
 
 #' @importFrom stats sd
 #' @importFrom insight get_response
 #' @export
 rope.brmsfit <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
-  if(all(bounds == "default")){
-    bounds <- c(-0.1*sd(insight::get_response(posterior)), 0.1*sd(insight::get_response(posterior)))
-  } else if(!all(is.numeric(bounds)) | length(bounds) != 2){
+  if (all(bounds == "default")) {
+    bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
+  } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
     stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
-  return(sapply(as.data.frame(posterior), rope, bounds=bounds, CI=CI, verbose=verbose, simplify = FALSE))
+  return(sapply(as.data.frame(posterior), rope, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE))
 }

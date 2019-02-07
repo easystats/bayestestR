@@ -17,6 +17,6 @@ test_that("rope", {
   testthat::expect_is(rope(rnorm_perfect(1000, 0, 1)), "rope")
   testthat::expect_equal(capture.output(print(rope(rnorm_perfect(1000, 0, 1)))), "8.88% of the 90% CI is in ROPE [-0.10, 0.10]")
 
-  testthat::expect_error(rope(rnorm_perfect(1000, 0, 1), bounds=c("A", 0.1)))
-  testthat::expect_equal(as_numeric_rope(rope(rnorm_perfect(1000, 0, 1), bounds=c(-0.1, 0.1))), 8.88, tolerance=0.01)
+  testthat::expect_error(rope(rnorm_perfect(1000, 0, 1), bounds = c("A", 0.1)))
+  testthat::expect_equal(as_numeric_rope(rope(rnorm_perfect(1000, 0, 1), bounds = c(-0.1, 0.1))), 8.88, tolerance = 0.01)
 })

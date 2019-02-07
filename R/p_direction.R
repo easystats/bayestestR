@@ -7,16 +7,15 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' # Simulate a posterior distribution of mean 1 and SD 1
 #' posterior <- rnorm(1000, mean = 1, sd = 1)
 #' p_direction(posterior)
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' p_direction(model)
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' p_direction(model)
@@ -30,7 +29,7 @@ p_direction <- function(posterior) {
 
 
 #' @export
-print.p_direction <- function(x, ...){
+print.p_direction <- function(x, ...) {
   cat(sprintf("pd = %.2f%%", x))
 }
 
@@ -58,6 +57,3 @@ p_direction.stanreg <- function(posterior) {
 p_direction.brmsfit <- function(posterior) {
   return(sapply(as.data.frame(posterior), p_direction, simplify = FALSE))
 }
-
-
-

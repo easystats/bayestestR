@@ -8,13 +8,13 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' p_rope(posterior = rnorm(1000, mean = 1, sd = 1), bounds = c(-0.1, 0.1))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' p_rope(model)
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' p_rope(model)
@@ -65,10 +65,10 @@ p_rope.numeric <- function(posterior, bounds = c(-0.1, 0.1), precision = 0.1) {
 
 #' @export
 p_rope.stanreg <- function(posterior, bounds = c(-0.1, 0.1), precision = 0.1) {
-  return(sapply(as.data.frame(posterior), p_rope, bounds=bounds, precision=precision, simplify = FALSE))
+  return(sapply(as.data.frame(posterior), p_rope, bounds = bounds, precision = precision, simplify = FALSE))
 }
 
 #' @export
 p_rope.brmsfit <- function(posterior, bounds = c(-0.1, 0.1), precision = 0.1) {
-  return(sapply(as.data.frame(posterior), p_rope, bounds=bounds, precision=precision, simplify = FALSE))
+  return(sapply(as.data.frame(posterior), p_rope, bounds = bounds, precision = precision, simplify = FALSE))
 }
