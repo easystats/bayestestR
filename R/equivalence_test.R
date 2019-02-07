@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' equivalence_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
@@ -20,7 +20,7 @@
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
@@ -49,16 +49,16 @@ equivalence_test.numeric <- function(posterior, bounds = "default", CI = 90, ver
     decision <- split(unname(decision), names(decision))
   }
 
-  return(decision)
+  decision
 }
 
 
 #' @export
 equivalence_test.stanreg <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
-  return(sapply(as.data.frame(posterior), equivalence_test, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE))
+  sapply(as.data.frame(posterior), equivalence_test, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
 }
 
 #' @export
 equivalence_test.brmsfit <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
-  return(sapply(as.data.frame(posterior), equivalence_test, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE))
+  sapply(as.data.frame(posterior), equivalence_test, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
 }

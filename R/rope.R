@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' rope(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
@@ -20,7 +20,7 @@
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
@@ -71,17 +71,21 @@ rope.numeric <- function(posterior, bounds = "default", CI = 90, verbose = TRUE)
     stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  if (length(CI) > 1) {
-    rope_values <- list()
-    for (CI_value in CI) {
-      rope_values[[paste0("CI_", CI_value)]] <- .rope(posterior, bounds = bounds, CI = CI_value, verbose = verbose)
-    }
-    return(rope_values)
-  } else {
-    return(.rope(posterior, bounds = bounds, CI = CI, verbose = verbose))
-  }
+  rope_values <- lapply(CI, function(i) {
+    .rope(posterior, bounds = bounds, CI = i, verbose = verbose)
+  })
+
+  names(rope_values) <- paste0("CI_", CI)
+  flatten_list(rope_values)
 }
 
+# could be moved into a "utils.R"-file or so...
+flatten_list <- function(l) {
+  if (length(l) == 1)
+    l[[1]]
+  else
+    l
+}
 
 
 .rope <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TRUE) {
@@ -102,7 +106,7 @@ rope.numeric <- function(posterior, bounds = "default", CI = 90, verbose = TRUE)
 
   class(rope) <- c(class(rope), "rope")
 
-  return(rope)
+  rope
 }
 
 #' @importFrom stats sd
@@ -114,7 +118,7 @@ rope.stanreg <- function(posterior, bounds = "default", CI = 90, verbose = TRUE)
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
     stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
-  return(sapply(as.data.frame(posterior), rope, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE))
+  sapply(as.data.frame(posterior), rope, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
 }
 
 #' @importFrom stats sd
@@ -126,5 +130,5 @@ rope.brmsfit <- function(posterior, bounds = "default", CI = 90, verbose = TRUE)
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
     stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
-  return(sapply(as.data.frame(posterior), rope, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE))
+  sapply(as.data.frame(posterior), rope, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
 }
