@@ -1,21 +1,21 @@
 {
     "collab_server" : "",
     "contents" : "",
-    "created" : 1549266823169.000,
+    "created" : 1549504969341.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
     "hash" : "0",
-    "id" : "B4383A65",
-    "lastKnownWriteTime" : 1549350710,
-    "last_content_update" : 1549350710860,
+    "id" : "83198F1F",
+    "lastKnownWriteTime" : 1549505387,
+    "last_content_update" : 1549505387582,
     "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/R/rope.R",
     "project_path" : "R/rope.R",
     "properties" : {
-        "cursorPosition" : "18,0",
-        "scrollLine" : "0"
+        "cursorPosition" : "32,17",
+        "scrollLine" : "21"
     },
-    "relative_order" : 6,
+    "relative_order" : 7,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_source"

@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1549464005288.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "67D86867",
+    "lastKnownWriteTime" : 1549504309,
+    "last_content_update" : 1549504309590,
+    "path" : "C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/R/map_estimate.R",
+    "project_path" : "R/map_estimate.R",
+    "properties" : {
+        "cursorPosition" : "5,44",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -27,6 +27,8 @@ Suggests:
 	dplyr,
 	tidyr,
 	stringr,
-	broom
+	broom,
+	rstanarm,
+	brms
 RoxygenNote: 6.1.1
 Language: en-GB

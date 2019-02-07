@@ -7,13 +7,13 @@
 rope(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TRUE)
 }
 \arguments{
-\item{posterior}{vector representing a posterior distribution.}
+\item{posterior}{vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
 
 \item{bounds}{ROPE's lower and higher bounds.}
 
-\item{CI}{the credible interval to use.}
+\item{CI}{The credible interval to use.}
 
-\item{verbose}{toggle off warnings.}
+\item{verbose}{Toggle off warnings.}
 }
 \description{
 Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
@@ -28,6 +28,16 @@ rope(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
 rope(posterior = rnorm(1000, 1, 1), CI = c(90, 95))
+
+\dontrun{
+library(rstanarm)
+model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+rope(model)
+
+library(brms)
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+rope(model)
+}
 }
 \author{
 \href{https://dominiquemakowski.github.io/}{Dominique Makowski}

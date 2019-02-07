@@ -2,8 +2,8 @@
 #'
 #' Functions to check if an object is a data frame, or coerce it if possible.
 #'
-#' @param x any R object.
-#' @param ... additional arguments to be passed to or from methods.
+#' @param x Any R object.
+#' @param ... Additional arguments to be passed to or from methods.
 #'
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'

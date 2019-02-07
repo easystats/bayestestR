@@ -7,7 +7,7 @@
 p_rope(posterior, bounds = c(-0.1, 0.1), precision = 0.1)
 }
 \arguments{
-\item{posterior}{vector representing a posterior distribution.}
+\item{posterior}{Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
 
 \item{bounds}{ROPE's lower and higher bounds.}
 
@@ -20,6 +20,15 @@ The ROPE-based p-value represents the maximum percentage of \link[=hdi]{HDI} tha
 library(bayestestR)
 
 p_rope(posterior = rnorm(1000, mean = 1, sd = 1), bounds = c(-0.1, 0.1))
+\dontrun{
+library(rstanarm)
+model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+p_rope(model)
+
+library(brms)
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+p_rope(model)
+}
 }
 \author{
 \href{https://dominiquemakowski.github.io/}{Dominique Makowski}

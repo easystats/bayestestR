@@ -2,9 +2,9 @@
 #'
 #' Generate a sample of size n with a near-perfect normal distribution.
 #'
-#' @param n number of observations. If length(n) > 1, the length is taken to be the number required.
-#' @param mean vector of means.
-#' @param sd vector of standard deviations.
+#' @param n Number of observations. If length(n) > 1, the length is taken to be the number required.
+#' @param mean Vector of means.
+#' @param sd Vector of standard deviations.
 #'
 #' @examples
 #' library(bayestestR)

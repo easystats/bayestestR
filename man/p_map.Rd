@@ -7,9 +7,9 @@
 p_map(posterior, precision = 2^10)
 }
 \arguments{
-\item{posterior}{vector representing a posterior distribution.}
+\item{posterior}{Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
 
-\item{precision}{number of points for density estimation. See the `n` parameter in \link[=density]{density}.}
+\item{precision}{Number of points for density estimation. See the `n` parameter in \link[=density]{density}.}
 }
 \description{
 Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP). It corresponds to the density value at 0 divided by the density of the highest density point.
@@ -19,6 +19,16 @@ library(bayestestR)
 
 p_map(posterior = rnorm(1000, 0, 1))
 p_map(posterior = rnorm(1000, 10, 1))
+
+\dontrun{
+library(rstanarm)
+model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+p_map(model)
+
+library(brms)
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+p_map(model)
+}
 }
 \references{
 \href{https://www.youtube.com/watch?v=Ip8Ci5KUVRc}{Mill's talk}
