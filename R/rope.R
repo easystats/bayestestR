@@ -37,18 +37,9 @@ rope <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
 #' @method as.double rope
 #' @export
 as.double.rope <- function(x, ...) {
-  # Doesn't work for some reason
-  return(x$ROPE_Percentage)
+  x$ROPE_Percentage
 }
 
-#' TEMPORARY FUNCTION
-#' @param x need to be documented
-#' @param ... need to be documented
-#' @export
-as_numeric_rope <- function(x, ...) {
-  # WAIT TO FIX THE OTHER
-  return(x$ROPE_Percentage)
-}
 
 #' @export
 print.rope <- function(x, ...) {

@@ -38,9 +38,9 @@ equivalence_test <- function(posterior, bounds = "default", CI = 90, verbose = T
 equivalence_test.numeric <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
   rope_value <- rope(posterior, bounds = bounds, CI = CI)
   if ("rope" %in% class(rope_value)) {
-    rope_value <- as_numeric_rope(rope_value)
+    rope_value <- as.numeric(rope_value)
   } else {
-    rope_value <- sapply(rope_value, as_numeric_rope)
+    rope_value <- sapply(rope_value, as.numeric)
   }
   decision <- ifelse(rope_value == 0, "rejected",
     ifelse(rope_value == 100, "accepted", "undecided")
