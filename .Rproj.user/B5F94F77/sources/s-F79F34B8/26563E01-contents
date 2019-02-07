@@ -1,0 +1,168 @@
+---
+title: "Supplementary Materials 2"
+author: "Dominique Makowski"
+output:
+  word_document:
+    fig_height: 6
+    fig_width: 12
+    toc: yes
+    toc_depth: '4'
+    df_print: "kable"
+    highlight: "pygments"
+    reference_docx: Template_Supplementary_Materials.docx
+  pdf_document:
+    fig_height: 6
+    fig_width: 12
+    number_sections: yes
+    theme: journal
+    toc: yes
+    toc_depth: '2'
+  html_document:
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 12
+    number_sections: yes
+    theme: journal
+    toc: yes
+    toc_depth: 2
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+
+This report contains the full statistical analysis of the result section. It provides the full statistical models description, along with the R code to generate it. 
+
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+source("1.Functions.R")
+source("2.Preprocessing.R")
+source("3.OutcomesReduction.R")
+
+
+
+library(knitr)
+options(knitr.kable.NA = '')
+
+rstan::rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+
+
+# load("models.RData")
+load("models_missing.RData")
+
+
+
+report_model <- function(models, feature="Fiction_Stererotypes_Negative", name="Negative_Stereotypes"){
+  mod <- models[["Affect"]][[feature]]$interaction
+  formula <- stringr::str_replace_all(mod$values$model$formula, feature, name) 
+  formula <- stringr::str_replace_all(mod$values$model$formula, "Affect", "Emotion_Index") 
+  table <- summary(mod) %>% 
+    select(-Overlap) %>% 
+    mutate(Variable = stringr::str_replace_all(Variable, feature, name)) %>% 
+    mutate(`90% CI` = paste0("[", format_digit(CI_lower, 2), ", ", format_digit(CI_higher, 2), "]"))
+  
+  print(formula)
+  knitr::kable(table, digits=2)
+  
+}
+  
+  
+  
+data <- models %>%
+  extract_data(outcomes=c("Affect"),
+               features=rev(c(
+                 # "Fiction_Stererotypes_Negative",
+                 # "Fiction_Stererotypes_Positive",
+                 # "Persona_Empathy",
+                 # "ASQ_Tolerating",
+                 # "ASQ_Adjusting",
+                 # "ASQ_Concealing",
+                 "SimAct_Capacity_Span",
+                 "SimAct_Updating_Span",
+                 "Switch_Switching_Speed",
+                 "CoCon_Conflict",
+                 "CoCon_Inhibition",
+                 "CoCon_Response",
+                 "CoCon_Core_Speed",
+                 # "Resting_HRV_DFA_1",
+                 # "Resting_HRV_RMSSD",
+                 "Interoception_Accuracy",
+                 "Interoception_Sensibility",
+                 "Interoception_Awareness")))
+
+
+```
+
+# Interoception
+
+## Awareness
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+report_model(models, feature="Interoception_Awareness", name="Interoceptive_Awareness")
+```
+
+## Sensibility
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+report_model(models, feature="Interoception_Sensibility", name="Interoceptive_Sensibility")
+```
+
+## Accuracy
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+report_model(models, feature="Interoception_Accuracy", name="Interoceptive_Accuracy")
+```
+
+# Executive Functions
+
+## CoCon - Processing Speed
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+report_model(models, feature="CoCon_Core_Speed", name="Processing_Speed")
+```
+
+## CoCon - Response Selection
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+report_model(models, feature="CoCon_Response", name="Response_Selection")
+```
+
+## CoCon - Response Inhibition
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+report_model(models, feature="CoCon_Inhibition", name="Response_Inhibition")
+```
+
+## CoCon - Conflict Resolution
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+report_model(models, feature="CoCon_Conflict", name="Conflict_Resolution")
+```
+
+## Switching - Shifting
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+report_model(models, feature="Switch_Switching_Speed", name="Shifting")
+```
+
+## Working Memory - Updating
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+report_model(models, feature="SimAct_Updating_Span", name="Updating")
+```
+
+## Working Memory - Capacity
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+report_model(models, feature="SimAct_Capacity_Span", name="Capacity")
+```
+
+
+# Personality Traits
+
+## Empathy
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+report_model(models, feature="Persona_Empathy", name="Empathy")
+```
