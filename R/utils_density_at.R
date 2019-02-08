@@ -2,9 +2,9 @@
 #'
 #' Compute the density of a given point of a distribution.
 #'
-#' @param posterior vector representing a posterior distribution.
-#' @param x the value of which to get the approximate probability.
-#' @param precision number of points for density estimation. See the `n` parameter in \link[=density]{density}.
+#' @param posterior Vector representing a posterior distribution.
+#' @param x The value of which to get the approximate probability.
+#' @param precision Number of points for density estimation. See the `n` parameter in \link[=density]{density}.
 #'
 #' @examples
 #' library(bayestestR)

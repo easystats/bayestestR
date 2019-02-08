@@ -16,11 +16,32 @@
 #' equivalence_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 1), CI = c(50, 99))
+#'
+#' \dontrun{
+#' library(rstanarm)
+#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+#' equivalence_test(model)
+#'
+#' library(brms)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' equivalence_test(model)
+#' }
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
 #' @export
-equivalence_test <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TRUE) {
+equivalence_test <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
+  UseMethod("equivalence_test")
+}
+
+
+#' @export
+equivalence_test.numeric <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
   rope_value <- rope(posterior, bounds = bounds, CI = CI)
+  if ("rope" %in% class(rope_value)) {
+    rope_value <- as.numeric(rope_value)
+  } else {
+    rope_value <- sapply(rope_value, as.numeric)
+  }
   decision <- ifelse(rope_value == 0, "rejected",
     ifelse(rope_value == 100, "accepted", "undecided")
   )
@@ -29,5 +50,16 @@ equivalence_test <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose 
     decision <- split(unname(decision), names(decision))
   }
 
-  return(decision)
+  decision
+}
+
+
+#' @export
+equivalence_test.stanreg <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
+  sapply(as.data.frame(posterior), equivalence_test, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
+}
+
+#' @export
+equivalence_test.brmsfit <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
+  sapply(as.data.frame(posterior), equivalence_test, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
 }

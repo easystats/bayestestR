@@ -4,17 +4,17 @@
 \alias{equivalence_test}
 \title{Test for Practical Equivalence}
 \usage{
-equivalence_test(posterior, bounds = c(-0.1, 0.1), CI = 90,
+equivalence_test(posterior, bounds = "default", CI = 90,
   verbose = TRUE)
 }
 \arguments{
-\item{posterior}{vector representing a posterior distribution.}
+\item{posterior}{vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
-\item{bounds}{ROPE's lower and higher bounds.}
+\item{bounds}{ROPE's lower and higher bounds. Shoudd be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
 
-\item{CI}{the credible interval to use.}
+\item{CI}{The credible interval to use.}
 
-\item{verbose}{toggle off warnings.}
+\item{verbose}{Toggle off warnings.}
 }
 \description{
 Perform a Test for Practical Equivalence based on the "HDI+ROPE decision rule" (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis".
@@ -29,6 +29,16 @@ equivalence_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 equivalence_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 equivalence_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
 equivalence_test(posterior = rnorm(1000, 1, 1), CI = c(50, 99))
+
+\dontrun{
+library(rstanarm)
+model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+equivalence_test(model)
+
+library(brms)
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+equivalence_test(model)
+}
 }
 \references{
 \href{https://strengejacke.wordpress.com/2018/06/06/r-functions-for-bayesian-model-statistics-and-summaries-rstats-stan-brms/}{sjstats}

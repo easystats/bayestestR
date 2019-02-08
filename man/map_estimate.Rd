@@ -7,9 +7,9 @@
 map_estimate(posterior, precision = 2^10)
 }
 \arguments{
-\item{posterior}{vector representing a posterior distribution.}
+\item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
-\item{precision}{number of points for density estimation. See the `n` parameter in \link[=density]{density}.}
+\item{precision}{Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.}
 }
 \value{
 The x, y coordinates of the MAP, corresponding to the MAP (x) and its density (y).
@@ -22,6 +22,16 @@ library(bayestestR)
 
 posterior <- rnorm(1000)
 map_estimate(posterior)
+
+\dontrun{
+library(rstanarm)
+model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+map_estimate(model)
+
+library(brms)
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+map_estimate(model)
+}
 }
 \author{
 \href{https://dominiquemakowski.github.io/}{Dominique Makowski}

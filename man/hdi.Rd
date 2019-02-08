@@ -7,11 +7,11 @@
 hdi(posterior, CI = 90, verbose = TRUE)
 }
 \arguments{
-\item{posterior}{vector representing a posterior distribution.}
+\item{posterior}{Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
 
-\item{CI}{the credible interval, value or vector between 0 and 100, indicating the probability that is to be estimated.}
+\item{CI}{The credible interval, value or vector between 0 and 100, indicating the probability that is to be estimated.}
 
-\item{verbose}{toggle off warnings.}
+\item{verbose}{Toggle off warnings.}
 }
 \description{
 Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
@@ -25,6 +25,17 @@ library(bayestestR)
 posterior <- rnorm(1000)
 hdi(posterior, CI = 90)
 hdi(posterior, CI = c(80, 90, 95))
+
+\dontrun{
+library(rstanarm)
+model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+hdi(model)
+
+library(brms)
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+hdi(model)
+}
+
 }
 \references{
 Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.

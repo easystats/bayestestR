@@ -2,20 +2,36 @@
 #'
 #' Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP). It corresponds to the density value at 0 divided by the density of the highest density point.
 #'
-#' @param posterior vector representing a posterior distribution.
-#' @param precision number of points for density estimation. See the `n` parameter in \link[=density]{density}.
+#' @param posterior Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.
+#' @param precision Number of points for density estimation. See the `n` parameter in \link[=density]{density}.
 #'
 #' @examples
 #' library(bayestestR)
 #'
 #' p_map(posterior = rnorm(1000, 0, 1))
 #' p_map(posterior = rnorm(1000, 10, 1))
+#'
+#' \dontrun{
+#' library(rstanarm)
+#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+#' p_map(model)
+#'
+#' library(brms)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' p_map(model)
+#' }
 #' @references \href{https://www.youtube.com/watch?v=Ip8Ci5KUVRc}{Mill's talk}
 #'
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #' @importFrom stats density
 #' @export
 p_map <- function(posterior, precision = 2^10) {
+  UseMethod("p_map")
+}
+
+
+#' @export
+p_map.numeric <- function(posterior, precision = 2^10) {
   # Highest density point
   map <- map_estimate(posterior)[2]
 
@@ -25,4 +41,15 @@ p_map <- function(posterior, precision = 2^10) {
 
   # Odds
   return(d_0 / map)
+}
+
+
+#' @export
+p_map.stanreg <- function(posterior, precision = 2^10) {
+  return(sapply(as.data.frame(posterior), p_map, precision = precision, simplify = FALSE))
+}
+
+#' @export
+p_map.brmsfit <- function(posterior, precision = 2^10) {
+  return(sapply(as.data.frame(posterior), p_map, precision = precision, simplify = FALSE))
 }
