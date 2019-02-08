@@ -7,19 +7,19 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' # Simulate a posterior distribution of mean 1 and SD 1
 #' posterior <- rnorm(1000, mean = 1, sd = 1)
 #' p_direction(posterior)
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' p_direction(model)
-#'
-#' library(brms)
-#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' p_direction(model)
+#' 
+#' # Will fail until get_predictors is implemented.
+#' # library(brms)
+#' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' # p_direction(model)
 #' }
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
@@ -49,12 +49,21 @@ p_direction.numeric <- function(posterior) {
 }
 
 
-#' @export
-p_direction.stanreg <- function(posterior) {
-  return(sapply(as.data.frame(posterior), p_direction, simplify = FALSE))
+
+
+
+#' @keywords internal
+.p_direction_models <- function(posterior) {
+  out <- data.frame(
+    "Parameter" = find_parameters(posterior),
+    "pd" = sapply(get_parameters(posterior), p_direction, simplify = TRUE),
+    row.names = NULL
+  )
+  return(out)
 }
 
 #' @export
-p_direction.brmsfit <- function(posterior) {
-  return(sapply(as.data.frame(posterior), p_direction, simplify = FALSE))
-}
+p_direction.stanreg <- .p_direction_models
+
+#' @export
+p_direction.brmsfit <- .p_direction_models

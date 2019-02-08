@@ -4,12 +4,12 @@
 \alias{p_rope}
 \title{ROPE-based p-value}
 \usage{
-p_rope(posterior, bounds = c(-0.1, 0.1), precision = 0.1)
+p_rope(posterior, bounds = "default", precision = 0.1)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
 
-\item{bounds}{ROPE's lower and higher bounds.}
+\item{bounds}{ROPE's lower and higher bounds. Shoudd be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
 
 \item{precision}{The precision by which to explore the ROPE space. Lower values increase the precision of the returned p value but can be quite computationaly costly.}
 }
@@ -20,15 +20,15 @@ The ROPE-based p-value represents the maximum percentage of \link[=hdi]{HDI} tha
 library(bayestestR)
 
 p_rope(posterior = rnorm(1000, mean = 1, sd = 1), bounds = c(-0.1, 0.1))
-
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 p_rope(model)
 
-library(brms)
-model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-p_rope(model)
+# Will fail until get_predictors is implemented.
+# library(brms)
+# model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+# p_rope(model)
 }
 }
 \author{

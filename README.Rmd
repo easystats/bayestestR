@@ -15,7 +15,10 @@ editor_options:
 
 # bayestestR <img src='man/figures/logo.png' align="right" height="139" />
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   fig.path = "README-"
@@ -31,50 +34,6 @@ knitr::opts_chunk$set(
 
 
 
-
-
-
-```{r eval=FALSE, message=FALSE, warning=FALSE, echo=FALSE}
-# Create logo
-library(ggplot2)
-library(dplyr)
-library(hexSticker)
-library(bayestestR)
-
-set.seed(333)
-
-posterior <- rnorm_perfect(1000, 2, 1)
-
-
-p <- posterior %>% 
-  density() %>% 
-  as.data.frame() %>% 
-  mutate(fill = ifelse(x > hdi(posterior, 75)[2], "sup", "hdi"),
-         fill = ifelse(x < hdi(posterior, 75)[1], "inf", fill),
-         fill = ifelse(x < 0, "p", fill)) %>% 
-  ggplot(aes(x=x, y=y)) +
-  geom_ribbon(aes(ymin=0, ymax=y, fill=fill)) +
-  scale_fill_manual(values=c("p"="#E91E63", "inf"="#FF9800", "hdi"="#FFC107", "sup"="#FF9800"), guide=FALSE) +
-  geom_vline(xintercept=0, linetype="dotted", size=0.1) +
-  # geom_segment(x=map_estimate(posterior)[1], xend=map_estimate(posterior)[1],
-  #              y=0, yend=map_estimate(posterior)[2], size=0.25, color="#E91E63") +
-  geom_line(size=0.35) +
-  theme_void() + 
-  theme_transparent() +
-  scale_y_continuous(expand = c(0, 0.002))
-p
-
-s <- hexSticker::sticker(p, package="bayestestR", 
-                    # p_size=8, 
-                    s_x=1,
-                    # s_y=.75,
-                    s_width=1.2, 
-                    s_height=0.8,
-                    h_fill="#FFC107", 
-                    h_color="#E91E63",
-                    filename="../logo.svg")
-s
-```
 
 
 `bayestestR` is a lightweight package providing utilities to describe posterior distributions and Bayesian models.
@@ -129,7 +88,6 @@ map_estimate(rnorm(1000, 1, 1))
 
 ![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-5-1.png)
 
-
 ### ROPE
 
 **`rope()`** computes the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence. Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are equivalent to the null value for practical purposes (2010, 2011, 2014). Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen). This could be generalized: For instance, for linear models, the ROPE could be set as 0 +/- .1 \* sd(y). Kruschke (2010, 2011, 2014) suggest using the proportion of the 95\% (or 90\%, considered more stable) *HDI* that falls within the ROPE as an index for "null-hypothesis" testing (as understood under the Bayesian framework, see `rope_test`). Besides the ROPE-based decision criteria, the proportion of the 95\% CI that falls in the ROPE can be used as a continuous index.
@@ -137,7 +95,6 @@ map_estimate(rnorm(1000, 1, 1))
 ```{r message=FALSE, warning=FALSE, results='hide'}
 rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 ```
-
 
 ![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-7-1.png)
 
@@ -179,7 +136,6 @@ p_map(posterior = rnorm(1000, 1, 1))
 ```
 
 ![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-13-1.png)
-
 
 ## Utilities
 

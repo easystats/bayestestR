@@ -11,20 +11,22 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' equivalence_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 1), CI = c(50, 99))
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
-#'
-#' library(brms)
-#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' equivalence_test(model)
+#' equivalence_test(model, CI = c(50, 100))
+#' 
+#' # Will fail until get_predictors is implemented.
+#' # library(brms)
+#' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' # equivalence_test(model)
+#' # equivalence_test(model, CI = c(50, 99))
 #' }
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
@@ -36,30 +38,51 @@ equivalence_test <- function(posterior, bounds = "default", CI = 90, verbose = T
 
 #' @export
 equivalence_test.numeric <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
-  rope_value <- rope(posterior, bounds = bounds, CI = CI)
-  if ("rope" %in% class(rope_value)) {
-    rope_value <- as.numeric(rope_value)
-  } else {
-    rope_value <- sapply(rope_value, as.numeric)
-  }
-  decision <- ifelse(rope_value == 0, "rejected",
-    ifelse(rope_value == 100, "accepted", "undecided")
+  out <- as.data.frame(rope(posterior, bounds = bounds, CI = CI))
+
+  out$ROPE_Equivalence <- ifelse(out$ROPE_Percentage == 0, "rejected",
+    ifelse(out$ROPE_Percentage == 100, "accepted", "undecided")
   )
+  return(out)
+}
 
-  if (length(CI) > 1) {
-    decision <- split(unname(decision), names(decision))
+
+
+
+#' @importFrom stats sd
+#' @keywords internal
+.equivalence_test_models <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
+  if (all(bounds == "default")) {
+    bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
+  } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
+    stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
-
-  decision
-}
-
-
-#' @export
-equivalence_test.stanreg <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
-  sapply(as.data.frame(posterior), equivalence_test, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
+  list <- sapply(get_parameters(posterior), equivalence_test, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
+  return(flatten_list(list, name = "Parameter"))
 }
 
 #' @export
-equivalence_test.brmsfit <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
-  sapply(as.data.frame(posterior), equivalence_test, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
+equivalence_test.stanreg <- .equivalence_test_models
+
+#' @export
+equivalence_test.brmsfit <- .equivalence_test_models
+
+
+
+
+
+#' TEMPORARY
+#' @importFrom stats coef
+#' @param model model
+#' @export
+find_parameters <- function(model) {
+  return(names(coef(model)))
+}
+
+#' TEMPORARY
+#' @importFrom stats coef
+#' @param model model
+#' @export
+get_parameters <- function(model) {
+  return(as.data.frame(model)[find_parameters(model)])
 }
