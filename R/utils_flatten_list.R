@@ -3,29 +3,25 @@
 #' @param list A list.
 #' @param name Name of column of keys in the case the output is a dataframe.
 #' @export
-flatten_list <- function(list, name = "name") {
-  if (length(list) == 1) {
-    return(list[[1]])
-  } else
-  if (all(sapply(list, is.data.frame))) {
-    if (is.null(names(list))) {
-      return(as.data.frame(t(sapply(list, rbind))))
+flatten_list <- function(object, name = "name") {
+  if (length(object) == 1) {
+    object[[1]]
+  } else if (all(sapply(object, is.data.frame))) {
+    if (is.null(names(object))) {
+      as.data.frame(t(sapply(object, rbind)))
     } else {
       tryCatch({
-        df <- data.frame()
-        for (i in names(list)) {
-          list[[i]][name] <- i
-          df <- rbind(df, list[[i]])
-        }
-        df <- df[c(name, names(df)[names(df) != name])]
-        return(as.data.frame(df))
+        rn <- names(object)
+        object <- do.call(rbind, object)
+        object[name] <- rn
+        object[c(name, setdiff(names(object), name))]
       }, warning = function(w) {
-        return(list)
+        object
       }, error = function(e) {
-        return(list)
+        object
       })
     }
   } else {
-    return(list)
+    object
   }
 }

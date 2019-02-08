@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' equivalence_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
@@ -21,7 +21,7 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
 #' equivalence_test(model, CI = c(50, 100))
-#' 
+#'
 #' # Will fail until get_predictors is implemented.
 #' # library(brms)
 #' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
@@ -57,8 +57,8 @@ equivalence_test.numeric <- function(posterior, bounds = "default", CI = 90, ver
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
     stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
-  list <- sapply(get_parameters(posterior), equivalence_test, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
-  return(flatten_list(list, name = "Parameter"))
+  l <- sapply(get_parameters(posterior), equivalence_test, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
+  return(flatten_list(l, name = "Parameter"))
 }
 
 #' @export
