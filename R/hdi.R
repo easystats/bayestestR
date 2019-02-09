@@ -5,7 +5,7 @@
 #' @details By default, hdi() returns the 90\% intervals, deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
 #'
 #' @param posterior Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.
-#' @param CI The credible interval, value or vector between 0 and 100, indicating the probability that is to be estimated.
+#' @param CI The HDI probability to be estimated. Value or vector between 0 and 100 named Credible Interval (CI) for consistency.
 #' @param verbose Toggle off warnings.
 #'
 #'
@@ -15,15 +15,17 @@
 #' posterior <- rnorm(1000)
 #' hdi(posterior, CI = 90)
 #' hdi(posterior, CI = c(80, 90, 95))
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
+#' hdi(model, CI = c(80, 90, 95))
 #'
-#' library(brms)
-#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' hdi(model)
+#' # Will fail until get_predictors is implemented.
+#' # library(brms)
+#' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' # hdi(model)
+#' # hdi(model, CI = c(80, 90, 95))
 #' }
 #'
 #' @author All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.
@@ -40,19 +42,30 @@ hdi.numeric <- function(posterior, CI = 90, verbose = TRUE) {
     .hdi(posterior, CI = i, verbose = verbose)
   })
 
-  names(hdi_values) <- paste0("CI_", CI)
-  flatten_list(hdi_values)
+  return(flatten_list(hdi_values))
+}
+
+
+
+
+
+
+
+
+#' @importFrom insight get_parameters
+#' @keywords internal
+.hdi_models <- function(posterior, CI = 90, verbose = TRUE) {
+  list <- sapply(insight::get_parameters(posterior), hdi, CI = CI, verbose = verbose, simplify = FALSE)
+  return(flatten_list(list, name = "Parameter"))
 }
 
 #' @export
-hdi.stanreg <- function(posterior, CI = 90, verbose = TRUE) {
-  sapply(as.data.frame(posterior), hdi, CI = CI, verbose = verbose, simplify = FALSE)
-}
+hdi.stanreg <- .hdi_models
 
 #' @export
-hdi.brmsfit <- function(posterior, CI = 90, verbose = TRUE) {
-  sapply(as.data.frame(posterior), hdi, CI = CI, verbose = verbose, simplify = FALSE)
-}
+hdi.brmsfit <- .hdi_models
+
+
 
 
 
@@ -71,19 +84,31 @@ hdi.brmsfit <- function(posterior, CI = 90, verbose = TRUE) {
     if (verbose) {
       warning("HDI: `CI` should be less than 100, returning NaNs.")
     }
-    return(c(NA, NA))
+    return(data.frame(
+      "CI" = CI * 100,
+      "CI_low" = NA,
+      "CI_high" = NA
+    ))
   }
 
 
   if (CI == 1) {
-    return(c(min(x), max(x)))
+    return(data.frame(
+      "CI" = CI * 100,
+      "CI_low" = min(x),
+      "CI_high" = max(x)
+    ))
   }
 
   if (anyNA(x)) {
     if (verbose) {
       warning("HDI: the posterior contains NaNs, returning NaNs.")
     }
-    return(c(NA, NA))
+    return(data.frame(
+      "CI" = CI * 100,
+      "CI_low" = NA,
+      "CI_high" = NA
+    ))
   }
 
   N <- length(x)
@@ -91,7 +116,11 @@ hdi.brmsfit <- function(posterior, CI = 90, verbose = TRUE) {
     if (verbose) {
       warning("HDI: the posterior is too short, returning NaNs.")
     }
-    return(c(NA, NA))
+    return(data.frame(
+      "CI" = CI * 100,
+      "CI_low" = NA,
+      "CI_high" = NA
+    ))
   }
 
   x_sorted <- sort(x)
@@ -101,7 +130,11 @@ hdi.brmsfit <- function(posterior, CI = 90, verbose = TRUE) {
     if (verbose) {
       warning("HDI: `CI` is too small or x does not contain enough data points, returning NaNs.")
     }
-    return(c(NA, NA))
+    return(data.frame(
+      "CI" = CI * 100,
+      "CI_low" = NA,
+      "CI_high" = NA
+    ))
   }
 
   lower <- seq_len(N - window_size)
@@ -126,5 +159,11 @@ hdi.brmsfit <- function(posterior, CI = 90, verbose = TRUE) {
   }
 
   # get values based on minimum
-  c(x_sorted[min_i], x_sorted[upper[min_i]])
+  out <- data.frame(
+    "CI" = CI * 100,
+    "CI_low" = x_sorted[min_i],
+    "CI_high" = x_sorted[upper[min_i]]
+  )
+  # class(out) <- c("CI", class(out))
+  return(out)
 }

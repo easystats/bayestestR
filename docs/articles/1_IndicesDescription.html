@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Indices Description">
@@ -163,7 +163,7 @@
 <a href="#hdi---the-credible-interval-ci" class="anchor"></a>HDI - The <em>Credible</em> Interval (CI)</h3>
 <p><strong><code><a href="../reference/hdi.html">hdi()</a></code></strong> computes the Highest Density Interval (HDI) of a posterior distribution, <em>i.e.</em>, the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as <strong>Credible Interval (CI)</strong>. By default, hdi() returns the 90% intervals, deemed to be more stable than, for instance, 95% intervals (Kruschke, 2015).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="../reference/hdi.html">hdi</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>), <span class="dt">CI =</span> <span class="dv">90</span>)</a></code></pre></div>
-<p><img src="https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-3-1.png"></p>
+<p><img src="1_IndicesDescription_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div id="map-estimate" class="section level3">
 <h3 class="hasAnchor">
@@ -174,14 +174,14 @@
 <a href="#map-estimate-1" class="anchor"></a>MAP Estimate</h3>
 <p><strong><code><a href="../reference/map_estimate.html">map_estimate()</a></code></strong> finds the Highest Maximum A Posteriori (MAP) estimate of a posterior. It corresponds to the ‘peak’ of the posterior distribution.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/map_estimate.html">map_estimate</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
-<p><img src="https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-5-1.png"></p>
+<p><img src="1_IndicesDescription_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 <div id="rope" class="section level3">
 <h3 class="hasAnchor">
 <a href="#rope" class="anchor"></a>ROPE</h3>
 <p><strong><code><a href="../reference/rope.html">rope()</a></code></strong> computes the proportion (in percentage) of the HDI (default to the 90% HDI) of a posterior distribution that lies within a region of practical equivalence. Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are equivalent to the null value for practical purposes (2010, 2011, 2014). Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen). This could be generalized: For instance, for linear models, the ROPE could be set as 0 +/- .1 * sd(y). Kruschke (2010, 2011, 2014) suggest using the proportion of the 95% (or 90%, considered more stable) <em>HDI</em> that falls within the ROPE as an index for “null-hypothesis” testing (as understood under the Bayesian framework, see <code>rope_test</code>). Besides the ROPE-based decision criteria, the proportion of the 95% CI that falls in the ROPE can be used as a continuous index.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/rope.html">rope</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">bounds =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</a></code></pre></div>
-<p><img src="https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-7-1.png"></p>
+<p><img src="1_IndicesDescription_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 </div>
 <div id="null-hypothesis-significance-testing-nhst" class="section level2">
@@ -204,14 +204,14 @@
 <a href="#probability-of-direction-pd" class="anchor"></a>Probability of Direction (<em>p</em>d)</h3>
 <p><strong><code><a href="../reference/p_direction.html">p_direction()</a></code></strong> computes the Probability of Direction (<em>p</em>d, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (consistently with the median’s sign). It is defined as the proportion of the posterior distribution that is of the median’s sign. Altough differently expressed, this index is fairly similar to the frequentist p-value (<em>i.e.</em>, is strongly correlated).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="dv">1</span>))</a></code></pre></div>
-<p><img src="https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-11-1.png"></p>
+<p><img src="1_IndicesDescription_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 <div id="map-based-p-value" class="section level3">
 <h3 class="hasAnchor">
 <a href="#map-based-p-value" class="anchor"></a>MAP-based <em>p</em>-value</h3>
 <p><strong><code><a href="../reference/p_map.html">p_map()</a></code></strong> computes a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (h0) using Mills’ (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP). It corresponds to the density value at 0 divided by the density of the highest density point.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/p_map.html">p_map</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
-<p><img src="https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-13-1.png"></p>
+<p><img src="1_IndicesDescription_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 </div>
 </div>
 </div>

@@ -10,15 +10,15 @@
 #'
 #' p_map(posterior = rnorm(1000, 0, 1))
 #' p_map(posterior = rnorm(1000, 10, 1))
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' p_map(model)
 #'
-#' library(brms)
-#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' p_map(model)
+#' # Will fail until get_predictors is implemented.
+#' # library(brms)
+#' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' # p_map(model)
 #' }
 #' @references \href{https://www.youtube.com/watch?v=Ip8Ci5KUVRc}{Mill's talk}
 #'
@@ -31,25 +31,42 @@ p_map <- function(posterior, precision = 2^10) {
 
 
 #' @export
+print.p_map <- function(x, ...) {
+  cat(sprintf("p (MAP) = %.2f", x))
+}
+
+
+
+#' @export
 p_map.numeric <- function(posterior, precision = 2^10) {
   # Highest density point
-  map <- map_estimate(posterior)[2]
+  map <- map_estimate(posterior, precision = precision, density = TRUE)$MAP_density
 
   # Density at 0
   d_0 <- density_at(posterior, 0, precision = precision)
   if (is.na(d_0)) d_0 <- 0
 
   # Odds
-  return(d_0 / map)
+  p <- d_0 / map
+  class(p) <- c("p_map", class(p))
+  return(p)
 }
 
+
+
+#' @importFrom insight find_parameters get_parameters
+#' @keywords internal
+.p_map_models <- function(posterior, precision = 2^10) {
+  out <- data.frame(
+    "Parameter" = insight::find_parameters(posterior),
+    "p_MAP" = sapply(insight::get_parameters(posterior), p_map, precision = precision, simplify = TRUE),
+    row.names = NULL
+  )
+  return(out)
+}
 
 #' @export
-p_map.stanreg <- function(posterior, precision = 2^10) {
-  return(sapply(as.data.frame(posterior), p_map, precision = precision, simplify = FALSE))
-}
+p_map.stanreg <- .p_map_models
 
 #' @export
-p_map.brmsfit <- function(posterior, precision = 2^10) {
-  return(sapply(as.data.frame(posterior), p_map, precision = precision, simplify = FALSE))
-}
+p_map.brmsfit <- .p_map_models

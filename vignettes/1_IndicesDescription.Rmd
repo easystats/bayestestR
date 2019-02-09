@@ -73,7 +73,23 @@ library(dplyr)
 hdi(posterior = rnorm(1000), CI = 90)
 ```
 
-![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-3-1.png)
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+posterior <- rnorm_perfect(100, 0.4, 0.2)
+posterior %>% 
+  density() %>% 
+  as.data.frame() %>% 
+  mutate(fill = ifelse(x < hdi(posterior)$CI_low, "low",
+                       ifelse(x > hdi(posterior)$CI_high, "high", "middle"))) %>% 
+  ggplot(aes(x=x, y=y, fill=fill)) +
+  geom_ribbon(aes(ymin=0, ymax=y)) +
+  geom_vline(xintercept=0, linetype="dotted") +
+  theme_classic() +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
+  scale_fill_manual(values=c("high"="#FFC107", "low"="#FFC107", "middle"="#E91E63"), guide=FALSE) +
+  annotate("text", x=0.4, y=1, label="The 90% HDI", color="white", size=8) +
+  xlab("\nParameter Value") +
+  ylab("Probability Density\n")
+```
 
 ###  MAP estimate
 
@@ -85,7 +101,21 @@ hdi(posterior = rnorm(1000), CI = 90)
 map_estimate(rnorm(1000, 1, 1))
 ```
 
-![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-5-1.png)
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+posterior <- rnorm_perfect(100, 0.4, 0.2)
+posterior %>% 
+  density() %>% 
+  as.data.frame() %>% 
+  ggplot(aes(x=x, y=y)) +
+  geom_ribbon(aes(ymin=0, ymax=y), fill="#FFC107") +
+  geom_segment(x=0.4, xend=0.4, y=0, yend=map_estimate(posterior, density=TRUE)$MAP_density, color="#E91E63", size=1) +
+  geom_point(x=map_estimate(posterior), y=map_estimate(posterior, density=TRUE)$MAP_density, color="#E91E63", size=5) +
+  geom_vline(xintercept=0, linetype="dotted") +
+  theme_classic() +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
+  xlab("\nParameter Value") +
+  ylab("Probability Density\n")
+```
 
 
 ### ROPE
@@ -96,8 +126,23 @@ map_estimate(rnorm(1000, 1, 1))
 rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 ```
 
-
-![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-7-1.png)
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+posterior <- rnorm_perfect(100, 0.4, 0.2)
+posterior %>% 
+  density() %>% 
+  as.data.frame() %>% 
+  mutate(fill = ifelse(x < -0.1, "low",
+                       ifelse(x > 0.1, "high", "middle"))) %>% 
+  ggplot(aes(x=x, y=y, fill=fill)) +
+  geom_ribbon(aes(ymin=0, ymax=y)) +
+  geom_vline(xintercept=0, linetype="dotted") +
+  theme_classic() +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
+  scale_x_continuous(breaks = c(-0.1, 0.1, 0.4)) +
+  scale_fill_manual(values=c("high"="#FFC107", "low"="#FFC107", "middle"="#E91E63"), guide=FALSE) +
+  xlab("\nParameter Value") +
+  ylab("Probability Density\n")
+```
 
 ## Null-Hypothesis Significance Testing (NHST)
 
@@ -126,7 +171,22 @@ p_rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 p_direction(rnorm(1000, mean = 1, sd = 1))
 ```
 
-![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-11-1.png)
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+posterior <- rnorm_perfect(100, 0.4, 0.2)
+posterior %>% 
+  density() %>% 
+  as.data.frame() %>% 
+  mutate(fill = ifelse(x < 0, "low", "high")) %>% 
+  ggplot(aes(x=x, y=y, fill=fill)) +
+  geom_ribbon(aes(ymin=0, ymax=y)) +
+  geom_vline(xintercept=0, linetype="dotted") +
+  theme_classic() +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
+  scale_fill_manual(values=c("high"="#FFC107", "low"="#E91E63"), guide=FALSE) +
+  xlab("\nParameter Value") +
+  ylab("Probability Density\n")
+```
+
 
 ### MAP-based *p*-value
 
@@ -136,4 +196,20 @@ p_direction(rnorm(1000, mean = 1, sd = 1))
 p_map(posterior = rnorm(1000, 1, 1))
 ```
 
-![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-13-1.png)
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+posterior <- rnorm_perfect(100, 0.4, 0.2)
+posterior %>% 
+  density() %>% 
+  as.data.frame() %>% 
+  ggplot(aes(x=x, y=y)) +
+  geom_ribbon(aes(ymin=0, ymax=y), fill="#FFC107") +
+  geom_segment(x=0.4, xend=0.4, y=0, yend=map_estimate(posterior, density=TRUE)$MAP_density, color="#E91E63", size=1) +
+  geom_segment(x=0, xend=0, y=0, yend=density_at(posterior, 0), color="#E91E63", size=1) +
+  geom_point(x=map_estimate(posterior), y=map_estimate(posterior, density=TRUE)$MAP_density, color="#E91E63", size=5) +
+  geom_point(x=0, y=density_at(posterior, 0), color="#E91E63", size=5) +
+  geom_vline(xintercept=0, linetype="dotted") +
+  theme_classic() +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
+  xlab("\nParameter Value") +
+  ylab("Probability Density\n")
+```

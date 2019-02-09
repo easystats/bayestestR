@@ -10,7 +10,5 @@
 #' @method as.data.frame density
 #' @export
 as.data.frame.density <- function(x, ...) {
-  df <- data.frame(x = x$x, y = x$y)
-
-  return(df)
+  data.frame(x = x$x, y = x$y)
 }

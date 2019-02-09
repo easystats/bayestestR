@@ -16,15 +16,17 @@
 #' rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 1), CI = c(90, 95))
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
+#' rope(model, CI = c(90, 95))
 #'
-#' library(brms)
-#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' rope(model)
+#' # Will fail until get_predictors is implemented.
+#' # library(brms)
+#' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' # rope(model)
+#' # rope(model, CI = c(90, 95))
 #' }
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
@@ -46,9 +48,9 @@ print.rope <- function(x, ...) {
   cat(sprintf(
     "%.2f%% of the %s%% CI is in ROPE [%.2f, %.2f]",
     x$ROPE_Percentage,
-    x$ROPE_CI,
-    x$ROPE_Bounds[1],
-    x$ROPE_Bounds[2]
+    x$CI,
+    x$ROPE_low,
+    x$ROPE_high
   ))
 }
 
@@ -67,33 +69,33 @@ rope.numeric <- function(posterior, bounds = "default", CI = 90, verbose = TRUE)
     .rope(posterior, bounds = bounds, CI = i, verbose = verbose)
   })
 
-  names(rope_values) <- paste0("CI_", CI)
-  flatten_list(rope_values)
+  out <- flatten_list(rope_values)
+  if (nrow(out) > 1) {
+    out$ROPE_Percentage <- as.numeric(out$ROPE_Percentage)
+  }
+  return(out)
 }
 
-# could be moved into a "utils.R"-file or so...
-flatten_list <- function(l) {
-  if (length(l) == 1)
-    l[[1]]
-  else
-    l
-}
+
 
 
 .rope <- function(posterior, bounds = c(-0.1, 0.1), CI = 90, verbose = TRUE) {
   HDI_area <- hdi(posterior, CI, verbose)
 
   if (anyNA(HDI_area)) {
-    return(NA)
+    rope_percentage <- NA
+  } else {
+    HDI_area <- posterior[posterior >= HDI_area$CI_low & posterior <= HDI_area$CI_high]
+    area_within <- HDI_area[HDI_area >= min(bounds) & HDI_area <= max(bounds)]
+    rope_percentage <- length(area_within) / length(HDI_area) * 100
   }
 
-  HDI_area <- posterior[posterior >= HDI_area[1] & posterior <= HDI_area[2]]
-  area_within <- HDI_area[HDI_area >= min(bounds) & HDI_area <= max(bounds)]
 
-  rope <- list(
-    "ROPE_Percentage" = length(area_within) / length(HDI_area) * 100,
-    "ROPE_Bounds" = bounds,
-    "ROPE_CI" = CI
+  rope <- data.frame(
+    "CI" = CI,
+    "ROPE_low" = bounds[1],
+    "ROPE_high" = bounds[2],
+    "ROPE_Percentage" = rope_percentage
   )
 
   class(rope) <- c("rope", class(rope))
@@ -101,26 +103,23 @@ flatten_list <- function(l) {
   rope
 }
 
+
+
+#' @importFrom insight get_response get_parameters
 #' @importFrom stats sd
-#' @importFrom insight get_response
-#' @export
-rope.stanreg <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
+#' @keywords internal
+.rope_models <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
   if (all(bounds == "default")) {
     bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
     stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
-  sapply(as.data.frame(posterior), rope, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
+  list <- sapply(insight::get_parameters(posterior), rope, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
+  return(flatten_list(list, name = "Parameter"))
 }
 
-#' @importFrom stats sd
-#' @importFrom insight get_response
 #' @export
-rope.brmsfit <- function(posterior, bounds = "default", CI = 90, verbose = TRUE) {
-  if (all(bounds == "default")) {
-    bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
-  } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
-    stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
-  }
-  sapply(as.data.frame(posterior), rope, bounds = bounds, CI = CI, verbose = verbose, simplify = FALSE)
-}
+rope.stanreg <- .rope_models
+
+#' @export
+rope.brmsfit <- .rope_models

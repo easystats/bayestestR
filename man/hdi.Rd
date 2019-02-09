@@ -9,7 +9,7 @@ hdi(posterior, CI = 90, verbose = TRUE)
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
 
-\item{CI}{The credible interval, value or vector between 0 and 100, indicating the probability that is to be estimated.}
+\item{CI}{The HDI probability to be estimated. Value or vector between 0 and 100 named Credible Interval (CI) for consistency.}
 
 \item{verbose}{Toggle off warnings.}
 }
@@ -25,15 +25,17 @@ library(bayestestR)
 posterior <- rnorm(1000)
 hdi(posterior, CI = 90)
 hdi(posterior, CI = c(80, 90, 95))
-
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 hdi(model)
+hdi(model, CI = c(80, 90, 95))
 
-library(brms)
-model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-hdi(model)
+# Will fail until get_predictors is implemented.
+# library(brms)
+# model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+# hdi(model)
+# hdi(model, CI = c(80, 90, 95))
 }
 
 }

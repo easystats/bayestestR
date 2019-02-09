@@ -55,7 +55,7 @@ library(tidyr)
 df <- read.csv("https://raw.github.com/DominiqueMakowski/bayestestR/master/data/bayes_indices.csv")
 ```
 
-For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it **HERE (ADD LINK)** (*takes about 1h*).
+For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it [**here**](https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html#simulate-regression-data-with-noise) (*takes about 2h*).
 
 ### Indices
 

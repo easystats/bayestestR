@@ -19,15 +19,15 @@ library(bayestestR)
 
 p_map(posterior = rnorm(1000, 0, 1))
 p_map(posterior = rnorm(1000, 10, 1))
-
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 p_map(model)
 
-library(brms)
-model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-p_map(model)
+# Will fail until get_predictors is implemented.
+# library(brms)
+# model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+# p_map(model)
 }
 }
 \references{
