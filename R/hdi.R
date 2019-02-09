@@ -5,7 +5,7 @@
 #' @details By default, hdi() returns the 90\% intervals, deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
 #'
 #' @param posterior Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.
-#' @param CI The HDI probability to be estimated. Value or vector between 0 and 100 named Credible Interval (CI) for consistency.
+#' @param ci The HDI probability to be estimated. Value or vector between 0 and 100 named Credible Interval (CI) for consistency.
 #' @param verbose Toggle off warnings.
 #'
 #'
@@ -13,33 +13,33 @@
 #' library(bayestestR)
 #'
 #' posterior <- rnorm(1000)
-#' hdi(posterior, CI = 90)
-#' hdi(posterior, CI = c(80, 90, 95))
+#' hdi(posterior, ci = 90)
+#' hdi(posterior, ci = c(80, 90, 95))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
-#' hdi(model, CI = c(80, 90, 95))
+#' hdi(model, ci = c(80, 90, 95))
 #'
 #' # Will fail until get_predictors is implemented.
 #' # library(brms)
 #' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' # hdi(model)
-#' # hdi(model, CI = c(80, 90, 95))
+#' # hdi(model, ci = c(80, 90, 95))
 #' }
 #'
 #' @author All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #' @export
-hdi <- function(posterior, CI = 90, verbose = TRUE) {
+hdi <- function(posterior, ci = 90, verbose = TRUE) {
   UseMethod("hdi")
 }
 
 
 #' @export
-hdi.numeric <- function(posterior, CI = 90, verbose = TRUE) {
-  hdi_values <- lapply(CI, function(i) {
-    .hdi(posterior, CI = i, verbose = verbose)
+hdi.numeric <- function(posterior, ci = 90, verbose = TRUE) {
+  hdi_values <- lapply(ci, function(i) {
+    .hdi(posterior, ci = i, verbose = verbose)
   })
 
   return(flatten_list(hdi_values))
@@ -54,8 +54,8 @@ hdi.numeric <- function(posterior, CI = 90, verbose = TRUE) {
 
 #' @importFrom insight get_parameters
 #' @keywords internal
-.hdi_models <- function(posterior, CI = 90, verbose = TRUE) {
-  list <- sapply(insight::get_parameters(posterior), hdi, CI = CI, verbose = verbose, simplify = FALSE)
+.hdi_models <- function(posterior, ci = 90, verbose = TRUE) {
+  list <- sapply(insight::get_parameters(posterior), hdi, ci = ci, verbose = verbose, simplify = FALSE)
   return(flatten_list(list, name = "Parameter"))
 }
 
@@ -78,23 +78,23 @@ hdi.brmsfit <- .hdi_models
 
 
 #' @keywords internal
-.hdi <- function(x, CI = 90, verbose = TRUE) {
-  CI <- CI / 100
-  if (CI > 1) {
+.hdi <- function(x, ci = 90, verbose = TRUE) {
+  ci <- ci / 100
+  if (ci > 1) {
     if (verbose) {
-      warning("HDI: `CI` should be less than 100, returning NaNs.")
+      warning("HDI: `ci` should be less than 100, returning NaNs.")
     }
     return(data.frame(
-      "CI" = CI * 100,
+      "CI" = ci * 100,
       "CI_low" = NA,
       "CI_high" = NA
     ))
   }
 
 
-  if (CI == 1) {
+  if (ci == 1) {
     return(data.frame(
-      "CI" = CI * 100,
+      "CI" = ci * 100,
       "CI_low" = min(x),
       "CI_high" = max(x)
     ))
@@ -105,7 +105,7 @@ hdi.brmsfit <- .hdi_models
       warning("HDI: the posterior contains NaNs, returning NaNs.")
     }
     return(data.frame(
-      "CI" = CI * 100,
+      "CI" = ci * 100,
       "CI_low" = NA,
       "CI_high" = NA
     ))
@@ -117,21 +117,21 @@ hdi.brmsfit <- .hdi_models
       warning("HDI: the posterior is too short, returning NaNs.")
     }
     return(data.frame(
-      "CI" = CI * 100,
+      "CI" = ci * 100,
       "CI_low" = NA,
       "CI_high" = NA
     ))
   }
 
   x_sorted <- sort(x)
-  window_size <- floor(CI * length(x_sorted))
+  window_size <- floor(ci * length(x_sorted))
 
   if (window_size < 2) {
     if (verbose) {
-      warning("HDI: `CI` is too small or x does not contain enough data points, returning NaNs.")
+      warning("HDI: `ci` is too small or x does not contain enough data points, returning NaNs.")
     }
     return(data.frame(
-      "CI" = CI * 100,
+      "CI" = ci * 100,
       "CI_low" = NA,
       "CI_high" = NA
     ))
@@ -160,7 +160,7 @@ hdi.brmsfit <- .hdi_models
 
   # get values based on minimum
   out <- data.frame(
-    "CI" = CI * 100,
+    "CI" = ci * 100,
     "CI_low" = x_sorted[min_i],
     "CI_high" = x_sorted[upper[min_i]]
   )

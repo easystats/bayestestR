@@ -10,7 +10,7 @@ test_that("rope", {
   testthat::expect_equal(as.numeric(rope(rnorm_perfect(1000, 0, 0.001))), 100, tolerance = 0.01)
   testthat::expect_equal(equivalence_test(rnorm_perfect(1000, 0, 0.001))$ROPE_Equivalence, "accepted")
 
-  x <- equivalence_test(rnorm_perfect(1000, 1, 1), CI = c(50, 99))
+  x <- equivalence_test(rnorm_perfect(1000, 1, 1), ci = c(50, 99))
   testthat::expect_equal(x$ROPE_Percentage[2], 4.94, tolerance = 0.01)
   testthat::expect_equal(x$ROPE_Equivalence[2], "undecided")
 

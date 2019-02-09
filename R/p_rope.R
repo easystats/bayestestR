@@ -46,7 +46,7 @@ p_rope.numeric <- function(posterior, bounds = "default", precision = 0.1) {
 
 
 
-  rope_df <- rope(posterior, bounds, CI = seq(0, 100, by = precision), verbose = FALSE)
+  rope_df <- rope(posterior, bounds, ci = seq(0, 100, by = precision), verbose = FALSE)
   rope_df <- na.omit(rope_df)
 
   rope_values <- rope_df$ROPE_Percentage
