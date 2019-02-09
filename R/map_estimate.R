@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' posterior <- rnorm(1000)
 #' map_estimate(posterior)
 #' map_estimate(posterior, density = TRUE)
@@ -16,7 +16,7 @@
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
-#' 
+#'
 #' # Will fail until get_predictors is implemented.
 #' # library(brms)
 #' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
@@ -57,10 +57,10 @@ map_estimate.numeric <- function(posterior, precision = 2^10, density = FALSE) {
 
 
 
-
+#' @importFrom insight get_parameters
 #' @keywords internal
 .map_estimate_models <- function(posterior, precision = 2^10, density = FALSE) {
-  list <- sapply(get_parameters(posterior), map_estimate, precision = precision, density = TRUE, simplify = FALSE)
+  list <- sapply(insight::get_parameters(posterior), map_estimate, precision = precision, density = TRUE, simplify = FALSE)
   out <- flatten_list(list, name = "Parameter")
   if (density == TRUE) {
     return(out)

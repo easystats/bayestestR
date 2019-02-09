@@ -7,7 +7,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' # Simulate a posterior distribution of mean 1 and SD 1
 #' posterior <- rnorm(1000, mean = 1, sd = 1)
 #' p_direction(posterior)
@@ -15,7 +15,7 @@
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' p_direction(model)
-#' 
+#'
 #' # Will fail until get_predictors is implemented.
 #' # library(brms)
 #' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
@@ -51,12 +51,12 @@ p_direction.numeric <- function(posterior) {
 
 
 
-
+#' @importFrom insight find_parameters get_parameters
 #' @keywords internal
 .p_direction_models <- function(posterior) {
   out <- data.frame(
-    "Parameter" = find_parameters(posterior),
-    "pd" = sapply(get_parameters(posterior), p_direction, simplify = TRUE),
+    "Parameter" = insight::find_parameters(posterior),
+    "pd" = sapply(insight::get_parameters(posterior), p_direction, simplify = TRUE),
     row.names = NULL
   )
   return(out)

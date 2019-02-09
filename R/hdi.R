@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' posterior <- rnorm(1000)
 #' hdi(posterior, CI = 90)
 #' hdi(posterior, CI = c(80, 90, 95))
@@ -20,14 +20,14 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
 #' hdi(model, CI = c(80, 90, 95))
-#' 
+#'
 #' # Will fail until get_predictors is implemented.
 #' # library(brms)
 #' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' # hdi(model)
 #' # hdi(model, CI = c(80, 90, 95))
 #' }
-#' 
+#'
 #' @author All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #' @export
@@ -52,10 +52,10 @@ hdi.numeric <- function(posterior, CI = 90, verbose = TRUE) {
 
 
 
-
+#' @importFrom insight get_parameters
 #' @keywords internal
 .hdi_models <- function(posterior, CI = 90, verbose = TRUE) {
-  list <- sapply(get_parameters(posterior), hdi, CI = CI, verbose = verbose, simplify = FALSE)
+  list <- sapply(insight::get_parameters(posterior), hdi, CI = CI, verbose = verbose, simplify = FALSE)
   return(flatten_list(list, name = "Parameter"))
 }
 

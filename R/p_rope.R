@@ -8,13 +8,13 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' p_rope(posterior = rnorm(1000, mean = 1, sd = 1), bounds = c(-0.1, 0.1))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' p_rope(model)
-#' 
+#'
 #' # Will fail until get_predictors is implemented.
 #' # library(brms)
 #' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
@@ -83,7 +83,7 @@ p_rope.numeric <- function(posterior, bounds = "default", precision = 0.1) {
 
 
 
-
+#' @importFrom insight find_parameters get_parameters
 #' @importFrom stats sd
 #' @keywords internal
 .p_rope_models <- function(posterior, bounds = "default", precision = 0.1) {
@@ -94,8 +94,8 @@ p_rope.numeric <- function(posterior, bounds = "default", precision = 0.1) {
   }
 
   out <- data.frame(
-    "Parameter" = find_parameters(posterior),
-    "p_ROPE" = sapply(get_parameters(posterior), bounds = bounds, p_rope, precision = precision, simplify = TRUE),
+    "Parameter" = insight::find_parameters(posterior),
+    "p_ROPE" = sapply(insight::get_parameters(posterior), bounds = bounds, p_rope, precision = precision, simplify = TRUE),
     row.names = NULL
   )
   return(out)

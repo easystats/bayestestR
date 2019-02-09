@@ -47,7 +47,7 @@ library(tidyr)
 df <- read.csv("https://raw.github.com/DominiqueMakowski/bayestestR/master/data/bayes_indices.csv")
 ```
 
-For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it below (*takes about 1h*).
+For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it below (*takes about 2h*).
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE, results='hide'}
 library(bayestestR)
