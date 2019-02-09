@@ -4,7 +4,7 @@
 \alias{rope}
 \title{Region of Practical Equivalence (ROPE)}
 \usage{
-rope(posterior, bounds = "default", ci = 90, verbose = TRUE)
+rope(posterior, bounds = "default", ci = 0.9, verbose = TRUE)
 }
 \arguments{
 \item{posterior}{vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
@@ -27,18 +27,18 @@ library(bayestestR)
 rope(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
-rope(posterior = rnorm(1000, 1, 1), ci = c(90, 95))
+rope(posterior = rnorm(1000, 1, 1), ci = c(.90, .95))
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 rope(model)
-rope(model, ci = c(90, 95))
+rope(model, ci = c(.90, .95))
 
 # Will fail until get_predictors is implemented.
 # library(brms)
 # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 # rope(model)
-# rope(model, ci = c(90, 95))
+# rope(model, ci = c(.90, .95))
 }
 }
 \author{

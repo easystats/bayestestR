@@ -4,7 +4,7 @@
 #'
 #' @param posterior Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.
 #' @param bounds ROPE's lower and higher bounds. Shoudd be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
-#' @param precision The precision by which to explore the ROPE space. Lower values increase the precision of the returned p value but can be quite computationaly costly.
+#' @param precision The precision by which to explore the ROPE space (in percentage). Lower values increase the precision of the returned p value but can be quite computationaly costly.
 #'
 #' @examples
 #' library(bayestestR)
@@ -23,7 +23,7 @@
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #' @importFrom stats na.omit
 #' @export
-p_rope <- function(posterior, bounds = "default", precision = 0.1) {
+p_rope <- function(posterior, bounds = "default", precision = .1) {
   UseMethod("p_rope")
 }
 
@@ -35,7 +35,8 @@ print.p_rope <- function(x, ...) {
 
 
 #' @export
-p_rope.numeric <- function(posterior, bounds = "default", precision = 0.1) {
+p_rope.numeric <- function(posterior, bounds = "default", precision = .1) {
+
   # This implementation is very clunky
 
   if (all(bounds == "default")) {
@@ -46,7 +47,7 @@ p_rope.numeric <- function(posterior, bounds = "default", precision = 0.1) {
 
 
 
-  rope_df <- rope(posterior, bounds, ci = seq(0, 100, by = precision), verbose = FALSE)
+  rope_df <- rope(posterior, bounds, ci = seq(0, 1, by = precision / 100), verbose = FALSE)
   rope_df <- na.omit(rope_df)
 
   rope_values <- rope_df$ROPE_Percentage
@@ -72,7 +73,7 @@ p_rope.numeric <- function(posterior, bounds = "default", precision = 0.1) {
     }
     p <- rope_df$CI[CI_position]
     p <- as.numeric(unlist(p))
-    p <- h0 * p
+    p <- h0 * p * 100
     # p <- 1/p  # Convert to probability
   }
 
@@ -86,7 +87,7 @@ p_rope.numeric <- function(posterior, bounds = "default", precision = 0.1) {
 #' @importFrom insight find_parameters get_parameters
 #' @importFrom stats sd
 #' @keywords internal
-.p_rope_models <- function(posterior, bounds = "default", precision = 0.1) {
+.p_rope_models <- function(posterior, bounds = "default", precision = .1) {
   if (all(bounds == "default")) {
     bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {

@@ -15,23 +15,23 @@
 #' rope(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
-#' rope(posterior = rnorm(1000, 1, 1), ci = c(90, 95))
+#' rope(posterior = rnorm(1000, 1, 1), ci = c(.90, .95))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
-#' rope(model, ci = c(90, 95))
+#' rope(model, ci = c(.90, .95))
 #'
 #' # Will fail until get_predictors is implemented.
 #' # library(brms)
 #' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' # rope(model)
-#' # rope(model, ci = c(90, 95))
+#' # rope(model, ci = c(.90, .95))
 #' }
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
 #' @export
-rope <- function(posterior, bounds = "default", ci = 90, verbose = TRUE) {
+rope <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
   UseMethod("rope")
 }
 
@@ -48,7 +48,7 @@ print.rope <- function(x, ...) {
   cat(sprintf(
     "%.2f%% of the %s%% CI is in ROPE [%.2f, %.2f]",
     x$ROPE_Percentage,
-    x$CI,
+    x$CI*100,
     x$ROPE_low,
     x$ROPE_high
   ))
@@ -58,7 +58,7 @@ print.rope <- function(x, ...) {
 
 
 #' @export
-rope.numeric <- function(posterior, bounds = "default", ci = 90, verbose = TRUE) {
+rope.numeric <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
   if (all(bounds == "default")) {
     bounds <- c(-0.1, 0.1)
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
@@ -79,7 +79,7 @@ rope.numeric <- function(posterior, bounds = "default", ci = 90, verbose = TRUE)
 
 
 
-.rope <- function(posterior, bounds = c(-0.1, 0.1), ci = 90, verbose = TRUE) {
+.rope <- function(posterior, bounds = c(-0.1, 0.1), ci = .90, verbose = TRUE) {
   HDI_area <- hdi(posterior, ci, verbose)
 
   if (anyNA(HDI_area)) {
@@ -108,7 +108,7 @@ rope.numeric <- function(posterior, bounds = "default", ci = 90, verbose = TRUE)
 #' @importFrom insight get_response get_parameters
 #' @importFrom stats sd
 #' @keywords internal
-.rope_models <- function(posterior, bounds = "default", ci = 90, verbose = TRUE) {
+.rope_models <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
   if (all(bounds == "default")) {
     bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {

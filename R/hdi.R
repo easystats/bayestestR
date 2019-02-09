@@ -2,10 +2,10 @@
 #'
 #' Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
 #'
-#' @details By default, hdi() returns the 90\% intervals, deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
+#' @details By default, hdi() returns the 90\% intervals (\code{ci = 0.9}), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
 #'
 #' @param posterior Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.
-#' @param ci The HDI probability to be estimated. Value or vector between 0 and 100 named Credible Interval (CI) for consistency.
+#' @param ci Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.
 #' @param verbose Toggle off warnings.
 #'
 #'
@@ -13,31 +13,31 @@
 #' library(bayestestR)
 #'
 #' posterior <- rnorm(1000)
-#' hdi(posterior, ci = 90)
-#' hdi(posterior, ci = c(80, 90, 95))
+#' hdi(posterior, ci = .90)
+#' hdi(posterior, ci = c(.80, .90, .95))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
-#' hdi(model, ci = c(80, 90, 95))
+#' hdi(model, ci = c(.80, .90, .95))
 #'
 #' # Will fail until get_predictors is implemented.
 #' # library(brms)
 #' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' # hdi(model)
-#' # hdi(model, ci = c(80, 90, 95))
+#' # hdi(model, ci = c(.80, .90, .95))
 #' }
 #'
 #' @author All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #' @export
-hdi <- function(posterior, ci = 90, verbose = TRUE) {
+hdi <- function(posterior, ci = .90, verbose = TRUE) {
   UseMethod("hdi")
 }
 
 
 #' @export
-hdi.numeric <- function(posterior, ci = 90, verbose = TRUE) {
+hdi.numeric <- function(posterior, ci = .90, verbose = TRUE) {
   hdi_values <- lapply(ci, function(i) {
     .hdi(posterior, ci = i, verbose = verbose)
   })
@@ -54,7 +54,7 @@ hdi.numeric <- function(posterior, ci = 90, verbose = TRUE) {
 
 #' @importFrom insight get_parameters
 #' @keywords internal
-.hdi_models <- function(posterior, ci = 90, verbose = TRUE) {
+.hdi_models <- function(posterior, ci = .90, verbose = TRUE) {
   list <- sapply(insight::get_parameters(posterior), hdi, ci = ci, verbose = verbose, simplify = FALSE)
   return(flatten_list(list, name = "Parameter"))
 }
@@ -78,11 +78,11 @@ hdi.brmsfit <- .hdi_models
 
 
 #' @keywords internal
-.hdi <- function(x, ci = 90, verbose = TRUE) {
-  ci <- ci / 100
+.hdi <- function(x, ci = .90, verbose = TRUE) {
+
   if (ci > 1) {
     if (verbose) {
-      warning("HDI: `ci` should be less than 100, returning NaNs.")
+      warning("HDI: `ci` should be less than 1, returning NaNs.")
     }
     return(data.frame(
       "CI" = ci * 100,

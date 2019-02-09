@@ -15,29 +15,29 @@
 #' equivalence_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
-#' equivalence_test(posterior = rnorm(1000, 1, 1), ci = c(50, 99))
+#' equivalence_test(posterior = rnorm(1000, 1, 1), ci = c(.50, .99))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
-#' equivalence_test(model, ci = c(50, 100))
+#' equivalence_test(model, ci = c(.50, 1))
 #'
 #' # Will fail until get_predictors is implemented.
 #' # library(brms)
 #' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' # equivalence_test(model)
-#' # equivalence_test(model, ci = c(50, 99))
+#' # equivalence_test(model, ci = c(.50, .99))
 #' }
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
 #' @export
-equivalence_test <- function(posterior, bounds = "default", ci = 90, verbose = TRUE) {
+equivalence_test <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
   UseMethod("equivalence_test")
 }
 
 
 #' @export
-equivalence_test.numeric <- function(posterior, bounds = "default", ci = 90, verbose = TRUE) {
+equivalence_test.numeric <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
   out <- as.data.frame(rope(posterior, bounds = bounds, ci = ci))
 
   out$ROPE_Equivalence <- ifelse(out$ROPE_Percentage == 0, "rejected",
@@ -51,7 +51,7 @@ equivalence_test.numeric <- function(posterior, bounds = "default", ci = 90, ver
 
 #' @importFrom stats sd
 #' @keywords internal
-.equivalence_test_models <- function(posterior, bounds = "default", ci = 90, verbose = TRUE) {
+.equivalence_test_models <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
   if (all(bounds == "default")) {
     bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {

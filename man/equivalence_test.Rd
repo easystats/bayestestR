@@ -4,7 +4,7 @@
 \alias{equivalence_test}
 \title{Test for Practical Equivalence}
 \usage{
-equivalence_test(posterior, bounds = "default", ci = 90,
+equivalence_test(posterior, bounds = "default", ci = 0.9,
   verbose = TRUE)
 }
 \arguments{
@@ -28,18 +28,18 @@ library(bayestestR)
 equivalence_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 equivalence_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 equivalence_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
-equivalence_test(posterior = rnorm(1000, 1, 1), ci = c(50, 99))
+equivalence_test(posterior = rnorm(1000, 1, 1), ci = c(.50, .99))
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 equivalence_test(model)
-equivalence_test(model, ci = c(50, 100))
+equivalence_test(model, ci = c(.50, 1))
 
 # Will fail until get_predictors is implemented.
 # library(brms)
 # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 # equivalence_test(model)
-# equivalence_test(model, ci = c(50, 99))
+# equivalence_test(model, ci = c(.50, .99))
 }
 }
 \references{
