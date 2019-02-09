@@ -66,23 +66,3 @@ equivalence_test.stanreg <- .equivalence_test_models
 
 #' @export
 equivalence_test.brmsfit <- .equivalence_test_models
-
-
-
-
-
-#' TEMPORARY
-#' @importFrom stats coef
-#' @param model model
-#' @export
-find_parameters <- function(model) {
-  return(names(coef(model)))
-}
-
-#' TEMPORARY
-#' @importFrom stats coef
-#' @param model model
-#' @export
-get_parameters <- function(model) {
-  return(as.data.frame(model)[find_parameters(model)])
-}

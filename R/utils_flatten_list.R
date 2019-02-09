@@ -1,6 +1,6 @@
 #' Flatten a list
 #'
-#' @param list A list.
+#' @param object A list.
 #' @param name Name of column of keys in the case the output is a dataframe.
 #' @export
 flatten_list <- function(object, name = "name") {

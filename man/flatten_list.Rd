@@ -4,10 +4,10 @@
 \alias{flatten_list}
 \title{Flatten a list}
 \usage{
-flatten_list(list, name = "name")
+flatten_list(object, name = "name")
 }
 \arguments{
-\item{list}{A list.}
+\item{object}{A list.}
 
 \item{name}{Name of column of keys in the case the output is a dataframe.}
 }
