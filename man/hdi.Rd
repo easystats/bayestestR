@@ -4,12 +4,12 @@
 \alias{hdi}
 \title{Highest Density Interval (HDI)}
 \usage{
-hdi(posterior, CI = 90, verbose = TRUE)
+hdi(posterior, ci = 0.9, verbose = TRUE)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
 
-\item{CI}{The HDI probability to be estimated. Value or vector between 0 and 100 named Credible Interval (CI) for consistency.}
+\item{ci}{Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.}
 
 \item{verbose}{Toggle off warnings.}
 }
@@ -17,25 +17,25 @@ hdi(posterior, CI = 90, verbose = TRUE)
 Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
 }
 \details{
-By default, hdi() returns the 90\% intervals, deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
+By default, hdi() returns the 90\% intervals (\code{ci = 0.9}), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
 }
 \examples{
 library(bayestestR)
 
 posterior <- rnorm(1000)
-hdi(posterior, CI = 90)
-hdi(posterior, CI = c(80, 90, 95))
+hdi(posterior, ci = .90)
+hdi(posterior, ci = c(.80, .90, .95))
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 hdi(model)
-hdi(model, CI = c(80, 90, 95))
+hdi(model, ci = c(.80, .90, .95))
 
 # Will fail until get_predictors is implemented.
 # library(brms)
 # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 # hdi(model)
-# hdi(model, CI = c(80, 90, 95))
+# hdi(model, ci = c(.80, .90, .95))
 }
 
 }

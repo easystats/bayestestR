@@ -70,7 +70,7 @@ library(dplyr)
 **`hdi()`** computes the Highest Density Interval (HDI) of a posterior distribution, *i.e.*, the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as **Credible Interval (CI)**. By default, hdi() returns the 90\% intervals, deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
-hdi(posterior = rnorm(1000), CI = 90)
+hdi(posterior = rnorm(1000), ci = .90)
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}

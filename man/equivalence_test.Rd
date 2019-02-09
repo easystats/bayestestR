@@ -4,7 +4,7 @@
 \alias{equivalence_test}
 \title{Test for Practical Equivalence}
 \usage{
-equivalence_test(posterior, bounds = "default", CI = 90,
+equivalence_test(posterior, bounds = "default", ci = 0.9,
   verbose = TRUE)
 }
 \arguments{
@@ -12,7 +12,7 @@ equivalence_test(posterior, bounds = "default", CI = 90,
 
 \item{bounds}{ROPE's lower and higher bounds. Shoudd be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
 
-\item{CI}{The credible interval to use.}
+\item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.}
 
 \item{verbose}{Toggle off warnings.}
 }
@@ -28,18 +28,18 @@ library(bayestestR)
 equivalence_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 equivalence_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 equivalence_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
-equivalence_test(posterior = rnorm(1000, 1, 1), CI = c(50, 99))
+equivalence_test(posterior = rnorm(1000, 1, 1), ci = c(.50, .99))
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 equivalence_test(model)
-equivalence_test(model, CI = c(50, 100))
+equivalence_test(model, ci = c(.50, 1))
 
 # Will fail until get_predictors is implemented.
 # library(brms)
 # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 # equivalence_test(model)
-# equivalence_test(model, CI = c(50, 99))
+# equivalence_test(model, ci = c(.50, .99))
 }
 }
 \references{
