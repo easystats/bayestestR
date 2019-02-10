@@ -13,7 +13,7 @@ Maintainer: Dominique Makowski <dom.makowski@gmail.com>
 URL: https://github.com/easystats/bayestestR
 BugReports: https://github.com/easystats/bayestestR/issues
 Description: Provides utilities to describe posterior distributions and Bayesian models. It includes point-estimates such as Maximum A Posteriori (MAP), measures of dispersion (Highest Density Interval - HDI) and indices used for null-hypothesis testing (such as the ROPE and pd).
-License: MIT + file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
@@ -32,6 +32,7 @@ Suggests:
 	broom,
 	rstanarm,
 	brms
+Remotes: 
+	easystats/insight
 RoxygenNote: 6.1.1
 Language: en-GB
-Remotes: easystats/insight
