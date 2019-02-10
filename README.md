@@ -51,11 +51,14 @@ interval have a higher probability density than points outside the
 interval. The HDI is used in the context of Bayesian posterior
 characterisation as **Credible Interval (CI)**. By default, hdi()
 returns the 90% intervals, deemed to be more stable than, for instance,
-95% intervals (Kruschke, 2015).
+95% intervals (Kruschke,
+2015).
 
 ``` r
-hdi(posterior = rnorm(1000), CI = 90)
+hdi(posterior = rnorm(1000), ci = .90)
 ```
+
+![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-3-1.png)
 
 ### MAP estimate
 
@@ -68,6 +71,8 @@ distribution.
 ``` r
 map_estimate(rnorm(1000, 1, 1))
 ```
+
+![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-5-1.png)
 
 ### ROPE
 
@@ -87,11 +92,14 @@ suggest using the proportion of the 95% (or 90%, considered more stable)
 *HDI* that falls within the ROPE as an index for “null-hypothesis”
 testing (as understood under the Bayesian framework, see `rope_test`).
 Besides the ROPE-based decision criteria, the proportion of the 95% CI
-that falls in the ROPE can be used as a continuous index.
+that falls in the ROPE can be used as a continuous
+index.
 
 ``` r
 rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 ```
+
+![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-7-1.png)
 
 ## Null-Hypothesis Significance Testing (NHST)
 
@@ -132,11 +140,14 @@ percentage) that a parameter (described by its posterior distribution)
 is strictly positive or negative (consistently with the median’s sign).
 It is defined as the proportion of the posterior distribution that is of
 the median’s sign. Altough differently expressed, this index is fairly
-similar to the frequentist p-value (*i.e.*, is strongly correlated).
+similar to the frequentist p-value (*i.e.*, is strongly
+correlated).
 
 ``` r
 p_direction(rnorm(1000, mean = 1, sd = 1))
 ```
+
+![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-11-1.png)
 
 ### MAP-based *p*-value
 
@@ -145,11 +156,14 @@ the odds that a parameter (described by its posterior distribution) has
 against the null hypothesis (h0) using Mills’ (2014, 2017) Objective
 Bayesian Hypothesis Testing paradigm. It is mathematically based on the
 density at the Maximum A Priori (MAP). It corresponds to the density
-value at 0 divided by the density of the highest density point.
+value at 0 divided by the density of the highest density
+point.
 
 ``` r
 p_map(posterior = rnorm(1000, 1, 1))
 ```
+
+![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-13-1.png)
 
 ## Utilities
 
@@ -175,7 +189,7 @@ density_at(posterior = rnorm(1000, 1, 1))
 
 You can cite the package as following:
 
-  - Makowski, D. (2019). *Understand and Describe Bayesian Models and
-    Posterior Distributions using BayestestR*. Available from
+  - Makowski, D. & Lüdecke, D. (2019). *Understand and Describe Bayesian
+    Models and Posterior Distributions using BayestestR*. Available from
     <https://github.com/easystats/bayestestR>.
     <DOI:10.5281/zenodo.2556486>.

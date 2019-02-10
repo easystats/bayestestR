@@ -3,7 +3,7 @@
 #' Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 #'
 #' @param posterior vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
-#' @param bounds ROPE's lower and higher bounds. Shoudd be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
+#' @param bounds ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
 #' @param ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.
 #' @param verbose Toggle off warnings.
 #'
@@ -27,7 +27,6 @@
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
 #' }
-#' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
 #' @export
 rope <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {

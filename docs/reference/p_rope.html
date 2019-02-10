@@ -164,11 +164,11 @@
     </tr>
     <tr>
       <th>bounds</th>
-      <td><p>ROPE's lower and higher bounds. Shoudd be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(0.1, 0.1)</a></code> if input is a vector and <code>x +- 0.1*SD(response)</code> if a Bayesian model is provided.</p></td>
+      <td><p>ROPE's lower and higher bounds. Should be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(0.1, 0.1)</a></code> if input is a vector and <code>x +- 0.1*SD(response)</code> if a Bayesian model is provided.</p></td>
     </tr>
     <tr>
       <th>precision</th>
-      <td><p>The precision by which to explore the ROPE space. Lower values increase the precision of the returned p value but can be quite computationaly costly.</p></td>
+      <td><p>The precision by which to explore the ROPE space (in percentage). Lower values increase the precision of the returned p value but can be quite computationaly costly.</p></td>
     </tr>
     </table>
     
@@ -181,10 +181,9 @@
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>p_rope</span>(<span class='no'>model</span>)
 
-<span class='co'># Will fail until get_predictors is implemented.</span>
-<span class='co'># library(brms)</span>
-<span class='co'># model &lt;- brms::brm(mpg ~ wt + cyl, data = mtcars)</span>
-<span class='co'># p_rope(model)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='fu'>p_rope</span>(<span class='no'>model</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -195,8 +194,6 @@
       <li><a href="#examples">Examples</a></li>
     </ul>
 
-    <h2>Author</h2>
-    <p><a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a></p>
   </div>
 </div>
 

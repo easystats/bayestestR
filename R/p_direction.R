@@ -20,7 +20,6 @@
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' p_direction(model)
 #' }
-#' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
 #' @export
 p_direction <- function(posterior) {

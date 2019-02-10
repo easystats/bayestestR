@@ -27,7 +27,6 @@
 #' equivalence_test(model)
 #' equivalence_test(model, ci = c(.50, .99))
 #' }
-#' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
 #' @export
 equivalence_test <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {

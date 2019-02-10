@@ -5,7 +5,6 @@
 #' @param x Any R object.
 #' @param ... Additional arguments to be passed to or from methods.
 #'
-#' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
 #' @method as.data.frame density
 #' @export

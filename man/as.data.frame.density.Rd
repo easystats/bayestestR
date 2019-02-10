@@ -14,6 +14,3 @@
 \description{
 Functions to check if an object is a data frame, or coerce it if possible.
 }
-\author{
-\href{https://dominiquemakowski.github.io/}{Dominique Makowski}
-}

@@ -141,7 +141,7 @@
 <h3 class="hasAnchor">
 <a href="#hdi---the-credible-interval-ci" class="anchor"></a>HDI - The <em>Credible</em> Interval (CI)</h3>
 <p><strong><code><a href="reference/hdi.html">hdi()</a></code></strong> computes the Highest Density Interval (HDI) of a posterior distribution, <em>i.e.</em>, the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as <strong>Credible Interval (CI)</strong>. By default, hdi() returns the 90% intervals, deemed to be more stable than, for instance, 95% intervals (Kruschke, 2015).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="reference/hdi.html">hdi</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>), <span class="dt">CI =</span> <span class="dv">90</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="reference/hdi.html">hdi</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>), <span class="dt">ci =</span> <span class="fl">.90</span>)</a></code></pre></div>
 <p><img src="https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-3-1.png"></p>
 </div>
 <div id="map-estimate" class="section level3">
@@ -214,7 +214,7 @@
 <a href="#credits" class="anchor"></a>Credits</h2>
 <p>You can cite the package as following:</p>
 <ul>
-<li>Makowski, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using BayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. <a href="DOI:10.5281/zenodo.2556486" class="uri">DOI:10.5281/zenodo.2556486</a>.</li>
+<li>Makowski, D. &amp; Lüdecke, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using BayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. <a href="DOI:10.5281/zenodo.2556486" class="uri">DOI:10.5281/zenodo.2556486</a>.</li>
 </ul>
 </div>
 </div>
@@ -233,9 +233,7 @@
 <div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
 </ul>
 </div>
 <div class="citation">
