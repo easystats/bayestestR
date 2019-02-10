@@ -22,11 +22,10 @@
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
 #'
-#' # Will fail until get_predictors is implemented.
-#' # library(brms)
-#' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' # rope(model)
-#' # rope(model, ci = c(.90, .95))
+#' library(brms)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' rope(model)
+#' rope(model, ci = c(.90, .95))
 #' }
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'

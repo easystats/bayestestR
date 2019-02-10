@@ -15,10 +15,9 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' p_map(model)
 #'
-#' # Will fail until get_predictors is implemented.
-#' # library(brms)
-#' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' # p_map(model)
+#' library(brms)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' p_map(model)
 #' }
 #' @references \href{https://www.youtube.com/watch?v=Ip8Ci5KUVRc}{Mill's talk}
 #'

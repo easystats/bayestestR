@@ -16,10 +16,9 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' p_direction(model)
 #'
-#' # Will fail until get_predictors is implemented.
-#' # library(brms)
-#' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' # p_direction(model)
+#' library(brms)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' p_direction(model)
 #' }
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'

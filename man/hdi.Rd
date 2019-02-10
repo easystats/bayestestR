@@ -31,11 +31,10 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 hdi(model)
 hdi(model, ci = c(.80, .90, .95))
 
-# Will fail until get_predictors is implemented.
-# library(brms)
-# model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-# hdi(model)
-# hdi(model, ci = c(.80, .90, .95))
+library(brms)
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+hdi(model)
+hdi(model, ci = c(.80, .90, .95))
 }
 
 }

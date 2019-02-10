@@ -15,10 +15,9 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' p_rope(model)
 #'
-#' # Will fail until get_predictors is implemented.
-#' # library(brms)
-#' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' # p_rope(model)
+#' library(brms)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' p_rope(model)
 #' }
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #' @importFrom stats na.omit
@@ -73,7 +72,7 @@ p_rope.numeric <- function(posterior, bounds = "default", precision = .1) {
     }
     p <- rope_df$CI[CI_position]
     p <- as.numeric(unlist(p))
-    p <- h0 * p * 100
+    p <- h0 * p
     # p <- 1/p  # Convert to probability
   }
 

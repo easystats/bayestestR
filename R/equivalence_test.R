@@ -22,11 +22,10 @@
 #' equivalence_test(model)
 #' equivalence_test(model, ci = c(.50, 1))
 #'
-#' # Will fail until get_predictors is implemented.
-#' # library(brms)
-#' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' # equivalence_test(model)
-#' # equivalence_test(model, ci = c(.50, .99))
+#' library(brms)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' equivalence_test(model)
+#' equivalence_test(model, ci = c(.50, .99))
 #' }
 #' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
