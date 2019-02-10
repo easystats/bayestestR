@@ -22,13 +22,11 @@
 #' equivalence_test(model)
 #' equivalence_test(model, ci = c(.50, 1))
 #'
-#' # Will fail until get_predictors is implemented.
-#' # library(brms)
-#' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' # equivalence_test(model)
-#' # equivalence_test(model, ci = c(.50, .99))
+#' library(brms)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' equivalence_test(model)
+#' equivalence_test(model, ci = c(.50, .99))
 #' }
-#' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #'
 #' @export
 equivalence_test <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
@@ -55,7 +53,7 @@ equivalence_test.numeric <- function(posterior, bounds = "default", ci = .90, ve
   if (all(bounds == "default")) {
     bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
-    stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    stop("`bounds` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
   l <- sapply(get_parameters(posterior), equivalence_test, bounds = bounds, ci = ci, verbose = verbose, simplify = FALSE)
   return(flatten_list(l, name = "Parameter"))

@@ -22,6 +22,3 @@ posterior <- rnorm_perfect(n = 10)
 density_at(posterior, 0)
 density_at(posterior, c(0, 1))
 }
-\author{
-\href{https://dominiquemakowski.github.io/}{Dominique Makowski}
-}

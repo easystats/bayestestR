@@ -10,7 +10,7 @@ equivalence_test(posterior, bounds = "default", ci = 0.9,
 \arguments{
 \item{posterior}{vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
-\item{bounds}{ROPE's lower and higher bounds. Shoudd be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
+\item{bounds}{ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.}
 
@@ -35,16 +35,13 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 equivalence_test(model)
 equivalence_test(model, ci = c(.50, 1))
 
-# Will fail until get_predictors is implemented.
-# library(brms)
-# model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-# equivalence_test(model)
-# equivalence_test(model, ci = c(.50, .99))
+library(brms)
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+equivalence_test(model)
+equivalence_test(model, ci = c(.50, .99))
 }
+
 }
 \references{
 \href{https://strengejacke.wordpress.com/2018/06/06/r-functions-for-bayesian-model-statistics-and-summaries-rstats-stan-brms/}{sjstats}
-}
-\author{
-\href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 }

@@ -17,12 +17,10 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
 #'
-#' # Will fail until get_predictors is implemented.
-#' # library(brms)
-#' # model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' # map_estimate(model)
+#' library(brms)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' map_estimate(model)
 #' }
-#' @author \href{https://dominiquemakowski.github.io/}{Dominique Makowski}
 #' @importFrom stats density
 #' @export
 map_estimate <- function(posterior, precision = 2^10, density = FALSE) {
