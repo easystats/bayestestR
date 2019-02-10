@@ -91,7 +91,7 @@ p_rope.numeric <- function(posterior, bounds = "default", precision = .1) {
   if (all(bounds == "default")) {
     bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
-    stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    stop("`bounds` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
   out <- data.frame(

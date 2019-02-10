@@ -48,7 +48,7 @@ print.rope <- function(x, ...) {
   cat(sprintf(
     "%.2f%% of the %s%% CI is in ROPE [%.2f, %.2f]",
     x$ROPE_Percentage,
-    x$CI*100,
+    x$CI,
     x$ROPE_low,
     x$ROPE_high
   ))
@@ -62,7 +62,7 @@ rope.numeric <- function(posterior, bounds = "default", ci = .90, verbose = TRUE
   if (all(bounds == "default")) {
     bounds <- c(-0.1, 0.1)
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
-    stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    stop("`bounds` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
   rope_values <- lapply(ci, function(i) {
@@ -92,7 +92,7 @@ rope.numeric <- function(posterior, bounds = "default", ci = .90, verbose = TRUE
 
 
   rope <- data.frame(
-    "CI" = ci,
+    "CI" = ci*100,
     "ROPE_low" = bounds[1],
     "ROPE_high" = bounds[2],
     "ROPE_Percentage" = rope_percentage
@@ -112,7 +112,7 @@ rope.numeric <- function(posterior, bounds = "default", ci = .90, verbose = TRUE
   if (all(bounds == "default")) {
     bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
-    stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    stop("`bounds` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
   list <- sapply(insight::get_parameters(posterior), rope, bounds = bounds, ci = ci, verbose = verbose, simplify = FALSE)
   return(flatten_list(list, name = "Parameter"))
