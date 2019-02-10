@@ -5,9 +5,6 @@
 # Session Data files
 .RData
 
-packrat*
-packrat/lib*/
-
 # Example code in package build process
 *-Ex.R
 
@@ -18,8 +15,7 @@ packrat/lib*/
 /*.Rcheck/
 
 # RStudio files
-.Rproj.user/*
-.Rproj.user
+.Rproj.user/
 
 # produced vignettes
 vignettes/*.html
