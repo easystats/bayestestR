@@ -201,6 +201,7 @@ df$sig_05 <- factor(ifelse(df$p_frequentist >= .05, "n.s.", "*"), levels=c("n.s.
 df$sig_01 <- factor(ifelse(df$p_frequentist >= .01, "n.s.", "**"), levels=c("n.s.", "**"))
 df$sig_001 <- factor(ifelse(df$p_frequentist >= .001, "n.s.", "***"), levels=c("n.s.", "***"))
 
+
 get_data <- function(predictor, outcome, lbound=0, ubound=0.3){
   fit <- glm(paste(outcome, "~", predictor), data=df, family = "binomial")
   data <- data.frame(x=1:100)
@@ -213,6 +214,8 @@ get_data <- function(predictor, outcome, lbound=0, ubound=0.3){
   data <- select_(data, "value"=predictor, outcome, "index", "CI_lower", "CI_upper")
   return(data)
 }
+
+
 
 rbind(
   rbind(
@@ -265,6 +268,44 @@ rbind(
   xlab("\nIndex Value")
 ```
 
+
+### Relationship between ROPE (full) and Equivalence test
+
+```{r, message=FALSE, warning=FALSE, fig.height=15, fig.width=10}
+df$equivalence <- factor(ifelse(df$rope == 0, "significant", "n.s."), levels=c("n.s.", "significant"))
+
+rbind(
+  get_data(predictor="p_map", outcome="equivalence", lbound=0, ubound=0.4),
+  get_data(predictor="p_direction", outcome="equivalence", lbound=92.5, ubound=100),
+  get_data(predictor="rope_full", outcome="equivalence", lbound=0, ubound=7),
+  get_data(predictor="p_frequentist", outcome="equivalence", lbound=0, ubound=0.15)
+) %>% 
+  ggplot(aes(x=value, y=equivalence)) +
+  geom_ribbon(aes(ymin=CI_lower, ymax=CI_upper), alpha=0.1) +
+  geom_line(aes(color=index), size=1) +
+  facet_wrap(~ index, scales = "free", nrow=5) +
+  theme_classic() +
+  theme(strip.background = element_blank()) +
+  scale_color_manual(values = c("p_frequentist"="#607D8B", "p_map" = "#E91E63", "p_direction" = "#2196F3",
+                               "rope" = "#FF9800", "rope_full" = "#FF5722", "p_rope"="#FFC107"), guide=FALSE) +
+  ylab("Probability of rejecting H0 with the equivalence test\n") +
+  xlab("\nIndex Value")
+
+```
+
+### Relationship between ROPE (full) and p (direction)
+
+```{r, message=FALSE, warning=FALSE, fig.height=15, fig.width=10}
+df %>%
+  mutate(effect = as.factor(effect)) %>% 
+  ggplot(aes(x=p_direction, y=rope_full, color=effect)) +
+  geom_point(alpha=0.025) +
+  theme_classic() +
+  theme(strip.background = element_blank()) +
+  scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") +
+  ylab("ROPE (full)\n") +
+  xlab("\nIndex Value")
+```
 
 
 ## Discussion

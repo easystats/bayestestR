@@ -42,13 +42,12 @@ Based on the previous [**comparison of point-estimates**](https://easystats.gith
     - *p*d \> 97.5\% ~ *p* \< .05: likely existing
     - *p*d \> 99\% ~ *p* \< .01: probably existing
     - *p*d \> 99.9%\ ~ *p* \< .001: certainly existing
-    - *p*d = 100\%: definitely existing
 
 - **ROPE (full)**: Extra caution is required as tts interpretation highly depends on other parameters such as sample size and ROPE bounds.
-
+    
+    - \> 5\% in ROPE: possibly not significant
     - \< 5\% in ROPE: possibly significant
     - \< 1\% in ROPE: likely significant
-    - 0\% in ROPE: definitely significant
     
 *Note: If you have any advice, opinion or such, we encourage you to let us know by opening an [discussion thread](https://github.com/easystats/bayestestR/issues) or making a pull request.*
 

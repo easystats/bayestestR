@@ -2,7 +2,7 @@
 #'
 #' @param object A list.
 #' @param name Name of column of keys in the case the output is a dataframe.
-#' @export
+#' @keywords internal
 flatten_list <- function(object, name = "name") {
   if (length(object) == 1) {
     object[[1]]
