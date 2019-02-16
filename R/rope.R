@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' rope(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
@@ -21,13 +21,13 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
 #' }
-#'
+#' 
 #' @export
 rope <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
   UseMethod("rope")
@@ -90,7 +90,7 @@ rope.numeric <- function(posterior, bounds = "default", ci = .90, verbose = TRUE
 
 
   rope <- data.frame(
-    "CI" = ci*100,
+    "CI" = ci * 100,
     "ROPE_low" = bounds[1],
     "ROPE_high" = bounds[2],
     "ROPE_Percentage" = rope_percentage

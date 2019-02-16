@@ -14,3 +14,4 @@ flatten_list(object, name = "name")
 \description{
 Flatten a list
 }
+\keyword{internal}
