@@ -45,9 +45,9 @@ Based on the previous [**comparison of point-estimates**](https://easystats.gith
 
 - **ROPE (full)**: Extra caution is required as its interpretation highly depends on other parameters such as sample size and ROPE bounds.
 
-    - \> 99\% in ROPE: not significant (we can accept the null hypothesis)
-    - \> 97.5\% in ROPE: probably not significant
-    - \< 97.5\% - \> 2.5\% in ROPE: negligible
+    - \> 99\% in ROPE: negligible (we can accept the null hypothesis)
+    - \> 97.5\% in ROPE: probably negligible
+    - \< 97.5\% - \> 2.5\% in ROPE: not significant
     - \< 2.5\% in ROPE: probably significant
     - \< 1\% in ROPE: significant (we can reject the null hypothesis)
     
