@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Region of Practical Equivalence (ROPE) — rope • bayestestR</title>
+<title>Find Default Equivalence (ROPE) Region Bounds — rope_bounds • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,9 +37,9 @@
 
 
 
-<meta property="og:title" content="Region of Practical Equivalence (ROPE) — rope" />
+<meta property="og:title" content="Find Default Equivalence (ROPE) Region Bounds — rope_bounds" />
 
-<meta property="og:description" content="Compute the proportion (in percentage) of the HDI (default to the 90% HDI) of a posterior distribution that lies within a region of practical equivalence." />
+<meta property="og:description" content="Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -142,60 +142,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Region of Practical Equivalence (ROPE)</h1>
+    <h1>Find Default Equivalence (ROPE) Region Bounds</h1>
     <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/rope.R'><code>R/rope.R</code></a></small>
-    <div class="hidden name"><code>rope.Rd</code></div>
+    <div class="hidden name"><code>rope_bounds.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Compute the proportion (in percentage) of the HDI (default to the 90% HDI) of a posterior distribution that lies within a region of practical equivalence.</p>
+    <p>Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>rope</span>(<span class='no'>posterior</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>rope_bounds</span>(<span class='no'>model</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>posterior</th>
-      <td><p>vector representing a posterior distribution. Can also be a <code>stanreg</code> or <code>brmsfit</code> model.</p></td>
-    </tr>
-    <tr>
-      <th>bounds</th>
-      <td><p>ROPE's lower and higher bounds. Should be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(0.1, 0.1)</a></code> if input is a vector and <code>x +- 0.1*SD(response)</code> if a Bayesian model is provided.</p></td>
-    </tr>
-    <tr>
-      <th>ci</th>
-      <td><p>The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.</p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>Toggle off warnings.</p></td>
+      <th>model</th>
+      <td><p>A Bayesian model.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are equivalent to the null value for practical purposes (2010, 2011, 2014). Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as 0 +/- .1 * sd(y). Kruschke (2010, 2011, 2014) suggest using the proportion of the 95% (or 90%, considered more stable) <a href='hdi.html'>HDI</a> that falls within the ROPE as an index for "null-hypothesis" testing (as understood under the Bayesian framework, see <a href='equivalence_test.html'>equivalence_test</a>). Besides the ROPE-based decision criteria, the proportion of the 95% CI that falls in the ROPE can be used as a continuous index.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
-
-<span class='fu'>rope</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>0.01</span>), <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; 100.00% of the 90% CI is in ROPE [-0.10, 0.10]</div><div class='input'><span class='fu'>rope</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; 8.10% of the 90% CI is in ROPE [-0.10, 0.10]</div><div class='input'><span class='fu'>rope</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; 0.00% of the 90% CI is in ROPE [-0.10, 0.10]</div><div class='input'><span class='fu'>rope</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;   CI ROPE_low ROPE_high ROPE_Percentage
-#&gt; 1 90     -0.1       0.1        5.771365
-#&gt; 2 95     -0.1       0.1        5.467928</div><span class='co'># NOT RUN {</span>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'>rope</span>(<span class='no'>model</span>)
-<span class='fu'>rope</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.90</span>, <span class='fl'>.95</span>))
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>vs</span> ~ <span class='no'>mpg</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>family</span><span class='kw'>=</span><span class='st'>"binomial"</span>)
+<span class='fu'>rope_bounds</span>(<span class='no'>model</span>)
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'>rope</span>(<span class='no'>model</span>)
-<span class='fu'>rope</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.90</span>, <span class='fl'>.95</span>))
+<span class='fu'>rope_bounds</span>(<span class='no'>model</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
@@ -203,9 +181,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

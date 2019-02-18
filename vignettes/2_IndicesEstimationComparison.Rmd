@@ -37,7 +37,7 @@ In the present work, we will compare these three point-estimates of effect betwe
 
 ### Simulate Regression Data with Noise
 
-We will simulate 36000 Bayesian and frequentist linear regression models with systematic variation of "true" effect (1 or 0), sample size (20, 40, 60), levels of noise (0.1, 2.5, 5), and priors (correct - same as true effect or incorrect).
+We simulated 36000 Bayesian and frequentist linear regression models with systematic variation of "true" effect (1 or 0), sample size (20, 40, 60), levels of noise (0.1, 2.5, 5), and priors (correct - same as true effect or incorrect).
 
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2)

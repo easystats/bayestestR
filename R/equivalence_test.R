@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' equivalence_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
@@ -21,13 +21,13 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
 #' equivalence_test(model, ci = c(.50, 1))
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
 #' equivalence_test(model, ci = c(.50, .99))
 #' }
-#' 
+#'
 #' @export
 equivalence_test <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
   UseMethod("equivalence_test")
@@ -57,7 +57,7 @@ equivalence_test.numeric <- function(posterior, bounds = "default", ci = .90, ve
 #' @keywords internal
 .equivalence_test_models <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
   if (all(bounds == "default")) {
-    bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
+    bounds <- rope_bounds(posterior)
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
     stop("`bounds` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }

@@ -86,13 +86,14 @@ around the null value enclosing values that are equivalent to the null
 value for practical purposes (2010, 2011, 2014). Kruschke (2018)
 suggests that such null value could be set, by default, to the -0.1 to
 0.1 range of a standardized parameter (negligible effect size according
-to Cohen). This could be generalized: For instance, for linear models,
-the ROPE could be set as 0 +/- .1 \* sd(y). Kruschke (2010, 2011, 2014)
-suggest using the proportion of the 95% (or 90%, considered more stable)
-*HDI* that falls within the ROPE as an index for “null-hypothesis”
-testing (as understood under the Bayesian framework, see `rope_test`).
-Besides the ROPE-based decision criteria, the proportion of the 95% CI
-that falls in the ROPE can be used as a continuous
+to Cohen, 1988). This could be generalized: For instance, for linear
+models, the ROPE could be set as 0 +/- .1 \* sd(y). Kruschke (2010,
+2011, 2014) suggest using the proportion of the 95% (or 90%, considered
+more stable) *HDI* that falls within the ROPE as an index for
+“null-hypothesis” testing (as understood under the Bayesian framework,
+see `rope_test`). Besides the ROPE-based decision criteria, the
+proportion of the 95% CI that falls in the ROPE can be used as a
+continuous
 index.
 
 ``` r
@@ -108,7 +109,17 @@ rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 **`equivalence_test()`** performs a Test for Practical Equivalence based
 on the “HDI+ROPE decision rule” (Kruschke, 2018) to check whether
 parameter values should be accepted or rejected against an explicitly
-formulated “null hypothesis”.
+formulated “null hypothesis”. Using the ROPE and the HDI, Kruschke
+(2010, 2011, 2014, 2018) suggest using the percentage of the 95% (or
+90%, considered more stable) HDI that falls within the ROPE as a
+decision rule. If the HDI is completely outside the ROPE, the “null
+hypothesis” for this parameter is “rejected”. If the ROPE completely
+covers the HDI, i.e. all most credible values of a parameter are inside
+the region of practical equivalence, the null hypothesis is accepted.
+Else, it’s undecided whether to accept or reject the null hypothesis. If
+the full ROPE is used (i.e., 100% of the HDI), then the null hypothesis
+is rejected or accepted if the percentage of the posterior within the
+ROPE is smaller than to 1% or greater than 99%.
 
 ``` r
 equivalence_test(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
@@ -166,6 +177,15 @@ p_map(posterior = rnorm(1000, 1, 1))
 ![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-13-1.png)
 
 ## Utilities
+
+### Probability of a Value
+
+**`rope_bounds()`**: Find default equivalence (ROPE) region bounds of
+Bayesian models.
+
+``` r
+rope_bounds(model)
+```
 
 ### Perfect Normal Distribution
 

@@ -8,13 +8,13 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' p_rope(posterior = rnorm(1000, mean = 1, sd = 1), bounds = c(-0.1, 0.1))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' p_rope(model)
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' p_rope(model)
@@ -87,7 +87,7 @@ p_rope.numeric <- function(posterior, bounds = "default", precision = .1) {
 #' @keywords internal
 .p_rope_models <- function(posterior, bounds = "default", precision = .1) {
   if (all(bounds == "default")) {
-    bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
+    bounds <- rope_bounds(posterior)
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
     stop("`bounds` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }

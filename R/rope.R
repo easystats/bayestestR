@@ -7,11 +7,11 @@
 #' @param ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.
 #' @param verbose Toggle off warnings.
 #'
-#' @details Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are equivalent to the null value for practical purposes (2010, 2011, 2014). Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen). This could be generalized: For instance, for linear models, the ROPE could be set as 0 +/- .1 * sd(y). Kruschke (2010, 2011, 2014) suggest using the proportion of the 95\% (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the ROPE as an index for "null-hypothesis" testing (as understood under the Bayesian framework, see \link[=equivalence_test]{equivalence_test}). Besides the ROPE-based decision criteria, the proportion of the 95\% CI that falls in the ROPE can be used as a continuous index.
+#' @details Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are equivalent to the null value for practical purposes (2010, 2011, 2014). Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as 0 +/- .1 * sd(y). Kruschke (2010, 2011, 2014) suggest using the proportion of the 95\% (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the ROPE as an index for "null-hypothesis" testing (as understood under the Bayesian framework, see \link[=equivalence_test]{equivalence_test}). Besides the ROPE-based decision criteria, the proportion of the 95\% CI that falls in the ROPE can be used as a continuous index.
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' rope(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
@@ -21,13 +21,13 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
 #' }
-#' 
+#'
 #' @export
 rope <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
   UseMethod("rope")
@@ -108,7 +108,7 @@ rope.numeric <- function(posterior, bounds = "default", ci = .90, verbose = TRUE
 #' @keywords internal
 .rope_models <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
   if (all(bounds == "default")) {
-    bounds <- c(-0.1 * sd(insight::get_response(posterior)), 0.1 * sd(insight::get_response(posterior)))
+    bounds <- rope_bounds(posterior)
   } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
     stop("`bounds` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
@@ -121,3 +121,37 @@ rope.stanreg <- .rope_models
 
 #' @export
 rope.brmsfit <- .rope_models
+
+
+
+
+
+
+#' Find Default Equivalence (ROPE) Region Bounds
+#'
+#' Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988).
+#' @param model A Bayesian model.
+#' @examples
+#' \dontrun{
+#' library(rstanarm)
+#' model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family="binomial")
+#' rope_bounds(model)
+#'
+#' library(brms)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' rope_bounds(model)
+#' }
+#'
+#' @export
+rope_bounds <- function(model){
+  if (insight::model_info(model)$is_linear){
+    bounds <- c(-0.1 * sd(insight::get_response(model)), 0.1 * sd(insight::get_response(model)))
+  } else if(insight::model_info(model)$is_binomial){
+    log_odds_equivalent_to_01_d <- 0.1 * (pi / sqrt(3))
+    bounds <- c(-log_odds_equivalent_to_01_d, log_odds_equivalent_to_01_d)
+  } else{
+    bounds <- c(-0.1, 0.1)
+  }
+  return(bounds)
+}
+
