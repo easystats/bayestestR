@@ -19,7 +19,7 @@ bibliography: bibliography.bib
 
 This vignette can be referred to by citing the package:
 
-- Makowski, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI:10.5281/zenodo.2556486.
+- Makowski, D. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI:10.5281/zenodo.2556486.
 
 
 
@@ -52,10 +52,11 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 
-df <- read.csv("https://raw.github.com/DominiqueMakowski/bayestestR/master/data/bayes_indices.csv")
+df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayes_indices.csv")
 ```
 
-For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it [**here**](https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html#simulate-regression-data-with-noise) (*takes about 2h*).
+For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it [here](https://easystats.github.io/circus/articles/bayesian_indices.html).
+
 
 ### Indices
 

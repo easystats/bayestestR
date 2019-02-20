@@ -158,7 +158,7 @@
 <div id="rope" class="section level3">
 <h3 class="hasAnchor">
 <a href="#rope" class="anchor"></a>ROPE</h3>
-<p><strong><code><a href="reference/rope.html">rope()</a></code></strong> computes the proportion (in percentage) of the HDI (default to the 90% HDI) of a posterior distribution that lies within a region of practical equivalence. Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are equivalent to the null value for practical purposes (2010, 2011, 2014). Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen). This could be generalized: For instance, for linear models, the ROPE could be set as 0 +/- .1 * sd(y). Kruschke (2010, 2011, 2014) suggest using the proportion of the 95% (or 90%, considered more stable) <em>HDI</em> that falls within the ROPE as an index for “null-hypothesis” testing (as understood under the Bayesian framework, see <code>rope_test</code>). Besides the ROPE-based decision criteria, the proportion of the 95% CI that falls in the ROPE can be used as a continuous index.</p>
+<p><strong><code><a href="reference/rope.html">rope()</a></code></strong> computes the proportion (in percentage) of the HDI (default to the 90% HDI) of a posterior distribution that lies within a region of practical equivalence. Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are equivalent to the null value for practical purposes (2010, 2011, 2014). Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as 0 +/- .1 * sd(y). Kruschke (2010, 2011, 2014) suggest using the proportion of the 95% (or 90%, considered more stable) <em>HDI</em> that falls within the ROPE as an index for “null-hypothesis” testing (as understood under the Bayesian framework, see <code>rope_test</code>). Besides the ROPE-based decision criteria, the proportion of the 95% CI that falls in the ROPE can be used as a continuous index.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="reference/rope.html">rope</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">bounds =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</a></code></pre></div>
 <p><img src="https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-7-1.png"></p>
 </div>
@@ -196,17 +196,23 @@
 <div id="utilities" class="section level2">
 <h2 class="hasAnchor">
 <a href="#utilities" class="anchor"></a>Utilities</h2>
+<div id="probability-of-a-value" class="section level3">
+<h3 class="hasAnchor">
+<a href="#probability-of-a-value" class="anchor"></a>Probability of a Value</h3>
+<p><strong><code><a href="reference/rope_bounds.html">rope_bounds()</a></code></strong>: Find default equivalence (ROPE) region bounds of Bayesian models.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="reference/rope_bounds.html">rope_bounds</a></span>(model)</a></code></pre></div>
+</div>
 <div id="perfect-normal-distribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#perfect-normal-distribution" class="anchor"></a>Perfect Normal Distribution</h3>
 <p><strong><code><a href="reference/rnorm_perfect.html">rnorm_perfect()</a></code></strong>: Generate a sample of size n with a near-perfect normal distribution.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="reference/rnorm_perfect.html">rnorm_perfect</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="reference/rnorm_perfect.html">rnorm_perfect</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
 </div>
-<div id="probability-of-a-value" class="section level3">
+<div id="probability-of-a-value-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#probability-of-a-value" class="anchor"></a>Probability of a Value</h3>
+<a href="#probability-of-a-value-1" class="anchor"></a>Probability of a Value</h3>
 <p><strong><code><a href="reference/density_at.html">density_at()</a></code></strong>: Compute the density of a given point of a distribution.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="reference/density_at.html">density_at</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="reference/density_at.html">density_at</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
 </div>
 </div>
 <div id="credits" class="section level2">

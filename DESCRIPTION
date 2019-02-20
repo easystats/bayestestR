@@ -36,8 +36,10 @@ Suggests:
 	stringr,
 	broom,
 	rstanarm,
-	brms
+	brms,
+	circus
 Remotes: 
-	easystats/insight
+	easystats/insight,
+	easystats/circus
 RoxygenNote: 6.1.1
 Language: en-GB
