@@ -4,7 +4,11 @@ test_that("rstanarm", {
   set.seed(333)
 
   library(rstanarm)
-  model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+  model <- circus::download_model("stanreg_lm_1")
+  testthat::expect_equal(rope_bounds(model)[1], -0.602, tol=0.1)
+
+  model <- circus::download_model("stanreg_glm_1")
+  testthat::expect_equal(rope_bounds(model)[1], -0.181, tol=0.1)
 
   testthat::expect_is(hdi(model), "data.frame")
   testthat::expect_is(rope(model), "data.frame")
