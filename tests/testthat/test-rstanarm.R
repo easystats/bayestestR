@@ -5,10 +5,10 @@ test_that("rstanarm", {
 
   library(rstanarm)
   model <- circus::download_model("stanreg_lm_1")
-  testthat::expect_equal(rope_bounds(model)[1], -0.602, tol=0.1)
+  testthat::expect_equal(rope_bounds(model)[1], -0.602, tol = 0.1)
 
   model <- circus::download_model("stanreg_glm_1")
-  testthat::expect_equal(rope_bounds(model)[1], -0.181, tol=0.1)
+  testthat::expect_equal(rope_bounds(model)[1], -0.2912962, tol = 0.1)
 
   testthat::expect_is(hdi(model), "data.frame")
   testthat::expect_is(rope(model), "data.frame")
