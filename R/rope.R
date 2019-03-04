@@ -142,16 +142,24 @@ rope.brmsfit <- .rope_models
 #' rope_bounds(model)
 #' }
 #'
+#' @importFrom insight get_response model_info
+#' @importFrom stats sd qlogis
 #' @export
 rope_bounds <- function(model){
-  if (insight::model_info(model)$is_linear){
-    bounds <- c(-0.1 * sd(insight::get_response(model)), 0.1 * sd(insight::get_response(model)))
-  } else if(insight::model_info(model)$is_binomial){
-    log_odds_equivalent_to_01_d <- 0.1 * (pi / sqrt(3))
-    bounds <- c(-log_odds_equivalent_to_01_d, log_odds_equivalent_to_01_d)
-  } else{
-    bounds <- c(-0.1, 0.1)
+  mi <- insight::model_info(model)
+  resp <- insight::get_response(model)
+
+  if (mi$is_linear) {
+    effect_size_d <- 0.1 * stats::sd(resp)
+  } else if (mi$is_binomial) {
+    numeric_response <- as.numeric(as.vector(resp))
+    prob_resp <- mean(numeric_response - min(numeric_response))
+    eff_size <- prob_resp / pi
+    effect_size_d <- (stats::qlogis(prob_resp + eff_size) - stats::qlogis(prob_resp - eff_size)) / 4
+  } else {
+    effect_size_d <- 0.1
   }
-  return(bounds)
+
+  c(-1, 1) * effect_size_d
 }
 
