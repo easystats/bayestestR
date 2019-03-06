@@ -210,5 +210,25 @@ hdi.brmsfit <- function(posterior, ci = .90, verbose = TRUE) {
   tmp <- tmp[, c("Parameter", "CI", "CI_low", "CI_high", "Component", "Group")]
   # clean random effects notation from parameters
   tmp$Parameter <- gsub("r_(.*)\\.(.*)\\.", "\\1", tmp$Parameter)
-  tmp
+  .clean_parameters(tmp)
+}
+
+
+#' @keywords internal
+.clean_parameters <- function(x) {
+  removers <- c(
+    grep("^prior_", x$Parameter),
+    grep("^sd_", x$Parameter),
+    grep("^cor_", x$Parameter),
+    grep("^lp__", x$Parameter)
+  )
+
+  if (length(removers)) {
+    x <- x[-removers, ]
+  }
+
+  if (nrow(x) == 0)
+    NULL
+  else
+    x
 }

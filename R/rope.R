@@ -146,9 +146,17 @@ rope.brmsfit <- .rope_models
 #' @importFrom stats sd qlogis
 #' @export
 rope_bounds <- function(model){
-  mi <- insight::model_info(model)
   resp <- insight::get_response(model)
+  mi <- insight::model_info(model)
 
+  if (insight::is_multivariate(model)) {
+    mapply(function(x, y) .rope_bounds(x, y), mi, resp)
+  } else {
+    .rope_bounds(mi, resp)
+  }
+}
+
+.rope_bounds <- function(mi, resp) {
   if (mi$is_linear) {
     effect_size_d <- 0.1 * stats::sd(resp)
   } else if (mi$is_binomial) {
@@ -162,4 +170,3 @@ rope_bounds <- function(model){
 
   c(-1, 1) * effect_size_d
 }
-
