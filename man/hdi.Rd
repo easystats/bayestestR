@@ -7,7 +7,7 @@
 hdi(posterior, ci = 0.9, verbose = TRUE)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
+\item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
 \item{ci}{Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.}
 
@@ -17,7 +17,7 @@ hdi(posterior, ci = 0.9, verbose = TRUE)
 Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
 }
 \details{
-By default, hdi() returns the 90\% intervals (\code{ci = 0.9}), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
+By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
 }
 \examples{
 library(bayestestR)

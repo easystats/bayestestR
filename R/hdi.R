@@ -2,16 +2,16 @@
 #'
 #' Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
 #'
-#' @details By default, hdi() returns the 90\% intervals (\code{ci = 0.9}), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
+#' @details By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
 #'
-#' @param posterior Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.
+#' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param ci Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.
 #' @param verbose Toggle off warnings.
 #'
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' posterior <- rnorm(1000)
 #' hdi(posterior, ci = .90)
 #' hdi(posterior, ci = c(.80, .90, .95))
@@ -20,13 +20,13 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
 #' hdi(model, ci = c(.80, .90, .95))
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
 #' hdi(model, ci = c(.80, .90, .95))
 #' }
-#' 
+#'
 #' @author All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #' @export
@@ -41,39 +41,63 @@ hdi.numeric <- function(posterior, ci = .90, verbose = TRUE) {
     .hdi(posterior, ci = i, verbose = verbose)
   })
 
-  return(flatten_list(hdi_values))
+  flatten_list(hdi_values)
 }
-
-
-
-
-
-
 
 
 #' @importFrom insight get_parameters
-#' @keywords internal
-.hdi_models <- function(posterior, ci = .90, verbose = TRUE) {
-  list <- sapply(insight::get_parameters(posterior), hdi, ci = ci, verbose = verbose, simplify = FALSE)
-  return(flatten_list(list, name = "Parameter"))
+#' @export
+hdi.stanreg <- function(posterior, ci = .90, verbose = TRUE) {
+
+  list <- lapply(c("fixed", "random"), function(x) {
+    tmp <- do.call(rbind, sapply(
+      insight::get_parameters(posterior, effects = x),
+      hdi,
+      ci = ci,
+      verbose = verbose,
+      simplify = FALSE)
+    )
+
+    if (!.is_empty_object(tmp)) {
+      tmp <- .clean_up_tmp_stanreg(tmp, x)
+    } else {
+      tmp <- NULL
+    }
+
+    tmp
+  })
+
+  do.call(rbind, args = c(compact_list(list), make.row.names = FALSE))
 }
 
-#' @export
-hdi.stanreg <- .hdi_models
 
 #' @export
-hdi.brmsfit <- .hdi_models
+hdi.brmsfit <- function(posterior, ci = .90, verbose = TRUE) {
 
+  effects <- c("fixed", "fixed", "random", "random")
+  component <- c("conditional", "zi", "conditional", "zi")
 
+  .get_hdi <- function(x, y) {
+    tmp <- do.call(rbind, sapply(
+      insight::get_parameters(posterior, effects = x, component = y),
+      hdi,
+      ci = ci,
+      verbose = verbose,
+      simplify = FALSE)
+    )
 
+    if (!.is_empty_object(tmp)) {
+      tmp <- .clean_up_tmp_brms(tmp, x, y)
+    } else {
+      tmp <- NULL
+    }
 
+    tmp
+  }
 
-
-
-
-
-
-
+  list <- mapply(.get_hdi, effects, component)
+  do.call(rbind, args = c(compact_list(list), make.row.names = FALSE))
+}
 
 
 #' @keywords internal
@@ -157,11 +181,34 @@ hdi.brmsfit <- .hdi_models
   }
 
   # get values based on minimum
-  out <- data.frame(
+  data.frame(
     "CI" = ci * 100,
     "CI_low" = x_sorted[min_i],
     "CI_high" = x_sorted[upper[min_i]]
   )
-  # class(out) <- c("CI", class(out))
-  return(out)
+}
+
+
+#' @keywords internal
+.clean_up_tmp_stanreg <- function(tmp, x) {
+  tmp$Group <- x
+  tmp$Parameter <- rownames(tmp)
+  rownames(tmp) <- NULL
+  tmp <- tmp[, c("Parameter", "CI", "CI_low", "CI_high", "Group")]
+  # clean random effects notation from parameters
+  tmp$Parameter <- gsub("b\\[(.*) (.*)\\]", "\\2", tmp$Parameter)
+  tmp
+}
+
+
+#' @keywords internal
+.clean_up_tmp_brms <- function(tmp, x, y) {
+  tmp$Group <- x
+  tmp$Component <- y
+  tmp$Parameter <- rownames(tmp)
+  rownames(tmp) <- NULL
+  tmp <- tmp[, c("Parameter", "CI", "CI_low", "CI_high", "Component", "Group")]
+  # clean random effects notation from parameters
+  tmp$Parameter <- gsub("r_(.*)\\.(.*)\\.", "\\1", tmp$Parameter)
+  tmp
 }
