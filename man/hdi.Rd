@@ -2,9 +2,18 @@
 % Please edit documentation in R/hdi.R
 \name{hdi}
 \alias{hdi}
+\alias{hdi.stanreg}
+\alias{hdi.brmsfit}
 \title{Highest Density Interval (HDI)}
 \usage{
-hdi(posterior, ci = 0.9, verbose = TRUE)
+hdi(posterior, ci = 0.9, verbose = TRUE, ...)
+
+\method{hdi}{stanreg}(posterior, ci = 0.9, effects = c("fixed",
+  "random", "all"), verbose = TRUE, ...)
+
+\method{hdi}{brmsfit}(posterior, ci = 0.9, effects = c("fixed",
+  "random", "all"), component = c("conditional", "zi", "zero_inflated",
+  "all"), verbose = TRUE)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
@@ -12,6 +21,15 @@ hdi(posterior, ci = 0.9, verbose = TRUE)
 \item{ci}{Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{...}{Currently not used.}
+
+\item{effects}{Should the HDI for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.}
+
+\item{component}{Should the HDI for all parameters, parameters for the conditional model
+or the zero-inflated part of the modelbe returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \description{
 Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).

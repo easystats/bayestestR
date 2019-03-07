@@ -6,7 +6,13 @@
 #'
 #' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param ci Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.
+#' @param effects Should the HDI for fixed effects, random effects or both be returned?
+#'   Only applies to mixed models. May be abbreviated.
+#' @param component Should the HDI for all parameters, parameters for the conditional model
+#'   or the zero-inflated part of the modelbe returned? May be abbreviated. Only
+#'   applies to \pkg{brms}-models.
 #' @param verbose Toggle off warnings.
+#' @param ... Currently not used.
 #'
 #'
 #' @examples
@@ -30,13 +36,13 @@
 #' @author All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #' @export
-hdi <- function(posterior, ci = .90, verbose = TRUE) {
+hdi <- function(posterior, ci = .90, verbose = TRUE, ...) {
   UseMethod("hdi")
 }
 
 
 #' @export
-hdi.numeric <- function(posterior, ci = .90, verbose = TRUE) {
+hdi.numeric <- function(posterior, ci = .90, verbose = TRUE, ...) {
   hdi_values <- lapply(ci, function(i) {
     .hdi(posterior, ci = i, verbose = verbose)
   })
@@ -46,8 +52,10 @@ hdi.numeric <- function(posterior, ci = .90, verbose = TRUE) {
 
 
 #' @importFrom insight get_parameters
+#' @rdname hdi
 #' @export
-hdi.stanreg <- function(posterior, ci = .90, verbose = TRUE) {
+hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), verbose = TRUE, ...) {
+  effects <- match.arg(effects)
 
   list <- lapply(c("fixed", "random"), function(x) {
     tmp <- do.call(rbind, sapply(
@@ -67,15 +75,29 @@ hdi.stanreg <- function(posterior, ci = .90, verbose = TRUE) {
     tmp
   })
 
-  do.call(rbind, args = c(compact_list(list), make.row.names = FALSE))
+  dat <- do.call(rbind, args = c(compact_list(list), make.row.names = FALSE))
+
+  if (all(dat$Group == dat$Group[1])) {
+    return(subset(dat, select = -Group))
+  }
+
+  switch(
+    effects,
+    fixed = subset(dat, select = -Group, subset = Group == "fixed"),
+    random = subset(dat, select = -Group, subset = Group == "random"),
+    dat
+  )
 }
 
 
+#' @rdname hdi
 #' @export
-hdi.brmsfit <- function(posterior, ci = .90, verbose = TRUE) {
+hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), verbose = TRUE) {
+  effects <- match.arg(effects)
+  component <- match.arg(component)
 
-  effects <- c("fixed", "fixed", "random", "random")
-  component <- c("conditional", "zi", "conditional", "zi")
+  eff <- c("fixed", "fixed", "random", "random")
+  com <- c("conditional", "zi", "conditional", "zi")
 
   .get_hdi <- function(x, y) {
     tmp <- do.call(rbind, sapply(
@@ -95,8 +117,33 @@ hdi.brmsfit <- function(posterior, ci = .90, verbose = TRUE) {
     tmp
   }
 
-  list <- mapply(.get_hdi, effects, component)
-  do.call(rbind, args = c(compact_list(list), make.row.names = FALSE))
+  list <- mapply(.get_hdi, eff, com)
+  dat <- do.call(rbind, args = c(compact_list(list), make.row.names = FALSE))
+
+  dat <- switch(
+    effects,
+    fixed = subset(dat, subset = Group == "fixed"),
+    random = subset(dat, subset = Group == "random"),
+    dat
+  )
+
+  dat <- switch(
+    component,
+    conditional = subset(dat, subset = Component == "conditional"),
+    zi = ,
+    zero_inflated = subset(dat, subset = Component == "zero_inflated"),
+    dat
+  )
+
+  if (all(dat$Group == dat$Group[1])) {
+    dat <- subset(dat, select = -Group)
+  }
+
+  if (all(dat$Component == dat$Component[1])) {
+    dat <- subset(dat, select = -Component)
+  }
+
+  dat
 }
 
 
