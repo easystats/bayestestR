@@ -10,4 +10,11 @@ test_that("hdi", {
   testthat::expect_warning(hdi(rnorm_perfect(1000), ci = 0.0000001))
   testthat::expect_warning(hdi(rnorm_perfect(1000), ci = 950))
   testthat::expect_warning(hdi(c(rnorm_perfect(1000, 0, 1), rnorm_perfect(1000, 6, 1), rnorm_perfect(1000, 12, 1)), ci = .10))
+
+  # TODO add tests
+  model <- circus::download_model("stanreg_lm_1")
+  hdi(model)
+
+  model <- circus::download_model("stanreg_lmerMod_1")
+  hdi(model)
 })
