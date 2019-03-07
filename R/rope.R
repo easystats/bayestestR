@@ -43,13 +43,20 @@ as.double.rope <- function(x, ...) {
 
 #' @export
 print.rope <- function(x, ...) {
-  cat(sprintf(
-    "%.2f%% of the %s%% CI is in ROPE [%.2f, %.2f]",
-    x$ROPE_Percentage,
-    x$CI,
-    x$ROPE_low,
-    x$ROPE_high
-  ))
+  if (is.data.frame(x)) {
+    cat(sprintf("# Proportions of samples inside the ROPE [%.2f, %.2f]\n\n", x$ROPE_low[1], x$ROPE_high[1]))
+    x <- subset(x, select = c("Parameter", "ROPE_Percentage"))
+    colnames(x)[2] <- "% in ROPE"
+    print.data.frame(x, row.names = F, digits = 3)
+  } else {
+    cat(sprintf(
+      "%.2f%% of the %s%% CI is in ROPE [%.2f, %.2f]",
+      x$ROPE_Percentage,
+      x$CI,
+      x$ROPE_low,
+      x$ROPE_high
+    ))
+  }
 }
 
 
@@ -71,7 +78,8 @@ rope.numeric <- function(posterior, bounds = "default", ci = .90, verbose = TRUE
   if (nrow(out) > 1) {
     out$ROPE_Percentage <- as.numeric(out$ROPE_Percentage)
   }
-  return(out)
+
+  out
 }
 
 
@@ -97,7 +105,6 @@ rope.numeric <- function(posterior, bounds = "default", ci = .90, verbose = TRUE
   )
 
   class(rope) <- c("rope", class(rope))
-
   rope
 }
 
@@ -113,7 +120,7 @@ rope.numeric <- function(posterior, bounds = "default", ci = .90, verbose = TRUE
     stop("`bounds` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
   list <- sapply(insight::get_parameters(posterior), rope, bounds = bounds, ci = ci, verbose = verbose, simplify = FALSE)
-  return(flatten_list(list, name = "Parameter"))
+  flatten_list(list, name = "Parameter")
 }
 
 #' @export
