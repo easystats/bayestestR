@@ -36,9 +36,9 @@ equivalence_test <- function(posterior, range = "default", ci = .95, verbose = T
 
 #' @export
 equivalence_test.numeric <- function(posterior, range = "default", ci = .95, verbose = TRUE) {
-  if (length(ci) > 1) {
-    stop("'ci' needs be a single value.", call. = FALSE)
-  }
+  # if (length(ci) > 1) {
+  #   stop("'ci' needs be a single value.", call. = FALSE)
+  # }
 
   rope_data <- rope(posterior, range = range, ci = ci)
   out <- as.data.frame(rope_data)

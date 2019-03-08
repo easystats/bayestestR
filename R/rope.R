@@ -45,8 +45,28 @@ as.double.rope <- function(x, ...) {
 print.rope <- function(x, ...) {
   if (is.data.frame(x)) {
     cat(sprintf("# Proportions of samples inside the ROPE [%.2f, %.2f]\n\n", x$ROPE_low[1], x$ROPE_high[1]))
-    x <- subset(x, select = c("Parameter", "ROPE_Percentage"))
-    colnames(x)[2] <- "% in ROPE"
+
+    # I think this is something nobody will understand and we'll probably forget
+    # why we did this, so I'll comment a bit...
+
+    # These are the base columns we want to print
+    cols <- c("Parameter", "ROPE_Percentage")
+
+    # In case we have ropes for different CIs, we also want this information
+    # So we first check if values in the CI column differ, and if so, we also
+    # keep this column for printing
+    if (!all(x$CI[1] == x$CI))
+      cols <- c("CI", cols)
+
+    # now we check which of the requested columns are actually in our data frame "x"
+    # "x" may differ, depending on if "rope()" was called with a model-object,
+    # or with a simple vector. So we can't hard-code this
+    x <- subset(x, select = intersect(cols, colnames(x)))
+
+    # This is just cosmetics, to have nicer column names
+    colnames(x)[ncol(x)] <- "% in ROPE"
+
+    # finally, print everything
     print.data.frame(x, row.names = F, digits = 3)
   } else {
     cat(sprintf(
@@ -74,7 +94,7 @@ rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE)
     .rope(posterior, range = range, ci = i, verbose = verbose)
   })
 
-  out <- flatten_list(rope_values)
+  out <- do.call(rbind, rope_values)
   if (nrow(out) > 1) {
     out$ROPE_Percentage <- as.numeric(out$ROPE_Percentage)
   }
