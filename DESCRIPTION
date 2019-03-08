@@ -25,19 +25,19 @@ VignetteBuilder: knitr
 Imports:
 	insight
 Suggests:
-	spelling,
+	brms,
+	broom,
+	circus,
+	covr,
+	dplyr,
+	ggplot2,
 	knitr,
 	rmarkdown,
-	testthat,
-	covr,
-	ggplot2,
-	dplyr,
-	tidyr,
-	stringr,
-	broom,
 	rstanarm,
-	brms,
-	circus
+	spelling,
+	stringr,
+	testthat,
+	tidyr
 Remotes: 
 	easystats/insight,
 	easystats/circus

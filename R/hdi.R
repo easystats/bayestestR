@@ -75,18 +75,20 @@ hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     tmp
   })
 
-  dat <- do.call(rbind, args = c(compact_list(list), make.row.names = FALSE))
+  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
 
-  if (all(dat$Group == dat$Group[1])) {
-    return(subset(dat, select = -Group))
-  }
-
-  switch(
+  dat <- switch(
     effects,
-    fixed = subset(dat, select = -Group, subset = Group == "fixed"),
-    random = subset(dat, select = -Group, subset = Group == "random"),
+    fixed = subset(dat, subset = Group == "fixed"),
+    random = subset(dat, subset = Group == "random"),
     dat
   )
+
+  if (all(dat$Group == dat$Group[1])) {
+    dat <- subset(dat, select = -Group)
+  }
+
+  dat
 }
 
 
@@ -118,7 +120,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
   }
 
   list <- mapply(.get_hdi, eff, com)
-  dat <- do.call(rbind, args = c(compact_list(list), make.row.names = FALSE))
+  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
 
   dat <- switch(
     effects,
@@ -244,7 +246,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
   tmp <- tmp[, c("Parameter", "CI", "CI_low", "CI_high", "Group")]
   # clean random effects notation from parameters
   tmp$Parameter <- gsub("b\\[(.*) (.*)\\]", "\\2", tmp$Parameter)
-  tmp
+  .clean_parameters(tmp)
 }
 
 
@@ -263,12 +265,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 
 #' @keywords internal
 .clean_parameters <- function(x) {
-  removers <- c(
-    grep("^prior_", x$Parameter),
-    grep("^sd_", x$Parameter),
-    grep("^cor_", x$Parameter),
-    grep("^lp__", x$Parameter)
-  )
+  removers <- grep("^(prior_|sd_|cor_|lp__)", x$Parameter)
 
   if (length(removers)) {
     x <- x[-removers, ]

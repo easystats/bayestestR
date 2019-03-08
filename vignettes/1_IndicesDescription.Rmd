@@ -25,20 +25,6 @@ This vignette can be referred to by citing the package:
 
 ## Why use the Bayesian Framework?
 
-In short, because it's:
-
-- Better
-- Simpler
-- Superior
-- Preferable
-- More appropriate
-- More desirable
-- More useful
-- More straightforward
-- Makes more sense
-
-Put textually :
-
 > Reasons to prefer this approach are reliability, better accuracy in noisy data, better estimation for small samples, less prone to type I error, the possibility of introducing prior knowledge into the analysis and, critically, results intuitiveness and their straightforward interpretation (Andrews & Baguley, 2013; Etz & Vandekerckhove, 2016; Kruschke, 2010; Kruschke, Aguinis, & Joo, 2012; Wagenmakers et al., 2018). Indeed, in the frequentist view, the effects are fixed (but unknown) and data are random, while the Bayesian inference calculates the probability of different effect values (called the **"posterior" distribution**) given the observed data. Bayesian’s uncertainty can be summarized, for example, by giving a range of values on the posterior distribution that includes 95% of the probability (the 95% *Credible* Interval). To illustrate the difference, the Bayesian framework allows to say *"given the observed data, the effect has 95% probability of falling within this range"*, while the Frequentist less straightforward alternative (the 95% *Confidence* Interval) would be "*there is a 95% probability that when computing a confidence interval from data of this sort, the effect falls within this range*". In general, the frequentist approach has been associated with the focus on null hypothesis testing, and the misuse of *p* values has been shown to critically contribute to the reproducibility crisis of psychological science (Chambers, Feredoes, Muthukumaraswamy, Suresh, & Etchells, 2014; Szucs & Ioannidis, 2016). There is a general agreement that the generalization of the Bayesian approach is a way of overcoming these issues (Benjamin et al., 2018; Etz & Vandekerckhove, 2016).
 
 ## What is the Bayesian Framework?

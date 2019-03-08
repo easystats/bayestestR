@@ -4,13 +4,13 @@
 \alias{equivalence_test}
 \title{Test for Practical Equivalence}
 \usage{
-equivalence_test(posterior, bounds = "default", ci = 0.9,
+equivalence_test(posterior, range = "default", ci = 0.95,
   verbose = TRUE)
 }
 \arguments{
-\item{posterior}{vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
-\item{bounds}{ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
+\item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.}
 
@@ -25,9 +25,9 @@ Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2010, 2011, 201
 \examples{
 library(bayestestR)
 
-equivalence_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
-equivalence_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
-equivalence_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
+equivalence_test(posterior = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
+equivalence_test(posterior = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
+equivalence_test(posterior = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 equivalence_test(posterior = rnorm(1000, 1, 1), ci = c(.50, .99))
 \dontrun{
 library(rstanarm)
@@ -43,5 +43,5 @@ equivalence_test(model, ci = c(.50, .99))
 
 }
 \references{
-\href{https://strengejacke.wordpress.com/2018/06/06/r-functions-for-bayesian-model-statistics-and-summaries-rstats-stan-brms/}{sjstats}
+Kruschke JK. Rejecting or Accepting Parameter Values in Bayesian Estimation. Advances in Methods and Practices in Psychological Science. 2018; doi: \doi{10.1177/2515245918771304}
 }

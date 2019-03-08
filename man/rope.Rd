@@ -4,12 +4,12 @@
 \alias{rope}
 \title{Region of Practical Equivalence (ROPE)}
 \usage{
-rope(posterior, bounds = "default", ci = 0.9, verbose = TRUE)
+rope(posterior, range = "default", ci = 0.9, verbose = TRUE)
 }
 \arguments{
-\item{posterior}{vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
-\item{bounds}{ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
+\item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.}
 
@@ -24,9 +24,9 @@ Statistically, the probability of a posterior distribution of being different fr
 \examples{
 library(bayestestR)
 
-rope(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
-rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
-rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
+rope(posterior = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
+rope(posterior = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
+rope(posterior = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 rope(posterior = rnorm(1000, 1, 1), ci = c(.90, .95))
 \dontrun{
 library(rstanarm)

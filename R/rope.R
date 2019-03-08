@@ -2,8 +2,8 @@
 #'
 #' Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 #'
-#' @param posterior vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
-#' @param bounds ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
+#' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
+#' @param range ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
 #' @param ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.
 #' @param verbose Toggle off warnings.
 #'
@@ -12,9 +12,9 @@
 #' @examples
 #' library(bayestestR)
 #'
-#' rope(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
-#' rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
-#' rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
+#' rope(posterior = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
+#' rope(posterior = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
+#' rope(posterior = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 1), ci = c(.90, .95))
 #' \dontrun{
 #' library(rstanarm)
@@ -29,7 +29,7 @@
 #' }
 #'
 #' @export
-rope <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
+rope <- function(posterior, range = "default", ci = .90, verbose = TRUE) {
   UseMethod("rope")
 }
 
@@ -63,15 +63,15 @@ print.rope <- function(x, ...) {
 
 
 #' @export
-rope.numeric <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
-  if (all(bounds == "default")) {
-    bounds <- c(-0.1, 0.1)
-  } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
-    stop("`bounds` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE) {
+  if (all(range == "default")) {
+    range <- c(-0.1, 0.1)
+  } else if (!all(is.numeric(range)) | length(range) != 2) {
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
   rope_values <- lapply(ci, function(i) {
-    .rope(posterior, bounds = bounds, ci = i, verbose = verbose)
+    .rope(posterior, range = range, ci = i, verbose = verbose)
   })
 
   out <- flatten_list(rope_values)
@@ -85,25 +85,26 @@ rope.numeric <- function(posterior, bounds = "default", ci = .90, verbose = TRUE
 
 
 
-.rope <- function(posterior, bounds = c(-0.1, 0.1), ci = .90, verbose = TRUE) {
-  HDI_area <- hdi(posterior, ci, verbose)
+.rope <- function(posterior, range = c(-0.1, 0.1), ci = .90, verbose = TRUE) {
+  HDI_area <- .hdi_area <- hdi(posterior, ci, verbose)
 
   if (anyNA(HDI_area)) {
     rope_percentage <- NA
   } else {
     HDI_area <- posterior[posterior >= HDI_area$CI_low & posterior <= HDI_area$CI_high]
-    area_within <- HDI_area[HDI_area >= min(bounds) & HDI_area <= max(bounds)]
+    area_within <- HDI_area[HDI_area >= min(range) & HDI_area <= max(range)]
     rope_percentage <- length(area_within) / length(HDI_area) * 100
   }
 
 
   rope <- data.frame(
     "CI" = ci * 100,
-    "ROPE_low" = bounds[1],
-    "ROPE_high" = bounds[2],
+    "ROPE_low" = range[1],
+    "ROPE_high" = range[2],
     "ROPE_Percentage" = rope_percentage
   )
 
+  attr(rope, "HDI_area") <- c(.hdi_area$CI_low, .hdi_area$CI_high)
   class(rope) <- c("rope", class(rope))
   rope
 }
@@ -113,14 +114,20 @@ rope.numeric <- function(posterior, bounds = "default", ci = .90, verbose = TRUE
 #' @importFrom insight get_response get_parameters
 #' @importFrom stats sd
 #' @keywords internal
-.rope_models <- function(posterior, bounds = "default", ci = .90, verbose = TRUE) {
-  if (all(bounds == "default")) {
-    bounds <- rope_bounds(posterior)
-  } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
-    stop("`bounds` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+.rope_models <- function(posterior, range = "default", ci = .90, verbose = TRUE) {
+  if (all(range == "default")) {
+    range <- rope_bounds(posterior)
+  } else if (!all(is.numeric(range)) | length(range) != 2) {
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
-  list <- sapply(insight::get_parameters(posterior), rope, bounds = bounds, ci = ci, verbose = verbose, simplify = FALSE)
-  flatten_list(list, name = "Parameter")
+
+  list <- sapply(insight::get_parameters(posterior), rope, range = range, ci = ci, verbose = verbose, simplify = FALSE)
+  hdi_area <- do.call(rbind, lapply(list, attr, "HDI_area"))
+
+  r <- flatten_list(list, name = "Parameter")
+  attr(r, "HDI_area") <- hdi_area
+
+  r
 }
 
 #' @export

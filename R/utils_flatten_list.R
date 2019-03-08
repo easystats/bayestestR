@@ -25,14 +25,3 @@ flatten_list <- function(object, name = "name") {
     object
   }
 }
-
-
-# remove NULL elements from lists
-compact_list <- function(x) x[!sapply(x, function(i) length(i) == 0 || is.null(i) || any(i == "NULL"))]
-
-#' @keywords internal
-# is string empty?
-.is_empty_object <- function(x) {
-  x <- suppressWarnings(x[!is.na(x)])
-  length(x) == 0 || is.null(x)
-}

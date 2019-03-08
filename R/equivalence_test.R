@@ -12,9 +12,9 @@
 #' @examples
 #' library(bayestestR)
 #'
-#' equivalence_test(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
-#' equivalence_test(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
-#' equivalence_test(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
+#' equivalence_test(posterior = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
+#' equivalence_test(posterior = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
+#' equivalence_test(posterior = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 1), ci = c(.50, .99))
 #' \dontrun{
 #' library(rstanarm)
@@ -29,14 +29,19 @@
 #' }
 #'
 #' @export
-equivalence_test <- function(posterior, bounds = "default", ci = .95, verbose = TRUE) {
+equivalence_test <- function(posterior, range = "default", ci = .95, verbose = TRUE) {
   UseMethod("equivalence_test")
 }
 
 
 #' @export
-equivalence_test.numeric <- function(posterior, bounds = "default", ci = .95, verbose = TRUE) {
-  out <- as.data.frame(rope(posterior, bounds = bounds, ci = ci))
+equivalence_test.numeric <- function(posterior, range = "default", ci = .95, verbose = TRUE) {
+  if (length(ci) > 1) {
+    stop("'ci' needs be a single value.", call. = FALSE)
+  }
+
+  rope_data <- rope(posterior, range = range, ci = ci)
+  out <- as.data.frame(rope_data)
 
   if (ci < 1) {
     out$ROPE_Equivalence <- ifelse(out$ROPE_Percentage == 0, "rejected",
@@ -48,21 +53,42 @@ equivalence_test.numeric <- function(posterior, bounds = "default", ci = .95, ve
     )
   }
 
+  out$HDI_low <- attr(rope_data, "HDI_area", exact = TRUE)[1]
+  out$HDI_high <- attr(rope_data, "HDI_area", exact = TRUE)[2]
+
+  class(out) <- c("equivalence_test", class(out))
   out
 }
 
 
+#' @export
+print.equivalence_test <- function(x, ...) {
+  cat("# Test for Practical Equivalence\n\n")
+  cat(sprintf("  ROPE: [%.2f %.2f]\n\n", x$ROPE_low[1], x$ROPE_high[1]))
+  ci <- x$CI[1]
+
+  x$ROPE_Percentage <- sprintf("%.2f%%", x$ROPE_Percentage)
+  x$HDI <- sprintf("[%.2f %.2f]", x$HDI_low, x$HDI_high)
+
+  x <- x[, intersect(c("Parameter", "ROPE_Equivalence", "ROPE_Percentage", "HDI"), colnames(x))]
+
+  colnames(x)[which(colnames(x) == "ROPE_Equivalence")] <- "H0"
+  colnames(x)[which(colnames(x) == "ROPE_Percentage")] <- "Inside ROPE"
+  colnames(x)[ncol(x)] <- sprintf("%i%% HDI", ci)
+
+  print.data.frame(x, digits = 3, row.names = FALSE)
+}
 
 
 #' @importFrom stats sd
 #' @keywords internal
-.equivalence_test_models <- function(posterior, bounds = "default", ci = .95, verbose = TRUE) {
-  if (all(bounds == "default")) {
-    bounds <- rope_bounds(posterior)
-  } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
-    stop("`bounds` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+.equivalence_test_models <- function(posterior, range = "default", ci = .95, verbose = TRUE) {
+  if (all(range == "default")) {
+    range <- rope_bounds(posterior)
+  } else if (!all(is.numeric(range)) | length(range) != 2) {
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
-  l <- sapply(get_parameters(posterior), equivalence_test, bounds = bounds, ci = ci, verbose = verbose, simplify = FALSE)
+  l <- sapply(get_parameters(posterior), equivalence_test, range = range, ci = ci, verbose = verbose, simplify = FALSE)
   flatten_list(l, name = "Parameter")
 }
 

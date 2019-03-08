@@ -3,13 +3,13 @@
 #' The ROPE-based p-value represents the maximum percentage of \link[=hdi]{HDI} that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the \link[=rope]{ROPE}. It differs from the ROPE, i.e., the proportion of a given CI in the ROPE, by representing the maximum CI to reach a ROPE proportion of 0\% (positive values) or 100\% (negative values). A ROPE-based p of 97\% means that there is a probability of .97 that a parameter (described by its posterior distribution) is outside the ROPE. On the contrary, a ROPE-based p of -97\% means that there is also a probability of 0.97 that the parameter is inside the ROPE.
 #'
 #' @param posterior Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.
-#' @param bounds ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
+#' @param range ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
 #' @param precision The precision by which to explore the ROPE space (in percentage). Lower values increase the precision of the returned p value but can be quite computationaly costly.
 #'
 #' @examples
 #' library(bayestestR)
 #'
-#' p_rope(posterior = rnorm(1000, mean = 1, sd = 1), bounds = c(-0.1, 0.1))
+#' p_rope(posterior = rnorm(1000, mean = 1, sd = 1), range = c(-0.1, 0.1))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -21,7 +21,7 @@
 #' }
 #' @importFrom stats na.omit
 #' @export
-p_rope <- function(posterior, bounds = "default", precision = .1) {
+p_rope <- function(posterior, range = "default", precision = .1) {
   UseMethod("p_rope")
 }
 
@@ -33,19 +33,19 @@ print.p_rope <- function(x, ...) {
 
 
 #' @export
-p_rope.numeric <- function(posterior, bounds = "default", precision = .1) {
+p_rope.numeric <- function(posterior, range = "default", precision = .1) {
 
   # This implementation is very clunky
 
-  if (all(bounds == "default")) {
-    bounds <- c(-0.1, 0.1)
-  } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
-    stop("bounds should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+  if (all(range == "default")) {
+    range <- c(-0.1, 0.1)
+  } else if (!all(is.numeric(range)) | length(range) != 2) {
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
 
 
-  rope_df <- rope(posterior, bounds, ci = seq(0, 1, by = precision / 100), verbose = FALSE)
+  rope_df <- rope(posterior, range, ci = seq(0, 1, by = precision / 100), verbose = FALSE)
   rope_df <- na.omit(rope_df)
 
   rope_values <- rope_df$ROPE_Percentage
@@ -85,16 +85,16 @@ p_rope.numeric <- function(posterior, bounds = "default", precision = .1) {
 #' @importFrom insight find_parameters get_parameters
 #' @importFrom stats sd
 #' @keywords internal
-.p_rope_models <- function(posterior, bounds = "default", precision = .1) {
-  if (all(bounds == "default")) {
-    bounds <- rope_bounds(posterior)
-  } else if (!all(is.numeric(bounds)) | length(bounds) != 2) {
-    stop("`bounds` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+.p_rope_models <- function(posterior, range = "default", precision = .1) {
+  if (all(range == "default")) {
+    range <- rope_bounds(posterior)
+  } else if (!all(is.numeric(range)) | length(range) != 2) {
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
   out <- data.frame(
     "Parameter" = insight::find_parameters(posterior),
-    "p_ROPE" = sapply(insight::get_parameters(posterior), bounds = bounds, p_rope, precision = precision, simplify = TRUE),
+    "p_ROPE" = sapply(insight::get_parameters(posterior), range = range, p_rope, precision = precision, simplify = TRUE),
     row.names = NULL
   )
   return(out)
