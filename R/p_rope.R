@@ -87,7 +87,7 @@ p_rope.numeric <- function(posterior, range = "default", precision = .1) {
 #' @keywords internal
 .p_rope_models <- function(posterior, range = "default", precision = .1) {
   if (all(range == "default")) {
-    range <- rope_bounds(posterior)
+    range <- rope_range(posterior)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }

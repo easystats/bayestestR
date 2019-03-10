@@ -80,7 +80,7 @@ print.equivalence_test <- function(x, ...) {
 #' @keywords internal
 .equivalence_test_models <- function(posterior, range = "default", ci = .95, verbose = TRUE) {
   if (all(range == "default")) {
-    range <- rope_bounds(posterior)
+    range <- rope_range(posterior)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }

@@ -6,7 +6,7 @@ test_that("brms", {
   set.seed(333)
 
   library(brms)
-  model <- brm(mpg ~ wt + cyl + (1 | gear), data = mtcars, sample_prior = T)
+  model <- brm(mpg ~ wt + cyl + (1 | gear), data = mtcars, sample_prior = TRUE)
 
   testthat::expect_is(hdi(model), "data.frame")
   testthat::expect_is(rope(model), "data.frame")

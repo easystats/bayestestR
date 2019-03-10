@@ -136,7 +136,7 @@ rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE)
 #' @keywords internal
 .rope_models <- function(posterior, range = "default", ci = .90, verbose = TRUE) {
   if (all(range == "default")) {
-    range <- rope_bounds(posterior)
+    range <- rope_range(posterior)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
@@ -169,28 +169,28 @@ rope.brmsfit <- .rope_models
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family="binomial")
-#' rope_bounds(model)
+#' rope_range(model)
 #'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' rope_bounds(model)
+#' rope_range(model)
 #' }
 #'
 #' @importFrom insight get_response model_info
 #' @importFrom stats sd qlogis
 #' @export
-rope_bounds <- function(model){
+rope_range <- function(model){
   resp <- insight::get_response(model)
   mi <- insight::model_info(model)
 
   if (insight::is_multivariate(model)) {
-    mapply(function(x, y) .rope_bounds(x, y), mi, resp)
+    mapply(function(x, y) .rope_range(x, y), mi, resp)
   } else {
-    .rope_bounds(mi, resp)
+    .rope_range(mi, resp)
   }
 }
 
-.rope_bounds <- function(mi, resp) {
+.rope_range <- function(mi, resp) {
   if (mi$is_linear) {
     effect_size_d <- 0.1 * stats::sd(resp)
   } else if (mi$is_binomial) {
