@@ -28,8 +28,10 @@
 #' rope(model, ci = c(.90, .95))
 #' }
 #'
+#' @importFrom insight get_response get_parameters model_info is_multivariate
+#' @importFrom stats sd qlogis
 #' @export
-rope <- function(posterior, range = "default", ci = .90, verbose = TRUE) {
+rope <- function(posterior, ...) {
   UseMethod("rope")
 }
 
@@ -88,7 +90,7 @@ print.rope <- function(x, ...) {
 
 
 #' @export
-rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE) {
+rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE, ...) {
   if (all(range == "default")) {
     range <- c(-0.1, 0.1)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
@@ -106,8 +108,6 @@ rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE)
 
   out
 }
-
-
 
 
 .rope <- function(posterior, range = c(-0.1, 0.1), ci = .90, verbose = TRUE) {
@@ -135,35 +135,123 @@ rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE)
 }
 
 
+#' @rdname rope
+#' @export
+rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), verbose = TRUE, ...) {
+  effects <- match.arg(effects)
 
-#' @importFrom insight get_response get_parameters
-#' @importFrom stats sd
-#' @keywords internal
-.rope_models <- function(posterior, range = "default", ci = .90, verbose = TRUE) {
   if (all(range == "default")) {
     range <- rope_range(posterior)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  list <- sapply(insight::get_parameters(posterior), rope, range = range, ci = ci, verbose = verbose, simplify = FALSE)
-  hdi_area <- do.call(rbind, lapply(list, attr, "HDI_area"))
+  list <- lapply(c("fixed", "random"), function(x) {
+    tmp <- do.call(rbind, sapply(
+      insight::get_parameters(posterior, effects = x),
+      rope,
+      range = range,
+      ci = ci,
+      verbose = verbose,
+      simplify = FALSE)
+    )
 
-  r <- flatten_list(list, name = "Parameter")
-  attr(r, "HDI_area") <- hdi_area
+    HDI_area <- attr(tmp, "HDI_area")
 
-  r
+    if (!.is_empty_object(tmp)) {
+      tmp <- .clean_up_tmp_stanreg(tmp, x, cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Group"))
+    } else {
+      tmp <- NULL
+    }
+
+    attr(tmp, "HDI_area") <- HDI_area
+    tmp
+  })
+
+  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
+
+  dat <- switch(
+    effects,
+    fixed = .select_rows(dat, "Group", "fixed"),
+    random = .select_rows(dat, "Group", "random"),
+    dat
+  )
+
+  if (all(dat$Group == dat$Group[1])) {
+    dat <- .remove_column(dat, "Group")
+  }
+
+  attr(dat, "HDI_area") <- do.call(rbind, lapply(list, attr, "HDI_area"))
+  dat
 }
 
+
+#' @rdname rope
 #' @export
-rope.stanreg <- .rope_models
+rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), verbose = TRUE, ...) {
+  effects <- match.arg(effects)
+  component <- match.arg(component)
 
-#' @export
-rope.brmsfit <- .rope_models
+  eff <- c("fixed", "fixed", "random", "random")
+  com <- c("conditional", "zi", "conditional", "zi")
 
+  if (all(range == "default")) {
+    range <- rope_range(posterior)
+  } else if (!all(is.numeric(range)) | length(range) != 2) {
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+  }
 
+  .get_rope <- function(x, y) {
+    tmp <- do.call(rbind, sapply(
+      insight::get_parameters(posterior, effects = x, component = y),
+      rope,
+      range = range,
+      ci = ci,
+      verbose = verbose,
+      simplify = FALSE)
+    )
 
+    HDI_area <- attr(tmp, "HDI_area")
 
+    if (!.is_empty_object(tmp)) {
+      tmp <- .clean_up_tmp_brms(tmp, x, y, cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Component", "Group"))
+    } else {
+      tmp <- NULL
+    }
+
+    attr(tmp, "HDI_area") <- HDI_area
+    tmp
+  }
+
+  list <- mapply(.get_rope, eff, com)
+  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
+
+  dat <- switch(
+    effects,
+    fixed = .select_rows(dat, "Group", "fixed"),
+    random = .select_rows(dat, "Group", "random"),
+    dat
+  )
+
+  dat <- switch(
+    component,
+    conditional = .select_rows(dat, "Component", "conditional"),
+    zi = ,
+    zero_inflated = .select_rows(dat, "Component", "zero_inflated"),
+    dat
+  )
+
+  if (all(dat$Group == dat$Group[1])) {
+    dat <- .remove_column(dat, "Group")
+  }
+
+  if (all(dat$Component == dat$Component[1])) {
+    dat <- .remove_column(dat, "Component")
+  }
+
+  attr(dat, "HDI_area") <- do.call(rbind, lapply(list, attr, "HDI_area"))
+  dat
+}
 
 
 #' Find Default Equivalence (ROPE) Region Bounds
@@ -181,8 +269,6 @@ rope.brmsfit <- .rope_models
 #' rope_range(model)
 #' }
 #'
-#' @importFrom insight get_response model_info
-#' @importFrom stats sd qlogis
 #' @export
 rope_range <- function(model){
   resp <- insight::get_response(model)

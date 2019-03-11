@@ -67,7 +67,7 @@ hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     )
 
     if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_stanreg(tmp, x)
+      tmp <- .clean_up_tmp_stanreg(tmp, x, cols = c("CI", "CI_low", "CI_high", "Group"))
     } else {
       tmp <- NULL
     }
@@ -111,7 +111,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     )
 
     if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_brms(tmp, x, y)
+      tmp <- .clean_up_tmp_brms(tmp, x, y, cols = c("CI", "CI_low", "CI_high", "Component", "Group"))
     } else {
       tmp <- NULL
     }
@@ -235,44 +235,4 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     "CI_low" = x_sorted[min_i],
     "CI_high" = x_sorted[upper[min_i]]
   )
-}
-
-
-#' @keywords internal
-.clean_up_tmp_stanreg <- function(tmp, x) {
-  tmp$Group <- x
-  tmp$Parameter <- rownames(tmp)
-  rownames(tmp) <- NULL
-  tmp <- tmp[, c("Parameter", "CI", "CI_low", "CI_high", "Group")]
-  # clean random effects notation from parameters
-  tmp$Parameter <- gsub("b\\[(.*) (.*)\\]", "\\2", tmp$Parameter)
-  .clean_parameters(tmp)
-}
-
-
-#' @keywords internal
-.clean_up_tmp_brms <- function(tmp, x, y) {
-  tmp$Group <- x
-  tmp$Component <- y
-  tmp$Parameter <- rownames(tmp)
-  rownames(tmp) <- NULL
-  tmp <- tmp[, c("Parameter", "CI", "CI_low", "CI_high", "Component", "Group")]
-  # clean random effects notation from parameters
-  tmp$Parameter <- gsub("r_(.*)\\.(.*)\\.", "\\1", tmp$Parameter)
-  .clean_parameters(tmp)
-}
-
-
-#' @keywords internal
-.clean_parameters <- function(x) {
-  removers <- grep("^(prior_|sd_|cor_|lp__)", x$Parameter)
-
-  if (length(removers)) {
-    x <- x[-removers, ]
-  }
-
-  if (nrow(x) == 0)
-    NULL
-  else
-    x
 }

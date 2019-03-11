@@ -2,9 +2,18 @@
 % Please edit documentation in R/rope.R
 \name{rope}
 \alias{rope}
+\alias{rope.stanreg}
+\alias{rope.brmsfit}
 \title{Region of Practical Equivalence (ROPE)}
 \usage{
-rope(posterior, range = "default", ci = 0.9, verbose = TRUE)
+rope(posterior, ...)
+
+\method{rope}{stanreg}(posterior, range = "default", ci = 0.9,
+  effects = c("fixed", "random", "all"), verbose = TRUE, ...)
+
+\method{rope}{brmsfit}(posterior, range = "default", ci = 0.9,
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), verbose = TRUE, ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
