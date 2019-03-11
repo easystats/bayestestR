@@ -6,9 +6,9 @@
 #'
 #' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param ci Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.
-#' @param effects Should the HDI for fixed effects, random effects or both be returned?
+#' @param effects Should results for fixed effects, random effects or both be returned?
 #'   Only applies to mixed models. May be abbreviated.
-#' @param component Should the HDI for all parameters, parameters for the conditional model
+#' @param component Should results for all parameters, parameters for the conditional model
 #'   or the zero-inflated part of the modelbe returned? May be abbreviated. Only
 #'   applies to \pkg{brms}-models.
 #' @param verbose Toggle off warnings.

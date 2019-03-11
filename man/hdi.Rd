@@ -22,12 +22,12 @@ hdi(posterior, ...)
 
 \item{ci}{Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.}
 
-\item{effects}{Should the HDI for fixed effects, random effects or both be returned?
+\item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
 
 \item{verbose}{Toggle off warnings.}
 
-\item{component}{Should the HDI for all parameters, parameters for the conditional model
+\item{component}{Should results for all parameters, parameters for the conditional model
 or the zero-inflated part of the modelbe returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
