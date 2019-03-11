@@ -15,3 +15,15 @@
   length(x) == 0 || is.null(x)
 }
 
+
+# select rows where values in "variabl" match "value"
+#' @keywords internal
+.select_rows <- function(data, variable, value) {
+  data[which(data[[variable]] == value), ]
+}
+
+# remove column
+#' @keywords internal
+.remove_column <- function(data, variable) {
+  data[, which(colnames(data) == variable), drop = FALSE]
+}

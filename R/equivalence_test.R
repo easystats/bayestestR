@@ -61,18 +61,24 @@ equivalence_test.numeric <- function(posterior, range = "default", ci = .95, ver
 print.equivalence_test <- function(x, ...) {
   cat("# Test for Practical Equivalence\n\n")
   cat(sprintf("  ROPE: [%.2f %.2f]\n\n", x$ROPE_low[1], x$ROPE_high[1]))
-  ci <- x$CI[1]
 
   x$ROPE_Percentage <- sprintf("%.2f%%", x$ROPE_Percentage)
   x$HDI <- sprintf("[%.2f %.2f]", x$HDI_low, x$HDI_high)
 
-  x <- x[, intersect(c("Parameter", "ROPE_Equivalence", "ROPE_Percentage", "HDI"), colnames(x))]
+  ci <- unique(x$CI)
+  keep.columns <- c("CI", "Parameter", "ROPE_Equivalence", "ROPE_Percentage", "HDI")
+
+  x <- x[, intersect(keep.columns, colnames(x))]
 
   colnames(x)[which(colnames(x) == "ROPE_Equivalence")] <- "H0"
-  colnames(x)[which(colnames(x) == "ROPE_Percentage")] <- "Inside ROPE"
-  colnames(x)[ncol(x)] <- sprintf("%i%% HDI", ci)
+  colnames(x)[which(colnames(x) == "ROPE_Percentage")] <- "% inside ROPE"
 
-  print.data.frame(x, digits = 3, row.names = FALSE)
+  for (i in ci) {
+    xsub <- x[x$CI == i, -which(colnames(x) == "CI")]
+    colnames(xsub)[ncol(xsub)] <- sprintf("%i%% HDI", i)
+    print.data.frame(xsub, digits = 3, row.names = FALSE)
+    cat("\n")
+  }
 }
 
 

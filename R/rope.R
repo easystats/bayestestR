@@ -44,7 +44,12 @@ as.double.rope <- function(x, ...) {
 #' @export
 print.rope <- function(x, ...) {
   if (is.data.frame(x)) {
-    cat(sprintf("# Proportions of samples inside the ROPE [%.2f, %.2f]\n\n", x$ROPE_low[1], x$ROPE_high[1]))
+    cat(sprintf(
+      "# Proportion%s of samples inside the ROPE [%.2f, %.2f]:\n\n",
+      ifelse(all(x$CI[1] == x$CI), "", "s"),
+      x$ROPE_low[1],
+      x$ROPE_high[1]
+    ))
 
     # I think this is something nobody will understand and we'll probably forget
     # why we did this, so I'll comment a bit...

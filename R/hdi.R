@@ -36,7 +36,7 @@
 #' @author All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #' @export
-hdi <- function(posterior, ci = .90, verbose = TRUE, ...) {
+hdi <- function(posterior, ...) {
   UseMethod("hdi")
 }
 
@@ -79,13 +79,13 @@ hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 
   dat <- switch(
     effects,
-    fixed = subset(dat, subset = Group == "fixed"),
-    random = subset(dat, subset = Group == "random"),
+    fixed = .select_rows(dat, "Group", "fixed"),
+    random = .select_rows(dat, "Group", "random"),
     dat
   )
 
   if (all(dat$Group == dat$Group[1])) {
-    dat <- subset(dat, select = -Group)
+    dat <- .remove_column(dat, "Group")
   }
 
   dat
@@ -94,7 +94,7 @@ hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 
 #' @rdname hdi
 #' @export
-hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), verbose = TRUE) {
+hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
@@ -124,25 +124,25 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 
   dat <- switch(
     effects,
-    fixed = subset(dat, subset = Group == "fixed"),
-    random = subset(dat, subset = Group == "random"),
+    fixed = .select_rows(dat, "Group", "fixed"),
+    random = .select_rows(dat, "Group", "random"),
     dat
   )
 
   dat <- switch(
     component,
-    conditional = subset(dat, subset = Component == "conditional"),
+    conditional = .select_rows(dat, "Component", "conditional"),
     zi = ,
-    zero_inflated = subset(dat, subset = Component == "zero_inflated"),
+    zero_inflated = .select_rows(dat, "Component", "zero_inflated"),
     dat
   )
 
   if (all(dat$Group == dat$Group[1])) {
-    dat <- subset(dat, select = -Group)
+    dat <- .remove_column(dat, "Group")
   }
 
   if (all(dat$Component == dat$Component[1])) {
-    dat <- subset(dat, select = -Component)
+    dat <- .remove_column(dat, "Component")
   }
 
   dat
