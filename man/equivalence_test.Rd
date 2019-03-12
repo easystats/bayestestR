@@ -20,7 +20,7 @@ equivalence_test(posterior, range = "default", ci = 0.95,
 Perform a Test for Practical Equivalence based on the "HDI+ROPE decision rule" (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis".
 }
 \details{
-Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2010, 2011, 2014, 2018) suggest using the percentage of the 95\% (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the ROPE as a decision rule. If the HDI is completely outside the ROPE, the "null hypothesis" for this parameter is "rejected". If the ROPE completely covers the HDI, i.e. all most credible values of a parameter are inside the region of practical equivalence, the null hypothesis is accepted. Else, it’s undecided whether to accept or reject the null hypothesis. If the full ROPE is used (i.e., 100\% of the HDI), then the null hypothesis is rejected or accepted if the percentage of the posterior within the ROPE is smaller than to 1\% or greater than 99\%.
+Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2018) suggest using the percentage of the 95\% (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the ROPE as a decision rule. If the HDI is completely outside the ROPE, the "null hypothesis" for this parameter is "rejected". If the ROPE completely covers the HDI, i.e. all most credible values of a parameter are inside the region of practical equivalence, the null hypothesis is accepted. Else, it’s undecided whether to accept or reject the null hypothesis. If the full ROPE is used (i.e., 100\% of the HDI), then the null hypothesis is rejected or accepted if the percentage of the posterior within the ROPE is smaller than to 1\% or greater than 99\%.
 }
 \examples{
 library(bayestestR)
@@ -43,5 +43,5 @@ equivalence_test(model, ci = c(.50, .99))
 
 }
 \references{
-Kruschke JK. Rejecting or Accepting Parameter Values in Bayesian Estimation. Advances in Methods and Practices in Psychological Science. 2018; doi: \doi{10.1177/2515245918771304}
+Kruschke JK. Rejecting or Accepting Parameter Values in Bayesian Estimation. Advances in Methods and Practices in Psychological Science. 2018; \doi{10.1177/2515245918771304}
 }
