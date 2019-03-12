@@ -21,7 +21,6 @@ Description: Provides utilities to describe posterior distributions and Bayesian
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-VignetteBuilder: knitr
 Imports:
 	insight
 Suggests:
@@ -42,3 +41,4 @@ Remotes:
 	easystats/circus
 RoxygenNote: 6.1.1
 Language: en-GB
+VignetteBuilder: knitr
