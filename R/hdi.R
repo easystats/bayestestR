@@ -2,16 +2,22 @@
 #'
 #' Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
 #'
-#' @details By default, hdi() returns the 90\% intervals (\code{ci = 0.9}), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
+#' @details By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
 #'
-#' @param posterior Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.
+#' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param ci Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.
+#' @param effects Should results for fixed effects, random effects or both be returned?
+#'   Only applies to mixed models. May be abbreviated.
+#' @param component Should results for all parameters, parameters for the conditional model
+#'   or the zero-inflated part of the modelbe returned? May be abbreviated. Only
+#'   applies to \pkg{brms}-models.
 #' @param verbose Toggle off warnings.
+#' @param ... Currently not used.
 #'
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' posterior <- rnorm(1000)
 #' hdi(posterior, ci = .90)
 #' hdi(posterior, ci = c(.80, .90, .95))
@@ -20,60 +26,127 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
 #' hdi(model, ci = c(.80, .90, .95))
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
 #' hdi(model, ci = c(.80, .90, .95))
 #' }
-#' 
+#'
 #' @author All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #' @export
-hdi <- function(posterior, ci = .90, verbose = TRUE) {
+hdi <- function(posterior, ...) {
   UseMethod("hdi")
 }
 
 
 #' @export
-hdi.numeric <- function(posterior, ci = .90, verbose = TRUE) {
+hdi.numeric <- function(posterior, ci = .90, verbose = TRUE, ...) {
   hdi_values <- lapply(ci, function(i) {
     .hdi(posterior, ci = i, verbose = verbose)
   })
 
-  return(flatten_list(hdi_values))
+  flatten_list(hdi_values)
 }
-
-
-
-
-
-
 
 
 #' @importFrom insight get_parameters
-#' @keywords internal
-.hdi_models <- function(posterior, ci = .90, verbose = TRUE) {
-  list <- sapply(insight::get_parameters(posterior), hdi, ci = ci, verbose = verbose, simplify = FALSE)
-  return(flatten_list(list, name = "Parameter"))
+#' @rdname hdi
+#' @export
+hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), verbose = TRUE, ...) {
+  effects <- match.arg(effects)
+
+  list <- lapply(c("fixed", "random"), function(x) {
+    tmp <- do.call(rbind, sapply(
+      insight::get_parameters(posterior, effects = x),
+      hdi,
+      ci = ci,
+      verbose = verbose,
+      simplify = FALSE)
+    )
+
+    if (!.is_empty_object(tmp)) {
+      tmp <- .clean_up_tmp_stanreg(tmp, x, cols = c("CI", "CI_low", "CI_high", "Group"))
+    } else {
+      tmp <- NULL
+    }
+
+    tmp
+  })
+
+  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
+
+  dat <- switch(
+    effects,
+    fixed = .select_rows(dat, "Group", "fixed"),
+    random = .select_rows(dat, "Group", "random"),
+    dat
+  )
+
+  if (all(dat$Group == dat$Group[1])) {
+    dat <- .remove_column(dat, "Group")
+  }
+
+  dat
 }
 
+
+#' @rdname hdi
 #' @export
-hdi.stanreg <- .hdi_models
+hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), verbose = TRUE, ...) {
+  effects <- match.arg(effects)
+  component <- match.arg(component)
 
-#' @export
-hdi.brmsfit <- .hdi_models
+  eff <- c("fixed", "fixed", "random", "random")
+  com <- c("conditional", "zi", "conditional", "zi")
 
+  .get_hdi <- function(x, y) {
+    tmp <- do.call(rbind, sapply(
+      insight::get_parameters(posterior, effects = x, component = y),
+      hdi,
+      ci = ci,
+      verbose = verbose,
+      simplify = FALSE)
+    )
 
+    if (!.is_empty_object(tmp)) {
+      tmp <- .clean_up_tmp_brms(tmp, x, y, cols = c("CI", "CI_low", "CI_high", "Component", "Group"))
+    } else {
+      tmp <- NULL
+    }
 
+    tmp
+  }
 
+  list <- mapply(.get_hdi, eff, com)
+  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
 
+  dat <- switch(
+    effects,
+    fixed = .select_rows(dat, "Group", "fixed"),
+    random = .select_rows(dat, "Group", "random"),
+    dat
+  )
 
+  dat <- switch(
+    component,
+    conditional = .select_rows(dat, "Component", "conditional"),
+    zi = ,
+    zero_inflated = .select_rows(dat, "Component", "zero_inflated"),
+    dat
+  )
 
+  if (all(dat$Group == dat$Group[1])) {
+    dat <- .remove_column(dat, "Group")
+  }
 
+  if (all(dat$Component == dat$Component[1])) {
+    dat <- .remove_column(dat, "Component")
+  }
 
-
-
+  dat
+}
 
 
 #' @keywords internal
@@ -157,11 +230,9 @@ hdi.brmsfit <- .hdi_models
   }
 
   # get values based on minimum
-  out <- data.frame(
+  data.frame(
     "CI" = ci * 100,
     "CI_low" = x_sorted[min_i],
     "CI_high" = x_sorted[upper[min_i]]
   )
-  # class(out) <- c("CI", class(out))
-  return(out)
 }

@@ -2,18 +2,36 @@
 % Please edit documentation in R/rope.R
 \name{rope}
 \alias{rope}
+\alias{rope.stanreg}
+\alias{rope.brmsfit}
 \title{Region of Practical Equivalence (ROPE)}
 \usage{
-rope(posterior, bounds = "default", ci = 0.9, verbose = TRUE)
+rope(posterior, ...)
+
+\method{rope}{stanreg}(posterior, range = "default", ci = 0.9,
+  effects = c("fixed", "random", "all"), verbose = TRUE, ...)
+
+\method{rope}{brmsfit}(posterior, range = "default", ci = 0.9,
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), verbose = TRUE, ...)
 }
 \arguments{
-\item{posterior}{vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
-\item{bounds}{ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
+\item{...}{Currently not used.}
+
+\item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.}
 
+\item{effects}{Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.}
+
 \item{verbose}{Toggle off warnings.}
+
+\item{component}{Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the modelbe returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \description{
 Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
@@ -24,9 +42,9 @@ Statistically, the probability of a posterior distribution of being different fr
 \examples{
 library(bayestestR)
 
-rope(posterior = rnorm(1000, 0, 0.01), bounds = c(-0.1, 0.1))
-rope(posterior = rnorm(1000, 0, 1), bounds = c(-0.1, 0.1))
-rope(posterior = rnorm(1000, 1, 0.01), bounds = c(-0.1, 0.1))
+rope(posterior = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
+rope(posterior = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
+rope(posterior = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 rope(posterior = rnorm(1000, 1, 1), ci = c(.90, .95))
 \dontrun{
 library(rstanarm)
