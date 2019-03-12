@@ -273,27 +273,26 @@ rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fi
 #'
 #' @export
 rope_range <- function(model){
-  resp <- insight::get_response(model)
-  mi <- insight::model_info(model)
+  response <- insight::get_response(model)
+  information <- insight::model_info(model)
 
   if (insight::is_multivariate(model)) {
-    mapply(function(x, y) .rope_range(x, y), mi, resp)
+    mapply(function(x, y) .rope_range(x, y), information, response)
   } else {
-    .rope_range(mi, resp)
+    .rope_range(information, response)
   }
 }
 
-.rope_range <- function(mi, resp) {
-  if (mi$is_linear) {
-    effect_size_d <- 0.1 * stats::sd(resp)
-  } else if (mi$is_binomial) {
-    numeric_response <- as.numeric(as.vector(resp))
+.rope_range <- function(information, response) {
+  if (information$is_linear) {
+    effect_size_d <- 0.1 * stats::sd(response)
+  } else if (information$is_binomial) {
+    numeric_response <- as.numeric(as.factor(response))
     prob_resp <- mean(numeric_response - min(numeric_response))
     eff_size <- prob_resp / pi
     effect_size_d <- (stats::qlogis(prob_resp + eff_size) - stats::qlogis(prob_resp - eff_size)) / 4
   } else {
     effect_size_d <- 0.1
   }
-
   c(-1, 1) * effect_size_d
 }
