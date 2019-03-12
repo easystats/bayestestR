@@ -62,45 +62,35 @@ as.double.rope <- function(x, ...) {
 
 #' @export
 print.rope <- function(x, ...) {
-  if (is.data.frame(x)) {
-    cat(sprintf(
-      "# Proportion%s of samples inside the ROPE [%.2f, %.2f]:\n\n",
-      ifelse(all(x$CI[1] == x$CI), "", "s"),
-      x$ROPE_low[1],
-      x$ROPE_high[1]
-    ))
+  cat(sprintf(
+    "# Proportion%s of samples inside the ROPE [%.2f, %.2f]:\n\n",
+    ifelse(all(x$CI[1] == x$CI), "", "s"),
+    x$ROPE_low[1],
+    x$ROPE_high[1]
+  ))
 
-    # I think this is something nobody will understand and we'll probably forget
-    # why we did this, so I'll comment a bit...
+  # I think this is something nobody will understand and we'll probably forget
+  # why we did this, so I'll comment a bit...
 
-    # These are the base columns we want to print
-    cols <- c("Parameter", "ROPE_Percentage")
+  # These are the base columns we want to print
+  cols <- c("Parameter", "ROPE_Percentage")
 
-    # In case we have ropes for different CIs, we also want this information
-    # So we first check if values in the CI column differ, and if so, we also
-    # keep this column for printing
-    if (!all(x$CI[1] == x$CI))
-      cols <- c("CI", cols)
+  # In case we have ropes for different CIs, we also want this information
+  # So we first check if values in the CI column differ, and if so, we also
+  # keep this column for printing
+  if (!all(x$CI[1] == x$CI))
+    cols <- c("CI", cols)
 
-    # now we check which of the requested columns are actually in our data frame "x"
-    # "x" may differ, depending on if "rope()" was called with a model-object,
-    # or with a simple vector. So we can't hard-code this
-    x <- subset(x, select = intersect(cols, colnames(x)))
+  # now we check which of the requested columns are actually in our data frame "x"
+  # "x" may differ, depending on if "rope()" was called with a model-object,
+  # or with a simple vector. So we can't hard-code this
+  x <- subset(x, select = intersect(cols, colnames(x)))
 
-    # This is just cosmetics, to have nicer column names
-    colnames(x)[ncol(x)] <- "% in ROPE"
+  # This is just cosmetics, to have nicer column names
+  colnames(x)[ncol(x)] <- "% in ROPE"
 
-    # finally, print everything
-    print.data.frame(x, row.names = F, digits = 3)
-  } else {
-    cat(sprintf(
-      "%.2f%% of the %s%% CI is in ROPE [%.2f, %.2f]",
-      x$ROPE_Percentage,
-      x$CI,
-      x$ROPE_low,
-      x$ROPE_high
-    ))
-  }
+  # finally, print everything
+  print.data.frame(x, row.names = F, digits = 3)
 }
 
 

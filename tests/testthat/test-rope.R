@@ -12,6 +12,8 @@ test_that("rope", {
 
   testthat::expect_equal(equivalence_test(rnorm_perfect(1000, 0, 0.001), ci = 1)$ROPE_Equivalence, "accepted")
 
+  print(rope(rnorm(1000, mean = 0, sd = 3), ci = .5))
+  testthat::expect_equal(rope(rnorm(1000, mean = 0, sd = 3), ci = c(.1, .5, .9))$CI, c(10, 50, 90))
 
   x <- equivalence_test(rnorm_perfect(1000, 1, 1), ci = c(.50, .99))
   testthat::expect_equal(x$ROPE_Percentage[2], 4.94, tolerance = 0.01)
