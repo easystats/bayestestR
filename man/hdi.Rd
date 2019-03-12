@@ -35,7 +35,14 @@ applies to \pkg{brms}-models.}
 Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
 }
 \details{
-By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
+Unlike equal-tailed intervals that typically exclude 2.5\% from each tail
+  of the distribution, the HDI is \emph{not} equal-tailed and therefor always
+  includes the mode(s) of posterior distributions.
+  \cr \cr
+  By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}),
+  deemed to be more stable than, for instance, 95\% intervals (\cite{Kruschke, 2015}).
+  An effective sample size of at least 10.000 is recommended if 95\% intervals
+  should be computed (\cite{Kruschke 2015, p. 183ff}).
 }
 \examples{
 library(bayestestR)

@@ -2,7 +2,14 @@
 #'
 #' Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
 #'
-#' @details By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
+#' @details Unlike equal-tailed intervals that typically exclude 2.5\% from each tail
+#'   of the distribution, the HDI is \emph{not} equal-tailed and therefor always
+#'   includes the mode(s) of posterior distributions.
+#'   \cr \cr
+#'   By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}),
+#'   deemed to be more stable than, for instance, 95\% intervals (\cite{Kruschke, 2015}).
+#'   An effective sample size of at least 10.000 is recommended if 95\% intervals
+#'   should be computed (\cite{Kruschke 2015, p. 183ff}).
 #'
 #' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param ci Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.
@@ -34,7 +41,9 @@
 #' }
 #'
 #' @author All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.
+#'
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
+#'
 #' @export
 hdi <- function(posterior, ...) {
   UseMethod("hdi")
