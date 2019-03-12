@@ -25,7 +25,7 @@
 
 #' @keywords internal
 .clean_parameters <- function(x) {
-  removers <- grep("^(prior_|sd_|cor_|lp__)", x$Parameter)
+  removers <- grep("^(prior_|sd_|cor_|lp__|smooth_sd)", x$Parameter)
 
   if (length(removers)) {
     x <- x[-removers, ]

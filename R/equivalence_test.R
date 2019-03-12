@@ -104,8 +104,11 @@ print.equivalence_test <- function(x, ...) {
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
+
   l <- sapply(get_parameters(posterior), equivalence_test, range = range, ci = ci, verbose = verbose, simplify = FALSE)
-  flatten_list(l, name = "Parameter")
+  out <- flatten_list(l, name = "Parameter")
+
+  .clean_parameters(out)
 }
 
 #' @export
