@@ -103,11 +103,17 @@ rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE,
     .rope(posterior, range = range, ci = i, verbose = verbose)
   })
 
+  # "do.call(rbind)" does not bind attribute values together
+  # so we need to capture the information about HDI separately
+
+  hdi_area <- lapply(rope_values, attr, "HDI_area")
+
   out <- do.call(rbind, rope_values)
   if (nrow(out) > 1) {
     out$ROPE_Percentage <- as.numeric(out$ROPE_Percentage)
   }
 
+  attr(out, "HDI_area") <- hdi_area
   out
 }
 

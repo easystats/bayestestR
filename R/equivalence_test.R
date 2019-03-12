@@ -49,8 +49,11 @@ equivalence_test.numeric <- function(posterior, range = "default", ci = .95, ver
     )
   }
 
-  out$HDI_low <- attr(rope_data, "HDI_area", exact = TRUE)[1]
-  out$HDI_high <- attr(rope_data, "HDI_area", exact = TRUE)[2]
+  out$HDI_low <- sapply(attr(rope_data, "HDI_area", exact = TRUE), function(i) i[1])
+  out$HDI_high <- sapply(attr(rope_data, "HDI_area", exact = TRUE), function(i) i[2])
+
+  # remove attribute
+  attr(out, "HDI_area") <- NULL
 
   class(out) <- c("equivalence_test", class(out))
   out
@@ -95,7 +98,15 @@ print.equivalence_test <- function(x, ...) {
 }
 
 #' @export
-equivalence_test.stanreg <- .equivalence_test_models
+equivalence_test.stanreg <- function(posterior, range = "default", ci = .95, verbose = TRUE) {
+  et <- .equivalence_test_models(posterior, range, ci, verbose)
+  attr(et, "model") <- deparse(substitute(posterior), width.cutoff = 500)
+  et
+}
 
 #' @export
-equivalence_test.brmsfit <- .equivalence_test_models
+equivalence_test.brmsfit <- function(posterior, range = "default", ci = .95, verbose = TRUE) {
+  et <- .equivalence_test_models(posterior, range, ci, verbose)
+  attr(et, "model") <- deparse(substitute(posterior), width.cutoff = 500)
+  et
+}
