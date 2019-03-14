@@ -93,7 +93,7 @@ map_estimate(rnorm(1000, 1, 1))
 **`rope()`** computes the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence. Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are equivalent to the null value for practical purposes (2010, 2011, 2014). Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as 0 +/- .1 \* sd(y). Kruschke (2010, 2011, 2014) suggest using the proportion of the 95\% (or 90\%, considered more stable) *HDI* that falls within the ROPE as an index for "null-hypothesis" testing (as understood under the Bayesian framework, see `rope_test`). Besides the ROPE-based decision criteria, the proportion of the 95\% CI that falls in the ROPE can be used as a continuous index.
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
-rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
+rope(posterior = rnorm(1000, 1, 1), range = c(-0.1, 0.1))
 ```
 
 ![](https://easystats.github.io/bayestestR/articles/IndicesDescription_files/figure-html/unnamed-chunk-7-1.png)
@@ -105,7 +105,7 @@ rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 **`equivalence_test()`** performs a Test for Practical Equivalence based on the "HDI+ROPE decision rule" (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis". Using the ROPE and the HDI, Kruschke (2010, 2011, 2014, 2018) suggest using the percentage of the 95\% (or 90\%, considered more stable) HDI that falls within the ROPE as a decision rule. If the HDI is completely outside the ROPE, the "null hypothesis" for this parameter is "rejected". If the ROPE completely covers the HDI, i.e. all most credible values of a parameter are inside the region of practical equivalence, the null hypothesis is accepted. Else, it’s undecided whether to accept or reject the null hypothesis. If the full ROPE is used (i.e., 100\% of the HDI), then the null hypothesis is rejected or accepted if the percentage of the posterior within the ROPE is smaller than to 1\% or greater than 99\%.
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
-equivalence_test(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
+equivalence_test(posterior = rnorm(1000, 1, 1), range = c(-0.1, 0.1))
 ```
 
 
@@ -114,7 +114,7 @@ equivalence_test(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
 **`p_rope()`** computes the ROPE-based p-value that represents the maximum percentage of HDI that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the ROPE. It differs from the ROPE, *i.e.*, the proportion of a given CI in the ROPE, by representing the maximum CI to reach a ROPE proportion of 0\% (positive values) or 100\% (negative values). A ROPE-based p of 97\% means that there is a probability of .97 that a parameter (described by its posterior distribution) is outside the ROPE. On the contrary, a ROPE-based p of -97\% means that there is also a probability of 0.97 that the parameter is inside the ROPE.
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
-p_rope(posterior = rnorm(1000, 1, 1), bounds = c(-0.1, 0.1))
+p_rope(posterior = rnorm(1000, 1, 1), range = c(-0.1, 0.1))
 ```
 
 ### Probability of Direction (*p*d)
@@ -142,10 +142,10 @@ p_map(posterior = rnorm(1000, 1, 1))
 
 ### Probability of a Value
 
-**`rope_bounds()`**: Find default equivalence (ROPE) region bounds of Bayesian models.
+**`rope_range()`**: Find default equivalence (ROPE) region bounds of Bayesian models.
 
 ```{r message=FALSE, warning=FALSE, results='hide', eval=FALSE}
-rope_bounds(model)
+rope_range(model)
 ```
 
 

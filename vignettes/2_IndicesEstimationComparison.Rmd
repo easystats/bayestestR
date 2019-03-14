@@ -54,7 +54,7 @@ For the sake of time and computational space, we downloaded the data from github
 
 ## Results
 
-### Relationship with the Theorethical True Effect
+### Relationship with the Theoretical True Effect
 
 We subtracted the theoretical "true" effect (0 or 1) from the indices, to observe the influence of noise, sample size and priors. 
 

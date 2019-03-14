@@ -2,14 +2,41 @@
 % Please edit documentation in R/p_map.R
 \name{p_map}
 \alias{p_map}
+\alias{p_map.numeric}
+\alias{p_map.stanreg}
+\alias{p_map.brmsfit}
 \title{Bayesian p-value based on the density at the Maximum A Priori (MAP)}
 \usage{
-p_map(posterior, precision = 2^10)
+p_map(posterior, ...)
+
+\method{p_map}{numeric}(posterior, precision = 2^10, ...)
+
+\method{p_map}{stanreg}(posterior, precision = 2^10,
+  effects = c("fixed", "random", "all"), parameters = NULL, ...)
+
+\method{p_map}{brmsfit}(posterior, precision = 2^10,
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), parameters = NULL, ...)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
+\item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
-\item{precision}{Number of points for density estimation. See the `n` parameter in \link[=density]{density}.}
+\item{...}{Currently not used.}
+
+\item{precision}{Number of points for density estimation. See the \code{n}-parameter in \link[=density]{density}.}
+
+\item{effects}{Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.}
+
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
+
+\item{component}{Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the modelbe returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \description{
 Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP). It corresponds to the density value at 0 divided by the density of the highest density point.
@@ -19,6 +46,7 @@ library(bayestestR)
 
 p_map(posterior = rnorm(1000, 0, 1))
 p_map(posterior = rnorm(1000, 10, 1))
+
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -26,8 +54,8 @@ p_map(model)
 
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-p_map(model)
-}
+p_map(model)}
+
 }
 \references{
 \href{https://www.youtube.com/watch?v=Ip8Ci5KUVRc}{Mill's talk}

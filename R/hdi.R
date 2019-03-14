@@ -2,7 +2,14 @@
 #'
 #' Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
 #'
-#' @details By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
+#' @details Unlike equal-tailed intervals that typically exclude 2.5\% from each tail
+#'   of the distribution, the HDI is \emph{not} equal-tailed and therefor always
+#'   includes the mode(s) of posterior distributions.
+#'   \cr \cr
+#'   By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}),
+#'   deemed to be more stable than, for instance, 95\% intervals (\cite{Kruschke, 2015}).
+#'   An effective sample size of at least 10.000 is recommended if 95\% intervals
+#'   should be computed (\cite{Kruschke 2015, p. 183ff}).
 #'
 #' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param ci Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.
@@ -11,6 +18,11 @@
 #' @param component Should results for all parameters, parameters for the conditional model
 #'   or the zero-inflated part of the modelbe returned? May be abbreviated. Only
 #'   applies to \pkg{brms}-models.
+#' @param parameters Regular expression pattern that describes the parameters that
+#'   should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+#'   filtered by default, so only parameters that typically appear in the
+#'   \code{summary()} are returned. Use \code{parameters} to select specific parameters
+#'   for the output.
 #' @param verbose Toggle off warnings.
 #' @param ... Currently not used.
 #'
@@ -34,32 +46,34 @@
 #' }
 #'
 #' @author All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.
+#'
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
+#'
 #' @export
 hdi <- function(posterior, ...) {
   UseMethod("hdi")
 }
 
 
+#' @rdname hdi
 #' @export
 hdi.numeric <- function(posterior, ci = .90, verbose = TRUE, ...) {
-  hdi_values <- lapply(ci, function(i) {
+  do.call(rbind, lapply(ci, function(i) {
     .hdi(posterior, ci = i, verbose = verbose)
-  })
-
-  flatten_list(hdi_values)
+  }))
 }
 
 
 #' @importFrom insight get_parameters
 #' @rdname hdi
 #' @export
-hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), verbose = TRUE, ...) {
+hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
 
   list <- lapply(c("fixed", "random"), function(x) {
+    parms <- insight::get_parameters(posterior, effects = x, parameters = parameters)
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x),
+      parms,
       hdi,
       ci = ci,
       verbose = verbose,
@@ -67,7 +81,12 @@ hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     )
 
     if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_stanreg(tmp, x, cols = c("CI", "CI_low", "CI_high", "Group"))
+      tmp <- .clean_up_tmp_stanreg(
+        tmp,
+        x,
+        cols = c("CI", "CI_low", "CI_high", "Group"),
+        parms = names(parms)
+      )
     } else {
       tmp <- NULL
     }
@@ -88,13 +107,14 @@ hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     dat <- .remove_column(dat, "Group")
   }
 
+  class(dat) <- c("hdi", class(dat))
   dat
 }
 
 
 #' @rdname hdi
 #' @export
-hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), verbose = TRUE, ...) {
+hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
@@ -102,8 +122,9 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
   com <- c("conditional", "zi", "conditional", "zi")
 
   .get_hdi <- function(x, y) {
+    parms <- insight::get_parameters(posterior, effects = x, component = y, parameters = parameters)
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x, component = y),
+      parms,
       hdi,
       ci = ci,
       verbose = verbose,
@@ -111,7 +132,13 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     )
 
     if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_brms(tmp, x, y, cols = c("CI", "CI_low", "CI_high", "Component", "Group"))
+      tmp <- .clean_up_tmp_brms(
+        tmp,
+        x,
+        y,
+        cols = c("CI", "CI_low", "CI_high", "Component", "Group"),
+        parms = names(parms)
+      )
     } else {
       tmp <- NULL
     }
@@ -119,7 +146,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     tmp
   }
 
-  list <- mapply(.get_hdi, eff, com)
+  list <- mapply(.get_hdi, eff, com, SIMPLIFY = FALSE)
   dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
 
   dat <- switch(
@@ -145,6 +172,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     dat <- .remove_column(dat, "Component")
   }
 
+  class(dat) <- c("hdi", class(dat))
   dat
 }
 
@@ -235,4 +263,95 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     "CI_low" = x_sorted[min_i],
     "CI_high" = x_sorted[upper[min_i]]
   )
+}
+
+
+#' @export
+print.hdi <- function(x, digits = 2, ...) {
+  .print_hdi(x, digits, title = "Highest Density Interval", ci_string = "HDI", ...)
+}
+
+
+.print_hdi <- function(x, digits, title, ci_string, ...) {
+  insight::print_color("blue", sprintf(
+    "# %s%s\n\n",
+    title,
+    ifelse(all(x$CI[1] == x$CI), "", "s")
+  ))
+
+  ci <- unique(x$CI)
+
+  # find the longest HDI-value, so we can align the brackets in the ouput
+  x$CI_low <- sprintf("%.*f", digits, x$CI_low)
+  x$CI_high <- sprintf("%.*f", digits, x$CI_high)
+
+  maxlen_low <- max(nchar(x$CI_low))
+  maxlen_high <- max(nchar(x$CI_high))
+
+  x$HDI <- sprintf("[%*s %*s]", maxlen_low, x$CI_low, maxlen_high, x$CI_high)
+
+  if (length(ci) == 1) {
+    xsub <- .remove_column(x, c("CI", "CI_low", "CI_high"))
+    colnames(xsub)[ncol(xsub)] <- sprintf("%i%% %s", ci, ci_string)
+    print_data_frame(xsub, digits = digits)
+  } else {
+    for (i in ci) {
+      xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
+      xsub <- .remove_column(xsub, c("CI", "CI_low", "CI_high"))
+      colnames(xsub)[ncol(xsub)] <- sprintf("%i%% %s", i, ci_string)
+      print_data_frame(xsub, digits = digits)
+      cat("\n")
+    }
+  }
+}
+
+
+print_data_frame <- function(x, digits) {
+  out <- list(x)
+  names(out) <- "fixed"
+
+  if (all(c("Group", "Component") %in% colnames(x))) {
+    x$split <- sprintf("%s_%s", x$Group, x$Component)
+  } else if ("Group" %in% colnames(x)) {
+    colnames(x)[which(colnames(x) == "Group")] <- "split"
+  } else if ("Component" %in% colnames(x)) {
+    colnames(x)[which(colnames(x) == "Component")] <- "split"
+  }
+
+  if ("split" %in% colnames(x)) {
+    out <- lapply(split(x, f = x$split), function(i) {
+      .remove_column(i, c("split", "Component", "Group"))
+    })
+  }
+
+  for (i in names(out)) {
+    header <- switch(
+      i,
+      "conditional" = ,
+      "fixed_conditional" = ,
+      "fixed" = "# fixed effects, conditional component",
+      "zi" = ,
+      "fixed_zi" = "# fixed effects, zero-inflation component",
+      "random" = ,
+      "random_conditional" = "# random effects, conditional component",
+      "random_zi" = "# random effects, zero-inflation component"
+    )
+
+    if ("Parameter" %in% colnames(out[[i]])) {
+      # clean parameters names
+      out[[i]]$Parameter <- gsub("^(b_zi_|b_|bsp_|bcs_)(.*)", "\\2", out[[i]]$Parameter)
+      # remove ".1" etc. suffix
+      out[[i]]$Parameter <- gsub("(.*)(\\.)(\\d)$", "\\1 \\3",  out[[i]]$Parameter)
+      # remove "__zi"
+      out[[i]]$Parameter <- gsub("__zi", "",  out[[i]]$Parameter)
+    }
+
+    if (length(out) > 1) {
+      insight::print_color("red", header)
+      cat("\n\n")
+    }
+
+    print.data.frame(out[[i]], row.names = FALSE, digits = digits)
+    cat("\n")
+  }
 }

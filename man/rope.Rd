@@ -2,18 +2,24 @@
 % Please edit documentation in R/rope.R
 \name{rope}
 \alias{rope}
+\alias{rope.numeric}
 \alias{rope.stanreg}
 \alias{rope.brmsfit}
 \title{Region of Practical Equivalence (ROPE)}
 \usage{
 rope(posterior, ...)
 
+\method{rope}{numeric}(posterior, range = "default", ci = 0.9,
+  verbose = TRUE, ...)
+
 \method{rope}{stanreg}(posterior, range = "default", ci = 0.9,
-  effects = c("fixed", "random", "all"), verbose = TRUE, ...)
+  effects = c("fixed", "random", "all"), parameters = NULL,
+  verbose = TRUE, ...)
 
 \method{rope}{brmsfit}(posterior, range = "default", ci = 0.9,
   effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), verbose = TRUE, ...)
+  "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE,
+  ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
@@ -24,10 +30,16 @@ rope(posterior, ...)
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.}
 
+\item{verbose}{Toggle off warnings.}
+
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
 
-\item{verbose}{Toggle off warnings.}
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
 
 \item{component}{Should results for all parameters, parameters for the conditional model
 or the zero-inflated part of the modelbe returned? May be abbreviated. Only
@@ -37,7 +49,24 @@ applies to \pkg{brms}-models.}
 Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 }
 \details{
-Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are equivalent to the null value for practical purposes (2010, 2011, 2014). Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as 0 +/- .1 * sd(y). Kruschke (2010, 2011, 2014) suggest using the proportion of the 95\% (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the ROPE as an index for "null-hypothesis" testing (as understood under the Bayesian framework, see \link[=equivalence_test]{equivalence_test}). Besides the ROPE-based decision criteria, the proportion of the 95\% CI that falls in the ROPE can be used as a continuous index.
+Statistically, the probability of a posterior distribution of being
+  different from 0 does not make much sense (the probability of it being
+  different from a single point being infinite). Therefore, the idea
+  underlining ROPE is to let the user define an area around the null value
+  enclosing values that are equivalent to the null value for practical
+  purposes (\cite{Kruschke 2010, 2011, 2014}).
+  \cr \cr
+  Kruschke (2018) suggests that such null value could be set, by default,
+  to the -0.1 to 0.1 range of a standardized parameter (negligible effect
+  size according to Cohen, 1988). This could be generalized: For instance,
+  for linear models, the ROPE could be set as \code{0 +/- .1 * sd(y)}.
+  \cr \cr
+  Kruschke (2010, 2011, 2014) suggests using the proportion of  the 95\%
+  (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the
+  ROPE as an index for "null-hypothesis" testing (as understood under the
+  Bayesian framework, see \link[=equivalence_test]{equivalence_test}).
+  Besides the ROPE-based decision criteria, the proportion of the 95\%
+  CI that falls in the ROPE can be used as a continuous index.
 }
 \examples{
 library(bayestestR)

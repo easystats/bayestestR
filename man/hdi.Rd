@@ -2,18 +2,21 @@
 % Please edit documentation in R/hdi.R
 \name{hdi}
 \alias{hdi}
+\alias{hdi.numeric}
 \alias{hdi.stanreg}
 \alias{hdi.brmsfit}
 \title{Highest Density Interval (HDI)}
 \usage{
 hdi(posterior, ...)
 
+\method{hdi}{numeric}(posterior, ci = 0.9, verbose = TRUE, ...)
+
 \method{hdi}{stanreg}(posterior, ci = 0.9, effects = c("fixed",
-  "random", "all"), verbose = TRUE, ...)
+  "random", "all"), parameters = NULL, verbose = TRUE, ...)
 
 \method{hdi}{brmsfit}(posterior, ci = 0.9, effects = c("fixed",
   "random", "all"), component = c("conditional", "zi", "zero_inflated",
-  "all"), verbose = TRUE, ...)
+  "all"), parameters = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
@@ -22,10 +25,16 @@ hdi(posterior, ...)
 
 \item{ci}{Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.}
 
+\item{verbose}{Toggle off warnings.}
+
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
 
-\item{verbose}{Toggle off warnings.}
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
 
 \item{component}{Should results for all parameters, parameters for the conditional model
 or the zero-inflated part of the modelbe returned? May be abbreviated. Only
@@ -35,7 +44,14 @@ applies to \pkg{brms}-models.}
 Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
 }
 \details{
-By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015).
+Unlike equal-tailed intervals that typically exclude 2.5\% from each tail
+  of the distribution, the HDI is \emph{not} equal-tailed and therefor always
+  includes the mode(s) of posterior distributions.
+  \cr \cr
+  By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}),
+  deemed to be more stable than, for instance, 95\% intervals (\cite{Kruschke, 2015}).
+  An effective sample size of at least 10.000 is recommended if 95\% intervals
+  should be computed (\cite{Kruschke 2015, p. 183ff}).
 }
 \examples{
 library(bayestestR)

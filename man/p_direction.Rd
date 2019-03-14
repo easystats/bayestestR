@@ -2,12 +2,39 @@
 % Please edit documentation in R/p_direction.R
 \name{p_direction}
 \alias{p_direction}
+\alias{p_direction.numeric}
+\alias{p_direction.stanreg}
+\alias{p_direction.brmsfit}
 \title{Probability of Direction (pd)}
 \usage{
-p_direction(posterior)
+p_direction(posterior, ...)
+
+\method{p_direction}{numeric}(posterior, ...)
+
+\method{p_direction}{stanreg}(posterior, effects = c("fixed", "random",
+  "all"), parameters = NULL, ...)
+
+\method{p_direction}{brmsfit}(posterior, effects = c("fixed", "random",
+  "all"), component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL, ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+
+\item{...}{Currently not used.}
+
+\item{effects}{Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.}
+
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
+
+\item{component}{Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the modelbe returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \description{
 Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50\% and 100\% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (consistently with the median's sign). It is defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar to the frequentist p-value (i.e., is strongly correlated).

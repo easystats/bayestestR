@@ -2,25 +2,55 @@
 % Please edit documentation in R/equivalence_test.R
 \name{equivalence_test}
 \alias{equivalence_test}
+\alias{equivalence_test.numeric}
+\alias{equivalence_test.stanreg}
+\alias{equivalence_test.brmsfit}
 \title{Test for Practical Equivalence}
 \usage{
-equivalence_test(posterior, range = "default", ci = 0.95,
-  verbose = TRUE)
+equivalence_test(posterior, ...)
+
+\method{equivalence_test}{numeric}(posterior, range = "default",
+  ci = 0.95, verbose = TRUE, ...)
+
+\method{equivalence_test}{stanreg}(posterior, range = "default",
+  ci = 0.95, parameters = NULL, verbose = TRUE, ...)
+
+\method{equivalence_test}{brmsfit}(posterior, range = "default",
+  ci = 0.95, parameters = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+
+\item{...}{Currently not used.}
 
 \item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
 }
 \description{
 Perform a Test for Practical Equivalence based on the "HDI+ROPE decision rule" (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis".
 }
 \details{
-Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2010, 2011, 2014, 2018) suggest using the percentage of the 95\% (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the ROPE as a decision rule. If the HDI is completely outside the ROPE, the "null hypothesis" for this parameter is "rejected". If the ROPE completely covers the HDI, i.e. all most credible values of a parameter are inside the region of practical equivalence, the null hypothesis is accepted. Else, it’s undecided whether to accept or reject the null hypothesis. If the full ROPE is used (i.e., 100\% of the HDI), then the null hypothesis is rejected or accepted if the percentage of the posterior within the ROPE is smaller than to 1\% or greater than 99\%.
+Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2018)
+  suggest using the percentage of the 95\% (or 90\%, considered more stable)
+  \link[=hdi]{HDI} that falls within the ROPE as a decision rule. If the HDI
+  is completely outside the ROPE, the "null hypothesis" for this parameter is
+  "rejected". If the ROPE completely covers the HDI, i.e. all most credible
+  values of a parameter are inside the region of practical equivalence, the
+  null hypothesis is accepted. Else, it’s undecided whether to accept or
+  reject the null hypothesis. If the full ROPE is used (i.e., 100\% of the
+  HDI), then the null hypothesis is rejected or accepted if the percentage
+  of the posterior within the ROPE is smaller than to 1\% or greater  than
+  99\%. Desirable results are low proportions inside the ROPE  (the closer
+  to zero the better) and the H0 should be rejected.
 }
 \examples{
 library(bayestestR)
@@ -29,6 +59,7 @@ equivalence_test(posterior = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
 equivalence_test(posterior = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 equivalence_test(posterior = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 equivalence_test(posterior = rnorm(1000, 1, 1), ci = c(.50, .99))
+
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -38,10 +69,9 @@ equivalence_test(model, ci = c(.50, 1))
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 equivalence_test(model)
-equivalence_test(model, ci = c(.50, .99))
-}
+equivalence_test(model, ci = c(.50, .99))}
 
 }
 \references{
-Kruschke JK. Rejecting or Accepting Parameter Values in Bayesian Estimation. Advances in Methods and Practices in Psychological Science. 2018; doi: \doi{10.1177/2515245918771304}
+Kruschke, J. K. (2018). Rejecting or Accepting Parameter Values in Bayesian Estimation. Advances in Methods and Practices in Psychological Science, 251524591877130. \doi{10.1177/2515245918771304}
 }

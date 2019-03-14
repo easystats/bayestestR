@@ -2,16 +2,44 @@
 % Please edit documentation in R/p_rope.R
 \name{p_rope}
 \alias{p_rope}
+\alias{p_rope.numeric}
+\alias{p_rope.stanreg}
+\alias{p_rope.brmsfit}
 \title{ROPE-based p-value}
 \usage{
-p_rope(posterior, range = "default", precision = 0.1)
+p_rope(posterior, ...)
+
+\method{p_rope}{numeric}(posterior, range = "default", precision = 0.1,
+  ...)
+
+\method{p_rope}{stanreg}(posterior, range = "default", precision = 0.1,
+  effects = c("fixed", "random", "all"), parameters = NULL, ...)
+
+\method{p_rope}{brmsfit}(posterior, range = "default", precision = 0.1,
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), parameters = NULL, ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
 
+\item{...}{Currently not used.}
+
 \item{range}{ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
 
 \item{precision}{The precision by which to explore the ROPE space (in percentage). Lower values increase the precision of the returned p value but can be quite computationaly costly.}
+
+\item{effects}{Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.}
+
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
+
+\item{component}{Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the modelbe returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \description{
 The ROPE-based p-value represents the maximum percentage of \link[=hdi]{HDI} that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the \link[=rope]{ROPE}. It differs from the ROPE, i.e., the proportion of a given CI in the ROPE, by representing the maximum CI to reach a ROPE proportion of 0\% (positive values) or 100\% (negative values). A ROPE-based p of 97\% means that there is a probability of .97 that a parameter (described by its posterior distribution) is outside the ROPE. On the contrary, a ROPE-based p of -97\% means that there is also a probability of 0.97 that the parameter is inside the ROPE.
@@ -20,6 +48,7 @@ The ROPE-based p-value represents the maximum percentage of \link[=hdi]{HDI} tha
 library(bayestestR)
 
 p_rope(posterior = rnorm(1000, mean = 1, sd = 1), range = c(-0.1, 0.1))
+
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -27,6 +56,6 @@ p_rope(model)
 
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-p_rope(model)
-}
+p_rope(model)}
+
 }

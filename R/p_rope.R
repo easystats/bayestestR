@@ -6,10 +6,13 @@
 #' @param range ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
 #' @param precision The precision by which to explore the ROPE space (in percentage). Lower values increase the precision of the returned p value but can be quite computationaly costly.
 #'
+#' @inheritParams hdi
+#'
 #' @examples
 #' library(bayestestR)
 #'
 #' p_rope(posterior = rnorm(1000, mean = 1, sd = 1), range = c(-0.1, 0.1))
+#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -17,11 +20,11 @@
 #'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' p_rope(model)
-#' }
+#' p_rope(model)}
+#'
 #' @importFrom stats na.omit
 #' @export
-p_rope <- function(posterior, range = "default", precision = .1) {
+p_rope <- function(posterior, ...) {
   UseMethod("p_rope")
 }
 
@@ -32,8 +35,9 @@ print.p_rope <- function(x, ...) {
 }
 
 
+#' @rdname p_rope
 #' @export
-p_rope.numeric <- function(posterior, range = "default", precision = .1) {
+p_rope.numeric <- function(posterior, range = "default", precision = .1, ...) {
 
   # This implementation is very clunky
 
@@ -44,9 +48,8 @@ p_rope.numeric <- function(posterior, range = "default", precision = .1) {
   }
 
 
-
   rope_df <- rope(posterior, range, ci = seq(0, 1, by = precision / 100), verbose = FALSE)
-  rope_df <- na.omit(rope_df)
+  rope_df <- stats::na.omit(rope_df)
 
   rope_values <- rope_df$ROPE_Percentage
 
@@ -76,32 +79,56 @@ p_rope.numeric <- function(posterior, range = "default", precision = .1) {
   }
 
   class(p) <- c("p_rope", class(p))
-  return(p)
+  p
 }
 
 
 
 
-#' @importFrom insight find_parameters get_parameters
-#' @importFrom stats sd
+#' @importFrom insight get_parameters
 #' @keywords internal
-.p_rope_models <- function(posterior, range = "default", precision = .1) {
+.p_rope_models <- function(posterior, range, precision, effects, component, parameters) {
   if (all(range == "default")) {
     range <- rope_range(posterior)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  out <- data.frame(
-    "Parameter" = insight::find_parameters(posterior),
-    "p_ROPE" = sapply(insight::get_parameters(posterior), range = range, p_rope, precision = precision, simplify = TRUE),
-    row.names = NULL
+  data.frame(
+    "Parameter" = .get_parameter_names(posterior, effects = effects, component = component, parameters = parameters),
+    "p_ROPE" = sapply(insight::get_parameters(posterior, effects = effects, component = component, parameters = parameters), range = range, p_rope, precision = precision, simplify = TRUE),
+    row.names = NULL,
+    stringsAsFactors = FALSE
   )
-  return(out)
 }
 
+#' @rdname p_rope
 #' @export
-p_rope.stanreg <- .p_rope_models
+p_rope.stanreg <- function(posterior, range = "default", precision = .1, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  effects <- match.arg(effects)
 
+  .p_rope_models(
+    posterior = posterior,
+    range = range,
+    precision = precision,
+    effects = effects,
+    component = "conditional",
+    parameters = parameters
+  )
+}
+
+#' @rdname p_rope
 #' @export
-p_rope.brmsfit <- .p_rope_models
+p_rope.brmsfit <- function(posterior, range = "default", precision = .1, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+  effects <- match.arg(effects)
+  component <- match.arg(component)
+
+  .p_rope_models(
+    posterior = posterior,
+    range = range,
+    precision = precision,
+    effects = effects,
+    component = component,
+    parameters = parameters
+  )
+}

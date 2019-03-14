@@ -153,7 +153,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>equivalence_test</span>(<span class='no'>posterior</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+    <pre class="usage"><span class='fu'>equivalence_test</span>(<span class='no'>posterior</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -161,11 +161,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>posterior</th>
-      <td><p>vector representing a posterior distribution. Can also be a <code>stanreg</code> or <code>brmsfit</code> model.</p></td>
+      <td><p>Vector representing a posterior distribution. Can also be a <code>stanreg</code> or <code>brmsfit</code> model.</p></td>
     </tr>
     <tr>
-      <th>bounds</th>
-      <td><p>ROPE's lower and higher bounds. Should be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(0.1, 0.1)</a></code> if input is a vector and <code>x +- 0.1*SD(response)</code> if a Bayesian model is provided.</p></td>
+      <th>range</th>
+      <td><p>ROPE's lower and higher bounds. Should be a vector of length two (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the range is set to <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(0.1, 0.1)</a></code> if input is a vector, and <code>x +- 0.1*SD(response)</code> if a Bayesian model is provided.</p></td>
     </tr>
     <tr>
       <th>ci</th>
@@ -179,22 +179,55 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Using the <a href='rope.html'>ROPE</a> and the <a href='hdi.html'>HDI</a>, Kruschke (2010, 2011, 2014, 2018) suggest using the percentage of the 95% (or 90%, considered more stable) <a href='hdi.html'>HDI</a> that falls within the ROPE as a decision rule. If the HDI is completely outside the ROPE, the "null hypothesis" for this parameter is "rejected". If the ROPE completely covers the HDI, i.e. all most credible values of a parameter are inside the region of practical equivalence, the null hypothesis is accepted. Else, it’s undecided whether to accept or reject the null hypothesis. If the full ROPE is used (i.e., 100% of the HDI), then the null hypothesis is rejected or accepted if the percentage of the posterior within the ROPE is smaller than to 1% or greater than 99%.</p>
+    <p>Using the <a href='rope.html'>ROPE</a> and the <a href='hdi.html'>HDI</a>, Kruschke (2018)
+  suggest using the percentage of the 95% (or 90%, considered more stable)
+  <a href='hdi.html'>HDI</a> that falls within the ROPE as a decision rule. If the HDI
+  is completely outside the ROPE, the "null hypothesis" for this parameter is
+  "rejected". If the ROPE completely covers the HDI, i.e. all most credible
+  values of a parameter are inside the region of practical equivalence, the
+  null hypothesis is accepted. Else, it’s undecided whether to accept or
+  reject the null hypothesis. If the full ROPE is used (i.e., 100% of the
+  HDI), then the null hypothesis is rejected or accepted if the percentage
+  of the posterior within the ROPE is smaller than to 1% or greater  than
+  99%. Desirable results are low proportions inside the ROPE  (the closer
+  to zero the better) and the H0 should be rejected.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p><a href='https://strengejacke.wordpress.com/2018/06/06/r-functions-for-bayesian-model-statistics-and-summaries-rstats-stan-brms/'>sjstats</a></p>
+    <p>Kruschke JK. Rejecting or Accepting Parameter Values in Bayesian Estimation. Advances in Methods and Practices in Psychological Science. 2018; doi: <a href='http://doi.org/10.1177/2515245918771304'>10.1177/2515245918771304</a></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
-<span class='fu'>equivalence_test</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>0.01</span>), <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt;   CI ROPE_low ROPE_high ROPE_Percentage ROPE_Equivalence
-#&gt; 1 90     -0.1       0.1             100         accepted</div><div class='input'><span class='fu'>equivalence_test</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt;   CI ROPE_low ROPE_high ROPE_Percentage ROPE_Equivalence
-#&gt; 1 90     -0.1       0.1        10.54384        undecided</div><div class='input'><span class='fu'>equivalence_test</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt;   CI ROPE_low ROPE_high ROPE_Percentage ROPE_Equivalence
-#&gt; 1 90     -0.1       0.1               0         rejected</div><div class='input'><span class='fu'>equivalence_test</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>.99</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: the condition has length &gt; 1 and only the first element will be used</span></div><div class='output co'>#&gt;   CI ROPE_low ROPE_high ROPE_Percentage ROPE_Equivalence
-#&gt; 1 50     -0.1       0.1        0.000000         rejected
-#&gt; 2 99     -0.1       0.1        5.449041        undecided</div><span class='co'># NOT RUN {</span>
+<span class='fu'>equivalence_test</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; # Test for Practical Equivalence
+#&gt; 
+#&gt;   ROPE: [-0.10 0.10]
+#&gt; 
+#&gt;        H0 % inside ROPE      95% HDI
+#&gt;  accepted       100.00% [-0.02 0.02]
+#&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; # Test for Practical Equivalence
+#&gt; 
+#&gt;   ROPE: [-0.10 0.10]
+#&gt; 
+#&gt;         H0 % inside ROPE      95% HDI
+#&gt;  undecided         9.99% [-1.95 1.69]
+#&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; # Test for Practical Equivalence
+#&gt; 
+#&gt;   ROPE: [-0.10 0.10]
+#&gt; 
+#&gt;        H0 % inside ROPE     95% HDI
+#&gt;  rejected         0.00% [0.98 1.02]
+#&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>.99</span>))</div><div class='output co'>#&gt; # Test for Practical Equivalence
+#&gt; 
+#&gt;   ROPE: [-0.10 0.10]
+#&gt; 
+#&gt;        H0 % inside ROPE     50% HDI
+#&gt;  rejected         0.00% [0.33 1.60]
+#&gt; 
+#&gt;         H0 % inside ROPE      99% HDI
+#&gt;  undecided         5.45% [-1.96 3.28]
+#&gt; </div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>equivalence_test</span>(<span class='no'>model</span>)

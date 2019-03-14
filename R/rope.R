@@ -5,11 +5,27 @@
 #' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param range ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
 #' @param ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.
-#' @param verbose Toggle off warnings.
 #'
 #' @inheritParams hdi
 #'
-#' @details Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are equivalent to the null value for practical purposes (2010, 2011, 2014). Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as 0 +/- .1 * sd(y). Kruschke (2010, 2011, 2014) suggest using the proportion of the 95\% (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the ROPE as an index for "null-hypothesis" testing (as understood under the Bayesian framework, see \link[=equivalence_test]{equivalence_test}). Besides the ROPE-based decision criteria, the proportion of the 95\% CI that falls in the ROPE can be used as a continuous index.
+#' @details Statistically, the probability of a posterior distribution of being
+#'   different from 0 does not make much sense (the probability of it being
+#'   different from a single point being infinite). Therefore, the idea
+#'   underlining ROPE is to let the user define an area around the null value
+#'   enclosing values that are equivalent to the null value for practical
+#'   purposes (\cite{Kruschke 2010, 2011, 2014}).
+#'   \cr \cr
+#'   Kruschke (2018) suggests that such null value could be set, by default,
+#'   to the -0.1 to 0.1 range of a standardized parameter (negligible effect
+#'   size according to Cohen, 1988). This could be generalized: For instance,
+#'   for linear models, the ROPE could be set as \code{0 +/- .1 * sd(y)}.
+#'   \cr \cr
+#'   Kruschke (2010, 2011, 2014) suggests using the proportion of  the 95\%
+#'   (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the
+#'   ROPE as an index for "null-hypothesis" testing (as understood under the
+#'   Bayesian framework, see \link[=equivalence_test]{equivalence_test}).
+#'   Besides the ROPE-based decision criteria, the proportion of the 95\%
+#'   CI that falls in the ROPE can be used as a continuous index.
 #'
 #' @examples
 #' library(bayestestR)
@@ -30,8 +46,7 @@
 #' rope(model, ci = c(.90, .95))
 #' }
 #'
-#' @importFrom insight get_response get_parameters model_info is_multivariate
-#' @importFrom stats sd qlogis
+#' @importFrom insight get_parameters is_multivariate print_color
 #' @export
 rope <- function(posterior, ...) {
   UseMethod("rope")
@@ -46,51 +61,61 @@ as.double.rope <- function(x, ...) {
 
 
 #' @export
-print.rope <- function(x, ...) {
-  if (is.data.frame(x)) {
-    cat(sprintf(
-      "# Proportion%s of samples inside the ROPE [%.2f, %.2f]:\n\n",
-      ifelse(all(x$CI[1] == x$CI), "", "s"),
-      x$ROPE_low[1],
-      x$ROPE_high[1]
-    ))
+print.rope <- function(x, digits = 2, ...) {
+  insight::print_color("blue", sprintf(
+    "# Proportion%s of samples inside the ROPE [%.*f, %.*f]:\n\n",
+    ifelse(all(x$CI[1] == x$CI), "", "s"),
+    digits,
+    x$ROPE_low[1],
+    digits,
+    x$ROPE_high[1]
+  ))
 
-    # I think this is something nobody will understand and we'll probably forget
-    # why we did this, so I'll comment a bit...
 
-    # These are the base columns we want to print
-    cols <- c("Parameter", "ROPE_Percentage")
+  # I think this is something nobody will understand and we'll probably forget
+  # why we did this, so I'll comment a bit...
 
-    # In case we have ropes for different CIs, we also want this information
-    # So we first check if values in the CI column differ, and if so, we also
-    # keep this column for printing
-    if (!all(x$CI[1] == x$CI))
-      cols <- c("CI", cols)
+  # These are the base columns we want to print
+  cols <- c("Parameter", "ROPE_Percentage", "Component", "Group")
 
-    # now we check which of the requested columns are actually in our data frame "x"
-    # "x" may differ, depending on if "rope()" was called with a model-object,
-    # or with a simple vector. So we can't hard-code this
-    x <- subset(x, select = intersect(cols, colnames(x)))
+  # In case we have ropes for different CIs, we also want this information
+  # So we first check if values in the CI column differ, and if so, we also
+  # keep this column for printing
+  if (!all(x$CI[1] == x$CI))
+    cols <- c("CI", cols)
 
-    # This is just cosmetics, to have nicer column names
-    colnames(x)[ncol(x)] <- "% in ROPE"
+  # Either way, we need to know the different CI-values, so we can
+  # split the data frame for printing later...
+  ci <- unique(x$CI)
 
-    # finally, print everything
-    print.data.frame(x, row.names = F, digits = 3)
+  # now we check which of the requested columns are actually in our data frame "x"
+  # "x" may differ, depending on if "rope()" was called with a model-object,
+  # or with a simple vector. So we can't hard-code this
+  x <- subset(x, select = intersect(cols, colnames(x)))
+
+  # This is just cosmetics, to have nicer column names and values
+  x$ROPE_Percentage <- sprintf("%.*f %%", digits, x$ROPE_Percentage)
+  colnames(x)[which(colnames(x) == "ROPE_Percentage")] <- "inside ROPE"
+
+  # In case we have multiple CI values, we create a subset for each CI value.
+  # Else, parameter-rows would be mixed up with both CIs, which is a bit
+  # more difficult to read...
+
+  if (length(ci) == 1) {
+    # print complete data frame, because we have no different CI values here
+    print_data_frame(x, digits = digits)
   } else {
-    cat(sprintf(
-      "%.2f%% of the %s%% CI is in ROPE [%.2f, %.2f]",
-      x$ROPE_Percentage,
-      x$CI,
-      x$ROPE_low,
-      x$ROPE_high
-    ))
+    for (i in ci) {
+      xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
+      insight::print_color("cyan", sprintf("ROPE for the %s%% HDI:\n\n", i))
+      print_data_frame(xsub, digits = digits)
+      cat("\n")
+    }
   }
 }
 
 
-
-
+#' @rdname rope
 #' @export
 rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE, ...) {
   if (all(range == "default")) {
@@ -103,11 +128,17 @@ rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE,
     .rope(posterior, range = range, ci = i, verbose = verbose)
   })
 
+  # "do.call(rbind)" does not bind attribute values together
+  # so we need to capture the information about HDI separately
+
+  hdi_area <- lapply(rope_values, attr, "HDI_area")
+
   out <- do.call(rbind, rope_values)
   if (nrow(out) > 1) {
     out$ROPE_Percentage <- as.numeric(out$ROPE_Percentage)
   }
 
+  attr(out, "HDI_area") <- hdi_area
   out
 }
 
@@ -139,7 +170,7 @@ rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE,
 
 #' @rdname rope
 #' @export
-rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), verbose = TRUE, ...) {
+rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
 
   if (all(range == "default")) {
@@ -149,8 +180,9 @@ rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fi
   }
 
   list <- lapply(c("fixed", "random"), function(x) {
+    parms <- insight::get_parameters(posterior, effects = x, parameters = parameters)
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x),
+      parms,
       rope,
       range = range,
       ci = ci,
@@ -161,7 +193,12 @@ rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fi
     HDI_area <- attr(tmp, "HDI_area")
 
     if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_stanreg(tmp, x, cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Group"))
+      tmp <- .clean_up_tmp_stanreg(
+        tmp,
+        x,
+        cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Group"),
+        parms = names(parms)
+      )
     } else {
       tmp <- NULL
     }
@@ -190,9 +227,13 @@ rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fi
 
 #' @rdname rope
 #' @export
-rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), verbose = TRUE, ...) {
+rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
+
+  if (insight::is_multivariate(posterior)) {
+    stop("Multivariate response models are not yet supported.")
+  }
 
   eff <- c("fixed", "fixed", "random", "random")
   com <- c("conditional", "zi", "conditional", "zi")
@@ -204,8 +245,9 @@ rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fi
   }
 
   .get_rope <- function(x, y) {
+    parms <- insight::get_parameters(posterior, effects = x, component = y, parameters = parameters)
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x, component = y),
+      parms,
       rope,
       range = range,
       ci = ci,
@@ -216,7 +258,13 @@ rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fi
     HDI_area <- attr(tmp, "HDI_area")
 
     if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_brms(tmp, x, y, cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Component", "Group"))
+      tmp <- .clean_up_tmp_brms(
+        tmp,
+        x,
+        y,
+        cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Component", "Group"),
+        parms = names(parms)
+      )
     } else {
       tmp <- NULL
     }
@@ -225,7 +273,7 @@ rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fi
     tmp
   }
 
-  list <- mapply(.get_rope, eff, com)
+  list <- mapply(.get_rope, eff, com, SIMPLIFY = FALSE)
   dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
 
   dat <- switch(
@@ -253,46 +301,4 @@ rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fi
 
   attr(dat, "HDI_area") <- do.call(rbind, lapply(list, attr, "HDI_area"))
   dat
-}
-
-
-#' Find Default Equivalence (ROPE) Region Bounds
-#'
-#' Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988).
-#' @param model A Bayesian model.
-#' @examples
-#' \dontrun{
-#' library(rstanarm)
-#' model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family="binomial")
-#' rope_range(model)
-#'
-#' library(brms)
-#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' rope_range(model)
-#' }
-#'
-#' @export
-rope_range <- function(model){
-  response <- insight::get_response(model)
-  information <- insight::model_info(model)
-
-  if (insight::is_multivariate(model)) {
-    mapply(function(x, y) .rope_range(x, y), information, response)
-  } else {
-    .rope_range(information, response)
-  }
-}
-
-.rope_range <- function(information, response) {
-  if (information$is_linear) {
-    effect_size_d <- 0.1 * stats::sd(response)
-  } else if (information$is_binomial) {
-    numeric_response <- as.numeric(as.factor(response))
-    prob_resp <- mean(numeric_response - min(numeric_response))
-    eff_size <- prob_resp / pi
-    effect_size_d <- (stats::qlogis(prob_resp + eff_size) - stats::qlogis(prob_resp - eff_size)) / 4
-  } else {
-    effect_size_d <- 0.1
-  }
-  c(-1, 1) * effect_size_d
 }
