@@ -40,13 +40,14 @@
 #'
 #' @importFrom insight print_color
 #' @export
-equivalence_test <- function(posterior, range = "default", ci = .95, verbose = TRUE) {
+equivalence_test <- function(posterior, ...) {
   UseMethod("equivalence_test")
 }
 
 
+#' @rdname equivalence_test
 #' @export
-equivalence_test.numeric <- function(posterior, range = "default", ci = .95, verbose = TRUE) {
+equivalence_test.numeric <- function(posterior, range = "default", ci = .95, verbose = TRUE, ...) {
   rope_data <- rope(posterior, range = range, ci = ci)
   out <- as.data.frame(rope_data)
 
@@ -138,15 +139,19 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   out
 }
 
+
+#' @rdname equivalence_test
 #' @export
-equivalence_test.stanreg <- function(posterior, range = "default", ci = .95, parameters = NULL, verbose = TRUE) {
+equivalence_test.stanreg <- function(posterior, range = "default", ci = .95, parameters = NULL, verbose = TRUE, ...) {
   et <- .equivalence_test_models(posterior, range, ci, parameters, verbose)
   attr(et, "model") <- deparse(substitute(posterior), width.cutoff = 500)
   et
 }
 
+
+#' @rdname equivalence_test
 #' @export
-equivalence_test.brmsfit <- function(posterior, range = "default", ci = .95, parameters = NULL, verbose = TRUE) {
+equivalence_test.brmsfit <- function(posterior, range = "default", ci = .95, parameters = NULL, verbose = TRUE, ...) {
   et <- .equivalence_test_models(posterior, range, ci, parameters, verbose)
   attr(et, "model") <- deparse(substitute(posterior), width.cutoff = 500)
   et

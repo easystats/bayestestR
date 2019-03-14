@@ -2,19 +2,38 @@
 % Please edit documentation in R/equivalence_test.R
 \name{equivalence_test}
 \alias{equivalence_test}
+\alias{equivalence_test.numeric}
+\alias{equivalence_test.stanreg}
+\alias{equivalence_test.brmsfit}
 \title{Test for Practical Equivalence}
 \usage{
-equivalence_test(posterior, range = "default", ci = 0.95,
-  verbose = TRUE)
+equivalence_test(posterior, ...)
+
+\method{equivalence_test}{numeric}(posterior, range = "default",
+  ci = 0.95, verbose = TRUE, ...)
+
+\method{equivalence_test}{stanreg}(posterior, range = "default",
+  ci = 0.95, parameters = NULL, verbose = TRUE, ...)
+
+\method{equivalence_test}{brmsfit}(posterior, range = "default",
+  ci = 0.95, parameters = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+
+\item{...}{Currently not used.}
 
 \item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
 }
 \description{
 Perform a Test for Practical Equivalence based on the "HDI+ROPE decision rule" (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis".

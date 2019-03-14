@@ -58,7 +58,6 @@ p_map.numeric <- function(posterior, precision = 2^10, ...) {
 #' @importFrom insight get_parameters
 #' @keywords internal
 .p_map_models <- function(posterior, precision, effects, component, parameters) {
-
   data.frame(
     "Parameter" = .get_parameter_names(posterior, effects = effects, component = component, parameters = parameters),
     "p_MAP" = sapply(insight::get_parameters(posterior, effects = effects, component = component, parameters = parameters), p_map, precision = precision, simplify = TRUE),

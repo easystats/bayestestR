@@ -21,18 +21,3 @@
   tmp$Parameter <- gsub("r_(.*)\\.(.*)\\.", "\\1", tmp$Parameter)
   tmp
 }
-
-
-#' @keywords internal
-.clean_parameters <- function(x) {
-  removers <- grep("^(prior_|sd_|cor_|lp__|smooth_sd)", x$Parameter)
-
-  if (length(removers)) {
-    x <- x[-removers, ]
-  }
-
-  if (nrow(x) == 0)
-    NULL
-  else
-    x
-}
