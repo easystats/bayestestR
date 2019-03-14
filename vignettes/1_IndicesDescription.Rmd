@@ -21,23 +21,6 @@ This vignette can be referred to by citing the package:
 - Makowski, D. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI:10.5281/zenodo.2556486.
 
 
-# The Bayesian Framework
-
-## Why use the Bayesian Framework?
-
-> Reasons to prefer this approach are reliability, better accuracy in noisy data, better estimation for small samples, less prone to type I error, the possibility of introducing prior knowledge into the analysis and, critically, results intuitiveness and their straightforward interpretation (Andrews & Baguley, 2013; Etz & Vandekerckhove, 2016; Kruschke, 2010; Kruschke, Aguinis, & Joo, 2012; Wagenmakers et al., 2018). Indeed, in the frequentist view, the effects are fixed (but unknown) and data are random, while the Bayesian inference calculates the probability of different effect values (called the **"posterior" distribution**) given the observed data. Bayesian’s uncertainty can be summarized, for example, by giving a range of values on the posterior distribution that includes 95% of the probability (the 95% *Credible* Interval). To illustrate the difference, the Bayesian framework allows to say *"given the observed data, the effect has 95% probability of falling within this range"*, while the Frequentist less straightforward alternative (the 95% *Confidence* Interval) would be "*there is a 95% probability that when computing a confidence interval from data of this sort, the effect falls within this range*". In general, the frequentist approach has been associated with the focus on null hypothesis testing, and the misuse of *p* values has been shown to critically contribute to the reproducibility crisis of psychological science (Chambers, Feredoes, Muthukumaraswamy, Suresh, & Etchells, 2014; Szucs & Ioannidis, 2016). There is a general agreement that the generalization of the Bayesian approach is a way of overcoming these issues (Benjamin et al., 2018; Etz & Vandekerckhove, 2016).
-
-## What is the Bayesian Framework?
-
-Once we agreed that the Bayesian framework is the right way to go, you might wonder *what* is the Bayesian framework. **What's all the fuss about?**
-
-Omitting the maths behind it, let's just say that:
-
-- The frequentist bloke tries to estimate "the real effect". For instance, the "real" value of the correlation between *x* and *y*. Frequentist models return a "**point-estimate**" (*i.e.*, a single value) of the "real" correlation (*e.g.*, r = 0.42) estimated by the model under a number of obscure assumptions (at a minimum, considering that the data is sampled at random from a "parent", usually normal distribution of data).
-- **The Bayesian master assumes no such thing**. The data are what they are. Based on this observed data (and a **prior** belief about the result), the Bayesian sampling algorithm returns a probability distribution (called **the posterior**) of the effect that is compatible with the observed data. For the correlation between *x* and *y*, it will return a distribution that says, for example, "the most probable effect is 0.42, but this data is also compatible with correlations of 0.12 or 0.74".
-- To characterize our effects, **no need of *p* values** or other cryptic indices. We simply describe the posterior distribution of the effect. For example, we can report the median, the 90% *Credible* Interval (CI; see *below*) and such.
-
-
 
 
 # Indices
