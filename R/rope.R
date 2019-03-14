@@ -267,7 +267,7 @@ rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fi
     tmp
   }
 
-  list <- mapply(.get_rope, eff, com)
+  list <- mapply(.get_rope, eff, com, SIMPLIFY = FALSE)
   dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
 
   dat <- switch(

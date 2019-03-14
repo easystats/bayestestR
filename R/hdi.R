@@ -127,7 +127,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     tmp
   }
 
-  list <- mapply(.get_hdi, eff, com)
+  list <- mapply(.get_hdi, eff, com, SIMPLIFY = FALSE)
   dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
 
   dat <- switch(
