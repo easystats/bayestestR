@@ -115,6 +115,7 @@ print.rope <- function(x, digits = 2, ...) {
 }
 
 
+#' @rdname rope
 #' @export
 rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE, ...) {
   if (all(range == "default")) {

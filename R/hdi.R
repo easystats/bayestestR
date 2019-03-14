@@ -55,6 +55,7 @@ hdi <- function(posterior, ...) {
 }
 
 
+#' @rdname hdi
 #' @export
 hdi.numeric <- function(posterior, ci = .90, verbose = TRUE, ...) {
   do.call(rbind, lapply(ci, function(i) {

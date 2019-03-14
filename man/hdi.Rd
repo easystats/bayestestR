@@ -2,11 +2,14 @@
 % Please edit documentation in R/hdi.R
 \name{hdi}
 \alias{hdi}
+\alias{hdi.numeric}
 \alias{hdi.stanreg}
 \alias{hdi.brmsfit}
 \title{Highest Density Interval (HDI)}
 \usage{
 hdi(posterior, ...)
+
+\method{hdi}{numeric}(posterior, ci = 0.9, verbose = TRUE, ...)
 
 \method{hdi}{stanreg}(posterior, ci = 0.9, effects = c("fixed",
   "random", "all"), parameters = NULL, verbose = TRUE, ...)
@@ -22,6 +25,8 @@ hdi(posterior, ...)
 
 \item{ci}{Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.}
 
+\item{verbose}{Toggle off warnings.}
+
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
 
@@ -30,8 +35,6 @@ should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
-
-\item{verbose}{Toggle off warnings.}
 
 \item{component}{Should results for all parameters, parameters for the conditional model
 or the zero-inflated part of the modelbe returned? May be abbreviated. Only
