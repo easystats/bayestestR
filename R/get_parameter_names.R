@@ -7,7 +7,7 @@
     "fixed" = pars[c("conditional", "zero_inflated")],
     "random" = pars[c("random", "zero_inflated_random")],
     "simplex" = pars["simplex"],
-    "smooth_terms" = pars["smooth_terms"]
+    "smooth_terms" = pars["smooth_terms"],
     "all" = pars
   )
 
