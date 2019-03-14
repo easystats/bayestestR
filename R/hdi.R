@@ -254,10 +254,10 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 
 #' @export
 print.hdi <- function(x, digits = 2, ...) {
-  cat(.colour("blue", sprintf(
+  insight::print_color("blue", sprintf(
     "# Highest Density Interval%s\n\n",
     ifelse(all(x$CI[1] == x$CI), "", "s")
-  )))
+  ))
 
   ci <- unique(x$CI)
 
