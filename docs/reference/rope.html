@@ -95,6 +95,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/bayestestR.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -155,14 +158,20 @@
 
     <pre class="usage"><span class='fu'>rope</span>(<span class='no'>posterior</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>rope</span>(<span class='no'>posterior</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>rope</span>(<span class='no'>posterior</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for brmsfit</span>
 <span class='fu'>rope</span>(<span class='no'>posterior</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>,
-  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,13 +193,21 @@
       <td><p>The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.</p></td>
     </tr>
     <tr>
+      <th>verbose</th>
+      <td><p>Toggle off warnings.</p></td>
+    </tr>
+    <tr>
       <th>effects</th>
       <td><p>Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
-      <th>verbose</th>
-      <td><p>Toggle off warnings.</p></td>
+      <th>parameters</th>
+      <td><p>Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+filtered by default, so only parameters that typically appear in the
+<code><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
+for the output.</p></td>
     </tr>
     <tr>
       <th>component</th>
@@ -207,36 +224,50 @@ applies to <span class="pkg">brms</span>-models.</p></td>
   different from a single point being infinite). Therefore, the idea
   underlining ROPE is to let the user define an area around the null value
   enclosing values that are equivalent to the null value for practical
-  purposes (<cite>Kruschke 2010, 2011, 2014</cite>). Kruschke (2018) suggests that
-  such null value could be set, by default, to the -0.1 to 0.1 range of a
-  standardized parameter (negligible effect size according to Cohen, 1988).
-  This could be generalized: For instance, for linear models, the ROPE
-  could be set as <code>0 +/- .1 * sd(y)</code>. Kruschke (2010, 2011, 2014) suggests
-  using the proportion of the 95% (or 90%, considered more stable)
-  <a href='hdi.html'>HDI</a> that falls within the ROPE as an index for
-  "null-hypothesis" testing (as understood under the Bayesian framework,
-  see <a href='equivalence_test.html'>equivalence_test</a>). Besides the ROPE-based
-  decision criteria, the proportion of the 95% CI that falls in the ROPE
-  can be used as a continuous index.</p>
+  purposes (<cite>Kruschke 2010, 2011, 2014</cite>).
+  <br /> <br />
+  Kruschke (2018) suggests that such null value could be set, by default,
+  to the -0.1 to 0.1 range of a standardized parameter (negligible effect
+  size according to Cohen, 1988). This could be generalized: For instance,
+  for linear models, the ROPE could be set as <code>0 +/- .1 * sd(y)</code>.
+  <br /> <br />
+  Kruschke (2010, 2011, 2014) suggests using the proportion of  the 95%
+  (or 90%, considered more stable) <a href='hdi.html'>HDI</a> that falls within the
+  ROPE as an index for "null-hypothesis" testing (as understood under the
+  Bayesian framework, see <a href='equivalence_test.html'>equivalence_test</a>).
+  Besides the ROPE-based decision criteria, the proportion of the 95%
+  CI that falls in the ROPE can be used as a continuous index.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
-<span class='fu'>rope</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; # Proportion of samples inside the ROPE [-0.10, 0.10]:
+<span class='fu'>rope</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
-#&gt;  % in ROPE
-#&gt;        100</div><div class='input'><span class='fu'>rope</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; # Proportion of samples inside the ROPE [-0.10, 0.10]:
+#&gt; </span><span> inside ROPE
+#&gt;     100.00 %
+#&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
-#&gt;  % in ROPE
-#&gt;        8.1</div><div class='input'><span class='fu'>rope</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; # Proportion of samples inside the ROPE [-0.10, 0.10]:
+#&gt; </span><span> inside ROPE
+#&gt;       8.10 %
+#&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
-#&gt;  % in ROPE
-#&gt;          0</div><div class='input'><span class='fu'>rope</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; # Proportions of samples inside the ROPE [-0.10, 0.10]:
+#&gt; </span><span> inside ROPE
+#&gt;       0.00 %
+#&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportions of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
-#&gt;  CI % in ROPE
-#&gt;  90      5.77
-#&gt;  95      5.47</div><span class='co'># NOT RUN {</span>
+#&gt; </span><span style='color: #00BBBB;'>ROPE for the 90% HDI:
+#&gt; 
+#&gt; </span><span> inside ROPE
+#&gt;       5.77 %
+#&gt; 
+#&gt; 
+#&gt; </span><span style='color: #00BBBB;'>ROPE for the 95% HDI:
+#&gt; 
+#&gt; </span><span> inside ROPE
+#&gt;       5.47 %
+#&gt; 
+#&gt; </div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>rope</span>(<span class='no'>model</span>)
