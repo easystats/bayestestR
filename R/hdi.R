@@ -339,7 +339,7 @@ print_data_frame <- function(x, digits) {
 
     if ("Parameter" %in% colnames(out[[i]])) {
       # clean parameters names
-      out[[i]]$Parameter <- gsub("^(b_zi_|b_|bsp_|bcs_)(.*)", "\\2", out[[i]]$Parameter)
+      out[[i]]$Parameter <- gsub("^(b_zi_|bs_|b_|bsp_|bcs_)(.*)", "\\2", out[[i]]$Parameter)
       # remove ".1" etc. suffix
       out[[i]]$Parameter <- gsub("(.*)(\\.)(\\d)$", "\\1 \\3",  out[[i]]$Parameter)
       # remove "__zi"

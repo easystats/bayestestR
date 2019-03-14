@@ -98,7 +98,7 @@ print.equivalence_test <- function(x, digits = 2, ...) {
 
   # clean parameter names
   if ("Parameter" %in% colnames(x)) {
-    x$Parameter <- gsub("^(b_zi_|b_|bsp_|bcs_)(.*)", "\\2", x$Parameter)
+    x$Parameter <- gsub("^(b_zi_|b_|bs_|bsp_|bcs_)(.*)", "\\2", x$Parameter)
   }
 
   for (i in ci) {
