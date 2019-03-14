@@ -23,10 +23,6 @@ test_that("rope", {
 
   set.seed(333)
   testthat::expect_is(rope(rnorm_perfect(1000, 0, 1)), "rope")
-  testthat::expect_equal(
-    capture.output(print(rope(rnorm_perfect(1000, 0, 1)))),
-    c("# Proportion of samples inside the ROPE [-0.10, 0.10]:", "", " % in ROPE", "      8.88")
-  )
   testthat::expect_error(rope(rnorm_perfect(1000, 0, 1), range = c("A", 0.1)))
   testthat::expect_equal(as.numeric(rope(rnorm_perfect(1000, 0, 1), range = c(-0.1, 0.1))), 8.88, tolerance = 0.01)
 })
