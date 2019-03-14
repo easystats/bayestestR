@@ -2,16 +2,46 @@
 % Please edit documentation in R/map_estimate.R
 \name{map_estimate}
 \alias{map_estimate}
+\alias{map_estimate.numeric}
+\alias{map_estimate.stanreg}
+\alias{map_estimate.brmsfit}
 \title{Maximum A Posteriori (MAP) Estimate}
 \usage{
-map_estimate(posterior, precision = 2^10, density = FALSE)
+map_estimate(posterior, ...)
+
+\method{map_estimate}{numeric}(posterior, precision = 2^10,
+  density = FALSE, ...)
+
+\method{map_estimate}{stanreg}(posterior, precision = 2^10,
+  density = FALSE, effects = c("fixed", "random", "all"),
+  parameters = NULL, ...)
+
+\method{map_estimate}{brmsfit}(posterior, precision = 2^10,
+  density = FALSE, effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL, ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
+\item{...}{Currently not used.}
+
 \item{precision}{Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.}
 
-\item{density}{If TRUE, it will return a data.frame with the x, y coordinates of the MAP, corresponding respectively to the MAP and its density value.}
+\item{density}{If \code{TRUE}, it will return a data.frame with the x, y coordinates of the MAP, corresponding respectively to the MAP and its density value.}
+
+\item{effects}{Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.}
+
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
+
+\item{component}{Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the modelbe returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \description{
 Find the Highest Maximum A Posteriori (MAP) estimate of a posterior. It corresponds to the 'peak' of the posterior distribution.
@@ -22,6 +52,7 @@ library(bayestestR)
 posterior <- rnorm(1000)
 map_estimate(posterior)
 map_estimate(posterior, density = TRUE)
+
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -29,6 +60,6 @@ map_estimate(model)
 
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-map_estimate(model)
-}
+map_estimate(model)}
+
 }

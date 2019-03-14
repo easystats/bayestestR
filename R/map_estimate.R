@@ -31,6 +31,7 @@ map_estimate <- function(posterior, ...) {
 }
 
 
+#' @rdname map_estimate
 #' @export
 map_estimate.numeric <- function(posterior, precision = 2^10, density = FALSE, ...) {
   d <- stats::density(posterior, n = precision)
