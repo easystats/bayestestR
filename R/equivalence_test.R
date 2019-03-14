@@ -39,6 +39,7 @@
 #' equivalence_test(model, ci = c(.50, .99))
 #' }
 #'
+#' @importFrom insight print_color
 #' @export
 equivalence_test <- function(posterior, range = "default", ci = .95, verbose = TRUE) {
   UseMethod("equivalence_test")
@@ -74,7 +75,7 @@ equivalence_test.numeric <- function(posterior, range = "default", ci = .95, ver
 
 #' @export
 print.equivalence_test <- function(x, digits = 2, ...) {
-  cat(.colour("blue", "# Test for Practical Equivalence\n\n"))
+  insight::print_color("blue", "# Test for Practical Equivalence\n\n")
   cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, x$ROPE_low[1], digits, x$ROPE_high[1]))
 
   # find the longest HDI-value, so we can align the brackets in the ouput

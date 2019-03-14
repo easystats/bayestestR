@@ -44,7 +44,7 @@
 #' rope(model, ci = c(.90, .95))
 #' }
 #'
-#' @importFrom insight get_parameters is_multivariate
+#' @importFrom insight get_parameters is_multivariate print_color
 #' @export
 rope <- function(posterior, ...) {
   UseMethod("rope")
@@ -60,14 +60,14 @@ as.double.rope <- function(x, ...) {
 
 #' @export
 print.rope <- function(x, digits = 2, ...) {
-  cat(.colour("blue", sprintf(
+  insight::print_color("blue", sprintf(
     "# Proportion%s of samples inside the ROPE [%.*f, %.*f]:\n\n",
     ifelse(all(x$CI[1] == x$CI), "", "s"),
     digits,
     x$ROPE_low[1],
     digits,
     x$ROPE_high[1]
-  )))
+  ))
 
 
   # I think this is something nobody will understand and we'll probably forget
@@ -109,7 +109,7 @@ print.rope <- function(x, digits = 2, ...) {
       xsub <- x[x$CI == i, -which(colnames(x) == "CI")]
       # remove ".1" etc. suffix
       xsub$Parameter <- gsub("(.*)(\\.\\d)$", "\\1",  xsub$Parameter)
-      cat(.colour("red", sprintf("%s%% HDI:\n", i)))
+      insight::print_color("red", sprintf("%s%% HDI:\n", i))
       print.data.frame(xsub, digits = digits, row.names = FALSE)
       cat("\n")
     }
