@@ -286,7 +286,7 @@ print.hdi <- function(x, digits = 2, ...) {
       xsub <- .remove_column(xsub, c("CI", "CI_low", "CI_high"))
       colnames(xsub)[ncol(xsub)] <- sprintf("%i%% %s", i, ci_string)
       print_data_frame(xsub, digits = digits)
-      cat("\n\n")
+      cat("\n")
     }
   }
 }
@@ -294,6 +294,7 @@ print.hdi <- function(x, digits = 2, ...) {
 
 print_data_frame <- function(x, digits) {
   out <- list(x)
+  names(out) <- "fixed"
 
   if (all(c("Group", "Component") %in% colnames(x))) {
     x$split <- sprintf("%s_%s", x$Group, x$Component)
@@ -329,8 +330,11 @@ print_data_frame <- function(x, digits) {
     # remove "__zi"
     out[[i]]$Parameter <- gsub("__zi", "",  out[[i]]$Parameter)
 
-    insight::print_color("red", header)
-    cat("\n\n")
+    if (length(out) > 1) {
+      insight::print_color("red", header)
+      cat("\n\n")
+    }
+
     print.data.frame(out[[i]], row.names = FALSE, digits = digits)
     cat("\n")
   }
