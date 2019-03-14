@@ -17,8 +17,7 @@
 #'   99\%. Desirable results are low proportions inside the ROPE  (the closer
 #'   to zero the better) and the H0 should be rejected.
 #'
-#' @references Kruschke JK. Rejecting or Accepting Parameter Values in Bayesian Estimation. Advances in Methods and Practices in Psychological Science. 2018; \doi{10.1177/2515245918771304}
-#'
+#' @references Kruschke, J. K. (2018). Rejecting or Accepting Parameter Values in Bayesian Estimation. Advances in Methods and Practices in Psychological Science, 251524591877130. \doi{10.1177/2515245918771304}
 #'
 #' @examples
 #' library(bayestestR)
@@ -27,6 +26,7 @@
 #' equivalence_test(posterior = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 1), ci = c(.50, .99))
+#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -36,8 +36,7 @@
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
-#' equivalence_test(model, ci = c(.50, .99))
-#' }
+#' equivalence_test(model, ci = c(.50, .99))}
 #'
 #' @importFrom insight print_color
 #' @export
