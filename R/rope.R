@@ -50,7 +50,7 @@
 #' rope(model, ci = c(.90, .95))
 #' }
 #'
-#' @importFrom insight get_parameters
+#' @importFrom insight get_parameters is_multivariate
 #' @export
 rope <- function(posterior, ...) {
   UseMethod("rope")
@@ -114,7 +114,7 @@ print.rope <- function(x, digits = 2, ...) {
     for (i in ci) {
       xsub <- x[x$CI == i, -which(colnames(x) == "CI")]
       # remove ".1" etc. suffix
-      xsub$Parameter <- gsub("(.*)(\\.\\d)$","\\1",  xsub$Parameter)
+      xsub$Parameter <- gsub("(.*)(\\.\\d)$", "\\1",  xsub$Parameter)
       cat(.colour("red", sprintf("%s%% HDI:\n", i)))
       print.data.frame(xsub, digits = digits, row.names = FALSE)
       cat("\n")
@@ -231,6 +231,10 @@ rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fi
 rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), pars = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
+
+  if (insight::is_multivariate(posterior)) {
+    stop("Multivariate response models are not yet supported.")
+  }
 
   eff <- c("fixed", "fixed", "random", "random")
   com <- c("conditional", "zi", "conditional", "zi")
