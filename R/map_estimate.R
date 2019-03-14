@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' posterior <- rnorm(1000)
 #' map_estimate(posterior)
 #' map_estimate(posterior, density = TRUE)
@@ -16,7 +16,7 @@
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
@@ -26,10 +26,6 @@
 map_estimate <- function(posterior, precision = 2^10, density = FALSE) {
   UseMethod("map_estimate")
 }
-
-
-
-
 
 
 #' @export
@@ -48,11 +44,6 @@ map_estimate.numeric <- function(posterior, precision = 2^10, density = FALSE) {
     ))
   }
 }
-
-
-
-
-
 
 
 #' @importFrom insight get_parameters

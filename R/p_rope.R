@@ -93,7 +93,7 @@ p_rope.numeric <- function(posterior, range = "default", precision = .1) {
   }
 
   out <- data.frame(
-    "Parameter" = insight::find_parameters(posterior),
+    "Parameter" = insight::find_parameters(posterior)[["conditional"]],
     "p_ROPE" = sapply(insight::get_parameters(posterior), range = range, p_rope, precision = precision, simplify = TRUE),
     row.names = NULL
   )
