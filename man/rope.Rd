@@ -9,12 +9,13 @@
 rope(posterior, ...)
 
 \method{rope}{stanreg}(posterior, range = "default", ci = 0.9,
-  effects = c("fixed", "random", "all"), pars = NULL, verbose = TRUE,
-  ...)
+  effects = c("fixed", "random", "all"), parameters = NULL,
+  verbose = TRUE, ...)
 
 \method{rope}{brmsfit}(posterior, range = "default", ci = 0.9,
   effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), pars = NULL, verbose = TRUE, ...)
+  "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE,
+  ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
@@ -28,10 +29,10 @@ rope(posterior, ...)
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
 
-\item{pars}{Regular expression pattern that describes the parameters that
+\item{parameters}{Regular expression pattern that describes the parameters that
 should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
-\code{summary()} are returned. Use \code{pars} to select specific parameters
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
 
 \item{verbose}{Toggle off warnings.}

@@ -5,12 +5,6 @@
 #' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param range ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
 #' @param ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.
-#' @param pars Regular expression pattern that describes the parameters that
-#'   should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
-#'   filtered by default, so only parameters that typically appear in the
-#'   \code{summary()} are returned. Use \code{pars} to select specific parameters
-#'   for the output.
-#' @param verbose Toggle off warnings.
 #'
 #' @inheritParams hdi
 #'
@@ -177,7 +171,7 @@ rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE,
 
 #' @rdname rope
 #' @export
-rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), pars = NULL, verbose = TRUE, ...) {
+rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
 
   if (all(range == "default")) {
@@ -188,7 +182,7 @@ rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fi
 
   list <- lapply(c("fixed", "random"), function(x) {
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x, pars = pars),
+      insight::get_parameters(posterior, effects = x, parameters = parameters),
       rope,
       range = range,
       ci = ci,
@@ -228,7 +222,7 @@ rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fi
 
 #' @rdname rope
 #' @export
-rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), pars = NULL, verbose = TRUE, ...) {
+rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
@@ -247,7 +241,7 @@ rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fi
 
   .get_rope <- function(x, y) {
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x, component = y, pars = pars),
+      insight::get_parameters(posterior, effects = x, component = y, parameters = parameters),
       rope,
       range = range,
       ci = ci,

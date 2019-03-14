@@ -18,6 +18,11 @@
 #' @param component Should results for all parameters, parameters for the conditional model
 #'   or the zero-inflated part of the modelbe returned? May be abbreviated. Only
 #'   applies to \pkg{brms}-models.
+#' @param parameters Regular expression pattern that describes the parameters that
+#'   should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+#'   filtered by default, so only parameters that typically appear in the
+#'   \code{summary()} are returned. Use \code{parameters} to select specific parameters
+#'   for the output.
 #' @param verbose Toggle off warnings.
 #' @param ... Currently not used.
 #'
@@ -61,12 +66,12 @@ hdi.numeric <- function(posterior, ci = .90, verbose = TRUE, ...) {
 #' @importFrom insight get_parameters
 #' @rdname hdi
 #' @export
-hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), pars = NULL, verbose = TRUE, ...) {
+hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
 
   list <- lapply(c("fixed", "random"), function(x) {
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x, pars = pars),
+      insight::get_parameters(posterior, effects = x, parameters = parameters),
       hdi,
       ci = ci,
       verbose = verbose,
@@ -102,7 +107,7 @@ hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 
 #' @rdname hdi
 #' @export
-hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), pars = NULL, verbose = TRUE, ...) {
+hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
@@ -111,7 +116,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 
   .get_hdi <- function(x, y) {
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x, component = y, pars = pars),
+      insight::get_parameters(posterior, effects = x, component = y, parameters = parameters),
       hdi,
       ci = ci,
       verbose = verbose,

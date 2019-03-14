@@ -108,7 +108,7 @@ print.equivalence_test <- function(x, digits = 2, ...) {
 
 #' @importFrom stats sd
 #' @keywords internal
-.equivalence_test_models <- function(posterior, range = "default", ci = .95, pars = NULL, verbose = TRUE) {
+.equivalence_test_models <- function(posterior, range = "default", ci = .95, parameters = NULL, verbose = TRUE) {
   if (all(range == "default")) {
     range <- rope_range(posterior)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
@@ -116,7 +116,7 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   }
 
   l <- sapply(
-    insight::get_parameters(posterior, component = "conditional", pars = pars),
+    insight::get_parameters(posterior, component = "conditional", parameters = parameters),
     equivalence_test,
     range = range,
     ci = ci,
@@ -136,15 +136,15 @@ print.equivalence_test <- function(x, digits = 2, ...) {
 }
 
 #' @export
-equivalence_test.stanreg <- function(posterior, range = "default", ci = .95, pars = NULL, verbose = TRUE) {
-  et <- .equivalence_test_models(posterior, range, ci, pars, verbose)
+equivalence_test.stanreg <- function(posterior, range = "default", ci = .95, parameters = NULL, verbose = TRUE) {
+  et <- .equivalence_test_models(posterior, range, ci, parameters, verbose)
   attr(et, "model") <- deparse(substitute(posterior), width.cutoff = 500)
   et
 }
 
 #' @export
-equivalence_test.brmsfit <- function(posterior, range = "default", ci = .95, pars = NULL, verbose = TRUE) {
-  et <- .equivalence_test_models(posterior, range, ci, pars, verbose)
+equivalence_test.brmsfit <- function(posterior, range = "default", ci = .95, parameters = NULL, verbose = TRUE) {
+  et <- .equivalence_test_models(posterior, range, ci, parameters, verbose)
   attr(et, "model") <- deparse(substitute(posterior), width.cutoff = 500)
   et
 }
