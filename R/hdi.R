@@ -276,22 +276,62 @@ print.hdi <- function(x, digits = 2, ...) {
 
   x$HDI <- sprintf("[%*s %*s]", maxlen_low, x$CI_low, maxlen_high, x$CI_high)
 
-  # clean parameters names
-  x$Parameter <- gsub("^(zi_|b_|bsp_|bcs_)(.*)", "\\2", x$Parameter)
-
   if (length(ci) == 1) {
     xsub <- .remove_column(x, c("CI", "CI_low", "CI_high"))
     colnames(xsub)[ncol(xsub)] <- sprintf("%i%% %s", ci, ci_string)
-    print.data.frame(xsub, row.names = FALSE, digits = digits)
+    print_data_frame(xsub, digits = digits)
   } else {
     for (i in ci) {
       xsub <- x[x$CI == i, -which(colnames(x) == "CI")]
       xsub <- .remove_column(xsub, c("CI", "CI_low", "CI_high"))
-      # remove ".1" etc. suffix
-      xsub$Parameter <- gsub("(.*)(\\.\\d)$", "\\1",  xsub$Parameter)
       colnames(xsub)[ncol(xsub)] <- sprintf("%i%% %s", i, ci_string)
-      print.data.frame(xsub, digits = digits, row.names = FALSE)
-      cat("\n")
+      print_data_frame(xsub, digits = digits)
+      cat("\n\n")
     }
+  }
+}
+
+
+print_data_frame <- function(x, digits) {
+  out <- list(x)
+
+  if (all(c("Group", "Component") %in% colnames(x))) {
+    x$split <- sprintf("%s_%s", x$Group, x$Component)
+  } else if ("Group" %in% colnames(x)) {
+    colnames(x)[which(colnames(x) == "Group")] <- "split"
+  } else if ("Component" %in% colnames(x)) {
+    colnames(x)[which(colnames(x) == "Component")] <- "split"
+  }
+
+  if ("split" %in% colnames(x)) {
+    out <- lapply(split(x, f = x$split), function(i) {
+      .remove_column(i, c("split", "Component", "Group"))
+    })
+  }
+
+  for (i in names(out)) {
+    header <- switch(
+      i,
+      "conditional" = ,
+      "fixed_conditional" = ,
+      "fixed" = "# fixed effects, conditional component",
+      "zi" = ,
+      "fixed_zi" = "# fixed effects, zero-inflation component",
+      "random" = ,
+      "random_conditional" = "# random effects, conditional component",
+      "random_zi" = "# random effects, zero-inflation component"
+    )
+
+    # clean parameters names
+    out[[i]]$Parameter <- gsub("^(b_zi_|b_|bsp_|bcs_)(.*)", "\\2", out[[i]]$Parameter)
+    # remove ".1" etc. suffix
+    out[[i]]$Parameter <- gsub("(.*)(\\.)(\\d)$", "\\1 \\3",  out[[i]]$Parameter)
+    # remove "__zi"
+    out[[i]]$Parameter <- gsub("__zi", "",  out[[i]]$Parameter)
+
+    insight::print_color("red", header)
+    cat("\n\n")
+    print.data.frame(out[[i]], row.names = FALSE, digits = digits)
+    cat("\n")
   }
 }
