@@ -52,11 +52,9 @@ hdi <- function(posterior, ...) {
 
 #' @export
 hdi.numeric <- function(posterior, ci = .90, verbose = TRUE, ...) {
-  hdi_values <- lapply(ci, function(i) {
+  do.call(rbind, lapply(ci, function(i) {
     .hdi(posterior, ci = i, verbose = verbose)
-  })
-
-  flatten_list(hdi_values)
+  }))
 }
 
 
@@ -277,6 +275,8 @@ print.hdi <- function(x, digits = 2, ...) {
     for (i in ci) {
       xsub <- x[x$CI == i, -which(colnames(x) == "CI")]
       xsub <- .remove_column(xsub, c("CI", "CI_low", "CI_high"))
+      # remove ".1" etc. suffix
+      xsub <- gsub("(.*)(\\.\\d)$","\\1",  xsub$Parameter)
       colnames(xsub)[ncol(xsub)] <- sprintf("%i%% HDI", i)
       print.data.frame(xsub, digits = digits, row.names = FALSE)
       cat("\n")
