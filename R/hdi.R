@@ -254,8 +254,14 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 
 #' @export
 print.hdi <- function(x, digits = 2, ...) {
+  .print_hdi(x, digits, title = "Highest Density Interval", ci_string = "HDI", ...)
+}
+
+
+.print_hdi <- function(x, digits, title, ci_string, ...) {
   insight::print_color("blue", sprintf(
-    "# Highest Density Interval%s\n\n",
+    "# %s%s\n\n",
+    title,
     ifelse(all(x$CI[1] == x$CI), "", "s")
   ))
 
@@ -275,7 +281,7 @@ print.hdi <- function(x, digits = 2, ...) {
 
   if (length(ci) == 1) {
     xsub <- .remove_column(x, c("CI", "CI_low", "CI_high"))
-    colnames(xsub)[ncol(xsub)] <- sprintf("%i%% HDI", ci)
+    colnames(xsub)[ncol(xsub)] <- sprintf("%i%% %s", ci, ci_string)
     print.data.frame(xsub, row.names = FALSE, digits = digits)
   } else {
     for (i in ci) {
@@ -283,7 +289,7 @@ print.hdi <- function(x, digits = 2, ...) {
       xsub <- .remove_column(xsub, c("CI", "CI_low", "CI_high"))
       # remove ".1" etc. suffix
       xsub$Parameter <- gsub("(.*)(\\.\\d)$", "\\1",  xsub$Parameter)
-      colnames(xsub)[ncol(xsub)] <- sprintf("%i%% HDI", i)
+      colnames(xsub)[ncol(xsub)] <- sprintf("%i%% %s", i, ci_string)
       print.data.frame(xsub, digits = digits, row.names = FALSE)
       cat("\n")
     }
