@@ -95,6 +95,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/bayestestR.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -153,7 +156,19 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>p_direction</span>(<span class='no'>posterior</span>)</pre>
+    <pre class="usage"><span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for stanreg</span>
+<span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>,
+  <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for brmsfit</span>
+<span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>,
+  <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,6 +176,29 @@
     <tr>
       <th>posterior</th>
       <td><p>Vector representing a posterior distribution. Can also be a <code>stanreg</code> or <code>brmsfit</code> model.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Currently not used.</p></td>
+    </tr>
+    <tr>
+      <th>effects</th>
+      <td><p>Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>parameters</th>
+      <td><p>Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+filtered by default, so only parameters that typically appear in the
+<code><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
+for the output.</p></td>
+    </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the modelbe returned? May be abbreviated. Only
+applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
     
