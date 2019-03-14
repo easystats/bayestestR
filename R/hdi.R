@@ -295,7 +295,7 @@ print.hdi <- function(x, digits = 2, ...) {
     print_data_frame(xsub, digits = digits)
   } else {
     for (i in ci) {
-      xsub <- x[x$CI == i, -which(colnames(x) == "CI")]
+      xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
       xsub <- .remove_column(xsub, c("CI", "CI_low", "CI_high"))
       colnames(xsub)[ncol(xsub)] <- sprintf("%i%% %s", i, ci_string)
       print_data_frame(xsub, digits = digits)
@@ -336,12 +336,14 @@ print_data_frame <- function(x, digits) {
       "random_zi" = "# random effects, zero-inflation component"
     )
 
-    # clean parameters names
-    out[[i]]$Parameter <- gsub("^(b_zi_|b_|bsp_|bcs_)(.*)", "\\2", out[[i]]$Parameter)
-    # remove ".1" etc. suffix
-    out[[i]]$Parameter <- gsub("(.*)(\\.)(\\d)$", "\\1 \\3",  out[[i]]$Parameter)
-    # remove "__zi"
-    out[[i]]$Parameter <- gsub("__zi", "",  out[[i]]$Parameter)
+    if ("Parameter" %in% colnames(out[[i]])) {
+      # clean parameters names
+      out[[i]]$Parameter <- gsub("^(b_zi_|b_|bsp_|bcs_)(.*)", "\\2", out[[i]]$Parameter)
+      # remove ".1" etc. suffix
+      out[[i]]$Parameter <- gsub("(.*)(\\.)(\\d)$", "\\1 \\3",  out[[i]]$Parameter)
+      # remove "__zi"
+      out[[i]]$Parameter <- gsub("__zi", "",  out[[i]]$Parameter)
+    }
 
     if (length(out) > 1) {
       insight::print_color("red", header)
