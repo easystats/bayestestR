@@ -76,8 +76,15 @@ print.equivalence_test <- function(x, ...) {
   cat(.colour("blue", "# Test for Practical Equivalence\n\n"))
   cat(sprintf("  ROPE: [%.2f %.2f]\n\n", x$ROPE_low[1], x$ROPE_high[1]))
 
+  # find the longest HDI-value, so we can align the brackets in the ouput
+  x$HDI_low <- sprintf("%.2f", x$HDI_low)
+  x$HDI_high <- sprintf("%.2f", x$HDI_high)
+
+  maxlen_low <- max(nchar(x$HDI_low))
+  maxlen_high <- max(nchar(x$HDI_high))
+
   x$ROPE_Percentage <- sprintf("%.2f%%", x$ROPE_Percentage)
-  x$HDI <- sprintf("[%.2f %.2f]", x$HDI_low, x$HDI_high)
+  x$HDI <- sprintf("[%*s %*s]", maxlen_low, x$HDI_low, maxlen_high, x$HDI_high)
 
   ci <- unique(x$CI)
   keep.columns <- c("CI", "Parameter", "ROPE_Equivalence", "ROPE_Percentage", "HDI")
