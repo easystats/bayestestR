@@ -97,6 +97,7 @@ print.equivalence_test <- function(x, ...) {
   for (i in ci) {
     xsub <- x[x$CI == i, -which(colnames(x) == "CI")]
     colnames(xsub)[ncol(xsub)] <- sprintf("%i%% HDI", i)
+    xsub$Parameter <- gsub("^(b_|bsp_|bcs_)(.*)", "\\2", xsub$Parameter)
     print.data.frame(xsub, digits = 3, row.names = FALSE)
     cat("\n")
   }
