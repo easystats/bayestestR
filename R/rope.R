@@ -5,6 +5,11 @@
 #' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param range ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
 #' @param ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.
+#' @param pars Regular expression pattern that describes the parameters that
+#'   should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+#'   filtered by default, so only parameters that typically appear in the
+#'   \code{summary()} are returned. Use \code{pars} to select specific parameters
+#'   for the output.
 #' @param verbose Toggle off warnings.
 #'
 #' @inheritParams hdi
@@ -45,8 +50,7 @@
 #' rope(model, ci = c(.90, .95))
 #' }
 #'
-#' @importFrom insight get_response get_parameters model_info is_multivariate
-#' @importFrom stats sd qlogis
+#' @importFrom insight get_parameters
 #' @export
 rope <- function(posterior, ...) {
   UseMethod("rope")
@@ -62,12 +66,13 @@ as.double.rope <- function(x, ...) {
 
 #' @export
 print.rope <- function(x, ...) {
-  cat(sprintf(
+  cat(.colour("blue", sprintf(
     "# Proportion%s of samples inside the ROPE [%.2f, %.2f]:\n\n",
     ifelse(all(x$CI[1] == x$CI), "", "s"),
     x$ROPE_low[1],
     x$ROPE_high[1]
-  ))
+  )))
+
 
   # I think this is something nobody will understand and we'll probably forget
   # why we did this, so I'll comment a bit...
@@ -81,6 +86,10 @@ print.rope <- function(x, ...) {
   if (!all(x$CI[1] == x$CI))
     cols <- c("CI", cols)
 
+  # Either way, we need to know the different CI-values, so we can
+  # split the data frame for printing later...
+  ci <- unique(x$CI)
+
   # now we check which of the requested columns are actually in our data frame "x"
   # "x" may differ, depending on if "rope()" was called with a model-object,
   # or with a simple vector. So we can't hard-code this
@@ -89,8 +98,21 @@ print.rope <- function(x, ...) {
   # This is just cosmetics, to have nicer column names
   colnames(x)[ncol(x)] <- "% in ROPE"
 
-  # finally, print everything
-  print.data.frame(x, row.names = F, digits = 3)
+  # In case we have multiple CI values, we create a subset for each CI value.
+  # Else, parameter-rows would be mixed up with both CIs, which is a bit
+  # more difficult to read...
+
+  if (length(ci) == 1) {
+    # print complete data frame, because we have no different CI values here
+    print.data.frame(x, row.names = F, digits = 3)
+  } else {
+    for (i in ci) {
+      xsub <- x[x$CI == i, -which(colnames(x) == "CI")]
+      cat(.colour("red", sprintf("%s%% HDI:\n", i)))
+      print.data.frame(xsub, digits = 3, row.names = FALSE)
+      cat("\n")
+    }
+  }
 }
 
 
@@ -150,7 +172,7 @@ rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE,
 
 #' @rdname rope
 #' @export
-rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), verbose = TRUE, ...) {
+rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), pars = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
 
   if (all(range == "default")) {
@@ -161,7 +183,7 @@ rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fi
 
   list <- lapply(c("fixed", "random"), function(x) {
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x),
+      insight::get_parameters(posterior, effects = x, pars = pars),
       rope,
       range = range,
       ci = ci,
@@ -201,7 +223,7 @@ rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fi
 
 #' @rdname rope
 #' @export
-rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), verbose = TRUE, ...) {
+rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), pars = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
@@ -216,7 +238,7 @@ rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fi
 
   .get_rope <- function(x, y) {
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x, component = y),
+      insight::get_parameters(posterior, effects = x, component = y, pars = pars),
       rope,
       range = range,
       ci = ci,
@@ -264,46 +286,4 @@ rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fi
 
   attr(dat, "HDI_area") <- do.call(rbind, lapply(list, attr, "HDI_area"))
   dat
-}
-
-
-#' Find Default Equivalence (ROPE) Region Bounds
-#'
-#' Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988).
-#' @param model A Bayesian model.
-#' @examples
-#' \dontrun{
-#' library(rstanarm)
-#' model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family="binomial")
-#' rope_range(model)
-#'
-#' library(brms)
-#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' rope_range(model)
-#' }
-#'
-#' @export
-rope_range <- function(model){
-  response <- insight::get_response(model)
-  information <- insight::model_info(model)
-
-  if (insight::is_multivariate(model)) {
-    mapply(function(x, y) .rope_range(x, y), information, response)
-  } else {
-    .rope_range(information, response)
-  }
-}
-
-.rope_range <- function(information, response) {
-  if (information$is_linear) {
-    effect_size_d <- 0.1 * stats::sd(response)
-  } else if (information$is_binomial) {
-    numeric_response <- as.numeric(as.factor(response))
-    prob_resp <- mean(numeric_response - min(numeric_response))
-    eff_size <- prob_resp / pi
-    effect_size_d <- (stats::qlogis(prob_resp + eff_size) - stats::qlogis(prob_resp - eff_size)) / 4
-  } else {
-    effect_size_d <- 0.1
-  }
-  c(-1, 1) * effect_size_d
 }

@@ -73,7 +73,7 @@ equivalence_test.numeric <- function(posterior, range = "default", ci = .95, ver
 
 #' @export
 print.equivalence_test <- function(x, ...) {
-  cat("# Test for Practical Equivalence\n\n")
+  cat(.colour("blue", "# Test for Practical Equivalence\n\n"))
   cat(sprintf("  ROPE: [%.2f %.2f]\n\n", x$ROPE_low[1], x$ROPE_high[1]))
 
   x$ROPE_Percentage <- sprintf("%.2f%%", x$ROPE_Percentage)
@@ -98,29 +98,31 @@ print.equivalence_test <- function(x, ...) {
 
 #' @importFrom stats sd
 #' @keywords internal
-.equivalence_test_models <- function(posterior, range = "default", ci = .95, verbose = TRUE) {
+.equivalence_test_models <- function(posterior, range = "default", ci = .95, pars = NULL, verbose = TRUE) {
   if (all(range == "default")) {
     range <- rope_range(posterior)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  l <- sapply(get_parameters(posterior), equivalence_test, range = range, ci = ci, verbose = verbose, simplify = FALSE)
-  out <- flatten_list(l, name = "Parameter")
+  l <- sapply(insight::get_parameters(posterior, pars = pars), equivalence_test, range = range, ci = ci, verbose = verbose, simplify = FALSE)
 
-  .clean_parameters(out)
+  # out <- flatten_list(l, name = "Parameter")
+  # .clean_parameters(out)
+
+  flatten_list(l, name = "Parameter")
 }
 
 #' @export
-equivalence_test.stanreg <- function(posterior, range = "default", ci = .95, verbose = TRUE) {
-  et <- .equivalence_test_models(posterior, range, ci, verbose)
+equivalence_test.stanreg <- function(posterior, range = "default", ci = .95, pars = NULL, verbose = TRUE) {
+  et <- .equivalence_test_models(posterior, range, ci, pars, verbose)
   attr(et, "model") <- deparse(substitute(posterior), width.cutoff = 500)
   et
 }
 
 #' @export
-equivalence_test.brmsfit <- function(posterior, range = "default", ci = .95, verbose = TRUE) {
-  et <- .equivalence_test_models(posterior, range, ci, verbose)
+equivalence_test.brmsfit <- function(posterior, range = "default", ci = .95, pars = NULL, verbose = TRUE) {
+  et <- .equivalence_test_models(posterior, range, ci, pars, verbose)
   attr(et, "model") <- deparse(substitute(posterior), width.cutoff = 500)
   et
 }

@@ -9,11 +9,11 @@
 hdi(posterior, ...)
 
 \method{hdi}{stanreg}(posterior, ci = 0.9, effects = c("fixed",
-  "random", "all"), verbose = TRUE, ...)
+  "random", "all"), pars = NULL, verbose = TRUE, ...)
 
 \method{hdi}{brmsfit}(posterior, ci = 0.9, effects = c("fixed",
   "random", "all"), component = c("conditional", "zi", "zero_inflated",
-  "all"), verbose = TRUE, ...)
+  "all"), pars = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}

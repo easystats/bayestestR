@@ -6,7 +6,7 @@
   tmp <- tmp[, c("Parameter", cols)]
   # clean random effects notation from parameters
   tmp$Parameter <- gsub("b\\[(.*) (.*)\\]", "\\2", tmp$Parameter)
-  .clean_parameters(tmp)
+  tmp
 }
 
 
@@ -19,7 +19,7 @@
   tmp <- tmp[, c("Parameter", cols)]
   # clean random effects notation from parameters
   tmp$Parameter <- gsub("r_(.*)\\.(.*)\\.", "\\1", tmp$Parameter)
-  .clean_parameters(tmp)
+  tmp
 }
 
 

@@ -63,12 +63,12 @@ hdi.numeric <- function(posterior, ci = .90, verbose = TRUE, ...) {
 #' @importFrom insight get_parameters
 #' @rdname hdi
 #' @export
-hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), verbose = TRUE, ...) {
+hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), pars = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
 
   list <- lapply(c("fixed", "random"), function(x) {
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x),
+      insight::get_parameters(posterior, effects = x, pars = pars),
       hdi,
       ci = ci,
       verbose = verbose,
@@ -103,7 +103,7 @@ hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 
 #' @rdname hdi
 #' @export
-hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), verbose = TRUE, ...) {
+hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), pars = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
@@ -112,7 +112,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 
   .get_hdi <- function(x, y) {
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x, component = y),
+      insight::get_parameters(posterior, effects = x, component = y, pars = pars),
       hdi,
       ci = ci,
       verbose = verbose,
