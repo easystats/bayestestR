@@ -114,7 +114,7 @@ print.rope <- function(x, digits = 2, ...) {
     for (i in ci) {
       xsub <- x[x$CI == i, -which(colnames(x) == "CI")]
       # remove ".1" etc. suffix
-      xsub <- gsub("(.*)(\\.\\d)$","\\1",  xsub$Parameter)
+      xsub$Parameter <- gsub("(.*)(\\.\\d)$","\\1",  xsub$Parameter)
       cat(.colour("red", sprintf("%s%% HDI:\n", i)))
       print.data.frame(xsub, digits = digits, row.names = FALSE)
       cat("\n")
