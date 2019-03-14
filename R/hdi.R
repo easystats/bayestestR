@@ -70,8 +70,9 @@ hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all
   effects <- match.arg(effects)
 
   list <- lapply(c("fixed", "random"), function(x) {
+    parms <- insight::get_parameters(posterior, effects = x, parameters = parameters)
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x, parameters = parameters),
+      parms,
       hdi,
       ci = ci,
       verbose = verbose,
@@ -79,7 +80,12 @@ hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     )
 
     if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_stanreg(tmp, x, cols = c("CI", "CI_low", "CI_high", "Group"))
+      tmp <- .clean_up_tmp_stanreg(
+        tmp,
+        x,
+        cols = c("CI", "CI_low", "CI_high", "Group"),
+        parms = names(parms)
+      )
     } else {
       tmp <- NULL
     }
@@ -115,8 +121,9 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
   com <- c("conditional", "zi", "conditional", "zi")
 
   .get_hdi <- function(x, y) {
+    parms <- insight::get_parameters(posterior, effects = x, component = y, parameters = parameters)
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x, component = y, parameters = parameters),
+      parms,
       hdi,
       ci = ci,
       verbose = verbose,
@@ -124,7 +131,13 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     )
 
     if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_brms(tmp, x, y, cols = c("CI", "CI_low", "CI_high", "Component", "Group"))
+      tmp <- .clean_up_tmp_brms(
+        tmp,
+        x,
+        y,
+        cols = c("CI", "CI_low", "CI_high", "Component", "Group"),
+        parms = names(parms)
+      )
     } else {
       tmp <- NULL
     }

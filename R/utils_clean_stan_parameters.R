@@ -1,7 +1,7 @@
 #' @keywords internal
-.clean_up_tmp_stanreg <- function(tmp, x, cols) {
+.clean_up_tmp_stanreg <- function(tmp, x, cols, parms) {
   tmp$Group <- x
-  tmp$Parameter <- rownames(tmp)
+  tmp$Parameter <- rep(parms, each = nrow(tmp) / length(parms))
   rownames(tmp) <- NULL
   tmp <- tmp[, c("Parameter", cols)]
   # clean random effects notation from parameters
@@ -11,10 +11,10 @@
 
 
 #' @keywords internal
-.clean_up_tmp_brms <- function(tmp, x, y, cols) {
+.clean_up_tmp_brms <- function(tmp, x, y, cols, parms) {
   tmp$Group <- x
   tmp$Component <- y
-  tmp$Parameter <- rownames(tmp)
+  tmp$Parameter <- rep(parms, each = nrow(tmp) / length(parms))
   rownames(tmp) <- NULL
   tmp <- tmp[, c("Parameter", cols)]
   # clean random effects notation from parameters

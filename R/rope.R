@@ -74,7 +74,7 @@ print.rope <- function(x, digits = 2, ...) {
   # why we did this, so I'll comment a bit...
 
   # These are the base columns we want to print
-  cols <- c("Parameter", "ROPE_Percentage")
+  cols <- c("Parameter", "ROPE_Percentage", "Component", "Group")
 
   # In case we have ropes for different CIs, we also want this information
   # So we first check if values in the CI column differ, and if so, we also
@@ -91,11 +91,9 @@ print.rope <- function(x, digits = 2, ...) {
   # or with a simple vector. So we can't hard-code this
   x <- subset(x, select = intersect(cols, colnames(x)))
 
-  # clean parameters names
-  x$Parameter <- gsub("^(b_zi_|b_|bsp_|bcs_)(.*)", "\\2", x$Parameter)
-
-  # This is just cosmetics, to have nicer column names
-  colnames(x)[ncol(x)] <- "% in ROPE"
+  # This is just cosmetics, to have nicer column names and values
+  x$ROPE_Percentage <- sprintf("%.*f %%", digits, x$ROPE_Percentage)
+  colnames(x)[which(colnames(x) == "ROPE_Percentage")] <- "inside ROPE"
 
   # In case we have multiple CI values, we create a subset for each CI value.
   # Else, parameter-rows would be mixed up with both CIs, which is a bit
@@ -103,14 +101,12 @@ print.rope <- function(x, digits = 2, ...) {
 
   if (length(ci) == 1) {
     # print complete data frame, because we have no different CI values here
-    print.data.frame(x, row.names = F, digits = digits)
+    print_data_frame(x, digits = digits)
   } else {
     for (i in ci) {
       xsub <- x[x$CI == i, -which(colnames(x) == "CI")]
-      # remove ".1" etc. suffix
-      xsub$Parameter <- gsub("(.*)(\\.\\d)$", "\\1",  xsub$Parameter)
-      insight::print_color("red", sprintf("%s%% HDI:\n", i))
-      print.data.frame(xsub, digits = digits, row.names = FALSE)
+      insight::print_color("cyan", sprintf("ROPE for the %s%% HDI:\n\n", i))
+      print_data_frame(xsub, digits = digits)
       cat("\n")
     }
   }
@@ -181,8 +177,9 @@ rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fi
   }
 
   list <- lapply(c("fixed", "random"), function(x) {
+    parms <- insight::get_parameters(posterior, effects = x, parameters = parameters)
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x, parameters = parameters),
+      parms,
       rope,
       range = range,
       ci = ci,
@@ -193,7 +190,12 @@ rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fi
     HDI_area <- attr(tmp, "HDI_area")
 
     if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_stanreg(tmp, x, cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Group"))
+      tmp <- .clean_up_tmp_stanreg(
+        tmp,
+        x,
+        cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Group"),
+        parms = names(parms)
+      )
     } else {
       tmp <- NULL
     }
@@ -240,8 +242,9 @@ rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fi
   }
 
   .get_rope <- function(x, y) {
+    parms <- insight::get_parameters(posterior, effects = x, component = y, parameters = parameters)
     tmp <- do.call(rbind, sapply(
-      insight::get_parameters(posterior, effects = x, component = y, parameters = parameters),
+      parms,
       rope,
       range = range,
       ci = ci,
@@ -252,7 +255,13 @@ rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fi
     HDI_area <- attr(tmp, "HDI_area")
 
     if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_brms(tmp, x, y, cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Component", "Group"))
+      tmp <- .clean_up_tmp_brms(
+        tmp,
+        x,
+        y,
+        cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Component", "Group"),
+        parms = names(parms)
+      )
     } else {
       tmp <- NULL
     }
