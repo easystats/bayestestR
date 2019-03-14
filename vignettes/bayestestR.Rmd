@@ -19,8 +19,6 @@ bibliography: bibliography.bib
 
 
 
-# The Bayesian Framework
-
 ## Why use the Bayesian Framework?
 
 Reasons to prefer this approach are **reliability**, better **accuracy** (in noisy data and small samples), the possibility of introducing **prior knowledge** into the analysis and, critically, **results intuitiveness** and their **straightforward interpretation** [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. 
@@ -32,23 +30,38 @@ Once we agreed that the Bayesian framework is the right way to go, you might won
 ## What is the Bayesian Framework?
 
 
-
 One of the core difference is that in the **frequentist view** (the "classic" statistics, with *p* and *t* values, as well as some weird *degrees of freedom*), **the effects are fixed** (but unknown) and **data are random**. On the contrary the Bayesian inference process computes the **probability** of different effect values *given the observed data*. Instead of having one estimated value of the "true effect", this probabilistic approach gives a distribution of values, called the **"posterior" distribution**. 
 
-Bayesian’s uncertainty can be summarized, for instance, by giving the **median** of the distribution, as well as a range of values on the posterior distribution that includes the 95% most probable values (the 95% ***Credible* Interval**). To illustrate the difference of interpretation, the Bayesian framework allows to say *"given the observed data, the effect has 95% probability of falling within this range"*, while the Frequentist less straightforward alternative (the 95% ***Confidence* Interval**) would be "*there is a 95% probability that when computing a confidence interval from data of this sort, the effect falls within this range*". 
+Bayesian’s uncertainty can be summarized, for instance, by giving the **median** of the distribution, as well as a range of values on the posterior distribution that includes the 95% most probable values (the 95\% ***Credible* Interval**). To illustrate the difference of interpretation, the Bayesian framework allows to say *"given the observed data, the effect has 95% probability of falling within this range"*, while the Frequentist less straightforward alternative (the 95\% ***Confidence* Interval**) would be "*there is a 95\% probability that when computing a confidence interval from data of this sort, the effect falls within this range*". 
 
 
 In other words, omitting the maths behind it, we can say that:
 
-- The frequentist bloke tries to estimate "the real effect". For instance, the "real" value of the correlation between *x* and *y*. Frequentist models return a "**point-estimate**" (*i.e.*, a single value) of the "real" correlation (*e.g.*, r = 0.42) estimated by the model under a number of obscure assumptions (at a minimum, considering that the data is sampled at random from a "parent", usually normal distribution of data).
+- The frequentist bloke tries to estimate "the real effect". For instance, the "real" value of the correlation between *x* and *y*. Hence, frequentist models return a "**point-estimate**" (*i.e.*, a single value) of the "real" correlation (*e.g.*, r = 0.42) estimated under a number of obscure assumptions (at a minimum, considering that the data is sampled at random from a "parent", usually normal distribution of data).
 - **The Bayesian master assumes no such thing**. The data are what they are. Based on this observed data (and a **prior** belief about the result), the Bayesian sampling algorithm returns a probability distribution (called **the posterior**) of the effect that is compatible with the observed data. For the correlation between *x* and *y*, it will return a distribution that says, for example, "the most probable effect is 0.42, but this data is also compatible with correlations of 0.12 or 0.74".
-- To characterize our effects, **no need of *p* values** or other cryptic indices. We simply describe the posterior distribution of the effect. For example, we can report the median, the 90% *Credible* Interval (CI; see *below*) and such.
+- To characterize our effects, **no need of *p* values** or other cryptic indices. We simply describe the posterior distribution of the effect. For example, we can report the median, the 90% *Credible* Interval or [other indices](https://easystats.github.io/bayestestR/articles/4_Guidelines.html).
+
+
+<!-- ```{r echo=FALSE, fig.cap="Accurate depiction of a Bayesian user estimating a credible interval."} -->
+<!-- knitr::include_graphics("https://cdn.shopify.com/s/files/1/0940/1604/files/IMG_8910_grande.JPG") -->
+<!-- ``` -->
+<!-- ![](https://cdn.shopify.com/s/files/1/0940/1604/files/IMG_8910_grande.JPG) -->
+
+
+*Note: Altough the very reason of this package is to advocate for the use of Bayesian statistics, please note that there are arguments supporting frequentist indices (see for instance [this thread](https://discourse.datamethods.org/t/language-for-communicating-frequentist-results-about-treatment-effects/934/16). As always, the world is not black and white (*p* \< .001).*
+
+**So... how does it work?**
+
+## A very simple regression example
+
+### BayestestR Installation
 
 
 
 
-# A very simple regression example
 
 
+
+## References
 
 
