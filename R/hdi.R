@@ -270,6 +270,7 @@ print.hdi <- function(x, digits = 2, ...) {
 
   if (length(ci) == 1) {
     xsub <- .remove_column(x, c("CI", "CI_low", "CI_high"))
+    colnames(xsub)[ncol(xsub)] <- sprintf("%i%% HDI", ci)
     print.data.frame(xsub, row.names = FALSE, digits = digits)
   } else {
     for (i in ci) {

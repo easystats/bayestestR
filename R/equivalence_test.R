@@ -115,12 +115,24 @@ print.equivalence_test <- function(x, digits = 2, ...) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  l <- sapply(insight::get_parameters(posterior, pars = pars), equivalence_test, range = range, ci = ci, verbose = verbose, simplify = FALSE)
+  l <- sapply(
+    insight::get_parameters(posterior, pars = pars),
+    equivalence_test,
+    range = range,
+    ci = ci,
+    verbose = verbose,
+    simplify = FALSE
+  )
 
-  # out <- flatten_list(l, name = "Parameter")
-  # .clean_parameters(out)
+  dat <- do.call(rbind, l)
+  out <- data.frame(
+    Parameter = rep(names(l), each = nrow(dat) / length(l)),
+    dat,
+    stringsAsFactors = FALSE
+  )
 
-  flatten_list(l, name = "Parameter")
+  class(out) <- c("equivalence_test", class(out))
+  out
 }
 
 #' @export
