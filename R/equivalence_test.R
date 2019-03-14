@@ -55,8 +55,9 @@ equivalence_test.numeric <- function(posterior, range = "default", ci = .95, ver
       ifelse(out$ROPE_Percentage == 100, "accepted", "undecided")
     )
   } else {
-    out$ROPE_Equivalence <- ifelse(out$ROPE_Percentage < 1, "rejected",
-      ifelse(out$ROPE_Percentage > 99, "accepted", "undecided")
+    # Related to guidelines for full rope (https://easystats.github.io/bayestestR/articles/4_Guidelines.html)
+    out$ROPE_Equivalence <- ifelse(out$ROPE_Percentage < 2.5, "rejected",
+                                   ifelse(out$ROPE_Percentage > 97.5, "accepted", "undecided")
     )
   }
 
