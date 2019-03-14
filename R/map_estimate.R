@@ -67,6 +67,8 @@ map_estimate.numeric <- function(posterior, precision = 2^10, density = FALSE, .
 #' @rdname map_estimate
 #' @export
 map_estimate.stanreg <- function(posterior, precision = 2^10, density = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  effects <- match.arg(effects)
+
   .map_estimate_models(
     posterior = insight::get_parameters(posterior, effects = effects, parameters = parameters),
     precision = precision,
@@ -77,6 +79,9 @@ map_estimate.stanreg <- function(posterior, precision = 2^10, density = FALSE, e
 #' @rdname map_estimate
 #' @export
 map_estimate.brmsfit <- function(posterior, precision = 2^10, density = FALSE, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+  effects <- match.arg(effects)
+  component <- match.arg(component)
+
   .map_estimate_models(
     posterior = insight::get_parameters(posterior, effects = effects, parameters = parameters),
     precision = precision,

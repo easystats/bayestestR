@@ -2,14 +2,17 @@
 #'
 #' Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing paradigm. It is mathematically based on the density at the Maximum A Priori (MAP). It corresponds to the density value at 0 divided by the density of the highest density point.
 #'
-#' @param posterior Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.
-#' @param precision Number of points for density estimation. See the `n` parameter in \link[=density]{density}.
+#' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
+#' @param precision Number of points for density estimation. See the \code{n}-parameter in \link[=density]{density}.
+#'
+#' @inheritParams hdi
 #'
 #' @examples
 #' library(bayestestR)
 #'
 #' p_map(posterior = rnorm(1000, 0, 1))
 #' p_map(posterior = rnorm(1000, 10, 1))
+#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -17,13 +20,13 @@
 #'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' p_map(model)
-#' }
+#' p_map(model)}
+#'
 #' @references \href{https://www.youtube.com/watch?v=Ip8Ci5KUVRc}{Mill's talk}
 #'
 #' @importFrom stats density
 #' @export
-p_map <- function(posterior, precision = 2^10) {
+p_map <- function(posterior, ...) {
   UseMethod("p_map")
 }
 
@@ -34,9 +37,9 @@ print.p_map <- function(x, ...) {
 }
 
 
-
+#' @rdname p_map
 #' @export
-p_map.numeric <- function(posterior, precision = 2^10) {
+p_map.numeric <- function(posterior, precision = 2^10, ...) {
   # Highest density point
   map <- map_estimate(posterior, precision = precision, density = TRUE)$MAP_density
 
@@ -47,24 +50,49 @@ p_map.numeric <- function(posterior, precision = 2^10) {
   # Odds
   p <- d_0 / map
   class(p) <- c("p_map", class(p))
-  return(p)
+  p
 }
 
 
 
-#' @importFrom insight find_parameters get_parameters
+#' @importFrom insight get_parameters
 #' @keywords internal
-.p_map_models <- function(posterior, precision = 2^10) {
-  out <- data.frame(
-    "Parameter" = insight::find_parameters(posterior)[["conditional"]],
-    "p_MAP" = sapply(insight::get_parameters(posterior), p_map, precision = precision, simplify = TRUE),
-    row.names = NULL
+.p_map_models <- function(posterior, precision, effects, component, parameters) {
+
+  data.frame(
+    "Parameter" = .get_parameter_names(posterior, effects = effects, component = component, parameters = parameters),
+    "p_MAP" = sapply(insight::get_parameters(posterior, effects = effects, component = component, parameters = parameters), p_map, precision = precision, simplify = TRUE),
+    row.names = NULL,
+    stringsAsFactors = FALSE
   )
-  return(out)
 }
 
+#' @rdname p_map
 #' @export
-p_map.stanreg <- .p_map_models
+p_map.stanreg <- function(posterior, precision = 2^10, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  effects <- match.arg(effects)
 
+  .p_map_models(
+    posterior = posterior,
+    precision = precision,
+    effects = effects,
+    component = "conditional",
+    parameters = parameters
+  )
+}
+
+#' @rdname p_map
 #' @export
-p_map.brmsfit <- .p_map_models
+p_map.brmsfit <- function(posterior, precision = 2^10, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+  effects <- match.arg(effects)
+  component <- match.arg(component)
+
+  .p_map_models(
+    posterior = posterior,
+    precision = precision,
+    effects = effects,
+    component = component,
+    parameters = parameters
+  )
+}
+

@@ -85,7 +85,7 @@ p_rope.numeric <- function(posterior, range = "default", precision = .1, ...) {
 
 
 
-#' @importFrom insight find_parameters get_parameters
+#' @importFrom insight get_parameters
 #' @keywords internal
 .p_rope_models <- function(posterior, range, precision, effects, component, parameters) {
   if (all(range == "default")) {
@@ -95,7 +95,7 @@ p_rope.numeric <- function(posterior, range = "default", precision = .1, ...) {
   }
 
   data.frame(
-    "Parameter" = insight::find_parameters(posterior, effects = effects, component = component, parameters = parameters),
+    "Parameter" = .get_parameter_names(posterior, effects = effects, component = component, parameters = parameters),
     "p_ROPE" = sapply(insight::get_parameters(posterior, effects = effects, component = component, parameters = parameters), range = range, p_rope, precision = precision, simplify = TRUE),
     row.names = NULL,
     stringsAsFactors = FALSE
@@ -105,6 +105,8 @@ p_rope.numeric <- function(posterior, range = "default", precision = .1, ...) {
 #' @rdname p_rope
 #' @export
 p_rope.stanreg <- function(posterior, range = "default", precision = .1, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  effects <- match.arg(effects)
+
   .p_rope_models(
     posterior = posterior,
     range = range,
@@ -117,7 +119,10 @@ p_rope.stanreg <- function(posterior, range = "default", precision = .1, effects
 
 #' @rdname p_rope
 #' @export
-p_rope.brmsfit <- function(posterior, range = "default", precision = .1, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+p_rope.brmsfit <- function(posterior, range = "default", precision = .1, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+  effects <- match.arg(effects)
+  component <- match.arg(component)
+
   .p_rope_models(
     posterior = posterior,
     range = range,

@@ -16,7 +16,8 @@ p_rope(posterior, ...)
   effects = c("fixed", "random", "all"), parameters = NULL, ...)
 
 \method{p_rope}{brmsfit}(posterior, range = "default", precision = 0.1,
-  effects = c("fixed", "random", "all"), parameters = NULL, ...)
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), parameters = NULL, ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
@@ -35,6 +36,10 @@ should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{component}{Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the modelbe returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \description{
 The ROPE-based p-value represents the maximum percentage of \link[=hdi]{HDI} that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the \link[=rope]{ROPE}. It differs from the ROPE, i.e., the proportion of a given CI in the ROPE, by representing the maximum CI to reach a ROPE proportion of 0\% (positive values) or 100\% (negative values). A ROPE-based p of 97\% means that there is a probability of .97 that a parameter (described by its posterior distribution) is outside the ROPE. On the contrary, a ROPE-based p of -97\% means that there is also a probability of 0.97 that the parameter is inside the ROPE.
