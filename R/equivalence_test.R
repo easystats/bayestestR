@@ -116,7 +116,7 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   }
 
   l <- sapply(
-    insight::get_parameters(posterior, pars = pars),
+    insight::get_parameters(posterior, component = "conditional", pars = pars),
     equivalence_test,
     range = range,
     ci = ci,

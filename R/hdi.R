@@ -266,7 +266,7 @@ print.hdi <- function(x, digits = 2, ...) {
   x$HDI <- sprintf("[%*s %*s]", maxlen_low, x$CI_low, maxlen_high, x$CI_high)
 
   # clean parameters names
-  x$Parameter <- gsub("^(b_|bsp_|bcs_)(.*)", "\\2", x$Parameter)
+  x$Parameter <- gsub("^(zi_|b_|bsp_|bcs_)(.*)", "\\2", x$Parameter)
 
   if (length(ci) == 1) {
     xsub <- .remove_column(x, c("CI", "CI_low", "CI_high"))

@@ -98,7 +98,7 @@ print.rope <- function(x, digits = 2, ...) {
   x <- subset(x, select = intersect(cols, colnames(x)))
 
   # clean parameters names
-  x$Parameter <- gsub("^(b_|bsp_|bcs_)(.*)", "\\2", x$Parameter)
+  x$Parameter <- gsub("^(zi_|b_|bsp_|bcs_)(.*)", "\\2", x$Parameter)
 
   # This is just cosmetics, to have nicer column names
   colnames(x)[ncol(x)] <- "% in ROPE"
