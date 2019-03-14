@@ -65,11 +65,13 @@ as.double.rope <- function(x, ...) {
 
 
 #' @export
-print.rope <- function(x, ...) {
+print.rope <- function(x, digits = 2, ...) {
   cat(.colour("blue", sprintf(
-    "# Proportion%s of samples inside the ROPE [%.2f, %.2f]:\n\n",
+    "# Proportion%s of samples inside the ROPE [%.*f, %.*f]:\n\n",
     ifelse(all(x$CI[1] == x$CI), "", "s"),
+    digits,
     x$ROPE_low[1],
+    digits,
     x$ROPE_high[1]
   )))
 
@@ -95,6 +97,9 @@ print.rope <- function(x, ...) {
   # or with a simple vector. So we can't hard-code this
   x <- subset(x, select = intersect(cols, colnames(x)))
 
+  # clean parameters names
+  x$Parameter <- gsub("^(b_|bsp_|bcs_)(.*)", "\\2", x$Parameter)
+
   # This is just cosmetics, to have nicer column names
   colnames(x)[ncol(x)] <- "% in ROPE"
 
@@ -104,18 +109,16 @@ print.rope <- function(x, ...) {
 
   if (length(ci) == 1) {
     # print complete data frame, because we have no different CI values here
-    print.data.frame(x, row.names = F, digits = 3)
+    print.data.frame(x, row.names = F, digits = digits)
   } else {
     for (i in ci) {
       xsub <- x[x$CI == i, -which(colnames(x) == "CI")]
       cat(.colour("red", sprintf("%s%% HDI:\n", i)))
-      print.data.frame(xsub, digits = 3, row.names = FALSE)
+      print.data.frame(xsub, digits = digits, row.names = FALSE)
       cat("\n")
     }
   }
 }
-
-
 
 
 #' @export

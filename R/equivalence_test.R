@@ -72,18 +72,18 @@ equivalence_test.numeric <- function(posterior, range = "default", ci = .95, ver
 
 
 #' @export
-print.equivalence_test <- function(x, ...) {
+print.equivalence_test <- function(x, digits = 2, ...) {
   cat(.colour("blue", "# Test for Practical Equivalence\n\n"))
-  cat(sprintf("  ROPE: [%.2f %.2f]\n\n", x$ROPE_low[1], x$ROPE_high[1]))
+  cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, x$ROPE_low[1], digits, x$ROPE_high[1]))
 
   # find the longest HDI-value, so we can align the brackets in the ouput
-  x$HDI_low <- sprintf("%.2f", x$HDI_low)
-  x$HDI_high <- sprintf("%.2f", x$HDI_high)
+  x$HDI_low <- sprintf("%.*f", digits, x$HDI_low)
+  x$HDI_high <- sprintf("%.*f", digits, x$HDI_high)
 
   maxlen_low <- max(nchar(x$HDI_low))
   maxlen_high <- max(nchar(x$HDI_high))
 
-  x$ROPE_Percentage <- sprintf("%.2f%%", x$ROPE_Percentage)
+  x$ROPE_Percentage <- sprintf("%.*f%%", digits, x$ROPE_Percentage)
   x$HDI <- sprintf("[%*s %*s]", maxlen_low, x$HDI_low, maxlen_high, x$HDI_high)
 
   ci <- unique(x$CI)
@@ -94,11 +94,13 @@ print.equivalence_test <- function(x, ...) {
   colnames(x)[which(colnames(x) == "ROPE_Equivalence")] <- "H0"
   colnames(x)[which(colnames(x) == "ROPE_Percentage")] <- "% inside ROPE"
 
+  # clean parameter names
+  x$Parameter <- gsub("^(b_|bsp_|bcs_)(.*)", "\\2", x$Parameter)
+
   for (i in ci) {
     xsub <- x[x$CI == i, -which(colnames(x) == "CI")]
     colnames(xsub)[ncol(xsub)] <- sprintf("%i%% HDI", i)
-    xsub$Parameter <- gsub("^(b_|bsp_|bcs_)(.*)", "\\2", xsub$Parameter)
-    print.data.frame(xsub, digits = 3, row.names = FALSE)
+    print.data.frame(xsub, digits = digits, row.names = FALSE)
     cat("\n")
   }
 }

@@ -97,6 +97,7 @@ hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     dat <- .remove_column(dat, "Group")
   }
 
+  class(dat) <- c("hdi", class(dat))
   dat
 }
 
@@ -154,6 +155,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     dat <- .remove_column(dat, "Component")
   }
 
+  class(dat) <- c("hdi", class(dat))
   dat
 }
 
@@ -244,4 +246,40 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     "CI_low" = x_sorted[min_i],
     "CI_high" = x_sorted[upper[min_i]]
   )
+}
+
+
+#' @export
+print.hdi <- function(x, digits = 2, ...) {
+  cat(.colour("blue", sprintf(
+    "# Highest Density Interval%s\n\n",
+    ifelse(all(x$CI[1] == x$CI), "", "s")
+  )))
+
+  ci <- unique(x$CI)
+
+  # find the longest HDI-value, so we can align the brackets in the ouput
+  x$CI_low <- sprintf("%.*f", digits, x$CI_low)
+  x$CI_high <- sprintf("%.*f", digits, x$CI_high)
+
+  maxlen_low <- max(nchar(x$CI_low))
+  maxlen_high <- max(nchar(x$CI_high))
+
+  x$HDI <- sprintf("[%*s %*s]", maxlen_low, x$CI_low, maxlen_high, x$CI_high)
+
+  # clean parameters names
+  x$Parameter <- gsub("^(b_|bsp_|bcs_)(.*)", "\\2", x$Parameter)
+
+  if (length(ci) == 1) {
+    xsub <- .remove_column(x, c("CI", "CI_low", "CI_high"))
+    print.data.frame(xsub, row.names = FALSE, digits = digits)
+  } else {
+    for (i in ci) {
+      xsub <- x[x$CI == i, -which(colnames(x) == "CI")]
+      xsub <- .remove_column(xsub, c("CI", "CI_low", "CI_high"))
+      colnames(xsub)[ncol(xsub)] <- sprintf("%i%% HDI", i)
+      print.data.frame(xsub, digits = digits, row.names = FALSE)
+      cat("\n")
+    }
+  }
 }
