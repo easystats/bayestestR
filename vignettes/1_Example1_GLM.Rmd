@@ -1,0 +1,29 @@
+---
+title: "Example 1: Bayesian (General) Linear Models"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, bayesian, posterior, test]
+vignette: >
+  \usepackage[utf8]{inputenc}
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
+---
+
+
+
+Now that you've read the [**Get started**](https://easystats.github.io/bayestestR/articles/bayestestR.html) section, let's dive in the subtleties of Bayesian modelling using R.
+
+## Loading the Packages
+
+
+## References
+
+

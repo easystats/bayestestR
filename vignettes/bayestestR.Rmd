@@ -1,5 +1,5 @@
 ---
-title: "Get Started with the Bayesian Framework!"
+title: "Get Started with the Bayesian Framework"
 output: 
   github_document:
     toc: true
@@ -21,7 +21,7 @@ bibliography: bibliography.bib
 
 ## Why use the Bayesian Framework?
 
-Reasons to prefer this approach are **reliability**, better **accuracy** (in noisy data and small samples), the possibility of introducing **prior knowledge** into the analysis and, critically, **results intuitiveness** and their **straightforward interpretation** [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. 
+Reasons to prefer this approach are **reliability**, **accuracy** (in noisy data and small samples), the possibility of introducing **prior knowledge** into the analysis and, critically, **results intuitiveness** and their **straightforward interpretation** [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. 
 
 In general, the frequentist approach has been associated with the focus on null hypothesis testing, and the misuse of *p* values has been shown to critically contribute to the reproducibility crisis of psychological science [@chambers2014instead; @szucs2016empirical]. There is a general agreement that the generalization of the Bayesian approach is one way of overcoming these issues [@benjamin2018redefine; @etz2016bayesian].
 
@@ -44,7 +44,7 @@ In other words, omitting the maths behind it, we can say that:
 
 
 ```{r echo=FALSE, fig.cap="Accurate depiction of a Bayesian user estimating a credible interval.", fig.align='center', out.width="50%"}
-knitr::include_graphics("https://cdn.shopify.com/s/files/1/0940/1604/files/IMG_8910_grande.JPG")
+knitr::include_graphics("https://github.com/easystats/bayestestR/tree/master/man/figures/bayesianMaster.png")
 ```
 
 
@@ -120,9 +120,9 @@ model %>%
   to_text(width=100)
 ```
 
-**That's it!** You fitted a Bayesian version of the model by simply using [`stan_glm()`](https://mc-stan.org/rstanarm/reference/stan_glm.html) instead of `lm()`. The conclusion that we can drawn, in this, are very similar. The median effect is about `0.41`, and it can be also be considered as *significant* in the Bayesian sense.
+**That's it!** You fitted a Bayesian version of the model by simply using [`stan_glm()`](https://mc-stan.org/rstanarm/reference/stan_glm.html) instead of `lm()`. The conclusion that we can drawn, in this, are very similar. The effect (*the median of the effect's posterior distribution*) is about `0.41`, and it can be also be considered as *significant* in the Bayesian sense.
 
-**So, ready to learn more?** Check out the next tutorial **[ADD LINK]**!
+**So, ready to learn more?** Check out the [**next tutorial**](https://easystats.github.io/bayestestR/articles/1_Example1_GLM.html)!
 
 ## References
 
