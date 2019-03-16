@@ -21,8 +21,29 @@ bibliography: bibliography.bib
 
 Now that you've read the [**Get started**](https://easystats.github.io/bayestestR/articles/bayestestR.html) section, let's dive in the subtleties of Bayesian modelling using R.
 
-## Loading the Packages
+## Loading the packages
 
+Oncce you've [isntalled](https://easystats.github.io/bayestestR/articles/bayestestR.html) the necessary packages, we can load `bayestestR` and `rstanarm`.
+
+```{r message=FALSE, warning=FALSE}
+library(rstanarm)
+library(bayestestR)
+```
+
+## Fitting the model
+
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+model <- stan_glm(Sepal.Length ~ Species, data=iris)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='hide'}
+library(rstanarm)
+set.seed(333)
+
+model <- stan_glm(Sepal.Length ~ Species, data=iris)
+```
+
+WORK IN PROGRESS.
 
 ## References
 
