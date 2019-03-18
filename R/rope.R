@@ -62,14 +62,14 @@ as.double.rope <- function(x, ...) {
 
 #' @export
 print.rope <- function(x, digits = 2, ...) {
-  insight::print_color("blue", sprintf(
+  insight::print_color(sprintf(
     "# Proportion%s of samples inside the ROPE [%.*f, %.*f]:\n\n",
     ifelse(all(x$CI[1] == x$CI), "", "s"),
     digits,
     x$ROPE_low[1],
     digits,
     x$ROPE_high[1]
-  ))
+  ), "blue")
 
 
   # I think this is something nobody will understand and we'll probably forget
@@ -107,7 +107,7 @@ print.rope <- function(x, digits = 2, ...) {
   } else {
     for (i in ci) {
       xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
-      insight::print_color("cyan", sprintf("ROPE for the %s%% HDI:\n\n", i))
+      insight::print_color(sprintf("ROPE for the %s%% HDI:\n\n", i), "cyan")
       print_data_frame(xsub, digits = digits)
       cat("\n")
     }

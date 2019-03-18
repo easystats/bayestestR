@@ -5,11 +5,11 @@ print.hdi <- function(x, digits = 2, ...) {
 
 
 .print_hdi <- function(x, digits, title, ci_string, ...) {
-  insight::print_color("blue", sprintf(
+  insight::print_color(sprintf(
     "# %s%s\n\n",
     title,
     ifelse(all(x$CI[1] == x$CI), "", "s")
-  ))
+  ), "blue")
 
   ci <- unique(x$CI)
 
@@ -94,7 +94,7 @@ print_data_frame <- function(x, digits) {
     }
 
     if (length(out) > 1) {
-      insight::print_color("red", header)
+      insight::print_color(header, "red")
       cat("\n\n")
     }
 
