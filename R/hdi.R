@@ -69,46 +69,7 @@ hdi.numeric <- function(posterior, ci = .90, verbose = TRUE, ...) {
 #' @export
 hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
-
-  list <- lapply(c("fixed", "random"), function(x) {
-    parms <- insight::get_parameters(posterior, effects = x, parameters = parameters)
-    tmp <- do.call(rbind, sapply(
-      parms,
-      hdi,
-      ci = ci,
-      verbose = verbose,
-      simplify = FALSE)
-    )
-
-    if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_stanreg(
-        tmp,
-        x,
-        cols = c("CI", "CI_low", "CI_high", "Group"),
-        parms = names(parms)
-      )
-    } else {
-      tmp <- NULL
-    }
-
-    tmp
-  })
-
-  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
-
-  dat <- switch(
-    effects,
-    fixed = .select_rows(dat, "Group", "fixed"),
-    random = .select_rows(dat, "Group", "random"),
-    dat
-  )
-
-  if (all(dat$Group == dat$Group[1])) {
-    dat <- .remove_column(dat, "Group")
-  }
-
-  class(dat) <- c("hdi", class(dat))
-  dat
+  .compute_interval_stanreg(posterior, ci, effects, parameters, verbose, fun = "hdi")
 }
 
 
@@ -117,121 +78,19 @@ hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-
-  eff <- c("fixed", "fixed", "random", "random")
-  com <- c("conditional", "zi", "conditional", "zi")
-
-  .get_hdi <- function(x, y) {
-    parms <- insight::get_parameters(posterior, effects = x, component = y, parameters = parameters)
-    tmp <- do.call(rbind, sapply(
-      parms,
-      hdi,
-      ci = ci,
-      verbose = verbose,
-      simplify = FALSE)
-    )
-
-    if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_brms(
-        tmp,
-        x,
-        y,
-        cols = c("CI", "CI_low", "CI_high", "Component", "Group"),
-        parms = names(parms)
-      )
-    } else {
-      tmp <- NULL
-    }
-
-    tmp
-  }
-
-  list <- mapply(.get_hdi, eff, com, SIMPLIFY = FALSE)
-  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
-
-  dat <- switch(
-    effects,
-    fixed = .select_rows(dat, "Group", "fixed"),
-    random = .select_rows(dat, "Group", "random"),
-    dat
-  )
-
-  dat <- switch(
-    component,
-    conditional = .select_rows(dat, "Component", "conditional"),
-    zi = ,
-    zero_inflated = .select_rows(dat, "Component", "zero_inflated"),
-    dat
-  )
-
-  if (all(dat$Group == dat$Group[1])) {
-    dat <- .remove_column(dat, "Group")
-  }
-
-  if (all(dat$Component == dat$Component[1])) {
-    dat <- .remove_column(dat, "Component")
-  }
-
-  class(dat) <- c("hdi", class(dat))
-  dat
+  .compute_interval_brmsfit(posterior, ci, effects, component, parameters, verbose, fun = "hdi")
 }
-
-
-
-
-
-
-
-
 
 
 
 #' @keywords internal
 .hdi <- function(x, ci = .90, verbose = TRUE) {
-  if (ci > 1) {
-    if (verbose) {
-      warning("`ci` should be less than 1, returning NAs.")
-    }
-    return(data.frame(
-      "CI" = ci * 100,
-      "CI_low" = NA,
-      "CI_high" = NA
-    ))
+  check_ci <- .check_ci_argument(x, ci, verbose)
+
+  if (!is.null(check_ci)) {
+    return(check_ci)
   }
 
-
-  if (ci == 1) {
-    return(data.frame(
-      "CI" = ci * 100,
-      "CI_low" = min(x, na.rm = TRUE),
-      "CI_high" = max(x, na.rm = TRUE)
-    ))
-  }
-
-  if (anyNA(x)) {
-    if (verbose) {
-      warning("The posterior contains NAs, returning NAs.")
-    }
-    return(data.frame(
-      "CI" = ci * 100,
-      "CI_low" = NA,
-      "CI_high" = NA
-    ))
-  }
-
-  N <- length(x)
-  if (N < 3) {
-    if (verbose) {
-      warning("The posterior is too short, returning NAs.")
-    }
-    return(data.frame(
-      "CI" = ci * 100,
-      "CI_low" = NA,
-      "CI_high" = NA
-    ))
-  }
-
-  # x_sorted <- sort(x)
   x_sorted <- sort.int(x, method = "quick")  # removes NA/NaN, but not Inf
   window_size <- ceiling(ci * length(x_sorted))
 

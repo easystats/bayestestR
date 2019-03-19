@@ -4,6 +4,12 @@ print.hdi <- function(x, digits = 2, ...) {
 }
 
 
+#' @export
+print.ci <- function(x, digits = 2, ...) {
+  .print_hdi(x, digits, title = "Credible Interval", ci_string = "CI", ...)
+}
+
+
 .print_hdi <- function(x, digits, title, ci_string, ...) {
   insight::print_color(sprintf(
     "# %s%s\n\n",
