@@ -45,7 +45,7 @@
 #' hdi(model, ci = c(.80, .90, .95))
 #' }
 #'
-#' @author All credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute}.
+#' @author Credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute} and \href{https://github.com/mikemeredith/HDInterval}{HDInterval}.
 #'
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #'
@@ -69,46 +69,7 @@ hdi.numeric <- function(posterior, ci = .90, verbose = TRUE, ...) {
 #' @export
 hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
-
-  list <- lapply(c("fixed", "random"), function(x) {
-    parms <- insight::get_parameters(posterior, effects = x, parameters = parameters)
-    tmp <- do.call(rbind, sapply(
-      parms,
-      hdi,
-      ci = ci,
-      verbose = verbose,
-      simplify = FALSE)
-    )
-
-    if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_stanreg(
-        tmp,
-        x,
-        cols = c("CI", "CI_low", "CI_high", "Group"),
-        parms = names(parms)
-      )
-    } else {
-      tmp <- NULL
-    }
-
-    tmp
-  })
-
-  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
-
-  dat <- switch(
-    effects,
-    fixed = .select_rows(dat, "Group", "fixed"),
-    random = .select_rows(dat, "Group", "random"),
-    dat
-  )
-
-  if (all(dat$Group == dat$Group[1])) {
-    dat <- .remove_column(dat, "Group")
-  }
-
-  class(dat) <- c("hdi", class(dat))
-  dat
+  .compute_interval_stanreg(posterior, ci, effects, parameters, verbose, fun = "hdi")
 }
 
 
@@ -117,117 +78,25 @@ hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-
-  eff <- c("fixed", "fixed", "random", "random")
-  com <- c("conditional", "zi", "conditional", "zi")
-
-  .get_hdi <- function(x, y) {
-    parms <- insight::get_parameters(posterior, effects = x, component = y, parameters = parameters)
-    tmp <- do.call(rbind, sapply(
-      parms,
-      hdi,
-      ci = ci,
-      verbose = verbose,
-      simplify = FALSE)
-    )
-
-    if (!.is_empty_object(tmp)) {
-      tmp <- .clean_up_tmp_brms(
-        tmp,
-        x,
-        y,
-        cols = c("CI", "CI_low", "CI_high", "Component", "Group"),
-        parms = names(parms)
-      )
-    } else {
-      tmp <- NULL
-    }
-
-    tmp
-  }
-
-  list <- mapply(.get_hdi, eff, com, SIMPLIFY = FALSE)
-  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
-
-  dat <- switch(
-    effects,
-    fixed = .select_rows(dat, "Group", "fixed"),
-    random = .select_rows(dat, "Group", "random"),
-    dat
-  )
-
-  dat <- switch(
-    component,
-    conditional = .select_rows(dat, "Component", "conditional"),
-    zi = ,
-    zero_inflated = .select_rows(dat, "Component", "zero_inflated"),
-    dat
-  )
-
-  if (all(dat$Group == dat$Group[1])) {
-    dat <- .remove_column(dat, "Group")
-  }
-
-  if (all(dat$Component == dat$Component[1])) {
-    dat <- .remove_column(dat, "Component")
-  }
-
-  class(dat) <- c("hdi", class(dat))
-  dat
+  .compute_interval_brmsfit(posterior, ci, effects, component, parameters, verbose, fun = "hdi")
 }
+
 
 
 #' @keywords internal
 .hdi <- function(x, ci = .90, verbose = TRUE) {
-  if (ci > 1) {
-    if (verbose) {
-      warning("HDI: `ci` should be less than 1, returning NaNs.")
-    }
-    return(data.frame(
-      "CI" = ci * 100,
-      "CI_low" = NA,
-      "CI_high" = NA
-    ))
+  check_ci <- .check_ci_argument(x, ci, verbose)
+
+  if (!is.null(check_ci)) {
+    return(check_ci)
   }
 
-
-  if (ci == 1) {
-    return(data.frame(
-      "CI" = ci * 100,
-      "CI_low" = min(x),
-      "CI_high" = max(x)
-    ))
-  }
-
-  if (anyNA(x)) {
-    if (verbose) {
-      warning("HDI: the posterior contains NaNs, returning NaNs.")
-    }
-    return(data.frame(
-      "CI" = ci * 100,
-      "CI_low" = NA,
-      "CI_high" = NA
-    ))
-  }
-
-  N <- length(x)
-  if (N < 3) {
-    if (verbose) {
-      warning("HDI: the posterior is too short, returning NaNs.")
-    }
-    return(data.frame(
-      "CI" = ci * 100,
-      "CI_low" = NA,
-      "CI_high" = NA
-    ))
-  }
-
-  x_sorted <- sort(x)
-  window_size <- floor(ci * length(x_sorted))
+  x_sorted <- sort.int(x, method = "quick")  # removes NA/NaN, but not Inf
+  window_size <- ceiling(ci * length(x_sorted))
 
   if (window_size < 2) {
     if (verbose) {
-      warning("HDI: `ci` is too small or x does not contain enough data points, returning NaNs.")
+      warning("`ci` is too small or x does not contain enough data points, returning NAs.")
     }
     return(data.frame(
       "CI" = ci * 100,
@@ -236,20 +105,17 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     ))
   }
 
-  lower <- seq_len(N - window_size)
-  upper <- window_size + lower
-
-  # vectorized difference between edges of cumulative distribution based on scan_length. Values are arranged from left to right scanning.
-  window_width_diff <- x_sorted[upper] - x_sorted[lower]
+  nCIs <- length(x_sorted) - window_size
+  ci.width <- sapply(1:nCIs, function(.x) x_sorted[.x + window_size] - x_sorted[.x])
 
   # find minimum of width differences, check for multiple minima
-  min_i <- which(window_width_diff == min(window_width_diff))
+  min_i <- which(ci.width == min(ci.width))
   n_candies <- length(min_i)
 
   if (n_candies > 1) {
     if (any(diff(sort(min_i)) != 1)) {
       if (verbose) {
-        warning("HDI: Identical densities found along different segments of the distribution, choosing rightmost.")
+        warning("Identical densities found along different segments of the distribution, choosing rightmost.")
       }
       min_i <- max(min_i)
     } else {
@@ -257,101 +123,10 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     }
   }
 
-  # get values based on minimum
   data.frame(
     "CI" = ci * 100,
     "CI_low" = x_sorted[min_i],
-    "CI_high" = x_sorted[upper[min_i]]
+    "CI_high" = x_sorted[min_i + window_size]
   )
 }
 
-
-#' @export
-print.hdi <- function(x, digits = 2, ...) {
-  .print_hdi(x, digits, title = "Highest Density Interval", ci_string = "HDI", ...)
-}
-
-
-.print_hdi <- function(x, digits, title, ci_string, ...) {
-  insight::print_color("blue", sprintf(
-    "# %s%s\n\n",
-    title,
-    ifelse(all(x$CI[1] == x$CI), "", "s")
-  ))
-
-  ci <- unique(x$CI)
-
-  # find the longest HDI-value, so we can align the brackets in the ouput
-  x$CI_low <- sprintf("%.*f", digits, x$CI_low)
-  x$CI_high <- sprintf("%.*f", digits, x$CI_high)
-
-  maxlen_low <- max(nchar(x$CI_low))
-  maxlen_high <- max(nchar(x$CI_high))
-
-  x$HDI <- sprintf("[%*s %*s]", maxlen_low, x$CI_low, maxlen_high, x$CI_high)
-
-  if (length(ci) == 1) {
-    xsub <- .remove_column(x, c("CI", "CI_low", "CI_high"))
-    colnames(xsub)[ncol(xsub)] <- sprintf("%i%% %s", ci, ci_string)
-    print_data_frame(xsub, digits = digits)
-  } else {
-    for (i in ci) {
-      xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
-      xsub <- .remove_column(xsub, c("CI", "CI_low", "CI_high"))
-      colnames(xsub)[ncol(xsub)] <- sprintf("%i%% %s", i, ci_string)
-      print_data_frame(xsub, digits = digits)
-      cat("\n")
-    }
-  }
-}
-
-
-print_data_frame <- function(x, digits) {
-  out <- list(x)
-  names(out) <- "fixed"
-
-  if (all(c("Group", "Component") %in% colnames(x))) {
-    x$split <- sprintf("%s_%s", x$Group, x$Component)
-  } else if ("Group" %in% colnames(x)) {
-    colnames(x)[which(colnames(x) == "Group")] <- "split"
-  } else if ("Component" %in% colnames(x)) {
-    colnames(x)[which(colnames(x) == "Component")] <- "split"
-  }
-
-  if ("split" %in% colnames(x)) {
-    out <- lapply(split(x, f = x$split), function(i) {
-      .remove_column(i, c("split", "Component", "Group"))
-    })
-  }
-
-  for (i in names(out)) {
-    header <- switch(
-      i,
-      "conditional" = ,
-      "fixed_conditional" = ,
-      "fixed" = "# fixed effects, conditional component",
-      "zi" = ,
-      "fixed_zi" = "# fixed effects, zero-inflation component",
-      "random" = ,
-      "random_conditional" = "# random effects, conditional component",
-      "random_zi" = "# random effects, zero-inflation component"
-    )
-
-    if ("Parameter" %in% colnames(out[[i]])) {
-      # clean parameters names
-      out[[i]]$Parameter <- gsub("^(b_zi_|bs_|b_|bsp_|bcs_)(.*)", "\\2", out[[i]]$Parameter)
-      # remove ".1" etc. suffix
-      out[[i]]$Parameter <- gsub("(.*)(\\.)(\\d)$", "\\1 \\3",  out[[i]]$Parameter)
-      # remove "__zi"
-      out[[i]]$Parameter <- gsub("__zi", "",  out[[i]]$Parameter)
-    }
-
-    if (length(out) > 1) {
-      insight::print_color("red", header)
-      cat("\n\n")
-    }
-
-    print.data.frame(out[[i]], row.names = FALSE, digits = digits)
-    cat("\n")
-  }
-}

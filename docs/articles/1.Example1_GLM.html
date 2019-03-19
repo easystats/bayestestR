@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reporting Guidelines • bayestestR</title>
+<title>Example 1: Bayesian (General) Linear Models • bayestestR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Reporting Guidelines">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Example 1: Bayesian (General) Linear Models">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -69,7 +69,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
+      <a href="../articles/1.Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
     </li>
     <li>
       <a href="../articles/1_IndicesDescription.html">Indices Description</a>
@@ -108,77 +108,24 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Reporting Guidelines</h1>
+      <h1>Example 1: Bayesian (General) Linear Models</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/4_Guidelines.Rmd"><code>vignettes/4_Guidelines.Rmd</code></a></small>
-      <div class="hidden name"><code>4_Guidelines.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/1.Example1_GLM.Rmd"><code>vignettes/1.Example1_GLM.Rmd</code></a></small>
+      <div class="hidden name"><code>1.Example1_GLM.Rmd</code></div>
 
     </div>
 
     
     
-<p>These guidelines can be referred to by citing the package:</p>
-<ul>
-<li>Makowski, D. &amp; Lüdecke, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using BayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. <a href="DOI:10.5281/zenodo.2556486" class="uri">DOI:10.5281/zenodo.2556486</a>.</li>
-</ul>
-<div id="reporting-guidelines" class="section level1">
-<h1 class="hasAnchor">
-<a href="#reporting-guidelines" class="anchor"></a>Reporting Guidelines</h1>
-<p>Based on the previous <a href="https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html"><strong>comparison of point-estimates</strong></a> and <a href="https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html"><strong>indices of effect existence</strong></a>, we can conclude that:</p>
-<ul>
-<li>For simple models and normally distributed posteriors, the <strong>MAP estimate</strong> seems to be more biased than the mean and the median of the posterior distribution.</li>
-<li>Aside from being more robust, the <strong>median</strong> makes more sense than the <strong>mean</strong> in a probabilistic framework (<em>e.g.</em>, there is 50% chance that the true effect is either higher or lower than the median).</li>
-<li>The <strong>traditional ROPE</strong> (using a 90% HDI) is not sensitive to delineate highly “significant” effects. The full ROPE (100% HDI) does not present the same flaw.</li>
-<li>The <strong>Probability of Direction (<em>p</em>d)</strong> is the closest index to the frequentist <em>p</em> value.</li>
-</ul>
-<p><strong>Thus, to minimally describe the posterior distribution of a parameter, we suggest reporting the <em>median</em> and the <em>90% CI</em> for parameter characterisation and, in the context of null-hypothesis testing, the Probability of Direction (<em>p</em>d) for effect existence and, especially in the context of confirmatory analyses, the ROPE (full) with an explicitly specified range for effect significance.</strong></p>
-<div id="interpretation-rules-of-thumb" class="section level2">
+<p>Now that you’ve read the <a href="https://easystats.github.io/bayestestR/articles/bayestestR.html"><strong>Get started</strong></a> section, let’s dive in the subtleties of Bayesian modelling using R.</p>
+<div id="loading-the-packages" class="section level2">
 <h2 class="hasAnchor">
-<a href="#interpretation-rules-of-thumb" class="anchor"></a>Interpretation Rules of Thumb</h2>
-<p><strong>The following thresholds are presented as landmarks only, and any use of such “labels” should be explicitly justified. Please consider with caution.</strong></p>
-<ul>
-<li>
-<p><strong>Probability of Direction (<em>p</em>d)</strong></p>
-<ul>
-<li>
-<em>p</em>d <strong>&lt;= 95%</strong> ~ <em>p</em> &gt; .1: uncertain</li>
-<li>
-<em>p</em>d <strong>&gt; 95%</strong> ~ <em>p</em> &lt; .1: possibly existing</li>
-<li>
-<em>p</em>d <strong>&gt; 97.5%</strong> ~ <em>p</em> &lt; .05: likely existing</li>
-<li>
-<em>p</em>d <strong>&gt; 99%</strong> ~ <em>p</em> &lt; .01: probably existing</li>
-<li>
-<em>p</em>d <strong>&gt; 99.9%</strong> ~ <em>p</em> &lt; .001: certainly existing</li>
-</ul>
-</li>
-<li>
-<p><strong>ROPE (full)</strong>: Extra caution is required as its interpretation highly depends on other parameters such as sample size and ROPE bounds.</p>
-<ul>
-<li>
-<strong>&gt; 99%</strong> in ROPE: negligible (we can accept the null hypothesis)</li>
-<li>
-<strong>&gt; 97.5%</strong> in ROPE: probably negligible</li>
-<li>
-<strong>&lt;= 97.5%</strong> &amp; <strong>&gt;= 2.5%</strong> in ROPE: not significant</li>
-<li>
-<strong>&lt; 2.5%</strong> in ROPE: probably significant</li>
-<li>
-<strong>&lt; 1%</strong> in ROPE: significant (we can reject the null hypothesis)</li>
-</ul>
-</li>
-</ul>
-<p><em>Note: If you have any advice, opinion or such, we encourage you to let us know by opening an <a href="https://github.com/easystats/bayestestR/issues">discussion thread</a> or making a pull request.</em></p>
+<a href="#loading-the-packages" class="anchor"></a>Loading the Packages</h2>
 </div>
-<div id="template-sentence" class="section level2">
+<div id="references" class="section level2">
 <h2 class="hasAnchor">
-<a href="#template-sentence" class="anchor"></a>Template Sentence</h2>
-<p>Based on these suggestions, a template sentence for minimal reporting of a parameter based on its posterior distribution could be:</p>
-<ul>
-<li>“the effect of <em>X</em> has a probability of <strong><em>p</em>d</strong> of being <em>negative</em> (Median = <strong><em>median</em></strong>, 90% CI [<strong><em>…</em></strong>, <strong><em>…</em></strong>]) and can be considered as <em>significant</em> (<strong><em>ROPE</em></strong>% in ROPE).”</li>
-</ul>
-</div>
+<a href="#references" class="anchor"></a>References</h2>
 </div>
   </div>
 
@@ -187,12 +134,8 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li>
-<a href="#reporting-guidelines">Reporting Guidelines</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#interpretation-rules-of-thumb">Interpretation Rules of Thumb</a></li>
-      <li><a href="#template-sentence">Template Sentence</a></li>
-      </ul>
-</li>
+<li><a href="#loading-the-packages">Loading the Packages</a></li>
+      <li><a href="#references">References</a></li>
       </ul>
 </div>
       </div>

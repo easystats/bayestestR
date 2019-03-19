@@ -108,6 +108,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
+    </li>
+    <li>
       <a href="../articles/1_IndicesDescription.html">Indices Description</a>
     </li>
     <li>
@@ -218,8 +221,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>)
-<span class='fu'>map_estimate</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; [1] 0.4506864</div><div class='input'><span class='fu'>map_estimate</span>(<span class='no'>posterior</span>, <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;         MAP MAP_density
-#&gt; 1 0.4506864   0.3907924</div><div class='input'>
+<span class='fu'>map_estimate</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; [1] 0.1164884</div><div class='input'><span class='fu'>map_estimate</span>(<span class='no'>posterior</span>, <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;         MAP MAP_density
+#&gt; 1 0.1164884   0.4051873</div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)

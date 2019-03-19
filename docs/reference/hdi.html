@@ -108,6 +108,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
+    </li>
+    <li>
       <a href="../articles/1_IndicesDescription.html">Indices Description</a>
     </li>
     <li>
@@ -230,11 +233,11 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>)
-<span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>.90</span>)</div><div class='output co'>#&gt;   CI    CI_low CI_high
-#&gt; 1 90 -1.627037 1.64854</div><div class='input'><span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;   CI    CI_low  CI_high
-#&gt; 1 80 -1.168696 1.381167
-#&gt; 2 90 -1.627037 1.648540
-#&gt; 3 95 -2.055435 1.819078</div><span class='co'># NOT RUN {</span>
+<span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>.90</span>)</div><div class='output co'>#&gt;   CI   CI_low  CI_high
+#&gt; 1 90 -1.41249 1.826027</div><div class='input'><span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;   CI    CI_low  CI_high
+#&gt; 1 80 -1.238035 1.169973
+#&gt; 2 90 -1.412490 1.826027
+#&gt; 3 95 -2.020344 1.826027</div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>hdi</span>(<span class='no'>model</span>)

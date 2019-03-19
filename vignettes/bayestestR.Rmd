@@ -1,5 +1,5 @@
 ---
-title: "Get Started with the Bayesian Framework!"
+title: "Get Started with the Bayesian Framework"
 output: 
   github_document:
     toc: true
@@ -21,16 +21,17 @@ bibliography: bibliography.bib
 
 ## Why use the Bayesian Framework?
 
-Reasons to prefer this approach are **reliability**, better **accuracy** (in noisy data and small samples), the possibility of introducing **prior knowledge** into the analysis and, critically, **results intuitiveness** and their **straightforward interpretation** [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. 
+Reasons to prefer this approach are **reliability**, **accuracy** (in noisy data and small samples), the possibility of introducing **prior knowledge** into the analysis and, critically, **results intuitiveness** and their **straightforward interpretation** [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. 
 
 In general, the frequentist approach has been associated with the focus on null hypothesis testing, and the misuse of *p* values has been shown to critically contribute to the reproducibility crisis of psychological science [@chambers2014instead; @szucs2016empirical]. There is a general agreement that the generalization of the Bayesian approach is one way of overcoming these issues [@benjamin2018redefine; @etz2016bayesian].
 
-Once we agreed that the Bayesian framework is the right way to go, you might wonder *what* is the Bayesian framework. **What's all the fuss about?**
+Once we agreed that the Bayesian framework is the right way to go, you might wonder *what* is the Bayesian framework. 
+
+**What's all the fuss about?**
 
 ## What is the Bayesian Framework?
 
-
-One of the core difference is that in the **frequentist view** (the "classic" statistics, with *p* and *t* values, as well as some weird *degrees of freedom*), **the effects are fixed** (but unknown) and **data are random**. On the contrary the Bayesian inference process computes the **probability** of different effect values *given the observed data*. Instead of having one estimated value of the "true effect", this probabilistic approach gives a distribution of values, called the **"posterior" distribution**. 
+Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology. Indeed, all the common statistical models (t-tests, correlations, ANOVAs, regressions, ...) can be made using the Bayesian framework. One of the core difference is that in the **frequentist view** (the "classic" statistics, with *p* and *t* values, as well as some weird *degrees of freedom*), **the effects are fixed** (but unknown) and **data are random**. On the contrary the Bayesian inference process computes the **probability** of different effect values *given the observed data*. Instead of having one estimated value of the "true effect", this probabilistic approach gives a distribution of values, called the **"posterior" distribution**. 
 
 Bayesian’s uncertainty can be summarized, for instance, by giving the **median** of the distribution, as well as a range of values on the posterior distribution that includes the 95% most probable values (the 95\% ***Credible* Interval**). To illustrate the difference of interpretation, the Bayesian framework allows to say *"given the observed data, the effect has 95% probability of falling within this range"*, while the Frequentist less straightforward alternative (the 95\% ***Confidence* Interval**) would be "*there is a 95\% probability that when computing a confidence interval from data of this sort, the effect falls within this range*". 
 
@@ -42,25 +43,86 @@ In other words, omitting the maths behind it, we can say that:
 - To characterize our effects, **no need of *p* values** or other cryptic indices. We simply describe the posterior distribution of the effect. For example, we can report the median, the 90% *Credible* Interval or [other indices](https://easystats.github.io/bayestestR/articles/4_Guidelines.html).
 
 
-<!-- ```{r echo=FALSE, fig.cap="Accurate depiction of a Bayesian user estimating a credible interval."} -->
-<!-- knitr::include_graphics("https://cdn.shopify.com/s/files/1/0940/1604/files/IMG_8910_grande.JPG") -->
-<!-- ``` -->
-<!-- ![](https://cdn.shopify.com/s/files/1/0940/1604/files/IMG_8910_grande.JPG) -->
+```{r echo=FALSE, fig.cap="Accurate depiction of a Bayesian user estimating a credible interval.", fig.align='center', out.width="50%"}
+knitr::include_graphics("https://github.com/easystats/bayestestR/tree/master/man/figures/bayesianMaster.png")
+```
 
 
-*Note: Altough the very reason of this package is to advocate for the use of Bayesian statistics, please note that there are arguments supporting frequentist indices (see for instance [this thread](https://discourse.datamethods.org/t/language-for-communicating-frequentist-results-about-treatment-effects/934/16). As always, the world is not black and white (*p* \< .001).*
+*Note: Altough the very reason of this package is to advocate for the use of Bayesian statistics, please note that there are arguments supporting frequentist indices (see for instance [this thread](https://discourse.datamethods.org/t/language-for-communicating-frequentist-results-about-treatment-effects/934/16)). As always, the world is not black and white (p \< .001).*
 
 **So... how does it work?**
 
-## A very simple regression example
+## A simple example
 
 ### BayestestR Installation
 
+You can install `bayestestR` along with the whole [**easystats**](https://github.com/easystats/easystats) suite by running the following:
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+install.packages("devtools")
+devtools::install_github("easystats/easystats")
+```
+
+Now that it's done, we can *load* the packages we need, in this case [`report`](https://github.com/easystats/report), which combines `bayestestR` and other packages together.
+
+```{r message=FALSE, warning=FALSE}
+library(report)  # Calling library(...) enables you to use the package's functions
+```
+
+
+Let's also install and load the [`rstanarm`](https://mc-stan.org/rstanarm/), used for fitting Bayesian models.
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+install.packages("rstanarm")
+library(rstanarm)
+```
 
 
 
+### Traditional linear regression
+
+Let's fit a simple frequentist linear regression between two numeric variables, `Sepal.Length` and `Petal.Length` from the famous [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included in R.
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+model <- lm(Sepal.Length ~ Petal.Length, data=iris)
+report(model)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+library(dplyr)
+
+lm(Sepal.Length ~ Petal.Length, data=iris) %>% 
+  report() %>% 
+  to_text(width=100)
+```
+
+This analysis suggests that there is a **significant** (*whatever that means*) and **positive** (with a coefficient of `0.41`) linear relationship between the two variables. 
+
+*Fitting and interpreting frequentist models is so easy it is normal that people use it instead of the Bayesian framework... right?*
+
+**Not anymore.**
 
 
+### Bayesian linear regression
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
+report(model)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='hide'}
+library(rstanarm)
+set.seed(333)
+
+model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+model %>% 
+  report() %>% 
+  to_text(width=100)
+```
+
+**That's it!** You fitted a Bayesian version of the model by simply using [`stan_glm()`](https://mc-stan.org/rstanarm/reference/stan_glm.html) instead of `lm()`. The conclusion that we can drawn, in this, are very similar. The effect (*the median of the effect's posterior distribution*) is about `0.41`, and it can be also be considered as *significant* in the Bayesian sense.
+
+**So, ready to learn more?** Check out the [**next tutorial**](https://easystats.github.io/bayestestR/articles/1_Example1_GLM.html)!
 
 ## References
 
