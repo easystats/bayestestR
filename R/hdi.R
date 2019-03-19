@@ -190,7 +190,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 .hdi <- function(x, ci = .90, verbose = TRUE) {
   if (ci > 1) {
     if (verbose) {
-      warning("HDI: `ci` should be less than 1, returning NaNs.")
+      warning("HDI: `ci` should be less than 1, returning NAs.")
     }
     return(data.frame(
       "CI" = ci * 100,
@@ -203,14 +203,14 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
   if (ci == 1) {
     return(data.frame(
       "CI" = ci * 100,
-      "CI_low" = min(x),
-      "CI_high" = max(x)
+      "CI_low" = min(x, na.rm = TRUE),
+      "CI_high" = max(x, na.rm = TRUE)
     ))
   }
 
   if (anyNA(x)) {
     if (verbose) {
-      warning("HDI: the posterior contains NaNs, returning NaNs.")
+      warning("HDI: the posterior contains NAs, returning NAs.")
     }
     return(data.frame(
       "CI" = ci * 100,
@@ -222,7 +222,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
   N <- length(x)
   if (N < 3) {
     if (verbose) {
-      warning("HDI: the posterior is too short, returning NaNs.")
+      warning("HDI: the posterior is too short, returning NAs.")
     }
     return(data.frame(
       "CI" = ci * 100,
@@ -232,12 +232,12 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
   }
 
   # x_sorted <- sort(x)
-  x_sorted <- sort.int(x, method='quick')  # removes NA/NaN, but not Inf
-  window_size <- floor(ci * length(x_sorted))
+  x_sorted <- sort.int(x, method = "quick")  # removes NA/NaN, but not Inf
+  window_size <- ceiling(ci * length(x_sorted))
 
   if (window_size < 2) {
     if (verbose) {
-      warning("HDI: `ci` is too small or x does not contain enough data points, returning NaNs.")
+      warning("HDI: `ci` is too small or x does not contain enough data points, returning NAs.")
     }
     return(data.frame(
       "CI" = ci * 100,
@@ -246,32 +246,13 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     ))
   }
 
-  lower <- seq_len(N - window_size)
-  upper <- window_size + lower
+  nCIs <- length(x_sorted) - window_size
+  ci.width <- sapply(1:nCIs, function(.x) x_sorted[.x + window_size] - x_sorted[.x])
 
-  # vectorized difference between edges of cumulative distribution based on scan_length. Values are arranged from left to right scanning.
-  window_width_diff <- x_sorted[upper] - x_sorted[lower]
-
-  # find minimum of width differences, check for multiple minima
-  min_i <- which(window_width_diff == min(window_width_diff))
-  n_candies <- length(min_i)
-
-  if (n_candies > 1) {
-    if (any(diff(sort(min_i)) != 1)) {
-      if (verbose) {
-        warning("HDI: Identical densities found along different segments of the distribution, choosing rightmost.")
-      }
-      min_i <- max(min_i)
-    } else {
-      min_i <- floor(mean(min_i))
-    }
-  }
-
-  # get values based on minimum
   data.frame(
     "CI" = ci * 100,
-    "CI_low" = x_sorted[min_i],
-    "CI_high" = x_sorted[upper[min_i]]
+    "CI_low" = x_sorted[which.min(ci.width)],
+    "CI_high" = x_sorted[which.min(ci.width) + window_size]
   )
 }
 
