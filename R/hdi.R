@@ -190,7 +190,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 .hdi <- function(x, ci = .90, verbose = TRUE) {
   if (ci > 1) {
     if (verbose) {
-      warning("HDI: `ci` should be less than 1, returning NAs.")
+      warning("`ci` should be less than 1, returning NAs.")
     }
     return(data.frame(
       "CI" = ci * 100,
@@ -210,7 +210,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 
   if (anyNA(x)) {
     if (verbose) {
-      warning("HDI: the posterior contains NAs, returning NAs.")
+      warning("The posterior contains NAs, returning NAs.")
     }
     return(data.frame(
       "CI" = ci * 100,
@@ -222,7 +222,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
   N <- length(x)
   if (N < 3) {
     if (verbose) {
-      warning("HDI: the posterior is too short, returning NAs.")
+      warning("The posterior is too short, returning NAs.")
     }
     return(data.frame(
       "CI" = ci * 100,
@@ -237,7 +237,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
 
   if (window_size < 2) {
     if (verbose) {
-      warning("HDI: `ci` is too small or x does not contain enough data points, returning NAs.")
+      warning("`ci` is too small or x does not contain enough data points, returning NAs.")
     }
     return(data.frame(
       "CI" = ci * 100,
@@ -249,10 +249,25 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
   nCIs <- length(x_sorted) - window_size
   ci.width <- sapply(1:nCIs, function(.x) x_sorted[.x + window_size] - x_sorted[.x])
 
+  # find minimum of width differences, check for multiple minima
+  min_i <- which(ci.width == min(ci.width))
+  n_candies <- length(min_i)
+
+  if (n_candies > 1) {
+    if (any(diff(sort(min_i)) != 1)) {
+      if (verbose) {
+        warning("Identical densities found along different segments of the distribution, choosing rightmost.")
+      }
+      min_i <- max(min_i)
+    } else {
+      min_i <- floor(mean(min_i))
+    }
+  }
+
   data.frame(
     "CI" = ci * 100,
-    "CI_low" = x_sorted[which.min(ci.width)],
-    "CI_high" = x_sorted[which.min(ci.width) + window_size]
+    "CI_low" = x_sorted[min_i],
+    "CI_high" = x_sorted[min_i + window_size]
   )
 }
 
