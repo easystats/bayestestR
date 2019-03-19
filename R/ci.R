@@ -27,7 +27,7 @@
 #' ci(model, ci = c(.80, .90, .95))}
 #'
 #' @export
-ci <- function(posterior, ci = .90, ...) {
+ci <- function(posterior, ...) {
   UseMethod("ci")
 }
 
