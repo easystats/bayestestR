@@ -180,11 +180,11 @@ p_map(posterior = rnorm(1000, 1, 1))
 
 ### Probability of a Value
 
-**`rope_bounds()`**: Find default equivalence (ROPE) region bounds of
+**`rope_range()`**: Find default equivalence (ROPE) region bounds of
 Bayesian models.
 
 ``` r
-rope_bounds(model)
+rope_range(model)
 ```
 
 ### Perfect Normal Distribution
