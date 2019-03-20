@@ -1,5 +1,5 @@
 ---
-title: "Get Started with the Bayesian Framework"
+title: "Get Started with Bayesian Analysis"
 output: 
   github_document:
     toc: true
@@ -63,11 +63,11 @@ install.packages("devtools")
 devtools::install_github("easystats/easystats")
 ```
 
-Now that it's done, we can *load* the packages we need, in this case [`report`](https://github.com/easystats/report), which combines `bayestestR` and other packages together.
+<!-- Now that it's done, we can *load* the packages we need, in this case [`report`](https://github.com/easystats/report), which combines `bayestestR` and other packages together. -->
 
-```{r message=FALSE, warning=FALSE}
-library(report)  # Calling library(...) enables you to use the package's functions
-```
+<!-- ```{r message=FALSE, warning=FALSE} -->
+<!-- library(report)  # Calling library(...) enables you to use the package's functions -->
+<!-- ``` -->
 
 
 Let's also install and load the [`rstanarm`](https://mc-stan.org/rstanarm/), used for fitting Bayesian models.
@@ -81,32 +81,60 @@ library(rstanarm)
 
 ### Traditional linear regression
 
-Let's fit a simple frequentist linear regression between two numeric variables, `Sepal.Length` and `Petal.Length` from the famous [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included in R.
+Let's fit a simple frequentist linear regression (the `lm()` function stands for *linear model*) between two numeric variables, `Sepal.Length` and `Petal.Length` from the famous [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 model <- lm(Sepal.Length ~ Petal.Length, data=iris)
-report(model)
+summary(model)
 ```
 ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 library(dplyr)
 
 lm(Sepal.Length ~ Petal.Length, data=iris) %>% 
-  report() %>% 
+  summary() %>% 
   to_text(width=100)
 ```
 
+<!-- ```{r message=FALSE, warning=FALSE, eval=FALSE} -->
+<!-- model <- lm(Sepal.Length ~ Petal.Length, data=iris) -->
+<!-- report(model) -->
+<!-- ``` -->
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA} -->
+<!-- library(dplyr) -->
+
+<!-- lm(Sepal.Length ~ Petal.Length, data=iris) %>%  -->
+<!--   report() %>%  -->
+<!--   to_text(width=100) -->
+<!-- ``` -->
+
 This analysis suggests that there is a **significant** (*whatever that means*) and **positive** (with a coefficient of `0.41`) linear relationship between the two variables. 
 
-*Fitting and interpreting frequentist models is so easy it is normal that people use it instead of the Bayesian framework... right?*
+*Fitting and interpreting **frequentist models is so easy** that it is obvious that people use it instead of the Bayesian framework... right?*
 
 **Not anymore.**
 
 
 ### Bayesian linear regression
 
+<!-- ```{r message=FALSE, warning=FALSE, eval=FALSE} -->
+<!-- model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris) -->
+<!-- report(model) -->
+<!-- ``` -->
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='hide'} -->
+<!-- library(rstanarm) -->
+<!-- set.seed(333) -->
+
+<!-- model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris) -->
+<!-- ``` -->
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA} -->
+<!-- model %>%  -->
+<!--   report() %>%  -->
+<!--   to_text(width=100) -->
+<!-- ``` -->
+
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
-report(model)
+summary(model)
 ```
 ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='hide'}
 library(rstanarm)
@@ -116,11 +144,11 @@ model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
 ```
 ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
 model %>% 
-  report() %>% 
-  to_text(width=100)
+  summary()
 ```
 
-**That's it!** You fitted a Bayesian version of the model by simply using [`stan_glm()`](https://mc-stan.org/rstanarm/reference/stan_glm.html) instead of `lm()`. The conclusion that we can drawn, in this, are very similar. The effect (*the median of the effect's posterior distribution*) is about `0.41`, and it can be also be considered as *significant* in the Bayesian sense.
+
+**That's it!** You fitted a Bayesian version of the model by simply using [`stan_glm()`](https://mc-stan.org/rstanarm/reference/stan_glm.html) instead of `lm()`. The conclusion that we can drawn, for this example, are very similar. The effect (*the median of the effect's posterior distribution*) is about `0.41`, and it can be also be considered as *significant* in the Bayesian sense.
 
 **So, ready to learn more?** Check out the [**next tutorial**](https://easystats.github.io/bayestestR/articles/1_Example1_GLM.html)!
 

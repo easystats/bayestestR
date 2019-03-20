@@ -24,8 +24,6 @@
 #'   (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the
 #'   ROPE as an index for "null-hypothesis" testing (as understood under the
 #'   Bayesian framework, see \link[=equivalence_test]{equivalence_test}).
-#'   Besides the ROPE-based decision criteria, the proportion of the 95\%
-#'   CI that falls in the ROPE can be used as a continuous index.
 #'
 #' @examples
 #' library(bayestestR)

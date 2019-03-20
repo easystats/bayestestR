@@ -26,6 +26,7 @@ test_that("rstanarm", {
   testthat::expect_equal(rope_range(model)[1], -0.043, tol = 0.1)
 
   testthat::expect_is(hdi(model), "data.frame")
+  testthat::expect_is(ci(model), "data.frame")
   testthat::expect_is(rope(model), "data.frame")
   testthat::expect_is(equivalence_test(model), "data.frame")
   testthat::expect_is(map_estimate(model), "data.frame")
