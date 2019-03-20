@@ -1,5 +1,5 @@
 ---
-title: "Comparison of Point-Estimates"
+title: "In-Depth: Comparison of Point-Estimates"
 output: 
   github_document:
     toc: true

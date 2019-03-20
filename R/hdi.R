@@ -1,9 +1,9 @@
 #' Highest Density Interval (HDI)
 #'
-#' Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
+#' Compute the \strong{Highest Density Interval (HDI)} of a posterior distribution, \emph{i.e.}, the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as \strong{Credible Interval (CI)}.
 #'
-#' @details Unlike equal-tailed intervals that typically exclude 2.5\% from each tail
-#'   of the distribution, the HDI is \emph{not} equal-tailed and therefor always
+#' @details Unlike equal-tailed intervals (see \link{ci}) that typically exclude 2.5\% from each tail
+#'   of the distribution, the HDI is \emph{not} equal-tailed and therefore always
 #'   includes the mode(s) of posterior distributions.
 #'   \cr \cr
 #'   By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}),

@@ -1,6 +1,6 @@
 #' Maximum A Posteriori (MAP) Estimate
 #'
-#' Find the Highest Maximum A Posteriori (MAP) estimate of a posterior. It corresponds to the 'peak' of the posterior distribution.
+#' Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution.
 #'
 #' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param precision Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.
