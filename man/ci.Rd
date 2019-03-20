@@ -7,7 +7,7 @@
 \alias{ci.brmsfit}
 \title{Confidence/Credible Interval}
 \usage{
-ci(posterior, ci = 0.9, ...)
+ci(posterior, ...)
 
 \method{ci}{numeric}(posterior, ci = 0.9, verbose = TRUE, ...)
 
@@ -21,9 +21,9 @@ ci(posterior, ci = 0.9, ...)
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
-\item{ci}{Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.}
-
 \item{...}{Currently not used.}
+
+\item{ci}{Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.}
 
 \item{verbose}{Toggle off warnings.}
 

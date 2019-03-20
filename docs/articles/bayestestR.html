@@ -154,7 +154,7 @@ Accurate depiction of a Bayesian user estimating a credible interval.
 <a href="#bayestestr-installation" class="anchor"></a>BayestestR Installation</h3>
 <p>You can install <code>bayestestR</code> along with the whole <a href="https://github.com/easystats/easystats"><strong>easystats</strong></a> suite by running the following:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"easystats/easystats"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"easystats/easystats"</span>)</a></code></pre></div>
 <p>Now that it’s done, we can <em>load</em> the packages we need, in this case <a href="https://github.com/easystats/report"><code>report</code></a>, which combines <code>bayestestR</code> and other packages together.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(report)  <span class="co"># Calling library(...) enables you to use the package's functions</span></a></code></pre></div>
 <p>Let’s also install and load the <a href="https://mc-stan.org/rstanarm/"><code>rstanarm</code></a>, used for fitting Bayesian models.</p>
@@ -183,16 +183,16 @@ Within this model:
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data=</span>iris)</a>
 <a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/report/topics/report">report</a></span>(model)</a></code></pre></div>
 <pre><code> We fitted a Bayesian linear model to predict Sepal.Length with Petal.Length. Priors over parameters
-were all set as normal (mean = 0.00, SD = 1.17) distributions.
+were set as normal (mean = 0.00, SD = 1.17) distributions.
 
   The model's explanatory power is substantial (R2's median = 0.76, LOO adj. R2 = 0.75). The model's
 intercept has a median of 4.31.
 
-Within this model: 
-  - Petal.Length has a probability of 100.00% of being positive (median = 0.41, 90% CI [0.38, 0.44])
+Within this model:
+   - Petal.Length has a probability of 100.00% of being positive (median = 0.41, 90% CI [0.38, 0.44])
 and can be considered as significant (0.00% in ROPE).</code></pre>
 <p><strong>That’s it!</strong> You fitted a Bayesian version of the model by simply using <a href="https://mc-stan.org/rstanarm/reference/stan_glm.html"><code>stan_glm()</code></a> instead of <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code>. The conclusion that we can drawn, in this, are very similar. The effect (<em>the median of the effect’s posterior distribution</em>) is about <code>0.41</code>, and it can be also be considered as <em>significant</em> in the Bayesian sense.</p>
-<p><strong>So, ready to learn more?</strong> Check out the next tutorial <strong>[ADD LINK]</strong>!</p>
+<p><strong>So, ready to learn more?</strong> Check out the <a href="https://easystats.github.io/bayestestR/articles/1_Example1_GLM.html"><strong>next tutorial</strong></a>!</p>
 </div>
 </div>
 <div id="references" class="section level2 unnumbered">
