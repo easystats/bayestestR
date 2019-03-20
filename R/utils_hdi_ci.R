@@ -50,7 +50,6 @@
 #' @importFrom insight get_parameters
 #' @keywords internal
 .compute_interval_stanreg <- function(posterior, ci, effects, parameters, verbose, fun) {
-
   list <- lapply(c("fixed", "random"), function(x) {
     parms <- insight::get_parameters(posterior, effects = x, parameters = parameters)
     tmp <- do.call(rbind, sapply(
@@ -58,8 +57,8 @@
       get(fun, asNamespace("bayestestR")),
       ci = ci,
       verbose = verbose,
-      simplify = FALSE)
-    )
+      simplify = FALSE
+    ))
 
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_stanreg(
@@ -108,8 +107,8 @@
       get(fun, asNamespace("bayestestR")),
       ci = ci,
       verbose = verbose,
-      simplify = FALSE)
-    )
+      simplify = FALSE
+    ))
 
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_brms(
@@ -154,5 +153,4 @@
 
   class(dat) <- c(fun, class(dat))
   dat
-
 }

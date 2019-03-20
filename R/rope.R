@@ -29,7 +29,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' rope(posterior = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 #' rope(posterior = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
@@ -39,13 +39,13 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
 #' }
-#'
+#' 
 #' @importFrom insight get_parameters is_multivariate print_color
 #' @export
 rope <- function(posterior, ...) {
@@ -81,8 +81,9 @@ print.rope <- function(x, digits = 2, ...) {
   # In case we have ropes for different CIs, we also want this information
   # So we first check if values in the CI column differ, and if so, we also
   # keep this column for printing
-  if (!all(x$CI[1] == x$CI))
+  if (!all(x$CI[1] == x$CI)) {
     cols <- c("CI", cols)
+  }
 
   # Either way, we need to know the different CI-values, so we can
   # split the data frame for printing later...
@@ -187,8 +188,8 @@ rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fi
       range = range,
       ci = ci,
       verbose = verbose,
-      simplify = FALSE)
-    )
+      simplify = FALSE
+    ))
 
     HDI_area <- attr(tmp, "HDI_area")
 
@@ -252,8 +253,8 @@ rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fi
       range = range,
       ci = ci,
       verbose = verbose,
-      simplify = FALSE)
-    )
+      simplify = FALSE
+    ))
 
     HDI_area <- attr(tmp, "HDI_area")
 

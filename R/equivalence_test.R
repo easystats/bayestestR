@@ -21,23 +21,23 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' equivalence_test(posterior = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 #' equivalence_test(posterior = rnorm(1000, 1, 1), ci = c(.50, .99))
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
 #' equivalence_test(model, ci = c(.50, 1))
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
-#' equivalence_test(model, ci = c(.50, .99))}
-#'
+#' equivalence_test(model, ci = c(.50, .99))
+#' }
+#' 
 #' @importFrom insight print_color
 #' @export
 equivalence_test <- function(posterior, ...) {
@@ -58,7 +58,7 @@ equivalence_test.numeric <- function(posterior, range = "default", ci = .95, ver
   } else {
     # Related to guidelines for full rope (https://easystats.github.io/bayestestR/articles/4_Guidelines.html)
     out$ROPE_Equivalence <- ifelse(out$ROPE_Percentage < 2.5, "rejected",
-                                   ifelse(out$ROPE_Percentage > 97.5, "accepted", "undecided")
+      ifelse(out$ROPE_Percentage > 97.5, "accepted", "undecided")
     )
   }
 

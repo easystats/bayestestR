@@ -29,7 +29,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' posterior <- rnorm(1000)
 #' hdi(posterior, ci = .90)
 #' hdi(posterior, ci = c(.80, .90, .95))
@@ -38,13 +38,13 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
 #' hdi(model, ci = c(.80, .90, .95))
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
 #' hdi(model, ci = c(.80, .90, .95))
 #' }
-#'
+#' 
 #' @author Credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute} and \href{https://github.com/mikemeredith/HDInterval}{HDInterval}.
 #'
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
@@ -91,7 +91,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     return(check_ci)
   }
 
-  x_sorted <- sort.int(x, method = "quick")  # removes NA/NaN, but not Inf
+  x_sorted <- sort.int(x, method = "quick") # removes NA/NaN, but not Inf
   window_size <- ceiling(ci * length(x_sorted))
 
   if (window_size < 2) {
@@ -129,4 +129,3 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     "CI_high" = x_sorted[min_i + window_size]
   )
 }
-

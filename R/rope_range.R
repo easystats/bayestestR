@@ -7,18 +7,18 @@
 #' @examples
 #' \dontrun{
 #' library(rstanarm)
-#' model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family="binomial")
+#' model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family = "binomial")
 #' rope_range(model)
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' rope_range(model)
 #' }
-#'
+#' 
 #' @importFrom insight get_response model_info is_multivariate
 #' @importFrom stats qlogis sd
 #' @export
-rope_range <- function(model){
+rope_range <- function(model) {
   response <- insight::get_response(model)
   information <- insight::model_info(model)
 
