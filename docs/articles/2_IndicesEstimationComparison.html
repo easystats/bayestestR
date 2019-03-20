@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Comparison of Point-Estimates • bayestestR</title>
+<title>In-Depth 1: Comparison of Point-Estimates • bayestestR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Comparison of Point-Estimates">
+<script src="../pkgdown.js"></script><meta property="og:title" content="In-Depth 1: Comparison of Point-Estimates">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -72,13 +72,10 @@
       <a href="../articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
     </li>
     <li>
-      <a href="../articles/1_IndicesDescription.html">Indices Description</a>
+      <a href="../articles/2_IndicesEstimationComparison.html">In-Depth 1: Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="../articles/2_IndicesEstimationComparison.html">Comparison of Point-Estimates</a>
-    </li>
-    <li>
-      <a href="../articles/3_IndicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
+      <a href="../articles/3_IndicesExistenceComparison.html">In-Depth 2: Comparison of Indices of Effect Existence</a>
     </li>
     <li>
       <a href="../articles/4_Guidelines.html">Reporting Guidelines</a>
@@ -108,7 +105,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Comparison of Point-Estimates</h1>
+      <h1>In-Depth 1: Comparison of Point-Estimates</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/2_IndicesEstimationComparison.Rmd"><code>vignettes/2_IndicesEstimationComparison.Rmd</code></a></small>
@@ -139,11 +136,11 @@
 <h3 class="hasAnchor">
 <a href="#simulate-regression-data-with-noise" class="anchor"></a>Simulate Regression Data with Noise</h3>
 <p>We simulated 36000 Bayesian and frequentist linear regression models with systematic variation of “true” effect (1 or 0), sample size (20, 40, 60), levels of noise (0.1, 2.5, 5), and priors (correct - same as true effect or incorrect).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)</a>
-<a class="sourceLine" id="cb1-4" title="4"></a>
-<a class="sourceLine" id="cb1-5" title="5">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayes_indices.csv"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)
+
+df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayes_indices.csv"</span>)</code></pre></div>
 <p>For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it <a href="https://easystats.github.io/circus/articles/bayesian_indices.html">here</a>.</p>
 </div>
 </div>
@@ -157,66 +154,66 @@
 <div id="sensitivity-to-noise" class="section level4">
 <h4 class="hasAnchor">
 <a href="#sensitivity-to-noise" class="anchor"></a>Sensitivity to Noise</h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">select</span>(noise, beta, prior_correct, effect, median, mean, map) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>noise, <span class="op">-</span>effect, <span class="op">-</span>prior_correct) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">noise =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(noise),</a>
-<a class="sourceLine" id="cb2-5" title="5">         <span class="dt">prior_correct =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(prior_correct),</a>
-<a class="sourceLine" id="cb2-6" title="6">         <span class="dt">value =</span> value<span class="op">-</span>effect) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> noise, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">color=</span>prior_correct)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-10" title="10"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-11" title="11"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"map"</span> =<span class="st"> "#795548"</span>, <span class="st">"mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
-<a class="sourceLine" id="cb2-12" title="12">                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-13" title="13"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span>=<span class="st">"#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span>=<span class="st">"#8BC34A"</span>),</a>
-<a class="sourceLine" id="cb2-14" title="14">                     <span class="dt">name =</span> <span class="st">"Correct Prior"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-16" title="16"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Noise"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-17" title="17"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(noise, beta, prior_correct, effect, median, mean, map) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>noise, <span class="op">-</span>effect, <span class="op">-</span>prior_correct) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">noise =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(noise),
+         <span class="dt">prior_correct =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(prior_correct),
+         <span class="dt">value =</span> value<span class="op">-</span>effect) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> noise, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">color=</span>prior_correct)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"map"</span> =<span class="st"> "#795548"</span>, <span class="st">"mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"median"</span> =<span class="st"> "#FFEB3B"</span>),
+                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span>=<span class="st">"#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span>=<span class="st">"#8BC34A"</span>),
+                     <span class="dt">name =</span> <span class="st">"Correct Prior"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Noise"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</code></pre></div>
 <p><img src="2_IndicesEstimationComparison_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 </div>
 <div id="sensitivity-to-sample-size" class="section level4">
 <h4 class="hasAnchor">
 <a href="#sensitivity-to-sample-size" class="anchor"></a>Sensitivity to Sample Size</h4>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="st">  </span><span class="kw">select</span>(sample_size, beta, effect, prior_correct, median, mean, map) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>sample_size, <span class="op">-</span>effect, <span class="op">-</span>prior_correct) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(sample_size),</a>
-<a class="sourceLine" id="cb3-5" title="5">         <span class="dt">prior_correct =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(prior_correct),</a>
-<a class="sourceLine" id="cb3-6" title="6">         <span class="dt">value =</span> value<span class="op">-</span>effect) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sample_size, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">color=</span>prior_correct)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"map"</span> =<span class="st"> "#795548"</span>, <span class="st">"mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
-<a class="sourceLine" id="cb3-12" title="12">                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span>=<span class="st">"#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span>=<span class="st">"#8BC34A"</span>),</a>
-<a class="sourceLine" id="cb3-14" title="14">                     <span class="dt">name =</span> <span class="st">"Correct Prior"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Sample Size"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(sample_size, beta, effect, prior_correct, median, mean, map) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>sample_size, <span class="op">-</span>effect, <span class="op">-</span>prior_correct) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(sample_size),
+         <span class="dt">prior_correct =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(prior_correct),
+         <span class="dt">value =</span> value<span class="op">-</span>effect) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sample_size, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">color=</span>prior_correct)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"map"</span> =<span class="st"> "#795548"</span>, <span class="st">"mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"median"</span> =<span class="st"> "#FFEB3B"</span>),
+                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span>=<span class="st">"#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span>=<span class="st">"#8BC34A"</span>),
+                     <span class="dt">name =</span> <span class="st">"Correct Prior"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Sample Size"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</code></pre></div>
 <p><img src="2_IndicesEstimationComparison_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div id="statistical-modelling" class="section level4">
 <h4 class="hasAnchor">
 <a href="#statistical-modelling" class="anchor"></a>Statistical Modelling</h4>
 <p>We fitted a (frequentist) multiple linear regression to statistically test the effects and interactions of noise, sample size and priors on the effect estimates.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">select</span>(sample_size, beta, effect, prior_correct, median, mean, map, noise) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>sample_size, <span class="op">-</span>effect, <span class="op">-</span>prior_correct, <span class="op">-</span>noise) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">noise=</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(noise),</a>
-<a class="sourceLine" id="cb4-5" title="5">         <span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(sample_size),</a>
-<a class="sourceLine" id="cb4-6" title="6">         <span class="dt">prior_correct =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(prior_correct)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(effect <span class="op">~</span><span class="st"> </span>estimate<span class="op">/</span>value <span class="op">*</span><span class="st"> </span>noise <span class="op">*</span><span class="st"> </span>sample_size <span class="op">*</span><span class="st"> </span>prior_correct, <span class="dt">data=</span>., <span class="dt">family=</span><span class="st">"binomial"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="st">  </span>broom<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">tidy</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="st">  </span><span class="kw">select</span>(term, estimate, <span class="dt">p=</span>p.value) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(term, <span class="st">'value'</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-11" title="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(term, <span class="st">":value"</span>),</a>
-<a class="sourceLine" id="cb4-12" title="12">         <span class="dt">term =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(term, <span class="st">"estimate"</span>),</a>
-<a class="sourceLine" id="cb4-13" title="13">         <span class="dt">p =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.001</span>, <span class="st">"&lt; .001***"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.01</span>, <span class="st">"&lt; .01**"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.05</span>, <span class="st">"&lt; .05*"</span>, <span class="st">"&gt; .05"</span>)))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-14" title="14"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(term, <span class="st">':'</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="dt">digits=</span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(sample_size, beta, effect, prior_correct, median, mean, map, noise) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>sample_size, <span class="op">-</span>effect, <span class="op">-</span>prior_correct, <span class="op">-</span>noise) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">noise=</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(noise),
+         <span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(sample_size),
+         <span class="dt">prior_correct =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(prior_correct)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(effect <span class="op">~</span><span class="st"> </span>estimate<span class="op">/</span>value <span class="op">*</span><span class="st"> </span>noise <span class="op">*</span><span class="st"> </span>sample_size <span class="op">*</span><span class="st"> </span>prior_correct, <span class="dt">data=</span>., <span class="dt">family=</span><span class="st">"binomial"</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>broom<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">tidy</a></span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(term, estimate, <span class="dt">p=</span>p.value) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(term, <span class="st">'value'</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(term, <span class="st">":value"</span>),
+         <span class="dt">term =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(term, <span class="st">"estimate"</span>),
+         <span class="dt">p =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span>.<span class="dv">001</span>, <span class="st">"&lt; .001***"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span>.<span class="dv">01</span>, <span class="st">"&lt; .01**"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span>.<span class="dv">05</span>, <span class="st">"&lt; .05*"</span>, <span class="st">"&gt; .05"</span>)))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(term, <span class="st">':'</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="dt">digits=</span><span class="dv">2</span>)</code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">term</th>
@@ -372,20 +369,20 @@
 <h3 class="hasAnchor">
 <a href="#relationship-with-the-frequentist-beta" class="anchor"></a>Relationship with the Frequentist Beta</h3>
 <p>In the next section, we will compare the three Bayesian indices with the frequentist beta.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw">select</span>(sample_size, beta, effect, prior_correct, median, mean, map, noise) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>beta, <span class="op">-</span>sample_size, <span class="op">-</span>effect, <span class="op">-</span>prior_correct, <span class="op">-</span>noise) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect),</a>
-<a class="sourceLine" id="cb5-5" title="5">         <span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(sample_size),</a>
-<a class="sourceLine" id="cb5-6" title="6">         <span class="dt">estimate =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(estimate, <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"mean"</span>, <span class="st">"median"</span>, <span class="st">"map"</span>))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> beta, <span class="dt">y =</span> value, <span class="dt">color =</span> effect, <span class="dt">shape=</span>sample_size)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.05</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>estimate, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-11" title="11"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-12" title="12"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>), <span class="dt">name=</span><span class="st">"Effect"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-13" title="13"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">colour =</span> <span class="kw">guide_legend</span>(<span class="dt">override.aes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">alpha =</span> <span class="dv">1</span>)),</a>
-<a class="sourceLine" id="cb5-14" title="14">         <span class="dt">shape =</span> <span class="kw">guide_legend</span>(<span class="dt">override.aes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">alpha =</span> <span class="dv">1</span>), <span class="dt">title=</span><span class="st">"Sample Size"</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(sample_size, beta, effect, prior_correct, median, mean, map, noise) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>beta, <span class="op">-</span>sample_size, <span class="op">-</span>effect, <span class="op">-</span>prior_correct, <span class="op">-</span>noise) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect),
+         <span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(sample_size),
+         <span class="dt">estimate =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(estimate, <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"mean"</span>, <span class="st">"median"</span>, <span class="st">"map"</span>))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> beta, <span class="dt">y =</span> value, <span class="dt">color =</span> effect, <span class="dt">shape=</span>sample_size)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.05</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>estimate, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>), <span class="dt">name=</span><span class="st">"Effect"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">colour =</span> <span class="kw">guide_legend</span>(<span class="dt">override.aes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">alpha =</span> <span class="dv">1</span>)),
+         <span class="dt">shape =</span> <span class="kw">guide_legend</span>(<span class="dt">override.aes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">alpha =</span> <span class="dv">1</span>), <span class="dt">title=</span><span class="st">"Sample Size"</span>))</code></pre></div>
 <p><img src="2_IndicesEstimationComparison_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 </div>

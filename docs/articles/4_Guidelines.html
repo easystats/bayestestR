@@ -72,13 +72,10 @@
       <a href="../articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
     </li>
     <li>
-      <a href="../articles/1_IndicesDescription.html">Indices Description</a>
+      <a href="../articles/2_IndicesEstimationComparison.html">In-Depth 1: Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="../articles/2_IndicesEstimationComparison.html">Comparison of Point-Estimates</a>
-    </li>
-    <li>
-      <a href="../articles/3_IndicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
+      <a href="../articles/3_IndicesExistenceComparison.html">In-Depth 2: Comparison of Indices of Effect Existence</a>
     </li>
     <li>
       <a href="../articles/4_Guidelines.html">Reporting Guidelines</a>
@@ -132,43 +129,29 @@
 <li>The <strong>traditional ROPE</strong> (using a 90% HDI) is not sensitive to delineate highly “significant” effects. The full ROPE (100% HDI) does not present the same flaw.</li>
 <li>The <strong>Probability of Direction (<em>p</em>d)</strong> is the closest index to the frequentist <em>p</em> value.</li>
 </ul>
-<p><strong>Thus, to minimally describe the posterior distribution of a parameter, we suggest reporting the <em>median</em> and the <em>90% CI</em> for parameter characterisation and, in the context of null-hypothesis testing, the Probability of Direction (<em>p</em>d) for effect existence and, especially in the context of confirmatory analyses, the ROPE (full) with an explicitly specified range for effect significance.</strong></p>
+<p><strong>Thus, to minimally describe the posterior distribution of a parameter, we suggest reporting the <em>median</em> and the <em>90% CI</em> (using HDI rather than quantiles) for parameter characterisation and, in the context of null-hypothesis testing, the Probability of Direction (<em>p</em>d) for effect existence and, especially in the context of confirmatory analyses, the ROPE (full) with an explicitly specified range for effect significance.</strong></p>
 <div id="interpretation-rules-of-thumb" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interpretation-rules-of-thumb" class="anchor"></a>Interpretation Rules of Thumb</h2>
 <p><strong>The following thresholds are presented as landmarks only, and any use of such “labels” should be explicitly justified. Please consider with caution.</strong></p>
 <ul>
-<li>
-<p><strong>Probability of Direction (<em>p</em>d)</strong></p>
+<li><strong>Probability of Direction (<em>p</em>d)</strong></li>
+</ul>
+<p>In most cases, it seems that the <em>pd</em> corresponds to the frequentist one-sided <em>p</em>-value through the formula <code>p-value = (1-pd/100)</code>. Thus, a <code>pd</code> of <code>95\%</code>, <code>97.5\%</code> <code>99.5\%</code> and <code>99.95\%</code> corresponds approximately to a two-sided <em>p</em>-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code>. Thus, for convience, we recommend using the following reference values:</p>
+<pre><code>- *p*d **\&lt;= 95\%** ~ *p* \&gt; .1: uncertain
+- *p*d **\&gt; 95\%** ~ *p* \&lt; .1: possibly existing
+- *p*d **\&gt; 97\%**: likely existing
+- *p*d **\&gt; 99\%**: probably existing
+- *p*d **\&gt; 99.9\%**: certainly existing</code></pre>
 <ul>
-<li>
-<em>p</em>d <strong>&lt;= 95%</strong> ~ <em>p</em> &gt; .1: uncertain</li>
-<li>
-<em>p</em>d <strong>&gt; 95%</strong> ~ <em>p</em> &lt; .1: possibly existing</li>
-<li>
-<em>p</em>d <strong>&gt; 97.5%</strong> ~ <em>p</em> &lt; .05: likely existing</li>
-<li>
-<em>p</em>d <strong>&gt; 99%</strong> ~ <em>p</em> &lt; .01: probably existing</li>
-<li>
-<em>p</em>d <strong>&gt; 99.9%</strong> ~ <em>p</em> &lt; .001: certainly existing</li>
+<li><strong>ROPE (full)</strong></li>
 </ul>
-</li>
-<li>
-<p><strong>ROPE (full)</strong>: Extra caution is required as its interpretation highly depends on other parameters such as sample size and ROPE bounds.</p>
-<ul>
-<li>
-<strong>&gt; 99%</strong> in ROPE: negligible (we can accept the null hypothesis)</li>
-<li>
-<strong>&gt; 97.5%</strong> in ROPE: probably negligible</li>
-<li>
-<strong>&lt;= 97.5%</strong> &amp; <strong>&gt;= 2.5%</strong> in ROPE: not significant</li>
-<li>
-<strong>&lt; 2.5%</strong> in ROPE: probably significant</li>
-<li>
-<strong>&lt; 1%</strong> in ROPE: significant (we can reject the null hypothesis)</li>
-</ul>
-</li>
-</ul>
+<p>Extra caution is required as its interpretation highly depends on other parameters such as sample size and ROPE range.</p>
+<pre><code>- **\&gt; 99\%** in ROPE: negligible (we can accept the null hypothesis)
+- **\&gt; 97.5\%** in ROPE: probably negligible
+- **\&lt;= 97.5\%** \&amp; **\&gt;= 2.5\%** in ROPE: not significant
+- **\&lt; 2.5\%** in ROPE: probably significant
+- **\&lt; 1\%** in ROPE: significant (we can reject the null hypothesis)</code></pre>
 <p><em>Note: If you have any advice, opinion or such, we encourage you to let us know by opening an <a href="https://github.com/easystats/bayestestR/issues">discussion thread</a> or making a pull request.</em></p>
 </div>
 <div id="template-sentence" class="section level2">

@@ -39,7 +39,7 @@
 
 <meta property="og:title" content="Test for Practical Equivalence — equivalence_test" />
 
-<meta property="og:description" content="Perform a Test for Practical Equivalence based on the &quot;HDI+ROPE decision rule&quot; (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated &quot;null hypothesis&quot;." />
+<meta property="og:description" content="Perform a Test for Practical Equivalence based on the &quot;HDI+ROPE decision rule&quot; (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated &quot;null hypothesis&quot; (i.e., a ROPE)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -111,13 +111,10 @@
       <a href="../articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
     </li>
     <li>
-      <a href="../articles/1_IndicesDescription.html">Indices Description</a>
+      <a href="../articles/2_IndicesEstimationComparison.html">In-Depth 1: Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="../articles/2_IndicesEstimationComparison.html">Comparison of Point-Estimates</a>
-    </li>
-    <li>
-      <a href="../articles/3_IndicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
+      <a href="../articles/3_IndicesExistenceComparison.html">In-Depth 2: Comparison of Indices of Effect Existence</a>
     </li>
     <li>
       <a href="../articles/4_Guidelines.html">Reporting Guidelines</a>
@@ -155,7 +152,7 @@
 
     <div class="ref-description">
     
-    <p>Perform a Test for Practical Equivalence based on the "HDI+ROPE decision rule" (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis".</p>
+    <p>Perform a <strong>Test for Practical Equivalence</strong> based on the <em>"HDI+ROPE decision rule"</em> (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (<em>i.e.</em>, a <a href='rope.html'>ROPE</a>).</p>
     
     </div>
 
@@ -215,10 +212,10 @@ for the output.</p></td>
   "rejected". If the ROPE completely covers the HDI, i.e. all most credible
   values of a parameter are inside the region of practical equivalence, the
   null hypothesis is accepted. Else, it’s undecided whether to accept or
-  reject the null hypothesis. If the full ROPE is used (i.e., 100% of the
+  reject the null hypothesis. If the full ROPE is used (<em>i.e.</em>, 100% of the
   HDI), then the null hypothesis is rejected or accepted if the percentage
-  of the posterior within the ROPE is smaller than to 1% or greater  than
-  99%. Desirable results are low proportions inside the ROPE  (the closer
+  of the posterior within the ROPE is smaller than to 2.5% or greater  than
+  97.5%. Desirable results are low proportions inside the ROPE  (the closer
   to zero the better) and the H0 should be rejected.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -256,8 +253,7 @@ for the output.</p></td>
 #&gt; 
 #&gt;         H0 inside ROPE      99% HDI
 #&gt;  undecided      4.34 % [-1.63 3.51]
-#&gt; </div><div class='input'>
-</div></span><span class='co'># NOT RUN {</span>
+#&gt; </div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>equivalence_test</span>(<span class='no'>model</span>)

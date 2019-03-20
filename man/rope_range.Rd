@@ -15,7 +15,7 @@ Kruschke (2018) suggests that such null value could be set, by default, to the -
 \examples{
 \dontrun{
 library(rstanarm)
-model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family="binomial")
+model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family = "binomial")
 rope_range(model)
 
 library(brms)

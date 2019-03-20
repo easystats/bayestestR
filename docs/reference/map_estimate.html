@@ -39,7 +39,7 @@
 
 <meta property="og:title" content="Maximum A Posteriori (MAP) Estimate — map_estimate" />
 
-<meta property="og:description" content="Find the Highest Maximum A Posteriori (MAP) estimate of a posterior. It corresponds to the 'peak' of the posterior distribution." />
+<meta property="og:description" content="Find the Highest Maximum A Posteriori (MAP) estimate of a posterior. It corresponds to the &quot;peak&quot; (or the mode) of the posterior distribution." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -111,13 +111,10 @@
       <a href="../articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
     </li>
     <li>
-      <a href="../articles/1_IndicesDescription.html">Indices Description</a>
+      <a href="../articles/2_IndicesEstimationComparison.html">In-Depth 1: Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="../articles/2_IndicesEstimationComparison.html">Comparison of Point-Estimates</a>
-    </li>
-    <li>
-      <a href="../articles/3_IndicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
+      <a href="../articles/3_IndicesExistenceComparison.html">In-Depth 2: Comparison of Indices of Effect Existence</a>
     </li>
     <li>
       <a href="../articles/4_Guidelines.html">Reporting Guidelines</a>
@@ -155,7 +152,7 @@
 
     <div class="ref-description">
     
-    <p>Find the Highest Maximum A Posteriori (MAP) estimate of a posterior. It corresponds to the 'peak' of the posterior distribution.</p>
+    <p>Find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior. It corresponds to the "peak" (or the <em>mode</em>) of the posterior distribution.</p>
     
     </div>
 
@@ -222,8 +219,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>)
 <span class='fu'>map_estimate</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; [1] 0.1164884</div><div class='input'><span class='fu'>map_estimate</span>(<span class='no'>posterior</span>, <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;         MAP MAP_density
-#&gt; 1 0.1164884   0.4051873</div><div class='input'>
-</div><span class='co'># NOT RUN {</span>
+#&gt; 1 0.1164884   0.4051873</div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>map_estimate</span>(<span class='no'>model</span>)

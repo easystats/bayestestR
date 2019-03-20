@@ -37,10 +37,10 @@ or the zero-inflated part of the modelbe returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \description{
-Compute the \strong{Probability of Direction} (\strong{pd}, also known as the Maximum Probability of Effect - \emph{MPE}). It varies between 50\% and 100\% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (\emph{i.e.}, is strongly correlated) to the frequentist \strong{p-value}.
+Compute the \strong{Probability of Direction} (\strong{\emph{p}d}, also known as the Maximum Probability of Effect - \emph{MPE}). It varies between 50\% and 100\% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (\emph{i.e.}, is strongly correlated) to the frequentist \strong{\emph{p}-value}.
 }
 \details{
-\strong{Relationship with the p-value}: In most cases, it seems that the \emph{pd} corresponds to the frequentist one-sided \emph{p}-value through the formula `p-value = (1-pd/100)`. Thus, a `pd` of `95\%`, `97.5\%` `99.5\%` and `99.95\%` corresponds approximately to a two-sided \emph{p}-value of respectively `.1`, `.05`, `.01` and `.001`. See the \href{https://easystats.github.io/bayestestR/articles/4_Guidelines.html}{\emph{reporting guidelines}}.
+\strong{Relationship with the p-value}: In most cases, it seems that the \emph{p}d corresponds to the frequentist one-sided \emph{p}-value through the formula `p-value = (1-pd/100)`. Thus, a `pd` of `95\%`, `97.5\%` `99.5\%` and `99.95\%` corresponds approximately to a two-sided \emph{p}-value of respectively `.1`, `.05`, `.01` and `.001`. See the \href{https://easystats.github.io/bayestestR/articles/4_Guidelines.html}{\emph{reporting guidelines}}.
 }
 \examples{
 library(bayestestR)

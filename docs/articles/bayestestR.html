@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Get Started with the Bayesian Framework • bayestestR</title>
+<title>Get Started with Bayesian Analysis • bayestestR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Get Started with the Bayesian Framework">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Get Started with Bayesian Analysis">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -72,13 +72,10 @@
       <a href="../articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
     </li>
     <li>
-      <a href="../articles/1_IndicesDescription.html">Indices Description</a>
+      <a href="../articles/2_IndicesEstimationComparison.html">In-Depth 1: Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="../articles/2_IndicesEstimationComparison.html">Comparison of Point-Estimates</a>
-    </li>
-    <li>
-      <a href="../articles/3_IndicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
+      <a href="../articles/3_IndicesExistenceComparison.html">In-Depth 2: Comparison of Indices of Effect Existence</a>
     </li>
     <li>
       <a href="../articles/4_Guidelines.html">Reporting Guidelines</a>
@@ -108,7 +105,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Get Started with the Bayesian Framework</h1>
+      <h1>Get Started with Bayesian Analysis</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/bayestestR.Rmd"><code>vignettes/bayestestR.Rmd</code></a></small>
@@ -121,7 +118,7 @@
 <div id="why-use-the-bayesian-framework" class="section level2">
 <h2 class="hasAnchor">
 <a href="#why-use-the-bayesian-framework" class="anchor"></a>Why use the Bayesian Framework?</h2>
-<p>Reasons to prefer this approach are <strong>reliability</strong>, <strong>accuracy</strong> (in noisy data and small samples), the possibility of introducing <strong>prior knowledge</strong> into the analysis and, critically, <strong>results intuitiveness</strong> and their <strong>straightforward interpretation</strong> <span class="citation">(Andrews and Baguley 2013; Etz and Vandekerckhove 2016; Kruschke 2010; Kruschke, Aguinis, and Joo 2012; Wagenmakers et al. 2018)</span>.</p>
+<p>Reasons to prefer this approach are <strong>reliability</strong>, <strong>accuracy</strong> (in noisy data and small samples), the possibility of introducing <strong>prior knowledge</strong> into the analysis and, critically, <strong>results intuitiveness</strong> and their <strong>straightforward interpretation</strong> <span class="citation">(Andrews and Baguley 2013; Etz and Vandekerckhove 2016; Kruschke 2010; Kruschke, Aguinis, and Joo 2012; E.-J. Wagenmakers et al. 2018)</span>.</p>
 <p>In general, the frequentist approach has been associated with the focus on null hypothesis testing, and the misuse of <em>p</em> values has been shown to critically contribute to the reproducibility crisis of psychological science <span class="citation">(Chambers et al. 2014; Szucs and Ioannidis 2016)</span>. There is a general agreement that the generalization of the Bayesian approach is one way of overcoming these issues <span class="citation">(Benjamin et al. 2018; Etz and Vandekerckhove 2016)</span>.</p>
 <p>Once we agreed that the Bayesian framework is the right way to go, you might wonder <em>what</em> is the Bayesian framework.</p>
 <p><strong>What’s all the fuss about?</strong></p>
@@ -139,11 +136,11 @@
 <li>To characterize our effects, <strong>no need of <em>p</em> values</strong> or other cryptic indices. We simply describe the posterior distribution of the effect. For example, we can report the median, the 90% <em>Credible</em> Interval or <a href="https://easystats.github.io/bayestestR/articles/4_Guidelines.html">other indices</a>.</li>
 </ul>
 <div class="figure" style="text-align: center">
-<img src="https://github.com/easystats/bayestestR/tree/master/man/figures/bayesianMaster.png" alt="Accurate depiction of a Bayesian user estimating a credible interval." width="50%"><p class="caption">
-Accurate depiction of a Bayesian user estimating a credible interval.
+<img src="https://github.com/easystats/bayestestR/raw/master/man/figures/bayesianMaster.png" alt="Accurate depiction of a regular Bayesian user estimating a credible interval." width="50%"><p class="caption">
+Accurate depiction of a regular Bayesian user estimating a credible interval.
 </p>
 </div>
-<p><em>Note: Altough the very reason of this package is to advocate for the use of Bayesian statistics, please note that there are arguments supporting frequentist indices (see for instance <a href="https://discourse.datamethods.org/t/language-for-communicating-frequentist-results-about-treatment-effects/934/16">this thread</a>). As always, the world is not black and white (p &lt; .001).</em></p>
+<p><em>Note: Altough the very purpose of this package is to advocate for the use of Bayesian statistics, please note that there are serious arguments supporting frequentist indices (see for instance <a href="https://discourse.datamethods.org/t/language-for-communicating-frequentist-results-about-treatment-effects/934/16">this thread</a>). As always, the world is not black and white (p &lt; .001).</em></p>
 <p><strong>So… how does it work?</strong></p>
 </div>
 <div id="a-simple-example" class="section level2">
@@ -153,45 +150,103 @@ Accurate depiction of a Bayesian user estimating a credible interval.
 <h3 class="hasAnchor">
 <a href="#bayestestr-installation" class="anchor"></a>BayestestR Installation</h3>
 <p>You can install <code>bayestestR</code> along with the whole <a href="https://github.com/easystats/easystats"><strong>easystats</strong></a> suite by running the following:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"easystats/easystats"</span>)</a></code></pre></div>
-<p>Now that it’s done, we can <em>load</em> the packages we need, in this case <a href="https://github.com/easystats/report"><code>report</code></a>, which combines <code>bayestestR</code> and other packages together.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(report)  <span class="co"># Calling library(...) enables you to use the package's functions</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)
+devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"easystats/easystats"</span>)</code></pre></div>
+<!-- Now that it's done, we can *load* the packages we need, in this case [`report`](https://github.com/easystats/report), which combines `bayestestR` and other packages together. -->
+<!-- ```{r message=FALSE, warning=FALSE} -->
+<!-- library(report)  # Calling library(...) enables you to use the package's functions -->
+<!-- ``` -->
 <p>Let’s also install and load the <a href="https://mc-stan.org/rstanarm/"><code>rstanarm</code></a>, used for fitting Bayesian models.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"rstanarm"</span>)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"rstanarm"</span>)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</code></pre></div>
 </div>
 <div id="traditional-linear-regression" class="section level3">
 <h3 class="hasAnchor">
 <a href="#traditional-linear-regression" class="anchor"></a>Traditional linear regression</h3>
-<p>Let’s fit a simple frequentist linear regression between two numeric variables, <code>Sepal.Length</code> and <code>Petal.Length</code> from the famous <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set"><code>iris</code></a> dataset, included in R.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data=</span>iris)</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/report/topics/report">report</a></span>(model)</a></code></pre></div>
-<pre><code> We fitted a linear model to predict Sepal.Length with Petal.Length. The model's explanatory power
-is substantial (R2 = 0.76, adj. R2 = 0.76). The model's intercept is at 4.31.
+<p>Let’s fit a simple frequentist linear regression (the <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code> function stands for <em>linear model</em>) between two numeric variables, <code>Sepal.Length</code> and <code>Petal.Length</code> from the famous <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set"><code>iris</code></a> dataset, included by default in R.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data=</span>iris)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(model)</code></pre></div>
+<pre><code>
+Call:
+lm(formula = Sepal.Length ~ Petal.Length, data = iris)
 
-Within this model: 
-  - Petal.Length is significant (beta = 0.41, 95% CI [0.37, 0.45], p &lt; .001) and large (std. beta =
-0.87).</code></pre>
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.24675 -0.29657 -0.01515  0.27676  1.00269 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   4.30660    0.07839   54.94   &lt;2e-16 ***
+Petal.Length  0.40892    0.01889   21.65   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4071 on 148 degrees of freedom
+Multiple R-squared:   0.76, Adjusted R-squared:  0.7583 
+F-statistic: 468.6 on 1 and 148 DF,  p-value: &lt; 2.2e-16</code></pre>
+<!-- ```{r message=FALSE, warning=FALSE, eval=FALSE} -->
+<!-- model <- lm(Sepal.Length ~ Petal.Length, data=iris) -->
+<!-- report(model) -->
+<!-- ``` -->
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA} -->
+<!-- library(dplyr) -->
+<!-- lm(Sepal.Length ~ Petal.Length, data=iris) %>%  -->
+<!--   report() %>%  -->
+<!--   to_text(width=100) -->
+<!-- ``` -->
 <p>This analysis suggests that there is a <strong>significant</strong> (<em>whatever that means</em>) and <strong>positive</strong> (with a coefficient of <code>0.41</code>) linear relationship between the two variables.</p>
-<p><em>Fitting and interpreting frequentist models is so easy it is normal that people use it instead of the Bayesian framework… right?</em></p>
+<p><em>Fitting and interpreting <strong>frequentist models is so easy</strong> that it is obvious that people use it instead of the Bayesian framework… right?</em></p>
 <p><strong>Not anymore.</strong></p>
 </div>
 <div id="bayesian-linear-regression" class="section level3">
 <h3 class="hasAnchor">
 <a href="#bayesian-linear-regression" class="anchor"></a>Bayesian linear regression</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data=</span>iris)</a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/report/topics/report">report</a></span>(model)</a></code></pre></div>
-<pre><code> We fitted a Bayesian linear model to predict Sepal.Length with Petal.Length. Priors over parameters
-were set as normal (mean = 0.00, SD = 1.17) distributions.
+<!-- ```{r message=FALSE, warning=FALSE, eval=FALSE} -->
+<!-- model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris) -->
+<!-- report(model) -->
+<!-- ``` -->
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='hide'} -->
+<!-- library(rstanarm) -->
+<!-- set.seed(333) -->
+<!-- model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris) -->
+<!-- ``` -->
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA} -->
+<!-- model %>%  -->
+<!--   report() %>%  -->
+<!--   to_text(width=100) -->
+<!-- ``` -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data=</span>iris)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(model)</code></pre></div>
+<pre><code>
+Model Info:
 
-  The model's explanatory power is substantial (R2's median = 0.76, LOO adj. R2 = 0.75). The model's
-intercept has a median of 4.31.
+ function:     stan_glm
+ family:       gaussian [identity]
+ formula:      Sepal.Length ~ Petal.Length
+ algorithm:    sampling
+ priors:       see help('prior_summary')
+ sample:       4000 (posterior sample size)
+ observations: 150
+ predictors:   2
 
-Within this model:
-   - Petal.Length has a probability of 100.00% of being positive (median = 0.41, 90% CI [0.38, 0.44])
-and can be considered as significant (0.00% in ROPE).</code></pre>
-<p><strong>That’s it!</strong> You fitted a Bayesian version of the model by simply using <a href="https://mc-stan.org/rstanarm/reference/stan_glm.html"><code>stan_glm()</code></a> instead of <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code>. The conclusion that we can drawn, in this, are very similar. The effect (<em>the median of the effect’s posterior distribution</em>) is about <code>0.41</code>, and it can be also be considered as <em>significant</em> in the Bayesian sense.</p>
+Estimates:
+                mean   sd    2.5%   25%   50%   75%   97.5%
+(Intercept)     4.3    0.1   4.2    4.3   4.3   4.4   4.4  
+Petal.Length    0.4    0.0   0.4    0.4   0.4   0.4   0.4  
+sigma           0.4    0.0   0.4    0.4   0.4   0.4   0.5  
+mean_PPD        5.8    0.0   5.8    5.8   5.8   5.9   5.9  
+log-posterior -84.0    1.2 -87.2  -84.5 -83.6 -83.1 -82.6  
+
+Diagnostics:
+              mcse Rhat n_eff
+(Intercept)   0.0  1.0  3913 
+Petal.Length  0.0  1.0  4116 
+sigma         0.0  1.0  4014 
+mean_PPD      0.0  1.0  3762 
+log-posterior 0.0  1.0  1901 
+
+For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
+<p><strong>That’s it!</strong> You fitted a Bayesian version of the model by simply using <a href="https://mc-stan.org/rstanarm/reference/stan_glm.html"><code>stan_glm()</code></a> instead of <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code>. The conclusion that we can drawn, for this example, are very similar. The effect (<em>the median of the effect’s posterior distribution</em>) is about <code>0.41</code>, and it can be also be considered as <em>significant</em> in the Bayesian sense.</p>
 <p><strong>So, ready to learn more?</strong> Check out the <a href="https://easystats.github.io/bayestestR/articles/1_Example1_GLM.html"><strong>next tutorial</strong></a>!</p>
 </div>
 </div>
@@ -200,28 +255,28 @@ and can be considered as significant (0.00% in ROPE).</code></pre>
 <a href="#references" class="anchor"></a>References</h2>
 <div id="refs" class="references">
 <div id="ref-andrews2013prior">
-<p>Andrews, Mark, and Thom Baguley. 2013. “Prior Approval: The Growth of Bayesian Methods in Psychology.” <em>British Journal of Mathematical and Statistical Psychology</em> 66 (1): 1–7.</p>
+<p>Andrews, Mark, and Thom Baguley. 2013. “Prior Approval: The Growth of Bayesian Methods in Psychology.” <em>British Journal of Mathematical and Statistical Psychology</em> 66 (1). Wiley Online Library: 1–7.</p>
 </div>
 <div id="ref-benjamin2018redefine">
-<p>Benjamin, Daniel J, James O Berger, Magnus Johannesson, Brian A Nosek, E-J Wagenmakers, Richard Berk, Kenneth A Bollen, et al. 2018. “Redefine Statistical Significance.” <em>Nature Human Behaviour</em> 2 (1): 6.</p>
+<p>Benjamin, Daniel J, James O Berger, Magnus Johannesson, Brian A Nosek, E-J Wagenmakers, Richard Berk, Kenneth A Bollen, et al. 2018. “Redefine Statistical Significance.” <em>Nature Human Behaviour</em> 2 (1). Nature Publishing Group: 6.</p>
 </div>
 <div id="ref-chambers2014instead">
-<p>Chambers, Christopher D, Eva Feredoes, Suresh Daniel Muthukumaraswamy, and Peter Etchells. 2014. “Instead of ’Playing the Game’ It Is Time to Change the Rules: Registered Reports at Aims Neuroscience and Beyond.” <em>AIMS Neuroscience</em> 1 (1): 4–17.</p>
+<p>Chambers, Christopher D, Eva Feredoes, Suresh Daniel Muthukumaraswamy, and Peter Etchells. 2014. “Instead of ’Playing the Game’ It Is Time to Change the Rules: Registered Reports at Aims Neuroscience and Beyond.” <em>AIMS Neuroscience</em> 1 (1). Aims Press: 4–17.</p>
 </div>
 <div id="ref-etz2016bayesian">
-<p>Etz, Alexander, and Joachim Vandekerckhove. 2016. “A Bayesian Perspective on the Reproducibility Project: Psychology.” <em>PloS One</em> 11 (2): e0149794.</p>
+<p>Etz, Alexander, and Joachim Vandekerckhove. 2016. “A Bayesian Perspective on the Reproducibility Project: Psychology.” <em>PloS One</em> 11 (2). Public Library of Science: e0149794.</p>
 </div>
 <div id="ref-kruschke2010believe">
-<p>Kruschke, John K. 2010. “What to Believe: Bayesian Methods for Data Analysis.” <em>Trends in Cognitive Sciences</em> 14 (7): 293–300.</p>
+<p>Kruschke, John K. 2010. “What to Believe: Bayesian Methods for Data Analysis.” <em>Trends in Cognitive Sciences</em> 14 (7). Elsevier: 293–300.</p>
 </div>
 <div id="ref-kruschke2012time">
-<p>Kruschke, John K, Herman Aguinis, and Harry Joo. 2012. “The Time Has Come: Bayesian Methods for Data Analysis in the Organizational Sciences.” <em>Organizational Research Methods</em> 15 (4): 722–52.</p>
+<p>Kruschke, John K, Herman Aguinis, and Harry Joo. 2012. “The Time Has Come: Bayesian Methods for Data Analysis in the Organizational Sciences.” <em>Organizational Research Methods</em> 15 (4). Sage Publications Sage CA: Los Angeles, CA: 722–52.</p>
 </div>
 <div id="ref-szucs2016empirical">
-<p>Szucs, Denes, and John PA Ioannidis. 2016. “Empirical Assessment of Published Effect Sizes and Power in the Recent Cognitive Neuroscience and Psychology Literature.” <em>BioRxiv</em>, 071530.</p>
+<p>Szucs, Denes, and John PA Ioannidis. 2016. “Empirical Assessment of Published Effect Sizes and Power in the Recent Cognitive Neuroscience and Psychology Literature.” <em>BioRxiv</em>. Cold Spring Harbor Laboratory, 071530.</p>
 </div>
 <div id="ref-wagenmakers2018bayesian">
-<p>Wagenmakers, Eric-Jan, Maarten Marsman, Tahira Jamil, Alexander Ly, Josine Verhagen, Jonathon Love, Ravi Selker, et al. 2018. “Bayesian Inference for Psychology. Part I: Theoretical Advantages and Practical Ramifications.” <em>Psychonomic Bulletin &amp; Review</em> 25 (1): 35–57.</p>
+<p>Wagenmakers, Eric-Jan, Maarten Marsman, Tahira Jamil, Alexander Ly, Josine Verhagen, Jonathon Love, Ravi Selker, et al. 2018. “Bayesian Inference for Psychology. Part I: Theoretical Advantages and Practical Ramifications.” <em>Psychonomic Bulletin &amp; Review</em> 25 (1). Springer: 35–57.</p>
 </div>
 </div>
 </div>

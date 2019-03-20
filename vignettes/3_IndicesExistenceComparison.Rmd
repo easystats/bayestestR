@@ -1,5 +1,5 @@
 ---
-title: "In-Depth: Comparison of Indices of Effect Existence"
+title: "In-Depth 2: Comparison of Indices of Effect Existence"
 output: 
   github_document:
     toc: true

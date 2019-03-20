@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Comparison of Indices of Effect Existence • bayestestR</title>
+<title>In-Depth 2: Comparison of Indices of Effect Existence • bayestestR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Comparison of Indices of Effect Existence">
+<script src="../pkgdown.js"></script><meta property="og:title" content="In-Depth 2: Comparison of Indices of Effect Existence">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -72,13 +72,10 @@
       <a href="../articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
     </li>
     <li>
-      <a href="../articles/1_IndicesDescription.html">Indices Description</a>
+      <a href="../articles/2_IndicesEstimationComparison.html">In-Depth 1: Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="../articles/2_IndicesEstimationComparison.html">Comparison of Point-Estimates</a>
-    </li>
-    <li>
-      <a href="../articles/3_IndicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
+      <a href="../articles/3_IndicesExistenceComparison.html">In-Depth 2: Comparison of Indices of Effect Existence</a>
     </li>
     <li>
       <a href="../articles/4_Guidelines.html">Reporting Guidelines</a>
@@ -108,7 +105,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Comparison of Indices of Effect Existence</h1>
+      <h1>In-Depth 2: Comparison of Indices of Effect Existence</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/3_IndicesExistenceComparison.Rmd"><code>vignettes/3_IndicesExistenceComparison.Rmd</code></a></small>
@@ -143,11 +140,11 @@
 <h3 class="hasAnchor">
 <a href="#procedure" class="anchor"></a>Procedure</h3>
 <p>We simulated 36000 Bayesian and frequentist linear regression models with systematic variation of “true” effect (1 or 0), sample size (20, 40, 60), levels of noise (0.1, 2.5, 5), and priors (correct - same as true effect or incorrect).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)</a>
-<a class="sourceLine" id="cb1-4" title="4"></a>
-<a class="sourceLine" id="cb1-5" title="5">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayes_indices.csv"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)
+
+df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayes_indices.csv"</span>)</code></pre></div>
 <p>For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it <a href="https://easystats.github.io/circus/articles/bayesian_indices.html">here</a>.</p>
 </div>
 <div id="indices" class="section level3">
@@ -179,96 +176,96 @@
 <div id="sensitivity-to-noise" class="section level4">
 <h4 class="hasAnchor">
 <a href="#sensitivity-to-noise" class="anchor"></a>Sensitivity to Noise</h4>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">select</span>(noise, effect, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">gather</span>(index, value, <span class="op">-</span>noise, <span class="op">-</span>sample_size, <span class="op">-</span>effect) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">noise =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(noise),</a>
-<a class="sourceLine" id="cb2-5" title="5">         <span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect),</a>
-<a class="sourceLine" id="cb2-6" title="6">         <span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(sample_size),</a>
-<a class="sourceLine" id="cb2-7" title="7">         <span class="dt">index =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(index, <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>, <span class="st">"p_direction"</span>, <span class="st">"p_map"</span>, <span class="st">"p_rope"</span>, <span class="st">"rope"</span>, <span class="st">"rope_full"</span>))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> noise, <span class="dt">y=</span>value, <span class="dt">color =</span> effect, <span class="dt">fill=</span>index)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">shape=</span><span class="dv">16</span>, <span class="dt">alpha=</span><span class="fl">0.02</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-10" title="10"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-11" title="11"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>index, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-12" title="12"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-13" title="13"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-14" title="14"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>, <span class="dt">name=</span><span class="st">"Effect"</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>=<span class="st">"#607D8B"</span>, <span class="st">"p_map"</span> =<span class="st"> "#E91E63"</span>, <span class="st">"p_direction"</span> =<span class="st"> "#2196F3"</span>,</a>
-<a class="sourceLine" id="cb2-16" title="16">                               <span class="st">"rope"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"rope_full"</span> =<span class="st"> "#FF5722"</span>, <span class="st">"p_rope"</span>=<span class="st">"#FFC107"</span>), <span class="dt">guide=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-17" title="17"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Index Value</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-18" title="18"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Noise"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(noise, effect, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(index, value, <span class="op">-</span>noise, <span class="op">-</span>sample_size, <span class="op">-</span>effect) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">noise =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(noise),
+         <span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect),
+         <span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(sample_size),
+         <span class="dt">index =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(index, <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>, <span class="st">"p_direction"</span>, <span class="st">"p_map"</span>, <span class="st">"p_rope"</span>, <span class="st">"rope"</span>, <span class="st">"rope_full"</span>))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> noise, <span class="dt">y=</span>value, <span class="dt">color =</span> effect, <span class="dt">fill=</span>index)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">shape=</span><span class="dv">16</span>, <span class="dt">alpha=</span><span class="fl">0.02</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>index, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>, <span class="dt">name=</span><span class="st">"Effect"</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>=<span class="st">"#607D8B"</span>, <span class="st">"p_map"</span> =<span class="st"> "#E91E63"</span>, <span class="st">"p_direction"</span> =<span class="st"> "#2196F3"</span>,
+                               <span class="st">"rope"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"rope_full"</span> =<span class="st"> "#FF5722"</span>, <span class="st">"p_rope"</span>=<span class="st">"#FFC107"</span>), <span class="dt">guide=</span><span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Index Value</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Noise"</span>)</code></pre></div>
 <p><img src="3_IndicesExistenceComparison_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 </div>
 <div id="sensitivity-to-sample-size" class="section level4">
 <h4 class="hasAnchor">
 <a href="#sensitivity-to-sample-size" class="anchor"></a>Sensitivity to Sample Size</h4>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="st">  </span><span class="kw">select</span>(noise, effect, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span><span class="kw">gather</span>(index, value, <span class="op">-</span>noise, <span class="op">-</span>sample_size, <span class="op">-</span>effect) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(sample_size),</a>
-<a class="sourceLine" id="cb3-5" title="5">         <span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect),</a>
-<a class="sourceLine" id="cb3-6" title="6">         <span class="dt">index =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(index, <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>, <span class="st">"p_direction"</span>, <span class="st">"p_map"</span>, <span class="st">"p_rope"</span>, <span class="st">"rope"</span>, <span class="st">"rope_full"</span>))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sample_size, <span class="dt">y=</span>value, <span class="dt">color =</span> effect, <span class="dt">fill=</span>index)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">shape=</span><span class="dv">16</span>, <span class="dt">alpha=</span><span class="fl">0.02</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>index, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>, <span class="dt">name=</span><span class="st">"Effect"</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>=<span class="st">"#607D8B"</span>, <span class="st">"p_map"</span> =<span class="st"> "#E91E63"</span>, <span class="st">"p_direction"</span> =<span class="st"> "#2196F3"</span>,</a>
-<a class="sourceLine" id="cb3-15" title="15">                               <span class="st">"rope"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"rope_full"</span> =<span class="st"> "#FF5722"</span>, <span class="st">"p_rope"</span>=<span class="st">"#FFC107"</span>), <span class="dt">guide=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Index Value</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Sample Size"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(noise, effect, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(index, value, <span class="op">-</span>noise, <span class="op">-</span>sample_size, <span class="op">-</span>effect) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(sample_size),
+         <span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect),
+         <span class="dt">index =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(index, <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>, <span class="st">"p_direction"</span>, <span class="st">"p_map"</span>, <span class="st">"p_rope"</span>, <span class="st">"rope"</span>, <span class="st">"rope_full"</span>))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sample_size, <span class="dt">y=</span>value, <span class="dt">color =</span> effect, <span class="dt">fill=</span>index)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">shape=</span><span class="dv">16</span>, <span class="dt">alpha=</span><span class="fl">0.02</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>index, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>, <span class="dt">name=</span><span class="st">"Effect"</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>=<span class="st">"#607D8B"</span>, <span class="st">"p_map"</span> =<span class="st"> "#E91E63"</span>, <span class="st">"p_direction"</span> =<span class="st"> "#2196F3"</span>,
+                               <span class="st">"rope"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"rope_full"</span> =<span class="st"> "#FF5722"</span>, <span class="st">"p_rope"</span>=<span class="st">"#FFC107"</span>), <span class="dt">guide=</span><span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Index Value</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Sample Size"</span>)</code></pre></div>
 <p><img src="3_IndicesExistenceComparison_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div id="sensitivity-to-priors" class="section level4">
 <h4 class="hasAnchor">
 <a href="#sensitivity-to-priors" class="anchor"></a>Sensitivity to Priors</h4>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">select</span>(noise, effect, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full, prior_correct) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span><span class="kw">gather</span>(index, value, <span class="op">-</span>noise, <span class="op">-</span>sample_size, <span class="op">-</span>effect, <span class="op">-</span>prior_correct) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(sample_size),</a>
-<a class="sourceLine" id="cb4-5" title="5">         <span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect),</a>
-<a class="sourceLine" id="cb4-6" title="6">         <span class="dt">prior_correct =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(prior_correct),</a>
-<a class="sourceLine" id="cb4-7" title="7">         <span class="dt">index =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(index, <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>, <span class="st">"p_direction"</span>, <span class="st">"p_map"</span>, <span class="st">"p_rope"</span>, <span class="st">"rope"</span>, <span class="st">"rope_full"</span>))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> effect, <span class="dt">y=</span>value, <span class="dt">color =</span> prior_correct, <span class="dt">fill=</span>index)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">shape=</span><span class="dv">16</span>, <span class="dt">alpha=</span><span class="fl">0.02</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-11" title="11"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>index, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-12" title="12"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-14" title="14"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>, <span class="dt">name=</span><span class="st">"Correct Prior"</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>=<span class="st">"#607D8B"</span>, <span class="st">"p_map"</span> =<span class="st"> "#E91E63"</span>, <span class="st">"p_direction"</span> =<span class="st"> "#2196F3"</span>,</a>
-<a class="sourceLine" id="cb4-16" title="16">                               <span class="st">"rope"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"rope_full"</span> =<span class="st"> "#FF5722"</span>, <span class="st">"p_rope"</span>=<span class="st">"#FFC107"</span>), <span class="dt">guide=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-17" title="17"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Index Value</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-18" title="18"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Effect"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(noise, effect, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full, prior_correct) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(index, value, <span class="op">-</span>noise, <span class="op">-</span>sample_size, <span class="op">-</span>effect, <span class="op">-</span>prior_correct) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(sample_size),
+         <span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect),
+         <span class="dt">prior_correct =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(prior_correct),
+         <span class="dt">index =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(index, <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>, <span class="st">"p_direction"</span>, <span class="st">"p_map"</span>, <span class="st">"p_rope"</span>, <span class="st">"rope"</span>, <span class="st">"rope_full"</span>))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> effect, <span class="dt">y=</span>value, <span class="dt">color =</span> prior_correct, <span class="dt">fill=</span>index)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">shape=</span><span class="dv">16</span>, <span class="dt">alpha=</span><span class="fl">0.02</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>index, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>, <span class="dt">name=</span><span class="st">"Correct Prior"</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>=<span class="st">"#607D8B"</span>, <span class="st">"p_map"</span> =<span class="st"> "#E91E63"</span>, <span class="st">"p_direction"</span> =<span class="st"> "#2196F3"</span>,
+                               <span class="st">"rope"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"rope_full"</span> =<span class="st"> "#FF5722"</span>, <span class="st">"p_rope"</span>=<span class="st">"#FFC107"</span>), <span class="dt">guide=</span><span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Index Value</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Effect"</span>)</code></pre></div>
 <p><img src="3_IndicesExistenceComparison_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 <div id="combined-sensitivity" class="section level4">
 <h4 class="hasAnchor">
 <a href="#combined-sensitivity" class="anchor"></a>Combined sensitivity</h4>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p_frequentist =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(p_frequentist),</a>
-<a class="sourceLine" id="cb5-3" title="3">         <span class="dt">p_direction =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(p_direction),</a>
-<a class="sourceLine" id="cb5-4" title="4">         <span class="dt">p_map =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(p_map),</a>
-<a class="sourceLine" id="cb5-5" title="5">         <span class="dt">p_rope =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(p_rope),</a>
-<a class="sourceLine" id="cb5-6" title="6">         <span class="dt">rope =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(rope),</a>
-<a class="sourceLine" id="cb5-7" title="7">         <span class="dt">rope_full =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(rope_full)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="st">  </span><span class="kw">select</span>(noise, effect, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full, prior_correct) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-9" title="9"><span class="st">  </span><span class="kw">gather</span>(index, value, <span class="op">-</span>noise, <span class="op">-</span>sample_size, <span class="op">-</span>effect, <span class="op">-</span>prior_correct) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-10" title="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(sample_size),</a>
-<a class="sourceLine" id="cb5-11" title="11">         <span class="dt">noise=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(noise),</a>
-<a class="sourceLine" id="cb5-12" title="12">         <span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect),</a>
-<a class="sourceLine" id="cb5-13" title="13">         <span class="dt">prior_correct =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(prior_correct),</a>
-<a class="sourceLine" id="cb5-14" title="14">         <span class="dt">index =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(index, <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>, <span class="st">"p_direction"</span>, <span class="st">"p_map"</span>, <span class="st">"p_rope"</span>, <span class="st">"rope"</span>, <span class="st">"rope_full"</span>))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-15" title="15"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(effect <span class="op">~</span><span class="st"> </span>index<span class="op">/</span>value <span class="op">*</span><span class="st"> </span>noise <span class="op">*</span><span class="st"> </span>sample_size <span class="op">*</span><span class="st"> </span>prior_correct, <span class="dt">data=</span>., <span class="dt">family=</span><span class="st">"binomial"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-16" title="16"><span class="st">  </span>broom<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">tidy</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-17" title="17"><span class="st">  </span><span class="kw">select</span>(term, estimate, <span class="dt">p=</span>p.value) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-18" title="18"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(term, <span class="st">'value'</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-19" title="19"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(term, <span class="st">":value"</span>),</a>
-<a class="sourceLine" id="cb5-20" title="20">         <span class="dt">term =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(term, <span class="st">"index"</span>),</a>
-<a class="sourceLine" id="cb5-21" title="21">         <span class="dt">p =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.001</span>, <span class="st">"&lt; .001***"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.01</span>, <span class="st">"&lt; .01**"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.05</span>, <span class="st">"&lt; .05*"</span>, <span class="st">"&gt; .05"</span>)))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-22" title="22"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="dt">digits=</span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">p_frequentist =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(p_frequentist),
+         <span class="dt">p_direction =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(p_direction),
+         <span class="dt">p_map =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(p_map),
+         <span class="dt">p_rope =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(p_rope),
+         <span class="dt">rope =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(rope),
+         <span class="dt">rope_full =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(rope_full)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(noise, effect, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full, prior_correct) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(index, value, <span class="op">-</span>noise, <span class="op">-</span>sample_size, <span class="op">-</span>effect, <span class="op">-</span>prior_correct) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(sample_size),
+         <span class="dt">noise=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/scale">scale</a></span>(noise),
+         <span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect),
+         <span class="dt">prior_correct =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(prior_correct),
+         <span class="dt">index =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(index, <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>, <span class="st">"p_direction"</span>, <span class="st">"p_map"</span>, <span class="st">"p_rope"</span>, <span class="st">"rope"</span>, <span class="st">"rope_full"</span>))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(effect <span class="op">~</span><span class="st"> </span>index<span class="op">/</span>value <span class="op">*</span><span class="st"> </span>noise <span class="op">*</span><span class="st"> </span>sample_size <span class="op">*</span><span class="st"> </span>prior_correct, <span class="dt">data=</span>., <span class="dt">family=</span><span class="st">"binomial"</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>broom<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">tidy</a></span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(term, estimate, <span class="dt">p=</span>p.value) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(term, <span class="st">'value'</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">term =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(term, <span class="st">":value"</span>),
+         <span class="dt">term =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(term, <span class="st">"index"</span>),
+         <span class="dt">p =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span>.<span class="dv">001</span>, <span class="st">"&lt; .001***"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span>.<span class="dv">01</span>, <span class="st">"&lt; .01**"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span>.<span class="dv">05</span>, <span class="st">"&lt; .05*"</span>, <span class="st">"&gt; .05"</span>)))) <span class="op">%&gt;%</span>
+<span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="dt">digits=</span><span class="dv">2</span>)</code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">term</th>
@@ -523,132 +520,132 @@
 <div id="relationship-with-the-frequentist-p-value" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relationship-with-the-frequentist-p-value" class="anchor"></a>Relationship with the frequentist <em>p</em> value</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">select</span>(noise, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full, effect) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">gather</span>(index, value, <span class="op">-</span>noise, <span class="op">-</span>p_frequentist, <span class="op">-</span>sample_size, <span class="op">-</span>effect) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect),</a>
-<a class="sourceLine" id="cb6-5" title="5">         <span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(sample_size),</a>
-<a class="sourceLine" id="cb6-6" title="6">         <span class="dt">index =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(index, <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>, <span class="st">"p_direction"</span>, <span class="st">"p_map"</span>, <span class="st">"p_rope"</span>, <span class="st">"rope"</span>, <span class="st">"rope_full"</span>))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> p_frequentist, <span class="dt">y =</span> value, <span class="dt">color =</span> effect, <span class="dt">shape=</span>sample_size)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.025</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>index, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-11" title="11"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-12" title="12"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>), <span class="dt">name=</span><span class="st">"Effect"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-13" title="13"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">colour =</span> <span class="kw">guide_legend</span>(<span class="dt">override.aes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">alpha =</span> <span class="dv">1</span>)),</a>
-<a class="sourceLine" id="cb6-14" title="14">         <span class="dt">shape =</span> <span class="kw">guide_legend</span>(<span class="dt">override.aes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">alpha =</span> <span class="dv">1</span>), <span class="dt">title=</span><span class="st">"Sample Size"</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(noise, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full, effect) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(index, value, <span class="op">-</span>noise, <span class="op">-</span>p_frequentist, <span class="op">-</span>sample_size, <span class="op">-</span>effect) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect),
+         <span class="dt">sample_size =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(sample_size),
+         <span class="dt">index =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(index, <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>, <span class="st">"p_direction"</span>, <span class="st">"p_map"</span>, <span class="st">"p_rope"</span>, <span class="st">"rope"</span>, <span class="st">"rope_full"</span>))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> p_frequentist, <span class="dt">y =</span> value, <span class="dt">color =</span> effect, <span class="dt">shape=</span>sample_size)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.025</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>index, <span class="dt">scales =</span> <span class="st">"free"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>), <span class="dt">name=</span><span class="st">"Effect"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">guides</span>(<span class="dt">colour =</span> <span class="kw">guide_legend</span>(<span class="dt">override.aes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">alpha =</span> <span class="dv">1</span>)),
+         <span class="dt">shape =</span> <span class="kw">guide_legend</span>(<span class="dt">override.aes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">alpha =</span> <span class="dv">1</span>), <span class="dt">title=</span><span class="st">"Sample Size"</span>))</code></pre></div>
 <p><img src="3_IndicesExistenceComparison_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div id="relationship-with-frequentist-p-based-arbitrary-clusters" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relationship-with-frequentist-p-based-arbitrary-clusters" class="anchor"></a>Relationship with frequentist <em>p</em>-based arbitrary clusters</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">df<span class="op">$</span>sig_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(df<span class="op">$</span>p_frequentist <span class="op">&gt;=</span><span class="st"> </span><span class="fl">.1</span>, <span class="st">"n.s."</span>, <span class="st">"-"</span>), <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"n.s."</span>, <span class="st">"-"</span>))</a>
-<a class="sourceLine" id="cb7-2" title="2">df<span class="op">$</span>sig_<span class="dv">05</span> &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(df<span class="op">$</span>p_frequentist <span class="op">&gt;=</span><span class="st"> </span><span class="fl">.05</span>, <span class="st">"n.s."</span>, <span class="st">"*"</span>), <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"n.s."</span>, <span class="st">"*"</span>))</a>
-<a class="sourceLine" id="cb7-3" title="3">df<span class="op">$</span>sig_<span class="dv">01</span> &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(df<span class="op">$</span>p_frequentist <span class="op">&gt;=</span><span class="st"> </span><span class="fl">.01</span>, <span class="st">"n.s."</span>, <span class="st">"**"</span>), <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"n.s."</span>, <span class="st">"**"</span>))</a>
-<a class="sourceLine" id="cb7-4" title="4">df<span class="op">$</span>sig_<span class="dv">001</span> &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(df<span class="op">$</span>p_frequentist <span class="op">&gt;=</span><span class="st"> </span><span class="fl">.001</span>, <span class="st">"n.s."</span>, <span class="st">"***"</span>), <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"n.s."</span>, <span class="st">"***"</span>))</a>
-<a class="sourceLine" id="cb7-5" title="5"></a>
-<a class="sourceLine" id="cb7-6" title="6"></a>
-<a class="sourceLine" id="cb7-7" title="7">get_data &lt;-<span class="st"> </span><span class="cf">function</span>(predictor, outcome, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.3</span>){</a>
-<a class="sourceLine" id="cb7-8" title="8">  fit &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(outcome, <span class="st">"~"</span>, predictor), <span class="dt">data=</span>df, <span class="dt">family =</span> <span class="st">"binomial"</span>)</a>
-<a class="sourceLine" id="cb7-9" title="9">  data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb7-10" title="10">  data[predictor] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(lbound, ubound, <span class="dt">length.out =</span> <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb7-11" title="11">  data<span class="op">$</span>index &lt;-<span class="st"> </span>predictor</a>
-<a class="sourceLine" id="cb7-12" title="12">  predict_fit &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(fit, <span class="dt">newdata=</span>data, <span class="dt">type=</span><span class="st">"response"</span>, <span class="dt">se.fit =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb7-13" title="13">  data[outcome] &lt;-<span class="st"> </span>predict_fit<span class="op">$</span>fit </a>
-<a class="sourceLine" id="cb7-14" title="14">  data<span class="op">$</span>CI_lower &lt;-<span class="st"> </span>predict_fit<span class="op">$</span>fit <span class="op">-</span><span class="st"> </span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">qnorm</a></span>(<span class="fl">0.99</span>) <span class="op">*</span><span class="st"> </span>predict_fit<span class="op">$</span>se.fit)</a>
-<a class="sourceLine" id="cb7-15" title="15">  data<span class="op">$</span>CI_upper &lt;-<span class="st"> </span>predict_fit<span class="op">$</span>fit <span class="op">+</span><span class="st"> </span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">qnorm</a></span>(<span class="fl">0.99</span>) <span class="op">*</span><span class="st"> </span>predict_fit<span class="op">$</span>se.fit)</a>
-<a class="sourceLine" id="cb7-16" title="16">  data &lt;-<span class="st"> </span><span class="kw">select_</span>(data, <span class="st">"value"</span>=predictor, outcome, <span class="st">"index"</span>, <span class="st">"CI_lower"</span>, <span class="st">"CI_upper"</span>)</a>
-<a class="sourceLine" id="cb7-17" title="17">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(data)</a>
-<a class="sourceLine" id="cb7-18" title="18">}</a>
-<a class="sourceLine" id="cb7-19" title="19"></a>
-<a class="sourceLine" id="cb7-20" title="20"></a>
-<a class="sourceLine" id="cb7-21" title="21"></a>
-<a class="sourceLine" id="cb7-22" title="22"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(</a>
-<a class="sourceLine" id="cb7-23" title="23">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(</a>
-<a class="sourceLine" id="cb7-24" title="24">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_map"</span>, <span class="dt">outcome=</span><span class="st">"sig_001"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.02</span>),</a>
-<a class="sourceLine" id="cb7-25" title="25">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_direction"</span>, <span class="dt">outcome=</span><span class="st">"sig_001"</span>, <span class="dt">lbound=</span><span class="fl">99.5</span>, <span class="dt">ubound=</span><span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb7-26" title="26">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_001"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.5</span>),</a>
-<a class="sourceLine" id="cb7-27" title="27">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope_full"</span>, <span class="dt">outcome=</span><span class="st">"sig_001"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.5</span>),</a>
-<a class="sourceLine" id="cb7-28" title="28">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_001"</span>, <span class="dt">lbound=</span><span class="dv">95</span>, <span class="dt">ubound=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb7-29" title="29">    ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-30" title="30"><span class="st">    </span><span class="kw">rename</span>(<span class="st">"sig"</span>=sig_<span class="dv">001</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-31" title="31"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">threshold=</span><span class="st">"p &lt; .001"</span>),</a>
-<a class="sourceLine" id="cb7-32" title="32">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(</a>
-<a class="sourceLine" id="cb7-33" title="33">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_map"</span>, <span class="dt">outcome=</span><span class="st">"sig_01"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.1</span>),</a>
-<a class="sourceLine" id="cb7-34" title="34">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_direction"</span>, <span class="dt">outcome=</span><span class="st">"sig_01"</span>, <span class="dt">lbound=</span><span class="dv">98</span>, <span class="dt">ubound=</span><span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb7-35" title="35">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_01"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb7-36" title="36">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope_full"</span>, <span class="dt">outcome=</span><span class="st">"sig_01"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb7-37" title="37">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_01"</span>, <span class="dt">lbound=</span><span class="dv">90</span>, <span class="dt">ubound=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb7-38" title="38">    ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-39" title="39"><span class="st">    </span><span class="kw">rename</span>(<span class="st">"sig"</span>=sig_<span class="dv">01</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-40" title="40"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">threshold=</span><span class="st">"p &lt; .01"</span>),</a>
-<a class="sourceLine" id="cb7-41" title="41">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(</a>
-<a class="sourceLine" id="cb7-42" title="42">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_map"</span>, <span class="dt">outcome=</span><span class="st">"sig_05"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.3</span>),</a>
-<a class="sourceLine" id="cb7-43" title="43">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_direction"</span>, <span class="dt">outcome=</span><span class="st">"sig_05"</span>, <span class="dt">lbound=</span><span class="dv">95</span>, <span class="dt">ubound=</span><span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb7-44" title="44">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_05"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">10</span>),</a>
-<a class="sourceLine" id="cb7-45" title="45">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope_full"</span>, <span class="dt">outcome=</span><span class="st">"sig_05"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">10</span>),</a>
-<a class="sourceLine" id="cb7-46" title="46">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_05"</span>, <span class="dt">lbound=</span><span class="dv">70</span>, <span class="dt">ubound=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb7-47" title="47">    ) <span class="op">%&gt;%</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb7-48" title="48"><span class="st">    </span><span class="kw">rename</span>(<span class="st">"sig"</span>=sig_<span class="dv">05</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-49" title="49"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">threshold=</span><span class="st">"p &lt; .05"</span>),</a>
-<a class="sourceLine" id="cb7-50" title="50">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(</a>
-<a class="sourceLine" id="cb7-51" title="51">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_map"</span>, <span class="dt">outcome=</span><span class="st">"sig_1"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.5</span>),</a>
-<a class="sourceLine" id="cb7-52" title="52">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_direction"</span>, <span class="dt">outcome=</span><span class="st">"sig_1"</span>, <span class="dt">lbound=</span><span class="dv">90</span>, <span class="dt">ubound=</span><span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb7-53" title="53">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_1"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">20</span>),</a>
-<a class="sourceLine" id="cb7-54" title="54">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope_full"</span>, <span class="dt">outcome=</span><span class="st">"sig_1"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">20</span>),</a>
-<a class="sourceLine" id="cb7-55" title="55">    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_1"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb7-56" title="56">    ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-57" title="57"><span class="st">    </span><span class="kw">rename</span>(<span class="st">"sig"</span>=sig_<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-58" title="58"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">threshold=</span><span class="st">"p &lt; .1"</span>)</a>
-<a class="sourceLine" id="cb7-59" title="59">) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-60" title="60"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">index =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(index)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-61" title="61"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>value, <span class="dt">y=</span>sig)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-62" title="62"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>CI_lower, <span class="dt">ymax=</span>CI_upper), <span class="dt">alpha=</span><span class="fl">0.1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-63" title="63"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color=</span>index), <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-64" title="64"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>index <span class="op">*</span><span class="st"> </span>threshold, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">nrow=</span><span class="dv">5</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-65" title="65"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-66" title="66"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-67" title="67"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>=<span class="st">"#607D8B"</span>, <span class="st">"p_map"</span> =<span class="st"> "#E91E63"</span>, <span class="st">"p_direction"</span> =<span class="st"> "#2196F3"</span>,</a>
-<a class="sourceLine" id="cb7-68" title="68">                               <span class="st">"rope"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"rope_full"</span> =<span class="st"> "#FF5722"</span>, <span class="st">"p_rope"</span>=<span class="st">"#FFC107"</span>), <span class="dt">guide=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-69" title="69"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Probability of being significant</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-70" title="70"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Index Value"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df<span class="op">$</span>sig_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(df<span class="op">$</span>p_frequentist <span class="op">&gt;=</span><span class="st"> </span>.<span class="dv">1</span>, <span class="st">"n.s."</span>, <span class="st">"-"</span>), <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"n.s."</span>, <span class="st">"-"</span>))
+df<span class="op">$</span>sig_<span class="dv">05</span> &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(df<span class="op">$</span>p_frequentist <span class="op">&gt;=</span><span class="st"> </span>.<span class="dv">05</span>, <span class="st">"n.s."</span>, <span class="st">"*"</span>), <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"n.s."</span>, <span class="st">"*"</span>))
+df<span class="op">$</span>sig_<span class="dv">01</span> &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(df<span class="op">$</span>p_frequentist <span class="op">&gt;=</span><span class="st"> </span>.<span class="dv">01</span>, <span class="st">"n.s."</span>, <span class="st">"**"</span>), <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"n.s."</span>, <span class="st">"**"</span>))
+df<span class="op">$</span>sig_<span class="dv">001</span> &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(df<span class="op">$</span>p_frequentist <span class="op">&gt;=</span><span class="st"> </span>.<span class="dv">001</span>, <span class="st">"n.s."</span>, <span class="st">"***"</span>), <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"n.s."</span>, <span class="st">"***"</span>))
+
+
+get_data &lt;-<span class="st"> </span><span class="cf">function</span>(predictor, outcome, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.3</span>){
+  fit &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(outcome, <span class="st">"~"</span>, predictor), <span class="dt">data=</span>df, <span class="dt">family =</span> <span class="st">"binomial"</span>)
+  data &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>)
+  data[predictor] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(lbound, ubound, <span class="dt">length.out =</span> <span class="dv">100</span>)
+  data<span class="op">$</span>index &lt;-<span class="st"> </span>predictor
+  predict_fit &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(fit, <span class="dt">newdata=</span>data, <span class="dt">type=</span><span class="st">"response"</span>, <span class="dt">se.fit =</span> <span class="ot">TRUE</span>)
+  data[outcome] &lt;-<span class="st"> </span>predict_fit<span class="op">$</span>fit 
+  data<span class="op">$</span>CI_lower &lt;-<span class="st"> </span>predict_fit<span class="op">$</span>fit <span class="op">-</span><span class="st"> </span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">qnorm</a></span>(<span class="fl">0.99</span>) <span class="op">*</span><span class="st"> </span>predict_fit<span class="op">$</span>se.fit)
+  data<span class="op">$</span>CI_upper &lt;-<span class="st"> </span>predict_fit<span class="op">$</span>fit <span class="op">+</span><span class="st"> </span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">qnorm</a></span>(<span class="fl">0.99</span>) <span class="op">*</span><span class="st"> </span>predict_fit<span class="op">$</span>se.fit)
+  data &lt;-<span class="st"> </span><span class="kw">select_</span>(data, <span class="st">"value"</span>=predictor, outcome, <span class="st">"index"</span>, <span class="st">"CI_lower"</span>, <span class="st">"CI_upper"</span>)
+  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(data)
+}
+
+
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(
+  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_map"</span>, <span class="dt">outcome=</span><span class="st">"sig_001"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.02</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_direction"</span>, <span class="dt">outcome=</span><span class="st">"sig_001"</span>, <span class="dt">lbound=</span><span class="fl">99.5</span>, <span class="dt">ubound=</span><span class="dv">100</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_001"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.5</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope_full"</span>, <span class="dt">outcome=</span><span class="st">"sig_001"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.5</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_001"</span>, <span class="dt">lbound=</span><span class="dv">95</span>, <span class="dt">ubound=</span><span class="dv">100</span>)
+    ) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">rename</span>(<span class="st">"sig"</span>=sig_<span class="dv">001</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">threshold=</span><span class="st">"p &lt; .001"</span>),
+  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_map"</span>, <span class="dt">outcome=</span><span class="st">"sig_01"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.1</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_direction"</span>, <span class="dt">outcome=</span><span class="st">"sig_01"</span>, <span class="dt">lbound=</span><span class="dv">98</span>, <span class="dt">ubound=</span><span class="dv">100</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_01"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">2</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope_full"</span>, <span class="dt">outcome=</span><span class="st">"sig_01"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">2</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_01"</span>, <span class="dt">lbound=</span><span class="dv">90</span>, <span class="dt">ubound=</span><span class="dv">100</span>)
+    ) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">rename</span>(<span class="st">"sig"</span>=sig_<span class="dv">01</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">threshold=</span><span class="st">"p &lt; .01"</span>),
+  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_map"</span>, <span class="dt">outcome=</span><span class="st">"sig_05"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.3</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_direction"</span>, <span class="dt">outcome=</span><span class="st">"sig_05"</span>, <span class="dt">lbound=</span><span class="dv">95</span>, <span class="dt">ubound=</span><span class="dv">100</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_05"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">10</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope_full"</span>, <span class="dt">outcome=</span><span class="st">"sig_05"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">10</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_05"</span>, <span class="dt">lbound=</span><span class="dv">70</span>, <span class="dt">ubound=</span><span class="dv">100</span>)
+    ) <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">    </span><span class="kw">rename</span>(<span class="st">"sig"</span>=sig_<span class="dv">05</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">threshold=</span><span class="st">"p &lt; .05"</span>),
+  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_map"</span>, <span class="dt">outcome=</span><span class="st">"sig_1"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.5</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_direction"</span>, <span class="dt">outcome=</span><span class="st">"sig_1"</span>, <span class="dt">lbound=</span><span class="dv">90</span>, <span class="dt">ubound=</span><span class="dv">100</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_1"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">20</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope_full"</span>, <span class="dt">outcome=</span><span class="st">"sig_1"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">20</span>),
+    <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_rope"</span>, <span class="dt">outcome=</span><span class="st">"sig_1"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">100</span>)
+    ) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">rename</span>(<span class="st">"sig"</span>=sig_<span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">threshold=</span><span class="st">"p &lt; .1"</span>)
+) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">index =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(index)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>value, <span class="dt">y=</span>sig)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>CI_lower, <span class="dt">ymax=</span>CI_upper), <span class="dt">alpha=</span><span class="fl">0.1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color=</span>index), <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>index <span class="op">*</span><span class="st"> </span>threshold, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">nrow=</span><span class="dv">5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>=<span class="st">"#607D8B"</span>, <span class="st">"p_map"</span> =<span class="st"> "#E91E63"</span>, <span class="st">"p_direction"</span> =<span class="st"> "#2196F3"</span>,
+                               <span class="st">"rope"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"rope_full"</span> =<span class="st"> "#FF5722"</span>, <span class="st">"p_rope"</span>=<span class="st">"#FFC107"</span>), <span class="dt">guide=</span><span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Probability of being significant</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Index Value"</span>)</code></pre></div>
 <p><img src="3_IndicesExistenceComparison_files/figure-html/unnamed-chunk-7-1.png" width="960"></p>
 </div>
 <div id="relationship-between-rope-full-and-equivalence-test" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relationship-between-rope-full-and-equivalence-test" class="anchor"></a>Relationship between ROPE (full) and Equivalence test</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">df<span class="op">$</span>equivalence &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(df<span class="op">$</span>rope <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="st">"significant"</span>, <span class="st">"n.s."</span>), <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"n.s."</span>, <span class="st">"significant"</span>))</a>
-<a class="sourceLine" id="cb8-2" title="2"></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(</a>
-<a class="sourceLine" id="cb8-4" title="4">  <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_map"</span>, <span class="dt">outcome=</span><span class="st">"equivalence"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.4</span>),</a>
-<a class="sourceLine" id="cb8-5" title="5">  <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_direction"</span>, <span class="dt">outcome=</span><span class="st">"equivalence"</span>, <span class="dt">lbound=</span><span class="fl">92.5</span>, <span class="dt">ubound=</span><span class="dv">100</span>),</a>
-<a class="sourceLine" id="cb8-6" title="6">  <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope_full"</span>, <span class="dt">outcome=</span><span class="st">"equivalence"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">7</span>),</a>
-<a class="sourceLine" id="cb8-7" title="7">  <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_frequentist"</span>, <span class="dt">outcome=</span><span class="st">"equivalence"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.15</span>)</a>
-<a class="sourceLine" id="cb8-8" title="8">) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>value, <span class="dt">y=</span>equivalence)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>CI_lower, <span class="dt">ymax=</span>CI_upper), <span class="dt">alpha=</span><span class="fl">0.1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-11" title="11"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color=</span>index), <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-12" title="12"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>index, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">nrow=</span><span class="dv">5</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-14" title="14"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-15" title="15"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>=<span class="st">"#607D8B"</span>, <span class="st">"p_map"</span> =<span class="st"> "#E91E63"</span>, <span class="st">"p_direction"</span> =<span class="st"> "#2196F3"</span>,</a>
-<a class="sourceLine" id="cb8-16" title="16">                               <span class="st">"rope"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"rope_full"</span> =<span class="st"> "#FF5722"</span>, <span class="st">"p_rope"</span>=<span class="st">"#FFC107"</span>), <span class="dt">guide=</span><span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-17" title="17"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Probability of rejecting H0 with the equivalence test</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-18" title="18"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Index Value"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df<span class="op">$</span>equivalence &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(df<span class="op">$</span>rope <span class="op">==</span><span class="st"> </span><span class="dv">0</span>, <span class="st">"significant"</span>, <span class="st">"n.s."</span>), <span class="dt">levels=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"n.s."</span>, <span class="st">"significant"</span>))
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind</a></span>(
+  <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_map"</span>, <span class="dt">outcome=</span><span class="st">"equivalence"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.4</span>),
+  <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_direction"</span>, <span class="dt">outcome=</span><span class="st">"equivalence"</span>, <span class="dt">lbound=</span><span class="fl">92.5</span>, <span class="dt">ubound=</span><span class="dv">100</span>),
+  <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"rope_full"</span>, <span class="dt">outcome=</span><span class="st">"equivalence"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="dv">7</span>),
+  <span class="kw">get_data</span>(<span class="dt">predictor=</span><span class="st">"p_frequentist"</span>, <span class="dt">outcome=</span><span class="st">"equivalence"</span>, <span class="dt">lbound=</span><span class="dv">0</span>, <span class="dt">ubound=</span><span class="fl">0.15</span>)
+) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>value, <span class="dt">y=</span>equivalence)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin=</span>CI_lower, <span class="dt">ymax=</span>CI_upper), <span class="dt">alpha=</span><span class="fl">0.1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color=</span>index), <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>index, <span class="dt">scales =</span> <span class="st">"free"</span>, <span class="dt">nrow=</span><span class="dv">5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_frequentist"</span>=<span class="st">"#607D8B"</span>, <span class="st">"p_map"</span> =<span class="st"> "#E91E63"</span>, <span class="st">"p_direction"</span> =<span class="st"> "#2196F3"</span>,
+                               <span class="st">"rope"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"rope_full"</span> =<span class="st"> "#FF5722"</span>, <span class="st">"p_rope"</span>=<span class="st">"#FFC107"</span>), <span class="dt">guide=</span><span class="ot">FALSE</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Probability of rejecting H0 with the equivalence test</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Index Value"</span>)</code></pre></div>
 <p><img src="3_IndicesExistenceComparison_files/figure-html/unnamed-chunk-8-1.png" width="960"></p>
 </div>
 <div id="relationship-between-rope-full-and-p-direction" class="section level3">
 <h3 class="hasAnchor">
 <a href="#relationship-between-rope-full-and-p-direction" class="anchor"></a>Relationship between ROPE (full) and p (direction)</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>p_direction, <span class="dt">y=</span>rope_full, <span class="dt">color=</span>effect)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.025</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>), <span class="dt">name=</span><span class="st">"Effect"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"ROPE (full)</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-9" title="9"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Index Value"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">effect =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(effect)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>p_direction, <span class="dt">y=</span>rope_full, <span class="dt">color=</span>effect)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.025</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>), <span class="dt">name=</span><span class="st">"Effect"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">"ROPE (full)</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Index Value"</span>)</code></pre></div>
 <p><img src="3_IndicesExistenceComparison_files/figure-html/unnamed-chunk-9-1.png" width="960"></p>
 </div>
 </div>
@@ -665,67 +662,67 @@
 <a href="#references" class="anchor"></a>References</h1>
 <div id="refs" class="references">
 <div id="ref-andrews2013prior">
-<p>Andrews, Mark, and Thom Baguley. 2013. “Prior Approval: The Growth of Bayesian Methods in Psychology.” <em>British Journal of Mathematical and Statistical Psychology</em> 66 (1): 1–7.</p>
+<p>Andrews, Mark, and Thom Baguley. 2013. “Prior Approval: The Growth of Bayesian Methods in Psychology.” <em>British Journal of Mathematical and Statistical Psychology</em> 66 (1). Wiley Online Library: 1–7.</p>
 </div>
 <div id="ref-benjamin2018redefine">
-<p>Benjamin, Daniel J, James O Berger, Magnus Johannesson, Brian A Nosek, E-J Wagenmakers, Richard Berk, Kenneth A Bollen, et al. 2018. “Redefine Statistical Significance.” <em>Nature Human Behaviour</em> 2 (1): 6.</p>
+<p>Benjamin, Daniel J, James O Berger, Magnus Johannesson, Brian A Nosek, E-J Wagenmakers, Richard Berk, Kenneth A Bollen, et al. 2018. “Redefine Statistical Significance.” <em>Nature Human Behaviour</em> 2 (1). Nature Publishing Group: 6.</p>
 </div>
 <div id="ref-burrell2016machine">
-<p>Burrell, Jenna. 2016. “How the Machine ‘Thinks’: Understanding Opacity in Machine Learning Algorithms.” <em>Big Data &amp; Society</em> 3 (1): 2053951715622512.</p>
+<p>Burrell, Jenna. 2016. “How the Machine ‘Thinks’: Understanding Opacity in Machine Learning Algorithms.” <em>Big Data &amp; Society</em> 3 (1). SAGE Publications Sage UK: London, England: 2053951715622512.</p>
 </div>
 <div id="ref-castelvecchi2016can">
 <p>Castelvecchi, Davide. 2016. “Can We Open the Black Box of Ai?” <em>Nature News</em> 538 (7623): 20.</p>
 </div>
 <div id="ref-chambers2014instead">
-<p>Chambers, Christopher D, Eva Feredoes, Suresh Daniel Muthukumaraswamy, and Peter Etchells. 2014. “Instead of ’Playing the Game’ It Is Time to Change the Rules: Registered Reports at Aims Neuroscience and Beyond.” <em>AIMS Neuroscience</em> 1 (1): 4–17.</p>
+<p>Chambers, Christopher D, Eva Feredoes, Suresh Daniel Muthukumaraswamy, and Peter Etchells. 2014. “Instead of ’Playing the Game’ It Is Time to Change the Rules: Registered Reports at Aims Neuroscience and Beyond.” <em>AIMS Neuroscience</em> 1 (1). Aims Press: 4–17.</p>
 </div>
 <div id="ref-cohen2016earth">
 <p>Cohen, Jacob. 2016. “The Earth Is Round (P&lt;. 05).” In <em>What If There Were No Significance Tests?</em>, 69–82. Routledge.</p>
 </div>
 <div id="ref-dienes2014using">
-<p>Dienes, Zoltan. 2014. “Using Bayes to Get the Most Out of Non-Significant Results.” <em>Frontiers in Psychology</em> 5: 781.</p>
+<p>Dienes, Zoltan. 2014. “Using Bayes to Get the Most Out of Non-Significant Results.” <em>Frontiers in Psychology</em> 5. Frontiers: 781.</p>
 </div>
 <div id="ref-dienes2018four">
-<p>Dienes, Zoltan, and Neil Mclatchie. 2018. “Four Reasons to Prefer Bayesian Analyses over Significance Testing.” <em>Psychonomic Bulletin &amp; Review</em> 25 (1): 207–18.</p>
-</div>
-<div id="ref-etz2018bayesian">
-<p>Etz, Alexander, Julia M Haaf, Jeffrey N Rouder, and Joachim Vandekerckhove. 2018. “Bayesian Inference and Testing Any Hypothesis You Can Specify.” <em>Advances in Methods and Practices in Psychological Science</em>, 2515245918773087.</p>
+<p>Dienes, Zoltan, and Neil Mclatchie. 2018. “Four Reasons to Prefer Bayesian Analyses over Significance Testing.” <em>Psychonomic Bulletin &amp; Review</em> 25 (1). Springer: 207–18.</p>
 </div>
 <div id="ref-etz2016bayesian">
-<p>Etz, Alexander, and Joachim Vandekerckhove. 2016. “A Bayesian Perspective on the Reproducibility Project: Psychology.” <em>PloS One</em> 11 (2): e0149794.</p>
+<p>Etz, Alexander, and Joachim Vandekerckhove. 2016. “A Bayesian Perspective on the Reproducibility Project: Psychology.” <em>PloS One</em> 11 (2). Public Library of Science: e0149794.</p>
+</div>
+<div id="ref-etz2018bayesian">
+<p>Etz, Alexander, Julia M Haaf, Jeffrey N Rouder, and Joachim Vandekerckhove. 2018. “Bayesian Inference and Testing Any Hypothesis You Can Specify.” <em>Advances in Methods and Practices in Psychological Science</em>. SAGE Publications Sage CA: Los Angeles, CA, 2515245918773087.</p>
 </div>
 <div id="ref-gronau2017bayesian">
-<p>Gronau, Quentin F, Sara Van Erp, Daniel W Heck, Joseph Cesario, Kai J Jonas, and Eric-Jan Wagenmakers. 2017. “A Bayesian Model-Averaged Meta-Analysis of the Power Pose Effect with Informed and Default Priors: The Case of Felt Power.” <em>Comprehensive Results in Social Psychology</em> 2 (1): 123–38.</p>
+<p>Gronau, Quentin F, Sara Van Erp, Daniel W Heck, Joseph Cesario, Kai J Jonas, and Eric-Jan Wagenmakers. 2017. “A Bayesian Model-Averaged Meta-Analysis of the Power Pose Effect with Informed and Default Priors: The Case of Felt Power.” <em>Comprehensive Results in Social Psychology</em> 2 (1). Taylor &amp; Francis: 123–38.</p>
 </div>
 <div id="ref-gronau2017simple">
-<p>Gronau, Quentin F, Eric-Jan Wagenmakers, Daniel W Heck, and Dora Matzke. 2017. “A Simple Method for Comparing Complex Models: Bayesian Model Comparison for Hierarchical Multinomial Processing Tree Models Using Warp-Iii Bridge Sampling.” <em>Psychometrika</em>, 1–24.</p>
+<p>Gronau, Quentin F, Eric-Jan Wagenmakers, Daniel W Heck, and Dora Matzke. 2017. “A Simple Method for Comparing Complex Models: Bayesian Model Comparison for Hierarchical Multinomial Processing Tree Models Using Warp-Iii Bridge Sampling.” <em>Psychometrika</em>. Springer, 1–24.</p>
 </div>
 <div id="ref-jarosz2014odds">
-<p>Jarosz, Andrew F, and Jennifer Wiley. 2014. “What Are the Odds? A Practical Guide to Computing and Reporting Bayes Factors.” <em>The Journal of Problem Solving</em> 7 (1): 2.</p>
+<p>Jarosz, Andrew F, and Jennifer Wiley. 2014. “What Are the Odds? A Practical Guide to Computing and Reporting Bayes Factors.” <em>The Journal of Problem Solving</em> 7 (1). Purdue University Press: 2.</p>
 </div>
 <div id="ref-jeffreys1998theory">
 <p>Jeffreys, Harold. 1998. <em>The Theory of Probability</em>. OUP Oxford.</p>
 </div>
 <div id="ref-kirk1996practical">
-<p>Kirk, Roger E. 1996. “Practical Significance: A Concept Whose Time Has Come.” <em>Educational and Psychological Measurement</em> 56 (5): 746–59.</p>
+<p>Kirk, Roger E. 1996. “Practical Significance: A Concept Whose Time Has Come.” <em>Educational and Psychological Measurement</em> 56 (5). Sage Publications Sage CA: Thousand Oaks, CA: 746–59.</p>
 </div>
 <div id="ref-kruschke2010believe">
-<p>Kruschke, John K. 2010. “What to Believe: Bayesian Methods for Data Analysis.” <em>Trends in Cognitive Sciences</em> 14 (7): 293–300.</p>
+<p>Kruschke, John K. 2010. “What to Believe: Bayesian Methods for Data Analysis.” <em>Trends in Cognitive Sciences</em> 14 (7). Elsevier: 293–300.</p>
 </div>
 <div id="ref-kruschke2012time">
-<p>Kruschke, John K, Herman Aguinis, and Harry Joo. 2012. “The Time Has Come: Bayesian Methods for Data Analysis in the Organizational Sciences.” <em>Organizational Research Methods</em> 15 (4): 722–52.</p>
+<p>Kruschke, John K, Herman Aguinis, and Harry Joo. 2012. “The Time Has Come: Bayesian Methods for Data Analysis in the Organizational Sciences.” <em>Organizational Research Methods</em> 15 (4). Sage Publications Sage CA: Los Angeles, CA: 722–52.</p>
 </div>
 <div id="ref-kruschke2018bayesian">
-<p>Kruschke, John K, and Torrin M Liddell. 2018. “The Bayesian New Statistics: Hypothesis Testing, Estimation, Meta-Analysis, and Power Analysis from a Bayesian Perspective.” <em>Psychonomic Bulletin &amp; Review</em> 25 (1): 178–206.</p>
+<p>Kruschke, John K, and Torrin M Liddell. 2018. “The Bayesian New Statistics: Hypothesis Testing, Estimation, Meta-Analysis, and Power Analysis from a Bayesian Perspective.” <em>Psychonomic Bulletin &amp; Review</em> 25 (1). Springer: 178–206.</p>
 </div>
 <div id="ref-lakens2018equivalence">
-<p>Lakens, Daniël, Anne M Scheel, and Peder M Isager. 2018. “Equivalence Testing for Psychological Research: A Tutorial.” <em>Advances in Methods and Practices in Psychological Science</em>, 2515245918770963.</p>
+<p>Lakens, Daniël, Anne M Scheel, and Peder M Isager. 2018. “Equivalence Testing for Psychological Research: A Tutorial.” <em>Advances in Methods and Practices in Psychological Science</em>. SAGE Publications Sage CA: Los Angeles, CA, 2515245918770963.</p>
 </div>
 <div id="ref-ly2016harold">
-<p>Ly, Alexander, Josine Verhagen, and Eric-Jan Wagenmakers. 2016. “Harold Jeffreys’s Default Bayes Factor Hypothesis Tests: Explanation, Extension, and Application in Psychology.” <em>Journal of Mathematical Psychology</em> 72: 19–32.</p>
+<p>Ly, Alexander, Josine Verhagen, and Eric-Jan Wagenmakers. 2016. “Harold Jeffreys’s Default Bayes Factor Hypothesis Tests: Explanation, Extension, and Application in Psychology.” <em>Journal of Mathematical Psychology</em> 72. Elsevier: 19–32.</p>
 </div>
 <div id="ref-maxwell2015psychology">
-<p>Maxwell, Scott E, Michael Y Lau, and George S Howard. 2015. “Is Psychology Suffering from a Replication Crisis? What Does ‘Failure to Replicate’ Really Mean?” <em>American Psychologist</em> 70 (6): 487.</p>
+<p>Maxwell, Scott E, Michael Y Lau, and George S Howard. 2015. “Is Psychology Suffering from a Replication Crisis? What Does ‘Failure to Replicate’ Really Mean?” <em>American Psychologist</em> 70 (6). American Psychological Association: 487.</p>
 </div>
 <div id="ref-mills2017objective">
 <p>Mills, Jeffrey A. 2017. “Objective Bayesian Precise Hypothesis Testing.” <em>University of Cincinnati [Original Version: 2007]</em>.</p>
@@ -734,22 +731,22 @@
 <p>Mills, Jeffrey A, and Olivier Parent. 2014. “Bayesian Mcmc Estimation.” In <em>Handbook of Regional Science</em>, 1571–95. Springer.</p>
 </div>
 <div id="ref-piironen2017comparison">
-<p>Piironen, Juho, and Aki Vehtari. 2017. “Comparison of Bayesian Predictive Methods for Model Selection.” <em>Statistics and Computing</em> 27 (3): 711–35.</p>
+<p>Piironen, Juho, and Aki Vehtari. 2017. “Comparison of Bayesian Predictive Methods for Model Selection.” <em>Statistics and Computing</em> 27 (3). Springer: 711–35.</p>
 </div>
 <div id="ref-snoek2012practical">
 <p>Snoek, Jasper, Hugo Larochelle, and Ryan P Adams. 2012. “Practical Bayesian Optimization of Machine Learning Algorithms.” In <em>Advances in Neural Information Processing Systems</em>, 2951–9.</p>
 </div>
 <div id="ref-szucs2016empirical">
-<p>Szucs, Denes, and John PA Ioannidis. 2016. “Empirical Assessment of Published Effect Sizes and Power in the Recent Cognitive Neuroscience and Psychology Literature.” <em>BioRxiv</em>, 071530.</p>
+<p>Szucs, Denes, and John PA Ioannidis. 2016. “Empirical Assessment of Published Effect Sizes and Power in the Recent Cognitive Neuroscience and Psychology Literature.” <em>BioRxiv</em>. Cold Spring Harbor Laboratory, 071530.</p>
 </div>
 <div id="ref-wagenmakers2018bayesian">
-<p>Wagenmakers, Eric-Jan, Maarten Marsman, Tahira Jamil, Alexander Ly, Josine Verhagen, Jonathon Love, Ravi Selker, et al. 2018. “Bayesian Inference for Psychology. Part I: Theoretical Advantages and Practical Ramifications.” <em>Psychonomic Bulletin &amp; Review</em> 25 (1): 35–57.</p>
+<p>Wagenmakers, Eric-Jan, Maarten Marsman, Tahira Jamil, Alexander Ly, Josine Verhagen, Jonathon Love, Ravi Selker, et al. 2018. “Bayesian Inference for Psychology. Part I: Theoretical Advantages and Practical Ramifications.” <em>Psychonomic Bulletin &amp; Review</em> 25 (1). Springer: 35–57.</p>
 </div>
 <div id="ref-wagenmakers2016bayesian">
-<p>Wagenmakers, Eric-Jan, Richard D Morey, and Michael D Lee. 2016. “Bayesian Benefits for the Pragmatic Researcher.” <em>Current Directions in Psychological Science</em> 25 (3): 169–76.</p>
+<p>Wagenmakers, Eric-Jan, Richard D Morey, and Michael D Lee. 2016. “Bayesian Benefits for the Pragmatic Researcher.” <em>Current Directions in Psychological Science</em> 25 (3). Sage Publications Sage CA: Los Angeles, CA: 169–76.</p>
 </div>
 <div id="ref-wagenmakers2017need">
-<p>Wagenmakers, Eric-Jan, Josine Verhagen, Alexander Ly, Dora Matzke, Helen Steingroever, Jeffrey N Rouder, and Richard D Morey. 2017. “The Need for Bayesian Hypothesis Testing in Psychological Science.” <em>Psychological Science Under Scrutiny: Recent Challenges and Proposed Solutions</em>, 123–38.</p>
+<p>Wagenmakers, Eric-Jan, Josine Verhagen, Alexander Ly, Dora Matzke, Helen Steingroever, Jeffrey N Rouder, and Richard D Morey. 2017. “The Need for Bayesian Hypothesis Testing in Psychological Science.” <em>Psychological Science Under Scrutiny: Recent Challenges and Proposed Solutions</em>. Wiley New York, NY, 123–38.</p>
 </div>
 <div id="ref-wasserstein2016asa">
 <p>Wasserstein, Ronald L, Nicole A Lazar, and others. 2016. “The Asa’s Statement on P-Values: Context, Process, and Purpose.” <em>The American Statistician</em> 70 (2): 129–33.</p>

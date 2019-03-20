@@ -43,12 +43,12 @@ In other words, omitting the maths behind it, we can say that:
 - To characterize our effects, **no need of *p* values** or other cryptic indices. We simply describe the posterior distribution of the effect. For example, we can report the median, the 90% *Credible* Interval or [other indices](https://easystats.github.io/bayestestR/articles/4_Guidelines.html).
 
 
-```{r echo=FALSE, fig.cap="Accurate depiction of a Bayesian user estimating a credible interval.", fig.align='center', out.width="50%"}
-knitr::include_graphics("https://github.com/easystats/bayestestR/tree/master/man/figures/bayesianMaster.png")
+```{r echo=FALSE, fig.cap="Accurate depiction of a regular Bayesian user estimating a credible interval.", fig.align='center', out.width="50%"}
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/bayesianMaster.png")
 ```
 
 
-*Note: Altough the very reason of this package is to advocate for the use of Bayesian statistics, please note that there are arguments supporting frequentist indices (see for instance [this thread](https://discourse.datamethods.org/t/language-for-communicating-frequentist-results-about-treatment-effects/934/16)). As always, the world is not black and white (p \< .001).*
+*Note: Altough the very purpose of this package is to advocate for the use of Bayesian statistics, please note that there are serious arguments supporting frequentist indices (see for instance [this thread](https://discourse.datamethods.org/t/language-for-communicating-frequentist-results-about-treatment-effects/934/16)). As always, the world is not black and white (p \< .001).*
 
 **So... how does it work?**
 
@@ -91,8 +91,7 @@ summary(model)
 library(dplyr)
 
 lm(Sepal.Length ~ Petal.Length, data=iris) %>% 
-  summary() %>% 
-  to_text(width=100)
+  summary()
 ```
 
 <!-- ```{r message=FALSE, warning=FALSE, eval=FALSE} -->

@@ -52,7 +52,6 @@ library(bayestestR)
 posterior <- rnorm(1000)
 map_estimate(posterior)
 map_estimate(posterior, density = TRUE)
-
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -60,6 +59,7 @@ map_estimate(model)
 
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-map_estimate(model)}
+map_estimate(model)
+}
 
 }
