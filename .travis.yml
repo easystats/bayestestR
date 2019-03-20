@@ -2,7 +2,7 @@ language: r
 
 os:
   #- windows
-  - linux
+  #- linux 
   - osx
   
 r:
@@ -19,7 +19,7 @@ env:
   global:
     - R_MAX_NUM_DLLS=999
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
-    - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+    # - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
 
 r_build_args: "--no-build-vignettes"
 r_check_args: "--no-build-vignettes --as-cran"
@@ -41,18 +41,18 @@ after_success:
   
   
 # Copied from https://github.com/mbjoseph/minimal-rstan-travis/blob/master/.travis.yml
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-7
+# addons:
+#   apt:
+#     sources:
+#       - ubuntu-toolchain-r-test
+#     packages:
+#       - g++-7
 
   
-before_install:
-  - mkdir -p ~/.R/
-  - echo "CXX14 = g++-7 -fPIC -flto=2" >> ~/.R/Makevars
-  - echo "CXX14FLAGS = -mtune=native -march=native -Wno-unused-variable -Wno-unused-function -Wno-unused-local-typedefs -Wno-ignored-attributes -Wno-deprecated-declarations -Wno-attributes -O3" >> ~/.R/Makevars
+# before_install:
+#   - mkdir -p ~/.R/
+#   - echo "CXX14 = g++-7 -fPIC -flto=2" >> ~/.R/Makevars
+#   - echo "CXX14FLAGS = -mtune=native -march=native -Wno-unused-variable -Wno-unused-function -Wno-unused-local-typedefs -Wno-ignored-attributes -Wno-deprecated-declarations # # # # -Wno-attributes -O3" >> ~/.R/Makevars
 
-install: 
-  - R -e "install.packages('rstan')"
+# install: 
+#   - R -e "install.packages('rstan')"
