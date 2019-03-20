@@ -19,6 +19,7 @@ env:
   global:
     - R_MAX_NUM_DLLS=999
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
+    - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
 
 r_build_args: "--no-build-vignettes"
 r_check_args: "--no-build-vignettes --as-cran"
@@ -46,9 +47,7 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-7
-env:
-  - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
-  
+
   
 before_install:
   - mkdir -p ~/.R/
