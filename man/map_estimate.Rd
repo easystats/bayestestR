@@ -44,7 +44,7 @@ or the zero-inflated part of the modelbe returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \description{
-Find the Highest Maximum A Posteriori (MAP) estimate of a posterior. It corresponds to the 'peak' of the posterior distribution.
+Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution.
 }
 \examples{
 library(bayestestR)

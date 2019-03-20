@@ -36,7 +36,7 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 }
 \description{
-Perform a Test for Practical Equivalence based on the "HDI+ROPE decision rule" (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis".
+Perform a \strong{Test for Practical Equivalence} based on the \emph{"HDI+ROPE decision rule"} (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (\emph{i.e.}, a \link[=rope]{ROPE}).
 }
 \details{
 Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2018)
@@ -46,10 +46,10 @@ Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2018)
   "rejected". If the ROPE completely covers the HDI, i.e. all most credible
   values of a parameter are inside the region of practical equivalence, the
   null hypothesis is accepted. Else, it’s undecided whether to accept or
-  reject the null hypothesis. If the full ROPE is used (i.e., 100\% of the
+  reject the null hypothesis. If the full ROPE is used (\emph{i.e.}, 100\% of the
   HDI), then the null hypothesis is rejected or accepted if the percentage
-  of the posterior within the ROPE is smaller than to 1\% or greater  than
-  99\%. Desirable results are low proportions inside the ROPE  (the closer
+  of the posterior within the ROPE is smaller than to 2.5\% or greater  than
+  97.5\%. Desirable results are low proportions inside the ROPE  (the closer
   to zero the better) and the H0 should be rejected.
 }
 \examples{

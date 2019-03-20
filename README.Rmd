@@ -21,7 +21,7 @@ library(dplyr)
 
 knitr::opts_chunk$set(
   collapse = TRUE,
-  fig.path = "README-"
+  fig.path = "man/figures/"
 )
 ```
 

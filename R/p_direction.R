@@ -5,7 +5,7 @@
 #' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @inheritParams hdi
 #'
-#' @details \strong{Relationship with the p-value}: In most cases, it seems that the \emph{pd} corresponds to the frequentist one-sided \emph{p}-value through the formula `p-value = (1-pd/100)`. Thus, a `pd` of `95\%`, `97.5\%` `99.5\%` and `99.95\%` corresponds approximately to a two-sided \emph{p}-value of respectively `.1`, `.05`, `.01` and `.001`. See the \href{https://easystats.github.io/bayestestR/articles/4_Guidelines.html}{\emph{reporting guidelines}.
+#' @details \strong{Relationship with the p-value}: In most cases, it seems that the \emph{pd} corresponds to the frequentist one-sided \emph{p}-value through the formula `p-value = (1-pd/100)`. Thus, a `pd` of `95\%`, `97.5\%` `99.5\%` and `99.95\%` corresponds approximately to a two-sided \emph{p}-value of respectively `.1`, `.05`, `.01` and `.001`. See the \href{https://easystats.github.io/bayestestR/articles/4_Guidelines.html}{\emph{reporting guidelines}}.
 #'
 #' @examples
 #' library(bayestestR)
