@@ -11,9 +11,9 @@
 #' posterior <- rnorm_perfect(n = 10)
 #' density_at(posterior, 0)
 #' density_at(posterior, c(0, 1))
-#' @importFrom stats approx
+#' @importFrom stats approx density
 #' @export
 density_at <- function(posterior, x, precision = 2^10) {
-  density <- density(posterior, n = precision)
-  return(approx(density$x, density$y, xout = x)$y)
+  density <- stats::density(posterior, n = precision)
+  stats::approx(density$x, density$y, xout = x)$y
 }
