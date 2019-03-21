@@ -7,19 +7,19 @@
 \alias{equivalence_test.brmsfit}
 \title{Test for Practical Equivalence}
 \usage{
-equivalence_test(posterior, ...)
+equivalence_test(x, ...)
 
-\method{equivalence_test}{numeric}(posterior, range = "default",
-  ci = 0.95, verbose = TRUE, ...)
+\method{equivalence_test}{numeric}(x, range = "default", ci = 0.95,
+  verbose = TRUE, ...)
 
-\method{equivalence_test}{stanreg}(posterior, range = "default",
-  ci = 0.95, parameters = NULL, verbose = TRUE, ...)
+\method{equivalence_test}{stanreg}(x, range = "default", ci = 0.95,
+  parameters = NULL, verbose = TRUE, ...)
 
-\method{equivalence_test}{brmsfit}(posterior, range = "default",
-  ci = 0.95, parameters = NULL, verbose = TRUE, ...)
+\method{equivalence_test}{brmsfit}(x, range = "default", ci = 0.95,
+  parameters = NULL, verbose = TRUE, ...)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
 \item{...}{Currently not used.}
 
@@ -55,10 +55,10 @@ Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2018)
 \examples{
 library(bayestestR)
 
-equivalence_test(posterior = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
-equivalence_test(posterior = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
-equivalence_test(posterior = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
-equivalence_test(posterior = rnorm(1000, 1, 1), ci = c(.50, .99))
+equivalence_test(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
+equivalence_test(x = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
+equivalence_test(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
+equivalence_test(x = rnorm(1000, 1, 1), ci = c(.50, .99))
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)

@@ -7,19 +7,19 @@
 \alias{hdi.brmsfit}
 \title{Highest Density Interval (HDI)}
 \usage{
-hdi(posterior, ...)
+hdi(x, ...)
 
-\method{hdi}{numeric}(posterior, ci = 0.9, verbose = TRUE, ...)
+\method{hdi}{numeric}(x, ci = 0.9, verbose = TRUE, ...)
 
-\method{hdi}{stanreg}(posterior, ci = 0.9, effects = c("fixed",
-  "random", "all"), parameters = NULL, verbose = TRUE, ...)
-
-\method{hdi}{brmsfit}(posterior, ci = 0.9, effects = c("fixed",
-  "random", "all"), component = c("conditional", "zi", "zero_inflated",
+\method{hdi}{stanreg}(x, ci = 0.9, effects = c("fixed", "random",
   "all"), parameters = NULL, verbose = TRUE, ...)
+
+\method{hdi}{brmsfit}(x, ci = 0.9, effects = c("fixed", "random",
+  "all"), component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL, verbose = TRUE, ...)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
 \item{...}{Currently not used.}
 

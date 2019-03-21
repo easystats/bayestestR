@@ -11,7 +11,7 @@
 #'
 #' @details For Bayesian Credible Intervals, CIs are often computed by the \link{hdi} method.
 #'
-#' @param model A \code{stanreg} or \code{brmsfit} model , or a vector representing a posterior distribution.
+#' @param x A \code{stanreg} or \code{brmsfit} model , or a vector representing a posterior distribution.
 #' @inheritParams hdi
 #'
 #' @examples
@@ -31,7 +31,7 @@
 #' }
 #'
 #' @export
-ci <- function(model, ...) {
+ci <- function(x, ...) {
   UseMethod("ci")
 }
 
@@ -39,27 +39,27 @@ ci <- function(model, ...) {
 
 #' @rdname ci
 #' @export
-ci.numeric <- function(model, ci = .90, verbose = TRUE, ...) {
+ci.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
   do.call(rbind, lapply(ci, function(i) {
-    .credible_interval(x = model, ci = i, verbose = verbose)
+    .credible_interval(x = x, ci = i, verbose = verbose)
   }))
 }
 
 
 #' @rdname ci
 #' @export
-ci.stanreg <- function(model, ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+ci.stanreg <- function(x, ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
-  .compute_interval_stanreg(model, ci, effects, parameters, verbose, fun = "ci")
+  .compute_interval_stanreg(x, ci, effects, parameters, verbose, fun = "ci")
 }
 
 
 #' @rdname ci
 #' @export
-ci.brmsfit <- function(model, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
+ci.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-  .compute_interval_brmsfit(model, ci, effects, component, parameters, verbose, fun = "ci")
+  .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose, fun = "ci")
 }
 
 

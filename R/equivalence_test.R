@@ -22,10 +22,10 @@
 #' @examples
 #' library(bayestestR)
 #'
-#' equivalence_test(posterior = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
-#' equivalence_test(posterior = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
-#' equivalence_test(posterior = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
-#' equivalence_test(posterior = rnorm(1000, 1, 1), ci = c(.50, .99))
+#' equivalence_test(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
+#' equivalence_test(x = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
+#' equivalence_test(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
+#' equivalence_test(x = rnorm(1000, 1, 1), ci = c(.50, .99))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -40,15 +40,15 @@
 #'
 #' @importFrom insight print_color
 #' @export
-equivalence_test <- function(posterior, ...) {
+equivalence_test <- function(x, ...) {
   UseMethod("equivalence_test")
 }
 
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.numeric <- function(posterior, range = "default", ci = .95, verbose = TRUE, ...) {
-  rope_data <- rope(posterior, range = range, ci = ci)
+equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
+  rope_data <- rope(x, range = range, ci = ci)
   out <- as.data.frame(rope_data)
 
   if (all(ci < 1)) {
@@ -75,15 +75,15 @@ equivalence_test.numeric <- function(posterior, range = "default", ci = .95, ver
 
 #' @importFrom stats sd
 #' @keywords internal
-.equivalence_test_models <- function(posterior, range = "default", ci = .95, parameters = NULL, verbose = TRUE) {
+.equivalence_test_models <- function(x, range = "default", ci = .95, parameters = NULL, verbose = TRUE) {
   if (all(range == "default")) {
-    range <- rope_range(posterior)
+    range <- rope_range(x)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
   l <- sapply(
-    insight::get_parameters(posterior, component = "conditional", parameters = parameters),
+    insight::get_parameters(x, component = "conditional", parameters = parameters),
     equivalence_test,
     range = range,
     ci = ci,
@@ -105,17 +105,17 @@ equivalence_test.numeric <- function(posterior, range = "default", ci = .95, ver
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.stanreg <- function(posterior, range = "default", ci = .95, parameters = NULL, verbose = TRUE, ...) {
-  et <- .equivalence_test_models(posterior, range, ci, parameters, verbose)
-  attr(et, "model") <- deparse(substitute(posterior), width.cutoff = 500)
+equivalence_test.stanreg <- function(x, range = "default", ci = .95, parameters = NULL, verbose = TRUE, ...) {
+  et <- .equivalence_test_models(x, range, ci, parameters, verbose)
+  attr(et, "model") <- deparse(substitute(x), width.cutoff = 500)
   et
 }
 
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.brmsfit <- function(posterior, range = "default", ci = .95, parameters = NULL, verbose = TRUE, ...) {
-  et <- .equivalence_test_models(posterior, range, ci, parameters, verbose)
-  attr(et, "model") <- deparse(substitute(posterior), width.cutoff = 500)
+equivalence_test.brmsfit <- function(x, range = "default", ci = .95, parameters = NULL, verbose = TRUE, ...) {
+  et <- .equivalence_test_models(x, range, ci, parameters, verbose)
+  attr(et, "model") <- deparse(substitute(x), width.cutoff = 500)
   et
 }

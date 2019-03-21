@@ -2,7 +2,7 @@
 #'
 #' Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 #'
-#' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
+#' @param x Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param range ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
 #' @param ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.
 #'
@@ -30,10 +30,10 @@
 #' @examples
 #' library(bayestestR)
 #'
-#' rope(posterior = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
-#' rope(posterior = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
-#' rope(posterior = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
-#' rope(posterior = rnorm(1000, 1, 1), ci = c(.90, .95))
+#' rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
+#' rope(x = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
+#' rope(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
+#' rope(x = rnorm(1000, 1, 1), ci = c(.90, .95))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -48,7 +48,7 @@
 #'
 #' @importFrom insight get_parameters is_multivariate
 #' @export
-rope <- function(posterior, ...) {
+rope <- function(x, ...) {
   UseMethod("rope")
 }
 
@@ -62,7 +62,7 @@ as.double.rope <- function(x, ...) {
 
 #' @rdname rope
 #' @export
-rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE, ...) {
+rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
   if (all(range == "default")) {
     range <- c(-0.1, 0.1)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
@@ -70,7 +70,7 @@ rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE,
   }
 
   rope_values <- lapply(ci, function(i) {
-    .rope(posterior, range = range, ci = i, verbose = verbose)
+    .rope(x, range = range, ci = i, verbose = verbose)
   })
 
   # "do.call(rbind)" does not bind attribute values together
@@ -88,13 +88,13 @@ rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE,
 }
 
 
-.rope <- function(posterior, range = c(-0.1, 0.1), ci = .90, verbose = TRUE) {
-  HDI_area <- .hdi_area <- hdi(posterior, ci, verbose)
+.rope <- function(x, range = c(-0.1, 0.1), ci = .90, verbose = TRUE) {
+  HDI_area <- .hdi_area <- hdi(x, ci, verbose)
 
   if (anyNA(HDI_area)) {
     rope_percentage <- NA
   } else {
-    HDI_area <- posterior[posterior >= HDI_area$CI_low & posterior <= HDI_area$CI_high]
+    HDI_area <- x[x >= HDI_area$CI_low & x <= HDI_area$CI_high]
     area_within <- HDI_area[HDI_area >= min(range) & HDI_area <= max(range)]
     rope_percentage <- length(area_within) / length(HDI_area) * 100
   }
@@ -115,17 +115,17 @@ rope.numeric <- function(posterior, range = "default", ci = .90, verbose = TRUE,
 
 #' @rdname rope
 #' @export
-rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
 
   if (all(range == "default")) {
-    range <- rope_range(posterior)
+    range <- rope_range(x)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
   list <- lapply(c("fixed", "random"), function(x) {
-    parms <- insight::get_parameters(posterior, effects = x, parameters = parameters)
+    parms <- insight::get_parameters(x, effects = x, parameters = parameters)
     tmp <- do.call(rbind, sapply(
       parms,
       rope,
@@ -172,11 +172,11 @@ rope.stanreg <- function(posterior, range = "default", ci = .90, effects = c("fi
 
 #' @rdname rope
 #' @export
-rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
+rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
-  if (insight::is_multivariate(posterior)) {
+  if (insight::is_multivariate(x)) {
     stop("Multivariate response models are not yet supported.")
   }
 
@@ -184,13 +184,13 @@ rope.brmsfit <- function(posterior, range = "default", ci = .90, effects = c("fi
   com <- c("conditional", "zi", "conditional", "zi")
 
   if (all(range == "default")) {
-    range <- rope_range(posterior)
+    range <- rope_range(x)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
   .get_rope <- function(x, y) {
-    parms <- insight::get_parameters(posterior, effects = x, component = y, parameters = parameters)
+    parms <- insight::get_parameters(x, effects = x, component = y, parameters = parameters)
     tmp <- do.call(rbind, sapply(
       parms,
       rope,

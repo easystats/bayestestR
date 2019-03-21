@@ -49,9 +49,9 @@
 
 #' @importFrom insight get_parameters
 #' @keywords internal
-.compute_interval_stanreg <- function(posterior, ci, effects, parameters, verbose, fun) {
+.compute_interval_stanreg <- function(x, ci, effects, parameters, verbose, fun) {
   list <- lapply(c("fixed", "random"), function(x) {
-    parms <- insight::get_parameters(posterior, effects = x, parameters = parameters)
+    parms <- insight::get_parameters(x, effects = x, parameters = parameters)
     tmp <- do.call(rbind, sapply(
       parms,
       get(fun, asNamespace("bayestestR")),
@@ -96,12 +96,12 @@
 
 #' @importFrom insight get_parameters
 #' @keywords internal
-.compute_interval_brmsfit <- function(posterior, ci, effects, component, parameters, verbose, fun) {
+.compute_interval_brmsfit <- function(x, ci, effects, component, parameters, verbose, fun) {
   eff <- c("fixed", "fixed", "random", "random")
   com <- c("conditional", "zi", "conditional", "zi")
 
   .get_hdi <- function(x, y) {
-    parms <- insight::get_parameters(posterior, effects = x, component = y, parameters = parameters)
+    parms <- insight::get_parameters(x, effects = x, component = y, parameters = parameters)
     tmp <- do.call(rbind, sapply(
       parms,
       get(fun, asNamespace("bayestestR")),

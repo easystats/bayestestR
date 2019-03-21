@@ -7,19 +7,19 @@
 \alias{ci.brmsfit}
 \title{Confidence/Credible Interval}
 \usage{
-ci(model, ...)
+ci(x, ...)
 
-\method{ci}{numeric}(model, ci = 0.9, verbose = TRUE, ...)
+\method{ci}{numeric}(x, ci = 0.9, verbose = TRUE, ...)
 
-\method{ci}{stanreg}(model, ci = 0.9, effects = c("fixed", "random",
+\method{ci}{stanreg}(x, ci = 0.9, effects = c("fixed", "random",
   "all"), parameters = NULL, verbose = TRUE, ...)
 
-\method{ci}{brmsfit}(model, ci = 0.9, effects = c("fixed", "random",
+\method{ci}{brmsfit}(x, ci = 0.9, effects = c("fixed", "random",
   "all"), component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL, verbose = TRUE, ...)
 }
 \arguments{
-\item{model}{A \code{stanreg} or \code{brmsfit} model , or a vector representing a posterior distribution.}
+\item{x}{A \code{stanreg} or \code{brmsfit} model , or a vector representing a posterior distribution.}
 
 \item{...}{Currently not used.}
 
