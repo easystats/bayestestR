@@ -91,8 +91,8 @@ hdi.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"), comp
     return(check_ci)
   }
 
-  x_sorted <- sort.int(x, method = "quick") # removes NA/NaN, but not Inf
-  window_size <- ceiling(ci * length(x_sorted))
+  x_sorted <- sort.int(x, method = "quick")  # removes NA/NaN, but not Inf
+  window_size <- ceiling(ci * length(x_sorted))  # See https://github.com/easystats/bayestestR/issues/39
 
   if (window_size < 2) {
     if (verbose) {
