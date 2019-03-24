@@ -50,8 +50,8 @@
 #' @importFrom insight get_parameters
 #' @keywords internal
 .compute_interval_stanreg <- function(x, ci, effects, parameters, verbose, fun) {
-  list <- lapply(c("fixed", "random"), function(x) {
-    parms <- insight::get_parameters(x, effects = x, parameters = parameters)
+  list <- lapply(c("fixed", "random"), function(.x) {
+    parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
     tmp <- do.call(rbind, sapply(
       parms,
       get(fun, asNamespace("bayestestR")),
@@ -63,7 +63,7 @@
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_stanreg(
         tmp,
-        x,
+        .x,
         cols = c("CI", "CI_low", "CI_high", "Group"),
         parms = names(parms)
       )
@@ -100,8 +100,8 @@
   eff <- c("fixed", "fixed", "random", "random")
   com <- c("conditional", "zi", "conditional", "zi")
 
-  .get_hdi <- function(x, y) {
-    parms <- insight::get_parameters(x, effects = x, component = y, parameters = parameters)
+  .get_hdi <- function(.x, .y) {
+    parms <- insight::get_parameters(x, effects = .x, component = .y, parameters = parameters)
     tmp <- do.call(rbind, sapply(
       parms,
       get(fun, asNamespace("bayestestR")),
@@ -113,8 +113,8 @@
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_brms(
         tmp,
-        x,
-        y,
+        .x,
+        .y,
         cols = c("CI", "CI_low", "CI_high", "Component", "Group"),
         parms = names(parms)
       )
