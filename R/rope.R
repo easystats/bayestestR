@@ -124,8 +124,8 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  list <- lapply(c("fixed", "random"), function(x) {
-    parms <- insight::get_parameters(x, effects = x, parameters = parameters)
+  list <- lapply(c("fixed", "random"), function(.x) {
+    parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
     tmp <- do.call(rbind, sapply(
       parms,
       rope,
@@ -140,7 +140,7 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_stanreg(
         tmp,
-        x,
+        .x,
         cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Group"),
         parms = names(parms)
       )
