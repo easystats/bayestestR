@@ -72,13 +72,10 @@
       <a href="../articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
     </li>
     <li>
-      <a href="../articles/1_IndicesDescription.html">Indices Description</a>
+      <a href="../articles/2_IndicesEstimationComparison.html">In-Depth 1: Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="../articles/2_IndicesEstimationComparison.html">Comparison of Point-Estimates</a>
-    </li>
-    <li>
-      <a href="../articles/3_IndicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
+      <a href="../articles/3_IndicesExistenceComparison.html">In-Depth 2: Comparison of Indices of Effect Existence</a>
     </li>
     <li>
       <a href="../articles/4_Guidelines.html">Reporting Guidelines</a>
@@ -123,13 +120,13 @@
 <h2 class="hasAnchor">
 <a href="#loading-the-packages" class="anchor"></a>Loading the packages</h2>
 <p>Oncce you’ve <a href="https://easystats.github.io/bayestestR/articles/bayestestR.html">isntalled</a> the necessary packages, we can load <code>bayestestR</code> and <code>rstanarm</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</code></pre></div>
 </div>
 <div id="fitting-the-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#fitting-the-model" class="anchor"></a>Fitting the model</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data=</span>iris)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data=</span>iris)</code></pre></div>
 <p>WORK IN PROGRESS.</p>
 </div>
 <div id="references" class="section level2">

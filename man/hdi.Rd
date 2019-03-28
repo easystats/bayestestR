@@ -7,19 +7,19 @@
 \alias{hdi.brmsfit}
 \title{Highest Density Interval (HDI)}
 \usage{
-hdi(posterior, ...)
+hdi(x, ...)
 
-\method{hdi}{numeric}(posterior, ci = 0.9, verbose = TRUE, ...)
+\method{hdi}{numeric}(x, ci = 0.9, verbose = TRUE, ...)
 
-\method{hdi}{stanreg}(posterior, ci = 0.9, effects = c("fixed",
-  "random", "all"), parameters = NULL, verbose = TRUE, ...)
-
-\method{hdi}{brmsfit}(posterior, ci = 0.9, effects = c("fixed",
-  "random", "all"), component = c("conditional", "zi", "zero_inflated",
+\method{hdi}{stanreg}(x, ci = 0.9, effects = c("fixed", "random",
   "all"), parameters = NULL, verbose = TRUE, ...)
+
+\method{hdi}{brmsfit}(x, ci = 0.9, effects = c("fixed", "random",
+  "all"), component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL, verbose = TRUE, ...)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
 \item{...}{Currently not used.}
 
@@ -41,11 +41,11 @@ or the zero-inflated part of the modelbe returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \description{
-Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
+Compute the \strong{Highest Density Interval (HDI)} of a posterior distribution, \emph{i.e.}, the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as \strong{Credible Interval (CI)}.
 }
 \details{
-Unlike equal-tailed intervals that typically exclude 2.5\% from each tail
-  of the distribution, the HDI is \emph{not} equal-tailed and therefor always
+Unlike equal-tailed intervals (see \link{ci}) that typically exclude 2.5\% from each tail
+  of the distribution, the HDI is \emph{not} equal-tailed and therefore always
   includes the mode(s) of posterior distributions.
   \cr \cr
   By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}),

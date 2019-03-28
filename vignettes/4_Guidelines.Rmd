@@ -29,7 +29,7 @@ Based on the previous [**comparison of point-estimates**](https://easystats.gith
 - The **traditional ROPE** (using a 90\% HDI) is not sensitive to delineate highly "significant" effects. The full ROPE (100\% HDI) does not present the same flaw.
 - The **Probability of Direction (*p*d)** is the closest index to the frequentist *p* value.
 
-**Thus, to minimally describe the posterior distribution of a parameter, we suggest reporting the *median* and the *90\% CI* for parameter characterisation and, in the context of null-hypothesis testing, the Probability of Direction (*p*d) for effect existence and, especially in the context of confirmatory analyses, the ROPE (full) with an explicitly specified range for effect significance.**
+**Thus, to minimally describe the posterior distribution of a parameter, we suggest reporting the *median* and the *90\% CI* (using HDI rather than quantiles) for parameter characterisation and, in the context of null-hypothesis testing, the Probability of Direction (*p*d) for effect existence and, especially in the context of confirmatory analyses, the ROPE (full) with an explicitly specified range for effect significance.**
 
 ## Interpretation Rules of Thumb
 
@@ -37,13 +37,17 @@ Based on the previous [**comparison of point-estimates**](https://easystats.gith
 
 - **Probability of Direction (*p*d)**
 
+In most cases, it seems that the *pd* corresponds to the frequentist one-sided *p*-value through the formula `p-value = (1-pd/100)`. Thus, a `pd` of `95\%`, `97.5\%` `99.5\%` and `99.95\%` corresponds approximately to a two-sided *p*-value of respectively `.1`, `.05`, `.01` and `.001`. Thus, for convience, we recommend using the following reference values:
+
     - *p*d **\<= 95\%** ~ *p* \> .1: uncertain
     - *p*d **\> 95\%** ~ *p* \< .1: possibly existing
-    - *p*d **\> 97.5\%** ~ *p* \< .05: likely existing
-    - *p*d **\> 99\%** ~ *p* \< .01: probably existing
-    - *p*d **\> 99.9\%** ~ *p* \< .001: certainly existing
+    - *p*d **\> 97\%**: likely existing
+    - *p*d **\> 99\%**: probably existing
+    - *p*d **\> 99.9\%**: certainly existing
 
-- **ROPE (full)**: Extra caution is required as its interpretation highly depends on other parameters such as sample size and ROPE bounds.
+- **ROPE (full)**
+
+Extra caution is required as its interpretation highly depends on other parameters such as sample size and ROPE range.
 
     - **\> 99\%** in ROPE: negligible (we can accept the null hypothesis)
     - **\> 97.5\%** in ROPE: probably negligible

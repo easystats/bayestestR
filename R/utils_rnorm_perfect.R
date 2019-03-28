@@ -13,6 +13,5 @@
 #' @importFrom stats qnorm
 #' @export
 rnorm_perfect <- function(n, mean = 0, sd = 1) {
-  x <- qnorm(seq(1 / n, 1 - 1 / n, length.out = n), mean, sd)
-  return(x)
+  stats::qnorm(seq(1 / n, 1 - 1 / n, length.out = n), mean, sd)
 }

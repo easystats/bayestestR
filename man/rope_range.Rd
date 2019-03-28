@@ -4,10 +4,10 @@
 \alias{rope_range}
 \title{Find Default Equivalence (ROPE) Region Bounds}
 \usage{
-rope_range(model)
+rope_range(x)
 }
 \arguments{
-\item{model}{A Bayesian model.}
+\item{x}{A model.}
 }
 \description{
 Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988).
@@ -15,7 +15,7 @@ Kruschke (2018) suggests that such null value could be set, by default, to the -
 \examples{
 \dontrun{
 library(rstanarm)
-model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family="binomial")
+model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family = "binomial")
 rope_range(model)
 
 library(brms)

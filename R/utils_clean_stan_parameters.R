@@ -1,6 +1,6 @@
 #' @keywords internal
-.clean_up_tmp_stanreg <- function(tmp, x, cols, parms) {
-  tmp$Group <- x
+.clean_up_tmp_stanreg <- function(tmp, group, cols, parms) {
+  tmp$Group <- group
   tmp$Parameter <- rep(parms, each = nrow(tmp) / length(parms))
   rownames(tmp) <- NULL
   tmp <- tmp[, c("Parameter", cols)]
@@ -11,9 +11,9 @@
 
 
 #' @keywords internal
-.clean_up_tmp_brms <- function(tmp, x, y, cols, parms) {
-  tmp$Group <- x
-  tmp$Component <- y
+.clean_up_tmp_brms <- function(tmp, group, component, cols, parms) {
+  tmp$Group <- group
+  tmp$Component <- component
   tmp$Parameter <- rep(parms, each = nrow(tmp) / length(parms))
   rownames(tmp) <- NULL
   tmp <- tmp[, c("Parameter", cols)]

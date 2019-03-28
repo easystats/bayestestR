@@ -49,22 +49,21 @@
 
 #' @importFrom insight get_parameters
 #' @keywords internal
-.compute_interval_stanreg <- function(posterior, ci, effects, parameters, verbose, fun) {
-
-  list <- lapply(c("fixed", "random"), function(x) {
-    parms <- insight::get_parameters(posterior, effects = x, parameters = parameters)
+.compute_interval_stanreg <- function(x, ci, effects, parameters, verbose, fun) {
+  list <- lapply(c("fixed", "random"), function(.x) {
+    parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
     tmp <- do.call(rbind, sapply(
       parms,
       get(fun, asNamespace("bayestestR")),
       ci = ci,
       verbose = verbose,
-      simplify = FALSE)
-    )
+      simplify = FALSE
+    ))
 
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_stanreg(
         tmp,
-        x,
+        group = .x,
         cols = c("CI", "CI_low", "CI_high", "Group"),
         parms = names(parms)
       )
@@ -97,25 +96,25 @@
 
 #' @importFrom insight get_parameters
 #' @keywords internal
-.compute_interval_brmsfit <- function(posterior, ci, effects, component, parameters, verbose, fun) {
+.compute_interval_brmsfit <- function(x, ci, effects, component, parameters, verbose, fun) {
   eff <- c("fixed", "fixed", "random", "random")
   com <- c("conditional", "zi", "conditional", "zi")
 
-  .get_hdi <- function(x, y) {
-    parms <- insight::get_parameters(posterior, effects = x, component = y, parameters = parameters)
+  .get_hdi <- function(.x, .y) {
+    parms <- insight::get_parameters(x, effects = .x, component = .y, parameters = parameters)
     tmp <- do.call(rbind, sapply(
       parms,
       get(fun, asNamespace("bayestestR")),
       ci = ci,
       verbose = verbose,
-      simplify = FALSE)
-    )
+      simplify = FALSE
+    ))
 
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_brms(
         tmp,
-        x,
-        y,
+        group = .x,
+        component = .y,
         cols = c("CI", "CI_low", "CI_high", "Component", "Group"),
         parms = names(parms)
       )
@@ -154,5 +153,4 @@
 
   class(dat) <- c(fun, class(dat))
   dat
-
 }

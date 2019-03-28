@@ -44,7 +44,7 @@ or the zero-inflated part of the modelbe returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \description{
-Find the Highest Maximum A Posteriori (MAP) estimate of a posterior. It corresponds to the 'peak' of the posterior distribution.
+Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution.
 }
 \examples{
 library(bayestestR)
@@ -52,7 +52,6 @@ library(bayestestR)
 posterior <- rnorm(1000)
 map_estimate(posterior)
 map_estimate(posterior, density = TRUE)
-
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -60,6 +59,7 @@ map_estimate(model)
 
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-map_estimate(model)}
+map_estimate(model)
+}
 
 }

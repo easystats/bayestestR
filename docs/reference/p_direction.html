@@ -39,7 +39,7 @@
 
 <meta property="og:title" content="Probability of Direction (pd) — p_direction" />
 
-<meta property="og:description" content="Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (consistently with the median's sign). It is defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar to the frequentist p-value (i.e., is strongly correlated)." />
+<meta property="og:description" content="Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist p-value." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -111,13 +111,10 @@
       <a href="../articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
     </li>
     <li>
-      <a href="../articles/1_IndicesDescription.html">Indices Description</a>
+      <a href="../articles/2_IndicesEstimationComparison.html">In-Depth 1: Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="../articles/2_IndicesEstimationComparison.html">Comparison of Point-Estimates</a>
-    </li>
-    <li>
-      <a href="../articles/3_IndicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
+      <a href="../articles/3_IndicesExistenceComparison.html">In-Depth 2: Comparison of Indices of Effect Existence</a>
     </li>
     <li>
       <a href="../articles/4_Guidelines.html">Reporting Guidelines</a>
@@ -155,7 +152,7 @@
 
     <div class="ref-description">
     
-    <p>Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (consistently with the median's sign). It is defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar to the frequentist p-value (i.e., is strongly correlated).</p>
+    <p>Compute the <strong>Probability of Direction</strong> (<strong><em>p</em>d</strong>, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (<em>i.e.</em>, is strongly correlated) to the frequentist <strong><em>p</em>-value</strong>.</p>
     
     </div>
 
@@ -205,6 +202,10 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><strong>Relationship with the p-value</strong>: In most cases, it seems that the <em>p</em>d corresponds to the frequentist one-sided <em>p</em>-value through the formula `p-value = (1-pd/100)`. Thus, a `pd` of `95%`, `97.5%` `99.5%` and `99.95%` corresponds approximately to a two-sided <em>p</em>-value of respectively `.1`, `.05`, `.01` and `.001`. See the <a href='https://easystats.github.io/bayestestR/articles/4_Guidelines.html'><em>reporting guidelines</em></a>.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
@@ -226,7 +227,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#details">Details</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

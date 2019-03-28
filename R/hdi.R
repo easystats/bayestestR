@@ -1,9 +1,9 @@
 #' Highest Density Interval (HDI)
 #'
-#' Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI is used in the context of Bayesian posterior characterisation as Credible Interval (CI).
+#' Compute the \strong{Highest Density Interval (HDI)} of a posterior distribution, \emph{i.e.}, the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as \strong{Credible Interval (CI)}.
 #'
-#' @details Unlike equal-tailed intervals that typically exclude 2.5\% from each tail
-#'   of the distribution, the HDI is \emph{not} equal-tailed and therefor always
+#' @details Unlike equal-tailed intervals (see \link{ci}) that typically exclude 2.5\% from each tail
+#'   of the distribution, the HDI is \emph{not} equal-tailed and therefore always
 #'   includes the mode(s) of posterior distributions.
 #'   \cr \cr
 #'   By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}),
@@ -11,7 +11,7 @@
 #'   An effective sample size of at least 10.000 is recommended if 95\% intervals
 #'   should be computed (\cite{Kruschke 2015, p. 183ff}).
 #'
-#' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
+#' @param x Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param ci Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.
 #' @param effects Should results for fixed effects, random effects or both be returned?
 #'   Only applies to mixed models. May be abbreviated.
@@ -50,16 +50,16 @@
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #'
 #' @export
-hdi <- function(posterior, ...) {
+hdi <- function(x, ...) {
   UseMethod("hdi")
 }
 
 
 #' @rdname hdi
 #' @export
-hdi.numeric <- function(posterior, ci = .90, verbose = TRUE, ...) {
+hdi.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
   do.call(rbind, lapply(ci, function(i) {
-    .hdi(posterior, ci = i, verbose = verbose)
+    .hdi(x, ci = i, verbose = verbose)
   }))
 }
 
@@ -67,18 +67,18 @@ hdi.numeric <- function(posterior, ci = .90, verbose = TRUE, ...) {
 #' @importFrom insight get_parameters
 #' @rdname hdi
 #' @export
-hdi.stanreg <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+hdi.stanreg <- function(x, ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
-  .compute_interval_stanreg(posterior, ci, effects, parameters, verbose, fun = "hdi")
+  .compute_interval_stanreg(x, ci, effects, parameters, verbose, fun = "hdi")
 }
 
 
 #' @rdname hdi
 #' @export
-hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
+hdi.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-  .compute_interval_brmsfit(posterior, ci, effects, component, parameters, verbose, fun = "hdi")
+  .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose, fun = "hdi")
 }
 
 
@@ -92,7 +92,7 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
   }
 
   x_sorted <- sort.int(x, method = "quick")  # removes NA/NaN, but not Inf
-  window_size <- ceiling(ci * length(x_sorted))
+  window_size <- ceiling(ci * length(x_sorted))  # See https://github.com/easystats/bayestestR/issues/39
 
   if (window_size < 2) {
     if (verbose) {
@@ -129,4 +129,3 @@ hdi.brmsfit <- function(posterior, ci = .90, effects = c("fixed", "random", "all
     "CI_high" = x_sorted[min_i + window_size]
   )
 }
-

@@ -2,12 +2,12 @@
 #'
 #' @description Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988).
 #'
-#' @param model A Bayesian model.
+#' @param x A model.
 #'
 #' @examples
 #' \dontrun{
 #' library(rstanarm)
-#' model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family="binomial")
+#' model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family = "binomial")
 #' rope_range(model)
 #'
 #' library(brms)
@@ -18,12 +18,12 @@
 #' @importFrom insight get_response model_info is_multivariate
 #' @importFrom stats qlogis sd
 #' @export
-rope_range <- function(model){
-  response <- insight::get_response(model)
-  information <- insight::model_info(model)
+rope_range <- function(x) {
+  response <- insight::get_response(x)
+  information <- insight::model_info(x)
 
-  if (insight::is_multivariate(model)) {
-    mapply(function(x, y) .rope_range(x, y), information, response)
+  if (insight::is_multivariate(x)) {
+    mapply(function(i, j) .rope_range(i, j), information, response)
   } else {
     .rope_range(information, response)
   }

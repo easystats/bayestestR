@@ -7,19 +7,19 @@
 \alias{ci.brmsfit}
 \title{Confidence/Credible Interval}
 \usage{
-ci(posterior, ...)
+ci(x, ...)
 
-\method{ci}{numeric}(posterior, ci = 0.9, verbose = TRUE, ...)
+\method{ci}{numeric}(x, ci = 0.9, verbose = TRUE, ...)
 
-\method{ci}{stanreg}(posterior, ci = 0.9, effects = c("fixed",
-  "random", "all"), parameters = NULL, verbose = TRUE, ...)
-
-\method{ci}{brmsfit}(posterior, ci = 0.9, effects = c("fixed",
-  "random", "all"), component = c("conditional", "zi", "zero_inflated",
+\method{ci}{stanreg}(x, ci = 0.9, effects = c("fixed", "random",
   "all"), parameters = NULL, verbose = TRUE, ...)
+
+\method{ci}{brmsfit}(x, ci = 0.9, effects = c("fixed", "random",
+  "all"), component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL, verbose = TRUE, ...)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{x}{A \code{stanreg} or \code{brmsfit} model , or a vector representing a posterior distribution.}
 
 \item{...}{Currently not used.}
 
@@ -41,19 +41,22 @@ or the zero-inflated part of the modelbe returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \description{
-Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models.
+Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models using quantiles.
+}
+\details{
 Documentation is accessible for:
 \itemize{
-  \item Bayesian models
+  \item \href{https://easystats.github.io/bayestestR/reference/ci.html}{Bayesian models}
   \item LM and GLMs
   \item Mixed models
 }
+
+For Bayesian Credible Intervals, CIs are often computed by the \link{hdi} method.
 }
 \examples{
 library(bayestestR)
 
 ci(rnorm(1000))
-
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -63,6 +66,7 @@ ci(model, ci = c(.80, .90, .95))
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 ci(model)
-ci(model, ci = c(.80, .90, .95))}
+ci(model, ci = c(.80, .90, .95))
+}
 
 }

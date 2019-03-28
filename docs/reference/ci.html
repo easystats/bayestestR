@@ -39,12 +39,7 @@
 
 <meta property="og:title" content="Confidence/Credible Interval — ci" />
 
-<meta property="og:description" content="Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models.
-Documentation is accessible for:
-Bayesian models
-LM and GLMs
-Mixed models
-" />
+<meta property="og:description" content="Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models using quantiles." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -116,13 +111,10 @@ Mixed models
       <a href="../articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
     </li>
     <li>
-      <a href="../articles/1_IndicesDescription.html">Indices Description</a>
+      <a href="../articles/2_IndicesEstimationComparison.html">In-Depth 1: Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="../articles/2_IndicesEstimationComparison.html">Comparison of Point-Estimates</a>
-    </li>
-    <li>
-      <a href="../articles/3_IndicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
+      <a href="../articles/3_IndicesExistenceComparison.html">In-Depth 2: Comparison of Indices of Effect Existence</a>
     </li>
     <li>
       <a href="../articles/4_Guidelines.html">Reporting Guidelines</a>
@@ -160,12 +152,7 @@ Mixed models
 
     <div class="ref-description">
     
-    <p>Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models.
-Documentation is accessible for:</p><ul>
-<li><p>Bayesian models</p></li>
-<li><p>LM and GLMs</p></li>
-<li><p>Mixed models</p></li>
-</ul>
+    <p>Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models using quantiles.</p>
     
     </div>
 
@@ -223,13 +210,21 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Documentation is accessible for:</p><ul>
+<li><p><a href='https://easystats.github.io/bayestestR/reference/ci.html'>Bayesian models</a></p></li>
+<li><p>LM and GLMs</p></li>
+<li><p>Mixed models</p></li>
+</ul>
+    <p>For Bayesian Credible Intervals, CIs are often computed by the <a href='hdi.html'>hdi</a> method.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
 <span class='fu'>ci</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt;   CI    CI_low  CI_high
-#&gt; 1 90 -1.643289 1.675485</div><div class='input'>
-</div><span class='co'># NOT RUN {</span>
+#&gt; 1 90 -1.643289 1.675485</div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>ci</span>(<span class='no'>model</span>)
@@ -246,7 +241,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#details">Details</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
