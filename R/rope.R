@@ -189,8 +189,8 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  .get_rope <- function(x, y) {
-    parms <- insight::get_parameters(x, effects = x, component = y, parameters = parameters)
+  .get_rope <- function(.x, .y) {
+    parms <- insight::get_parameters(x, effects = .x, component = .y, parameters = parameters)
     tmp <- do.call(rbind, sapply(
       parms,
       rope,
@@ -205,8 +205,8 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_brms(
         tmp,
-        x,
-        y,
+        .x,
+        .y,
         cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Component", "Group"),
         parms = names(parms)
       )
