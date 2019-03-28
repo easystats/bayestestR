@@ -63,7 +63,7 @@
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_stanreg(
         tmp,
-        .x,
+        group = .x,
         cols = c("CI", "CI_low", "CI_high", "Group"),
         parms = names(parms)
       )
@@ -113,8 +113,8 @@
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_brms(
         tmp,
-        .x,
-        .y,
+        group = .x,
+        component = .y,
         cols = c("CI", "CI_low", "CI_high", "Component", "Group"),
         parms = names(parms)
       )

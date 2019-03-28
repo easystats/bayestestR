@@ -140,7 +140,7 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_stanreg(
         tmp,
-        .x,
+        group = .x,
         cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Group"),
         parms = names(parms)
       )
@@ -205,8 +205,8 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_brms(
         tmp,
-        .x,
-        .y,
+        group = .x,
+        component = .y,
         cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Component", "Group"),
         parms = names(parms)
       )
