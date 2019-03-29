@@ -23,7 +23,7 @@ Now that you've read the [**Get started**](https://easystats.github.io/bayestest
 
 ## Loading the packages
 
-Oncce you've [isntalled](https://easystats.github.io/bayestestR/articles/bayestestR.html) the necessary packages, we can load `rstanarm` (to fit the models) and `bayestestR` (to compute useful indices).
+Once you've [installed](https://easystats.github.io/bayestestR/articles/bayestestR.html) the necessary packages, we can load `rstanarm` (to fit the models) and `bayestestR` (to compute useful indices).
 
 ```{r message=FALSE, warning=FALSE}
 library(rstanarm)

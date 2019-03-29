@@ -119,19 +119,26 @@
 <div id="loading-the-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#loading-the-packages" class="anchor"></a>Loading the packages</h2>
-<p>Oncce you’ve <a href="https://easystats.github.io/bayestestR/articles/bayestestR.html">isntalled</a> the necessary packages, we can load <code>bayestestR</code> and <code>rstanarm</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</code></pre></div>
+<p>Once you’ve <a href="https://easystats.github.io/bayestestR/articles/bayestestR.html">installed</a> the necessary packages, we can load <code>rstanarm</code> (to fit the models) and <code>bayestestR</code> (to compute useful indices).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a></code></pre></div>
 </div>
-<div id="fitting-the-model" class="section level2">
+<div id="a-linear-model" class="section level2">
 <h2 class="hasAnchor">
-<a href="#fitting-the-model" class="anchor"></a>Fitting the model</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data=</span>iris)</code></pre></div>
-<p>WORK IN PROGRESS.</p>
+<a href="#a-linear-model" class="anchor"></a>A Linear Model</h2>
+<div id="fitting-the-model" class="section level3">
+<h3 class="hasAnchor">
+<a href="#fitting-the-model" class="anchor"></a>Fitting the model</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data=</span>iris)</a></code></pre></div>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div id="extracting-the-posterior" class="section level3">
+<h3 class="hasAnchor">
+<a href="#extracting-the-posterior" class="anchor"></a>Extracting the posterior</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">posteriors &lt;-<span class="st"> </span>insight<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/insight/topics/get_parameters">get_parameters</a></span>(model)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/density">density</a></span>(posteriors<span class="op">$</span>Petal.Length))</a></code></pre></div>
+<!-- ### Correspondance with Frequentist Models -->
+<!-- TO BE IMPROVED -->
+</div>
 </div>
   </div>
 
@@ -141,8 +148,7 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#loading-the-packages">Loading the packages</a></li>
-      <li><a href="#fitting-the-model">Fitting the model</a></li>
-      <li><a href="#references">References</a></li>
+      <li><a href="#a-linear-model">A Linear Model</a></li>
       </ul>
 </div>
       </div>
