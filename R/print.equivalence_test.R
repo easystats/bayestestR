@@ -34,4 +34,3 @@ print.equivalence_test <- function(x, digits = 2, ...) {
     cat("\n")
   }
 }
-

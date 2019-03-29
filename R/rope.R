@@ -29,7 +29,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
 #' rope(x = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 #' rope(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
@@ -39,13 +39,13 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
 #' }
-#'
+#' 
 #' @importFrom insight get_parameters is_multivariate
 #' @export
 rope <- function(x, ...) {

@@ -21,7 +21,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' equivalence_test(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
 #' equivalence_test(x = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 #' equivalence_test(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
@@ -31,13 +31,13 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
 #' equivalence_test(model, ci = c(.50, 1))
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
 #' equivalence_test(model, ci = c(.50, .99))
 #' }
-#'
+#' 
 #' @importFrom insight print_color
 #' @export
 equivalence_test <- function(x, ...) {
