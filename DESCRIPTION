@@ -30,6 +30,7 @@ Suggests:
 	dplyr,
 	tidyr,
 	ggplot2,
+	ggridges,
 	knitr,
 	rmarkdown,
 	rstanarm,
