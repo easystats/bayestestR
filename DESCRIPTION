@@ -35,7 +35,7 @@ Suggests:
 	rmarkdown,
 	rstanarm,
 	stringr,
-  testthat
+	testthat
 RoxygenNote: 6.1.1
 Language: en-GB
 VignetteBuilder: knitr
