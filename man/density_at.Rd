@@ -11,7 +11,7 @@ density_at(posterior, x, precision = 2^10)
 
 \item{x}{The value of which to get the approximate probability.}
 
-\item{precision}{Number of points for density estimation. See the `n` parameter in \link[=density]{density}.}
+\item{precision}{Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.}
 }
 \description{
 Compute the density of a given point of a distribution.
