@@ -23,7 +23,7 @@ equivalence_test(x, ...)
 
 \item{...}{Currently not used.}
 
-\item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
+\item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.}
 

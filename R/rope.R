@@ -3,7 +3,7 @@
 #' Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 #'
 #' @param x Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
-#' @param range ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
+#' @param range ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
 #' @param ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.
 #'
 #' @inheritParams hdi
@@ -29,7 +29,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
 #' rope(x = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 #' rope(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
@@ -39,13 +39,13 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
 #' }
-#' 
+#'
 #' @importFrom insight get_parameters is_multivariate
 #' @export
 rope <- function(x, ...) {
