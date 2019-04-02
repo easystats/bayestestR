@@ -183,7 +183,7 @@
     </tr>
     <tr>
       <th>range</th>
-      <td><p>ROPE's lower and higher bounds. Should be a vector of length two (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the range is set to <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(0.1, 0.1)</a></code> if input is a vector, and <code>x +- 0.1*SD(response)</code> if a Bayesian model is provided.</p></td>
+      <td><p>ROPE's lower and higher bounds. Should be a vector of length two (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the range is set to <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code> if input is a vector, and <code>x +- 0.1*SD(response)</code> if a Bayesian model is provided.</p></td>
     </tr>
     <tr>
       <th>ci</th>
@@ -216,7 +216,7 @@ for the output.</p></td>
   HDI), then the null hypothesis is rejected or accepted if the percentage
   of the posterior within the ROPE is smaller than to 2.5% or greater  than
   97.5%. Desirable results are low proportions inside the ROPE  (the closer
-  to zero the better) and the H0 should be rejected.</p>
+  to zero the better) and the null hypothesis should be rejected.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

@@ -152,7 +152,7 @@
 
     <div class="ref-description">
     
-    <p>Generate a sample of size n with a near-perfect normal distribution.</p>
+    <p>Generate a sample of size <code>n</code> with a near-perfect normal distribution.</p>
     
     </div>
 
@@ -163,7 +163,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>n</th>
-      <td><p>Number of observations. If length(n) &gt; 1, the length is taken to be the number required.</p></td>
+      <td><p>Number of observations. If <code>length(n) &gt; 1</code>, the length is taken to be the number required.</p></td>
     </tr>
     <tr>
       <th>mean</th>
@@ -178,8 +178,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>rnorm_perfect</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a></span>(<span class='no'>x</span>))</div><div class='img'><img src='rnorm_perfect-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>rnorm_perfect</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='error'>Error in stats::qnorm(seq(1/n, 1 - 1/n, length.out = n), mean, stats::sd): Non-numeric argument to mathematical function</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a></span>(<span class='no'>x</span>))</div><div class='output co'>#&gt; <span class='error'>Error in density.default(x): argument 'x' must be numeric</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
