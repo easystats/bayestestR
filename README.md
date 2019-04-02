@@ -142,15 +142,17 @@ and can be interpreted as the probability (expressed in percentage) that
 a parameter (described by its posterior distribution) is strictly
 positive or negative (whichever is the most probable). It is
 mathematically defined as the proportion of the posterior distribution
-that is of the median’s sign. Altough differently expressed, this index
+that is of the median’s sign. Although differently expressed, this index
 is fairly similar (*i.e.*, is strongly correlated) to the frequentist
 ***p*-value**.
 
 **Relationship with the p-value**: In most cases, it seems that the *pd*
 corresponds to the frequentist one-sided *p*-value through the formula
-`p-value = (1-pd/100)`. Thus, a `pd` of `95\%`, `97.5\%` `99.5\%` and
-`99.95\%` corresponds approximately to a two-sided *p*-value of
-respectively `.1`, `.05`, `.01` and `.001`. See the [*reporting
+`p-value = (1-pd/100)` and two the two-sided *p*-value (the most
+commonly reported) through the formula `p-value = 2*(1-pd/100)`. Thus, a
+`pd` of `95%`, `97.5%` `99.5%` and `99.95%` corresponds approximately to
+a two-sided *p*-value of respectively `.1`, `.05`, `.01` and `.001`. See
+the [*reporting
 guidelines*](https://easystats.github.io/bayestestR/articles/4_Guidelines.html).
 
 ``` r
@@ -174,7 +176,8 @@ proportion of 0% (positive values) or 100% (negative values). A
 ROPE-based *p* of 97% means that there is a probability of .97 that a
 parameter (described by its posterior distribution) is outside the ROPE.
 On the contrary, a ROPE-based p of -97% means that there is a
-probability of .97 that the parameter is inside the ROPE.
+probability of .97 that the parameter is inside the
+ROPE.
 
 ``` r
 p_rope(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
@@ -182,12 +185,13 @@ p_rope(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
 
 ### MAP-based *p*-value
 
-\[**`p_map()`**\] computes a Bayesian equivalent of the p-value, related
-to the odds that a parameter (described by its posterior distribution)
-has against the null hypothesis (*h0*) using Mills’ (2014, 2017)
-*Objective Bayesian Hypothesis Testing* framework. It is mathematically
-based on the density at the Maximum A Priori (MAP) and corresponds to
-the density value at 0 divided by the density of the MAP
+[**`p_map()`**](https://easystats.github.io/bayestestR/reference/p_map.html)
+computes a Bayesian equivalent of the p-value, related to the odds that
+a parameter (described by its posterior distribution) has against the
+null hypothesis (*h0*) using Mills’ (2014, 2017) *Objective Bayesian
+Hypothesis Testing* framework. It is mathematically based on the density
+at the Maximum A Priori (MAP) and corresponds to the density value at 0
+divided by the density of the MAP
 estimate.
 
 ``` r
@@ -201,11 +205,12 @@ p_map(posterior = rnorm(1000, 1, 1))
 ### Find ROPE’s appropriate range
 
 [**`rope_range()`**](https://easystats.github.io/bayestestR/reference/rope_range.html):
-Find default equivalence (ROPE) region bounds of Bayesian models.
-Kruschke (2018) suggests that such null value could be set, by default,
-to the -0.1 to 0.1 range of a standardized parameter (negligible effect
-size according to Cohen,
-1988).
+This function attempts at finding suitable “default” values for the
+Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests that
+such null value could be set, by default, to the `-0.1` to `0.1` range
+of a standardized parameter (negligible effect size according to Cohen,
+1988), which can be generalised for linear models to
+`[-0.1*sd(y), 0.1*sd(y)]`.
 
 ``` r
 rope_range(model)

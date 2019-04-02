@@ -39,7 +39,7 @@
 
 <meta property="og:title" content="Find Default Equivalence (ROPE) Region Bounds — rope_range" />
 
-<meta property="og:description" content="Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988)." />
+<meta property="og:description" content="This function attempts at finding suitable &quot;default&quot; values for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988), which can be generalised for linear models to \([-0.1*SD_{y}, 0.1*SD_{y}]\)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -152,7 +152,7 @@
 
     <div class="ref-description">
     
-    <p>Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988).</p>
+    <p>This function attempts at finding suitable "default" values for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests that such null value could be set, by default, to the <code>-0.1</code> to <code>0.1</code> range of a standardized parameter (negligible effect size according to Cohen, 1988), which can be generalised for linear models to \([-0.1*SD_{y}, 0.1*SD_{y}]\).</p>
     
     </div>
 
@@ -163,9 +163,14 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A model.</p></td>
+      <td><p>Vector representing a posterior distribution. Can also be a <code>stanreg</code> or <code>brmsfit</code> model.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. doi: <a href='http://doi.org/10.1177/2515245918771304'>10.1177/2515245918771304</a>
+.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -184,7 +189,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

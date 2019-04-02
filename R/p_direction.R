@@ -5,7 +5,7 @@
 #' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @inheritParams hdi
 #'
-#' @details \strong{Relationship with the p-value}: In most cases, it seems that the \emph{p}d corresponds to the frequentist one-sided \emph{p}-value through the formula \code{p-value = (1-pd/100)}. Thus, a \code{pd} of \code{95\%}, \code{97.5\%}, \code{99.5\%} and \code{99.95\%} corresponds approximately to a two-sided \emph{p}-value of respectively \code{.1}, \code{.05}, \code{.01} and \code{.001}. See the \href{https://easystats.github.io/bayestestR/articles/4_Guidelines.html}{\emph{reporting guidelines}}.
+#' @details \strong{Relationship with the p-value}: In most cases, it seems that the \emph{p}d corresponds to the frequentist one-sided \emph{p}-value through the formula \eqn{p_{two sided} = 2*(1-\frac{p_{d}}{100})} and two the two-sided \emph{p}-value (\emph{the most commonly reported one} through the formula \eqn{p_{one sided} = 2*(1-\frac{p_{d}}{100})}. Thus, a \code{pd} of \code{95\%}, \code{97.5\%}, \code{99.5\%} and \code{99.95\%} corresponds approximately to a\emph{p}-value of respectively \code{.1}, \code{.05}, \code{.01} and \code{.001}. See the \href{https://easystats.github.io/bayestestR/articles/4_Guidelines.html}{\emph{reporting guidelines}}.
 #'
 #' @examples
 #' library(bayestestR)
@@ -88,3 +88,8 @@ p_direction.brmsfit <- function(posterior, effects = c("fixed", "random", "all")
     parameters = parameters
   )
 }
+
+
+#' @rdname p_direction
+#' @export
+pd <- p_direction

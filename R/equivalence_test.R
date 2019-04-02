@@ -17,7 +17,7 @@
 #'   97.5\%. Desirable results are low proportions inside the ROPE  (the closer
 #'   to zero the better) and the null hypothesis should be rejected.
 #'
-#' @references Kruschke, J. K. (2018). Rejecting or Accepting Parameter Values in Bayesian Estimation. Advances in Methods and Practices in Psychological Science, 251524591877130. \doi{10.1177/2515245918771304}
+#' @references Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
 #'
 #' @examples
 #' library(bayestestR)
