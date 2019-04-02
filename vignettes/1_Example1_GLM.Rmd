@@ -23,28 +23,42 @@ Now that you've read the [**Get started**](https://easystats.github.io/bayestest
 
 ## Loading the packages
 
-Oncce you've [isntalled](https://easystats.github.io/bayestestR/articles/bayestestR.html) the necessary packages, we can load `bayestestR` and `rstanarm`.
+Once you've [installed](https://easystats.github.io/bayestestR/articles/bayestestR.html) the necessary packages, we can load `rstanarm` (to fit the models) and `bayestestR` (to compute useful indices).
 
 ```{r message=FALSE, warning=FALSE}
 library(rstanarm)
 library(bayestestR)
 ```
 
-## Fitting the model
+## A Linear Model
+
+### Fitting the model
 
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
-model <- stan_glm(Sepal.Length ~ Species, data=iris)
+model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
 ```
 ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='hide'}
 library(rstanarm)
 set.seed(333)
 
-model <- stan_glm(Sepal.Length ~ Species, data=iris)
+model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
 ```
 
-WORK IN PROGRESS.
+### Extracting the posterior
 
-## References
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+posteriors <- insight::get_parameters(model)
+```
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+plot(density(posteriors$Petal.Length))
+```
+
+
+<!-- ### Correspondance with Frequentist Models -->
+
+<!-- TO BE IMPROVED -->
+
 
 

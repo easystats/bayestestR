@@ -16,7 +16,7 @@
 }
 
 
-# select rows where values in "variabl" match "value"
+# select rows where values in "variable" match "value"
 #' @keywords internal
 .select_rows <- function(data, variable, value) {
   data[which(data[[variable]] == value), ]
@@ -26,4 +26,26 @@
 #' @keywords internal
 .remove_column <- function(data, variables) {
   data[, -which(colnames(data) %in% variables), drop = FALSE]
+}
+
+
+#' @importFrom stats reshape
+#' @keywords internal
+.to_long <- function(x, names_to = "key", values_to = "value", columns = colnames(x)) {
+  if (is.numeric(columns)) columns <- colnames(x)[columns]
+  dat <- stats::reshape(
+    as.data.frame(x),
+    idvar = "id",
+    ids = row.names(x),
+    times = columns,
+    timevar = names_to,
+    v.names = values_to,
+    varying = list(columns),
+    direction = "long"
+  )
+
+  if (is.factor(dat[[values_to]]))
+    dat[[values_to]] <- as.character(dat[[values_to]])
+
+  dat[, 1:(ncol(dat) - 1), drop = FALSE]
 }

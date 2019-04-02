@@ -53,4 +53,3 @@ print.rope <- function(x, digits = 2, ...) {
     }
   }
 }
-

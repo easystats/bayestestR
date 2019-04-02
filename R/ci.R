@@ -16,20 +16,20 @@
 #'
 #' @examples
 #' library(bayestestR)
-#'
+#' 
 #' ci(rnorm(1000))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' ci(model)
 #' ci(model, ci = c(.80, .90, .95))
-#'
+#' 
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' ci(model)
 #' ci(model, ci = c(.80, .90, .95))
 #' }
-#'
+#' 
 #' @export
 ci <- function(x, ...) {
   UseMethod("ci")
