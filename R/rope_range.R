@@ -1,20 +1,22 @@
 #' @title Find Default Equivalence (ROPE) Region Bounds
 #'
-#' @description Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988).
+#' @description This function attempts at finding suitable "default" values for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests that such null value could be set, by default, to the \code{-0.1} to \code{0.1} range of a standardized parameter (negligible effect size according to Cohen, 1988), which can be generalised for linear models to \eqn{[-0.1*SD_{y}, 0.1*SD_{y}]}.
 #'
-#' @param x A model.
+#' @inheritParams rope
 #'
 #' @examples
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family = "binomial")
 #' rope_range(model)
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' rope_range(model)
 #' }
-#' 
+#'
+#' @references Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
+#'
 #' @importFrom insight get_response model_info is_multivariate
 #' @importFrom stats qlogis sd
 #' @export

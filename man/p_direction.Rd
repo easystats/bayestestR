@@ -5,6 +5,7 @@
 \alias{p_direction.numeric}
 \alias{p_direction.stanreg}
 \alias{p_direction.brmsfit}
+\alias{pd}
 \title{Probability of Direction (pd)}
 \usage{
 p_direction(posterior, ...)
@@ -17,6 +18,8 @@ p_direction(posterior, ...)
 \method{p_direction}{brmsfit}(posterior, effects = c("fixed", "random",
   "all"), component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL, ...)
+
+pd(posterior, ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
@@ -40,7 +43,7 @@ applies to \pkg{brms}-models.}
 Compute the \strong{Probability of Direction} (\strong{\emph{p}d}, also known as the Maximum Probability of Effect - \emph{MPE}). It varies between 50\% and 100\% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (\emph{i.e.}, is strongly correlated) to the frequentist \strong{\emph{p}-value}.
 }
 \details{
-\strong{Relationship with the p-value}: In most cases, it seems that the \emph{p}d corresponds to the frequentist one-sided \emph{p}-value through the formula \code{p-value = (1-pd/100)}. Thus, a \code{pd} of \code{95\%}, \code{97.5\%}, \code{99.5\%} and \code{99.95\%} corresponds approximately to a two-sided \emph{p}-value of respectively \code{.1}, \code{.05}, \code{.01} and \code{.001}. See the \href{https://easystats.github.io/bayestestR/articles/4_Guidelines.html}{\emph{reporting guidelines}}.
+\strong{Relationship with the p-value}: In most cases, it seems that the \emph{p}d corresponds to the frequentist one-sided \emph{p}-value through the formula \eqn{p_{two sided} = 2*(1-\frac{p_{d}}{100})} and two the two-sided \emph{p}-value (\emph{the most commonly reported one} through the formula \eqn{p_{one sided} = 2*(1-\frac{p_{d}}{100})}. Thus, a \code{pd} of \code{95\%}, \code{97.5\%}, \code{99.5\%} and \code{99.95\%} corresponds approximately to a\emph{p}-value of respectively \code{.1}, \code{.05}, \code{.01} and \code{.001}. See the \href{https://easystats.github.io/bayestestR/articles/4_Guidelines.html}{\emph{reporting guidelines}}.
 }
 \examples{
 library(bayestestR)
