@@ -35,6 +35,17 @@ filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
 }
+\value{
+A data frame with following columns:
+  \itemize{
+    \item \code{Parameter} The model parameter(s).
+    \item \code{CI} The probability of the HDI.
+    \item \code{ROPE_low}, \code{ROPE_high} The limits of the ROPE. These values are identical for all parameters.
+    \item \code{ROPE_Percentage} The proportion of the HDI that lies inside the ROPE.
+    \item \code{ROPE_Equivalence} The "test result", as character. Either "rejected", "accepted" or "undecided".
+    \item \code{HDI_low} , \code{HDI_high} The lower and upper HDI limits for the parameters.
+  }
+}
 \description{
 Perform a \strong{Test for Practical Equivalence} based on the \emph{"HDI+ROPE decision rule"} (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (\emph{i.e.}, a \link[=rope]{ROPE}).
 }
@@ -52,6 +63,11 @@ Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2018)
   97.5\%. Desirable results are low proportions inside the ROPE  (the closer
   to zero the better) and the null hypothesis should be rejected.
 }
+\note{
+There is a \code{print()}-method with a \code{digits}-argument to control
+  the amount of digits in the output, and there is a \code{plot()}-method
+  to visualize the results from the equivalence-test (for models only).
+}
 \examples{
 library(bayestestR)
 
@@ -59,11 +75,20 @@ equivalence_test(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
 equivalence_test(x = rnorm(1000, 0, 1), range = c(-0.1, 0.1))
 equivalence_test(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 equivalence_test(x = rnorm(1000, 1, 1), ci = c(.50, .99))
+
+# print more digits
+test <- equivalence_test(x = rnorm(1000, 1, 1), ci = c(.50, .99))
+print(test, digits = 4)
+
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 equivalence_test(model)
 equivalence_test(model, ci = c(.50, 1))
+
+# plot result
+test <- equivalence_test(model)
+plot(test)
 
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
