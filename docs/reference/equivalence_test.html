@@ -203,6 +203,18 @@ for the output.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data frame with following columns:</p><ul>
+<li><p><code>Parameter</code> The model parameter(s).</p></li>
+<li><p><code>CI</code> The probability of the HDI.</p></li>
+<li><p><code>ROPE_low</code>, <code>ROPE_high</code> The limits of the ROPE. These values are identical for all parameters.</p></li>
+<li><p><code>ROPE_Percentage</code> The proportion of the HDI that lies inside the ROPE.</p></li>
+<li><p><code>ROPE_Equivalence</code> The "test result", as character. Either "rejected", "accepted" or "undecided".</p></li>
+<li><p><code>HDI_low</code> , <code>HDI_high</code> The lower and upper HDI limits for the parameters.</p></li>
+</ul>
+
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Using the <a href='rope.html'>ROPE</a> and the <a href='hdi.html'>HDI</a>, Kruschke (2018)
@@ -217,6 +229,12 @@ for the output.</p></td>
   of the posterior within the ROPE is smaller than to 2.5% or greater  than
   97.5%. Desirable results are low proportions inside the ROPE  (the closer
   to zero the better) and the null hypothesis should be rejected.</p>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>There is a <code><a href='https://www.rdocumentation.org/packages/base/topics/print'>print()</a></code>-method with a <code>digits</code>-argument to control
+  the amount of digits in the output, and there is a <code><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot()</a></code>-method
+  to visualize the results from the equivalence-test (for models only).</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -254,11 +272,28 @@ for the output.</p></td>
 #&gt; 
 #&gt;         H0 inside ROPE      99% HDI
 #&gt;  undecided      4.34 % [-1.63 3.51]
-#&gt; </div></span><span class='co'># NOT RUN {</span>
+#&gt; </div><div class='input'>
+<span class='co'># print more digits</span>
+<span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'>equivalence_test</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>.99</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>test</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
+#&gt; 
+#&gt; </span><span>  ROPE: [-0.1000 0.1000]
+#&gt; 
+#&gt;        H0 inside ROPE          50% HDI
+#&gt;  rejected    0.0000 % [ 0.4757 1.7762]
+#&gt; 
+#&gt;         H0 inside ROPE          99% HDI
+#&gt;  undecided    5.7518 % [-1.4670 3.5258]
+#&gt; </div><div class='input'>
+</div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>equivalence_test</span>(<span class='no'>model</span>)
 <span class='fu'>equivalence_test</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>1</span>))
+
+<span class='co'># plot result</span>
+<span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'>equivalence_test</span>(<span class='no'>model</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>test</span>)
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
@@ -272,7 +307,11 @@ for the output.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#note">Note</a></li>
 
       <li><a href="#references">References</a></li>
       
