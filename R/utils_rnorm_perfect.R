@@ -10,8 +10,8 @@
 #' library(bayestestR)
 #' x <- rnorm_perfect(n = 10)
 #' plot(density(x))
-#' @importFrom stats qnorm sd
+#' @importFrom stats qnorm
 #' @export
 rnorm_perfect <- function(n, mean = 0, sd = 1) {
-  stats::qnorm(seq(1 / n, 1 - 1 / n, length.out = n), mean, stats::sd)
+  stats::qnorm(seq(1 / n, 1 - 1 / n, length.out = n), mean, sd)
 }
