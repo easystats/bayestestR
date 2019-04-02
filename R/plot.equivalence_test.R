@@ -6,16 +6,24 @@ plot.equivalence_test <- function(x, ...) {
     return(x)
   }
 
+  model_name <- attr(x, "model", exact = TRUE)
+
+  if (is.null(model_name)) {
+    warning("plot() only works for equivalence_test() with model-objects.", call. = FALSE)
+    return(x)
+  }
+
+
   # retrieve model
   model <- tryCatch(
     {
-      get(attr(x, "model", exact = TRUE), envir = parent.frame())
+      get(model_name, envir = parent.frame())
     },
     error = function(e) { NULL }
   )
 
   if (is.null(model)) {
-    warning(sprintf("Can't find object '%s'.", attr(x, "model", exact = TRUE)))
+    warning(sprintf("Can't find object '%s'.", model_name))
     return(x)
   }
 

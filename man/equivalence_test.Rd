@@ -50,7 +50,7 @@ Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2018)
   HDI), then the null hypothesis is rejected or accepted if the percentage
   of the posterior within the ROPE is smaller than to 2.5\% or greater  than
   97.5\%. Desirable results are low proportions inside the ROPE  (the closer
-  to zero the better) and the H0 should be rejected.
+  to zero the better) and the null hypothesis should be rejected.
 }
 \examples{
 library(bayestestR)
