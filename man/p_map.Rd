@@ -35,7 +35,7 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 
 \item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the modelbe returned? May be abbreviated. Only
+or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \description{

@@ -16,7 +16,7 @@
 #' @param effects Should results for fixed effects, random effects or both be returned?
 #'   Only applies to mixed models. May be abbreviated.
 #' @param component Should results for all parameters, parameters for the conditional model
-#'   or the zero-inflated part of the modelbe returned? May be abbreviated. Only
+#'   or the zero-inflated part of the model be returned? May be abbreviated. Only
 #'   applies to \pkg{brms}-models.
 #' @param parameters Regular expression pattern that describes the parameters that
 #'   should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
@@ -29,7 +29,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' posterior <- rnorm(1000)
 #' hdi(posterior, ci = .90)
 #' hdi(posterior, ci = c(.80, .90, .95))
@@ -38,13 +38,13 @@
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
 #' hdi(model, ci = c(.80, .90, .95))
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
 #' hdi(model, ci = c(.80, .90, .95))
 #' }
-#' 
+#'
 #' @author Credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute} and \href{https://github.com/mikemeredith/HDInterval}{HDInterval}.
 #'
 #' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.

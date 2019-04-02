@@ -37,7 +37,7 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 
 \item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the modelbe returned? May be abbreviated. Only
+or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \description{
@@ -47,8 +47,6 @@ Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models u
 Documentation is accessible for:
 \itemize{
   \item \href{https://easystats.github.io/bayestestR/reference/ci.html}{Bayesian models}
-  \item LM and GLMs
-  \item Mixed models
 }
 
 For Bayesian Credible Intervals, CIs are often computed by the \link{hdi} method.
