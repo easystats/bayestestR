@@ -1,8 +1,8 @@
 #' The (Perfect) Normal Distribution
 #'
-#' Generate a sample of size n with a near-perfect normal distribution.
+#' Generate a sample of size \code{n} with a near-perfect normal distribution.
 #'
-#' @param n Number of observations. If length(n) > 1, the length is taken to be the number required.
+#' @param n Number of observations. If \code{length(n) > 1}, the length is taken to be the number required.
 #' @param mean Vector of means.
 #' @param sd Vector of standard deviations.
 #'
