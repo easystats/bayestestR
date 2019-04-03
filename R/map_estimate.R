@@ -4,13 +4,22 @@
 #'
 #' @param posterior Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param precision Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.
-#' @param density If \code{TRUE}, it will return a data.frame with the x, y coordinates of the MAP, corresponding respectively to the MAP and its density value.
+#' @param density If \code{TRUE}, it will return a data frame with the x, y coordinates of the MAP, corresponding respectively to the MAP and its density value.
 #'
 #' @inheritParams hdi
 #'
+#' @return A numeric value if \code{posterior} is a vector and \code{density = FALSE}.
+#'   If \code{density = TRUE}, or if \code{posterior} is a model-object, returns
+#'   a data frame with following columns:
+#'   \itemize{
+#'     \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
+#'     \item \code{MAP} The MAP estimate for the posterior or each model parameter.
+#'     \item \code{MAP_density}
+#'   }
+#'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' posterior <- rnorm(1000)
 #' map_estimate(posterior)
 #' map_estimate(posterior, density = TRUE)
@@ -18,12 +27,12 @@
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)
 #' }
-#' 
+#'
 #' @importFrom stats density
 #' @export
 map_estimate <- function(posterior, ...) {

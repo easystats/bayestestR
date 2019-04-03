@@ -28,7 +28,7 @@ map_estimate(posterior, ...)
 
 \item{precision}{Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.}
 
-\item{density}{If \code{TRUE}, it will return a data.frame with the x, y coordinates of the MAP, corresponding respectively to the MAP and its density value.}
+\item{density}{If \code{TRUE}, it will return a data frame with the x, y coordinates of the MAP, corresponding respectively to the MAP and its density value.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
@@ -42,6 +42,16 @@ for the output.}
 \item{component}{Should results for all parameters, parameters for the conditional model
 or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
+}
+\value{
+A numeric value if \code{posterior} is a vector and \code{density = FALSE}.
+  If \code{density = TRUE}, or if \code{posterior} is a model-object, returns
+  a data frame with following columns:
+  \itemize{
+    \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
+    \item \code{MAP} The MAP estimate for the posterior or each model parameter.
+    \item \code{MAP_density}
+  }
 }
 \description{
 Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution.
