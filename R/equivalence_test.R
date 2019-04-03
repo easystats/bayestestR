@@ -16,6 +16,10 @@
 #'   of the posterior within the ROPE is smaller than to 2.5\% or greater  than
 #'   97.5\%. Desirable results are low proportions inside the ROPE  (the closer
 #'   to zero the better) and the null hypothesis should be rejected.
+#'   \cr \cr
+#'   Some attention is required for finding suitable values for the ROPE limits
+#'   (argument \code{range}). See 'Details' in \link{rope_range} for further
+#'   information.
 #'
 #' @references Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
 #'

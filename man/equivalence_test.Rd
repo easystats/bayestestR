@@ -62,6 +62,10 @@ Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2018)
   of the posterior within the ROPE is smaller than to 2.5\% or greater  than
   97.5\%. Desirable results are low proportions inside the ROPE  (the closer
   to zero the better) and the null hypothesis should be rejected.
+  \cr \cr
+  Some attention is required for finding suitable values for the ROPE limits
+  (argument \code{range}). See 'Details' in \link{rope_range} for further
+  information.
 }
 \note{
 There is a \code{print()}-method with a \code{digits}-argument to control

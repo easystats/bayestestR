@@ -18,11 +18,11 @@ This function attempts at finding suitable "default" values
   to \ifelse{html}{\out{-0.1 * SD<sub>y</sub>, 0.1 * SD<sub>y</sub>}}{\eqn{[-0.1*SD_{y}, 0.1*SD_{y}]}}.
   \cr \cr
   For models with binary outcome, there is no direct way to specify the
-  effect size that defines the ROPE limits. Two examples from Kruschke suggest
-  that a negligible change is about .05 on the logit-scale. In these cases,
-  it is recommended to specify the rope argument, however, if not specified,
-  the ROPE limits are caluclated as suggested by Kruschke, i.e. the effect
-  size is the probability of "success" for the outcome, divided by \code{pi}.
+  effect size that defines the ROPE limits. In such cases,
+  it is recommended to specify the rope argument, however, the effect size
+  of the ROPE limits is the probability of "success" for the outcome, divided
+  by \code{pi}. This attempt tries to generalize the ideas from Kruschke
+  regarding ROPE limits for models with binary outcome.
   \cr \cr
   For all other models, \code{-0.1, 0.1} is used to determine the ROPE limits.
 }
