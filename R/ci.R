@@ -10,6 +10,13 @@
 #' @param x A \code{stanreg} or \code{brmsfit} model , or a vector representing a posterior distribution.
 #' @inheritParams hdi
 #'
+#' @return A data frame with following columns:
+#'   \itemize{
+#'     \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
+#'     \item \code{CI} The probability of the credible interval.
+#'     \item \code{CI_low} , \code{CI_high} The lower and upper credible interval limits for the parameters.
+#'   }
+#'
 #' @examples
 #' library(bayestestR)
 #'

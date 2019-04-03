@@ -38,7 +38,7 @@ for the output.}
 \value{
 A data frame with following columns:
   \itemize{
-    \item \code{Parameter} The model parameter(s).
+    \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
     \item \code{CI} The probability of the HDI.
     \item \code{ROPE_low}, \code{ROPE_high} The limits of the ROPE. These values are identical for all parameters.
     \item \code{ROPE_Percentage} The proportion of the HDI that lies inside the ROPE.

@@ -28,6 +28,12 @@
 #' @param verbose Toggle off warnings.
 #' @param ... Currently not used.
 #'
+#' @return A data frame with following columns:
+#'   \itemize{
+#'     \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
+#'     \item \code{CI} The probability of the HDI.
+#'     \item \code{CI_low} , \code{CI_high} The lower and upper HDI limits for the parameters.
+#'   }
 #'
 #' @examples
 #' library(bayestestR)
