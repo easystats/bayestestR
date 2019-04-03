@@ -23,7 +23,8 @@ ci(x, ...)
 
 \item{...}{Currently not used.}
 
-\item{ci}{Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.}
+\item{ci}{Value or vector of probability of the interval (between 0 and 1)
+to be estimated. Named Credible Interval (CI) for consistency.}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -48,8 +49,6 @@ Documentation is accessible for:
 \itemize{
   \item \href{https://easystats.github.io/bayestestR/reference/ci.html}{Bayesian models}
 }
-
-For Bayesian Credible Intervals, CIs are often computed by the \link{hdi} method.
 }
 \examples{
 library(bayestestR)

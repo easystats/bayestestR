@@ -7,8 +7,6 @@
 #'   \item \href{https://easystats.github.io/bayestestR/reference/ci.html}{Bayesian models}
 #' }
 #'
-#' @details For Bayesian Credible Intervals, CIs are often computed by the \link{hdi} method.
-#'
 #' @param x A \code{stanreg} or \code{brmsfit} model , or a vector representing a posterior distribution.
 #' @inheritParams hdi
 #'

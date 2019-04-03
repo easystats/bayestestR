@@ -11,8 +11,10 @@
 #'   An effective sample size of at least 10.000 is recommended if 95\% intervals
 #'   should be computed (\cite{Kruschke 2015, p. 183ff}).
 #'
-#' @param x Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
-#' @param ci Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.
+#' @param x Vector representing a posterior distribution. Can also be a
+#'   \code{stanreg} or \code{brmsfit} model.
+#' @param ci Value or vector of probability of the interval (between 0 and 1)
+#'   to be estimated. Named Credible Interval (CI) for consistency.
 #' @param effects Should results for fixed effects, random effects or both be returned?
 #'   Only applies to mixed models. May be abbreviated.
 #' @param component Should results for all parameters, parameters for the conditional model
