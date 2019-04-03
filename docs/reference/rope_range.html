@@ -47,11 +47,11 @@
   to -0.1 * SDy, 0.1 * SDy.
    
   For models with binary outcome, there is no direct way to specify the
-  effect size that defines the ROPE limits. Two examples from Kruschke suggest
-  that a negligible change is about .05 on the logit-scale. In these cases,
-  it is recommended to specify the rope argument, however, if not specified,
-  the ROPE limits are caluclated as suggested by Kruschke, i.e. the effect
-  size is the probability of &quot;success&quot; for the outcome, divided by pi.
+  effect size that defines the ROPE limits. In such cases,
+  it is recommended to specify the rope argument, however, the effect size
+  of the ROPE limits is the probability of &quot;success&quot; for the outcome, divided
+  by pi. This attempt tries to generalize the ideas from Kruschke
+  regarding ROPE limits for models with binary outcome.
    
   For all other models, -0.1, 0.1 is used to determine the ROPE limits." />
 
@@ -174,11 +174,11 @@
   to -0.1 * SD<sub>y</sub>, 0.1 * SD<sub>y</sub>.
   <br /> <br />
   For models with binary outcome, there is no direct way to specify the
-  effect size that defines the ROPE limits. Two examples from Kruschke suggest
-  that a negligible change is about .05 on the logit-scale. In these cases,
-  it is recommended to specify the rope argument, however, if not specified,
-  the ROPE limits are caluclated as suggested by Kruschke, i.e. the effect
-  size is the probability of "success" for the outcome, divided by <code>pi</code>.
+  effect size that defines the ROPE limits. In such cases,
+  it is recommended to specify the rope argument, however, the effect size
+  of the ROPE limits is the probability of "success" for the outcome, divided
+  by <code>pi</code>. This attempt tries to generalize the ideas from Kruschke
+  regarding ROPE limits for models with binary outcome.
   <br /> <br />
   For all other models, <code>-0.1, 0.1</code> is used to determine the ROPE limits.</p>
     
