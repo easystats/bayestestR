@@ -12,6 +12,8 @@ output:
 tags: [r, bayesian, posterior, test]
 vignette: >
   \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{Example 1: Bayesian (General) Linear Models}
+  %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 bibliography: bibliography.bib

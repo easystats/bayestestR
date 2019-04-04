@@ -7,28 +7,29 @@
 \alias{map_estimate.brmsfit}
 \title{Maximum A Posteriori (MAP) Estimate}
 \usage{
-map_estimate(posterior, ...)
+map_estimate(x, ...)
 
-\method{map_estimate}{numeric}(posterior, precision = 2^10,
+\method{map_estimate}{numeric}(x, precision = 2^10, density = FALSE,
+  ...)
+
+\method{map_estimate}{stanreg}(x, precision = 2^10,
+  effects = c("fixed", "random", "all"), parameters = NULL,
   density = FALSE, ...)
 
-\method{map_estimate}{stanreg}(posterior, precision = 2^10,
-  density = FALSE, effects = c("fixed", "random", "all"),
-  parameters = NULL, ...)
-
-\method{map_estimate}{brmsfit}(posterior, precision = 2^10,
-  density = FALSE, effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL, ...)
+\method{map_estimate}{brmsfit}(x, precision = 2^10,
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), parameters = NULL, density = FALSE,
+  ...)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{x}{Vector representing a posterior distribution. Can also be a
+\code{stanreg} or \code{brmsfit} model.}
 
 \item{...}{Currently not used.}
 
 \item{precision}{Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.}
 
-\item{density}{If \code{TRUE}, it will return a data frame with the x, y coordinates of the MAP, corresponding respectively to the MAP and its density value.}
+\item{density}{Turning this parameter}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
@@ -54,14 +55,22 @@ A numeric value if \code{posterior} is a vector and \code{density = FALSE}.
   }
 }
 \description{
-Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution.
+Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior, \emph{i.e.,} the most probable value. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution. This function returns a dataframe containing the MAP value. If the \code{density} is set to \code{TRUE}, it will include a second column containing the \emph{probability} (\emph{i.e.,} the value of the estimated density function) associated with the MAP (the value of the y axis of the density curve at the MAP).
 }
 \examples{
 library(bayestestR)
 
-posterior <- rnorm(1000)
+posterior <- rnorm(10000)
+
 map_estimate(posterior)
 map_estimate(posterior, density = TRUE)
+
+plot(density(posterior))
+abline(v=map_estimate(posterior),
+       col="red")  # The x coordinate of MAP
+abline(h=map_estimate(posterior, density = TRUE)$MAP_density,
+       col="blue")  # The y coordinate of MAP
+
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)

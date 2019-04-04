@@ -11,7 +11,9 @@ output:
     fig_height: 6
 tags: [r, bayesian, posterior, test]
 vignette: >
+  %\VignetteIndexEntry{Reporting Guidelines}
   \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---
@@ -35,7 +37,7 @@ Based on the previous [**comparison of point-estimates**](https://easystats.gith
 
 **The following thresholds are presented as landmarks only, and any use of such "labels" should be explicitly justified. Please consider with caution.**
 
-- **Probability of Direction (*p*d)**: In most cases, it seems that the *pd* corresponds to the frequentist one-sided *p*-value through the formula `p-value = (1-pd/100)`. Thus, a ***p*d** of `95%`, `97.5%` `99.5%` and `99.95%` corresponds approximately to a two-sided ***p*-value** of respectively `.1`, `.05`, `.01` and `.001`. Thus, for convience, we recommend using the following reference values:
+- **Probability of Direction (*p*d)**: In most cases, it seems that the *pd* corresponds to the frequentist one-sided *p* value through the formula `p value = (1-pd/100)` and to the two-sided *p* value (the most commonly reported) through the formula `p value = 2*(1-pd/100)`. Thus, a `pd` of `95%`, `97.5%` `99.5%` and `99.95%` corresponds approximately to a two-sided *p* value of respectively `.1`, `.05`, `.01` and `.001`. Thus, for convience, we recommend using the following reference values:
 
     - *p*d **\<= 95\%** ~ *p* \> .1: uncertain
     - *p*d **\> 95\%** ~ *p* \< .1: possibly existing
@@ -50,7 +52,7 @@ Based on the previous [**comparison of point-estimates**](https://easystats.gith
     - **\<= 97.5\%** \& **\>= 2.5\%** in ROPE: not significant
     - **\< 2.5\%** in ROPE: probably significant
     - **\< 1\%** in ROPE: significant (we can reject the null hypothesis)
-    
+
 *Note: If you have any advice, opinion or such, we encourage you to let us know by opening an [discussion thread](https://github.com/easystats/bayestestR/issues) or making a pull request.*
 
 ## Template Sentence

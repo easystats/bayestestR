@@ -6,7 +6,6 @@
 ^LICENSE
 ^data/.
 ^docs/.
-^vignettes/.
 ^logo.png
 ^README.Rmd
 ^logo.png

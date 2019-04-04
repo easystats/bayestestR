@@ -17,7 +17,6 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="In-Depth 1: Comparison of Point-Estimates">
 <meta property="og:description" content="">
-<meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -56,10 +55,25 @@
   </a>
 </li>
 <li>
-  <a href="../articles/bayestestR.html">Get started</a>
+  <a href="../news/index.html">News</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../articles/bayestestR.html">Get started</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Examples
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -69,21 +83,15 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
+      <a href="../articles/indicesEstimationComparison.html">1. Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="../articles/2_IndicesEstimationComparison.html">In-Depth 1: Comparison of Point-Estimates</a>
+      <a href="../articles/indicesExistenceComparison.html">2. Comparison of Indices of Effect Existence</a>
     </li>
     <li>
-      <a href="../articles/3_IndicesExistenceComparison.html">In-Depth 2: Comparison of Indices of Effect Existence</a>
-    </li>
-    <li>
-      <a href="../articles/4_Guidelines.html">Reporting Guidelines</a>
+      <a href="../articles/guidelines.html">3. Reporting Guidelines</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -108,8 +116,8 @@
       <h1>In-Depth 1: Comparison of Point-Estimates</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/2_IndicesEstimationComparison.Rmd"><code>vignettes/2_IndicesEstimationComparison.Rmd</code></a></small>
-      <div class="hidden name"><code>2_IndicesEstimationComparison.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/indicesEstimationComparison.Rmd"><code>vignettes/indicesEstimationComparison.Rmd</code></a></small>
+      <div class="hidden name"><code>indicesEstimationComparison.Rmd</code></div>
 
     </div>
 
@@ -171,7 +179,7 @@
 <a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-16" title="16"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Noise"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-17" title="17"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
-<p><img src="2_IndicesEstimationComparison_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 </div>
 <div id="sensitivity-to-sample-size" class="section level4">
 <h4 class="hasAnchor">
@@ -193,7 +201,7 @@
 <a class="sourceLine" id="cb3-15" title="15"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-16" title="16"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Sample Size"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-17" title="17"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
-<p><img src="2_IndicesEstimationComparison_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div id="statistical-modelling" class="section level4">
 <h4 class="hasAnchor">
@@ -383,7 +391,7 @@
 <a class="sourceLine" id="cb5-12" title="12"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>), <span class="dt">name=</span><span class="st">"Effect"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb5-13" title="13"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">colour =</span> <span class="kw">guide_legend</span>(<span class="dt">override.aes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">alpha =</span> <span class="dv">1</span>)),</a>
 <a class="sourceLine" id="cb5-14" title="14">         <span class="dt">shape =</span> <span class="kw">guide_legend</span>(<span class="dt">override.aes =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">alpha =</span> <span class="dv">1</span>), <span class="dt">title=</span><span class="st">"Sample Size"</span>))</a></code></pre></div>
-<p><img src="2_IndicesEstimationComparison_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 </div>
 <div id="discussion" class="section level2">

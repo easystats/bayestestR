@@ -12,6 +12,8 @@ output:
 tags: [r, bayesian, posterior, test]
 vignette: >
   \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{In-Depth 1: Comparison of Point-Estimates}
+  %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---
