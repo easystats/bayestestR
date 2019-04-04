@@ -46,7 +46,8 @@ ci.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
 
 #' @rdname ci
 #' @export
-ci.stanreg <- function(x, ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+ci.stanreg <- function(x, ci = .90, effects = c("fixed", "random", "all"),
+                       parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   .compute_interval_stanreg(x, ci, effects, parameters, verbose, fun = "ci")
 }
@@ -54,10 +55,13 @@ ci.stanreg <- function(x, ci = .90, effects = c("fixed", "random", "all"), param
 
 #' @rdname ci
 #' @export
-ci.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
+ci.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"),
+                       component = c("conditional", "zi", "zero_inflated", "all"),
+                       parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-  .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose, fun = "ci")
+  .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose,
+                            fun = "ci")
 }
 
 
@@ -70,7 +74,9 @@ ci.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"), compo
     return(check_ci)
   }
 
-  .ci <- as.vector(stats::quantile(x, probs = c((1 - ci) / 2, (1 + ci) / 2), names = FALSE))
+  .ci <- as.vector(stats::quantile(x,
+                                   probs = c((1 - ci) / 2, (1 + ci) / 2),
+                                   names = FALSE))
 
   data.frame(
     "CI" = ci * 100,

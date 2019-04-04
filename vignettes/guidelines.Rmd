@@ -11,7 +11,9 @@ output:
     fig_height: 6
 tags: [r, bayesian, posterior, test]
 vignette: >
+  %\VignetteIndexEntry{Reporting Guidelines}
   \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 ---

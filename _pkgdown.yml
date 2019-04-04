@@ -8,3 +8,27 @@ template:
   params:
     ganalytics: UA-97457476-7
     bootswatch: cosmo
+    
+navbar:
+  type: default
+  left:
+  - icon: fa-home fa-lg
+    href: index.html
+  - text: Reference
+    href: reference/index.html
+  - text: Get started
+    href: articles/bayestestR.html
+  - text: Examples
+    menu:
+      - text: '1. Bayesian (General) Linear Models'
+        href: articles/example1_GLM.html
+  - text: Articles
+    menu:
+      - text: '1. Comparison of Point-Estimates'
+        href: articles/indicesEstimationComparison.html
+      - text: '2. Comparison of Indices of Effect Existence'
+        href: articles/indicesExistenceComparison.html
+      - text: '3. Reporting Guidelines'
+        href: articles/guidelines.html
+  - text: News
+    href: news/index.html

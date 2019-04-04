@@ -56,10 +56,22 @@
   </a>
 </li>
 <li>
-  <a href="articles/bayestestR.html">Get started</a>
+  <a href="reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="articles/bayestestR.html">Get started</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Examples
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
+    </li>
+  </ul>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -69,21 +81,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/1_Example1_GLM.html">Example 1: Bayesian (General) Linear Models</a>
+      <a href="articles/indicesEstimationComparison.html">1. Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="articles/2_IndicesEstimationComparison.html">In-Depth 1: Comparison of Point-Estimates</a>
+      <a href="articles/indicesExistenceComparison.html">2. Comparison of Indices of Effect Existence</a>
     </li>
     <li>
-      <a href="articles/3_IndicesExistenceComparison.html">In-Depth 2: Comparison of Indices of Effect Existence</a>
-    </li>
-    <li>
-      <a href="articles/4_Guidelines.html">Reporting Guidelines</a>
+      <a href="articles/guidelines.html">3. Reporting Guidelines</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="news/index.html">Changelog</a>
+  <a href="news/index.html">News</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -118,9 +127,9 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Run the following:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"easystats/bayestestR"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"bayestestR"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)
+devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"easystats/bayestestR"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"bayestestR"</span>)</code></pre></div>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
@@ -146,7 +155,7 @@
 <p><a href="https://easystats.github.io/bayestestR/reference/hdi.html"><strong><code><a href="reference/hdi.html">hdi()</a></code></strong></a> computes the <strong>Highest Density Interval (HDI)</strong> of a posterior distribution, <em>i.e.</em>, the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as <strong>Credible Interval (CI)</strong>.</p>
 <p>Unlike equal-tailed intervals (see <a href="https://easystats.github.io/bayestestR/reference/ci.html">ci</a>) that typically exclude 2.5% from each tail of the distribution, the HDI is <em>not</em> equal-tailed and therefore always includes the mode(s) of posterior distributions.</p>
 <p>By default, hdi() returns the 90% intervals (<code>ci = 0.9</code>), deemed to be more stable than, for instance, 95% intervals (Kruschke, 2015). An effective sample size of at least 10.000 is recommended if 95% intervals should be computed (Kruschke 2015, p. 183ff).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="reference/hdi.html">hdi</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>), <span class="dt">ci =</span> <span class="fl">.90</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/hdi.html">hdi</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>), <span class="dt">ci =</span> .<span class="dv">90</span>)</code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 <div id="map-estimate" class="section level3">
@@ -157,7 +166,7 @@
 <h3 class="hasAnchor">
 <a href="#map-estimate-1" class="anchor"></a>MAP Estimate</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/map_estimate.html"><strong><code><a href="reference/map_estimate.html">map_estimate()</a></code></strong></a> finds the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior. It corresponds to the “peak” (or the <em>mode</em>) of the posterior distribution.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/map_estimate.html">map_estimate</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/map_estimate.html">map_estimate</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 <div id="rope" class="section level3">
@@ -167,7 +176,7 @@
 <p>Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are <em>equivalent to the null</em> value for practical purposes (Kruschke 2010, 2011, 2014).</p>
 <p>Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as <code>0 +/- .1 * sd(y)</code>. This ROPE range can be automatically computed for models using the <a href="https://easystats.github.io/bayestestR/reference/rope_range.html">rope_range</a> function.</p>
 <p>Kruschke (2010, 2011, 2014) suggests using the proportion of the 95% (or 90%, considered more stable) HDI that falls within the ROPE as an index for “null-hypothesis” testing (as understood under the Bayesian framework, see <a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html">equivalence_test</a>).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="reference/rope.html">rope</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rope.html">rope</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-9-1.png" width="700"></p>
 </div>
 </div>
@@ -178,27 +187,27 @@
 <h3 class="hasAnchor">
 <a href="#equivalence-test" class="anchor"></a>Equivalence test</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html"><strong><code><a href="reference/equivalence_test.html">equivalence_test()</a></code></strong></a> a <strong>Test for Practical Equivalence</strong> based on the <em>“HDI+ROPE decision rule”</em> (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated “null hypothesis” (<em>i.e.</em>, a <a href="https://easystats.github.io/bayestestR/reference/rope.html">ROPE</a>).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="reference/equivalence_test.html">equivalence_test</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/equivalence_test.html">equivalence_test</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</code></pre></div>
 </div>
 <div id="probability-of-direction-pd" class="section level3">
 <h3 class="hasAnchor">
 <a href="#probability-of-direction-pd" class="anchor"></a>Probability of Direction (<em>p</em>d)</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/p_direction.html"><strong><code><a href="reference/p_direction.html">p_direction()</a></code></strong></a> computes the <strong>Probability of Direction</strong> (<strong><em>p</em>d</strong>, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median’s sign. Although differently expressed, this index is fairly similar (<em>i.e.</em>, is strongly correlated) to the frequentist <strong><em>p</em>-value</strong>.</p>
 <p><strong>Relationship with the p-value</strong>: In most cases, it seems that the <em>pd</em> corresponds to the frequentist one-sided <em>p</em>-value through the formula <code>p-value = (1-pd/100)</code> and two the two-sided <em>p</em>-value (the most commonly reported) through the formula <code>p-value = 2*(1-pd/100)</code>. Thus, a <code>pd</code> of <code>95%</code>, <code>97.5%</code> <code>99.5%</code> and <code>99.95%</code> corresponds approximately to a two-sided <em>p</em>-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code>. See the <a href="https://easystats.github.io/bayestestR/articles/4_Guidelines.html"><em>reporting guidelines</em></a>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="reference/p_direction.html">p_direction</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/p_direction.html">p_direction</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="dv">1</span>))</code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-12-1.png" width="700"></p>
 </div>
 <div id="rope-based-probability" class="section level3">
 <h3 class="hasAnchor">
 <a href="#rope-based-probability" class="anchor"></a>ROPE-based probability</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/p_rope.html"><strong><code><a href="reference/p_rope.html">p_rope()</a></code></strong></a> Compute the ROPE-based p-value, an exploratory index representing the maximum percentage of <a href="https://easystats.github.io/bayestestR/reference/hdi.html">HDI</a> that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the <a href="https://easystats.github.io/bayestestR/reference/rope.html">ROPE</a>. It differs from the ROPE percentage, <em>i.e.</em>, from the proportion of a given CI in the ROPE, as it represents the maximum CI to reach a ROPE proportion of 0% (positive values) or 100% (negative values). A ROPE-based <em>p</em> of 97% means that there is a probability of .97 that a parameter (described by its posterior distribution) is outside the ROPE. On the contrary, a ROPE-based p of -97% means that there is a probability of .97 that the parameter is inside the ROPE.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="reference/p_rope.html">p_rope</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/p_rope.html">p_rope</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</code></pre></div>
 </div>
 <div id="map-based-p-value" class="section level3">
 <h3 class="hasAnchor">
 <a href="#map-based-p-value" class="anchor"></a>MAP-based <em>p</em>-value</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/p_map.html"><strong><code><a href="reference/p_map.html">p_map()</a></code></strong></a> computes a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (<em>h0</em>) using Mills’ (2014, 2017) <em>Objective Bayesian Hypothesis Testing</em> framework. It is mathematically based on the density at the Maximum A Priori (MAP) and corresponds to the density value at 0 divided by the density of the MAP estimate.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="reference/p_map.html">p_map</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/p_map.html">p_map</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-15-1.png" width="700"></p>
 </div>
 </div>
@@ -209,19 +218,19 @@
 <h3 class="hasAnchor">
 <a href="#find-ropes-appropriate-range" class="anchor"></a>Find ROPE’s appropriate range</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/rope_range.html"><strong><code><a href="reference/rope_range.html">rope_range()</a></code></strong></a>: This function attempts at finding suitable “default” values for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests that such null value could be set, by default, to the <code>-0.1</code> to <code>0.1</code> range of a standardized parameter (negligible effect size according to Cohen, 1988), which can be generalised for linear models to <code>[-0.1*sd(y), 0.1*sd(y)]</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="reference/rope_range.html">rope_range</a></span>(model)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rope_range.html">rope_range</a></span>(model)</code></pre></div>
 </div>
 <div id="perfect-normal-distribution" class="section level3">
 <h3 class="hasAnchor">
 <a href="#perfect-normal-distribution" class="anchor"></a>Perfect Normal Distribution</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/rnorm_perfect.html"><strong><code><a href="reference/rnorm_perfect.html">rnorm_perfect()</a></code></strong></a>: Generate a sample of size n with a near-perfect normal distribution.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="reference/rnorm_perfect.html">rnorm_perfect</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/rnorm_perfect.html">rnorm_perfect</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</code></pre></div>
 </div>
 <div id="probability-of-a-value" class="section level3">
 <h3 class="hasAnchor">
 <a href="#probability-of-a-value" class="anchor"></a>Probability of a Value</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/density_at.html"><strong><code><a href="reference/density_at.html">density_at()</a></code></strong></a>: Compute the density of a given point of a distribution.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="reference/density_at.html">density_at</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/density_at.html">density_at</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dv">1</span>)</code></pre></div>
 </div>
 </div>
 <div id="credits" class="section level2">
