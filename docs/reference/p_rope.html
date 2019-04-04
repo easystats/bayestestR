@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find Default Equivalence (ROPE) Region Bounds — rope_range • bayestestR</title>
+<title>ROPE-based p-value — p_rope • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,23 +37,9 @@
 
 
 
-<meta property="og:title" content="Find Default Equivalence (ROPE) Region Bounds — rope_range" />
+<meta property="og:title" content="ROPE-based p-value — p_rope" />
 
-<meta property="og:description" content="This function attempts at finding suitable &quot;default&quot; values
-  for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests
-  that such null value could be set, by default, to a range from -0.1 to
-  0.1 times of a standardized parameter (negligible effect size
-  according to Cohen, 1988), which can be generalised for linear models
-  to -0.1 * SDy, 0.1 * SDy.
-   
-  For models with binary outcome, there is no direct way to specify the
-  effect size that defines the ROPE limits. In such cases,
-  it is recommended to specify the rope argument, however, the effect size
-  of the ROPE limits is the probability of &quot;success&quot; for the outcome, divided
-  by pi. This attempt tries to generalize the ideas from Kruschke
-  regarding ROPE limits for models with binary outcome.
-   
-  For all other models, -0.1, 0.1 is used to determine the ROPE limits." />
+<meta property="og:description" content="Compute the ROPE-based p-value, an exploratory index representing the maximum percentage of HDI that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the ROPE. It differs from the ROPE percentage, i.e., from the proportion of a given CI in the ROPE, as it represents the maximum CI to reach a ROPE proportion of 0% (positive values) or 100% (negative values). A ROPE-based p of 97% means that there is a probability of .97 that a parameter (described by its posterior distribution) is outside the ROPE. On the contrary, a ROPE-based p of -97% means that there is a probability of .97 that the parameter is inside the ROPE." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -166,57 +152,84 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find Default Equivalence (ROPE) Region Bounds</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/rope_range.R'><code>R/rope_range.R</code></a></small>
-    <div class="hidden name"><code>rope_range.Rd</code></div>
+    <h1>ROPE-based p-value</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/p_rope.R'><code>R/p_rope.R</code></a></small>
+    <div class="hidden name"><code>p_rope.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function attempts at finding suitable "default" values
-  for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests
-  that such null value could be set, by default, to a range from <code>-0.1</code> to
-  <code>0.1</code> times of a standardized parameter (negligible effect size
-  according to Cohen, 1988), which can be generalised for linear models
-  to -0.1 * SD<sub>y</sub>, 0.1 * SD<sub>y</sub>.
-  <br /> <br />
-  For models with binary outcome, there is no direct way to specify the
-  effect size that defines the ROPE limits. In such cases,
-  it is recommended to specify the rope argument, however, the effect size
-  of the ROPE limits is the probability of "success" for the outcome, divided
-  by <code>pi</code>. This attempt tries to generalize the ideas from Kruschke
-  regarding ROPE limits for models with binary outcome.
-  <br /> <br />
-  For all other models, <code>-0.1, 0.1</code> is used to determine the ROPE limits.</p>
+    <p>Compute the ROPE-based p-value, an exploratory index representing the maximum percentage of <a href='hdi.html'>HDI</a> that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the <a href='rope.html'>ROPE</a>. It differs from the ROPE percentage, <em>i.e.</em>, from the proportion of a given CI in the ROPE, as it represents the maximum CI to reach a ROPE proportion of 0% (positive values) or 100% (negative values). A ROPE-based <em>p</em> of 97% means that there is a probability of .97 that a parameter (described by its posterior distribution) is outside the ROPE. On the contrary, a ROPE-based p of -97% means that there is a probability of .97 that the parameter is inside the ROPE.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>rope_range</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>p_rope</span>(<span class='no'>posterior</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>p_rope</span>(<span class='no'>posterior</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='no'>...</span>)
+
+<span class='co'># S3 method for stanreg</span>
+<span class='fu'>p_rope</span>(<span class='no'>posterior</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for brmsfit</span>
+<span class='fu'>p_rope</span>(<span class='no'>posterior</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>,
+  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>Vector representing a posterior distribution. Can also be a <code>stanreg</code> or <code>brmsfit</code> model.</p></td>
+      <th>posterior</th>
+      <td><p>Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Currently not used.</p></td>
+    </tr>
+    <tr>
+      <th>range</th>
+      <td><p>ROPE's lower and higher bounds. Should be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the range is set to <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(0.1, 0.1)</a></code> if input is a vector and <code>x +- 0.1*SD(response)</code> if a Bayesian model is provided.</p></td>
+    </tr>
+    <tr>
+      <th>precision</th>
+      <td><p>The precision by which to explore the ROPE space (in percentage). Lower values increase the precision of the returned p value but can be quite computationaly costly.</p></td>
+    </tr>
+    <tr>
+      <th>effects</th>
+      <td><p>Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>parameters</th>
+      <td><p>Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+filtered by default, so only parameters that typically appear in the
+<code><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
+for the output.</p></td>
+    </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the model be returned? May be abbreviated. Only
+applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. doi: <a href='http://doi.org/10.1177/2515245918771304'>10.1177/2515245918771304</a>
-.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
+
+<span class='fu'>p_rope</span>(<span class='kw'>posterior</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; p (ROPE) = 44.40%</div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>vs</span> ~ <span class='no'>mpg</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>)
-<span class='fu'>rope_range</span>(<span class='no'>model</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='fu'>p_rope</span>(<span class='no'>model</span>)
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'>rope_range</span>(<span class='no'>model</span>)
+<span class='fu'>p_rope</span>(<span class='no'>model</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
@@ -224,9 +237,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#references">References</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 
