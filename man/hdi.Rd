@@ -19,11 +19,13 @@ hdi(x, ...)
   parameters = NULL, verbose = TRUE, ...)
 }
 \arguments{
-\item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{x}{Vector representing a posterior distribution. Can also be a
+\code{stanreg} or \code{brmsfit} model.}
 
 \item{...}{Currently not used.}
 
-\item{ci}{Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.}
+\item{ci}{Value or vector of probability of the interval (between 0 and 1)
+to be estimated. Named Credible Interval (CI) for consistency.}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -39,6 +41,14 @@ for the output.}
 \item{component}{Should results for all parameters, parameters for the conditional model
 or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
+}
+\value{
+A data frame with following columns:
+  \itemize{
+    \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
+    \item \code{CI} The probability of the HDI.
+    \item \code{CI_low} , \code{CI_high} The lower and upper HDI limits for the parameters.
+  }
 }
 \description{
 Compute the \strong{Highest Density Interval (HDI)} of a posterior distribution, i.e., all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as \strong{Credible Interval (CI)}.

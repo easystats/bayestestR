@@ -192,7 +192,8 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.</p></td>
+      <td><p>Value or vector of probability of the interval (between 0 and 1)
+to be estimated. Named Credible Interval (CI) for consistency.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -219,12 +220,20 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data frame with following columns:</p><ul>
+<li><p><code>Parameter</code> The model parameter(s), if <code>x</code> is a model-object. If <code>x</code> is a vector, this column is missing.</p></li>
+<li><p><code>CI</code> The probability of the credible interval.</p></li>
+<li><p><code>CI_low</code> , <code>CI_high</code> The lower and upper credible interval limits for the parameters.</p></li>
+</ul>
+
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Documentation is accessible for:</p><ul>
 <li><p><a href='https://easystats.github.io/bayestestR/reference/ci.html'>Bayesian models</a></p></li>
 </ul>
-    <p>For Bayesian Credible Intervals, CIs are often computed by the <a href='hdi.html'>hdi</a> method.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -249,6 +258,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>

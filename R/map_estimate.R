@@ -6,10 +6,20 @@
 #' @param precision Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.
 #' @param density Turning this parameter
 #'
+#' @return A numeric value if \code{posterior} is a vector and \code{density = FALSE}.
+#'   If \code{density = TRUE}, or if \code{posterior} is a model-object, returns
+#'   a data frame with following columns:
+#'   \itemize{
+#'     \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
+#'     \item \code{MAP} The MAP estimate for the posterior or each model parameter.
+#'     \item \code{MAP_density}
+#'   }
+#'
 #' @examples
 #' library(bayestestR)
 #'
 #' posterior <- rnorm(10000)
+#'
 #' map_estimate(posterior)
 #' map_estimate(posterior, density = TRUE)
 #'

@@ -23,7 +23,8 @@ ci(x, ...)
 
 \item{...}{Currently not used.}
 
-\item{ci}{Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.}
+\item{ci}{Value or vector of probability of the interval (between 0 and 1)
+to be estimated. Named Credible Interval (CI) for consistency.}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -40,6 +41,14 @@ for the output.}
 or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
+\value{
+A data frame with following columns:
+  \itemize{
+    \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
+    \item \code{CI} The probability of the credible interval.
+    \item \code{CI_low} , \code{CI_high} The lower and upper credible interval limits for the parameters.
+  }
+}
 \description{
 Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models using quantiles.
 }
@@ -48,8 +57,6 @@ Documentation is accessible for:
 \itemize{
   \item \href{https://easystats.github.io/bayestestR/reference/ci.html}{Bayesian models}
 }
-
-For Bayesian Credible Intervals, CIs are often computed by the \link{hdi} method.
 }
 \examples{
 library(bayestestR)

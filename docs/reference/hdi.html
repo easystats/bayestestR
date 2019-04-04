@@ -184,7 +184,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>Vector representing a posterior distribution. Can also be a <code>stanreg</code> or <code>brmsfit</code> model.</p></td>
+      <td><p>Vector representing a posterior distribution. Can also be a
+<code>stanreg</code> or <code>brmsfit</code> model.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -192,7 +193,8 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Value or vector of HDI probability (between 0 and 1) to be estimated. Named Credible Interval (CI) for consistency.</p></td>
+      <td><p>Value or vector of probability of the interval (between 0 and 1)
+to be estimated. Named Credible Interval (CI) for consistency.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -219,6 +221,15 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data frame with following columns:</p><ul>
+<li><p><code>Parameter</code> The model parameter(s), if <code>x</code> is a model-object. If <code>x</code> is a vector, this column is missing.</p></li>
+<li><p><code>CI</code> The probability of the HDI.</p></li>
+<li><p><code>CI_low</code> , <code>CI_high</code> The lower and upper HDI limits for the parameters.</p></li>
+</ul>
+
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Unlike equal-tailed intervals (see <a href='ci.html'>ci</a>) that typically exclude 2.5% from each tail
@@ -240,10 +251,10 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>)
 <span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>.90</span>)</div><div class='output co'>#&gt;   CI   CI_low  CI_high
-#&gt; 1 90 -1.41249 1.826027</div><div class='input'><span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;   CI    CI_low  CI_high
-#&gt; 1 80 -1.238035 1.169973
-#&gt; 2 90 -1.412490 1.826027
-#&gt; 3 95 -2.020344 1.826027</div><span class='co'># NOT RUN {</span>
+#&gt; 1 90 -1.47594 1.891033</div><div class='input'><span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;   CI    CI_low  CI_high
+#&gt; 1 80 -1.242422 1.309083
+#&gt; 2 90 -1.475940 1.891033
+#&gt; 3 95 -1.827537 2.080725</div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>hdi</span>(<span class='no'>model</span>)
@@ -261,6 +272,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
 
       <li><a href="#references">References</a></li>
