@@ -1,10 +1,10 @@
 #' Maximum A Posteriori (MAP) Estimate
 #'
-#' Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior, \emph{i.e.,} the most probable value. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution. This returns a dataframe with one column containing the MAP value and a second column containing the \emph{probability} (\emph{i.e.,} the value of the estimated density function) associated with the MAP.
+#' Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior, \emph{i.e.,} the most probable value. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution. This function returns a dataframe containing the MAP value. If the \code{density} is set to \code{TRUE}, it will include a second column containing the \emph{probability} (\emph{i.e.,} the value of the estimated density function) associated with the MAP (the value of the y axis of the density curve at the MAP).
 #'
 #' @inheritParams hdi
 #' @param precision Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.
-#'
+#' @param density Turning this parameter
 #'
 #' @examples
 #' library(bayestestR)
@@ -38,16 +38,22 @@ map_estimate <- function(x, ...) {
 
 #' @rdname map_estimate
 #' @export
-map_estimate.numeric <- function(x, precision = 2^10, ...) {
+map_estimate.numeric <- function(x, precision = 2^10, density = FALSE, ...) {
   d <- stats::density(x, n = precision)
 
   hdp_x <- d$x[which.max(d$y)]
   hdp_y <- max(d$y)
 
-  data.frame(
+  out <- data.frame(
     "MAP" = hdp_x,
     "MAP_density" = hdp_y
   )
+
+  if (density == TRUE) {
+    out
+  } else {
+    out[names(out) != "MAP_density"]
+  }
 }
 
 
@@ -67,25 +73,25 @@ map_estimate.numeric <- function(x, precision = 2^10, ...) {
 
 #' @rdname map_estimate
 #' @export
-map_estimate.stanreg <- function(x, precision = 2^10, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+map_estimate.stanreg <- function(x, precision = 2^10, effects = c("fixed", "random", "all"), parameters = NULL, density = FALSE, ...) {
   effects <- match.arg(effects)
 
   .map_estimate_models(
     x = insight::get_parameters(x, effects = effects, parameters = parameters),
     precision = precision,
-    ...
+    density = density
   )
 }
 
 #' @rdname map_estimate
 #' @export
-map_estimate.brmsfit <- function(x, precision = 2^10, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+map_estimate.brmsfit <- function(x, precision = 2^10, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, density = FALSE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
   .map_estimate_models(
     x = insight::get_parameters(x, effects = effects, parameters = parameters),
     precision = precision,
-    ...
+    density = density
   )
 }

@@ -9,14 +9,17 @@
 \usage{
 map_estimate(x, ...)
 
-\method{map_estimate}{numeric}(x, precision = 2^10, ...)
+\method{map_estimate}{numeric}(x, precision = 2^10, density = FALSE,
+  ...)
 
 \method{map_estimate}{stanreg}(x, precision = 2^10,
-  effects = c("fixed", "random", "all"), parameters = NULL, ...)
+  effects = c("fixed", "random", "all"), parameters = NULL,
+  density = FALSE, ...)
 
 \method{map_estimate}{brmsfit}(x, precision = 2^10,
   effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), parameters = NULL, ...)
+  "zi", "zero_inflated", "all"), parameters = NULL, density = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
@@ -24,6 +27,8 @@ map_estimate(x, ...)
 \item{...}{Currently not used.}
 
 \item{precision}{Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.}
+
+\item{density}{Turning this parameter}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
@@ -39,7 +44,7 @@ or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \description{
-Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior, \emph{i.e.,} the most probable value. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution. This returns a dataframe with one column containing the MAP value and a second column containing the \emph{probability} (\emph{i.e.,} the value of the estimated density function) associated with the MAP.
+Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior, \emph{i.e.,} the most probable value. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution. This function returns a dataframe containing the MAP value. If the \code{density} is set to \code{TRUE}, it will include a second column containing the \emph{probability} (\emph{i.e.,} the value of the estimated density function) associated with the MAP (the value of the y axis of the density curve at the MAP).
 }
 \examples{
 library(bayestestR)

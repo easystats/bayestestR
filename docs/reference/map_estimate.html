@@ -39,7 +39,7 @@
 
 <meta property="og:title" content="Maximum A Posteriori (MAP) Estimate — map_estimate" />
 
-<meta property="og:description" content="Find the Highest Maximum A Posteriori (MAP) estimate of a posterior, i.e., the most probable value. It corresponds to the &quot;peak&quot; (or the mode) of the posterior distribution. This returns a dataframe with one column containing the MAP and a second column containing the probability (i.e., the estimated density) associated with the MAP." />
+<meta property="og:description" content="Find the Highest Maximum A Posteriori (MAP) estimate of a posterior, i.e., the most probable value. It corresponds to the &quot;peak&quot; (or the mode) of the posterior distribution. This function returns a dataframe containing the MAP value. If the density is set to TRUE, it will include a second column containing the probability (i.e., the value of the estimated density function) associated with the MAP (the value of the y axis of the density curve at the MAP)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -95,6 +95,9 @@
   </a>
 </li>
 <li>
+  <a href="../news/index.html">News</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -130,9 +133,6 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -161,23 +161,26 @@
 
     <div class="ref-description">
     
-    <p>Find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.,</em> the most probable value. It corresponds to the "peak" (or the <em>mode</em>) of the posterior distribution. This returns a dataframe with one column containing the MAP and a second column containing the <em>probability</em> (<em>i.e.,</em> the estimated density) associated with the MAP.</p>
+    <p>Find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.,</em> the most probable value. It corresponds to the "peak" (or the <em>mode</em>) of the posterior distribution. This function returns a dataframe containing the MAP value. If the <code>density</code> is set to <code>TRUE</code>, it will include a second column containing the <em>probability</em> (<em>i.e.,</em> the value of the estimated density function) associated with the MAP (the value of the y axis of the density curve at the MAP).</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>map_estimate</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>map_estimate</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='no'>...</span>)
+<span class='fu'>map_estimate</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>map_estimate</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for brmsfit</span>
 <span class='fu'>map_estimate</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>,
-  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,6 +196,10 @@
     <tr>
       <th>precision</th>
       <td><p>Number of points for density estimation. See the <code>n</code> parameter in <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a>.</p></td>
+    </tr>
+    <tr>
+      <th>density</th>
+      <td><p>Turning this parameter</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -220,8 +227,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>10000</span>)
-<span class='fu'>map_estimate</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt;         MAP MAP_density
-#&gt; 1 -0.126324    0.391735</div><div class='input'><span class='fu'>map_estimate</span>(<span class='no'>posterior</span>, <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;         MAP MAP_density
+<span class='fu'>map_estimate</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt;         MAP
+#&gt; 1 -0.126324</div><div class='input'><span class='fu'>map_estimate</span>(<span class='no'>posterior</span>, <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;         MAP MAP_density
 #&gt; 1 -0.126324    0.391735</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a></span>(<span class='no'>posterior</span>))</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/abline'>abline</a></span>(<span class='kw'>v</span><span class='kw'>=</span><span class='fu'>map_estimate</span>(<span class='no'>posterior</span>),
        <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"red"</span>)  <span class='co'># The x coordinate of MAP</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/abline'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fu'>map_estimate</span>(<span class='no'>posterior</span>, <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)$<span class='no'>MAP_density</span>,

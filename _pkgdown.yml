@@ -14,6 +14,8 @@ navbar:
   left:
   - icon: fa-home fa-lg
     href: index.html
+  - text: News
+    href: news/index.html
   - text: Reference
     href: reference/index.html
   - text: Get started
@@ -30,5 +32,4 @@ navbar:
         href: articles/indicesExistenceComparison.html
       - text: '3. Reporting Guidelines'
         href: articles/guidelines.html
-  - text: News
-    href: news/index.html
+
