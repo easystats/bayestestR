@@ -2,7 +2,7 @@ language: r
 
 os:
   #- windows
-  #- linux 
+  - linux 
   - osx
   
 r:
@@ -10,8 +10,8 @@ r:
   #- devel
 
 # Copied from broom
-sudo: required
-cache: packages  
+# sudo: required
+# cache: packages  
 bioc_required: true
 warnings_are_errors: false
 

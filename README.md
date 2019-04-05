@@ -31,12 +31,14 @@ posts:
 
   - [Get Started with Bayesian
     Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
+  - [Example 1: Bayesian (General) Linear
+    Models](https://easystats.github.io/bayestestR/articles/example1_GLM.html)
   - [Comparison of
-    Point-Estimates](https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html)
+    Point-Estimates](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
   - [Comparison of Indices of Effect
-    Existence](https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html)
+    Existence](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html)
   - [Reporting
-    Guidelines](https://easystats.github.io/bayestestR/articles/4_Guidelines.html)
+    Guidelines](https://easystats.github.io/bayestestR/articles/guidelines.html)
 
 # Functions
 
@@ -71,9 +73,13 @@ hdi(rnorm(1000), ci = .90)
 ### MAP Estimate
 
 [**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html)
-finds the **Highest Maximum A Posteriori (MAP)** estimate of a
-posterior. It corresponds to the “peak” (or the *mode*) of the posterior
-distribution.
+find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior,
+*i.e.,* the most probable value. It corresponds to the “peak” (or the
+*mode*) of the posterior distribution. This function returns a dataframe
+containing the MAP value. If the `density` is set to `TRUE`, it will
+include a second column containing the *probability* (*i.e.,* the value
+of the estimated density function) associated with the MAP (the value of
+the y axis of the density curve at the MAP).
 
 ``` r
 map_estimate(rnorm(1000, 1, 1))
@@ -145,11 +151,11 @@ is fairly similar (*i.e.*, is strongly correlated) to the frequentist
 
 **Relationship with the p-value**: In most cases, it seems that the *pd*
 corresponds to the frequentist one-sided *p*-value through the formula
-`p-value = (1-pd/100)` and two the two-sided *p*-value (the most
-commonly reported) through the formula `p-value = 2*(1-pd/100)`. Thus, a
-`pd` of `95\%`, `97.5\%` `99.5\%` and `99.95\%` corresponds
-approximately to a two-sided *p*-value of respectively `.1`, `.05`,
-`.01` and `.001`. See the [*reporting
+`p-value = (1-pd/100)` and to the two-sided *p*-value (the most commonly
+reported) through the formula `p-value = 2*(1-pd/100)`. Thus, a `pd` of
+`95\%`, `97.5\%` `99.5\%` and `99.95\%` corresponds approximately to a
+two-sided *p*-value of respectively `.1`, `.05`, `.01` and `.001`. See
+the [*reporting
 guidelines*](https://easystats.github.io/bayestestR/articles/4_Guidelines.html).
 
 ``` r
