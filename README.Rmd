@@ -57,9 +57,10 @@ library("bayestestR")
 The package documentation can be found [**here**](https://easystats.github.io/bayestestR/). Check-out these posts:
 
 - [Get Started with Bayesian Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
-- [Comparison of Point-Estimates](https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html)
-- [Comparison of Indices of Effect Existence](https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html)
-- [Reporting Guidelines](https://easystats.github.io/bayestestR/articles/4_Guidelines.html)
+- [Example 1: Bayesian (General) Linear Models](https://easystats.github.io/bayestestR/articles/example1_GLM.html)
+- [Comparison of Point-Estimates](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
+- [Comparison of Indices of Effect Existence](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html)
+- [Reporting Guidelines](https://easystats.github.io/bayestestR/articles/guidelines.html)
 
 # Functions
 

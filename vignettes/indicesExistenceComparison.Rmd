@@ -272,7 +272,7 @@ rbind(
 ```
 
 
-### Relationship between ROPE (full) and Equivalence test
+### Relationship with Equivalence test
 
 ```{r, message=FALSE, warning=FALSE, fig.height=15, fig.width=10}
 df$equivalence <- factor(ifelse(df$rope == 0, "significant", "n.s."), levels=c("n.s.", "significant"))
@@ -298,7 +298,7 @@ rbind(
 
 ### Relationship between ROPE (full) and p (direction)
 
-```{r, message=FALSE, warning=FALSE, fig.height=15, fig.width=10}
+```{r, message=FALSE, warning=FALSE, fig.height=6, fig.width=10.08}
 df %>%
   mutate(effect = as.factor(effect)) %>% 
   ggplot(aes(x=p_direction, y=rope_full, color=effect)) +
@@ -315,7 +315,7 @@ df %>%
 
 Based on the simulation of multiple linear regressions, the present work aimed at comparing several indices of effect existence solely derived from the posterior distribution, provide visual representations of the "behaviour" of such indices in relationship with sample size, noise, priors and the frequentist *p*-value.
 
-While this comparison with a frequentist index may seem counterintuitive or wrong (as the Bayesian thinking is intrinsically different from the frequentist framework), we believe that this comparison is interesting for didactic reasons. The frequentist *p*-value “speaks” to many and can thus be seen as a reference and a way to facilitate the shift toward the Bayesian framework. This does not preclude, however, that a change in the general paradigm of effect existence seeking in necessary, and that Bayesian indices are fundamentally different (for the good) from the frequentist *p*, rather than mere approximations or equivalents. Critically, we strongly agree on the distinction and possible dissociation between an effect’s existence and meaningfulness [@lakens2018equivalence]. Nevertheless, we believe that assessing whether an effect is "meaningful" is highly dependent on the literature, priors, novelty, context or field, and that it cannot be assessed based solely on a statistical index (even though some of the indices, such as the ROPE-related ones, attempt at bridging existence with meaningfulness). Thus, researchers should rely on statistics to assess effect existence (as well as size and direction estimation), and systematically, but contextually, discuss its meaning and importance.
+While this comparison with a frequentist index may seem counterintuitive or wrong (as the Bayesian thinking is intrinsically different from the frequentist framework), we believe that this comparison is interesting for didactic reasons. The frequentist *p*-value “speaks” to many and can thus be seen as a reference and a way to facilitate the shift toward the Bayesian framework. This does not preclude, however, that a change in the general paradigm of effect existence seeking in necessary, and that Bayesian indices are fundamentally different from the frequentist *p*, rather than mere approximations or equivalents. Critically, we strongly agree on the distinction and possible dissociation between an effect’s existence and meaningfulness [@lakens2018equivalence]. Nevertheless, we believe that assessing whether an effect is "meaningful" is highly dependent on the literature, priors, novelty, context or field, and that it cannot be assessed based solely on a statistical index (even though some of the indices, such as the ROPE-related ones, attempt at bridging existence with meaningfulness). Thus, researchers should rely on statistics to assess effect existence (as well as size and direction estimation), and systematically, but contextually, discuss its meaning and importance within a larger perspective.
 
 Conclusions can be found in the [guidelines section](https://easystats.github.io/bayestestR/articles/4_Guidelines.html).
 
