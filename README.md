@@ -156,7 +156,7 @@ reported) through the formula `p-value = 2*(1-pd/100)`. Thus, a `pd` of
 `95\%`, `97.5\%` `99.5\%` and `99.95\%` corresponds approximately to a
 two-sided *p*-value of respectively `.1`, `.05`, `.01` and `.001`. See
 the [*reporting
-guidelines*](https://easystats.github.io/bayestestR/articles/4_Guidelines.html).
+guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
 
 ``` r
 p_direction(rnorm(1000, mean = 1, sd = 1))

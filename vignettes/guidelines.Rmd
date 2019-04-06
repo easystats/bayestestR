@@ -20,11 +20,11 @@ editor_options:
 
 These guidelines can be referred to by citing the package:
 
-- Makowski, D. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI:10.5281/zenodo.2556486.
+- Makowski, D. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI: [10.5281/zenodo.2556486](https://zenodo.org/record/2556486).
 
 # Reporting Guidelines
 
-Based on the previous [**comparison of point-estimates**](https://easystats.github.io/bayestestR/articles/2_IndicesEstimationComparison.html) and [**indices of effect existence**](https://easystats.github.io/bayestestR/articles/3_IndicesExistenceComparison.html), we can conclude that:
+Based on the previous [**comparison of point-estimates**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html) and [**indices of effect existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html), we can conclude that:
 
 - For simple models and normally distributed posteriors, the **MAP estimate** seems to be more biased than the mean and the median of the posterior distribution.
 - Aside from being more robust, the **median** makes more sense than the **mean** in a probabilistic framework (*e.g.*, there is 50\% chance that the true effect is either higher or lower than the median).
