@@ -206,12 +206,15 @@ p_map(posterior = rnorm(1000, 1, 1))
 ### Find ROPE’s appropriate range
 
 [**`rope_range()`**](https://easystats.github.io/bayestestR/reference/rope_range.html):
-This function attempts at finding suitable “default” values for the
-Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests that
-such null value could be set, by default, to the `-0.1` to `0.1` range
-of a standardized parameter (negligible effect size according to Cohen,
-1988), which can be generalised for linear models to
-`[-0.1*sd(y), 0.1*sd(y)]`.
+This function attempts at automatically finding suitable “default”
+values for the Region Of Practical Equivalence (ROPE). Kruschke (2018)
+suggests that such null value could be set, by default, to a range from
+`-0.1` to `0.1` of a standardized parameter (negligible effect size
+according to Cohen, 1988), which can be generalised for linear models to
+`-0.1 * sd(y), 0.1 * sd(y)`. For logistic models, the parameters
+expressed in log odds ratio can be converted to standardized difference
+through the formula `sqrt(3)/pi`, resulting in a range of `-0.05` to
+`-0.05`.
 
 ``` r
 rope_range(model)

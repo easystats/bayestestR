@@ -10,19 +10,21 @@ rope_range(x)
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 }
 \description{
-This function attempts at finding suitable "default" values
-  for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests
+This function attempts at automatically finding suitable "default"
+  values for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests
   that such null value could be set, by default, to a range from \code{-0.1} to
-  \code{0.1} times of a standardized parameter (negligible effect size
+  \code{0.1} of a standardized parameter (negligible effect size
   according to Cohen, 1988), which can be generalised for linear models
   to \ifelse{html}{\out{-0.1 * SD<sub>y</sub>, 0.1 * SD<sub>y</sub>}}{\eqn{[-0.1*SD_{y}, 0.1*SD_{y}]}}.
   \cr \cr
-  For models with binary outcome, there is no direct way to specify the
-  effect size that defines the ROPE limits. In such cases,
-  it is recommended to specify the rope argument, however, the effect size
-  of the ROPE limits is the probability of "success" for the outcome, divided
-  by \code{pi}. This attempt tries to generalize the ideas from Kruschke
-  regarding ROPE limits for models with binary outcome.
+  For logistic models, the parameters expressed in log odds ratio can be
+  converted to standardized difference through the formula
+  \ifelse{html}{\out{sqrt(3)/pi}}{\eqn{\sqrt{3}/\pi}}, resulting in a range
+  of \code{-0.055} to \code{-0.055}.
+  \cr \cr
+  For other models with binary outcome, it is strongly recommended to
+  manually specify the rope argument. Currently, the same default is applied
+  that for logistic models.
   \cr \cr
   For all other models, \code{-0.1, 0.1} is used to determine the ROPE limits.
 }
