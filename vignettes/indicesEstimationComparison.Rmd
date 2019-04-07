@@ -20,7 +20,7 @@ editor_options:
 
 This vignette can be referred to by citing the package:
 
-- Makowski, D. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI:10.5281/zenodo.2556486.
+- Makowski, D. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI: [10.5281/zenodo.2556486](https://zenodo.org/record/2556486).
 
 
 
@@ -158,4 +158,4 @@ df %>%
 
 ## Discussion
 
-Conclusions can be found in the [guidelines section](https://easystats.github.io/bayestestR/articles/4_Guidelines.html).
+Conclusions can be found in the [guidelines section](https://easystats.github.io/bayestestR/articles/guidelines.html).

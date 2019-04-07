@@ -153,7 +153,7 @@ is fairly similar (*i.e.*, is strongly correlated) to the frequentist
 corresponds to the frequentist one-sided *p*-value through the formula
 `p-value = (1-pd/100)` and to the two-sided *p*-value (the most commonly
 reported) through the formula `p-value = 2*(1-pd/100)`. Thus, a `pd` of
-`95\%`, `97.5\%` `99.5\%` and `99.95\%` corresponds approximately to a
+`95%`, `97.5%` `99.5%` and `99.95%` corresponds approximately to a
 two-sided *p*-value of respectively `.1`, `.05`, `.01` and `.001`. See
 the [*reporting
 guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).

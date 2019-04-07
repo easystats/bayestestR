@@ -12,8 +12,8 @@ output:
 tags: [r, bayesian, posterior, test]
 vignette: >
   %\VignetteIndexEntry{Get Started with Bayesian Analysis}
-  %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 bibliography: bibliography.bib
@@ -42,7 +42,7 @@ In other words, omitting the maths behind it, we can say that:
 
 - The frequentist bloke tries to estimate "the real effect". For instance, the "real" value of the correlation between *x* and *y*. Hence, frequentist models return a "**point-estimate**" (*i.e.*, a single value) of the "real" correlation (*e.g.*, r = 0.42) estimated under a number of obscure assumptions (at a minimum, considering that the data is sampled at random from a "parent", usually normal distribution of data).
 - **The Bayesian master assumes no such thing**. The data are what they are. Based on this observed data (and a **prior** belief about the result), the Bayesian sampling algorithm returns a probability distribution (called **the posterior**) of the effect that is compatible with the observed data. For the correlation between *x* and *y*, it will return a distribution that says, for example, "the most probable effect is 0.42, but this data is also compatible with correlations of 0.12 or 0.74".
-- To characterize our effects, **no need of *p* values** or other cryptic indices. We simply describe the posterior distribution of the effect. For example, we can report the median, the 90% *Credible* Interval or [other indices](https://easystats.github.io/bayestestR/articles/4_Guidelines.html).
+- To characterize our effects, **no need of *p* values** or other cryptic indices. We simply describe the posterior distribution of the effect. For example, we can report the median, the 90% *Credible* Interval or [other indices](https://easystats.github.io/bayestestR/articles/guidelines.html).
 
 
 ```{r echo=FALSE, fig.cap="Accurate depiction of a regular Bayesian user estimating a credible interval.", fig.align='center', out.width="50%"}
