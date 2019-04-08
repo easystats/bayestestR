@@ -102,7 +102,7 @@ posterior %>%
 
 ### MAP Estimate
 
-[**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html) find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior, *i.e.,* the most probable value. It corresponds to the "peak" (or the *mode*) of the posterior distribution. This function returns a dataframe containing the MAP value. If the `density` is set to `TRUE`, it will include a second column containing the *probability* (*i.e.,* the value of the estimated density function) associated with the MAP (the value of the y axis of the density curve at the MAP).
+[**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html) find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior, *i.e.,* the most probable value.
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
 map_estimate(rnorm(1000, 1, 1))
@@ -115,8 +115,8 @@ posterior %>%
   as.data.frame() %>% 
   ggplot(aes(x=x, y=y)) +
   geom_ribbon(aes(ymin=0, ymax=y), fill="#FFC107") +
-  geom_segment(x=0.4, xend=0.4, y=0, yend=map_estimate(posterior, density=TRUE)$MAP_density, color="#E91E63", size=1) +
-  geom_point(x=map_estimate(posterior)$MAP, y=map_estimate(posterior, density=TRUE)$MAP_density, color="#E91E63", size=5) +
+  geom_segment(x=0.4, xend=0.4, y=0, yend=attributes(map_estimate(posterior))$MAP_density, color="#E91E63", size=1) +
+  geom_point(x=map_estimate(posterior), y=attributes(map_estimate(posterior))$MAP_density, color="#E91E63", size=5) +
   geom_vline(xintercept=0, linetype="dotted") +
   theme_classic() +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +

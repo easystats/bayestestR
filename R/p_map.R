@@ -9,19 +9,19 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' 
+#'
 #' p_map(posterior = rnorm(1000, 0, 1))
 #' p_map(posterior = rnorm(1000, 10, 1))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' p_map(model)
-#' 
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' p_map(model)
 #' }
-#' 
+#'
 #' @references \href{https://www.youtube.com/watch?v=Ip8Ci5KUVRc}{Mill's talk}
 #'
 #' @importFrom stats density
@@ -41,7 +41,7 @@ print.p_map <- function(x, ...) {
 #' @export
 p_map.numeric <- function(posterior, precision = 2^10, ...) {
   # Highest density point
-  map <- map_estimate(posterior, precision = precision, density = TRUE)$MAP_density
+  map <- attributes(map_estimate(posterior, precision = precision))$MAP_density
 
   # Density at 0
   d_0 <- density_at(posterior, 0, precision = precision)
