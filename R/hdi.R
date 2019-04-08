@@ -9,7 +9,7 @@
 #'   By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}),
 #'   deemed to be more stable than, for instance, 95\% intervals (\cite{Kruschke, 2015}).
 #'   An effective sample size of at least 10.000 is recommended if 95\% intervals
-#'   should be computed (\cite{Kruschke 2015, p. 183ff}).
+#'   should be computed (\cite{Kruschke, 2015, p. 183ff}).
 #'
 #' @param x Vector representing a posterior distribution. Can also be a
 #'   \code{stanreg} or \code{brmsfit} model.
