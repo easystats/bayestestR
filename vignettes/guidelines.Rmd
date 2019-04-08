@@ -31,7 +31,7 @@ Based on the previous [**comparison of point-estimates**](https://easystats.gith
 - The **traditional ROPE** (using a 90\% HDI) is not sensitive to delineate highly "significant" effects. The full ROPE (100\% HDI) does not present the same flaw.
 - The **Probability of Direction (*p*d)** is the closest index to the frequentist *p* value.
 
-**Thus, to minimally describe the posterior distribution of a parameter, we suggest reporting the *median* and the *90\% CI* (using HDI rather than quantiles) for parameter characterisation and, in the context of null-hypothesis testing, the Probability of Direction (*p*d) for effect existence and, especially in the context of confirmatory analyses, the ROPE (full) with an explicitly specified range for effect significance.**
+Thus, to minimally **describe the posterior distribution** of a parameter, we suggest reporting the **median** and the **90\% CI** (using HDI rather than quantiles) for parameter characterisation and, in the context of null-hypothesis testing, the **Probability of Direction (*p*d)** for effect existence and, especially in the context of confirmatory analyses, the **ROPE percentage (full)** with an explicitly specified range for effect significance.
 
 ## Interpretation Rules of Thumb
 

@@ -11,3 +11,4 @@
 ^logo.png
 ^pkgdown/.
 ^paper.*$
+^man/figures/.
