@@ -12,3 +12,4 @@
 ^pkgdown/.
 ^paper.*$
 ^man/figures/.
+^README.md
