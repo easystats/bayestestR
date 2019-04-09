@@ -40,7 +40,7 @@ print.p_map <- function(x, ...) {
 #' @rdname p_map
 #' @export
 p_map.numeric <- function(posterior, precision = 2^10, ...) {
-  # Highest density point
+  # Density at MAP
   map <- attributes(map_estimate(posterior, precision = precision))$MAP_density
 
   # Density at 0

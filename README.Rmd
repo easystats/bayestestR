@@ -34,7 +34,7 @@ knitr::opts_chunk$set(
 [![DOI](https://zenodo.org/badge/165641861.svg)](https://zenodo.org/badge/latestdoi/165641861)
 
 
-
+***"Become a Bayesian master you will"***
 
 
 
