@@ -78,7 +78,7 @@ map_estimate.numeric <- function(x, precision = 2^10, ...) {
   out <- flatten_list(list, name = "Parameter")
   rownames(out) <- NULL
 
-  out
+  as.data.frame(out)
 }
 
 #' @rdname map_estimate
