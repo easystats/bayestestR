@@ -60,7 +60,6 @@ p_direction.numeric <- function(x, ...) {
     stringsAsFactors = FALSE
   )
 
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
 
@@ -70,12 +69,14 @@ p_direction.numeric <- function(x, ...) {
 p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
 
-  .p_direction_models(
+  out <- .p_direction_models(
     x = x,
     effects = effects,
     component = "conditional",
     parameters = parameters
   )
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
 }
 
 #' @rdname p_direction
@@ -84,12 +85,14 @@ p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), compon
   effects <- match.arg(effects)
   component <- match.arg(component)
 
-  .p_direction_models(
+  out <- .p_direction_models(
     x = x,
     effects = effects,
     component = component,
     parameters = parameters
   )
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
 }
 
 
