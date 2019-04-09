@@ -126,6 +126,7 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
   )
 
   class(out) <- c("equivalence_test", class(out))
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
 
@@ -133,16 +134,12 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
 #' @rdname equivalence_test
 #' @export
 equivalence_test.stanreg <- function(x, range = "default", ci = .95, parameters = NULL, verbose = TRUE, ...) {
-  et <- .equivalence_test_models(x, range, ci, parameters, verbose)
-  attr(et, "model") <- deparse(substitute(x), width.cutoff = 500)
-  et
+  .equivalence_test_models(x, range, ci, parameters, verbose)
 }
 
 
 #' @rdname equivalence_test
 #' @export
 equivalence_test.brmsfit <- function(x, range = "default", ci = .95, parameters = NULL, verbose = TRUE, ...) {
-  et <- .equivalence_test_models(x, range, ci, parameters, verbose)
-  attr(et, "model") <- deparse(substitute(x), width.cutoff = 500)
-  et
+  .equivalence_test_models(x, range, ci, parameters, verbose)
 }

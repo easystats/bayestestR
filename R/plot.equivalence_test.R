@@ -6,7 +6,7 @@ plot.equivalence_test <- function(x, ...) {
     return(x)
   }
 
-  model_name <- attr(x, "model", exact = TRUE)
+  model_name <- attr(x, "object_name", exact = TRUE)
 
   if (is.null(model_name)) {
     warning("plot() only works for equivalence_test() with model-objects.", call. = FALSE)
