@@ -31,7 +31,12 @@ p_direction <- function(x, ...) {
 
 #' @export
 print.p_direction <- function(x, ...) {
-  cat(sprintf("pd = %.2f%%", x))
+  if("data.frame" %in% class(x)){
+    paste0("  - ", x$Parameter, sprintf(": pd = %.2f%%", x$pd))
+  } else{
+    cat(sprintf("pd = %.2f%%", x))
+  }
+
 }
 
 
@@ -59,7 +64,7 @@ p_direction.numeric <- function(x, ...) {
     row.names = NULL,
     stringsAsFactors = FALSE
   )
-
+  class(out) <- c("p_direction", class(out))
   out
 }
 
