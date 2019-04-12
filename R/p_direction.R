@@ -36,7 +36,6 @@ print.p_direction <- function(x, ...) {
   } else{
     cat(sprintf("pd = %.2f%%", x))
   }
-
 }
 
 
