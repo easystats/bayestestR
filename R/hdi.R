@@ -63,15 +63,6 @@ hdi <- function(x, ...) {
 }
 
 
-#' @export
-print.hdi <- function(x, ...) {
-  print(as.data.frame(x))  # To be improved
-  # if("data.frame" %in% class(x)){
-  #   cat(paste0(paste0("  - ", x$Parameter, sprintf(": pd = %.2f%%", x$pd)), collapse = "\n"))
-  # } else{
-  #   cat(sprintf("pd = %.2f%%", x))
-  # }
-}
 
 
 
