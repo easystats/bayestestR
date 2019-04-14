@@ -16,7 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Understand and Describe Bayesian Models and Posterior Distributions">
-<meta property="og:description" content="Provides utilities to describe posterior distributions and Bayesian models. It includes point-estimates such as Maximum A Posteriori (MAP), measures of dispersion (Highest Density Interval - HDI) and indices used for null-hypothesis testing (such as ROPE percentage and pd).">
+<meta property="og:description" content="Provides utilities to describe posterior distributions and Bayesian models. It includes point-estimates such as Maximum A Posteriori (MAP), measures of dispersion (Highest Density Interval - HDI; Kruschke, 2015 &lt;doi:10.1016/C2012-0-00477-2&gt;) and indices used for null-hypothesis testing (such as ROPE percentage and pd).">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -59,7 +59,7 @@
   <a href="news/index.html">News</a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="reference/index.html">Features</a>
 </li>
 <li>
   <a href="articles/bayestestR.html">Get started</a>
@@ -122,6 +122,7 @@
 <a href="#bayestestr" class="anchor"></a>bayestestR <img src="reference/figures/logo.png" align="right" height="139">
 </h1></div>
 
+<p><strong><em>“Become a Bayesian master you will”</em></strong></p>
 <p><code>bayestestR</code> is a lightweight package providing utilities to describe posterior distributions and Bayesian models.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -134,7 +135,8 @@
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#documentation" class="anchor"></a>Documentation</h2>
-<p>The package documentation can be found <a href="https://easystats.github.io/bayestestR/"><strong>here</strong></a>. Check-out these posts:</p>
+<p><a href="https://easystats.github.io/bayestestR/"><img src="https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63" alt="Documentation"></a> <a href="https://easystats.github.io/blog/posts/"><img src="https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800" alt="Blog"></a> <a href="https://easystats.github.io/bayestestR/reference/index.html"><img src="https://img.shields.io/badge/features-bayestestR-orange.svg?colorB=2196F3" alt="Features"></a></p>
+<p>Click on the buttons above to access the package <a href="https://easystats.github.io/bayestestR/"><strong>documentation</strong></a> and the <a href="https://easystats.github.io/blog/posts/"><strong>easystats blog</strong></a> and check-out these vignettes:</p>
 <ul>
 <li><a href="https://easystats.github.io/bayestestR/articles/bayestestR.html">Get Started with Bayesian Analysis</a></li>
 <li><a href="https://easystats.github.io/bayestestR/articles/example1_GLM.html">Example 1: Bayesian (General) Linear Models</a></li>
@@ -162,7 +164,7 @@
 <div id="map-estimate" class="section level3">
 <h3 class="hasAnchor">
 <a href="#map-estimate" class="anchor"></a>MAP Estimate</h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/map_estimate.html"><strong><code><a href="reference/map_estimate.html">map_estimate()</a></code></strong></a> find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.,</em> the most probable value. It corresponds to the “peak” (or the <em>mode</em>) of the posterior distribution. This function returns a dataframe containing the MAP value. If the <code>density</code> is set to <code>TRUE</code>, it will include a second column containing the <em>probability</em> (<em>i.e.,</em> the value of the estimated density function) associated with the MAP (the value of the y axis of the density curve at the MAP).</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/map_estimate.html"><strong><code><a href="reference/map_estimate.html">map_estimate()</a></code></strong></a> find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.,</em> the most probable value.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/map_estimate.html">map_estimate</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-7-1.png" width="700"></p>
 </div>
@@ -245,6 +247,8 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=bayestestR">https://​cloud.r-project.org/​package=bayestestR</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/easystats/bayestestR">https://​github.com/​easystats/​bayestestR</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/easystats/bayestestR/issues">https://​github.com/​easystats/​bayestestR/​issues</a>
@@ -276,9 +280,10 @@
       <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://cran.r-project.org/package=bayestestR"><img src="http://www.r-pkg.org/badges/version/bayestestR" alt="CRAN"></a></li>
+<li><a href="https://cran.r-project.org/package=bayestestR"><img src="http://cranlogs.r-pkg.org/badges/bayestestR" alt="downloads"></a></li>
 <li><a href="https://travis-ci.org/easystats/bayestestR"><img src="https://travis-ci.org/easystats/bayestestR.svg?branch=master" alt="Build Status"></a></li>
 <li><a href="https://codecov.io/gh/easystats/bayestestR"><img src="https://codecov.io/gh/easystats/bayestestR/branch/master/graph/badge.svg" alt="codecov"></a></li>
-<li><a href="https://easystats.github.io/bayestestR/"><img src="https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63" alt="Documentation"></a></li>
 <li><a href="https://zenodo.org/badge/latestdoi/165641861"><img src="https://zenodo.org/badge/165641861.svg" alt="DOI"></a></li>
 </ul>
 </div>

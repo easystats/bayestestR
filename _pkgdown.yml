@@ -16,7 +16,7 @@ navbar:
     href: index.html
   - text: News
     href: news/index.html
-  - text: Reference
+  - text: Features
     href: reference/index.html
   - text: Get started
     href: articles/bayestestR.html

@@ -8,21 +8,21 @@
 \alias{pd}
 \title{Probability of Direction (pd)}
 \usage{
-p_direction(posterior, ...)
+p_direction(x, ...)
 
-\method{p_direction}{numeric}(posterior, ...)
+\method{p_direction}{numeric}(x, ...)
 
-\method{p_direction}{stanreg}(posterior, effects = c("fixed", "random",
-  "all"), parameters = NULL, ...)
-
-\method{p_direction}{brmsfit}(posterior, effects = c("fixed", "random",
-  "all"), component = c("conditional", "zi", "zero_inflated", "all"),
+\method{p_direction}{stanreg}(x, effects = c("fixed", "random", "all"),
   parameters = NULL, ...)
 
-pd(posterior, ...)
+\method{p_direction}{brmsfit}(x, effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL, ...)
+
+pd(x, ...)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
 \item{...}{Currently not used.}
 

@@ -6,8 +6,9 @@
 [![Build
 Status](https://travis-ci.org/easystats/bayestestR.svg?branch=master)](https://travis-ci.org/easystats/bayestestR)
 [![codecov](https://codecov.io/gh/easystats/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/easystats/bayestestR)
-[![Documentation](https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63)](https://easystats.github.io/bayestestR/)
 [![DOI](https://zenodo.org/badge/165641861.svg)](https://zenodo.org/badge/latestdoi/165641861)
+
+***“Become a Bayesian master you will”***
 
 `bayestestR` is a lightweight package providing utilities to describe
 posterior distributions and Bayesian models.
@@ -27,9 +28,14 @@ library("bayestestR")
 
 ## Documentation
 
-The package documentation can be found
-[**here**](https://easystats.github.io/bayestestR/). Check-out these
-posts:
+[![Documentation](https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63)](https://easystats.github.io/bayestestR/)
+[![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
+[![Features](https://img.shields.io/badge/features-bayestestR-orange.svg?colorB=2196F3)](https://easystats.github.io/bayestestR/reference/index.html)
+
+Click on the buttons above to access the package
+[**documentation**](https://easystats.github.io/bayestestR/) and the
+[**easystats blog**](https://easystats.github.io/blog/posts/) and
+check-out these vignettes:
 
   - [Get Started with Bayesian
     Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
@@ -76,12 +82,7 @@ hdi(rnorm(1000), ci = .90)
 
 [**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html)
 find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior,
-*i.e.,* the most probable value. It corresponds to the “peak” (or the
-*mode*) of the posterior distribution. This function returns a dataframe
-containing the MAP value. If the `density` is set to `TRUE`, it will
-include a second column containing the *probability* (*i.e.,* the value
-of the estimated density function) associated with the MAP (the value of
-the y axis of the density curve at the MAP).
+*i.e.,* the most probable value.
 
 ``` r
 map_estimate(rnorm(1000, 1, 1))

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
   <a href="../news/index.html">News</a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Features</a>
 </li>
 <li>
   <a href="../articles/bayestestR.html">Get started</a>
@@ -156,11 +156,43 @@
       <small>Source: <a href='https://github.com/easystats/bayestestR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="bayestestr-011" class="section level1">
+<h1 class="page-header">
+<a href="#bayestestr-011" class="anchor"></a>bayestestR 0.1.1<small> Unreleased </small>
+</h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>
+<code>map_estimate</code> now returns a single value instead of a dataframe and the <code>density</code> parameter has been removed. The MAP density value is now accessible via <code>attributes(map_output)$MAP_density</code>
+</li>
+</ul>
+</div>
+<div id="new-functions--features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions--features" class="anchor"></a>New functions / features</h2>
+<ul>
+<li>Started adding plotting methods (currently in the <a href="https://github.com/easystats/see"><code>see</code></a> package) for <code>p_direction</code> and <code>hdi</code>
+</li>
+</ul>
+</div>
+<div id="minor-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<ul>
+<li>Improved testing</li>
+</ul>
+</div>
+</div>
     <div id="bayestestr-010" class="section level1">
 <h1 class="page-header">
-<a href="#bayestestr-010" class="anchor"></a>bayestestR 0.1.0</h1>
+<a href="#bayestestr-010" class="anchor"></a>bayestestR 0.1.0<small> 2019-04-08 </small>
+</h1>
 <ul>
-<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
+<li>CRAN initial publication and <a href="https://github.com/easystats/bayestestR/releases/tag/v0.1.0">0.1.0 release</a>
+</li>
+<li>Added a <code>NEWS.md</code> file to track changes to the package</li>
 </ul>
 </div>
   </div>
@@ -169,6 +201,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#bayestestr-011">0.1.1</a></li>
         <li><a href="#bayestestr-010">0.1.0</a></li>
       </ul>
     </div>

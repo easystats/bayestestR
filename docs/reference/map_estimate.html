@@ -39,7 +39,7 @@
 
 <meta property="og:title" content="Maximum A Posteriori (MAP) Estimate — map_estimate" />
 
-<meta property="og:description" content="Find the Highest Maximum A Posteriori (MAP) estimate of a posterior, i.e., the most probable value. It corresponds to the &quot;peak&quot; (or the mode) of the posterior distribution. This function returns a dataframe containing the MAP value. If the density is set to TRUE, it will include a second column containing the probability (i.e., the value of the estimated density function) associated with the MAP (the value of the y axis of the density curve at the MAP)." />
+<meta property="og:description" content="Find the Highest Maximum A Posteriori (MAP) estimate of a posterior, i.e., the most probable value. It corresponds to the &quot;peak&quot; (or the mode) of the posterior distribution." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
   <a href="../news/index.html">News</a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../reference/index.html">Features</a>
 </li>
 <li>
   <a href="../articles/bayestestR.html">Get started</a>
@@ -161,26 +161,23 @@
 
     <div class="ref-description">
     
-    <p>Find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.,</em> the most probable value. It corresponds to the "peak" (or the <em>mode</em>) of the posterior distribution. This function returns a dataframe containing the MAP value. If the <code>density</code> is set to <code>TRUE</code>, it will include a second column containing the <em>probability</em> (<em>i.e.,</em> the value of the estimated density function) associated with the MAP (the value of the y axis of the density curve at the MAP).</p>
+    <p>Find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.,</em> the most probable value. It corresponds to the "peak" (or the <em>mode</em>) of the posterior distribution.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>map_estimate</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>map_estimate</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>)
+<span class='fu'>map_estimate</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>map_estimate</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for brmsfit</span>
 <span class='fu'>map_estimate</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>,
-  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>)</pre>
+  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,10 +194,6 @@
     <tr>
       <th>precision</th>
       <td><p>Number of points for density estimation. See the <code>n</code> parameter in <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a>.</p></td>
-    </tr>
-    <tr>
-      <th>density</th>
-      <td><p>Turning this parameter</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -225,12 +218,11 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A numeric value if <code>posterior</code> is a vector and <code>density = FALSE</code>.
+    <p>A numeric value if <code>posterior</code> is a vector.
   If <code>density = TRUE</code>, or if <code>posterior</code> is a model-object, returns
   a data frame with following columns:</p><ul>
 <li><p><code>Parameter</code> The model parameter(s), if <code>x</code> is a model-object. If <code>x</code> is a vector, this column is missing.</p></li>
 <li><p><code>MAP</code> The MAP estimate for the posterior or each model parameter.</p></li>
-<li><p><code>MAP_density</code></p></li>
 </ul>
 
     
@@ -239,13 +231,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>10000</span>)
-
-<span class='fu'>map_estimate</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt;          MAP
-#&gt; 1 -0.1646055</div><div class='input'><span class='fu'>map_estimate</span>(<span class='no'>posterior</span>, <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;          MAP MAP_density
-#&gt; 1 -0.1646055   0.3968591</div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a></span>(<span class='no'>posterior</span>))</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/abline'>abline</a></span>(<span class='kw'>v</span><span class='kw'>=</span><span class='fu'>map_estimate</span>(<span class='no'>posterior</span>),
-       <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"red"</span>)  <span class='co'># The x coordinate of MAP</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/abline'>abline</a></span>(<span class='kw'>h</span><span class='kw'>=</span><span class='fu'>map_estimate</span>(<span class='no'>posterior</span>, <span class='kw'>density</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)$<span class='no'>MAP_density</span>,
-       <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"blue"</span>)  <span class='co'># The y coordinate of MAP</span></div><div class='img'><img src='map_estimate-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>map_estimate</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; MAP = -0.16</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a></span>(<span class='no'>posterior</span>))</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/abline'>abline</a></span>(<span class='kw'>v</span><span class='kw'>=</span><span class='fu'>map_estimate</span>(<span class='no'>posterior</span>), <span class='kw'>col</span><span class='kw'>=</span><span class='st'>"red"</span>)</div><div class='img'><img src='map_estimate-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
