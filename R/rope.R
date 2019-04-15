@@ -135,16 +135,27 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
 
   list <- lapply(c("fixed", "random"), function(.x) {
     parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
-    tmp <- do.call(rbind, sapply(
+    tmp <- sapply(
       parms,
       rope,
       range = range,
       ci = ci,
       verbose = verbose,
       simplify = FALSE
-    ))
+    )
 
-    HDI_area <- attr(tmp, "HDI_area")
+
+    HDI_area <- lapply(tmp, function(.x) {
+      attr(.x, "HDI_area")
+    })
+
+    HDI_area <- lapply(HDI_area, function(.x) {
+      dat <- cbind(CI = ci, data.frame(do.call(rbind, .x)))
+      colnames(dat) <- c("CI", "HDI_low", "HDI_high")
+      dat
+    })
+
+    tmp <- do.call(rbind, tmp)
 
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_stanreg(
@@ -153,11 +164,15 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
         cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Group"),
         parms = names(parms)
       )
+
+      if (!.is_empty_object(HDI_area)) {
+        attr(tmp, "HDI_area") <- HDI_area
+      }
+
     } else {
       tmp <- NULL
     }
 
-    attr(tmp, "HDI_area") <- HDI_area
     tmp
   })
 
@@ -174,7 +189,15 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
     dat <- .remove_column(dat, "Group")
   }
 
-  attr(dat, "HDI_area") <- do.call(rbind, lapply(list, attr, "HDI_area"))
+  HDI_area_attributes <- lapply(.compact_list(list), attr, "HDI_area")
+
+  if (effects != "all") {
+    HDI_area_attributes <- HDI_area_attributes[[1]]
+  } else {
+    names(HDI_area_attributes) <- c("fixed", "random")
+  }
+
+  attr(dat, "HDI_area") <- HDI_area_attributes
   dat
 }
 
@@ -209,7 +232,15 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
       simplify = FALSE
     ))
 
-    HDI_area <- attr(tmp, "HDI_area")
+    HDI_area <- lapply(tmp, function(.x) {
+      attr(.x, "HDI_area")
+    })
+
+    HDI_area <- lapply(HDI_area, function(.x) {
+      dat <- cbind(CI = ci, data.frame(do.call(rbind, .x)))
+      colnames(dat) <- c("CI", "HDI_low", "HDI_high")
+      dat
+    })
 
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_brms(
@@ -219,11 +250,15 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
         cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Component", "Group"),
         parms = names(parms)
       )
+
+      if (!.is_empty_object(HDI_area)) {
+        attr(tmp, "HDI_area") <- HDI_area
+      }
+
     } else {
       tmp <- NULL
     }
 
-    attr(tmp, "HDI_area") <- HDI_area
     tmp
   }
 
@@ -253,6 +288,14 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
     dat <- .remove_column(dat, "Component")
   }
 
-  attr(dat, "HDI_area") <- do.call(rbind, lapply(list, attr, "HDI_area"))
+  HDI_area_attributes <- lapply(.compact_list(list), attr, "HDI_area")
+
+  if (effects != "all") {
+    HDI_area_attributes <- HDI_area_attributes[[1]]
+  } else {
+    names(HDI_area_attributes) <- c("fixed", "random")
+  }
+
+  attr(dat, "HDI_area") <- HDI_area_attributes
   dat
 }
