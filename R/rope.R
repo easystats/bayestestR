@@ -135,27 +135,10 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
 
   list <- lapply(c("fixed", "random"), function(.x) {
     parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
-    tmp <- sapply(
-      parms,
-      rope,
-      range = range,
-      ci = ci,
-      verbose = verbose,
-      simplify = FALSE
-    )
 
-
-    HDI_area <- lapply(tmp, function(.x) {
-      attr(.x, "HDI_area")
-    })
-
-    HDI_area <- lapply(HDI_area, function(.x) {
-      dat <- cbind(CI = ci, data.frame(do.call(rbind, .x)))
-      colnames(dat) <- c("CI", "HDI_low", "HDI_high")
-      dat
-    })
-
-    tmp <- do.call(rbind, tmp)
+    getropedata <- .prepare_rope_df(parms, range, ci, verbose)
+    tmp <- getropedata$tmp
+    HDI_area <- getropedata$HDI_area
 
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_stanreg(
@@ -223,24 +206,10 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
 
   .get_rope <- function(.x, .y) {
     parms <- insight::get_parameters(x, effects = .x, component = .y, parameters = parameters)
-    tmp <- do.call(rbind, sapply(
-      parms,
-      rope,
-      range = range,
-      ci = ci,
-      verbose = verbose,
-      simplify = FALSE
-    ))
 
-    HDI_area <- lapply(tmp, function(.x) {
-      attr(.x, "HDI_area")
-    })
-
-    HDI_area <- lapply(HDI_area, function(.x) {
-      dat <- cbind(CI = ci, data.frame(do.call(rbind, .x)))
-      colnames(dat) <- c("CI", "HDI_low", "HDI_high")
-      dat
-    })
+    getropedata <- .prepare_rope_df(parms, range, ci, verbose)
+    tmp <- getropedata$tmp
+    HDI_area <- getropedata$HDI_area
 
     if (!.is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_brms(
@@ -298,4 +267,33 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
 
   attr(dat, "HDI_area") <- HDI_area_attributes
   dat
+}
+
+
+
+#' @keywords internal
+.prepare_rope_df <- function(parms, range, ci, verbose) {
+  tmp <- sapply(
+    parms,
+    rope,
+    range = range,
+    ci = ci,
+    verbose = verbose,
+    simplify = FALSE
+  )
+
+  HDI_area <- lapply(tmp, function(.x) {
+    attr(.x, "HDI_area")
+  })
+
+  HDI_area <- lapply(HDI_area, function(.x) {
+    dat <- cbind(CI = ci, data.frame(do.call(rbind, .x)))
+    colnames(dat) <- c("CI", "HDI_low", "HDI_high")
+    dat
+  })
+
+  list(
+    tmp = do.call(rbind, tmp),
+    HDI_area = HDI_area
+  )
 }
