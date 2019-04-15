@@ -46,7 +46,7 @@ In other words, omitting the maths behind it, we can say that:
 
 
 ```{r echo=FALSE, fig.cap="Accurate depiction of a regular Bayesian user estimating a credible interval.", fig.align='center', out.width="50%"}
-knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/bayesianMaster.png")
+knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/bayesianMaster.png")
 ```
 
 
