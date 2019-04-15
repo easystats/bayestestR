@@ -2,15 +2,16 @@
 
 ## Breaking changes
 
-- `map_estimate` now returns a single value instead of a dataframe and the `density` parameter has been removed. The MAP density value is now accessible via `attributes(map_output)$MAP_density`
+- `map_estimate()` now returns a single value instead of a dataframe and the `density` parameter has been removed. The MAP density value is now accessible via `attributes(map_output)$MAP_density`
 
 ## New functions / features
 
-- Started adding plotting methods (currently in the [`see`](https://github.com/easystats/see) package) for `p_direction` and `hdi`
+- Started adding plotting methods (currently in the [`see`](https://github.com/easystats/see) package) for `p_direction()` and `hdi()`
 
 ## Minor changes
 
 - Improved testing
+- `rope()` for model-objects now returns the HDI values for all parameters as attribute in a consistent way.
 
 # bayestestR 0.1.0
 
