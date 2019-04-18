@@ -43,9 +43,11 @@ ci <- function(x, ...) {
 #' @rdname ci
 #' @export
 ci.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
-  do.call(rbind, lapply(ci, function(i) {
+  out <- do.call(rbind, lapply(ci, function(i) {
     .credible_interval(x = x, ci = i, verbose = verbose)
   }))
+  class(out) <- unique(c("ci", class(out)))
+  out
 }
 
 
@@ -65,8 +67,7 @@ ci.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"),
                        parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-  .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose,
-                            fun = "ci")
+  .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose, fun = "ci")
 }
 
 
@@ -79,9 +80,11 @@ ci.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"),
     return(check_ci)
   }
 
-  .ci <- as.vector(stats::quantile(x,
-                                   probs = c((1 - ci) / 2, (1 + ci) / 2),
-                                   names = FALSE))
+  .ci <- as.vector(stats::quantile(
+    x,
+    probs = c((1 - ci) / 2, (1 + ci) / 2),
+    names = FALSE
+  ))
 
   data.frame(
     "CI" = ci * 100,

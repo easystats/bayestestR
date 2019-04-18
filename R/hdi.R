@@ -72,7 +72,7 @@ hdi.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .hdi(x, ci = i, verbose = verbose)
   }))
-  class(out) <- c("hdi", class(out))
+  class(out) <- unique(c("hdi", class(out)))
   out
 }
 
@@ -83,7 +83,6 @@ hdi.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
 hdi.stanreg <- function(x, ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   out <- .compute_interval_stanreg(x, ci, effects, parameters, verbose, fun = "hdi")
-  class(out) <- c("hdi", class(out))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
@@ -95,7 +94,6 @@ hdi.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"), comp
   effects <- match.arg(effects)
   component <- match.arg(component)
   out <- .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose, fun = "hdi")
-  class(out) <- c("hdi", class(out))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }

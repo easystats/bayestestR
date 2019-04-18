@@ -13,6 +13,10 @@
 - Improved testing
 - `rope()` for model-objects now returns the HDI values for all parameters as attribute in a consistent way.
 
+## Bug fixes
+
+- `hdi()` returned multiple class attributes (#72)
+
 # bayestestR 0.1.0
 
 - CRAN initial publication and [0.1.0 release](https://github.com/easystats/bayestestR/releases/tag/v0.1.0)

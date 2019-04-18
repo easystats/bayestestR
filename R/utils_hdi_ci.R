@@ -87,7 +87,7 @@
     dat <- .remove_column(dat, "Group")
   }
 
-  class(dat) <- c(fun, class(dat))
+  class(dat) <- unique(c(fun, class(dat)))
   dat
 }
 
@@ -151,6 +151,6 @@
     dat <- .remove_column(dat, "Component")
   }
 
-  class(dat) <- c(fun, class(dat))
+  class(dat) <- unique(c(fun, class(dat)))
   dat
 }
