@@ -35,127 +35,155 @@ There are three main indices used in the literature for effect estimation: the *
 
 In the present work, we will compare these three point-estimates of effect between themselves, as well as with the widely known **beta**, extracted from a comparable frequentist model. With this comparison, we expect to draw bridges and relationships between the two frameworks, helping and easing the transition for the public.
 
-## Methods
 
-### Simulate Regression Data with Noise
+## Experiment 1: Relationship with Error (Noise) and Sample Size
 
-We simulated 36000 Bayesian and frequentist linear regression models with systematic variation of "true" effect (1 or 0), sample size (20, 40, 60), levels of noise (0.1, 2.5, 5), and priors (correct - same as true effect or incorrect).
+
+### Methods
+
+#### Simulate Regression Data with Noise
+
+
+The simulation aimed at modulating the following characteristics:
+
+- **Model type**: linear or logistic.
+- **"True" effect** (original regression coefficient from which data is drawn): Can be 1 or 0 (no effect).
+- **Sample size**: From 20 to 100 by steps of 10.
+- **Error**: Gaussian noise applied to the predictor with SD from 0.33 to 6.66 (with 1000 different values).
+
+We generated a dataset for each combination of these characteristics, resulting in a total of `2 * 2 * 9 * 1000 = 36000` Bayesian and frequentist models. The code used for generation is avaible [here](https://easystats.github.io/circus/articles/bayesian_indices.html) (please note that it takes usually several days/weeks to complete).
 
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2)
 library(dplyr)
 library(tidyr)
 
-df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayes_indices.csv")
+df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv")
 ```
 
-For the sake of time and computational space, we downloaded the data from github. However, you can find the code to generate it [here](https://easystats.github.io/circus/articles/bayesian_indices.html).
 
 
 
+### Results
 
-## Results
-
-### Relationship with the Theoretical True Effect
-
-We subtracted the theoretical "true" effect (0 or 1) from the indices, to observe the influence of noise, sample size and priors. 
+#### Relationship with the Theoretical True Effect
 
 
-#### Sensitivity to Noise
+##### Sensitivity to Noise
 
 ```{r, message=FALSE, warning=FALSE}
 df %>%
-  select(noise, beta, prior_correct, effect, median, mean, map) %>%
-  gather(estimate, value, -noise, -effect, -prior_correct) %>%
-  mutate(noise = as.factor(noise),
-         prior_correct = as.factor(prior_correct),
-         value = value-effect) %>%
-  ggplot(aes(x = noise, y = value, fill = estimate, color=prior_correct)) +
-  geom_boxplot() +
-  geom_hline(yintercept = 0) +
+  select(error, true_effect, outcome_type, beta, Median, Mean, MAP) %>%
+  gather(estimate, value, -error, -true_effect, -outcome_type) %>%
+  mutate(temp = as.factor(cut(error, 10, labels = FALSE))) %>% 
+  group_by(temp) %>% 
+  mutate(error_group = round(mean(error), 1)) %>% 
+  ungroup() %>% 
+  filter(value < 6) %>% 
+  ggplot(aes(x = error_group, y = value, fill = estimate, group = interaction(estimate, error_group))) +
+  # geom_hline(yintercept = 0) +
+  # geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +
+  # geom_smooth(method="loess") +
+  geom_boxplot(outlier.shape=NA) +
   theme_classic() +
-  scale_fill_manual(values = c("beta" = "#607D8B", "map" = "#795548", "mean" = "#FF9800", "median" = "#FFEB3B"),
+  scale_fill_manual(values = c("beta" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
                     name = "Index") +
-  scale_color_manual(values = c(`0`="#f44336", `1`="#8BC34A"),
-                     name = "Correct Prior") +
   xlab("Point-estimate of the true value 0\n") +
   ylab("\nNoise") +
-  coord_cartesian(ylim=c(-1, 1))
+  facet_wrap(~ outcome_type * true_effect, scales="free") 
 ```
 
 
-#### Sensitivity to Sample Size
+##### Sensitivity to Sample Size
 
 ```{r, message=FALSE, warning=FALSE}
 df %>%
-  select(sample_size, beta, effect, prior_correct, median, mean, map) %>%
-  gather(estimate, value, -sample_size, -effect, -prior_correct) %>%
-  mutate(sample_size = as.factor(sample_size),
-         prior_correct = as.factor(prior_correct),
-         value = value-effect) %>%
-  ggplot(aes(x = sample_size, y = value, fill = estimate, color=prior_correct)) +
-  geom_boxplot() +
-  geom_hline(yintercept = 0) +
+  select(sample_size, true_effect, outcome_type, beta, Median, Mean, MAP) %>%
+  gather(estimate, value, -sample_size, -true_effect, -outcome_type) %>%
+  mutate(temp = as.factor(cut(sample_size, 10, labels = FALSE))) %>% 
+  group_by(temp) %>% 
+  mutate(size_group = round(mean(sample_size))) %>% 
+  ungroup() %>% 
+  filter(value < 6) %>% 
+  ggplot(aes(x = size_group, y = value, fill = estimate, group = interaction(estimate, size_group))) +
+  # geom_hline(yintercept = 0) +
+  # geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +
+  # geom_smooth(method="loess") +
+  geom_boxplot(outlier.shape=NA) +
   theme_classic() +
-  scale_fill_manual(values = c("beta" = "#607D8B", "map" = "#795548", "mean" = "#FF9800", "median" = "#FFEB3B"),
+  scale_fill_manual(values = c("beta" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
                     name = "Index") +
-  scale_color_manual(values = c(`0`="#f44336", `1`="#8BC34A"),
-                     name = "Correct Prior") +
-  ylab("Point-estimate of the true value 0\n") +
-  xlab("\nSample Size") +
-  coord_cartesian(ylim=c(-1, 1))
+  xlab("Point-estimate of the true value 0\n") +
+  ylab("\nNoise") +
+  facet_wrap(~ outcome_type * true_effect, scales="free")
 ```
 
 
 
-#### Statistical Modelling
+##### Statistical Modelling
 
-We fitted a (frequentist) multiple linear regression to statistically test the effects and interactions of noise, sample size and priors on the effect estimates.
+We fitted a (frequentist) multiple linear regression to statistically test the the predict the presence or absence of effect with the estimates as well as their interaction with noise and sample size.
 
 ```{r, message=FALSE, warning=FALSE}
 df %>%
-  select(sample_size, beta, effect, prior_correct, median, mean, map, noise) %>%
-  gather(estimate, value, -sample_size, -effect, -prior_correct, -noise) %>%
-  mutate(noise= scale(noise),
-         sample_size = scale(sample_size),
-         prior_correct = as.factor(prior_correct)) %>%
-  glm(effect ~ estimate/value * noise * sample_size * prior_correct, data=., family="binomial") %>%
+  select(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) %>%
+  gather(estimate, value, -sample_size, -error, -true_effect, -outcome_type) %>%
+  glm(true_effect ~ outcome_type / value * estimate * sample_size * error, data=., family="binomial") %>%
   broom::tidy() %>%
   select(term, estimate, p=p.value) %>%
-  filter(stringr::str_detect(term, 'value')) %>%
-  mutate(term = stringr::str_remove(term, ":value"),
-         term = stringr::str_remove(term, "estimate"),
-         p = ifelse(p < .001, "< .001***", ifelse(p < .01, "< .01**", ifelse(p < .05, "< .05*", "> .05")))) %>%
-  filter(stringr::str_detect(term, ':')) %>%
-  knitr::kable(digits=2)
+  filter(stringr::str_detect(term, 'outcome_type'),
+         stringr::str_detect(term, ':value')) %>%
+  mutate(
+    sample_size = stringr::str_detect(term, 'sample_size'),
+    error = stringr::str_detect(term, 'error'),
+    term = stringr::str_remove(term, "estimate"),
+    term = stringr::str_remove(term, "outcome_type"),
+    p = paste0(sprintf("%.2f", p), ifelse(p < .001, "***", ifelse(p < .01, "**", ifelse(p < .05, "*", ""))))) %>%
+  arrange(sample_size, error, term) %>% 
+  select(-sample_size, -error) %>% 
+  knitr::kable(digits=2) 
 ```
 
 
+This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist's beta:
+
+- For linear Models;
+
+  - The **mean**, followed closely by the **median**, and the **MAP** estimate had a superior performance, altough not significantly.
+  - The **mean**, followed closely by the **median**, and the **MAP** estimate, were less affected by noise, altough not significantly.
+  - No difference for the sensitivity to sample size was found.
+    
+- For logistic models:
+
+  - The **MAP** estimate, followed by the **median** and the **mean**, estimate had a superior performance.
+  - The **MAP** estimate, followed by the **median**, and the **mean**, were less affected by noise, altough not significantly.
+  - The **MAP** estimate, followed by the **mean**, and the **median**, were less affected by sample size, altough not significantly.
+
+<!-- #### Relationship with the Frequentist Beta -->
+
+<!-- In the next section, we will compare the three Bayesian indices with the frequentist beta. -->
 
 
+<!-- ```{r, message=FALSE, warning=FALSE} -->
+<!-- df %>% -->
+<!--   select(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) %>% -->
+<!--   gather(estimate, value, -sample_size, -error, -true_effect, -outcome_type, -beta) %>%  -->
+<!--   mutate(effect = as.factor(effect), -->
+<!--          sample_size = as.factor(sample_size), -->
+<!--          estimate = factor(estimate, levels=c("mean", "median", "map"))) %>% -->
+<!--   ggplot(aes(x = beta, y = value, color = effect, shape=sample_size)) + -->
+<!--   geom_point(alpha=0.05) + -->
+<!--   facet_wrap(~estimate, scales = "free") + -->
+<!--   theme_classic() + -->
+<!--   theme(strip.background = element_blank()) + -->
+<!--   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") + -->
+<!--   guides(colour = guide_legend(override.aes = list(alpha = 1)), -->
+<!--          shape = guide_legend(override.aes = list(alpha = 1), title="Sample Size")) -->
+<!-- ``` -->
+## Study 2: Relationship with Sampling Characteristics
+## Study 3: Relationship with Priors Specification
 
-### Relationship with the Frequentist Beta
 
-In the next section, we will compare the three Bayesian indices with the frequentist beta.
-
-
-```{r, message=FALSE, warning=FALSE}
-df %>%
-  select(sample_size, beta, effect, prior_correct, median, mean, map, noise) %>%
-  gather(estimate, value, -beta, -sample_size, -effect, -prior_correct, -noise) %>%
-  mutate(effect = as.factor(effect),
-         sample_size = as.factor(sample_size),
-         estimate = factor(estimate, levels=c("mean", "median", "map"))) %>%
-  ggplot(aes(x = beta, y = value, color = effect, shape=sample_size)) +
-  geom_point(alpha=0.05) +
-  facet_wrap(~estimate, scales = "free") +
-  theme_classic() +
-  theme(strip.background = element_blank()) +
-  scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") +
-  guides(colour = guide_legend(override.aes = list(alpha = 1)),
-         shape = guide_legend(override.aes = list(alpha = 1), title="Sample Size"))
-```
-
-## Discussion
+### Discussion
 
 Conclusions can be found in the [guidelines section](https://easystats.github.io/bayestestR/articles/guidelines.html).

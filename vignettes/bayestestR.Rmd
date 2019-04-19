@@ -33,15 +33,15 @@ Once we agreed that the Bayesian framework is the right way to go, you might won
 
 ## What is the Bayesian Framework?
 
-Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology. Indeed, all the common statistical models (t-tests, correlations, ANOVAs, regressions, ...) can be made using the Bayesian framework. One of the core difference is that in the **frequentist view** (the "classic" statistics, with *p* and *t* values, as well as some weird *degrees of freedom*), **the effects are fixed** (but unknown) and **data are random**. On the contrary the Bayesian inference process computes the **probability** of different effect values *given the observed data*. Instead of having one estimated value of the "true effect", this probabilistic approach gives a distribution of values, called the **"posterior" distribution**. 
+Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology. Indeed, all the common statistical procedures (t-tests, correlations, ANOVAs, regressions, ...) can be achieved using the Bayesian framework. One of the core difference is that in the **frequentist view** (the "classic" statistics, with *p* and *t* values, as well as some weird *degrees of freedom*), **the effects are fixed** (but unknown) and **data are random**. On the contrary, the Bayesian inference process computes the **probability** of different effects *given the observed data*. Instead of having one estimated value of the "true effect", this probabilistic approach gives a distribution of values, called the **"posterior" distribution**. 
 
 Bayesian’s uncertainty can be summarized, for instance, by giving the **median** of the distribution, as well as a range of values on the posterior distribution that includes the 95% most probable values (the 95\% ***Credible* Interval**). To illustrate the difference of interpretation, the Bayesian framework allows to say *"given the observed data, the effect has 95% probability of falling within this range"*, while the Frequentist less straightforward alternative (the 95\% ***Confidence* Interval**) would be "*there is a 95\% probability that when computing a confidence interval from data of this sort, the effect falls within this range*". 
 
 
 In other words, omitting the maths behind it, we can say that:
 
-- The frequentist bloke tries to estimate "the real effect". For instance, the "real" value of the correlation between *x* and *y*. Hence, frequentist models return a "**point-estimate**" (*i.e.*, a single value) of the "real" correlation (*e.g.*, r = 0.42) estimated under a number of obscure assumptions (at a minimum, considering that the data is sampled at random from a "parent", usually normal distribution of data).
-- **The Bayesian master assumes no such thing**. The data are what they are. Based on this observed data (and a **prior** belief about the result), the Bayesian sampling algorithm returns a probability distribution (called **the posterior**) of the effect that is compatible with the observed data. For the correlation between *x* and *y*, it will return a distribution that says, for example, "the most probable effect is 0.42, but this data is also compatible with correlations of 0.12 or 0.74".
+- The frequentist bloke tries to estimate "the **real effect**". For instance, the "real" value of the correlation between *x* and *y*. Hence, frequentist models return a "**point-estimate**" (*i.e.*, a single value) of the "real" correlation (*e.g.*, r = 0.42) estimated under a number of obscure assumptions (at a minimum, considering that the data is sampled at random from a "parent", usually normal distribution).
+- **The Bayesian master assumes no such thing**. The data are what they are. Based on this observed data (and a **prior** belief about the result), the Bayesian sampling algorithm returns a probability distribution (called **the posterior**) of the effect that is compatible with the observed data. For the correlation between *x* and *y*, it will return a distribution that says, for example, "the most probable effect is 0.42, but this data is also compatible with correlations of 0.12 and 0.74".
 - To characterize our effects, **no need of *p* values** or other cryptic indices. We simply describe the posterior distribution of the effect. For example, we can report the median, the 90% *Credible* Interval or [other indices](https://easystats.github.io/bayestestR/articles/guidelines.html).
 
 
@@ -72,7 +72,7 @@ devtools::install_github("easystats/easystats")
 <!-- ``` -->
 
 
-Let's also install and load the [`rstanarm`](https://mc-stan.org/rstanarm/), used for fitting Bayesian models.
+Let's also install and load the [`rstanarm`](https://mc-stan.org/rstanarm/), that allows fitting Bayesian models.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 install.packages("rstanarm")
