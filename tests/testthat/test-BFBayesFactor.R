@@ -5,6 +5,7 @@ set.seed(333)
 context("BF correlation")
 x <- BayesFactor::correlationBF(y = iris$Sepal.Length, x = iris$Sepal.Width)
 test_that("p_direction", {
+  testthat::skip_on_travis() # Until insight v3 is released
   expect_equal(as.numeric(p_direction(x)), 92.25,  tol=1)
 })
 
@@ -15,6 +16,7 @@ data(sleep)
 diffScores <- sleep$extra[1:10] - sleep$extra[11:20]
 x <- BayesFactor::ttestBF(x = diffScores)
 test_that("p_direction", {
+  testthat::skip_on_travis() # Until insight v3 is released
   expect_equal(as.numeric(p_direction(x)), 99.675, tol=1)
 })
 
@@ -26,6 +28,7 @@ chickwts <- chickwts[chickwts$feed %in% c("horsebean","linseed"),]
 chickwts$feed <- factor(chickwts$feed)
 x <- BayesFactor::ttestBF(formula = weight ~ feed, data = chickwts)
 test_that("p_direction", {
+  testthat::skip_on_travis() # Until insight v3 is released
   expect_equal(as.numeric(p_direction(x)), 100, tol=1)
 })
 
@@ -35,6 +38,7 @@ t <- c(-.15, 2.39, 2.42, 2.43)
 N <- c(100, 150, 97, 99)
 x <- BayesFactor::meta.ttestBF(t=t, n1=N, rscale=1)
 test_that("p_direction", {
+  testthat::skip_on_travis() # Until insight v3 is released
   expect_equal(as.numeric(p_direction(x)), 99.975, tol=1)
 })
 
