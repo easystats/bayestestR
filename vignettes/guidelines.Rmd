@@ -2,12 +2,10 @@
 title: "Reporting Guidelines"
 output: 
   github_document:
-    highlight: zenburn
     toc: true
     fig_width: 10.08
     fig_height: 6
   rmarkdown::html_vignette:
-    highlight: zenburn
     toc: true
     fig_width: 10.08
     fig_height: 6

@@ -10,8 +10,9 @@
 
 ## Minor changes
 
+- `p_direction`: improved printing
 - Improved testing
-- `rope()` for model-objects now returns the HDI values for all parameters as attribute in a consistent way.
+- `rope()` for model-objects now returns the HDI values for all parameters as attribute in a consistent way
 
 ## Bug fixes
 
