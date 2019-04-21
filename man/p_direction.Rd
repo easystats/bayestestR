@@ -2,13 +2,16 @@
 % Please edit documentation in R/p_direction.R
 \name{p_direction}
 \alias{p_direction}
+\alias{pd}
 \alias{p_direction.numeric}
 \alias{p_direction.stanreg}
 \alias{p_direction.brmsfit}
-\alias{pd}
+\alias{p_direction.BFBayesFactor}
 \title{Probability of Direction (pd)}
 \usage{
 p_direction(x, ...)
+
+pd(x, ...)
 
 \method{p_direction}{numeric}(x, ...)
 
@@ -19,7 +22,7 @@ p_direction(x, ...)
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL, ...)
 
-pd(x, ...)
+\method{p_direction}{BFBayesFactor}(x, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}

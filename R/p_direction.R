@@ -28,6 +28,11 @@ p_direction <- function(x, ...) {
   UseMethod("p_direction")
 }
 
+#' @rdname p_direction
+#' @export
+pd <- p_direction
+
+
 
 
 
@@ -94,4 +99,10 @@ p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), compon
 
 #' @rdname p_direction
 #' @export
-pd <- p_direction
+p_direction.BFBayesFactor <- function(x, ...) {
+  out <- insight::get_parameters(x)
+  out <- sapply(out, p_direction)
+  class(out) <- c("p_direction", class(out))
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}

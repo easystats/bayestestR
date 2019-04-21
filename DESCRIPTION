@@ -27,6 +27,7 @@ Depends:
 Imports:
 	insight
 Suggests:
+	BayesFactor,
 	brms,
 	broom,
 	covr,
