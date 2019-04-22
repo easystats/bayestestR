@@ -37,6 +37,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="Probability of Direction (pd) — p_direction" />
 
 <meta property="og:description" content="Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist p-value." />
@@ -167,6 +169,8 @@
 
     <pre class="usage"><span class='fu'>p_direction</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
+<span class='fu'>pd</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for numeric</span>
 <span class='fu'>p_direction</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
@@ -179,7 +183,8 @@
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
   <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
-<span class='fu'>pd</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='co'># S3 method for BFBayesFactor</span>
+<span class='fu'>p_direction</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -223,7 +228,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
 <span class='co'># Simulate a posterior distribution of mean 1 and SD 1</span>
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='fu'>p_direction</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; pd = 86.80%</div><span class='co'># NOT RUN {</span>
+<span class='fu'>p_direction</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Probability of Direction (pd):
+#&gt; 
+#&gt; </span><span>pd = 86.80%</div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>p_direction</span>(<span class='no'>model</span>)

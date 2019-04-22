@@ -28,19 +28,12 @@ p_direction <- function(x, ...) {
   UseMethod("p_direction")
 }
 
-
+#' @rdname p_direction
 #' @export
-print.p_direction <- function(x, ...) {
-  if("data_plot" %in% class(x)){
-    print(as.data.frame(x))
-  } else{
-    if("data.frame" %in% class(x)){
-      cat(paste0(paste0("  - ", x$Parameter, sprintf(": pd = %.2f%%", x$pd)), collapse = "\n"))
-    } else{
-      cat(sprintf("pd = %.2f%%", x))
-    }
-  }
-}
+pd <- p_direction
+
+
+
 
 
 #' @rdname p_direction
@@ -106,4 +99,10 @@ p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), compon
 
 #' @rdname p_direction
 #' @export
-pd <- p_direction
+p_direction.BFBayesFactor <- function(x, ...) {
+  out <- insight::get_parameters(x)
+  out <- sapply(out, p_direction)
+  class(out) <- c("p_direction", class(out))
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}

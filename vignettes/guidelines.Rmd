@@ -31,7 +31,63 @@ Based on the previous [**comparison of point-estimates**](https://easystats.gith
 - The **traditional ROPE** (using a 90\% HDI) is not sensitive to delineate highly "significant" effects. The full ROPE (100\% HDI) does not present the same flaw.
 - The **Probability of Direction (*p*d)** is the closest index to the frequentist *p* value.
 
-Thus, to minimally **describe the posterior distribution** of a parameter, we suggest reporting the **median** and the **90\% CI** (using HDI rather than quantiles) for parameter characterisation and, in the context of null-hypothesis testing, the **Probability of Direction (*p*d)** for effect existence and, especially in the context of confirmatory analyses, the **ROPE percentage (full)** with an explicitly specified range for effect significance.
+Thus, to minimally **describe the posterior distribution** of a parameter, we suggest reporting the **median** and the **90\% CI** (using HDI rather than quantiles) for parameter characterisation and, in the context of null-hypothesis testing, the **Probability of Direction (*p*d)** for effect existence and, especially in the context of confirmatory analyses, the **ROPE percentage (full)** with an explicitly specified range for effect significance. 
+
+## Effect *Significance*
+
+Note that the two latter indices give different and independent information: The `pd` is a marker of **existence**, consistency and direction of a parameter (whether a parameter has a consistent effect in one or another direction), whereas the percentage in **ROPE** is a index of **significance** (in its primary meaning); informing us whether a parameter is related or not to a non-negligible change (in terms of magnitude) in the outcome.
+
+However, keep in mind that unlike the `pd`, indices of effect *size*, such as the **ROPE percentage**, depend on the unit of its parameter, and can thus be easily changed *via* the scaling of the predictors.
+
+- Example:
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+library(rstanarm)
+library(bayestestR)
+
+data <- iris
+model <- stan_glm(Sepal.Length ~ Sepal.Width, data=data)
+
+p_direction(model)
+rope(model, ci=1)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+library(rstanarm)
+library(bayestestR)
+set.seed(333)
+
+data <- iris
+junk <- capture.output(model <- stan_glm(Sepal.Length ~ Sepal.Width, data=data))
+
+p_direction(model)
+rope(model, ci=1)
+```
+
+We can see that the *p*d and the percentage in ROPE of the linear relationship between **Sepal.Length** and **Sepal.Width** are respectively of about `92.17%` and `15.95%`, corresponding to an **uncertain** and **not significant** effect. What happen if we scale our predictor? 
+
+
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+data$Sepal.Width_scaled <- data$Sepal.Width / 100
+model <- stan_glm(Sepal.Length ~ Sepal.Width_scaled, data=data)
+
+p_direction(model)
+rope(model, ci=1)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+library(rstanarm)
+library(bayestestR)
+set.seed(333)
+
+data$Sepal.Width_scaled <- data$Sepal.Width / 100
+junk <- capture.output(model <- stan_glm(Sepal.Length ~ Sepal.Width_scaled, data=data))
+
+p_direction(model)
+rope(model, ci=1)
+```
+
+As you can see, by simply dividing the predictory by 100, we **drastically** changed the conclusion related to the **percentage in ROPE** (being now very close to `0`): the effect could now be **interpreted as being significant**. This is another reason why we recommend using **the two indices**, to assess both effect **existence** and **significance**.
+
 
 ## Interpretation Rules of Thumb
 
@@ -49,7 +105,7 @@ Thus, to minimally **describe the posterior distribution** of a parameter, we su
 
     - **\> 99\%** in ROPE: negligible (we can accept the null hypothesis)
     - **\> 97.5\%** in ROPE: probably negligible
-    - **\<= 97.5\%** \& **\>= 2.5\%** in ROPE: not significant
+    - **\<= 97.5\%** \& **\>= 2.5\%** in ROPE: undecided significance
     - **\< 2.5\%** in ROPE: probably significant
     - **\< 1\%** in ROPE: significant (we can reject the null hypothesis)
 
