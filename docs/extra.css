@@ -1,24 +1,40 @@
 /* Syntax highlighting ---------------------------------------------------- */ 
 
-/*pre {*/ 
-/*  overflow: auto;*/ 
-/*  word-wrap: normal;*/ 
-/*  word-break: normal;*/ 
-/*  border: 1px solid #eee;*/ 
-/*  background-color: #455A64;*/ 
-/*}*/ 
+
+/* code chunk */
+pre {background-color: #37474F; 
+     color: white;
+     border-radius: 5px;} 
 
 
 
-/*.fl      {color: #1514b5;}*/ 
-/*.fu      {color: #FF9800;}*/  /* function */
-/*.ch,.st  {color: #CDDC39;}*/  /* string */
-/*.kw      {color: #FFC107;}*/  /* keyword */
-/*.co      {color: #9E9E9E;}*/  /* comment */
+.fl      {color: #f44336;}  /* numerics */
+.fu      {color: #FF9800;}  /* function */
+.ch,.st  {color: #66BB6A;} /* string */
+.co      {color: #B0BEC5;}  /* comment */
 
-/*.message { color: #EEEEEE;   font-weight: bolder;}*/ 
-/*.error   { color: #f44336;  font-weight: bolder;}*/ 
-/*.warning { color: #9C27B0; font-weight: bolder;}*/ 
+.kw {color: #FF9800;} /* functions */
+.sourceLine {color: #FCE4EC;} /* functions */
 
-.ch,.st  {color: orange;} /* string */
-.co      {color: #BDBDBD;}  /* comment */
+
+
+
+/* unvisited link */
+a:link {
+  color: #03A9F4;
+}
+
+/* visited link */
+a:visited {
+  color: #2196F3;
+}
+
+/* mouse over link */
+a:hover {
+  color: #9C27B0;
+}
+
+/* selected link */
+a:active {
+  color: #2196F3;
+}
