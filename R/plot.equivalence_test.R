@@ -29,7 +29,7 @@ plot.equivalence_test <- function(x, ...) {
 
 
   # if we have intercept-only models, keep at least the intercept
-  intercepts <- which(x$Parameter %in% c("Intercept", "(Intercept)"))
+  intercepts <- which(x$Parameter %in% c("Intercept", "(Intercept)", "b_Intercept"))
   if (nrow(x) > length(intercepts)) {
     x <- x[-intercepts, ]
   }
