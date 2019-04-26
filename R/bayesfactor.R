@@ -9,6 +9,17 @@
 #' @param null Value to be tested
 #' @param direction Test type. One of \code{-1} (left tailed), \code{0} (defult; two tailed) or \code{1} (right tailed)
 #'
+#' @examples
+#' \dontrun{
+#' Xprior <- rnorm_perfect(1000, mean = 0, sd = 1)
+#' Xpost <- rnorm_perfect(1000, mean = .5, sd = .3)
+#'
+#' bayesfactor(Xpost, method = 'savage-dickey', prior = Xprior)
+#' ##>   Bayes Factor
+#' ##> 1          1.2
+#' ##> ---
+#' ##> Method: savage-dickey
+#' }
 #' @references
 #' Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010). Bayesian
 #' hypothesis testing for psychologists: A tutorial on the Savage-Dickey method.
