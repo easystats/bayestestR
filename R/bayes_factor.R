@@ -44,7 +44,7 @@ bayes_factor.numeric <- function(x,method = "savage-dickey",...){
 #' @export
 #' @import logspline
 savage_dickey_bf <- function(x,prior,null = 0,direction = 0){
-  if (require(logspline)) {
+  if (requireNamespace("logspline")) {
     f_post <- suppressWarnings(logspline(x))
     f_prior <- suppressWarnings(logspline(prior))
 
@@ -83,14 +83,19 @@ savage_dickey_bf <- function(x,prior,null = 0,direction = 0){
 #' @export
 print.bf_val <- function(x,digits = 2, logBF = FALSE) {
   method <- attr(x,'method')
+
+  df <- data.frame(BF = x,
+                   row.names = names(x))
+  colnames(df) <- "Bayes Factor"
+
   if (logBF) {
-    cat("Bayes Factor (log)\n")
-    print(round(log(x[1]),digits))
-  } else {
-    cat("Bayes Factor\n")
-    print(round(x[1],digits))
+    df[[1]] <- log(df[[1]])
+    colnames(df) <- "Bayes Factor (log)"
   }
 
+  print.data.frame(df,digits = digits)
   cat("---\n")
   cat(paste0("Method: ", method,'\n'))
+
+  return(invisible(x))
 }
