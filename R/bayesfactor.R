@@ -17,22 +17,16 @@
 #' @author Mattan S. Ben-Shachar
 #'
 #' @export
-bayes_factor <- function(x,method = "savage-dickey",...){
-  UseMethod("bayes_factor")
+bayesfactor <- function(x,method = "savage-dickey",...){
+  UseMethod("bayesfactor")
 }
 
-#' @describeIn bayes_factor alias
+#' @rdname bayesfactor
 #' @export
-bf <- function(x,...) {
-  bayes_factor(x,...)
-}
-
-#' @rdname bayes_factor
-#' @export
-bayes_factor.numeric <- function(x,method = "savage-dickey",...){
+bayesfactor.numeric <- function(x,method = "savage-dickey",...){
   method <- match.arg(method)
   if (method=="savage-dickey") {
-    bf_val <- savage_dickey_bf(x,...)
+    bf_val <- bayesfactor_savagedickey(x,...)
   } else {
     stop("Other methods not supported yet.")
   }
@@ -40,10 +34,9 @@ bayes_factor.numeric <- function(x,method = "savage-dickey",...){
   return(bf_val)
 }
 
-#' @rdname bayes_factor
+#' @rdname bayesfactor
 #' @export
-#' @import logspline
-savage_dickey_bf <- function(x,prior,null = 0,direction = 0){
+bayesfactor_savagedickey <- function(x,prior,null = 0,direction = 0){
   if (requireNamespace("logspline")) {
     f_post <- suppressWarnings(logspline(x))
     f_prior <- suppressWarnings(logspline(prior))
