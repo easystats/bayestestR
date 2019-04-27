@@ -59,7 +59,7 @@ library("bayestestR")
 [![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
 [![Features](https://img.shields.io/badge/features-bayestestR-orange.svg?colorB=2196F3)](https://easystats.github.io/bayestestR/reference/index.html)
 
-Click on the buttons above to access the package [**documentation**](https://easystats.github.io/bayestestR/) and the [**easystats blog**](https://easystats.github.io/blog/posts/) and check-out these vignettes:
+Click on the buttons above to access the package [**documentation**](https://easystats.github.io/bayestestR/) and the [**easystats blog**](https://easystats.github.io/blog/posts/), and check-out these vignettes:
 
 - [Get Started with Bayesian Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
 - [Example 1: Bayesian (General) Linear Models](https://easystats.github.io/bayestestR/articles/example1_GLM.html)
@@ -202,7 +202,40 @@ posterior %>%
   ylab("Probability Density\n")
 ```
 
+### Bayes Factor
 
+[**`bayesfactor()`**](https://easystats.github.io/bayestestR/reference/bayesfactor.html) computes the Bayes Factor between two competing hypotheses.
+
+
+```{r message=FALSE, warning=FALSE, results='hide'}
+prior <- rnorm(1000, mean = 0, sd = 1)
+posterior <- rnorm(1000, mean = 1, sd = 0.7)
+
+bayesfactor(posterior, prior = prior, h0 = 0)
+```
+
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+posterior <- rnorm_perfect(1000, mean = 1, sd = 0.7) %>% 
+  density() %>% 
+  as.data.frame()
+prior <- rnorm_perfect(1000, mean = 0, sd = 1) %>% 
+  density() %>% 
+  as.data.frame()
+
+posterior %>% 
+  ggplot(aes(x=x, y=y)) +
+  geom_ribbon(aes(ymin=0, ymax=y), fill="#FFC107") +
+  geom_line(data=prior, size=1, linetype="dotted") +
+  geom_segment(x=0, xend=0, y=0, yend=max(prior$y), color="blue", size=1) +
+  geom_point(x=0, y=max(prior$y), color="blue", size=5) +
+  geom_segment(x=0, xend=0, y=0, yend=density_at(posterior$x,0), color="#E91E63", size=1) +
+  geom_point(x=0, y=density_at(posterior$x,0), color="#E91E63", size=5) +
+  theme_classic() +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.65)) +
+  scale_fill_manual(values=c("high"="#FFC107", "low"="#E91E63"), guide=FALSE) +
+  xlab("\nParameter Value") +
+  ylab("Probability Density\n")
+```
 
 ### ROPE-based probability
 
