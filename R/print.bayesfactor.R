@@ -1,10 +1,10 @@
 #' @export
-print.bayesfactor <- function(x, digits = 2, logBF = FALSE, ...) {
+print.bayesfactor <- function(x, digits = 2, log = FALSE, ...) {
 
   df <- data.frame(BF = x, row.names = names(x))
   colnames(df) <- "Bayes Factor"
 
-  if (logBF) {
+  if (log) {
     df[[1]] <- log(df[[1]])
     colnames(df) <- "Bayes Factor (log)"
   }
