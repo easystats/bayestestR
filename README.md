@@ -167,6 +167,21 @@ p_direction(rnorm(1000, mean = 1, sd = 1))
 
 ![](man/figures/unnamed-chunk-12-1.png)<!-- -->
 
+### Bayes Factor
+
+[**`bayesfactor()`**](https://easystats.github.io/bayestestR/reference/bayesfactor.html)
+computes the Bayes Factor, *i.e.*, the likelihood ratio between two
+competing hypotheses.
+
+``` r
+prior <- rnorm(1000, mean = 0, sd = 1)
+posterior <- rnorm(1000, mean = 1, sd = 0.7)
+
+bayesfactor(posterior, prior = prior, h0 = 0)
+```
+
+![](man/figures/unnamed-chunk-14-1.png)<!-- -->
+
 ### ROPE-based probability
 
 [**`p_rope()`**](https://easystats.github.io/bayestestR/reference/p_rope.html)
@@ -202,7 +217,7 @@ divided by the density of the MAP estimate.
 p_map(posterior = rnorm(1000, 1, 1))
 ```
 
-![](man/figures/unnamed-chunk-15-1.png)<!-- -->
+![](man/figures/unnamed-chunk-17-1.png)<!-- -->
 
 ## Utilities
 

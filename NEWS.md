@@ -1,4 +1,4 @@
-# bayestestR 0.1.1
+# bayestestR 0.1.2
 
 ## Breaking changes
 
@@ -6,6 +6,7 @@
 
 ## New functions / features
 
+- `bayesfactor` function has been added.
 - Started adding plotting methods (currently in the [`see`](https://github.com/easystats/see) package) for `p_direction()` and `hdi()`
 
 ## Minor changes
@@ -17,6 +18,7 @@
 ## Bug fixes
 
 - `hdi()` returned multiple class attributes (#72)
+- `plot.equivalence_test()` did not work properly for *brms*-models (#76).
 
 # bayestestR 0.1.0
 
