@@ -204,7 +204,7 @@ posterior %>%
 
 ### Bayes Factor
 
-[**`bayesfactor()`**](https://easystats.github.io/bayestestR/reference/bayesfactor.html) computes the Bayes Factor, *i.e.*, the likelihood ratio between two competing hypotheses.
+[**`bayesfactor()`**](https://easystats.github.io/bayestestR/reference/bayesfactor.html) computes the Bayes Factor between two competing hypotheses.
 
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
