@@ -4,29 +4,40 @@
 \alias{bayesfactor}
 \alias{bayesfactor.numeric}
 \alias{bayesfactor_savagedickey}
-\title{Compute Bayes Factor (BF)}
+\title{Bayes Factor (BF)}
 \usage{
-bayesfactor(x, method = "savage-dickey", ...)
+bayesfactor(x, prior, h0 = 0, direction = 0,
+  method = "savage-dickey", ...)
 
-\method{bayesfactor}{numeric}(x, method = "savage-dickey", ...)
+\method{bayesfactor}{numeric}(x, prior, h0 = 0, direction = 0,
+  method = "savage-dickey", ...)
 
-bayesfactor_savagedickey(x, prior, null = 0, direction = 0)
+bayesfactor_savagedickey(x, prior, h0 = 0, direction = 0)
 }
 \arguments{
-\item{x}{Vector representing a posterior distribution}
+\item{x}{Vector representing a posterior distribution.}
 
-\item{method}{The method to be used. Currently only \code{"savage-dickey"} is supported}
+\item{prior}{Vector representing a prior distribution.}
 
-\item{...}{Arguments passed to the specific methods}
+\item{h0}{Value to be tested against (usually \code{0} in the context of null hypothesis testing).}
 
-\item{prior}{Vector representing a prior distribution}
+\item{direction}{Test type. One of \code{-1} (left tailed), \code{0} (defult; two tailed) or \code{1} (right tailed).}
 
-\item{null}{Value to be tested}
+\item{method}{The method to be used. Currently only \code{"savage-dickey"} is supported.}
 
-\item{direction}{Test type. One of \code{-1} (left tailed), \code{0} (defult; two tailed) or \code{1} (right tailed)}
+\item{...}{Arguments passed to or from other methods.}
 }
 \description{
-Compute likelihood ratio between two competing hypotheses
+Compute the Bayes Factor, i.e., the likelihood ratio between two competing hypotheses.
+}
+\examples{
+library(bayestestR)
+
+prior <- rnorm_perfect(1000, mean = 0, sd = 1)
+posterior <- rnorm_perfect(1000, mean = .5, sd = .3)
+
+bayesfactor(posterior, prior = prior)
+
 }
 \references{
 Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010). Bayesian

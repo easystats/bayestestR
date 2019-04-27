@@ -1,6 +1,5 @@
 #' @export
-print.bf_val <- function(x, digits = 2, logBF = FALSE, ...) {
-  method <- attr(x, "method")
+print.bayesfactor <- function(x, digits = 2, logBF = FALSE, ...) {
 
   df <- data.frame(BF = x, row.names = names(x))
   colnames(df) <- "Bayes Factor"
@@ -10,7 +9,8 @@ print.bf_val <- function(x, digits = 2, logBF = FALSE, ...) {
     colnames(df) <- "Bayes Factor (log)"
   }
 
-  print.data.frame(df,digits = digits)
+  print.data.frame(df, digits = digits)
   cat("---\n")
-  cat(paste0("Method: ", method,'\n'))
+  cat(paste0("H0: ", attr(x, "H0"),'\n'))
+  cat(paste0("Method: ", attr(x, "method"),'\n'))
 }
