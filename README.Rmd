@@ -21,6 +21,7 @@ library(dplyr)
 
 knitr::opts_chunk$set(
   collapse = TRUE,
+  dpi=450,
   fig.path = "man/figures/"
 )
 ```
