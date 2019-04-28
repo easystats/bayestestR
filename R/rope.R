@@ -85,13 +85,26 @@ rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
   # "do.call(rbind)" does not bind attribute values together
   # so we need to capture the information about HDI separately
 
-  hdi_area <- lapply(rope_values, attr, "HDI_area")
 
   out <- do.call(rbind, rope_values)
   if (nrow(out) > 1) {
     out$ROPE_Percentage <- as.numeric(out$ROPE_Percentage)
   }
 
+  # Attributes
+  hdi_area <- lapply(rope_values, attr, "HDI_area")
+  hdi_area <- as.data.frame(t(as.data.frame(hdi_area)), row.names = 1:length(hdi_area))
+  names(hdi_area) <- c("CI_low", "CI_high")
+  hdi_area <- cbind(data.frame("CI" = ci * 100), hdi_area)
+  # if(length(hdi_area) == 1){
+  #   hdi_area <- as.data.frame(t(as.data.frame(hdi_area)), row.names=1)
+  #   names(hdi_area) <- c("CI_low", "CI_high")
+  #   hdi_area <- cbind(data.frame("CI" = ci * 100), hdi_area)
+  # } else{
+  #   hdi_area <- as.data.frame(t(as.data.frame(hdi_area)), row.names = 1:length(hdi_area))
+  #   names(hdi_area) <- c("CI_low", "CI_high")
+  #   hdi_area <- cbind(data.frame("CI" = ci * 100), hdi_area)
+  # }
   attr(out, "HDI_area") <- hdi_area
   out
 }
