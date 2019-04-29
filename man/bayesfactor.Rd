@@ -17,7 +17,7 @@ bayesfactor_savagedickey(x, prior, h0 = 0, direction = 0)
 \arguments{
 \item{x}{Vector representing a posterior distribution.}
 
-\item{prior}{Vector representing a prior distribution.}
+\item{prior}{Vector representing a prior distribution. If a prior is not provided, will sample from \code{~Cauchy(location = null, scale = sd(posterior))} (but this should be avoided).}
 
 \item{h0}{Value to be tested against (usually \code{0} in the context of null hypothesis testing).}
 
