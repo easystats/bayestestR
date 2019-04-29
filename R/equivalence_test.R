@@ -1,6 +1,15 @@
 #' Test for Practical Equivalence
 #'
-#' Perform a \strong{Test for Practical Equivalence} based on the \emph{"HDI+ROPE decision rule"} (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (\emph{i.e.}, a \link[=rope]{ROPE}).
+#' Perform a \strong{Test for Practical Equivalence} for Bayesian and frequentist models.
+#'
+#' Documentation is accessible for:
+#' \itemize{
+#'   \item \href{https://easystats.github.io/bayestestR/reference/equivalence_test.html}{Bayesian models}
+#'   \item \href{https://easystats.github.io/parameters/reference/equivalence_test.lm.html}{Frequentist models}
+#' }
+#'
+#' For Bayesian models, the \strong{Test for Practical Equivalence} is based on the \emph{"HDI+ROPE decision rule"} (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (\emph{i.e.}, a \link[=rope]{ROPE}).
+#'
 #'
 #' @inheritParams rope
 #'
@@ -89,8 +98,8 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
     )
   }
 
-  out$HDI_low <- sapply(attr(rope_data, "HDI_area", exact = TRUE), function(i) i[1])
-  out$HDI_high <- sapply(attr(rope_data, "HDI_area", exact = TRUE), function(i) i[2])
+  out$HDI_low <- attr(rope_data, "HDI_area", exact = TRUE)$CI_low
+  out$HDI_high <- attr(rope_data, "HDI_area", exact = TRUE)$CI_high
 
   # remove attribute
   attr(out, "HDI_area") <- NULL

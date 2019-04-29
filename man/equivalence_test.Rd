@@ -47,9 +47,17 @@ A data frame with following columns:
   }
 }
 \description{
-Perform a \strong{Test for Practical Equivalence} based on the \emph{"HDI+ROPE decision rule"} (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (\emph{i.e.}, a \link[=rope]{ROPE}).
+Perform a \strong{Test for Practical Equivalence} for Bayesian and frequentist models.
 }
 \details{
+Documentation is accessible for:
+\itemize{
+  \item \href{https://easystats.github.io/bayestestR/reference/equivalence_test.html}{Bayesian models}
+  \item \href{https://easystats.github.io/parameters/reference/equivalence_test.lm.html}{Frequentist models}
+}
+
+For Bayesian models, the \strong{Test for Practical Equivalence} is based on the \emph{"HDI+ROPE decision rule"} (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (\emph{i.e.}, a \link[=rope]{ROPE}).
+
 Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2018)
   suggest using the percentage of the 95\% (or 90\%, considered more stable)
   \link[=hdi]{HDI} that falls within the ROPE as a decision rule. If the HDI

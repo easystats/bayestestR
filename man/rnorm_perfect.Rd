@@ -2,19 +2,32 @@
 % Please edit documentation in R/utils_rnorm_perfect.R
 \name{rnorm_perfect}
 \alias{rnorm_perfect}
-\title{The (Perfect) Normal Distribution}
+\alias{rcauchy_perfect}
+\alias{rpois_perfect}
+\title{Perfect Empirical Distributions}
 \usage{
 rnorm_perfect(n, mean = 0, sd = 1)
+
+rcauchy_perfect(n, location = 0, scale = 1)
+
+rpois_perfect(n, lambda)
 }
 \arguments{
-\item{n}{Number of observations. If \code{length(n) > 1}, the length is taken to be the number required.}
+\item{n}{number of observations. If \code{length(n) > 1}, the length
+    is taken to be the number required.}
 
-\item{mean}{Vector of means.}
+\item{mean}{vector of means.}
 
-\item{sd}{Vector of standard deviations.}
+\item{sd}{vector of standard deviations.}
+
+\item{location}{location and scale parameters.}
+
+\item{scale}{location and scale parameters.}
+
+\item{lambda}{vector of (non-negative) means.}
 }
 \description{
-Generate a sample of size \code{n} with a near-perfect normal distribution.
+Generate a sample of size \code{n} with a near-perfect distribution.
 }
 \examples{
 library(bayestestR)

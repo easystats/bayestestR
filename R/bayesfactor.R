@@ -5,7 +5,7 @@
 #' @param x Vector representing a posterior distribution.
 #' @param prior Vector representing a prior distribution. If a prior is not provided, will sample from \code{~Cauchy(location = null, scale = sd(posterior))} (but this should be avoided).
 #' @param method The method to be used. Currently only \code{"savage-dickey"} is supported.
-#' @param h0 Value to be tested against (usually \code{0} in the context of null hypothesis testing).
+#' @param hypothesis Value to be tested against (usually \code{0} in the context of null hypothesis testing).
 #' @param direction Test type. One of \code{-1} (left tailed), \code{0} (defult; two tailed) or \code{1} (right tailed).
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -25,16 +25,16 @@
 #' @author Mattan S. Ben-Shachar
 #'
 #' @export
-bayesfactor <- function(x, prior, h0 = 0, direction = 0, method = "savage-dickey", ...){
+bayesfactor <- function(x, prior, hypothesis = 0, direction = 0, method = "savage-dickey", ...){
   UseMethod("bayesfactor")
 }
 
 #' @rdname bayesfactor
 #' @export
-bayesfactor.numeric <- function(x, prior, h0 = 0, direction = 0, method = "savage-dickey", ...) {
+bayesfactor.numeric <- function(x, prior, hypothesis = 0, direction = 0, method = "savage-dickey", ...) {
   method <- match.arg(method)
   if (method == "savage-dickey") {
-    bf_val <- bayesfactor_savagedickey(x, prior = prior, h0 = h0, direction = direction)
+    bf_val <- bayesfactor_savagedickey(x, prior = prior, hypothesis = hypothesis, direction = direction)
   } else {
     stop("Other methods not supported yet.")
   }
@@ -46,52 +46,52 @@ bayesfactor.numeric <- function(x, prior, h0 = 0, direction = 0, method = "savag
 #' @importFrom stats rcauchy sd
 #' @rdname bayesfactor
 #' @export
-bayesfactor_savagedickey <- function(x, prior, h0 = 0, direction = 0){
+bayesfactor_savagedickey <- function(x, prior, hypothesis = 0, direction = 0){
   if (missing(prior)) {
     prior <- stats::rcauchy(
       n        = length(x),
-      location = h0,
+      location = hypothesis,
       scale    = stats::sd(x)
     )
-    warning("Prior not specified!\n", "Using Cauchy prior with location = ", h0,
+    warning("Prior not specified!\n", "Using Cauchy prior with location = ", hypothesis,
             " and scale = ", round(stats::sd(x)), ".\n",
-            "It is recommended to define a prior!")
+            "It is recommended to explicitly define the prior.")
   }
 
   if (requireNamespace("logspline")) {
     f_post <- suppressWarnings(logspline::logspline(x))
     f_prior <- suppressWarnings(logspline::logspline(prior))
 
-    d_post <- logspline::dlogspline(h0, f_post)
-    d_prior <- logspline::dlogspline(h0, f_prior)
+    d_post <- logspline::dlogspline(hypothesis, f_post)
+    d_prior <- logspline::dlogspline(hypothesis, f_prior)
 
     norm_post <- norm_prior <- 1
     if (direction < 0) {
-      norm_post <- logspline::plogspline(h0, f_post)
-      norm_prior <- logspline::plogspline(h0, f_prior)
+      norm_post <- logspline::plogspline(hypothesis, f_post)
+      norm_prior <- logspline::plogspline(hypothesis, f_prior)
     } else if (direction > 0) {
-      norm_post <- 1 - logspline::plogspline(h0, f_post)
-      norm_prior <- 1 - logspline::plogspline(h0, f_prior)
+      norm_post <- 1 - logspline::plogspline(hypothesis, f_post)
+      norm_prior <- 1 - logspline::plogspline(hypothesis, f_prior)
     }
   } else {
     insight::print_color("Consider installing the `logspline` package for a more robust estimate.\n", "red")
-    d_post <- density_at(x, h0)
-    d_prior <- density_at(prior, h0)
+    d_post <- density_at(x, hypothesis)
+    d_prior <- density_at(prior, hypothesis)
 
     norm_post <- norm_prior <- 1
     if (direction < 0) {
-      norm_post <- mean(x < h0)
-      norm_prior <- mean(prior < h0)
+      norm_post <- mean(x < hypothesis)
+      norm_prior <- mean(prior < hypothesis)
     } else if (direction > 0) {
       norm_post <- 1 - mean(x < 0)
-      norm_prior <- 1 - mean(prior < h0)
+      norm_prior <- 1 - mean(prior < hypothesis)
     }
   }
 
   bf_val <- (d_prior / norm_prior) / (d_post / norm_post)
   class(bf_val) <- c("bayesfactor", class(bf_val))
   attr(bf_val, "method") <- "savage-dickey"
-  attr(bf_val, "H0") <- h0
+  attr(bf_val, "H0") <- hypothesis
 
   bf_val
 }

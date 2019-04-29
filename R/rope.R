@@ -85,13 +85,15 @@ rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
   # "do.call(rbind)" does not bind attribute values together
   # so we need to capture the information about HDI separately
 
-  hdi_area <- lapply(rope_values, attr, "HDI_area")
 
   out <- do.call(rbind, rope_values)
   if (nrow(out) > 1) {
     out$ROPE_Percentage <- as.numeric(out$ROPE_Percentage)
   }
 
+  # Attributes
+  hdi_area <- cbind(CI = ci * 100, data.frame(do.call(rbind, lapply(rope_values, attr, "HDI_area"))))
+  names(hdi_area) <- c("CI", "CI_low", "CI_high")
   attr(out, "HDI_area") <- hdi_area
   out
 }
@@ -286,11 +288,11 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
     attr(.x, "HDI_area")
   })
 
-  HDI_area <- lapply(HDI_area, function(.x) {
-    dat <- cbind(CI = ci, data.frame(do.call(rbind, .x)))
-    colnames(dat) <- c("CI", "HDI_low", "HDI_high")
-    dat
-  })
+  # HDI_area <- lapply(HDI_area, function(.x) {
+  #   dat <- cbind(CI = ci, data.frame(do.call(rbind, .x)))
+  #   colnames(dat) <- c("CI", "HDI_low", "HDI_high")
+  #   dat
+  # })
 
   list(
     tmp = do.call(rbind, tmp),
