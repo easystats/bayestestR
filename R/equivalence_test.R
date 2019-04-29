@@ -98,8 +98,8 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
     )
   }
 
-  out$HDI_low <- sapply(attr(rope_data, "HDI_area", exact = TRUE), function(i) i[1])
-  out$HDI_high <- sapply(attr(rope_data, "HDI_area", exact = TRUE), function(i) i[2])
+  out$HDI_low <- attr(rope_data, "HDI_area", exact = TRUE)$CI_low
+  out$HDI_high <- attr(rope_data, "HDI_area", exact = TRUE)$CI_high
 
   # remove attribute
   attr(out, "HDI_area") <- NULL
