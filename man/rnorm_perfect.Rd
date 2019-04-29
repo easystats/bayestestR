@@ -4,6 +4,7 @@
 \alias{rnorm_perfect}
 \alias{rcauchy_perfect}
 \alias{rpois_perfect}
+\alias{rt_perfect}
 \title{Perfect Empirical Distributions}
 \usage{
 rnorm_perfect(n, mean = 0, sd = 1)
@@ -11,6 +12,8 @@ rnorm_perfect(n, mean = 0, sd = 1)
 rcauchy_perfect(n, location = 0, scale = 1)
 
 rpois_perfect(n, lambda)
+
+rt_perfect(n, df, ncp)
 }
 \arguments{
 \item{n}{number of observations. If \code{length(n) > 1}, the length
@@ -25,6 +28,13 @@ rpois_perfect(n, lambda)
 \item{scale}{location and scale parameters.}
 
 \item{lambda}{vector of (non-negative) means.}
+
+\item{df}{degrees of freedom (\eqn{> 0}, maybe non-integer).  \code{df
+      = Inf} is allowed.}
+
+\item{ncp}{non-centrality parameter \eqn{\delta}{delta};
+    currently except for \code{rt()}, only for \code{abs(ncp) <= 37.62}.
+    If omitted, use the central t distribution.}
 }
 \description{
 Generate a sample of size \code{n} with a near-perfect distribution.

@@ -287,9 +287,9 @@ rope_range(model)
 ```
 
 
-### Perfect Normal Distribution
+### Perfect Distributions
 
-[**`rnorm_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html): Generate a sample of size n with a near-perfect normal distribution.
+[**`rnorm_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html), [**`rcauchy_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html), [**`rpois_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html), [**`rt_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html): Generate a sample of size n with a near-perfect distributions.
 
 ```{r message=FALSE, warning=FALSE, results='hide', eval=FALSE}
 rnorm_perfect(n = 10)

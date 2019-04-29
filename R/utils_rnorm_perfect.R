@@ -31,3 +31,12 @@ rcauchy_perfect <- function(n, location = 0, scale = 1) {
 rpois_perfect <- function(n, lambda) {
   stats::qcauchy(seq(1 / n, 1 - 1 / n, length.out = n), lambda)
 }
+
+
+#' @rdname rnorm_perfect
+#' @inheritParams stats::rt
+#' @importFrom stats qt
+#' @export
+rt_perfect <- function(n, df, ncp) {
+  stats::qt(seq(1 / n, 1 - 1 / n, length.out = n), df, ncp)
+}
