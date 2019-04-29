@@ -42,17 +42,19 @@ bayesfactor.numeric <- function(x, prior, h0 = 0, direction = 0, method = "savag
   bf_val
 }
 
+
+#' @importFrom stats rcauchy sd
 #' @rdname bayesfactor
 #' @export
 bayesfactor_savagedickey <- function(x, prior, h0 = 0, direction = 0){
   if (missing(prior)) {
-    prior <- rcauchy(
+    prior <- stats::rcauchy(
       n        = length(posterior),
       location = null,
-      scale    = sd(posterior)
+      scale    = stats::sd(posterior)
     )
     warning("Prior not specified!\n",
-            "Used Cauchy prior with location = ", null, " and scale = ", round(sd(posterior)), ".\n",
+            "Used Cauchy prior with location = ", null, " and scale = ", round(stats::sd(posterior)), ".\n",
             "Please specify your own priors appropriate prior!")
   }
 
