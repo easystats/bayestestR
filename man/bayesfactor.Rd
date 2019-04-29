@@ -6,20 +6,20 @@
 \alias{bayesfactor_savagedickey}
 \title{Bayes Factor (BF)}
 \usage{
-bayesfactor(x, prior, h0 = 0, direction = 0,
+bayesfactor(x, prior, hypothesis = 0, direction = 0,
   method = "savage-dickey", ...)
 
-\method{bayesfactor}{numeric}(x, prior, h0 = 0, direction = 0,
+\method{bayesfactor}{numeric}(x, prior, hypothesis = 0, direction = 0,
   method = "savage-dickey", ...)
 
-bayesfactor_savagedickey(x, prior, h0 = 0, direction = 0)
+bayesfactor_savagedickey(x, prior, hypothesis = 0, direction = 0)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution.}
 
 \item{prior}{Vector representing a prior distribution. If a prior is not provided, will sample from \code{~Cauchy(location = null, scale = sd(posterior))} (but this should be avoided).}
 
-\item{h0}{Value to be tested against (usually \code{0} in the context of null hypothesis testing).}
+\item{hypothesis}{Value to be tested against (usually \code{0} in the context of null hypothesis testing).}
 
 \item{direction}{Test type. One of \code{-1} (left tailed), \code{0} (defult; two tailed) or \code{1} (right tailed).}
 
