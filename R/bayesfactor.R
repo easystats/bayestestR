@@ -3,7 +3,7 @@
 #' Compute the Bayes Factor, i.e., the likelihood ratio between two competing hypotheses.
 #'
 #' @param x Vector representing a posterior distribution.
-#' @param prior Vector representing a prior distribution.
+#' @param prior Vector representing a prior distribution. If a prior is not provided, will sample from \code{~Cauchy(location = null, scale = sd(posterior))} (but this should be avoided).
 #' @param method The method to be used. Currently only \code{"savage-dickey"} is supported.
 #' @param h0 Value to be tested against (usually \code{0} in the context of null hypothesis testing).
 #' @param direction Test type. One of \code{-1} (left tailed), \code{0} (defult; two tailed) or \code{1} (right tailed).
@@ -45,6 +45,17 @@ bayesfactor.numeric <- function(x, prior, h0 = 0, direction = 0, method = "savag
 #' @rdname bayesfactor
 #' @export
 bayesfactor_savagedickey <- function(x, prior, h0 = 0, direction = 0){
+  if (missing(prior)) {
+    prior <- rcauchy(
+      n        = length(posterior),
+      location = null,
+      scale    = sd(posterior)
+    )
+    warning("Prior not specified!\n",
+            "Used Cauchy prior with location = ", null, " and scale = ", round(sd(posterior)), ".\n",
+            "Please specify your own priors appropriate prior!")
+  }
+
   if (requireNamespace("logspline")) {
     f_post <- suppressWarnings(logspline::logspline(x))
     f_prior <- suppressWarnings(logspline::logspline(prior))
