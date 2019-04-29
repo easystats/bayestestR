@@ -53,9 +53,9 @@ bayesfactor_savagedickey <- function(x, prior, h0 = 0, direction = 0){
       location = h0,
       scale    = stats::sd(x)
     )
-    warning("Prior not specified!\n",
-            "Used Cauchy prior with location = ", h0, " and scale = ", round(stats::sd(x)), ".\n",
-            "Please specify your own priors appropriate prior!")
+    warning("Prior not specified!\n", "Using Cauchy prior with location = ", h0,
+            " and scale = ", round(stats::sd(x)), ".\n",
+            "It is recommended to define a prior!")
   }
 
   if (requireNamespace("logspline")) {
