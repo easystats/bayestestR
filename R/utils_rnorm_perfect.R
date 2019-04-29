@@ -1,10 +1,8 @@
-#' The (Perfect) Normal Distribution
+#' Perfect Empirical Distributions
 #'
-#' Generate a sample of size \code{n} with a near-perfect normal distribution.
+#' Generate a sample of size \code{n} with a near-perfect distribution.
 #'
-#' @param n Number of observations. If \code{length(n) > 1}, the length is taken to be the number required.
-#' @param mean Vector of means.
-#' @param sd Vector of standard deviations.
+#' @inheritParams stats::rnorm
 #'
 #' @examples
 #' library(bayestestR)
@@ -14,4 +12,22 @@
 #' @export
 rnorm_perfect <- function(n, mean = 0, sd = 1) {
   stats::qnorm(seq(1 / n, 1 - 1 / n, length.out = n), mean, sd)
+}
+
+
+#' @rdname rnorm_perfect
+#' @inheritParams stats::rcauchy
+#' @importFrom stats qcauchy
+#' @export
+rcauchy_perfect <- function(n, location = 0, scale = 1) {
+  stats::qcauchy(seq(1 / n, 1 - 1 / n, length.out = n), location, scale)
+}
+
+
+#' @rdname rnorm_perfect
+#' @inheritParams stats::rpois
+#' @importFrom stats qcauchy
+#' @export
+rpois_perfect <- function(n, lambda) {
+  stats::qcauchy(seq(1 / n, 1 - 1 / n, length.out = n), lambda)
 }
