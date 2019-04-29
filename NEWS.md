@@ -6,7 +6,7 @@
 
 ## New functions / features
 
-- `rcauchy_perfect` and `rpois_perfect` functions have been added
+- `rcauchy_perfect`, `rpois_perfect` and `rt_perfect` functions have been added
 - `bayesfactor` function has been added
 - Started adding plotting methods (currently in the [`see`](https://github.com/easystats/see) package) for `p_direction()` and `hdi()`
 
