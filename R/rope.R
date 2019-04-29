@@ -92,19 +92,8 @@ rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
   }
 
   # Attributes
-  hdi_area <- lapply(rope_values, attr, "HDI_area")
-  hdi_area <- as.data.frame(t(as.data.frame(hdi_area)), row.names = 1:length(hdi_area))
-  names(hdi_area) <- c("CI_low", "CI_high")
-  hdi_area <- cbind(data.frame("CI" = ci * 100), hdi_area)
-  # if(length(hdi_area) == 1){
-  #   hdi_area <- as.data.frame(t(as.data.frame(hdi_area)), row.names=1)
-  #   names(hdi_area) <- c("CI_low", "CI_high")
-  #   hdi_area <- cbind(data.frame("CI" = ci * 100), hdi_area)
-  # } else{
-  #   hdi_area <- as.data.frame(t(as.data.frame(hdi_area)), row.names = 1:length(hdi_area))
-  #   names(hdi_area) <- c("CI_low", "CI_high")
-  #   hdi_area <- cbind(data.frame("CI" = ci * 100), hdi_area)
-  # }
+  hdi_area <- cbind(CI = ci * 100, data.frame(do.call(rbind, lapply(rope_values, attr, "HDI_area"))))
+  names(hdi_area) <- c("CI", "CI_low", "CI_high")
   attr(out, "HDI_area") <- hdi_area
   out
 }
@@ -299,11 +288,11 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
     attr(.x, "HDI_area")
   })
 
-  HDI_area <- lapply(HDI_area, function(.x) {
-    dat <- cbind(CI = ci, data.frame(do.call(rbind, .x)))
-    colnames(dat) <- c("CI", "HDI_low", "HDI_high")
-    dat
-  })
+  # HDI_area <- lapply(HDI_area, function(.x) {
+  #   dat <- cbind(CI = ci, data.frame(do.call(rbind, .x)))
+  #   colnames(dat) <- c("CI", "HDI_low", "HDI_high")
+  #   dat
+  # })
 
   list(
     tmp = do.call(rbind, tmp),
