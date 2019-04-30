@@ -66,7 +66,7 @@ bayesfactor_models.default <- function(..., .denominator = 1L){
 #' @import insight
 bayesfactor_models.brmsfit <- function(..., .denominator = 1L){
   if (!requireNamespace("bridgesampling")) {
-    stop("This function requires the package 'bridgesampling' to be installed. \nPlease install by running 'install.packages(\"bridgesampling\")' and run the function again ;-)")
+    stop("Package \"bridgesampling\" needed for this function to work. Please install it.")
   }
 
   # Orgenize the models
@@ -109,7 +109,7 @@ bayesfactor_models.stanreg <- function(..., .denominator = 1L){
 
 bayesfactor_models.BFBayesFactor <- function(models) {
   if (!requireNamespace("BayesFactor")) {
-    stop("This function requires the package 'BayesFactor' to be installed. \nPlease install by running 'install.packages(\"BayesFactor\")' and run the function again ;-)")
+    stop("Package \"BayesFactor\" needed for this function to work. Please install it.")
   }
   mBFs <- c(0,BayesFactor::extractBF(models,TRUE,TRUE))
   mforms <- sapply(c(models@denominator,models@numerator),function(x) x@shortName)

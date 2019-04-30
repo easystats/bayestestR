@@ -75,7 +75,7 @@ bayesfactor_savagedickey.numeric <- function(posterior,prior,direction = "both",
       norm_prior <- 1 - logspline::plogspline(hypothesis, f_prior)
     }
   } else {
-    insight::print_color("Consider installing the `logspline` package for a more robust estimate.\n", "red")
+    insight::print_color("Consider installing the \"logspline\" package for a more robust estimate.\n", "red")
     d_post <- density_at(x, hypothesis)
     d_prior <- density_at(prior, hypothesis)
 
