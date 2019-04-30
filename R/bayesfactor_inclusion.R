@@ -114,6 +114,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
   bayesfactor_inclusion.BFGrid(models, match_models = match_models, prior_odds = prior_odds)
 }
 
+#' @importFrom stats as.formula terms setNames
 get_model_table <- function(BFGrid, priorOdds = NULL){
   denominator <- attr(BFGrid,'denominator')
   BFGrid <- rbind(BFGrid[denominator,],BFGrid[-denominator,])
@@ -121,10 +122,10 @@ get_model_table <- function(BFGrid, priorOdds = NULL){
 
   # Prior and post odds
   Modelnames <- BFGrid$Model
-  if (!is.null(priorOdds)){
-    priorOdds <- c(1,priorOdds)
+  if (!is.null(priorOdds)) {
+    priorOdds <- c(1, priorOdds)
   } else {
-    priorOdds <- rep(1,length(Modelnames))
+    priorOdds <- rep(1, length(Modelnames))
   }
 
   posterior_odds <- priorOdds * exp(BFGrid$log.BF)
@@ -138,47 +139,51 @@ get_model_table <- function(BFGrid, priorOdds = NULL){
                          stringsAsFactors = FALSE)
 
   # add effects table
-  make_terms <- function(formula){
-    formula.f <- as.formula(paste0('~',formula))
-    all.terms <- attr(terms(formula.f), "term.labels")
+  make_terms <- function(formula) {
+    formula.f <- stats::as.formula(paste0('~', formula))
+    all.terms <- attr(stats::terms(formula.f), "term.labels")
 
     fix_trms <- all.terms[!grepl("\\|", all.terms)] # no random
 
     random_parts <- paste0(all.terms[grepl("\\|", all.terms)]) # only random
     if (length(random_parts) == 0) {
-      return(setNames(fix_trms,fix_trms))
+      return(stats::setNames(fix_trms, fix_trms))
     }
 
     random_units <- sub("^.+\\|\\s+", "", random_parts)
-    tmp_random <- lapply(sub("\\|.+$", "", random_parts),
-                         function(x) as.formula(paste0("~", x)))
+    tmp_random <- lapply(
+      sub("\\|.+$", "", random_parts),
+      function(x) stats::as.formula(paste0("~", x))
+    )
 
     rand_print <- rand_trms <- vector("list", length(random_parts))
 
     for (i in seq_along(random_parts)) {
       tmp_trms <- attr(terms.formula(tmp_random[[i]]), "term.labels")
 
-      if (!any(unlist(strsplit(as.character(tmp_random[[i]])[[2]],' \\+ '))=="0"))
-        tmp_trms <- c("1",tmp_trms)
+      if (!any(unlist(strsplit(as.character(tmp_random[[i]])[[2]], ' \\+ ')) == "0"))
+        tmp_trms <- c("1", tmp_trms)
 
-      rand_trms[[i]] <- paste0(tmp_trms,':',random_units[[i]])
-      rand_print[[i]] <- paste0("(",tmp_trms,"|",random_units[[i]],")")
+      rand_trms[[i]] <- paste0(tmp_trms, ':', random_units[[i]])
+      rand_print[[i]] <- paste0("(", tmp_trms, "|", random_units[[i]], ")")
     }
 
-    setNames(c(fix_trms,unlist(rand_trms)),
-             c(fix_trms,unlist(rand_print)))
+    stats::setNames(
+      c(fix_trms,unlist(rand_trms)),
+      c(fix_trms,unlist(rand_print))
+    )
   }
 
   print_terms <- character()
   for (m in seq_len(nrow(df.model))) {
     tmp_terms <- make_terms(df.model$Modelnames[m])
     # Somehow save randomeffs for printing?
-    df.model[m,tmp_terms] <- TRUE
+    df.model[m, tmp_terms] <- TRUE
   }
 
   df.model[is.na(df.model)] <- FALSE
 
-  return(df.model)
+  df.model
 }
 
 
