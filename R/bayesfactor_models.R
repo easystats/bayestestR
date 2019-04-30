@@ -38,12 +38,11 @@ bayesfactor_models <- function(..., .denominator = 1L) {
   UseMethod("bayesfactor_models")
 }
 
-#' @import insight
 bayesfactor_models.default <- function(..., .denominator = 1L){
   # Orgenize the models
   mods <- list(...)
   if (!is.numeric(.denominator)) {
-    mods <- c(mods,list(.denominator))
+    mods <- c(mods, list(.denominator))
     .denominator <- length(mods)
   }
 
@@ -55,7 +54,7 @@ bayesfactor_models.default <- function(..., .denominator = 1L){
 
   # Get BF
   mBIC <- sapply(mods, BIC)
-  mBFs <- (mBIC - mBIC[.denominator])/(-2)
+  mBFs <- (mBIC - mBIC[.denominator]) / (-2)
 
   # Get formula
   mforms <- sapply(mods, find_full_formula)
@@ -66,12 +65,13 @@ bayesfactor_models.default <- function(..., .denominator = 1L){
 
   attr(res,'denominator') <- .denominator
   attr(res,'BF_method') <- 'BIC approximation'
-  class(res) <- c('BFGrid',class(res))
+  class(res) <- c('BFGrid', class(res))
 
-  return(res)
+  res
 }
 
-#' @import insight
+
+#' @importFrom insight get_response
 bayesfactor_models.brmsfit <- function(..., .denominator = 1L){
   if (!requireNamespace("bridgesampling")) {
     stop("Package \"bridgesampling\" needed for this function to work. Please install it.")
@@ -80,7 +80,7 @@ bayesfactor_models.brmsfit <- function(..., .denominator = 1L){
   # Orgenize the models
   mods <- list(...)
   if (!is.numeric(.denominator)) {
-    mods <- c(mods,list(.denominator))
+    mods <- c(mods, list(.denominator))
     .denominator <- length(mods)
   }
 
@@ -105,23 +105,24 @@ bayesfactor_models.brmsfit <- function(..., .denominator = 1L){
 
   attr(res,'denominator') <- .denominator
   attr(res,'BF_method') <- 'marginal likelihoods (bridgesampling)'
-  class(res) <- c('BFGrid',class(res))
+  class(res) <- c('BFGrid', class(res))
 
-  return(res)
+  res
 }
+
 
 bayesfactor_models.stanreg <- function(..., .denominator = 1L){
-  bayesfactor_models.brmsfit(...,.denominator = .denominator
-  )
+  bayesfactor_models.brmsfit(..., .denominator = .denominator)
 }
+
 
 bayesfactor_models.BFBayesFactor <- function(models) {
   if (!requireNamespace("BayesFactor")) {
     stop("Package \"BayesFactor\" needed for this function to work. Please install it.")
   }
-  mBFs <- c(0,BayesFactor::extractBF(models,TRUE,TRUE))
-  mforms <- sapply(c(models@denominator,models@numerator),function(x) x@shortName)
-  mforms[mforms=="Intercept only"] <- "1"
+  mBFs <- c(0, BayesFactor::extractBF(models, TRUE, TRUE))
+  mforms <- sapply(c(models@denominator, models@numerator), function(x) x@shortName)
+  mforms[mforms == "Intercept only"] <- "1"
 
   res <- data.frame(Model  = unname(mforms),
                     log.BF = mBFs,
@@ -129,15 +130,13 @@ bayesfactor_models.BFBayesFactor <- function(models) {
 
   attr(res,'denominator') <- 1
   attr(res,'BF_method') <- 'JZS (BayesFactor)'
-  class(res) <- c('BFGrid',class(res))
+  class(res) <- c('BFGrid', class(res))
 
-  return(res)
+  res
 }
 
-#' @import insight
+#' @importFrom insight find_formula
 find_full_formula <- function(mod){
-  # waiting for:
-  # https://github.com/easystats/insight/issues/87
   formulas <- insight::find_formula(mod)
 
   conditional <- random <- NULL
@@ -150,8 +149,8 @@ find_full_formula <- function(mod){
       formulas$random <- list(formulas$random)
     }
     random <- sapply(formulas$random, function(x) {
-      paste0("(",as.character(x)[2],")")
+      paste0("(", as.character(x)[2], ")")
     })
   }
-  paste(c(conditional,random),collapse = " + ")
+  paste(c(conditional, random), collapse = " + ")
 }
