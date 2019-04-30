@@ -6,13 +6,13 @@
 
 ## New functions / features
 
-- `rcauchy_perfect`, `rpois_perfect` and `rt_perfect` functions have been added
-- `bayesfactor` function has been added
+- `rcauchy_perfect()`, `rpois_perfect()` and `rt_perfect()` functions have been added
+- `bayesfactor()` function has been added
 - Started adding plotting methods (currently in the [`see`](https://github.com/easystats/see) package) for `p_direction()` and `hdi()`
 
 ## Minor changes
 
-- `p_direction`: improved printing
+- `p_direction()`: improved printing
 - Improved testing
 - `rope()` for model-objects now returns the HDI values for all parameters as attribute in a consistent way
 
