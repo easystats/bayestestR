@@ -76,15 +76,15 @@ bayesfactor_savagedickey.numeric <- function(posterior,prior,direction = "two-si
     }
   } else {
     insight::print_color("Consider installing the \"logspline\" package for a more robust estimate.\n", "red")
-    d_post <- density_at(x, hypothesis)
+    d_post <- density_at(posterior, hypothesis)
     d_prior <- density_at(prior, hypothesis)
 
     norm_post <- norm_prior <- 1
     if (direction < 0) {
-      norm_post <- mean(x < hypothesis)
+      norm_post <- mean(posterior < hypothesis)
       norm_prior <- mean(prior < hypothesis)
     } else if (direction > 0) {
-      norm_post <- 1 - mean(x < 0)
+      norm_post <- 1 - mean(posterior < 0)
       norm_prior <- 1 - mean(prior < hypothesis)
     }
   }
