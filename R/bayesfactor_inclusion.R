@@ -188,17 +188,19 @@ get_model_table <- function(BFGrid, priorOdds = NULL){
 
 
 includes_interaction <- function(eff,effnames){
-  eff_b <- strsplit(eff,"\\:")
-  effnames_b <- strsplit(effnames,'\\:')
+  eff_b <- strsplit(eff, "\\:")
+  effnames_b <- strsplit(effnames, '\\:')
 
-  is_int <- sapply(effnames_b,function(x) length(x)>1)
+  is_int <- sapply(effnames_b, function(x) length(x) > 1)
 
   temp <- logical(length(effnames))
+
   for (rr in seq_along(effnames)) {
     if (is_int[rr]) {
       temp[rr] <- all(eff_b[[1]] %in% effnames_b[[rr]]) &
         !all(effnames_b[[rr]] %in% eff_b[[1]])
     }
   }
-  return(temp)
+
+  temp
 }

@@ -38,6 +38,7 @@ bayesfactor_savagedickey <- function(posterior,prior,direction = "two-sided", hy
 
 #' @rdname bayesfactor_savagedickey
 #' @export
+#' @importFrom insight print_color
 #' @importFrom stats rcauchy sd
 bayesfactor_savagedickey.numeric <- function(posterior,prior,direction = "two-sided", hypothesis = 0){
   if (missing(prior)) {
