@@ -5,14 +5,22 @@
 #'
 #' @author Mattan S. Ben-Shachar
 #'
-#' @param ... fitted models (any models supported by \code{insight]}), all fitted on the same data, or a single \code{BFBayesFactor} object. See details.
+#' @param ... fitted models (any models supported by \code{insight]}), all fit on the same data, or a single \code{BFBayesFactor} object. See details.
 #' @param .denominator Either an integer indicating which of the models to use as the denominator,
 #' or a model to use as a denominator. (Ignored for \code{BFBayesFactor})
 #'
 #' @details
-#' For \code{brms} or \code{rstanarm} models, Bayes factors are computed using the \code{bridgesampling} package.
-#' For \code{BFBayesFactor}, \code{bayesfactor_models} is mostly a wraparoud \code{BayesFactor::extractBF}.
-#' For all other model types (supported by \code{insight]}), BIC approximations are used to cimpute Bayes factors.
+#'
+#' \itemize{
+#'   \item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \code{bridgesampling} package.
+#'   \itemize{
+#'     \item \code{brmsfit} models must have been fitted with \code{save_all_pars = TRUE}.
+#'     \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
+#'   }
+#'   \item For \code{BFBayesFactor}, \code{bayesfactor_models} is mostly a wraparoud \code{BayesFactor::extractBF}.
+#'   \item For all other model types (supported by \code{insight]}), BIC approximations are used to cimpute Bayes factors.
+#' }
+#'
 #'
 #' @return a data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs (log) of the supplied models, that prints nicely.
 #'
