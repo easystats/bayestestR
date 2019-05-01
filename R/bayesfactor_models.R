@@ -69,6 +69,7 @@ bayesfactor_models <- function(..., .denominator = 1L) {
   UseMethod("bayesfactor_models")
 }
 
+#' @export
 bayesfactor_models.default <- function(..., .denominator = 1L){
   # Orgenize the models
   mods <- list(...)
@@ -88,7 +89,7 @@ bayesfactor_models.default <- function(..., .denominator = 1L){
   mBFs <- (mBIC - mBIC[.denominator]) / (-2)
 
   # Get formula
-  mforms <- sapply(mods, find_full_formula)
+  mforms <- sapply(mods, .find_full_formula)
 
   res <- data.frame(Model  = mforms,
                     log.BF = mBFs,
@@ -102,6 +103,7 @@ bayesfactor_models.default <- function(..., .denominator = 1L){
 }
 
 
+#' @export
 #' @importFrom insight get_response
 bayesfactor_models.brmsfit <- function(..., .denominator = 1L){
   if (!requireNamespace("bridgesampling")) {
@@ -128,7 +130,7 @@ bayesfactor_models.brmsfit <- function(..., .denominator = 1L){
     bridgesampling::bf(x, mML[[.denominator]], log = TRUE)[['bf']])
 
   # Get formula
-  mforms <- sapply(mods, find_full_formula)
+  mforms <- sapply(mods, .find_full_formula)
 
   res <- data.frame(Model  = mforms,
                     log.BF = mBFs,
@@ -141,12 +143,12 @@ bayesfactor_models.brmsfit <- function(..., .denominator = 1L){
   res
 }
 
-
+#' @export
 bayesfactor_models.stanreg <- function(..., .denominator = 1L){
   bayesfactor_models.brmsfit(..., .denominator = .denominator)
 }
 
-
+#' @export
 bayesfactor_models.BFBayesFactor <- function(models) {
   if (!requireNamespace("BayesFactor")) {
     stop("Package \"BayesFactor\" needed for this function to work. Please install it.")
@@ -166,8 +168,9 @@ bayesfactor_models.BFBayesFactor <- function(models) {
   res
 }
 
+#' @keywords internal
 #' @importFrom insight find_formula
-find_full_formula <- function(mod){
+.find_full_formula <- function(mod){
   formulas <- insight::find_formula(mod)
 
   conditional <- random <- NULL
