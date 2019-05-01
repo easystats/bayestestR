@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Probability of a Given Point — density_at • bayestestR</title>
+<title>Compute a Savage-Dickey density ratio Bayes factor — bayesfactor_savagedickey • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Probability of a Given Point — density_at" />
+<meta property="og:title" content="Compute a Savage-Dickey density ratio Bayes factor — bayesfactor_savagedickey" />
 
-<meta property="og:description" content="Compute the density of a given point of a distribution." />
+<meta property="og:description" content="This method computes the ratio between the density of a single value (typically the null)
+in two distributions, typically the posterior vs. the prior distributions." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -156,18 +157,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Probability of a Given Point</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/utils_density_at.R'><code>R/utils_density_at.R</code></a></small>
-    <div class="hidden name"><code>density_at.Rd</code></div>
+    <h1>Compute a Savage-Dickey density ratio Bayes factor</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/bayesfactor_savagedickey.R'><code>R/bayesfactor_savagedickey.R</code></a></small>
+    <div class="hidden name"><code>bayesfactor_savagedickey.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Compute the density of a given point of a distribution.</p>
+    <p>This method computes the ratio between the density of a single value (typically the null)
+in two distributions, typically the posterior vs. the prior distributions.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>density_at</span>(<span class='no'>posterior</span>, <span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>)</pre>
+    <pre class="usage"><span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
+  <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,29 +184,66 @@
       <td><p>Vector representing a posterior distribution.</p></td>
     </tr>
     <tr>
-      <th>x</th>
-      <td><p>The value of which to get the approximate probability.</p></td>
+      <th>prior</th>
+      <td><p>Vector representing a prior distribution. If a prior is not provided, will sample from <code>~Cauchy(location = hypothesis, scale = sd(posterior))</code> (but this should be avoided).</p></td>
     </tr>
     <tr>
-      <th>precision</th>
-      <td><p>Number of points for density estimation. See the <code>n</code> parameter in <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a>.</p></td>
+      <th>direction</th>
+      <td><p>Test type. One of <code>0</code>, <code>"two-sided"</code> (defult; two tailed),
+<code>-1</code>, <code>"left"</code> (left tailed), <code>1</code>, <code>"right"</code> (right tailed).</p></td>
+    </tr>
+    <tr>
+      <th>hypothesis</th>
+      <td><p>Value to be tested against (usually <code>0</code> in the context of null hypothesis testing).</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data frame of class <code>BFsd</code> which contains the Bayes factor representing by how
+much <em>less</em> the null is likely under the posterior compared to the prior (larger than 1
+can be interpereted as evidence against the null).</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This method is used to examine if the hypothesis value is less or more likely given the observed data.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., &amp; Grasman, R. (2010). Bayesian
+hypothesis testing for psychologists: A tutorial on the Savage-Dickey method.
+Cognitive psychology, 60(3), 158-189.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
-<span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rnorm_perfect.html'>rnorm_perfect</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>density_at</span>(<span class='no'>posterior</span>, <span class='fl'>0</span>)</div><div class='output co'>#&gt; [1] 0.4099268</div><div class='input'><span class='fu'>density_at</span>(<span class='no'>posterior</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; [1] 0.4099268 0.2657192</div></pre>
+
+<span class='no'>prior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rnorm_perfect.html'>rnorm_perfect</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rnorm_perfect.html'>rnorm_perfect</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.3</span>)
+
+<span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: logspline</span></div><div class='output co'>#&gt;   Bayes Factor
+#&gt; 1          1.2
+#&gt; ---
+#&gt; Method: Savage-Dickey density ratio
+#&gt; Test Value: 0</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
+    <h2>Author</h2>
+    <p>Mattan S. Ben-Shachar</p>
   </div>
 </div>
 

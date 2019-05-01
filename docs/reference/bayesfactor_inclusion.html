@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Probability of a Given Point — density_at • bayestestR</title>
+<title>Get inclusion BFs for effects across Bayesian models — bayesfactor_inclusion • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Probability of a Given Point — density_at" />
+<meta property="og:title" content="Get inclusion BFs for effects across Bayesian models — bayesfactor_inclusion" />
 
-<meta property="og:description" content="Compute the density of a given point of a distribution." />
+<meta property="og:description" content="Get inclusion BFs for effects across Bayesian models" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -156,50 +156,105 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Probability of a Given Point</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/utils_density_at.R'><code>R/utils_density_at.R</code></a></small>
-    <div class="hidden name"><code>density_at.Rd</code></div>
+    <h1>Get inclusion BFs for effects across Bayesian models</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/bayesfactor_inclusion.R'><code>R/bayesfactor_inclusion.R</code></a></small>
+    <div class="hidden name"><code>bayesfactor_inclusion.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Compute the density of a given point of a distribution.</p>
+    <p>Get inclusion BFs for effects across Bayesian models</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>density_at</span>(<span class='no'>posterior</span>, <span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>)</pre>
+    <pre class="usage"><span class='fu'>bayesfactor_inclusion</span>(<span class='no'>models</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>posterior</th>
-      <td><p>Vector representing a posterior distribution.</p></td>
+      <th>models</th>
+      <td><p>an object of class <code>BFGrid</code> or <code>BFBayesFactor</code>.</p></td>
     </tr>
     <tr>
-      <th>x</th>
-      <td><p>The value of which to get the approximate probability.</p></td>
+      <th>match_models</th>
+      <td><p>If <code>FALSE</code> (default), Inclustion BFs are computed by
+comparing all models with an effect against all models without the effect. If <code>TRUE</code>,
+Inclusion BFs are computed by comparing all models with an effect against models without
+the effect AND without any higher-order interactions with the effect.</p></td>
     </tr>
     <tr>
-      <th>precision</th>
-      <td><p>Number of points for density estimation. See the <code>n</code> parameter in <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a>.</p></td>
+      <th>prior_odds</th>
+      <td><p>optional vector of prior odds for the models. See <code>BayesFactor::priorOdds</code></p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a data frame containing the prior and posterior probabilities, and BF (log) for each effect.</p>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Random effects in the <code>lme</code> style will be displayed as interactions:
+i.e., <code>(X|G)</code> will become <code>1:G</code> and <code>X:G</code>.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Hinne, M., Gronau, Q. F., van den Bergh, D., &amp; Wagenmakers,
+E. (2019, March 25). A conceptual introduction to Bayesian Model
+Averaging. https://doi.org/10.31234/osf.io/wgb64</p>
+<p>#' Clyde, M. A., Ghosh, J., &amp; Littman, M. L. (2011). Bayesian
+adaptive sampling for variable selection and model averaging. Journal
+of Computational and Graphical Statistics, 20(1), 80-101.</p>
+<p>Mathot. S. (2017). Bayes like a Baws:
+Interpreting Bayesian Repeated Measures in JASP [Blog post].
+Retrieved from https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
-<span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rnorm_perfect.html'>rnorm_perfect</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>density_at</span>(<span class='no'>posterior</span>, <span class='fl'>0</span>)</div><div class='output co'>#&gt; [1] 0.4099268</div><div class='input'><span class='fu'>density_at</span>(<span class='no'>posterior</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; [1] 0.4099268 0.2657192</div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
+
+<span class='co'># Using with bayesfactor_models:</span>
+<span class='co'># ------------------------------</span>
+<span class='no'>mo0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='no'>mo1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='no'>mo2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='no'>mo3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+
+<span class='no'>SepalLength_BFmodels</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bayesfactor_models.html'>bayesfactor_models</a></span>(<span class='no'>mo1</span>,<span class='no'>mo2</span>,<span class='no'>mo3</span>,<span class='kw'>.denominator</span> <span class='kw'>=</span> <span class='no'>mo0</span>)
+<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>SepalLength_BFmodels</span>)
+
+<span class='co'># Using with BayesFactor objects:</span>
+<span class='co'># -------------------------------</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>BayesFactor</span>)
+
+<span class='no'>BF</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/generalTestBF'>generalTestBF</a></span>(<span class='no'>len</span> ~ <span class='no'>supp</span> * <span class='no'>dose</span>, <span class='no'>ToothGrowth</span>, <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BF</span>)
+
+<span class='co'># compare only matched models:</span>
+<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BF</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
+
+      <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
+    <h2>Author</h2>
+    <p>Mattan S. Ben-Shachar</p>
   </div>
 </div>
 

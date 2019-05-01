@@ -41,7 +41,7 @@
   
 <meta property="og:title" content="Test for Practical Equivalence — equivalence_test" />
 
-<meta property="og:description" content="Perform a Test for Practical Equivalence based on the &quot;HDI+ROPE decision rule&quot; (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated &quot;null hypothesis&quot; (i.e., a ROPE)." />
+<meta property="og:description" content="Perform a Test for Practical Equivalence for Bayesian and frequentist models." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -163,7 +163,7 @@
 
     <div class="ref-description">
     
-    <p>Perform a <strong>Test for Practical Equivalence</strong> based on the <em>"HDI+ROPE decision rule"</em> (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (<em>i.e.</em>, a <a href='rope.html'>ROPE</a>).</p>
+    <p>Perform a <strong>Test for Practical Equivalence</strong> for Bayesian and frequentist models.</p>
     
     </div>
 
@@ -228,7 +228,12 @@ for the output.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Using the <a href='rope.html'>ROPE</a> and the <a href='hdi.html'>HDI</a>, Kruschke (2018)
+    <p>Documentation is accessible for:</p><ul>
+<li><p><a href='https://easystats.github.io/bayestestR/reference/equivalence_test.html'>Bayesian models</a></p></li>
+<li><p><a href='https://easystats.github.io/parameters/reference/equivalence_test.lm.html'>Frequentist models</a></p></li>
+</ul>
+    <p>For Bayesian models, the <strong>Test for Practical Equivalence</strong> is based on the <em>"HDI+ROPE decision rule"</em> (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (<em>i.e.</em>, a <a href='rope.html'>ROPE</a>).</p>
+<p>Using the <a href='rope.html'>ROPE</a> and the <a href='hdi.html'>HDI</a>, Kruschke (2018)
   suggest using the percentage of the 95% (or 90%, considered more stable)
   <a href='hdi.html'>HDI</a> that falls within the ROPE as a decision rule. If the HDI
   is completely outside the ROPE, the "null hypothesis" for this parameter is
@@ -338,7 +343,7 @@ for the output.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
 </div>
 
 <div class="pkgdown">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>The (Perfect) Normal Distribution — rnorm_perfect • bayestestR</title>
+<title>Perfect Empirical Distributions — rnorm_perfect • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="The (Perfect) Normal Distribution — rnorm_perfect" />
+<meta property="og:title" content="Perfect Empirical Distributions — rnorm_perfect" />
 
-<meta property="og:description" content="Generate a sample of size n with a near-perfect normal distribution." />
+<meta property="og:description" content="Generate a sample of size n with a near-perfect distribution." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -156,33 +156,63 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>The (Perfect) Normal Distribution</h1>
+    <h1>Perfect Empirical Distributions</h1>
     <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/utils_rnorm_perfect.R'><code>R/utils_rnorm_perfect.R</code></a></small>
     <div class="hidden name"><code>rnorm_perfect.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Generate a sample of size <code>n</code> with a near-perfect normal distribution.</p>
+    <p>Generate a sample of size <code>n</code> with a near-perfect distribution.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>rnorm_perfect</span>(<span class='no'>n</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>rnorm_perfect</span>(<span class='no'>n</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+
+<span class='fu'>rcauchy_perfect</span>(<span class='no'>n</span>, <span class='kw'>location</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+
+<span class='fu'>rpois_perfect</span>(<span class='no'>n</span>, <span class='no'>lambda</span>)
+
+<span class='fu'>rt_perfect</span>(<span class='no'>n</span>, <span class='no'>df</span>, <span class='no'>ncp</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>n</th>
-      <td><p>Number of observations. If <code>length(n) &gt; 1</code>, the length is taken to be the number required.</p></td>
+      <td><p>number of observations. If <code>length(n) &gt; 1</code>, the length
+    is taken to be the number required.</p></td>
     </tr>
     <tr>
       <th>mean</th>
-      <td><p>Vector of means.</p></td>
+      <td><p>vector of means.</p></td>
     </tr>
     <tr>
       <th>sd</th>
-      <td><p>Vector of standard deviations.</p></td>
+      <td><p>vector of standard deviations.</p></td>
+    </tr>
+    <tr>
+      <th>location</th>
+      <td><p>location and scale parameters.</p></td>
+    </tr>
+    <tr>
+      <th>scale</th>
+      <td><p>location and scale parameters.</p></td>
+    </tr>
+    <tr>
+      <th>lambda</th>
+      <td><p>vector of (non-negative) means.</p></td>
+    </tr>
+    <tr>
+      <th>df</th>
+      <td><p>degrees of freedom (\(&gt; 0\), maybe non-integer).  <code>df
+      = Inf</code> is allowed.</p></td>
+    </tr>
+    <tr>
+      <th>ncp</th>
+      <td><p>non-centrality parameter \(\delta\);
+    currently except for <code><a href='https://www.rdocumentation.org/packages/stats/topics/TDist'>rt()</a></code>, only for <code>abs(ncp) &lt;= 37.62</code>.
+    If omitted, use the central t distribution.</p></td>
     </tr>
     </table>
     
@@ -205,7 +235,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
 </div>
 
 <div class="pkgdown">

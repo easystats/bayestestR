@@ -322,8 +322,8 @@ rbind(
     get_data(predictor="p_ROPE", outcome="equivalence_95", lbound=0, ubound=100),
     get_data(predictor="ROPE_90", outcome="equivalence_95", lbound=0, ubound=0.5),
     get_data(predictor="ROPE_full", outcome="equivalence_95", lbound=0, ubound=0.5),
-    get_data(predictor="bayesfactor_0707", outcome="equivalence_95", lbound=0, ubound=5),
-    get_data(predictor="bayesfactor_1", outcome="equivalence_95", lbound=0, ubound=5)
+    get_data(predictor="bayesfactor_0707", outcome="equivalence_95", lbound=0, ubound=3),
+    get_data(predictor="bayesfactor_1", outcome="equivalence_95", lbound=0, ubound=3)
     ) %>% 
     rename("equivalence"=equivalence_95) %>% 
     mutate(level="95 HDI"),
@@ -333,8 +333,8 @@ rbind(
     get_data(predictor="p_ROPE", outcome="equivalence_90", lbound=0, ubound=100),
     get_data(predictor="ROPE_95", outcome="equivalence_90", lbound=0, ubound=0.5),
     get_data(predictor="ROPE_full", outcome="equivalence_90", lbound=0, ubound=0.5),
-    get_data(predictor="bayesfactor_0707", outcome="equivalence_90", lbound=0, ubound=5),
-    get_data(predictor="bayesfactor_1", outcome="equivalence_90", lbound=0, ubound=5)
+    get_data(predictor="bayesfactor_0707", outcome="equivalence_90", lbound=0, ubound=3),
+    get_data(predictor="bayesfactor_1", outcome="equivalence_90", lbound=0, ubound=3)
     ) %>% 
     rename("equivalence"=equivalence_90) %>% 
     mutate(level="90 HDI")
@@ -342,7 +342,7 @@ rbind(
   ggplot(aes(x=value, y=equivalence)) +
   geom_ribbon(aes(ymin=CI_lower, ymax=CI_upper), alpha=0.1) +
   geom_line(aes(color=index), size=1) +
-  facet_wrap(~ index * level * outcome_type, scales = "free", nrow=5) +
+  facet_wrap(~ index * level * outcome_type, scales = "free", nrow=7) +
   theme_classic() +
   theme(strip.background = element_blank(),
         strip.text = element_text(face="bold")) +

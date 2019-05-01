@@ -41,7 +41,7 @@
   
 <meta property="og:title" content="Confidence/Credible Interval — ci" />
 
-<meta property="og:description" content="Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models using quantiles." />
+<meta property="og:description" content="Compute Confidence/Credible Intervals (CI) for Bayesian (using quantiles) and frequentist models." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -163,7 +163,7 @@
 
     <div class="ref-description">
     
-    <p>Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models using quantiles.</p>
+    <p>Compute Confidence/Credible Intervals (CI) for Bayesian (using quantiles) and frequentist models.</p>
     
     </div>
 
@@ -235,7 +235,16 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
     <p>Documentation is accessible for:</p><ul>
 <li><p><a href='https://easystats.github.io/bayestestR/reference/ci.html'>Bayesian models</a></p></li>
+<li><p><a href='https://easystats.github.io/parameters/reference/ci.merMod.html'>Frequentist models</a></p></li>
 </ul>
+    <ul>
+<li><p><strong>Bayesian models</strong></p></li>
+</ul><p>This functions returns, by default, the quantile interval, <em>i.e.</em>, an equal-tailed interval (ETI). A 90% ETI has 5% of the distribution on either side of its limits. It indicates the 5th percentile and the 95h percentile. In symmetric distributions, the two methods of computing credible intervals, the ETI and the <a href='hdi.html'>HDI</a>, return similar results.</p>
+<p>This is not the case for skewed distributions. Indeed, it is possible that parameter values in the ETI have lower credibility (are less probable) than parameter values outside the ETI. This property seems undesirable as a summary of the credible values in a distribution.</p>
+<p>On the other hand, the ETI range does change when transformations are applied to the distribution (for instance, for a log odds scale to probabilies): the lower and higher bounds of the transformed distribution will correspond to the transformed lower and higher bounds of the original distribution. On the contrary, applying transformations to the distribution whill change the resulting HDI.</p>
+<p></p><ul>
+<li><p><strong>Frequentist models</strong></p></li>
+</ul><p>This function is implemented in the <a href='https://github.com/easystats/parameters'>parameters</a> pacakge and attemps to retrieve, or compute, the Confidence Interval (default <code>ci</code> level: <code>.95</code>).</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -275,7 +284,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
 </div>
 
 <div class="pkgdown">

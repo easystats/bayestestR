@@ -4,12 +4,12 @@
 \alias{bayesfactor_models}
 \title{Extract Bayes Factors from fitted models}
 \usage{
-bayesfactor_models(..., .denominator = 1L)
+bayesfactor_models(..., denominator = 1L)
 }
 \arguments{
 \item{...}{fitted models (any models supported by \code{insight]}), all fit on the same data, or a single \code{BFBayesFactor} object (see details).}
 
-\item{.denominator}{Either an integer indicating which of the models to use as the denominator,
+\item{denominator}{Either an integer indicating which of the models to use as the denominator,
 or a model to use as a denominator. Ignored for \code{BFBayesFactor}.}
 }
 \value{
@@ -37,16 +37,16 @@ lm1 <- lm(Sepal.Length ~ 1, data = iris)
 lm2 <- lm(Sepal.Length ~ Species, data = iris)
 lm3 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 lm4 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
-bayesfactor_models(lm1,lm2,lm3,lm4,.denominator = 1L)
-bayesfactor_models(lm2,lm3,lm4,.denominator = lm1) # same result
+bayesfactor_models(lm1,lm2,lm3,lm4,denominator = 1L)
+bayesfactor_models(lm2,lm3,lm4,denominator = lm1) # same result
 
 # With lmerMod objects:
 library(lme4)
 lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1|Species), data = iris)
 lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species), data = iris)
 lmer3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species) + (1|Petal.Width), data = iris)
-bayesfactor_models(lmer1,lmer2,lmer3,.denominator = 1L)
-bayesfactor_models(lmer1,lmer2,lmer3,.denominator = lm1) # mix objects fit on the same data
+bayesfactor_models(lmer1,lmer2,lmer3,denominator = 1L)
+bayesfactor_models(lmer1,lmer2,lmer3,denominator = lm1) # mix objects fit on the same data
 
 # With BFBayesFactor objects:
 library(BayesFactor)
@@ -63,7 +63,7 @@ brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
 brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
 brm3 <- brm(Sepal.Length ~ Species + Petal.Length, data = iris, save_all_pars = TRUE)
 
-bayesfactor_models(brm1,brm2,brm3,.denominator = 1L)
+bayesfactor_models(brm1,brm2,brm3,denominator = 1L)
 }
 
 }

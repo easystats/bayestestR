@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -157,7 +157,7 @@
 <li>
 <strong>Sample size</strong>: From 20 to 100 by steps of 10.</li>
 <li>
-<strong>Error</strong>: Gaussian noise applied to the predictor with SD from 0.33 to 6.66 (with 1000 different values).</li>
+<strong>Error</strong>: Gaussian noise applied to the predictor with SD uniformly spread between 0.33 and 6.66 (with 1000 different values).</li>
 </ul>
 <p>We generated a dataset for each combination of these characteristics, resulting in a total of <code>2 * 2 * 9 * 1000 = 36000</code> Bayesian and frequentist models. The code used for generation is avaible <a href="https://easystats.github.io/circus/articles/bayesian_indices.html">here</a> (please note that it takes usually several days/weeks to complete).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
@@ -251,163 +251,163 @@
 <tbody>
 <tr class="odd">
 <td align="left">binary:value</td>
-<td align="right">2.86</td>
-<td align="left">0.57</td>
+<td align="right">1.64</td>
+<td align="left">0.18</td>
 </tr>
 <tr class="even">
 <td align="left">binary:value:MAP</td>
-<td align="right">0.55</td>
-<td align="left">0.94</td>
+<td align="right">1.08</td>
+<td align="left">0.56</td>
 </tr>
 <tr class="odd">
 <td align="left">binary:value:Mean</td>
-<td align="right">1.03</td>
-<td align="left">0.89</td>
+<td align="right">0.90</td>
+<td align="left">0.62</td>
 </tr>
 <tr class="even">
 <td align="left">binary:value:Median</td>
-<td align="right">1.20</td>
-<td align="left">0.87</td>
+<td align="right">0.99</td>
+<td align="left">0.59</td>
 </tr>
 <tr class="odd">
 <td align="left">linear:value</td>
-<td align="right">1.88</td>
-<td align="left">0.81</td>
+<td align="right">5.71</td>
+<td align="left">0.06</td>
 </tr>
 <tr class="even">
 <td align="left">linear:value:MAP</td>
-<td align="right">-0.15</td>
-<td align="left">0.99</td>
+<td align="right">1.03</td>
+<td align="left">0.81</td>
 </tr>
 <tr class="odd">
 <td align="left">linear:value:Mean</td>
-<td align="right">-0.12</td>
-<td align="left">0.99</td>
-</tr>
-<tr class="even">
-<td align="left">linear:value:Median</td>
-<td align="right">-0.12</td>
-<td align="left">0.99</td>
-</tr>
-<tr class="odd">
-<td align="left">binary:value:error</td>
-<td align="right">0.18</td>
+<td align="right">0.72</td>
 <td align="left">0.87</td>
 </tr>
 <tr class="even">
+<td align="left">linear:value:Median</td>
+<td align="right">0.64</td>
+<td align="left">0.88</td>
+</tr>
+<tr class="odd">
+<td align="left">binary:value:error</td>
+<td align="right">-0.56</td>
+<td align="left">0.04*</td>
+</tr>
+<tr class="even">
 <td align="left">binary:value:MAP:error</td>
-<td align="right">0.02</td>
-<td align="left">0.99</td>
+<td align="right">-0.19</td>
+<td align="left">0.64</td>
 </tr>
 <tr class="odd">
 <td align="left">binary:value:Mean:error</td>
-<td align="right">-0.11</td>
-<td align="left">0.95</td>
+<td align="right">-0.16</td>
+<td align="left">0.69</td>
 </tr>
 <tr class="even">
 <td align="left">binary:value:Median:error</td>
-<td align="right">-0.11</td>
-<td align="left">0.94</td>
+<td align="right">-0.17</td>
+<td align="left">0.66</td>
 </tr>
 <tr class="odd">
 <td align="left">linear:value:error</td>
-<td align="right">-1.05</td>
-<td align="left">0.55</td>
+<td align="right">-1.73</td>
+<td align="left">0.01**</td>
 </tr>
 <tr class="even">
 <td align="left">linear:value:MAP:error</td>
-<td align="right">0.06</td>
-<td align="left">0.98</td>
+<td align="right">-0.17</td>
+<td align="left">0.85</td>
 </tr>
 <tr class="odd">
 <td align="left">linear:value:Mean:error</td>
-<td align="right">0.04</td>
-<td align="left">0.99</td>
+<td align="right">-0.13</td>
+<td align="left">0.88</td>
 </tr>
 <tr class="even">
 <td align="left">linear:value:Median:error</td>
-<td align="right">0.05</td>
-<td align="left">0.98</td>
+<td align="right">-0.12</td>
+<td align="left">0.89</td>
 </tr>
 <tr class="odd">
 <td align="left">binary:value:MAP:sample_size</td>
-<td align="right">0.01</td>
-<td align="left">0.95</td>
+<td align="right">-0.01</td>
+<td align="left">0.87</td>
 </tr>
 <tr class="even">
 <td align="left">binary:value:Mean:sample_size</td>
 <td align="right">-0.01</td>
-<td align="left">0.94</td>
+<td align="left">0.83</td>
 </tr>
 <tr class="odd">
 <td align="left">binary:value:Median:sample_size</td>
 <td align="right">-0.01</td>
-<td align="left">0.94</td>
+<td align="left">0.84</td>
 </tr>
 <tr class="even">
 <td align="left">binary:value:sample_size</td>
-<td align="right">0.07</td>
-<td align="left">0.46</td>
+<td align="right">0.13</td>
+<td align="left">0.00***</td>
 </tr>
 <tr class="odd">
 <td align="left">linear:value:MAP:sample_size</td>
-<td align="right">-0.01</td>
-<td align="left">0.98</td>
+<td align="right">-0.02</td>
+<td align="left">0.88</td>
 </tr>
 <tr class="even">
 <td align="left">linear:value:Mean:sample_size</td>
-<td align="right">0.01</td>
-<td align="left">0.97</td>
+<td align="right">-0.01</td>
+<td align="left">0.95</td>
 </tr>
 <tr class="odd">
 <td align="left">linear:value:Median:sample_size</td>
-<td align="right">0.01</td>
-<td align="left">0.98</td>
+<td align="right">-0.01</td>
+<td align="left">0.96</td>
 </tr>
 <tr class="even">
 <td align="left">linear:value:sample_size</td>
-<td align="right">0.26</td>
-<td align="left">0.28</td>
+<td align="right">0.28</td>
+<td align="left">0.00***</td>
 </tr>
 <tr class="odd">
 <td align="left">binary:value:MAP:sample_size:error</td>
 <td align="right">0.00</td>
-<td align="left">0.92</td>
+<td align="left">0.86</td>
 </tr>
 <tr class="even">
 <td align="left">binary:value:Mean:sample_size:error</td>
 <td align="right">0.00</td>
-<td align="left">0.98</td>
+<td align="left">0.83</td>
 </tr>
 <tr class="odd">
 <td align="left">binary:value:Median:sample_size:error</td>
 <td align="right">0.00</td>
-<td align="left">0.98</td>
+<td align="left">0.83</td>
 </tr>
 <tr class="even">
 <td align="left">binary:value:sample_size:error</td>
-<td align="right">-0.01</td>
-<td align="left">0.68</td>
+<td align="right">0.00</td>
+<td align="left">0.44</td>
 </tr>
 <tr class="odd">
 <td align="left">linear:value:MAP:sample_size:error</td>
 <td align="right">0.00</td>
-<td align="left">0.98</td>
+<td align="left">0.91</td>
 </tr>
 <tr class="even">
 <td align="left">linear:value:Mean:sample_size:error</td>
 <td align="right">0.00</td>
-<td align="left">0.98</td>
+<td align="left">0.93</td>
 </tr>
 <tr class="odd">
 <td align="left">linear:value:Median:sample_size:error</td>
 <td align="right">0.00</td>
-<td align="left">0.98</td>
+<td align="left">0.94</td>
 </tr>
 <tr class="even">
 <td align="left">linear:value:sample_size:error</td>
-<td align="right">0.02</td>
-<td align="left">0.72</td>
+<td align="right">0.00</td>
+<td align="left">0.94</td>
 </tr>
 </tbody>
 </table>
@@ -430,7 +430,6 @@
 </ul>
 </li>
 </ul>
-<!-- #### Relationship with the Frequentist Beta --><!-- In the next section, we will compare the three Bayesian indices with the frequentist beta. --><!-- ```{r, message=FALSE, warning=FALSE} --><!-- df %>% --><!--   select(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) %>% --><!--   gather(estimate, value, -sample_size, -error, -true_effect, -outcome_type, -beta) %>%  --><!--   mutate(effect = as.factor(effect), --><!--          sample_size = as.factor(sample_size), --><!--          estimate = factor(estimate, levels=c("mean", "median", "map"))) %>% --><!--   ggplot(aes(x = beta, y = value, color = effect, shape=sample_size)) + --><!--   geom_point(alpha=0.05) + --><!--   facet_wrap(~estimate, scales = "free") + --><!--   theme_classic() + --><!--   theme(strip.background = element_blank()) + --><!--   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") + --><!--   guides(colour = guide_legend(override.aes = list(alpha = 1)), --><!--          shape = guide_legend(override.aes = list(alpha = 1), title="Sample Size")) --><!-- ``` -->
 </div>
 </div>
 </div>
@@ -472,7 +471,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>.</p>
+  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
 </div>
 
 <div class="pkgdown">
