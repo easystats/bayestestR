@@ -212,7 +212,7 @@ posterior %>%
 prior <- rnorm(1000, mean = 0, sd = 1)
 posterior <- rnorm(1000, mean = 1, sd = 0.7)
 
-bayesfactor(posterior, prior = prior, h0 = 0)
+bayesfactor_savagedickey(posterior, prior, direction = "two-sided", hypothesis = 0)
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}

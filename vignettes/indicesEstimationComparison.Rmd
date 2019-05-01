@@ -49,7 +49,7 @@ The simulation aimed at modulating the following characteristics:
 - **Model type**: linear or logistic.
 - **"True" effect** (original regression coefficient from which data is drawn): Can be 1 or 0 (no effect).
 - **Sample size**: From 20 to 100 by steps of 10.
-- **Error**: Gaussian noise applied to the predictor with SD from 0.33 to 6.66 (with 1000 different values).
+- **Error**: Gaussian noise applied to the predictor with SD uniformly spread between 0.33 and 6.66 (with 1000 different values).
 
 We generated a dataset for each combination of these characteristics, resulting in a total of `2 * 2 * 9 * 1000 = 36000` Bayesian and frequentist models. The code used for generation is avaible [here](https://easystats.github.io/circus/articles/bayesian_indices.html) (please note that it takes usually several days/weeks to complete).
 
@@ -159,27 +159,7 @@ This suggests that, in order to delineate between the presence and the absence o
   - The **MAP** estimate, followed by the **median**, and the **mean**, were less affected by noise, altough not significantly.
   - The **MAP** estimate, followed by the **mean**, and the **median**, were less affected by sample size, altough not significantly.
 
-<!-- #### Relationship with the Frequentist Beta -->
 
-<!-- In the next section, we will compare the three Bayesian indices with the frequentist beta. -->
-
-
-<!-- ```{r, message=FALSE, warning=FALSE} -->
-<!-- df %>% -->
-<!--   select(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) %>% -->
-<!--   gather(estimate, value, -sample_size, -error, -true_effect, -outcome_type, -beta) %>%  -->
-<!--   mutate(effect = as.factor(effect), -->
-<!--          sample_size = as.factor(sample_size), -->
-<!--          estimate = factor(estimate, levels=c("mean", "median", "map"))) %>% -->
-<!--   ggplot(aes(x = beta, y = value, color = effect, shape=sample_size)) + -->
-<!--   geom_point(alpha=0.05) + -->
-<!--   facet_wrap(~estimate, scales = "free") + -->
-<!--   theme_classic() + -->
-<!--   theme(strip.background = element_blank()) + -->
-<!--   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") + -->
-<!--   guides(colour = guide_legend(override.aes = list(alpha = 1)), -->
-<!--          shape = guide_legend(override.aes = list(alpha = 1), title="Sample Size")) -->
-<!-- ``` -->
 ## Study 2: Relationship with Sampling Characteristics
 ## Study 3: Relationship with Priors Specification
 

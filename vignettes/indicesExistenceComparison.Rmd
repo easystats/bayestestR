@@ -52,6 +52,8 @@ For all of the simulated models, we computed the following indices:
 - **ROPE (90\%)**: this index refers to the percentage of the 90\% HDI that lies within the ROPE.
 - **ROPE (95\%)**: this index refers to the percentage of the 95\% HDI that lies within the ROPE.
 - **ROPE (full)**: this index refers to the percentage of the whole posterior distribution that lies within the ROPE.
+- **Bayes factor (scale = 1)**: TODO.
+- **Bayes factor (scale = 0.707)**: TODO.
 
 The Region of Practical Equivalence (ROPE) was defined as ranging from -0.1 to 0.1.
 
@@ -66,7 +68,7 @@ The simulation aimed at modulating the following characteristics:
 - **Model type**: linear or logistic.
 - **"True" effect** (original regression coefficient from which data is drawn): Can be 1 or 0 (no effect).
 - **Sample size**: From 20 to 100 by steps of 10.
-- **Error**: Gaussian noise applied to the predictor with SD from 0.33 to 6.66 (with 1000 different values).
+- **Error**: Gaussian noise applied to the predictor with SD uniformly spread between 0.33 and 6.66 (with 1000 different values).
 
 We generated a dataset for each combination of these characteristics, resulting in a total of `2 * 2 * 9 * 1000 = 36000` Bayesian and frequentist models. The code used for generation is avaible [here](https://easystats.github.io/circus/articles/bayesian_indices.html) (please note that it takes usually several days/weeks to complete).
 
@@ -75,7 +77,9 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 
-df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv")
+df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv") %>% 
+  mutate(bayesfactor_0707 = log(bayesfactor_0707),
+         bayesfactor_1 = log(bayesfactor_1))
 ```
 
 
@@ -88,12 +92,12 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_stu
 
 ##### Sensitivity to Noise
 
-```{r, message=FALSE, warning=FALSE, fig.height=20, fig.width=16}
+```{r, message=FALSE, warning=FALSE, fig.height=25, fig.width=15}
 df %>%
-  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_90, ROPE_95, ROPE_full) %>%
+  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_90, ROPE_95, ROPE_full, bayesfactor_0707, bayesfactor_1) %>%
   gather(index, value, -error, -sample_size, -true_effect, -outcome_type) %>%
   mutate(true_effect = as.factor(true_effect),
-         index = factor(index, levels=c("p_value", "p_direction", "p_MAP", "p_ROPE", "ROPE_90", "ROPE_95", "ROPE_full"))) %>%
+         index = factor(index, levels=c("p_value", "p_direction", "p_MAP", "p_ROPE", "ROPE_90", "ROPE_95", "ROPE_full", "bayesfactor_0707", "bayesfactor_1"))) %>%
   mutate(temp = as.factor(cut(error, 10, labels = FALSE))) %>% 
   group_by(temp) %>% 
   mutate(error_group = round(mean(error), 1)) %>% 
@@ -107,7 +111,8 @@ df %>%
           strip.text = element_text(face="bold")) +
   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A", name="Effect")) +
   scale_fill_manual(values = c("p_value"="#607D8B", "p_MAP" = "#4CAF50", "p_direction" = "#2196F3",
-                               "ROPE_90" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722", "p_ROPE"="#E91E63"), guide=FALSE) +
+                               "ROPE_90" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
+                               "p_ROPE"="#E91E63", "bayesfactor_0707"="#9C27B0", "bayesfactor_1"="#673AB7"), guide=FALSE) +
   ylab("Index Value\n") +
   xlab("\nNoise")
 ```
@@ -115,12 +120,12 @@ df %>%
 
 ##### Sensitivity to Sample Size
 
-```{r, message=FALSE, warning=FALSE, fig.height=20, fig.width=16}
+```{r, message=FALSE, warning=FALSE, fig.height=25, fig.width=15}
 df %>%
-  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_90, ROPE_95, ROPE_full) %>%
+  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_90, ROPE_95, ROPE_full, bayesfactor_0707, bayesfactor_1) %>%
   gather(index, value, -error, -sample_size, -true_effect, -outcome_type) %>%
   mutate(true_effect = as.factor(true_effect),
-         index = factor(index, levels=c("p_value", "p_direction", "p_MAP", "p_ROPE", "ROPE_90", "ROPE_95", "ROPE_full"))) %>%
+         index = factor(index, levels=c("p_value", "p_direction", "p_MAP", "p_ROPE", "ROPE_90", "ROPE_95", "ROPE_full", "bayesfactor_0707", "bayesfactor_1"))) %>%
   mutate(temp = as.factor(cut(sample_size, 10, labels = FALSE))) %>% 
   group_by(temp) %>% 
   mutate(size_group = round(mean(sample_size))) %>% 
@@ -134,33 +139,12 @@ df %>%
           strip.text = element_text(face="bold")) +
   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A", name="Effect")) +
   scale_fill_manual(values = c("p_value"="#607D8B", "p_MAP" = "#4CAF50", "p_direction" = "#2196F3",
-                               "ROPE_90" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722", "p_ROPE"="#E91E63"), guide=FALSE) +
+                               "ROPE_90" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
+                               "p_ROPE"="#E91E63", "bayesfactor_0707"="#9C27B0", "bayesfactor_1"="#673AB7"), guide=FALSE) +
   ylab("Index Value\n") +
-  xlab("\nNoise")
+  xlab("\nSample Size")
 ```
 
-<!-- ##### Sensitivity to Priors -->
-
-<!-- ```{r, message=FALSE, warning=FALSE} -->
-<!-- df %>% -->
-<!--   select(noise, effect, sample_size, p_frequentist, p_direction, p_map, p_rope, rope, rope_full, prior_correct) %>% -->
-<!--   gather(index, value, -noise, -sample_size, -effect, -prior_correct) %>% -->
-<!--   mutate(sample_size = as.factor(sample_size), -->
-<!--          effect = as.factor(effect), -->
-<!--          prior_correct = as.factor(prior_correct), -->
-<!--          index = factor(index, levels=c("p_frequentist", "p_direction", "p_map", "p_rope", "rope", "rope_full"))) %>% -->
-<!--   ggplot(aes(x = effect, y=value, color = prior_correct, fill=index)) + -->
-<!--   geom_jitter(shape=16, alpha=0.02) + -->
-<!--   geom_boxplot(outlier.shape = NA) + -->
-<!--   facet_wrap(~index, scales = "free") + -->
-<!--   theme_classic() + -->
-<!--   theme(strip.background = element_blank()) + -->
-<!--   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A", name="Correct Prior")) + -->
-<!--   scale_fill_manual(values = c("p_frequentist"="#607D8B", "p_map" = "#E91E63", "p_direction" = "#2196F3", -->
-<!--                                "rope" = "#FF9800", "rope_full" = "#FF5722", "p_rope"="#FFC107"), guide=FALSE) + -->
-<!--   ylab("Index Value\n") + -->
-<!--   xlab("\nEffect") -->
-<!-- ``` -->
 
 ##### Statistical Modelling
 
@@ -212,12 +196,12 @@ We fitted a (frequentist) multiple linear regression to predict the presence or 
 
 
 
-```{r, message=FALSE, warning=FALSE, fig.height=20, fig.width=16}
+```{r, message=FALSE, warning=FALSE, fig.height=25, fig.width=15}
 df %>%
-  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_90, ROPE_95, ROPE_full) %>%
+  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_90, ROPE_95, ROPE_full, bayesfactor_0707, bayesfactor_1) %>%
   gather(index, value, -error, -sample_size, -true_effect, -outcome_type, -p_value) %>%
   mutate(true_effect = as.factor(true_effect),
-         index = factor(index, levels=c("p_direction", "p_MAP", "p_ROPE", "ROPE_90", "ROPE_95", "ROPE_full"))) %>%
+         index = factor(index, levels=c("p_direction", "p_MAP", "p_ROPE", "ROPE_90", "ROPE_95", "ROPE_full", "bayesfactor_0707", "bayesfactor_1"))) %>%
   mutate(temp = as.factor(cut(sample_size, 3, labels = FALSE))) %>% 
   group_by(temp) %>% 
   mutate(size_group = as.factor(round(mean(sample_size)))) %>% 
@@ -261,41 +245,49 @@ get_data <- function(predictor, outcome, lbound=0, ubound=0.3){
 rbind(
   rbind(
     get_data(predictor="p_direction", outcome="sig_001", lbound=99.5, ubound=100),
-    get_data(predictor="p_MAP", outcome="sig_001", lbound=0, ubound=0.02),
-    get_data(predictor="p_ROPE", outcome="sig_001", lbound=0, ubound=100),
+    get_data(predictor="p_MAP", outcome="sig_001", lbound=0, ubound=0.01),
+    get_data(predictor="p_ROPE", outcome="sig_001", lbound=97, ubound=100),
     get_data(predictor="ROPE_90", outcome="sig_001", lbound=0, ubound=0.5),
     get_data(predictor="ROPE_95", outcome="sig_001", lbound=0, ubound=0.5),
-    get_data(predictor="ROPE_full", outcome="sig_001", lbound=0, ubound=0.5)
+    get_data(predictor="ROPE_full", outcome="sig_001", lbound=0, ubound=0.5),
+    get_data(predictor="bayesfactor_0707", outcome="sig_001", lbound=0, ubound=10),
+    get_data(predictor="bayesfactor_1", outcome="sig_001", lbound=0, ubound=10)
     ) %>% 
     rename("sig"=sig_001) %>% 
     mutate(threshold="p < .001"),
   rbind(
     get_data(predictor="p_direction", outcome="sig_01", lbound=98, ubound=100),
     get_data(predictor="p_MAP", outcome="sig_01", lbound=0, ubound=0.1),
-    get_data(predictor="p_ROPE", outcome="sig_01", lbound=0, ubound=100),
+    get_data(predictor="p_ROPE", outcome="sig_01", lbound=85, ubound=100),
     get_data(predictor="ROPE_90", outcome="sig_01", lbound=0, ubound=2),
     get_data(predictor="ROPE_95", outcome="sig_01", lbound=0, ubound=2),
-    get_data(predictor="ROPE_full", outcome="sig_01", lbound=0, ubound=2)
+    get_data(predictor="ROPE_full", outcome="sig_01", lbound=0, ubound=2),
+    get_data(predictor="bayesfactor_0707", outcome="sig_01", lbound=0, ubound=5),
+    get_data(predictor="bayesfactor_1", outcome="sig_01", lbound=0, ubound=5)
     ) %>% 
     rename("sig"=sig_01) %>% 
     mutate(threshold="p < .01"),
   rbind(
     get_data(predictor="p_direction", outcome="sig_05", lbound=95, ubound=100),
     get_data(predictor="p_MAP", outcome="sig_05", lbound=0, ubound=0.3),
-    get_data(predictor="p_ROPE", outcome="sig_05", lbound=0, ubound=100),
+    get_data(predictor="p_ROPE", outcome="sig_05", lbound=50, ubound=100),
     get_data(predictor="ROPE_90", outcome="sig_05", lbound=0, ubound=10),
     get_data(predictor="ROPE_95", outcome="sig_05", lbound=0, ubound=10),
-    get_data(predictor="ROPE_full", outcome="sig_05", lbound=0, ubound=10)
+    get_data(predictor="ROPE_full", outcome="sig_05", lbound=0, ubound=10),
+    get_data(predictor="bayesfactor_0707", outcome="sig_05", lbound=0, ubound=2),
+    get_data(predictor="bayesfactor_1", outcome="sig_05", lbound=0, ubound=2)
     ) %>%  
     rename("sig"=sig_05) %>% 
     mutate(threshold="p < .05"),
   rbind(
     get_data(predictor="p_direction", outcome="sig_1", lbound=90, ubound=100),
     get_data(predictor="p_MAP", outcome="sig_1", lbound=0, ubound=0.5),
-    get_data(predictor="p_ROPE", outcome="sig_1", lbound=0, ubound=100),
+    get_data(predictor="p_ROPE", outcome="sig_1", lbound=25, ubound=100),
     get_data(predictor="ROPE_90", outcome="sig_1", lbound=0, ubound=20),
     get_data(predictor="ROPE_95", outcome="sig_1", lbound=0, ubound=20),
-    get_data(predictor="ROPE_full", outcome="sig_1", lbound=0, ubound=20)
+    get_data(predictor="ROPE_full", outcome="sig_1", lbound=0, ubound=20),
+    get_data(predictor="bayesfactor_0707", outcome="sig_1", lbound=0, ubound=1),
+    get_data(predictor="bayesfactor_1", outcome="sig_1", lbound=0, ubound=1)
     ) %>% 
     rename("sig"=sig_1) %>% 
     mutate(threshold="p < .1")
@@ -309,7 +301,8 @@ rbind(
   theme(strip.background = element_blank(),
         strip.text = element_text(face="bold")) +
   scale_color_manual(values = c("p_value"="#607D8B", "p_MAP" = "#4CAF50", "p_direction" = "#2196F3",
-                               "ROPE_90" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722", "p_ROPE"="#E91E63"), guide=FALSE) +
+                               "ROPE_90" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
+                               "p_ROPE"="#E91E63", "bayesfactor_0707"="#9C27B0", "bayesfactor_1"="#673AB7"), guide=FALSE) +
   ylab("Probability of being significant\n") +
   xlab("\nIndex Value")
 ```
@@ -328,7 +321,9 @@ rbind(
     get_data(predictor="p_MAP", outcome="equivalence_95", lbound=0, ubound=0.02),
     get_data(predictor="p_ROPE", outcome="equivalence_95", lbound=0, ubound=100),
     get_data(predictor="ROPE_90", outcome="equivalence_95", lbound=0, ubound=0.5),
-    get_data(predictor="ROPE_full", outcome="equivalence_95", lbound=0, ubound=0.5)
+    get_data(predictor="ROPE_full", outcome="equivalence_95", lbound=0, ubound=0.5),
+    get_data(predictor="bayesfactor_0707", outcome="equivalence_95", lbound=0, ubound=5),
+    get_data(predictor="bayesfactor_1", outcome="equivalence_95", lbound=0, ubound=5)
     ) %>% 
     rename("equivalence"=equivalence_95) %>% 
     mutate(level="95 HDI"),
@@ -337,7 +332,9 @@ rbind(
     get_data(predictor="p_MAP", outcome="equivalence_90", lbound=0, ubound=0.02),
     get_data(predictor="p_ROPE", outcome="equivalence_90", lbound=0, ubound=100),
     get_data(predictor="ROPE_95", outcome="equivalence_90", lbound=0, ubound=0.5),
-    get_data(predictor="ROPE_full", outcome="equivalence_90", lbound=0, ubound=0.5)
+    get_data(predictor="ROPE_full", outcome="equivalence_90", lbound=0, ubound=0.5),
+    get_data(predictor="bayesfactor_0707", outcome="equivalence_90", lbound=0, ubound=5),
+    get_data(predictor="bayesfactor_1", outcome="equivalence_90", lbound=0, ubound=5)
     ) %>% 
     rename("equivalence"=equivalence_90) %>% 
     mutate(level="90 HDI")
@@ -350,7 +347,8 @@ rbind(
   theme(strip.background = element_blank(),
         strip.text = element_text(face="bold")) +
   scale_color_manual(values = c("p_value"="#607D8B", "p_MAP" = "#4CAF50", "p_direction" = "#2196F3",
-                               "ROPE_90" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722", "p_ROPE"="#E91E63"), guide=FALSE) +
+                               "ROPE_90" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
+                               "p_ROPE"="#E91E63", "bayesfactor_0707"="#9C27B0", "bayesfactor_1"="#673AB7"), guide=FALSE) +
   ylab("Probability of rejecting H0 with the equivalence test\n") +
   xlab("\nIndex Value")
 
