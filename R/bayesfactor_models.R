@@ -26,7 +26,38 @@
 #'
 #' @examples
 #' \dontrun{
-#' # ADD
+#' # With lm objects:
+#' lm1 <- lm(Sepal.Length ~ 1, data = iris)
+#' lm2 <- lm(Sepal.Length ~ Species, data = iris)
+#' lm3 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
+#' lm4 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
+#' bayesfactor_models(lm1,lm2,lm3,lm4,.denominator = 1L)
+#' bayesfactor_models(lm2,lm3,lm4,.denominator = lm1) # same result
+#'
+#' # With lmerMod objects:
+#' library(lme4)
+#' lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1|Species), data = iris)
+#' lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species), data = iris)
+#' lmer3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species) + (1|Petal.Width), data = iris)
+#' bayesfactor_models(lmer1,lmer2,lmer3,.denominator = 1L)
+#' bayesfactor_models(lmer1,lmer2,lmer3,.denominator = lm1) # mix objects fir on the same data
+#'
+#' # With BFBayesFactor objects:
+#' library(BayesFactor)
+#' data(puzzles)
+#' BF <- anovaBF(RT ~ shape * color + ID, data = puzzles,
+#'               whichRandom = "ID", progress = FALSE)
+#' BF
+#' bayesfactor_models(BF) # basically the same
+#'
+#' # with brmfit objects:
+#' # (note the save_all_pars MUST be set to TRUE inorder to work)
+#' library(brms)
+#' brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
+#' brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
+#' brm3 <- brm(Sepal.Length ~ Species + Petal.Length, data = iris, save_all_pars = TRUE)
+#'
+#' bayesfactor_models(brm1,brm2,brm3,.denominator = 1L)
 #'}
 #'
 #' @references Wagenmakers, E. J. (2007). A practical
