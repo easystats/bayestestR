@@ -40,7 +40,7 @@
 #' lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species), data = iris)
 #' lmer3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species) + (1|Petal.Width), data = iris)
 #' bayesfactor_models(lmer1,lmer2,lmer3,.denominator = 1L)
-#' bayesfactor_models(lmer1,lmer2,lmer3,.denominator = lm1) # mix objects fir on the same data
+#' bayesfactor_models(lmer1,lmer2,lmer3,.denominator = lm1) # mix objects fit on the same data
 #'
 #' # With BFBayesFactor objects:
 #' library(BayesFactor)
@@ -51,7 +51,7 @@
 #' bayesfactor_models(BF) # basically the same
 #'
 #' # with brmfit objects:
-#' # (note the save_all_pars MUST be set to TRUE inorder to work)
+#' # (note the save_all_pars MUST be set to TRUE in order to work)
 #' library(brms)
 #' brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
 #' brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
