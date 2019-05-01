@@ -74,7 +74,7 @@ model <- stan_glm(Sepal.Length ~ Sepal.Width_scaled, data=data)
 p_direction(model)
 rope(model, ci=1)
 ```
-```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=">"}
 library(rstanarm)
 library(bayestestR)
 set.seed(333)
