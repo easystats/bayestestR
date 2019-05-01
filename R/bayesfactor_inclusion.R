@@ -66,7 +66,8 @@ bayesfactor_inclusion.BFGrid <- function(models, match_models = FALSE, prior_odd
 
   # Build Interaction Matrix #
   if (match_models) {
-    df.interaction <- data.frame(effnames)
+    df.interaction <- data.frame(effnames,
+                                 stringsAsFactors = FALSE)
 
     for (eff in effnames) {
       df.interaction[,eff] <- sapply(effnames, function(x) includes_interaction(x,eff))
@@ -79,7 +80,8 @@ bayesfactor_inclusion.BFGrid <- function(models, match_models = FALSE, prior_odd
   df.effect <- data.frame(effnames,
                           Pinc  = rep(NA,length(effnames)),
                           PincD = rep(NA,length(effnames)),
-                          BFinc = rep(NA,length(effnames)))
+                          BFinc = rep(NA,length(effnames)),
+                          stringsAsFactors = FALSE)
 
   for (eff in effnames) {
     df.model_temp <- df.model
