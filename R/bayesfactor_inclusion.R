@@ -190,10 +190,8 @@ get_model_table <- function(BFGrid, priorOdds = NULL){
     )
   }
 
-  print_terms <- character()
   for (m in seq_len(nrow(df.model))) {
     tmp_terms <- make_terms(df.model$Modelnames[m])
-    # Somehow save randomeffs for printing?
     df.model[m, tmp_terms] <- TRUE
   }
 
