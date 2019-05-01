@@ -5,9 +5,9 @@
 #'
 #' @author Mattan S. Ben-Shachar
 #'
-#' @param ... fitted models (any models supported by \code{insight]}), all fit on the same data, or a single \code{BFBayesFactor} object. See details.
+#' @param ... fitted models (any models supported by \code{insight]}), all fit on the same data, or a single \code{BFBayesFactor} object (see details).
 #' @param .denominator Either an integer indicating which of the models to use as the denominator,
-#' or a model to use as a denominator. (Ignored for \code{BFBayesFactor})
+#' or a model to use as a denominator. Ignored for \code{BFBayesFactor}.
 #'
 #' @details
 #'
