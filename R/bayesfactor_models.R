@@ -6,7 +6,7 @@
 #' @author Mattan S. Ben-Shachar
 #'
 #' @param ... fitted models (any models supported by \code{insight]}), all fit on the same data, or a single \code{BFBayesFactor} object (see details).
-#' @param .denominator Either an integer indicating which of the models to use as the denominator,
+#' @param denominator Either an integer indicating which of the models to use as the denominator,
 #' or a model to use as a denominator. Ignored for \code{BFBayesFactor}.
 #'
 #' @details
@@ -31,16 +31,16 @@
 #' lm2 <- lm(Sepal.Length ~ Species, data = iris)
 #' lm3 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 #' lm4 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
-#' bayesfactor_models(lm1,lm2,lm3,lm4,.denominator = 1L)
-#' bayesfactor_models(lm2,lm3,lm4,.denominator = lm1) # same result
+#' bayesfactor_models(lm1,lm2,lm3,lm4,denominator = 1L)
+#' bayesfactor_models(lm2,lm3,lm4,denominator = lm1) # same result
 #'
 #' # With lmerMod objects:
 #' library(lme4)
 #' lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1|Species), data = iris)
 #' lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species), data = iris)
 #' lmer3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species) + (1|Petal.Width), data = iris)
-#' bayesfactor_models(lmer1,lmer2,lmer3,.denominator = 1L)
-#' bayesfactor_models(lmer1,lmer2,lmer3,.denominator = lm1) # mix objects fit on the same data
+#' bayesfactor_models(lmer1,lmer2,lmer3,denominator = 1L)
+#' bayesfactor_models(lmer1,lmer2,lmer3,denominator = lm1) # mix objects fit on the same data
 #'
 #' # With BFBayesFactor objects:
 #' library(BayesFactor)
@@ -57,7 +57,7 @@
 #' brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
 #' brm3 <- brm(Sepal.Length ~ Species + Petal.Length, data = iris, save_all_pars = TRUE)
 #'
-#' bayesfactor_models(brm1,brm2,brm3,.denominator = 1L)
+#' bayesfactor_models(brm1,brm2,brm3,denominator = 1L)
 #'}
 #'
 #' @references Wagenmakers, E. J. (2007). A practical
@@ -65,28 +65,28 @@
 #' bulletin & review, 14(5), 779-804.
 #'
 #' @export
-bayesfactor_models <- function(..., .denominator = 1L) {
+bayesfactor_models <- function(..., denominator = 1L) {
   UseMethod("bayesfactor_models")
 }
 
 #' @export
-bayesfactor_models.default <- function(..., .denominator = 1L){
+bayesfactor_models.default <- function(..., denominator = 1L){
   # Orgenize the models
   mods <- list(...)
-  if (!is.numeric(.denominator)) {
-    mods <- c(mods, list(.denominator))
-    .denominator <- length(mods)
+  if (!is.numeric(denominator)) {
+    mods <- c(mods, list(denominator))
+    denominator <- length(mods)
   }
 
   # Test that all is good:
   resps <- lapply(mods, insight::get_response)
-  if (!all(sapply(resps[-.denominator], function(x) identical(x,resps[[.denominator]])))) {
+  if (!all(sapply(resps[-denominator], function(x) identical(x,resps[[denominator]])))) {
     stop('Models were not computed from the same data')
   }
 
   # Get BF
   mBIC <- sapply(mods, BIC)
-  mBFs <- (mBIC - mBIC[.denominator]) / (-2)
+  mBFs <- (mBIC - mBIC[denominator]) / (-2)
 
   # Get formula
   mforms <- sapply(mods, .find_full_formula)
@@ -95,7 +95,7 @@ bayesfactor_models.default <- function(..., .denominator = 1L){
                     log.BF = mBFs,
                     stringsAsFactors = FALSE)
 
-  attr(res,'denominator') <- .denominator
+  attr(res,'denominator') <- denominator
   attr(res,'BF_method') <- 'BIC approximation'
   class(res) <- c('BFGrid', class(res))
 
@@ -105,21 +105,21 @@ bayesfactor_models.default <- function(..., .denominator = 1L){
 
 #' @export
 #' @importFrom insight get_response
-bayesfactor_models.brmsfit <- function(..., .denominator = 1L){
+bayesfactor_models.brmsfit <- function(..., denominator = 1L){
   if (!requireNamespace("bridgesampling")) {
     stop("Package \"bridgesampling\" needed for this function to work. Please install it.")
   }
 
   # Orgenize the models
   mods <- list(...)
-  if (!is.numeric(.denominator)) {
-    mods <- c(mods, list(.denominator))
-    .denominator <- length(mods)
+  if (!is.numeric(denominator)) {
+    mods <- c(mods, list(denominator))
+    denominator <- length(mods)
   }
 
   # Test that all is good:
   resps <- lapply(mods, insight::get_response)
-  if (!all(sapply(resps[-.denominator], function(x) identical(x,resps[[.denominator]])))) {
+  if (!all(sapply(resps[-denominator], function(x) identical(x,resps[[denominator]])))) {
     stop('Models were not computed from the same data')
   }
 
@@ -127,7 +127,7 @@ bayesfactor_models.brmsfit <- function(..., .denominator = 1L){
   mML <- lapply(mods, function(x)
     bridgesampling::bridge_sampler(x, silent = TRUE))
   mBFs <- sapply(mML, function(x)
-    bridgesampling::bf(x, mML[[.denominator]], log = TRUE)[['bf']])
+    bridgesampling::bf(x, mML[[denominator]], log = TRUE)[['bf']])
 
   # Get formula
   mforms <- sapply(mods, .find_full_formula)
@@ -136,7 +136,7 @@ bayesfactor_models.brmsfit <- function(..., .denominator = 1L){
                     log.BF = mBFs,
                     stringsAsFactors = FALSE)
 
-  attr(res,'denominator') <- .denominator
+  attr(res,'denominator') <- denominator
   attr(res,'BF_method') <- 'marginal likelihoods (bridgesampling)'
   class(res) <- c('BFGrid', class(res))
 
@@ -144,8 +144,8 @@ bayesfactor_models.brmsfit <- function(..., .denominator = 1L){
 }
 
 #' @export
-bayesfactor_models.stanreg <- function(..., .denominator = 1L){
-  bayesfactor_models.brmsfit(..., .denominator = .denominator)
+bayesfactor_models.stanreg <- function(..., denominator = 1L){
+  bayesfactor_models.brmsfit(..., denominator = denominator)
 }
 
 #' @export
