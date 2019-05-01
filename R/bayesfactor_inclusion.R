@@ -59,9 +59,12 @@ bayesfactor_inclusion <- function(models, match_models = FALSE, prior_odds = NUL
   UseMethod("bayesfactor_inclusion")
 }
 
+
+
+#' @export
 bayesfactor_inclusion.BFGrid <- function(models, match_models = FALSE, prior_odds = NULL) {
   # Build Models Table #
-  df.model <- get_model_table(models, priorOdds = prior_odds)
+  df.model <- .get_model_table(models, priorOdds = prior_odds)
   effnames <- colnames(df.model)[-(1:3)]
 
   # Build Interaction Matrix #
@@ -70,7 +73,7 @@ bayesfactor_inclusion.BFGrid <- function(models, match_models = FALSE, prior_odd
                                  stringsAsFactors = FALSE)
 
     for (eff in effnames) {
-      df.interaction[,eff] <- sapply(effnames, function(x) includes_interaction(x,eff))
+      df.interaction[,eff] <- sapply(effnames, function(x) .includes_interaction(x,eff))
     }
     rownames(df.interaction) <- effnames
     df.interaction <- df.interaction[,-1]
@@ -125,13 +128,17 @@ bayesfactor_inclusion.BFGrid <- function(models, match_models = FALSE, prior_odd
   return(df.effect)
 }
 
+
+#' @export
 bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, prior_odds = NULL) {
   models <- bayesfactor_models.BFBayesFactor(models)
   bayesfactor_inclusion.BFGrid(models, match_models = match_models, prior_odds = prior_odds)
 }
 
+
+#' @keywords internal
 #' @importFrom stats as.formula terms setNames
-get_model_table <- function(BFGrid, priorOdds = NULL){
+.get_model_table <- function(BFGrid, priorOdds = NULL){
   denominator <- attr(BFGrid,'denominator')
   BFGrid <- rbind(BFGrid[denominator,],BFGrid[-denominator,])
   attr(BFGrid,'denominator') <- 1
@@ -201,7 +208,8 @@ get_model_table <- function(BFGrid, priorOdds = NULL){
 }
 
 
-includes_interaction <- function(eff,effnames){
+#' @keywords internal
+.includes_interaction <- function(eff,effnames){
   eff_b <- strsplit(eff, "\\:")
   effnames_b <- strsplit(effnames, '\\:')
 
