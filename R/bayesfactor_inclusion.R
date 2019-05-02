@@ -45,7 +45,7 @@
 #' E. (2019, March 25). A conceptual introduction to Bayesian Model
 #' Averaging. https://doi.org/10.31234/osf.io/wgb64
 #'
-#'#' Clyde, M. A., Ghosh, J., & Littman, M. L. (2011). Bayesian
+#' Clyde, M. A., Ghosh, J., & Littman, M. L. (2011). Bayesian
 #' adaptive sampling for variable selection and model averaging. Journal
 #' of Computational and Graphical Statistics, 20(1), 80-101.
 #'
