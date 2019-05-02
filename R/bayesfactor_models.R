@@ -8,6 +8,8 @@
 #' @param ... fitted models (any models supported by \code{insight]}), all fit on the same data, or a single \code{BFBayesFactor} object (see details).
 #' @param denominator Either an integer indicating which of the models to use as the denominator,
 #' or a model to use as a denominator. Ignored for \code{BFBayesFactor}.
+#' @param subset Vector of model indices to keep or remove.
+#' @param reference Index of model to rereference to, or \code{"top"} to reference to the best model, or \code{"bottom"} to reference to the worst model.
 #'
 #' @details
 #'
@@ -166,6 +168,35 @@ bayesfactor_models.BFBayesFactor <- function(models) {
   class(res) <- c('BFGrid', class(res))
 
   res
+}
+
+#' @describeIn
+#' @export
+update.BFGrid <- function(x, subset = NULL, reference = NULL){
+  if (!is.null(reference)) {
+    if (reference=="top") {
+      reference <- which.max(x$log.BF)
+    } else if (reference=="bottom") {
+      reference <- which.min(x$log.BF)
+    }
+    x$log.BF <- x$log.BF - x$log.BF[reference]
+    attr(x,"denominator") <- reference
+  }
+
+  denominator <- attr(x,"denominator")
+
+  if (!is.null(subset)) {
+    x_subset <- x[subset,]
+
+    if (denominator %in% subset) {
+      attr(x_subset,"denominator") <- which(denominator == subset)
+    } else {
+      x_subset <- rbind(x[denominator,],x_subset)
+      attr(x_subset,"denominator") <- 1
+    }
+    x <- x_subset
+  }
+  x
 }
 
 #' @keywords internal
