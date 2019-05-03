@@ -102,7 +102,7 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
   out$HDI_high <- attr(rope_data, "HDI_area", exact = TRUE)$CI_high
 
   # remove attribute
-  # attr(out, "HDI_area") <- NULL
+  attr(out, "HDI_area") <- NULL
 
   class(out) <- c("equivalence_test", class(out))
   out
