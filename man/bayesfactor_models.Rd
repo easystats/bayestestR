@@ -7,7 +7,7 @@
 bayesfactor_models(..., denominator = 1L)
 }
 \arguments{
-\item{...}{fitted models (any models supported by \code{insight]}), all fit on the same data, or a single \code{BFBayesFactor} object (see details).}
+\item{...}{Fitted models (any models supported by \code{insight]}), all fit on the same data, or a single \code{BFBayesFactor} object (see details).}
 
 \item{denominator}{Either an integer indicating which of the models to use as the denominator,
 or a model to use as a denominator. Ignored for \code{BFBayesFactor}.}
@@ -17,7 +17,7 @@ a data frame containing the models' formulas (reconstructed fixed and random eff
 }
 \description{
 These functions return a simple \code{data.frame} of class \code{BFGrid} that print nicely
-that can be passed to \code{???}
+that can be passed to \code{???}.
 }
 \details{
 \itemize{
@@ -71,6 +71,9 @@ bayesfactor_models(brm1,brm2,brm3,denominator = 1L)
 Wagenmakers, E. J. (2007). A practical
 solution to the pervasive problems of p values. Psychonomic
 bulletin & review, 14(5), 779-804.
+}
+\seealso{
+update.BFGrid
 }
 \author{
 Mattan S. Ben-Shachar

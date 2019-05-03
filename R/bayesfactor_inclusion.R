@@ -137,7 +137,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
 
 
 #' @keywords internal
-#' @importFrom stats as.formula terms setNames
+#' @importFrom stats as.formula terms setNames terms.formula
 .get_model_table <- function(BFGrid, priorOdds = NULL){
   denominator <- attr(BFGrid,'denominator')
   BFGrid <- rbind(BFGrid[denominator,],BFGrid[-denominator,])

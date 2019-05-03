@@ -1,5 +1,5 @@
 #' @export
-print.BFinc <- function(x, log = FALSE, digits = 2) {
+print.BFinc <- function(x, digits = 2, log = FALSE, ...) {
   BFE <- x
   colnames(BFE) <- c('Pr(prior)', 'Pr(posterior)','log(Inclusion.BF)')
   if (!log) {

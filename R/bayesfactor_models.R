@@ -1,15 +1,13 @@
 #' Extract Bayes Factors from fitted models
 #'
 #' @description These functions return a simple \code{data.frame} of class \code{BFGrid} that print nicely
-#' that can be passed to \code{???}
+#' that can be passed to \code{???}.
 #'
 #' @author Mattan S. Ben-Shachar
 #'
-#' @param ... fitted models (any models supported by \code{insight]}), all fit on the same data, or a single \code{BFBayesFactor} object (see details).
+#' @param ... Fitted models (any models supported by \code{insight]}), all fit on the same data, or a single \code{BFBayesFactor} object (see details).
 #' @param denominator Either an integer indicating which of the models to use as the denominator,
 #' or a model to use as a denominator. Ignored for \code{BFBayesFactor}.
-#' @param subset Vector of model indices to keep or remove.
-#' @param reference Index of model to rereference to, or \code{"top"} to reference to the best model, or \code{"bottom"} to reference to the worst model.
 #'
 #' @details
 #'
@@ -66,11 +64,14 @@
 #' solution to the pervasive problems of p values. Psychonomic
 #' bulletin & review, 14(5), 779-804.
 #'
+#' @seealso update.BFGrid
+#'
 #' @export
 bayesfactor_models <- function(..., denominator = 1L) {
   UseMethod("bayesfactor_models")
 }
 
+#' @importFrom stats BIC
 #' @export
 bayesfactor_models.default <- function(..., denominator = 1L){
   # Orgenize the models
@@ -150,8 +151,10 @@ bayesfactor_models.stanreg <- function(..., denominator = 1L){
   bayesfactor_models.brmsfit(..., denominator = denominator)
 }
 
+
 #' @export
-bayesfactor_models.BFBayesFactor <- function(models) {
+bayesfactor_models.BFBayesFactor <- function(...) {
+  models <- list(...)
   if (!requireNamespace("BayesFactor")) {
     stop("Package \"BayesFactor\" needed for this function to work. Please install it.")
   }
@@ -170,28 +173,34 @@ bayesfactor_models.BFBayesFactor <- function(models) {
   res
 }
 
-#' @describeIn
+#' Update BFGrid
+#'
+#'
+#' @param object A BFGrid object.
+#' @param subset Vector of model indices to keep or remove.
+#' @param reference Index of model to rereference to, or \code{"top"} to reference to the best model, or \code{"bottom"} to reference to the worst model.
+#' @param ... Currently not used.
 #' @export
-update.BFGrid <- function(x, subset = NULL, reference = NULL){
+update.BFGrid <- function(object, subset = NULL, reference = NULL, ...){
   if (!is.null(reference)) {
     if (reference=="top") {
-      reference <- which.max(x$log.BF)
+      reference <- which.max(object$log.BF)
     } else if (reference=="bottom") {
-      reference <- which.min(x$log.BF)
+      reference <- which.min(object$log.BF)
     }
-    x$log.BF <- x$log.BF - x$log.BF[reference]
-    attr(x,"denominator") <- reference
+    object$log.BF <- object$log.BF - object$log.BF[reference]
+    attr(object,"denominator") <- reference
   }
 
-  denominator <- attr(x,"denominator")
+  denominator <- attr(object,"denominator")
 
   if (!is.null(subset)) {
-    x_subset <- x[subset,]
+    x_subset <- object[subset,]
 
     if (denominator %in% subset) {
       attr(x_subset,"denominator") <- which(denominator == subset)
     } else {
-      x_subset <- rbind(x[denominator,],x_subset)
+      x_subset <- rbind(object[denominator,],x_subset)
       attr(x_subset,"denominator") <- 1
     }
     x <- x_subset

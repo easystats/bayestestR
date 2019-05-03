@@ -33,6 +33,7 @@ Imports:
 	insight
 Suggests:
 	BayesFactor,
+	bridgesampling,
 	brms,
 	broom,
 	covr,

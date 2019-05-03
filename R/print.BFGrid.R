@@ -1,5 +1,5 @@
 #' @export
-print.BFGrid <- function(x, log = FALSE, digits = 2) {
+print.BFGrid <- function(x, digits = 2, log = FALSE, ...) {
   BFE <- x
   denominator <- attr(BFE,'denominator')
   grid.type <- attr(BFE,'BF_method')
