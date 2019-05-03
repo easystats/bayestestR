@@ -1,6 +1,6 @@
 #' Extract Bayes Factors from fitted models
 #'
-#' @description These functions return a simple \code{data.frame} of class \code{BFGrid} that print nicely
+#' @description These functions return a simple \code{data.frame} of class \code{bayesfactor_models} that print nicely
 #' that can be passed to \code{???}.
 #'
 #' @author Mattan S. Ben-Shachar
@@ -100,7 +100,7 @@ bayesfactor_models.default <- function(..., denominator = 1){
 
   attr(res,'denominator') <- denominator
   attr(res,'BF_method') <- 'BIC approximation'
-  class(res) <- c('BFGrid', class(res))
+  class(res) <- c('bayesfactor_models', class(res))
 
   res
 }
@@ -141,7 +141,7 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1){
 
   attr(res,'denominator') <- denominator
   attr(res,'BF_method') <- 'marginal likelihoods (bridgesampling)'
-  class(res) <- c('BFGrid', class(res))
+  class(res) <- c('bayesfactor_models', class(res))
 
   res
 }
@@ -168,20 +168,20 @@ bayesfactor_models.BFBayesFactor <- function(...) {
 
   attr(res,'denominator') <- 1
   attr(res,'BF_method') <- 'JZS (BayesFactor)'
-  class(res) <- c('BFGrid', class(res))
+  class(res) <- c('bayesfactor_models', class(res))
 
   res
 }
 
-#' Update BFGrid
+#' Update bayesfactor_models
 #'
 #'
-#' @param object A BFGrid object.
+#' @param object A \link{bayesfactor_models} object.
 #' @param subset Vector of model indices to keep or remove.
 #' @param reference Index of model to rereference to, or \code{"top"} to reference to the best model, or \code{"bottom"} to reference to the worst model.
 #' @param ... Currently not used.
 #' @export
-update.BFGrid <- function(object, subset = NULL, reference = NULL, ...){
+update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...){
   if (!is.null(reference)) {
     if (reference=="top") {
       reference <- which.max(object$log.BF)
