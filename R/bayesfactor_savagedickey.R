@@ -91,7 +91,7 @@ bayesfactor_savagedickey.numeric <- function(posterior,prior,direction = "two-si
   }
 
   bf_val <- data.frame(BFsd = (d_prior / norm_prior) / (d_post / norm_post))
-  class(bf_val) <- c("BFsd", class(bf_val))
+  class(bf_val) <- c("bayesfactor_savagedickey", class(bf_val))
   attr(bf_val, "hypothesis") <- hypothesis
 
   bf_val

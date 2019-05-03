@@ -1,5 +1,5 @@
 #' @export
-print.BFsd <- function(x, digits = 2, log = FALSE, ...) {
+print.bayesfactor_savagedickey <- function(x, digits = 2, log = FALSE, ...) {
   BFE <- x
   colnames(BFE) <- "Bayes Factor"
 

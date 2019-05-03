@@ -121,7 +121,7 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
   rownames(df.effect) <- effnames
 
 
-  class(df.effect) <- c('BFinc',class(df.effect))
+  class(df.effect) <- c('bayesfactor_inclusion',class(df.effect))
   attr(df.effect,'matched') <- match_models
   attr(df.effect,'priorOdds') <- prior_odds
 
