@@ -205,7 +205,7 @@ posterior %>%
 
 ### Bayes Factor
 
-[**`bayesfactor()`**](https://easystats.github.io/bayestestR/reference/bayesfactor.html) computes the Bayes Factor between two competing hypotheses.
+[**`bayesfactor()`**](https://easystats.github.io/bayestestR/reference/bayesfactor.html) computes the ratio between the density of a single value (typically the null) in two distributions, typically the posterior vs. the prior distributions. This method is used to examine if the hypothesis value is less or more likely given the observed data.
 
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
@@ -227,8 +227,8 @@ posterior %>%
   ggplot(aes(x=x, y=y)) +
   geom_ribbon(aes(ymin=0, ymax=y), fill="#FFC107") +
   geom_line(data=prior, size=1, linetype="dotted") +
-  geom_segment(x=0, xend=0, y=0, yend=max(prior$y), color="blue", size=1) +
-  geom_point(x=0, y=max(prior$y), color="blue", size=5) +
+  geom_segment(x=0, xend=0, y=0, yend=max(prior$y), color="#2196F3", size=1) +
+  geom_point(x=0, y=max(prior$y), color="#2196F3", size=5) +
   geom_segment(x=0, xend=0, y=0, yend=density_at(posterior$x,0), color="#E91E63", size=1) +
   geom_point(x=0, y=density_at(posterior$x,0), color="#E91E63", size=5) +
   theme_classic() +

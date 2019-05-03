@@ -1,4 +1,4 @@
-#' Compute a Savage-Dickey density ratio Bayes factor
+#' Savage-Dickey density ratio Bayes factor
 #'
 #' This method computes the ratio between the density of a single value (typically the null)
 #' in two distributions, typically the posterior vs. the prior distributions.

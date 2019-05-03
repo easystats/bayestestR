@@ -34,7 +34,7 @@ library("bayestestR")
 
 Click on the buttons above to access the package
 [**documentation**](https://easystats.github.io/bayestestR/) and the
-[**easystats blog**](https://easystats.github.io/blog/posts/) and
+[**easystats blog**](https://easystats.github.io/blog/posts/), and
 check-out these vignettes:
 
   - [Get Started with Bayesian
@@ -170,14 +170,16 @@ p_direction(rnorm(1000, mean = 1, sd = 1))
 ### Bayes Factor
 
 [**`bayesfactor()`**](https://easystats.github.io/bayestestR/reference/bayesfactor.html)
-computes the Bayes Factor, *i.e.*, the likelihood ratio between two
-competing hypotheses.
+computes the ratio between the density of a single value (typically the
+null) in two distributions, typically the posterior vs. the prior
+distributions. This method is used to examine if the hypothesis value is
+less or more likely given the observed data.
 
 ``` r
 prior <- rnorm(1000, mean = 0, sd = 1)
 posterior <- rnorm(1000, mean = 1, sd = 0.7)
 
-bayesfactor(posterior, prior = prior, h0 = 0)
+bayesfactor_savagedickey(posterior, prior, direction = "two-sided", hypothesis = 0)
 ```
 
 ![](man/figures/unnamed-chunk-14-1.png)<!-- -->
@@ -238,10 +240,13 @@ through the formula `sqrt(3)/pi`, resulting in a range of `-0.05` to
 rope_range(model)
 ```
 
-### Perfect Normal Distribution
+### Perfect Distributions
 
-[**`rnorm_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html):
-Generate a sample of size n with a near-perfect normal distribution.
+[**`rnorm_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html),
+[**`rcauchy_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html),
+[**`rpois_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html),
+[**`rt_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html):
+Generate a sample of size n with a near-perfect distributions.
 
 ``` r
 rnorm_perfect(n = 10)
