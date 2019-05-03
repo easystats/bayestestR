@@ -1,6 +1,6 @@
 #' Extract Bayes Factors from fitted models
 #'
-#' @description These functions return a simple \code{data.frame} of class \code{BFGrid} that print nicely
+#' @description These functions return a simple \code{data.frame} of class \code{bayesfactor_models} that print nicely
 #' that can be passed to \code{???}.
 #'
 #' @author Mattan S. Ben-Shachar
@@ -31,7 +31,7 @@
 #' lm2 <- lm(Sepal.Length ~ Species, data = iris)
 #' lm3 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 #' lm4 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
-#' bayesfactor_models(lm1,lm2,lm3,lm4,denominator = 1L)
+#' bayesfactor_models(lm1,lm2,lm3,lm4,denominator = 1)
 #' bayesfactor_models(lm2,lm3,lm4,denominator = lm1) # same result
 #'
 #' # With lmerMod objects:
@@ -39,7 +39,7 @@
 #' lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1|Species), data = iris)
 #' lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species), data = iris)
 #' lmer3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species) + (1|Petal.Width), data = iris)
-#' bayesfactor_models(lmer1,lmer2,lmer3,denominator = 1L)
+#' bayesfactor_models(lmer1,lmer2,lmer3,denominator = 1)
 #' bayesfactor_models(lmer1,lmer2,lmer3,denominator = lm1) # mix objects fit on the same data
 #'
 #' # With BFBayesFactor objects:
@@ -57,7 +57,7 @@
 #' brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
 #' brm3 <- brm(Sepal.Length ~ Species + Petal.Length, data = iris, save_all_pars = TRUE)
 #'
-#' bayesfactor_models(brm1,brm2,brm3,denominator = 1L)
+#' bayesfactor_models(brm1,brm2,brm3,denominator = 1)
 #'}
 #'
 #' @references Wagenmakers, E. J. (2007). A practical
@@ -67,13 +67,13 @@
 #' @seealso update.BFGrid
 #'
 #' @export
-bayesfactor_models <- function(..., denominator = 1L) {
+bayesfactor_models <- function(..., denominator = 1) {
   UseMethod("bayesfactor_models")
 }
 
 #' @importFrom stats BIC
 #' @export
-bayesfactor_models.default <- function(..., denominator = 1L){
+bayesfactor_models.default <- function(..., denominator = 1){
   # Orgenize the models
   mods <- list(...)
   if (!is.numeric(denominator)) {
@@ -100,7 +100,7 @@ bayesfactor_models.default <- function(..., denominator = 1L){
 
   attr(res,'denominator') <- denominator
   attr(res,'BF_method') <- 'BIC approximation'
-  class(res) <- c('BFGrid', class(res))
+  class(res) <- c('bayesfactor_models', class(res))
 
   res
 }
@@ -108,7 +108,7 @@ bayesfactor_models.default <- function(..., denominator = 1L){
 
 #' @export
 #' @importFrom insight get_response
-bayesfactor_models.brmsfit <- function(..., denominator = 1L){
+bayesfactor_models.brmsfit <- function(..., denominator = 1){
   if (!requireNamespace("bridgesampling")) {
     stop("Package \"bridgesampling\" needed for this function to work. Please install it.")
   }
@@ -141,13 +141,13 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1L){
 
   attr(res,'denominator') <- denominator
   attr(res,'BF_method') <- 'marginal likelihoods (bridgesampling)'
-  class(res) <- c('BFGrid', class(res))
+  class(res) <- c('bayesfactor_models', class(res))
 
   res
 }
 
 #' @export
-bayesfactor_models.stanreg <- function(..., denominator = 1L){
+bayesfactor_models.stanreg <- function(..., denominator = 1){
   bayesfactor_models.brmsfit(..., denominator = denominator)
 }
 
@@ -168,20 +168,20 @@ bayesfactor_models.BFBayesFactor <- function(...) {
 
   attr(res,'denominator') <- 1
   attr(res,'BF_method') <- 'JZS (BayesFactor)'
-  class(res) <- c('BFGrid', class(res))
+  class(res) <- c('bayesfactor_models', class(res))
 
   res
 }
 
-#' Update BFGrid
+#' Update bayesfactor_models
 #'
 #'
-#' @param object A BFGrid object.
+#' @param object A \link{bayesfactor_models} object.
 #' @param subset Vector of model indices to keep or remove.
 #' @param reference Index of model to rereference to, or \code{"top"} to reference to the best model, or \code{"bottom"} to reference to the worst model.
 #' @param ... Currently not used.
 #' @export
-update.BFGrid <- function(object, subset = NULL, reference = NULL, ...){
+update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...){
   if (!is.null(reference)) {
     if (reference=="top") {
       reference <- which.max(object$log.BF)

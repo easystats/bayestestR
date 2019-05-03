@@ -7,7 +7,7 @@
 bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL)
 }
 \arguments{
-\item{models}{an object of class \code{BFGrid} or \code{BFBayesFactor}.}
+\item{models}{an object of class \link{bayesfactor_models} or \code{BFBayesFactor}.}
 
 \item{match_models}{If \code{FALSE} (default), Inclustion BFs are computed by
 comparing all models with an effect against all models without the effect. If \code{TRUE},

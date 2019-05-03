@@ -2,7 +2,7 @@
 #'
 #'
 #' @author Mattan S. Ben-Shachar
-#' @param models an object of class \code{BFGrid} or \code{BFBayesFactor}.
+#' @param models an object of class \link{bayesfactor_models} or \code{BFBayesFactor}.
 #' @param match_models If \code{FALSE} (default), Inclustion BFs are computed by
 #' comparing all models with an effect against all models without the effect. If \code{TRUE},
 #' Inclusion BFs are computed by comparing all models with an effect against models without
@@ -62,7 +62,7 @@ bayesfactor_inclusion <- function(models, match_models = FALSE, prior_odds = NUL
 
 
 #' @export
-bayesfactor_inclusion.BFGrid <- function(models, match_models = FALSE, prior_odds = NULL) {
+bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALSE, prior_odds = NULL) {
   # Build Models Table #
   df.model <- .get_model_table(models, priorOdds = prior_odds)
   effnames <- colnames(df.model)[-(1:3)]
@@ -121,7 +121,7 @@ bayesfactor_inclusion.BFGrid <- function(models, match_models = FALSE, prior_odd
   rownames(df.effect) <- effnames
 
 
-  class(df.effect) <- c('BFinc',class(df.effect))
+  class(df.effect) <- c('bayesfactor_inclusion',class(df.effect))
   attr(df.effect,'matched') <- match_models
   attr(df.effect,'priorOdds') <- prior_odds
 
@@ -132,7 +132,7 @@ bayesfactor_inclusion.BFGrid <- function(models, match_models = FALSE, prior_odd
 #' @export
 bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, prior_odds = NULL) {
   models <- bayesfactor_models.BFBayesFactor(models)
-  bayesfactor_inclusion.BFGrid(models, match_models = match_models, prior_odds = prior_odds)
+  bayesfactor_inclusion.bayesfactor_models(models, match_models = match_models, prior_odds = prior_odds)
 }
 
 

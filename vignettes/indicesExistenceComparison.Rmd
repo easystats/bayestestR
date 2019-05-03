@@ -367,7 +367,7 @@ df %>%
         strip.text = element_text(face="bold")) +
   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") +
   ylab("ROPE (full)\n") +
-  xlab("\nIndex Value")
+  xlab("\nProbability of Direction")
 ```
 
 
