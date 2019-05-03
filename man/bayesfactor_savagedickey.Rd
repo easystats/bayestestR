@@ -3,7 +3,7 @@
 \name{bayesfactor_savagedickey}
 \alias{bayesfactor_savagedickey}
 \alias{bayesfactor_savagedickey.numeric}
-\title{Compute a Savage-Dickey density ratio Bayes factor}
+\title{Savage-Dickey density ratio Bayes factor}
 \usage{
 bayesfactor_savagedickey(posterior, prior, direction = "two-sided",
   hypothesis = 0)
