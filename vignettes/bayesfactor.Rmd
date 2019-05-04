@@ -1,5 +1,21 @@
 ---
-output: html_document
+title: "Bayes Factors"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, bayesian, bayesfactors]
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{Bayes Factor}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -39,9 +55,10 @@ Let's use the Student's Sleep data, and try and answer the question: given the o
 
 ```{r sleep_boxplot, echo=FALSE}
 library(ggplot2)
-ggplot(sleep,aes(group,extra)) +
+ggplot(sleep, aes(group, extra)) +
   geom_boxplot() +
-  see::theme_modern()
+  # see::theme_modern()
+  theme_light()
 ```
 
 
@@ -84,7 +101,7 @@ ggplot() +
   stat_function(aes(color = "Prior"), fun = function(x) logspline::dlogspline(x,f_prior), xlim = x_lims,
                 size = 1) +
   labs(x = 'group2', y = 'density', color = '') + 
-  see::theme_modern() + 
+  theme_light() + 
   theme(legend.position = c(0.2,0.8)) + 
   NULL
 
@@ -103,19 +120,17 @@ This BF indicates the the likelihood of an effect of size 0 is 0.98 less likely 
 We can also conduct a directional test is we have some prior hypothesis about the direction of the effect:
 
 ```{r prior_n_post_plot_one_sided, echo=FALSE}
-f_post <- suppressWarnings(logspline::logspline(group2_post[group2_post>0], lbound = 0)) 
-f_prior <- suppressWarnings(logspline::logspline(group2_prior[group2_prior>0], lbound = 0)) 
+f_post <- suppressWarnings(logspline::logspline(group2_post[group2_post > 0], lbound = 0)) 
+f_prior <- suppressWarnings(logspline::logspline(group2_prior[group2_prior > 0], lbound = 0)) 
 
 x_lims <- c(0,max(c(group2_post,group2_prior))) * 0.7
 
 ggplot() +
   aes(x = 0, y = 0) +
-  stat_function(aes(color = "Posterior"), fun = function(x) logspline::dlogspline(x,f_post), xlim = x_lims,
-                size = 1) +
-  stat_function(aes(color = "Prior"), fun = function(x) logspline::dlogspline(x,f_prior), xlim = x_lims,
-                size = 1) +
+  stat_function(aes(color = "Posterior"), fun = function(x) logspline::dlogspline(x, f_post), xlim = x_lims, size = 1) +
+  stat_function(aes(color = "Prior"), fun = function(x) logspline::dlogspline(x, f_prior), xlim = x_lims, size = 1) +
   labs(x = 'group2', y = 'density', color = '') + 
-  see::theme_modern() + 
+  theme_light() + 
   theme(legend.position = c(0.8,0.8)) + 
   NULL
 
