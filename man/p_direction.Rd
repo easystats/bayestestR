@@ -13,23 +13,23 @@ p_direction(x, ...)
 
 pd(x, ...)
 
-\method{p_direction}{numeric}(x, raw = TRUE, ...)
+\method{p_direction}{numeric}(x, method = "direct", ...)
 
 \method{p_direction}{stanreg}(x, effects = c("fixed", "random", "all"),
-  parameters = NULL, raw = TRUE, ...)
+  parameters = NULL, method = "direct", ...)
 
 \method{p_direction}{brmsfit}(x, effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL, raw = TRUE, ...)
+  parameters = NULL, method = "direct", ...)
 
-\method{p_direction}{BFBayesFactor}(x, raw = TRUE, ...)
+\method{p_direction}{BFBayesFactor}(x, method = "direct", ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
 \item{...}{Currently not used.}
 
-\item{raw}{If \code{TRUE} (default), the computation is based on the raw ratio of samples superior and inferior to 0. If \code{FALSE}, the result is based on the \link[=auc]{Area under the Curve (AUC)}.}
+\item{method}{Can be \code{"simple"} or \code{"AUC"}. If \code{"simple"} (default), the computation is based on the raw ratio of samples superior and inferior to 0. If \code{"AUC"}., the result is based on the \link[=auc]{Area under the Curve (AUC)}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
