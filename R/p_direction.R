@@ -14,18 +14,18 @@
 #' # Simulate a posterior distribution of mean 1 and SD 1
 #' posterior <- rnorm(1000, mean = 1, sd = 1)
 #' p_direction(posterior)
-#' p_direction(posterior, raw=FALSE)
+#' p_direction(posterior, raw = FALSE)
 #'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' p_direction(model)
-#' p_direction(model, raw=FALSE)
+#' p_direction(model, raw = FALSE)
 #'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' p_direction(model)
-#' p_direction(model, raw=FALSE)
+#' p_direction(model, raw = FALSE)
 #' }
 #'
 #' @export
@@ -40,26 +40,26 @@ pd <- p_direction
 
 
 
-
+#' @importFrom stats density
 #' @rdname p_direction
 #' @export
 p_direction.numeric <- function(x, raw = TRUE, ...) {
-  if (raw){
+  if (raw) {
     p_direction <- 100 * max(
       c(
         length(x[x > 0]) / length(x), # pd positive
         length(x[x < 0]) / length(x) # pd negative
       )
     )
-  } else{
-    dens <- as.data.frame(density(x, n = 2^10))
-    if(length(x[x > 0]) > length(x[x < 0])){
+  } else {
+    dens <- as.data.frame(stats::density(x, n = 2^10))
+    if (length(x[x > 0]) > length(x[x < 0])) {
       dens <- dens[dens$x > 0, ]
-    } else{
+    } else {
       dens <- dens[dens$x < 0, ]
     }
-    p_direction <- area_under_curve(dens$x, dens$y, method="spline") * 100
-    if(p_direction >= 100) p_direction <- 100
+    p_direction <- area_under_curve(dens$x, dens$y, method = "spline") * 100
+    if (p_direction >= 100) p_direction <- 100
   }
 
   class(p_direction) <- c("p_direction", class(p_direction))
@@ -69,10 +69,10 @@ p_direction.numeric <- function(x, raw = TRUE, ...) {
 
 #' @importFrom insight get_parameters
 #' @keywords internal
-.p_direction_models <- function(x, effects, component, parameters, raw=TRUE) {
+.p_direction_models <- function(x, effects, component, parameters, raw = TRUE) {
   out <- data.frame(
     "Parameter" = .get_parameter_names(x, effects = effects, component = component, parameters = parameters),
-    "pd" = sapply(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), p_direction, raw=raw, simplify = TRUE),
+    "pd" = sapply(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), p_direction, raw = raw, simplify = TRUE),
     row.names = NULL,
     stringsAsFactors = FALSE
   )
@@ -83,7 +83,7 @@ p_direction.numeric <- function(x, raw = TRUE, ...) {
 
 #' @rdname p_direction
 #' @export
-p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parameters = NULL, raw=TRUE, ...) {
+p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parameters = NULL, raw = TRUE, ...) {
   effects <- match.arg(effects)
 
   out <- .p_direction_models(
@@ -91,7 +91,7 @@ p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parame
     effects = effects,
     component = "conditional",
     parameters = parameters,
-    raw=raw
+    raw = raw
   )
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
@@ -99,7 +99,7 @@ p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parame
 
 #' @rdname p_direction
 #' @export
-p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, raw=TRUE, ...) {
+p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, raw = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
@@ -108,7 +108,7 @@ p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), compon
     effects = effects,
     component = component,
     parameters = parameters,
-    raw=raw
+    raw = raw
   )
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
@@ -117,9 +117,9 @@ p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), compon
 
 #' @rdname p_direction
 #' @export
-p_direction.BFBayesFactor <- function(x, raw=TRUE, ...) {
+p_direction.BFBayesFactor <- function(x, raw = TRUE, ...) {
   out <- insight::get_parameters(x)
-  out <- sapply(out, p_direction, raw=raw)
+  out <- sapply(out, p_direction, raw = raw)
   class(out) <- c("p_direction", class(out))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out

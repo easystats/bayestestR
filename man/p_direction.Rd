@@ -56,18 +56,18 @@ library(bayestestR)
 # Simulate a posterior distribution of mean 1 and SD 1
 posterior <- rnorm(1000, mean = 1, sd = 1)
 p_direction(posterior)
-p_direction(posterior, raw=FALSE)
+p_direction(posterior, raw = FALSE)
 
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 p_direction(model)
-p_direction(model, raw=FALSE)
+p_direction(model, raw = FALSE)
 
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 p_direction(model)
-p_direction(model, raw=FALSE)
+p_direction(model, raw = FALSE)
 }
 
 }
