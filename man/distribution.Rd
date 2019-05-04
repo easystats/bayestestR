@@ -7,9 +7,6 @@
 \alias{distribution_poisson}
 \alias{distribution_student}
 \alias{rnorm_perfect}
-\alias{rcauchy_perfect}
-\alias{rpois_perfect}
-\alias{rt_perfect}
 \title{Empirical Distributions}
 \usage{
 distribution(type = "normal", ...)
@@ -23,12 +20,6 @@ distribution_poisson(n, lambda = 1, random = FALSE)
 distribution_student(n, df, ncp, random = FALSE)
 
 rnorm_perfect(n, mean = 0, sd = 1)
-
-rcauchy_perfect(n, location = 0, scale = 1)
-
-rpois_perfect(n, lambda)
-
-rt_perfect(n, df, ncp)
 }
 \arguments{
 \item{type}{Can be \code{"normal"} (default), \code{"cauchy"}, \code{"poisson"} or \code{"student"}.}
