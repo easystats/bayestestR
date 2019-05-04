@@ -10,7 +10,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' posterior <- rnorm_perfect(1000)
+#' posterior <- distribution_normal(1000)
 #'
 #' dens <- as.data.frame(density(posterior))
 #' dens <- dens[dens$x > 0, ]

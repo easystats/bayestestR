@@ -8,7 +8,7 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' posterior <- rnorm_perfect(n = 10)
+#' posterior <- distribution_normal(n = 10)
 #' density_at(posterior, 0)
 #' density_at(posterior, c(0, 1))
 #' @importFrom stats approx density
