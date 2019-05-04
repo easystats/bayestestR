@@ -42,7 +42,7 @@ bayesfactor_savagedickey <- function(posterior,prior,direction = "two-sided", hy
 #' @importFrom stats rcauchy sd
 bayesfactor_savagedickey.numeric <- function(posterior,prior,direction = "two-sided", hypothesis = 0){
   if (missing(prior)) {
-    prior <- stats::rcauchy(
+    prior <- distribution_cauchy(
       n        = length(posterior),
       location = hypothesis,
       scale    = stats::sd(posterior)
