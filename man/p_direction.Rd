@@ -13,21 +13,23 @@ p_direction(x, ...)
 
 pd(x, ...)
 
-\method{p_direction}{numeric}(x, ...)
+\method{p_direction}{numeric}(x, raw = TRUE, ...)
 
 \method{p_direction}{stanreg}(x, effects = c("fixed", "random", "all"),
-  parameters = NULL, ...)
+  parameters = NULL, raw = TRUE, ...)
 
 \method{p_direction}{brmsfit}(x, effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL, ...)
+  parameters = NULL, raw = TRUE, ...)
 
-\method{p_direction}{BFBayesFactor}(x, ...)
+\method{p_direction}{BFBayesFactor}(x, raw = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
 \item{...}{Currently not used.}
+
+\item{raw}{If \code{TRUE} (default), the computation is based on the raw ratio of samples superior and inferior to 0. If \code{FALSE}, the result is based on the \link[=auc]{Area under the Curve (AUC)}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
@@ -54,14 +56,18 @@ library(bayestestR)
 # Simulate a posterior distribution of mean 1 and SD 1
 posterior <- rnorm(1000, mean = 1, sd = 1)
 p_direction(posterior)
+p_direction(posterior, raw=FALSE)
+
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 p_direction(model)
+p_direction(model, raw=FALSE)
 
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 p_direction(model)
+p_direction(model, raw=FALSE)
 }
 
 }
