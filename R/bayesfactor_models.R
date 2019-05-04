@@ -154,7 +154,7 @@ bayesfactor_models.stanreg <- function(..., denominator = 1){
 
 #' @export
 bayesfactor_models.BFBayesFactor <- function(...) {
-  models <- list(...)
+  models <- c(...)
   if (!requireNamespace("BayesFactor")) {
     stop("Package \"BayesFactor\" needed for this function to work. Please install it.")
   }
@@ -195,17 +195,17 @@ update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, .
   denominator <- attr(object,"denominator")
 
   if (!is.null(subset)) {
-    x_subset <- object[subset,]
+    object_subset <- object[subset,]
 
     if (denominator %in% subset) {
       attr(x_subset,"denominator") <- which(denominator == subset)
     } else {
-      x_subset <- rbind(object[denominator,],x_subset)
-      attr(x_subset,"denominator") <- 1
+      object_subset <- rbind(object[denominator,],object_subset)
+      attr(object_subset,"denominator") <- 1
     }
-    x <- x_subset
+    object <- object_subset
   }
-  x
+  object
 }
 
 #' @keywords internal
