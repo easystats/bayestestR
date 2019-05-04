@@ -37,7 +37,7 @@ area_under_curve <- function(x, y, method=c("trapezoid", "step", "spline")) {
 
   switch(
     match.arg(arg = method, choices = c("trapezoid", "step", "spline")),
-    "trapezoid" = sum((apply(cbind(y[-length(y)], y[-1]), 1, mean)) * (x[-1] - x[-length(x)])),
+    "trapezoid" = sum((rowMeans(cbind(y[-length(y)], y[-1]))) * (x[-1] - x[-length(x)])),
     "step" = sum(y[-length(y)] * (x[-1] - x[-length(x)])),
     "spline" = stats::integrate(stats::splinefun(x, y, method = "natural"), lower = min(x), upper = max(x))$value
   )
