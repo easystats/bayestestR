@@ -13,16 +13,22 @@
 #'
 #' @export
 distribution <- function(type = "normal", ...) {
-  if(type == "normal"){
-    return(distribution_normal(...))
-  }
+
+  switch(
+    match.arg(arg = type, choices = c("normal", "cauchy", "poisson", "student")),
+    "normal" = distribution_normal(...),
+    "cauchy" = distribution_cauchy(...),
+    "poisson" = distribution_poisson(...),
+    "student" = distribution_student(...)
+  )
 }
+
 
 
 
 #' @rdname distribution
 #' @inheritParams stats::rnorm
-#' @importFrom stats qnorm
+#' @importFrom stats qnorm rnorm
 #' @export
 distribution_normal <- function(n, mean = 0, sd = 1, random = FALSE) {
   if(random){
@@ -33,11 +39,43 @@ distribution_normal <- function(n, mean = 0, sd = 1, random = FALSE) {
 }
 
 
+#' @rdname distribution
+#' @inheritParams stats::rcauchy
+#' @importFrom stats rcauchy qcauchy
+#' @export
+distribution_cauchy <- function(n, location = 0, scale = 1, random = FALSE) {
+  if(random){
+    stats::rcauchy(n, location, scale)
+  } else{
+    stats::qcauchy(seq(1 / n, 1 - 1 / n, length.out = n), location, scale)
+  }
+}
 
 
+#' @rdname distribution
+#' @inheritParams stats::rpois
+#' @importFrom stats rpois qpois
+#' @export
+distribution_poisson <- function(n, lambda = 1, random = FALSE) {
+  if(random){
+    stats::rpois(n, lambda)
+  } else{
+    stats::qpois(seq(1 / n, 1 - 1 / n, length.out = n), lambda)
+  }
+}
 
 
-
+#' @rdname distribution
+#' @inheritParams stats::rt
+#' @importFrom stats rt qt
+#' @export
+distribution_student <- function(n, df, ncp, random = FALSE) {
+  if(random){
+    stats::rt(n, df, ncp)
+  } else{
+    stats::qt(seq(1 / n, 1 - 1 / n, length.out = n), df, ncp)
+  }
+}
 
 
 
@@ -72,6 +110,7 @@ rnorm_perfect <- function(n, mean = 0, sd = 1) {
 #' @importFrom stats qcauchy
 #' @export
 rcauchy_perfect <- function(n, location = 0, scale = 1) {
+  .Deprecated("distribution_cauchy")
   stats::qcauchy(seq(1 / n, 1 - 1 / n, length.out = n), location, scale)
 }
 
@@ -81,7 +120,8 @@ rcauchy_perfect <- function(n, location = 0, scale = 1) {
 #' @importFrom stats qcauchy
 #' @export
 rpois_perfect <- function(n, lambda) {
-  stats::qcauchy(seq(1 / n, 1 - 1 / n, length.out = n), lambda)
+  .Deprecated("distribution_poisson")
+  stats::qpois(seq(1 / n, 1 - 1 / n, length.out = n), lambda)
 }
 
 
@@ -90,5 +130,6 @@ rpois_perfect <- function(n, lambda) {
 #' @importFrom stats qt
 #' @export
 rt_perfect <- function(n, df, ncp) {
+  .Deprecated("distribution_student")
   stats::qt(seq(1 / n, 1 - 1 / n, length.out = n), df, ncp)
 }

@@ -3,6 +3,9 @@
 \name{distribution}
 \alias{distribution}
 \alias{distribution_normal}
+\alias{distribution_cauchy}
+\alias{distribution_poisson}
+\alias{distribution_student}
 \alias{rnorm_perfect}
 \alias{rcauchy_perfect}
 \alias{rpois_perfect}
@@ -12,6 +15,12 @@
 distribution(type = "normal", ...)
 
 distribution_normal(n, mean = 0, sd = 1, random = FALSE)
+
+distribution_cauchy(n, location = 0, scale = 1, random = FALSE)
+
+distribution_poisson(n, lambda = 1, random = FALSE)
+
+distribution_student(n, df, ncp, random = FALSE)
 
 rnorm_perfect(n, mean = 0, sd = 1)
 
@@ -55,4 +64,5 @@ Generate a sample of size \code{n} with a near-perfect distribution.
 library(bayestestR)
 x <- distribution(n = 10)
 plot(density(x))
+
 }
