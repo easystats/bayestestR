@@ -18,8 +18,8 @@
 #' @examples
 #' library(bayestestR)
 #'
-#' prior <- rnorm_perfect(1000, mean = 0, sd = 1)
-#' posterior <- rnorm_perfect(1000, mean = .5, sd = .3)
+#' prior <- distribution_normal(1000, mean = 0, sd = 1)
+#' posterior <- distribution_normal(1000, mean = .5, sd = .3)
 #'
 #' bayesfactor_savagedickey(posterior, prior)
 #'
@@ -42,7 +42,7 @@ bayesfactor_savagedickey <- function(posterior,prior,direction = "two-sided", hy
 #' @importFrom stats rcauchy sd
 bayesfactor_savagedickey.numeric <- function(posterior,prior,direction = "two-sided", hypothesis = 0){
   if (missing(prior)) {
-    prior <- stats::rcauchy(
+    prior <- distribution_cauchy(
       n        = length(posterior),
       location = hypothesis,
       scale    = stats::sd(posterior)
