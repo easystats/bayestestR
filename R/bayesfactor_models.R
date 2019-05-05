@@ -137,6 +137,13 @@ bayesfactor_models.default <- function(..., denominator = 1){
   # Orgenize the models
   mods <- list(...)
 
+  # Warn
+  n_samps <- sapply(mods, function(x) nrow(as.data.frame(x)))
+  if (any(n_samps < 4e4)) {
+    warning("Bayes factors might not be precise.\n",
+            "For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.")
+  }
+
   if (!is.numeric(denominator)) {
     model_name <- deparse(match.call()[["denominator"]])
     arg_names <- sapply(match.call(expand.dots = F)$`...`, deparse)
