@@ -129,10 +129,11 @@ Looking at the distributions, we can see that the posterior is centered at `r ro
 ### Compute the Savage-Dickey's BF
 
 ```{r savagedickey, message=FALSE, warning=FALSE}
-bayesfactor_savagedickey(posterior = posterior, prior = prior)
+test_group2 <- bayesfactor_savagedickey(posterior = posterior, prior = prior)
+test_group2
 ```
 
-This BF indicates the **likelihood of an effect of 0 (null effect) is 0.76 less likely under posterior**. In other words, the observed data has `1/0.76 = 1.32` more chances to happen under the null hypothesis. Altough the center of distribution has shifted, it is still quite dense around the null.
+This BF indicates the **likelihood of an effect of 0 (null effect) is `r round(test_group2$BFsd[1],2)` less likely under posterior**. In other words, the observed data has 1/`r round(test_group2$BFsd[1],2)` = `r 1/round(test_group2$BFsd[1],2)` more chances to happen under the null hypothesis. Altough the center of distribution has shifted, it is still quite dense around the null.
 
 Note that **Interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). 
 
@@ -165,10 +166,11 @@ ggplot() +
 ```
 
 ```{r savagedickey_one_sided, message=FALSE, warning=FALSE}
-bayesfactor_savagedickey(posterior = posterior, prior = prior, direction = ">")
+test_group2_right <- bayesfactor_savagedickey(posterior = posterior, prior = prior, direction = ">")
+test_group2_right
 ```
 
-As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), the presence of an effect is `1.5` times more likely than the null hypothesis.  indicating that given the observed data, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of `1.5` is still considered quite week evidence).
+As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), the presence of an effect is `r round(test_group2_right$BFsd[1],2)` times more likely than the null hypothesis. This indicates that, given the observed data, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of `r round(test_group2_right$BFsd[1],2)` is still considered quite week evidence).
 
 ## Comparing models
 
@@ -205,48 +207,21 @@ We can now compare these models with the `bayesfactor_models` function, using th
 comparison <- bayesfactor_models(m1, m2, m3, m4, denominator = m0)
 comparison
 ```
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+```{r brms_models_print, echo=FALSE, message=FALSE, warning=FALSE}
 # dput(comparison)
 
-structure(list(Model = c("Petal.Length", "Species", "Species + Petal.Length", 
+comparison <- structure(list(Model = c("Petal.Length", "Species", "Species + Petal.Length", 
 "Species * Petal.Length", "1"), log.BF = c(102.551353996205, 
 68.5028425810333, 128.605282540213, 128.855928380748, 0)), class = c("bayesfactor_models", 
 "data.frame"), row.names = c(NA, -5L), denominator = 5L, BF_method = "marginal likelihoods (bridgesampling)")
+comparison
 ```
 
 We can see that the full model is the best model - with $BF_{\text{m0}}=9\times 10^{55}$ compared to the null (intercept only). We can also change the reference model to the main effect model:
 
-```{r eval=FALSE, message=FALSE, warning=FALSE}
-# update(comparison, reference = 3)
-```
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# dput(update(comparison, reference = 3))
-
-# brms_models <-
-#   structure(
-#     list(
-#       Model = c(
-#         "Species",
-#         "Petal.Length",
-#         "Species + Petal.Length",
-#         "Species * Petal.Length",
-#         "1"
-#       ),
-#       log.BF = c(
-#         68.508589034605,
-#         102.554331682822,
-#         128.609564577131,
-#         128.872267410808,
-#         0
-#       )
-#     ),
-#     class = c("bayesfactor_models",
-#               "data.frame"),
-#     row.names = c(NA, -5L),
-#     denominator = 5L,
-#     BF_method = "marginal likelihoods (bridgesampling)"
-#   )
-# brms_models
+```{r update_models, message=FALSE, warning=FALSE}
+update(comparison, reference = 3)
 ```
 
 As we can see, though the full model is the best, there hardly any evidence it is preferable to the main effects model.
@@ -259,14 +234,15 @@ Interestingly, we can also compute Bayes factors for frequentist models! This is
 
 
 ```{r lme4, message=FALSE, warning=FALSE}
-# library(lme4)
-# 
-# m0 <- lmer(Sepal.Length ~ (1 | Species), data = iris)
-# m1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
-# m2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
-# m3 <- lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris)
-# 
-# bayesfactor_models(m1, m2, m3, m4, denominator = m0)
+library(lme4)
+
+m0 <- lmer(Sepal.Length ~ (1 | Species), data = iris)
+m1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+m2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
+m3 <- lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris)
+m4 <- lmer(Sepal.Length ~ Petal.Length * Petal.Width + (Petal.Length | Species), data = iris)
+
+bayesfactor_models(m1, m2, m3, m4, denominator = m0)
 ```
 
 
@@ -280,16 +256,16 @@ In other words, on average - are models with effect $X$ better than models witho
 
 Lets use the `brms` example from above:
 
-```{r inclusion_brms, message=FALSE, warning=FALSE, eval=FALSE}
-bayesfactor_inclusion(brms_models)
+```{r inclusion_brms, message=FALSE, warning=FALSE}
+bayesfactor_inclusion(comparison)
 ```
 
 As we can see, across all 5 models, the addition of each effect term makes the model on average, more likely.
 
 We can also compare only matched models - i.e., a model without effect $A$ will only be compared to models *with* effect $A$, but not with models with higher-level interaction. (See explanation for why you might want to do this [here](https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp).)
 
-```{r inclusion_brms2, message=FALSE, warning=FALSE, eval=FALSE}
-bayesfactor_inclusion(brms_models, match_models = TRUE)
+```{r inclusion_brms2, message=FALSE, warning=FALSE}
+bayesfactor_inclusion(comparison, match_models = TRUE)
 ```
 
 In this case, it did not change the inclusion Bayes factors by much (by did change the prior and posterior effect probabilies).
@@ -300,7 +276,7 @@ In this case, it did not change the inclusion Bayes factors by much (by did chan
 
 #### Compared across all models
 
-```{r JASP_all, message=FALSE, warning=FALSE, eval=FALSE}
+```{r JASP_all, message=FALSE, warning=FALSE}
 library(BayesFactor)
 
 ToothGrowth$dose <- as.factor(ToothGrowth$dose)
@@ -311,18 +287,18 @@ bayesfactor_inclusion(BF_ToothGrowth)
 
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r JASP_all_fig, echo=FALSE, message=FALSE, warning=FALSE}
 knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/JASP1.PNG")
 ```
 
 #### Compared across matched models
 
-```{r JASP_matched, message=FALSE, warning=FALSE, eval=FALSE}
+```{r JASP_matched, message=FALSE, warning=FALSE}
 bayesfactor_inclusion(BF_ToothGrowth, match_models = TRUE)
 ```
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r JASP_matched_fig, echo=FALSE, message=FALSE, warning=FALSE}
 knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/JASP2.PNG")
 ```
 
@@ -330,7 +306,7 @@ knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/
 
 We'll add `dose` to the null model in JASP, and do the same in `R`:
 
-```{r JASP_Nuisance, message=FALSE, warning=FALSE, eval=FALSE}
+```{r JASP_Nuisance, message=FALSE, warning=FALSE}
 BF_ToothGrowth_against_dose <- BF_ToothGrowth[3:4]/BF_ToothGrowth[2]
 BF_ToothGrowth_against_dose
 
@@ -340,7 +316,7 @@ BF_ToothGrowth_against_dose
 bayesfactor_inclusion(BF_ToothGrowth_against_dose)
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r JASP_Nuisance_fig, echo=FALSE, message=FALSE, warning=FALSE}
 knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/JASP3.PNG")
 ```
 
