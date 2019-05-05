@@ -90,7 +90,7 @@ insight::get_priors(model)
 For the `group2` parameter, the prior that was used was a **normal distribution** of **mean** (location) `0` and **SD** (scale) `5.044799`. We can simulate this prior distribution as follows:
 
 
-```{r prior_n_post, message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(bayestestR)
 
 prior <- distribution_normal(length(posterior), mean = 0, sd = 5.044799)
@@ -124,7 +124,7 @@ ggplot() +
 
 ```
 
-Looking at the distributions, we can see that the posterior is centered at `r round(median(posterior$group2), 2)`. But this does not mean that an effect of 0 is necessarily less likely. To test that, we will use `bayesfactor_savagedickey`!
+Looking at the distributions, we can see that the posterior is centered at `r round(median(posterior), 2)`. But this does not mean that an effect of 0 is necessarily less likely. To test that, we will use `bayesfactor_savagedickey`!
 
 ### Compute the Savage-Dickey's BF
 
@@ -280,7 +280,7 @@ In other words, on average - are models with effect $X$ better than models witho
 
 Lets use the `brms` example from above:
 
-```{r inclusion_brms}
+```{r inclusion_brms, message=FALSE, warning=FALSE, eval=FALSE}
 bayesfactor_inclusion(brms_models)
 ```
 
@@ -288,7 +288,7 @@ As we can see, across all 5 models, the addition of each effect term makes the m
 
 We can also compare only matched models - i.e., a model without effect $A$ will only be compared to models *with* effect $A$, but not with models with higher-level interaction. (See explanation for why you might want to do this [here](https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp).)
 
-```{r inclusion_brms2}
+```{r inclusion_brms2, message=FALSE, warning=FALSE, eval=FALSE}
 bayesfactor_inclusion(brms_models, match_models = TRUE)
 ```
 
@@ -300,7 +300,7 @@ In this case, it did not change the inclusion Bayes factors by much (by did chan
 
 #### Compared across all models
 
-```{r JASP_all, message=FALSE}
+```{r JASP_all, message=FALSE, warning=FALSE, eval=FALSE}
 library(BayesFactor)
 
 ToothGrowth$dose <- as.factor(ToothGrowth$dose)
@@ -317,7 +317,7 @@ knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/
 
 #### Compared across matched models
 
-```{r JASP_matched}
+```{r JASP_matched, message=FALSE, warning=FALSE, eval=FALSE}
 bayesfactor_inclusion(BF_ToothGrowth, match_models = TRUE)
 ```
 
@@ -330,7 +330,7 @@ knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/
 
 We'll add `dose` to the null model in JASP, and do the same in `R`:
 
-```{r JASP_Nuisance}
+```{r JASP_Nuisance, message=FALSE, warning=FALSE, eval=FALSE}
 BF_ToothGrowth_against_dose <- BF_ToothGrowth[3:4]/BF_ToothGrowth[2]
 BF_ToothGrowth_against_dose
 
@@ -344,3 +344,4 @@ bayesfactor_inclusion(BF_ToothGrowth_against_dose)
 knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/JASP3.PNG")
 ```
 
+# References
