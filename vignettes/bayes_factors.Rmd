@@ -178,84 +178,95 @@ Besides comparing distributions, Bayes factors can also be used to compare whole
 
 This is usually done by computing the marginal likelihoods of two models. In such a case, the Bayes factor is a measure of relative evidence between the two compared models. Note that the compared models *do not* need to be nested models (see `brms2` and `brms3` below).
 
+
+
+### Bayesian models (`brms` and `rstanarm`)
+
 **Note: In order to compute the Bayes factors for models, non-default arguments must be added upon fitting:**
   
   - `brmsfit` models **must** have been fitted with `save_all_pars = TRUE`
   - `stanreg` models **must** have been fitted with a defined `diagnostic_file`.
+  
+Let's first fit 5 Bayesian regressions with `brms` to predict `Sepal.Length`:
 
-### `brms` and `rstanarm`
-
-Let's first fit 4 Bayesian regressions with `brms` to predict `Sepal.Length`:
-
-```{r brms_disp, eval=FALSE}
+```{r brms_disp, eval=FALSE, message=FALSE, warning=FALSE}
 library(brms)
 
 m0 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
-m1 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
-m2 <- brm(Sepal.Length ~ Species + Petal.Length, data = iris, save_all_pars = TRUE)
-m3 <- brm(Sepal.Length ~ Species * Petal.Length, data = iris, save_all_pars = TRUE)
+m1 <- brm(Sepal.Length ~ Petal.Length, data = iris, save_all_pars = TRUE)
+m2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
+m3 <- brm(Sepal.Length ~ Species + Petal.Length, data = iris, save_all_pars = TRUE)
+m4 <- brm(Sepal.Length ~ Species * Petal.Length, data = iris, save_all_pars = TRUE)
 ```
 
-We can now compare these models with the `bayesfactor_models` function, using the `denominator` argument to specify which model all models will be compared to (in this case, the constant model):
+We can now compare these models with the `bayesfactor_models` function, using the `denominator` argument to specify which model all models will be compared against (in this case, the constant model):
 
 ```{r brms_models_disp, eval=FALSE}
-brms_models <- bayesfactor_models(m1, m2, m3, denominator = m0)
-brms_models
+comparison <- bayesfactor_models(m1, m2, m3, m4, denominator = m0)
+comparison
 ```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# dput(comparison)
 
-
-```{r brms_models}
-brms_models <-
-  structure(
-    list(
-      Model = c(
-        "Species",
-        "Petal.Length",
-        "Species + Petal.Length",
-        "Species * Petal.Length",
-        "1"
-      ),
-      log.BF = c(
-        68.508589034605,
-        102.554331682822,
-        128.609564577131,
-        128.872267410808,
-        0
-      )
-    ),
-    class = c("bayesfactor_models",
-              "data.frame"),
-    row.names = c(NA, -5L),
-    denominator = 5L,
-    BF_method = "marginal likelihoods (bridgesampling)"
-  )
-brms_models
+structure(list(Model = c("Petal.Length", "Species", "Species + Petal.Length", 
+"Species * Petal.Length", "1"), log.BF = c(102.551353996205, 
+68.5028425810333, 128.605282540213, 128.855928380748, 0)), class = c("bayesfactor_models", 
+"data.frame"), row.names = c(NA, -5L), denominator = 5L, BF_method = "marginal likelihoods (bridgesampling)")
 ```
-
 
 We can see that the full model is the best model - with $BF_{\text{m0}}=9\times 10^{55}$ compared to the null (intercept only). We can also change the reference model to the main effect model:
 
-```{r}
-update(brms_models, reference = 3)
+```{r eval=FALSE, message=FALSE, warning=FALSE}
+# update(comparison, reference = 3)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# dput(update(comparison, reference = 3))
+
+# brms_models <-
+#   structure(
+#     list(
+#       Model = c(
+#         "Species",
+#         "Petal.Length",
+#         "Species + Petal.Length",
+#         "Species * Petal.Length",
+#         "1"
+#       ),
+#       log.BF = c(
+#         68.508589034605,
+#         102.554331682822,
+#         128.609564577131,
+#         128.872267410808,
+#         0
+#       )
+#     ),
+#     class = c("bayesfactor_models",
+#               "data.frame"),
+#     row.names = c(NA, -5L),
+#     denominator = 5L,
+#     BF_method = "marginal likelihoods (bridgesampling)"
+#   )
+# brms_models
 ```
 
 As we can see, though the full model is the best, there hardly any evidence it is preferable to the main effects model.
 
 
 
-### All other models: BIC approximation
+### The BIC approximation for Frequentist Models
 
-Surprisingly enough, we can compute Bayes factors and compare non-Bayesian models! This is done by comparing BIC measures, and also allows for comparing non-nested models (read more [here](https://doi.org/10.3758/BF03194105).
+Interestingly, we can also compute Bayes factors for frequentist models! This is done by comparing BIC measures, and also allows for comparing non-nested models [@wagenmakers2007practical]. Let's try it out on **mixed models**:
 
 
-```{r lme4, message=FALSE}
-library(lme4)
-mo1 <- lmer(Sepal.Length ~ (1 | Species), data = iris)
-mo2 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
-mo3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
-mo4 <- lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris)
-
-bayesfactor_models(mo1, mo2, mo3, mo4, denominator = 1L)
+```{r lme4, message=FALSE, warning=FALSE}
+# library(lme4)
+# 
+# m0 <- lmer(Sepal.Length ~ (1 | Species), data = iris)
+# m1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+# m2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
+# m3 <- lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris)
+# 
+# bayesfactor_models(m1, m2, m3, m4, denominator = m0)
 ```
 
 
@@ -263,7 +274,7 @@ bayesfactor_models(mo1, mo2, mo3, mo4, denominator = 1L)
 
 Inclusion Bayes factors answer the question:
 
-> Given the observed data, how much more likely have models with a particular effect become, compared to models without that particular effect?
+> **Given the observed data, how much more likely have models with a particular effect become, compared to models without that particular effect?**
 
 In other words, on average - are models with effect $X$ better than models without effect $X$?
 
