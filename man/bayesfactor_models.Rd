@@ -27,7 +27,7 @@ This function computes Bayes factors from fitted models or extracts
     \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
   }
   \item For \code{BFBayesFactor}, \code{bayesfactor_models} is mostly a wraparoud \code{BayesFactor::extractBF}.
-  \item For all other model types (supported by \CRANpkg{insight}), BIC approximations are used to cimpute Bayes factors.
+  \item For all other model types (supported by \CRANpkg{insight}), BIC approximations are used to compute Bayes factors.
 }
 }
 \examples{
