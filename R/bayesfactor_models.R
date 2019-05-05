@@ -67,9 +67,14 @@
 #' bayesfactor_models(brm1, brm2, brm3, denominator = 1)
 #'}
 #'
-#' @references Wagenmakers, E. J. (2007). A practical
+#' @references
+#' \itemize{
+#'   \item Wagenmakers, E. J. (2007). A practical
 #' solution to the pervasive problems of p values. Psychonomic
 #' bulletin & review, 14(5), 779-804.
+#'   \item Kass, R. E., & Raftery, A. E. (1995). Bayes Factors. Journal of the
+#' American Statistical Association, 90(430), 773-795.
+#' }
 #'
 #' @seealso update.BFGrid
 #'
