@@ -7,7 +7,7 @@
 bayesfactor_models(..., denominator = 1)
 }
 \arguments{
-\item{...}{Fitted models (any models supported by \CRANpkg{insight]}), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').}
+\item{...}{Fitted models (any models supported by \CRANpkg{insight}), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').}
 
 \item{denominator}{Either an integer indicating which of the models to use as the denominator,
 or a model to use as a denominator. Ignored for \code{BFBayesFactor}.}
