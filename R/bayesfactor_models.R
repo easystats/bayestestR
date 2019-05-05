@@ -113,6 +113,10 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1){
     stop("Package \"bridgesampling\" needed for this function to work. Please install it.")
   }
 
+  if (!requireNamespace("brms")) {
+    stop("Package \"brms\" needed for this function to work. Please install it.")
+  }
+
   # Orgenize the models
   mods <- list(...)
   if (!is.numeric(denominator)) {
