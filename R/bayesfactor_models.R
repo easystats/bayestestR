@@ -84,8 +84,9 @@ bayesfactor_models.default <- function(..., denominator = 1){
   # Orgenize the models
   mods <- list(...)
   if (!is.numeric(denominator)) {
-    mods <- c(mods, list(denominator))
-    denominator <- length(mods)
+    model_name <- deparse(match.call()[["denominator"]])
+    arg_names <- sapply(match.call(expand.dots = F)$`...`, deparse)
+    denominator <- which(arg_names == model_name)
   }
 
   # Test that all is good:
