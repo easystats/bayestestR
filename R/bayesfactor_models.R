@@ -72,6 +72,7 @@
 #'
 #' @seealso update.BFGrid
 #'
+#' @importFrom insight is_nullmodel get_response
 #' @export
 bayesfactor_models <- function(..., denominator = 1) {
   UseMethod("bayesfactor_models")
@@ -104,8 +105,9 @@ bayesfactor_models.default <- function(..., denominator = 1){
                     log.BF = mBFs,
                     stringsAsFactors = FALSE)
 
-  attr(res,'denominator') <- denominator
-  attr(res,'BF_method') <- 'BIC approximation'
+  attr(res, 'denominator') <- denominator
+  attr(res, 'denominator_null') <- insight::is_nullmodel(mods[denominator])
+  attr(res, 'BF_method') <- 'BIC approximation'
   class(res) <- c('bayesfactor_models', class(res))
 
   res
