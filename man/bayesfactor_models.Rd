@@ -29,6 +29,9 @@ This function computes Bayes factors from fitted models or extracts
   \item For \code{BFBayesFactor}, \code{bayesfactor_models} is mostly a wraparoud \code{BayesFactor::extractBF}.
   \item For all other model types (supported by \CRANpkg{insight}), BIC approximations are used to compute Bayes factors.
 }
+In order to correctly and precisely estimate Bayes Factors, a rule of thumb are
+the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful \strong{P}osterior
+(i.e. probably at leat 40,000 samples instead of the default of 4,000).
 }
 \examples{
 # With lm objects:
@@ -75,9 +78,11 @@ bayesfactor_models(brm1, brm2, brm3, denominator = 1)
 
 }
 \references{
-Wagenmakers, E. J. (2007). A practical
-solution to the pervasive problems of p values. Psychonomic
-bulletin & review, 14(5), 779-804.
+\itemize{
+  \item Kass, R. E., & Raftery, A. E. (1995). Bayes Factors. Journal of the American Statistical Association, 90(430), 773-795.
+  \item Robert, C. P. (2016). The expected demise of the Bayes factor. Journal of Mathematical Psychology, 72, 33–37.
+  \item Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin & review, 14(5), 779-804.
+}
 }
 \seealso{
 update.BFGrid
