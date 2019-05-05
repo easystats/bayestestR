@@ -24,6 +24,8 @@ navbar:
     menu:
       - text: '1. Bayesian (General) Linear Models'
         href: articles/example1_GLM.html
+      - text: '2. Bayes Factors'
+        href: articles/bayes_factors.html
   - text: Articles
     menu:
       - text: '1. Comparison of Point-Estimates'

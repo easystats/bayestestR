@@ -1,0 +1,335 @@
+---
+title: "Bayes Factors"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, bayesian, bayes factors]
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{Bayes Factor}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+set.seed(5)
+```
+
+# Bayes Factors
+
+Bayes factors (**BFs**) are indices of *relative* evidence of one "model" (data generating process) over another, which are used in Bayesian inference as alternatives to classical (frequentist) hypothesis testing indices. In the Bayesian framework, a Bayes factor can also be thought of as the quantity by which some *prior* belief about the relative odds of two models are updated in light of the observed data.
+
+According to Bayes' theorem:
+
+$$
+P(M|D) = \frac{P(D|M)P(M)}{P(D)}
+$$
+
+Then by comparing two models, we get:
+
+$$
+\frac{P(M_1|D)}{P(M_2|D)} = \frac{P(D|M_1)}{P(D|M_2)} \times \frac{P(M_1)}{P(M_2)}
+$$
+Where the middle term is the Bayes factor:
+$$
+BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
+$$
+Bayes factor are typically computed as the ratio of marginal likelihoods of two competing hypotheses / models, but as we can see from the equation above, they can also be computed by dividing the posterior-odds by the prior-odds. Importantly, **Bayes factors cover a wide range of indices and applications**, and come in different flavours.
+
+## Savage-Dickey density ratio Bayes factor
+
+The ***Savage-Dickey density ratio*** can be used to answer the question:
+
+> **Given the data, is the null more, or less likely?**
+
+This is done by by comparing the density (likelihood) of the null value under the prior between the prior and posterior distributions (see @wagenmakers2010bayesian).
+
+Let's use the Student's Sleep data, and try and answer the question: *given the observed data, is it more or less likely that the drug (the variable `group`) has no effect on the numbers of hours of extra sleep (variable `extra`?*
+
+```{r sleep_boxplot, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+
+ggplot(sleep, aes(x = group, y = extra, fill= group)) +
+  geom_boxplot() +
+  theme_classic()
+```
+
+
+The **bloxplot** suggests that the 2nd group has a higher number of hours of extra sleep. By how much? Let's fit a simple Bayesian linear model.
+
+```{r rstanarm_disp, eval=FALSE, message=FALSE, warning=FALSE}
+library(rstanarm)
+
+model <- stan_glm(extra ~ group, data = sleep)
+```
+
+```{r rstanarm_fit, echo=FALSE, message=FALSE, warning=FALSE}
+library(rstanarm)
+
+junk <- capture.output(model <- stan_glm(extra ~ group, data = sleep))
+```
+
+
+We can use `as.data.frame` on this model to extract the posterior distribution related to the effect of `group2`, and the `get_priors` from the `insight` package to see what the prior distribution was used:
+
+```{r prior_n_post, message=FALSE, warning=FALSE}
+posterior <- as.data.frame(model)$group2
+
+insight::get_priors(model)
+```
+
+For the `group2` parameter, the prior that was used was a **normal distribution** of **mean** (location) `0` and **SD** (scale) `5.044799`. We can simulate this prior distribution as follows:
+
+
+```{r prior_n_post, message=FALSE, warning=FALSE}
+library(bayestestR)
+
+prior <- distribution_normal(length(posterior), mean = 0, sd = 5.044799)
+```
+
+We can not plot both the prior:
+
+```{r prior_n_post_plot, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot() +
+  geom_density(data=data.frame(prior), aes(x = prior, color = "Prior")) +
+  geom_density(data=data.frame(posterior), aes(x = posterior, color = "Posterior")) +
+  geom_vline(aes(xintercept=0), linetype="dotted") +
+  theme_classic()
+  
+
+# f_post <- suppressWarnings(logspline::logspline(posterior)) 
+# f_prior <- suppressWarnings(logspline::logspline(prior)) 
+# 
+# x_lims <- range(c(posterior, prior)) * 0.7
+# 
+# ggplot() +
+#   aes(x = 0, y = 0) +
+#   stat_function(aes(color = "Posterior"), fun = function(x) logspline::dlogspline(x,f_post), xlim = x_lims,
+#                 size = 1) +
+#   stat_function(aes(color = "Prior"), fun = function(x) logspline::dlogspline(x,f_prior), xlim = x_lims,
+#                 size = 1) +
+#   labs(x = 'group2', y = 'density', color = '') + 
+#   theme_classic() + 
+#   theme(legend.position = c(0.2,0.8)) + 
+#   NULL
+
+```
+
+Looking at the distributions, we can see that the posterior is centered at `r round(median(posterior$group2), 2)`. But this does not mean that an effect of 0 is necessarily less likely. To test that, we will use `bayesfactor_savagedickey`!
+
+### Compute the Savage-Dickey's BF
+
+```{r savagedickey, message=FALSE, warning=FALSE}
+bayesfactor_savagedickey(posterior = posterior, prior = prior)
+```
+
+This BF indicates the **likelihood of an effect of 0 (null effect) is 0.76 less likely under posterior**. In other words, the observed data has `1/0.76 = 1.32` more chances to happen under the null hypothesis. Altough the center of distribution has shifted, it is still quite dense around the null.
+
+Note that **Interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). 
+
+
+### Directional test
+
+We can also conduct a directional test if we have some prior hypothesis about the direction of the effect:
+
+```{r prior_n_post_plot_one_sided, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot() +
+  geom_density(data=data.frame(prior = prior[prior > 0]), aes(x = prior, color = "Prior")) +
+  geom_density(data=data.frame(posterior = posterior[posterior > 0]), aes(x = posterior, color = "Posterior")) +
+  theme_classic()
+  
+
+# f_post <- suppressWarnings(logspline::logspline(posterior[posterior > 0], lbound = 0)) 
+# f_prior <- suppressWarnings(logspline::logspline(prior[prior > 0], lbound = 0)) 
+# 
+# x_lims <- c(0,max(c(posterior,prior))) * 0.7
+# 
+# ggplot() +
+#   aes(x = 0, y = 0) +
+#   stat_function(aes(color = "Posterior"), fun = function(x) logspline::dlogspline(x, f_post), xlim = x_lims, size = 1) +
+#   stat_function(aes(color = "Prior"), fun = function(x) logspline::dlogspline(x, f_prior), xlim = x_lims, size = 1) +
+#   labs(x = 'group2', y = 'density', color = '') + 
+#   theme_light() + 
+#   theme(legend.position = c(0.8,0.8)) + 
+#   NULL
+
+```
+
+```{r savagedickey_one_sided, message=FALSE, warning=FALSE}
+bayesfactor_savagedickey(posterior = posterior, prior = prior, direction = ">")
+```
+
+As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), the presence of an effect is `1.5` times more likely than the null hypothesis.  indicating that given the observed data, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of `1.5` is still considered quite week evidence).
+
+## Comparing models
+
+Besides comparing distributions, Bayes factors can also be used to compare whole models. In these cases they can answer the question:
+
+> **Is the observed data more likely given Model 1, or Model 2?**
+
+This is usually done by computing the marginal likelihoods of two models. In such a case, the Bayes factor is a measure of relative evidence between the two compared models. Note that the compared models *do not* need to be nested models (see `brms2` and `brms3` below).
+
+**Note: In order to compute the Bayes factors for models, non-default arguments must be added upon fitting:**
+  
+  - `brmsfit` models **must** have been fitted with `save_all_pars = TRUE`
+  - `stanreg` models **must** have been fitted with a defined `diagnostic_file`.
+
+### `brms` and `rstanarm`
+
+Let's first fit 4 Bayesian regressions with `brms` to predict `Sepal.Length`:
+
+```{r brms_disp, eval=FALSE}
+library(brms)
+
+m0 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
+m1 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
+m2 <- brm(Sepal.Length ~ Species + Petal.Length, data = iris, save_all_pars = TRUE)
+m3 <- brm(Sepal.Length ~ Species * Petal.Length, data = iris, save_all_pars = TRUE)
+```
+
+We can now compare these models with the `bayesfactor_models` function, using the `denominator` argument to specify which model all models will be compared to (in this case, the constant model):
+
+```{r brms_models_disp, eval=FALSE}
+brms_models <- bayesfactor_models(m1, m2, m3, denominator = m0)
+brms_models
+```
+
+
+```{r brms_models}
+brms_models <-
+  structure(
+    list(
+      Model = c(
+        "Species",
+        "Petal.Length",
+        "Species + Petal.Length",
+        "Species * Petal.Length",
+        "1"
+      ),
+      log.BF = c(
+        68.508589034605,
+        102.554331682822,
+        128.609564577131,
+        128.872267410808,
+        0
+      )
+    ),
+    class = c("bayesfactor_models",
+              "data.frame"),
+    row.names = c(NA, -5L),
+    denominator = 5L,
+    BF_method = "marginal likelihoods (bridgesampling)"
+  )
+brms_models
+```
+
+
+We can see that the full model is the best model - with $BF_{\text{m0}}=9\times 10^{55}$ compared to the null (intercept only). We can also change the reference model to the main effect model:
+
+```{r}
+update(brms_models, reference = 3)
+```
+
+As we can see, though the full model is the best, there hardly any evidence it is preferable to the main effects model.
+
+
+
+### All other models: BIC approximation
+
+Surprisingly enough, we can compute Bayes factors and compare non-Bayesian models! This is done by comparing BIC measures, and also allows for comparing non-nested models (read more [here](https://doi.org/10.3758/BF03194105).
+
+
+```{r lme4, message=FALSE}
+library(lme4)
+mo1 <- lmer(Sepal.Length ~ (1 | Species), data = iris)
+mo2 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+mo3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
+mo4 <- lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris)
+
+bayesfactor_models(mo1, mo2, mo3, mo4, denominator = 1L)
+```
+
+
+## Inclusion Bayes factors via Bayesian model averaging
+
+Inclusion Bayes factors answer the question:
+
+> Given the observed data, how much more likely have models with a particular effect become, compared to models without that particular effect?
+
+In other words, on average - are models with effect $X$ better than models without effect $X$?
+
+Lets use the `brms` example from above:
+
+```{r inclusion_brms}
+bayesfactor_inclusion(brms_models)
+```
+
+As we can see, across all 5 models, the addition of each effect term makes the model on average, more likely.
+
+We can also compare only matched models - i.e., a model without effect $A$ will only be compared to models *with* effect $A$, but not with models with higher-level interaction. (See explanation for why you might want to do this [here](https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp).)
+
+```{r inclusion_brms2}
+bayesfactor_inclusion(brms_models, match_models = TRUE)
+```
+
+In this case, it did not change the inclusion Bayes factors by much (by did change the prior and posterior effect probabilies).
+
+### Comparison with JASP
+
+`bayesfactor_inclusion` is meant to provide Bayes Factors across model averages, similar to JASP's *Effects* option. Lets compare the two:
+
+#### Compared across all models
+
+```{r JASP_all, message=FALSE}
+library(BayesFactor)
+
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+
+BF_ToothGrowth <- anovaBF(len ~ dose*supp, ToothGrowth)
+
+bayesfactor_inclusion(BF_ToothGrowth)
+
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/JASP1.PNG")
+```
+
+#### Compared across matched models
+
+```{r JASP_matched}
+bayesfactor_inclusion(BF_ToothGrowth, match_models = TRUE)
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/JASP2.PNG")
+```
+
+#### With Nuisance Effects
+
+We'll add `dose` to the null model in JASP, and do the same in `R`:
+
+```{r JASP_Nuisance}
+BF_ToothGrowth_against_dose <- BF_ToothGrowth[3:4]/BF_ToothGrowth[2]
+BF_ToothGrowth_against_dose
+
+# OR:
+# update(bayesfactor_models(BF_ToothGrowth), subset = c(4,5), reference = 3)
+
+bayesfactor_inclusion(BF_ToothGrowth_against_dose)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/JASP3.PNG")
+```
+
