@@ -83,8 +83,8 @@ bayesfactor_models.default <- function(..., denominator = 1){
 
   # Test that all is good:
   resps <- lapply(mods, insight::get_response)
-  if (!all(sapply(resps[-denominator], function(x) identical(x,resps[[denominator]])))) {
-    stop('Models were not computed from the same data')
+  if (!all(sapply(resps[-denominator], function(x) identical(x, resps[[denominator]])))) {
+    stop("Models were not computed from the same data.")
   }
 
   # Get BF
@@ -122,8 +122,8 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1){
 
   # Test that all is good:
   resps <- lapply(mods, insight::get_response)
-  if (!all(sapply(resps[-denominator], function(x) identical(x,resps[[denominator]])))) {
-    stop('Models were not computed from the same data')
+  if (!all(sapply(resps[-denominator], function(x) identical(x, resps[[denominator]])))) {
+    stop("Models were not computed from the same data.")
   }
 
   # Get BF
@@ -183,9 +183,9 @@ bayesfactor_models.BFBayesFactor <- function(...) {
 #' @export
 update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...){
   if (!is.null(reference)) {
-    if (reference=="top") {
+    if (reference == "top") {
       reference <- which.max(object$log.BF)
-    } else if (reference=="bottom") {
+    } else if (reference == "bottom") {
       reference <- which.min(object$log.BF)
     }
     object$log.BF <- object$log.BF - object$log.BF[reference]

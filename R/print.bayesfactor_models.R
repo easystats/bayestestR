@@ -1,13 +1,13 @@
 #' @export
 print.bayesfactor_models <- function(x, digits = 2, log = FALSE, ...) {
   BFE <- x
-  denominator <- attr(BFE,'denominator')
-  grid.type <- attr(BFE,'BF_method')
+  denominator <- attr(BFE, 'denominator')
+  grid.type <- attr(BFE, 'BF_method')
 
   BFE_ <- as.data.frame(BFE)
   if (!log) BFE_$log.BF <- exp(BFE_$log.BF)
 
-  rownames(BFE_) <- paste0('[',seq_len(nrow(BFE_)),'] ',BFE_$Model, '   ')
+  rownames(BFE_) <- paste0('[', seq_len(nrow(BFE_)), '] ', BFE_$Model, '   ')
   denM <- rownames(BFE_)[denominator]
   BFE_ <- BFE_[-denominator,'log.BF',drop = FALSE]
   colnames(BFE_) <- ""
