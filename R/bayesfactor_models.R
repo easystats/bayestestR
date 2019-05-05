@@ -81,12 +81,20 @@ bayesfactor_models <- function(..., denominator = 1) {
 #' @importFrom stats BIC
 #' @export
 bayesfactor_models.default <- function(..., denominator = 1){
-  # Orgenize the models
+  # Organize the models
   mods <- list(...)
+
   if (!is.numeric(denominator)) {
     model_name <- deparse(match.call()[["denominator"]])
     arg_names <- sapply(match.call(expand.dots = F)$`...`, deparse)
-    denominator <- which(arg_names == model_name)
+    denominator_model <- which(arg_names == model_name)
+
+    if (length(denominator_model) == 0) {
+      mods <- c(mods, list(denominator))
+      denominator <- length(mods)
+    } else {
+      denominator <- denominator_model
+    }
   }
 
   # Test that all is good:

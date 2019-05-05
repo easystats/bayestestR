@@ -15,7 +15,6 @@
 #' i.e., \code{(X|G)} will become \code{1:G} and \code{X:G}.
 #'
 #' @examples
-#' \dontrun{
 #' library(bayestestR)
 #'
 #' # Using with bayesfactor_models:
@@ -25,8 +24,8 @@
 #' mo2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 #' mo3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 #'
-#' SepalLength_BFmodels <- bayesfactor_models(mo1,mo2,mo3,.denominator = mo0)
-#' bayesfactor_inclusion(SepalLength_BFmodels)
+#' BFmodels <- bayesfactor_models(mo1, mo2, mo3, denominator = mo0)
+#' bayesfactor_inclusion(BFmodels)
 #'
 #' # Using with BayesFactor objects:
 #' # -------------------------------
@@ -38,8 +37,6 @@
 #'
 #' # compare only matched models:
 #' bayesfactor_inclusion(BF, match_models = TRUE)
-#'
-#' }
 #'
 #' @references Hinne, M., Gronau, Q. F., van den Bergh, D., & Wagenmakers,
 #' E. (2019, March 25). A conceptual introduction to Bayesian Model

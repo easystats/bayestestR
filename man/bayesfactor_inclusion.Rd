@@ -27,7 +27,6 @@ Random effects in the \code{lme} style will be displayed as interactions:
 i.e., \code{(X|G)} will become \code{1:G} and \code{X:G}.
 }
 \examples{
-\dontrun{
 library(bayestestR)
 
 # Using with bayesfactor_models:
@@ -37,8 +36,8 @@ mo1 <- lm(Sepal.Length ~ Species, data = iris)
 mo2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 mo3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 
-SepalLength_BFmodels <- bayesfactor_models(mo1,mo2,mo3,.denominator = mo0)
-bayesfactor_inclusion(SepalLength_BFmodels)
+BFmodels <- bayesfactor_models(mo1, mo2, mo3, denominator = mo0)
+bayesfactor_inclusion(BFmodels)
 
 # Using with BayesFactor objects:
 # -------------------------------
@@ -50,8 +49,6 @@ bayesfactor_inclusion(BF)
 
 # compare only matched models:
 bayesfactor_inclusion(BF, match_models = TRUE)
-
-}
 
 }
 \references{
