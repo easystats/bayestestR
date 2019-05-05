@@ -106,7 +106,7 @@ bayesfactor_models.default <- function(..., denominator = 1){
                     stringsAsFactors = FALSE)
 
   attr(res, 'denominator') <- denominator
-  attr(res, 'denominator_null') <- insight::is_nullmodel(mods[denominator])
+  attr(res, 'denominator_null') <- insight::is_nullmodel(mods[denominator][[1]])
   attr(res, 'BF_method') <- 'BIC approximation'
   class(res) <- c('bayesfactor_models', class(res))
 
