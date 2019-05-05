@@ -1,11 +1,11 @@
 #' Extract Bayes Factors from fitted models
 #'
-#' @description These functions return a simple \code{data.frame} of class \code{bayesfactor_models} that print nicely
-#' that can be passed to \code{???}.
+#' @description This function computes Bayes factors from fitted models or extracts
+#'   the Bayes factor from objects of class \code{BFBayesFactor}.
 #'
 #' @author Mattan S. Ben-Shachar
 #'
-#' @param ... Fitted models (any models supported by \code{insight]}), all fit on the same data, or a single \code{BFBayesFactor} object (see details).
+#' @param ... Fitted models (any models supported by \CRANpkg{insight]}), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').
 #' @param denominator Either an integer indicating which of the models to use as the denominator,
 #' or a model to use as a denominator. Ignored for \code{BFBayesFactor}.
 #'
@@ -18,30 +18,33 @@
 #'     \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
 #'   }
 #'   \item For \code{BFBayesFactor}, \code{bayesfactor_models} is mostly a wraparoud \code{BayesFactor::extractBF}.
-#'   \item For all other model types (supported by \code{insight]}), BIC approximations are used to cimpute Bayes factors.
+#'   \item For all other model types (supported by \CRANpkg{insight}), BIC approximations are used to cimpute Bayes factors.
 #' }
 #'
 #'
-#' @return a data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs (log) of the supplied models, that prints nicely.
+#' @return A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs (log) of the supplied models, that prints nicely.
 #'
 #' @examples
-#' \dontrun{
 #' # With lm objects:
 #' lm1 <- lm(Sepal.Length ~ 1, data = iris)
 #' lm2 <- lm(Sepal.Length ~ Species, data = iris)
 #' lm3 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 #' lm4 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
-#' bayesfactor_models(lm1,lm2,lm3,lm4,denominator = 1)
-#' bayesfactor_models(lm2,lm3,lm4,denominator = lm1) # same result
+#' bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1)
+#' bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result
 #'
 #' # With lmerMod objects:
 #' library(lme4)
 #' lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1|Species), data = iris)
 #' lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species), data = iris)
-#' lmer3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species) + (1|Petal.Width), data = iris)
-#' bayesfactor_models(lmer1,lmer2,lmer3,denominator = 1)
-#' bayesfactor_models(lmer1,lmer2,lmer3,denominator = lm1) # mix objects fit on the same data
+#' lmer3 <- lmer(
+#'   Sepal.Length ~ Petal.Length + (Petal.Length|Species) + (1|Petal.Width),
+#'   data = iris
+#' )
+#' bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
+#' bayesfactor_models(lmer1, lmer2, lmer3, denominator = lmer1)
 #'
+#' \dontrun{
 #' # With BFBayesFactor objects:
 #' library(BayesFactor)
 #' data(puzzles)
@@ -55,9 +58,12 @@
 #' library(brms)
 #' brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
 #' brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
-#' brm3 <- brm(Sepal.Length ~ Species + Petal.Length, data = iris, save_all_pars = TRUE)
+#' brm3 <- brm(
+#'   Sepal.Length ~ Species + Petal.Length, data = iris,
+#'   save_all_pars = TRUE
+#' )
 #'
-#' bayesfactor_models(brm1,brm2,brm3,denominator = 1)
+#' bayesfactor_models(brm1, brm2, brm3, denominator = 1)
 #'}
 #'
 #' @references Wagenmakers, E. J. (2007). A practical
