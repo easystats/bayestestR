@@ -26,6 +26,7 @@ mo4_e <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | 
 # both uses of denominator
 BFM1 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, mo1, denominator = 4)
 BFM2 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, denominator = mo1)
+BFM3 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, mo1, denominator = mo1)
 
 set.seed(444)
 brms_4bf_1 <- circus::download_model("brms_4bf_1")
@@ -42,12 +43,10 @@ test_that("bayesfactor_models", {
   testthat::expect_is(brms_models,"bayesfactor_models")
   testthat::expect_equal(brms_models$log.BF,c(0, 68.5, 102.5, 128.6, 128.8), tolerance = 0.1)
 
-  ## CANT TEST BRMS / RSTANARM without running the whole thing
-  ## loading data from circus looses the ll data
-
 
   ## BIC
   testthat::expect_equal(BFM1,BFM2)
+  testthat::expect_equal(BFM1,BFM3)
 
   # only on same data!
   testthat::expect_error(bayestestR::bayesfactor_models(mo1, mo2, mo4_e))
