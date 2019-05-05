@@ -204,7 +204,7 @@ update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, .
     object_subset <- object[subset,]
 
     if (denominator %in% subset) {
-      attr(x_subset,"denominator") <- which(denominator == subset)
+      attr(object_subset,"denominator") <- which(denominator == subset)
     } else {
       object_subset <- rbind(object[denominator,],object_subset)
       attr(object_subset,"denominator") <- 1
