@@ -176,7 +176,7 @@ bayesfactor_models.stanreg <- function(..., denominator = 1){
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
   }
-  bayesfactor_models.brmsfit(..., denominator = denominator)
+  .bayesfactor_models_stan(..., denominator = denominator)
 }
 
 #' @export
