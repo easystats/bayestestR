@@ -32,6 +32,7 @@
 #' lm4 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 #' bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1)
 #' bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result
+#' bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
 #'
 #' # With lmerMod objects:
 #' library(lme4)
@@ -131,9 +132,24 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1){
 
   # Orgenize the models
   mods <- list(...)
+
+  if (inherits(mods[[1]],"brmsfit")) {
+    if (!requireNamespace("brms")) {
+      stop("Package \"brms\" needed for this function to work. Please install it.")
+    }
+  }
+
   if (!is.numeric(denominator)) {
-    mods <- c(mods, list(denominator))
-    denominator <- length(mods)
+    model_name <- deparse(match.call()[["denominator"]])
+    arg_names <- sapply(match.call(expand.dots = F)$`...`, deparse)
+    denominator_model <- which(arg_names == model_name)
+
+    if (length(denominator_model) == 0) {
+      mods <- c(mods, list(denominator))
+      denominator <- length(mods)
+    } else {
+      denominator <- denominator_model
+    }
   }
 
   # Test that all is good:
@@ -164,6 +180,9 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1){
 
 #' @export
 bayesfactor_models.stanreg <- function(..., denominator = 1){
+  if (!requireNamespace("rstanarm")) {
+    stop("Package \"rstanarm\" needed for this function to work. Please install it.")
+  }
   bayesfactor_models.brmsfit(..., denominator = denominator)
 }
 
