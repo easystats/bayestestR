@@ -7,17 +7,16 @@ print.bayesfactor_models <- function(x, digits = 2, log = FALSE, ...) {
   BFE_ <- as.data.frame(BFE)
   if (!log) BFE_$log.BF <- exp(BFE_$log.BF)
 
+  # indicate null-model
+  BFE_$Model <- gsub("1", "1 (null-model)", BFE_$Model, fixed = TRUE)
+
   rownames(BFE_) <- paste0('[', seq_len(nrow(BFE_)), '] ', BFE_$Model, '   ')
   denM <- rownames(BFE_)[denominator]
-  BFE_ <- BFE_[-denominator, 'log.BF',drop = FALSE]
+  BFE_ <- BFE_[-denominator, 'log.BF', drop = FALSE]
   colnames(BFE_) <- ""
 
-  if (isTRUE(attr(x, "denominator_null"))) {
-    denM <- paste(trimws(denM), "(null-model)")
-  }
-
   cat('Bayes factor analysis\n--------------')
-  print.data.frame(BFE_,digits = digits)
+  print.data.frame(BFE_, digits = digits)
   cat('\nAgainst denominator:\n\t', denM)
   cat('\n---\nBayes factor type: \n', grid.type)
   if (log) cat('Presenting log(BF)\n')
