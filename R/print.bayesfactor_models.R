@@ -8,7 +8,7 @@ print.bayesfactor_models <- function(x, digits = 2, log = FALSE, ...) {
   if (!log) BFE_$log.BF <- exp(BFE_$log.BF)
 
   # indicate null-model
-  BFE_$Model <- gsub("1", "1 (null-model)", BFE_$Model, fixed = TRUE)
+  BFE_$Model[BFE_$Model=="1"] <- "(Intercept only)"
 
   rownames(BFE_) <- paste0('[', seq_len(nrow(BFE_)), '] ', BFE_$Model, '   ')
   denM <- rownames(BFE_)[denominator]
