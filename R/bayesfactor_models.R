@@ -123,21 +123,14 @@ bayesfactor_models.default <- function(..., denominator = 1){
 }
 
 
-#' @export
 #' @importFrom insight get_response
-bayesfactor_models.brmsfit <- function(..., denominator = 1){
+.bayesfactor_models_stan <- function(..., denominator = 1){
   if (!requireNamespace("bridgesampling")) {
     stop("Package \"bridgesampling\" needed for this function to work. Please install it.")
   }
 
   # Orgenize the models
   mods <- list(...)
-
-  if (inherits(mods[[1]],"brmsfit")) {
-    if (!requireNamespace("brms")) {
-      stop("Package \"brms\" needed for this function to work. Please install it.")
-    }
-  }
 
   if (!is.numeric(denominator)) {
     model_name <- deparse(match.call()[["denominator"]])
@@ -184,6 +177,14 @@ bayesfactor_models.stanreg <- function(..., denominator = 1){
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
   }
   bayesfactor_models.brmsfit(..., denominator = denominator)
+}
+
+#' @export
+bayesfactor_models.brmsfit <- function(..., denominator = 1){
+  if (!requireNamespace("brms")) {
+    stop("Package \"brms\" needed for this function to work. Please install it.")
+  }
+  .bayesfactor_models_stan(..., denominator = denominator)
 }
 
 
