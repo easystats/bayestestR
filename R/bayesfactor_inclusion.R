@@ -182,7 +182,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
     rand_print <- rand_trms <- vector("list", length(random_parts))
 
     for (i in seq_along(random_parts)) {
-      tmp_trms <- attr(terms.formula(tmp_random[[i]]), "term.labels")
+      tmp_trms <- attr(stats::terms.formula(tmp_random[[i]]), "term.labels")
 
       if (!any(unlist(strsplit(as.character(tmp_random[[i]])[[2]], ' \\+ ')) == "0"))
         tmp_trms <- c("1", tmp_trms)
@@ -192,8 +192,8 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
     }
 
     stats::setNames(
-      c(fix_trms,unlist(rand_trms)),
-      c(fix_trms,unlist(rand_print))
+      c(fix_trms, unlist(rand_trms)),
+      c(fix_trms, unlist(rand_print))
     )
   }
 
