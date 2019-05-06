@@ -233,7 +233,7 @@ As we can see, though the full model is the best, there hardly any evidence it i
 Interestingly, we can also compute Bayes factors for frequentist models! This is done by comparing BIC measures, and also allows for comparing non-nested models [@wagenmakers2007practical]. Let's try it out on **mixed models**:
 
 
-```{r lme4, message=FALSE, warning=FALSE}
+```{r lme4_models, message=FALSE, warning=FALSE}
 library(lme4)
 
 m0 <- lmer(Sepal.Length ~ (1 | Species), data = iris)
@@ -256,7 +256,7 @@ In other words, on average - are models with effect $X$ better than models witho
 
 Lets use the `brms` example from above:
 
-```{r inclusion_brms, message=FALSE, warning=FALSE}
+```{r inclusion_brms, message=FALSE, warning=FALSE, eval=FALSE}
 bayesfactor_inclusion(comparison)
 ```
 
@@ -264,7 +264,7 @@ As we can see, across all 5 models, the addition of each effect term makes the m
 
 We can also compare only matched models - i.e., a model without effect $A$ will only be compared to models *with* effect $A$, but not with models with higher-level interaction. (See explanation for why you might want to do this [here](https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp).)
 
-```{r inclusion_brms2, message=FALSE, warning=FALSE}
+```{r inclusion_brms2, message=FALSE, warning=FALSE, eval=FALSE}
 bayesfactor_inclusion(comparison, match_models = TRUE)
 ```
 
@@ -276,7 +276,7 @@ In this case, it did not change the inclusion Bayes factors by much (by did chan
 
 #### Compared across all models
 
-```{r JASP_all, message=FALSE, warning=FALSE}
+```{r JASP_all, message=FALSE, warning=FALSE, eval=FALSE}
 library(BayesFactor)
 
 ToothGrowth$dose <- as.factor(ToothGrowth$dose)
@@ -293,7 +293,7 @@ knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/
 
 #### Compared across matched models
 
-```{r JASP_matched, message=FALSE, warning=FALSE}
+```{r JASP_matched, message=FALSE, warning=FALSE, eval=FALSE}
 bayesfactor_inclusion(BF_ToothGrowth, match_models = TRUE)
 ```
 
@@ -306,7 +306,7 @@ knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/
 
 We'll add `dose` to the null model in JASP, and do the same in `R`:
 
-```{r JASP_Nuisance, message=FALSE, warning=FALSE}
+```{r JASP_Nuisance, message=FALSE, warning=FALSE, eval=FALSE}
 BF_ToothGrowth_against_dose <- BF_ToothGrowth[3:4]/BF_ToothGrowth[2]
 BF_ToothGrowth_against_dose
 
