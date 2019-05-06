@@ -226,7 +226,7 @@ update(comparison, reference = 3)
 
 As we can see, though the full model is the best, there hardly any evidence it is preferable to the main effects model.
 
-> **NOTE:** Inorder to correctly and precisely estimate Bayes Factors, you always need the 4 P's: **P**roper **P**riors ([1](https://doi.org/10.1016/j.jmp.2015.08.002), [2](https://http://doi.org/10.1080/01621459.1995.10476572), [3](https://doi.org/10.1016/S0304-4076(00)00076-2)), and a **P**lentiful **P**osterior ([4](https://doi.org/10.1007/s11336-018-9648-3)).
+> **NOTE:** Inorder to correctly and precisely estimate Bayes Factors, you always need the 4 P's: **P**roper **P**riors ([1](https://doi.org/10.1016/j.jmp.2015.08.002), [2](https://doi.org/10.1080/01621459.1995.10476572), [3](https://doi.org/10.1016/S0304-4076(00)00076-2)), and a **P**lentiful **P**osterior ([4](https://doi.org/10.1007/s11336-018-9648-3)).
 
 ### The BIC approximation for Frequentist Models
 

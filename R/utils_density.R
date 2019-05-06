@@ -20,7 +20,7 @@
 #' @importFrom stats density
 #' @importFrom utils install.packages
 #' @export
-estimate_density <- function(x, method="kernel", precision = 2^10, ...){
+estimate_density <- function(x, method="kernel", precision = 2^10, bw = "SJ", ...){
 
   method <- match.arg(method, c("kernel", "logspline", "KernSmooth"))
 
@@ -28,7 +28,7 @@ estimate_density <- function(x, method="kernel", precision = 2^10, ...){
 
   # Kernel
   if(method == "kernel"){
-    return(as.data.frame(density(x, n = precision, bw = "SJ", from = x_range[1], to = x_range[2], ...)))
+    return(as.data.frame(density(x, n = precision, bw = bw, from = x_range[1], to = x_range[2], ...)))
 
   # Logspline
   } else if(method == "logspline"){
@@ -69,6 +69,7 @@ estimate_density <- function(x, method="kernel", precision = 2^10, ...){
 as.data.frame.density <- function(x, ...) {
   data.frame(x = x$x, y = x$y)
 }
+
 
 
 

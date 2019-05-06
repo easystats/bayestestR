@@ -4,7 +4,8 @@
 \alias{estimate_density}
 \title{Density Estimation}
 \usage{
-estimate_density(x, method = "kernel", precision = 2^10, ...)
+estimate_density(x, method = "kernel", precision = 2^10, bw = "SJ",
+  ...)
 }
 \arguments{
 \item{x}{the data from which the estimate is to be computed.  For the
@@ -13,6 +14,21 @@ estimate_density(x, method = "kernel", precision = 2^10, ...)
 \item{method}{Method of density estimation.}
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \link[=density]{density}.}
+
+\item{bw}{the smoothing bandwidth to be used.  The kernels are scaled
+    such that this is the standard deviation of the smoothing kernel.
+    (Note this differs from the reference books cited below, and from S-PLUS.)
+
+    \code{bw} can also be a character string giving a rule to choose the
+    bandwidth.  See \code{\link{bw.nrd}}. \cr The default,
+    \code{"nrd0"}, has remained the default for historical and
+    compatibility reasons, rather than as a general recommendation,
+    where e.g., \code{"SJ"} would rather fit, see also Venables and
+    Ripley (2002).
+
+    The specified (or computed) value of \code{bw} is multiplied by
+    \code{adjust}.
+  }
 
 \item{...}{further arguments for (non-default) methods.}
 }
