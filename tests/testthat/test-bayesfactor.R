@@ -28,15 +28,20 @@ BFM1 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, mo1, denominator = 4)
 BFM2 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, denominator = mo1)
 BFM3 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, mo1, denominator = mo1)
 
-set.seed(444)
+
 brms_4bf_1 <- insight::download_model("brms_4bf_1")
 brms_4bf_2 <- insight::download_model("brms_4bf_2")
 brms_4bf_3 <- insight::download_model("brms_4bf_3")
 brms_4bf_4 <- insight::download_model("brms_4bf_4")
 brms_4bf_5 <- insight::download_model("brms_4bf_5")
 
+set.seed(444)
 library(brms)
 brms_models <- bayestestR::bayesfactor_models(brms_4bf_1,brms_4bf_2,brms_4bf_3, brms_4bf_4, brms_4bf_5)
+
+library(rstanarm)
+mo0 <- stan_glm(Sepal.Length ~ 1, data = iris, diagnostic_file = file.path(tempdir(), "df0.csv"))
+mo1 <- stan_glm(Sepal.Length ~ Species, data = iris, diagnostic_file = file.path(tempdir(), "df1.csv"))
 
 test_that("bayesfactor_models", {
   # brms
@@ -44,6 +49,11 @@ test_that("bayesfactor_models", {
   testthat::expect_is(brms_models,"bayesfactor_models")
   testthat::expect_equal(brms_models$log.BF,c(0, 68.5, 102.5, 128.6, 128.8), tolerance = 0.1)
 
+  # rstanarm
+  testthat::expect_warning(bayestestR::bayesfactor_models(mo0,mo1))
+  stan_models <- bayestestR::bayesfactor_models(mo0,mo1)
+  testthat::expect_is(stan_models,"bayesfactor_models")
+  testthat::expect_equal(stan_models$log.BF,c(0, 65.19), tolerance = 0.1)
 
   ## BIC
   testthat::expect_equal(BFM1,BFM2)
