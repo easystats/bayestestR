@@ -40,6 +40,7 @@ brms_models <- bayestestR::bayesfactor_models(brms_4bf_1,brms_4bf_2,brms_4bf_3, 
 
 test_that("bayesfactor_models", {
   # brms
+  testthat::expect_warning(bayestestR::bayesfactor_models(brms_4bf_1,brms_4bf_2))
   testthat::expect_is(brms_models,"bayesfactor_models")
   testthat::expect_equal(brms_models$log.BF,c(0, 68.5, 102.5, 128.6, 128.8), tolerance = 0.1)
 
