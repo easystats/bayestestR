@@ -20,4 +20,5 @@ print.bayesfactor_models <- function(x, digits = 2, log = FALSE, ...) {
   cat('\nAgainst denominator:\n\t', denM)
   cat('\n---\nBayes factor type: ', grid.type, '\n')
   if (log) cat('Presenting log(BF)\n')
+  invisible(x)
 }
