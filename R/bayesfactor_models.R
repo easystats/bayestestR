@@ -10,7 +10,6 @@
 #' or a model to use as a denominator. Ignored for \code{BFBayesFactor}.
 #'
 #' @details
-#'
 #' \itemize{
 #'   \item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \code{bridgesampling} package.
 #'   \itemize{
@@ -20,7 +19,9 @@
 #'   \item For \code{BFBayesFactor}, \code{bayesfactor_models} is mostly a wraparoud \code{BayesFactor::extractBF}.
 #'   \item For all other model types (supported by \CRANpkg{insight}), BIC approximations are used to compute Bayes factors.
 #' }
-#'
+#' In order to correctly and precisely estimate Bayes Factors, a rule of thumb are
+#' the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful \strong{P}osterior
+#' (i.e. probably at leat 40,000 samples instead of the default of 4,000).
 #'
 #' @return A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs (log) of the supplied models, that prints nicely.
 #'
@@ -67,9 +68,12 @@
 #' bayesfactor_models(brm1, brm2, brm3, denominator = 1)
 #'}
 #'
-#' @references Wagenmakers, E. J. (2007). A practical
-#' solution to the pervasive problems of p values. Psychonomic
-#' bulletin & review, 14(5), 779-804.
+#' @references
+#' \itemize{
+#'   \item Kass, R. E., & Raftery, A. E. (1995). Bayes Factors. Journal of the American Statistical Association, 90(430), 773-795.
+#'   \item Robert, C. P. (2016). The expected demise of the Bayes factor. Journal of Mathematical Psychology, 72, 33–37.
+#'   \item Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin & review, 14(5), 779-804.
+#' }
 #'
 #' @seealso update.BFGrid
 #'
@@ -123,7 +127,7 @@ bayesfactor_models.default <- function(..., denominator = 1){
 }
 
 
-#' @importFrom insight get_response
+#' @importFrom insight get_response find_algorithm
 .bayesfactor_models_stan <- function(..., denominator = 1){
   if (!requireNamespace("bridgesampling")) {
     stop("Package \"bridgesampling\" needed for this function to work. Please install it.")
@@ -135,6 +139,16 @@ bayesfactor_models.default <- function(..., denominator = 1){
 
   # Orgenize the models
   mods <- list(...)
+
+  # Warn
+  n_samps <- sapply(mods, function(x) {
+    alg <- insight::find_algorithm(x)
+    (alg$chains - alg$warmup) * alg$iterations
+  })
+  if (any(n_samps < 4e4)) {
+    warning("Bayes factors might not be precise.\n",
+            "For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.")
+  }
 
   if (!is.numeric(denominator)) {
     model_name <- deparse(match.call()[["denominator"]])
