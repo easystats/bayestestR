@@ -137,7 +137,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
 
 
 #' @keywords internal
-#' @importFrom stats as.formula terms setNames terms.formula
+#' @importFrom stats as.formula terms terms.formula
 .get_model_table <- function(BFGrid, priorOdds = NULL){
   denominator <- attr(BFGrid,'denominator')
   BFGrid <- rbind(BFGrid[denominator,],BFGrid[-denominator,])
@@ -170,7 +170,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
 
     random_parts <- paste0(all.terms[grepl("\\|", all.terms)]) # only random
     if (length(random_parts) == 0) {
-      return(stats::setNames(fix_trms, fix_trms))
+      return(fix_trms)
     }
 
     random_units <- sub("^.+\\|\\s+", "", random_parts)
@@ -179,7 +179,6 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
       function(x) stats::as.formula(paste0("~", x))
     )
 
-    # rand_print <- rand_trms <- vector("list", length(random_parts))
     rand_trms <- vector("list", length(random_parts))
 
     for (i in seq_along(random_parts)) {
@@ -189,13 +188,8 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
         tmp_trms <- c("1", tmp_trms)
 
       rand_trms[[i]] <- paste0(tmp_trms, ':', random_units[[i]])
-      # rand_print[[i]] <- paste0("(", tmp_trms, "|", random_units[[i]], ")")
     }
 
-    # stats::setNames(
-    #   c(fix_trms, unlist(rand_trms)),
-    #   c(fix_trms, unlist(rand_print))
-    # )
     c(fix_trms, unlist(rand_trms))
   }
 
