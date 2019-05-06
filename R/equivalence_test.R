@@ -163,7 +163,6 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .95, parameters 
 #' @importFrom insight find_parameters
 #' @keywords internal
 .check_parameter_correlation <- function(model) {
-
   dat <- as.data.frame(model)[, insight::find_parameters(model, flatten = TRUE)]
   dat <- dat[, -1]
 
