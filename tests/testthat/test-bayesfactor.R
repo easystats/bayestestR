@@ -26,41 +26,37 @@ mo4_e <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | 
 # both uses of denominator
 BFM1 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, mo1, denominator = 4)
 BFM2 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, denominator = mo1)
+BFM3 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, mo1, denominator = mo1)
+
+set.seed(444)
+brms_4bf_1 <- circus::download_model("brms_4bf_1")
+brms_4bf_2 <- circus::download_model("brms_4bf_2")
+brms_4bf_3 <- circus::download_model("brms_4bf_3")
+brms_4bf_4 <- circus::download_model("brms_4bf_4")
+brms_4bf_5 <- circus::download_model("brms_4bf_5")
+
+library(brms)
+brms_models <- bayestestR::bayesfactor_models(brms_4bf_1,brms_4bf_2,brms_4bf_3, brms_4bf_4, brms_4bf_5)
 
 test_that("bayesfactor_models", {
-  ## CANT TEST BRMS / RSTANARM without running the whole thing
-  ## loading data from circus looses the ll data
+  # brms
+  testthat::expect_is(brms_models,"bayesfactor_models")
+  testthat::expect_equal(brms_models$log.BF,c(0, 68.5, 102.5, 128.6, 128.8), tolerance = 0.1)
 
 
   ## BIC
   testthat::expect_equal(BFM1,BFM2)
+  testthat::expect_equal(BFM1,BFM3)
 
   # only on same data!
   testthat::expect_error(bayestestR::bayesfactor_models(mo1, mo2, mo4_e))
 
+
   # update models
-  testthat::expect_equal(
-    update(BFM2,subset = c(1,2)),
-    structure(list(Model = c("1 + (1 | Species)", "Petal.Length + (1 | Species)",
-                             "Petal.Length + (Petal.Length | Species)"),
-                   log.BF = c(0, 57.3710763968226, 54.5213320500375)),
-              denominator = 1,
-              BF_method = "BIC approximation",
-              row.names = c(4L, 1L, 2L),
-              class = c("bayesfactor_models", "data.frame"))
-  )
+  testthat::expect_equal(update(BFM2,subset = c(1,2))$log.BF,c(0,57.3,54.52), tolerance = 0.1)
 
   # update reference
-  testthat::expect_equal(
-    update(BFM2,reference = 1),
-    structure(list(Model = c("Petal.Length + (1 | Species)", "Petal.Length + (Petal.Length | Species)",
-                             "Petal.Length + Petal.Width + (Petal.Length | Species)", "1 + (1 | Species)"),
-                   log.BF = c(0, -2.84974434678507, -6.2922613780033, -57.3710763968226)),
-              row.names = c(NA, -4L),
-              denominator = 1,
-              BF_method = "BIC approximation",
-              class = c("bayesfactor_models", "data.frame"))
-  )
+  testthat::expect_equal(update(BFM2,reference = 1)$log.BF,c(0,-2.8,-6.2,-57.4),tolerance = 0.1)
 })
 
 test_that("bayesfactor_inclusion", {
@@ -76,13 +72,8 @@ test_that("bayesfactor_inclusion", {
   testthat::expect_true(is.na(bayesfactor_inclusion(BFM1)[1,"log.BF.Inc"]))
 
   # + match_models
-  testthat::expect_equal(
-    bayesfactor_inclusion(BFM1, match_models = TRUE),
-    structure(list(P.Inc.prior = c(1, 0.25, 0.5, 0.25),
-                   P.Inc.posterior = c(1, 0.94365467987862, 0.0563453201213796, 0.00174629939236133),
-                   log.BF.Inc = c(NaN, 57.3710763968226, -2.81826110716954, -5.24989624835758)),
-              class = c("bayesfactor_inclusion", "data.frame"),
-              row.names = c("1:Species", "Petal.Length", "Petal.Length:Species", "Petal.Width"),
-              matched = TRUE)
-  )
+  bfinc_matched <- bayestestR::bayesfactor_inclusion(BFM1, match_models = TRUE)
+  testthat::expect_equal(bfinc_matched$P.Inc.prior,c(1, 0.25, 0.5, 0.25),tolerance = 0.1)
+  testthat::expect_equal(bfinc_matched$P.Inc.posterior,c(1, 0.94, 0.06, 0),tolerance = 0.1)
+  testthat::expect_equal(bfinc_matched$log.BF.Inc,c(NaN, 57.37, -2.82, -5.25),tolerance = 0.1)
 })
