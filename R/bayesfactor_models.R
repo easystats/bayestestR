@@ -200,8 +200,11 @@ bayesfactor_models.stanreg <- function(..., denominator = 1){
 
 #' @export
 bayesfactor_models.brmsfit <- function(..., denominator = 1){
-  if (!require("brms")) {
+  if (!requireNamespace("brms")) {
     stop("Package \"brms\" needed for this function to work. Please install it.")
+  }
+  if (!("brms" %in% .packages)) {
+    stop("This function requires package \"brms\" to be loaded. Please run \"library(brms)\".")
   }
   .bayesfactor_models_stan(..., denominator = denominator)
 }
