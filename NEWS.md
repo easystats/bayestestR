@@ -15,6 +15,7 @@
 - `p_direction()`: improved printing
 - Improved testing
 - `rope()` for model-objects now returns the HDI values for all parameters as attribute in a consistent way
+- Changes legend-labels in `plot.equivalence_test()` to align plots with the output of the `print()`-method (#78)
 
 ## Bug fixes
 
