@@ -112,6 +112,8 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
 #' @importFrom stats sd
 #' @keywords internal
 .equivalence_test_models <- function(x, range = "default", ci = .95, parameters = NULL, verbose = TRUE) {
+  .check_parameter_correlation(x)
+
   if (all(range == "default")) {
     range <- rope_range(x)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
@@ -154,4 +156,29 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .95, parameters 
   out <- .equivalence_test_models(x, range, ci, parameters, verbose)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
+}
+
+
+#' @importFrom stats cor cor.test
+#' @importFrom insight find_parameters
+#' @keywords internal
+.check_parameter_correlation <- function(model) {
+
+  dat <- as.data.frame(model)[, insight::find_parameters(model, flatten = TRUE)]
+  dat <- dat[, -1]
+
+  parameter_correlation <- stats::cor(dat)
+  parameter <- expand.grid(colnames(dat), colnames(dat), stringsAsFactors = FALSE)
+
+  results <- cbind(
+    parameter,
+    corr = abs(as.vector(expand.grid(parameter_correlation)[[1]])),
+    pvalue = apply(parameter, 1, function(r) stats::cor.test(dat[[r[1]]], dat[[r[2]]])$p.value)
+  )
+
+  results <- results[which(results$pvalue < 0.05) & results$Var1 != results$Var2, ]
+
+  if (nrow(results) > 0 && any(results$corr >= 0.5)) {
+    warning("Some parameters show strong correlation. Note that the equivalence-test may have inappropriate results when covariates are not independent.")
+  }
 }
