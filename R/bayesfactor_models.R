@@ -203,7 +203,7 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1){
   if (!requireNamespace("brms")) {
     stop("Package \"brms\" needed for this function to work. Please install it.")
   }
-  if (!("brms" %in% .packages)) {
+  if (!("brms" %in% .packages())) {
     stop("This function requires package \"brms\" to be loaded. Please run \"library(brms)\".")
   }
   .bayesfactor_models_stan(..., denominator = denominator)
