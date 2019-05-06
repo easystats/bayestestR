@@ -56,15 +56,6 @@ plot.equivalence_test <- function(x, ...) {
     tmp <- .to_long(tmp, names_to = "predictor", values_to = "estimate")
     # tmp$predictor <- as.factor(tmp$predictor)
 
-    i$ROPE_Equivalence <- ifelse(
-      i$ROPE_Equivalence == "accepted",
-      "rejected",
-      ifelse(
-        i$ROPE_Equivalence == "rejected",
-        "accepted",
-        "undecided")
-    )
-
     tmp$grp <- NA
     for (j in 1:nrow(i)) {
       tmp$grp[tmp$predictor == i$Parameter[j]] <- i$ROPE_Equivalence[j]
@@ -82,15 +73,15 @@ plot.equivalence_test <- function(x, ...) {
 
   # check for user defined arguments
 
-  fill.color <- c("#018F77", "#CD423F", "#FCDA3B")
+  fill.color <- c("#CD423F", "#018F77", "#FCDA3B")
   rope.color <- "#0171D3"
   rope.alpha <- 0.15
   x.title <- sprintf("%i%% Highest Density Region of Posterior Samples", x$CI[1])
-  legend.title <- "Decision on Parameters"
+  legend.title <- "Decision on H0"
   labels <- levels(tmp$predictor)
   names(labels) <- labels
 
-  fill.color <- fill.color[sort(unique(match(x$ROPE_Equivalence, c("rejected", "accepted", "undecided"))))]
+  fill.color <- fill.color[sort(unique(match(x$ROPE_Equivalence, c("accepted", "rejected", "undecided"))))]
 
   add.args <- lapply(match.call(expand.dots = F)$`...`, function(x) x)
   if ("colors" %in% names(add.args)) fill.color <- eval(add.args[["colors"]])
