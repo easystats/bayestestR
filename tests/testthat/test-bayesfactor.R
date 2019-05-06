@@ -78,11 +78,11 @@ test_that("bayesfactor_inclusion", {
   BF_ToothGrowth <- BayesFactor::anovaBF(len ~ dose*supp, ToothGrowth)
   testthat::expect_equal(
     bayestestR::bayesfactor_inclusion(BF_ToothGrowth),
-    bayestestR::bayesfactor_inclusion(bayesfactor_models(BF_ToothGrowth))
+    bayestestR::bayesfactor_inclusion(bayestestR::bayesfactor_models(BF_ToothGrowth))
   )
 
   # with random effects in all models:
-  testthat::expect_true(is.na(bayesfactor_inclusion(BFM1)[1,"log.BF.Inc"]))
+  testthat::expect_true(is.na(bayestestR::bayesfactor_inclusion(BFM1)[1,"log.BF.Inc"]))
 
   # + match_models
   bfinc_matched <- bayestestR::bayesfactor_inclusion(BFM1, match_models = TRUE)
