@@ -1,6 +1,6 @@
 #' @importFrom insight find_parameters
 .get_parameter_names <- function(posterior, effects, component, parameters) {
-  pars <- insight::find_parameters(posterior, parameters = parameters)
+  pars <- insight::find_parameters(posterior, flatten = FALSE, parameters = parameters)
 
   pars <- switch(
     effects,
