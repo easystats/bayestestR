@@ -179,7 +179,8 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
       function(x) stats::as.formula(paste0("~", x))
     )
 
-    rand_print <- rand_trms <- vector("list", length(random_parts))
+    # rand_print <- rand_trms <- vector("list", length(random_parts))
+    rand_trms <- vector("list", length(random_parts))
 
     for (i in seq_along(random_parts)) {
       tmp_trms <- attr(stats::terms.formula(tmp_random[[i]]), "term.labels")
@@ -188,18 +189,21 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
         tmp_trms <- c("1", tmp_trms)
 
       rand_trms[[i]] <- paste0(tmp_trms, ':', random_units[[i]])
-      rand_print[[i]] <- paste0("(", tmp_trms, "|", random_units[[i]], ")")
+      # rand_print[[i]] <- paste0("(", tmp_trms, "|", random_units[[i]], ")")
     }
 
-    stats::setNames(
-      c(fix_trms, unlist(rand_trms)),
-      c(fix_trms, unlist(rand_print))
-    )
+    # stats::setNames(
+    #   c(fix_trms, unlist(rand_trms)),
+    #   c(fix_trms, unlist(rand_print))
+    # )
+    c(fix_trms, unlist(rand_trms))
   }
 
   for (m in seq_len(nrow(df.model))) {
     tmp_terms <- make_terms(df.model$Modelnames[m])
-    df.model[m, tmp_terms] <- TRUE
+    if (length(tmp_terms) > 0) {
+      df.model[m, tmp_terms] <- TRUE
+    }
   }
 
   df.model[is.na(df.model)] <- FALSE
