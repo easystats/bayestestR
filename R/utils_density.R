@@ -33,8 +33,12 @@ estimate_density <- function(x, method="kernel", precision = 2^10, bw = "SJ", ..
   # Logspline
   } else if(method == "logspline"){
     if (!requireNamespace("logspline")) {
-      readline("Package \"logspline\" needed for this function. Press ENTER to install or ESCAPE to abort.")
-      install.packages("logspline")
+      if(interactive()){
+        readline("Package \"logspline\" needed for this function. Press ENTER to install or ESCAPE to abort.")
+        install.packages("logspline")
+      } else{
+        stop("Package \"logspline\" needed for this function. Press run 'install.packages(\"logspline\")'.")
+      }
     }
 
     x_axis <- seq(x_range[1], x_range[2], length.out = precision)
@@ -44,8 +48,12 @@ estimate_density <- function(x, method="kernel", precision = 2^10, bw = "SJ", ..
     # KernSmooth
   } else if(method == "KernSmooth"){
     if (!requireNamespace("KernSmooth")) {
-    readline("Package \"KernSmooth\" needed for this function. Press ENTER to install or ESCAPE to abort.")
-    install.packages("KernSmooth")
+      if(interactive()){
+        readline("Package \"KernSmooth\" needed for this function. Press ENTER to install or ESCAPE to abort.")
+        install.packages("KernSmooth")
+      } else{
+        stop("Package \"KernSmooth\" needed for this function. Press run 'install.packages(\"KernSmooth\")'.")
+      }
     }
     x <- as.data.frame(KernSmooth::bkde(x, range.x = x_range, gridsize = precision, truncate = TRUE, ...))
   } else{
@@ -90,8 +98,8 @@ as.data.frame.density <- function(x, ...) {
 #' density_at(posterior, c(0, 1))
 #' @importFrom stats approx density
 #' @export
-density_at <- function(posterior, x, precision = 2^10) {
-  density <- stats::density(posterior, n = precision)
+density_at <- function(posterior, x, precision = 2^10, ...) {
+  density <- estimate_density(posterior, method = "kernel", bw = "nrd0", precision = precision, ...)
   stats::approx(density$x, density$y, xout = x)$y
 }
 

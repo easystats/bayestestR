@@ -4,7 +4,7 @@
 \alias{density_at}
 \title{Probability of a Given Point}
 \usage{
-density_at(posterior, x, precision = 2^10)
+density_at(posterior, x, precision = 2^10, ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution.}
@@ -12,6 +12,8 @@ density_at(posterior, x, precision = 2^10)
 \item{x}{The value of which to get the approximate probability.}
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \link[=density]{density}.}
+
+\item{...}{further arguments for (non-default) methods.}
 }
 \description{
 Compute the density of a given point of a distribution.
