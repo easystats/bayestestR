@@ -24,7 +24,7 @@ map_estimate(x, ...)
 
 \item{...}{Currently not used.}
 
-\item{precision}{Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.}
+\item{precision}{Number of points of density data. See the \code{n} parameter in \link[=density]{density}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}

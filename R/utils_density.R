@@ -99,7 +99,7 @@ as.data.frame.density <- function(x, ...) {
 #' @importFrom stats approx density
 #' @export
 density_at <- function(posterior, x, precision = 2^10, ...) {
-  density <- estimate_density(posterior, method = "kernel", bw = "nrd0", precision = precision, ...)
+  density <- estimate_density(posterior, precision = precision, ...)
   stats::approx(density$x, density$y, xout = x)$y
 }
 
