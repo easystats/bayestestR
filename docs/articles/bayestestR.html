@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -74,6 +74,9 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
+    </li>
+    <li>
+      <a href="../articles/bayes_factors.html">2. Bayes Factors</a>
     </li>
   </ul>
 </li>
@@ -161,7 +164,7 @@ Accurate depiction of a regular Bayesian user estimating a credible interval.
 <a href="#bayestestr-installation" class="anchor"></a>BayestestR Installation</h3>
 <p>You can install <code>bayestestR</code> along with the whole <a href="https://github.com/easystats/easystats"><strong>easystats</strong></a> suite by running the following:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"easystats/easystats"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"easystats/easystats"</span>)</a></code></pre></div>
 <!-- Now that it's done, we can *load* the packages we need, in this case [`report`](https://github.com/easystats/report), which combines `bayestestR` and other packages together. -->
 <!-- ```{r message=FALSE, warning=FALSE} -->
 <!-- library(report)  # Calling library(...) enables you to use the package's functions -->
@@ -241,19 +244,19 @@ Model Info:
 
 Estimates:
                 mean   sd    2.5%   25%   50%   75%   97.5%
-(Intercept)     4.3    0.1   4.2    4.3   4.3   4.4   4.4  
+(Intercept)     4.3    0.1   4.2    4.3   4.3   4.4   4.5  
 Petal.Length    0.4    0.0   0.4    0.4   0.4   0.4   0.4  
 sigma           0.4    0.0   0.4    0.4   0.4   0.4   0.5  
-mean_PPD        5.8    0.0   5.8    5.8   5.8   5.9   5.9  
-log-posterior -84.0    1.2 -87.2  -84.5 -83.6 -83.1 -82.6  
+mean_PPD        5.8    0.0   5.7    5.8   5.8   5.9   5.9  
+log-posterior -84.0    1.2 -87.2  -84.6 -83.7 -83.1 -82.6  
 
 Diagnostics:
               mcse Rhat n_eff
-(Intercept)   0.0  1.0  3913 
-Petal.Length  0.0  1.0  4116 
-sigma         0.0  1.0  4014 
-mean_PPD      0.0  1.0  3762 
-log-posterior 0.0  1.0  1901 
+(Intercept)   0.0  1.0  4056 
+Petal.Length  0.0  1.0  4311 
+sigma         0.0  1.0  3895 
+mean_PPD      0.0  1.0  4060 
+log-posterior 0.0  1.0  1959 
 
 For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
 <p><strong>That’s it!</strong> You fitted a Bayesian version of the model by simply using <a href="https://mc-stan.org/rstanarm/reference/stan_glm.html"><code>stan_glm()</code></a> instead of <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code>. The conclusion that we can drawn, for this example, are very similar. The effect (<em>the median of the effect’s posterior distribution</em>) is about <code>0.41</code>, and it can be also be considered as <em>significant</em> in the Bayesian sense.</p>
@@ -309,7 +312,7 @@ For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
+  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>.</p>
 </div>
 
 <div class="pkgdown">

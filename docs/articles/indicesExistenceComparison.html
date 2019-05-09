@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>In-Depth 2: Comparison of Indices of Effect Existence • bayestestR</title>
+<title>In-Depth 2: Comparison of Indices of Effect Existence and Significance • bayestestR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="In-Depth 2: Comparison of Indices of Effect Existence">
+<meta property="og:title" content="In-Depth 2: Comparison of Indices of Effect Existence and Significance">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -74,6 +74,9 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
+    </li>
+    <li>
+      <a href="../articles/bayes_factors.html">2. Bayes Factors</a>
     </li>
   </ul>
 </li>
@@ -115,7 +118,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>In-Depth 2: Comparison of Indices of Effect Existence</h1>
+      <h1>In-Depth 2: Comparison of Indices of Effect Existence and Significance</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/indicesExistenceComparison.Rmd"><code>vignettes/indicesExistenceComparison.Rmd</code></a></small>
@@ -129,9 +132,9 @@
 <ul>
 <li>Makowski, D. &amp; Lüdecke, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using BayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. DOI: <a href="https://zenodo.org/record/2556486">10.5281/zenodo.2556486</a>.</li>
 </ul>
-<div id="indices-of-effect-existence-in-the-bayesian-framework" class="section level1">
+<div id="indices-of-effect-existence-and-significance-in-the-bayesian-framework" class="section level1">
 <h1 class="hasAnchor">
-<a href="#indices-of-effect-existence-in-the-bayesian-framework" class="anchor"></a>Indices of Effect <em>Existence</em> in the Bayesian Framework</h1>
+<a href="#indices-of-effect-existence-and-significance-in-the-bayesian-framework" class="anchor"></a>Indices of Effect <em>Existence</em> and <em>Significance</em> in the Bayesian Framework</h1>
 <p>There is now a general agreement that the Bayesian statistical framework is the right way to go for psychological science. Nevertheless, its flexible nature is its power and weakness, for there is no agreement about what indices should be computed or reported. Moreover, the lack of a consensual index of effect existence, such as the frequentist <em>p</em>-value, possibly contributes to the unnecessary murkiness that many non-familiar readers perceive in Bayesian statistics. Thus, this study describes and compares several indices of effect existence, provide intuitive visual representation of the “behaviour” of such indices in relationship with traditional metrics such as sample size and frequentist significance. The results contribute to develop the intuitive understanding of the values that researchers report and allow to draw recommendations for Bayesian statistics description, critical for the standardization of scientific reporting.</p>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
@@ -461,7 +464,7 @@
 <a class="sourceLine" id="cb7-8" title="8">        <span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">face=</span><span class="st">"bold"</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-9" title="9"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">`</span><span class="dt">0</span><span class="st">`</span> =<span class="st"> "#f44336"</span>, <span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> "#8BC34A"</span>), <span class="dt">name=</span><span class="st">"Effect"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-10" title="10"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"ROPE (full)</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Index Value"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb7-11" title="11"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Probability of Direction"</span>)</a></code></pre></div>
 <p><img src="indicesExistenceComparison_files/figure-html/unnamed-chunk-7-1.png" width="967.68"></p>
 </div>
 </div>
@@ -586,7 +589,7 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li>
-<a href="#indices-of-effect-existence-in-the-bayesian-framework">Indices of Effect <em>Existence</em> in the Bayesian Framework</a><ul class="nav nav-pills nav-stacked">
+<a href="#indices-of-effect-existence-and-significance-in-the-bayesian-framework">Indices of Effect <em>Existence</em> and <em>Significance</em> in the Bayesian Framework</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
       <li><a href="#study-1-relationship-with-noise-and-sample-size">Study 1: Relationship with Noise and Sample Size</a></li>
       <li><a href="#study-2-relationship-with-sampling-characteristics">Study 2: Relationship with Sampling Characteristics</a></li>
@@ -603,7 +606,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
+  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>.</p>
 </div>
 
 <div class="pkgdown">

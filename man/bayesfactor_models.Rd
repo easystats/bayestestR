@@ -45,21 +45,22 @@ bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
 
 # With lmerMod objects:
 library(lme4)
-lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1|Species), data = iris)
-lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species), data = iris)
+lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
 lmer3 <- lmer(
-  Sepal.Length ~ Petal.Length + (Petal.Length|Species) + (1|Petal.Width),
+  Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
   data = iris
 )
 bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
 bayesfactor_models(lmer1, lmer2, lmer3, denominator = lmer1)
-
 \dontrun{
 # With BFBayesFactor objects:
 library(BayesFactor)
 data(puzzles)
-BF <- anovaBF(RT ~ shape * color + ID, data = puzzles,
-              whichRandom = "ID", progress = FALSE)
+BF <- anovaBF(RT ~ shape * color + ID,
+  data = puzzles,
+  whichRandom = "ID", progress = FALSE
+)
 BF
 bayesfactor_models(BF) # basically the same
 
@@ -69,7 +70,8 @@ library(brms)
 brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
 brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
 brm3 <- brm(
-  Sepal.Length ~ Species + Petal.Length, data = iris,
+  Sepal.Length ~ Species + Petal.Length,
+  data = iris,
   save_all_pars = TRUE
 )
 

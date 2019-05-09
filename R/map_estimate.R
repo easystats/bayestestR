@@ -3,7 +3,7 @@
 #' Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior, \emph{i.e.,} the most probable value. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution.
 #'
 #' @inheritParams hdi
-#' @param precision Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.
+#' @inheritParams estimate_density
 #'
 #' @return A numeric value if \code{posterior} is a vector.
 #'   If \code{density = TRUE}, or if \code{posterior} is a model-object, returns
@@ -20,8 +20,7 @@
 #' map_estimate(posterior)
 #'
 #' plot(density(posterior))
-#' abline(v=map_estimate(posterior), col="red")
-#'
+#' abline(v = map_estimate(posterior), col = "red")
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -53,7 +52,7 @@ print.MAP <- function(x, ...) {
 #' @rdname map_estimate
 #' @export
 map_estimate.numeric <- function(x, precision = 2^10, ...) {
-  d <- stats::density(x, n = precision)
+  d <- estimate_density(x, precision = precision, ...)
 
   hdp_x <- d$x[which.max(d$y)]
   hdp_y <- max(d$y)
@@ -73,9 +72,9 @@ map_estimate.numeric <- function(x, precision = 2^10, ...) {
 
 #' @importFrom insight get_parameters
 #' @keywords internal
-.map_estimate_models <- function(x, precision) {
-  list <- sapply(x, map_estimate, precision = precision, simplify = FALSE)
-  out <- flatten_list(list, name = "Parameter")
+.map_estimate_models <- function(x, precision, ...) {
+  list <- sapply(x, map_estimate, precision = precision, simplify = FALSE, ...)
+  out <- .flatten_list(list, name = "Parameter")
   rownames(out) <- NULL
 
   as.data.frame(out)

@@ -36,15 +36,14 @@ estimate_density(x, method = "kernel", precision = 2^10, bw = "SJ",
 Density Estimation
 }
 \examples{
-x <- rnorm(500)
+x <- rnorm(250, 1)
 
-density_kernel <- estimate_density(x, method="kernel")
-density_logspline <- estimate_density(x, method="logspline")
-density_KernSmooth <- estimate_density(x, method="KernSmooth")
+density_kernel <- estimate_density(x, method = "kernel")
+density_logspline <- estimate_density(x, method = "logspline")
+density_KernSmooth <- estimate_density(x, method = "KernSmooth")
 
-hist(x, prob=TRUE)
-lines(density_kernel$x, density_kernel$y, col="black", lwd=2)
-lines(density_logspline$x, density_logspline$y, col="red", lwd=2)
-lines(density_KernSmooth$x, density_KernSmooth$y, col="blue", lwd=2)
-
+hist(x, prob = TRUE)
+lines(density_kernel$x, density_kernel$y, col = "black", lwd = 2)
+lines(density_logspline$x, density_logspline$y, col = "red", lwd = 2)
+lines(density_KernSmooth$x, density_KernSmooth$y, col = "blue", lwd = 2)
 }

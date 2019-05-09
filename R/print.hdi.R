@@ -1,8 +1,8 @@
 #' @export
 print.hdi <- function(x, digits = 2, ...) {
-  if("data_plot" %in% class(x)){
+  if ("data_plot" %in% class(x)) {
     print(as.data.frame(x))
-  } else{
+  } else {
     .print_hdi(x, digits, title = "Highest Density Interval", ci_string = "HDI", ...)
   }
 }

@@ -55,5 +55,4 @@ Generate a sample of size \code{n} with a near-perfect distribution.
 library(bayestestR)
 x <- distribution(n = 10)
 plot(density(x))
-
 }

@@ -37,7 +37,6 @@
 #'
 #' # compare only matched models:
 #' bayesfactor_inclusion(BF, match_models = TRUE)
-#'
 #' @references
 #' \itemize{
 #'   \item Hinne, M., Gronau, Q. F., van den Bergh, D., & Wagenmakers,
@@ -70,60 +69,62 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
   # Build Interaction Matrix #
   if (match_models) {
     df.interaction <- data.frame(effnames,
-                                 stringsAsFactors = FALSE)
+      stringsAsFactors = FALSE
+    )
 
     for (eff in effnames) {
-      df.interaction[,eff] <- sapply(effnames, function(x) .includes_interaction(x,eff))
+      df.interaction[, eff] <- sapply(effnames, function(x) .includes_interaction(x, eff))
     }
     rownames(df.interaction) <- effnames
-    df.interaction <- df.interaction[,-1]
+    df.interaction <- df.interaction[, -1]
   }
 
   # Build Effect Table #
   df.effect <- data.frame(effnames,
-                          Pinc  = rep(NA,length(effnames)),
-                          PincD = rep(NA,length(effnames)),
-                          BFinc = rep(NA,length(effnames)),
-                          stringsAsFactors = FALSE)
+    Pinc = rep(NA, length(effnames)),
+    PincD = rep(NA, length(effnames)),
+    BFinc = rep(NA, length(effnames)),
+    stringsAsFactors = FALSE
+  )
 
   for (eff in effnames) {
     df.model_temp <- df.model
 
     if (match_models) {
       # remove models with higher interactions
-      inter_term <- effnames[unlist(df.interaction[effnames==eff,,drop = TRUE])]
+      inter_term <- effnames[unlist(df.interaction[effnames == eff, , drop = TRUE])]
 
-      hashigherinter <- which(rowSums(df.model[,inter_term, drop = FALSE])>0)
+      hashigherinter <- which(rowSums(df.model[, inter_term, drop = FALSE]) > 0)
 
-      if (length(hashigherinter)>0) {
-        df.model_temp <- df.model_temp[-hashigherinter,,drop = FALSE]
+      if (length(hashigherinter) > 0) {
+        df.model_temp <- df.model_temp[-hashigherinter, , drop = FALSE]
       }
     }
 
     # models with effect
     mwith <- which(df.model_temp[[eff]])
-    mwithprior <- sum(df.model_temp[mwith,'priorProbs'])
-    mwithpost <- sum(df.model_temp[mwith,'postProbs'])
+    mwithprior <- sum(df.model_temp[mwith, "priorProbs"])
+    mwithpost <- sum(df.model_temp[mwith, "postProbs"])
 
     # models without effect
-    mwithoutprior <- sum(df.model_temp[-mwith,'priorProbs'])
-    mwithoutpost <- sum(df.model_temp[-mwith,'postProbs'])
+    mwithoutprior <- sum(df.model_temp[-mwith, "priorProbs"])
+    mwithoutpost <- sum(df.model_temp[-mwith, "postProbs"])
 
     # Save results
-    df.effect$Pinc[effnames==eff]  <- mwithprior
-    df.effect$PincD[effnames==eff] <- mwithpost
-    df.effect$BFinc[effnames==eff] <- (mwithpost/mwithoutpost)/(mwithprior/mwithoutprior)
+    df.effect$Pinc[effnames == eff] <- mwithprior
+    df.effect$PincD[effnames == eff] <- mwithpost
+    df.effect$BFinc[effnames == eff] <- (mwithpost / mwithoutpost) / (mwithprior / mwithoutprior)
   }
 
   df.effect$BFinc <- log(df.effect$BFinc)
-  df.effect <- df.effect[,-1,drop = FALSE]
-  colnames(df.effect) <- c("P.Inc.prior","P.Inc.posterior","log.BF.Inc")
+  df.effect <- df.effect[, -1, drop = FALSE]
+  colnames(df.effect) <- c("P.Inc.prior", "P.Inc.posterior", "log.BF.Inc")
   rownames(df.effect) <- effnames
 
 
-  class(df.effect) <- c('bayesfactor_inclusion',class(df.effect))
-  attr(df.effect,'matched') <- match_models
-  attr(df.effect,'priorOdds') <- prior_odds
+  class(df.effect) <- c("bayesfactor_inclusion", class(df.effect))
+  attr(df.effect, "matched") <- match_models
+  attr(df.effect, "priorOdds") <- prior_odds
 
   return(df.effect)
 }
@@ -138,10 +139,10 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
 
 #' @keywords internal
 #' @importFrom stats as.formula terms terms.formula
-.get_model_table <- function(BFGrid, priorOdds = NULL){
-  denominator <- attr(BFGrid,'denominator')
-  BFGrid <- rbind(BFGrid[denominator,],BFGrid[-denominator,])
-  attr(BFGrid,'denominator') <- 1
+.get_model_table <- function(BFGrid, priorOdds = NULL) {
+  denominator <- attr(BFGrid, "denominator")
+  BFGrid <- rbind(BFGrid[denominator, ], BFGrid[-denominator, ])
+  attr(BFGrid, "denominator") <- 1
 
   # Prior and post odds
   Modelnames <- BFGrid$Model
@@ -157,13 +158,14 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
   postProbs <- posterior_odds / sum(posterior_odds)
 
   df.model <- data.frame(Modelnames,
-                         priorProbs,
-                         postProbs,
-                         stringsAsFactors = FALSE)
+    priorProbs,
+    postProbs,
+    stringsAsFactors = FALSE
+  )
 
   # add effects table
   make_terms <- function(formula) {
-    formula.f <- stats::as.formula(paste0('~', formula))
+    formula.f <- stats::as.formula(paste0("~", formula))
     all.terms <- attr(stats::terms(formula.f), "term.labels")
 
     fix_trms <- all.terms[!grepl("\\|", all.terms)] # no random
@@ -184,10 +186,11 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
     for (i in seq_along(random_parts)) {
       tmp_trms <- attr(stats::terms.formula(tmp_random[[i]]), "term.labels")
 
-      if (!any(unlist(strsplit(as.character(tmp_random[[i]])[[2]], ' \\+ ')) == "0"))
+      if (!any(unlist(strsplit(as.character(tmp_random[[i]])[[2]], " \\+ ")) == "0")) {
         tmp_trms <- c("1", tmp_trms)
+      }
 
-      rand_trms[[i]] <- paste0(tmp_trms, ':', random_units[[i]])
+      rand_trms[[i]] <- paste0(tmp_trms, ":", random_units[[i]])
     }
 
     c(fix_trms, unlist(rand_trms))
@@ -207,9 +210,9 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
 
 
 #' @keywords internal
-.includes_interaction <- function(eff,effnames){
+.includes_interaction <- function(eff, effnames) {
   eff_b <- strsplit(eff, "\\:")
-  effnames_b <- strsplit(effnames, '\\:')
+  effnames_b <- strsplit(effnames, "\\:")
 
   is_int <- sapply(effnames_b, function(x) length(x) > 1)
 

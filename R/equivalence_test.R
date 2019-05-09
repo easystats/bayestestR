@@ -57,7 +57,6 @@
 #' # print more digits
 #' test <- equivalence_test(x = rnorm(1000, 1, 1), ci = c(.50, .99))
 #' print(test, digits = 4)
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)

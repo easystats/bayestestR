@@ -24,7 +24,7 @@ map_estimate(x, ...)
 
 \item{...}{Currently not used.}
 
-\item{precision}{Number of points for density estimation. See the \code{n} parameter in \link[=density]{density}.}
+\item{precision}{Number of points of density data. See the \code{n} parameter in \link[=density]{density}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
@@ -58,8 +58,7 @@ posterior <- rnorm(10000)
 map_estimate(posterior)
 
 plot(density(posterior))
-abline(v=map_estimate(posterior), col="red")
-
+abline(v = map_estimate(posterior), col = "red")
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
