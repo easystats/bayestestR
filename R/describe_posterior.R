@@ -20,7 +20,7 @@
 #' @importFrom stats mad median sd setNames
 #'
 #' @export
-describe_posterior <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE) {
+describe_posterior <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
   UseMethod("describe_posterior")
 }
 
@@ -31,7 +31,7 @@ describe_posterior <- function(posteriors, ci = .90, ci_method = "hdi", estimate
 
 #' @rdname describe_posterior
 #' @export
-describe_posterior.numeric <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE) {
+describe_posterior.numeric <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
   x <-
     describe_posterior(
       as.data.frame(posteriors),
@@ -58,7 +58,7 @@ describe_posterior.double <- describe_posterior.numeric
 #' @rdname describe_posterior
 #' @method describe_posterior data.frame
 #' @export
-describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE) {
+describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
   # Point estimates
   out <- data.frame("Parameter" = colnames(posteriors))
   if ("median" %in% c(estimate)) {
@@ -74,7 +74,7 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi
     }
   }
   if ("map" %in% c(estimate)) {
-    out$MAP <- unlist(sapply(posteriors, map_estimate))
+    out$MAP <- unlist(sapply(posteriors, map_estimate, ...))
   }
 
   # CI
@@ -100,9 +100,9 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi
       hdi <- hdi[names(hdi) != "name"]
     } else {
       if (ci_method == "hdi") {
-        hdi <- as.data.frame(t(sapply(posteriors, hdi, ci = ci)), stringsAsFactors = FALSE)
+        hdi <- as.data.frame(t(sapply(posteriors, hdi, ci = ci, ...)), stringsAsFactors = FALSE)
       } else {
-        hdi <- as.data.frame(t(sapply(posteriors, ci, ci = ci)), stringsAsFactors = FALSE)
+        hdi <- as.data.frame(t(sapply(posteriors, ci, ci = ci, ...)), stringsAsFactors = FALSE)
       }
       hdi <- hdi[c("CI_low", "CI_high")]
     }
@@ -116,7 +116,7 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi
   if (!is.null(test)) {
     test_list <- tolower(c(test))
     if ("pd" %in% test_list | "p_direction" %in% test_list | "pdir" %in% test_list | "mpe" %in% test_list) {
-      out$pd <- sapply(posteriors, p_direction)
+      out$pd <- sapply(posteriors, p_direction, ...)
     }
     if ("rope" %in% test_list | "equivalence" %in% test_list | "equi" %in% test_list) {
       if (length(ci) == 1 | rope_full) {
@@ -160,3 +160,15 @@ describe_posterior.data.frame <- function(posteriors, ci = .90, ci_method = "hdi
   rownames(out) <- NULL
   return(out)
 }
+
+
+
+#' @rdname describe_posterior
+#' @export
+describe_posterior.stanreg <- function(posteriors, ci = .90, ci_method = "hdi", estimate = "median", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
+  describe_posterior(as.data.frame(posteriors), ci = ci, ci_method = ci_method, estimate = estimate, test = test, rope_range = rope_range, rope_full = rope_full, dispersion = dispersion, ...)
+}
+
+#' @rdname describe_posterior
+#' @export
+describe_posterior.brmsfit <- describe_posterior.stanreg

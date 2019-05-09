@@ -6,7 +6,7 @@
 #' @param precision Number of points of density data. See the \code{n} parameter in \link[=density]{density}.
 #'
 #' @examples
-#' x <- rnorm(500)
+#' x <- rnorm(250, 1)
 #'
 #' density_kernel <- estimate_density(x, method="kernel")
 #' density_logspline <- estimate_density(x, method="logspline")

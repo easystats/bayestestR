@@ -5,23 +5,33 @@
 \alias{describe_posterior.numeric}
 \alias{describe_posterior.double}
 \alias{describe_posterior.data.frame}
+\alias{describe_posterior.stanreg}
+\alias{describe_posterior.brmsfit}
 \title{Describe posterior distributions.}
 \usage{
 describe_posterior(posteriors, ci = 0.9, ci_method = "hdi",
   estimate = "median", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, dispersion = TRUE)
+  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
 
 \method{describe_posterior}{numeric}(posteriors, ci = 0.9,
   ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, dispersion = TRUE)
+  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
 
 \method{describe_posterior}{double}(posteriors, ci = 0.9,
   ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, dispersion = TRUE)
+  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
 
 \method{describe_posterior}{data.frame}(posteriors, ci = 0.9,
   ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, dispersion = TRUE)
+  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
+
+\method{describe_posterior}{stanreg}(posteriors, ci = 0.9,
+  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
+  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
+
+\method{describe_posterior}{brmsfit}(posteriors, ci = 0.9,
+  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
+  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
 }
 \arguments{
 \item{posteriors}{A vector, dataframe or model of posterior draws.}
