@@ -6,6 +6,8 @@
 #' @param precision Number of points of density data. See the \code{n} parameter in \link[=density]{density}.
 #'
 #' @examples
+#' library(bayestestR)
+#'
 #' x <- rnorm(250, 1)
 #'
 #' density_kernel <- estimate_density(x, method = "kernel")
@@ -16,6 +18,7 @@
 #' lines(density_kernel$x, density_kernel$y, col = "black", lwd = 2)
 #' lines(density_logspline$x, density_logspline$y, col = "red", lwd = 2)
 #' lines(density_KernSmooth$x, density_KernSmooth$y, col = "blue", lwd = 2)
+#'
 #' @importFrom stats density
 #' @importFrom utils install.packages
 #' @export
