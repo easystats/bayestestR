@@ -97,3 +97,45 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior, direction = "two-
 
   bf_val
 }
+
+#' @rdname bayesfactor_savagedickey
+#' @export
+#' @importFrom insight find_algorithm
+bayesfactor_savagedickey.stanreg <- function(object, direction = "two-sided", hypothesis = 0){
+  if (!requireNamespace("rstanarm")) {
+    stop("Package \"rstanarm\" needed for this function to work. Please install it.")
+  }
+
+  # Get Priors
+  alg <- insight::find_algorithm(object)
+
+  capture.output(Prior <- suppressWarnings(
+    update(
+      object,
+      prior_PD = TRUE,
+      iter = alg$iterations,
+      chains = alg$chains,
+      warmup = alg$warmup
+    )
+  ))
+
+  posterior <- as.data.frame(object)
+  prior <- as.data.frame(Prior)
+
+  # Get savage-dickey BFs
+  sdbf <- numeric(ncol(prior))
+
+  for (par in seq_len(ncol(posterior))) {
+    tmp <- bayesfactor_savagedickey.numeric(posterior[[par]],
+                                            prior[[par]],
+                                            direction = direction,
+                                            hypothesis = hypothesis)
+    sdbf[par] <- tmp[['BFsd']]
+  }
+
+  bf_val <- data.frame(BFsd = sdbf, row.names = colnames(posterior))
+  class(bf_val) <- c("bayesfactor_savagedickey", class(bf_val))
+  attr(bf_val, "hypothesis") <- hypothesis
+
+  bf_val
+}
