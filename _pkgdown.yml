@@ -3,6 +3,8 @@ authors:
     href: https://dominiquemakowski.github.io/
   Daniel Lüdecke:
     href: https://github.com/strengejacke
+  Mattan S. Ben-Shachar:
+    href: https://github.com/mattansb
 
 template:
   params:
@@ -24,6 +26,8 @@ navbar:
     menu:
       - text: '1. Bayesian (General) Linear Models'
         href: articles/example1_GLM.html
+      - text: '2. Bayes Factors'
+        href: articles/bayes_factors.html
   - text: Articles
     menu:
       - text: '1. Comparison of Point-Estimates'

@@ -15,7 +15,6 @@
 #' i.e., \code{(X|G)} will become \code{1:G} and \code{X:G}.
 #'
 #' @examples
-#' \dontrun{
 #' library(bayestestR)
 #'
 #' # Using with bayesfactor_models:
@@ -25,8 +24,8 @@
 #' mo2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 #' mo3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 #'
-#' SepalLength_BFmodels <- bayesfactor_models(mo1,mo2,mo3,.denominator = mo0)
-#' bayesfactor_inclusion(SepalLength_BFmodels)
+#' BFmodels <- bayesfactor_models(mo1, mo2, mo3, denominator = mo0)
+#' bayesfactor_inclusion(BFmodels)
 #'
 #' # Using with BayesFactor objects:
 #' # -------------------------------
@@ -39,19 +38,20 @@
 #' # compare only matched models:
 #' bayesfactor_inclusion(BF, match_models = TRUE)
 #'
-#' }
-#'
-#' @references Hinne, M., Gronau, Q. F., van den Bergh, D., & Wagenmakers,
+#' @references
+#' \itemize{
+#'   \item Hinne, M., Gronau, Q. F., van den Bergh, D., & Wagenmakers,
 #' E. (2019, March 25). A conceptual introduction to Bayesian Model
 #' Averaging. https://doi.org/10.31234/osf.io/wgb64
 #'
-#' Clyde, M. A., Ghosh, J., & Littman, M. L. (2011). Bayesian
+#'   \item Clyde, M. A., Ghosh, J., & Littman, M. L. (2011). Bayesian
 #' adaptive sampling for variable selection and model averaging. Journal
 #' of Computational and Graphical Statistics, 20(1), 80-101.
 #'
-#' Mathot. S. (2017). Bayes like a Baws:
+#'   \item Mathot. S. (2017). Bayes like a Baws:
 #' Interpreting Bayesian Repeated Measures in JASP [Blog post].
 #' Retrieved from https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp
+#' }
 #'
 #'
 #' @export
@@ -137,7 +137,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
 
 
 #' @keywords internal
-#' @importFrom stats as.formula terms setNames terms.formula
+#' @importFrom stats as.formula terms terms.formula
 .get_model_table <- function(BFGrid, priorOdds = NULL){
   denominator <- attr(BFGrid,'denominator')
   BFGrid <- rbind(BFGrid[denominator,],BFGrid[-denominator,])
@@ -170,7 +170,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
 
     random_parts <- paste0(all.terms[grepl("\\|", all.terms)]) # only random
     if (length(random_parts) == 0) {
-      return(stats::setNames(fix_trms, fix_trms))
+      return(fix_trms)
     }
 
     random_units <- sub("^.+\\|\\s+", "", random_parts)
@@ -179,27 +179,25 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
       function(x) stats::as.formula(paste0("~", x))
     )
 
-    rand_print <- rand_trms <- vector("list", length(random_parts))
+    rand_trms <- vector("list", length(random_parts))
 
     for (i in seq_along(random_parts)) {
-      tmp_trms <- attr(terms.formula(tmp_random[[i]]), "term.labels")
+      tmp_trms <- attr(stats::terms.formula(tmp_random[[i]]), "term.labels")
 
       if (!any(unlist(strsplit(as.character(tmp_random[[i]])[[2]], ' \\+ ')) == "0"))
         tmp_trms <- c("1", tmp_trms)
 
       rand_trms[[i]] <- paste0(tmp_trms, ':', random_units[[i]])
-      rand_print[[i]] <- paste0("(", tmp_trms, "|", random_units[[i]], ")")
     }
 
-    stats::setNames(
-      c(fix_trms,unlist(rand_trms)),
-      c(fix_trms,unlist(rand_print))
-    )
+    c(fix_trms, unlist(rand_trms))
   }
 
   for (m in seq_len(nrow(df.model))) {
     tmp_terms <- make_terms(df.model$Modelnames[m])
-    df.model[m, tmp_terms] <- TRUE
+    if (length(tmp_terms) > 0) {
+      df.model[m, tmp_terms] <- TRUE
+    }
   }
 
   df.model[is.na(df.model)] <- FALSE

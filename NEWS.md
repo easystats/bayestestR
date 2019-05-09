@@ -1,11 +1,14 @@
-# bayestestR 0.1.2
+# bayestestR 0.1.4
 
 ## Breaking changes
 
+- `rnorm_perfect()` deprecated in favour of `distribution_normal()`
 - `map_estimate()` now returns a single value instead of a dataframe and the `density` parameter has been removed. The MAP density value is now accessible via `attributes(map_output)$MAP_density`
 
 ## New functions / features
 
+- `p_direction()`: new argument `raw = FALSE` to compute pd based on AUC
+- `area_under_curve()`: compute AUC
 - `rcauchy_perfect()`, `rpois_perfect()` and `rt_perfect()` functions have been added
 - `bayesfactor()` function has been added
 - Started adding plotting methods (currently in the [`see`](https://github.com/easystats/see) package) for `p_direction()` and `hdi()`

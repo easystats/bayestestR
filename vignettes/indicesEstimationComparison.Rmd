@@ -41,8 +41,6 @@ In the present work, we will compare these three point-estimates of effect betwe
 
 ### Methods
 
-#### Simulate Regression Data with Noise
-
 
 The simulation aimed at modulating the following characteristics:
 
@@ -66,10 +64,8 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_stu
 
 ### Results
 
-#### Relationship with the Theoretical True Effect
 
-
-##### Sensitivity to Noise
+#### Sensitivity to Noise
 
 ```{r, message=FALSE, warning=FALSE}
 df %>%
@@ -88,13 +84,13 @@ df %>%
   theme_classic() +
   scale_fill_manual(values = c("beta" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
                     name = "Index") +
-  xlab("Point-estimate of the true value 0\n") +
-  ylab("\nNoise") +
+  ylab("Point-estimate of the true value 0\n") +
+  xlab("\nNoise") +
   facet_wrap(~ outcome_type * true_effect, scales="free") 
 ```
 
 
-##### Sensitivity to Sample Size
+#### Sensitivity to Sample Size
 
 ```{r, message=FALSE, warning=FALSE}
 df %>%
@@ -120,7 +116,7 @@ df %>%
 
 
 
-##### Statistical Modelling
+#### Statistical Modelling
 
 We fitted a (frequentist) multiple linear regression to statistically test the the predict the presence or absence of effect with the estimates as well as their interaction with noise and sample size.
 
@@ -160,10 +156,76 @@ This suggests that, in order to delineate between the presence and the absence o
   - The **MAP** estimate, followed by the **mean**, and the **median**, were less affected by sample size, altough not significantly.
 
 
-## Study 2: Relationship with Sampling Characteristics
-## Study 3: Relationship with Priors Specification
+## Experiment 2: Relationship with Sampling Characteristics
 
 
-### Discussion
+
+## Experiment 3: Relationship with Priors Specification
+
+### Methods
+
+The simulation aimed at modulating the following characteristics:
+
+- **Model type**: linear or logistic.
+- **"True" effect** (original regression coefficient from which data is drawn): Can be 1 or 0 (no effect).
+- **chains**: from 1 to 8
+- **iterations**: from 100 to 4000 by step of 100.
+- **warmup**: Ratio of warmup iterations. from 1/10 to 9/10 by step of 0.1.
+
+We generated 3 datasets for each combination of these characteristics, resulting in a total of `2 * 2 * 8 * 40 * 9 * 3 = 34560` Bayesian and frequentist models. The code used for generation is avaible [here](https://easystats.github.io/circus/articles/bayesian_indices.html) (please note that it takes usually several days/weeks to complete).
+
+```{r message=FALSE, warning=FALSE}
+df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study3.csv")
+```
+
+### Results
+
+
+#### Sensitivity to number of iterations
+
+```{r, message=FALSE, warning=FALSE}
+df %>%
+  select(iterations, true_effect, outcome_type, beta, Median, Mean, MAP) %>%
+  gather(estimate, value, -iterations, -true_effect, -outcome_type) %>%
+  mutate(temp = as.factor(cut(iterations, 5, labels = FALSE))) %>% 
+  group_by(temp) %>% 
+  mutate(iterations_group = round(mean(iterations), 1)) %>% 
+  ungroup() %>% 
+  filter(value < 6) %>%
+  ggplot(aes(x = iterations_group, y = value, fill = estimate, group = interaction(estimate, iterations_group))) +
+  geom_boxplot(outlier.shape=NA) +
+  theme_classic() +
+  scale_fill_manual(values = c("beta" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
+                    name = "Index") +
+  ylab("Point-estimate of the true value 0\n") +
+  xlab("\nNumber of Iterations") +
+  facet_wrap(~ outcome_type * true_effect, scales="free") 
+```
+
+
+#### Sensitivity to warmup ratio
+
+```{r, message=FALSE, warning=FALSE}
+df %>%
+  mutate(warmup = warmup / iterations) %>% 
+  select(warmup, true_effect, outcome_type, beta, Median, Mean, MAP) %>%
+  gather(estimate, value, -warmup, -true_effect, -outcome_type) %>%
+  mutate(temp = as.factor(cut(warmup, 3, labels = FALSE))) %>% 
+  group_by(temp) %>% 
+  mutate(warmup_group = round(mean(warmup), 1)) %>% 
+  ungroup() %>% 
+  filter(value < 6) %>% 
+  ggplot(aes(x = warmup_group, y = value, fill = estimate, group = interaction(estimate, warmup_group))) +
+  geom_boxplot(outlier.shape=NA) +
+  theme_classic() +
+  scale_fill_manual(values = c("beta" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
+                    name = "Index") +
+  ylab("Point-estimate of the true value 0\n") +
+  xlab("\nNumber of Iterations") +
+  facet_wrap(~ outcome_type * true_effect, scales="free") 
+```
+
+
+## Discussion
 
 Conclusions can be found in the [guidelines section](https://easystats.github.io/bayestestR/articles/guidelines.html).

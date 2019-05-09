@@ -27,7 +27,6 @@ Random effects in the \code{lme} style will be displayed as interactions:
 i.e., \code{(X|G)} will become \code{1:G} and \code{X:G}.
 }
 \examples{
-\dontrun{
 library(bayestestR)
 
 # Using with bayesfactor_models:
@@ -37,8 +36,8 @@ mo1 <- lm(Sepal.Length ~ Species, data = iris)
 mo2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 mo3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 
-SepalLength_BFmodels <- bayesfactor_models(mo1,mo2,mo3,.denominator = mo0)
-bayesfactor_inclusion(SepalLength_BFmodels)
+BFmodels <- bayesfactor_models(mo1, mo2, mo3, denominator = mo0)
+bayesfactor_inclusion(BFmodels)
 
 # Using with BayesFactor objects:
 # -------------------------------
@@ -52,20 +51,20 @@ bayesfactor_inclusion(BF)
 bayesfactor_inclusion(BF, match_models = TRUE)
 
 }
-
-}
 \references{
-Hinne, M., Gronau, Q. F., van den Bergh, D., & Wagenmakers,
+\itemize{
+  \item Hinne, M., Gronau, Q. F., van den Bergh, D., & Wagenmakers,
 E. (2019, March 25). A conceptual introduction to Bayesian Model
 Averaging. https://doi.org/10.31234/osf.io/wgb64
 
-Clyde, M. A., Ghosh, J., & Littman, M. L. (2011). Bayesian
+  \item Clyde, M. A., Ghosh, J., & Littman, M. L. (2011). Bayesian
 adaptive sampling for variable selection and model averaging. Journal
 of Computational and Graphical Statistics, 20(1), 80-101.
 
-Mathot. S. (2017). Bayes like a Baws:
+  \item Mathot. S. (2017). Bayes like a Baws:
 Interpreting Bayesian Repeated Measures in JASP [Blog post].
 Retrieved from https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp
+}
 }
 \author{
 Mattan S. Ben-Shachar
