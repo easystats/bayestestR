@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • bayestestR</title>
+<title>Empirical Distributions — distribution • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,7 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Empirical Distributions — distribution" />
+
+<meta property="og:description" content="Generate a sample of size n with a near-perfect distribution." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -69,7 +71,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -157,22 +159,96 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Empirical Distributions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/utils_distribution.R'><code>R/utils_distribution.R</code></a></small>
+    <div class="hidden name"><code>distribution.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="bayestestR.html">Get Started with Bayesian Analysis</a></li>
-        <li><a href="bayes_factors.html">Bayes Factors</a></li>
-        <li><a href="example1_GLM.html">Example 1: Bayesian (General) Linear Models</a></li>
-        <li><a href="guidelines.html">Reporting Guidelines</a></li>
-        <li><a href="indicesEstimationComparison.html">In-Depth 1: Comparison of Point-Estimates</a></li>
-        <li><a href="indicesExistenceComparison.html">In-Depth 2: Comparison of Indices of Effect Existence and Significance</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>Generate a sample of size <code>n</code> with a near-perfect distribution.</p>
+    
     </div>
+
+    <pre class="usage"><span class='fu'>distribution</span>(<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"normal"</span>, <span class='no'>...</span>)
+
+<span class='fu'>distribution_normal</span>(<span class='no'>n</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>distribution_cauchy</span>(<span class='no'>n</span>, <span class='kw'>location</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>distribution_poisson</span>(<span class='no'>n</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>distribution_student</span>(<span class='no'>n</span>, <span class='no'>df</span>, <span class='no'>ncp</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>rnorm_perfect</span>(<span class='no'>n</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>type</th>
+      <td><p>Can be <code>"normal"</code> (default), <code>"cauchy"</code>, <code>"poisson"</code> or <code>"student"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td><p>number of observations. If <code>length(n) &gt; 1</code>, the length
+    is taken to be the number required.</p></td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td><p>vector of means.</p></td>
+    </tr>
+    <tr>
+      <th>sd</th>
+      <td><p>vector of standard deviations.</p></td>
+    </tr>
+    <tr>
+      <th>random</th>
+      <td><p>Generate near-perfect or random (simple wrappers for the base R <code>r*</code> functions) distributions.</p></td>
+    </tr>
+    <tr>
+      <th>location</th>
+      <td><p>location and scale parameters.</p></td>
+    </tr>
+    <tr>
+      <th>scale</th>
+      <td><p>location and scale parameters.</p></td>
+    </tr>
+    <tr>
+      <th>lambda</th>
+      <td><p>vector of (non-negative) means.</p></td>
+    </tr>
+    <tr>
+      <th>df</th>
+      <td><p>degrees of freedom (\(&gt; 0\), maybe non-integer).  <code>df
+      = Inf</code> is allowed.</p></td>
+    </tr>
+    <tr>
+      <th>ncp</th>
+      <td><p>non-centrality parameter \(\delta\);
+    currently except for <code><a href='https://www.rdocumentation.org/packages/stats/topics/TDist'>rt()</a></code>, only for <code>abs(ncp) &lt;= 37.62</code>.
+    If omitted, use the central t distribution.</p></td>
+    </tr>
+    </table>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>distribution</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a></span>(<span class='no'>x</span>))</div><div class='img'><img src='distribution-1.png' alt='' width='700' height='433' /></div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 

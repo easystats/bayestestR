@@ -34,7 +34,6 @@ y <- dens$y
 area_under_curve(x, y, method = "trapezoid")
 area_under_curve(x, y, method = "step")
 area_under_curve(x, y, method = "spline")
-
 }
 \seealso{
 DescTools

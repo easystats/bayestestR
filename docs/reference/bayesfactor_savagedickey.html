@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute a Savage-Dickey density ratio Bayes factor — bayesfactor_savagedickey • bayestestR</title>
+<title>Savage-Dickey density ratio Bayes factor — bayesfactor_savagedickey • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,7 +39,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Compute a Savage-Dickey density ratio Bayes factor — bayesfactor_savagedickey" />
+<meta property="og:title" content="Savage-Dickey density ratio Bayes factor — bayesfactor_savagedickey" />
 
 <meta property="og:description" content="This method computes the ratio between the density of a single value (typically the null)
 in two distributions, typically the posterior vs. the prior distributions." />
@@ -85,7 +85,7 @@ in two distributions, typically the posterior vs. the prior distributions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -115,6 +115,9 @@ in two distributions, typically the posterior vs. the prior distributions." />
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
+    </li>
+    <li>
+      <a href="../articles/bayes_factors.html">2. Bayes Factors</a>
     </li>
   </ul>
 </li>
@@ -157,7 +160,7 @@ in two distributions, typically the posterior vs. the prior distributions." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute a Savage-Dickey density ratio Bayes factor</h1>
+    <h1>Savage-Dickey density ratio Bayes factor</h1>
     <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/bayesfactor_savagedickey.R'><code>R/bayesfactor_savagedickey.R</code></a></small>
     <div class="hidden name"><code>bayesfactor_savagedickey.Rd</code></div>
     </div>
@@ -218,15 +221,14 @@ Cognitive psychology, 60(3), 158-189.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
-<span class='no'>prior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rnorm_perfect.html'>rnorm_perfect</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rnorm_perfect.html'>rnorm_perfect</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.3</span>)
+<span class='no'>prior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.3</span>)
 
 <span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: logspline</span></div><div class='output co'>#&gt;   Bayes Factor
 #&gt; 1          1.2
 #&gt; ---
 #&gt; Method: Savage-Dickey density ratio
-#&gt; Test Value: 0</div><div class='input'>
-</div></pre>
+#&gt; Test Value: 0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -249,7 +251,7 @@ Cognitive psychology, 60(3), 158-189.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
+  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
 </div>
 
 <div class="pkgdown">

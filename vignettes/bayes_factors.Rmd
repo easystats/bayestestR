@@ -12,12 +12,14 @@ output:
 tags: [r, bayesian, bayes factors]
 vignette: >
   \usepackage[utf8]{inputenc}
-  %\VignetteIndexEntry{Bayes Factor}
+  %\VignetteIndexEntry{Bayes Factors}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
 bibliography: bibliography.bib
 ---
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 set.seed(5)

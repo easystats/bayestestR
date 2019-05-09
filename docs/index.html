@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -74,6 +74,9 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
+    </li>
+    <li>
+      <a href="articles/bayes_factors.html">2. Bayes Factors</a>
     </li>
   </ul>
 </li>
@@ -130,7 +133,7 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Run the following:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"easystats/bayestestR"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"easystats/bayestestR"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"bayestestR"</span>)</a></code></pre></div>
 </div>
 <div id="documentation" class="section level2">
@@ -200,7 +203,7 @@
 <div id="bayes-factor" class="section level3">
 <h3 class="hasAnchor">
 <a href="#bayes-factor" class="anchor"></a>Bayes Factor</h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/bayesfactor.html"><strong><code>bayesfactor()</code></strong></a> computes the Bayes Factor between two competing hypotheses.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/bayesfactor.html"><strong><code>bayesfactor()</code></strong></a> computes the ratio between the density of a single value (typically the null) in two distributions, typically the posterior vs. the prior distributions. This method is used to examine if the hypothesis value is less or more likely given the observed data.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">prior &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb8-2" title="2">posterior &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="fl">0.7</span>)</a>
 <a class="sourceLine" id="cb8-3" title="3"></a>
@@ -233,8 +236,8 @@
 <div id="perfect-distributions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#perfect-distributions" class="anchor"></a>Perfect Distributions</h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/rnorm_perfect.html"><strong><code><a href="reference/rnorm_perfect.html">rnorm_perfect()</a></code></strong></a>, <a href="https://easystats.github.io/bayestestR/reference/rnorm_perfect.html"><strong><code><a href="reference/rnorm_perfect.html">rcauchy_perfect()</a></code></strong></a>, <a href="https://easystats.github.io/bayestestR/reference/rnorm_perfect.html"><strong><code><a href="reference/rnorm_perfect.html">rpois_perfect()</a></code></strong></a>, <a href="https://easystats.github.io/bayestestR/reference/rnorm_perfect.html"><strong><code><a href="reference/rnorm_perfect.html">rt_perfect()</a></code></strong></a>: Generate a sample of size n with a near-perfect distributions.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="reference/rnorm_perfect.html">rnorm_perfect</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
+<p><a href="https://easystats.github.io/bayestestR/reference/rnorm_perfect.html"><strong><code><a href="reference/distribution.html">rnorm_perfect()</a></code></strong></a>, <a href="https://easystats.github.io/bayestestR/reference/rnorm_perfect.html"><strong><code>rcauchy_perfect()</code></strong></a>, <a href="https://easystats.github.io/bayestestR/reference/rnorm_perfect.html"><strong><code>rpois_perfect()</code></strong></a>, <a href="https://easystats.github.io/bayestestR/reference/rnorm_perfect.html"><strong><code>rt_perfect()</code></strong></a>: Generate a sample of size n with a near-perfect distributions.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="reference/distribution.html">rnorm_perfect</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
 </div>
 <div id="probability-of-a-value" class="section level3">
 <h3 class="hasAnchor">
@@ -285,7 +288,8 @@
 <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-5375-9967" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>
 <a href="https://github.com/strengejacke">Daniel Lüdecke</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-8895-3206" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
-<li>Mattan S. Ben-Shachar <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-4287-4801" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li>
+<a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-4287-4801" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 </ul>
 </div>
 
@@ -305,7 +309,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
+  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>.</p>
 </div>
 
 <div class="pkgdown">

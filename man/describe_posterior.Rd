@@ -57,6 +57,4 @@ Compute indices relevant to describe and characterise the posterior distribution
 }
 \examples{
 describe_posterior(rnorm(1000))
-
-
 }

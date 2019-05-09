@@ -186,7 +186,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
     for (i in seq_along(random_parts)) {
       tmp_trms <- attr(stats::terms.formula(tmp_random[[i]]), "term.labels")
 
-      if (!any(unlist(strsplit(as.character(tmp_random[[i]])[[2]], " \+ ")) == "0")) {
+      if (!any(unlist(strsplit(as.character(tmp_random[[i]])[[2]], " \\+ ")) == "0")) {
         tmp_trms <- c("1", tmp_trms)
       }
 
@@ -212,7 +212,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
 #' @keywords internal
 .includes_interaction <- function(eff, effnames) {
   eff_b <- strsplit(eff, "\\:")
-  effnames_b <- strsplit(effnames, "\:")
+  effnames_b <- strsplit(effnames, "\\:")
 
   is_int <- sapply(effnames_b, function(x) length(x) > 1)
 

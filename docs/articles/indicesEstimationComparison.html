@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -74,6 +74,9 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
+    </li>
+    <li>
+      <a href="../articles/bayes_factors.html">2. Bayes Factors</a>
     </li>
   </ul>
 </li>
@@ -145,9 +148,6 @@
 <div id="methods" class="section level3">
 <h3 class="hasAnchor">
 <a href="#methods" class="anchor"></a>Methods</h3>
-<div id="simulate-regression-data-with-noise" class="section level4">
-<h4 class="hasAnchor">
-<a href="#simulate-regression-data-with-noise" class="anchor"></a>Simulate Regression Data with Noise</h4>
 <p>The simulation aimed at modulating the following characteristics:</p>
 <ul>
 <li>
@@ -166,16 +166,12 @@
 <a class="sourceLine" id="cb1-4" title="4"></a>
 <a class="sourceLine" id="cb1-5" title="5">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv"</span>)</a></code></pre></div>
 </div>
-</div>
 <div id="results" class="section level3">
 <h3 class="hasAnchor">
 <a href="#results" class="anchor"></a>Results</h3>
-<div id="relationship-with-the-theoretical-true-effect" class="section level4">
+<div id="sensitivity-to-noise" class="section level4">
 <h4 class="hasAnchor">
-<a href="#relationship-with-the-theoretical-true-effect" class="anchor"></a>Relationship with the Theoretical True Effect</h4>
-<div id="sensitivity-to-noise" class="section level5">
-<h5 class="hasAnchor">
-<a href="#sensitivity-to-noise" class="anchor"></a>Sensitivity to Noise</h5>
+<a href="#sensitivity-to-noise" class="anchor"></a>Sensitivity to Noise</h4>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">df <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">select</span>(error, true_effect, outcome_type, beta, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>error, <span class="op">-</span>true_effect, <span class="op">-</span>outcome_type) <span class="op">%&gt;%</span></a>
@@ -192,14 +188,14 @@
 <a class="sourceLine" id="cb2-14" title="14"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
 <a class="sourceLine" id="cb2-16" title="16">                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-17" title="17"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-18" title="18"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Noise"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Noise"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-19" title="19"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>outcome_type <span class="op">*</span><span class="st"> </span>true_effect, <span class="dt">scales=</span><span class="st">"free"</span>) </a></code></pre></div>
 <p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 </div>
-<div id="sensitivity-to-sample-size" class="section level5">
-<h5 class="hasAnchor">
-<a href="#sensitivity-to-sample-size" class="anchor"></a>Sensitivity to Sample Size</h5>
+<div id="sensitivity-to-sample-size" class="section level4">
+<h4 class="hasAnchor">
+<a href="#sensitivity-to-sample-size" class="anchor"></a>Sensitivity to Sample Size</h4>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">df <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="st">  </span><span class="kw">select</span>(sample_size, true_effect, outcome_type, beta, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>sample_size, <span class="op">-</span>true_effect, <span class="op">-</span>outcome_type) <span class="op">%&gt;%</span></a>
@@ -221,9 +217,9 @@
 <a class="sourceLine" id="cb3-19" title="19"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>outcome_type <span class="op">*</span><span class="st"> </span>true_effect, <span class="dt">scales=</span><span class="st">"free"</span>)</a></code></pre></div>
 <p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
-<div id="statistical-modelling" class="section level5">
-<h5 class="hasAnchor">
-<a href="#statistical-modelling" class="anchor"></a>Statistical Modelling</h5>
+<div id="statistical-modelling" class="section level4">
+<h4 class="hasAnchor">
+<a href="#statistical-modelling" class="anchor"></a>Statistical Modelling</h4>
 <p>We fitted a (frequentist) multiple linear regression to statistically test the the predict the presence or absence of effect with the estimates as well as their interaction with noise and sample size.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">df <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">select</span>(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
@@ -433,19 +429,84 @@
 </div>
 </div>
 </div>
-</div>
-<div id="study-2-relationship-with-sampling-characteristics" class="section level2">
+<div id="experiment-2-relationship-with-sampling-characteristics" class="section level2">
 <h2 class="hasAnchor">
-<a href="#study-2-relationship-with-sampling-characteristics" class="anchor"></a>Study 2: Relationship with Sampling Characteristics</h2>
+<a href="#experiment-2-relationship-with-sampling-characteristics" class="anchor"></a>Experiment 2: Relationship with Sampling Characteristics</h2>
 </div>
-<div id="study-3-relationship-with-priors-specification" class="section level2">
+<div id="experiment-3-relationship-with-priors-specification" class="section level2">
 <h2 class="hasAnchor">
-<a href="#study-3-relationship-with-priors-specification" class="anchor"></a>Study 3: Relationship with Priors Specification</h2>
-<div id="discussion" class="section level3">
+<a href="#experiment-3-relationship-with-priors-specification" class="anchor"></a>Experiment 3: Relationship with Priors Specification</h2>
+<div id="methods-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#discussion" class="anchor"></a>Discussion</h3>
-<p>Conclusions can be found in the <a href="https://easystats.github.io/bayestestR/articles/guidelines.html">guidelines section</a>.</p>
+<a href="#methods-1" class="anchor"></a>Methods</h3>
+<p>The simulation aimed at modulating the following characteristics:</p>
+<ul>
+<li>
+<strong>Model type</strong>: linear or logistic.</li>
+<li>
+<strong>“True” effect</strong> (original regression coefficient from which data is drawn): Can be 1 or 0 (no effect).</li>
+<li>
+<strong>chains</strong>: from 1 to 8</li>
+<li>
+<strong>iterations</strong>: from 100 to 4000 by step of 100.</li>
+<li>
+<strong>warmup</strong>: Ratio of warmup iterations. from 1/10 to 9/10 by step of 0.1.</li>
+</ul>
+<p>We generated 3 datasets for each combination of these characteristics, resulting in a total of <code>2 * 2 * 8 * 40 * 9 * 3 = 34560</code> Bayesian and frequentist models. The code used for generation is avaible <a href="https://easystats.github.io/circus/articles/bayesian_indices.html">here</a> (please note that it takes usually several days/weeks to complete).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayesSim_study3.csv"</span>)</a></code></pre></div>
 </div>
+<div id="results-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#results-1" class="anchor"></a>Results</h3>
+<div id="sensitivity-to-number-of-iterations" class="section level4">
+<h4 class="hasAnchor">
+<a href="#sensitivity-to-number-of-iterations" class="anchor"></a>Sensitivity to number of iterations</h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">select</span>(iterations, true_effect, outcome_type, beta, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>iterations, <span class="op">-</span>true_effect, <span class="op">-</span>outcome_type) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cut">cut</a></span>(iterations, <span class="dv">5</span>, <span class="dt">labels =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(temp) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">iterations_group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(iterations), <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(value <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> iterations_group, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/interaction">interaction</a></span>(estimate, iterations_group))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape=</span><span class="ot">NA</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
+<a class="sourceLine" id="cb6-13" title="13">                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Number of Iterations"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-16" title="16"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>outcome_type <span class="op">*</span><span class="st"> </span>true_effect, <span class="dt">scales=</span><span class="st">"free"</span>) </a></code></pre></div>
+<p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+</div>
+<div id="sensitivity-to-warmup-ratio" class="section level4">
+<h4 class="hasAnchor">
+<a href="#sensitivity-to-warmup-ratio" class="anchor"></a>Sensitivity to warmup ratio</h4>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">warmup =</span> warmup <span class="op">/</span><span class="st"> </span>iterations) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw">select</span>(warmup, true_effect, outcome_type, beta, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>warmup, <span class="op">-</span>true_effect, <span class="op">-</span>outcome_type) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cut">cut</a></span>(warmup, <span class="dv">3</span>, <span class="dt">labels =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw">group_by</span>(temp) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">warmup_group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(warmup), <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(value <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> warmup_group, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/interaction">interaction</a></span>(estimate, warmup_group))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape=</span><span class="ot">NA</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
+<a class="sourceLine" id="cb7-14" title="14">                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Number of Iterations"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-17" title="17"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>outcome_type <span class="op">*</span><span class="st"> </span>true_effect, <span class="dt">scales=</span><span class="st">"free"</span>) </a></code></pre></div>
+<p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+</div>
+</div>
+</div>
+<div id="discussion" class="section level2">
+<h2 class="hasAnchor">
+<a href="#discussion" class="anchor"></a>Discussion</h2>
+<p>Conclusions can be found in the <a href="https://easystats.github.io/bayestestR/articles/guidelines.html">guidelines section</a>.</p>
 </div>
 </div>
   </div>
@@ -459,8 +520,9 @@
 <a href="#effect-point-estimates-in-the-bayesian-framework">Effect Point-Estimates in the Bayesian Framework</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
       <li><a href="#experiment-1-relationship-with-error-noise-and-sample-size">Experiment 1: Relationship with Error (Noise) and Sample Size</a></li>
-      <li><a href="#study-2-relationship-with-sampling-characteristics">Study 2: Relationship with Sampling Characteristics</a></li>
-      <li><a href="#study-3-relationship-with-priors-specification">Study 3: Relationship with Priors Specification</a></li>
+      <li><a href="#experiment-2-relationship-with-sampling-characteristics">Experiment 2: Relationship with Sampling Characteristics</a></li>
+      <li><a href="#experiment-3-relationship-with-priors-specification">Experiment 3: Relationship with Priors Specification</a></li>
+      <li><a href="#discussion">Discussion</a></li>
       </ul>
 </li>
       </ul>
@@ -471,7 +533,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, Mattan S. Ben-Shachar.</p>
+  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>.</p>
 </div>
 
 <div class="pkgdown">

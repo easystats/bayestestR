@@ -11,8 +11,8 @@ output:
     fig_height: 6
 tags: [r, bayesian, posterior, test]
 vignette: >
-  %\VignetteIndexEntry{Get Started with Bayesian Analysis}
   \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{Get Started with Bayesian Analysis}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
