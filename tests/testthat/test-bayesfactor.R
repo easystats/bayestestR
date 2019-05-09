@@ -72,21 +72,21 @@ brms_4bf_5 <- insight::download_model("brms_4bf_5")
 #   testthat::expect_equal(update(BFM2,reference = 1)$log.BF,c(0,-2.8,-6.2,-57.4),tolerance = 0.1)
 # })
 #
-# test_that("bayesfactor_inclusion", {
-#   # BayesFactor
-#   ToothGrowth$dose <- as.factor(ToothGrowth$dose)
-#   BF_ToothGrowth <- BayesFactor::anovaBF(len ~ dose*supp, ToothGrowth)
-#   testthat::expect_equal(
-#     bayestestR::bayesfactor_inclusion(BF_ToothGrowth),
-#     bayestestR::bayesfactor_inclusion(bayestestR::bayesfactor_models(BF_ToothGrowth))
-#   )
-#
-#   # with random effects in all models:
-#   testthat::expect_true(is.na(bayestestR::bayesfactor_inclusion(BFM1)[1,"log.BF.Inc"]))
-#
-#   # + match_models
-#   bfinc_matched <- bayestestR::bayesfactor_inclusion(BFM1, match_models = TRUE)
-#   testthat::expect_equal(bfinc_matched$P.Inc.prior,c(1, 0.25, 0.5, 0.25),tolerance = 0.1)
-#   testthat::expect_equal(bfinc_matched$P.Inc.posterior,c(1, 0.94, 0.06, 0),tolerance = 0.1)
-#   testthat::expect_equal(bfinc_matched$log.BF.Inc,c(NaN, 57.37, -2.82, -5.25),tolerance = 0.1)
-# })
+test_that("bayesfactor_inclusion", {
+  # BayesFactor
+  ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+  BF_ToothGrowth <- BayesFactor::anovaBF(len ~ dose*supp, ToothGrowth)
+  testthat::expect_equal(
+    bayestestR::bayesfactor_inclusion(BF_ToothGrowth),
+    bayestestR::bayesfactor_inclusion(bayestestR::bayesfactor_models(BF_ToothGrowth))
+  )
+
+  # with random effects in all models:
+  testthat::expect_true(is.na(bayestestR::bayesfactor_inclusion(BFM1)[1,"log.BF.Inc"]))
+
+  # + match_models
+  bfinc_matched <- bayestestR::bayesfactor_inclusion(BFM1, match_models = TRUE)
+  testthat::expect_equal(bfinc_matched$P.Inc.prior,c(1, 0.25, 0.5, 0.25),tolerance = 0.1)
+  testthat::expect_equal(bfinc_matched$P.Inc.posterior,c(1, 0.94, 0.06, 0),tolerance = 0.1)
+  testthat::expect_equal(bfinc_matched$log.BF.Inc,c(NaN, 57.37, -2.82, -5.25),tolerance = 0.1)
+})
