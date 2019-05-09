@@ -23,7 +23,7 @@
 #' the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful \strong{P}osterior
 #' (i.e. probably at leat 40,000 samples instead of the default of 4,000).
 #'
-#' @return A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs (log) of the supplied models, that prints nicely.
+#' @return A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs (log), that prints nicely.
 #'
 #' @examples
 #' # With lm objects:

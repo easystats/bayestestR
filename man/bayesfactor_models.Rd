@@ -13,7 +13,7 @@ bayesfactor_models(..., denominator = 1)
 or a model to use as a denominator. Ignored for \code{BFBayesFactor}.}
 }
 \value{
-A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs (log) of the supplied models, that prints nicely.
+A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs (log), that prints nicely.
 }
 \description{
 This function computes Bayes factors from fitted models or extracts

@@ -22,7 +22,7 @@ bayesfactor_savagedickey(posterior, prior, direction = "two-sided",
 \item{hypothesis}{Value to be tested against (usually \code{0} in the context of null hypothesis testing).}
 }
 \value{
-A data frame of class \code{BFsd} which contains the Bayes factor representing by how
+A data frame containing the Bayes factor representing by how
 much \emph{less} the null is likely under the posterior compared to the prior (larger than 1
 can be interpereted as evidence against the null).
 }
