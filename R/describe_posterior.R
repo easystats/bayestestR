@@ -15,8 +15,6 @@
 #'
 #' @examples
 #' describe_posterior(rnorm(1000))
-#'
-#'
 #' @importFrom stats mad median sd setNames
 #'
 #' @export

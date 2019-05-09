@@ -20,16 +20,16 @@
 #' area_under_curve(x, y, method = "trapezoid")
 #' area_under_curve(x, y, method = "step")
 #' area_under_curve(x, y, method = "spline")
-#'
 #' @importFrom stats integrate splinefun
 #' @seealso DescTools
 #' @export
-area_under_curve <- function(x, y, method=c("trapezoid", "step", "spline")) {
+area_under_curve <- function(x, y, method = c("trapezoid", "step", "spline")) {
 
   # Stolen from DescTools: https://github.com/cran/DescTools/blob/master/R/StatsAndCIs.r
 
-  if (length(x) != length(y))
+  if (length(x) != length(y)) {
     stop("length x must equal length y")
+  }
 
   idx <- order(x)
   x <- x[idx]

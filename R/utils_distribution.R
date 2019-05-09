@@ -10,7 +10,6 @@
 #' library(bayestestR)
 #' x <- distribution(n = 10)
 #' plot(density(x))
-#'
 #' @export
 distribution <- function(type = "normal", ...) {
   switch(
@@ -32,7 +31,7 @@ distribution <- function(type = "normal", ...) {
 distribution_normal <- function(n, mean = 0, sd = 1, random = FALSE) {
   if (random) {
     stats::rnorm(n, mean, sd)
-  } else{
+  } else {
     stats::qnorm(seq(1 / n, 1 - 1 / n, length.out = n), mean, sd)
   }
 }
@@ -45,7 +44,7 @@ distribution_normal <- function(n, mean = 0, sd = 1, random = FALSE) {
 distribution_cauchy <- function(n, location = 0, scale = 1, random = FALSE) {
   if (random) {
     stats::rcauchy(n, location, scale)
-  } else{
+  } else {
     stats::qcauchy(seq(1 / n, 1 - 1 / n, length.out = n), location, scale)
   }
 }
@@ -58,7 +57,7 @@ distribution_cauchy <- function(n, location = 0, scale = 1, random = FALSE) {
 distribution_poisson <- function(n, lambda = 1, random = FALSE) {
   if (random) {
     stats::rpois(n, lambda)
-  } else{
+  } else {
     stats::qpois(seq(1 / n, 1 - 1 / n, length.out = n), lambda)
   }
 }
@@ -71,7 +70,7 @@ distribution_poisson <- function(n, lambda = 1, random = FALSE) {
 distribution_student <- function(n, df, ncp, random = FALSE) {
   if (random) {
     stats::rt(n, df, ncp)
-  } else{
+  } else {
     stats::qt(seq(1 / n, 1 - 1 / n, length.out = n), df, ncp)
   }
 }

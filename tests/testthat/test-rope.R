@@ -4,7 +4,7 @@ test_that("rope", {
   testthat::expect_equal(as.numeric(rope(rnorm_perfect(1000, 0, 1))), 8.88, tolerance = 0.01)
   testthat::expect_equal(equivalence_test(rnorm_perfect(1000, 0, 1))$ROPE_Equivalence, "undecided")
   testthat::expect_equal(length(capture.output(print(equivalence_test(rnorm_perfect(1000))))), 7)
-  testthat::expect_equal(length(capture.output(print(equivalence_test(rnorm_perfect(1000), ci=c(0.8, 0.9))))), 10)
+  testthat::expect_equal(length(capture.output(print(equivalence_test(rnorm_perfect(1000), ci = c(0.8, 0.9))))), 10)
 
   testthat::expect_equal(as.numeric(rope(rnorm_perfect(1000, 2, 0.01))), 0, tolerance = 0.01)
   testthat::expect_equal(equivalence_test(rnorm_perfect(1000, 2, 0.01))$ROPE_Equivalence, "rejected")

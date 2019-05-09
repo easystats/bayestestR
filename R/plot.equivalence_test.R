@@ -1,6 +1,5 @@
 #' @export
 plot.equivalence_test <- function(x, ...) {
-
   if (!requireNamespace("ggplot2", quietly = TRUE) && !requireNamespace("ggridges", quietly = TRUE)) {
     warning("Packages 'ggplot2' and 'ggridges' required to plot test for practical equivalence.", call. = FALSE)
     return(x)
@@ -15,11 +14,12 @@ plot.equivalence_test <- function(x, ...) {
 
 
   # retrieve model
-  model <- tryCatch(
-    {
-      get(model_name, envir = parent.frame())
-    },
-    error = function(e) { NULL }
+  model <- tryCatch({
+    get(model_name, envir = parent.frame())
+  },
+  error = function(e) {
+    NULL
+  }
   )
 
   if (is.null(model)) {

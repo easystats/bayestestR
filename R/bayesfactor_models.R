@@ -37,21 +37,22 @@
 #'
 #' # With lmerMod objects:
 #' library(lme4)
-#' lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1|Species), data = iris)
-#' lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length|Species), data = iris)
+#' lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+#' lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
 #' lmer3 <- lmer(
-#'   Sepal.Length ~ Petal.Length + (Petal.Length|Species) + (1|Petal.Width),
+#'   Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
 #'   data = iris
 #' )
 #' bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
 #' bayesfactor_models(lmer1, lmer2, lmer3, denominator = lmer1)
-#'
 #' \dontrun{
 #' # With BFBayesFactor objects:
 #' library(BayesFactor)
 #' data(puzzles)
-#' BF <- anovaBF(RT ~ shape * color + ID, data = puzzles,
-#'               whichRandom = "ID", progress = FALSE)
+#' BF <- anovaBF(RT ~ shape * color + ID,
+#'   data = puzzles,
+#'   whichRandom = "ID", progress = FALSE
+#' )
 #' BF
 #' bayesfactor_models(BF) # basically the same
 #'
@@ -61,12 +62,13 @@
 #' brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
 #' brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
 #' brm3 <- brm(
-#'   Sepal.Length ~ Species + Petal.Length, data = iris,
+#'   Sepal.Length ~ Species + Petal.Length,
+#'   data = iris,
 #'   save_all_pars = TRUE
 #' )
 #'
 #' bayesfactor_models(brm1, brm2, brm3, denominator = 1)
-#'}
+#' }
 #'
 #' @references
 #' \itemize{
@@ -86,7 +88,7 @@ bayesfactor_models <- function(..., denominator = 1) {
 
 #' @importFrom stats BIC
 #' @export
-bayesfactor_models.default <- function(..., denominator = 1){
+bayesfactor_models.default <- function(..., denominator = 1) {
   # Organize the models
   mods <- list(...)
 
@@ -116,20 +118,22 @@ bayesfactor_models.default <- function(..., denominator = 1){
   # Get formula
   mforms <- sapply(mods, .find_full_formula)
 
-  res <- data.frame(Model  = mforms,
-                    log.BF = mBFs,
-                    stringsAsFactors = FALSE)
+  res <- data.frame(
+    Model = mforms,
+    log.BF = mBFs,
+    stringsAsFactors = FALSE
+  )
 
-  attr(res, 'denominator') <- denominator
-  attr(res, 'BF_method') <- 'BIC approximation'
-  class(res) <- c('bayesfactor_models', class(res))
+  attr(res, "denominator") <- denominator
+  attr(res, "BF_method") <- "BIC approximation"
+  class(res) <- c("bayesfactor_models", class(res))
 
   res
 }
 
 
 #' @importFrom insight get_response find_algorithm
-.bayesfactor_models_stan <- function(..., denominator = 1){
+.bayesfactor_models_stan <- function(..., denominator = 1) {
   if (!requireNamespace("bridgesampling")) {
     stop("Package \"bridgesampling\" needed for this function to work. Please install it.")
   }
@@ -143,8 +147,10 @@ bayesfactor_models.default <- function(..., denominator = 1){
     (alg$chains - alg$warmup) * alg$iterations
   })
   if (any(n_samps < 4e4)) {
-    warning("Bayes factors might not be precise.\n",
-            "For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.")
+    warning(
+      "Bayes factors might not be precise.\n",
+      "For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples."
+    )
   }
 
   if (!is.numeric(denominator)) {
@@ -170,24 +176,26 @@ bayesfactor_models.default <- function(..., denominator = 1){
   mML <- lapply(mods, function(x)
     bridgesampling::bridge_sampler(x, silent = TRUE))
   mBFs <- sapply(mML, function(x)
-    bridgesampling::bf(x, mML[[denominator]], log = TRUE)[['bf']])
+    bridgesampling::bf(x, mML[[denominator]], log = TRUE)[["bf"]])
 
   # Get formula
   mforms <- sapply(mods, .find_full_formula)
 
-  res <- data.frame(Model  = mforms,
-                    log.BF = mBFs,
-                    stringsAsFactors = FALSE)
+  res <- data.frame(
+    Model = mforms,
+    log.BF = mBFs,
+    stringsAsFactors = FALSE
+  )
 
-  attr(res,'denominator') <- denominator
-  attr(res,'BF_method') <- 'marginal likelihoods (bridgesampling)'
-  class(res) <- c('bayesfactor_models', class(res))
+  attr(res, "denominator") <- denominator
+  attr(res, "BF_method") <- "marginal likelihoods (bridgesampling)"
+  class(res) <- c("bayesfactor_models", class(res))
 
   res
 }
 
 #' @export
-bayesfactor_models.stanreg <- function(..., denominator = 1){
+bayesfactor_models.stanreg <- function(..., denominator = 1) {
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
   }
@@ -195,7 +203,7 @@ bayesfactor_models.stanreg <- function(..., denominator = 1){
 }
 
 #' @export
-bayesfactor_models.brmsfit <- function(..., denominator = 1){
+bayesfactor_models.brmsfit <- function(..., denominator = 1) {
   if (!requireNamespace("brms")) {
     stop("Package \"brms\" needed for this function to work. Please install it.")
   }
@@ -216,13 +224,15 @@ bayesfactor_models.BFBayesFactor <- function(...) {
   mforms <- sapply(c(models@denominator, models@numerator), function(x) x@shortName)
   mforms[mforms == "Intercept only"] <- "1"
 
-  res <- data.frame(Model  = unname(mforms),
-                    log.BF = mBFs,
-                    stringsAsFactors = FALSE)
+  res <- data.frame(
+    Model = unname(mforms),
+    log.BF = mBFs,
+    stringsAsFactors = FALSE
+  )
 
-  attr(res,'denominator') <- 1
-  attr(res,'BF_method') <- 'JZS (BayesFactor)'
-  class(res) <- c('bayesfactor_models', class(res))
+  attr(res, "denominator") <- 1
+  attr(res, "BF_method") <- "JZS (BayesFactor)"
+  class(res) <- c("bayesfactor_models", class(res))
 
   res
 }
@@ -235,7 +245,7 @@ bayesfactor_models.BFBayesFactor <- function(...) {
 #' @param reference Index of model to rereference to, or \code{"top"} to reference to the best model, or \code{"bottom"} to reference to the worst model.
 #' @param ... Currently not used.
 #' @export
-update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...){
+update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...) {
   if (!is.null(reference)) {
     if (reference == "top") {
       reference <- which.max(object$log.BF)
@@ -243,19 +253,19 @@ update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, .
       reference <- which.min(object$log.BF)
     }
     object$log.BF <- object$log.BF - object$log.BF[reference]
-    attr(object,"denominator") <- reference
+    attr(object, "denominator") <- reference
   }
 
-  denominator <- attr(object,"denominator")
+  denominator <- attr(object, "denominator")
 
   if (!is.null(subset)) {
-    object_subset <- object[subset,]
+    object_subset <- object[subset, ]
 
     if (denominator %in% subset) {
-      attr(object_subset,"denominator") <- which(denominator == subset)
+      attr(object_subset, "denominator") <- which(denominator == subset)
     } else {
-      object_subset <- rbind(object[denominator,],object_subset)
-      attr(object_subset,"denominator") <- 1
+      object_subset <- rbind(object[denominator, ], object_subset)
+      attr(object_subset, "denominator") <- 1
     }
     object <- object_subset
   }
@@ -264,7 +274,7 @@ update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, .
 
 #' @keywords internal
 #' @importFrom insight find_formula
-.find_full_formula <- function(mod){
+.find_full_formula <- function(mod) {
   formulas <- insight::find_formula(mod)
 
   conditional <- random <- NULL

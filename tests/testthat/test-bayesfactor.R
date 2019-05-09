@@ -3,7 +3,7 @@ context("bayesfactor_*")
 test_that("bayesfactor_savagedickey", {
   set.seed(444)
   Xprior <- rnorm(1000)
-  Xposterior <- rnorm(1000,0.7,0.2)
+  Xposterior <- rnorm(1000, 0.7, 0.2)
 
   bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, hypothesis = 0, direction = 0)
   testthat::expect_equal(as.numeric(bfsd), 39.6, tolerance = 0.1)
@@ -21,7 +21,7 @@ mo1 <- lme4::lmer(Sepal.Length ~ (1 | Species), data = iris)
 mo2 <- lme4::lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
 mo3 <- lme4::lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
 mo4 <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris)
-mo4_e <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris[-1,])
+mo4_e <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris[-1, ])
 
 # both uses of denominator
 BFM1 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, mo1, denominator = 4)
@@ -75,18 +75,18 @@ brms_4bf_5 <- insight::download_model("brms_4bf_5")
 test_that("bayesfactor_inclusion", {
   # BayesFactor
   ToothGrowth$dose <- as.factor(ToothGrowth$dose)
-  BF_ToothGrowth <- BayesFactor::anovaBF(len ~ dose*supp, ToothGrowth)
+  BF_ToothGrowth <- BayesFactor::anovaBF(len ~ dose * supp, ToothGrowth)
   testthat::expect_equal(
     bayestestR::bayesfactor_inclusion(BF_ToothGrowth),
     bayestestR::bayesfactor_inclusion(bayestestR::bayesfactor_models(BF_ToothGrowth))
   )
 
   # with random effects in all models:
-  testthat::expect_true(is.na(bayestestR::bayesfactor_inclusion(BFM1)[1,"log.BF.Inc"]))
+  testthat::expect_true(is.na(bayestestR::bayesfactor_inclusion(BFM1)[1, "log.BF.Inc"]))
 
   # + match_models
   bfinc_matched <- bayestestR::bayesfactor_inclusion(BFM1, match_models = TRUE)
-  testthat::expect_equal(bfinc_matched$P.Inc.prior,c(1, 0.25, 0.5, 0.25),tolerance = 0.1)
-  testthat::expect_equal(bfinc_matched$P.Inc.posterior,c(1, 0.94, 0.06, 0),tolerance = 0.1)
-  testthat::expect_equal(bfinc_matched$log.BF.Inc,c(NaN, 57.37, -2.82, -5.25),tolerance = 0.1)
+  testthat::expect_equal(bfinc_matched$P.Inc.prior, c(1, 0.25, 0.5, 0.25), tolerance = 0.1)
+  testthat::expect_equal(bfinc_matched$P.Inc.posterior, c(1, 0.94, 0.06, 0), tolerance = 0.1)
+  testthat::expect_equal(bfinc_matched$log.BF.Inc, c(NaN, 57.37, -2.82, -5.25), tolerance = 0.1)
 })

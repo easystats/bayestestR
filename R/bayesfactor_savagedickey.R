@@ -22,7 +22,6 @@
 #' posterior <- distribution_normal(1000, mean = .5, sd = .3)
 #'
 #' bayesfactor_savagedickey(posterior, prior)
-#'
 #' @references
 #' Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010). Bayesian
 #' hypothesis testing for psychologists: A tutorial on the Savage-Dickey method.
@@ -31,7 +30,7 @@
 #' @author Mattan S. Ben-Shachar
 #'
 #' @export
-bayesfactor_savagedickey <- function(posterior,prior,direction = "two-sided", hypothesis = 0) {
+bayesfactor_savagedickey <- function(posterior, prior, direction = "two-sided", hypothesis = 0) {
   UseMethod("bayesfactor_savagedickey")
 }
 
@@ -40,21 +39,23 @@ bayesfactor_savagedickey <- function(posterior,prior,direction = "two-sided", hy
 #' @export
 #' @importFrom insight print_color
 #' @importFrom stats rcauchy sd
-bayesfactor_savagedickey.numeric <- function(posterior,prior,direction = "two-sided", hypothesis = 0){
+bayesfactor_savagedickey.numeric <- function(posterior, prior, direction = "two-sided", hypothesis = 0) {
   if (missing(prior)) {
     prior <- distribution_cauchy(
-      n        = length(posterior),
+      n = length(posterior),
       location = hypothesis,
-      scale    = stats::sd(posterior)
+      scale = stats::sd(posterior)
     )
-    warning("Prior not specified!\n",
-            "Used Cauchy prior with location = ", hypothesis, " and scale = ", round(stats::sd(posterior)), ".\n",
-            "It is recommended to explicitly define the prior!")
+    warning(
+      "Prior not specified!\n",
+      "Used Cauchy prior with location = ", hypothesis, " and scale = ", round(stats::sd(posterior)), ".\n",
+      "It is recommended to explicitly define the prior!"
+    )
   }
 
   # find direction
   direction.opts <- data.frame(
-    String = c("left","right","two-sided","<",">","=","-1","0","1","+1"),
+    String = c("left", "right", "two-sided", "<", ">", "=", "-1", "0", "1", "+1"),
     Value = c(-1, 1, 0, -1, 1, 0, -1, 0, 1, 1)
   )
   direction <- direction.opts$Value[pmatch(direction, direction.opts$String, 2)[1]]

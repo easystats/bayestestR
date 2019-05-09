@@ -153,7 +153,6 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
       if (!.is_empty_object(HDI_area)) {
         attr(tmp, "HDI_area") <- HDI_area
       }
-
     } else {
       tmp <- NULL
     }
@@ -225,7 +224,6 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
       if (!.is_empty_object(HDI_area)) {
         attr(tmp, "HDI_area") <- HDI_area
       }
-
     } else {
       tmp <- NULL
     }

@@ -15,7 +15,6 @@
 #' posterior <- rnorm(1000, mean = 1, sd = 1)
 #' p_direction(posterior)
 #' p_direction(posterior, raw = FALSE)
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
