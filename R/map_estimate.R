@@ -75,7 +75,7 @@ map_estimate.numeric <- function(x, precision = 2^10, ...) {
 #' @keywords internal
 .map_estimate_models <- function(x, precision) {
   list <- sapply(x, map_estimate, precision = precision, simplify = FALSE)
-  out <- flatten_list(list, name = "Parameter")
+  out <- .flatten_list(list, name = "Parameter")
   rownames(out) <- NULL
 
   as.data.frame(out)
