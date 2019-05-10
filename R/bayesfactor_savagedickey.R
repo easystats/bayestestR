@@ -5,8 +5,8 @@
 #'
 #' This method is used to examine if the hypothesis value is less or more likely given the observed data.
 #'
-#' @param posterior Vector representing a posterior distribution.
-#' @param prior Vector representing a prior distribution. If a prior is not provided, will sample from \code{~Cauchy(location = hypothesis, scale = sd(posterior))} (but this should be avoided).
+#' @param posterior Vector representing a posterior distribution, or a \code{stanreg} object.
+#' @param prior Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored). If a prior is not provided, will sample from \code{~Cauchy(location = hypothesis, scale = sd(posterior))} (but this should be avoided).
 #' @param direction Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
 #' \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).
 #' @param hypothesis Value to be tested against (usually \code{0} in the context of null hypothesis testing).
@@ -22,6 +22,10 @@
 #' posterior <- distribution_normal(1000, mean = .5, sd = .3)
 #'
 #' bayesfactor_savagedickey(posterior, prior)
+#'
+#' library(rstanarm)
+#' stan_model <- stan_glm(extra ~ group, data = sleep))
+#' bayesfactor_savagedickey(stan_model)
 #' @references
 #' Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010). Bayesian
 #' hypothesis testing for psychologists: A tutorial on the Savage-Dickey method.
@@ -30,7 +34,7 @@
 #' @author Mattan S. Ben-Shachar
 #'
 #' @export
-bayesfactor_savagedickey <- function(posterior, prior, direction = "two-sided", hypothesis = 0) {
+bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0) {
   UseMethod("bayesfactor_savagedickey")
 }
 
@@ -39,8 +43,8 @@ bayesfactor_savagedickey <- function(posterior, prior, direction = "two-sided", 
 #' @export
 #' @importFrom insight print_color
 #' @importFrom stats rcauchy sd
-bayesfactor_savagedickey.numeric <- function(posterior, prior, direction = "two-sided", hypothesis = 0) {
-  if (missing(prior)) {
+bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0) {
+  if (is.null(prior)) {
     prior <- distribution_cauchy(
       n = length(posterior),
       location = hypothesis,
@@ -103,17 +107,17 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior, direction = "two-
 #' @importFrom insight find_algorithm
 #' @importFrom stats update
 #' @importFrom utils capture.output
-bayesfactor_savagedickey.stanreg <- function(object, direction = "two-sided", hypothesis = 0){
+bayesfactor_savagedickey.stanreg <- function(posterior, direction = "two-sided", hypothesis = 0){
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
   }
 
   # Get Priors
-  alg <- insight::find_algorithm(object)
+  alg <- insight::find_algorithm(posterior)
 
-  capture.output(Prior <- suppressWarnings(
+  capture.output(prior <- suppressWarnings(
     update(
-      object,
+      posterior,
       prior_PD = TRUE,
       iter = alg$iterations,
       chains = alg$chains,
@@ -121,8 +125,8 @@ bayesfactor_savagedickey.stanreg <- function(object, direction = "two-sided", hy
     )
   ))
 
-  posterior <- as.data.frame(object)
-  prior <- as.data.frame(Prior)
+  posterior <- as.data.frame(posterior)
+  prior <- as.data.frame(prior)
 
   # Get savage-dickey BFs
   sdbf <- numeric(ncol(prior))
