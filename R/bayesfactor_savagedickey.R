@@ -23,9 +23,12 @@
 #'
 #' bayesfactor_savagedickey(posterior, prior)
 #'
+#' \dontrun{
 #' library(rstanarm)
-#' stan_model <- stan_glm(extra ~ group, data = sleep))
+#' stan_model <- stan_glm(extra ~ group, data = sleep)
 #' bayesfactor_savagedickey(stan_model)
+#' }
+#'
 #' @references
 #' Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010). Bayesian
 #' hypothesis testing for psychologists: A tutorial on the Savage-Dickey method.
@@ -107,7 +110,7 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
 #' @importFrom insight find_algorithm
 #' @importFrom stats update
 #' @importFrom utils capture.output
-bayesfactor_savagedickey.stanreg <- function(posterior, direction = "two-sided", hypothesis = 0){
+bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0){
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
   }
@@ -115,18 +118,21 @@ bayesfactor_savagedickey.stanreg <- function(posterior, direction = "two-sided",
   # Get Priors
   alg <- insight::find_algorithm(posterior)
 
-  capture.output(prior <- suppressWarnings(
-    update(
-      posterior,
-      prior_PD = TRUE,
-      iter = alg$iterations,
-      chains = alg$chains,
-      warmup = alg$warmup
-    )
-  ))
+  if(is.null(prior)){
+    capture.output(prior <- suppressWarnings(
+      update(
+        posterior,
+        prior_PD = TRUE,
+        iter = alg$iterations,
+        chains = alg$chains,
+        warmup = alg$warmup
+      )
+    ))
+    prior <- as.data.frame(prior)
+  }
 
   posterior <- as.data.frame(posterior)
-  prior <- as.data.frame(prior)
+
 
   # Get savage-dickey BFs
   sdbf <- numeric(ncol(prior))
