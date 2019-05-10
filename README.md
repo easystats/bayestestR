@@ -70,7 +70,8 @@ posterior distributions.
 By default, hdi() returns the 90% intervals (`ci = 0.9`), deemed to be
 more stable than, for instance, 95% intervals (Kruschke, 2015). An
 effective sample size of at least 10.000 is recommended if 95% intervals
-should be computed (Kruschke 2015, p. 183ff).
+should be computed (Kruschke 2015,
+p. 183ff).
 
 ``` r
 hdi(rnorm(1000), ci = .90)
@@ -82,7 +83,8 @@ hdi(rnorm(1000), ci = .90)
 
 [**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html)
 find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior,
-*i.e.,* the most probable value.
+*i.e.,* the most probable
+value.
 
 ``` r
 map_estimate(rnorm(1000, 1, 1))
@@ -169,7 +171,7 @@ p_direction(rnorm(1000, mean = 1, sd = 1))
 
 ### Bayes Factor
 
-[**`bayesfactor()`**](https://easystats.github.io/bayestestR/reference/bayesfactor.html)
+[**`bayesfactor_savagedickey()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_savagedickey.html)
 computes the ratio between the density of a single value (typically the
 null) in two distributions, typically the posterior vs. the prior
 distributions. This method is used to examine if the hypothesis value is
@@ -199,7 +201,8 @@ proportion of 0% (positive values) or 100% (negative values). A
 ROPE-based *p* of 97% means that there is a probability of .97 that a
 parameter (described by its posterior distribution) is outside the ROPE.
 On the contrary, a ROPE-based p of -97% means that there is a
-probability of .97 that the parameter is inside the ROPE.
+probability of .97 that the parameter is inside the
+ROPE.
 
 ``` r
 p_rope(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
@@ -213,7 +216,8 @@ a parameter (described by its posterior distribution) has against the
 null hypothesis (*h0*) using Mills’ (2014, 2017) *Objective Bayesian
 Hypothesis Testing* framework. It is mathematically based on the density
 at the Maximum A Priori (MAP) and corresponds to the density value at 0
-divided by the density of the MAP estimate.
+divided by the density of the MAP
+estimate.
 
 ``` r
 p_map(posterior = rnorm(1000, 1, 1))
@@ -246,7 +250,8 @@ rope_range(model)
 [**`rcauchy_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html),
 [**`rpois_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html),
 [**`rt_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html):
-Generate a sample of size n with a near-perfect distributions.
+Generate a sample of size n with a near-perfect
+distributions.
 
 ``` r
 rnorm_perfect(n = 10)

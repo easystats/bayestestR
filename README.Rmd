@@ -205,7 +205,7 @@ posterior %>%
 
 ### Bayes Factor
 
-[**`bayesfactor()`**](https://easystats.github.io/bayestestR/reference/bayesfactor.html) computes the ratio between the density of a single value (typically the null) in two distributions, typically the posterior vs. the prior distributions. This method is used to examine if the hypothesis value is less or more likely given the observed data.
+[**`bayesfactor_savagedickey()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_savagedickey.html) computes the ratio between the density of a single value (typically the null) in two distributions, typically the posterior vs. the prior distributions. This method is used to examine if the hypothesis value is less or more likely given the observed data.
 
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
