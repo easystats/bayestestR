@@ -25,11 +25,11 @@ knitr::opts_chunk$set(echo = TRUE)
 set.seed(5)
 ```
 
-The adoption of the Bayesian framework for applied statistics, especially in social or psychological sciences, seems to be developing in two distinct directions. One of the key topic marking their separation is their opinion about the **Bayes factor**. In short, some authors (e.g., the "Amsterdam school", led by [Wagenmakers](https://www.bayesianspectacles.org/)) advocate its use and emphasise its qualities as a statistical index, while others point its limits and prefer the precise description of the posterior distribution (using CIs, ROPEs, etc.). 
+The adoption of the Bayesian framework for applied statistics, especially in the social or psychological sciences, seems to be developing in two distinct directions, with one of the key topics marking their separation is their opinion about the **Bayes factor**. In short, some authors (e.g., the "Amsterdam school", led by [Wagenmakers](https://www.bayesianspectacles.org/)) advocate its use and emphasise its qualities as a statistical index, while others point to its limits and prefer instead the precise description of posterior distributions (using CIs, ROPEs, etc.). 
 
-`bayestestR` does not take a side in this debate, rather offering tools to help you in whatever analysis you want to achieve. It strongly supports the notion of an *informed choice*: **discover the methods, try them, understand them, learn about them, and decide**.
+`bayestestR` does not take a side in this debate, rather offering tools to help you in whatever analysis you want to achieve. Instead, it strongly supports the notion of an *informed choice*: **discover the methods, try them, understand them, learn about them, and decide for yourself**.
 
-Thus, here's an introduction to Bayes factors :)
+Having said that, here's an introduction to Bayes factors :)
 
 # Bayes Factors
 
@@ -179,6 +179,15 @@ test_group2_right
 ```
 
 As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), the presence of an effect is `r round(test_group2_right$BFsd[1],2)` times more likely than the null hypothesis. This indicates that, given the observed data, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of `r round(test_group2_right$BFsd[1],2)` is still considered quite week evidence).
+
+### Testing all model parameters
+
+Alternativly, we could also pass our model directly as-is to `bayesfactor_savagedickey` to simultaniously test all of the model's parameters:
+
+```{r}
+bayesfactor_savagedickey(model)
+```
+
 
 ## Comparing models
 
