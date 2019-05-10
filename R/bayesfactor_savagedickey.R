@@ -101,6 +101,8 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior, direction = "two-
 #' @rdname bayesfactor_savagedickey
 #' @export
 #' @importFrom insight find_algorithm
+#' @importFrom stats update
+#' @importFrom utils capture.output
 bayesfactor_savagedickey.stanreg <- function(object, direction = "two-sided", hypothesis = 0){
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
