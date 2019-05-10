@@ -44,7 +44,6 @@ bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-s
 
 #' @rdname bayesfactor_savagedickey
 #' @export
-#' @importFrom insight print_color
 #' @importFrom stats rcauchy sd
 bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0) {
   if (is.null(prior)) {
@@ -60,45 +59,7 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
     )
   }
 
-  # find direction
-  direction.opts <- data.frame(
-    String = c("left", "right", "two-sided", "<", ">", "=", "-1", "0", "1", "+1"),
-    Value = c(-1, 1, 0, -1, 1, 0, -1, 0, 1, 1)
-  )
-  direction <- direction.opts$Value[pmatch(direction, direction.opts$String, 2)[1]]
-
-
-  if (requireNamespace("logspline")) {
-    f_post <- suppressWarnings(logspline::logspline(posterior))
-    f_prior <- suppressWarnings(logspline::logspline(prior))
-
-    d_post <- logspline::dlogspline(hypothesis, f_post)
-    d_prior <- logspline::dlogspline(hypothesis, f_prior)
-
-    norm_post <- norm_prior <- 1
-    if (direction < 0) {
-      norm_post <- logspline::plogspline(hypothesis, f_post)
-      norm_prior <- logspline::plogspline(hypothesis, f_prior)
-    } else if (direction > 0) {
-      norm_post <- 1 - logspline::plogspline(hypothesis, f_post)
-      norm_prior <- 1 - logspline::plogspline(hypothesis, f_prior)
-    }
-  } else {
-    insight::print_color("Consider installing the \"logspline\" package for a more robust estimate.\n", "red")
-    d_post <- density_at(posterior, hypothesis)
-    d_prior <- density_at(prior, hypothesis)
-
-    norm_post <- norm_prior <- 1
-    if (direction < 0) {
-      norm_post <- mean(posterior < hypothesis)
-      norm_prior <- mean(prior < hypothesis)
-    } else if (direction > 0) {
-      norm_post <- 1 - mean(posterior < 0)
-      norm_prior <- 1 - mean(prior < hypothesis)
-    }
-  }
-
-  bf_val <- data.frame(BFsd = (d_prior / norm_prior) / (d_post / norm_post))
+  bf_val <- data.frame(BFsd = .bayesfactor_savagedickey(posterior, prior, direction = direction, hypothesis = hypothesis))
   class(bf_val) <- c("bayesfactor_savagedickey", class(bf_val))
   attr(bf_val, "hypothesis") <- hypothesis
 
@@ -138,11 +99,10 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL, direction 
   sdbf <- numeric(ncol(prior))
 
   for (par in seq_len(ncol(posterior))) {
-    tmp <- bayesfactor_savagedickey.numeric(posterior[[par]],
-                                            prior[[par]],
-                                            direction = direction,
-                                            hypothesis = hypothesis)
-    sdbf[par] <- tmp[['BFsd']]
+    sdbf[par] <- .bayesfactor_savagedickey(posterior[[par]],
+                                           prior[[par]],
+                                           direction = direction,
+                                           hypothesis = hypothesis)
   }
 
   bf_val <- data.frame(BFsd = sdbf, row.names = colnames(posterior))
@@ -150,4 +110,46 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL, direction 
   attr(bf_val, "hypothesis") <- hypothesis
 
   bf_val
+}
+
+#' @importFrom insight print_color
+.bayesfactor_savagedickey <- function(posterior,prior, direction = "two-sided", hypothesis = 0){
+  # find direction
+  direction.opts <- data.frame(
+    String = c("left", "right", "two-sided", "<", ">", "=", "-1", "0", "1", "+1"),
+    Value = c(-1, 1, 0, -1, 1, 0, -1, 0, 1, 1)
+  )
+  direction <- direction.opts$Value[pmatch(direction, direction.opts$String, 2)[1]]
+
+  if (requireNamespace("logspline")) {
+    f_post <- suppressWarnings(logspline::logspline(posterior))
+    f_prior <- suppressWarnings(logspline::logspline(prior))
+
+    d_post <- logspline::dlogspline(hypothesis, f_post)
+    d_prior <- logspline::dlogspline(hypothesis, f_prior)
+
+    norm_post <- norm_prior <- 1
+    if (direction < 0) {
+      norm_post <- logspline::plogspline(hypothesis, f_post)
+      norm_prior <- logspline::plogspline(hypothesis, f_prior)
+    } else if (direction > 0) {
+      norm_post <- 1 - logspline::plogspline(hypothesis, f_post)
+      norm_prior <- 1 - logspline::plogspline(hypothesis, f_prior)
+    }
+  } else {
+    insight::print_color("Consider installing the \"logspline\" package for a more robust estimate.\n", "red")
+    d_post <- density_at(posterior, hypothesis)
+    d_prior <- density_at(prior, hypothesis)
+
+    norm_post <- norm_prior <- 1
+    if (direction < 0) {
+      norm_post <- mean(posterior < hypothesis)
+      norm_prior <- mean(prior < hypothesis)
+    } else if (direction > 0) {
+      norm_post <- 1 - mean(posterior < 0)
+      norm_prior <- 1 - mean(prior < hypothesis)
+    }
+  }
+
+  (d_prior / norm_prior) / (d_post / norm_post)
 }
