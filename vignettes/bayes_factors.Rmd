@@ -69,7 +69,7 @@ This is done by by comparing the density (likelihood) of the null value under th
 
 Let's use the Student's Sleep data, and try and answer the question: ***given the observed data, is it more or less likely that the drug (the variable `group`) has no effect on the numbers of hours of extra sleep (variable `extra`)?***
 
-```{r sleep_boxplot, message=FALSE, warning=FALSE}
+```{r sleep_boxplot, echo=FALSE, message=FALSE, warning=FALSE}
 library(ggplot2)
 library(dplyr)
 
@@ -101,9 +101,6 @@ posterior <- as.data.frame(model)$group2
 
 insight::get_priors(model)
 ```
-```{r prior_n_post2, message=FALSE, warning=FALSE}
-knitr::kable(insight::get_priors(model), digits=3)
-```
 
 For the `group2` parameter, the prior that was used was a **normal distribution** of **mean** (location) `0` and **SD** (scale) `5.044799`. We can simulate this prior distribution as follows:
 
@@ -117,28 +114,29 @@ prior <- distribution_normal(length(posterior), mean = 0, sd = 5.044799)
 We can not plot both the prior:
 
 ```{r prior_n_post_plot, echo=FALSE, message=FALSE, warning=FALSE}
-ggplot() +
-  geom_density(data=data.frame(prior), aes(x = prior, color = "Prior")) +
-  geom_density(data=data.frame(posterior), aes(x = posterior, color = "Posterior")) +
-  geom_vline(aes(xintercept=0), linetype="dotted") +
-  theme_classic()
+# ggplot() +
+#   geom_density(data = data.frame(prior), aes(x = prior, color = "Prior")) +
+#   geom_density(data = data.frame(posterior), aes(x = posterior, color = "Posterior")) +
+#   geom_vline(aes(xintercept = 0), linetype = "dotted") +
+#   theme_classic()
   
 
-# f_post <- suppressWarnings(logspline::logspline(posterior)) 
-# f_prior <- suppressWarnings(logspline::logspline(prior)) 
-# 
-# x_lims <- range(c(posterior, prior)) * 0.7
-# 
-# ggplot() +
-#   aes(x = 0, y = 0) +
-#   stat_function(aes(color = "Posterior"), fun = function(x) logspline::dlogspline(x,f_post), xlim = x_lims,
-#                 size = 1) +
-#   stat_function(aes(color = "Prior"), fun = function(x) logspline::dlogspline(x,f_prior), xlim = x_lims,
-#                 size = 1) +
-#   labs(x = 'group2', y = 'density', color = '') + 
-#   theme_classic() + 
-#   theme(legend.position = c(0.2,0.8)) + 
-#   NULL
+f_post <- suppressWarnings(logspline::logspline(posterior))
+f_prior <- suppressWarnings(logspline::logspline(prior))
+
+x_lims <- range(c(posterior, prior)) * 0.7
+
+ggplot() +
+  aes(x = 0, y = 0) +
+  stat_function(aes(color = "Posterior"), fun = function(x) logspline::dlogspline(x,f_post), xlim = x_lims,
+                size = 1) +
+  stat_function(aes(color = "Prior"), fun = function(x) logspline::dlogspline(x,f_prior), xlim = x_lims,
+                size = 1) +
+  geom_vline(aes(xintercept = 0), linetype = "dotted") +
+  labs(x = 'group2', y = 'density', color = '') +
+  theme_classic() +
+  theme(legend.position = c(0.2,0.8)) +
+  NULL
 
 ```
 
@@ -151,7 +149,7 @@ test_group2 <- bayesfactor_savagedickey(posterior = posterior, prior = prior)
 test_group2
 ```
 
-This BF indicates the **likelihood of an effect of 0 (null effect) is `r round(test_group2$BFsd[1],2)` less likely under posterior**. In other words, the observed data has 1/`r round(test_group2$BFsd[1],2)` = `r 1/round(test_group2$BFsd[1],2)` more chances to happen under the null hypothesis. Although the centre of distribution has shifted, it is still quite dense around the null.
+This BF indicates the **likelihood of an effect of 0 (null effect) is `r round(test_group2$BFsd[1],2)` less likely under posterior**. In other words, a null effect is has become 1/`r round(test_group2$BFsd[1],2)` = `r 1/round(test_group2$BFsd[1],2)` time more likely given the observed data. Although the centre of distribution has shifted, it is still quite dense around the null.
 
 Note that **interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). 
 
@@ -161,25 +159,27 @@ Note that **interpretation guides** for Bayes factors can be found [**here**](ht
 We can also conduct a directional test if we have some prior hypothesis about the direction of the effect:
 
 ```{r prior_n_post_plot_one_sided, echo=FALSE, message=FALSE, warning=FALSE}
-ggplot() +
-  geom_density(data=data.frame(prior = prior[prior > 0]), aes(x = prior, color = "Prior")) +
-  geom_density(data=data.frame(posterior = posterior[posterior > 0]), aes(x = posterior, color = "Posterior")) +
-  theme_classic()
+# ggplot() +
+#   geom_density(data = data.frame(prior = prior[prior > 0]), aes(x = prior, color = "Prior")) +
+#   geom_density(data = data.frame(posterior = posterior[posterior > 0]),
+#                aes(x = posterior, color = "Posterior")) +
+#   theme_classic()
   
 
-# f_post <- suppressWarnings(logspline::logspline(posterior[posterior > 0], lbound = 0)) 
-# f_prior <- suppressWarnings(logspline::logspline(prior[prior > 0], lbound = 0)) 
-# 
-# x_lims <- c(0,max(c(posterior,prior))) * 0.7
-# 
-# ggplot() +
-#   aes(x = 0, y = 0) +
-#   stat_function(aes(color = "Posterior"), fun = function(x) logspline::dlogspline(x, f_post), xlim = x_lims, size = 1) +
-#   stat_function(aes(color = "Prior"), fun = function(x) logspline::dlogspline(x, f_prior), xlim = x_lims, size = 1) +
-#   labs(x = 'group2', y = 'density', color = '') + 
-#   theme_light() + 
-#   theme(legend.position = c(0.8,0.8)) + 
-#   NULL
+f_post <- suppressWarnings(logspline::logspline(posterior[posterior > 0], lbound = 0))
+f_prior <- suppressWarnings(logspline::logspline(prior[prior > 0], lbound = 0))
+
+x_lims <- c(0,max(c(posterior,prior))) * 0.7
+
+ggplot() +
+  aes(x = 0, y = 0) +
+  stat_function(aes(color = "Posterior"), fun = function(x) logspline::dlogspline(x, f_post), xlim = x_lims, size = 1) +
+  stat_function(aes(color = "Prior"), fun = function(x) logspline::dlogspline(x, f_prior), xlim = x_lims, size = 1) +
+  geom_vline(aes(xintercept = 0), linetype = "dotted") +
+  labs(x = 'group2', y = 'density', color = '') +
+  theme_classic() +
+  theme(legend.position = c(0.8,0.8)) +
+  NULL
 
 ```
 
@@ -188,7 +188,7 @@ test_group2_right <- bayesfactor_savagedickey(posterior = posterior, prior = pri
 test_group2_right
 ```
 
-As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), **the presence of an effect is `r round(test_group2_right$BFsd[1],2)` times more likely than the null hypothesis**. This indicates that, given the observed data, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of `r round(test_group2_right$BFsd[1],2)` is still considered quite weak evidence).
+As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), **the presence of an effect is `r round(test_group2_right$BFsd[1],2)` times more likely than the null hypothesis**. This indicates that, given the observed data, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of `r round(test_group2_right$BFsd[1],2)` is still considered quite [weak evidence](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf)).
 
 ### Testing all model parameters
 
@@ -253,7 +253,7 @@ update(comparison, reference = 3)
 
 As we can see, though the full model is the best, there hardly any evidence it is preferable to the main effects model.
 
-> **NOTE:** In order to correctly and precisely estimate Bayes Factors, you always need the 4 P's: **P**roper **P**riors ([1](https://doi.org/10.1016/j.jmp.2015.08.002), [2](https://www.tandfonline.com/doi/abs/10.1080/01621459.1995.10476572), [3](https://doi.org/10.1016/S0304-4076(00)00076-2)), and a **P**lentiful **P**osterior ([4](https://doi.org/10.1007/s11336-018-9648-3)).
+> **NOTE:** In order to correctly and precisely estimate Bayes Factors, you always need the 4 P's: **P**roper **P**riors <sup>([1](https://doi.org/10.1016/j.jmp.2015.08.002), [2](https://doi.org/10.1080/01621459.1995.10476572), [3](https://doi.org/10.1016/S0304-4076(00)00076-2))</sup>, and a **P**lentiful **P**osterior <sup>([4](https://doi.org/10.1007/s11336-018-9648-3))</sup>.
 
 ### The BIC approximation for Frequentist Models
 
@@ -283,7 +283,7 @@ In other words, on average - are models with effect $X$ better than models witho
 
 Lets use the `brms` example from above:
 
-```{r inclusion_brms, message=FALSE, warning=FALSE, eval=FALSE}
+```{r inclusion_brms, message=FALSE, warning=FALSE, eval=TRUE}
 bayesfactor_inclusion(comparison)
 ```
 
@@ -291,7 +291,7 @@ As we can see, across all 5 models, the addition of each effect term makes the m
 
 We can also compare only matched models - i.e., a model without effect $A$ will only be compared to models *with* effect $A$, but not with models with higher-level interaction. (See explanation for why you might want to do this [here](https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp).)
 
-```{r inclusion_brms2, message=FALSE, warning=FALSE, eval=FALSE}
+```{r inclusion_brms2, message=FALSE, warning=FALSE, eval=TRUE}
 bayesfactor_inclusion(comparison, match_models = TRUE)
 ```
 
@@ -333,11 +333,10 @@ knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/
 We'll add `dose` to the null model in JASP, and do the same in `R`:
 
 ```{r JASP_Nuisance, message=FALSE, warning=FALSE, eval=TRUE}
-BF_ToothGrowth_against_dose <- BF_ToothGrowth[3:4]/BF_ToothGrowth[2]
+BF_ToothGrowth_against_dose <- BF_ToothGrowth[3:4]/BF_ToothGrowth[2] # OR: 
+# update(bayesfactor_models(BF_ToothGrowth), subset = c(4,5), reference = 3)
 BF_ToothGrowth_against_dose
 
-# OR:
-# update(bayesfactor_models(BF_ToothGrowth), subset = c(4,5), reference = 3)
 
 bayesfactor_inclusion(BF_ToothGrowth_against_dose)
 ```
