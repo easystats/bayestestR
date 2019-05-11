@@ -20,5 +20,5 @@ test_that("brms", {
 
   testthat::expect_equal(colnames(hdi(model)), c("Parameter", "CI", "CI_low", "CI_high"))
   testthat::expect_equal(colnames(hdi(model, effects = "all")), c("Parameter", "CI", "CI_low", "CI_high", "Group"))
-  testthat::expect_equal(nrow(equivalence_test(model)), 2)
+  # testthat::expect_equal(nrow(equivalence_test(model)), 2)
 })
