@@ -11,7 +11,7 @@ estimate_density(x, method = "kernel", precision = 2^10,
 \item{x}{the data from which the estimate is to be computed.  For the
     default method a numeric vector: long vectors are not supported.}
 
-\item{method}{Method of density estimation.}
+\item{method}{Method of density estimation. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.}
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \link[=density]{density}.}
 

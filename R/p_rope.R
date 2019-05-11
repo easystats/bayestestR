@@ -85,6 +85,8 @@ p_rope.numeric <- function(posterior, range = "default", precision = .1, ...) {
 
 
 
+
+
 #' @importFrom insight get_parameters
 #' @keywords internal
 .p_rope_models <- function(posterior, range, precision, effects, component, parameters) {

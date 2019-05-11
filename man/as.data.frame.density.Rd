@@ -7,10 +7,10 @@
 \method{as.data.frame}{density}(x, ...)
 }
 \arguments{
-\item{x}{Any R object.}
+\item{x}{any \R object.}
 
-\item{...}{Additional arguments to be passed to or from methods.}
+\item{...}{additional arguments to be passed to or from methods.}
 }
 \description{
-Functions to check if an object is a data frame, or coerce it if possible.
+Coerce to a Data Frame
 }

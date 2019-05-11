@@ -4,6 +4,7 @@
 \alias{p_direction}
 \alias{pd}
 \alias{p_direction.numeric}
+\alias{p_direction.data.frame}
 \alias{p_direction.stanreg}
 \alias{p_direction.brmsfit}
 \alias{p_direction.BFBayesFactor}
@@ -14,6 +15,8 @@ p_direction(x, ...)
 pd(x, ...)
 
 \method{p_direction}{numeric}(x, method = "direct", ...)
+
+\method{p_direction}{data.frame}(x, method = "direct", ...)
 
 \method{p_direction}{stanreg}(x, effects = c("fixed", "random", "all"),
   parameters = NULL, method = "direct", ...)
@@ -29,7 +32,7 @@ pd(x, ...)
 
 \item{...}{Currently not used.}
 
-\item{method}{Can be \code{"simple"} or \code{"AUC"}. If \code{"simple"} (default), the computation is based on the raw ratio of samples superior and inferior to 0. If \code{"AUC"}., the result is based on the \link[=auc]{Area under the Curve (AUC)}.}
+\item{method}{Can be \code{"direct"} or one of methods of \link[=estimate_density]{density estimation}, such as \code{"kernel"}, \code{"logspline"} or \code{"KernSmooth"}. If \code{"direct"} (default), the computation is based on the raw ratio of samples superior and inferior to 0. Else, the result is based on the \link[=auc]{Area under the Curve (AUC)} of the estimated \link[=estimate_density]{density} function.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
@@ -54,19 +57,58 @@ Compute the \strong{Probability of Direction} (\strong{\emph{p}d}, also known as
 library(bayestestR)
 
 # Simulate a posterior distribution of mean 1 and SD 1
+# ----------------------------------------------------
 posterior <- rnorm(1000, mean = 1, sd = 1)
 p_direction(posterior)
-p_direction(posterior, raw = FALSE)
+p_direction(posterior, method = "kernel")
+
+# Simulate a dataframe of posterior distributions
+# -----------------------------------------------
+df <- data.frame(replicate(4, rnorm(100)))
+p_direction(df)
+p_direction(df, method = "kernel")
+
 \dontrun{
+# rstanarm models
+# -----------------------------------------------
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 p_direction(model)
-p_direction(model, raw = FALSE)
+p_direction(model, method = "kernel")
 
+# brms models
+# -----------------------------------------------
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 p_direction(model)
-p_direction(model, raw = FALSE)
+p_direction(model, method = "kernel")
+
+# BayesFactor objects
+# -----------------------------------------------
+library(BayesFactor)
+bf <- ttestBF(x = rnorm(100, 1, 1))
+p_direction(bf)
+p_direction(bf, method = "kernel")
 }
+
+# Comparison of methods
+# -----------------------------------------------
+library(logspline)
+library(KernSmooth)
+
+data <- data.frame()
+for(i in rnorm(8, 0, 4)){
+  for(j in rnorm(8, 0.5, 4)){
+    x <- rnorm(1000, i, abs(j))
+    data <- rbind(data,
+      data.frame("direct" = pd(x),
+                 "kernel" = pd(x, method="kernel"),
+                 "logspline" = pd(x, method="logspline"),
+                 "KernSmooth" = pd(x, method="KernSmooth")
+                 ))
+  }
+}
+pairs(~., data=data)
+
 
 }
