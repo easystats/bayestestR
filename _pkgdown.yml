@@ -26,14 +26,14 @@ navbar:
     menu:
       - text: '1. Bayesian (General) Linear Models'
         href: articles/example1_GLM.html
-      - text: '2. Bayes Factors'
-        href: articles/bayes_factors.html
   - text: Articles
     menu:
-      - text: '1. Comparison of Point-Estimates'
+      - text: 'Comparison of Point-Estimates'
         href: articles/indicesEstimationComparison.html
-      - text: '2. Comparison of Indices of Effect Existence'
+      - text: 'Comparison of Indices of Effect Existence'
         href: articles/indicesExistenceComparison.html
-      - text: '3. Reporting Guidelines'
-        href: articles/guidelines.html
+      - text: 'Bayes Factors'
+        href: articles/bayes_factors.html
+  - text: Guidelines
+    href: articles/guidelines.html
 

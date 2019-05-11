@@ -240,16 +240,23 @@ through the formula `sqrt(3)/pi`, resulting in a range of `-0.05` to
 rope_range(model)
 ```
 
+### Density Estimation
+
+[**`estimate_density()`**](https://easystats.github.io/bayestestR/reference/estimate_density.html):
+This function is a wrapper over different methods of density estimation.
+By default, it uses the base R `density` with by default uses a
+different smoothing bandwidth (`"SJ"`) from the legacy default
+implemented the base R `density` function (`"nrd0"`). However, Deng &
+Wickham suggest that `method = "KernSmooth"` is the fastest and the most
+accurate.
+
 ### Perfect Distributions
 
-[**`rnorm_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html),
-[**`rcauchy_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html),
-[**`rpois_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html),
-[**`rt_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html):
-Generate a sample of size n with a near-perfect distributions.
+[**`distribution()`**](https://easystats.github.io/bayestestR/reference/distribution.html):
+Generate a sample of size n with near-perfect distributions.
 
 ``` r
-rnorm_perfect(n = 10)
+distribution(n = 10)
 ```
 
 ### Probability of a Value

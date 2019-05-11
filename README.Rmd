@@ -294,6 +294,12 @@ rope_range(model)
 ```
 
 
+
+### Density Estimation
+
+[**`estimate_density()`**](https://easystats.github.io/bayestestR/reference/estimate_density.html): This function is a wrapper over different methods of density estimation. By default, it uses the base R `density` with by default uses a different smoothing bandwidth (`"SJ"`) from the legacy default implemented the base R `density` function (`"nrd0"`). However, Deng \& Wickham suggest that `method = "KernSmooth"` is the fastest and the most accurate.
+
+
 ### Perfect Distributions
 
 [**`distribution()`**](https://easystats.github.io/bayestestR/reference/distribution.html): Generate a sample of size n with near-perfect distributions.
