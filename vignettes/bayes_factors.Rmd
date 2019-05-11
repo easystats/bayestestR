@@ -101,8 +101,8 @@ posterior <- as.data.frame(model)$group2
 
 insight::get_priors(model)
 ```
-```{r prior_n_post, message=FALSE, warning=FALSE}
-kable(insight::get_priors(model), digits=3)
+```{r prior_n_post2, message=FALSE, warning=FALSE}
+knitr::kable(insight::get_priors(model), digits=3)
 ```
 
 For the `group2` parameter, the prior that was used was a **normal distribution** of **mean** (location) `0` and **SD** (scale) `5.044799`. We can simulate this prior distribution as follows:
@@ -303,7 +303,7 @@ In this case, it did not change the inclusion Bayes factors by much (by did chan
 
 #### Compared across all models
 
-```{r JASP_all, message=FALSE, warning=FALSE, eval=FALSE}
+```{r JASP_all, message=FALSE, warning=FALSE, eval=TRUE}
 library(BayesFactor)
 
 ToothGrowth$dose <- as.factor(ToothGrowth$dose)
@@ -311,7 +311,6 @@ ToothGrowth$dose <- as.factor(ToothGrowth$dose)
 BF_ToothGrowth <- anovaBF(len ~ dose*supp, ToothGrowth)
 
 bayesfactor_inclusion(BF_ToothGrowth)
-
 ```
 
 ```{r JASP_all_fig, echo=FALSE, message=FALSE, warning=FALSE}
@@ -320,7 +319,7 @@ knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/
 
 #### Compared across matched models
 
-```{r JASP_matched, message=FALSE, warning=FALSE, eval=FALSE}
+```{r JASP_matched, message=FALSE, warning=FALSE, eval=TRUE}
 bayesfactor_inclusion(BF_ToothGrowth, match_models = TRUE)
 ```
 
@@ -333,7 +332,7 @@ knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/
 
 We'll add `dose` to the null model in JASP, and do the same in `R`:
 
-```{r JASP_Nuisance, message=FALSE, warning=FALSE, eval=FALSE}
+```{r JASP_Nuisance, message=FALSE, warning=FALSE, eval=TRUE}
 BF_ToothGrowth_against_dose <- BF_ToothGrowth[3:4]/BF_ToothGrowth[2]
 BF_ToothGrowth_against_dose
 

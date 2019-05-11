@@ -78,7 +78,7 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 ## Posterior Description
 
-[**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html)
+[**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html) is the master function with which you can compute all of the indices cited below *at once*.
 
 ### Highest Density Interval (HDI) - The *Credible* Interval (CI)
 
