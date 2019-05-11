@@ -162,21 +162,24 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .95, parameters 
 #' @importFrom insight find_parameters
 #' @keywords internal
 .check_parameter_correlation <- function(model) {
-  dat <- as.data.frame(model)[, insight::find_parameters(model, flatten = TRUE)]
-  dat <- dat[, -1]
+  valid_parameters <- insight::find_parameters(model, parameters = "^(?!(r_|sd_|cor_|b\\[))", flatten = TRUE)
+  dat <- as.data.frame(model)[, valid_parameters]
+  dat <- dat[, -1, drop = FALSE]
 
-  parameter_correlation <- stats::cor(dat)
-  parameter <- expand.grid(colnames(dat), colnames(dat), stringsAsFactors = FALSE)
+  if (ncol(dat) > 1) {
+    parameter_correlation <- stats::cor(dat)
+    parameter <- expand.grid(colnames(dat), colnames(dat), stringsAsFactors = FALSE)
 
-  results <- cbind(
-    parameter,
-    corr = abs(as.vector(expand.grid(parameter_correlation)[[1]])),
-    pvalue = apply(parameter, 1, function(r) stats::cor.test(dat[[r[1]]], dat[[r[2]]])$p.value)
-  )
+    results <- cbind(
+      parameter,
+      corr = abs(as.vector(expand.grid(parameter_correlation)[[1]])),
+      pvalue = apply(parameter, 1, function(r) stats::cor.test(dat[[r[1]]], dat[[r[2]]])$p.value)
+    )
 
-  results <- results[which(results$pvalue < 0.05) & results$Var1 != results$Var2, ]
+    results <- results[results$pvalue < 0.05 & results$Var1 != results$Var2, ]
 
-  if (nrow(results) > 0 && any(results$corr >= 0.5)) {
-    warning("Some parameters show strong correlation. Note that the equivalence-test may have inappropriate results when covariates are not independent.")
+    if (nrow(results) > 0 && any(results$corr >= 0.5)) {
+      warning("Some parameters show strong correlation. Note that the equivalence-test may have inappropriate results when covariates are not independent.", call. = FALSE)
+    }
   }
 }
