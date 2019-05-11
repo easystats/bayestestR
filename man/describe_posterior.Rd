@@ -6,7 +6,6 @@
 \alias{describe_posterior.double}
 \alias{describe_posterior.data.frame}
 \alias{describe_posterior.stanreg}
-\alias{describe_posterior.brmsfit}
 \title{Describe posterior distributions.}
 \usage{
 describe_posterior(posteriors, estimate = "median", ci = 0.9,
@@ -27,11 +26,15 @@ describe_posterior(posteriors, estimate = "median", ci = 0.9,
 
 \method{describe_posterior}{stanreg}(posteriors, estimate = "median",
   ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
+  rope_range = "default", rope_full = TRUE, dispersion = TRUE,
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), parameters = NULL, ...)
 
-\method{describe_posterior}{brmsfit}(posteriors, estimate = "median",
+\method{describe_posterior}{stanreg}(posteriors, estimate = "median",
   ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
+  rope_range = "default", rope_full = TRUE, dispersion = TRUE,
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), parameters = NULL, ...)
 }
 \arguments{
 \item{posteriors}{A vector, dataframe or model of posterior draws.}
@@ -51,6 +54,18 @@ describe_posterior(posteriors, estimate = "median", ci = 0.9,
 \item{dispersion}{Indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
 \item{...}{Additional arguments to be passed to or from methods.}
+
+\item{effects}{Should variables for fixed effects, random effects
+or both be returned? Only applies to mixed models. May be abbreviated.}
+
+\item{component}{Should all predictor variables, predictor variables for the
+conditional model, the zero-inflated part of the model, the dispersion
+term or the instrumental variables be returned? Applies to models
+with zero-inflated and/or dispersion formula, or to models with instrumental
+variable (so called fixed-effects regressions). May be abbreviated.}
+
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned.}
 }
 \description{
 Compute indices relevant to describe and characterise the posterior distributions.

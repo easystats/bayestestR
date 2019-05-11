@@ -41,6 +41,8 @@ check-out these vignettes:
     Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
   - [Example 1: Bayesian (General) Linear
     Models](https://easystats.github.io/bayestestR/articles/example1_GLM.html)
+  - [Bayes
+    Factors](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
   - [Comparison of
     Point-Estimates](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
   - [Comparison of Indices of Effect
@@ -272,7 +274,8 @@ density_at(rnorm(1000, 1, 1), 1)
 
 You can cite the package as following:
 
-  - Makowski, D. & Lüdecke, D. (2019). *Understand and Describe Bayesian
-    Models and Posterior Distributions using BayestestR*. Available from
+  - Makowski, D., Ben-Shachar M. S., & Lüdecke, D. (2019). *Understand
+    and Describe Bayesian Models and Posterior Distributions using
+    BayestestR*. Available from
     <https://github.com/easystats/bayestestR>.
     <DOI:10.5281/zenodo.2556486>.

@@ -98,7 +98,7 @@ map_estimate.brmsfit <- function(x, precision = 2^10, effects = c("fixed", "rand
   component <- match.arg(component)
 
   .map_estimate_models(
-    x = insight::get_parameters(x, effects = effects, parameters = parameters),
+    x = insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
     precision = precision
   )
 }
