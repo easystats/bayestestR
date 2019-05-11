@@ -21,7 +21,7 @@ bibliography: bibliography.bib
 
 This vignette can be referred to by citing the package:
 
-- Makowski, D., Ben-Shachar M. S. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI: [10.5281/zenodo.2556486](https://zenodo.org/record/2556486).
+- Makowski, D., Ben-Shachar M. S. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using bayestestR*. Available from https://github.com/easystats/bayestestR. DOI: [10.5281/zenodo.2556486](https://zenodo.org/record/2556486).
 
 
 ```{r setup, include=FALSE}
@@ -65,9 +65,9 @@ The ***Savage-Dickey density ratio*** can be used to answer the question:
 
 > **Given the data, is the null more, or less likely?**
 
-This is done by by comparing the density (likelihood) of the null value under the prior between the prior and posterior distributions (see @wagenmakers2010bayesian).
+This is done by by comparing the density (likelihood) of the null value under the prior between the prior and posterior distributions [@wagenmakers2010bayesian].
 
-Let's use the Student's Sleep data, and try and answer the question: *given the observed data, is it more or less likely that the drug (the variable `group`) has no effect on the numbers of hours of extra sleep (variable `extra`?*
+Let's use the Student's Sleep data, and try and answer the question: ***given the observed data, is it more or less likely that the drug (the variable `group`) has no effect on the numbers of hours of extra sleep (variable `extra`)?***
 
 ```{r sleep_boxplot, message=FALSE, warning=FALSE}
 library(ggplot2)
@@ -79,7 +79,7 @@ ggplot(sleep, aes(x = group, y = extra, fill= group)) +
 ```
 
 
-The **bloxplot** suggests that the 2nd group has a higher number of hours of extra sleep. By how much? Let's fit a simple Bayesian linear model.
+The **bloxplot** suggests that the 2nd group has a higher number of hours of extra sleep. By how much? Let's fit a simple [Bayesian linear model](https://easystats.github.io/bayestestR/articles/example1_GLM.html).
 
 ```{r rstanarm_disp, eval=FALSE, message=FALSE, warning=FALSE}
 library(rstanarm)
@@ -96,10 +96,13 @@ junk <- capture.output(model <- stan_glm(extra ~ group, data = sleep))
 
 We can use `as.data.frame` on this model to extract the posterior distribution related to the effect of `group2`, and the `get_priors` from the `insight` package to see what the prior distribution was used:
 
-```{r prior_n_post, message=FALSE, warning=FALSE}
+```{r prior_n_post, message=FALSE, warning=FALSE, results='hide'}
 posterior <- as.data.frame(model)$group2
 
 insight::get_priors(model)
+```
+```{r prior_n_post, message=FALSE, warning=FALSE}
+kable(insight::get_priors(model), digits=3)
 ```
 
 For the `group2` parameter, the prior that was used was a **normal distribution** of **mean** (location) `0` and **SD** (scale) `5.044799`. We can simulate this prior distribution as follows:
@@ -150,7 +153,7 @@ test_group2
 
 This BF indicates the **likelihood of an effect of 0 (null effect) is `r round(test_group2$BFsd[1],2)` less likely under posterior**. In other words, the observed data has 1/`r round(test_group2$BFsd[1],2)` = `r 1/round(test_group2$BFsd[1],2)` more chances to happen under the null hypothesis. Although the centre of distribution has shifted, it is still quite dense around the null.
 
-Note that **Interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). 
+Note that **interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). 
 
 
 ### Directional test
@@ -185,11 +188,11 @@ test_group2_right <- bayesfactor_savagedickey(posterior = posterior, prior = pri
 test_group2_right
 ```
 
-As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), the presence of an effect is `r round(test_group2_right$BFsd[1],2)` times more likely than the null hypothesis. This indicates that, given the observed data, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of `r round(test_group2_right$BFsd[1],2)` is still considered quite week evidence).
+As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), **the presence of an effect is `r round(test_group2_right$BFsd[1],2)` times more likely than the null hypothesis**. This indicates that, given the observed data, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of `r round(test_group2_right$BFsd[1],2)` is still considered quite weak evidence).
 
 ### Testing all model parameters
 
-Alternativly, we could also pass our model directly as-is to `bayesfactor_savagedickey` to simultaniously test all of the model's parameters:
+Alternatively, we could also pass our model directly as-is to `bayesfactor_savagedickey` to simultaneously test all of the model's parameters:
 
 ```{r}
 bayesfactor_savagedickey(model)

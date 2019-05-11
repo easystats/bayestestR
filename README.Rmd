@@ -78,6 +78,8 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 ## Posterior Description
 
+[**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html)
+
 ### Highest Density Interval (HDI) - The *Credible* Interval (CI)
 
 [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html) computes the **Highest Density Interval (HDI)** of a posterior distribution, *i.e.*, the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as **Credible Interval (CI)**.
@@ -324,4 +326,4 @@ density_at(rnorm(1000, 1, 1), 1)
 
 You can cite the package as following:
 
-- Makowski, D., Ben-Shachar M. S., \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI:10.5281/zenodo.2556486.
+- Makowski, D., Ben-Shachar M. S., \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using bayestestR*. Available from https://github.com/easystats/bayestestR. DOI:10.5281/zenodo.2556486.
