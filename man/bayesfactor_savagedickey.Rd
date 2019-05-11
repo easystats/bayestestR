@@ -10,11 +10,11 @@ bayesfactor_savagedickey(posterior, prior = NULL,
   direction = "two-sided", hypothesis = 0, ...)
 
 \method{bayesfactor_savagedickey}{numeric}(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0)
+  direction = "two-sided", hypothesis = 0, ...)
 
 \method{bayesfactor_savagedickey}{stanreg}(posterior, prior = NULL,
   direction = "two-sided", hypothesis = 0, effects = c("fixed",
-  "random", "all"))
+  "random", "all"), ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution, or a \code{stanreg} object.}

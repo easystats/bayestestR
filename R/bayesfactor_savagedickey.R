@@ -47,7 +47,7 @@ bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-s
 #' @rdname bayesfactor_savagedickey
 #' @export
 #' @importFrom stats rcauchy sd
-bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0) {
+bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, ...) {
   if (is.null(prior)) {
     prior <- distribution_cauchy(
       n = length(posterior),
@@ -75,7 +75,8 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
 #' @importFrom utils capture.output
 bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
                                              direction = "two-sided", hypothesis = 0,
-                                             effects = c("fixed", "random", "all")){
+                                             effects = c("fixed", "random", "all"),
+                                             ...){
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
   }

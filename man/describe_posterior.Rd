@@ -9,38 +9,38 @@
 \alias{describe_posterior.brmsfit}
 \title{Describe posterior distributions.}
 \usage{
-describe_posterior(posteriors, ci = 0.9, ci_method = "hdi",
-  estimate = "median", test = c("pd", "rope"),
+describe_posterior(posteriors, estimate = "median", ci = 0.9,
+  ci_method = "hdi", test = c("pd", "rope"), rope_range = "default",
+  rope_full = TRUE, dispersion = TRUE, ...)
+
+\method{describe_posterior}{numeric}(posteriors, estimate = "median",
+  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
 
-\method{describe_posterior}{numeric}(posteriors, ci = 0.9,
-  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
+\method{describe_posterior}{double}(posteriors, estimate = "median",
+  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
 
-\method{describe_posterior}{double}(posteriors, ci = 0.9,
-  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
+\method{describe_posterior}{data.frame}(posteriors, estimate = "median",
+  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
 
-\method{describe_posterior}{data.frame}(posteriors, ci = 0.9,
-  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
+\method{describe_posterior}{stanreg}(posteriors, estimate = "median",
+  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
 
-\method{describe_posterior}{stanreg}(posteriors, ci = 0.9,
-  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
-
-\method{describe_posterior}{brmsfit}(posteriors, ci = 0.9,
-  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
+\method{describe_posterior}{brmsfit}(posteriors, estimate = "median",
+  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
 }
 \arguments{
 \item{posteriors}{A vector, dataframe or model of posterior draws.}
 
+\item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".}
+
 \item{ci}{Credible Interval (CI) level. Default to 0.90 (90\%).}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be \link{hdi} (default) or "quantile" (see \link{ci}).}
-
-\item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".}
 
 \item{test}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".}
 
