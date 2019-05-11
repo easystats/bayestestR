@@ -7,13 +7,14 @@
 \title{Savage-Dickey density ratio Bayes factor}
 \usage{
 bayesfactor_savagedickey(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0)
+  direction = "two-sided", hypothesis = 0, ...)
 
 \method{bayesfactor_savagedickey}{numeric}(posterior, prior = NULL,
   direction = "two-sided", hypothesis = 0)
 
 \method{bayesfactor_savagedickey}{stanreg}(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0)
+  direction = "two-sided", hypothesis = 0, effects = c("fixed",
+  "random", "all"))
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution, or a \code{stanreg} object.}
@@ -24,6 +25,10 @@ bayesfactor_savagedickey(posterior, prior = NULL,
 \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).}
 
 \item{hypothesis}{Value to be tested against (usually \code{0} in the context of null hypothesis testing).}
+
+\item{...}{Currently not used.}
+
+\item{effects}{Should results for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.}
 }
 \value{
 A data frame of class \code{BFsd} which contains the Bayes factor representing by how

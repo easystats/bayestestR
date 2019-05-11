@@ -10,6 +10,8 @@
 #' @param direction Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
 #' \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).
 #' @param hypothesis Value to be tested against (usually \code{0} in the context of null hypothesis testing).
+#' @param effects Should results for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.
+#' @param ... Currently not used.
 #'
 #' @return A data frame of class \code{BFsd} which contains the Bayes factor representing by how
 #' much \emph{less} the null is likely under the posterior compared to the prior (larger than 1
@@ -37,7 +39,7 @@
 #' @author Mattan S. Ben-Shachar
 #'
 #' @export
-bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0) {
+bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, ...) {
   UseMethod("bayesfactor_savagedickey")
 }
 
@@ -71,15 +73,19 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
 #' @importFrom insight find_algorithm
 #' @importFrom stats update
 #' @importFrom utils capture.output
-bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0){
+bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
+                                             direction = "two-sided", hypothesis = 0,
+                                             effects = c("fixed", "random", "all")){
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
   }
 
-  # Get Priors
-  alg <- insight::find_algorithm(posterior)
+  effects <- match.arg(effects)
 
-  if(is.null(prior)){
+  # Get Priors
+  if (is.null(prior)) {
+    alg <- insight::find_algorithm(posterior)
+
     capture.output(prior <- suppressWarnings(
       update(
         posterior,
@@ -89,11 +95,10 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL, direction 
         warmup = alg$warmup
       )
     ))
-    prior <- as.data.frame(prior)
+    prior <- insight::get_parameters(prior, effects = effects)
   }
 
-  posterior <- as.data.frame(posterior)
-
+  posterior <- insight::get_parameters(posterior, effects = effects)
 
   # Get savage-dickey BFs
   sdbf <- numeric(ncol(prior))
