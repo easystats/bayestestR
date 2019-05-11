@@ -22,9 +22,10 @@
 #' @importFrom stats density
 #' @importFrom utils install.packages
 #' @export
-estimate_density <- function(x, method = "kernel", precision = 2^10, bw = "SJ", ...) {
+estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, bw = "SJ", ...) {
   method <- match.arg(method, c("kernel", "logspline", "KernSmooth"))
 
+  # Range
   x_range <- range(x)
 
   # Kernel

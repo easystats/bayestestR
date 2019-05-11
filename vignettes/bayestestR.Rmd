@@ -20,6 +20,12 @@ bibliography: bibliography.bib
 ---
 
 
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+options(digits=2)
+```
+
 
 ## Why use the Bayesian Framework?
 
@@ -72,7 +78,7 @@ devtools::install_github("easystats/easystats")
 <!-- ``` -->
 
 
-Let's also install and load the [`rstanarm`](https://mc-stan.org/rstanarm/), that allows fitting Bayesian models.
+Let's also install and load the [`rstanarm`](https://mc-stan.org/rstanarm/), that allows fitting Bayesian models, as well as [`bayestestR`](https://github.com/easystats/bayestestR), to describe them.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 install.packages("rstanarm")
@@ -83,7 +89,7 @@ library(rstanarm)
 
 ### Traditional linear regression
 
-Let's fit a simple frequentist linear regression (the `lm()` function stands for *linear model*) between two numeric variables, `Sepal.Length` and `Petal.Length` from the famous [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R.
+Let's start by fitting a simple frequentist linear regression (the `lm()` function stands for *linear model*) between two numeric variables, `Sepal.Length` and `Petal.Length` from the famous [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 model <- lm(Sepal.Length ~ Petal.Length, data=iris)
@@ -135,18 +141,15 @@ This analysis suggests that there is a **significant** (*whatever that means*) a
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
-summary(model)
-```
-```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='hide'}
-library(rstanarm)
-set.seed(333)
-
-model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
 describe_posterior(model)
 ```
 ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
-model %>% 
-  describe_posterior()
+library(rstanarm)
+library(bayestestR)
+set.seed(333)
+
+junk <- capture.output(model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris))
+knitr::kable(describe_posterior(model), digits=2)
 ```
 
 

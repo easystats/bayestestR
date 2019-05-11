@@ -169,14 +169,14 @@ Accurate depiction of a regular Bayesian user estimating a credible interval.
 <!-- ```{r message=FALSE, warning=FALSE} -->
 <!-- library(report)  # Calling library(...) enables you to use the package's functions -->
 <!-- ``` -->
-<p>Let’s also install and load the <a href="https://mc-stan.org/rstanarm/"><code>rstanarm</code></a>, that allows fitting Bayesian models.</p>
+<p>Let’s also install and load the <a href="https://mc-stan.org/rstanarm/"><code>rstanarm</code></a>, that allows fitting Bayesian models, as well as <a href="https://github.com/easystats/bayestestR"><code>bayestestR</code></a>, to describe them.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"rstanarm"</span>)</a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a></code></pre></div>
 </div>
 <div id="traditional-linear-regression" class="section level3">
 <h3 class="hasAnchor">
 <a href="#traditional-linear-regression" class="anchor"></a>Traditional linear regression</h3>
-<p>Let’s fit a simple frequentist linear regression (the <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code> function stands for <em>linear model</em>) between two numeric variables, <code>Sepal.Length</code> and <code>Petal.Length</code> from the famous <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set"><code>iris</code></a> dataset, included by default in R.</p>
+<p>Let’s start by fitting a simple frequentist linear regression (the <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code> function stands for <em>linear model</em>) between two numeric variables, <code>Sepal.Length</code> and <code>Petal.Length</code> from the famous <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set"><code>iris</code></a> dataset, included by default in R.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data=</span>iris)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(model)</a></code></pre></div>
 <pre><code>
@@ -184,19 +184,19 @@ Call:
 lm(formula = Sepal.Length ~ Petal.Length, data = iris)
 
 Residuals:
-     Min       1Q   Median       3Q      Max 
--1.24675 -0.29657 -0.01515  0.27676  1.00269 
+    Min      1Q  Median      3Q     Max 
+-1.2468 -0.2966 -0.0152  0.2768  1.0027 
 
 Coefficients:
              Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   4.30660    0.07839   54.94   &lt;2e-16 ***
-Petal.Length  0.40892    0.01889   21.65   &lt;2e-16 ***
+(Intercept)    4.3066     0.0784    54.9   &lt;2e-16 ***
+Petal.Length   0.4089     0.0189    21.6   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.4071 on 148 degrees of freedom
-Multiple R-squared:   0.76, Adjusted R-squared:  0.7583 
-F-statistic: 468.6 on 1 and 148 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 0.41 on 148 degrees of freedom
+Multiple R-squared:  0.76,  Adjusted R-squared:  0.758 
+F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <!-- ```{r message=FALSE, warning=FALSE, eval=FALSE} -->
 <!-- model <- lm(Sepal.Length ~ Petal.Length, data=iris) -->
 <!-- report(model) -->
@@ -229,37 +229,52 @@ F-statistic: 468.6 on 1 and 148 DF,  p-value: &lt; 2.2e-16</code></pre>
 <!--   to_text(width=100) -->
 <!-- ``` -->
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data=</span>iris)</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(model)</a></code></pre></div>
-<pre><code>
-Model Info:
-
- function:     stan_glm
- family:       gaussian [identity]
- formula:      Sepal.Length ~ Petal.Length
- algorithm:    sampling
- priors:       see help('prior_summary')
- sample:       4000 (posterior sample size)
- observations: 150
- predictors:   2
-
-Estimates:
-                mean   sd    2.5%   25%   50%   75%   97.5%
-(Intercept)     4.3    0.1   4.2    4.3   4.3   4.4   4.5  
-Petal.Length    0.4    0.0   0.4    0.4   0.4   0.4   0.4  
-sigma           0.4    0.0   0.4    0.4   0.4   0.4   0.5  
-mean_PPD        5.8    0.0   5.7    5.8   5.8   5.9   5.9  
-log-posterior -84.0    1.2 -87.2  -84.6 -83.7 -83.1 -82.6  
-
-Diagnostics:
-              mcse Rhat n_eff
-(Intercept)   0.0  1.0  4056 
-Petal.Length  0.0  1.0  4311 
-sigma         0.0  1.0  3895 
-mean_PPD      0.0  1.0  4060 
-log-posterior 0.0  1.0  1959 
-
-For each parameter, mcse is Monte Carlo standard error, n_eff is a crude measure of effective sample size, and Rhat is the potential scale reduction factor on split chains (at convergence Rhat=1).</code></pre>
-<p><strong>That’s it!</strong> You fitted a Bayesian version of the model by simply using <a href="https://mc-stan.org/rstanarm/reference/stan_glm.html"><code>stan_glm()</code></a> instead of <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code>. The conclusion that we can drawn, for this example, are very similar. The effect (<em>the median of the effect’s posterior distribution</em>) is about <code>0.41</code>, and it can be also be considered as <em>significant</em> in the Bayesian sense.</p>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">Median</th>
+<th align="right">MAD</th>
+<th align="right">CI_low</th>
+<th align="right">CI_high</th>
+<th align="right">pd</th>
+<th align="right">ROPE_Percentage</th>
+<th align="left">ROPE_Equivalence</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">4.31</td>
+<td align="right">0.08</td>
+<td align="right">4.18</td>
+<td align="right">4.44</td>
+<td align="right">100</td>
+<td align="right">0</td>
+<td align="left">rejected</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Length</td>
+<td align="right">0.41</td>
+<td align="right">0.02</td>
+<td align="right">0.38</td>
+<td align="right">0.44</td>
+<td align="right">100</td>
+<td align="right">0</td>
+<td align="left">rejected</td>
+</tr>
+<tr class="odd">
+<td align="left">sigma</td>
+<td align="right">0.41</td>
+<td align="right">0.02</td>
+<td align="right">0.37</td>
+<td align="right">0.45</td>
+<td align="right">100</td>
+<td align="right">0</td>
+<td align="left">rejected</td>
+</tr>
+</tbody>
+</table>
+<p><strong>That’s it!</strong> You fitted a Bayesian version of the model by simply using <a href="https://mc-stan.org/rstanarm/reference/stan_glm.html"><code>stan_glm()</code></a> instead of <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code> and described the posterior distributions of the parameters. The conclusion that we can drawn, for this example, are very similar. The effect (<em>the median of the effect’s posterior distribution</em>) is about <code>0.41</code>, and it can be also be considered as <em>significant</em> in the Bayesian sense (more on that later).</p>
 <p><strong>So, ready to learn more?</strong> Check out the <a href="https://easystats.github.io/bayestestR/articles/example1_GLM.html"><strong>next tutorial</strong></a>!</p>
 </div>
 </div>

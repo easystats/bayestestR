@@ -19,6 +19,11 @@ editor_options:
 bibliography: bibliography.bib
 ---
 
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+options(digits=2)
+```
 
 
 Now that you've read the [**Get started**](https://easystats.github.io/bayestestR/articles/bayestestR.html) section, let's dive in the subtleties of Bayesian modelling using R.
