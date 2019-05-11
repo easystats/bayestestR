@@ -3,23 +3,32 @@
 \name{bayesfactor_savagedickey}
 \alias{bayesfactor_savagedickey}
 \alias{bayesfactor_savagedickey.numeric}
+\alias{bayesfactor_savagedickey.stanreg}
 \title{Savage-Dickey density ratio Bayes factor}
 \usage{
-bayesfactor_savagedickey(posterior, prior, direction = "two-sided",
-  hypothesis = 0)
+bayesfactor_savagedickey(posterior, prior = NULL,
+  direction = "two-sided", hypothesis = 0, ...)
 
-\method{bayesfactor_savagedickey}{numeric}(posterior, prior,
-  direction = "two-sided", hypothesis = 0)
+\method{bayesfactor_savagedickey}{numeric}(posterior, prior = NULL,
+  direction = "two-sided", hypothesis = 0, ...)
+
+\method{bayesfactor_savagedickey}{stanreg}(posterior, prior = NULL,
+  direction = "two-sided", hypothesis = 0, effects = c("fixed",
+  "random", "all"), ...)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution.}
+\item{posterior}{Vector representing a posterior distribution, or a \code{stanreg} object.}
 
-\item{prior}{Vector representing a prior distribution. If a prior is not provided, will sample from \code{~Cauchy(location = hypothesis, scale = sd(posterior))} (but this should be avoided).}
+\item{prior}{Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored). If a prior is not provided, will sample from \code{~Cauchy(location = hypothesis, scale = sd(posterior))} (but this should be avoided).}
 
 \item{direction}{Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
 \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).}
 
 \item{hypothesis}{Value to be tested against (usually \code{0} in the context of null hypothesis testing).}
+
+\item{...}{Currently not used.}
+
+\item{effects}{Should results for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.}
 }
 \value{
 A data frame containing the Bayes factor representing by how
@@ -40,6 +49,13 @@ prior <- distribution_normal(1000, mean = 0, sd = 1)
 posterior <- distribution_normal(1000, mean = .5, sd = .3)
 
 bayesfactor_savagedickey(posterior, prior)
+
+\dontrun{
+library(rstanarm)
+stan_model <- stan_glm(extra ~ group, data = sleep)
+bayesfactor_savagedickey(stan_model)
+}
+
 }
 \references{
 Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010). Bayesian

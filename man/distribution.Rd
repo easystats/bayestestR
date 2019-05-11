@@ -6,23 +6,29 @@
 \alias{distribution_cauchy}
 \alias{distribution_poisson}
 \alias{distribution_student}
+\alias{distribution_chisquared}
+\alias{distribution_uniform}
 \alias{rnorm_perfect}
 \title{Empirical Distributions}
 \usage{
 distribution(type = "normal", ...)
 
-distribution_normal(n, mean = 0, sd = 1, random = FALSE)
+distribution_normal(n, mean = 0, sd = 1, random = FALSE, ...)
 
-distribution_cauchy(n, location = 0, scale = 1, random = FALSE)
+distribution_cauchy(n, location = 0, scale = 1, random = FALSE, ...)
 
-distribution_poisson(n, lambda = 1, random = FALSE)
+distribution_poisson(n, lambda = 1, random = FALSE, ...)
 
-distribution_student(n, df, ncp, random = FALSE)
+distribution_student(n, df, ncp, random = FALSE, ...)
+
+distribution_chisquared(n, df, ncp = 0, random = FALSE, ...)
+
+distribution_uniform(n, min = 0, max = 1, random = FALSE, ...)
 
 rnorm_perfect(n, mean = 0, sd = 1)
 }
 \arguments{
-\item{type}{Can be \code{"normal"} (default), \code{"cauchy"}, \code{"poisson"} or \code{"student"}.}
+\item{type}{Can be \code{"normal"} (default), \code{"cauchy"}, \code{"poisson"}, \code{"chisquared"}, \code{"uniform"} or \code{"student"}.}
 
 \item{...}{Arguments passed to or from other methods.}
 
@@ -47,6 +53,10 @@ rnorm_perfect(n, mean = 0, sd = 1)
 \item{ncp}{non-centrality parameter \eqn{\delta}{delta};
     currently except for \code{rt()}, only for \code{abs(ncp) <= 37.62}.
     If omitted, use the central t distribution.}
+
+\item{min}{lower and upper limits of the distribution.  Must be finite.}
+
+\item{max}{lower and upper limits of the distribution.  Must be finite.}
 }
 \description{
 Generate a sample of size \code{n} with a near-perfect distribution.

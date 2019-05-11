@@ -19,6 +19,8 @@ editor_options:
 library(ggplot2)
 library(dplyr)
 
+options(digits=2)
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   dpi=450,
@@ -64,6 +66,7 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 - [Get Started with Bayesian Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
 - [Example 1: Bayesian (General) Linear Models](https://easystats.github.io/bayestestR/articles/example1_GLM.html)
+- [Bayes Factors](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
 - [Comparison of Point-Estimates](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
 - [Comparison of Indices of Effect Existence](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html)
 - [Reporting Guidelines](https://easystats.github.io/bayestestR/articles/guidelines.html)
@@ -89,8 +92,9 @@ hdi(rnorm(1000), ci = .90)
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 posterior <- rnorm_perfect(100, 0.4, 0.2)
+
 posterior %>% 
-  density() %>% 
+  density() %>%
   as.data.frame() %>% 
   mutate(fill = ifelse(x < hdi(posterior)$CI_low, "low",
                        ifelse(x > hdi(posterior)$CI_high, "high", "middle"))) %>% 
@@ -115,14 +119,16 @@ map_estimate(rnorm(1000, 1, 1))
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-posterior <- rnorm_perfect(100, 0.4, 0.2)
+posterior <- distribution_normal(100, 0.4, 0.2)
+map_result <- map_estimate(posterior, bw="nrd0")
+
 posterior %>% 
-  density() %>% 
-  as.data.frame() %>% 
+  density() %>%
+  as.data.frame() %>%  
   ggplot(aes(x=x, y=y)) +
   geom_ribbon(aes(ymin=0, ymax=y), fill="#FFC107") +
-  geom_segment(x=0.4, xend=0.4, y=0, yend=attributes(map_estimate(posterior))$MAP_density, color="#E91E63", size=1) +
-  geom_point(x=map_estimate(posterior), y=attributes(map_estimate(posterior))$MAP_density, color="#E91E63", size=5) +
+  geom_segment(x=0.4, xend=0.4, y=0, yend=attributes(map_result)$MAP_density, color="#E91E63", size=1) +
+  geom_point(x=map_result, y=attributes(map_result)$MAP_density, color="#E91E63", size=5) +
   geom_vline(xintercept=0, linetype="dotted") +
   theme_classic() +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
@@ -148,7 +154,7 @@ rope(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 posterior <- rnorm_perfect(100, 0.4, 0.2)
 posterior %>% 
-  density() %>% 
+  density() %>%
   as.data.frame() %>% 
   mutate(fill = ifelse(x < -0.1, "low",
                        ifelse(x > 0.1, "high", "middle"))) %>% 
@@ -190,7 +196,7 @@ p_direction(rnorm(1000, mean = 1, sd = 1))
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 posterior <- rnorm_perfect(100, 0.4, 0.2)
 posterior %>% 
-  density() %>% 
+  density() %>%
   as.data.frame() %>% 
   mutate(fill = ifelse(x < 0, "low", "high")) %>% 
   ggplot(aes(x=x, y=y, fill=fill)) +
@@ -205,7 +211,7 @@ posterior %>%
 
 ### Bayes Factor
 
-[**`bayesfactor()`**](https://easystats.github.io/bayestestR/reference/bayesfactor.html) computes the ratio between the density of a single value (typically the null) in two distributions, typically the posterior vs. the prior distributions. This method is used to examine if the hypothesis value is less or more likely given the observed data.
+[**`bayesfactor_savagedickey()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_savagedickey.html) computes the ratio between the density of a single value (typically the null) in two distributions, typically the posterior vs. the prior distributions. This method is used to examine if the hypothesis value is less or more likely given the observed data.
 
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
@@ -217,10 +223,10 @@ bayesfactor_savagedickey(posterior, prior, direction = "two-sided", hypothesis =
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 posterior <- rnorm_perfect(1000, mean = 1, sd = 0.7) %>% 
-  density() %>% 
+  density() %>%
   as.data.frame()
 prior <- rnorm_perfect(1000, mean = 0, sd = 1) %>% 
-  density() %>% 
+  density() %>%
   as.data.frame()
 
 posterior %>% 
@@ -259,14 +265,16 @@ p_map(posterior = rnorm(1000, 1, 1))
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
 posterior <- rnorm_perfect(100, 0.4, 0.2)
+map_result <- map_estimate(posterior, bw="nrd0")
+
 posterior %>% 
-  density() %>% 
+  density() %>%
   as.data.frame() %>% 
   ggplot(aes(x=x, y=y)) +
   geom_ribbon(aes(ymin=0, ymax=y), fill="#FFC107") +
-  geom_segment(x=0.4, xend=0.4, y=0, yend=attributes(map_estimate(posterior))$MAP_density, color="#E91E63", size=1) +
+  geom_segment(x=0.4, xend=0.4, y=0, yend=attributes(map_result)$MAP_density, color="#E91E63", size=1) +
   geom_segment(x=0, xend=0, y=0, yend=density_at(posterior, 0), color="#E91E63", size=1) +
-  geom_point(x=map_estimate(posterior), y=attributes(map_estimate(posterior))$MAP_density, color="#E91E63", size=5) +
+  geom_point(x=map_result, y=attributes(map_result)$MAP_density, color="#E91E63", size=5) +
   geom_point(x=0, y=density_at(posterior, 0), color="#E91E63", size=5) +
   geom_vline(xintercept=0, linetype="dotted") +
   theme_classic() +
@@ -287,12 +295,18 @@ rope_range(model)
 ```
 
 
+
+### Density Estimation
+
+[**`estimate_density()`**](https://easystats.github.io/bayestestR/reference/estimate_density.html): This function is a wrapper over different methods of density estimation. By default, it uses the base R `density` with by default uses a different smoothing bandwidth (`"SJ"`) from the legacy default implemented the base R `density` function (`"nrd0"`). However, Deng \& Wickham suggest that `method = "KernSmooth"` is the fastest and the most accurate.
+
+
 ### Perfect Distributions
 
-[**`rnorm_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html), [**`rcauchy_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html), [**`rpois_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html), [**`rt_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html): Generate a sample of size n with a near-perfect distributions.
+[**`distribution()`**](https://easystats.github.io/bayestestR/reference/distribution.html): Generate a sample of size n with near-perfect distributions.
 
 ```{r message=FALSE, warning=FALSE, results='hide', eval=FALSE}
-rnorm_perfect(n = 10)
+distribution(n = 10)
 ```
 
 ### Probability of a Value
@@ -310,4 +324,4 @@ density_at(rnorm(1000, 1, 1), 1)
 
 You can cite the package as following:
 
-- Makowski, D. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI:10.5281/zenodo.2556486.
+- Makowski, D., Ben-Shachar M. S., \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI:10.5281/zenodo.2556486.

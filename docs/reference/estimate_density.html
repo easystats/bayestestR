@@ -41,7 +41,7 @@
   
 <meta property="og:title" content="Density Estimation — estimate_density" />
 
-<meta property="og:description" content="Density Estimation" />
+<meta property="og:description" content="This function is a wrapper over different methods of density estimation. By default, it uses the base R density with by default uses a different smoothing bandwidth (&quot;SJ&quot;) from the legacy default implemented the base R density function (&quot;nrd0&quot;). However, Deng \&amp;amp; Wickham suggest that method = &quot;KernSmooth&quot; is the fastest and the most accurate." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -115,9 +115,6 @@
     <li>
       <a href="../articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
     </li>
-    <li>
-      <a href="../articles/bayes_factors.html">2. Bayes Factors</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -128,15 +125,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/indicesEstimationComparison.html">1. Comparison of Point-Estimates</a>
+      <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="../articles/indicesExistenceComparison.html">2. Comparison of Indices of Effect Existence</a>
+      <a href="../articles/indicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
     </li>
     <li>
-      <a href="../articles/guidelines.html">3. Reporting Guidelines</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../articles/guidelines.html">Guidelines</a>
 </li>
       </ul>
       
@@ -160,18 +160,18 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Density Estimation</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/utils_density.R'><code>R/utils_density.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/estimate_density.R'><code>R/estimate_density.R</code></a></small>
     <div class="hidden name"><code>estimate_density.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Density Estimation</p>
+    <p>This function is a wrapper over different methods of density estimation. By default, it uses the base R <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a> with by default uses a different smoothing bandwidth (<code>"SJ"</code>) from the legacy default implemented the base R <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a> function (<code>"nrd0"</code>). However, Deng \&amp; Wickham suggest that <code>method = "KernSmooth"</code> is the fastest and the most accurate.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>estimate_density</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>bw</span> <span class='kw'>=</span> <span class='st'>"SJ"</span>,
-  <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>estimate_density</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>,
+  <span class='kw'>extend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>extend_scale</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>bw</span> <span class='kw'>=</span> <span class='st'>"SJ"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -188,6 +188,14 @@
     <tr>
       <th>precision</th>
       <td><p>Number of points of density data. See the <code>n</code> parameter in <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a>.</p></td>
+    </tr>
+    <tr>
+      <th>extend</th>
+      <td><p>Extend the range of the x axis by a factor of <code>extend_scale</code>.</p></td>
+    </tr>
+    <tr>
+      <th>extend_scale</th>
+      <td><p>Ratio of range by which to extend the x axis. A value of <code>0.1</code> means that the x axis will be extended by <code>1/10</code> of the range of the data.</p></td>
     </tr>
     <tr>
       <th>bw</th>
@@ -209,20 +217,35 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Deng, H., \&amp; Wickham, H. (2011). Density estimation in R. Electronic publication.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>250</span>, <span class='fl'>1</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>250</span>, <span class='fl'>1</span>)
+
+<span class='co'># Methods</span>
 <span class='no'>density_kernel</span> <span class='kw'>&lt;-</span> <span class='fu'>estimate_density</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)
 <span class='no'>density_logspline</span> <span class='kw'>&lt;-</span> <span class='fu'>estimate_density</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"logspline"</span>)
 <span class='no'>density_KernSmooth</span> <span class='kw'>&lt;-</span> <span class='fu'>estimate_density</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"KernSmooth"</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: KernSmooth</span></div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a></span>(<span class='no'>x</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_kernel</span>$<span class='no'>x</span>, <span class='no'>density_kernel</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_logspline</span>$<span class='no'>x</span>, <span class='no'>density_logspline</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_KernSmooth</span>$<span class='no'>x</span>, <span class='no'>density_KernSmooth</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='estimate_density-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a></span>(<span class='no'>x</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_kernel</span>$<span class='no'>x</span>, <span class='no'>density_kernel</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_logspline</span>$<span class='no'>x</span>, <span class='no'>density_logspline</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_KernSmooth</span>$<span class='no'>x</span>, <span class='no'>density_KernSmooth</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='estimate_density-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Extension</span>
+<span class='no'>density_extended</span> <span class='kw'>&lt;-</span> <span class='fu'>estimate_density</span>(<span class='no'>x</span>, <span class='kw'>extend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>density_default</span> <span class='kw'>&lt;-</span> <span class='fu'>estimate_density</span>(<span class='no'>x</span>, <span class='kw'>extend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a></span>(<span class='no'>x</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_extended</span>$<span class='no'>x</span>, <span class='no'>density_extended</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_default</span>$<span class='no'>x</span>, <span class='no'>density_default</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='estimate_density-2.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

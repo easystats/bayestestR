@@ -6,41 +6,44 @@
 \alias{describe_posterior.double}
 \alias{describe_posterior.data.frame}
 \alias{describe_posterior.stanreg}
-\alias{describe_posterior.brmsfit}
 \title{Describe posterior distributions.}
 \usage{
-describe_posterior(posteriors, ci = 0.9, ci_method = "hdi",
-  estimate = "median", test = c("pd", "rope"),
+describe_posterior(posteriors, estimate = "median", ci = 0.9,
+  ci_method = "hdi", test = c("pd", "rope"), rope_range = "default",
+  rope_full = TRUE, dispersion = TRUE, ...)
+
+\method{describe_posterior}{numeric}(posteriors, estimate = "median",
+  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
 
-\method{describe_posterior}{numeric}(posteriors, ci = 0.9,
-  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
+\method{describe_posterior}{double}(posteriors, estimate = "median",
+  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
 
-\method{describe_posterior}{double}(posteriors, ci = 0.9,
-  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
+\method{describe_posterior}{data.frame}(posteriors, estimate = "median",
+  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
 
-\method{describe_posterior}{data.frame}(posteriors, ci = 0.9,
-  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
+\method{describe_posterior}{stanreg}(posteriors, estimate = "median",
+  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
+  rope_range = "default", rope_full = TRUE, dispersion = TRUE,
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), parameters = NULL, ...)
 
-\method{describe_posterior}{stanreg}(posteriors, ci = 0.9,
-  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
-
-\method{describe_posterior}{brmsfit}(posteriors, ci = 0.9,
-  ci_method = "hdi", estimate = "median", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
+\method{describe_posterior}{stanreg}(posteriors, estimate = "median",
+  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
+  rope_range = "default", rope_full = TRUE, dispersion = TRUE,
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), parameters = NULL, ...)
 }
 \arguments{
 \item{posteriors}{A vector, dataframe or model of posterior draws.}
 
+\item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".}
+
 \item{ci}{Credible Interval (CI) level. Default to 0.90 (90\%).}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be \link{hdi} (default) or "quantile" (see \link{ci}).}
-
-\item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".}
 
 \item{test}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".}
 
@@ -51,6 +54,18 @@ describe_posterior(posteriors, ci = 0.9, ci_method = "hdi",
 \item{dispersion}{Indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
 \item{...}{Additional arguments to be passed to or from methods.}
+
+\item{effects}{Should variables for fixed effects, random effects
+or both be returned? Only applies to mixed models. May be abbreviated.}
+
+\item{component}{Should all predictor variables, predictor variables for the
+conditional model, the zero-inflated part of the model, the dispersion
+term or the instrumental variables be returned? Applies to models
+with zero-inflated and/or dispersion formula, or to models with instrumental
+variable (so called fixed-effects regressions). May be abbreviated.}
+
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned.}
 }
 \description{
 Compute indices relevant to describe and characterise the posterior distributions.

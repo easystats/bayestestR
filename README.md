@@ -41,6 +41,8 @@ check-out these vignettes:
     Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
   - [Example 1: Bayesian (General) Linear
     Models](https://easystats.github.io/bayestestR/articles/example1_GLM.html)
+  - [Bayes
+    Factors](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
   - [Comparison of
     Point-Estimates](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
   - [Comparison of Indices of Effect
@@ -169,7 +171,7 @@ p_direction(rnorm(1000, mean = 1, sd = 1))
 
 ### Bayes Factor
 
-[**`bayesfactor()`**](https://easystats.github.io/bayestestR/reference/bayesfactor.html)
+[**`bayesfactor_savagedickey()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_savagedickey.html)
 computes the ratio between the density of a single value (typically the
 null) in two distributions, typically the posterior vs. the prior
 distributions. This method is used to examine if the hypothesis value is
@@ -240,16 +242,23 @@ through the formula `sqrt(3)/pi`, resulting in a range of `-0.05` to
 rope_range(model)
 ```
 
+### Density Estimation
+
+[**`estimate_density()`**](https://easystats.github.io/bayestestR/reference/estimate_density.html):
+This function is a wrapper over different methods of density estimation.
+By default, it uses the base R `density` with by default uses a
+different smoothing bandwidth (`"SJ"`) from the legacy default
+implemented the base R `density` function (`"nrd0"`). However, Deng &
+Wickham suggest that `method = "KernSmooth"` is the fastest and the most
+accurate.
+
 ### Perfect Distributions
 
-[**`rnorm_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html),
-[**`rcauchy_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html),
-[**`rpois_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html),
-[**`rt_perfect()`**](https://easystats.github.io/bayestestR/reference/rnorm_perfect.html):
-Generate a sample of size n with a near-perfect distributions.
+[**`distribution()`**](https://easystats.github.io/bayestestR/reference/distribution.html):
+Generate a sample of size n with near-perfect distributions.
 
 ``` r
-rnorm_perfect(n = 10)
+distribution(n = 10)
 ```
 
 ### Probability of a Value
@@ -265,7 +274,8 @@ density_at(rnorm(1000, 1, 1), 1)
 
 You can cite the package as following:
 
-  - Makowski, D. & Lüdecke, D. (2019). *Understand and Describe Bayesian
-    Models and Posterior Distributions using BayestestR*. Available from
+  - Makowski, D., Ben-Shachar M. S., & Lüdecke, D. (2019). *Understand
+    and Describe Bayesian Models and Posterior Distributions using
+    BayestestR*. Available from
     <https://github.com/easystats/bayestestR>.
     <DOI:10.5281/zenodo.2556486>.

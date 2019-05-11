@@ -115,9 +115,6 @@
     <li>
       <a href="../articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
     </li>
-    <li>
-      <a href="../articles/bayes_factors.html">2. Bayes Factors</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -128,15 +125,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/indicesEstimationComparison.html">1. Comparison of Point-Estimates</a>
+      <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="../articles/indicesExistenceComparison.html">2. Comparison of Indices of Effect Existence</a>
+      <a href="../articles/indicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
     </li>
     <li>
-      <a href="../articles/guidelines.html">3. Reporting Guidelines</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../articles/guidelines.html">Guidelines</a>
 </li>
       </ul>
       
@@ -172,13 +172,17 @@
 
     <pre class="usage"><span class='fu'>distribution</span>(<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"normal"</span>, <span class='no'>...</span>)
 
-<span class='fu'>distribution_normal</span>(<span class='no'>n</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>distribution_normal</span>(<span class='no'>n</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
-<span class='fu'>distribution_cauchy</span>(<span class='no'>n</span>, <span class='kw'>location</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>distribution_cauchy</span>(<span class='no'>n</span>, <span class='kw'>location</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
-<span class='fu'>distribution_poisson</span>(<span class='no'>n</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>distribution_poisson</span>(<span class='no'>n</span>, <span class='kw'>lambda</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
-<span class='fu'>distribution_student</span>(<span class='no'>n</span>, <span class='no'>df</span>, <span class='no'>ncp</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>distribution_student</span>(<span class='no'>n</span>, <span class='no'>df</span>, <span class='no'>ncp</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='fu'>distribution_chisquared</span>(<span class='no'>n</span>, <span class='no'>df</span>, <span class='kw'>ncp</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='fu'>distribution_uniform</span>(<span class='no'>n</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>rnorm_perfect</span>(<span class='no'>n</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
@@ -187,7 +191,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>type</th>
-      <td><p>Can be <code>"normal"</code> (default), <code>"cauchy"</code>, <code>"poisson"</code> or <code>"student"</code>.</p></td>
+      <td><p>Can be <code>"normal"</code> (default), <code>"cauchy"</code>, <code>"poisson"</code>, <code>"chisquared"</code>, <code>"uniform"</code> or <code>"student"</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -232,6 +236,14 @@
       <td><p>non-centrality parameter \(\delta\);
     currently except for <code><a href='https://www.rdocumentation.org/packages/stats/topics/TDist'>rt()</a></code>, only for <code>abs(ncp) &lt;= 37.62</code>.
     If omitted, use the central t distribution.</p></td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td><p>lower and upper limits of the distribution.  Must be finite.</p></td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td><p>lower and upper limits of the distribution.  Must be finite.</p></td>
     </tr>
     </table>
     

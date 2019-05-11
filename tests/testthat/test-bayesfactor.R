@@ -13,6 +13,12 @@ test_that("bayesfactor_savagedickey", {
 
   bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, hypothesis = 1, direction = 0)
   testthat::expect_equal(as.numeric(bfsd), 0.4, tolerance = 0.1)
+
+  library(rstanarm)
+  set.seed(333)
+  junk <- capture.output(model <- stan_glm(extra ~ group, data = sleep))
+  bfsd <- bayestestR::bayesfactor_savagedickey(model)
+  testthat::expect_equal(log(bfsd$BFsd), c(-2.69, -0.14), tolerance = 0.1)
 })
 
 set.seed(444)

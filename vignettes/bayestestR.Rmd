@@ -20,6 +20,12 @@ bibliography: bibliography.bib
 ---
 
 
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+options(digits=2)
+```
+
 
 ## Why use the Bayesian Framework?
 
@@ -72,7 +78,7 @@ devtools::install_github("easystats/easystats")
 <!-- ``` -->
 
 
-Let's also install and load the [`rstanarm`](https://mc-stan.org/rstanarm/), that allows fitting Bayesian models.
+Let's also install and load the [`rstanarm`](https://mc-stan.org/rstanarm/), that allows fitting Bayesian models, as well as [`bayestestR`](https://github.com/easystats/bayestestR), to describe them.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 install.packages("rstanarm")
@@ -83,7 +89,7 @@ library(rstanarm)
 
 ### Traditional linear regression
 
-Let's fit a simple frequentist linear regression (the `lm()` function stands for *linear model*) between two numeric variables, `Sepal.Length` and `Petal.Length` from the famous [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R.
+Let's start by fitting a simple frequentist linear regression (the `lm()` function stands for *linear model*) between two numeric variables, `Sepal.Length` and `Petal.Length` from the famous [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 model <- lm(Sepal.Length ~ Petal.Length, data=iris)
@@ -135,21 +141,19 @@ This analysis suggests that there is a **significant** (*whatever that means*) a
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
-summary(model)
-```
-```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='hide'}
-library(rstanarm)
-set.seed(333)
-
-model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
+describe_posterior(model)
 ```
 ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
-model %>% 
-  summary()
+library(rstanarm)
+library(bayestestR)
+set.seed(333)
+
+junk <- capture.output(model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris))
+knitr::kable(describe_posterior(model), digits=2)
 ```
 
 
-**That's it!** You fitted a Bayesian version of the model by simply using [`stan_glm()`](https://mc-stan.org/rstanarm/reference/stan_glm.html) instead of `lm()`. The conclusion that we can drawn, for this example, are very similar. The effect (*the median of the effect's posterior distribution*) is about `0.41`, and it can be also be considered as *significant* in the Bayesian sense.
+**That's it!** You fitted a Bayesian version of the model by simply using [`stan_glm()`](https://mc-stan.org/rstanarm/reference/stan_glm.html) instead of `lm()` and described the posterior distributions of the parameters. The conclusion that we can drawn, for this example, are very similar. The effect (*the median of the effect's posterior distribution*) is about `0.41`, and it can be also be considered as *significant* in the Bayesian sense (more on that later).
 
 **So, ready to learn more?** Check out the [**next tutorial**](https://easystats.github.io/bayestestR/articles/example1_GLM.html)!
 

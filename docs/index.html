@@ -75,9 +75,6 @@
 <li>
       <a href="articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
     </li>
-    <li>
-      <a href="articles/bayes_factors.html">2. Bayes Factors</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -88,15 +85,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/indicesEstimationComparison.html">1. Comparison of Point-Estimates</a>
+      <a href="articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="articles/indicesExistenceComparison.html">2. Comparison of Indices of Effect Existence</a>
+      <a href="articles/indicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
     </li>
     <li>
-      <a href="articles/guidelines.html">3. Reporting Guidelines</a>
+      <a href="articles/bayes_factors.html">Bayes Factors</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="articles/guidelines.html">Guidelines</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -144,6 +144,7 @@
 <ul>
 <li><a href="https://easystats.github.io/bayestestR/articles/bayestestR.html">Get Started with Bayesian Analysis</a></li>
 <li><a href="https://easystats.github.io/bayestestR/articles/example1_GLM.html">Example 1: Bayesian (General) Linear Models</a></li>
+<li><a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html">Bayes Factors</a></li>
 <li><a href="https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a></li>
 <li><a href="https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html">Comparison of Indices of Effect Existence</a></li>
 <li><a href="https://easystats.github.io/bayestestR/articles/guidelines.html">Reporting Guidelines</a></li>
@@ -203,7 +204,7 @@
 <div id="bayes-factor" class="section level3">
 <h3 class="hasAnchor">
 <a href="#bayes-factor" class="anchor"></a>Bayes Factor</h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/bayesfactor.html"><strong><code>bayesfactor()</code></strong></a> computes the ratio between the density of a single value (typically the null) in two distributions, typically the posterior vs. the prior distributions. This method is used to examine if the hypothesis value is less or more likely given the observed data.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/bayesfactor_savagedickey.html"><strong><code><a href="reference/bayesfactor_savagedickey.html">bayesfactor_savagedickey()</a></code></strong></a> computes the ratio between the density of a single value (typically the null) in two distributions, typically the posterior vs. the prior distributions. This method is used to examine if the hypothesis value is less or more likely given the observed data.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">prior &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb8-2" title="2">posterior &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="fl">0.7</span>)</a>
 <a class="sourceLine" id="cb8-3" title="3"></a>
@@ -233,11 +234,16 @@
 <p><a href="https://easystats.github.io/bayestestR/reference/rope_range.html"><strong><code><a href="reference/rope_range.html">rope_range()</a></code></strong></a>: This function attempts at automatically finding suitable “default” values for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests that such null value could be set, by default, to a range from <code>-0.1</code> to <code>0.1</code> of a standardized parameter (negligible effect size according to Cohen, 1988), which can be generalised for linear models to <code>-0.1 * sd(y), 0.1 * sd(y)</code>. For logistic models, the parameters expressed in log odds ratio can be converted to standardized difference through the formula <code>sqrt(3)/pi</code>, resulting in a range of <code>-0.05</code> to <code>-0.05</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="reference/rope_range.html">rope_range</a></span>(model)</a></code></pre></div>
 </div>
+<div id="density-estimation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#density-estimation" class="anchor"></a>Density Estimation</h3>
+<p><a href="https://easystats.github.io/bayestestR/reference/estimate_density.html"><strong><code><a href="reference/estimate_density.html">estimate_density()</a></code></strong></a>: This function is a wrapper over different methods of density estimation. By default, it uses the base R <code>density</code> with by default uses a different smoothing bandwidth (<code>"SJ"</code>) from the legacy default implemented the base R <code>density</code> function (<code>"nrd0"</code>). However, Deng &amp; Wickham suggest that <code>method = "KernSmooth"</code> is the fastest and the most accurate.</p>
+</div>
 <div id="perfect-distributions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#perfect-distributions" class="anchor"></a>Perfect Distributions</h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/rnorm_perfect.html"><strong><code><a href="reference/distribution.html">rnorm_perfect()</a></code></strong></a>, <a href="https://easystats.github.io/bayestestR/reference/rnorm_perfect.html"><strong><code>rcauchy_perfect()</code></strong></a>, <a href="https://easystats.github.io/bayestestR/reference/rnorm_perfect.html"><strong><code>rpois_perfect()</code></strong></a>, <a href="https://easystats.github.io/bayestestR/reference/rnorm_perfect.html"><strong><code>rt_perfect()</code></strong></a>: Generate a sample of size n with a near-perfect distributions.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="reference/distribution.html">rnorm_perfect</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
+<p><a href="https://easystats.github.io/bayestestR/reference/distribution.html"><strong><code><a href="reference/distribution.html">distribution()</a></code></strong></a>: Generate a sample of size n with near-perfect distributions.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="reference/distribution.html">distribution</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
 </div>
 <div id="probability-of-a-value" class="section level3">
 <h3 class="hasAnchor">
@@ -251,7 +257,7 @@
 <a href="#credits" class="anchor"></a>Credits</h2>
 <p>You can cite the package as following:</p>
 <ul>
-<li>Makowski, D. &amp; Lüdecke, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using BayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. <a href="DOI:10.5281/zenodo.2556486" class="uri">DOI:10.5281/zenodo.2556486</a>.</li>
+<li>Makowski, D., Ben-Shachar M. S., &amp; Lüdecke, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using BayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. <a href="DOI:10.5281/zenodo.2556486" class="uri">DOI:10.5281/zenodo.2556486</a>.</li>
 </ul>
 </div>
 </div>
