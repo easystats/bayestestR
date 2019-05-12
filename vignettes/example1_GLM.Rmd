@@ -23,12 +23,13 @@ This vignette can be referred to by citing the package:
 
 - Makowski, D., Ben-Shachar M. S. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using bayestestR*. Available from https://github.com/easystats/bayestestR. DOI: [10.5281/zenodo.2556486](https://zenodo.org/record/2556486).
 
+---
+
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 options(knitr.kable.NA = '')
 options(digits=2)
 ```
-
 
 Now that you've read the [**Get started**](https://easystats.github.io/bayestestR/articles/bayestestR.html) section, let's dive in the subtleties of Bayesian modelling using R.
 
