@@ -53,6 +53,11 @@
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
+#'
+#' library(BayesFactor)
+#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' rope(bf)
+#' rope(bf, ci = c(.90, .95))
 #' }
 #'
 #' @importFrom insight get_parameters is_multivariate
@@ -123,6 +128,15 @@ rope.data.frame <- function(x, range = "default", ci = .90, verbose = TRUE, ...)
   attr(dat, "HDI_area") <- HDI_area_attributes
   class(dat) <- c("rope", "data.frame")
   dat
+}
+
+
+
+#' @rdname rope
+#' @export
+rope.BFBayesFactor <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
+  out <- rope(insight::get_parameters(x), range = range, ci = ci, verbose = verbose, ...)
+  out
 }
 
 

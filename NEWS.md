@@ -7,7 +7,7 @@
 
 ## New functions / features
 
-- `p_direction()`: new argument `raw = FALSE` to compute pd based on AUC
+- `p_direction()`: new argument `method` to compute pd based on AUC
 - `area_under_curve()`: compute AUC
 - `distribution()` functions have been added
 - `bayesfactor()` function has been added

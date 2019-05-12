@@ -28,6 +28,7 @@ This vignette can be referred to by citing the package:
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 options(knitr.kable.NA = '')
+knitr::opts_chunk$set(comment=">")
 options(digits=2)
 ```
 
@@ -164,33 +165,33 @@ Well, this is **close to the mean**. Maybe we could take the **mode**, the *peak
 map_estimate(posteriors$Petal.Length)
 ```
 
-Let's add these values to the posterior distribution:
+**They are all very close!** Let's visualise these values on the posterior distribution:
 
 ```{r message=FALSE, warning=FALSE}
 ggplot(posteriors, aes(x = Petal.Length)) +
   geom_density(fill = "orange") +
   # The mean in blue
-  geom_vline(xintercept=mean(posteriors$Petal.Length), color="blue", size=2) +
+  geom_vline(xintercept=mean(posteriors$Petal.Length), color="blue", size=1) +
   # The median in red
-  geom_vline(xintercept=median(posteriors$Petal.Length), color="red", size=2) +
+  geom_vline(xintercept=median(posteriors$Petal.Length), color="red", size=1) +
   # The MAP in purple
-  geom_vline(xintercept=map_estimate(posteriors$Petal.Length), color="purple", size=2)
+  geom_vline(xintercept=map_estimate(posteriors$Petal.Length), color="purple", size=1)
 ```
 
-Well, all these values give very similar results. Thus, **we will chose the median**, as this value has a direct meaning from a probabilistic perspective: there is 50\% chance that the true effect is higher and 50\% chance that the effect is lower (as it *cuts* the distribution in two equal parts).
+Well, all these values give very similar results. Thus, **we will chose the median**, as this value has a direct meaning from a probabilistic perspective: **there is 50\% chance that the true effect is higher and 50\% chance that the effect is lower** (as it *cuts* the distribution in two equal parts).
 
 
 #### Uncertainty
 
-Now that the have a point-estimate, let's **describe the uncertainty**. We could compute the range:
+Now that the have a point-estimate, we have to **describe the uncertainty**. We could compute the range:
 
 ```{r message=FALSE, warning=FALSE}
 range(posteriors$Petal.Length)
 ```
 
-But does it make sense to include all these extreme values? Maybe not. Thus, we will compute a [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html). Long story short, it's kind of similar to a frequentist **confidence interval**, but it is easier to interpret and easier to compute. And it makes more sense.
+But does it make sense to include all these extreme values? Probably not. Thus, we will compute a [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html). Long story short, it's kind of similar to a frequentist **confidence interval**, but it is easier to interpret and easier to compute. And it makes more sense.
 
-We will compute this **credible interval** through the Highest Density Interval (HDI) method. It will give us the range containing the 90\% more probable effect values. **Note that we will use 90\% CIs instead of 95\% CIs as it is the case in the frequentist framework as the 90\% level gives more stable results**.
+We will compute this **credible interval** based on the [Highest Density Interval (HDI)](file:///C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/docs/reference/hdi.html). It will give us the range containing the 90\% more probable effect values. **Note that we will use 90\% CIs instead of 95\% CIs as it is the case in the frequentist framework as the 90\% level gives more stable results**.
 
 ```{r message=FALSE, warning=FALSE}
 hdi(posteriors$Petal.Length, ci=0.90)
