@@ -62,7 +62,7 @@ pd <- p_direction
 #' @export
 p_direction.numeric <- function(x, method = "direct", ...) {
   if (method == "direct") {
-    p_direction <- 100 * max(
+    pdir <- 100 * max(
       c(
         length(x[x > 0]) / length(x), # pd positive
         length(x[x < 0]) / length(x) # pd negative
@@ -75,13 +75,16 @@ p_direction.numeric <- function(x, method = "direct", ...) {
     } else {
       dens <- dens[dens$x < 0, ]
     }
-    p_direction <- area_under_curve(dens$x, dens$y, method = "spline") * 100
-    if (p_direction >= 100) p_direction <- 100
+    pdir <- area_under_curve(dens$x, dens$y, method = "spline") * 100
+    if (pdir >= 100) pdir <- 100
   }
 
-  attr(p_direction, "method") <- method
-  class(p_direction) <- c("p_direction", class(p_direction))
-  p_direction
+  attr(pdir, "method") <- method
+  attr(pdir, "data") <- x
+
+  class(pdir) <- c("p_direction", class(pdir))
+
+  pdir
 }
 
 
@@ -105,7 +108,10 @@ p_direction.data.frame <- function(x, method = "direct", ...) {
     row.names = NULL,
     stringsAsFactors = FALSE
   )
+
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   class(out) <- c("p_direction", class(out))
+
   out
 }
 
