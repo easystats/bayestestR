@@ -109,6 +109,17 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
 }
 
 
+# Wait for equivalence_test.data.frame
+# #' @rdname equivalence_test
+# #' @export
+# equivalence_test.BFBayesFactor <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
+#   out <- equivalence_test(insight::get_parameters(x), range = range, ci = ci, verbose = verbose, ...)
+#   out
+# }
+
+
+
+
 #' @importFrom stats sd
 #' @keywords internal
 .equivalence_test_models <- function(x, range = "default", ci = .95, parameters = NULL, verbose = TRUE) {
