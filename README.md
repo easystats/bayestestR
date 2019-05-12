@@ -41,8 +41,14 @@ check-out these vignettes:
     Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
   - [Example 1: Bayesian (General) Linear
     Models](https://easystats.github.io/bayestestR/articles/example1_GLM.html)
-  - [Bayes
-    Factors](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
+  - [Credible
+    Intervals](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+  - [Probability of Direction
+    (pd)](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
+  - [Region of Practical Equivalence
+    (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
+  - [Bayes Factors
+    (BF)](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
   - [Comparison of
     Point-Estimates](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
   - [Comparison of Indices of Effect

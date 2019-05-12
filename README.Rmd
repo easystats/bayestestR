@@ -66,7 +66,10 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 - [Get Started with Bayesian Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
 - [Example 1: Bayesian (General) Linear Models](https://easystats.github.io/bayestestR/articles/example1_GLM.html)
-- [Bayes Factors](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
+- [Credible Intervals](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+- [Probability of Direction (pd)](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
+- [Region of Practical Equivalence (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
+- [Bayes Factors (BF)](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
 - [Comparison of Point-Estimates](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
 - [Comparison of Indices of Effect Existence](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html)
 - [Reporting Guidelines](https://easystats.github.io/bayestestR/articles/guidelines.html)
