@@ -55,10 +55,12 @@ p_map.numeric <- function(x, precision = 2^10, ...) {
 
 #' @export
 p_map.data.frame <- function(x, precision = 2^10, ...) {
+  x <- .select_nums(x)
+
   if (ncol(x) == 1) {
     p_MAP <- p_map(x[, 1], precision = precision, ...)
   } else {
-    p_MAP <- sapply(.select_nums(x), p_map, precision = precision, simplify = TRUE, ...)
+    p_MAP <- sapply(x, p_map, precision = precision, simplify = TRUE, ...)
   }
 
   out <- data.frame(

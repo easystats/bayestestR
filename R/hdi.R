@@ -41,6 +41,10 @@
 #' posterior <- rnorm(1000)
 #' hdi(posterior, ci = .90)
 #' hdi(posterior, ci = c(.80, .90, .95))
+#'
+#' df <- data.frame(replicate(4, rnorm(100)))
+#' hdi(df)
+#' hdi(df, ci = c(.80, .90, .95))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -75,6 +79,28 @@ hdi.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
   class(out) <- unique(c("hdi", class(out)))
   out
 }
+
+
+
+
+#' @rdname hdi
+#' @export
+hdi.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
+  x <- .select_nums(x)
+
+  if (ncol(x) == 1) {
+    out <- hdi(x[, 1], ci = ci, verbose = verbose, ...)
+  } else {
+    out <- sapply(x, hdi, ci = ci, verbose = verbose, simplify = FALSE)
+    out <- do.call(rbind, args = c(.compact_list(out), make.row.names = FALSE))
+  }
+
+  out$Parameter <- names(x)
+
+  class(out) <- unique(c("hdi", class(out)))
+  out
+}
+
 
 
 #' @importFrom insight get_parameters
