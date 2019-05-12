@@ -104,7 +104,7 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
   attr(out, "HDI_area") <- NULL
   attr(out, "data") <- x
 
-  class(out) <- c("equivalence_test", class(out))
+  class(out) <- c("equivalence_test", "equivalence_test_see", class(out))
   out
 }
 
@@ -136,7 +136,7 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
     stringsAsFactors = FALSE
   )
 
-  class(out) <- c("equivalence_test_br", "equivalence_test", class(out))
+  class(out) <- c("equivalence_test", "equivalence_test_see", class(out))
   out
 }
 

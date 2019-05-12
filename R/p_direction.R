@@ -82,7 +82,7 @@ p_direction.numeric <- function(x, method = "direct", ...) {
   attr(pdir, "method") <- method
   attr(pdir, "data") <- x
 
-  class(pdir) <- c("p_direction", class(pdir))
+  class(pdir) <- c("p_direction", "p_direction_see", class(pdir))
 
   pdir
 }
@@ -110,7 +110,7 @@ p_direction.data.frame <- function(x, method = "direct", ...) {
   )
 
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
-  class(out) <- c("p_direction", class(out))
+  class(out) <- c("p_direction", "p_direction_see", class(out))
 
   out
 }
