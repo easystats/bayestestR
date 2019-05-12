@@ -43,7 +43,7 @@ library(bayestestR)
 library(insight)
 ```
 
-## A Linear Model
+## A simple linear Model (*aka* a regression)
 
 ### Fitting the model
 
@@ -74,10 +74,15 @@ model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
 
 You can see the sampling algorithm being run. Once it is done, let us extract the parameters (*i.e.*, the coefficients) of the model.
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 posteriors <- insight::get_parameters(model)
 
-summary(posteriors)  # Summary
+head(posteriors)  # Show the first 6 rows
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+posteriors <- insight::get_parameters(model)
+
+head(posteriors)  # Show the first 6 rows
 ```
 
 As we can see, the parameters take the form of a long dataframe with two columns, corresponding to the **intercept** and **Petal.Length**. These columns contain the **posterior distributions** of these two parameters, *i.e.*, different plausible values.
@@ -92,18 +97,17 @@ nrow(posteriors)  # Size (number of rows)
 
 > **Why is the size 4000, and not more or less?**
 
-First of all, these observations (the rows) are usually reffered to as **posterior draws**. The underlying idea is that the Bayesian sampling algorithm (such as **Monte Carlo Makov Chains - MCMC)**) will *draw* from the hidden true posterior distribution. Thus, it is through these posterior draws that we can estimate the underlying true posterior distribution. Thus, **the more draws you have, the better is your estimation of the posterior distribution**. But it also takes longer to compute.
+First of all, these observations (the rows) are usually reffered to as **posterior draws**. The underlying idea is that the Bayesian sampling algorithm (such as **Monte Carlo Makov Chains - MCMC**) will *draw* from the hidden true posterior distribution. Thus, it is through these posterior draws that we can estimate the underlying true posterior distribution. Thus, **the more draws you have, the better is your estimation of the posterior distribution**. But it also takes longer to compute.
 
-If we look at the documentation (`?sampling`) for the rstanarm `"sampling"` algorithm used by default in the model above, we can see several parameters that influence the number of posterior draws. By default, there are **4** `chains` (you can see it as distinct sampling runs), all that will create **2000** `iter` (draws). However, only half of these iterations is kept, as half is used for `warmup` (the convergence of the algorithm). Which total is **`4 chains * (2000 iterations - 1000 warmup) = 4000`** posterior draws. We can change that, for instance:
+If we look at the documentation (`?sampling`) for the rstanarm `"sampling"` algorithm used by default in the model above, we can see several parameters that influence the number of posterior draws. By default, there are **4** `chains` (you can see it as distinct sampling runs), that each create **2000** `iter` (draws). However, only half of these iterations is kept, as half is used for `warmup` (the convergence of the algorithm). The total is **`4 chains * (2000 iterations - 1000 warmup) = 4000`** posterior draws. We can change that, for instance:
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris, chains = 2, iter = 1000, warmup = 250)
  
 nrow(insight::get_parameters(model))  # Size (number of rows)
-
 ```
-```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='hide'}
-model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris, chains = 2, iter = 1000, warmup = 250)
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, echo=FALSE}
+junk <- capture.output(model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris, chains = 2, iter = 1000, warmup = 250))
 nrow(insight::get_parameters(model))  # Size (number of rows)
 ```
 
@@ -129,7 +133,7 @@ This distribution represents the probability (the y axis) of different effects (
 
 And this is at the heart of Bayesian analysis. We don't need *p*-values, *t*-values or degrees of freedom: **everything is there, under our nose**, within this **posterior distribution**.
 
-As you can see, our description is consistent with the values of the frequentist regression (which had a beta of **0.41**). That is reassuring! We can now go ahead and precisely characterise this posterior distribution.
+As you can see, our description is consistent with the values of the frequentist regression (which had a beta of **0.41**). This is reassuring! We can now go ahead and **precisely characterise** this posterior distribution.
 
 ### Describing the Posterior
 
@@ -138,13 +142,131 @@ Unfortunately, it is often not practical to report the whole posterior distribut
 
 #### Point-estimate
 
+**What single value can best represent my posterior distribution?**
+
+Let's check the **mean**:
+
+```{r message=FALSE, warning=FALSE}
+mean(posteriors$Petal.Length)
+```
+
+This is close to the frequentist beta. But as we know, the mean is quite sensitive to outliers or extremes values. Maybe the **median** could be more robust?
+
+```{r message=FALSE, warning=FALSE}
+median(posteriors$Petal.Length)
+```
+
+Well, this is **close to the mean**. Maybe we could take the **mode**, the *peak* of the posterior distribution? In the Bayesian framework, this value is called the **Maximum A Posteriori (MAP)**. Let's see:
+
+```{r message=FALSE, warning=FALSE}
+map_estimate(posteriors$Petal.Length)
+```
+
+Let's add these values to the posterior distribution:
+
+```{r message=FALSE, warning=FALSE}
+ggplot(posteriors, aes(x = Petal.Length)) +
+  geom_density(fill = "orange") +
+  # The mean in blue
+  geom_vline(xintercept=mean(posteriors$Petal.Length), color="blue", size=2) +
+  # The median in red
+  geom_vline(xintercept=median(posteriors$Petal.Length), color="red", size=2) +
+  # The MAP in purple
+  geom_vline(xintercept=map_estimate(posteriors$Petal.Length), color="purple", size=2)
+```
+
+Well, all these values give very similar results. Thus, **we will chose the median**, as this value has a direct meaning from a probabilistic perspective: there is 50\% chance that the true effect is higher and 50\% chance that the effect is lower (as it *cuts* the distribution in two equal parts).
+
+
 #### Uncertainty
 
+Now that the have a point-estimate, let's **describe the uncertainty**. We could compute the range:
+
+```{r message=FALSE, warning=FALSE}
+range(posteriors$Petal.Length)
+```
+
+But does it make sense to include all these extreme values? Maybe not. Thus, we will compute a [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html). Long story short, it's kind of similar to a frequentist **confidence interval**, but it is easier to interpret and easier to compute. And it makes more sense.
+
+We will compute this **credible interval** through the Highest Density Interval (HDI) method. It will give us the range containing the 90\% more probable effect values. **Note that we will use 90\% CIs instead of 95\% CIs as it is the case in the frequentist framework as the 90\% level gives more stable results**.
+
+```{r message=FALSE, warning=FALSE}
+hdi(posteriors$Petal.Length, ci=0.90)
+```
+
+Nice, so we can conclude that **the effect has 90\% chance of falling within the `[0.38, 0.44]` range**. We have just computed the two more important information to describe our effects. 
+
 #### Effect significance
+
+However, in many scientific fields, simply describing the effect is not enough. The readers also want to know if this effect ***means*** something. Is it important? Is it different from 0? In other words, **assessing the *significance* of the effect**. How can we do this?
+
+Well, in this particular case, it is very eloquent: **all possible effect values (*i.e.*, the whole posterior distribution) are positive and superior to 0.35, which is already a lot**.
+
+But still, we want some objective decision criterion, to say if **yes or no the effect is significant**.  We could do similarly to the frequentist framework, and see if the **Credible Interval** contains 0. Here, it is not the case, which means that our **effect is significant**. 
+
+But this index is not very fine-grained, isn't it? **Can we do better? Yes.**
+
+
+## A linear model with a categorical predictor
+
+Let's take interest in the **weight of chickens**, depending on 2 **feed types**. We will start by selecting, from the `chickwts` dataset (also available in base R), the 2 feed types that are of interest for us (because reasons): **Meat meals** and **Sunflowers**.
+
+### Data preparation and model fitting
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+# We keep only rows for which feed is meatmeal or sunflower
+data <- chickwts %>% 
+  filter(feed %in% c("meatmeal", "sunflower"))
+```
+
+
+Let's run another Bayesian regression to predict the **Weight** with the **2 types of feed type**.
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+model <- stan_glm(weight ~ feed, data=data)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='hide'}
+model <- stan_glm(weight ~ feed, data=data)
+```
+
+### Posterior description
+
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+posteriors <- insight::get_parameters(model)
+
+ggplot(posteriors, aes(x=feedsunflower)) +
+  geom_density(fill = "red")
+```
+
+TBD.
+
+### Comparison to frequentist
+
+**Are these conclusions different from the ones obtained via a frequentist regression?** Let's see.
+
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+model <- lm(weight ~ feed, data=data)
+summary(model)
+```
+
+TBD.
+
+## All with one function
+
+We went through extracting posteriors and computing the different indices. **But what if I told you that we can do all of this, and more, with only one function?**
+
+> **Behold, `describe_posterior`!**
+
+Let's run this function **directly** on the model:
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+describe_posterior(model)
+```
+
+There we have it! The **median**, the **CI**, the **pd** and the **ROPE percentage**!
+
 
 
 
 TBD.
-
-
-
