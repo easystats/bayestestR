@@ -35,7 +35,7 @@ Now that you've read the [**Get started**](https://easystats.github.io/bayestest
 
 ## Loading the packages
 
-Once you've [installed](https://easystats.github.io/bayestestR/articles/bayestestR.html) the necessary packages, we can load `rstanarm` (to fit the models) and `bayestestR` (to compute useful indices).
+Once you've [installed](https://easystats.github.io/bayestestR/articles/bayestestR.html) the necessary packages, we can load `rstanarm` (to fit the models), `bayestestR` (to compute useful indices) and `insight` (to access the parameters).
 
 ```{r message=FALSE, warning=FALSE}
 library(rstanarm)
@@ -47,6 +47,18 @@ library(insight)
 
 ### Fitting the model
 
+We will start by fitting a simple model to test the relationship between **Petal.Length** (our predictor, - or independent, variable) and **Sepal.Length** (our response, - or dependent, variable) from the [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R. 
+
+Let's start by fitting the **frequentist** version of the model, just to have some **reference**:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+model <- lm(Sepal.Length ~ Petal.Length, data=iris)
+summary(model)
+```
+
+In this model, the linear relationship between **Petal.Length** and **Sepal.Length** is **positive and significant** (beta = 0.41, t(148) = 21.65, p < .001).
+
+Let's do the **Bayesian version**:
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
@@ -60,23 +72,79 @@ model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
 
 ### Extracting the posterior
 
+You can see the sampling algorithm being run. Once it is done, let us extract the parameters (*i.e.*, the coefficients) of the model.
 
 ```{r message=FALSE, warning=FALSE}
 posteriors <- insight::get_parameters(model)
-summary(posteriors)
+
+summary(posteriors)  # Summary
 ```
 
-As we can see, the parameters take the form of a long dataframe with two columns, corresponding to the **intercept** and **Petal.Length**. These columns contain the **posterior distributions** of these two parameters, *i.e.*, different plausible values. Let's look at the distribution of our parameter of interest, the effect of `Sepal.Length`.
+As we can see, the parameters take the form of a long dataframe with two columns, corresponding to the **intercept** and **Petal.Length**. These columns contain the **posterior distributions** of these two parameters, *i.e.*, different plausible values.
+
+#### About posterior *draws*
+
+Let's look at the length of the posteriors.
+
+```{r message=FALSE, warning=FALSE}
+nrow(posteriors)  # Size (number of rows)
+```
+
+> **Why is the size 4000, and not more or less?**
+
+First of all, these observations (the rows) are usually reffered to as **posterior draws**. The underlying idea is that the Bayesian sampling algorithm (such as **Monte Carlo Makov Chains - MCMC)**) will *draw* from the hidden true posterior distribution. Thus, it is through these posterior draws that we can estimate the underlying true posterior distribution. Thus, **the more draws you have, the better is your estimation of the posterior distribution**. But it also takes longer to compute.
+
+If we look at the documentation (`?sampling`) for the rstanarm `"sampling"` algorithm used by default in the model above, we can see several parameters that influence the number of posterior draws. By default, there are **4** `chains` (you can see it as distinct sampling runs), all that will create **2000** `iter` (draws). However, only half of these iterations is kept, as half is used for `warmup` (the convergence of the algorithm). Which total is **`4 chains * (2000 iterations - 1000 warmup) = 4000`** posterior draws. We can change that, for instance:
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris, chains = 2, iter = 1000, warmup = 250)
+ 
+nrow(insight::get_parameters(model))  # Size (number of rows)
+
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='hide'}
+model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris, chains = 2, iter = 1000, warmup = 250)
+nrow(insight::get_parameters(model))  # Size (number of rows)
+```
+
+In this case, we indeed have **`2 chains * (1000 iterations - 250 warmup) = 1500`** posterior draws. Let's keep our first model with the default setup.
+
+
+#### Visualising the posterior distribution
+
+
+Now that we've understood where do these values come from, let's look at them. We will start by visualizing (using the `ggplot2` package) the distribution of our parameter of interest, the effect of `Petal.Length`.
 
 
 ```{r message=FALSE, warning=FALSE}
-plot(density(posteriors$Petal.Length))
+library(ggplot2)
+
+ggplot(posteriors, aes(x = Petal.Length)) +
+  geom_density(fill = "orange")
 ```
 
+This distribution represents the probability (the y axis) of different effects (the x axis). The central values are more probable than the extreme values. As you can see, this distribution ranges from about **0.35 to 0.50**, with the bulk of it being at around **0.41**.
 
-<!-- ### Correspondance with Frequentist Models -->
+> **Congrats! You've just described your posterior distribution.**
 
-<!-- TO BE IMPROVED -->
+And this is at the heart of Bayesian analysis. We don't need *p*-values, *t*-values or degrees of freedom: **everything is there, under our nose**, within this **posterior distribution**.
+
+As you can see, our description is consistent with the values of the frequentist regression (which had a beta of **0.41**). That is reassuring! We can now go ahead and precisely characterise this posterior distribution.
+
+### Describing the Posterior
+
+Unfortunately, it is often not practical to report the whole posterior distributions as graphs. We need to find a **consise way to summarise it**. We recommend to describe the posterior distribution with **3 elements**. A **point-estimate**, a one-value summary (such as the *beta* from the frequentist regression); a **credible interval**, representing the associated uncertainty and some **indices of significance**, giving information about the importance of this effect.
+
+
+#### Point-estimate
+
+#### Uncertainty
+
+#### Effect significance
+
+
+
+TBD.
 
 
 

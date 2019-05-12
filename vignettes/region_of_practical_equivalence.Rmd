@@ -34,7 +34,7 @@ set.seed(333)
 ```
 
 
-# What is the *ROPE*?
+# What is the *ROPE?*
 
 Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against "zero". Indeed, the Bayesian framework offers a probalistic view of the parameters, allowing to assess the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as **"practically no effect"** (*i.e.*, a negligible magnitude) is sufficient. This range is called the **region of practical equivalence (ROPE)**.
 

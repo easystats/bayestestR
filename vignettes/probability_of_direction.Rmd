@@ -33,7 +33,7 @@ options(digits=2)
 set.seed(333)
 ```
 
-# What is the *pd*?
+# What is the *pd?*
 
 The **Probability of Direction (pd)** is an index of **effect existence**, ranging from 50\% to 100\%, representing the certainty with which an effect goes in a particular direction (*i.e.*, whether it is positive or negative). 
 
