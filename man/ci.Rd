@@ -59,15 +59,28 @@ Documentation is accessible for:
   \item \href{https://easystats.github.io/parameters/reference/ci.merMod.html}{Frequentist models}
 }
 
+\strong{Bayesian models}
+\cr \cr
+This functions returns, by default, the quantile interval, i.e., an
+equal-tailed interval (ETI). A 90\% ETI has 5\% of the distribution on either
+side of its limits. It indicates the 5th percentile and the 95h percentile.
+In symmetric distributions, the two methods of computing credible intervals,
+the ETI and the \link[=hdi]{HDI}, return similar results.
 
-\itemize{\item \strong{Bayesian models}}
-This functions returns, by default, the quantile interval, \emph{i.e.}, an equal-tailed interval (ETI). A 90\% ETI has 5\% of the distribution on either side of its limits. It indicates the 5th percentile and the 95h percentile. In symmetric distributions, the two methods of computing credible intervals, the ETI and the \link[=hdi]{HDI}, return similar results.
+This is not the case for skewed distributions. Indeed, it is possible that
+parameter values in the ETI have lower credibility (are less probable) than
+parameter values outside the ETI. This property seems undesirable as a summary
+of the credible values in a distribution.
 
-This is not the case for skewed distributions. Indeed, it is possible that parameter values in the ETI have lower credibility (are less probable) than parameter values outside the ETI. This property seems undesirable as a summary of the credible values in a distribution.
+On the other hand, the ETI range does change when transformations are applied
+to the distribution (for instance, for a log odds scale to probabilities):
+the lower and higher bounds of the transformed distribution will correspond
+to the transformed lower and higher bounds of the original distribution.
+On the contrary, applying transformations to the distribution will change
+the resulting HDI.
 
-On the other hand, the ETI range does change when transformations are applied to the distribution (for instance, for a log odds scale to probabilities): the lower and higher bounds of the transformed distribution will correspond to the transformed lower and higher bounds of the original distribution. On the contrary, applying transformations to the distribution will change the resulting HDI.
-
- \itemize{\item \strong{Frequentist models}}
+\strong{Frequentist models}
+\cr \cr
  This function is implemented in the \href{https://github.com/easystats/parameters}{parameters} pacakge and attemps to retrieve, or compute, the Confidence Interval (default \code{ci} level: \code{.95}).
 }
 \examples{
