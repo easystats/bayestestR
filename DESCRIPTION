@@ -46,6 +46,7 @@ Suggests:
 	knitr,
 	lme4,
 	logspline,
+	see,
 	rmarkdown,
 	rstanarm,
 	stringr,
