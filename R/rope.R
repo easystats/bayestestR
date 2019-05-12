@@ -135,6 +135,9 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
+  # check for possible collinearity that might bias ROPE
+  if (verbose) .check_parameter_correlation(x)
+
   list <- lapply(c("fixed", "random"), function(.x) {
     parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
 
@@ -204,6 +207,9 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
+
+  # check for possible collinearity that might bias ROPE
+  if (verbose) .check_parameter_correlation(x)
 
   .get_rope <- function(.x, .y) {
     parms <- insight::get_parameters(x, effects = .x, component = .y, parameters = parameters)

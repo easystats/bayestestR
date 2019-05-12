@@ -111,13 +111,13 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
 #' @importFrom stats sd
 #' @keywords internal
 .equivalence_test_models <- function(x, range = "default", ci = .95, parameters = NULL, verbose = TRUE) {
-  .check_parameter_correlation(x)
-
   if (all(range == "default")) {
     range <- rope_range(x)
   } else if (!all(is.numeric(range)) | length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
+
+  if (verbose) .check_parameter_correlation(x)
 
   l <- sapply(
     insight::get_parameters(x, component = "conditional", parameters = parameters),
@@ -179,7 +179,7 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .95, parameters 
     results <- results[results$pvalue < 0.05 & results$Var1 != results$Var2, ]
 
     if (nrow(results) > 0 && any(results$corr >= 0.5)) {
-      warning("Some parameters show strong correlation. Note that the equivalence-test may have inappropriate results when covariates are not independent.", call. = FALSE)
+      warning("Some parameters show strong correlations. Note that joint parameter distributions may shift towards or away from the ROPE when covariates are not independent. Hence, a test for practical equivalence may have inappropriate results.", call. = FALSE)
     }
   }
 }
