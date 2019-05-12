@@ -2,35 +2,20 @@
 % Please edit documentation in R/describe_posterior.R
 \name{describe_posterior}
 \alias{describe_posterior}
-\alias{describe_posterior.numeric}
-\alias{describe_posterior.double}
-\alias{describe_posterior.data.frame}
 \alias{describe_posterior.stanreg}
+\alias{describe_posterior.brmsfit}
 \title{Describe Posterior Distributions}
 \usage{
 describe_posterior(posteriors, estimate = "median", ci = 0.9,
   ci_method = "hdi", test = c("pd", "rope"), rope_range = "default",
   rope_full = TRUE, dispersion = TRUE, ...)
 
-\method{describe_posterior}{numeric}(posteriors, estimate = "median",
-  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
-
-\method{describe_posterior}{double}(posteriors, estimate = "median",
-  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
-
-\method{describe_posterior}{data.frame}(posteriors, estimate = "median",
-  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...)
-
 \method{describe_posterior}{stanreg}(posteriors, estimate = "median",
   ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, dispersion = TRUE,
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), parameters = NULL, ...)
+  effects = c("fixed", "random", "all"), parameters = NULL, ...)
 
-\method{describe_posterior}{stanreg}(posteriors, estimate = "median",
+\method{describe_posterior}{brmsfit}(posteriors, estimate = "median",
   ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, dispersion = TRUE,
   effects = c("fixed", "random", "all"), component = c("conditional",
@@ -58,14 +43,14 @@ describe_posterior(posteriors, estimate = "median", ci = 0.9,
 \item{effects}{Should variables for fixed effects, random effects
 or both be returned? Only applies to mixed models. May be abbreviated.}
 
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned.}
+
 \item{component}{Should all predictor variables, predictor variables for the
 conditional model, the zero-inflated part of the model, the dispersion
 term or the instrumental variables be returned? Applies to models
 with zero-inflated and/or dispersion formula, or to models with instrumental
 variable (so called fixed-effects regressions). May be abbreviated.}
-
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned.}
 }
 \description{
 Compute indices relevant to describe and characterise the posterior distributions.

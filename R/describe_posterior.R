@@ -27,7 +27,6 @@ describe_posterior <- function(posteriors, estimate = "median", ci = .90, ci_met
 
 
 
-#' @rdname describe_posterior
 #' @export
 describe_posterior.numeric <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
   x <-
@@ -45,7 +44,6 @@ describe_posterior.numeric <- function(posteriors, estimate = "median", ci = .90
 }
 
 
-#' @rdname describe_posterior
 #' @export
 describe_posterior.double <- describe_posterior.numeric
 
@@ -53,7 +51,6 @@ describe_posterior.double <- describe_posterior.numeric
 
 
 
-#' @rdname describe_posterior
 #' @method describe_posterior data.frame
 #' @export
 describe_posterior.data.frame <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
@@ -170,7 +167,7 @@ describe_posterior.data.frame <- function(posteriors, estimate = "median", ci = 
   }
 
   rownames(out) <- NULL
-  return(out)
+  out
 }
 
 
@@ -187,7 +184,7 @@ describe_posterior.stanreg <- function(posteriors, estimate = "median", ci = .90
 #' @inheritParams insight::get_parameters
 #' @rdname describe_posterior
 #' @export
-describe_posterior.stanreg <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+describe_posterior.brmsfit <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
