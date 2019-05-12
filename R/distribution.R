@@ -2,7 +2,7 @@
 #'
 #' Generate a sample of size \code{n} with a near-perfect distribution.
 #'
-#' @param type Can be \code{"normal"} (default), \code{"cauchy"}, \code{"poisson"}, \code{"chisquared"}, \code{"uniform"} or \code{"student"}.
+#' @param type Can be \code{"normal"} (default), \code{"cauchy"}, \code{"poisson"}, \code{"chisquared"}, \code{"uniform"}, \code{"student"} or \code{"beta"}.
 #' @param random Generate near-perfect or random (simple wrappers for the base R \code{r*} functions) distributions.
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -13,13 +13,14 @@
 #' @export
 distribution <- function(type = "normal", ...) {
   switch(
-    match.arg(arg = type, choices = c("normal", "cauchy", "poisson", "student", "chisquared", "uniform")),
+    match.arg(arg = type, choices = c("normal", "cauchy", "poisson", "student", "chisquared", "uniform", "beta")),
     "normal" = distribution_normal(...),
     "cauchy" = distribution_cauchy(...),
     "poisson" = distribution_poisson(...),
     "student" = distribution_student(...),
     "chisquared" = distribution_chisquared(...),
-    "uniform" = distribution_uniform(...)
+    "uniform" = distribution_uniform(...),
+    "beta" = distribution_beta(...)
   )
 }
 
@@ -106,6 +107,17 @@ distribution_uniform <- function(n, min = 0, max = 1, random = FALSE, ...) {
 
 
 
+#' @rdname distribution
+#' @inheritParams stats::rbeta
+#' @importFrom stats rbeta qbeta
+#' @export
+distribution_beta <- function(n, shape1, shape2, ncp = 0, random = FALSE, ...) {
+  if (random) {
+    stats::rbeta(n, shape1, shape2, ncp = ncp)
+  } else {
+    stats::qbeta(seq(1 / n, 1 - 1 / n, length.out = n), shape1, shape2, ncp = ncp,  ...)
+  }
+}
 
 
 

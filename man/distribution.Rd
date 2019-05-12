@@ -8,6 +8,7 @@
 \alias{distribution_student}
 \alias{distribution_chisquared}
 \alias{distribution_uniform}
+\alias{distribution_beta}
 \alias{rnorm_perfect}
 \title{Empirical Distributions}
 \usage{
@@ -25,10 +26,12 @@ distribution_chisquared(n, df, ncp = 0, random = FALSE, ...)
 
 distribution_uniform(n, min = 0, max = 1, random = FALSE, ...)
 
+distribution_beta(n, shape1, shape2, ncp = 0, random = FALSE, ...)
+
 rnorm_perfect(n, mean = 0, sd = 1)
 }
 \arguments{
-\item{type}{Can be \code{"normal"} (default), \code{"cauchy"}, \code{"poisson"}, \code{"chisquared"}, \code{"uniform"} or \code{"student"}.}
+\item{type}{Can be \code{"normal"} (default), \code{"cauchy"}, \code{"poisson"}, \code{"chisquared"}, \code{"uniform"}, \code{"student"} or \code{"beta"}.}
 
 \item{...}{Arguments passed to or from other methods.}
 
@@ -57,6 +60,10 @@ rnorm_perfect(n, mean = 0, sd = 1)
 \item{min}{lower and upper limits of the distribution.  Must be finite.}
 
 \item{max}{lower and upper limits of the distribution.  Must be finite.}
+
+\item{shape1}{non-negative parameters of the Beta distribution.}
+
+\item{shape2}{non-negative parameters of the Beta distribution.}
 }
 \description{
 Generate a sample of size \code{n} with a near-perfect distribution.
