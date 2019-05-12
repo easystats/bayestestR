@@ -20,7 +20,8 @@ distribution <- function(type = "normal", ...) {
     "student" = distribution_student(...),
     "chisquared" = distribution_chisquared(...),
     "uniform" = distribution_uniform(...),
-    "beta" = distribution_beta(...)
+    "beta" = distribution_beta(...),
+    distribution_custom(type = type, ...)
   )
 }
 
@@ -118,6 +119,21 @@ distribution_beta <- function(n, shape1, shape2, ncp = 0, random = FALSE, ...) {
     stats::qbeta(seq(1 / n, 1 - 1 / n, length.out = n), shape1, shape2, ncp = ncp, ...)
   }
 }
+
+
+#' @rdname distribution
+#' @inheritParams distribution
+#' @export
+distribution_custom <- function(n, type = "norm", ..., random = FALSE) {
+  if (random) {
+    f <- match.fun(paste0("r", type))
+    f(n, ...)
+  } else {
+    f <- match.fun(paste0("q", type))
+    f(seq(1 / n, 1 - 1 / n, length.out = n), ...)
+  }
+}
+
 
 
 
