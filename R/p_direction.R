@@ -46,26 +46,6 @@
 #' p_direction(bf, method = "kernel")
 #' }
 #'
-#' \dontrun{
-#' # Comparison of methods
-#' # -----------------------------------------------
-#' library(logspline)
-#' library(KernSmooth)
-#'
-#' data <- data.frame()
-#' for(i in rnorm(8, 0, 4)){
-#'   for(j in rnorm(8, 0.5, 4)){
-#'     x <- rnorm(1000, i, abs(j))
-#'     data <- rbind(data,
-#'       data.frame("direct" = pd(x),
-#'                  "kernel" = pd(x, method="kernel"),
-#'                  "logspline" = pd(x, method="logspline"),
-#'                  "KernSmooth" = pd(x, method="KernSmooth")
-#'                  ))
-#'   }
-#' }
-#' pairs(~., data=data)
-#' }
 #'
 #'
 #' @export

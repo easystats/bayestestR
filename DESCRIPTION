@@ -39,6 +39,7 @@ Suggests:
 	covr,
 	dplyr,
 	tidyr,
+	GGally,
 	ggplot2,
 	ggridges,
 	KernSmooth,
