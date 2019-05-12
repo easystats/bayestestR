@@ -171,7 +171,7 @@ hdi.BFBayesFactor <- function(x, ci = .90, verbose = TRUE, ...) {
   if (n_candies > 1) {
     if (any(diff(sort(min_i)) != 1)) {
       if (verbose) {
-        warning("Identical densities found along different segments of the distribution, choosing rightmost.")
+        warning("Identical densities found along different segments of the distribution, choosing rightmost.", call. = FALSE)
       }
       min_i <- max(min_i)
     } else {

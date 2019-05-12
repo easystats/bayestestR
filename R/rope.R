@@ -69,6 +69,15 @@ as.double.rope <- function(x, ...) {
 }
 
 
+
+#' @rdname rope
+#' @export
+rope.default <- function(x, ...) {
+  NULL
+}
+
+
+
 #' @rdname rope
 #' @export
 rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
@@ -99,6 +108,25 @@ rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
 }
 
 
+
+
+#' @rdname rope
+#' @export
+rope.data.frame <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
+  out <- .prepare_rope_df(x, range, ci, verbose)
+  HDI_area_attributes <- .compact_list(out$HDI_area)
+  dat <- data.frame(
+    Parameter = rep(names(HDI_area_attributes), each = length(ci)),
+    out$tmp,
+    stringsAsFactors = FALSE
+  )
+  attr(dat, "HDI_area") <- HDI_area_attributes
+  class(dat) <- c("rope", "data.frame")
+  dat
+}
+
+
+
 .rope <- function(x, range = c(-0.1, 0.1), ci = .90, verbose = TRUE) {
   HDI_area <- .hdi_area <- hdi(x, ci, verbose)
 
@@ -122,6 +150,7 @@ rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
   class(rope) <- c("rope", class(rope))
   rope
 }
+
 
 
 #' @rdname rope
@@ -187,6 +216,7 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
   attr(dat, "HDI_area") <- HDI_area_attributes
   dat
 }
+
 
 
 #' @rdname rope
