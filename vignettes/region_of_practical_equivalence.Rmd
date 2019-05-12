@@ -43,7 +43,7 @@ TBD.
 
 # Sensitivity to the parameter's scale
 
-However, keep in mind that unlike indices of effect *existence* (such as the `pd`), indices of effect *size*, such as the **ROPE percentage**, depend on the unit of its parameter, and can thus be easily changed *via* the scaling of the predictors.
+However, keep in mind that unlike indices of effect *existence* (such as the [`pd`](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)), indices of effect *size*, such as the **ROPE percentage**, depend on the unit of its parameter, and can thus be easily changed *via* the scaling of the predictors.
 
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}

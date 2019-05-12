@@ -115,7 +115,7 @@ library(bayestestR)
 prior <- distribution_normal(length(posterior), mean = 0, sd = 5.044799)
 ```
 
-We can not plot both the prior:
+We can now plot both the prior:
 
 ```{r prior_n_post_plot, echo=FALSE, message=FALSE, warning=FALSE}
 # ggplot() +
@@ -207,7 +207,7 @@ bayesfactor_savagedickey(model)
 
 Besides comparing distributions, Bayes factors can also be used to compare whole models. In these cases they can answer the question:
 
-> **Is the observed data more likely given Model 1, or Model 2?**
+> **Is the observed data more likely under Model 1, or Model 2?**
 
 This is usually done by computing the marginal likelihoods of two models. In such a case, the Bayes factor is a measure of relative evidence between the two compared models. Note that the compared models *do not* need to be nested models (see `brms2` and `brms3` below).
 

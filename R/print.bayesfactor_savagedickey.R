@@ -11,6 +11,6 @@ print.bayesfactor_savagedickey <- function(x, digits = 2, log = FALSE, ...) {
   print.data.frame(BFE, digits = digits)
   cat("---\n")
   cat("Method: Savage-Dickey density ratio\n")
-  cat(paste0("Test Value: ", attr(BFE, "hypothesis"), "\n"))
+  cat(paste0("Test Value: ", round(attr(BFE, "hypothesis"),digits), "\n"))
   invisible(x)
 }
