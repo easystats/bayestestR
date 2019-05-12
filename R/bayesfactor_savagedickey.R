@@ -3,8 +3,6 @@
 #' This method computes the ratio between the density of a single value (typically the null)
 #' in two distributions, typically the posterior vs. the prior distributions.
 #'
-#' This method is used to examine if the hypothesis value is less or more likely given the observed data.
-#'
 #' @param posterior Vector representing a posterior distribution, or a \code{stanreg} object.
 #' @param prior Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored). If a prior is not provided, will sample from \code{~Cauchy(location = hypothesis, scale = sd(posterior))} (but this should be avoided).
 #' @param direction Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
@@ -16,6 +14,11 @@
 #' @return A data frame containing the Bayes factor representing by how
 #' much \emph{less} the null is likely under the posterior compared to the prior (larger than 1
 #' can be interpereted as evidence against the null).
+#'
+#' @details This method is used to examine if the hypothesis value is less or more
+#' likely given the observed data. For \code{stanreg} objects, if \code{prior = NULL},
+#' the model is updated to incliude prior-information and then for each model
+#' parameter the prior is compared to the posterior distributon.
 #'
 #' @examples
 #' library(bayestestR)
@@ -87,7 +90,7 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
     alg <- insight::find_algorithm(posterior)
 
     capture.output(prior <- suppressWarnings(
-      update(
+      stats::update(
         posterior,
         prior_PD = TRUE,
         iter = alg$iterations,
