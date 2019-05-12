@@ -108,7 +108,10 @@ rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
   # Attributes
   hdi_area <- cbind(CI = ci * 100, data.frame(do.call(rbind, lapply(rope_values, attr, "HDI_area"))))
   names(hdi_area) <- c("CI", "CI_low", "CI_high")
+
   attr(out, "HDI_area") <- hdi_area
+  attr(out, "data") <- x
+
   out
 }
 
@@ -125,7 +128,10 @@ rope.data.frame <- function(x, range = "default", ci = .90, verbose = TRUE, ...)
     out$tmp,
     stringsAsFactors = FALSE
   )
+
   attr(dat, "HDI_area") <- HDI_area_attributes
+  attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+
   class(dat) <- c("rope", "data.frame")
   dat
 }
@@ -228,6 +234,8 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
   }
 
   attr(dat, "HDI_area") <- HDI_area_attributes
+  attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+
   dat
 }
 
@@ -316,6 +324,8 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
   }
 
   attr(dat, "HDI_area") <- HDI_area_attributes
+  attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+
   dat
 }
 

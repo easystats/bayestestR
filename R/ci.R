@@ -92,7 +92,9 @@ ci.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
 #' @rdname ci
 #' @export
 ci.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
-  .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "ci")
+  dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "ci")
+  attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  dat
 }
 
 

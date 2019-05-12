@@ -80,6 +80,7 @@ hdi.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
     .hdi(x, ci = i, verbose = verbose)
   }))
   class(out) <- unique(c("hdi", class(out)))
+  attr(out, "data") <- x
   out
 }
 
@@ -88,7 +89,9 @@ hdi.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
 #' @rdname hdi
 #' @export
 hdi.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
-  .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "hdi")
+  dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "hdi")
+  attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  dat
 }
 
 

@@ -10,7 +10,11 @@ print.hdi <- function(x, digits = 2, ...) {
 
 #' @export
 print.ci <- function(x, digits = 2, ...) {
-  .print_hdi(x, digits, title = "Credible Interval", ci_string = "CI", ...)
+  if ("data_plot" %in% class(x)) {
+    print(as.data.frame(x))
+  } else {
+    .print_hdi(x, digits, title = "Credible Interval", ci_string = "CI", ...)
+  }
 }
 
 
