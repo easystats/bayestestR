@@ -24,7 +24,7 @@
 #'
 #' This is not the case for skewed distributions. Indeed, it is possible that parameter values in the ETI have lower credibility (are less probable) than parameter values outside the ETI. This property seems undesirable as a summary of the credible values in a distribution.
 #'
-#' On the other hand, the ETI range does change when transformations are applied to the distribution (for instance, for a log odds scale to probabilies): the lower and higher bounds of the transformed distribution will correspond to the transformed lower and higher bounds of the original distribution. On the contrary, applying transformations to the distribution whill change the resulting HDI.
+#' On the other hand, the ETI range does change when transformations are applied to the distribution (for instance, for a log odds scale to probabilities): the lower and higher bounds of the transformed distribution will correspond to the transformed lower and higher bounds of the original distribution. On the contrary, applying transformations to the distribution will change the resulting HDI.
 #'
 #'  \itemize{\item \strong{Frequentist models}}
 #'  This function is implemented in the \href{https://github.com/easystats/parameters}{parameters} pacakge and attemps to retrieve, or compute, the Confidence Interval (default \code{ci} level: \code{.95}).
