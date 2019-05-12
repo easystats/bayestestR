@@ -135,7 +135,7 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
     stringsAsFactors = FALSE
   )
 
-  class(out) <- c("equivalence_test", class(out))
+  class(out) <- c("equivalence_test_br", "equivalence_test", class(out))
   out
 }
 
@@ -162,7 +162,7 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .95, parameters 
 #' @importFrom insight find_parameters
 #' @keywords internal
 .check_parameter_correlation <- function(model) {
-  valid_parameters <- insight::find_parameters(model, parameters = "^(?!(r_|sd_|cor_|b\\[))", flatten = TRUE)
+  valid_parameters <- insight::find_parameters(model, parameters = "^(?!(r_|sd_|prior_|cor_|b\\[))", flatten = TRUE)
   dat <- as.data.frame(model)[, valid_parameters]
   dat <- dat[, -1, drop = FALSE]
 

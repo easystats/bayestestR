@@ -124,11 +124,11 @@ describe_posterior.data.frame <- function(posteriors, estimate = "median", ci = 
     if ("all" %in% test_list) {
       test_list <- c("pd", "rope", "p_map", "bayesfactor")
     }
-    if ("pd" %in% test_list | "p_direction" %in% test_list | "pdir" %in% test_list | "mpe" %in% test_list) {
+    if ("pd" %in% test_list || "p_direction" %in% test_list || "pdir" %in% test_list || "mpe" %in% test_list) {
       out$pd <- sapply(posteriors, p_direction, ...)
     }
-    if ("rope" %in% test_list | "equivalence" %in% test_list | "equi" %in% test_list) {
-      if (length(ci) == 1 | rope_full) {
+    if ("rope" %in% test_list || "equivalence" %in% test_list || "equi" %in% test_list) {
+      if (length(ci) == 1 || rope_full) {
         if (rope_full) {
           results_rope <- as.data.frame(t(sapply(posteriors, equivalence_test, range = rope_range, ci = 1)), stringsAsFactors = FALSE)
         } else {
@@ -157,10 +157,10 @@ describe_posterior.data.frame <- function(posteriors, estimate = "median", ci = 
       }
       out <- cbind(out, results_rope)
     }
-    if ("p_map" %in% test_list | "pmap" %in% test_list) {
+    if ("p_map" %in% test_list || "pmap" %in% test_list) {
       out$p_MAP <- sapply(posteriors, p_map)
     }
-    if ("bayes factor" %in% test_list | "bayesfactor" %in% test_list | "bf" %in% test_list) {
+    if ("bayes factor" %in% test_list || "bayesfactor" %in% test_list || "bf" %in% test_list) {
       out$BF <- sapply(posteriors, bayesfactor_savagedickey, ...)
     }
     # TODO: add p_ROPE, but first must enhance its implementation
