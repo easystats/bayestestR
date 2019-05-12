@@ -120,4 +120,6 @@ density_at <- function(posterior, x, precision = 2^10, ...) {
 }
 
 
+
+#' @export
 probability_at <- density_at

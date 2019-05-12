@@ -12,6 +12,7 @@
 - `distribution()` functions have been added
 - `bayesfactor()` function has been added
 - Started adding plotting methods (currently in the [`see`](https://github.com/easystats/see) package) for `p_direction()` and `hdi()`
+- `probability_at()` as alias for `density_at()`.
 
 ## Minor changes
 
