@@ -49,7 +49,9 @@ Suggests:
 	rmarkdown,
 	rstanarm,
 	stringr,
-	testthat
+	testthat,
+Remotes: 
+	easystats/see
 RoxygenNote: 6.1.1
 Language: en-GB
 VignetteBuilder: knitr
