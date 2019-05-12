@@ -102,6 +102,7 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
 
   # remove attribute
   attr(out, "HDI_area") <- NULL
+  attr(out, "data") <- x
 
   class(out) <- c("equivalence_test", class(out))
   out
