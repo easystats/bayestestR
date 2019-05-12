@@ -92,7 +92,7 @@ p_direction.numeric <- function(x, method = "direct", ...) {
       )
     )
   } else {
-    dens <- estimate_density(x, method=method, precision = 2^10, ...)
+    dens <- estimate_density(x, method=method, precision = 2^10, extend = TRUE, ...)
     if (length(x[x > 0]) > length(x[x < 0])) {
       dens <- dens[dens$x > 0, ]
     } else {
