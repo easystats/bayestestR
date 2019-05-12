@@ -101,6 +101,9 @@ posterior <- as.data.frame(model)$group2
 
 insight::get_priors(model)
 ```
+```{r prior_table, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(insight::get_priors(model))
+```
 
 For the `group2` parameter, the prior that was used was a **normal distribution** of **mean** (location) `0` and **SD** (scale) `5.044799`. We can simulate this prior distribution as follows:
 
