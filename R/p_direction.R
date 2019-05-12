@@ -46,6 +46,7 @@
 #' p_direction(bf, method = "kernel")
 #' }
 #'
+#' \dontrun{
 #' # Comparison of methods
 #' # -----------------------------------------------
 #' library(logspline)
@@ -64,6 +65,7 @@
 #'   }
 #' }
 #' pairs(~., data=data)
+#' }
 #'
 #'
 #' @export
@@ -194,9 +196,9 @@ p_direction.BFBayesFactor <- function(x, method = "direct", ...) {
 #' @export
 as.numeric.p_direction <- function(x, ...){
   if("data.frame" %in% class(x)){
-    return(as.numeric(x$pd))
+    return(as.numeric(as.vector(x$pd)))
   } else{
-    return(as.numeric(x))
+    return(as.vector(x))
   }
 }
 

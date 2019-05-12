@@ -91,6 +91,7 @@ p_direction(bf)
 p_direction(bf, method = "kernel")
 }
 
+\dontrun{
 # Comparison of methods
 # -----------------------------------------------
 library(logspline)
@@ -109,6 +110,7 @@ for(i in rnorm(8, 0, 4)){
   }
 }
 pairs(~., data=data)
+}
 
 
 }
