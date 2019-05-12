@@ -69,12 +69,21 @@ as.double.rope <- function(x, ...) {
 }
 
 
+
+#' @rdname rope
+#' @export
+rope.default <- function(x, ...) {
+  NULL
+}
+
+
+
 #' @rdname rope
 #' @export
 rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
   if (all(range == "default")) {
     range <- c(-0.1, 0.1)
-  } else if (!all(is.numeric(range)) | length(range) != 2) {
+  } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
@@ -97,6 +106,25 @@ rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
   attr(out, "HDI_area") <- hdi_area
   out
 }
+
+
+
+
+#' @rdname rope
+#' @export
+rope.data.frame <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
+  out <- .prepare_rope_df(x, range, ci, verbose)
+  HDI_area_attributes <- .compact_list(out$HDI_area)
+  dat <- data.frame(
+    Parameter = rep(names(HDI_area_attributes), each = length(ci)),
+    out$tmp,
+    stringsAsFactors = FALSE
+  )
+  attr(dat, "HDI_area") <- HDI_area_attributes
+  class(dat) <- c("rope", "data.frame")
+  dat
+}
+
 
 
 .rope <- function(x, range = c(-0.1, 0.1), ci = .90, verbose = TRUE) {
@@ -124,6 +152,7 @@ rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
 }
 
 
+
 #' @rdname rope
 #' @export
 rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
@@ -131,7 +160,7 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
 
   if (all(range == "default")) {
     range <- rope_range(x)
-  } else if (!all(is.numeric(range)) | length(range) != 2) {
+  } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
@@ -189,6 +218,7 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
 }
 
 
+
 #' @rdname rope
 #' @export
 rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
@@ -204,7 +234,7 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
 
   if (all(range == "default")) {
     range <- rope_range(x)
-  } else if (!all(is.numeric(range)) | length(range) != 2) {
+  } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
