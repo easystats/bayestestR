@@ -28,6 +28,10 @@ navbar:
         href: articles/example1_GLM.html
   - text: Articles
     menu:
+      - text: 'Credible Intervals'
+        href: articles/credible_interval.html
+      - text: 'Region of Practical Equivalence'
+        href: articles/region_of_practical_equivalence.html
       - text: 'Probability of Direction'
         href: articles/probability_of_direction.html
       - text: 'Bayes Factors'
