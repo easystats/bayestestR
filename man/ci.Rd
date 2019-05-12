@@ -3,6 +3,7 @@
 \name{ci}
 \alias{ci}
 \alias{ci.numeric}
+\alias{ci.data.frame}
 \alias{ci.stanreg}
 \alias{ci.brmsfit}
 \title{Confidence/Credible Interval}
@@ -10,6 +11,8 @@
 ci(x, ...)
 
 \method{ci}{numeric}(x, ci = 0.9, verbose = TRUE, ...)
+
+\method{ci}{data.frame}(x, ci = 0.9, verbose = TRUE, ...)
 
 \method{ci}{stanreg}(x, ci = 0.9, effects = c("fixed", "random",
   "all"), parameters = NULL, verbose = TRUE, ...)

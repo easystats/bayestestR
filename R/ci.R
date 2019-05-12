@@ -77,6 +77,15 @@ ci.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
 }
 
 
+
+#' @rdname ci
+#' @export
+ci.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
+  .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "ci")
+}
+
+
+
 #' @rdname ci
 #' @export
 ci.stanreg <- function(x, ci = .90, effects = c("fixed", "random", "all"),

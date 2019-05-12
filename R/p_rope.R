@@ -41,7 +41,7 @@ p_rope.numeric <- function(x, range = "default", precision = .1, ...) {
 
   if (all(range == "default")) {
     range <- c(-0.1, 0.1)
-  } else if (!all(is.numeric(range)) | length(range) != 2) {
+  } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
@@ -111,7 +111,7 @@ p_rope.data.frame <- function(x, range = "default", precision = .1, ...) {
 .p_rope_models <- function(x, range, precision, effects, component, parameters, ...) {
   if (all(range == "default")) {
     range <- rope_range(x)
-  } else if (!all(is.numeric(range)) | length(range) != 2) {
+  } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 

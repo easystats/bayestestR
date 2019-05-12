@@ -3,6 +3,7 @@
 \name{hdi}
 \alias{hdi}
 \alias{hdi.numeric}
+\alias{hdi.data.frame}
 \alias{hdi.stanreg}
 \alias{hdi.brmsfit}
 \title{Highest Density Interval (HDI)}
@@ -10,6 +11,8 @@
 hdi(x, ...)
 
 \method{hdi}{numeric}(x, ci = 0.9, verbose = TRUE, ...)
+
+\method{hdi}{data.frame}(x, ci = 0.9, verbose = TRUE, ...)
 
 \method{hdi}{stanreg}(x, ci = 0.9, effects = c("fixed", "random",
   "all"), parameters = NULL, verbose = TRUE, ...)
