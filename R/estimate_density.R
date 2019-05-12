@@ -37,7 +37,7 @@
 #' @importFrom utils install.packages
 #' @export
 estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
-  method <- match.arg(method, c("kernel", "logspline", "KernSmooth"))
+  method <- match.arg(method, c("kernel", "logspline", "KernSmooth", "smooth"))
 
   # Range
   x_range <- range(x)
@@ -67,7 +67,7 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
     return(data.frame(x = x_axis, y = y))
 
     # KernSmooth
-  } else if (method == "KernSmooth") {
+  } else if (method %in% c("KernSmooth", "smooth")) {
     if (!requireNamespace("KernSmooth")) {
       if (interactive()) {
         readline("Package \"KernSmooth\" needed for this function. Press ENTER to install or ESCAPE to abort.")
