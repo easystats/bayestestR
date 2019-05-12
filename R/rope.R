@@ -112,7 +112,7 @@ rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
   attr(out, "HDI_area") <- hdi_area
   attr(out, "data") <- x
 
-  class(out) <- c("rope", "rope_see", class(out))
+  class(out) <- unique(c("rope", "rope_see", class(out)))
 
   out
 }
@@ -169,7 +169,7 @@ rope.BFBayesFactor <- function(x, range = "default", ci = .90, verbose = TRUE, .
   )
 
   attr(rope, "HDI_area") <- c(.hdi_area$CI_low, .hdi_area$CI_high)
-  class(rope) <- c("rope", "rope_see", class(rope))
+  class(rope) <- unique(c("rope", "rope_see", class(rope)))
   rope
 }
 

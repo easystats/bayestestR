@@ -114,7 +114,7 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
   attr(out, "HDI_area") <- NULL
   attr(out, "data") <- x
 
-  class(out) <- c("equivalence_test", "equivalence_test_see", class(out))
+  class(out) <- unique(c("equivalence_test", "equivalence_test_see", class(out)))
   out
 }
 
@@ -139,7 +139,7 @@ equivalence_test.data.frame <- function(x, range = "default", ci = .95, verbose 
   )
 
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
-  class(out) <- c("equivalence_test", "equivalence_test_see", class(out))
+  class(out) <- unique(c("equivalence_test", "equivalence_test_see", class(out)))
 
   out
 }
@@ -184,7 +184,7 @@ equivalence_test.data.frame <- function(x, range = "default", ci = .95, verbose 
     stringsAsFactors = FALSE
   )
 
-  class(out) <- c("equivalence_test", "equivalence_test_see", class(out))
+  class(out) <- unique(c("equivalence_test", "equivalence_test_see", class(out)))
   out
 }
 

@@ -23,3 +23,21 @@ plot.rope <- function(x, ...) {
   }
   NextMethod()
 }
+
+
+#' @export
+plot.hdi <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot HDI Please install it.")
+  }
+  NextMethod()
+}
+
+
+#' @export
+plot.ci <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot credible intervals. Please install it.")
+  }
+  NextMethod()
+}
