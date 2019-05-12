@@ -169,6 +169,8 @@ p_rope.brmsfit <- function(x, range = "default", precision = .1, effects = c("fi
 
 
 
+
+
 #' Numeric Vectors
 #'
 #' @inheritParams base::as.numeric

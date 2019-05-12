@@ -91,4 +91,4 @@ p_direction(model)
 rope(model, ci=1)
 ```
 
-As you can see, by simply dividing the predictory by 100, we **drastically** changed (*we divided it by 100*) the conclusion related to the **percentage in ROPE** (which became very close to `0`): the effect could now be **interpreted as being significant**. Thus, we recommend, when reporting or reading ROPE results, to pay close attention to the unit of the predictors. This is another reason why we suggest using **two indices**, to assess both effect **existence** and **significance**.
+As you can see, by simply dividing the predictory by 100, we **drastically** changed (*we divided it by 100*) the conclusion related to the **percentage in ROPE** (which became very close to `0`): the effect could now be **interpreted as being significant**. Thus, we recommend, when reporting or reading ROPE results, to pay close attention to the unit of the predictors.

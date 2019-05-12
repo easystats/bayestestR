@@ -124,6 +124,15 @@ p_map.brmsfit <- function(x, precision = 2^10, effects = c("fixed", "random", "a
 
 
 
+#' @rdname p_map
+#' @export
+p_map.BFBayesFactor <- function(x, precision = 2^10, ...) {
+  out <- p_map(insight::get_parameters(x), precision = precision, ...)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}
+
+
 #' Numeric Vectors
 #'
 #' @inheritParams base::as.numeric
