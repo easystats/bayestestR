@@ -108,7 +108,10 @@ p_direction.data.frame <- function(x, method = "direct", ...) {
     row.names = NULL,
     stringsAsFactors = FALSE
   )
+
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   class(out) <- c("p_direction", class(out))
+
   out
 }
 
