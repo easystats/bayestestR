@@ -3,24 +3,27 @@
 \name{p_rope}
 \alias{p_rope}
 \alias{p_rope.numeric}
+\alias{p_rope.data.frame}
 \alias{p_rope.stanreg}
 \alias{p_rope.brmsfit}
 \title{ROPE-based p-value}
 \usage{
-p_rope(posterior, ...)
+p_rope(x, ...)
 
-\method{p_rope}{numeric}(posterior, range = "default", precision = 0.1,
-  ...)
+\method{p_rope}{numeric}(x, range = "default", precision = 0.1, ...)
 
-\method{p_rope}{stanreg}(posterior, range = "default", precision = 0.1,
+\method{p_rope}{data.frame}(x, range = "default", precision = 0.1, ...)
+
+\method{p_rope}{stanreg}(x, range = "default", precision = 0.1,
   effects = c("fixed", "random", "all"), parameters = NULL, ...)
 
-\method{p_rope}{brmsfit}(posterior, range = "default", precision = 0.1,
+\method{p_rope}{brmsfit}(x, range = "default", precision = 0.1,
   effects = c("fixed", "random", "all"), component = c("conditional",
   "zi", "zero_inflated", "all"), parameters = NULL, ...)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.}
+\item{x}{Vector representing a posterior distribution. Can also be a
+\code{stanreg} or \code{brmsfit} model.}
 
 \item{...}{Currently not used.}
 
@@ -47,7 +50,7 @@ Compute the ROPE-based p-value, an exploratory index representing the maximum pe
 \examples{
 library(bayestestR)
 
-p_rope(posterior = rnorm(1000, mean = 1, sd = 1), range = c(-0.1, 0.1))
+p_rope(x = rnorm(1000, mean = 1, sd = 1), range = c(-0.1, 0.1))
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)

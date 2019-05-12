@@ -24,7 +24,6 @@
 #' posterior <- distribution_normal(1000, mean = .5, sd = .3)
 #'
 #' bayesfactor_savagedickey(posterior, prior)
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' stan_model <- stan_glm(extra ~ group, data = sleep)
@@ -76,7 +75,7 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
 bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
                                              direction = "two-sided", hypothesis = 0,
                                              effects = c("fixed", "random", "all"),
-                                             ...){
+                                             ...) {
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
   }
@@ -106,9 +105,10 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 
   for (par in seq_len(ncol(posterior))) {
     sdbf[par] <- .bayesfactor_savagedickey(posterior[[par]],
-                                           prior[[par]],
-                                           direction = direction,
-                                           hypothesis = hypothesis)
+      prior[[par]],
+      direction = direction,
+      hypothesis = hypothesis
+    )
   }
 
   bf_val <- data.frame(BFsd = sdbf, row.names = colnames(posterior))
@@ -119,7 +119,7 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 }
 
 #' @importFrom insight print_color
-.bayesfactor_savagedickey <- function(posterior,prior, direction = "two-sided", hypothesis = 0){
+.bayesfactor_savagedickey <- function(posterior, prior, direction = "two-sided", hypothesis = 0) {
   # find direction
   direction.opts <- data.frame(
     String = c("left", "right", "two-sided", "<", ">", "=", "-1", "0", "1", "+1"),

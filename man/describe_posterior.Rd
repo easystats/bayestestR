@@ -6,7 +6,7 @@
 \alias{describe_posterior.double}
 \alias{describe_posterior.data.frame}
 \alias{describe_posterior.stanreg}
-\title{Describe posterior distributions.}
+\title{Describe Posterior Distributions}
 \usage{
 describe_posterior(posteriors, estimate = "median", ci = 0.9,
   ci_method = "hdi", test = c("pd", "rope"), rope_range = "default",

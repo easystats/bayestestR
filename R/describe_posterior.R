@@ -1,4 +1,4 @@
-#' Describe posterior distributions.
+#' Describe Posterior Distributions
 #'
 #' Compute indices relevant to describe and characterise the posterior distributions.
 #'
@@ -59,21 +59,31 @@ describe_posterior.double <- describe_posterior.numeric
 describe_posterior.data.frame <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
   # Point estimates
   out <- data.frame("Parameter" = colnames(posteriors))
-  if ("median" %in% c(estimate)) {
-    out$Median <- sapply(posteriors, stats::median)
-    if (dispersion) {
-      out$MAD <- sapply(posteriors, stats::mad)
+
+  if (!is.null(estimate)) {
+    estimate_list <- tolower(c(estimate))
+    if ("all" %in% estimate_list) {
+      estimate_list <- c("median", "mean", "map")
+    }
+
+    if ("median" %in% estimate_list) {
+      out$Median <- sapply(posteriors, stats::median)
+      if (dispersion) {
+        out$MAD <- sapply(posteriors, stats::mad)
+      }
+    }
+    if ("mean" %in% estimate_list) {
+      out$Mean <- sapply(posteriors, mean)
+      if (dispersion) {
+        out$SD <- sapply(posteriors, stats::sd)
+      }
+    }
+    if ("map" %in% estimate_list) {
+      out$MAP <- unlist(sapply(posteriors, map_estimate, ...))
     }
   }
-  if ("mean" %in% c(estimate)) {
-    out$Mean <- sapply(posteriors, mean)
-    if (dispersion) {
-      out$SD <- sapply(posteriors, stats::sd)
-    }
-  }
-  if ("map" %in% c(estimate)) {
-    out$MAP <- unlist(sapply(posteriors, map_estimate, ...))
-  }
+
+
 
   # CI
   if (!is.null(ci)) {
@@ -113,6 +123,10 @@ describe_posterior.data.frame <- function(posteriors, estimate = "median", ci = 
   # Effect Existence
   if (!is.null(test)) {
     test_list <- tolower(c(test))
+
+    if ("all" %in% test_list) {
+      test_list <- c("pd", "rope", "p_map", "bayesfactor")
+    }
     if ("pd" %in% test_list | "p_direction" %in% test_list | "pdir" %in% test_list | "mpe" %in% test_list) {
       out$pd <- sapply(posteriors, p_direction, ...)
     }

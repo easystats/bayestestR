@@ -54,6 +54,10 @@ check-out these vignettes:
 
 ## Posterior Description
 
+[**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html)
+is the master function with which you can compute all of the indices
+cited below *at once*.
+
 ### Highest Density Interval (HDI) - The *Credible* Interval (CI)
 
 [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html)
@@ -218,7 +222,7 @@ at the Maximum A Priori (MAP) and corresponds to the density value at 0
 divided by the density of the MAP estimate.
 
 ``` r
-p_map(posterior = rnorm(1000, 1, 1))
+p_map(rnorm(1000, 1, 1))
 ```
 
 ![](man/figures/unnamed-chunk-17-1.png)<!-- -->
@@ -276,6 +280,6 @@ You can cite the package as following:
 
   - Makowski, D., Ben-Shachar M. S., & Lüdecke, D. (2019). *Understand
     and Describe Bayesian Models and Posterior Distributions using
-    BayestestR*. Available from
+    bayestestR*. Available from
     <https://github.com/easystats/bayestestR>.
     <DOI:10.5281/zenodo.2556486>.

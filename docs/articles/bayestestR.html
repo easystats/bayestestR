@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
       </span>
     </div>
 
@@ -85,13 +85,22 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/credible_interval.html">Credible Intervals</a>
+    </li>
+    <li>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+    </li>
+    <li>
+      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+    </li>
+    <li>
+      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+    </li>
+    <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
     </li>
     <li>
       <a href="../articles/indicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
-    </li>
-    <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
     </li>
   </ul>
 </li>
@@ -140,7 +149,7 @@
 <h2 class="hasAnchor">
 <a href="#what-is-the-bayesian-framework" class="anchor"></a>What is the Bayesian Framework?</h2>
 <p>Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology. Indeed, all the common statistical procedures (t-tests, correlations, ANOVAs, regressions, …) can be achieved using the Bayesian framework. One of the core difference is that in the <strong>frequentist view</strong> (the “classic” statistics, with <em>p</em> and <em>t</em> values, as well as some weird <em>degrees of freedom</em>), <strong>the effects are fixed</strong> (but unknown) and <strong>data are random</strong>. On the contrary, the Bayesian inference process computes the <strong>probability</strong> of different effects <em>given the observed data</em>. Instead of having one estimated value of the “true effect”, this probabilistic approach gives a distribution of values, called the <strong>“posterior” distribution</strong>.</p>
-<p>Bayesian’s uncertainty can be summarized, for instance, by giving the <strong>median</strong> of the distribution, as well as a range of values on the posterior distribution that includes the 95% most probable values (the 95% <strong><em>Credible</em> Interval</strong>). To illustrate the difference of interpretation, the Bayesian framework allows to say <em>“given the observed data, the effect has 95% probability of falling within this range”</em>, while the Frequentist less straightforward alternative (the 95% <strong><em>Confidence</em> Interval</strong>) would be “<em>there is a 95% probability that when computing a confidence interval from data of this sort, the effect falls within this range</em>”.</p>
+<p>Bayesian’s uncertainty can be summarized, for instance, by giving the <strong>median</strong> of the distribution, as well as a range of values on the posterior distribution that includes the 95% most probable values (the 95% <strong><em>Credible</em> Interval</strong>). To illustrate the difference of interpretation, the Bayesian framework allows to say <em>“given the observed data, the effect has 95% probability of falling within this range”</em>, while the frequentist less straightforward alternative (the 95% <strong><em>Confidence</em> Interval</strong>) would be “<em>there is a 95% probability that when computing a confidence interval from data of this sort, the effect falls within this range</em>”.</p>
 <p>In other words, omitting the maths behind it, we can say that:</p>
 <ul>
 <li>The frequentist bloke tries to estimate “the <strong>real effect</strong>”. For instance, the “real” value of the correlation between <em>x</em> and <em>y</em>. Hence, frequentist models return a “<strong>point-estimate</strong>” (<em>i.e.</em>, a single value) of the “real” correlation (<em>e.g.</em>, r = 0.42) estimated under a number of obscure assumptions (at a minimum, considering that the data is sampled at random from a “parent”, usually normal distribution).</li>
@@ -164,7 +173,7 @@ Accurate depiction of a regular Bayesian user estimating a credible interval.
 <a href="#bayestestr-installation" class="anchor"></a>BayestestR Installation</h3>
 <p>You can install <code>bayestestR</code> along with the whole <a href="https://github.com/easystats/easystats"><strong>easystats</strong></a> suite by running the following:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"easystats/easystats"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"easystats/easystats"</span>)</a></code></pre></div>
 <!-- Now that it's done, we can *load* the packages we need, in this case [`report`](https://github.com/easystats/report), which combines `bayestestR` and other packages together. -->
 <!-- ```{r message=FALSE, warning=FALSE} -->
 <!-- library(report)  # Calling library(...) enables you to use the package's functions -->
@@ -258,16 +267,6 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <td align="right">0.02</td>
 <td align="right">0.38</td>
 <td align="right">0.44</td>
-<td align="right">100</td>
-<td align="right">0</td>
-<td align="left">rejected</td>
-</tr>
-<tr class="odd">
-<td align="left">sigma</td>
-<td align="right">0.41</td>
-<td align="right">0.02</td>
-<td align="right">0.37</td>
-<td align="right">0.45</td>
 <td align="right">100</td>
 <td align="right">0</td>
 <td align="left">rejected</td>

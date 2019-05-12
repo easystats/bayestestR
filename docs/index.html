@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
       </span>
     </div>
 
@@ -85,13 +85,22 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="articles/credible_interval.html">Credible Intervals</a>
+    </li>
+    <li>
+      <a href="articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+    </li>
+    <li>
+      <a href="articles/probability_of_direction.html">Probability of Direction</a>
+    </li>
+    <li>
+      <a href="articles/bayes_factors.html">Bayes Factors</a>
+    </li>
+    <li>
       <a href="articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
     </li>
     <li>
       <a href="articles/indicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
-    </li>
-    <li>
-      <a href="articles/bayes_factors.html">Bayes Factors</a>
     </li>
   </ul>
 </li>
@@ -133,7 +142,7 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Run the following:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"easystats/bayestestR"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"easystats/bayestestR"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(<span class="st">"bayestestR"</span>)</a></code></pre></div>
 </div>
 <div id="documentation" class="section level2">
@@ -157,6 +166,7 @@
 <div id="posterior-description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#posterior-description" class="anchor"></a>Posterior Description</h2>
+<p><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html"><strong><code><a href="reference/describe_posterior.html">describe_posterior()</a></code></strong></a> is the master function with which you can compute all of the indices cited below <em>at once</em>.</p>
 <div id="highest-density-interval-hdi---the-credible-interval-ci" class="section level3">
 <h3 class="hasAnchor">
 <a href="#highest-density-interval-hdi---the-credible-interval-ci" class="anchor"></a>Highest Density Interval (HDI) - The <em>Credible</em> Interval (CI)</h3>
@@ -221,7 +231,7 @@
 <h3 class="hasAnchor">
 <a href="#map-based-p-value" class="anchor"></a>MAP-based <em>p</em>-value</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/p_map.html"><strong><code><a href="reference/p_map.html">p_map()</a></code></strong></a> computes a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (<em>h0</em>) using Mills’ (2014, 2017) <em>Objective Bayesian Hypothesis Testing</em> framework. It is mathematically based on the density at the Maximum A Priori (MAP) and corresponds to the density value at 0 divided by the density of the MAP estimate.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="reference/p_map.html">p_map</a></span>(<span class="dt">posterior =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="reference/p_map.html">p_map</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-17-1.png" width="3281.25"></p>
 </div>
 </div>
@@ -257,7 +267,7 @@
 <a href="#credits" class="anchor"></a>Credits</h2>
 <p>You can cite the package as following:</p>
 <ul>
-<li>Makowski, D., Ben-Shachar M. S., &amp; Lüdecke, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using BayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. <a href="DOI:10.5281/zenodo.2556486" class="uri">DOI:10.5281/zenodo.2556486</a>.</li>
+<li>Makowski, D., Ben-Shachar M. S., &amp; Lüdecke, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using bayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. <a href="DOI:10.5281/zenodo.2556486" class="uri">DOI:10.5281/zenodo.2556486</a>.</li>
 </ul>
 </div>
 </div>

@@ -49,7 +49,6 @@ prior <- distribution_normal(1000, mean = 0, sd = 1)
 posterior <- distribution_normal(1000, mean = .5, sd = .3)
 
 bayesfactor_savagedickey(posterior, prior)
-
 \dontrun{
 library(rstanarm)
 stan_model <- stan_glm(extra ~ group, data = sleep)

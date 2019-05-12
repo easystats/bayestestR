@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
       </span>
     </div>
 
@@ -125,13 +125,22 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/credible_interval.html">Credible Intervals</a>
+    </li>
+    <li>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+    </li>
+    <li>
+      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+    </li>
+    <li>
+      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+    </li>
+    <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
     </li>
     <li>
       <a href="../articles/indicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
-    </li>
-    <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
     </li>
   </ul>
 </li>
@@ -160,7 +169,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Empirical Distributions</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/utils_distribution.R'><code>R/utils_distribution.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/distribution.R'><code>R/distribution.R</code></a></small>
     <div class="hidden name"><code>distribution.Rd</code></div>
     </div>
 
@@ -184,6 +193,8 @@
 
 <span class='fu'>distribution_uniform</span>(<span class='no'>n</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
+<span class='fu'>distribution_beta</span>(<span class='no'>n</span>, <span class='no'>shape1</span>, <span class='no'>shape2</span>, <span class='kw'>ncp</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
 <span class='fu'>rnorm_perfect</span>(<span class='no'>n</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -191,7 +202,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>type</th>
-      <td><p>Can be <code>"normal"</code> (default), <code>"cauchy"</code>, <code>"poisson"</code>, <code>"chisquared"</code>, <code>"uniform"</code> or <code>"student"</code>.</p></td>
+      <td><p>Can be <code>"normal"</code> (default), <code>"cauchy"</code>, <code>"poisson"</code>, <code>"chisquared"</code>, <code>"uniform"</code>, <code>"student"</code> or <code>"beta"</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -244,6 +255,14 @@
     <tr>
       <th>max</th>
       <td><p>lower and upper limits of the distribution.  Must be finite.</p></td>
+    </tr>
+    <tr>
+      <th>shape1</th>
+      <td><p>non-negative parameters of the Beta distribution.</p></td>
+    </tr>
+    <tr>
+      <th>shape2</th>
+      <td><p>non-negative parameters of the Beta distribution.</p></td>
     </tr>
     </table>
     

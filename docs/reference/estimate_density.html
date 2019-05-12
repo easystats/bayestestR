@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
       </span>
     </div>
 
@@ -125,13 +125,22 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/credible_interval.html">Credible Intervals</a>
+    </li>
+    <li>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+    </li>
+    <li>
+      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+    </li>
+    <li>
+      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+    </li>
+    <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
     </li>
     <li>
       <a href="../articles/indicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
-    </li>
-    <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
     </li>
   </ul>
 </li>
@@ -183,7 +192,7 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>Method of density estimation.</p></td>
+      <td><p>Method of density estimation. Can be <code>"kernel"</code> (default), <code>"logspline"</code> or <code>"KernSmooth"</code>.</p></td>
     </tr>
     <tr>
       <th>precision</th>
@@ -236,8 +245,7 @@
 <span class='no'>density_extended</span> <span class='kw'>&lt;-</span> <span class='fu'>estimate_density</span>(<span class='no'>x</span>, <span class='kw'>extend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>density_default</span> <span class='kw'>&lt;-</span> <span class='fu'>estimate_density</span>(<span class='no'>x</span>, <span class='kw'>extend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a></span>(<span class='no'>x</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_extended</span>$<span class='no'>x</span>, <span class='no'>density_extended</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_default</span>$<span class='no'>x</span>, <span class='no'>density_default</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='estimate_density-2.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a></span>(<span class='no'>x</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_extended</span>$<span class='no'>x</span>, <span class='no'>density_extended</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_default</span>$<span class='no'>x</span>, <span class='no'>density_default</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='estimate_density-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
       </span>
     </div>
 
@@ -85,13 +85,22 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/credible_interval.html">Credible Intervals</a>
+    </li>
+    <li>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+    </li>
+    <li>
+      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+    </li>
+    <li>
+      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+    </li>
+    <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
     </li>
     <li>
       <a href="../articles/indicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
-    </li>
-    <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
     </li>
   </ul>
 </li>
@@ -130,15 +139,17 @@
     
 <p>This vignette can be referred to by citing the package:</p>
 <ul>
-<li>Makowski, D., Ben-Shachar M. S. &amp; Lüdecke, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using BayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. DOI: <a href="https://zenodo.org/record/2556486">10.5281/zenodo.2556486</a>.</li>
+<li>Makowski, D., Ben-Shachar M. S. &amp; Lüdecke, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using bayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. DOI: <a href="https://zenodo.org/record/2556486">10.5281/zenodo.2556486</a>.</li>
 </ul>
+<hr>
 <p>Now that you’ve read the <a href="https://easystats.github.io/bayestestR/articles/bayestestR.html"><strong>Get started</strong></a> section, let’s dive in the subtleties of Bayesian modelling using R.</p>
 <div id="loading-the-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#loading-the-packages" class="anchor"></a>Loading the packages</h2>
 <p>Once you’ve <a href="https://easystats.github.io/bayestestR/articles/bayestestR.html">installed</a> the necessary packages, we can load <code>rstanarm</code> (to fit the models) and <code>bayestestR</code> (to compute useful indices).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(insight)</a></code></pre></div>
 </div>
 <div id="a-linear-model" class="section level2">
 <h2 class="hasAnchor">
@@ -151,8 +162,18 @@
 <div id="extracting-the-posterior" class="section level3">
 <h3 class="hasAnchor">
 <a href="#extracting-the-posterior" class="anchor"></a>Extracting the posterior</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">posteriors &lt;-<span class="st"> </span>insight<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/insight/topics/get_parameters">get_parameters</a></span>(model)</a></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/density">density</a></span>(posteriors<span class="op">$</span>Petal.Length))</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">posteriors &lt;-<span class="st"> </span>insight<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/insight/topics/get_parameters">get_parameters</a></span>(model)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(posteriors)</a></code></pre></div>
+<pre><code>##   (Intercept)   Petal.Length 
+##  Min.   :4.0   Min.   :0.35  
+##  1st Qu.:4.3   1st Qu.:0.40  
+##  Median :4.3   Median :0.41  
+##  Mean   :4.3   Mean   :0.41  
+##  3rd Qu.:4.4   3rd Qu.:0.42  
+##  Max.   :4.6   Max.   :0.48</code></pre>
+<p>As we can see, the parameters take the form of a long dataframe with two columns, corresponding to the <strong>intercept</strong> and <strong>Petal.Length</strong>. These columns contain the <strong>posterior distributions</strong> of these two parameters, <em>i.e.</em>, different plausible values. Let’s look at the distribution of our parameter of interest, the effect of <code>Sepal.Length</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/density">density</a></span>(posteriors<span class="op">$</span>Petal.Length))</a></code></pre></div>
+<p><img src="example1_GLM_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <!-- ### Correspondance with Frequentist Models -->
 <!-- TO BE IMPROVED -->
 </div>

@@ -1,7 +1,7 @@
 Package: bayestestR
 Type: Package
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: c(
     person("Dominique", 
         "Makowski", 
@@ -39,6 +39,7 @@ Suggests:
 	covr,
 	dplyr,
 	tidyr,
+	GGally,
 	ggplot2,
 	ggridges,
 	KernSmooth,

@@ -21,14 +21,15 @@ bibliography: bibliography.bib
 
 This vignette can be referred to by citing the package:
 
-- Makowski, D., Ben-Shachar M. S. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using BayestestR*. Available from https://github.com/easystats/bayestestR. DOI: [10.5281/zenodo.2556486](https://zenodo.org/record/2556486).
+- Makowski, D., Ben-Shachar M. S. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using bayestestR*. Available from https://github.com/easystats/bayestestR. DOI: [10.5281/zenodo.2556486](https://zenodo.org/record/2556486).
+
+---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 options(knitr.kable.NA = '')
 options(digits=2)
 ```
-
 
 Now that you've read the [**Get started**](https://easystats.github.io/bayestestR/articles/bayestestR.html) section, let's dive in the subtleties of Bayesian modelling using R.
 
@@ -39,6 +40,7 @@ Once you've [installed](https://easystats.github.io/bayestestR/articles/bayestes
 ```{r message=FALSE, warning=FALSE}
 library(rstanarm)
 library(bayestestR)
+library(insight)
 ```
 
 ## A Linear Model
@@ -59,10 +61,15 @@ model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
 ### Extracting the posterior
 
 
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+```{r message=FALSE, warning=FALSE}
 posteriors <- insight::get_parameters(model)
+summary(posteriors)
 ```
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+
+As we can see, the parameters take the form of a long dataframe with two columns, corresponding to the **intercept** and **Petal.Length**. These columns contain the **posterior distributions** of these two parameters, *i.e.*, different plausible values. Let's look at the distribution of our parameter of interest, the effect of `Sepal.Length`.
+
+
+```{r message=FALSE, warning=FALSE}
 plot(density(posteriors$Petal.Length))
 ```
 

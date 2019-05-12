@@ -1,4 +1,4 @@
-# bayestestR 0.1.4
+# bayestestR 0.1.5
 
 ## Breaking changes
 
@@ -9,7 +9,7 @@
 
 - `p_direction()`: new argument `raw = FALSE` to compute pd based on AUC
 - `area_under_curve()`: compute AUC
-- `rcauchy_perfect()`, `rpois_perfect()` and `rt_perfect()` functions have been added
+- `distribution()` functions have been added
 - `bayesfactor()` function has been added
 - Started adding plotting methods (currently in the [`see`](https://github.com/easystats/see) package) for `p_direction()` and `hdi()`
 

@@ -1,0 +1,157 @@
+---
+title: "Probability of Direction (pd)"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, bayesian, posterior, test]
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{Probability of Direction (pd)}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
+---
+
+This vignette can be referred to by citing the package:
+
+- Makowski, D., Ben-Shachar M. S. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using bayestestR*. Available from https://github.com/easystats/bayestestR. DOI: [10.5281/zenodo.2556486](https://zenodo.org/record/2556486).
+
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+options(digits=2)
+
+set.seed(333)
+```
+
+# What is the *pd*?
+
+The **Probability of Direction (pd)** is an index of **effect existence**, ranging from 50\% to 100\%, representing the certainty with which an effect goes in a particular direction (*i.e.*, whether it is positive or negative). 
+
+Beyond its simplicity of interpretation, understanding and computation, this index also presents other interesting properties:
+
+- It is independent from the model: It is solely based on the posterior distributions and does not require any additional information from the data or the model.
+- It is not sensitive to the scale of neither the response variable nor the predictor.
+- It is strongly correlated with the frequentist *p*-value, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.
+
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, fig.cap="Correlation between the frequentist p-value and the probability of direction (pd)", fig.align='center'}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv") %>% 
+  mutate(effect_existence = ifelse(true_effect == 1, "True effect", "Absence of true effect")) %>% 
+  ggplot(aes(x=p_direction, y=p_value, color=effect_existence)) +
+  geom_point(alpha=0.1, stroke=0, shape=16) +
+  theme_classic() +
+  scale_y_reverse() +
+  scale_color_manual(values=c("True effect"="green", "Absence of true effect"="red")) +
+  theme(legend.title = element_blank()) +
+  guides(colour = guide_legend(override.aes = list(alpha = 1))) +
+  xlab("\nProbability of Direction (pd)") +
+  ylab("Frequentist p-value\n")
+```
+
+However, this index is not relevant to assess the magnitude and importance of an effect (the real meaning of "significance"), which is better achieved through other indices such as the [ROPE percentage](https://easystats.github.io/bayestestR/index.html#rope). In fact, indices of significance and existence are totally independent. You can have an effect with a *pd* of `99.99\%`, for which the whole posterior distribution is concentrated in the `[0.0001, 0.002]` range. In this case, the effect is **positive with a high certainty**, but also **not significant** (*i.e.*, very small).
+
+This index is particularly useful in exploratory research or clinical studies, for which the focus is to make sure that the effect of interest is not in the opposite direction (for clinical studies, that a treatment is not harmful). However, once the effect's direction is confirmed, the focus should shift toward its significance, including a precise estimation of its magnitude and importance.
+
+
+
+# Methods of computation
+
+The most **simple and direct** way to compute the **pd** is to 1) look at the median's sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents.
+
+The second approach relies on [**density estimation**](https://easystats.github.io/bayestestR/reference/estimate_density.html). It starts by estimating the density function (for which many methods are available), and then computing the [**area under the curve**](https://easystats.github.io/bayestestR/reference/area_under_curve.html) (AUC) of the density curve on the other side of 0. The density-based method could be considered as more precise (as the "simple" method's precision is directly related to the amount of posterior draws), but strongly depends on the method used to estimate the density function.
+
+# Methods comparison
+
+Let's compare the 4 available methods, the **direct** method and 3 **density-based** methods differing by their density estimation algorithm (see [`estimate_density`](https://easystats.github.io/bayestestR/reference/estimate_density.html)).
+
+## Correlation
+
+Let's start by testing the proximity and similarity of the results obtained by different methods.
+
+```{r message=FALSE, warning=FALSE, fig.align='center'}
+library(bayestestR)
+library(logspline)
+library(KernSmooth)
+
+# Compute the correlations
+data <- data.frame()
+for(the_mean in runif(25, 0, 4)){
+  for(the_sd in runif(25, 0.5, 4)){
+    x <- rnorm(100, the_mean, abs(the_sd))
+    data <- rbind(data,
+      data.frame("direct" = pd(x),
+                 "kernel" = pd(x, method="kernel"),
+                 "logspline" = pd(x, method="logspline"),
+                 "KernSmooth" = pd(x, method="KernSmooth")
+                 ))
+  }
+}
+data <- as.data.frame(sapply(data, as.numeric))
+
+# Visualize the correlations
+library(ggplot2)
+library(GGally)
+
+GGally::ggpairs(data) +
+  theme_classic()
+```
+
+All methods give are highly correlated and give very similar results. That means that the method choice is not a drastic game changer and cannot be used to tweak the results too much.
+
+## Accuracy
+
+To test the accuracy of each methods, we will start by computing the **direct *pd*** from a very dense distribution (with a large amount of observations). This will be our baseline, or "true" *pd*. Then, we will iteratively draw smaller samples from this parent distribution, and we will compute the *pd* with different methods. The closer this estimate is from the reference one, the better.
+
+```{r message=FALSE, warning=FALSE}
+data <- data.frame()
+for(i in 1:25){
+  the_mean <- runif(1, 0, 4)
+  the_sd <- abs(runif(1, 0.5, 4))
+  parent_distribution <- rnorm(100000, the_mean, the_sd)
+  true_pd <- pd(parent_distribution)
+  
+  for(j in 1:25){
+    sample_size <- round(runif(1, 25, 5000))
+    subsample <- sample(parent_distribution, sample_size)
+    data <- rbind(data,
+      data.frame("sample_size" = sample_size, 
+                 "true" = true_pd,
+                 "direct" = pd(subsample) - true_pd,
+                 "kernel" = pd(subsample, method="kernel")- true_pd,
+                 "logspline" = pd(subsample, method="logspline") - true_pd,
+                 "KernSmooth" = pd(subsample, method="KernSmooth") - true_pd
+                 ))
+  }
+}
+data <- as.data.frame(sapply(data, as.numeric))
+```
+
+```{r message=FALSE, warning=FALSE, fig.align='center'}
+library(tidyr)
+library(dplyr)
+
+data %>% 
+  tidyr::gather(Method, Distance, -sample_size, -true) %>% 
+  ggplot(aes(x=sample_size, y = Distance, color = Method, fill= Method)) +
+  geom_point(alpha=0.3, stroke=0, shape=16) +
+  geom_smooth(alpha=0.2) +
+  geom_hline(yintercept=0) +
+  theme_classic() +
+  xlab("\nDistribution Size")
+```
+
+The "Kernel" based density methods seems to consistently underestimate the *pd*. Interestingly, the "direct" method appears as being the more reliable, even in the case of small number of posterior draws.

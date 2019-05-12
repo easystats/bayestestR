@@ -11,7 +11,7 @@ estimate_density(x, method = "kernel", precision = 2^10,
 \item{x}{the data from which the estimate is to be computed.  For the
     default method a numeric vector: long vectors are not supported.}
 
-\item{method}{Method of density estimation.}
+\item{method}{Method of density estimation. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.}
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \link[=density]{density}.}
 
@@ -61,7 +61,6 @@ density_default <- estimate_density(x, extend = FALSE)
 hist(x, prob = TRUE)
 lines(density_extended$x, density_extended$y, col = "red", lwd = 3)
 lines(density_default$x, density_default$y, col = "black", lwd = 3)
-
 }
 \references{
 Deng, H., \& Wickham, H. (2011). Density estimation in R. Electronic publication.
