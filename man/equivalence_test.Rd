@@ -2,14 +2,21 @@
 % Please edit documentation in R/equivalence_test.R
 \name{equivalence_test}
 \alias{equivalence_test}
+\alias{equivalence_test.default}
 \alias{equivalence_test.numeric}
+\alias{equivalence_test.data.frame}
 \alias{equivalence_test.stanreg}
 \alias{equivalence_test.brmsfit}
 \title{Test for Practical Equivalence}
 \usage{
 equivalence_test(x, ...)
 
+\method{equivalence_test}{default}(x, ...)
+
 \method{equivalence_test}{numeric}(x, range = "default", ci = 0.95,
+  verbose = TRUE, ...)
+
+\method{equivalence_test}{data.frame}(x, range = "default", ci = 0.95,
   verbose = TRUE, ...)
 
 \method{equivalence_test}{stanreg}(x, range = "default", ci = 0.95,

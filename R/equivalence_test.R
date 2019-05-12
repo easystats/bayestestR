@@ -80,6 +80,16 @@ equivalence_test <- function(x, ...) {
 }
 
 
+
+#' @rdname equivalence_test
+#' @export
+equivalence_test.default <- function(x, ...) {
+  NULL
+}
+
+
+
+
 #' @rdname equivalence_test
 #' @export
 equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
@@ -107,6 +117,33 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
   class(out) <- c("equivalence_test", "equivalence_test_see", class(out))
   out
 }
+
+
+
+#' @rdname equivalence_test
+#' @export
+equivalence_test.data.frame <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
+  l <- .compact_list(lapply(
+    x,
+    equivalence_test,
+    range = range,
+    ci = ci,
+    verbose = verbose
+  ))
+
+  dat <- do.call(rbind, l)
+  out <- data.frame(
+    Parameter = rep(names(l), each = nrow(dat) / length(l)),
+    dat,
+    stringsAsFactors = FALSE
+  )
+
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  class(out) <- c("equivalence_test", "equivalence_test_see", class(out))
+
+  out
+}
+
 
 
 # Wait for equivalence_test.data.frame
