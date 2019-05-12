@@ -39,8 +39,10 @@ check-out these vignettes:
 
   - [Get Started with Bayesian
     Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
-  - [Example 1: Bayesian (General) Linear
-    Models](https://easystats.github.io/bayestestR/articles/example1_GLM.html)
+  - [Example 1: Linear
+    Models](https://easystats.github.io/bayestestR/articles/example1_LM.html)
+  - [Example 2: General Linear
+    Models](https://easystats.github.io/bayestestR/articles/example2_GLM.html)
   - [Credible
     Intervals](https://easystats.github.io/bayestestR/articles/credible_interval.html)
   - [Probability of Direction

@@ -31,7 +31,7 @@ options(knitr.kable.NA = '')
 options(digits=2)
 ```
 
-Now that you've read the [**Get started**](https://easystats.github.io/bayestestR/articles/bayestestR.html) section, let's dive in the subtleties of Bayesian modelling using R.
+Now that you've read the [**Get started**](https://easystats.github.io/bayestestR/articles/bayestestR.html) section, let's dive in the **subtleties of Bayesian modelling using R**.
 
 ## Loading the packages
 
@@ -43,11 +43,13 @@ library(bayestestR)
 library(insight)
 ```
 
-## A simple linear model (*aka* a regression)
+## Simple linear model (*aka* a regression)
+
+We will begin by a simple regression to test the relationship between **Petal.Length** (our predictor, - or *independent*, variable) and **Sepal.Length** (our response, - or *dependent*, variable) from the [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R. 
+
 
 ### Fitting the model
 
-We will start by fitting a simple model to test the relationship between **Petal.Length** (our predictor, - or independent, variable) and **Sepal.Length** (our response, - or dependent, variable) from the [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R. 
 
 Let's start by fitting the **frequentist** version of the model, just to have some **reference**:
 
