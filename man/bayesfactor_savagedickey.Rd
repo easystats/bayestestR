@@ -40,9 +40,9 @@ in two distributions, typically the posterior vs. the prior distributions.
 }
 \details{
 This method is used to examine if the hypothesis value is less or more
-likely given the observed data. For \code{stanreg} objects, if \code{prior = NULL},
-the model is updated to incliude prior-information and then for each model
-parameter the prior is compared to the posterior distributon.
+likely given the observed data. When posterior is a model (\code{stanreg}),
+posterior and prior samples are extracted for each parameter, and
+Savage-Dickey Bayes factors are computed for each parameter.
 \cr \cr
 A Bayes factor greater than 1 can be interpereted as evidence against the null,
 at which one convention is that a Bayes factor greater than 3 can be considered
