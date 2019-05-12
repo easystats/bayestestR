@@ -73,8 +73,6 @@ hdi <- function(x, ...) {
 
 
 
-
-
 #' @rdname hdi
 #' @export
 hdi.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
@@ -87,23 +85,10 @@ hdi.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
 
 
 
-
 #' @rdname hdi
 #' @export
 hdi.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
-  x <- .select_nums(x)
-
-  if (ncol(x) == 1) {
-    out <- hdi(x[, 1], ci = ci, verbose = verbose, ...)
-  } else {
-    out <- sapply(x, hdi, ci = ci, verbose = verbose, simplify = FALSE)
-    out <- do.call(rbind, args = c(.compact_list(out), make.row.names = FALSE))
-  }
-
-  out$Parameter <- names(x)
-
-  class(out) <- unique(c("hdi", class(out)))
-  out
+  .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "hdi")
 }
 
 
@@ -117,6 +102,7 @@ hdi.stanreg <- function(x, ci = .90, effects = c("fixed", "random", "all"), para
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
+
 
 
 #' @rdname hdi
