@@ -135,7 +135,7 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
     stringsAsFactors = FALSE
   )
 
-  class(out) <- c("equivalence_test", class(out))
+  class(out) <- c("equivalence_test_br", "equivalence_test", class(out))
   out
 }
 
