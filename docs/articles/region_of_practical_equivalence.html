@@ -73,7 +73,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
+      <a href="../articles/example1_LM.html">1. Linear Models</a>
+    </li>
+    <li>
+      <a href="../articles/example2_GLM.html">2. General Linear Models</a>
     </li>
   </ul>
 </li>
@@ -144,14 +147,15 @@
 <hr>
 <div id="what-is-the-rope" class="section level1">
 <h1 class="hasAnchor">
-<a href="#what-is-the-rope" class="anchor"></a>What is the <em>ROPE</em>?</h1>
+<a href="#what-is-the-rope" class="anchor"></a>What is the <em>ROPE?</em>
+</h1>
 <p>Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against “zero”. Indeed, the Bayesian framework offers a probalistic view of the parameters, allowing to assess the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as <strong>“practically no effect”</strong> (<em>i.e.</em>, a negligible magnitude) is sufficient. This range is called the <strong>region of practical equivalence (ROPE)</strong>.</p>
 <p>TBD.</p>
 </div>
 <div id="sensitivity-to-the-parameters-scale" class="section level1">
 <h1 class="hasAnchor">
 <a href="#sensitivity-to-the-parameters-scale" class="anchor"></a>Sensitivity to the parameter’s scale</h1>
-<p>However, keep in mind that unlike indices of effect <em>existence</em> (such as the <code>pd</code>), indices of effect <em>size</em>, such as the <strong>ROPE percentage</strong>, depend on the unit of its parameter, and can thus be easily changed <em>via</em> the scaling of the predictors.</p>
+<p>However, keep in mind that unlike indices of effect <em>existence</em> (such as the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><code>pd</code></a>), indices of effect <em>size</em>, such as the <strong>ROPE percentage</strong>, depend on the unit of its parameter, and can thus be easily changed <em>via</em> the scaling of the predictors.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a>
 <a class="sourceLine" id="cb1-3" title="3"></a>
@@ -184,7 +188,7 @@
 &gt;           Parameter inside ROPE
 &gt;         (Intercept)      0.00 %
 &gt;  Sepal.Width_scaled      0.15 %</code></pre>
-<p>As you can see, by simply dividing the predictory by 100, we <strong>drastically</strong> changed (<em>we divided it by 100</em>) the conclusion related to the <strong>percentage in ROPE</strong> (which became very close to <code>0</code>): the effect could now be <strong>interpreted as being significant</strong>. Thus, we recommend, when reporting or reading ROPE results, to pay close attention to the unit of the predictors. This is another reason why we suggest using <strong>two indices</strong>, to assess both effect <strong>existence</strong> and <strong>significance</strong>.</p>
+<p>As you can see, by simply dividing the predictory by 100, we <strong>drastically</strong> changed (<em>we divided it by 100</em>) the conclusion related to the <strong>percentage in ROPE</strong> (which became very close to <code>0</code>): the effect could now be <strong>interpreted as being significant</strong>. Thus, we recommend, when reporting or reading ROPE results, to pay close attention to the unit of the predictors.</p>
 </div>
   </div>
 
@@ -193,7 +197,7 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#what-is-the-rope">What is the <em>ROPE</em>?</a></li>
+<li><a href="#what-is-the-rope">What is the <em>ROPE?</em></a></li>
       <li><a href="#sensitivity-to-the-parameters-scale">Sensitivity to the parameter’s scale</a></li>
       </ul>
 </div>

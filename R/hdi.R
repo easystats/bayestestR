@@ -41,6 +41,10 @@
 #' posterior <- rnorm(1000)
 #' hdi(posterior, ci = .90)
 #' hdi(posterior, ci = c(.80, .90, .95))
+#'
+#' df <- data.frame(replicate(4, rnorm(100)))
+#' hdi(df)
+#' hdi(df, ci = c(.80, .90, .95))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -51,6 +55,11 @@
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)
 #' hdi(model, ci = c(.80, .90, .95))
+#'
+#' library(BayesFactor)
+#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' hdi(bf)
+#' hdi(bf, ci = c(.80, .90, .95))
 #' }
 #'
 #' @author Credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute} and \href{https://github.com/mikemeredith/HDInterval}{HDInterval}.
@@ -84,7 +93,6 @@ hdi.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
 
 
 
-
 #' @importFrom insight get_parameters
 #' @rdname hdi
 #' @export
@@ -107,6 +115,14 @@ hdi.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"), comp
   out
 }
 
+
+#' @rdname hdi
+#' @export
+hdi.BFBayesFactor <- function(x, ci = .90, verbose = TRUE, ...) {
+  out <- hdi(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}
 
 
 #' @keywords internal

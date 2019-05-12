@@ -155,7 +155,7 @@ knitr::kable(describe_posterior(model), digits=2)
 
 **That's it!** You fitted a Bayesian version of the model by simply using [`stan_glm()`](https://mc-stan.org/rstanarm/reference/stan_glm.html) instead of `lm()` and described the posterior distributions of the parameters. The conclusion that we can drawn, for this example, are very similar. The effect (*the median of the effect's posterior distribution*) is about `0.41`, and it can be also be considered as *significant* in the Bayesian sense (more on that later).
 
-**So, ready to learn more?** Check out the [**next tutorial**](https://easystats.github.io/bayestestR/articles/example1_GLM.html)!
+**So, ready to learn more?** Check out the [**next tutorial**](https://easystats.github.io/bayestestR/articles/example1_LM.html)!
 
 ## References
 

@@ -73,7 +73,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
+      <a href="../articles/example1_LM.html">1. Linear Models</a>
+    </li>
+    <li>
+      <a href="../articles/example2_GLM.html">2. General Linear Models</a>
     </li>
   </ul>
 </li>
@@ -144,7 +147,8 @@
 <hr>
 <div id="what-is-the-pd" class="section level1">
 <h1 class="hasAnchor">
-<a href="#what-is-the-pd" class="anchor"></a>What is the <em>pd</em>?</h1>
+<a href="#what-is-the-pd" class="anchor"></a>What is the <em>pd?</em>
+</h1>
 <p>The <strong>Probability of Direction (pd)</strong> is an index of <strong>effect existence</strong>, ranging from 50% to 100%, representing the certainty with which an effect goes in a particular direction (<em>i.e.</em>, whether it is positive or negative).</p>
 <p>Beyond its simplicity of interpretation, understanding and computation, this index also presents other interesting properties:</p>
 <ul>
@@ -157,8 +161,8 @@
 Correlation between the frequentist p-value and the probability of direction (pd)
 </p>
 </div>
-<p>However, this index is not relevant to assess the magnitude and importance of an effect (the real meaning of “significance”), which is better achieved through other indices such as the <a href="https://easystats.github.io/bayestestR/index.html#rope">ROPE percentage</a>. In fact, indices of significance and existence are totally independent. You can have an effect with a <em>pd</em> of <code>99.99\%</code>, for which the whole posterior distribution is concentrated in the <code>[0.0001, 0.002]</code> range. In this case, the effect is <strong>positive with a high certainty</strong>, but also <strong>not significant</strong> (<em>i.e.</em>, very small).</p>
-<p>This index is particularly useful in exploratory research or clinical studies, for which the focus is to make sure that the effect of interest is not in the opposite direction (for clinical studies, that a treatment is not harmful). However, once the effect’s direction is confirmed, the focus should shift toward its significance, including a precise estimation of its magnitude and importance.</p>
+<p>However, this index is not relevant to assess the magnitude and importance of an effect (the real meaning of “significance”), which is better achieved through other indices such as the <a href="https://easystats.github.io/bayestestR/index.html#rope">ROPE percentage</a>. In fact, indices of significance and existence are totally independent. You can have an effect with a <em>pd</em> of <strong>99.99%</strong>, for which the whole posterior distribution is concentrated in the <code>[0.0001, 0.002]</code> range. In this case, the effect is <strong>positive with a high certainty</strong>, but also <strong>not significant</strong> (<em>i.e.</em>, very small).</p>
+<p>Indices of effect existence, such as the <em>pd</em>, are particularly useful in exploratory research or clinical studies, for which the focus is to make sure that the effect of interest is not in the opposite direction (for clinical studies, that a treatment is not harmful). However, once the effect’s direction is confirmed, the focus should shift toward its significance, including a precise estimation of its magnitude and importance.</p>
 </div>
 <div id="methods-of-computation" class="section level1">
 <h1 class="hasAnchor">
@@ -249,7 +253,7 @@ Correlation between the frequentist p-value and the probability of direction (pd
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#what-is-the-pd">What is the <em>pd</em>?</a></li>
+<li><a href="#what-is-the-pd">What is the <em>pd?</em></a></li>
       <li><a href="#methods-of-computation">Methods of computation</a></li>
       <li>
 <a href="#methods-comparison">Methods comparison</a><ul class="nav nav-pills nav-stacked">

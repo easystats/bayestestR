@@ -33,7 +33,7 @@ options(digits=2)
 set.seed(333)
 ```
 
-# What is the *pd*?
+# What is the *pd?*
 
 The **Probability of Direction (pd)** is an index of **effect existence**, ranging from 50\% to 100\%, representing the certainty with which an effect goes in a particular direction (*i.e.*, whether it is positive or negative). 
 
@@ -50,21 +50,21 @@ library(tidyr)
 library(ggplot2)
 
 read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv") %>% 
-  mutate(effect_existence = ifelse(true_effect == 1, "True effect", "Absence of true effect")) %>% 
+  mutate(effect_existence = ifelse(true_effect == 1, "Presence of true effect", "Absence of true effect")) %>% 
   ggplot(aes(x=p_direction, y=p_value, color=effect_existence)) +
   geom_point(alpha=0.1, stroke=0, shape=16) +
   theme_classic() +
   scale_y_reverse() +
-  scale_color_manual(values=c("True effect"="green", "Absence of true effect"="red")) +
+  scale_color_manual(values=c("Presence of true effect"="green", "Absence of true effect"="red")) +
   theme(legend.title = element_blank()) +
   guides(colour = guide_legend(override.aes = list(alpha = 1))) +
   xlab("\nProbability of Direction (pd)") +
   ylab("Frequentist p-value\n")
 ```
 
-However, this index is not relevant to assess the magnitude and importance of an effect (the real meaning of "significance"), which is better achieved through other indices such as the [ROPE percentage](https://easystats.github.io/bayestestR/index.html#rope). In fact, indices of significance and existence are totally independent. You can have an effect with a *pd* of `99.99\%`, for which the whole posterior distribution is concentrated in the `[0.0001, 0.002]` range. In this case, the effect is **positive with a high certainty**, but also **not significant** (*i.e.*, very small).
+However, this index is not relevant to assess the magnitude and importance of an effect (the real meaning of "significance"), which is better achieved through other indices such as the [ROPE percentage](https://easystats.github.io/bayestestR/index.html#rope). In fact, indices of significance and existence are totally independent. You can have an effect with a *pd* of **99.99\%**, for which the whole posterior distribution is concentrated in the `[0.0001, 0.002]` range. In this case, the effect is **positive with a high certainty**, but also **not significant** (*i.e.*, very small).
 
-This index is particularly useful in exploratory research or clinical studies, for which the focus is to make sure that the effect of interest is not in the opposite direction (for clinical studies, that a treatment is not harmful). However, once the effect's direction is confirmed, the focus should shift toward its significance, including a precise estimation of its magnitude and importance.
+Indices of effect existence, such as the *pd*, are particularly useful in exploratory research or clinical studies, for which the focus is to make sure that the effect of interest is not in the opposite direction (for clinical studies, that a treatment is not harmful). However, once the effect's direction is confirmed, the focus should shift toward its significance, including a precise estimation of its magnitude and importance.
 
 
 

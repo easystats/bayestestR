@@ -113,7 +113,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
+      <a href="../articles/example1_LM.html">1. Linear Models</a>
+    </li>
+    <li>
+      <a href="../articles/example2_GLM.html">2. General Linear Models</a>
     </li>
   </ul>
 </li>
@@ -257,8 +260,8 @@ variable (so called fixed-effects regressions). May be abbreviated.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt;        Median       MAD    CI_low  CI_high pd ROPE_Percentage ROPE_Equivalence
-#&gt; 1 0.002468538 0.9522048 -1.665648 1.577889 50             8.1        undecided</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt;        Median       MAD    CI_low CI_high   pd ROPE_Percentage ROPE_Equivalence
+#&gt; 1 -0.00935952 0.9259463 -1.690634 1.58772 50.7             9.2        undecided</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

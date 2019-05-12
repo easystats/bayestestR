@@ -50,3 +50,9 @@
 
   dat[, 1:(ncol(dat) - 1), drop = FALSE]
 }
+
+#' select numerics columns
+#' @keywords internal
+.select_nums <- function(x) {
+  x[unlist(lapply(x, is.numeric))]
+}

@@ -20,6 +20,10 @@
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' p_map(model)
+#'
+#' library(BayesFactor)
+#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' p_map(bf)
 #' }
 #'
 #' @references \href{https://www.youtube.com/watch?v=Ip8Ci5KUVRc}{Mill's talk}
@@ -55,10 +59,12 @@ p_map.numeric <- function(x, precision = 2^10, ...) {
 
 #' @export
 p_map.data.frame <- function(x, precision = 2^10, ...) {
+  x <- .select_nums(x)
+
   if (ncol(x) == 1) {
     p_MAP <- p_map(x[, 1], precision = precision, ...)
   } else {
-    p_MAP <- sapply(.select_nums(x), p_map, precision = precision, simplify = TRUE, ...)
+    p_MAP <- sapply(x, p_map, precision = precision, simplify = TRUE, ...)
   }
 
   out <- data.frame(
@@ -120,6 +126,15 @@ p_map.brmsfit <- function(x, precision = 2^10, effects = c("fixed", "random", "a
 }
 
 
+
+
+#' @rdname p_map
+#' @export
+p_map.BFBayesFactor <- function(x, precision = 2^10, ...) {
+  out <- p_map(insight::get_parameters(x), precision = precision, ...)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}
 
 
 #' Numeric Vectors

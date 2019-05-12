@@ -6,6 +6,7 @@
 \alias{hdi.data.frame}
 \alias{hdi.stanreg}
 \alias{hdi.brmsfit}
+\alias{hdi.BFBayesFactor}
 \title{Highest Density Interval (HDI)}
 \usage{
 hdi(x, ...)
@@ -20,6 +21,8 @@ hdi(x, ...)
 \method{hdi}{brmsfit}(x, ci = 0.9, effects = c("fixed", "random",
   "all"), component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL, verbose = TRUE, ...)
+
+\method{hdi}{BFBayesFactor}(x, ci = 0.9, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a
@@ -72,6 +75,10 @@ library(bayestestR)
 posterior <- rnorm(1000)
 hdi(posterior, ci = .90)
 hdi(posterior, ci = c(.80, .90, .95))
+
+df <- data.frame(replicate(4, rnorm(100)))
+hdi(df)
+hdi(df, ci = c(.80, .90, .95))
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -82,6 +89,11 @@ library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 hdi(model)
 hdi(model, ci = c(.80, .90, .95))
+
+library(BayesFactor)
+bf <- ttestBF(x = rnorm(100, 1, 1))
+hdi(bf)
+hdi(bf, ci = c(.80, .90, .95))
 }
 
 }

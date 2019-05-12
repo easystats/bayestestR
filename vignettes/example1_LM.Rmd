@@ -1,0 +1,362 @@
+---
+title: "Example 1: Linear Models"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, bayesian, posterior, test]
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{Example 1: Linear Models}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
+---
+
+This vignette can be referred to by citing the package:
+
+- Makowski, D., Ben-Shachar M. S. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using bayestestR*. Available from https://github.com/easystats/bayestestR. DOI: [10.5281/zenodo.2556486](https://zenodo.org/record/2556486).
+
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+options(digits=2)
+```
+
+Now that you've read the [**Get started**](https://easystats.github.io/bayestestR/articles/bayestestR.html) section, let's dive in the subtleties of Bayesian modelling using R.
+
+## Loading the packages
+
+Once you've [installed](https://easystats.github.io/bayestestR/articles/bayestestR.html) the necessary packages, we can load `rstanarm` (to fit the models), `bayestestR` (to compute useful indices) and `insight` (to access the parameters).
+
+```{r message=FALSE, warning=FALSE}
+library(rstanarm)
+library(bayestestR)
+library(insight)
+```
+
+## A simple linear model (*aka* a regression)
+
+### Fitting the model
+
+We will start by fitting a simple model to test the relationship between **Petal.Length** (our predictor, - or independent, variable) and **Sepal.Length** (our response, - or dependent, variable) from the [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R. 
+
+Let's start by fitting the **frequentist** version of the model, just to have some **reference**:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+model <- lm(Sepal.Length ~ Petal.Length, data=iris)
+summary(model)
+```
+
+In this model, the linear relationship between **Petal.Length** and **Sepal.Length** is **positive and significant** (beta = 0.41, t(148) = 21.65, p < .001).
+
+Let's do the **Bayesian version**:
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='hide'}
+library(rstanarm)
+set.seed(333)
+
+model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
+```
+
+### Extracting the posterior
+
+You can see the sampling algorithm being run. Once it is done, let us extract the parameters (*i.e.*, the coefficients) of the model.
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+posteriors <- insight::get_parameters(model)
+
+head(posteriors)  # Show the first 6 rows
+```
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+posteriors <- insight::get_parameters(model)
+
+head(posteriors)  # Show the first 6 rows
+```
+
+As we can see, the parameters take the form of a long dataframe with two columns, corresponding to the **intercept** and **Petal.Length**. These columns contain the **posterior distributions** of these two parameters, *i.e.*, different plausible values.
+
+#### About posterior *draws*
+
+Let's look at the length of the posteriors.
+
+```{r message=FALSE, warning=FALSE}
+nrow(posteriors)  # Size (number of rows)
+```
+
+> **Why is the size 4000, and not more or less?**
+
+First of all, these observations (the rows) are usually reffered to as **posterior draws**. The underlying idea is that the Bayesian sampling algorithm (such as **Monte Carlo Makov Chains - MCMC**) will *draw* from the hidden true posterior distribution. Thus, it is through these posterior draws that we can estimate the underlying true posterior distribution. Thus, **the more draws you have, the better is your estimation of the posterior distribution**. But it also takes longer to compute.
+
+If we look at the documentation (`?sampling`) for the rstanarm `"sampling"` algorithm used by default in the model above, we can see several parameters that influence the number of posterior draws. By default, there are **4** `chains` (you can see it as distinct sampling runs), that each create **2000** `iter` (draws). However, only half of these iterations is kept, as half is used for `warmup` (the convergence of the algorithm). The total is **`4 chains * (2000 iterations - 1000 warmup) = 4000`** posterior draws. We can change that, for instance:
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris, chains = 2, iter = 1000, warmup = 250)
+ 
+nrow(insight::get_parameters(model))  # Size (number of rows)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, echo=FALSE}
+junk <- capture.output(model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris, chains = 2, iter = 1000, warmup = 250))
+nrow(insight::get_parameters(model))  # Size (number of rows)
+```
+
+In this case, we indeed have **`2 chains * (1000 iterations - 250 warmup) = 1500`** posterior draws. Let's keep our first model with the default setup.
+
+
+#### Visualising the posterior distribution
+
+
+Now that we've understood where do these values come from, let's look at them. We will start by visualizing (using the `ggplot2` package) the distribution of our parameter of interest, the effect of `Petal.Length`.
+
+
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+
+ggplot(posteriors, aes(x = Petal.Length)) +
+  geom_density(fill = "orange")
+```
+
+This distribution represents the probability (the y axis) of different effects (the x axis). The central values are more probable than the extreme values. As you can see, this distribution ranges from about **0.35 to 0.50**, with the bulk of it being at around **0.41**.
+
+> **Congrats! You've just described your posterior distribution.**
+
+And this is at the heart of Bayesian analysis. We don't need *p*-values, *t*-values or degrees of freedom: **everything is there, under our nose**, within this **posterior distribution**.
+
+As you can see, our description is consistent with the values of the frequentist regression (which had a beta of **0.41**). This is reassuring! We can now go ahead and **precisely characterise** this posterior distribution.
+
+### Describing the Posterior
+
+Unfortunately, it is often not practical to report the whole posterior distributions as graphs. We need to find a **consise way to summarise it**. We recommend to describe the posterior distribution with **3 elements**. A **point-estimate**, a one-value summary (such as the *beta* from the frequentist regression); a **credible interval**, representing the associated uncertainty and some **indices of significance**, giving information about the importance of this effect.
+
+
+#### Point-estimate
+
+**What single value can best represent my posterior distribution?**
+
+Let's check the **mean**:
+
+```{r message=FALSE, warning=FALSE}
+mean(posteriors$Petal.Length)
+```
+
+This is close to the frequentist beta. But as we know, the mean is quite sensitive to outliers or extremes values. Maybe the **median** could be more robust?
+
+```{r message=FALSE, warning=FALSE}
+median(posteriors$Petal.Length)
+```
+
+Well, this is **close to the mean**. Maybe we could take the **mode**, the *peak* of the posterior distribution? In the Bayesian framework, this value is called the **Maximum A Posteriori (MAP)**. Let's see:
+
+```{r message=FALSE, warning=FALSE}
+map_estimate(posteriors$Petal.Length)
+```
+
+Let's add these values to the posterior distribution:
+
+```{r message=FALSE, warning=FALSE}
+ggplot(posteriors, aes(x = Petal.Length)) +
+  geom_density(fill = "orange") +
+  # The mean in blue
+  geom_vline(xintercept=mean(posteriors$Petal.Length), color="blue", size=2) +
+  # The median in red
+  geom_vline(xintercept=median(posteriors$Petal.Length), color="red", size=2) +
+  # The MAP in purple
+  geom_vline(xintercept=map_estimate(posteriors$Petal.Length), color="purple", size=2)
+```
+
+Well, all these values give very similar results. Thus, **we will chose the median**, as this value has a direct meaning from a probabilistic perspective: there is 50\% chance that the true effect is higher and 50\% chance that the effect is lower (as it *cuts* the distribution in two equal parts).
+
+
+#### Uncertainty
+
+Now that the have a point-estimate, let's **describe the uncertainty**. We could compute the range:
+
+```{r message=FALSE, warning=FALSE}
+range(posteriors$Petal.Length)
+```
+
+But does it make sense to include all these extreme values? Maybe not. Thus, we will compute a [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html). Long story short, it's kind of similar to a frequentist **confidence interval**, but it is easier to interpret and easier to compute. And it makes more sense.
+
+We will compute this **credible interval** through the Highest Density Interval (HDI) method. It will give us the range containing the 90\% more probable effect values. **Note that we will use 90\% CIs instead of 95\% CIs as it is the case in the frequentist framework as the 90\% level gives more stable results**.
+
+```{r message=FALSE, warning=FALSE}
+hdi(posteriors$Petal.Length, ci=0.90)
+```
+
+Nice, so we can conclude that **the effect has 90\% chance of falling within the `[0.38, 0.44]` range**. We have just computed the two more important information to describe our effects. 
+
+#### Effect significance
+
+However, in many scientific fields, simply describing the effect is not enough. The readers also want to know if this effect ***means*** something. Is it important? Is it different from 0? In other words, **assessing the *significance* of the effect**. How can we do this?
+
+Well, in this particular case, it is very eloquent: **all possible effect values (*i.e.*, the whole posterior distribution) are positive and superior to 0.35, which is already a lot**.
+
+But still, we want some objective decision criterion, to say if **yes or no the effect is significant**.  We could do similarly to the frequentist framework, and see if the **Credible Interval** contains 0. Here, it is not the case, which means that our **effect is significant**. 
+
+But this index is not very fine-grained, isn't it? **Can we do better? Yes.**
+
+
+## A linear model with a categorical predictor
+
+Let's take interest in the **weight of chickens**, depending on 2 **feed types**. We will start by selecting, from the `chickwts` dataset (also available in base R), the 2 feed types that are of interest for us (*because reasons*): **Meat meals** and **Sunflowers**.
+
+### Data preparation and model fitting
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+library(dplyr)
+
+# We keep only rows for which feed is meatmeal or sunflower
+data <- chickwts %>% 
+  filter(feed %in% c("meatmeal", "sunflower"))
+```
+
+
+Let's run another Bayesian regression to predict the **Weight** with the **2 types of feed type**.
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+model <- stan_glm(weight ~ feed, data=data)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA, results='hide'}
+model <- stan_glm(weight ~ feed, data=data)
+```
+
+### Posterior description
+
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+posteriors <- insight::get_parameters(model)
+
+ggplot(posteriors, aes(x=feedsunflower)) +
+  geom_density(fill = "red")
+```
+
+This represents the **posterior distribution of the difference between meat meals and Sunflowers**. Seems that the difference is rather **positive**... Eating Sunflowers makes you more fat (if you're a chicken). **By how much?** Let us compute the **median** and the **CI**:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+median(posteriors$feedsunflower)
+hdi(posteriors$feedsunflower)
+```
+
+It makes you fat by around `50.6` (the median). However, the uncertainty is quite high: **there is 90\% chance that the difference between the two feed types is between `9.15` and `91.34`.**
+
+### ROPE Percentage
+
+Testing wether this distribution is different from 0 doesn't make sense, as 0 is a single value. However, one way to assess **significance** could be to define an area around 0, which will consider as *equivalent* to zero (to no, - or negligible, effect). This is called the [**Region of Practical Equivalence (ROPE)**](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html), and is one way of testing the significance of parameters.
+
+> **How can we define this region?**
+
+
+---
+
+***Driing driiiing***
+
+**- The easystats team speaking. How can we help?**
+
+**- I am Prof Howard. An expert in chicks... I mean chickens. Just calling to let you know that based on my expert knowledge, an effect between -20 and 20 is negligible. Bye.**
+
+---
+
+Well, that's convenient. Now we know that we can define the ROPE as the `[-20, 20]` range. All effects within this range are considered as *null* (negligible). We can now compute the **proportion of the 90\% most probable values (the 90\% CI) which are not null**, *i.e.*, which are outside this range. 
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.90)
+```
+
+
+**5.75\% of the 90\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is a bit too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
+
+Altough to be honest, I have **some doubts about this Prof Howard**. I don't really trust **his definition of ROPE**. Is there a more objective way of defining it?
+
+**Yes.** One of the practice is for instance to use the **tenth** (`1/10 = 0.1`) of the standard deviation (SD) of the response variable.
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+rope_value <- 0.1 * sd(data$weight)
+rope_range <- c(-rope_value, rope_value)
+rope_range
+```
+
+Let's redefine our ROPE as the region within the `[-6.17, 6.17]` range. However, note that this can be directly obtained by the `rope_range` function :)
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+rope_value <- rope_range(model)
+rope_range
+```
+
+Let's recompute the **percentage in ROPE**:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+rope(posteriors$feedsunflower, range = rope_range, ci=0.90)
+```
+
+Well, with this reasonable definition of ROPE, we observe that that the 90\% of the posterior distribution of the effect does **not** overlap with the ROPE. Thus, we can conclude that **the effect is significant**.
+
+
+### Probability of Direction (pd)
+
+Maybe we are not interested in whether the effect is not-negligible. Maybe **we just want to know if this effect is positive or negative**. In this case, we can simply compute the proportion of the posterior that is positive, no matter the "size". 
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+n_positive <- posteriors %>% 
+  filter(feedsunflower > 0) %>% # select only positive values
+  nrow() # Get length
+n_positive / nrow(posteriors) * 100
+```
+
+We can conclude that **the effect is positive with a probability of 97.90\%**. We call this index the [**Probability of Direction (pd)**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html). It can, in fact, be computed more easily with the following:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+p_direction(posteriors$feedsunflower)
+```
+
+Interestingly, it so happens that **this index is (in *most* of the cases) highly correlated to the frequentist *p*-value**. We could almost roughly infer the corresponding *p*-value with a simple transformation:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+pd <- 97.90
+onesided_p <- 1 - pd / 100  
+twosided_p <- onesided_p * 2
+twosided_p
+```
+
+If we ran our model in the frequentist framework, we should approximately observe an effect with a *p*-value of `r round(twosided_p, digits=3)`. **Is that true?**
+
+
+
+
+### Comparison to frequentist
+
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+lm(weight ~ feed, data=data) %>% 
+  summary()
+```
+
+The frequentist model tells us that the difference is **positive and significant** (beta = 52.01, p = 0.04). 
+
+**Altough we arrived to a similar conclusion, the Bayesian framework allowed us to develop a more profound and intuitive understanding of our effect, and of the uncertainty of its estimation.**
+
+
+## All with one function
+
+And yet, I agree, it was a bit **tedious** to extract and compute all the indices. **But what if I told you that we can do all of this, and more, with only one function?**
+
+> **Behold, `describe_posterior`!**
+
+This function computes all of the afored mentioned indices, and can be run directly on the model:
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+describe_posterior(model)
+```
+
+**Tada!** There we have it! The **median**, the **CI**, the **pd** and the **ROPE percentage**!
+
+Understanding and describing posterior distributions is just one aspect of Bayesian modelling... **Are you ready for more?** [**Click here**](https://easystats.github.io/bayestestR/articles/example2_GLM.html) to see the next example.

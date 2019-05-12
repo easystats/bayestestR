@@ -87,10 +87,12 @@ p_rope.numeric <- function(x, range = "default", precision = .1, ...) {
 #' @rdname p_rope
 #' @export
 p_rope.data.frame <- function(x, range = "default", precision = .1, ...) {
+  x <- .select_nums(x)
+
   if (ncol(x) == 1) {
     p_ROPE <- p_rope(x[, 1], range = range, precision = precision, ...)
   } else {
-    p_ROPE <- sapply(.select_nums(x), p_rope, range = range, precision = precision, simplify = TRUE, ...)
+    p_ROPE <- sapply(x, p_rope, range = range, precision = precision, simplify = TRUE, ...)
   }
 
   out <- data.frame(
@@ -109,6 +111,7 @@ p_rope.data.frame <- function(x, range = "default", precision = .1, ...) {
 #' @importFrom insight get_parameters
 #' @keywords internal
 .p_rope_models <- function(x, range, precision, effects, component, parameters, ...) {
+
   if (all(range == "default")) {
     range <- rope_range(x)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
@@ -162,6 +165,8 @@ p_rope.brmsfit <- function(x, range = "default", precision = .1, effects = c("fi
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
+
+
 
 
 

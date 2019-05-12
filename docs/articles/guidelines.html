@@ -73,7 +73,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
+      <a href="../articles/example1_LM.html">1. Linear Models</a>
+    </li>
+    <li>
+      <a href="../articles/example2_GLM.html">2. General Linear Models</a>
     </li>
   </ul>
 </li>
@@ -150,9 +153,9 @@
 <li>For simple models and normally distributed posteriors, the <strong>MAP estimate</strong> seems to be more biased than the mean and the median of the posterior distribution.</li>
 <li>Aside from being more robust, the <strong>median</strong> makes more sense than the <strong>mean</strong> in a probabilistic framework (<em>e.g.</em>, there is 50% chance that the true effect is either higher or lower than the median).</li>
 <li>The <strong>traditional ROPE</strong> (using a 90% HDI) is not sensitive to delineate highly “significant” effects. The full ROPE (100% HDI) does not present the same flaw.</li>
-<li>The <strong>Probability of Direction (<em>p</em>d)</strong> is the closest index to the frequentist <em>p</em> value.</li>
+<li>The <strong>Probability of Direction (<em>p</em>d)</strong> is the closest index to the frequentist <em>p</em>-value.</li>
 </ul>
-<p>Thus, to minimally <strong>describe the posterior distribution</strong> of a parameter, we suggest reporting the <strong>median</strong> and the <strong>90% CI</strong> (using HDI rather than quantiles) for parameter characterisation and, in the context of null-hypothesis testing, the <strong>Probability of Direction (<em>p</em>d)</strong> for effect existence and, especially in the context of confirmatory analyses, the <strong>ROPE percentage (full)</strong> with an explicitly specified range for effect significance.</p>
+<p>Thus, to minimally <strong>describe the posterior distribution</strong> of a parameter, we suggest reporting the <strong>median</strong> and the <strong>90% CI</strong> (using HDI rather than quantiles) for parameter characterisation and, in the context of null-hypothesis testing, the <strong>Probability of Direction (<em>pd</em>)</strong> for effect existence and, especially in the context of confirmatory analyses, the <strong>ROPE percentage (full)</strong> with an explicitly specified range for effect significance.</p>
 <div id="effect-significance" class="section level2">
 <h2 class="hasAnchor">
 <a href="#effect-significance" class="anchor"></a>Effect <em>Significance</em>
@@ -168,15 +171,15 @@
 <p><strong>Probability of Direction (<em>p</em>d)</strong>: In most cases, it seems that the <em>pd</em> corresponds to the frequentist one-sided <em>p</em> value through the formula <code>p value = (1-pd/100)</code> and to the two-sided <em>p</em> value (the most commonly reported) through the formula <code>p value = 2*(1-pd/100)</code>. Thus, a <code>pd</code> of <code>95%</code>, <code>97.5%</code> <code>99.5%</code> and <code>99.95%</code> corresponds approximately to a two-sided <em>p</em> value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code>. Thus, for convience, we recommend using the following reference values:</p>
 <ul>
 <li>
-<em>p</em>d <strong>&lt;= 95%</strong> ~ <em>p</em> &gt; .1: uncertain</li>
+<em>pd</em> <strong>&lt;= 95%</strong> ~ <em>p</em> &gt; .1: uncertain</li>
 <li>
-<em>p</em>d <strong>&gt; 95%</strong> ~ <em>p</em> &lt; .1: possibly existing</li>
+<em>pd</em> <strong>&gt; 95%</strong> ~ <em>p</em> &lt; .1: possibly existing</li>
 <li>
-<em>p</em>d <strong>&gt; 97%</strong>: likely existing</li>
+<em>pd</em> <strong>&gt; 97%</strong>: likely existing</li>
 <li>
-<em>p</em>d <strong>&gt; 99%</strong>: probably existing</li>
+<em>pd</em> <strong>&gt; 99%</strong>: probably existing</li>
 <li>
-<em>p</em>d <strong>&gt; 99.9%</strong>: certainly existing</li>
+<em>pd</em> <strong>&gt; 99.9%</strong>: certainly existing</li>
 </ul>
 </li>
 <li>
@@ -202,7 +205,7 @@
 <a href="#template-sentence" class="anchor"></a>Template Sentence</h2>
 <p>Based on these suggestions, a template sentence for minimal reporting of a parameter based on its posterior distribution could be:</p>
 <ul>
-<li>“the effect of <em>X</em> has a probability of <strong><em>p</em>d</strong> of being <em>negative</em> (Median = <strong><em>median</em></strong>, 90% CI [<strong><em>…</em></strong>, <strong><em>…</em></strong>]) and can be considered as <em>significant</em> (<strong><em>ROPE</em></strong>% in ROPE).”</li>
+<li>“the effect of <em>X</em> has a probability of <strong><em>pd</em></strong> of being <em>negative</em> (Median = <strong><em>median</em></strong>, 90% CI [<strong><em>…</em></strong>, <strong><em>…</em></strong>]) and can be considered as <em>significant</em> (<strong><em>ROPE</em></strong>% in ROPE).”</li>
 </ul>
 </div>
 </div>

@@ -91,10 +91,12 @@ p_direction.numeric <- function(x, method = "direct", ...) {
 #' @rdname p_direction
 #' @export
 p_direction.data.frame <- function(x, method = "direct", ...) {
+  x <- .select_nums(x)
+
   if (ncol(x) == 1) {
     pd <- p_direction(x[, 1], method = method, ...)
   } else {
-    pd <- sapply(.select_nums(x), p_direction, method = method, simplify = TRUE, ...)
+    pd <- sapply(x, p_direction, method = method, simplify = TRUE, ...)
   }
 
   out <- data.frame(

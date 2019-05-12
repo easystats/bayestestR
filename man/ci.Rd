@@ -6,11 +6,14 @@
 \alias{ci.data.frame}
 \alias{ci.stanreg}
 \alias{ci.brmsfit}
+\alias{ci.BFBayesFactor}
 \title{Confidence/Credible Interval}
 \usage{
 ci(x, ...)
 
 \method{ci}{numeric}(x, ci = 0.9, verbose = TRUE, ...)
+
+\method{ci}{data.frame}(x, ci = 0.9, verbose = TRUE, ...)
 
 \method{ci}{data.frame}(x, ci = 0.9, verbose = TRUE, ...)
 
@@ -20,6 +23,8 @@ ci(x, ...)
 \method{ci}{brmsfit}(x, ci = 0.9, effects = c("fixed", "random",
   "all"), component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL, verbose = TRUE, ...)
+
+\method{ci}{BFBayesFactor}(x, ci = 0.9, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{A \code{stanreg} or \code{brmsfit} model , or a vector representing a posterior distribution.}
@@ -89,7 +94,13 @@ the resulting HDI.
 \examples{
 library(bayestestR)
 
-ci(rnorm(1000))
+posterior <- rnorm(1000)
+ci(posterior)
+ci(posterior, ci = c(.80, .90, .95))
+
+df <- data.frame(replicate(4, rnorm(100)))
+ci(df)
+ci(df, ci = c(.80, .90, .95))
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -100,6 +111,11 @@ library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 ci(model)
 ci(model, ci = c(.80, .90, .95))
+
+library(BayesFactor)
+bf <- ttestBF(x = rnorm(100, 1, 1))
+ci(bf)
+ci(bf, ci = c(.80, .90, .95))
 }
 
 }
