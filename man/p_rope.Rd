@@ -55,6 +55,10 @@ Compute the ROPE-based p-value, an exploratory index representing the maximum pe
 library(bayestestR)
 
 p_rope(x = rnorm(1000, mean = 1, sd = 1), range = c(-0.1, 0.1))
+
+# Broken
+# df <- data.frame(replicate(4, rnorm(100)))
+# p_rope(df)
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -64,9 +68,10 @@ library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 p_rope(model)
 
-#' library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
-p_rope(bf)
+# Broken
+# library(BayesFactor)
+# bf <- ttestBF(x = rnorm(100, 1, 1))
+# p_rope(bf)
 }
 
 }
