@@ -1,0 +1,93 @@
+---
+title: "Region of Practical Equivalence (ROPE)"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, bayesian, posterior, test, rope, equivalence test]
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{Region of Practical Equivalence (ROPE)}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
+---
+
+This vignette can be referred to by citing the package:
+
+- Makowski, D., Ben-Shachar M. S. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using bayestestR*. Available from https://github.com/easystats/bayestestR. DOI: [10.5281/zenodo.2556486](https://zenodo.org/record/2556486).
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+options(digits=2)
+
+set.seed(333)
+```
+
+
+# What is the *ROPE*?
+
+Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against "zero". Indeed, the Bayesian framework offers a probalistic view of the parameters, allowing to assess the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as **"practically no effect"** (*i.e.*, a negligible magnitude) is sufficient. This range is called the **region of practical equivalence (ROPE)**.
+
+
+TBD.
+
+# Sensitivity to the parameter's scale
+
+However, keep in mind that unlike indices of effect *existence* (such as the `pd`), indices of effect *size*, such as the **ROPE percentage**, depend on the unit of its parameter, and can thus be easily changed *via* the scaling of the predictors.
+
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+library(rstanarm)
+library(bayestestR)
+
+data <- iris
+model <- stan_glm(Sepal.Length ~ Sepal.Width, data=data)
+
+p_direction(model)
+rope(model, ci=1)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
+library(rstanarm)
+library(bayestestR)
+set.seed(333)
+
+data <- iris
+junk <- capture.output(model <- stan_glm(Sepal.Length ~ Sepal.Width, data=data))
+
+p_direction(model)
+rope(model, ci=1)
+```
+
+We can see that the *pd* and the percentage in ROPE of the linear relationship between **Sepal.Length** and **Sepal.Width** are respectively of about `92.17%` and `15.95%`, corresponding to an **uncertain** and **not significant** effect. What happen if we scale our predictor? 
+
+
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+data$Sepal.Width_scaled <- data$Sepal.Width / 100
+model <- stan_glm(Sepal.Length ~ Sepal.Width_scaled, data=data)
+
+p_direction(model)
+rope(model, ci=1)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, comment=">"}
+library(rstanarm)
+library(bayestestR)
+set.seed(333)
+
+data$Sepal.Width_scaled <- data$Sepal.Width / 100
+junk <- capture.output(model <- stan_glm(Sepal.Length ~ Sepal.Width_scaled, data=data))
+
+p_direction(model)
+rope(model, ci=1)
+```
+
+As you can see, by simply dividing the predictory by 100, we **drastically** changed (*we divided it by 100*) the conclusion related to the **percentage in ROPE** (which became very close to `0`): the effect could now be **interpreted as being significant**. Thus, we recommend, when reporting or reading ROPE results, to pay close attention to the unit of the predictors. This is another reason why we suggest using **two indices**, to assess both effect **existence** and **significance**.

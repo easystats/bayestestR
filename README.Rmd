@@ -93,7 +93,7 @@ hdi(rnorm(1000), ci = .90)
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-posterior <- rnorm_perfect(100, 0.4, 0.2)
+posterior <- distribution_normal(100, 0.4, 0.2)
 
 posterior %>% 
   density() %>%
@@ -154,7 +154,7 @@ rope(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-posterior <- rnorm_perfect(100, 0.4, 0.2)
+posterior <- distribution_normal(100, 0.4, 0.2)
 posterior %>% 
   density() %>%
   as.data.frame() %>% 
@@ -196,7 +196,7 @@ p_direction(rnorm(1000, mean = 1, sd = 1))
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-posterior <- rnorm_perfect(100, 0.4, 0.2)
+posterior <- distribution_normal(100, 0.4, 0.2)
 posterior %>% 
   density() %>%
   as.data.frame() %>% 
@@ -224,10 +224,10 @@ bayesfactor_savagedickey(posterior, prior, direction = "two-sided", hypothesis =
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-posterior <- rnorm_perfect(1000, mean = 1, sd = 0.7) %>% 
+posterior <- distribution_normal(1000, mean = 1, sd = 0.7) %>% 
   density() %>%
   as.data.frame()
-prior <- rnorm_perfect(1000, mean = 0, sd = 1) %>% 
+prior <- distribution_normal(1000, mean = 0, sd = 1) %>% 
   density() %>%
   as.data.frame()
 
@@ -262,11 +262,11 @@ p_rope(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
 [**`p_map()`**](https://easystats.github.io/bayestestR/reference/p_map.html) computes a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (*h0*) using Mills' (2014, 2017) *Objective Bayesian Hypothesis Testing* framework. It is mathematically based on the density at the Maximum A Priori (MAP) and corresponds to the density value at 0 divided by the density of the MAP estimate.
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
-p_map(posterior = rnorm(1000, 1, 1))
+p_map(rnorm(1000, 1, 1))
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-posterior <- rnorm_perfect(100, 0.4, 0.2)
+posterior <- distribution_normal(100, 0.4, 0.2)
 map_result <- map_estimate(posterior, bw="nrd0")
 
 posterior %>% 
