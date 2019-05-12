@@ -1,0 +1,42 @@
+---
+title: "Example 2: General Linear Models"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, bayesian, posterior, test]
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{Example 1: General Linear Models}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
+---
+
+This vignette can be referred to by citing the package:
+
+- Makowski, D., Ben-Shachar M. S. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using bayestestR*. Available from https://github.com/easystats/bayestestR. DOI: [10.5281/zenodo.2556486](https://zenodo.org/record/2556486).
+
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+options(digits=2)
+```
+
+
+Now that [**describing and understanding posterior distributions of linear regressions**](https://easystats.github.io/bayestestR/articles/example1_LM.html) has no secrets for you, let's go deeper.
+
+> **"But it's only about regressions and I want to do ANOVAs and t-tests"**
+
+Don't worry, my dear. Let us all remind the fact that **all basic statistical pocedures** such as t-tests, ANOVAs, correlations or Chisquare tests [**are linear regressions**](https://lindeloev.github.io/tests-as-linear/). Now that we have accepted the beauty of it, let us continue with a general linear model.
+
+
+TO BE CONTINUED.

@@ -1,5 +1,5 @@
 ---
-title: "Example 1: Bayesian (General) Linear Models"
+title: "Example 1: Linear Models"
 output: 
   github_document:
     toc: true
@@ -12,7 +12,7 @@ output:
 tags: [r, bayesian, posterior, test]
 vignette: >
   \usepackage[utf8]{inputenc}
-  %\VignetteIndexEntry{Example 1: Bayesian (General) Linear Models}
+  %\VignetteIndexEntry{Example 1: Linear Models}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
@@ -43,7 +43,7 @@ library(bayestestR)
 library(insight)
 ```
 
-## A simple linear Model (*aka* a regression)
+## A simple linear model (*aka* a regression)
 
 ### Fitting the model
 
@@ -209,11 +209,13 @@ But this index is not very fine-grained, isn't it? **Can we do better? Yes.**
 
 ## A linear model with a categorical predictor
 
-Let's take interest in the **weight of chickens**, depending on 2 **feed types**. We will start by selecting, from the `chickwts` dataset (also available in base R), the 2 feed types that are of interest for us (because reasons): **Meat meals** and **Sunflowers**.
+Let's take interest in the **weight of chickens**, depending on 2 **feed types**. We will start by selecting, from the `chickwts` dataset (also available in base R), the 2 feed types that are of interest for us (*because reasons*): **Meat meals** and **Sunflowers**.
 
 ### Data preparation and model fitting
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
+library(dplyr)
+
 # We keep only rows for which feed is meatmeal or sunflower
 data <- chickwts %>% 
   filter(feed %in% c("meatmeal", "sunflower"))
@@ -239,34 +241,122 @@ ggplot(posteriors, aes(x=feedsunflower)) +
   geom_density(fill = "red")
 ```
 
-TBD.
+This represents the **posterior distribution of the difference between meat meals and Sunflowers**. Seems that the difference is rather **positive**... Eating Sunflowers makes you more fat (if you're a chicken). **By how much?** Let us compute the **median** and the **CI**:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+median(posteriors$feedsunflower)
+hdi(posteriors$feedsunflower)
+```
+
+It makes you fat by around `50.6` (the median). However, the uncertainty is quite high: **there is 90\% chance that the difference between the two feed types is between `9.15` and `91.34`.**
+
+### ROPE Percentage
+
+Testing wether this distribution is different from 0 doesn't make sense, as 0 is a single value. However, one way to assess **significance** could be to define an area around 0, which will consider as *equivalent* to zero (to no, - or negligible, effect). This is called the [**Region of Practical Equivalence (ROPE)**](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html), and is one way of testing the significance of parameters.
+
+> **How can we define this region?**
+
+
+---
+
+***Driing driiiing***
+
+**- The easystats team speaking. How can we help?**
+
+**- I am Prof Howard. An expert in chicks... I mean chickens. Just calling to let you know that based on my expert knownledge, an effect between -20 and 20 is negligible. Bye.**
+
+---
+
+Well, that's convenient. Now we know that we can define the ROPE as the `[-20, 20]` range. All effects within this range are considered as null. We can now compute the **proportion of the 90\% most probable values (the 90\% CI) which are not null**, *i.e.*, which are outside this range. 
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.90)
+```
+
+
+**5.75\% of the 90\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is a bit too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
+
+Altough to be honest, I have **some doubts about this prof Howard**. I don't really trust **his definition of ROPE**. Is there a more objective way of defining it?
+
+**Yes.** One of the practice is for instance to use the **tenth** (`1/10 = 0.1`) of the standard deviation (SD) of the response variable.
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+rope_value <- 0.1 * sd(data$weight)
+rope_range <- c(-rope_value, rope_value)
+rope_range
+```
+
+Let's redefine our ROPE as the region within the `[-6.17, 6.17]` range. However, note that this can be directly obtained by the `rope_range` function :)
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+rope_value <- rope_range(model)
+rope_range
+```
+
+Let's recompute the **percentage in ROPE**:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+rope(posteriors$feedsunflower, range = rope_range, ci=0.90)
+```
+
+Well, with this reasonable definition of ROPE, we observe that that the 90\% of the posterior distribution of the effect does **not** overlap with the ROPE. Thus, we can conclude that **the effect is significant**.
+
+
+### Probability of Direction (pd)
+
+Maybe we are not interested in whether the effect is not-negligible. Maybe **we just want to know if this effect is positive or negative**. In this case, we can simply compute the proportion of the posterior that is positive, no matter the "size". 
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+n_positive <- posteriors %>% 
+  filter(feedsunflower > 0) %>% # select only positive values
+  nrow() # Get length
+n_positive / nrow(posteriors) * 100
+```
+
+We can conclude that **the effect is positive with a probability of 97.90\%**. We call this index the [**Probability of Direction (pd)**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html). It can, in fact, be computed more easily with the following:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+p_direction(posteriors$feedsunflower)
+```
+
+Interestingly, it so happens that **this index is (in *most* of the cases) highly correlated to the frequentist *p*-value**. We could almost roughly infer the corresponding *p*-value with a simple transformation:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+pd <- 97.90
+onesided_p <- 1 - pd / 100  
+twosided_p <- onesided_p * 2
+twosided_p
+```
+
+If we ran our model in the frequentist framework, we should approximately observe an effect with a *p*-value of `r round(twosided_p, digits=3)`. **Is that true?**
+
+
+
 
 ### Comparison to frequentist
 
-**Are these conclusions different from the ones obtained via a frequentist regression?** Let's see.
-
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
-model <- lm(weight ~ feed, data=data)
-summary(model)
+lm(weight ~ feed, data=data) %>% 
+  summary()
 ```
 
-TBD.
+The frequentist model tells us that the difference is **positive and significant** (beta = 52.01, p = 0.04). 
+
+**Altough we arrived to a similar conclusion, the Bayesian framework allowed us to develop a more profound and intuitive understanding of our effect, and of the uncertainty of its estimation.**
+
 
 ## All with one function
 
-We went through extracting posteriors and computing the different indices. **But what if I told you that we can do all of this, and more, with only one function?**
+And yet, I agree, it was a bit **tedious** to extract and compute all the indices. **But what if I told you that we can do all of this, and more, with only one function?**
 
 > **Behold, `describe_posterior`!**
 
-Let's run this function **directly** on the model:
+This function computes all of the afored mentioned indices, and can be run directly on the model:
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 describe_posterior(model)
 ```
 
-There we have it! The **median**, the **CI**, the **pd** and the **ROPE percentage**!
+**Tada!** There we have it! The **median**, the **CI**, the **pd** and the **ROPE percentage**!
 
-
-
-
-TBD.
+Understanding and describing posterior distributions is just one aspect of Bayesian modelling... **Are you ready for more?** [**Click here**](https://easystats.github.io/bayestestR/articles/example2_GLM.html) to see the next example.
