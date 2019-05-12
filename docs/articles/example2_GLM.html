@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reporting Guidelines • bayestestR</title>
+<title>Example 2: General Linear Models • bayestestR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Reporting Guidelines">
+<meta property="og:title" content="Example 2: General Linear Models">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -130,101 +130,30 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Reporting Guidelines</h1>
+      <h1>Example 2: General Linear Models</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/guidelines.Rmd"><code>vignettes/guidelines.Rmd</code></a></small>
-      <div class="hidden name"><code>guidelines.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/example2_GLM.Rmd"><code>vignettes/example2_GLM.Rmd</code></a></small>
+      <div class="hidden name"><code>example2_GLM.Rmd</code></div>
 
     </div>
 
     
     
-<p>These guidelines can be referred to by citing the package:</p>
+<p>This vignette can be referred to by citing the package:</p>
 <ul>
 <li>Makowski, D., Ben-Shachar M. S. &amp; Lüdecke, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using bayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. DOI: <a href="https://zenodo.org/record/2556486">10.5281/zenodo.2556486</a>.</li>
 </ul>
 <hr>
-<div id="reporting-guidelines" class="section level1">
-<h1 class="hasAnchor">
-<a href="#reporting-guidelines" class="anchor"></a>Reporting Guidelines</h1>
-<p>Based on the previous <a href="https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html"><strong>comparison of point-estimates</strong></a> and <a href="https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html"><strong>indices of effect existence</strong></a>, we can conclude that:</p>
-<ul>
-<li>For simple models and normally distributed posteriors, the <strong>MAP estimate</strong> seems to be more biased than the mean and the median of the posterior distribution.</li>
-<li>Aside from being more robust, the <strong>median</strong> makes more sense than the <strong>mean</strong> in a probabilistic framework (<em>e.g.</em>, there is 50% chance that the true effect is either higher or lower than the median).</li>
-<li>The <strong>traditional ROPE</strong> (using a 90% HDI) is not sensitive to delineate highly “significant” effects. The full ROPE (100% HDI) does not present the same flaw.</li>
-<li>The <strong>Probability of Direction (<em>p</em>d)</strong> is the closest index to the frequentist <em>p</em>-value.</li>
-</ul>
-<p>Thus, to minimally <strong>describe the posterior distribution</strong> of a parameter, we suggest reporting the <strong>median</strong> and the <strong>90% CI</strong> (using HDI rather than quantiles) for parameter characterisation and, in the context of null-hypothesis testing, the <strong>Probability of Direction (<em>pd</em>)</strong> for effect existence and, especially in the context of confirmatory analyses, the <strong>ROPE percentage (full)</strong> with an explicitly specified range for effect significance.</p>
-<div id="effect-significance" class="section level2">
-<h2 class="hasAnchor">
-<a href="#effect-significance" class="anchor"></a>Effect <em>Significance</em>
-</h2>
-<p>Note that the two latter indices give different and independent information: The <code>pd</code> is a marker of <strong>existence</strong>, consistency and direction of a parameter (whether a parameter has a consistent effect in one or another direction), whereas the percentage in <strong>ROPE</strong> is a index of <strong>significance</strong> (in its primary meaning); informing us whether a parameter is related or not to a non-negligible change (in terms of magnitude) in the outcome.</p>
-</div>
-<div id="interpretation-rules-of-thumb" class="section level2">
-<h2 class="hasAnchor">
-<a href="#interpretation-rules-of-thumb" class="anchor"></a>Interpretation Rules of Thumb</h2>
-<p><strong>The following thresholds are presented as landmarks only, and any use of such “labels” should be explicitly justified. Please consider with caution.</strong></p>
-<ul>
-<li>
-<p><strong>Probability of Direction (<em>p</em>d)</strong>: In most cases, it seems that the <em>pd</em> corresponds to the frequentist one-sided <em>p</em> value through the formula <code>p value = (1-pd/100)</code> and to the two-sided <em>p</em> value (the most commonly reported) through the formula <code>p value = 2*(1-pd/100)</code>. Thus, a <code>pd</code> of <code>95%</code>, <code>97.5%</code> <code>99.5%</code> and <code>99.95%</code> corresponds approximately to a two-sided <em>p</em> value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code>. Thus, for convience, we recommend using the following reference values:</p>
-<ul>
-<li>
-<em>pd</em> <strong>&lt;= 95%</strong> ~ <em>p</em> &gt; .1: uncertain</li>
-<li>
-<em>pd</em> <strong>&gt; 95%</strong> ~ <em>p</em> &lt; .1: possibly existing</li>
-<li>
-<em>pd</em> <strong>&gt; 97%</strong>: likely existing</li>
-<li>
-<em>pd</em> <strong>&gt; 99%</strong>: probably existing</li>
-<li>
-<em>pd</em> <strong>&gt; 99.9%</strong>: certainly existing</li>
-</ul>
-</li>
-<li>
-<p><strong>ROPE (full)</strong>: Extra caution is required as its interpretation highly depends on other parameters such as sample size and ROPE range.</p>
-<ul>
-<li>
-<strong>&gt; 99%</strong> in ROPE: negligible (we can accept the null hypothesis)</li>
-<li>
-<strong>&gt; 97.5%</strong> in ROPE: probably negligible</li>
-<li>
-<strong>&lt;= 97.5%</strong> &amp; <strong>&gt;= 2.5%</strong> in ROPE: undecided significance</li>
-<li>
-<strong>&lt; 2.5%</strong> in ROPE: probably significant</li>
-<li>
-<strong>&lt; 1%</strong> in ROPE: significant (we can reject the null hypothesis)</li>
-</ul>
-</li>
-</ul>
-<p><em>Note: If you have any advice, opinion or such, we encourage you to let us know by opening an <a href="https://github.com/easystats/bayestestR/issues">discussion thread</a> or making a pull request.</em></p>
-</div>
-<div id="template-sentence" class="section level2">
-<h2 class="hasAnchor">
-<a href="#template-sentence" class="anchor"></a>Template Sentence</h2>
-<p>Based on these suggestions, a template sentence for minimal reporting of a parameter based on its posterior distribution could be:</p>
-<ul>
-<li>“the effect of <em>X</em> has a probability of <strong><em>pd</em></strong> of being <em>negative</em> (Median = <strong><em>median</em></strong>, 90% CI [<strong><em>…</em></strong>, <strong><em>…</em></strong>]) and can be considered as <em>significant</em> (<strong><em>ROPE</em></strong>% in ROPE).”</li>
-</ul>
-</div>
-</div>
+<p>Now that <a href="https://easystats.github.io/bayestestR/articles/example1_LM.html"><strong>describing and understanding posterior distributions of linear regressions</strong></a> has no secrets for you, let’s go deeper.</p>
+<blockquote>
+<p><strong>“But it’s only about regressions and I want to do ANOVAs and t-tests”</strong></p>
+</blockquote>
+<p>Don’t worry, my dear. Let us all remind the fact that <strong>all basic statistical pocedures</strong> such as t-tests, ANOVAs, correlations or Chisquare tests <a href="https://lindeloev.github.io/tests-as-linear/"><strong>are linear regressions</strong></a>. Now that we have accepted the beauty of it, let us continue with a general linear model.</p>
+<p>TO BE CONTINUED.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li>
-<a href="#reporting-guidelines">Reporting Guidelines</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#effect-significance">Effect <em>Significance</em></a></li>
-      <li><a href="#interpretation-rules-of-thumb">Interpretation Rules of Thumb</a></li>
-      <li><a href="#template-sentence">Template Sentence</a></li>
-      </ul>
-</li>
-      </ul>
-</div>
       </div>
 
 </div>

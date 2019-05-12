@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Example 1: Bayesian (General) Linear Models • bayestestR</title>
+<title>Example 1: Linear Models • bayestestR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Example 1: Bayesian (General) Linear Models">
+<meta property="og:title" content="Example 1: Linear Models">
 <meta property="og:description" content="">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
@@ -73,7 +73,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
+      <a href="../articles/example1_LM.html">1. Linear Models</a>
+    </li>
+    <li>
+      <a href="../articles/example2_GLM.html">2. General Linear Models</a>
     </li>
   </ul>
 </li>
@@ -127,11 +130,11 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Example 1: Bayesian (General) Linear Models</h1>
+      <h1>Example 1: Linear Models</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/example1_GLM.Rmd"><code>vignettes/example1_GLM.Rmd</code></a></small>
-      <div class="hidden name"><code>example1_GLM.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/example1_LM.Rmd"><code>vignettes/example1_LM.Rmd</code></a></small>
+      <div class="hidden name"><code>example1_LM.Rmd</code></div>
 
     </div>
 
@@ -153,7 +156,7 @@
 </div>
 <div id="a-simple-linear-model-aka-a-regression" class="section level2">
 <h2 class="hasAnchor">
-<a href="#a-simple-linear-model-aka-a-regression" class="anchor"></a>A simple linear Model (<em>aka</em> a regression)</h2>
+<a href="#a-simple-linear-model-aka-a-regression" class="anchor"></a>A simple linear model (<em>aka</em> a regression)</h2>
 <div id="fitting-the-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fitting-the-model" class="anchor"></a>Fitting the model</h3>
@@ -224,7 +227,7 @@
 <a class="sourceLine" id="cb11-2" title="2"></a>
 <a class="sourceLine" id="cb11-3" title="3"><span class="kw">ggplot</span>(posteriors, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Length)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb11-4" title="4"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">"orange"</span>)</a></code></pre></div>
-<p><img src="example1_GLM_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<p><img src="example1_LM_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <p>This distribution represents the probability (the y axis) of different effects (the x axis). The central values are more probable than the extreme values. As you can see, this distribution ranges from about <strong>0.35 to 0.50</strong>, with the bulk of it being at around <strong>0.41</strong>.</p>
 <blockquote>
 <p><strong>Congrats! You’ve just described your posterior distribution.</strong></p>
@@ -259,7 +262,7 @@
 <a class="sourceLine" id="cb18-6" title="6"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(posteriors<span class="op">$</span>Petal.Length), <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb18-7" title="7"><span class="st">  </span><span class="co"># The MAP in purple</span></a>
 <a class="sourceLine" id="cb18-8" title="8"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="kw"><a href="../reference/map_estimate.html">map_estimate</a></span>(posteriors<span class="op">$</span>Petal.Length), <span class="dt">color=</span><span class="st">"purple"</span>, <span class="dt">size=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="example1_GLM_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
+<p><img src="example1_LM_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <p>Well, all these values give very similar results. Thus, <strong>we will chose the median</strong>, as this value has a direct meaning from a probabilistic perspective: there is 50% chance that the true effect is higher and 50% chance that the effect is lower (as it <em>cuts</em> the distribution in two equal parts).</p>
 </div>
 <div id="uncertainty" class="section level4">
@@ -309,7 +312,7 @@
 <a class="sourceLine" id="cb25-2" title="2"></a>
 <a class="sourceLine" id="cb25-3" title="3"><span class="kw">ggplot</span>(posteriors, <span class="kw">aes</span>(<span class="dt">x=</span>feedsunflower)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb25-4" title="4"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">"red"</span>)</a></code></pre></div>
-<p><img src="example1_GLM_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
+<p><img src="example1_LM_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
 <p>This represents the <strong>posterior distribution of the difference between meat meals and Sunflowers</strong>. Seems that the difference is rather <strong>positive</strong>… Eating Sunflowers makes you more fat (if you’re a chicken). <strong>By how much?</strong> Let us compute the <strong>median</strong> and the <strong>CI</strong>:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(posteriors<span class="op">$</span>feedsunflower)</a></code></pre></div>
 <pre><code>## [1] 51</code></pre>
@@ -329,10 +332,10 @@
 </blockquote>
 <hr>
 <p><strong><em>Driing driiiing</em></strong></p>
-<p><strong>- The easystats team speaking. How may we help you?</strong></p>
-<p><strong>- I am Prof Howard. An expert in chicks… I mean chickens. Anyway, just calling to let you know that based on my expert knownledge, an effect between -20 and 20 is negligible. Bye.</strong></p>
+<p><strong>- The easystats team speaking. How can we help?</strong></p>
+<p><strong>- I am Prof Howard. An expert in chicks… I mean chickens. Just calling to let you know that based on my expert knowledge, an effect between -20 and 20 is negligible. Bye.</strong></p>
 <hr>
-<p>Well, that’s convenient. Now we know that we can define the ROPE as the <code>[-20, 20]</code> range. All effects within this range are considered as null. We can now compute the <strong>proportion of the 90% most probable values (the 90% CI) which are not null</strong>, <em>i.e.</em>, which are outside this range.</p>
+<p>Well, that’s convenient. Now we know that we can define the ROPE as the <code>[-20, 20]</code> range. All effects within this range are considered as <em>null</em> (negligible). We can now compute the <strong>proportion of the 90% most probable values (the 90% CI) which are not null</strong>, <em>i.e.</em>, which are outside this range.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw"><a href="../reference/rope.html">rope</a></span>(posteriors<span class="op">$</span>feedsunflower, <span class="dt">range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">20</span>, <span class="dv">20</span>), <span class="dt">ci=</span><span class="fl">0.90</span>)</a></code></pre></div>
 <pre><code>## # Proportion of samples inside the ROPE [-20.00, 20.00]:
 ## 
@@ -360,13 +363,30 @@
 <div id="probability-of-direction-pd" class="section level3">
 <h3 class="hasAnchor">
 <a href="#probability-of-direction-pd" class="anchor"></a>Probability of Direction (pd)</h3>
+<p>Maybe we are not interested in whether the effect is not-negligible. Maybe <strong>we just want to know if this effect is positive or negative</strong>. In this case, we can simply compute the proportion of the posterior that is positive, no matter the “size”.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">n_positive &lt;-<span class="st"> </span>posteriors <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb38-2" title="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(feedsunflower <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># select only positive values</span></a>
+<a class="sourceLine" id="cb38-3" title="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>() <span class="co"># Get length</span></a>
+<a class="sourceLine" id="cb38-4" title="4">n_positive <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(posteriors) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a></code></pre></div>
+<pre><code>## [1] 98</code></pre>
+<p>We can conclude that <strong>the effect is positive with a probability of 97.90%</strong>. We call this index the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>Probability of Direction (pd)</strong></a>. It can, in fact, be computed more easily with the following:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(posteriors<span class="op">$</span>feedsunflower)</a></code></pre></div>
+<pre><code>## # Probability of Direction (pd):
+## 
+## pd = 97.82%</code></pre>
+<p>Interestingly, it so happens that <strong>this index is (in <em>most</em> of the cases) highly correlated to the frequentist <em>p</em>-value</strong>. We could almost roughly infer the corresponding <em>p</em>-value with a simple transformation:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">pd &lt;-<span class="st"> </span><span class="fl">97.90</span></a>
+<a class="sourceLine" id="cb42-2" title="2">onesided_p &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>pd <span class="op">/</span><span class="st"> </span><span class="dv">100</span>  </a>
+<a class="sourceLine" id="cb42-3" title="3">twosided_p &lt;-<span class="st"> </span>onesided_p <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb42-4" title="4">twosided_p</a></code></pre></div>
+<pre><code>## [1] 0.042</code></pre>
+<p>If we ran our model in the frequentist framework, we should approximately observe an effect with a <em>p</em>-value of 0.04. <strong>Is that true?</strong></p>
 </div>
 <div id="comparison-to-frequentist" class="section level3">
 <h3 class="hasAnchor">
 <a href="#comparison-to-frequentist" class="anchor"></a>Comparison to frequentist</h3>
-<p><strong>Are these conclusions different from the ones obtained via a frequentist regression?</strong> Let’s see.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(weight <span class="op">~</span><span class="st"> </span>feed, <span class="dt">data=</span>data) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb38-2" title="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(weight <span class="op">~</span><span class="st"> </span>feed, <span class="dt">data=</span>data) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb44-2" title="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>()</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = weight ~ feed, data = data)
@@ -385,26 +405,27 @@
 ## Residual standard error: 57 on 21 degrees of freedom
 ## Multiple R-squared:  0.185,  Adjusted R-squared:  0.146 
 ## F-statistic: 4.77 on 1 and 21 DF,  p-value: 0.0405</code></pre>
-<p>TBD.</p>
+<p>The frequentist model tells us that the difference is <strong>positive and significant</strong> (beta = 52.01, p = 0.04).</p>
+<p><strong>Altough we arrived to a similar conclusion, the Bayesian framework allowed us to develop a more profound and intuitive understanding of our effect, and of the uncertainty of its estimation.</strong></p>
 </div>
 </div>
 <div id="all-with-one-function" class="section level2">
 <h2 class="hasAnchor">
 <a href="#all-with-one-function" class="anchor"></a>All with one function</h2>
-<p>We went through extracting posteriors and computing the different indices. <strong>But what if I told you that we can do all of this, and more, with only one function?</strong></p>
+<p>And yet, I agree, it was a bit <strong>tedious</strong> to extract and compute all the indices. <strong>But what if I told you that we can do all of this, and more, with only one function?</strong></p>
 <blockquote>
 <p><strong>Behold, <code>describe_posterior</code>!</strong></p>
 </blockquote>
-<p>Let’s run this function <strong>directly</strong> on the model:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model)</a></code></pre></div>
+<p>This function computes all of the afored mentioned indices, and can be run directly on the model:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model)</a></code></pre></div>
 <pre><code>##       Parameter Median MAD CI_low CI_high  pd ROPE_Percentage
 ## 1   (Intercept)    277  18  248.8     308 100            0.00
 ## 2 feedsunflower     51  24    6.2      89  98            0.05
 ##   ROPE_Equivalence
 ## 1         rejected
 ## 2         rejected</code></pre>
-<p>There we have it! The <strong>median</strong>, the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE percentage</strong>!</p>
-<p>TBD.</p>
+<p><strong>Tada!</strong> There we have it! The <strong>median</strong>, the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE percentage</strong>!</p>
+<p>Understanding and describing posterior distributions is just one aspect of Bayesian modelling… <strong>Are you ready for more?</strong> <a href="https://easystats.github.io/bayestestR/articles/example2_GLM.html"><strong>Click here</strong></a> to see the next example.</p>
 </div>
   </div>
 
@@ -414,7 +435,7 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#loading-the-packages">Loading the packages</a></li>
-      <li><a href="#a-simple-linear-model-aka-a-regression">A simple linear Model (<em>aka</em> a regression)</a></li>
+      <li><a href="#a-simple-linear-model-aka-a-regression">A simple linear model (<em>aka</em> a regression)</a></li>
       <li><a href="#a-linear-model-with-a-categorical-predictor">A linear model with a categorical predictor</a></li>
       <li><a href="#all-with-one-function">All with one function</a></li>
       </ul>

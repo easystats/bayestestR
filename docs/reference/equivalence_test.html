@@ -113,7 +113,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/example1_GLM.html">1. Bayesian (General) Linear Models</a>
+      <a href="../articles/example1_LM.html">1. Linear Models</a>
+    </li>
+    <li>
+      <a href="../articles/example2_GLM.html">2. General Linear Models</a>
     </li>
   </ul>
 </li>
@@ -288,7 +291,7 @@ for the output.</p></td>
 #&gt; </span><span>  ROPE: [-0.10 0.10]
 #&gt; 
 #&gt;         H0 inside ROPE      95% HDI
-#&gt;  undecided      7.57 % [-2.00 1.98]
+#&gt;  undecided      7.36 % [-1.92 2.00]
 #&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
 #&gt; </span><span>  ROPE: [-0.10 0.10]
@@ -300,10 +303,10 @@ for the output.</p></td>
 #&gt; </span><span>  ROPE: [-0.10 0.10]
 #&gt; 
 #&gt;        H0 inside ROPE      50% HDI
-#&gt;  rejected      0.00 % [ 0.38 1.72]
+#&gt;  rejected      0.00 % [ 0.48 1.85]
 #&gt; 
 #&gt;         H0 inside ROPE      99% HDI
-#&gt;  undecided      4.94 % [-1.50 3.24]
+#&gt;  undecided      5.45 % [-1.33 3.72]
 #&gt; </div><div class='input'>
 <span class='co'># print more digits</span>
 <span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'>equivalence_test</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>.99</span>))
@@ -312,10 +315,10 @@ for the output.</p></td>
 #&gt; </span><span>  ROPE: [-0.1000 0.1000]
 #&gt; 
 #&gt;        H0 inside ROPE          50% HDI
-#&gt;  rejected    0.0000 % [ 0.1215 1.4606]
+#&gt;  rejected    0.0000 % [ 0.2561 1.5780]
 #&gt; 
 #&gt;         H0 inside ROPE          99% HDI
-#&gt;  undecided    5.1463 % [-1.5328 3.8337]
+#&gt;  undecided    5.8527 % [-1.5328 3.5682]
 #&gt; </div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)

@@ -5,7 +5,8 @@ articles:
   bayestestR: bayestestR.html
   bayes_factors: bayes_factors.html
   credible_interval: credible_interval.html
-  example1_GLM: example1_GLM.html
+  example1_LM: example1_LM.html
+  example2_GLM: example2_GLM.html
   guidelines: guidelines.html
   indicesEstimationComparison: indicesEstimationComparison.html
   indicesExistenceComparison: indicesExistenceComparison.html
