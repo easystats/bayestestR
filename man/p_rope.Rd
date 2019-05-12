@@ -4,6 +4,7 @@
 \alias{p_rope}
 \alias{p_rope.numeric}
 \alias{p_rope.data.frame}
+\alias{p_rope.BFBayesFactor}
 \alias{p_rope.stanreg}
 \alias{p_rope.brmsfit}
 \title{ROPE-based p-value}
@@ -13,6 +14,9 @@ p_rope(x, ...)
 \method{p_rope}{numeric}(x, range = "default", precision = 0.1, ...)
 
 \method{p_rope}{data.frame}(x, range = "default", precision = 0.1, ...)
+
+\method{p_rope}{BFBayesFactor}(x, range = "default", precision = 0.1,
+  ...)
 
 \method{p_rope}{stanreg}(x, range = "default", precision = 0.1,
   effects = c("fixed", "random", "all"), parameters = NULL, ...)
@@ -59,6 +63,10 @@ p_rope(model)
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 p_rope(model)
+
+#' library(BayesFactor)
+bf <- ttestBF(x = rnorm(100, 1, 1))
+p_rope(bf)
 }
 
 }

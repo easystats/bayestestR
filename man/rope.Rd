@@ -5,6 +5,7 @@
 \alias{rope.default}
 \alias{rope.numeric}
 \alias{rope.data.frame}
+\alias{rope.BFBayesFactor}
 \alias{rope.stanreg}
 \alias{rope.brmsfit}
 \title{Region of Practical Equivalence (ROPE)}
@@ -17,6 +18,9 @@ rope(x, ...)
   verbose = TRUE, ...)
 
 \method{rope}{data.frame}(x, range = "default", ci = 0.9,
+  verbose = TRUE, ...)
+
+\method{rope}{BFBayesFactor}(x, range = "default", ci = 0.9,
   verbose = TRUE, ...)
 
 \method{rope}{stanreg}(x, range = "default", ci = 0.9,
@@ -92,6 +96,11 @@ library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 rope(model)
 rope(model, ci = c(.90, .95))
+
+library(BayesFactor)
+bf <- ttestBF(x = rnorm(100, 1, 1))
+rope(bf)
+rope(bf, ci = c(.90, .95))
 }
 
 }

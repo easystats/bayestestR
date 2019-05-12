@@ -28,7 +28,10 @@ This vignette can be referred to by citing the package:
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 options(knitr.kable.NA = '')
+knitr::opts_chunk$set(comment=">")
 options(digits=2)
+
+set.seed(333)
 ```
 
 Now that you've read the [**Get started**](https://easystats.github.io/bayestestR/articles/bayestestR.html) section, let's dive in the **subtleties of Bayesian modelling using R**.
@@ -58,7 +61,7 @@ model <- lm(Sepal.Length ~ Petal.Length, data=iris)
 summary(model)
 ```
 
-In this model, the linear relationship between **Petal.Length** and **Sepal.Length** is **positive and significant** (beta = 0.41, t(148) = 21.65, p < .001).
+In this model, the linear relationship between **Petal.Length** and **Sepal.Length** is **positive and significant** (beta = 0.41, t(148) = 21.6, p < .001).
 
 Let's do the **Bayesian version**:
 
@@ -89,7 +92,7 @@ head(posteriors)  # Show the first 6 rows
 
 As we can see, the parameters take the form of a long dataframe with two columns, corresponding to the **intercept** and **Petal.Length**. These columns contain the **posterior distributions** of these two parameters, *i.e.*, different plausible values.
 
-#### About posterior *draws*
+#### About posterior draws
 
 Let's look at the length of the posteriors.
 
@@ -164,33 +167,33 @@ Well, this is **close to the mean**. Maybe we could take the **mode**, the *peak
 map_estimate(posteriors$Petal.Length)
 ```
 
-Let's add these values to the posterior distribution:
+**They are all very close!** Let's visualise these values on the posterior distribution:
 
 ```{r message=FALSE, warning=FALSE}
 ggplot(posteriors, aes(x = Petal.Length)) +
   geom_density(fill = "orange") +
   # The mean in blue
-  geom_vline(xintercept=mean(posteriors$Petal.Length), color="blue", size=2) +
+  geom_vline(xintercept=mean(posteriors$Petal.Length), color="blue", size=1) +
   # The median in red
-  geom_vline(xintercept=median(posteriors$Petal.Length), color="red", size=2) +
+  geom_vline(xintercept=median(posteriors$Petal.Length), color="red", size=1) +
   # The MAP in purple
-  geom_vline(xintercept=map_estimate(posteriors$Petal.Length), color="purple", size=2)
+  geom_vline(xintercept=map_estimate(posteriors$Petal.Length), color="purple", size=1)
 ```
 
-Well, all these values give very similar results. Thus, **we will chose the median**, as this value has a direct meaning from a probabilistic perspective: there is 50\% chance that the true effect is higher and 50\% chance that the effect is lower (as it *cuts* the distribution in two equal parts).
+Well, all these values give very similar results. Thus, **we will chose the median**, as this value has a direct meaning from a probabilistic perspective: **there is 50\% chance that the true effect is higher and 50\% chance that the effect is lower** (as it *cuts* the distribution in two equal parts).
 
 
 #### Uncertainty
 
-Now that the have a point-estimate, let's **describe the uncertainty**. We could compute the range:
+Now that the have a point-estimate, we have to **describe the uncertainty**. We could compute the range:
 
 ```{r message=FALSE, warning=FALSE}
 range(posteriors$Petal.Length)
 ```
 
-But does it make sense to include all these extreme values? Maybe not. Thus, we will compute a [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html). Long story short, it's kind of similar to a frequentist **confidence interval**, but it is easier to interpret and easier to compute. And it makes more sense.
+But does it make sense to include all these extreme values? Probably not. Thus, we will compute a [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html). Long story short, it's kind of similar to a frequentist **confidence interval**, but it is easier to interpret and easier to compute. And it makes more sense.
 
-We will compute this **credible interval** through the Highest Density Interval (HDI) method. It will give us the range containing the 90\% more probable effect values. **Note that we will use 90\% CIs instead of 95\% CIs as it is the case in the frequentist framework as the 90\% level gives more stable results**.
+We will compute this **credible interval** based on the [Highest Density Interval (HDI)](file:///C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/docs/reference/hdi.html). It will give us the range containing the 90\% more probable effect values. **Note that we will use 90\% CIs instead of 95\% CIs as it is the case in the frequentist framework as the 90\% level gives more stable results**.
 
 ```{r message=FALSE, warning=FALSE}
 hdi(posteriors$Petal.Length, ci=0.90)
@@ -250,7 +253,7 @@ median(posteriors$feedsunflower)
 hdi(posteriors$feedsunflower)
 ```
 
-It makes you fat by around `50.6` (the median). However, the uncertainty is quite high: **there is 90\% chance that the difference between the two feed types is between `9.15` and `91.34`.**
+It makes you fat by around `51` (the median). However, the uncertainty is quite high: **there is 90\% chance that the difference between the two feed types is between `6.21` and `88.67`.**
 
 ### ROPE Percentage
 
@@ -276,7 +279,7 @@ rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.90)
 ```
 
 
-**5.75\% of the 90\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is a bit too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
+**8.33\% of the 90\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is a bit too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
 
 Altough to be honest, I have **some doubts about this Prof Howard**. I don't really trust **his definition of ROPE**. Is there a more objective way of defining it?
 
@@ -288,7 +291,7 @@ rope_range <- c(-rope_value, rope_value)
 rope_range
 ```
 
-Let's redefine our ROPE as the region within the `[-6.17, 6.17]` range. However, note that this can be directly obtained by the `rope_range` function :)
+Let's redefine our ROPE as the region within the `[-6.2, 6.2]` range. However, note that this can be directly obtained by the `rope_range` function :)
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 rope_value <- rope_range(model)
@@ -315,7 +318,7 @@ n_positive <- posteriors %>%
 n_positive / nrow(posteriors) * 100
 ```
 
-We can conclude that **the effect is positive with a probability of 97.90\%**. We call this index the [**Probability of Direction (pd)**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html). It can, in fact, be computed more easily with the following:
+We can conclude that **the effect is positive with a probability of 97.82\%**. We call this index the [**Probability of Direction (pd)**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html). It can, in fact, be computed more easily with the following:
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 p_direction(posteriors$feedsunflower)
@@ -324,7 +327,7 @@ p_direction(posteriors$feedsunflower)
 Interestingly, it so happens that **this index is (in *most* of the cases) highly correlated to the frequentist *p*-value**. We could almost roughly infer the corresponding *p*-value with a simple transformation:
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
-pd <- 97.90
+pd <- 97.82
 onesided_p <- 1 - pd / 100  
 twosided_p <- onesided_p * 2
 twosided_p
@@ -343,7 +346,7 @@ lm(weight ~ feed, data=data) %>%
   summary()
 ```
 
-The frequentist model tells us that the difference is **positive and significant** (beta = 52.01, p = 0.04). 
+The frequentist model tells us that the difference is **positive and significant** (beta = 52, p = 0.04). 
 
 **Altough we arrived to a similar conclusion, the Bayesian framework allowed us to develop a more profound and intuitive understanding of our effect, and of the uncertainty of its estimation.**
 
