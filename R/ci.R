@@ -46,7 +46,13 @@
 #' @examples
 #' library(bayestestR)
 #'
-#' ci(rnorm(1000))
+#' posterior <- rnorm(1000)
+#' ci(posterior)
+#' ci(posterior, ci = c(.80, .90, .95))
+#'
+#' df <- data.frame(replicate(4, rnorm(100)))
+#' ci(df)
+#' ci(df, ci = c(.80, .90, .95))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -57,6 +63,11 @@
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' ci(model)
 #' ci(model, ci = c(.80, .90, .95))
+#'
+#' library(BayesFactor)
+#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' ci(bf)
+#' ci(bf, ci = c(.80, .90, .95))
 #' }
 #'
 #' @export
@@ -72,6 +83,25 @@ ci.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .credible_interval(x = x, ci = i, verbose = verbose)
   }))
+  class(out) <- unique(c("ci", class(out)))
+  out
+}
+
+
+#' @rdname ci
+#' @export
+ci.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
+  x <- .select_nums(x)
+
+  if (ncol(x) == 1) {
+    out <- ci(x[, 1], ci = ci, verbose = verbose, ...)
+  } else {
+    out <- sapply(x, ci, ci = ci, verbose = verbose, simplify = FALSE)
+    out <- do.call(rbind, args = c(.compact_list(out), make.row.names = FALSE))
+  }
+
+  out$Parameter <- names(x)
+
   class(out) <- unique(c("ci", class(out)))
   out
 }
@@ -96,6 +126,14 @@ ci.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"),
   .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose, fun = "ci")
 }
 
+
+#' @rdname ci
+#' @export
+ci.BFBayesFactor <- function(x, ci = .90, verbose = TRUE, ...) {
+  out <- ci(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}
 
 
 #' @importFrom stats quantile

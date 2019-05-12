@@ -58,6 +58,10 @@ p_map(model)
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 p_map(model)
+
+library(BayesFactor)
+bf <- ttestBF(x = rnorm(100, 1, 1))
+p_map(bf)
 }
 
 }
