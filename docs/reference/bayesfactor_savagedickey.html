@@ -250,8 +250,7 @@ Cognitive psychology, 60(3), 158-189.</p>
 #&gt; 1          1.2
 #&gt; ---
 #&gt; Method: Savage-Dickey density ratio
-#&gt; Test Value: 0</div><div class='input'>
-</div><span class='co'># NOT RUN {</span>
+#&gt; Test Value: 0</div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>stan_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
 <span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>stan_model</span>)

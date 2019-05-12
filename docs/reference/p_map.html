@@ -242,8 +242,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; </span><span>p (MAP) = 1.00%</div><div class='input'><span class='fu'>p_map</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>10</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># MAP-based p-value:
 #&gt; 
-#&gt; </span><span>p (MAP) = 0.00%</div><div class='input'>
-</div></span><span class='co'># NOT RUN {</span>
+#&gt; </span><span>p (MAP) = 0.00%</div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>p_map</span>(<span class='no'>model</span>)
