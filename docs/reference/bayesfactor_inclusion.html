@@ -205,6 +205,14 @@ the effect AND without any higher-order interactions with the effect.</p></td>
 
     <p>a data frame containing the prior and posterior probabilities, and BF (log) for each effect.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Inclusion Bayes factors answer the question: Given the observed data,
+how much more likely have models with a particular effect become, compared to
+models without that particular effect? In other words, on average - are
+models with effect X better than models without effect X? See also
+<a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>this vignette</a>.</p>
+    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Random effects in the <code>lme</code> style will be displayed as interactions:
@@ -249,7 +257,7 @@ Retrieved from https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measure
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>Type BFManual() to open the manual.</span>
 #&gt; <span class='message'>************</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'BayesFactor'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:testthat':</span>
+#&gt; <span class='message'>Attaching package: ‘BayesFactor’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:testthat’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    compare</span></div><div class='input'>
 <span class='no'>BF</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/generalTestBF'>generalTestBF</a></span>(<span class='no'>len</span> ~ <span class='no'>supp</span> * <span class='no'>dose</span>, <span class='no'>ToothGrowth</span>, <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -274,6 +282,8 @@ Retrieved from https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measure
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#note">Note</a></li>
 

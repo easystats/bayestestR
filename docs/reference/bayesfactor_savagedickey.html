@@ -231,7 +231,10 @@ can be interpereted as evidence against the null).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This method is used to examine if the hypothesis value is less or more likely given the observed data.</p>
+    <p>This method is used to examine if the hypothesis value is less or more
+likely given the observed data. For <code>stanreg</code> objects, if <code>prior = NULL</code>,
+the model is updated to incliude prior-information and then for each model
+parameter the prior is compared to the posterior distributon.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

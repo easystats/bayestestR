@@ -188,7 +188,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...</th>
-      <td><p>Fitted models (any models supported by <a href='https://CRAN.R-project.org/package=insight'><span class="pkg">insight</span></a>), all fit on the same data, or a single <code>BFBayesFactor</code> object (see 'Details').</p></td>
+      <td><p>Fitted models (any models supported by <span class="pkg">insight</span>), all fit on the same data, or a single <code>BFBayesFactor</code> object (see 'Details').</p></td>
     </tr>
     <tr>
       <th>denominator</th>
@@ -204,11 +204,11 @@ or a model to use as a denominator. Ignored for <code>BFBayesFactor</code>.</p><
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <ul>
-<li><p>For <code>brmsfit</code> or <code>stanreg</code> models, Bayes factors are computed using the <code>bridgesampling</code> package.</p><ul>
+<li><p>For <code>brmsfit</code> or <code>stanreg</code> models, Bayes factors are computed using the <a href='https://CRAN.R-project.org/package=bridgesampling'><span class="pkg">bridgesampling</span></a> package.</p><ul>
 <li><p><code>brmsfit</code> models must have been fitted with <code>save_all_pars = TRUE</code>.</p></li>
 <li><p><code>stanreg</code> models must have been fitted with a defined <code>diagnostic_file</code>.</p></li>
 </ul></li>
-<li><p>For <code>BFBayesFactor</code>, <code>bayesfactor_models</code> is mostly a wraparoud <code><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/extractBF-methods'>BayesFactor::extractBF</a></code>.</p></li>
+<li><p>For <code>BFBayesFactor</code>, <code>bayesfactor_models()</code> is mostly a wraparoud <code><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/extractBF-methods'>BayesFactor::extractBF()</a></code>.</p></li>
 <li><p>For all other model types (supported by <a href='https://CRAN.R-project.org/package=insight'><span class="pkg">insight</span></a>), BIC approximations are used to compute Bayes factors.</p></li>
 </ul><p>In order to correctly and precisely estimate Bayes Factors, a rule of thumb are
 the 4 P's: <strong>P</strong>roper <strong>P</strong>riors and <strong>P</strong>lentiful <strong>P</strong>osterior
@@ -217,10 +217,10 @@ the 4 P's: <strong>P</strong>roper <strong>P</strong>riors and <strong>P</strong
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <ul>
+<li><p>Gronau, Q. F., Wagenmakers, E. J., Heck, D. W., &amp; Matzke, D. (2019). A simple method for comparing complex models: Bayesian model comparison for hierarchical multinomial processing tree models using Warp-III bridge sampling. Psychometrika, 84(1), 261-284.</p></li>
 <li><p>Kass, R. E., &amp; Raftery, A. E. (1995). Bayes Factors. Journal of the American Statistical Association, 90(430), 773-795.</p></li>
 <li><p>Robert, C. P. (2016). The expected demise of the Bayes factor. Journal of Mathematical Psychology, 72, 33–37.</p></li>
 <li><p>Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin &amp; review, 14(5), 779-804.</p></li>
-<li><p>Gronau, Q. F., Wagenmakers, E. J., Heck, D. W., &amp; Matzke, D. (2019). A simple method for comparing complex models: Bayesian model comparison for hierarchical multinomial processing tree models using Warp-III bridge sampling. Psychometrika, 84(1), 261-284.</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
