@@ -47,7 +47,6 @@ library(bayestestR)
 
 p_map(rnorm(1000, 0, 1))
 p_map(rnorm(1000, 10, 1))
-
 \dontrun{
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)

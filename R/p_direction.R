@@ -22,7 +22,6 @@
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' p_direction(df)
 #' p_direction(df, method = "kernel")
-#'
 #' \dontrun{
 #' # rstanarm models
 #' # -----------------------------------------------
@@ -45,8 +44,6 @@
 #' p_direction(bf)
 #' p_direction(bf, method = "kernel")
 #' }
-#'
-#'
 #'
 #' @export
 p_direction <- function(x, ...) {
@@ -72,7 +69,7 @@ p_direction.numeric <- function(x, method = "direct", ...) {
       )
     )
   } else {
-    dens <- estimate_density(x, method=method, precision = 2^10, extend = TRUE, ...)
+    dens <- estimate_density(x, method = method, precision = 2^10, extend = TRUE, ...)
     if (length(x[x > 0]) > length(x[x < 0])) {
       dens <- dens[dens$x > 0, ]
     } else {
@@ -94,9 +91,9 @@ p_direction.numeric <- function(x, method = "direct", ...) {
 #' @rdname p_direction
 #' @export
 p_direction.data.frame <- function(x, method = "direct", ...) {
-  if(ncol(x) == 1){
+  if (ncol(x) == 1) {
     pd <- p_direction(x[, 1], method = method, ...)
-  } else{
+  } else {
     pd <- sapply(.select_nums(x), p_direction, method = method, simplify = TRUE, ...)
   }
 
@@ -108,7 +105,6 @@ p_direction.data.frame <- function(x, method = "direct", ...) {
   )
   class(out) <- c("p_direction", class(out))
   out
-
 }
 
 
@@ -116,7 +112,6 @@ p_direction.data.frame <- function(x, method = "direct", ...) {
 #' @importFrom insight get_parameters
 #' @keywords internal
 .p_direction_models <- function(x, effects, component, parameters, method = "direct", ...) {
-
   out <- p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, ...)
   out$Parameter <- .get_parameter_names(x, effects = effects, component = component, parameters = parameters)
 
@@ -174,10 +169,10 @@ p_direction.BFBayesFactor <- function(x, method = "direct", ...) {
 #' @inheritParams base::as.numeric
 #' @method as.numeric p_direction
 #' @export
-as.numeric.p_direction <- function(x, ...){
-  if("data.frame" %in% class(x)){
+as.numeric.p_direction <- function(x, ...) {
+  if ("data.frame" %in% class(x)) {
     return(as.numeric(as.vector(x$pd)))
-  } else{
+  } else {
     return(as.vector(x))
   }
 }

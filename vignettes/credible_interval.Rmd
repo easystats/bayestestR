@@ -33,9 +33,9 @@ set.seed(333)
 ```
 
 
-# What is a *Credible Interval*?
+# What is a *Credible* Interval?
 
-Credible intervals are an important concept in Bayesian statistics. Its core purpose is to describe and summarise **the uncertainty** related to your parameters. In this regards, it could appear as quite similar to the frequentist **Confidence Intervals**. While their goal is similar, their statistical meaning is very different. Indeed, while the latter is obtained through a complex algorithm full of rarely-tested assumptions and approximations, the credible intervals are fairly straightforward to compute. 
+Credible intervals are an important concept in Bayesian statistics. Its core purpose is to describe and summarise **the uncertainty** related to your parameters. In this regards, it could appear as quite similar to the frequentist **Confidence Intervals**. However, while their goal is similar, **their statistical definition annd meaning is very different**. Indeed, while the latter is obtained through a complex algorithm full of rarely-tested assumptions and approximations, the credible intervals are fairly straightforward to compute. 
 
 As the Bayesian inference returns a distribution of possible effect values (the posterior), the credible interval is just the range containing a particular percentage of probable values. For instance, the 95\% credible interval simply is the central portion of the posterior distribution that contains 95\% of the values. 
 
@@ -67,7 +67,7 @@ ci_eti <- ci(posterior)
 posterior %>% 
   estimate_density(extend=TRUE) %>% 
   ggplot(aes(x=x, y=y)) +
-  geom_area(fill="pink") +
+  geom_area(fill="orange") +
   theme_classic() +
   # HDI in blue
   geom_vline(xintercept=ci_hdi$CI_low, color="royalblue", size=3) +
@@ -77,9 +77,9 @@ posterior %>%
   geom_vline(xintercept=ci_eti$CI_high, color="red", size=1)
 ```
 
-> **But these are exactly the same?**
+> **These are exactly the same...**
 
-It seems like it. But is it also the case for other types of distributions?
+But is it also the case for other types of distributions?
 
 ```{r warning=FALSE, message=FALSE}
 library(bayestestR)

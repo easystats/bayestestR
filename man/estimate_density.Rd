@@ -61,7 +61,6 @@ density_default <- estimate_density(x, extend = FALSE)
 hist(x, prob = TRUE)
 lines(density_extended$x, density_extended$y, col = "red", lwd = 3)
 lines(density_default$x, density_default$y, col = "black", lwd = 3)
-
 }
 \references{
 Deng, H., \& Wickham, H. (2011). Density estimation in R. Electronic publication.

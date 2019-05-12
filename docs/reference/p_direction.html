@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
       </span>
     </div>
 
@@ -125,13 +125,22 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/credible_interval.html">Credible Intervals</a>
+    </li>
+    <li>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+    </li>
+    <li>
+      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+    </li>
+    <li>
+      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+    </li>
+    <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
     </li>
     <li>
       <a href="../articles/indicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
-    </li>
-    <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
     </li>
   </ul>
 </li>
@@ -177,6 +186,9 @@
 <span class='co'># S3 method for numeric</span>
 <span class='fu'>p_direction</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"direct"</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>p_direction</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"direct"</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>p_direction</span>(<span class='no'>x</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
   <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"direct"</span>, <span class='no'>...</span>)
@@ -202,7 +214,7 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>Can be <code>"simple"</code> or <code>"AUC"</code>. If <code>"simple"</code> (default), the computation is based on the raw ratio of samples superior and inferior to 0. If <code>"AUC"</code>., the result is based on the <a href='area_under_curve.html'>Area under the Curve (AUC)</a>.</p></td>
+      <td><p>Can be <code>"direct"</code> or one of methods of <a href='estimate_density.html'>density estimation</a>, such as <code>"kernel"</code>, <code>"logspline"</code> or <code>"KernSmooth"</code>. If <code>"direct"</code> (default), the computation is based on the raw ratio of samples superior and inferior to 0. Else, the result is based on the <a href='area_under_curve.html'>Area under the Curve (AUC)</a> of the estimated <a href='estimate_density.html'>density</a> function.</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -234,22 +246,51 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
 <span class='co'># Simulate a posterior distribution of mean 1 and SD 1</span>
+<span class='co'># ----------------------------------------------------</span>
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='fu'>p_direction</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Probability of Direction (pd):
 #&gt; 
-#&gt; </span><span>pd = 83.70%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='kw'>raw</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
+#&gt; </span><span>pd = 83.70%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
 #&gt; 
-#&gt; </span><span>pd = 83.70%</div></span><span class='co'># NOT RUN {</span>
+#&gt; </span><span>pd = 83.21%</div><div class='input'>
+<span class='co'># Simulate a dataframe of posterior distributions</span>
+<span class='co'># -----------------------------------------------</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
+<span class='fu'>p_direction</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
+#&gt; 
+#&gt; </span><span>  - X1: pd = 54.00%
+#&gt;   - X2: pd = 55.00%
+#&gt;   - X3: pd = 52.00%
+#&gt;   - X4: pd = 50.00%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
+#&gt; 
+#&gt; </span><span>  - X1: pd = 52.26%
+#&gt;   - X2: pd = 52.94%
+#&gt;   - X3: pd = 50.84%
+#&gt;   - X4: pd = 51.87%</div><div class='input'>
+</div></span><span class='co'># NOT RUN {</span>
+<span class='co'># rstanarm models</span>
+<span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>p_direction</span>(<span class='no'>model</span>)
-<span class='fu'>p_direction</span>(<span class='no'>model</span>, <span class='kw'>raw</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>p_direction</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)
 
+<span class='co'># brms models</span>
+<span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>p_direction</span>(<span class='no'>model</span>)
-<span class='fu'>p_direction</span>(<span class='no'>model</span>, <span class='kw'>raw</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>p_direction</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)
+
+<span class='co'># BayesFactor objects</span>
+<span class='co'># -----------------------------------------------</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>BayesFactor</span>)
+<span class='no'>bf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/ttestBF'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
+<span class='fu'>p_direction</span>(<span class='no'>bf</span>)
+<span class='fu'>p_direction</span>(<span class='no'>bf</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)
 <span class='co'># }</span><div class='input'>
+
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

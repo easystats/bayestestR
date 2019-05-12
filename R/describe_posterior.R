@@ -60,10 +60,9 @@ describe_posterior.data.frame <- function(posteriors, estimate = "median", ci = 
   # Point estimates
   out <- data.frame("Parameter" = colnames(posteriors))
 
-  if(!is.null(estimate)){
-
+  if (!is.null(estimate)) {
     estimate_list <- tolower(c(estimate))
-    if ("all" %in% estimate_list){
+    if ("all" %in% estimate_list) {
       estimate_list <- c("median", "mean", "map")
     }
 
@@ -82,7 +81,6 @@ describe_posterior.data.frame <- function(posteriors, estimate = "median", ci = 
     if ("map" %in% estimate_list) {
       out$MAP <- unlist(sapply(posteriors, map_estimate, ...))
     }
-
   }
 
 
@@ -126,7 +124,7 @@ describe_posterior.data.frame <- function(posteriors, estimate = "median", ci = 
   if (!is.null(test)) {
     test_list <- tolower(c(test))
 
-    if ("all" %in% test_list){
+    if ("all" %in% test_list) {
       test_list <- c("pd", "rope", "p_map", "bayesfactor")
     }
     if ("pd" %in% test_list | "p_direction" %in% test_list | "pdir" %in% test_list | "mpe" %in% test_list) {

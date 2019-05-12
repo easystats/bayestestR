@@ -87,9 +87,9 @@ p_rope.numeric <- function(x, range = "default", precision = .1, ...) {
 #' @rdname p_rope
 #' @export
 p_rope.data.frame <- function(x, range = "default", precision = .1, ...) {
-  if(ncol(x) == 1){
+  if (ncol(x) == 1) {
     p_ROPE <- p_rope(x[, 1], range = range, precision = precision, ...)
-  } else{
+  } else {
     p_ROPE <- sapply(.select_nums(x), p_rope, range = range, precision = precision, simplify = TRUE, ...)
   }
 
@@ -101,7 +101,6 @@ p_rope.data.frame <- function(x, range = "default", precision = .1, ...) {
   )
   class(out) <- c("p_rope", class(out))
   out
-
 }
 
 
@@ -172,10 +171,10 @@ p_rope.brmsfit <- function(x, range = "default", precision = .1, effects = c("fi
 #' @inheritParams base::as.numeric
 #' @method as.numeric p_rope
 #' @export
-as.numeric.p_rope <- function(x, ...){
-  if("data.frame" %in% class(x)){
+as.numeric.p_rope <- function(x, ...) {
+  if ("data.frame" %in% class(x)) {
     return(as.numeric(as.vector(x$p_ROPE)))
-  } else{
+  } else {
     return(as.vector(x))
   }
 }

@@ -30,7 +30,6 @@
 #' hist(x, prob = TRUE)
 #' lines(density_extended$x, density_extended$y, col = "red", lwd = 3)
 #' lines(density_default$x, density_default$y, col = "black", lwd = 3)
-#'
 #' @references Deng, H., \& Wickham, H. (2011). Density estimation in R. Electronic publication.
 #'
 #' @importFrom stats density
@@ -41,7 +40,7 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 
   # Range
   x_range <- range(x)
-  if(extend){
+  if (extend) {
     extension_scale <- diff(x_range) * extend_scale
     x_range[1] <- x_range[1] - extension_scale
     x_range[2] <- x_range[2] + extension_scale

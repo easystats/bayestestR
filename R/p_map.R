@@ -12,7 +12,6 @@
 #'
 #' p_map(rnorm(1000, 0, 1))
 #' p_map(rnorm(1000, 10, 1))
-#'
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
@@ -56,9 +55,9 @@ p_map.numeric <- function(x, precision = 2^10, ...) {
 
 #' @export
 p_map.data.frame <- function(x, precision = 2^10, ...) {
-  if(ncol(x) == 1){
+  if (ncol(x) == 1) {
     p_MAP <- p_map(x[, 1], precision = precision, ...)
-  } else{
+  } else {
     p_MAP <- sapply(.select_nums(x), p_map, precision = precision, simplify = TRUE, ...)
   }
 
@@ -70,7 +69,6 @@ p_map.data.frame <- function(x, precision = 2^10, ...) {
   )
   class(out) <- c("p_map", class(out))
   out
-
 }
 
 
@@ -129,10 +127,10 @@ p_map.brmsfit <- function(x, precision = 2^10, effects = c("fixed", "random", "a
 #' @inheritParams base::as.numeric
 #' @method as.numeric p_map
 #' @export
-as.numeric.p_map <- function(x, ...){
-  if("data.frame" %in% class(x)){
+as.numeric.p_map <- function(x, ...) {
+  if ("data.frame" %in% class(x)) {
     return(as.numeric(as.vector(x$p_MAP)))
-  } else{
+  } else {
     return(as.vector(x))
   }
 }

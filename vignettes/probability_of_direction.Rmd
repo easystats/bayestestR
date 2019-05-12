@@ -43,7 +43,7 @@ Beyond its simplicity of interpretation, understanding and computation, this ind
 - It is strongly correlated with the frequentist *p*-value, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.
 
 
-```{r message=FALSE, warning=FALSE, echo=FALSE, fig.cap="Correlation between the frequentist p-value and the probability of direction (pd)"}
+```{r message=FALSE, warning=FALSE, echo=FALSE, fig.cap="Correlation between the frequentist p-value and the probability of direction (pd)", fig.align='center'}
 library(dplyr)
 library(tidyr)
 library(ggplot2)
@@ -81,7 +81,7 @@ Let's compare the 4 available methods, the **direct** method and 3 **density-bas
 
 Let's start by testing the proximity and similarity of the results obtained by different methods.
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, fig.align='center'}
 library(bayestestR)
 library(logspline)
 library(KernSmooth)
@@ -139,7 +139,7 @@ for(i in 1:25){
 data <- as.data.frame(sapply(data, as.numeric))
 ```
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, fig.align='center'}
 library(tidyr)
 library(dplyr)
 

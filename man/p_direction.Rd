@@ -67,7 +67,6 @@ p_direction(posterior, method = "kernel")
 df <- data.frame(replicate(4, rnorm(100)))
 p_direction(df)
 p_direction(df, method = "kernel")
-
 \dontrun{
 # rstanarm models
 # -----------------------------------------------
@@ -90,7 +89,5 @@ bf <- ttestBF(x = rnorm(100, 1, 1))
 p_direction(bf)
 p_direction(bf, method = "kernel")
 }
-
-
 
 }

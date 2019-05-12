@@ -115,7 +115,7 @@ distribution_beta <- function(n, shape1, shape2, ncp = 0, random = FALSE, ...) {
   if (random) {
     stats::rbeta(n, shape1, shape2, ncp = ncp)
   } else {
-    stats::qbeta(seq(1 / n, 1 - 1 / n, length.out = n), shape1, shape2, ncp = ncp,  ...)
+    stats::qbeta(seq(1 / n, 1 - 1 / n, length.out = n), shape1, shape2, ncp = ncp, ...)
   }
 }
 
