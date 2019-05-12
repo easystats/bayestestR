@@ -22,6 +22,12 @@
 #' In order to correctly and precisely estimate Bayes Factors, a rule of thumb are
 #' the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful \strong{P}osterior
 #' (i.e. probably at leat 40,000 samples instead of the default of 4,000).
+#' \cr \cr
+#' A Bayes factor greater than 1 can be interpereted as evidence against the null,
+#' at which one convention is that a Bayes factor greater than 3 can be considered
+#' as "substantial" evidence against the null (and vice versa, a Bayes factor
+#' smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
+#' (\cite{Wetzels et al. 2011}).
 #'
 #' @return A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs (log), that prints nicely.
 #'
@@ -76,6 +82,7 @@
 #'   \item Kass, R. E., & Raftery, A. E. (1995). Bayes Factors. Journal of the American Statistical Association, 90(430), 773-795.
 #'   \item Robert, C. P. (2016). The expected demise of the Bayes factor. Journal of Mathematical Psychology, 72, 33–37.
 #'   \item Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin & review, 14(5), 779-804.
+#'   \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., & Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 #' }
 #'
 #' @seealso update.BFGrid

@@ -12,13 +12,18 @@
 #' @param ... Currently not used.
 #'
 #' @return A data frame containing the Bayes factor representing by how
-#' much \emph{less} the null is likely under the posterior compared to the prior (larger than 1
-#' can be interpereted as evidence against the null).
+#' much \emph{less} the null is likely under the posterior compared to the prior.
 #'
 #' @details This method is used to examine if the hypothesis value is less or more
-#' likely given the observed data. For \code{stanreg} objects, if \code{prior = NULL},
-#' the model is updated to incliude prior-information and then for each model
-#' parameter the prior is compared to the posterior distributon.
+#' likely given the observed data. When posterior is a model (\code{stanreg}),
+#' posterior and prior samples are extracted for each parameter, and
+#' Savage-Dickey Bayes factors are computed for each parameter.
+#' \cr \cr
+#' A Bayes factor greater than 1 can be interpereted as evidence against the null,
+#' at which one convention is that a Bayes factor greater than 3 can be considered
+#' as "substantial" evidence against the null (and vice versa, a Bayes factor
+#' smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
+#' (\cite{Wetzels et al. 2011}).
 #'
 #' @examples
 #' library(bayestestR)
@@ -34,9 +39,10 @@
 #' }
 #'
 #' @references
-#' Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010). Bayesian
-#' hypothesis testing for psychologists: A tutorial on the Savage-Dickey method.
-#' Cognitive psychology, 60(3), 158-189.
+#' \itemize{
+#' \item Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.
+#' \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., & Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
+#' }
 #'
 #' @author Mattan S. Ben-Shachar
 #'
