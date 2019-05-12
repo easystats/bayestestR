@@ -5,18 +5,18 @@
 #'
 #' @author Mattan S. Ben-Shachar
 #'
-#' @param ... Fitted models (any models supported by \CRANpkg{insight}), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').
+#' @param ... Fitted models (any models supported by \pkg{insight}), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').
 #' @param denominator Either an integer indicating which of the models to use as the denominator,
 #' or a model to use as a denominator. Ignored for \code{BFBayesFactor}.
 #'
 #' @details
 #' \itemize{
-#'   \item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \code{bridgesampling} package.
+#'   \item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
 #'   \itemize{
 #'     \item \code{brmsfit} models must have been fitted with \code{save_all_pars = TRUE}.
 #'     \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
 #'   }
-#'   \item For \code{BFBayesFactor}, \code{bayesfactor_models} is mostly a wraparoud \code{BayesFactor::extractBF}.
+#'   \item For \code{BFBayesFactor}, \code{bayesfactor_models()} is mostly a wraparoud \code{BayesFactor::extractBF()}.
 #'   \item For all other model types (supported by \CRANpkg{insight}), BIC approximations are used to compute Bayes factors.
 #' }
 #' In order to correctly and precisely estimate Bayes Factors, a rule of thumb are
@@ -72,10 +72,10 @@
 #'
 #' @references
 #' \itemize{
+#'   \item Gronau, Q. F., Wagenmakers, E. J., Heck, D. W., & Matzke, D. (2019). A simple method for comparing complex models: Bayesian model comparison for hierarchical multinomial processing tree models using Warp-III bridge sampling. Psychometrika, 84(1), 261-284.
 #'   \item Kass, R. E., & Raftery, A. E. (1995). Bayes Factors. Journal of the American Statistical Association, 90(430), 773-795.
 #'   \item Robert, C. P. (2016). The expected demise of the Bayes factor. Journal of Mathematical Psychology, 72, 33–37.
 #'   \item Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin & review, 14(5), 779-804.
-#'   \item Gronau, Q. F., Wagenmakers, E. J., Heck, D. W., & Matzke, D. (2019). A simple method for comparing complex models: Bayesian model comparison for hierarchical multinomial processing tree models using Warp-III bridge sampling. Psychometrika, 84(1), 261-284.
 #' }
 #'
 #' @seealso update.BFGrid
