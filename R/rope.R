@@ -112,6 +112,8 @@ rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
   attr(out, "HDI_area") <- hdi_area
   attr(out, "data") <- x
 
+  class(out) <- c("rope", "rope_see", class(out))
+
   out
 }
 
@@ -132,7 +134,7 @@ rope.data.frame <- function(x, range = "default", ci = .90, verbose = TRUE, ...)
   attr(dat, "HDI_area") <- HDI_area_attributes
   attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
 
-  class(dat) <- c("rope", "data.frame")
+  class(dat) <- c("rope", "rope_see", "data.frame")
   dat
 }
 
@@ -167,7 +169,7 @@ rope.BFBayesFactor <- function(x, range = "default", ci = .90, verbose = TRUE, .
   )
 
   attr(rope, "HDI_area") <- c(.hdi_area$CI_low, .hdi_area$CI_high)
-  class(rope) <- c("rope", class(rope))
+  class(rope) <- c("rope", "rope_see", class(rope))
   rope
 }
 

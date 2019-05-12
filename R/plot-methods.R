@@ -14,3 +14,12 @@ plot.p_direction <- function(x, ...) {
   }
   NextMethod()
 }
+
+
+#' @export
+plot.rope <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot ROPE. Please install it.")
+  }
+  NextMethod()
+}
