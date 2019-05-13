@@ -31,11 +31,11 @@ describe_posterior <- function(posteriors, estimate = "median", ci = .90, ci_met
 
 
 #' @keywords internal
-.describe_posterior <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
+.describe_posterior <- function(x, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, ...) {
 
   # Point-estimates
   if (!is.null(estimate)) {
-    estimates <- point_estimate(posteriors, ...)
+    estimates <- point_estimate(x, estimate = estimate, dispersion = dispersion, ...)
   } else{
     estimates <- data.frame()
   }
@@ -44,28 +44,41 @@ describe_posterior <- function(posteriors, estimate = "median", ci = .90, ci_met
   if (!is.null(estimate)) {
     ci_method <- match.arg(ci_method, c("hdi", "quantile", "ci", "eti"))
     if(ci_method == "hdi"){
-      uncertainty <- hdi(posteriors, ci=ci)
+      uncertainty <- hdi(x, ci=ci)
     } else{
-      uncertainty <- ci(posteriors, ci=ci)
+      uncertainty <- ci(x, ci=ci)
     }
   } else{
     uncertainty <- data.frame()
   }
 
   # Effect Existence
-  if (!is.null(test)) {
-    test <- match.arg(test, c("pd", "p_direction", "pdir", "mpe",
-                              "rope", "equivalence", "equivalence_test", "equitest",
-                              "bf", "bayesfactor", "bayes_factor"), several.ok = TRUE)
+  test <- match.arg(test, c("pd", "p_direction", "pdir", "mpe",
+                            "rope", "equivalence", "equivalence_test", "equitest",
+                            "bf", "bayesfactor", "bayes_factor"), several.ok = TRUE)
 
-    # Probability of direction
-    if(any(c("pd", "p_direction", "pdir", "mpe") %in% test)){
-      test_rez <- p_direction(test_rez, ...)
-    }
+
+  # Probability of direction
+  if(any(c("pd", "p_direction", "pdir", "mpe") %in% test)){
+    test_pd <- p_direction(x, ...)
   } else{
-    test_rez <- data.frame()
+    test_pd <- data.frame()
   }
 
+  # Probability of direction
+  if(any(c("rope") %in% test)){
+    if(rope_full){
+      test_rope <- rope(x, range = rope_range, ci = 1, ...)
+    } else{
+      test_rope <- rope(x, range = rope_range, ci = ci, ...)
+    }
+  } else{
+    test_rope <- data.frame()
+  }
+
+  out <- merge(estimates, uncertainty)
+  out <- merge(out, test_pd)
+  out <- merge(out, test_rope)
 }
 
 
