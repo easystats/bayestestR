@@ -135,7 +135,7 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
   } else{
     test_equi <- data.frame("Parameter" = NA)
   }
-  test_rope <- merge(test_rope, test_equi)
+  test_rope <- merge(test_rope, test_equi, all = TRUE)
   test_rope <- test_rope[!names(test_rope) %in% c("HDI_low", "HDI_high")]
 
 
