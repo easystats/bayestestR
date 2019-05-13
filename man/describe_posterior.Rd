@@ -36,8 +36,6 @@ describe_posterior(posteriors, estimate = "median", ci = 0.9,
 
 \item{rope_full}{If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.}
 
-\item{dispersion}{Indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
-
 \item{...}{Additional arguments to be passed to or from methods.}
 
 \item{effects}{Should variables for fixed effects, random effects

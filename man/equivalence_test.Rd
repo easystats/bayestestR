@@ -5,6 +5,7 @@
 \alias{equivalence_test.default}
 \alias{equivalence_test.numeric}
 \alias{equivalence_test.data.frame}
+\alias{equivalence_test.BFBayesFactor}
 \alias{equivalence_test.stanreg}
 \alias{equivalence_test.brmsfit}
 \title{Test for Practical Equivalence}
@@ -18,6 +19,9 @@ equivalence_test(x, ...)
 
 \method{equivalence_test}{data.frame}(x, range = "default", ci = 0.95,
   verbose = TRUE, ...)
+
+\method{equivalence_test}{BFBayesFactor}(x, range = "default",
+  ci = 0.9, verbose = TRUE, ...)
 
 \method{equivalence_test}{stanreg}(x, range = "default", ci = 0.95,
   parameters = NULL, verbose = TRUE, ...)
@@ -112,6 +116,11 @@ library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 equivalence_test(model)
 equivalence_test(model, ci = c(.50, .99))
+
+ibrary(BayesFactor)
+bf <- ttestBF(x = rnorm(100, 1, 1))
+equivalence_test(bf)
+equivalence_test(bf, ci = c(.50, .99))
 }
 
 }

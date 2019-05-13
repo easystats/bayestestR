@@ -253,23 +253,23 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='fu'>p_direction</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Probability of Direction (pd):
 #&gt; 
-#&gt; </span><span>pd = 83.30%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
+#&gt; </span><span>pd = 83.80%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
 #&gt; 
-#&gt; </span><span>pd = 82.57%</div><div class='input'>
+#&gt; </span><span>pd = 82.56%</div><div class='input'>
 <span class='co'># Simulate a dataframe of posterior distributions</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>p_direction</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
 #&gt; 
-#&gt; </span><span>  - X1: pd = 51.00%
-#&gt;   - X2: pd = 56.00%
-#&gt;   - X3: pd = 56.00%
-#&gt;   - X4: pd = 53.00%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
+#&gt; </span><span>  - X1: pd = 50.00%
+#&gt;   - X2: pd = 57.00%
+#&gt;   - X3: pd = 50.00%
+#&gt;   - X4: pd = 52.00%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
 #&gt; 
-#&gt; </span><span>  - X1: pd = 49.83%
-#&gt;   - X2: pd = 54.50%
-#&gt;   - X3: pd = 54.68%
-#&gt;   - X4: pd = 51.59%</div></span><span class='co'># NOT RUN {</span>
+#&gt; </span><span>  - X1: pd = 49.21%
+#&gt;   - X2: pd = 55.60%
+#&gt;   - X3: pd = 53.72%
+#&gt;   - X4: pd = 48.93%</div></span><span class='co'># NOT RUN {</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
