@@ -14,13 +14,41 @@
 #'
 #'
 #' @examples
-#' describe_posterior(rnorm(1000))
-#' describe_posterior(rnorm(1000), estimate="all", dispersion = TRUE, test="all")
+#' x <- rnorm(1000)
+#' describe_posterior(x)
+#' describe_posterior(x, estimate="all", dispersion = TRUE, test="all")
+#' describe_posterior(x, ci=c(0.80, 0.90))
 #'
 #' df <- data.frame(replicate(4, rnorm(100)))
-#' describe_posterior(df, estimate = "all", dispersion = TRUE)
+#' describe_posterior(df)
 #' describe_posterior(df, estimate="all", dispersion = TRUE, test="all")
+#' describe_posterior(df, ci=c(0.80, 0.90))
 #'
+#' \dontrun{
+#' # rstanarm models
+#' # -----------------------------------------------
+#' library(rstanarm)
+#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+#' describe_posterior(model)
+#' describe_posterior(model, estimate="all", dispersion = TRUE, test="all")
+#' describe_posterior(model, ci=c(0.80, 0.90))
+#'
+#' # brms models
+#' # -----------------------------------------------
+#' library(brms)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' describe_posterior(model)
+#' describe_posterior(model, estimate="all", dispersion = TRUE, test="all")
+#' describe_posterior(model, ci=c(0.80, 0.90))
+#'
+#' # BayesFactor objects
+#' # -----------------------------------------------
+#' library(BayesFactor)
+#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' describe_posterior(bf)
+#' describe_posterior(bf, estimate="all", dispersion = TRUE, test="all")
+#' describe_posterior(bbf, ci=c(0.80, 0.90))
+#' }
 #'
 #' @importFrom stats mad median sd setNames
 #'
@@ -111,13 +139,6 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
 
 
 
-
-
-
-
-
-
-
 #' @export
 describe_posterior.numeric <- function(posteriors, estimate = "median", dispersion = TRUE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, ...) {
   .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, ...)
@@ -128,6 +149,25 @@ describe_posterior.double <- describe_posterior.numeric
 
 #' @export
 describe_posterior.data.frame <- describe_posterior.numeric
+
+
+
+
+#' @inheritParams insight::get_parameters
+#' @rdname describe_posterior
+#' @export
+describe_posterior.stanreg <- function(posteriors, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, effects = effects, parameters = parameters, ...)
+}
+
+#' @inheritParams insight::get_parameters
+#' @rdname describe_posterior
+#' @export
+old_describe_posterior.brmsfit <- function(posteriors, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+  .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, effects = effects, component = component, parameters = parameters, ...)
+}
+
+
 
 
 
@@ -269,24 +309,3 @@ old_describe_posterior.data.frame <- function(posteriors, estimate = "median", c
 }
 
 
-#' @inheritParams insight::get_parameters
-#' @rdname describe_posterior
-#' @export
-old_describe_posterior.stanreg <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
-  effects <- match.arg(effects)
-  x <- insight::get_parameters(posteriors, effects = effects, parameters = parameters)
-
-  describe_posterior(x, ci = ci, ci_method = ci_method, estimate = estimate, test = test, rope_range = rope_range, rope_full = rope_full, dispersion = dispersion, ...)
-}
-
-#' @inheritParams insight::get_parameters
-#' @rdname describe_posterior
-#' @export
-old_describe_posterior.brmsfit <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-
-  x <- insight::get_parameters(posteriors, effects = effects, component = component, parameters = parameters)
-
-  describe_posterior(x, ci = ci, ci_method = ci_method, estimate = estimate, test = test, rope_range = rope_range, rope_full = rope_full, dispersion = dispersion, ...)
-}
