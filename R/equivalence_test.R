@@ -254,7 +254,7 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .95, parameters 
     results <- results[results$pvalue < 0.05 & results$Var1 != results$Var2, ]
 
     if (nrow(results) > 0 && any(results$corr >= 0.5)) {
-      warning("Some parameters show strong correlations. Note that joint parameter distributions may shift towards or away from the ROPE when covariates are not independent. Hence, a test for practical equivalence may have inappropriate results.", call. = FALSE)
+      warning("Some parameters show strong correlations, leading to inappropriate results. See 'Details' in '?equivalence_test'.", call. = FALSE)
     }
   }
 }
