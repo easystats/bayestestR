@@ -71,6 +71,11 @@
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' equivalence_test(model)
 #' equivalence_test(model, ci = c(.50, .99))
+#'
+#' ibrary(BayesFactor)
+#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' equivalence_test(bf)
+#' equivalence_test(bf, ci = c(.50, .99))
 #' }
 #'
 #' @importFrom insight print_color
@@ -146,13 +151,12 @@ equivalence_test.data.frame <- function(x, range = "default", ci = .95, verbose 
 
 
 
-# Wait for equivalence_test.data.frame
-# #' @rdname equivalence_test
-# #' @export
-# equivalence_test.BFBayesFactor <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
-#   out <- equivalence_test(insight::get_parameters(x), range = range, ci = ci, verbose = verbose, ...)
-#   out
-# }
+#' @rdname equivalence_test
+#' @export
+equivalence_test.BFBayesFactor <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
+  out <- equivalence_test(insight::get_parameters(x), range = range, ci = ci, verbose = verbose, ...)
+  out
+}
 
 
 
