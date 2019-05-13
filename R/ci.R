@@ -83,7 +83,7 @@ ci.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .credible_interval(x = x, ci = i, verbose = verbose)
   }))
-  class(out) <- unique(c("ci", "ci_see", class(out)))
+  class(out) <- unique(c("ci", "see_ci", class(out)))
   out
 }
 
@@ -113,7 +113,7 @@ ci.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
 
   out$Parameter <- names(x)
 
-  class(out) <- unique(c("ci", "ci_see", class(out)))
+  class(out) <- unique(c("ci", "see_ci", class(out)))
   out
 }
 
