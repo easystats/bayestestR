@@ -182,11 +182,31 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for stanreg</span>
+<span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for brmsfit</span>
+<span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for BFBayesFactor</span>
+<span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>Vector representing a posterior distribution. Can also be a
+<code>stanreg</code> or <code>brmsfit</code> model.</p></td>
+    </tr>
     <tr>
       <th>estimate</th>
       <td><p>The <a href='https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html'>point-estimate(s)</a> to compute. Can be a character or a list with "median", "mean", "MAP" or "all".</p></td>
@@ -199,17 +219,67 @@
       <th>...</th>
       <td><p>Additional arguments to be passed to or from methods.</p></td>
     </tr>
+    <tr>
+      <th>effects</th>
+      <td><p>Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>parameters</th>
+      <td><p>Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+filtered by default, so only parameters that typically appear in the
+<code><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
+for the output.</p></td>
+    </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the model be returned? May be abbreviated. Only
+applies to <span class="pkg">brms</span>-models.</p></td>
+    </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
-<span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt;        Median
-#&gt; 1 -0.04459378</div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;       Median       MAD       Mean       SD       MAP
-#&gt; 1 0.06749555 0.9748701 0.06191005 0.962365 0.0792491</div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt;        Median
-#&gt; 1 0.009003838</div><div class='input'>
+<span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt;      Median
+#&gt; 1 -0.121871</div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;        Median      MAD        Mean       SD        MAP
+#&gt; 1 -0.03520619 1.029391 -0.02671112 1.010026 -0.0883505</div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt;        Median
+#&gt; 1 -0.03553678</div><div class='input'>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
+<span class='fu'>point_estimate</span>(<span class='no'>df</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   Parameter      Median       MAD        Mean        SD        MAP
+#&gt; 1        X1  0.06294551 0.8409773 -0.01361213 0.8803251  0.1985447
+#&gt; 2        X2 -0.10458773 0.9958177 -0.06656414 1.0919902 -0.2513890
+#&gt; 3        X3 -0.12467739 1.0273560 -0.08629742 1.0316331 -0.2647254
+#&gt; 4        X4  0.07238957 1.2117317  0.04403914 1.1182058  0.3976266</div><div class='input'><span class='fu'>point_estimate</span>(<span class='no'>df</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt;   Parameter      Median
+#&gt; 1        X1  0.06294551
+#&gt; 2        X2 -0.10458773
+#&gt; 3        X3 -0.12467739
+#&gt; 4        X4  0.07238957</div><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'># rstanarm models</span>
+<span class='co'># -----------------------------------------------</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='fu'>point_estimate</span>(<span class='no'>model</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>point_estimate</span>(<span class='no'>model</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))
 
+<span class='co'># brms models</span>
+<span class='co'># -----------------------------------------------</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='fu'>point_estimate</span>(<span class='no'>model</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>point_estimate</span>(<span class='no'>model</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))
+
+<span class='co'># BayesFactor objects</span>
+<span class='co'># -----------------------------------------------</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>BayesFactor</span>)
+<span class='no'>bf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/ttestBF'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
+<span class='fu'>point_estimate</span>(<span class='no'>bf</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>point_estimate</span>(<span class='no'>bf</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))
+<span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
