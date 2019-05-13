@@ -212,7 +212,8 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Credible Interval (CI) level. Default to 0.90 (90%).</p></td>
+      <td><p>Value or vector of probability of the interval (between 0 and 1)
+to be estimated. Named Credible Interval (CI) for consistency.</p></td>
     </tr>
     <tr>
       <th>ci_method</th>
@@ -231,33 +232,61 @@
       <td><p>If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the <code>ci</code> argument.</p></td>
     </tr>
     <tr>
+      <th>dispersion</th>
+      <td><p>if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Additional arguments to be passed to or from methods.</p></td>
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should variables for fixed effects, random effects
-or both be returned? Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>parameters</th>
       <td><p>Regular expression pattern that describes the parameters that
-should be returned.</p></td>
+should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+filtered by default, so only parameters that typically appear in the
+<code><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
+for the output.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should all predictor variables, predictor variables for the
-conditional model, the zero-inflated part of the model, the dispersion
-term or the instrumental variables be returned? Applies to models
-with zero-inflated and/or dispersion formula, or to models with instrumental
-variable (so called fixed-effects regressions). May be abbreviated.</p></td>
+      <td><p>Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the model be returned? May be abbreviated. Only
+applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt;        Median       MAD    CI_low CI_high   pd ROPE_Percentage ROPE_Equivalence
-#&gt; 1 -0.00935952 0.9259463 -1.690634 1.58772 50.7             9.2        undecided</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt;         Median       MAD    CI_low  CI_high   pd ROPE_Percentage
+#&gt; 1 -0.005473077 0.9636613 -1.405601 1.712907 50.2             8.5
+#&gt;   ROPE_Equivalence
+#&gt; 1        undecided</div><div class='input'>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
+<span class='fu'>describe_posterior</span>(<span class='no'>df</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   Parameter      Median       MAD        Mean        SD          MAP    CI_low
+#&gt; 1        X1  0.10526723 1.0253289  0.05899111 1.0194272  0.001657595 -1.689547
+#&gt; 2        X2  0.06909295 1.0267032  0.03713839 0.9703200 -0.023262587 -1.365789
+#&gt; 3        X3  0.01312073 0.9436938  0.03503264 0.9869062 -0.115885664 -1.681573
+#&gt; 4        X4 -0.09898537 1.1543220 -0.06861218 1.0414355 -0.108738311 -1.587608
+#&gt;    CI_high pd ROPE_Percentage ROPE_Equivalence
+#&gt; 1 1.510348 52               4        undecided
+#&gt; 2 1.758286 53               9        undecided
+#&gt; 3 1.539376 50               9        undecided
+#&gt; 4 1.526738 53               9        undecided</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>df</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt;   Parameter      Median       MAD          MAP    CI_low  CI_high pd
+#&gt; 1        X1  0.10526723 1.0253289  0.001657595 -1.689547 1.510348 52
+#&gt; 2        X2  0.06909295 1.0267032 -0.023262587 -1.365789 1.758286 53
+#&gt; 3        X3  0.01312073 0.9436938 -0.115885664 -1.681573 1.539376 50
+#&gt; 4        X4 -0.09898537 1.1543220 -0.108738311 -1.587608 1.526738 53
+#&gt;   ROPE_Percentage ROPE_Equivalence
+#&gt; 1               4        undecided
+#&gt; 2               9        undecided
+#&gt; 3               9        undecided
+#&gt; 4               9        undecided</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
