@@ -3,7 +3,7 @@
 #' Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 #'
 #' @param x Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
-#' @param range ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.
+#' @param range ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.
 #' @param ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.
 #'
 #' @inheritParams hdi
@@ -25,7 +25,7 @@
 #'   Kruschke (2010, 2011, 2014) suggests using the proportion of  the 95\%
 #'   (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the
 #'   ROPE as an index for "null-hypothesis" testing (as understood under the
-#'   Bayesian framework, see \link[=equivalence_test]{equivalence_test}).
+#'   Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
 #'
 #' @references \itemize{
 #' \item Cohen, J. (1988). Statistical power analysis for the behavioural sciences.
