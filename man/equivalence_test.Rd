@@ -70,7 +70,7 @@ Documentation is accessible for:
 For Bayesian models, the \strong{Test for Practical Equivalence} is based on the \emph{"HDI+ROPE decision rule"} (\cite{Kruschke, 2015, 2018}) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (i.e., a ROPE).
 
 Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, \cite{Kruschke (2018)}
-  suggest using the percentage of the 95\% (or 90\%, considered more stable)
+  suggests using the percentage of the 95\% (or 90\%, considered more stable)
   HDI that falls within the ROPE as a decision rule. If the HDI
   is completely outside the ROPE, the "null hypothesis" for this parameter is
   "rejected". If the ROPE completely covers the HDI, i.e. all most credible
@@ -78,7 +78,7 @@ Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, \cite{Kruschke (2018)}
   null hypothesis is accepted. Else, it’s undecided whether to accept or
   reject the null hypothesis. If the full ROPE is used (i.e., 100\% of the
   HDI), then the null hypothesis is rejected or accepted if the percentage
-  of the posterior within the ROPE is smaller than to 2.5\% or greater  than
+  of the posterior within the ROPE is smaller than to 2.5\% or greater than
   97.5\%. Desirable results are low proportions inside the ROPE  (the closer
   to zero the better) and the null hypothesis should be rejected.
   \cr \cr
@@ -99,7 +99,7 @@ Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, \cite{Kruschke (2018)}
   \cr \cr
   \code{equivalence_test()} performs a simple check for pairs of correlating
   parameters, but as there can be collinearity between more than two variables,
-  a first step to check the assumptions of this hypothesis testing it to look
+  a first step to check the assumptions of this hypothesis testing is to look
   at different pair plots. An even more sophisticated check is the projection
   predictive variable selection (\cite{Piironen and Vehtari 2017}).
 }
