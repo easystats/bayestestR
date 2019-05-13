@@ -148,6 +148,7 @@ rope.data.frame <- function(x, range = "default", ci = .90, verbose = TRUE, ...)
     out$tmp,
     stringsAsFactors = FALSE
   )
+  row.names(dat) <- NULL
 
   attr(dat, "HDI_area") <- HDI_area_attributes
   attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
