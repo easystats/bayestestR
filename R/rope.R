@@ -206,7 +206,7 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
   }
 
   # check for possible collinearity that might bias ROPE
-  if (verbose) .check_parameter_correlation(x, "rope")
+  if (verbose) .check_multicollinearity(x, "rope")
 
   list <- lapply(c("fixed", "random"), function(.x) {
     parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
@@ -282,7 +282,7 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
   }
 
   # check for possible collinearity that might bias ROPE
-  if (verbose) .check_parameter_correlation(x, "rope")
+  if (verbose) .check_multicollinearity(x, "rope")
 
   .get_rope <- function(.x, .y) {
     parms <- insight::get_parameters(x, effects = .x, component = .y, parameters = parameters)
