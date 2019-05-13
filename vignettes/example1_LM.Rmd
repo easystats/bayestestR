@@ -63,7 +63,7 @@ summary(model)
 
 In this model, the linear relationship between **Petal.Length** and **Sepal.Length** is **positive and significant** (beta = 0.41, t(148) = 21.6, p < .001).
 
-Let's do the **Bayesian version**:
+Let's fit a **Bayesian version**:
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
@@ -75,9 +75,11 @@ set.seed(333)
 model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
 ```
 
+You can see the sampling algorithm being run. 
+
 ### Extracting the posterior
 
-You can see the sampling algorithm being run. Once it is done, let us extract the parameters (*i.e.*, the coefficients) of the model.
+Once it is done, let us extract the parameters (*i.e.*, the coefficients) of the model.
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 posteriors <- insight::get_parameters(model)
@@ -90,7 +92,7 @@ posteriors <- insight::get_parameters(model)
 head(posteriors)  # Show the first 6 rows
 ```
 
-As we can see, the parameters take the form of a long dataframe with two columns, corresponding to the **intercept** and **Petal.Length**. These columns contain the **posterior distributions** of these two parameters, *i.e.*, different plausible values.
+As we can see, the parameters take the form of a long dataframe with two columns, corresponding to the **intercept** and the effect of **Petal.Length**. These columns contain the **posterior distributions** of these two parameters, *i.e.*, a set of different plausible values.
 
 #### About posterior draws
 
@@ -255,22 +257,23 @@ hdi(posteriors$feedsunflower)
 
 It makes you fat by around `51` (the median). However, the uncertainty is quite high: **there is 90\% chance that the difference between the two feed types is between `6.21` and `88.67`.**
 
+> **Is this effect different from 0?**
+
 ### ROPE Percentage
 
-Testing wether this distribution is different from 0 doesn't make sense, as 0 is a single value. However, one way to assess **significance** could be to define an area around 0, which will consider as *equivalent* to zero (to no, - or negligible, effect). This is called the [**Region of Practical Equivalence (ROPE)**](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html), and is one way of testing the significance of parameters.
+Testing wether this distribution is different from 0 doesn't make sense, as 0 is a single value (*and the probability that any distribution is different from a single value is infinite*). 
 
-> **How can we define this region?**
+However, one way to assess **significance** could be to define an area around 0, which will consider as *equivalent* to zero (to no, - or negligible, effect). This is called the [**Region of Practical Equivalence (ROPE)**](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html), and is one way of testing the significance of parameters.
+
+**How can we define this region?**
 
 
----
+> ***Driing driiiing***
 
-***Driing driiiing***
+-- ***The easystats team speaking. How can we help?***
 
-**- The easystats team speaking. How can we help?**
+-- ***I am Prof Howard. An expert in chicks... I mean chickens. Just calling to let you know that based on my expert knowledge, an effect between -20 and 20 is negligible. Bye.***
 
-**- I am Prof Howard. An expert in chicks... I mean chickens. Just calling to let you know that based on my expert knowledge, an effect between -20 and 20 is negligible. Bye.**
-
----
 
 Well, that's convenient. Now we know that we can define the ROPE as the `[-20, 20]` range. All effects within this range are considered as *null* (negligible). We can now compute the **proportion of the 90\% most probable values (the 90\% CI) which are not null**, *i.e.*, which are outside this range. 
 
@@ -279,11 +282,11 @@ rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.90)
 ```
 
 
-**8.33\% of the 90\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is a bit too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
+**8.33\% of the 90\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
 
-Altough to be honest, I have **some doubts about this Prof Howard**. I don't really trust **his definition of ROPE**. Is there a more objective way of defining it?
+Altough, to be honest, I have **some doubts about this Prof Howard**. I don't really trust **his definition of ROPE**. Is there a more **objective** way of defining it?
 
-**Yes.** One of the practice is for instance to use the **tenth** (`1/10 = 0.1`) of the standard deviation (SD) of the response variable.
+**Yes.** One of the practice is for instance to use the **tenth (`1/10 = 0.1`) of the standard deviation (SD)** of the response variable, which can be considered as a "negligible" effect size.
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 rope_value <- 0.1 * sd(data$weight)
@@ -291,7 +294,7 @@ rope_range <- c(-rope_value, rope_value)
 rope_range
 ```
 
-Let's redefine our ROPE as the region within the `[-6.2, 6.2]` range. However, note that this can be directly obtained by the `rope_range` function :)
+Let's redefine our ROPE as the region within the `[-6.2, 6.2]` range. **Note that this can be directly obtained by the `rope_range` function :)**
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 rope_value <- rope_range(model)
@@ -304,12 +307,12 @@ Let's recompute the **percentage in ROPE**:
 rope(posteriors$feedsunflower, range = rope_range, ci=0.90)
 ```
 
-Well, with this reasonable definition of ROPE, we observe that that the 90\% of the posterior distribution of the effect does **not** overlap with the ROPE. Thus, we can conclude that **the effect is significant**.
+With this reasonable definition of ROPE, we observe that that the 90\% of the posterior distribution of the effect does **not** overlap with the ROPE. Thus, we can conclude that **the effect is significant**.
 
 
 ### Probability of Direction (pd)
 
-Maybe we are not interested in whether the effect is not-negligible. Maybe **we just want to know if this effect is positive or negative**. In this case, we can simply compute the proportion of the posterior that is positive, no matter the "size". 
+Maybe we are not interested in whether the effect is not-negligible. Maybe **we just want to know if this effect is positive or negative**. In this case, we can simply compute the proportion of the posterior that is positive, no matter the "size" of the effect. 
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 n_positive <- posteriors %>% 
@@ -324,7 +327,7 @@ We can conclude that **the effect is positive with a probability of 97.82\%**. W
 p_direction(posteriors$feedsunflower)
 ```
 
-Interestingly, it so happens that **this index is (in *most* of the cases) highly correlated to the frequentist *p*-value**. We could almost roughly infer the corresponding *p*-value with a simple transformation:
+Interestingly, it so happens that **this index is usually highly correlated with the frequentist *p*-value**. We could almost roughly infer the corresponding *p*-value with a simple transformation:
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 pd <- 97.82
