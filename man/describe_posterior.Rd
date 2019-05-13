@@ -26,7 +26,8 @@ describe_posterior(posteriors, estimate = "median", ci = 0.9,
 
 \item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".}
 
-\item{ci}{Credible Interval (CI) level. Default to 0.90 (90\%).}
+\item{ci}{Value or vector of probability of the interval (between 0 and 1)
+to be estimated. Named Credible Interval (CI) for consistency.}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be \link{hdi} (default) or "quantile" (see \link{ci}).}
 
@@ -36,23 +37,31 @@ describe_posterior(posteriors, estimate = "median", ci = 0.9,
 
 \item{rope_full}{If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.}
 
+\item{dispersion}{if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
+
 \item{...}{Additional arguments to be passed to or from methods.}
 
-\item{effects}{Should variables for fixed effects, random effects
-or both be returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.}
 
 \item{parameters}{Regular expression pattern that describes the parameters that
-should be returned.}
+should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
 
-\item{component}{Should all predictor variables, predictor variables for the
-conditional model, the zero-inflated part of the model, the dispersion
-term or the instrumental variables be returned? Applies to models
-with zero-inflated and/or dispersion formula, or to models with instrumental
-variable (so called fixed-effects regressions). May be abbreviated.}
+\item{component}{Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the model be returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \description{
 Compute indices relevant to describe and characterise the posterior distributions.
 }
 \examples{
 describe_posterior(rnorm(1000))
+
+df <- data.frame(replicate(4, rnorm(100)))
+describe_posterior(df, estimate = "all", dispersion = TRUE)
+describe_posterior(df, estimate = c("median", "MAP"))
+
 }

@@ -102,19 +102,21 @@ ci.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
 #' @rdname ci
 #' @export
 ci.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
-  x <- .select_nums(x)
+  # x <- .select_nums(x)
+  #
+  # if (ncol(x) == 1) {
+  #   out <- ci(x[, 1], ci = ci, verbose = verbose, ...)
+  # } else {
+  #   out <- sapply(x, ci, ci = ci, verbose = verbose, simplify = FALSE)
+  #   out <- do.call(rbind, args = c(.compact_list(out), make.row.names = FALSE))
+  # }
+  #
+  # out$Parameter <- names(x)
+  dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "ci")
+  attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
 
-  if (ncol(x) == 1) {
-    out <- ci(x[, 1], ci = ci, verbose = verbose, ...)
-  } else {
-    out <- sapply(x, ci, ci = ci, verbose = verbose, simplify = FALSE)
-    out <- do.call(rbind, args = c(.compact_list(out), make.row.names = FALSE))
-  }
-
-  out$Parameter <- names(x)
-
-  class(out) <- unique(c("ci", "ci_see", class(out)))
-  out
+  class(dat) <- unique(c("ci", "ci_see", class(dat)))
+  dat
 }
 
 
