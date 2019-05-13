@@ -3,7 +3,7 @@
 #' This method computes the ratio between the density of a single value (typically the null)
 #' in two distributions, typically the posterior vs. the prior distributions.
 #'
-#' @param posterior Vector representing a posterior distribution, or a \code{stanreg} object.
+#' @param posterior Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object.
 #' @param prior Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored).
 #' @param direction Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
 #' \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).
@@ -15,7 +15,7 @@
 #' much \emph{less} the null is likely under the posterior compared to the prior.
 #'
 #' @details This method is used to examine if the hypothesis value is less or more
-#' likely given the observed data. When posterior is a model (\code{stanreg}),
+#' likely given the observed data. When posterior is a model (\code{stanreg}, \code{brmsfit}),
 #' posterior and prior samples are extracted for each parameter, and
 #' Savage-Dickey Bayes factors are computed for each parameter.
 #' \cr \cr
@@ -106,14 +106,70 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
   posterior <- insight::get_parameters(posterior, effects = effects)
 
   # Get savage-dickey BFs
-  sdbf <- numeric(ncol(prior))
+  bayesfactor_savagedickey.data.frame(
+    posterior = posterior, prior = prior,
+    direction = direction, hypothesis = hypothesis
+  )
+}
 
+#' @rdname bayesfactor_savagedickey
+#' @export
+#' @importFrom insight find_parameters
+bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
+                                             direction = "two-sided", hypothesis = 0,
+                                             effects = c("fixed", "random", "all"),
+                                             ...) {
+  if (!requireNamespace("brms")) {
+    stop("Package \"brms\" needed for this function to work. Please install it.")
+  }
+
+  effects <- match.arg(effects)
+
+  params <- insight::find_parameters(posterior)
+  params <- switch(
+    effects,
+    "fixed" = params[["conditional"]],
+    "random" = params[["random"]],
+    "all" = unlist(params[c("conditional", "random")])
+  )
+
+  h_ <- brms::hypothesis(posterior, paste0(params, "=0"), class = NULL, ...)
+
+  if (all(is.na(h_$hypothesis$Evid.Ratio))) {
+    stop("Cannot compute Savage-Dickey Bayes factor(s) with default priors")
+  }
+
+  posterior <- h_$samples
+  prior <- h_$prior_samples
+  colnames(posterior) <- colnames(prior) <- params
+
+  # Get savage-dickey BFs
+  bayesfactor_savagedickey.data.frame(
+    posterior = posterior, prior = prior,
+    direction = direction, hypothesis = hypothesis
+  )
+}
+
+#' @rdname bayesfactor_savagedickey
+#' @export
+bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
+                                                direction = "two-sided", hypothesis = 0,
+                                                ...) {
+  if (is.null(prior)) {
+    prior <- posterior
+    warning(
+      "Prior not specified!\n",
+      "Please specify priors (with columns matching 'posterior')",
+      " to get meaningful results!"
+    )
+  }
+
+  sdbf <- numeric(ncol(prior))
   for (par in seq_len(ncol(posterior))) {
     sdbf[par] <- .bayesfactor_savagedickey(posterior[[par]],
-      prior[[par]],
-      direction = direction,
-      hypothesis = hypothesis
-    )
+                                           prior[[par]],
+                                           direction = direction,
+                                           hypothesis = hypothesis)
   }
 
   bf_val <- data.frame(BFsd = sdbf, row.names = colnames(posterior))
