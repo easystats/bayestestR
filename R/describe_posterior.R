@@ -129,14 +129,14 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
       test_equi <- equivalence_test(x, range = rope_range, ci = ci, ...)
     }
     if(!"Parameter" %in% names(test_equi)){
-      test_rope <- cbind(data.frame("Parameter" = "Posterior"), test_equi)
+      test_equi <- cbind(data.frame("Parameter" = "Posterior"), test_equi)
     }
     names(test_equi)[names(test_equi) == "CI"] <- "ROPE_CI"
   } else{
     test_equi <- data.frame("Parameter" = NA)
   }
   test_rope <- merge(test_rope, test_equi)
-  test_rope <- test_rope[!names(test_rope) %in%c("HDI_low", "HDI_high")]
+  test_rope <- test_rope[!names(test_rope) %in% c("HDI_low", "HDI_high")]
 
 
   # Bayes Factors
