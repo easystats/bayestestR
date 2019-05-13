@@ -9,23 +9,40 @@
 \usage{
 point_estimate(x, estimate = "median", dispersion = FALSE, ...)
 
-\method{point_estimate}{stanreg}(x, effects = c("fixed", "random",
-  "all"), parameters = NULL, estimate = "median", dispersion = FALSE,
-  ...)
+\method{point_estimate}{stanreg}(x, estimate = "median",
+  dispersion = FALSE, effects = c("fixed", "random", "all"),
+  parameters = NULL, ...)
 
-\method{point_estimate}{brmsfit}(x, effects = c("fixed", "random",
-  "all"), component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL, estimate = "median", dispersion = FALSE, ...)
+\method{point_estimate}{brmsfit}(x, estimate = "median",
+  dispersion = FALSE, effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL, ...)
 
 \method{point_estimate}{BFBayesFactor}(x, estimate = "median",
   dispersion = FALSE, ...)
 }
 \arguments{
+\item{x}{Vector representing a posterior distribution. Can also be a
+\code{stanreg} or \code{brmsfit} model.}
+
 \item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
 
 \item{dispersion}{if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
 \item{...}{Additional arguments to be passed to or from methods.}
+
+\item{effects}{Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.}
+
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
+
+\item{component}{Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the model be returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \description{
 Compute various point-estimates, such as the mean, the median or the MAP, to describe posterior distributions.
