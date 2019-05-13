@@ -34,7 +34,7 @@ equivalence_test(x, ...)
 
 \item{...}{Currently not used.}
 
-\item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
+\item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.}
 
@@ -67,24 +67,41 @@ Documentation is accessible for:
   \item \href{https://easystats.github.io/parameters/reference/equivalence_test.lm.html}{Frequentist models}
 }
 
-For Bayesian models, the \strong{Test for Practical Equivalence} is based on the \emph{"HDI+ROPE decision rule"} (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (\emph{i.e.}, a \link[=rope]{ROPE}).
+For Bayesian models, the \strong{Test for Practical Equivalence} is based on the \emph{"HDI+ROPE decision rule"} (\cite{Kruschke, 2015, 2018}) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (i.e., a ROPE).
 
-Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, Kruschke (2018)
-  suggest using the percentage of the 95\% (or 90\%, considered more stable)
-  \link[=hdi]{HDI} that falls within the ROPE as a decision rule. If the HDI
+Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, \cite{Kruschke (2018)}
+  suggests using the percentage of the 95\% (or 90\%, considered more stable)
+  HDI that falls within the ROPE as a decision rule. If the HDI
   is completely outside the ROPE, the "null hypothesis" for this parameter is
   "rejected". If the ROPE completely covers the HDI, i.e. all most credible
   values of a parameter are inside the region of practical equivalence, the
   null hypothesis is accepted. Else, it’s undecided whether to accept or
-  reject the null hypothesis. If the full ROPE is used (\emph{i.e.}, 100\% of the
+  reject the null hypothesis. If the full ROPE is used (i.e., 100\% of the
   HDI), then the null hypothesis is rejected or accepted if the percentage
-  of the posterior within the ROPE is smaller than to 2.5\% or greater  than
+  of the posterior within the ROPE is smaller than to 2.5\% or greater than
   97.5\%. Desirable results are low proportions inside the ROPE  (the closer
   to zero the better) and the null hypothesis should be rejected.
   \cr \cr
   Some attention is required for finding suitable values for the ROPE limits
-  (argument \code{range}). See 'Details' in \link{rope_range} for further
-  information.
+  (argument \code{range}). See 'Details' in \code{\link[=rope_range]{rope_range()}}
+  for further information.
+  \cr \cr
+  \strong{Non-independent covariates}
+  \cr \cr
+  When parameters show strong correlations, i.e. when covariates are not
+  independent, the joint parameter distributions may shift towards or
+  away from the ROPE. In such cases, the test for practical equivalence may
+  have inappropriate results. Collinearity invalidates ROPE and hypothesis
+  testing based on univariate marginals, as the probabilities are conditional
+  on independence. Most problematic are the results of the "undecided"
+  parameters, which may either move further towards "rejection" or away
+  from it (\cite{Kruschke 2015, 340f}).
+  \cr \cr
+  \code{equivalence_test()} performs a simple check for pairs of correlating
+  parameters, but as there can be collinearity between more than two variables,
+  a first step to check the assumptions of this hypothesis testing is to look
+  at different pair plots. An even more sophisticated check is the projection
+  predictive variable selection (\cite{Piironen and Vehtari 2017}).
 }
 \note{
 There is a \code{print()}-method with a \code{digits}-argument to control
@@ -125,5 +142,9 @@ equivalence_test(bf, ci = c(.50, .99))
 
 }
 \references{
-Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
+\itemize{
+  \item Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}
+  \item Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press
+  \item Piironen, J., & Vehtari, A. (2017). Comparison of Bayesian predictive methods for model selection. Statistics and Computing, 27(3), 711–735. \doi{10.1007/s11222-016-9649-y}
+}
 }

@@ -115,7 +115,7 @@ ci.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "ci")
   attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
 
-  class(dat) <- unique(c("ci", "ci_see", class(dat)))
+  class(dat) <- unique(c("ci", "see_ci", class(dat)))
   dat
 }
 

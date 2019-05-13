@@ -37,7 +37,7 @@ rope(x, ...)
 
 \item{...}{Currently not used.}
 
-\item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and \code{x +- 0.1*SD(response)} if a Bayesian model is provided.}
+\item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.}
 
@@ -77,7 +77,7 @@ Statistically, the probability of a posterior distribution of being
   Kruschke (2010, 2011, 2014) suggests using the proportion of  the 95\%
   (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the
   ROPE as an index for "null-hypothesis" testing (as understood under the
-  Bayesian framework, see \link[=equivalence_test]{equivalence_test}).
+  Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
 }
 \examples{
 library(bayestestR)
