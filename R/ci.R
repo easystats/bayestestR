@@ -84,6 +84,7 @@ ci.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
     .credible_interval(x = x, ci = i, verbose = verbose)
   }))
   class(out) <- unique(c("ci", "see_ci", class(out)))
+  attr(out, "data") <- x
   out
 }
 
@@ -98,34 +99,14 @@ ci.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
 }
 
 
-
-#' @rdname ci
-#' @export
-ci.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
-  # x <- .select_nums(x)
-  #
-  # if (ncol(x) == 1) {
-  #   out <- ci(x[, 1], ci = ci, verbose = verbose, ...)
-  # } else {
-  #   out <- sapply(x, ci, ci = ci, verbose = verbose, simplify = FALSE)
-  #   out <- do.call(rbind, args = c(.compact_list(out), make.row.names = FALSE))
-  # }
-  #
-  # out$Parameter <- names(x)
-  dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "ci")
-  attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
-
-  class(dat) <- unique(c("ci", "see_ci", class(dat)))
-  dat
-}
-
-
 #' @rdname ci
 #' @export
 ci.stanreg <- function(x, ci = .90, effects = c("fixed", "random", "all"),
                        parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
-  .compute_interval_stanreg(x, ci, effects, parameters, verbose, fun = "ci")
+  out <- .compute_interval_stanreg(x, ci, effects, parameters, verbose, fun = "ci")
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
 }
 
 
@@ -136,7 +117,9 @@ ci.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"),
                        parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-  .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose, fun = "ci")
+  out <- .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose, fun = "ci")
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
 }
 
 

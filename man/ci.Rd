@@ -15,8 +15,6 @@ ci(x, ...)
 
 \method{ci}{data.frame}(x, ci = 0.9, verbose = TRUE, ...)
 
-\method{ci}{data.frame}(x, ci = 0.9, verbose = TRUE, ...)
-
 \method{ci}{stanreg}(x, ci = 0.9, effects = c("fixed", "random",
   "all"), parameters = NULL, verbose = TRUE, ...)
 
