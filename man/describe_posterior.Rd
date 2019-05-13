@@ -2,20 +2,20 @@
 % Please edit documentation in R/describe_posterior.R
 \name{describe_posterior}
 \alias{describe_posterior}
-\alias{describe_posterior.stanreg}
-\alias{describe_posterior.brmsfit}
+\alias{old_describe_posterior.stanreg}
+\alias{old_describe_posterior.brmsfit}
 \title{Describe Posterior Distributions}
 \usage{
 describe_posterior(posteriors, estimate = "median", ci = 0.9,
   ci_method = "hdi", test = c("pd", "rope"), rope_range = "default",
   rope_full = TRUE, dispersion = TRUE, ...)
 
-\method{describe_posterior}{stanreg}(posteriors, estimate = "median",
+old_describe_posterior.stanreg(posteriors, estimate = "median",
   ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, dispersion = TRUE,
   effects = c("fixed", "random", "all"), parameters = NULL, ...)
 
-\method{describe_posterior}{brmsfit}(posteriors, estimate = "median",
+old_describe_posterior.brmsfit(posteriors, estimate = "median",
   ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
   rope_range = "default", rope_full = TRUE, dispersion = TRUE,
   effects = c("fixed", "random", "all"), component = c("conditional",

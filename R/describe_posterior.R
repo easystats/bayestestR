@@ -15,15 +15,17 @@
 #'
 #' @examples
 #' describe_posterior(rnorm(1000))
+#' describe_posterior(rnorm(1000), estimate="all", dispersion = TRUE, test="all")
 #'
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' describe_posterior(df, estimate = "all", dispersion = TRUE)
-#' describe_posterior(df, estimate = c("median", "MAP"))
+#' describe_posterior(df, estimate="all", dispersion = TRUE, test="all")
+#'
 #'
 #' @importFrom stats mad median sd setNames
 #'
 #' @export
-describe_posterior <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
+describe_posterior <- function(posteriors, estimate = "median", dispersion = TRUE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, ...) {
   UseMethod("describe_posterior")
 }
 
@@ -36,8 +38,11 @@ describe_posterior <- function(posteriors, estimate = "median", ci = .90, ci_met
   # Point-estimates
   if (!is.null(estimate)) {
     estimates <- point_estimate(x, estimate = estimate, dispersion = dispersion, ...)
+    if(!"Parameter" %in% names(estimates)){
+      estimates <- cbind(data.frame("Parameter" = "Posterior"), estimates)
+    }
   } else{
-    estimates <- data.frame()
+    estimates <- data.frame("Parameter" = NA)
   }
 
   # Uncertainty
@@ -48,37 +53,50 @@ describe_posterior <- function(posteriors, estimate = "median", ci = .90, ci_met
     } else{
       uncertainty <- ci(x, ci=ci)
     }
+    if(!"Parameter" %in% names(uncertainty)){
+      uncertainty <- cbind(data.frame("Parameter" = "Posterior"), uncertainty)
+    }
   } else{
-    uncertainty <- data.frame()
+    uncertainty <- data.frame("Parameter" = NA)
   }
 
   # Effect Existence
   test <- match.arg(test, c("pd", "p_direction", "pdir", "mpe",
                             "rope", "equivalence", "equivalence_test", "equitest",
-                            "bf", "bayesfactor", "bayes_factor"), several.ok = TRUE)
-
+                            "bf", "bayesfactor", "bayes_factor", "all"), several.ok = TRUE)
+  if("all" %in% test){
+    test <- c("pd", "rope", "equivalence", "bf")
+  }
 
   # Probability of direction
   if(any(c("pd", "p_direction", "pdir", "mpe") %in% test)){
     test_pd <- p_direction(x, ...)
+    if(!is.data.frame(test_pd)) test_pd <- data.frame("Parameter" = "Posterior", "pd" = test_pd)
+
   } else{
-    test_pd <- data.frame()
+    test_pd <- data.frame("Parameter" = NA)
   }
 
-  # Probability of direction
+  # ROPE
   if(any(c("rope") %in% test)){
     if(rope_full){
       test_rope <- rope(x, range = rope_range, ci = 1, ...)
     } else{
       test_rope <- rope(x, range = rope_range, ci = ci, ...)
     }
+    if(!"Parameter" %in% names(test_rope)){
+      test_rope <- cbind(data.frame("Parameter" = "Posterior"), test_rope)
+    }
+    names(test_rope)[names(test_rope) == "CI"] <- "ROPE_CI"
   } else{
-    test_rope <- data.frame()
+    test_rope <- data.frame("Parameter" = NA)
   }
 
-  out <- merge(estimates, uncertainty)
-  out <- merge(out, test_pd)
-  out <- merge(out, test_rope)
+  out <- merge(estimates, uncertainty, all=TRUE)
+  out <- merge(out, test_pd, all=TRUE)
+  out <- merge(out, test_rope, all=TRUE)
+  out <- out[!is.na(out$Parameter), ]
+  out
 }
 
 
@@ -101,24 +119,31 @@ describe_posterior <- function(posteriors, estimate = "median", ci = .90, ci_met
 
 
 #' @export
-describe_posterior.numeric <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
-  x <-
-    describe_posterior(
-      as.data.frame(posteriors),
-      ci = ci,
-      ci_method = ci_method,
-      estimate = estimate,
-      test = test,
-      rope_range = rope_range,
-      rope_full = rope_full,
-      dispersion = dispersion
-    )
-  x[names(x) != "Parameter"]
+describe_posterior.numeric <- function(posteriors, estimate = "median", dispersion = TRUE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, ...) {
+  .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, ...)
 }
-
 
 #' @export
 describe_posterior.double <- describe_posterior.numeric
+
+#' @export
+describe_posterior.data.frame <- describe_posterior.numeric
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -126,7 +151,7 @@ describe_posterior.double <- describe_posterior.numeric
 
 #' @method describe_posterior data.frame
 #' @export
-describe_posterior.data.frame <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
+old_describe_posterior.data.frame <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
   # Point estimates
   out <- data.frame("Parameter" = colnames(posteriors))
 
@@ -247,7 +272,7 @@ describe_posterior.data.frame <- function(posteriors, estimate = "median", ci = 
 #' @inheritParams insight::get_parameters
 #' @rdname describe_posterior
 #' @export
-describe_posterior.stanreg <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+old_describe_posterior.stanreg <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
   x <- insight::get_parameters(posteriors, effects = effects, parameters = parameters)
 
@@ -257,7 +282,7 @@ describe_posterior.stanreg <- function(posteriors, estimate = "median", ci = .90
 #' @inheritParams insight::get_parameters
 #' @rdname describe_posterior
 #' @export
-describe_posterior.brmsfit <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+old_describe_posterior.brmsfit <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
