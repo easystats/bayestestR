@@ -3,21 +3,21 @@
 \name{describe_posterior}
 \alias{describe_posterior}
 \alias{describe_posterior.stanreg}
-\alias{old_describe_posterior.brmsfit}
+\alias{describe_posterior.brmsfit}
 \title{Describe Posterior Distributions}
 \usage{
 describe_posterior(posteriors, estimate = "median", dispersion = TRUE,
   ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, ...)
+  rope_range = "default", rope_full = TRUE, bf_prior = NULL, ...)
 
 \method{describe_posterior}{stanreg}(posteriors, estimate = "median",
   dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
-  "rope"), rope_range = "default", rope_full = TRUE,
+  "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL,
   effects = c("fixed", "random", "all"), parameters = NULL, ...)
 
-old_describe_posterior.brmsfit(posteriors, estimate = "median",
+\method{describe_posterior}{brmsfit}(posteriors, estimate = "median",
   dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
-  "rope"), rope_range = "default", rope_full = TRUE,
+  "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL,
   effects = c("fixed", "random", "all"), component = c("conditional",
   "zi", "zero_inflated", "all"), parameters = NULL, ...)
 }
@@ -35,9 +35,11 @@ to be estimated. Named Credible Interval (CI) for consistency.}
 
 \item{test}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".}
 
-\item{rope_range}{\href{https://easystats.github.io/bayestestR/#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.}
+\item{rope_range}{\href{https://easystats.github.io/bayestestR/rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.}
 
 \item{rope_full}{If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.}
+
+\item{bf_prior}{Distribution representing a prior for the computation of \href{https://easystats.github.io/bayestestR/bayesfactor_savagedickey}{Bayes factors}. Used if the input is a posterior, otherwise (in the case of models) ignored.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 
