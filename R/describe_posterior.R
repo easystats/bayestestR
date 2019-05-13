@@ -3,24 +3,84 @@
 #' Compute indices relevant to describe and characterise the posterior distributions.
 #'
 #' @param posteriors A vector, dataframe or model of posterior draws.
-#' @param ci Credible Interval (CI) level. Default to 0.90 (90\%).
 #' @param ci_method The type of index used for Credible Interval. Can be \link{hdi} (default) or "quantile" (see \link{ci}).
 #' @param estimate The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".
 #' @param test The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".
 #' @param rope_range \href{https://easystats.github.io/bayestestR/#rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
 #' @param rope_full If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.
 #'
-#' @param ... Additional arguments to be passed to or from methods.
+#' @inheritParams point_estimate
+#' @inheritParams ci
 #'
 #'
 #' @examples
 #' describe_posterior(rnorm(1000))
+#'
+#' df <- data.frame(replicate(4, rnorm(100)))
+#' describe_posterior(df, estimate = "all", dispersion = TRUE)
+#' describe_posterior(df, estimate = c("median", "MAP"))
+#'
 #' @importFrom stats mad median sd setNames
 #'
 #' @export
 describe_posterior <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
   UseMethod("describe_posterior")
 }
+
+
+
+
+#' @keywords internal
+.describe_posterior <- function(posteriors, estimate = "median", ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, dispersion = TRUE, ...) {
+
+  # Point-estimates
+  if (!is.null(estimate)) {
+    estimates <- point_estimate(posteriors, ...)
+  } else{
+    estimates <- data.frame()
+  }
+
+  # Uncertainty
+  if (!is.null(estimate)) {
+    ci_method <- match.arg(ci_method, c("hdi", "quantile", "ci", "eti"))
+    if(ci_method == "hdi"){
+      uncertainty <- hdi(posteriors, ci=ci)
+    } else{
+      uncertainty <- ci(posteriors, ci=ci)
+    }
+  } else{
+    uncertainty <- data.frame()
+  }
+
+  # Effect Existence
+  if (!is.null(test)) {
+    test <- match.arg(test, c("pd", "p_direction", "pdir", "mpe",
+                              "rope", "equivalence", "equivalence_test", "equitest",
+                              "bf", "bayesfactor", "bayes_factor"), several.ok = TRUE)
+
+    # Probability of direction
+    if(any(c("pd", "p_direction", "pdir", "mpe") %in% test)){
+      test_rez <- p_direction(test_rez, ...)
+    }
+  } else{
+    test_rez <- data.frame()
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

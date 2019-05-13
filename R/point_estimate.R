@@ -2,6 +2,7 @@
 #'
 #' Compute various point-estimates, such as the mean, the median or the MAP, to describe posterior distributions.
 #'
+#' @inheritParams hdi
 #' @param estimate The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean", "MAP" or "all".
 #' @param dispersion if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).
 #' @param ... Additional arguments to be passed to or from methods.
@@ -119,7 +120,7 @@ point_estimate.data.frame <- function(x, estimate = "median", dispersion = FALSE
 
 #' @rdname point_estimate
 #' @export
-point_estimate.stanreg <- function(x, effects = c("fixed", "random", "all"), parameters = NULL, estimate = "median", dispersion = FALSE, ...) {
+point_estimate.stanreg <- function(x, estimate = "median", dispersion = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
 
   out <- .p_direction_models(
@@ -137,7 +138,7 @@ point_estimate.stanreg <- function(x, effects = c("fixed", "random", "all"), par
 
 #' @rdname point_estimate
 #' @export
-point_estimate.brmsfit <- function(x, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, estimate = "median", dispersion = FALSE, ...) {
+point_estimate.brmsfit <- function(x, estimate = "median", dispersion = FALSE, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 

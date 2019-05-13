@@ -171,7 +171,8 @@
   dat <- data.frame(
     Parameter = rep(names(out), each = length(ci)),
     do.call(rbind, out),
-    stringsAsFactors = FALSE
+    stringsAsFactors = FALSE,
+    row.names = NULL
   )
 
   class(dat) <- unique(c(fun, class(dat)))
