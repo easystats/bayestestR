@@ -236,7 +236,7 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .95, parameters 
 #' @importFrom stats cor cor.test
 #' @importFrom insight find_parameters
 #' @keywords internal
-.check_parameter_correlation <- function(model) {
+.check_parameter_correlation <- function(model, method = "equivalence_test") {
   valid_parameters <- insight::find_parameters(model, parameters = "^(?!(r_|sd_|prior_|cor_|b\\[))", flatten = TRUE)
   dat <- as.data.frame(model)[, valid_parameters]
   dat <- dat[, -1, drop = FALSE]
@@ -254,7 +254,7 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .95, parameters 
     results <- results[results$pvalue < 0.05 & results$Var1 != results$Var2, ]
 
     if (nrow(results) > 0 && any(results$corr >= 0.5)) {
-      warning("Some parameters show strong correlations, leading to inappropriate results. See 'Details' in '?equivalence_test'.", call. = FALSE)
+      warning("Possible multicollinearity, leading to inappropriate results. See 'Details' in '?", method, "'.", call. = FALSE)
     }
   }
 }

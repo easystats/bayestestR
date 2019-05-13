@@ -26,6 +26,24 @@
 #'   (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the
 #'   ROPE as an index for "null-hypothesis" testing (as understood under the
 #'   Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
+#'   \cr \cr
+#'   \strong{Non-independent covariates}
+#'   \cr \cr
+#'   When parameters show strong correlations, i.e. when covariates are not
+#'   independent, the joint parameter distributions may shift towards or
+#'   away from the ROPE. Collinearity invalidates ROPE and hypothesis
+#'   testing based on univariate marginals, as the probabilities are conditional
+#'   on independence. Most problematic are parameters that only have partial
+#'   overlap with the ROPE region. In case of collinearity, the (joint) distributions
+#'   of these parameters may either get an increased or decreased ROPE, which
+#'   means that inferences based on \code{rope()} are inappropriate
+#'   (\cite{Kruschke 2015, 340f}).
+#'   \cr \cr
+#'   \code{rope()} performs a simple check for pairs of correlating
+#'   parameters, but as there can be collinearity between more than two variables,
+#'   a first step to check the assumptions of this hypothesis testing is to look
+#'   at different pair plots. An even more sophisticated check is the projection
+#'   predictive variable selection (\cite{Piironen and Vehtari 2017}).
 #'
 #' @references \itemize{
 #' \item Cohen, J. (1988). Statistical power analysis for the behavioural sciences.
@@ -33,8 +51,8 @@
 #' \item Kruschke, J. K. (2011). Bayesian assessment of null values via parameter estimation and model comparison. Perspectives on Psychological Science, 6(3), 299-312. \doi{10.1177/1745691611406925}.
 #' \item Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press. \doi{10.1177/2515245918771304}.
 #' \item Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
-#'  }
-#'
+#' \item Piironen, J., & Vehtari, A. (2017). Comparison of Bayesian predictive methods for model selection. Statistics and Computing, 27(3), 711–735. \doi{10.1007/s11222-016-9649-y}
+#' }
 #'
 #' @examples
 #' library(bayestestR)
@@ -187,7 +205,7 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
   }
 
   # check for possible collinearity that might bias ROPE
-  if (verbose) .check_parameter_correlation(x)
+  if (verbose) .check_parameter_correlation(x, "rope")
 
   list <- lapply(c("fixed", "random"), function(.x) {
     parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
@@ -263,7 +281,7 @@ rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "r
   }
 
   # check for possible collinearity that might bias ROPE
-  if (verbose) .check_parameter_correlation(x)
+  if (verbose) .check_parameter_correlation(x, "rope")
 
   .get_rope <- function(.x, .y) {
     parms <- insight::get_parameters(x, effects = .x, component = .y, parameters = parameters)
