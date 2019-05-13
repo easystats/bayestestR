@@ -1,5 +1,7 @@
 context("bayesfactor_*")
 
+# bayesfactor_savagedickey ------------------------------------------------
+
 test_that("bayesfactor_savagedickey", {
   set.seed(444)
   Xprior <- rnorm(1000)
@@ -14,12 +16,18 @@ test_that("bayesfactor_savagedickey", {
   bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, hypothesis = 1, direction = 0)
   testthat::expect_equal(as.numeric(bfsd), 0.4, tolerance = 0.1)
 
+  testthat::expect_warning(bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior))
+  testthat::expect_equal(as.numeric(bfsd), 1, tolerance = 0.1)
+
   library(rstanarm)
   set.seed(333)
   junk <- capture.output(model <- stan_glm(extra ~ group, data = sleep))
   bfsd <- bayestestR::bayesfactor_savagedickey(model)
   testthat::expect_equal(log(bfsd$BFsd), c(-2.69, -0.14), tolerance = 0.1)
 })
+
+
+# bayesfactor_models ------------------------------------------------------
 
 set.seed(444)
 
@@ -78,6 +86,10 @@ brms_4bf_5 <- insight::download_model("brms_4bf_5")
 #   testthat::expect_equal(update(BFM2,reference = 1)$log.BF,c(0,-2.8,-6.2,-57.4),tolerance = 0.1)
 # })
 #
+
+
+# bayesfactor_inclusion ---------------------------------------------------
+
 test_that("bayesfactor_inclusion", {
   # BayesFactor
   ToothGrowth$dose <- as.factor(ToothGrowth$dose)

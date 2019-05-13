@@ -4,7 +4,7 @@
 #' in two distributions, typically the posterior vs. the prior distributions.
 #'
 #' @param posterior Vector representing a posterior distribution, or a \code{stanreg} object.
-#' @param prior Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored). If a prior is not provided, will sample from \code{~Cauchy(location = hypothesis, scale = sd(posterior))} (but this should be avoided).
+#' @param prior Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored).
 #' @param direction Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
 #' \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).
 #' @param hypothesis Value to be tested against (usually \code{0} in the context of null hypothesis testing).
@@ -57,15 +57,11 @@ bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-s
 #' @importFrom stats rcauchy sd
 bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, ...) {
   if (is.null(prior)) {
-    prior <- distribution_cauchy(
-      n = length(posterior),
-      location = hypothesis,
-      scale = stats::sd(posterior)
-    )
+    prior <- posterior
     warning(
       "Prior not specified!\n",
-      "Used Cauchy prior with location = ", hypothesis, " and scale = ", round(stats::sd(posterior)), ".\n",
-      "It is recommended to explicitly define the prior!"
+      "Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)')",
+      " to get meaningful results!"
     )
   }
 

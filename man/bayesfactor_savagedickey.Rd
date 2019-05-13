@@ -19,7 +19,7 @@ bayesfactor_savagedickey(posterior, prior = NULL,
 \arguments{
 \item{posterior}{Vector representing a posterior distribution, or a \code{stanreg} object.}
 
-\item{prior}{Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored). If a prior is not provided, will sample from \code{~Cauchy(location = hypothesis, scale = sd(posterior))} (but this should be avoided).}
+\item{prior}{Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored).}
 
 \item{direction}{Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
 \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).}
