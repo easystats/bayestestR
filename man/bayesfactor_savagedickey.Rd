@@ -4,6 +4,8 @@
 \alias{bayesfactor_savagedickey}
 \alias{bayesfactor_savagedickey.numeric}
 \alias{bayesfactor_savagedickey.stanreg}
+\alias{bayesfactor_savagedickey.brmsfit}
+\alias{bayesfactor_savagedickey.data.frame}
 \title{Savage-Dickey density ratio Bayes factor}
 \usage{
 bayesfactor_savagedickey(posterior, prior = NULL,
@@ -15,11 +17,18 @@ bayesfactor_savagedickey(posterior, prior = NULL,
 \method{bayesfactor_savagedickey}{stanreg}(posterior, prior = NULL,
   direction = "two-sided", hypothesis = 0, effects = c("fixed",
   "random", "all"), ...)
+
+\method{bayesfactor_savagedickey}{brmsfit}(posterior, prior = NULL,
+  direction = "two-sided", hypothesis = 0, effects = c("fixed",
+  "random", "all"), ...)
+
+\method{bayesfactor_savagedickey}{data.frame}(posterior, prior = NULL,
+  direction = "two-sided", hypothesis = 0, ...)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution, or a \code{stanreg} object.}
+\item{posterior}{Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object.}
 
-\item{prior}{Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored). If a prior is not provided, will sample from \code{~Cauchy(location = hypothesis, scale = sd(posterior))} (but this should be avoided).}
+\item{prior}{Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored).}
 
 \item{direction}{Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
 \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).}
@@ -40,7 +49,7 @@ in two distributions, typically the posterior vs. the prior distributions.
 }
 \details{
 This method is used to examine if the hypothesis value is less or more
-likely given the observed data. When posterior is a model (\code{stanreg}),
+likely given the observed data. When posterior is a model (\code{stanreg}, \code{brmsfit}),
 posterior and prior samples are extracted for each parameter, and
 Savage-Dickey Bayes factors are computed for each parameter.
 \cr \cr
