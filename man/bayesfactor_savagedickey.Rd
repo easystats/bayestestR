@@ -53,8 +53,7 @@ likely given the observed data. When posterior is a model (\code{stanreg}, \code
 posterior and prior samples are extracted for each parameter, and
 Savage-Dickey Bayes factors are computed for each parameter.
 
-\strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \code{sample_prior = TRUE},
-and \emph{custom (non-default)} priors. See example below.
+\strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)} priors. See example below.
 \cr \cr
 A Bayes factor greater than 1 can be interpereted as evidence against the null,
 at which one convention is that a Bayes factor greater than 3 can be considered
@@ -86,7 +85,7 @@ my_custom_priors <-
   set_prior("student_t(3, 0, 1)",class = "sd", group = "ID")
 
 brms_model <- brm(extra ~ group + (1|ID), data = sleep,
-                  sample_prior = TRUE, prior = my_custom_priors)
+                  prior = my_custom_priors)
 bayesfactor_savagedickey(brms_model)
 }
 

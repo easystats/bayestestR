@@ -19,8 +19,7 @@
 #' posterior and prior samples are extracted for each parameter, and
 #' Savage-Dickey Bayes factors are computed for each parameter.
 #'
-#' \strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \code{sample_prior = TRUE},
-#' and \emph{custom (non-default)} priors. See example below.
+#' \strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)} priors. See example below.
 #' \cr \cr
 #' A Bayes factor greater than 1 can be interpereted as evidence against the null,
 #' at which one convention is that a Bayes factor greater than 3 can be considered
@@ -52,7 +51,7 @@
 #'   set_prior("student_t(3, 0, 1)",class = "sd", group = "ID")
 #'
 #' brms_model <- brm(extra ~ group + (1|ID), data = sleep,
-#'                   sample_prior = TRUE, prior = my_custom_priors)
+#'                   prior = my_custom_priors)
 #' bayesfactor_savagedickey(brms_model)
 #' }
 #'
@@ -107,6 +106,7 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 
   # Get Priors
   if (is.null(prior)) {
+    cat("Sampling Priors...")
     alg <- insight::find_algorithm(posterior)
 
     capture.output(prior <- suppressWarnings(
@@ -132,7 +132,8 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 
 #' @rdname bayesfactor_savagedickey
 #' @export
-#' @importFrom insight find_parameters
+#' @importFrom insight find_parameters find_algorithm
+#' @importFrom stats update
 bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
                                              direction = "two-sided", hypothesis = 0,
                                              effects = c("fixed", "random", "all"),
@@ -142,60 +143,30 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
   }
 
   effects <- match.arg(effects)
-  params <- insight::find_parameters(posterior)
 
-  # random effects
-  if (effects!="fixed") {
-    warning("Cannot compute Savage-Dickey BFs for random effect from 'brmsfit' objects.")
-    # get posterior and prior df for random
-    params_random <- params[["random"]]
-    prior_random <- posterior_random <- as.data.frame(posterior)[,params_random]
+  # Get Priors
+  if (is.null(prior)) {
+    alg <- insight::find_algorithm(posterior)
 
-    if (effects!="all") {
-      posterior <- posterior_random
-      prior <- prior_random
-    }
+    capture.output(prior <- suppressWarnings(
+      stats::update(
+        posterior,
+        sample_prior = "only",
+        iter = alg$iterations,
+        chains = alg$chains,
+        warmup = alg$warmup
+      )
+    ))
+    prior <- insight::get_parameters(prior, effects = effects)
   }
 
-  # fixed effects
-  if (effects!="random") {
-    # get posterior and prior df for fixed
-    params_fixed <- params[["conditional"]]
-    posterior_fixed <- as.data.frame(posterior)[,params_fixed]
-
-    h_ <- brms::hypothesis(posterior, paste0(params_fixed, "=0"), class = NULL)
-
-    if (all(is.na(h_$hypothesis$Evid.Ratio))) {
-      stop("\nCannot compute Savage-Dickey Bayes factor(s) for 'brmsfit' model - please:",
-           "\n   (1) set 'sample_prior = TRUE'",
-           "\n   (2) set non-default priors")
-    }
-
-    prior_fixed <- h_$prior_samples
-    colnames(prior_fixed) <- params_fixed
-
-    if (effects!="all") {
-      posterior <- posterior_fixed
-      prior <- prior_fixed
-    }
-  }
-
-  if (effects=="all") {
-    posterior <- cbind(posterior_fixed,posterior_random)
-    prior <- cbind(prior_fixed,prior_random)
-  }
+  posterior <- insight::get_parameters(posterior, effects = effects)
 
   # Get savage-dickey BFs
-  sdBF <- bayesfactor_savagedickey.data.frame(
+  bayesfactor_savagedickey.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, hypothesis = hypothesis
   )
-  if (effects!="fixed") {
-    sdBF <- within(sdBF,{
-      BF[Parameter %in% params_random] <- NA
-    })
-  }
-  return(sdBF)
 }
 
 #' @rdname bayesfactor_savagedickey

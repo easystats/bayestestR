@@ -25,7 +25,11 @@ test_that("bayesfactor_savagedickey", {
   bfsd <- bayestestR::bayesfactor_savagedickey(model)
   testthat::expect_equal(log(bfsd$BF), c(-2.69, -0.14), tolerance = 0.1)
 
-  # Add test for BRMS
+  library(brms)
+  brms_mixed_6 <- circus::download_model("brms_mixed_6")
+  set.seed(222)
+  sdBF <- bayesfactor_savagedickey(brms_mixed_6, effects = "fixed")
+  testthat::expect_equal(log(sdBF$BF), c(-6.0, -5.8, 0.7, -2.7, -7.4), tolerance = 0.1)
 })
 
 
