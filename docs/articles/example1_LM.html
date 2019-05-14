@@ -375,7 +375,7 @@
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(posteriors<span class="op">$</span>feedsunflower)</a></code></pre></div>
 <pre><code>&gt; # Probability of Direction (pd):
 &gt; 
-&gt; pd = 97.82%</code></pre>
+&gt;   - pd = 97.82%</code></pre>
 <p>Interestingly, it so happens that <strong>this index is usually highly correlated with the frequentist <em>p</em>-value</strong>. We could almost roughly infer the corresponding <em>p</em>-value with a simple transformation:</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">pd &lt;-<span class="st"> </span><span class="fl">97.82</span></a>
 <a class="sourceLine" id="cb42-2" title="2">onesided_p &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>pd <span class="op">/</span><span class="st"> </span><span class="dv">100</span>  </a>
@@ -420,12 +420,12 @@
 </blockquote>
 <p>This function computes all of the afored mentioned indices, and can be run directly on the model:</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model)</a></code></pre></div>
-<pre><code>&gt;       Parameter Median MAD CI_low CI_high  pd ROPE_Percentage
-&gt; 1   (Intercept)    277  18  248.8     308 100            0.00
-&gt; 2 feedsunflower     51  24    6.2      89  98            0.05
-&gt;   ROPE_Equivalence
-&gt; 1         rejected
-&gt; 2         rejected</code></pre>
+<pre><code>&gt;       Parameter  pd CI CI_low CI_high ROPE_CI ROPE_low ROPE_high
+&gt; 1   (Intercept) 100 90  248.8     308     100     -6.2       6.2
+&gt; 2 feedsunflower  98 90    6.2      89     100     -6.2       6.2
+&gt;   ROPE_Percentage
+&gt; 1             0.0
+&gt; 2             2.4</code></pre>
 <p><strong>Tada!</strong> There we have it! The <strong>median</strong>, the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE percentage</strong>!</p>
 <p>Understanding and describing posterior distributions is just one aspect of Bayesian modelling… <strong>Are you ready for more?</strong> <a href="https://easystats.github.io/bayestestR/articles/example2_GLM.html"><strong>Click here</strong></a> to see the next example.</p>
 </div>

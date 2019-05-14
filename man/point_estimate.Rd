@@ -57,7 +57,6 @@ point_estimate(rnorm(1000), estimate = c("median", "MAP"))
 df <- data.frame(replicate(4, rnorm(100)))
 point_estimate(df, estimate = "all", dispersion = TRUE)
 point_estimate(df, estimate = c("median", "MAP"))
-
 \dontrun{
 # rstanarm models
 # -----------------------------------------------

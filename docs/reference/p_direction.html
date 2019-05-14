@@ -178,7 +178,7 @@
 
     <div class="ref-description">
     
-    <p>Compute the <strong>Probability of Direction</strong> (<strong><em>p</em>d</strong>, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (<em>i.e.</em>, is strongly correlated) to the frequentist <strong><em>p</em>-value</strong>.</p>
+    <p>Compute the <strong>Probability of Direction</strong> (<strong>pd</strong>, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist <strong>p-value</strong>.</p>
     
     </div>
 
@@ -242,7 +242,15 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><strong>Relationship with the p-value</strong>: In most cases, it seems that the <em>p</em>d corresponds to the frequentist one-sided <em>p</em>-value through the formula \(p_{two sided} = 2*(1-\frac{p_{d}}{100})\) and to the two-sided <em>p</em>-value (<em>the most commonly reported one</em> through the formula \(p_{one sided} = 2*(1-\frac{p_{d}}{100})\). Thus, a <code>pd</code> of <code>95%</code>, <code>97.5%</code>, <code>99.5%</code> and <code>99.95%</code> corresponds approximately to a<em>p</em>-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code>. See the <a href='https://easystats.github.io/bayestestR/articles/guidelines.html'><em>reporting guidelines</em></a>.</p>
+    <p><strong>Relationship with the p-value</strong>: In most cases, it seems
+that the <em>p</em>d corresponds to the frequentist one-sided p-value
+through the formula \(p_{two sided} = 2*(1-\frac{p_{d}}{100})\) and to
+the two-sided p-value (the most commonly reported one) through
+the formula \(p_{one sided} = 2*(1-\frac{p_{d}}{100})\). Thus, a <code>pd</code>
+of <code>95%</code>, <code>97.5%</code>, <code>99.5%</code> and <code>99.95%</code> corresponds
+approximately to ap-value of respectively <code>.1</code>, <code>.05</code>,
+<code>.01</code> and <code>.001</code>. See the
+<a href='https://easystats.github.io/bayestestR/articles/guidelines.html'>reporting guidelines</a>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -253,23 +261,23 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='fu'>p_direction</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Probability of Direction (pd):
 #&gt; 
-#&gt; </span><span>pd = 83.80%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
+#&gt; </span><span>  - pd = 84.20%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
 #&gt; 
-#&gt; </span><span>pd = 82.56%</div><div class='input'>
+#&gt; </span><span>  - pd = 83.11%</div><div class='input'>
 <span class='co'># Simulate a dataframe of posterior distributions</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>p_direction</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
 #&gt; 
-#&gt; </span><span>  - X1: pd = 50.00%
-#&gt;   - X2: pd = 57.00%
+#&gt; </span><span>  - X1: pd = 54.00%
+#&gt;   - X2: pd = 63.00%
 #&gt;   - X3: pd = 50.00%
-#&gt;   - X4: pd = 52.00%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
+#&gt;   - X4: pd = 56.00%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd):
 #&gt; 
-#&gt; </span><span>  - X1: pd = 49.21%
-#&gt;   - X2: pd = 55.60%
-#&gt;   - X3: pd = 53.72%
-#&gt;   - X4: pd = 48.93%</div></span><span class='co'># NOT RUN {</span>
+#&gt; </span><span>  - X1: pd = 55.56%
+#&gt;   - X2: pd = 60.66%
+#&gt;   - X3: pd = 52.15%
+#&gt;   - X4: pd = 55.55%</div></span><span class='co'># NOT RUN {</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)

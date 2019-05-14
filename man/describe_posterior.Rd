@@ -62,38 +62,37 @@ Compute indices relevant to describe and characterise the posterior distribution
 \examples{
 x <- rnorm(1000)
 describe_posterior(x)
-describe_posterior(x, estimate="all", dispersion = TRUE, test="all")
-describe_posterior(x, ci=c(0.80, 0.90))
+describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all")
+describe_posterior(x, ci = c(0.80, 0.90))
 
 df <- data.frame(replicate(4, rnorm(100)))
 describe_posterior(df)
-describe_posterior(df, estimate="all", dispersion = TRUE, test="all")
-describe_posterior(df, ci=c(0.80, 0.90))
-
+describe_posterior(df, estimate = "all", dispersion = TRUE, test = "all")
+describe_posterior(df, ci = c(0.80, 0.90))
 \dontrun{
 # rstanarm models
 # -----------------------------------------------
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 describe_posterior(model)
-describe_posterior(model, estimate="all", dispersion = TRUE, test="all")
-describe_posterior(model, ci=c(0.80, 0.90))
+describe_posterior(model, estimate = "all", dispersion = TRUE, test = "all")
+describe_posterior(model, ci = c(0.80, 0.90))
 
 # brms models
 # -----------------------------------------------
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 describe_posterior(model)
-describe_posterior(model, estimate="all", dispersion = TRUE, test="all")
-describe_posterior(model, ci=c(0.80, 0.90))
+describe_posterior(model, estimate = "all", dispersion = TRUE, test = "all")
+describe_posterior(model, ci = c(0.80, 0.90))
 
 # BayesFactor objects
 # -----------------------------------------------
 library(BayesFactor)
 bf <- ttestBF(x = rnorm(100, 1, 1))
 describe_posterior(bf)
-describe_posterior(bf, estimate="all", dispersion = TRUE, test="all")
-describe_posterior(bbf, ci=c(0.80, 0.90))
+describe_posterior(bf, estimate = "all", dispersion = TRUE, test = "all")
+describe_posterior(bbf, ci = c(0.80, 0.90))
 }
 
 }

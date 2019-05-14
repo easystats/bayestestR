@@ -194,18 +194,27 @@ in two distributions, typically the posterior vs. the prior distributions.</p>
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>,
-  <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)</pre>
+  <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for brmsfit</span>
+<span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>,
+  <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>posterior</th>
-      <td><p>Vector representing a posterior distribution, or a <code>stanreg</code> object.</p></td>
+      <td><p>Vector representing a posterior distribution, or a <code>stanreg</code> / <code>brmsfit</code> object.</p></td>
     </tr>
     <tr>
       <th>prior</th>
-      <td><p>Vector representing a prior distribution (If <code>posterior</code> is a vector, otherwise ignored). If a prior is not provided, will sample from <code>~Cauchy(location = hypothesis, scale = sd(posterior))</code> (but this should be avoided).</p></td>
+      <td><p>Vector representing a prior distribution (If <code>posterior</code> is a vector, otherwise ignored).</p></td>
     </tr>
     <tr>
       <th>direction</th>
@@ -234,7 +243,7 @@ much <em>less</em> the null is likely under the posterior compared to the prior.
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This method is used to examine if the hypothesis value is less or more
-likely given the observed data. When posterior is a model (<code>stanreg</code>),
+likely given the observed data. When posterior is a model (<code>stanreg</code>, <code>brmsfit</code>),
 posterior and prior samples are extracted for each parameter, and
 Savage-Dickey Bayes factors are computed for each parameter.
 <br /> <br />

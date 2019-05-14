@@ -244,20 +244,20 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
-<span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt;      Median
-#&gt; 1 -0.121871</div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;        Median      MAD        Mean       SD        MAP
-#&gt; 1 -0.03520619 1.029391 -0.02671112 1.010026 -0.0883505</div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt;        Median
-#&gt; 1 -0.03553678</div><div class='input'>
+<span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt;        Median
+#&gt; 1 -0.01141807</div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;      Median       MAD       Mean        SD        MAP
+#&gt; 1 0.0723298 0.9594375 0.06526177 0.9558218 0.01372406</div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt;        Median
+#&gt; 1 -0.01075199</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>point_estimate</span>(<span class='no'>df</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   Parameter      Median       MAD        Mean        SD        MAP
-#&gt; 1        X1  0.06294551 0.8409773 -0.01361213 0.8803251  0.1985447
-#&gt; 2        X2 -0.10458773 0.9958177 -0.06656414 1.0919902 -0.2513890
-#&gt; 3        X3 -0.12467739 1.0273560 -0.08629742 1.0316331 -0.2647254
-#&gt; 4        X4  0.07238957 1.2117317  0.04403914 1.1182058  0.3976266</div><div class='input'><span class='fu'>point_estimate</span>(<span class='no'>df</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt;   Parameter      Median
-#&gt; 1        X1  0.06294551
-#&gt; 2        X2 -0.10458773
-#&gt; 3        X3 -0.12467739
-#&gt; 4        X4  0.07238957</div><div class='input'>
+#&gt; 1        X1  0.10657617 0.9250963  0.01334510 0.9888546  0.3346005
+#&gt; 2        X2 -0.08135287 1.0592898 -0.10065941 0.9787949 -0.2371634
+#&gt; 3        X3  0.10971977 0.9548766  0.14463890 0.9680442  0.1474331
+#&gt; 4        X4 -0.05052848 1.0849669  0.01613327 1.0665220  0.1586988</div><div class='input'><span class='fu'>point_estimate</span>(<span class='no'>df</span>, <span class='kw'>estimate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt;   Parameter      Median
+#&gt; 1        X1  0.10657617
+#&gt; 2        X2 -0.08135287
+#&gt; 3        X3  0.10971977
+#&gt; 4        X4 -0.05052848</div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
