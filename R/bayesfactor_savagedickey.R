@@ -204,9 +204,14 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     )
   }
 
-  bf_val <- data.frame(Parameter = colnames(posterior),
-                       BF = sdbf)
-  class(bf_val) <- c("bayesfactor_savagedickey", "see_bayesfactor_savagedickey", class(bf_val))
+  bf_val <- data.frame(Parameter = colnames(posterior), BF = sdbf)
+
+  class(bf_val) <- unique(
+    c("bayesfactor_savagedickey",
+      "see_bayesfactor_savagedickey",
+      class(bf_val)
+    ))
+
   attr(bf_val, "hypothesis") <- hypothesis
   attr(bf_val, "direction") <- direction
   attr(bf_val, "plot_data") <- .make_sdBF_plot_data(posterior,prior,direction,hypothesis)
@@ -267,15 +272,18 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   Value[ind]
 }
 
+
+
+#' @importFrom utils stack
 #' @keywords internal
 .make_sdBF_plot_data <- function(posterior,prior,direction,hypothesis){
   estimate_samples_density <- function(x) {
     nm <- deparse(substitute(x))
-    x <- stack(x)
+    x <- utils::stack(x)
     x <- split(x,x$ind)
 
     x <- lapply(x, function(data) {
-      d <- bayestestR::estimate_density(data$values)
+      d <- estimate_density(data$values)
       if (direction > 0) {
         d <- d[d$x > hypothesis,,drop = FALSE]
         d$y <- d$y / mean(data$values > hypothesis)
@@ -291,6 +299,8 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     x
   }
 
-  rbind(estimate_samples_density(posterior),
-        estimate_samples_density(prior))
+  rbind(
+    estimate_samples_density(posterior),
+    estimate_samples_density(prior)
+  )
 }
