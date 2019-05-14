@@ -48,9 +48,7 @@ test_that("describe_posterior", {
   # testthat::expect_equal(dim(rez), c(4, 16))
   # rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
   # testthat::expect_equal(dim(rez), c(8, 16))
-  # rez <- describe_posterior(x, estimate = NULL, dispersion = TRUE, test = NULL, ci_method="quantile")
-  # testthat::expect_equal(dim(rez), c(4, 4))
-
-
+  rez <- describe_posterior(x, estimate = NULL, dispersion = TRUE, test = NULL, ci_method="quantile")
+  testthat::expect_equal(dim(rez), c(4, 4))
 
 })
