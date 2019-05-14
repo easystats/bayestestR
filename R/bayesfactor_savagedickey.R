@@ -65,7 +65,7 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
     )
   }
 
-  bf_val <- data.frame(BF = .bayesfactor_savagedickey(posterior, prior, direction = direction, hypothesis = hypothesis))
+  bf_val <- data.frame(log.BF = .bayesfactor_savagedickey(posterior, prior, direction = direction, hypothesis = hypothesis))
   class(bf_val) <- c("bayesfactor_savagedickey", class(bf_val))
   attr(bf_val, "hypothesis") <- hypothesis
 
@@ -174,7 +174,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   }
 
   bf_val <- data.frame(Parameter = colnames(posterior),
-                       BF = sdbf)
+                       log.BF = sdbf)
   class(bf_val) <- c("bayesfactor_savagedickey", class(bf_val))
   attr(bf_val, "hypothesis") <- hypothesis
 
@@ -220,5 +220,5 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     }
   }
 
-  (d_prior / norm_prior) / (d_post / norm_post)
+  log((d_prior / norm_prior) / (d_post / norm_post))
 }

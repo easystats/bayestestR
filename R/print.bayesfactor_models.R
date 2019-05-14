@@ -5,14 +5,14 @@ print.bayesfactor_models <- function(x, digits = 2, log = FALSE, ...) {
   grid.type <- attr(BFE, "BF_method")
 
   BFE_ <- as.data.frame(BFE)
-  if (!log) BFE_$BF_log <- exp(BFE_$BF_log)
+  if (!log) BFE_$log.BF <- exp(BFE_$log.BF)
 
   # indicate null-model
   BFE_$Model[BFE_$Model == "1"] <- "(Intercept only)"
 
   rownames(BFE_) <- paste0("[", seq_len(nrow(BFE_)), "] ", BFE_$Model, "   ")
   denM <- rownames(BFE_)[denominator]
-  BFE_ <- BFE_[-denominator, "BF_log", drop = FALSE]
+  BFE_ <- BFE_[-denominator, "log.BF", drop = FALSE]
   colnames(BFE_) <- ""
 
   cat("Bayes factor analysis
