@@ -123,10 +123,17 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
 
   # Equivalence test
   if(any(c("equivalence", "equivalence_test", "equitest") %in% test)){
-    if(rope_full){
-      test_equi <- equivalence_test(x, range = rope_range, ci = 1, ...)
+
+    if(any(c("rope") %in% test)){
+      equi_warnings = FALSE
     } else{
-      test_equi <- equivalence_test(x, range = rope_range, ci = ci, ...)
+      equi_warnings = TRUE
+    }
+
+    if(rope_full){
+      test_equi <- equivalence_test(x, range = rope_range, ci = 1, verbose = equi_warnings, ...)
+    } else{
+      test_equi <- equivalence_test(x, range = rope_range, ci = ci, verbose = equi_warnings, ...)
     }
     if(!"Parameter" %in% names(test_equi)){
       test_equi <- cbind(data.frame("Parameter" = "Posterior"), test_equi)

@@ -89,7 +89,7 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
   df.effect <- data.frame(effnames,
     Pinc = rep(NA, length(effnames)),
     PincD = rep(NA, length(effnames)),
-    BFinc = rep(NA, length(effnames)),
+    BF_inclusion = rep(NA, length(effnames)),
     stringsAsFactors = FALSE
   )
 
@@ -119,10 +119,10 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
     # Save results
     df.effect$Pinc[effnames == eff] <- mwithprior
     df.effect$PincD[effnames == eff] <- mwithpost
-    df.effect$BFinc[effnames == eff] <- (mwithpost / mwithoutpost) / (mwithprior / mwithoutprior)
+    df.effect$BF_inclusion[effnames == eff] <- (mwithpost / mwithoutpost) / (mwithprior / mwithoutprior)
   }
 
-  df.effect$BFinc <- log(df.effect$BFinc)
+  df.effect$BF_inclusion <- log(df.effect$BF_inclusion)
   df.effect <- df.effect[, -1, drop = FALSE]
   colnames(df.effect) <- c("P.Inc.prior", "P.Inc.posterior", "log.BF.Inc")
   rownames(df.effect) <- effnames
@@ -158,7 +158,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
     priorOdds <- rep(1, length(Modelnames))
   }
 
-  posterior_odds <- priorOdds * exp(BFGrid$log.BF)
+  posterior_odds <- priorOdds * exp(BFGrid$BF_log)
 
   priorProbs <- priorOdds / sum(priorOdds)
   postProbs <- posterior_odds / sum(posterior_odds)

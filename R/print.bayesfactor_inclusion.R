@@ -1,9 +1,9 @@
 #' @export
 print.bayesfactor_inclusion <- function(x, digits = 2, log = FALSE, ...) {
   BFE <- x
-  colnames(BFE) <- c("Pr(prior)", "Pr(posterior)", "log(Inclusion.BF)")
+  colnames(BFE) <- c("Pr(prior)", "Pr(posterior)", "log(BF_inclusion)")
   if (!log) {
-    colnames(BFE)[3] <- "Inclusion.BF"
+    colnames(BFE)[3] <- "BF_inclusion"
     BFE[, 3] <- exp(BFE[, 3])
   }
 

@@ -127,7 +127,7 @@ bayesfactor_models.default <- function(..., denominator = 1) {
 
   res <- data.frame(
     Model = mforms,
-    log.BF = mBFs,
+    BF_log = mBFs,
     stringsAsFactors = FALSE
   )
 
@@ -190,7 +190,7 @@ bayesfactor_models.default <- function(..., denominator = 1) {
 
   res <- data.frame(
     Model = mforms,
-    log.BF = mBFs,
+    BF_log = mBFs,
     stringsAsFactors = FALSE
   )
 
@@ -233,7 +233,7 @@ bayesfactor_models.BFBayesFactor <- function(...) {
 
   res <- data.frame(
     Model = unname(mforms),
-    log.BF = mBFs,
+    BF_log = mBFs,
     stringsAsFactors = FALSE
   )
 
@@ -255,11 +255,11 @@ bayesfactor_models.BFBayesFactor <- function(...) {
 update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...) {
   if (!is.null(reference)) {
     if (reference == "top") {
-      reference <- which.max(object$log.BF)
+      reference <- which.max(object$BF_log)
     } else if (reference == "bottom") {
-      reference <- which.min(object$log.BF)
+      reference <- which.min(object$BF_log)
     }
-    object$log.BF <- object$log.BF - object$log.BF[reference]
+    object$BF_log <- object$BF_log - object$BF_log[reference]
     attr(object, "denominator") <- reference
   }
 
