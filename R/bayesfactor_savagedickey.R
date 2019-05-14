@@ -73,6 +73,9 @@ bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-s
 #' @export
 #' @importFrom stats rcauchy sd
 bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, ...) {
+  # find direction
+  direction <- .get_direction(direction)
+
   if (is.null(prior)) {
     prior <- posterior
     warning(
@@ -85,6 +88,9 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
   bf_val <- data.frame(BF = .bayesfactor_savagedickey(posterior, prior, direction = direction, hypothesis = hypothesis))
   class(bf_val) <- c("bayesfactor_savagedickey", class(bf_val))
   attr(bf_val, "hypothesis") <- hypothesis
+  attr(bf_val, "direction") <- direction
+  attr(bf_val,"posterior") <- data.frame(posterior)
+  attr(bf_val,"prior") <- data.frame(prior)
 
   bf_val
 }
@@ -174,6 +180,9 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
 bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
                                                 direction = "two-sided", hypothesis = 0,
                                                 ...) {
+  # find direction
+  direction <- .get_direction(direction)
+
   if (is.null(prior)) {
     prior <- posterior
     warning(
@@ -196,20 +205,16 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
                        BF = sdbf)
   class(bf_val) <- c("bayesfactor_savagedickey", class(bf_val))
   attr(bf_val, "hypothesis") <- hypothesis
+  attr(bf_val, "direction") <- direction
+  attr(bf_val,"posterior") <- posterior
+  attr(bf_val,"prior") <- prior
 
   bf_val
 }
 
 #' @keywords internal
 #' @importFrom insight print_color
-.bayesfactor_savagedickey <- function(posterior, prior, direction = "two-sided", hypothesis = 0) {
-  # find direction
-  direction.opts <- data.frame(
-    String = c("left", "right", "two-sided", "<", ">", "=", "-1", "0", "1", "+1"),
-    Value = c(-1, 1, 0, -1, 1, 0, -1, 0, 1, 1)
-  )
-  direction <- direction.opts$Value[pmatch(direction, direction.opts$String, 2)[1]]
-
+.bayesfactor_savagedickey <- function(posterior, prior, direction = 0, hypothesis = 0) {
   if (requireNamespace("logspline")) {
     f_post <- suppressWarnings(logspline::logspline(posterior))
     f_prior <- suppressWarnings(logspline::logspline(prior))
@@ -241,4 +246,21 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   }
 
   (d_prior / norm_prior) / (d_post / norm_post)
+}
+
+#' @keywords internal
+.get_direction <- function(direction){
+  if (length(direction) > 1) {
+    warning("Using first 'direction' value.")
+    direction <- direction[1]
+  }
+
+  String <- c("left", "right", "two-sided", "<", ">", "=", "-1", "0", "1", "+1")
+  Value <- c(-1, 1, 0, -1, 1, 0, -1, 0, 1, 1)
+
+  ind <- String == direction
+  if (length(ind) == 0) {
+    stop("Unrecognized 'direction' argument.")
+  }
+  Value[ind]
 }
