@@ -9,7 +9,7 @@
 #' the effect AND without any higher-order interactions with the effect.
 #' @param prior_odds optional vector of prior odds for the models. See \code{BayesFactor::priorOdds}
 #'
-#' @return a data frame containing the prior and posterior probabilities, and BF (log) for each effect.
+#' @return a data frame containing the prior and posterior probabilities, and BF for each effect.
 #'
 #' @details Inclusion Bayes factors answer the question: Given the observed data,
 #' how much more likely have models with a particular effect become, compared to
@@ -122,9 +122,9 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
     df.effect$BF_inclusion[effnames == eff] <- (mwithpost / mwithoutpost) / (mwithprior / mwithoutprior)
   }
 
-  df.effect$BF_inclusion <- log(df.effect$BF_inclusion)
+  df.effect$BF_inclusion <- df.effect$BF_inclusion
   df.effect <- df.effect[, -1, drop = FALSE]
-  colnames(df.effect) <- c("P.Inc.prior", "P.Inc.posterior", "log.BF.Inc")
+  colnames(df.effect) <- c("P.Inc.prior", "P.Inc.posterior", "BF.Inc")
   rownames(df.effect) <- effnames
 
 
@@ -158,7 +158,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
     priorOdds <- rep(1, length(Modelnames))
   }
 
-  posterior_odds <- priorOdds * exp(BFGrid$BF_log)
+  posterior_odds <- priorOdds * BFGrid$BF
 
   priorProbs <- priorOdds / sum(priorOdds)
   postProbs <- posterior_odds / sum(posterior_odds)

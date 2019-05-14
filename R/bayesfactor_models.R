@@ -29,7 +29,7 @@
 #' smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
 #' (\cite{Wetzels et al. 2011}).
 #'
-#' @return A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs (log), that prints nicely.
+#' @return A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs, that prints nicely.
 #'
 #' @examples
 #' # With lm objects:
@@ -127,13 +127,13 @@ bayesfactor_models.default <- function(..., denominator = 1) {
 
   res <- data.frame(
     Model = mforms,
-    BF_log = mBFs,
+    BF = exp(mBFs),
     stringsAsFactors = FALSE
   )
 
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- "BIC approximation"
-  class(res) <- c("bayesfactor_models", class(res))
+  class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
 }
@@ -190,13 +190,13 @@ bayesfactor_models.default <- function(..., denominator = 1) {
 
   res <- data.frame(
     Model = mforms,
-    BF_log = mBFs,
+    BF = exp(mBFs),
     stringsAsFactors = FALSE
   )
 
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- "marginal likelihoods (bridgesampling)"
-  class(res) <- c("bayesfactor_models", class(res))
+  class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
 }
@@ -233,13 +233,13 @@ bayesfactor_models.BFBayesFactor <- function(...) {
 
   res <- data.frame(
     Model = unname(mforms),
-    BF_log = mBFs,
+    BF = exp(mBFs),
     stringsAsFactors = FALSE
   )
 
   attr(res, "denominator") <- 1
   attr(res, "BF_method") <- "JZS (BayesFactor)"
-  class(res) <- c("bayesfactor_models", class(res))
+  class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
 }
@@ -255,11 +255,11 @@ bayesfactor_models.BFBayesFactor <- function(...) {
 update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...) {
   if (!is.null(reference)) {
     if (reference == "top") {
-      reference <- which.max(object$BF_log)
+      reference <- which.max(object$BF)
     } else if (reference == "bottom") {
-      reference <- which.min(object$BF_log)
+      reference <- which.min(object$BF)
     }
-    object$BF_log <- object$BF_log - object$BF_log[reference]
+    object$BF <- object$BF / object$BF[reference]
     attr(object, "denominator") <- reference
   }
 

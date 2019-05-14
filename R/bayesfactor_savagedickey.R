@@ -3,7 +3,7 @@
 #' This method computes the ratio between the density of a single value (typically the null)
 #' in two distributions, typically the posterior vs. the prior distributions.
 #'
-#' @param posterior Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object.
+#' @param posterior Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object (see Details).
 #' @param prior Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored).
 #' @param direction Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
 #' \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).
@@ -18,6 +18,8 @@
 #' likely given the observed data. When posterior is a model (\code{stanreg}, \code{brmsfit}),
 #' posterior and prior samples are extracted for each parameter, and
 #' Savage-Dickey Bayes factors are computed for each parameter.
+#'
+#' \strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)} priors. See example below.
 #' \cr \cr
 #' A Bayes factor greater than 1 can be interpereted as evidence against the null,
 #' at which one convention is that a Bayes factor greater than 3 can be considered
@@ -32,10 +34,25 @@
 #' posterior <- distribution_normal(1000, mean = .5, sd = .3)
 #'
 #' bayesfactor_savagedickey(posterior, prior)
+#'
 #' \dontrun{
+#'
+#' # rstanarm models
+#' # ---------------
 #' library(rstanarm)
 #' stan_model <- stan_glm(extra ~ group, data = sleep)
 #' bayesfactor_savagedickey(stan_model)
+#'
+#' # brms models
+#' # -----------
+#' library(brms)
+#' my_custom_priors <-
+#'   set_prior("student_t(3, 0, 1)",class = "b") +
+#'   set_prior("student_t(3, 0, 1)",class = "sd", group = "ID")
+#'
+#' brms_model <- brm(extra ~ group + (1|ID), data = sleep,
+#'                   prior = my_custom_priors)
+#' bayesfactor_savagedickey(brms_model)
 #' }
 #'
 #' @references
@@ -56,6 +73,9 @@ bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-s
 #' @export
 #' @importFrom stats rcauchy sd
 bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, ...) {
+  # find direction
+  direction <- .get_direction(direction)
+
   if (is.null(prior)) {
     prior <- posterior
     warning(
@@ -65,9 +85,15 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
     )
   }
 
-  bf_val <- data.frame(BF = .bayesfactor_savagedickey(posterior, prior, direction = direction, hypothesis = hypothesis))
-  class(bf_val) <- c("bayesfactor_savagedickey", class(bf_val))
+  bf_val <- data.frame(BF = .bayesfactor_savagedickey(posterior, prior,
+                                                      direction = direction,
+                                                      hypothesis = hypothesis))
+  class(bf_val) <- c("bayesfactor_savagedickey", "see_bayesfactor_savagedickey", class(bf_val))
   attr(bf_val, "hypothesis") <- hypothesis
+  attr(bf_val, "direction") <- direction
+  attr(bf_val, "plot_data") <- .make_sdBF_plot_data(data.frame(X = posterior),
+                                                    data.frame(X = prior),
+                                                    direction,hypothesis)
 
   bf_val
 }
@@ -89,6 +115,7 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 
   # Get Priors
   if (is.null(prior)) {
+    cat("Sampling Priors\n")
     alg <- insight::find_algorithm(posterior)
 
     capture.output(prior <- suppressWarnings(
@@ -114,7 +141,8 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 
 #' @rdname bayesfactor_savagedickey
 #' @export
-#' @importFrom insight find_parameters
+#' @importFrom insight find_parameters find_algorithm
+#' @importFrom stats update
 bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
                                              direction = "two-sided", hypothesis = 0,
                                              effects = c("fixed", "random", "all"),
@@ -125,23 +153,23 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
 
   effects <- match.arg(effects)
 
-  params <- insight::find_parameters(posterior)
-  params <- switch(
-    effects,
-    "fixed" = params[["conditional"]],
-    "random" = params[["random"]],
-    "all" = unlist(params[c("conditional", "random")])
-  )
+  # Get Priors
+  if (is.null(prior)) {
+    alg <- insight::find_algorithm(posterior)
 
-  h_ <- brms::hypothesis(posterior, paste0(params, "=0"), class = NULL, ...)
-
-  if (all(is.na(h_$hypothesis$Evid.Ratio))) {
-    stop("Cannot compute Savage-Dickey Bayes factor(s) with default priors")
+    capture.output(prior <- suppressWarnings(
+      stats::update(
+        posterior,
+        sample_prior = "only",
+        iter = alg$iterations,
+        chains = alg$chains,
+        warmup = alg$warmup
+      )
+    ))
+    prior <- insight::get_parameters(prior, effects = effects)
   }
 
-  posterior <- h_$samples
-  prior <- h_$prior_samples
-  colnames(posterior) <- colnames(prior) <- params
+  posterior <- insight::get_parameters(posterior, effects = effects)
 
   # Get savage-dickey BFs
   bayesfactor_savagedickey.data.frame(
@@ -155,6 +183,9 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
 bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
                                                 direction = "two-sided", hypothesis = 0,
                                                 ...) {
+  # find direction
+  direction <- .get_direction(direction)
+
   if (is.null(prior)) {
     prior <- posterior
     warning(
@@ -175,22 +206,18 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 
   bf_val <- data.frame(Parameter = colnames(posterior),
                        BF = sdbf)
-  class(bf_val) <- c("bayesfactor_savagedickey", class(bf_val))
+  class(bf_val) <- c("bayesfactor_savagedickey", "see_bayesfactor_savagedickey", class(bf_val))
   attr(bf_val, "hypothesis") <- hypothesis
+  attr(bf_val, "direction") <- direction
+  attr(bf_val, "plot_data") <- .make_sdBF_plot_data(posterior,prior,direction,hypothesis)
 
   bf_val
 }
 
+#' @keywords internal
 #' @importFrom insight print_color
-.bayesfactor_savagedickey <- function(posterior, prior, direction = "two-sided", hypothesis = 0) {
-  # find direction
-  direction.opts <- data.frame(
-    String = c("left", "right", "two-sided", "<", ">", "=", "-1", "0", "1", "+1"),
-    Value = c(-1, 1, 0, -1, 1, 0, -1, 0, 1, 1)
-  )
-  direction <- direction.opts$Value[pmatch(direction, direction.opts$String, 2)[1]]
-
-  if (requireNamespace("logspline")) {
+.bayesfactor_savagedickey <- function(posterior, prior, direction = 0, hypothesis = 0) {
+  if (requireNamespace("logspline", quietly = TRUE)) {
     f_post <- suppressWarnings(logspline::logspline(posterior))
     f_prior <- suppressWarnings(logspline::logspline(prior))
 
@@ -221,4 +248,49 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   }
 
   (d_prior / norm_prior) / (d_post / norm_post)
+}
+
+#' @keywords internal
+.get_direction <- function(direction){
+  if (length(direction) > 1) {
+    warning("Using first 'direction' value.")
+    direction <- direction[1]
+  }
+
+  String <- c("left", "right", "two-sided", "<", ">", "=", "-1", "0", "1", "+1")
+  Value <- c(-1, 1, 0, -1, 1, 0, -1, 0, 1, 1)
+
+  ind <- String == direction
+  if (length(ind) == 0) {
+    stop("Unrecognized 'direction' argument.")
+  }
+  Value[ind]
+}
+
+#' @keywords internal
+.make_sdBF_plot_data <- function(posterior,prior,direction,hypothesis){
+  estimate_samples_density <- function(x) {
+    nm <- deparse(substitute(x))
+    x <- stack(x)
+    x <- split(x,x$ind)
+
+    x <- lapply(x, function(data) {
+      d <- bayestestR::estimate_density(data$values)
+      if (direction > 0) {
+        d <- d[d$x > hypothesis,,drop = FALSE]
+        d$y <- d$y / mean(data$values > hypothesis)
+      } else if (direction < 0) {
+        d <- d[d$x < hypothesis,,drop = FALSE]
+        d$y <- d$y / mean(data$values < hypothesis)
+      }
+      d$ind <- data$ind[1]
+      d
+    })
+    x <- do.call("rbind",x)
+    x$Distribution <- nm
+    x
+  }
+
+  rbind(estimate_samples_density(posterior),
+        estimate_samples_density(prior))
 }

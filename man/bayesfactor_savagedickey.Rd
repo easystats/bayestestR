@@ -26,7 +26,7 @@ bayesfactor_savagedickey(posterior, prior = NULL,
   direction = "two-sided", hypothesis = 0, ...)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object.}
+\item{posterior}{Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object (see Details).}
 
 \item{prior}{Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored).}
 
@@ -52,6 +52,8 @@ This method is used to examine if the hypothesis value is less or more
 likely given the observed data. When posterior is a model (\code{stanreg}, \code{brmsfit}),
 posterior and prior samples are extracted for each parameter, and
 Savage-Dickey Bayes factors are computed for each parameter.
+
+\strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)} priors. See example below.
 \cr \cr
 A Bayes factor greater than 1 can be interpereted as evidence against the null,
 at which one convention is that a Bayes factor greater than 3 can be considered
@@ -66,10 +68,25 @@ prior <- distribution_normal(1000, mean = 0, sd = 1)
 posterior <- distribution_normal(1000, mean = .5, sd = .3)
 
 bayesfactor_savagedickey(posterior, prior)
+
 \dontrun{
+
+# rstanarm models
+# ---------------
 library(rstanarm)
 stan_model <- stan_glm(extra ~ group, data = sleep)
 bayesfactor_savagedickey(stan_model)
+
+# brms models
+# -----------
+library(brms)
+my_custom_priors <-
+  set_prior("student_t(3, 0, 1)",class = "b") +
+  set_prior("student_t(3, 0, 1)",class = "sd", group = "ID")
+
+brms_model <- brm(extra ~ group + (1|ID), data = sleep,
+                  prior = my_custom_priors)
+bayesfactor_savagedickey(brms_model)
 }
 
 }
