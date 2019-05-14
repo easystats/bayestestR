@@ -133,7 +133,7 @@ bayesfactor_models.default <- function(..., denominator = 1) {
 
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- "BIC approximation"
-  class(res) <- c("bayesfactor_models", class(res))
+  class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
 }
@@ -196,7 +196,7 @@ bayesfactor_models.default <- function(..., denominator = 1) {
 
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- "marginal likelihoods (bridgesampling)"
-  class(res) <- c("bayesfactor_models", class(res))
+  class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
 }
@@ -239,7 +239,7 @@ bayesfactor_models.BFBayesFactor <- function(...) {
 
   attr(res, "denominator") <- 1
   attr(res, "BF_method") <- "JZS (BayesFactor)"
-  class(res) <- c("bayesfactor_models", class(res))
+  class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
 }
