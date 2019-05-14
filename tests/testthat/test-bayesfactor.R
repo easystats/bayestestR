@@ -8,22 +8,22 @@ test_that("bayesfactor_savagedickey", {
   Xposterior <- rnorm(1000, 0.7, 0.2)
 
   bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, hypothesis = 0, direction = 0)
-  testthat::expect_equal(bfsd$log.BF, 3.7, tolerance = 0.1)
+  testthat::expect_equal(log(bfsd$BF), 3.7, tolerance = 0.1)
 
   bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, hypothesis = 0, direction = 1)
-  testthat::expect_equal(bfsd$log.BF, 4.3, tolerance = 0.1)
+  testthat::expect_equal(log(bfsd$BF), 4.3, tolerance = 0.1)
 
   bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, hypothesis = 1, direction = 0)
-  testthat::expect_equal(bfsd$log.BF, -0.8, tolerance = 0.1)
+  testthat::expect_equal(log(bfsd$BF), -0.8, tolerance = 0.1)
 
   testthat::expect_warning(bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior))
-  testthat::expect_equal(bfsd$log.BF, 0, tolerance = 0.1)
+  testthat::expect_equal(log(bfsd$BF), 0, tolerance = 0.1)
 
   library(rstanarm)
   set.seed(333)
   junk <- capture.output(model <- stan_glm(extra ~ group, data = sleep))
   bfsd <- bayestestR::bayesfactor_savagedickey(model)
-  testthat::expect_equal(bfsd$log.BF, c(-2.69, -0.14), tolerance = 0.1)
+  testthat::expect_equal(log(bfsd$BF), c(-2.69, -0.14), tolerance = 0.1)
 
   # Add test for BRMS
 })
@@ -60,18 +60,18 @@ brms_4bf_5 <- insight::download_model("brms_4bf_5")
 #                                              diagnostic_file = file.path(tempdir(), "df0.csv")))
 # junk <- capture.output(stan_bf_1 <- stan_glm(Sepal.Length ~ Species, data = iris,
 #                                              diagnostic_file = file.path(tempdir(), "df1.csv")))
-#
+
 # test_that("bayesfactor_models", {
 #   # brms
 #   testthat::expect_warning(bayestestR::bayesfactor_models(brms_4bf_1,brms_4bf_2))
 #   testthat::expect_is(brms_models,"bayesfactor_models")
-#   testthat::expect_equal(brms_models$log.BF,c(0, 68.5, 102.5, 128.6, 128.8), tolerance = 0.1)
+#   testthat::expect_equal(log(brms_models$BF),c(0, 68.5, 102.5, 128.6, 128.8), tolerance = 0.1)
 #
 #   # rstanarm
 #   testthat::expect_warning(bayestestR::bayesfactor_models(stan_bf_0,stan_bf_1))
 #   stan_models <- suppressWarnings(bayestestR::bayesfactor_models(stan_bf_0,stan_bf_1))
 #   testthat::expect_is(stan_models,"bayesfactor_models")
-#   testthat::expect_equal(stan_models$log.BF,c(0, 65.19), tolerance = 0.1)
+#   testthat::expect_equal(log(stan_models$BF),c(0, 65.19), tolerance = 0.1)
 #
 #   ## BIC
 #   testthat::expect_equal(BFM1,BFM2)
@@ -82,12 +82,12 @@ brms_4bf_5 <- insight::download_model("brms_4bf_5")
 #
 #
 #   # update models
-#   testthat::expect_equal(update(BFM2,subset = c(1,2))$log.BF,c(0,57.3,54.52), tolerance = 0.1)
+#   testthat::expect_equal(log(update(BFM2,subset = c(1,2))$BF),c(0,57.3,54.52), tolerance = 0.1)
 #
 #   # update reference
-#   testthat::expect_equal(update(BFM2,reference = 1)$log.BF,c(0,-2.8,-6.2,-57.4),tolerance = 0.1)
+#   testthat::expect_equal(log(update(BFM2,reference = 1)$BF),c(0,-2.8,-6.2,-57.4),tolerance = 0.1)
 # })
-#
+
 
 
 # bayesfactor_inclusion ---------------------------------------------------
@@ -102,11 +102,11 @@ test_that("bayesfactor_inclusion", {
   )
 
   # with random effects in all models:
-  testthat::expect_true(is.na(bayestestR::bayesfactor_inclusion(BFM1)[1, "log.BF.Inc"]))
+  testthat::expect_true(is.nan(bayestestR::bayesfactor_inclusion(BFM1)[1, "BF.Inc"]))
 
   # + match_models
   bfinc_matched <- bayestestR::bayesfactor_inclusion(BFM1, match_models = TRUE)
   testthat::expect_equal(bfinc_matched$P.Inc.prior, c(1, 0.25, 0.5, 0.25), tolerance = 0.1)
   testthat::expect_equal(bfinc_matched$P.Inc.posterior, c(1, 0.94, 0.06, 0), tolerance = 0.1)
-  testthat::expect_equal(bfinc_matched$log.BF.Inc, c(NaN, 57.37, -2.82, -5.25), tolerance = 0.1)
+  testthat::expect_equal(log(bfinc_matched$BF.Inc), c(NaN, 57.37, -2.82, -5.25), tolerance = 0.1)
 })

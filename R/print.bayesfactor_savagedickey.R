@@ -4,10 +4,10 @@ print.bayesfactor_savagedickey <- function(x, digits = 2, log = FALSE, ...) {
   hypothesis <- attr(BFE, "hypothesis")
 
   if (log) {
-    names(BFE)[names(BFE) == "log.BF"] <- "log(Bayes Factor)"
+    BFE$BF <- log(BFE$BF)
+    names(BFE)[names(BFE) == "BF"] <- "log(Bayes Factor)"
   } else {
-    BFE$log.BF <- exp(BFE$log.BF)
-    names(BFE)[names(BFE) == "log.BF"] <- "Bayes Factor"
+    names(BFE)[names(BFE) == "BF"] <- "Bayes Factor"
   }
 
   insight::print_color("# Bayes Factor (Savage-Dickey density ratio)\n\n", "blue")

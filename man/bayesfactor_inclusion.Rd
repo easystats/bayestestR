@@ -17,7 +17,7 @@ the effect AND without any higher-order interactions with the effect.}
 \item{prior_odds}{optional vector of prior odds for the models. See \code{BayesFactor::priorOdds}}
 }
 \value{
-a data frame containing the prior and posterior probabilities, and BF (log) for each effect.
+a data frame containing the prior and posterior probabilities, and BF for each effect.
 }
 \description{
 Get inclusion BFs for effects across Bayesian models

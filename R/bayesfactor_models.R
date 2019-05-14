@@ -29,7 +29,7 @@
 #' smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
 #' (\cite{Wetzels et al. 2011}).
 #'
-#' @return A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs (log), that prints nicely.
+#' @return A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs, that prints nicely.
 #'
 #' @examples
 #' # With lm objects:
@@ -127,7 +127,7 @@ bayesfactor_models.default <- function(..., denominator = 1) {
 
   res <- data.frame(
     Model = mforms,
-    log.BF = mBFs,
+    BF = exp(mBFs),
     stringsAsFactors = FALSE
   )
 
@@ -190,7 +190,7 @@ bayesfactor_models.default <- function(..., denominator = 1) {
 
   res <- data.frame(
     Model = mforms,
-    log.BF = mBFs,
+    BF = exp(mBFs),
     stringsAsFactors = FALSE
   )
 
@@ -233,7 +233,7 @@ bayesfactor_models.BFBayesFactor <- function(...) {
 
   res <- data.frame(
     Model = unname(mforms),
-    log.BF = mBFs,
+    BF = exp(mBFs),
     stringsAsFactors = FALSE
   )
 
@@ -255,11 +255,11 @@ bayesfactor_models.BFBayesFactor <- function(...) {
 update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...) {
   if (!is.null(reference)) {
     if (reference == "top") {
-      reference <- which.max(object$log.BF)
+      reference <- which.max(object$BF)
     } else if (reference == "bottom") {
-      reference <- which.min(object$log.BF)
+      reference <- which.min(object$BF)
     }
-    object$log.BF <- object$log.BF - object$log.BF[reference]
+    object$BF <- object$BF / object$BF[reference]
     attr(object, "denominator") <- reference
   }
 
