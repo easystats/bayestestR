@@ -173,7 +173,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     )
   }
 
-  bf_val <- data.frame(Parameters = colnames(posterior),
+  bf_val <- data.frame(Parameter = colnames(posterior),
                        BF = sdbf)
   class(bf_val) <- c("bayesfactor_savagedickey", class(bf_val))
   attr(bf_val, "hypothesis") <- hypothesis
