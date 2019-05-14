@@ -59,9 +59,9 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
   if (is.null(prior)) {
     prior <- posterior
     warning(
-      "Prior not specified!\n",
+      "Prior not specified! ",
       "Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)')",
-      " to get meaningful results!"
+      " to get meaningful results."
     )
   }
 
@@ -158,9 +158,9 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   if (is.null(prior)) {
     prior <- posterior
     warning(
-      "Prior not specified!\n",
+      "Prior not specified! ",
       "Please specify priors (with columns matching 'posterior')",
-      " to get meaningful results!"
+      " to get meaningful results."
     )
   }
 
@@ -173,7 +173,8 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     )
   }
 
-  bf_val <- data.frame(BF = sdbf, row.names = colnames(posterior))
+  bf_val <- data.frame(Parameter = colnames(posterior),
+                       BF = sdbf)
   class(bf_val) <- c("bayesfactor_savagedickey", class(bf_val))
   attr(bf_val, "hypothesis") <- hypothesis
 

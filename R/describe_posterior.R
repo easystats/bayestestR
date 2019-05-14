@@ -74,7 +74,7 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
   }
 
   # Uncertainty
-  if (!is.null(estimate)) {
+  if (!is.null(ci)) {
     ci_method <- match.arg(ci_method, c("hdi", "quantile", "ci", "eti"))
     if (ci_method == "hdi") {
       uncertainty <- hdi(x, ci = ci)
@@ -89,69 +89,75 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
   }
 
   # Effect Existence
-  test <- match.arg(test, c(
-    "pd", "p_direction", "pdir", "mpe",
-    "rope", "equivalence", "equivalence_test", "equitest",
-    "bf", "bayesfactor", "bayes_factor", "all"
-  ), several.ok = TRUE)
-  if ("all" %in% test) {
-    test <- c("pd", "rope", "equivalence", "bf")
-  }
+  if(!is.null(test)){
+    test <- match.arg(test, c(
+      "pd", "p_direction", "pdir", "mpe",
+      "rope", "equivalence", "equivalence_test", "equitest",
+      "bf", "bayesfactor", "bayes_factor", "all"
+    ), several.ok = TRUE)
+    if ("all" %in% test) {
+      test <- c("pd", "rope", "equivalence", "bf")
+    }
 
-  # Probability of direction
-  if (any(c("pd", "p_direction", "pdir", "mpe") %in% test)) {
-    test_pd <- p_direction(x, ...)
-    if (!is.data.frame(test_pd)) test_pd <- data.frame("Parameter" = "Posterior", "pd" = test_pd)
-  } else {
-    test_pd <- data.frame("Parameter" = NA)
-  }
-
-  # ROPE
-  if (any(c("rope") %in% test)) {
-    if (rope_full) {
-      test_rope <- rope(x, range = rope_range, ci = 1, ...)
+    # Probability of direction
+    if (any(c("pd", "p_direction", "pdir", "mpe") %in% test)) {
+      test_pd <- p_direction(x, ...)
+      if (!is.data.frame(test_pd)) test_pd <- data.frame("Parameter" = "Posterior", "pd" = test_pd)
     } else {
-      test_rope <- rope(x, range = rope_range, ci = ci, ...)
+      test_pd <- data.frame("Parameter" = NA)
     }
-    if (!"Parameter" %in% names(test_rope)) {
-      test_rope <- cbind(data.frame("Parameter" = "Posterior"), test_rope)
-    }
-    names(test_rope)[names(test_rope) == "CI"] <- "ROPE_CI"
-  } else {
-    test_rope <- data.frame("Parameter" = NA)
-  }
 
-  # Equivalence test
-  if (any(c("equivalence", "equivalence_test", "equitest") %in% test)) {
+    # ROPE
     if (any(c("rope") %in% test)) {
-      equi_warnings <- FALSE
+      if (rope_full) {
+        test_rope <- rope(x, range = rope_range, ci = 1, ...)
+      } else {
+        test_rope <- rope(x, range = rope_range, ci = ci, ...)
+      }
+      if (!"Parameter" %in% names(test_rope)) {
+        test_rope <- cbind(data.frame("Parameter" = "Posterior"), test_rope)
+      }
+      names(test_rope)[names(test_rope) == "CI"] <- "ROPE_CI"
     } else {
-      equi_warnings <- TRUE
+      test_rope <- data.frame("Parameter" = NA)
     }
 
-    if (rope_full) {
-      test_equi <- equivalence_test(x, range = rope_range, ci = 1, verbose = equi_warnings, ...)
+    # Equivalence test
+    if (any(c("equivalence", "equivalence_test", "equitest") %in% test)) {
+      if (any(c("rope") %in% test)) {
+        equi_warnings <- FALSE
+      } else {
+        equi_warnings <- TRUE
+      }
+
+      if (rope_full) {
+        test_equi <- equivalence_test(x, range = rope_range, ci = 1, verbose = equi_warnings, ...)
+      } else {
+        test_equi <- equivalence_test(x, range = rope_range, ci = ci, verbose = equi_warnings, ...)
+      }
+      if (!"Parameter" %in% names(test_equi)) {
+        test_equi <- cbind(data.frame("Parameter" = "Posterior"), test_equi)
+      }
+      names(test_equi)[names(test_equi) == "CI"] <- "ROPE_CI"
     } else {
-      test_equi <- equivalence_test(x, range = rope_range, ci = ci, verbose = equi_warnings, ...)
+      test_equi <- data.frame("Parameter" = NA)
     }
-    if (!"Parameter" %in% names(test_equi)) {
-      test_equi <- cbind(data.frame("Parameter" = "Posterior"), test_equi)
-    }
-    names(test_equi)[names(test_equi) == "CI"] <- "ROPE_CI"
-  } else {
-    test_equi <- data.frame("Parameter" = NA)
-  }
-  test_rope <- merge(test_rope, test_equi, all = TRUE)
-  test_rope <- test_rope[!names(test_rope) %in% c("HDI_low", "HDI_high")]
+    test_rope <- merge(test_rope, test_equi, all = TRUE)
+    test_rope <- test_rope[!names(test_rope) %in% c("HDI_low", "HDI_high")]
 
 
-  # Bayes Factors
-  if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
-    test_bf <- bayesfactor_savagedickey(x, prior = bf_prior, ...)
-    if (!"Parameter" %in% names(test_bf)) {
-      test_bf <- cbind(data.frame("Parameter" = "Posterior"), test_bf)
+    # Bayes Factors
+    if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
+      test_bf <- bayesfactor_savagedickey(x, prior = bf_prior, ...)
+      if (!"Parameter" %in% names(test_bf)) {
+        test_bf <- cbind(data.frame("Parameter" = "Posterior"), test_bf)
+      }
+    } else {
+      test_bf <- data.frame("Parameter" = NA)
     }
-  } else {
+  } else{
+    test_pd <- data.frame("Parameter" = NA)
+    test_rope <- data.frame("Parameter" = NA)
     test_bf <- data.frame("Parameter" = NA)
   }
 
@@ -186,7 +192,8 @@ describe_posterior.double <- describe_posterior.numeric
 #' @export
 describe_posterior.data.frame <- describe_posterior.numeric
 
-
+#' @export
+describe_posterior.BFBayesFactor <- describe_posterior.numeric
 
 
 #' @inheritParams insight::get_parameters
