@@ -231,5 +231,3 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .95, parameters 
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
-
-

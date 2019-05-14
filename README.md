@@ -8,7 +8,7 @@ Status](https://travis-ci.org/easystats/bayestestR.svg?branch=master)](https://t
 [![codecov](https://codecov.io/gh/easystats/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/easystats/bayestestR)
 [![DOI](https://zenodo.org/badge/165641861.svg)](https://zenodo.org/badge/latestdoi/165641861)
 
-***“Become a Bayesian master you will”***
+***Become a Bayesian master you will***
 
 `bayestestR` is a lightweight package providing utilities to describe
 posterior distributions and Bayesian models.
@@ -58,13 +58,31 @@ check-out these vignettes:
   - [Reporting
     Guidelines](https://easystats.github.io/bayestestR/articles/guidelines.html)
 
-# Functions
-
-## Posterior Description
+# Features
 
 [**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html)
 is the master function with which you can compute all of the indices
 cited below *at once*.
+
+``` r
+describe_posterior(rnorm(1000))
+```
+
+## Point-estimates
+
+### MAP Estimate
+
+[**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html)
+find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior,
+*i.e.,* the most probable value.
+
+``` r
+map_estimate(rnorm(1000, 1, 1))
+```
+
+![](man/figures/unnamed-chunk-6-1.png)<!-- -->
+
+## Uncertainty
 
 ### Highest Density Interval (HDI) - The *Credible* Interval (CI)
 
@@ -90,19 +108,9 @@ should be computed (Kruschke 2015, p. 183ff).
 hdi(rnorm(1000), ci = .90)
 ```
 
-![](man/figures/unnamed-chunk-5-1.png)<!-- -->
+![](man/figures/unnamed-chunk-8-1.png)<!-- -->
 
-### MAP Estimate
-
-[**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html)
-find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior,
-*i.e.,* the most probable value.
-
-``` r
-map_estimate(rnorm(1000, 1, 1))
-```
-
-![](man/figures/unnamed-chunk-7-1.png)<!-- -->
+## Null-Hypothesis Significance Testing (NHST)
 
 ### ROPE
 
@@ -136,9 +144,7 @@ framework, see
 rope(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
 ```
 
-![](man/figures/unnamed-chunk-9-1.png)<!-- -->
-
-## Null-Hypothesis Significance Testing (NHST)
+![](man/figures/unnamed-chunk-10-1.png)<!-- -->
 
 ### Equivalence test
 
@@ -179,7 +185,7 @@ guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
 p_direction(rnorm(1000, mean = 1, sd = 1))
 ```
 
-![](man/figures/unnamed-chunk-12-1.png)<!-- -->
+![](man/figures/unnamed-chunk-13-1.png)<!-- -->
 
 ### Bayes Factor
 
@@ -196,7 +202,7 @@ posterior <- rnorm(1000, mean = 1, sd = 0.7)
 bayesfactor_savagedickey(posterior, prior, direction = "two-sided", hypothesis = 0)
 ```
 
-![](man/figures/unnamed-chunk-14-1.png)<!-- -->
+![](man/figures/unnamed-chunk-15-1.png)<!-- -->
 
 ### ROPE-based probability
 
@@ -233,7 +239,7 @@ divided by the density of the MAP estimate.
 p_map(rnorm(1000, 1, 1))
 ```
 
-![](man/figures/unnamed-chunk-17-1.png)<!-- -->
+![](man/figures/unnamed-chunk-18-1.png)<!-- -->
 
 ## Utilities
 

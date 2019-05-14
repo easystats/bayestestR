@@ -19,14 +19,14 @@
     # Filter
     results <- results[results$pvalue < 0.05 & results$Var1 != results$Var2, ]
 
-    if (nrow(results) > 0){
+    if (nrow(results) > 0) {
 
       # Remove duplicates
       results$where <- paste0(results$Var1, " and ", results$Var2)
       results$where2 <- paste0(results$Var2, " and ", results$Var1)
       to_remove <- c()
-      for(i in 1:nrow(results)){
-        if(results$where2[i] %in% results$where[1:i]){
+      for (i in 1:nrow(results)) {
+        if (results$where2[i] %in% results$where[1:i]) {
           to_remove <- c(to_remove, i)
         }
       }
@@ -34,7 +34,7 @@
 
       # Filter by threshold
       results <- results[results$corr > threshold, ]
-      if(nrow(results) > 0){
+      if (nrow(results) > 0) {
         where <- paste0("between ", paste0(paste0(results$where, " (r = ", round(results$corr, 2), ")"), collapse = ", "), "")
         warning("Possible multicollinearity ", where, ". This might lead to inappropriate results. See 'Details' in '?", method, "'.", call. = FALSE)
       }

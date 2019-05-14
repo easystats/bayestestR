@@ -167,9 +167,10 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   sdbf <- numeric(ncol(prior))
   for (par in seq_len(ncol(posterior))) {
     sdbf[par] <- .bayesfactor_savagedickey(posterior[[par]],
-                                           prior[[par]],
-                                           direction = direction,
-                                           hypothesis = hypothesis)
+      prior[[par]],
+      direction = direction,
+      hypothesis = hypothesis
+    )
   }
 
   bf_val <- data.frame(BF = sdbf, row.names = colnames(posterior))
