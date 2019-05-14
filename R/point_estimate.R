@@ -18,7 +18,6 @@
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' point_estimate(df, estimate = "all", dispersion = TRUE)
 #' point_estimate(df, estimate = c("median", "MAP"))
-#'
 #' \dontrun{
 #' # rstanarm models
 #' # -----------------------------------------------
@@ -52,11 +51,10 @@ point_estimate <- function(x, estimate = "median", dispersion = FALSE, ...) {
 
 #' @export
 point_estimate.numeric <- function(x, estimate = "median", dispersion = FALSE, ...) {
-
   estimate <- match.arg(estimate, c("median", "mean", "map", "all"), several.ok = TRUE)
   if ("all" %in% estimate) {
     estimate_list <- c("median", "mean", "map")
-  } else{
+  } else {
     estimate_list <- c(estimate)
   }
 

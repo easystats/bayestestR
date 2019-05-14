@@ -247,7 +247,7 @@ Retrieved from https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measure
 <span class='no'>mo3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 
 <span class='no'>BFmodels</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bayesfactor_models.html'>bayesfactor_models</a></span>(<span class='no'>mo1</span>, <span class='no'>mo2</span>, <span class='no'>mo3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>mo0</span>)
-<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BFmodels</span>)</div><div class='output co'>#&gt;                      Pr(prior) Pr(posterior) Inclusion.BF
+<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BFmodels</span>)</div><div class='output co'>#&gt;                      Pr(prior) Pr(posterior) BF_inclusion
 #&gt; Species                   0.75         1.000      2.0e+55
 #&gt; Petal.Length              0.50         1.000      3.6e+26
 #&gt; Species:Petal.Length      0.25         0.036      1.1e-01
@@ -265,14 +265,14 @@ Retrieved from https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measure
 #&gt; <span class='message'>    compare</span></div><div class='input'>
 <span class='no'>BF</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/generalTestBF'>generalTestBF</a></span>(<span class='no'>len</span> ~ <span class='no'>supp</span> * <span class='no'>dose</span>, <span class='no'>ToothGrowth</span>, <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BF</span>)</div><div class='output co'>#&gt;           Pr(prior) Pr(posterior) Inclusion.BF
+<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BF</span>)</div><div class='output co'>#&gt;           Pr(prior) Pr(posterior) BF_inclusion
 #&gt; supp            0.6          0.98      3.5e+01
 #&gt; dose            0.6          1.00      5.7e+12
 #&gt; supp:dose       0.2          0.56      5.0e+00
 #&gt; ---
 #&gt; Inclusion BFs compared among all models.</div><div class='input'>
 <span class='co'># compare only matched models:</span>
-<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BF</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;           Pr(prior) Pr(posterior) Inclusion.BF
+<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BF</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;           Pr(prior) Pr(posterior) BF_inclusion
 #&gt; supp            0.4          0.42      2.3e+01
 #&gt; dose            0.4          0.44      3.8e+12
 #&gt; supp:dose       0.2          0.56      5.0e+00

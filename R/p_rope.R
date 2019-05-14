@@ -125,7 +125,6 @@ p_rope.BFBayesFactor <- function(x, range = "default", precision = .1, ...) {
 #' @importFrom insight get_parameters
 #' @keywords internal
 .p_rope_models <- function(x, range, precision, effects, component, parameters, ...) {
-
   if (all(range == "default")) {
     range <- rope_range(x)
   } else if (!all(is.numeric(range)) || length(range) != 2) {

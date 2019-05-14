@@ -23,7 +23,7 @@ test_that("bayesfactor_savagedickey", {
   set.seed(333)
   junk <- capture.output(model <- stan_glm(extra ~ group, data = sleep))
   bfsd <- bayestestR::bayesfactor_savagedickey(model)
-  testthat::expect_equal(log(bfsd$BFsd), c(-2.69, -0.14), tolerance = 0.1)
+  testthat::expect_equal(log(bfsd$BF), c(-2.69, -0.14), tolerance = 0.1)
 
   # Add test for BRMS
 })

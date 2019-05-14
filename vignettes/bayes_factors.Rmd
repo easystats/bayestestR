@@ -154,7 +154,7 @@ test_group2 <- bayesfactor_savagedickey(posterior = posterior, prior = prior)
 test_group2
 ```
 
-This BF indicates the **likelihood of an effect of 0 (null effect) is `r round(test_group2$BFsd[1],2)` less likely under posterior**. In other words, a null effect is has become 1/`r round(test_group2$BFsd[1],2)` = `r 1/round(test_group2$BFsd[1],2)` time more likely given the observed data. Although the centre of distribution has shifted, it is still quite dense around the null.
+This BF indicates the **likelihood of an effect of 0 (null effect) is `r round(test_group2$BF[1],2)` less likely under posterior**. In other words, a null effect is has become 1/`r round(test_group2$BF[1],2)` = `r 1/round(test_group2$BF[1],2)` time more likely given the observed data. Although the centre of distribution has shifted, it is still quite dense around the null.
 
 Note that **interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). 
 
@@ -193,7 +193,7 @@ test_group2_right <- bayesfactor_savagedickey(posterior = posterior, prior = pri
 test_group2_right
 ```
 
-As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), **the presence of an effect is `r round(test_group2_right$BFsd[1],2)` times more likely than the null hypothesis**. This indicates that, given the observed data, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of `r round(test_group2_right$BFsd[1],2)` is still considered quite [weak evidence](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf)).
+As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), **the presence of an effect is `r round(test_group2_right$BF[1],2)` times more likely than the null hypothesis**. This indicates that, given the observed data, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of `r round(test_group2_right$BF[1],2)` is still considered quite [weak evidence](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf)).
 
 ### Testing all model parameters
 
@@ -244,7 +244,7 @@ comparison
 # dput(comparison)
 
 comparison <- structure(list(Model = c("Petal.Length", "Species", "Species + Petal.Length", 
-"Species * Petal.Length", "1"), log.BF = c(102.551353996205, 
+"Species * Petal.Length", "1"), BF_log = c(102.551353996205, 
 68.5028425810333, 128.605282540213, 128.855928380748, 0)), class = c("bayesfactor_models", 
 "data.frame"), row.names = c(NA, -5L), denominator = 5L, BF_method = "marginal likelihoods (bridgesampling)")
 comparison

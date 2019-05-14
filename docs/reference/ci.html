@@ -190,9 +190,6 @@
 <span class='co'># S3 method for data.frame</span>
 <span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for data.frame</span>
-<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
-
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>,
   <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
@@ -290,50 +287,50 @@ the resulting HDI.</p>
 <span class='fu'>ci</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Credible Interval
 #&gt; 
 #&gt; </span><span>        90% CI
-#&gt;  [-1.64, 1.68]
+#&gt;  [-1.59, 1.69]
 #&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Intervals
 #&gt; 
 #&gt; </span><span>        80% CI
-#&gt;  [-1.30, 1.32]
+#&gt;  [-1.27, 1.32]
 #&gt; 
 #&gt; 
 #&gt;         90% CI
-#&gt;  [-1.64, 1.68]
+#&gt;  [-1.59, 1.69]
 #&gt; 
 #&gt; 
 #&gt;         95% CI
-#&gt;  [-1.92, 1.99]
+#&gt;  [-1.86, 1.96]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>ci</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Interval
 #&gt; 
 #&gt; </span><span> Parameter        90% CI
-#&gt;         X1 [-2.00, 1.52]
-#&gt;         X2 [-1.71, 1.45]
-#&gt;         X3 [-1.74, 1.43]
-#&gt;         X4 [-1.38, 1.43]
+#&gt;         X1 [-1.64, 1.52]
+#&gt;         X2 [-1.74, 1.22]
+#&gt;         X3 [-1.51, 1.83]
+#&gt;         X4 [-1.42, 1.99]
 #&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Intervals
 #&gt; 
 #&gt; </span><span> Parameter        80% CI
-#&gt;         X1 [-1.49, 1.23]
-#&gt;         X2 [-1.45, 1.12]
-#&gt;         X3 [-1.31, 1.22]
-#&gt;         X4 [-1.14, 1.19]
+#&gt;         X1 [-1.21, 1.33]
+#&gt;         X2 [-1.48, 1.05]
+#&gt;         X3 [-1.23, 1.19]
+#&gt;         X4 [-1.04, 1.57]
 #&gt; 
 #&gt; 
 #&gt;  Parameter        90% CI
-#&gt;         X1 [-2.00, 1.52]
-#&gt;         X2 [-1.71, 1.45]
-#&gt;         X3 [-1.74, 1.43]
-#&gt;         X4 [-1.38, 1.43]
+#&gt;         X1 [-1.64, 1.52]
+#&gt;         X2 [-1.74, 1.22]
+#&gt;         X3 [-1.51, 1.83]
+#&gt;         X4 [-1.42, 1.99]
 #&gt; 
 #&gt; 
 #&gt;  Parameter        95% CI
-#&gt;         X1 [-2.13, 1.71]
-#&gt;         X2 [-1.88, 1.57]
-#&gt;         X3 [-1.86, 1.99]
-#&gt;         X4 [-1.66, 1.91]
+#&gt;         X1 [-1.88, 1.88]
+#&gt;         X2 [-2.07, 1.45]
+#&gt;         X3 [-1.70, 1.98]
+#&gt;         X4 [-1.86, 2.31]
 #&gt; 
 #&gt; </div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)

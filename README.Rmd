@@ -36,7 +36,7 @@ knitr::opts_chunk$set(
 [![DOI](https://zenodo.org/badge/165641861.svg)](https://zenodo.org/badge/latestdoi/165641861)
 
 
-***"Become a Bayesian master you will"***
+***Become a Bayesian master you will***
 
 
 
@@ -77,12 +77,46 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 
 
-# Functions
-
-
-## Posterior Description
+# Features
 
 [**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html) is the master function with which you can compute all of the indices cited below *at once*.
+
+```{r message=FALSE, warning=FALSE, results='hide'}
+describe_posterior(rnorm(1000))
+```
+
+
+## Point-estimates
+
+
+### MAP Estimate
+
+[**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html) find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior, *i.e.,* the most probable value.
+
+```{r message=FALSE, warning=FALSE, results='hide'}
+map_estimate(rnorm(1000, 1, 1))
+```
+
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+posterior <- distribution_normal(100, 0.4, 0.2)
+map_result <- map_estimate(posterior, bw="nrd0")
+
+posterior %>% 
+  density() %>%
+  as.data.frame() %>%  
+  ggplot(aes(x=x, y=y)) +
+  geom_ribbon(aes(ymin=0, ymax=y), fill="#FFC107") +
+  geom_segment(x=0.4, xend=0.4, y=0, yend=attributes(map_result)$MAP_density, color="#E91E63", size=1) +
+  geom_point(x=map_result, y=attributes(map_result)$MAP_density, color="#E91E63", size=5) +
+  geom_vline(xintercept=0, linetype="dotted") +
+  theme_classic() +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
+  xlab("\nParameter Value") +
+  ylab("Probability Density\n")
+```
+
+
+## Uncertainty
 
 ### Highest Density Interval (HDI) - The *Credible* Interval (CI)
 
@@ -116,32 +150,7 @@ posterior %>%
 ```
 
 
-### MAP Estimate
-
-[**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html) find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior, *i.e.,* the most probable value.
-
-```{r message=FALSE, warning=FALSE, results='hide'}
-map_estimate(rnorm(1000, 1, 1))
-```
-
-```{r message=FALSE, warning=FALSE, echo=FALSE}
-posterior <- distribution_normal(100, 0.4, 0.2)
-map_result <- map_estimate(posterior, bw="nrd0")
-
-posterior %>% 
-  density() %>%
-  as.data.frame() %>%  
-  ggplot(aes(x=x, y=y)) +
-  geom_ribbon(aes(ymin=0, ymax=y), fill="#FFC107") +
-  geom_segment(x=0.4, xend=0.4, y=0, yend=attributes(map_result)$MAP_density, color="#E91E63", size=1) +
-  geom_point(x=map_result, y=attributes(map_result)$MAP_density, color="#E91E63", size=5) +
-  geom_vline(xintercept=0, linetype="dotted") +
-  theme_classic() +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
-  xlab("\nParameter Value") +
-  ylab("Probability Density\n")
-```
-
+## Null-Hypothesis Significance Testing (NHST)
 
 ### ROPE
 
@@ -175,7 +184,7 @@ posterior %>%
   ylab("Probability Density\n")
 ```
 
-## Null-Hypothesis Significance Testing (NHST)
+
 
 ### Equivalence test
 
