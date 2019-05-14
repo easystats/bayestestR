@@ -61,9 +61,19 @@ model <- lm(Sepal.Length ~ Petal.Length, data=iris)
 summary(model)
 ```
 
-In this model, the linear relationship between **Petal.Length** and **Sepal.Length** is **positive and significant** (beta = 0.41, t(148) = 21.6, p < .001).
 
-Let's fit a **Bayesian version**:
+In this model, the linear relationship between **Petal.Length** and **Sepal.Length** is **positive and significant** (beta = 0.41, t(148) = 21.6, p < .001). This means that for every increase of 1 in **Petal.Length** (the predictor), **Sepal.Length** (the response) increases by **0.41**. This can be visualised by plotting the observations:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+library(ggplot2)
+
+ggplot(iris, aes(x=Petal.Length, y=Sepal.Length)) +
+  geom_point() +
+  geom_smooth(method="lm")
+```
+
+
+Let's fit a **Bayesian version** of the model:
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
@@ -104,7 +114,7 @@ nrow(posteriors)  # Size (number of rows)
 
 > **Why is the size 4000, and not more or less?**
 
-First of all, these observations (the rows) are usually reffered to as **posterior draws**. The underlying idea is that the Bayesian sampling algorithm (such as **Monte Carlo Makov Chains - MCMC**) will *draw* from the hidden true posterior distribution. Thus, it is through these posterior draws that we can estimate the underlying true posterior distribution. Thus, **the more draws you have, the better is your estimation of the posterior distribution**. But it also takes longer to compute.
+First of all, these observations (the rows) are usually reffered to as **posterior draws**. The underlying idea is that the Bayesian sampling algorithm (such as **Monte Carlo Makov Chains - MCMC**) will *draw* from the hidden true posterior distribution. Thus, it is through these posterior draws that we can estimate the underlying true posterior distribution. **The more draws you have, the better is your estimation of the posterior distribution**. But it also takes longer to compute.
 
 If we look at the documentation (`?sampling`) for the rstanarm `"sampling"` algorithm used by default in the model above, we can see several parameters that influence the number of posterior draws. By default, there are **4** `chains` (you can see it as distinct sampling runs), that each create **2000** `iter` (draws). However, only half of these iterations is kept, as half is used for `warmup` (the convergence of the algorithm). The total is **`4 chains * (2000 iterations - 1000 warmup) = 4000`** posterior draws. We can change that, for instance:
 
@@ -128,8 +138,6 @@ Now that we've understood where do these values come from, let's look at them. W
 
 
 ```{r message=FALSE, warning=FALSE}
-library(ggplot2)
-
 ggplot(posteriors, aes(x = Petal.Length)) +
   geom_density(fill = "orange")
 ```
