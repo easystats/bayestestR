@@ -115,7 +115,7 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 
   # Get Priors
   if (is.null(prior)) {
-    cat("Sampling Priors...")
+    cat("Sampling Priors\n")
     alg <- insight::find_algorithm(posterior)
 
     capture.output(prior <- suppressWarnings(
@@ -287,7 +287,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
       d
     })
     x <- do.call("rbind",x)
-    x$Type <- nm
+    x$Distribution <- nm
     x
   }
 
