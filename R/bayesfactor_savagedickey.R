@@ -3,7 +3,7 @@
 #' This method computes the ratio between the density of a single value (typically the null)
 #' in two distributions, typically the posterior vs. the prior distributions.
 #'
-#' @param posterior Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object.
+#' @param posterior Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object (see Details).
 #' @param prior Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored).
 #' @param direction Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
 #' \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).
@@ -18,6 +18,9 @@
 #' likely given the observed data. When posterior is a model (\code{stanreg}, \code{brmsfit}),
 #' posterior and prior samples are extracted for each parameter, and
 #' Savage-Dickey Bayes factors are computed for each parameter.
+#'
+#' \strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \code{sample_prior = TRUE},
+#' and \emph{custom (non-default)} priors. See example below.
 #' \cr \cr
 #' A Bayes factor greater than 1 can be interpereted as evidence against the null,
 #' at which one convention is that a Bayes factor greater than 3 can be considered
@@ -32,10 +35,25 @@
 #' posterior <- distribution_normal(1000, mean = .5, sd = .3)
 #'
 #' bayesfactor_savagedickey(posterior, prior)
+#'
 #' \dontrun{
+#'
+#' # rstanarm models
+#' # ---------------
 #' library(rstanarm)
 #' stan_model <- stan_glm(extra ~ group, data = sleep)
 #' bayesfactor_savagedickey(stan_model)
+#'
+#' # brms models
+#' # -----------
+#' library(brms)
+#' my_custom_priors <-
+#'   set_prior("student_t(3, 0, 1)",class = "b") +
+#'   set_prior("student_t(3, 0, 1)",class = "sd", group = "ID")
+#'
+#' brms_model <- brm(extra ~ group + (1|ID), data = sleep,
+#'                   sample_prior = TRUE, prior = my_custom_priors)
+#' bayesfactor_savagedickey(brms_model)
 #' }
 #'
 #' @references
@@ -124,30 +142,60 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
   }
 
   effects <- match.arg(effects)
-
   params <- insight::find_parameters(posterior)
-  params <- switch(
-    effects,
-    "fixed" = params[["conditional"]],
-    "random" = params[["random"]],
-    "all" = unlist(params[c("conditional", "random")])
-  )
 
-  h_ <- brms::hypothesis(posterior, paste0(params, "=0"), class = NULL, ...)
+  # random effects
+  if (effects!="fixed") {
+    warning("Cannot compute Savage-Dickey BFs for random effect from 'brmsfit' objects.")
+    # get posterior and prior df for random
+    params_random <- params[["random"]]
+    prior_random <- posterior_random <- as.data.frame(posterior)[,params_random]
 
-  if (all(is.na(h_$hypothesis$Evid.Ratio))) {
-    stop("Cannot compute Savage-Dickey Bayes factor(s) with default priors")
+    if (effects!="all") {
+      posterior <- posterior_random
+      prior <- prior_random
+    }
   }
 
-  posterior <- h_$samples
-  prior <- h_$prior_samples
-  colnames(posterior) <- colnames(prior) <- params
+  # fixed effects
+  if (effects!="random") {
+    # get posterior and prior df for fixed
+    params_fixed <- params[["conditional"]]
+    posterior_fixed <- as.data.frame(posterior)[,params_fixed]
+
+    h_ <- brms::hypothesis(posterior, paste0(params_fixed, "=0"), class = NULL)
+
+    if (all(is.na(h_$hypothesis$Evid.Ratio))) {
+      stop("\nCannot compute Savage-Dickey Bayes factor(s) for 'brmsfit' model - please:",
+           "\n   (1) set 'sample_prior = TRUE'",
+           "\n   (2) set non-default priors")
+    }
+
+    prior_fixed <- h_$prior_samples
+    colnames(prior_fixed) <- params_fixed
+
+    if (effects!="all") {
+      posterior <- posterior_fixed
+      prior <- prior_fixed
+    }
+  }
+
+  if (effects=="all") {
+    posterior <- cbind(posterior_fixed,posterior_random)
+    prior <- cbind(prior_fixed,prior_random)
+  }
 
   # Get savage-dickey BFs
-  bayesfactor_savagedickey.data.frame(
+  sdBF <- bayesfactor_savagedickey.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, hypothesis = hypothesis
   )
+  if (effects!="fixed") {
+    sdBF <- within(sdBF,{
+      log.BF[Parameter %in% params_random] <- NA
+    })
+  }
+  return(sdBF)
 }
 
 #' @rdname bayesfactor_savagedickey
@@ -181,6 +229,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   bf_val
 }
 
+#' @keywords internal
 #' @importFrom insight print_color
 .bayesfactor_savagedickey <- function(posterior, prior, direction = "two-sided", hypothesis = 0) {
   # find direction
