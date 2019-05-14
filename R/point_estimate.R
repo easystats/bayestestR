@@ -121,7 +121,7 @@ point_estimate.data.frame <- function(x, estimate = "median", dispersion = FALSE
 point_estimate.stanreg <- function(x, estimate = "median", dispersion = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
 
-  out <- .p_direction_models(
+  out <- .point_estimate_models(
     x = x,
     effects = effects,
     component = "conditional",
@@ -140,7 +140,7 @@ point_estimate.brmsfit <- function(x, estimate = "median", dispersion = FALSE, e
   effects <- match.arg(effects)
   component <- match.arg(component)
 
-  out <- .p_direction_models(
+  out <- .point_estimate_models(
     x = x,
     effects = effects,
     component = component,
