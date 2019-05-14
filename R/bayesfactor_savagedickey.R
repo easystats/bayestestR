@@ -85,12 +85,15 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
     )
   }
 
-  bf_val <- data.frame(BF = .bayesfactor_savagedickey(posterior, prior, direction = direction, hypothesis = hypothesis))
+  bf_val <- data.frame(BF = .bayesfactor_savagedickey(posterior, prior,
+                                                      direction = direction,
+                                                      hypothesis = hypothesis))
   class(bf_val) <- c("bayesfactor_savagedickey", "see_bayesfactor_savagedickey", class(bf_val))
   attr(bf_val, "hypothesis") <- hypothesis
   attr(bf_val, "direction") <- direction
-  attr(bf_val,"posterior") <- data.frame(posterior)
-  attr(bf_val,"prior") <- data.frame(prior)
+  attr(bf_val, "plot_data") <- .make_sdBF_plot_data(data.frame(X = posterior),
+                                                    data.frame(X = prior),
+                                                    direction,hypothesis)
 
   bf_val
 }
@@ -206,8 +209,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   class(bf_val) <- c("bayesfactor_savagedickey", "see_bayesfactor_savagedickey", class(bf_val))
   attr(bf_val, "hypothesis") <- hypothesis
   attr(bf_val, "direction") <- direction
-  attr(bf_val,"posterior") <- posterior
-  attr(bf_val,"prior") <- prior
+  attr(bf_val, "plot_data") <- .make_sdBF_plot_data(posterior,prior,direction,hypothesis)
 
   bf_val
 }
@@ -215,7 +217,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @keywords internal
 #' @importFrom insight print_color
 .bayesfactor_savagedickey <- function(posterior, prior, direction = 0, hypothesis = 0) {
-  if (requireNamespace("logspline")) {
+  if (requireNamespace("logspline", quietly = TRUE)) {
     f_post <- suppressWarnings(logspline::logspline(posterior))
     f_prior <- suppressWarnings(logspline::logspline(prior))
 
@@ -263,4 +265,32 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     stop("Unrecognized 'direction' argument.")
   }
   Value[ind]
+}
+
+#' @keywords internal
+.make_sdBF_plot_data <- function(posterior,prior,direction,hypothesis){
+  estimate_samples_density <- function(x) {
+    nm <- deparse(substitute(x))
+    x <- stack(x)
+    x <- split(x,x$ind)
+
+    x <- lapply(x, function(data) {
+      d <- bayestestR::estimate_density(data$values)
+      if (direction > 0) {
+        d <- d[d$x > hypothesis,,drop = FALSE]
+        d$y <- d$y / mean(data$values > hypothesis)
+      } else if (direction < 0) {
+        d <- d[d$x < hypothesis,,drop = FALSE]
+        d$y <- d$y / mean(data$values < hypothesis)
+      }
+      d$ind <- data$ind[1]
+      d
+    })
+    x <- do.call("rbind",x)
+    x$Type <- nm
+    x
+  }
+
+  rbind(estimate_samples_density(posterior),
+        estimate_samples_density(prior))
 }

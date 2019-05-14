@@ -41,3 +41,10 @@ plot.ci <- function(x, ...) {
   }
   NextMethod()
 }
+
+plot.bayesfactor_savagedickey <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot Savage-Dickey Bayes factor. Please install it.")
+  }
+  NextMethod()
+}
