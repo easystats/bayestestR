@@ -197,8 +197,12 @@ describe_posterior.BFBayesFactor <- describe_posterior.numeric
 
 #' @export
 describe_posterior.data.frame <-function(posteriors, estimate = "median", dispersion = TRUE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, ...) {
-  col_order <- names(posteriors)
+
   out <- .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, ...)
+
+  # Restore col order
+  col_order <- names(posteriors)
+  col_order <- rep(col_order, each=round(nrow(out) / length(col_order)))
   out[match(col_order, out$Parameter),]
 }
 
