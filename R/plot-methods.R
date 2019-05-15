@@ -49,3 +49,11 @@ plot.bayesfactor_savagedickey <- function(x, ...) {
   }
   NextMethod()
 }
+
+#' @export
+plot.bayesfactor_models <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot models' Bayes factors. Please install it.")
+  }
+  NextMethod()
+}
