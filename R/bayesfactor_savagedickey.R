@@ -4,7 +4,7 @@
 #' in two distributions, typically the posterior vs. the prior distributions.
 #'
 #' @param posterior Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object (see Details).
-#' @param prior Vector representing a prior distribution (If \code{posterior} is a vector, otherwise ignored).
+#' @param prior Vector representing a prior distribution (If \code{posterior} is a vector) / A data frame with column names matching \code{posterior}'s (if \code{posterior} is a data frame) Otherwise ignored).
 #' @param direction Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
 #' \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).
 #' @param hypothesis Value to be tested against (usually \code{0} in the context of null hypothesis testing).
@@ -195,10 +195,11 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     )
   }
 
-  sdbf <- numeric(ncol(prior))
-  for (par in seq_len(ncol(posterior))) {
-    sdbf[par] <- .bayesfactor_savagedickey(posterior[[par]],
-      prior[[par]],
+  sdbf <- numeric(ncol(posterior))
+  for (par in seq_along(posterior)) {
+    par_name <- colnames(posterior)[par]
+    sdbf[par] <- .bayesfactor_savagedickey(posterior[[par_name]],
+      prior[[par_name]],
       direction = direction,
       hypothesis = hypothesis
     )

@@ -69,7 +69,7 @@ rnorm_perfect(n, mean = 0, sd = 1)
 \item{shape2}{non-negative parameters of the Beta distribution.}
 }
 \description{
-Generate a sample of size \code{n} with a near-perfect distribution.
+Generate a sequence of n-quantiles, i.e., a sample of size \code{n} with a near-perfect distribution.
 }
 \examples{
 library(bayestestR)

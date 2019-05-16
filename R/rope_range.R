@@ -16,6 +16,12 @@
 #'   manually specify the rope argument. Currently, the same default is applied
 #'   that for logistic models.
 #'   \cr \cr
+#'   For BayesFactor t-tests, the standard deviation of the response is used,
+#'   similarly to linear models (see above).
+#'   \cr \cr
+#'   For correlations, \code{-0.05, 0.05} is used, i.e., half the value of a
+#'   negligible correlation as suggested by Cohen's (1988) rules of thumb.
+#'   \cr \cr
 #'   For all other models, \code{-0.1, 0.1} is used to determine the ROPE limits.
 #'
 #' @inheritParams rope
@@ -29,6 +35,10 @@
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' rope_range(model)
+#'
+#' library(BayesFactor)
+#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' rope_range(bf)
 #' }
 #'
 #' @references Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
@@ -41,15 +51,19 @@ rope_range <- function(x) {
   information <- insight::model_info(x)
 
   if (insight::is_multivariate(x)) {
-    mapply(function(i, j) .rope_range(i, j), information, response)
+    mapply(function(i, j) .rope_range(i, j), x, information, response)
   } else {
-    .rope_range(information, response)
+    .rope_range(x, information, response)
   }
 }
 
-.rope_range <- function(information, response) {
+.rope_range <- function(x, information, response) {
+
+  # Linear Models
   if (information$is_linear) {
     negligible_value <- 0.1 * stats::sd(response)
+
+    # General Linear Models
   } else if (information$is_binomial) {
     # https://github.com/easystats/bayestestR/issues/20
     # numeric_response <- as.numeric(as.factor(response))
@@ -57,8 +71,28 @@ rope_range <- function(x) {
     # eff_size <- prob_resp / pi
     # negligible_value <- (stats::qlogis(prob_resp + eff_size) - stats::qlogis(prob_resp - eff_size)) / 4
     negligible_value <- 0.1 * sqrt(3) / pi
+
+
+    # T-tests
+  } else if (information$is_ttest) {
+    if("BFBayesFactor" %in% class(x)){
+      negligible_value <- 0.1 * stats::sd(x@data[, 1])
+    } else{
+      warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.")
+      negligible_value <- 0.1
+    }
+
+    # Correlations
+  } else if (information$is_correlation) {
+    # https://github.com/easystats/bayestestR/issues/121
+    negligible_value <- 0.05
+
+    # Default
   } else {
     negligible_value <- 0.1
   }
+
   c(-1, 1) * negligible_value
 }
+
+

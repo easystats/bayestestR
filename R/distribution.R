@@ -1,6 +1,6 @@
 #' Empirical Distributions
 #'
-#' Generate a sample of size \code{n} with a near-perfect distribution.
+#' Generate a sequence of n-quantiles, i.e., a sample of size \code{n} with a near-perfect distribution.
 #'
 #' @param type Can be \code{"normal"} (default), \code{"cauchy"}, \code{"poisson"}, \code{"chisquared"}, \code{"uniform"}, \code{"student"} or \code{"beta"}.
 #' @param random Generate near-perfect or random (simple wrappers for the base R \code{r*} functions) distributions.
@@ -24,6 +24,7 @@ distribution <- function(type = "normal", ...) {
     distribution_custom(type = type, ...)
   )
 }
+
 
 
 
