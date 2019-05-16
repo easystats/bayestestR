@@ -6,8 +6,10 @@ os:
   - osx
   
 r:
+  - oldrel
   - release
-  # - devel
+  - devel
+
 
 # Copied from broom
 # sudo: required
