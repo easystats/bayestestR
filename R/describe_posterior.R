@@ -63,6 +63,7 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
 #' @keywords internal
 .describe_posterior <- function(x, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, ...) {
 
+
   # Point-estimates
   if (!is.null(estimate)) {
     estimates <- point_estimate(x, estimate = estimate, dispersion = dispersion, ...)
@@ -166,6 +167,15 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
   out <- merge(out, test_rope, all = TRUE)
   out <- merge(out, test_bf, all = TRUE)
   out <- out[!is.na(out$Parameter), ]
+
+  # Restore columns order
+  col_order <- point_estimate(x, estimate = "median", dispersion = FALSE, ci=NULL, ...)
+  if("Parameter" %in% names(col_order)){
+    col_order <- col_order$Parameter
+    col_order <- rep(col_order, each=round(nrow(out) / length(col_order)))
+    out[match(col_order, out$Parameter),]
+  }
+
   out
 }
 
@@ -192,19 +202,8 @@ describe_posterior.double <- describe_posterior.numeric
 #' @export
 describe_posterior.BFBayesFactor <- describe_posterior.numeric
 
-
-
-
 #' @export
-describe_posterior.data.frame <-function(posteriors, estimate = "median", dispersion = TRUE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, ...) {
-
-  out <- .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, ...)
-
-  # Restore col order
-  col_order <- names(posteriors)
-  col_order <- rep(col_order, each=round(nrow(out) / length(col_order)))
-  out[match(col_order, out$Parameter),]
-}
+describe_posterior.data.frame <- describe_posterior.numeric
 
 
 
