@@ -119,29 +119,12 @@ prior <- distribution_normal(length(posterior), mean = 0, sd = 5.044799)
 We can now plot both the prior:
 
 ```{r prior_n_post_plot, echo=FALSE, message=FALSE, warning=FALSE}
-# ggplot() +
-#   geom_density(data = data.frame(prior), aes(x = prior, color = "Prior")) +
-#   geom_density(data = data.frame(posterior), aes(x = posterior, color = "Posterior")) +
-#   geom_vline(aes(xintercept = 0), linetype = "dotted") +
-#   theme_classic()
-  
 
-f_post <- suppressWarnings(logspline::logspline(posterior))
-f_prior <- suppressWarnings(logspline::logspline(prior))
-
-x_lims <- range(c(posterior, prior)) * 0.7
-
-ggplot() +
-  aes(x = 0, y = 0) +
-  stat_function(aes(color = "Posterior"), fun = function(x) logspline::dlogspline(x,f_post), xlim = x_lims,
-                size = 1) +
-  stat_function(aes(color = "Prior"), fun = function(x) logspline::dlogspline(x,f_prior), xlim = x_lims,
-                size = 1) +
-  geom_vline(aes(xintercept = 0), linetype = "dotted") +
-  labs(x = 'group2', y = 'density', color = '') +
-  theme_classic() +
-  theme(legend.position = c(0.2,0.8)) +
-  NULL
+# Using "see"
+bayesfactor_savagedickey(data.frame(group2 = posterior),
+                         data.frame(group2 = prior)) %>% 
+  plot() + 
+  theme(legend.position = c(0.2,0.8))
 
 ```
 
@@ -164,27 +147,13 @@ Note that **interpretation guides** for Bayes factors can be found [**here**](ht
 We can also conduct a directional test if we have some prior hypothesis about the direction of the effect:
 
 ```{r prior_n_post_plot_one_sided, echo=FALSE, message=FALSE, warning=FALSE}
-# ggplot() +
-#   geom_density(data = data.frame(prior = prior[prior > 0]), aes(x = prior, color = "Prior")) +
-#   geom_density(data = data.frame(posterior = posterior[posterior > 0]),
-#                aes(x = posterior, color = "Posterior")) +
-#   theme_classic()
-  
 
-f_post <- suppressWarnings(logspline::logspline(posterior[posterior > 0], lbound = 0))
-f_prior <- suppressWarnings(logspline::logspline(prior[prior > 0], lbound = 0))
-
-x_lims <- c(0,max(c(posterior,prior))) * 0.7
-
-ggplot() +
-  aes(x = 0, y = 0) +
-  stat_function(aes(color = "Posterior"), fun = function(x) logspline::dlogspline(x, f_post), xlim = x_lims, size = 1) +
-  stat_function(aes(color = "Prior"), fun = function(x) logspline::dlogspline(x, f_prior), xlim = x_lims, size = 1) +
-  geom_vline(aes(xintercept = 0), linetype = "dotted") +
-  labs(x = 'group2', y = 'density', color = '') +
-  theme_classic() +
-  theme(legend.position = c(0.8,0.8)) +
-  NULL
+# Using "see"
+bayesfactor_savagedickey(data.frame(group2 = posterior),
+                         data.frame(group2 = prior),
+                         direction = ">") %>% 
+  plot() + 
+  theme(legend.position = c(0.8,0.8))
 
 ```
 
@@ -245,7 +214,7 @@ comparison
 
 comparison <- structure(list(Model = c("Petal.Length", "Species", "Species + Petal.Length", 
 "Species * Petal.Length", "1"), BF = c(102.551353996205, 
-68.5028425810333, 128.605282540213, 128.855928380748, 0)), class = c("bayesfactor_models", 
+68.5028425810333, 128.605282540213, 128.855928380748, 0)), class = c("bayesfactor_models", "see_bayesfactor_models",
 "data.frame"), row.names = c(NA, -5L), denominator = 5L, BF_method = "marginal likelihoods (bridgesampling)")
 comparison
 ```
