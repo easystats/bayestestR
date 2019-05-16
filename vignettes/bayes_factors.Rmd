@@ -213,8 +213,8 @@ comparison
 # dput(comparison)
 
 comparison <- structure(list(Model = c("Petal.Length", "Species", "Species + Petal.Length", 
-"Species * Petal.Length", "1"), BF = c(102.551353996205, 
-68.5028425810333, 128.605282540213, 128.855928380748, 0)), class = c("bayesfactor_models", "see_bayesfactor_models",
+"Species * Petal.Length", "1"), BF = exp(c(102.551353996205, 
+68.5028425810333, 128.605282540213, 128.855928380748, 0))), class = c("bayesfactor_models", "see_bayesfactor_models",
 "data.frame"), row.names = c(NA, -5L), denominator = 5L, BF_method = "marginal likelihoods (bridgesampling)")
 comparison
 ```
