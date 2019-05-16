@@ -1,7 +1,7 @@
 #' @importFrom stats cor cor.test
 #' @importFrom insight find_parameters
 #' @keywords internal
-.check_multicollinearity <- function(model, method = "equivalence_test", threshold = 0.5, ...) {
+.check_multicollinearity <- function(model, method = "equivalence_test", threshold = 0.7, ...) {
   valid_parameters <- insight::find_parameters(model, parameters = "^(?!(r_|sd_|prior_|cor_|b\\[))", flatten = TRUE)
   dat <- as.data.frame(model)[, valid_parameters]
   dat <- dat[, -1, drop = FALSE]
@@ -32,11 +32,19 @@
       }
       results <- results[-to_remove, ]
 
-      # Filter by threshold
-      results <- results[results$corr > threshold, ]
+      # Filter by first threshold
+      threshold <- ifelse(threshold >= .9, .9, threshold)
+      results <- results[results$corr > threshold & results$corr <= .9, ]
       if (nrow(results) > 0) {
         where <- paste0("between ", paste0(paste0(results$where, " (r = ", round(results$corr, 2), ")"), collapse = ", "), "")
-        warning("Possible multicollinearity ", where, ". This might lead to inappropriate results. See 'Details' in '?", method, "'.", call. = FALSE)
+        message("Possible multicollinearity ", where, ". This might lead to inappropriate results. See 'Details' in '?", method, "'.")
+      }
+
+      # Filter by second threshold
+      results <- results[results$corr > .9, ]
+      if (nrow(results) > 0) {
+        where <- paste0("between ", paste0(paste0(results$where, " (r = ", round(results$corr, 2), ")"), collapse = ", "), "")
+        warning("Probable multicollinearity ", where, ". This might lead to inappropriate results. See 'Details' in '?", method, "'.", call. = FALSE)
       }
     }
   }
