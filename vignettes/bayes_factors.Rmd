@@ -120,11 +120,26 @@ We can now plot both the prior:
 
 ```{r prior_n_post_plot, echo=FALSE, message=FALSE, warning=FALSE}
 
-# Using "see"
-bayesfactor_savagedickey(data.frame(group2 = posterior),
-                         data.frame(group2 = prior)) %>% 
-  plot() + 
-  theme(legend.position = c(0.2,0.8))
+f_post <- suppressWarnings(logspline::logspline(posterior))
+f_prior <- suppressWarnings(logspline::logspline(prior))
+x_lims <- range(c(posterior, prior)) * 0.7
+ggplot() +
+  aes(x = 0, y = 0) +
+  stat_function(aes(color = "Posterior"), fun = function(x) logspline::dlogspline(x,f_post), xlim = x_lims,
+                size = 1) +
+  stat_function(aes(color = "Prior"), fun = function(x) logspline::dlogspline(x,f_prior), xlim = x_lims,
+                size = 1) +
+  geom_vline(aes(xintercept = 0), linetype = "dotted") +
+  labs(x = 'group2', y = 'density', color = '') +
+  theme_classic() +
+  theme(legend.position = c(0.2,0.8)) +
+  NULL
+
+# # Using "see"
+# bayesfactor_savagedickey(data.frame(group2 = posterior),
+#                          data.frame(group2 = prior)) %>% 
+#   plot() + 
+#   theme(legend.position = c(0.2,0.8))
 
 ```
 
@@ -148,12 +163,25 @@ We can also conduct a directional test if we have some prior hypothesis about th
 
 ```{r prior_n_post_plot_one_sided, echo=FALSE, message=FALSE, warning=FALSE}
 
-# Using "see"
-bayesfactor_savagedickey(data.frame(group2 = posterior),
-                         data.frame(group2 = prior),
-                         direction = ">") %>% 
-  plot() + 
-  theme(legend.position = c(0.8,0.8))
+f_post <- suppressWarnings(logspline::logspline(posterior[posterior > 0], lbound = 0))
+f_prior <- suppressWarnings(logspline::logspline(prior[prior > 0], lbound = 0))
+x_lims <- c(0,max(c(posterior,prior))) * 0.7
+ggplot() +
+  aes(x = 0, y = 0) +
+  stat_function(aes(color = "Posterior"), fun = function(x) logspline::dlogspline(x, f_post), xlim = x_lims, size = 1) +
+  stat_function(aes(color = "Prior"), fun = function(x) logspline::dlogspline(x, f_prior), xlim = x_lims, size = 1) +
+  geom_vline(aes(xintercept = 0), linetype = "dotted") +
+  labs(x = 'group2', y = 'density', color = '') +
+  theme_classic() +
+  theme(legend.position = c(0.8,0.8)) +
+  NULL
+
+# # Using "see"
+# bayesfactor_savagedickey(data.frame(group2 = posterior),
+#                          data.frame(group2 = prior),
+#                          direction = ">") %>% 
+#   plot() + 
+#   theme(legend.position = c(0.8,0.8))
 
 ```
 
