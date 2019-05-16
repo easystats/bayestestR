@@ -115,7 +115,6 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 
   # Get Priors
   if (is.null(prior)) {
-    cat("Sampling Priors\n")
     alg <- insight::find_algorithm(posterior)
 
     capture.output(prior <- suppressWarnings(
