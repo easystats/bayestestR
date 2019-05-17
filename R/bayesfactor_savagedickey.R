@@ -223,36 +223,43 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @importFrom insight print_color
 .bayesfactor_savagedickey <- function(posterior, prior, direction = 0, hypothesis = 0) {
   if (requireNamespace("logspline", quietly = TRUE)) {
-    f_post <- suppressWarnings(logspline::logspline(posterior))
-    f_prior <- suppressWarnings(logspline::logspline(prior))
 
-    d_post <- logspline::dlogspline(hypothesis, f_post)
-    d_prior <- logspline::dlogspline(hypothesis, f_prior)
+    relative_density <- function(samples){
+      f_samples <- suppressWarnings(logspline::logspline(samples))
+      d_samples <- logspline::dlogspline(hypothesis, f_samples)
 
-    norm_post <- norm_prior <- 1
-    if (direction < 0) {
-      norm_post <- logspline::plogspline(hypothesis, f_post)
-      norm_prior <- logspline::plogspline(hypothesis, f_prior)
-    } else if (direction > 0) {
-      norm_post <- 1 - logspline::plogspline(hypothesis, f_post)
-      norm_prior <- 1 - logspline::plogspline(hypothesis, f_prior)
+      if (direction < 0) {
+        norm_samples <- logspline::plogspline(hypothesis, f_samples)
+      } else if (direction > 0) {
+        norm_samples <- 1 - logspline::plogspline(hypothesis, f_samples)
+      } else {
+        norm_samples <- 1
+      }
+
+      d_samples / norm_samples
     }
+
   } else {
-    insight::print_color("Consider installing the \"logspline\" package for a more robust estimate.\n", "red")
-    d_post <- density_at(posterior, hypothesis)
-    d_prior <- density_at(prior, hypothesis)
 
-    norm_post <- norm_prior <- 1
-    if (direction < 0) {
-      norm_post <- mean(posterior < hypothesis)
-      norm_prior <- mean(prior < hypothesis)
-    } else if (direction > 0) {
-      norm_post <- 1 - mean(posterior < 0)
-      norm_prior <- 1 - mean(prior < hypothesis)
+    insight::print_color("Consider installing the \"logspline\" package for a more robust estimate.\n", "red")
+    relative_density <- function(samples){
+      d_samples <- density_at(samples, hypothesis)
+
+      if (direction < 0) {
+        norm_samples <- mean(samples < hypothesis)
+      } else if (direction > 0) {
+        norm_samples <- 1 - mean(samples < 0)
+      } else {
+        norm_samples <- 1
+      }
+
+      d_samples / norm_samples
     }
+
   }
 
-  (d_prior / norm_prior) / (d_post / norm_post)
+  relative_density(prior) / relative_density(posterior)
+
 }
 
 #' @keywords internal
@@ -277,13 +284,20 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @importFrom utils stack
 #' @keywords internal
 .make_sdBF_plot_data <- function(posterior,prior,direction,hypothesis){
-  estimate_samples_density <- function(x) {
-    nm <- deparse(substitute(x))
-    x <- utils::stack(x)
-    x <- split(x,x$ind)
+  if (requireNamespace("logspline", quietly = TRUE)) {
+    density_method <- "logspline"
+  } else {
+    density_method <- "kernel"
+  }
+  estimate_samples_density <- function(samples) {
+    nm <- deparse(substitute(samples))
+    samples <- utils::stack(samples)
+    samples <- split(samples,samples$ind)
 
-    x <- lapply(x, function(data) {
-      d <- estimate_density(data$values)
+    samples <- lapply(samples, function(data) {
+      d <- estimate_density(data$values,
+                            method = density_method,
+                            extend = TRUE, extend_scale = 0.05)
       if (direction > 0) {
         d <- d[d$x > hypothesis,,drop = FALSE]
         d$y <- d$y / mean(data$values > hypothesis)
@@ -294,9 +308,9 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
       d$ind <- data$ind[1]
       d
     })
-    x <- do.call("rbind",x)
-    x$Distribution <- nm
-    x
+    samples <- do.call("rbind",samples)
+    samples$Distribution <- nm
+    samples
   }
 
   rbind(
