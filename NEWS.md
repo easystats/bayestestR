@@ -26,6 +26,7 @@
 ## Bug fixes
 
 - `hdi()` returned multiple class attributes (#72)
+- Printing results from `hdi()` failed when `ci`-argument had fractional parts for percentage values (e.g. `ci = .995`).
 - `plot.equivalence_test()` did not work properly for *brms*-models (#76).
 
 # bayestestR 0.1.0
