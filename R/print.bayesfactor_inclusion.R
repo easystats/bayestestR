@@ -7,7 +7,6 @@ print.bayesfactor_inclusion <- function(x, digits = 2, log = FALSE, ...) {
     BFE$BF <- log(BFE$BF)
   } else {
     colnames(BFE) <- c("Pr(prior)", "Pr(posterior)", "Inclusion BF")
-
   }
 
 

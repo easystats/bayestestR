@@ -9,7 +9,7 @@ test_that("describe_posterior", {
   testthat::expect_equal(dim(rez), c(1, 16))
   rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
   testthat::expect_equal(dim(rez), c(2, 16))
-  rez <- describe_posterior(x, estimate = NULL, dispersion = TRUE, test = NULL, ci_method="quantile")
+  rez <- describe_posterior(x, estimate = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
   testthat::expect_equal(dim(rez), c(1, 4))
 
   # Dataframes
@@ -18,7 +18,7 @@ test_that("describe_posterior", {
   testthat::expect_equal(dim(rez), c(4, 16))
   rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
   testthat::expect_equal(dim(rez), c(8, 16))
-  rez <- describe_posterior(x, estimate = NULL, dispersion = TRUE, test = NULL, ci_method="quantile")
+  rez <- describe_posterior(x, estimate = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
   testthat::expect_equal(dim(rez), c(4, 4))
 
   # Rstanarm
@@ -28,7 +28,7 @@ test_that("describe_posterior", {
   testthat::expect_equal(dim(rez), c(2, 18))
   rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
   testthat::expect_equal(dim(rez), c(4, 18))
-  rez <- describe_posterior(x, estimate = NULL, dispersion = TRUE, test = NULL, ci_method="quantile")
+  rez <- describe_posterior(x, estimate = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
   testthat::expect_equal(dim(rez), c(2, 6))
 
   # Brms
@@ -50,5 +50,4 @@ test_that("describe_posterior", {
   # testthat::expect_equal(dim(rez), c(8, 16))
   # rez <- describe_posterior(x, estimate = NULL, dispersion = TRUE, test = NULL, ci_method="quantile")
   # testthat::expect_equal(dim(rez), c(4, 4))
-
 })
