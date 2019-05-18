@@ -78,7 +78,7 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = c("ESS", "Rhat
 
   # Select rows
   effects <- match.arg(effects)
-  params <- insight::find_parameters(posteriors, effects = effects, parameters = parameters, flatten = TRUE)
+  params <- colnames(insight::get_parameters(posteriors, effects = effects, parameters = parameters))
 
   diagnostic_df[diagnostic_df$Parameter %in% params, ]
 }
