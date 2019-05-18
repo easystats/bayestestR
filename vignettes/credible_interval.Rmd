@@ -43,11 +43,10 @@ As the Bayesian inference returns a distribution of possible effect values (the 
 
 Note that this drastically improve the interpretability of the Bayesian interval compared to the frequentist one. Indeed, the Bayesian framework allows to say *"given the observed data, the effect has 95% probability of falling within this range"*, while the frequentist less straightforward alternative (the 95\% ***Confidence* Interval**) would be "*there is a 95\% probability that when computing a confidence interval from data of this sort, the effect falls within this range*".
 
-TBD.
 
 # Why is the default 90\%?
 
-By default, the CIs are computed with 90\% intervals (`ci = 0.9`), deemed to be more stable than, for instance, 95% intervals (Kruschke, 2015). An effective sample size of at least 10.000 is recommended if 95% intervals should be computed (Kruschke, 2015, p. 183ff)
+By default, the CIs are computed with 90\% intervals (`ci = 0.90`), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2015). An effective sample size (ESS; see [here](https://easystats.github.io/bayestestR/reference/dianostic_posterior.html)) of at least 10.000 is recommended if 95\% intervals should be computed (Kruschke, 2015, p. 183ff)
 
 # Different types of CIs
 

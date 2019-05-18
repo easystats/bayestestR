@@ -25,11 +25,11 @@ test_that("describe_posterior", {
   library(rstanarm)
   x <- insight::download_model("stanreg_lm_1")
   rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all")
-  testthat::expect_equal(dim(rez), c(2, 16))
+  testthat::expect_equal(dim(rez), c(2, 18))
   rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
-  testthat::expect_equal(dim(rez), c(4, 16))
+  testthat::expect_equal(dim(rez), c(4, 18))
   rez <- describe_posterior(x, estimate = NULL, dispersion = TRUE, test = NULL, ci_method="quantile")
-  testthat::expect_equal(dim(rez), c(2, 4))
+  testthat::expect_equal(dim(rez), c(2, 6))
 
   # Brms
   library(brms)

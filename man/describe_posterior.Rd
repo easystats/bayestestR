@@ -13,7 +13,8 @@ describe_posterior(posteriors, estimate = "median", dispersion = TRUE,
 \method{describe_posterior}{stanreg}(posteriors, estimate = "median",
   dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL,
-  effects = c("fixed", "random", "all"), parameters = NULL, ...)
+  diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"),
+  parameters = NULL, ...)
 
 \method{describe_posterior}{brmsfit}(posteriors, estimate = "median",
   dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
@@ -24,7 +25,7 @@ describe_posterior(posteriors, estimate = "median", dispersion = TRUE,
 \arguments{
 \item{posteriors}{A vector, dataframe or model of posterior draws.}
 
-\item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".}
+\item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
 
 \item{dispersion}{if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
@@ -42,6 +43,8 @@ to be estimated. Named Credible Interval (CI) for consistency.}
 \item{bf_prior}{Distribution representing a prior for the computation of \href{https://easystats.github.io/bayestestR/bayesfactor_savagedickey}{Bayes factors}. Used if the input is a posterior, otherwise (in the case of models) ignored.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
+
+\item{diagnostic}{Diagnostic metrics to compute. Can be a character or a list with "ESS", "Rhat", "MCSE" or "all".}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}

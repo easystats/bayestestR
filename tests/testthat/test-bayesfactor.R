@@ -13,6 +13,9 @@ test_that("bayesfactor_savagedickey", {
   bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, hypothesis = 0, direction = 1)
   testthat::expect_equal(log(bfsd$BF), 4.3, tolerance = 0.1)
 
+  bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, hypothesis = 0, direction = -1)
+  testthat::expect_equal(log(bfsd$BF), -2.5, tolerance = 0.1)
+
   bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, hypothesis = 1, direction = 0)
   testthat::expect_equal(log(bfsd$BF), -0.8, tolerance = 0.1)
 
@@ -23,14 +26,14 @@ test_that("bayesfactor_savagedickey", {
   set.seed(333)
   junk <- capture.output(model <- stan_glm(extra ~ group, data = sleep))
   bfsd <- bayestestR::bayesfactor_savagedickey(model)
-  testthat::expect_equal(log(bfsd$BF), c(-2.69, -0.14), tolerance = 0.1)
+  testthat::expect_equal(log(bfsd$BF), c(-2.69, -0.14), tolerance = 0.2)
 
   # SKIP FOR TRAVIS
   # library(brms)
   # brms_mixed_6 <- insight::download_model("brms_mixed_6")
   # set.seed(222)
-  # sdBF <- bayesfactor_savagedickey(brms_mixed_6, effects = "fixed")
-  # testthat::expect_equal(log(sdBF$BF), c(-6.0, -5.8, 0.7, -2.7, -7.4), tolerance = 0.2)
+  # bfsd <- bayesfactor_savagedickey(brms_mixed_6, effects = "fixed")
+  # testthat::expect_equal(log(bfsd$BF), c(-6.0, -5.8, 0.7, -2.7, -7.4), tolerance = 0.2)
 })
 
 

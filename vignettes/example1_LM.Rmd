@@ -38,7 +38,7 @@ Now that you've read the [**Get started**](https://easystats.github.io/bayestest
 
 ## Loading the packages
 
-Once you've [installed](https://easystats.github.io/bayestestR/articles/bayestestR.html) the necessary packages, we can load `rstanarm` (to fit the models), `bayestestR` (to compute useful indices) and `insight` (to access the parameters).
+Once you've [installed](https://easystats.github.io/bayestestR/articles/bayestestR.html#bayestestr-installation) the necessary packages, we can load `rstanarm` (to fit the models), `bayestestR` (to compute useful indices) and `insight` (to access the parameters).
 
 ```{r message=FALSE, warning=FALSE}
 library(rstanarm)
@@ -62,14 +62,16 @@ summary(model)
 ```
 
 
-In this model, the linear relationship between **Petal.Length** and **Sepal.Length** is **positive and significant** (beta = 0.41, t(148) = 21.6, p < .001). This means that for every increase of 1 in **Petal.Length** (the predictor), **Sepal.Length** (the response) increases by **0.41**. This can be visualised by plotting the observations:
+In this model, the linear relationship between **Petal.Length** and **Sepal.Length** is **positive and significant** (beta = 0.41, t(148) = 21.6, p < .001). This means that for every increase of 1 in **Petal.Length** (the predictor), **Sepal.Length** (the response) increases by **0.41**. This can be visualised by plotting, using the `ggplot2` package, the predictor values on the `x` axis and the response values as `y`:
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
-library(ggplot2)
+library(ggplot2)  # Load the package
 
+# The ggplot function takes the data as argument, and then the variables 
+# related to aesthetic features such as the x and y axes.
 ggplot(iris, aes(x=Petal.Length, y=Sepal.Length)) +
-  geom_point() +
-  geom_smooth(method="lm")
+  geom_point() +  # This adds the point
+  geom_smooth(method="lm") # This adds a regression line
 ```
 
 
@@ -134,7 +136,7 @@ In this case, we indeed have **`2 chains * (1000 iterations - 250 warmup) = 1500
 #### Visualising the posterior distribution
 
 
-Now that we've understood where do these values come from, let's look at them. We will start by visualizing (using the `ggplot2` package) the distribution of our parameter of interest, the effect of `Petal.Length`.
+Now that we've understood where do these values come from, let's look at them. We will start by visualizing the distribution of our parameter of interest, the effect of `Petal.Length`.
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -201,7 +203,7 @@ Now that the have a point-estimate, we have to **describe the uncertainty**. We 
 range(posteriors$Petal.Length)
 ```
 
-But does it make sense to include all these extreme values? Probably not. Thus, we will compute a [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html). Long story short, it's kind of similar to a frequentist **confidence interval**, but it is easier to interpret and easier to compute. And it makes more sense.
+But does it make sense to include all these extreme values? Probably not. Thus, we will compute a [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html). Long story short, it's kind of similar to a frequentist **confidence interval**, but it is easier to interpret and easier to compute. *And it makes more sense*.
 
 We will compute this **credible interval** based on the [Highest Density Interval (HDI)](file:///C:/Users/Dom/Dropbox/RECHERCHE/N/easystats/bayestestR/docs/reference/hdi.html). It will give us the range containing the 90\% more probable effect values. **Note that we will use 90\% CIs instead of 95\% CIs as it is the case in the frequentist framework as the 90\% level gives more stable results**.
 

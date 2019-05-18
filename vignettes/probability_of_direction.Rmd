@@ -67,7 +67,9 @@ However, this index is not relevant to assess the magnitude and importance of an
 
 Indices of effect existence, such as the *pd*, are particularly useful in exploratory research or clinical studies, for which the focus is to make sure that the effect of interest is not in the opposite direction (for clinical studies, that a treatment is not harmful). However, once the effect's direction is confirmed, the focus should shift toward its significance, including a precise estimation of its magnitude and importance.
 
+> **But if it's like the *p*-value, it must be bad because the *p*-value is bad [insert reference to the reproducibility crisis].**
 
+In fact, this aspect of the reproducibility crisis might have been misunsterstood. Indeed, the *p*-value is **not** an intrisically bad or wrong index. It is its **misuse**, **misunderstanding** qnd **mininterpretation** that fueled the decay of the situation. For instance, the fact that the **pd** is highly correlated with the *p*-value suggests that the latter is more an index of effect *existence* than *significance* (understood in the layman sense "worth of interest"). The Bayesian version, the **pd**, offers a intuitive understanding of the meaning of this index and makes obvious the fact that no thresholds make really sense. We believe that the transparency of the **pd**, and its reconceptualisation as an index of effecct existence, offers a valuable insight into the characterisation of Bayesian results.
 
 # Methods of computation
 

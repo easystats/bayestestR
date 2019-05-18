@@ -30,12 +30,28 @@
 #' hist(x, prob = TRUE)
 #' lines(density_extended$x, density_extended$y, col = "red", lwd = 3)
 #' lines(density_default$x, density_default$y, col = "black", lwd = 3)
+#'
+#' df <- data.frame(replicate(4, rnorm(100)))
+#' estimate_density(df)
+#'
 #' @references Deng, H., \& Wickham, H. (2011). Density estimation in R. Electronic publication.
 #'
 #' @importFrom stats density
 #' @importFrom utils install.packages
 #' @export
 estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
+  UseMethod("estimate_density")
+}
+
+#' @rdname estimate_density
+#' @export
+estimate_probability <- estimate_density
+
+
+
+#' @keywords internal
+.estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
+
   method <- match.arg(method, c("kernel", "logspline", "KernSmooth", "smooth"))
 
   # Range
@@ -75,12 +91,56 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
         stop("Package \"KernSmooth\" needed for this function. Press run 'install.packages(\"KernSmooth\")'.")
       }
     }
-    x <- as.data.frame(KernSmooth::bkde(x, range.x = x_range, gridsize = precision, truncate = TRUE, ...))
+    return(as.data.frame(KernSmooth::bkde(x, range.x = x_range, gridsize = precision, truncate = TRUE, ...)))
   } else {
     stop("method should be one of 'kernel', 'logspline' or 'KernSmooth'")
   }
 }
 
+
+
+
+
+#' @export
+estimate_density.numeric <- function(x, ...) {
+  out <- .estimate_density(x, ...)
+  class(out) <- c("estimate_density", class(out))
+  out
+}
+
+
+
+
+
+
+#' @export
+estimate_density.data.frame <- function(x, ...) {
+  out <- sapply(x, estimate_density, simplify = FALSE)
+  for(i in names(out)){
+    out[[i]]$Parameter <- i
+  }
+  out <- do.call(rbind, out)
+
+  row.names(out) <- NULL
+  out[, c("Parameter", "x", "y")]
+}
+
+
+
+# Replace in see
+# #' @importFrom graphics plot
+# #' @export
+# plot.estimate_density <- function(x, ...) {
+#   if("Parameter" %in% names(x)){
+#     params <- as.character(unique(x$Parameter))
+#     plot(x=x[x$Parameter == params[[1]], ]$x, y=x[x$Parameter == params[[1]], ]$y, type="l", main="Estimated Density Function", xlab = "Values", ylab = "Density", col = "black")
+#     for(i in tail(params, -1)){
+#       lines(x=x[x$Parameter == i, ]$x, y=x[x$Parameter == i, ]$y)
+#     }
+#   } else{
+#     plot(x=x$x, y=x$y, type="l", main="Estimated Density Function", xlab = "Values", ylab = "Density")
+#   }
+# }
 
 
 
