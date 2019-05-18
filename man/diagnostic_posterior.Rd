@@ -5,24 +5,24 @@
 \alias{diagnostic_posterior.stanreg}
 \title{Posteriors Sampling Diagnostic}
 \usage{
-diagnostic_posterior(posteriors, ...)
+diagnostic_posterior(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 
-\method{diagnostic_posterior}{stanreg}(posteriors, effects = c("fixed",
-  "random", "all"), parameters = NULL, ...)
+\method{diagnostic_posterior}{stanreg}(posteriors, diagnostic = c("ESS",
+  "Rhat"), effects = c("fixed", "random", "all"), parameters = NULL,
+  ...)
 }
 \arguments{
-\item{posteriors}{A vector, dataframe or model of posterior draws.}
+\item{posteriors}{A stanreg or brms model.}
 
-\item{...}{Additional arguments to be passed to or from methods.}
+\item{diagnostic}{Diagnostic metrics to compute. Can be a character or a list with "ESS", "Rhat", "MCSE" or "all".}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{...}{Currently not used.}
+
+\item{effects}{Should variables for fixed effects, random effects
+or both be returned? Only applies to mixed models. May be abbreviated.}
 
 \item{parameters}{Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
-filtered by default, so only parameters that typically appear in the
-\code{summary()} are returned. Use \code{parameters} to select specific parameters
-for the output.}
+should be returned.}
 }
 \description{
 Extract diagnostic metrics (Effective Sample Size (\code{ESS}), \code{Rhat} and Monte Carlo Standard Error \code{MCSE}).

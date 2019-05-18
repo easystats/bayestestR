@@ -13,7 +13,7 @@ describe_posterior(posteriors, estimate = "median", dispersion = TRUE,
 \method{describe_posterior}{stanreg}(posteriors, estimate = "median",
   dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL,
-  diagnostic = TRUE, effects = c("fixed", "random", "all"),
+  diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"),
   parameters = NULL, ...)
 
 \method{describe_posterior}{brmsfit}(posteriors, estimate = "median",
@@ -25,7 +25,7 @@ describe_posterior(posteriors, estimate = "median", dispersion = TRUE,
 \arguments{
 \item{posteriors}{A vector, dataframe or model of posterior draws.}
 
-\item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".}
+\item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
 
 \item{dispersion}{if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
@@ -44,7 +44,7 @@ to be estimated. Named Credible Interval (CI) for consistency.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 
-\item{diagnostic}{Include sampling \link[=diagnostic_posterior]{diagnostic metrics} (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1 (Gelman and Rubin, 1992) or 1.01 (Vehtari et al., 2019).}
+\item{diagnostic}{Diagnostic metrics to compute. Can be a character or a list with "ESS", "Rhat", "MCSE" or "all".}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}

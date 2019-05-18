@@ -2,8 +2,8 @@
 #'
 #' Extract diagnostic metrics (Effective Sample Size (\code{ESS}), \code{Rhat} and Monte Carlo Standard Error \code{MCSE}).
 #'
-#'
-#' @inheritParams describe_posterior
+#' @param posteriors A stanreg or brms model.
+#' @param diagnostic Diagnostic metrics to compute. Can be a character or a list with "ESS", "Rhat", "MCSE" or "all".
 #'
 #' @details
 #'   \strong{Effective Sample (ESS)} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). The ESS corresponds to the number of independent samples with the same estimation power as the N autocorrelated samples. It represents the amount by which autocorrelation within the chains increases uncertainty of estimates.
@@ -35,14 +35,14 @@
 #'   \item Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., \& Bürkner, P. C. (2019). Rank-normalization, folding, and localization: An improved Rhat for assessing convergence of MCMC. arXiv preprint arXiv:1903.08008.
 #' }
 #' @export
-diagnostic_posterior <- function(posteriors, ...) {
+diagnostic_posterior <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...) {
   UseMethod("diagnostic_posterior")
 }
 
 
 
 #' @export
-diagnostic_posterior.numeric <- function(posteriors, ...) {
+diagnostic_posterior.numeric <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...) {
   stop("`diagnostic_posterior` only works with rstanarm or brms models.")
 }
 
@@ -57,9 +57,16 @@ diagnostic_posterior.BFBayesFactor <- diagnostic_posterior.numeric
 #' @inheritParams insight::get_parameters
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.stanreg <- function(posteriors, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+diagnostic_posterior.stanreg <- function(posteriors, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), parameters = NULL, ...) {
 
   # TODO: MCSE
+
+  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  if ("all" %in% diagnostic) {
+    diagnostic <- c("ESS", "Rhat") # Add MCSE
+  } else {
+    diagnostic <- c(diagnostic)
+  }
 
   # Get indices and rename
   diagnostic_df <- as.data.frame(posteriors$stan_summary)
@@ -67,7 +74,7 @@ diagnostic_posterior.stanreg <- function(posteriors, effects = c("fixed", "rando
   diagnostic_df$ESS <- diagnostic_df$n_eff
 
   # Select columns
-  diagnostic_df <- diagnostic_df[, c("Parameter", "ESS", "Rhat")]
+  diagnostic_df <- diagnostic_df[, c("Parameter", diagnostic)]
   row.names(diagnostic_df) <- NULL
 
   # Select rows

@@ -4,7 +4,6 @@
 #'
 #' @param posteriors A vector, dataframe or model of posterior draws.
 #' @param ci_method The type of index used for Credible Interval. Can be \link{hdi} (default) or "quantile" (see \link{ci}).
-#' @param estimate The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean" or "MAP".
 #' @param test The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".
 #' @param rope_range \href{https://easystats.github.io/bayestestR/rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
 #' @param rope_full If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.
@@ -210,16 +209,16 @@ describe_posterior.data.frame <- describe_posterior.numeric
 
 
 #' @inheritParams insight::get_parameters
-#' @param diagnostic Include sampling \link[=diagnostic_posterior]{diagnostic metrics} (effective sample, Rhat and MCSE). \code{Effective Sample} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). \code{Rhat} should not be larger than 1.1 (Gelman and Rubin, 1992) or 1.01 (Vehtari et al., 2019).
+#' @inheritParams diagnostic_posterior
 #' @rdname describe_posterior
 #' @export
-describe_posterior.stanreg <- function(posteriors, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = TRUE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+describe_posterior.stanreg <- function(posteriors, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), parameters = NULL, ...) {
 
   out <- .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
 
-  if (diagnostic){
+  if (!is.null(diagnostic)){
     col_order <- out$Parameter
-    diagnostic <- diagnostic_posterior(posteriors)
+    diagnostic <- diagnostic_posterior(posteriors, diagnostic, effects, parameters, ...)
     out <- merge(out, diagnostic, all = TRUE)
     out <- out[match(col_order, out$Parameter),]
   }
