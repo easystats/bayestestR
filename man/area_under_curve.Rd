@@ -5,9 +5,9 @@
 \alias{auc}
 \title{Area under the Curve (AUC)}
 \usage{
-area_under_curve(x, y, method = c("trapezoid", "step", "spline"))
+area_under_curve(x, y, method = c("trapezoid", "step", "spline"), ...)
 
-auc(x, y, method = c("trapezoid", "step", "spline"))
+auc(x, y, method = c("trapezoid", "step", "spline"), ...)
 }
 \arguments{
 \item{x}{Vector of x values.}
@@ -15,6 +15,8 @@ auc(x, y, method = c("trapezoid", "step", "spline"))
 \item{y}{Vector of y values.}
 
 \item{method}{Can be "trapezoid" (default), "step" or "spline".}
+
+\item{...}{Arguments passed to or from other methods.}
 }
 \description{
 Based on the DescTools \code{AUC} function. It calculates the area under the curve with a naive algorithm and with a more elaborated spline approach. The curve must be given by vectors of xy-coordinates.

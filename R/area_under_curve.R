@@ -5,6 +5,7 @@
 #' @param x Vector of x values.
 #' @param y Vector of y values.
 #' @param method Can be "trapezoid" (default), "step" or "spline".
+#' @param ... Arguments passed to or from other methods.
 #'
 #' @details If method is set to "trapezoid" then the curve is formed by connecting all points by a direct line (composite trapezoid rule). If "step" is chosen then a stepwise connection of two points is used. For calculating the area under a spline interpolation the splinefun function is used in combination with integrate. The AUC function will handle unsorted x values (by sorting x) and ties for the x values (by ignoring duplicates).
 #'
@@ -23,7 +24,7 @@
 #' @importFrom stats integrate splinefun
 #' @seealso DescTools
 #' @export
-area_under_curve <- function(x, y, method = c("trapezoid", "step", "spline")) {
+area_under_curve <- function(x, y, method = c("trapezoid", "step", "spline"), ...) {
 
   # Stolen from DescTools: https://github.com/cran/DescTools/blob/master/R/StatsAndCIs.r
 

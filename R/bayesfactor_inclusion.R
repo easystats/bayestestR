@@ -8,6 +8,7 @@
 #' Inclusion BFs are computed by comparing all models with an effect against models without
 #' the effect AND without any higher-order interactions with the effect.
 #' @param prior_odds optional vector of prior odds for the models. See \code{BayesFactor::priorOdds}
+#' @param ... Arguments passed to or from other methods.
 #'
 #' @return a data frame containing the prior and posterior probabilities, and BF for each effect.
 #'
@@ -60,14 +61,14 @@
 #'
 #'
 #' @export
-bayesfactor_inclusion <- function(models, match_models = FALSE, prior_odds = NULL) {
+bayesfactor_inclusion <- function(models, match_models = FALSE, prior_odds = NULL, ...) {
   UseMethod("bayesfactor_inclusion")
 }
 
 
 
 #' @export
-bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALSE, prior_odds = NULL) {
+bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALSE, prior_odds = NULL, ...) {
   # Build Models Table #
   df.model <- .get_model_table(models, priorOdds = prior_odds)
   effnames <- colnames(df.model)[-(1:3)]
@@ -137,7 +138,7 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
 
 
 #' @export
-bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, prior_odds = NULL) {
+bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, prior_odds = NULL, ...) {
   models <- bayesfactor_models.BFBayesFactor(models)
   bayesfactor_inclusion.bayesfactor_models(models, match_models = match_models, prior_odds = prior_odds)
 }
@@ -145,7 +146,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
 
 #' @keywords internal
 #' @importFrom stats as.formula terms terms.formula
-.get_model_table <- function(BFGrid, priorOdds = NULL) {
+.get_model_table <- function(BFGrid, priorOdds = NULL, ...) {
   denominator <- attr(BFGrid, "denominator")
   BFGrid <- rbind(BFGrid[denominator, ], BFGrid[-denominator, ])
   attr(BFGrid, "denominator") <- 1
