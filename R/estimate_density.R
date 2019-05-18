@@ -2,6 +2,7 @@
 #'
 #' This function is a wrapper over different methods of density estimation. By default, it uses the base R \link{density} with by default uses a different smoothing bandwidth (\code{"SJ"}) from the legacy default implemented the base R \link{density} function (\code{"nrd0"}). However, Deng \& Wickham suggest that \code{method = "KernSmooth"} is the fastest and the most accurate.
 #'
+#' @inheritParams hdi
 #' @inheritParams stats::density
 #' @param method Method of density estimation. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.
 #' @param precision Number of points of density data. See the \code{n} parameter in \link[=density]{density}.
@@ -33,6 +34,22 @@
 #'
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' estimate_density(df)
+#'
+#' \dontrun{
+#' # rstanarm models
+#' # -----------------------------------------------
+#' library(rstanarm)
+#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+#' estimate_density(model)
+#'
+#' # brms models
+#' # -----------------------------------------------
+#' library(brms)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' estimate_density(model)
+#' }
+#'
+#'
 #' @references Deng, H., \& Wickham, H. (2011). Density estimation in R. Electronic publication.
 #'
 #' @importFrom stats density
@@ -102,7 +119,7 @@ estimate_probability <- estimate_density
 #' @export
 estimate_density.numeric <- function(x, ...) {
   out <- .estimate_density(x, ...)
-  class(out) <- c("estimate_density", class(out))
+  class(out) <- c("estimate_density", "see_estimate_density", class(out))
   out
 }
 
@@ -113,6 +130,7 @@ estimate_density.numeric <- function(x, ...) {
 
 #' @export
 estimate_density.data.frame <- function(x, ...) {
+  x <- .select_nums(x)
   out <- sapply(x, estimate_density, simplify = FALSE)
   for (i in names(out)) {
     out[[i]]$Parameter <- i
@@ -125,22 +143,30 @@ estimate_density.data.frame <- function(x, ...) {
 
 
 
-# Replace in see
-# #' @importFrom graphics plot
-# #' @export
-# plot.estimate_density <- function(x, ...) {
-#   if("Parameter" %in% names(x)){
-#     params <- as.character(unique(x$Parameter))
-#     plot(x=x[x$Parameter == params[[1]], ]$x, y=x[x$Parameter == params[[1]], ]$y, type="l", main="Estimated Density Function", xlab = "Values", ylab = "Density", col = "black")
-#     for(i in tail(params, -1)){
-#       lines(x=x[x$Parameter == i, ]$x, y=x[x$Parameter == i, ]$y)
-#     }
-#   } else{
-#     plot(x=x$x, y=x$y, type="l", main="Estimated Density Function", xlab = "Values", ylab = "Density")
-#   }
-# }
 
 
+#' @importFrom insight get_parameters
+#' @export
+estimate_density.stanreg <- function(x, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  effects <- match.arg(effects)
+
+  out <- estimate_density(insight::get_parameters(x, effects = effects, parameters = parameters), ...)
+
+  out
+}
+
+
+#' @importFrom insight get_parameters
+#' @export
+estimate_density.brmsfit <- function(x, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+
+  effects <- match.arg(effects)
+  component <- match.arg(component)
+
+  out <- estimate_density(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ...)
+
+  out
+}
 
 
 #' Coerce to a Data Frame

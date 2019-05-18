@@ -16,7 +16,7 @@ probability_at(posterior, x, precision = 2^10, ...)
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \link[=density]{density}.}
 
-\item{...}{further arguments for (non-default) methods.}
+\item{...}{Currently not used.}
 }
 \description{
 Compute the density of a given point of a distribution.
