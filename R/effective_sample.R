@@ -75,7 +75,7 @@ effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"
 
   data.frame(
     Parameter = rownames(s),
-    ESS = round(s[, "n_eff"]),
+    ESS = as.data.frame(s)["n_eff", ],
     stringsAsFactors = FALSE,
     row.names = NULL
   )

@@ -107,8 +107,8 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = c("ESS", "Rhat
   diagnostic_df$Parameter <- make.names(row.names(diagnostic_df))
   diagnostic_df$ESS <- round(diagnostic_df$n_eff)
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  MCSE <- mcse(posteriors, effects = "all", component = "all")
-  diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
+  # MCSE <- mcse(posteriors, effects = "all", component = "all")
+  # diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns
   diagnostic_df <- diagnostic_df[, c("Parameter", diagnostic)]
