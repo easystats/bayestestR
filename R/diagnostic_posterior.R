@@ -26,7 +26,6 @@
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' diagnostic_posterior(model)
-#'
 #' }
 #'
 #' @references

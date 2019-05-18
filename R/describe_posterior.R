@@ -89,7 +89,7 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
   }
 
   # Effect Existence
-  if(!is.null(test)){
+  if (!is.null(test)) {
     test <- match.arg(test, c(
       "pd", "p_direction", "pdir", "mpe",
       "rope", "equivalence", "equivalence_test", "equitest",
@@ -155,7 +155,7 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
     } else {
       test_bf <- data.frame("Parameter" = NA)
     }
-  } else{
+  } else {
     test_pd <- data.frame("Parameter" = NA)
     test_rope <- data.frame("Parameter" = NA)
     test_bf <- data.frame("Parameter" = NA)
@@ -168,11 +168,11 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
   out <- out[!is.na(out$Parameter), ]
 
   # Restore columns order
-  col_order <- point_estimate(x, estimate = "median", dispersion = FALSE, ci=NULL, ...)
-  if("Parameter" %in% names(col_order)){
+  col_order <- point_estimate(x, estimate = "median", dispersion = FALSE, ci = NULL, ...)
+  if ("Parameter" %in% names(col_order)) {
     col_order <- col_order$Parameter
-    col_order <- rep(col_order, each=round(nrow(out) / length(col_order)))
-    out[match(col_order, out$Parameter),]
+    col_order <- rep(col_order, each = round(nrow(out) / length(col_order)))
+    out[match(col_order, out$Parameter), ]
   }
 
   out
@@ -213,14 +213,13 @@ describe_posterior.data.frame <- describe_posterior.numeric
 #' @rdname describe_posterior
 #' @export
 describe_posterior.stanreg <- function(posteriors, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), parameters = NULL, ...) {
-
   out <- .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
 
-  if (!is.null(diagnostic)){
+  if (!is.null(diagnostic)) {
     col_order <- out$Parameter
     diagnostic <- diagnostic_posterior(posteriors, diagnostic, effects, parameters, ...)
     out <- merge(out, diagnostic, all = TRUE)
-    out <- out[match(col_order, out$Parameter),]
+    out <- out[match(col_order, out$Parameter), ]
   }
   out
 }

@@ -75,9 +75,9 @@ rope_range <- function(x) {
 
     # T-tests
   } else if (information$is_ttest) {
-    if("BFBayesFactor" %in% class(x)){
+    if ("BFBayesFactor" %in% class(x)) {
       negligible_value <- 0.1 * stats::sd(x@data[, 1])
-    } else{
+    } else {
       warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.")
       negligible_value <- 0.1
     }
@@ -94,5 +94,3 @@ rope_range <- function(x) {
 
   c(-1, 1) * negligible_value
 }
-
-

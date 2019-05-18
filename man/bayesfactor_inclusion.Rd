@@ -4,7 +4,8 @@
 \alias{bayesfactor_inclusion}
 \title{Get inclusion BFs for effects across Bayesian models}
 \usage{
-bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL)
+bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL,
+  ...)
 }
 \arguments{
 \item{models}{an object of class \link{bayesfactor_models} or \code{BFBayesFactor}.}
@@ -15,6 +16,8 @@ Inclusion BFs are computed by comparing all models with an effect against models
 the effect AND without any higher-order interactions with the effect.}
 
 \item{prior_odds}{optional vector of prior odds for the models. See \code{BayesFactor::priorOdds}}
+
+\item{...}{Arguments passed to or from other methods.}
 }
 \value{
 a data frame containing the prior and posterior probabilities, and BF for each effect.

@@ -33,7 +33,6 @@
 #'
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' estimate_density(df)
-#'
 #' @references Deng, H., \& Wickham, H. (2011). Density estimation in R. Electronic publication.
 #'
 #' @importFrom stats density
@@ -51,7 +50,6 @@ estimate_probability <- estimate_density
 
 #' @keywords internal
 .estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
-
   method <- match.arg(method, c("kernel", "logspline", "KernSmooth", "smooth"))
 
   # Range
@@ -116,7 +114,7 @@ estimate_density.numeric <- function(x, ...) {
 #' @export
 estimate_density.data.frame <- function(x, ...) {
   out <- sapply(x, estimate_density, simplify = FALSE)
-  for(i in names(out)){
+  for (i in names(out)) {
     out[[i]]$Parameter <- i
   }
   out <- do.call(rbind, out)
