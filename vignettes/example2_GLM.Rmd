@@ -39,7 +39,7 @@ Now that [**describing and understanding posterior distributions of linear regre
 
 > **"But it's only about regressions and I want to do ANOVAs and t-tests"**
 
-Don't worry, my dear. Let us all remind the fact that **all basic statistical pocedures** such as t-tests, ANOVAs, correlations or Chisquare tests [**are linear regressions**](https://lindeloev.github.io/tests-as-linear/). Now that we have accepted the beauty of it, let us continue with a general linear model.
+Don't worry. Let us all remind and appreciate the fact that **all basic statistical pocedures** such as t-tests, ANOVAs, correlations or Chisquare tests [***are* linear regressions**](https://lindeloev.github.io/tests-as-linear/). Now that we have accepted the beauty of it, we will continue with a general linear model.
 
 
 TO BE CONTINUED.
