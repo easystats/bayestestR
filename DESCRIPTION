@@ -49,6 +49,7 @@ Suggests:
 	logspline,
 	see,
 	rmarkdown,
+	rstan,
 	rstanarm,
 	stringr,
 	testthat,

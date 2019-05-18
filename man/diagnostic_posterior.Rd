@@ -3,13 +3,19 @@
 \name{diagnostic_posterior}
 \alias{diagnostic_posterior}
 \alias{diagnostic_posterior.stanreg}
+\alias{diagnostic_posterior.brmsfit}
 \title{Posteriors Sampling Diagnostic}
 \usage{
 diagnostic_posterior(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 
-\method{diagnostic_posterior}{stanreg}(posteriors, diagnostic = c("ESS",
-  "Rhat"), effects = c("fixed", "random", "all"), parameters = NULL,
-  ...)
+\method{diagnostic_posterior}{stanreg}(posteriors, diagnostic = c("all",
+  "ESS", "Rhat", "MCSE"), effects = c("fixed", "random", "all"),
+  parameters = NULL, ...)
+
+\method{diagnostic_posterior}{brmsfit}(posteriors, diagnostic = c("all",
+  "ESS", "Rhat", "MCSE"), effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL, ...)
 }
 \arguments{
 \item{posteriors}{A stanreg or brms model.}
@@ -23,6 +29,12 @@ or both be returned? Only applies to mixed models. May be abbreviated.}
 
 \item{parameters}{Regular expression pattern that describes the parameters that
 should be returned.}
+
+\item{component}{Should all predictor variables, predictor variables for the
+conditional model, the zero-inflated part of the model, the dispersion
+term or the instrumental variables be returned? Applies to models
+with zero-inflated and/or dispersion formula, or to models with instrumental
+variable (so called fixed-effects regressions). May be abbreviated.}
 }
 \description{
 Extract diagnostic metrics (Effective Sample Size (\code{ESS}), \code{Rhat} and Monte Carlo Standard Error \code{MCSE}).

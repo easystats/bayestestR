@@ -56,21 +56,21 @@ diagnostic_posterior.BFBayesFactor <- diagnostic_posterior.numeric
 #' @inheritParams insight::get_parameters
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.stanreg <- function(posteriors, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), parameters = NULL, ...) {
-
-  # TODO: MCSE
-
+diagnostic_posterior.stanreg <- function(posteriors, diagnostic = c("all", "ESS", "Rhat", "MCSE"), effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "Rhat") # Add MCSE
+    diagnostic <- c("ESS", "Rhat", "MCSE") # Add MCSE
   } else {
     diagnostic <- c(diagnostic)
   }
 
   # Get indices and rename
   diagnostic_df <- as.data.frame(posteriors$stan_summary)
-  diagnostic_df$Parameter <- row.names(diagnostic_df)
-  diagnostic_df$ESS <- diagnostic_df$n_eff
+  diagnostic_df$Parameter <- make.names(row.names(diagnostic_df))
+  diagnostic_df$ESS <- round(diagnostic_df$n_eff)
+  # special handling for MCSE, due to some parameters (like lp__) missing in rows
+  MCSE <- mcse(posteriors, effects = "all")
+  diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns
   diagnostic_df <- diagnostic_df[, c("Parameter", diagnostic)]
@@ -78,7 +78,53 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = c("ESS", "Rhat
 
   # Select rows
   effects <- match.arg(effects)
-  params <- colnames(insight::get_parameters(posteriors, effects = effects, parameters = parameters))
+  params <- colnames(
+    insight::get_parameters(posteriors, effects = effects, parameters = parameters)
+  )
+
+  diagnostic_df[diagnostic_df$Parameter %in% params, ]
+}
+
+
+#' @inheritParams insight::get_parameters
+#' @rdname diagnostic_posterior
+#' @export
+diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = c("all", "ESS", "Rhat", "MCSE"), effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  if ("all" %in% diagnostic) {
+    diagnostic <- c("ESS", "Rhat", "MCSE") # Add MCSE
+  } else {
+    diagnostic <- c(diagnostic)
+  }
+
+  if (!requireNamespace("rstan", quietly = TRUE)) {
+    stop("Package 'rstan' required for this function to work. Please install it.")
+  }
+
+  # Get indices and rename
+  diagnostic_df <- as.data.frame(rstan::summary(posteriors$fit)$summary)
+  diagnostic_df$Parameter <- make.names(row.names(diagnostic_df))
+  diagnostic_df$ESS <- round(diagnostic_df$n_eff)
+  # special handling for MCSE, due to some parameters (like lp__) missing in rows
+  MCSE <- mcse(posteriors, effects = "all", component = "all")
+  diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
+
+  # Select columns
+  diagnostic_df <- diagnostic_df[, c("Parameter", diagnostic)]
+  row.names(diagnostic_df) <- NULL
+
+  # Select rows
+  effects <- match.arg(effects)
+  component <- match.arg(component)
+  params <-
+    colnames(
+      insight::get_parameters(
+        posteriors,
+        effects = effects,
+        component = component,
+        parameters = parameters
+      )
+    )
 
   diagnostic_df[diagnostic_df$Parameter %in% params, ]
 }

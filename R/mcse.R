@@ -44,7 +44,14 @@ mcse.brmsfit <- function(model, effects = c("fixed", "random", "all"), component
       parameters = parameters
     )
 
-  ess <- effective_samples(model, effects, component, parameters)
+  ess <-
+    effective_samples(
+      model,
+      effects = effects,
+      component = component,
+      parameters = parameters
+    )
+
   mcse_helper(pars, ess$ESS)
 }
 
@@ -62,7 +69,13 @@ mcse.stanreg <- function(model, effects = c("fixed", "random", "all"), parameter
       parameters = parameters
     )
 
-  ess <- effective_samples(model, effects, parameters)
+  ess <-
+    effective_samples(
+      model,
+      effects = effects,
+      parameters = parameters
+    )
+
   mcse_helper(pars, ess$ESS)
 }
 
