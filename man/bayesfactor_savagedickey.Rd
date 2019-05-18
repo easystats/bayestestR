@@ -40,18 +40,17 @@ bayesfactor_savagedickey(posterior, prior = NULL,
 \item{effects}{Should results for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.}
 }
 \value{
-A data frame containing the Bayes factor representing by how
-much \emph{less} the null is likely under the posterior compared to the prior.
+A data frame containing the Bayes factor representing evidence \emph{against} the (point) null effect model.
 }
 \description{
 This method computes the ratio between the density of a single value (typically the null)
-in two distributions, typically the posterior vs. the prior distributions.
+in two distributions. When the compared distributions are the posterior and the prior distributions,
+this results in an approximation of a Bayes factor against the (point) null model.
 }
 \details{
-This method is used to examine if the hypothesis value is less or more
-likely given the observed data. When posterior is a model (\code{stanreg}, \code{brmsfit}),
-posterior and prior samples are extracted for each parameter, and
-Savage-Dickey Bayes factors are computed for each parameter.
+This method is used to compute Bayes factors based on prior and posterior distributions.
+When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
+extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
 
 \strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)} priors. See example below.
 \cr \cr
