@@ -151,7 +151,7 @@ bayesfactor_models.default <- function(..., denominator = 1) {
   # Warn
   n_samps <- sapply(mods, function(x) {
     alg <- insight::find_algorithm(x)
-    (alg$chains - alg$warmup) * alg$iterations
+    (alg$iterations - alg$warmup) * alg$chains
   })
   if (any(n_samps < 4e4)) {
     warning(
