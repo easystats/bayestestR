@@ -2,9 +2,13 @@
 % Please edit documentation in R/estimate_density.R
 \name{estimate_density}
 \alias{estimate_density}
+\alias{estimate_probability}
 \title{Density Estimation}
 \usage{
 estimate_density(x, method = "kernel", precision = 2^10,
+  extend = FALSE, extend_scale = 0.1, bw = "SJ", ...)
+
+estimate_probability(x, method = "kernel", precision = 2^10,
   extend = FALSE, extend_scale = 0.1, bw = "SJ", ...)
 }
 \arguments{
@@ -61,6 +65,10 @@ density_default <- estimate_density(x, extend = FALSE)
 hist(x, prob = TRUE)
 lines(density_extended$x, density_extended$y, col = "red", lwd = 3)
 lines(density_default$x, density_default$y, col = "black", lwd = 3)
+
+df <- data.frame(replicate(4, rnorm(100)))
+estimate_density(df)
+
 }
 \references{
 Deng, H., \& Wickham, H. (2011). Density estimation in R. Electronic publication.
