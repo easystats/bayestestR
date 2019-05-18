@@ -12,8 +12,8 @@ estimate_probability(x, method = "kernel", precision = 2^10,
   extend = FALSE, extend_scale = 0.1, bw = "SJ", ...)
 }
 \arguments{
-\item{x}{the data from which the estimate is to be computed.  For the
-    default method a numeric vector: long vectors are not supported.}
+\item{x}{Vector representing a posterior distribution. Can also be a
+\code{stanreg} or \code{brmsfit} model.}
 
 \item{method}{Method of density estimation. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.}
 
@@ -38,7 +38,7 @@ estimate_probability(x, method = "kernel", precision = 2^10,
     \code{adjust}.
   }
 
-\item{...}{further arguments for (non-default) methods.}
+\item{...}{Currently not used.}
 }
 \description{
 This function is a wrapper over different methods of density estimation. By default, it uses the base R \link{density} with by default uses a different smoothing bandwidth (\code{"SJ"}) from the legacy default implemented the base R \link{density} function (\code{"nrd0"}). However, Deng \& Wickham suggest that \code{method = "KernSmooth"} is the fastest and the most accurate.
@@ -68,6 +68,22 @@ lines(density_default$x, density_default$y, col = "black", lwd = 3)
 
 df <- data.frame(replicate(4, rnorm(100)))
 estimate_density(df)
+
+\dontrun{
+# rstanarm models
+# -----------------------------------------------
+library(rstanarm)
+model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+estimate_density(model)
+
+# brms models
+# -----------------------------------------------
+library(brms)
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+estimate_density(model)
+}
+
+
 }
 \references{
 Deng, H., \& Wickham, H. (2011). Density estimation in R. Electronic publication.

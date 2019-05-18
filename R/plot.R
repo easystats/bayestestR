@@ -57,3 +57,11 @@ plot.bayesfactor_models <- function(x, ...) {
   }
   NextMethod()
 }
+
+#' @export
+plot.estimate_density <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot densities. Please install it.")
+  }
+  NextMethod()
+}
