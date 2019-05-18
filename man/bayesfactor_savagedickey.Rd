@@ -68,7 +68,6 @@ prior <- distribution_normal(1000, mean = 0, sd = 1)
 posterior <- distribution_normal(1000, mean = .5, sd = .3)
 
 bayesfactor_savagedickey(posterior, prior)
-
 \dontrun{
 
 # rstanarm models
@@ -81,11 +80,13 @@ bayesfactor_savagedickey(stan_model)
 # -----------
 library(brms)
 my_custom_priors <-
-  set_prior("student_t(3, 0, 1)",class = "b") +
-  set_prior("student_t(3, 0, 1)",class = "sd", group = "ID")
+  set_prior("student_t(3, 0, 1)", class = "b") +
+  set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")
 
-brms_model <- brm(extra ~ group + (1|ID), data = sleep,
-                  prior = my_custom_priors)
+brms_model <- brm(extra ~ group + (1 | ID),
+  data = sleep,
+  prior = my_custom_priors
+)
 bayesfactor_savagedickey(brms_model)
 }
 
