@@ -1,28 +1,25 @@
-#' @title Compute Monte-Carlo Standard Error
-#' @name mcse
+#' Compute Monte-Carlo Standard Error (MCSE)
 #'
-#' @description \code{mcse()} returns the Monte Carlo standard error.
+#' This function returns the Monte Carlo Standard Error (MCSE).
 #'
-#' @inheritParams effective_samples
+#' @inheritParams effective_sample
 #'
-#' @return \code{mcse()} and \code{n_eff()} return a tibble with two columns: one
-#'   with the term names and one with the related statistic resp. effective
-#'   sample size.
 #'
-#' @details The Monte Carlo Standard Error is another useful measure of accuracy of
-#'  the chains. It is defined as standard deviation of the chains divided by
-#'  their effective sample size (the formula for \code{mcse()} is from
-#'  Kruschke 2015, p. 187). The MCSE \dQuote{provides a quantitative suggestion
-#'  of how big the estimation noise is}.
+#' @details \strong{Monte Carlo Standard Error (MCSE)} is another measure of
+#' accuracy of the chains. It is defined as standard deviation of the chains
+#' divided by their effective sample size (the formula for \code{mcse()} is
+#' from Kruschke 2015, p. 187). The MCSE \dQuote{provides a quantitative
+#' suggestion of how big the estimation noise is}.
 #'
-#' @references Kruschke JK. Doing Bayesian Data Analysis: A Tutorial with R, JAGS, and Stan. 2nd edition. Academic Press, 2015
+#' @references Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #'
 #' @examples
 #' \dontrun{
-#' if (require("rstanarm")) {
-#'   m <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
-#'   mcse(m)
-#' }}
+#' library(rstanarm)
+#'
+#' model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
+#' mcse(model)
+#' }
 #' @importFrom insight get_parameters
 #' @export
 mcse <- function(model, ...) {
@@ -45,7 +42,7 @@ mcse.brmsfit <- function(model, effects = c("fixed", "random", "all"), component
     )
 
   ess <-
-    effective_samples(
+    effective_sample(
       model,
       effects = effects,
       component = component,
@@ -70,7 +67,7 @@ mcse.stanreg <- function(model, effects = c("fixed", "random", "all"), parameter
     )
 
   ess <-
-    effective_samples(
+    effective_sample(
       model,
       effects = effects,
       parameters = parameters

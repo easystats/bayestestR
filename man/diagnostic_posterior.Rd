@@ -8,12 +8,12 @@
 \usage{
 diagnostic_posterior(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 
-\method{diagnostic_posterior}{stanreg}(posteriors, diagnostic = c("all",
-  "ESS", "Rhat", "MCSE"), effects = c("fixed", "random", "all"),
-  parameters = NULL, ...)
+\method{diagnostic_posterior}{stanreg}(posteriors, diagnostic = c("ESS",
+  "Rhat"), effects = c("fixed", "random", "all"), parameters = NULL,
+  ...)
 
-\method{diagnostic_posterior}{brmsfit}(posteriors, diagnostic = c("all",
-  "ESS", "Rhat", "MCSE"), effects = c("fixed", "random", "all"),
+\method{diagnostic_posterior}{brmsfit}(posteriors, diagnostic = c("ESS",
+  "Rhat"), effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL, ...)
 }
@@ -40,11 +40,11 @@ variable (so called fixed-effects regressions). May be abbreviated.}
 Extract diagnostic metrics (Effective Sample Size (\code{ESS}), \code{Rhat} and Monte Carlo Standard Error \code{MCSE}).
 }
 \details{
-\strong{Effective Sample (ESS)} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). The ESS corresponds to the number of independent samples with the same estimation power as the N autocorrelated samples. It represents the amount by which autocorrelation within the chains increases uncertainty of estimates.
+\strong{Effective Sample (ESS)} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). The ESS corresponds to the number of independent samples with the same estimation power as the N autocorrelated samples. It is is a measure of \dQuote{how much independent information there is in autocorrelated chains} (\emph{Kruschke 2015, p182-3}).
   \cr \cr
   \strong{Rhat} should be the closest to 1. It should not be larger than 1.1 (Gelman and Rubin, 1992) or 1.01 (Vehtari et al., 2019). The split R-hat statistic quantifies the consistency of an ensemble of Markov chains.
   \cr \cr
-  \strong{Monte Carlo Standard Error (MCSE)} is not implemented yet.
+  \strong{Monte Carlo Standard Error (MCSE)} is another measure of accuracy of the chains. It is defined as standard deviation of the chains divided by their effective sample size (the formula for \code{mcse()} is from Kruschke 2015, p. 187). The MCSE \dQuote{provides a quantitative suggestion of how big the estimation noise is}.
 }
 \examples{
 \dontrun{
@@ -66,5 +66,6 @@ diagnostic_posterior(model)
 \itemize{
   \item Gelman, A., \& Rubin, D. B. (1992). Inference from iterative simulation using multiple sequences. Statistical science, 7(4), 457-472.
   \item Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., \& Bürkner, P. C. (2019). Rank-normalization, folding, and localization: An improved Rhat for assessing convergence of MCMC. arXiv preprint arXiv:1903.08008.
+  \item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 }
 }
