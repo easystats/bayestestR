@@ -1,40 +1,33 @@
-#' @title Effective Sample
-#' @name effective_samples
+#' Effective Sample Size (ESS)
 #'
-#' @description \code{effective_samples()} returns the effective sample size.
+#' This function returns the effective sample size (ESS).
 #'
 #' @param model A \code{stanreg}, \code{stanfit}, or \code{brmsfit} object.
-#' @param ... Not used
+#' @param ... Currently not used.
 #' @inheritParams hdi
 #'
-#' @return A data frame with two columns: Parameter name and effective sample size.
+#' @return A data frame with two columns: Parameter name and effective sample size (ESS).
 #'
-#' @details The effective sample size divides the actual sample size by the amount
-#'  of autocorrelation. The effective sample size is a measure of \dQuote{how
-#'  much independent information there is in autocorrelated chains}, or:
-#'  \dQuote{What would be the sample size of a completely non-autocorrelated chain
-#'  that yielded the same information?} (\emph{Kruschke 2015, p182-3}).
-#'  The ratio of effective number of samples and total number of samples
-#'  ranges from 0 to 1, and should be close to 1. The closer this ratio comes
-#'  to zero means that the chains may be inefficient, but possibly still okay.
+#' @details \strong{Effective Sample (ESS)} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). The ESS corresponds to the number of independent samples with the same estimation power as the N autocorrelated samples. It is is a measure of \dQuote{how much independent information there is in autocorrelated chains} (\emph{Kruschke 2015, p182-3}).
 #'
-#' @references Kruschke JK. Doing Bayesian Data Analysis: A Tutorial with R, JAGS, and Stan. 2nd edition. Academic Press, 2015
+#' @references Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #'
 #' @examples
 #' \dontrun{
-#' if (require("rstanarm")) {
-#'   m <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
-#'   effective_samples(m)
-#' }}
+#' library(rstanarm)
+#'
+#' model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
+#' effective_sample(model)
+#' }
 #' @export
-effective_samples <- function(model, ...) {
-  UseMethod("effective_samples")
+effective_sample <- function(model, ...) {
+  UseMethod("effective_sample")
 }
 
 
-#' @rdname effective_samples
+#' @rdname effective_sample
 #' @export
-effective_samples.brmsfit <- function(model, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+effective_sample.brmsfit <- function(model, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   # check arguments
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -64,9 +57,9 @@ effective_samples.brmsfit <- function(model, effects = c("fixed", "random", "all
 
 
 
-#' @rdname effective_samples
+#' @rdname effective_sample
 #' @export
-effective_samples.stanreg <- function(model, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   # check arguments
   effects <- match.arg(effects)
 

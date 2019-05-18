@@ -3,7 +3,7 @@
 \name{mcse}
 \alias{mcse}
 \alias{mcse.stanreg}
-\title{Compute Monte-Carlo Standard Error}
+\title{Compute Monte-Carlo Standard Error (MCSE)}
 \usage{
 mcse(model, ...)
 
@@ -13,7 +13,7 @@ mcse(model, ...)
 \arguments{
 \item{model}{A \code{stanreg}, \code{stanfit}, or \code{brmsfit} object.}
 
-\item{...}{Not used}
+\item{...}{Currently not used.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
@@ -24,28 +24,24 @@ filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
 }
-\value{
-\code{mcse()} and \code{n_eff()} return a tibble with two columns: one
-  with the term names and one with the related statistic resp. effective
-  sample size.
-}
 \description{
-\code{mcse()} returns the Monte Carlo standard error.
+This function returns the Monte Carlo Standard Error (MCSE).
 }
 \details{
-The Monte Carlo Standard Error is another useful measure of accuracy of
- the chains. It is defined as standard deviation of the chains divided by
- their effective sample size (the formula for \code{mcse()} is from
- Kruschke 2015, p. 187). The MCSE \dQuote{provides a quantitative suggestion
- of how big the estimation noise is}.
+\strong{Monte Carlo Standard Error (MCSE)} is another measure of
+accuracy of the chains. It is defined as standard deviation of the chains
+divided by their effective sample size (the formula for \code{mcse()} is
+from Kruschke 2015, p. 187). The MCSE \dQuote{provides a quantitative
+suggestion of how big the estimation noise is}.
 }
 \examples{
 \dontrun{
-if (require("rstanarm")) {
-  m <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
-  mcse(m)
-}}
+library(rstanarm)
+
+model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
+mcse(model)
+}
 }
 \references{
-Kruschke JK. Doing Bayesian Data Analysis: A Tutorial with R, JAGS, and Stan. 2nd edition. Academic Press, 2015
+Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 }
