@@ -70,12 +70,12 @@ effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"
       parameters = parameters
     )
 
-  s <- summary(model)
+  s <- as.data.frame(summary(model))
   s <- s[make.names(rownames(s)) %in% colnames(pars), ]
 
   data.frame(
     Parameter = rownames(s),
-    ESS = as.data.frame(s)["n_eff", ],
+    ESS = s[["n_eff"]],
     stringsAsFactors = FALSE,
     row.names = NULL
   )
