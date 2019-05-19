@@ -67,9 +67,9 @@ Click on the buttons above to access the package [**documentation**](https://eas
 #### Tutorials
 
 - [Get Started with Bayesian Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
-- [Example 1: Initiation to Bayesian Models](https://easystats.github.io/bayestestR/articles/example1.html)
+- [Example 1: Initiation to Bayesian models](https://easystats.github.io/bayestestR/articles/example1.html)
 - [Example 2: Confirmation of Bayesian skills](https://easystats.github.io/bayestestR/articles/example2.html)
-- [Example 3: Become a Bayesian Master](https://easystats.github.io/bayestestR/articles/example3.html)
+- [Example 3: Become a Bayesian master](https://easystats.github.io/bayestestR/articles/example3.html)
 
 #### Articles
 

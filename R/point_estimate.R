@@ -116,6 +116,7 @@ point_estimate.data.frame <- function(x, estimate = "median", dispersion = FALSE
 }
 
 
+
 #' @rdname point_estimate
 #' @export
 point_estimate.stanreg <- function(x, estimate = "median", dispersion = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
@@ -157,7 +158,7 @@ point_estimate.brmsfit <- function(x, estimate = "median", dispersion = FALSE, e
 #' @rdname point_estimate
 #' @export
 point_estimate.BFBayesFactor <- function(x, estimate = "median", dispersion = FALSE, ...) {
-  out <- point_estimate(insight::get_parameters(x), , estimate = estimate, dispersion = dispersion, ...)
+  out <- point_estimate(insight::get_parameters(x), estimate = estimate, dispersion = dispersion, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
