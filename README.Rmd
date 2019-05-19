@@ -64,9 +64,15 @@ library("bayestestR")
 
 Click on the buttons above to access the package [**documentation**](https://easystats.github.io/bayestestR/) and the [**easystats blog**](https://easystats.github.io/blog/posts/), and check-out these vignettes:
 
+#### Tutorials
+
 - [Get Started with Bayesian Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
 - [Example 1: Initiation to Bayesian Models](https://easystats.github.io/bayestestR/articles/example1.html)
 - [Example 2: Confirmation of Bayesian skills](https://easystats.github.io/bayestestR/articles/example2.html)
+- [Example 3: Become a Bayesian Master](https://easystats.github.io/bayestestR/articles/example3.html)
+
+#### Articles
+
 - [Credible Intervals](https://easystats.github.io/bayestestR/articles/credible_interval.html)
 - [Probability of Direction (pd)](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
 - [Region of Practical Equivalence (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)

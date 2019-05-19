@@ -37,12 +37,19 @@ Click on the buttons above to access the package
 [**easystats blog**](https://easystats.github.io/blog/posts/), and
 check-out these vignettes:
 
+#### Tutorials
+
   - [Get Started with Bayesian
     Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
-  - [Example 1: Linear
-    Models](https://easystats.github.io/bayestestR/articles/example1_LM.html)
-  - [Example 2: General Linear
-    Models](https://easystats.github.io/bayestestR/articles/example2_GLM.html)
+  - [Example 1: Initiation to Bayesian
+    Models](https://easystats.github.io/bayestestR/articles/example1.html)
+  - [Example 2: Confirmation of Bayesian
+    skills](https://easystats.github.io/bayestestR/articles/example2.html)
+  - [Example 3: Become a Bayesian
+    Master](https://easystats.github.io/bayestestR/articles/example3.html)
+
+#### Articles
+
   - [Credible
     Intervals](https://easystats.github.io/bayestestR/articles/credible_interval.html)
   - [Probability of Direction
