@@ -159,7 +159,7 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
   if (is.null(prior)) {
     alg <- insight::find_algorithm(posterior)
 
-    capture.output(prior <- suppressWarnings(
+    capture.output(prior <- try(suppressWarnings(
       stats::update(
         posterior,
         sample_prior = "only",
@@ -167,7 +167,14 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
         chains = alg$chains,
         warmup = alg$warmup
       )
-    ))
+    ), silent = TRUE))
+    if (is(prior,"try-error")) {
+      if (grepl('proper priors', prior)) {
+        stop("Cannot compute BF for 'brmsfit' models fit with default priors. See '?bayesfactor_savagedickey'")
+      } else {
+        stop(prior)
+      }
+    }
     prior <- insight::get_parameters(prior, effects = effects)
   }
 
