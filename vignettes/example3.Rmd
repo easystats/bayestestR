@@ -1,5 +1,5 @@
 ---
-title: "Example 3: Become a Bayesian Master"
+title: "Example 3: Become a Bayesian master"
 output: 
   github_document:
     toc: true
@@ -12,7 +12,7 @@ output:
 tags: [r, bayesian, posterior, test]
 vignette: >
   \usepackage[utf8]{inputenc}
-  %\VignetteIndexEntry{Example 3: Become a Bayesian Master}
+  %\VignetteIndexEntry{Example 3: Become a Bayesian master}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
