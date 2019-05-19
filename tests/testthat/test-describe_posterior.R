@@ -32,14 +32,15 @@ test_that("describe_posterior", {
   testthat::expect_equal(dim(rez), c(2, 6))
 
   # Brms
-  # library(brms)
-  # x <- insight::download_model("brms_mixed_1")
-  # rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all")
+  library(brms)
+  x <- insight::download_model("brms_mixed_1")
+  # rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all")  # doenst work because of BFs
   # testthat::expect_equal(dim(rez), c(4, 16))
-  # rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
-  # testthat::expect_equal(dim(rez), c(8, 16))
-  # rez <- describe_posterior(x, estimate = NULL, dispersion = TRUE, test = NULL, ci_method="quantile")
-  # testthat::expect_equal(dim(rez), c(4, 4))
+  rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, ci = c(0.8, 0.9))
+  testthat::expect_equal(dim(rez), c(4, 14))
+  rez <- describe_posterior(x, estimate = NULL, dispersion = TRUE, test = NULL, ci_method="quantile")
+  testthat::expect_equal(dim(rez), c(2, 4))
+
 
   # BayesFactor
   library(BayesFactor)
