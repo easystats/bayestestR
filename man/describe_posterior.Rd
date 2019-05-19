@@ -19,8 +19,9 @@ describe_posterior(posteriors, estimate = "median", dispersion = TRUE,
 \method{describe_posterior}{brmsfit}(posteriors, estimate = "median",
   dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL,
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), parameters = NULL, ...)
+  diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL, ...)
 }
 \arguments{
 \item{posteriors}{A vector, dataframe or model of posterior draws.}

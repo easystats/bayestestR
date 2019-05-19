@@ -217,7 +217,7 @@ describe_posterior.stanreg <- function(posteriors, estimate = "median", dispersi
 
   if (!is.null(diagnostic)) {
     col_order <- out$Parameter
-    diagnostic <- diagnostic_posterior(posteriors, diagnostic, effects, parameters, ...)
+    diagnostic <- diagnostic_posterior(posteriors, diagnostic, effects = effects, parameters = parameters, ...)
     out <- merge(out, diagnostic, all = TRUE)
     out <- out[match(col_order, out$Parameter), ]
   }
@@ -227,6 +227,14 @@ describe_posterior.stanreg <- function(posteriors, estimate = "median", dispersi
 #' @inheritParams describe_posterior.stanreg
 #' @rdname describe_posterior
 #' @export
-describe_posterior.brmsfit <- function(posteriors, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
-  .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, effects = effects, component = component, parameters = parameters, ...)
+describe_posterior.brmsfit <- function(posteriors, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+  out <- .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, effects = effects, component = component, parameters = parameters, ...)
+
+  if (!is.null(diagnostic)) {
+    col_order <- out$Parameter
+    diagnostic <- diagnostic_posterior(posteriors, diagnostic, effects = effects, component = component, parameters = parameters, ...)
+    out <- merge(out, diagnostic, all = TRUE)
+    out <- out[match(col_order, out$Parameter), ]
+  }
+  out
 }
