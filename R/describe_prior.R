@@ -35,7 +35,7 @@ describe_prior <- function(model, ...) {
 
 
 #' @keywords internal
-.describe_posterior <- function(model, ...) {
+.describe_prior <- function(model, ...) {
   priors <- insight::get_priors(model)
 
   # Format names
@@ -54,7 +54,7 @@ describe_prior <- function(model, ...) {
 
 
 #' @export
-describe_posterior.stanreg <- .describe_posterior
+describe_prior.stanreg <- .describe_prior
 
 # #' @export
-# describe_posterior.brmsfit <- .describe_posterior
+# describe_prior.brmsfit <- .describe_prior
