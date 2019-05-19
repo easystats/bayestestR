@@ -75,7 +75,7 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
 
   # Uncertainty
   if (!is.null(ci)) {
-    ci_method <- match.arg(ci_method, c("hdi", "quantile", "ci", "eti"))
+    ci_method <- match.arg(tolower(ci_method), c("hdi", "quantile", "ci", "eti"))
     if (ci_method == "hdi") {
       uncertainty <- hdi(x, ci = ci)
     } else {
@@ -90,7 +90,7 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
 
   # Effect Existence
   if (!is.null(test)) {
-    test <- match.arg(test, c(
+    test <- match.arg(tolower(test), c(
       "pd", "p_direction", "pdir", "mpe",
       "rope", "equivalence", "equivalence_test", "equitest",
       "bf", "bayesfactor", "bayes_factor", "all"

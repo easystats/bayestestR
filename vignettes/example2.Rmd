@@ -1,5 +1,5 @@
 ---
-title: "Example 2: General Linear Models"
+title: "Example 2: Confirmation of Bayesian skills"
 output: 
   github_document:
     toc: true
@@ -12,7 +12,7 @@ output:
 tags: [r, bayesian, posterior, test]
 vignette: >
   \usepackage[utf8]{inputenc}
-  %\VignetteIndexEntry{Example 2: General Linear Models}
+  %\VignetteIndexEntry{Example 2: Confirmation of Bayesian skills}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
@@ -35,7 +35,7 @@ set.seed(333)
 ```
 
 
-Now that [**describing and understanding posterior distributions of linear regressions**](https://easystats.github.io/bayestestR/articles/example1_LM.html) has no secrets for you, let's go deeper.
+Now that [**describing and understanding posterior distributions of linear regressions**](https://easystats.github.io/bayestestR/articles/example1.html) has no secrets for you, let's go deeper.
 
 > **"But it's only about regressions and I want to do ANOVAs and t-tests"**
 
@@ -46,6 +46,9 @@ TO BE CONTINUED.
 
 ### Diagnostic Indices
 
+About diagnostic indices such as Rhat and ESS.
 
 
 ### Priors
+
+About priors.

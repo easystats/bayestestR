@@ -24,10 +24,12 @@ navbar:
     href: articles/bayestestR.html
   - text: Examples
     menu:
-      - text: '1. Linear Models'
-        href: articles/example1_LM.html
-      - text: '2. General Linear Models'
-        href: articles/example2_GLM.html
+      - text: '1. Initiation to Bayesian models'
+        href: articles/example1.html
+      - text: '2. Confirmation of Bayesian skills'
+        href: articles/example2.html
+      - text: '3. Become a Bayesian Master'
+        href: articles/example3.html
   - text: Articles
     menu:
       - text: 'Credible Intervals'

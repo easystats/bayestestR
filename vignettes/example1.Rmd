@@ -1,5 +1,5 @@
 ---
-title: "Example 1: Linear Models"
+title: "Example 1: Initiation to Bayesian models"
 output: 
   github_document:
     toc: true
@@ -12,7 +12,7 @@ output:
 tags: [r, bayesian, posterior, test]
 vignette: >
   \usepackage[utf8]{inputenc}
-  %\VignetteIndexEntry{Example 1: Linear Models}
+  %\VignetteIndexEntry{Example 1: Initiation to Bayesian models}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
