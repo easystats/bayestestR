@@ -119,7 +119,7 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
   # Get Priors
   if (is.null(prior)) {
     alg <- insight::find_algorithm(posterior)
-    message("Sampling Priors")
+    message("Computation of Bayes factors: sampling priors, please wait...")
     capture.output(prior <- suppressWarnings(
       stats::update(
         posterior,

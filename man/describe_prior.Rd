@@ -8,6 +8,8 @@ describe_prior(model, ...)
 }
 \arguments{
 \item{model}{A Bayesian model.}
+
+\item{...}{Currently not used.}
 }
 \description{
 Returns a summary of the priors used in the model.

@@ -3,6 +3,7 @@
 #' Returns a summary of the priors used in the model.
 #'
 #' @param model A Bayesian model.
+#' @param ... Currently not used.
 #'
 #' @examples
 #' \dontrun{
@@ -36,7 +37,7 @@ describe_prior <- function(model, ...) {
 
 #' @keywords internal
 .describe_prior <- function(model, ...) {
-  priors <- insight::get_priors(model)
+  priors <- insight::get_priors(model, ...)
 
   # Format names
   names(priors) <- tools::toTitleCase(names(priors))
