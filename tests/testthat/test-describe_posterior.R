@@ -32,8 +32,8 @@ test_that("describe_posterior", {
   testthat::expect_equal(dim(rez), c(2, 6))
 
   # Brms
-  library(brms)
-  x <- insight::download_model("brms_mixed_1")
+  # library(brms)
+  # x <- insight::download_model("brms_mixed_1")
   # rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all")
   # testthat::expect_equal(dim(rez), c(4, 16))
   # rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
@@ -43,7 +43,7 @@ test_that("describe_posterior", {
 
   # BayesFactor
   library(BayesFactor)
-  x <- ttestBF(x = rnorm(100, 1, 1))
+  x <- BayesFactor::ttestBF(x = rnorm(100, 1, 1))
   # rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all")
   # testthat::expect_equal(dim(rez), c(4, 16))
   # rez <- describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))

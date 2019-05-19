@@ -79,15 +79,21 @@ bayesfactor_models(brm1, brm2, brm3, denominator = 1)
 # ---------------------
 # (note that a unique diagnostic_file MUST be specified in order to work)
 library(rstanarm)
-stan_m0 <- stan_glm(Sepal.Length ~ 1, data = iris,
-                    family = gaussian(),
-                    diagnostic_file = file.path(tempdir(), "df0.csv"))
-stan_m1 <- stan_glm(Sepal.Length ~ Species, data = iris,
-                    family = gaussian(),
-                    diagnostic_file = file.path(tempdir(), "df1.csv"))
-stan_m2 <- stan_glm(Sepal.Length ~ Species + Petal.Length, data = iris,
-                    family = gaussian(),
-                    diagnostic_file = file.path(tempdir(), "df2.csv"))
+stan_m0 <- stan_glm(Sepal.Length ~ 1,
+  data = iris,
+  family = gaussian(),
+  diagnostic_file = file.path(tempdir(), "df0.csv")
+)
+stan_m1 <- stan_glm(Sepal.Length ~ Species,
+  data = iris,
+  family = gaussian(),
+  diagnostic_file = file.path(tempdir(), "df1.csv")
+)
+stan_m2 <- stan_glm(Sepal.Length ~ Species + Petal.Length,
+  data = iris,
+  family = gaussian(),
+  diagnostic_file = file.path(tempdir(), "df2.csv")
+)
 bayesfactor_models(stan_m1, stan_m2, denominator = stan_m0)
 
 # With BFBayesFactor objects:

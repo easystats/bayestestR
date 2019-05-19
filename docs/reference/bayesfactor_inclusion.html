@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
       </span>
     </div>
 
@@ -182,7 +182,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>bayesfactor_inclusion</span>(<span class='no'>models</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>bayesfactor_inclusion</span>(<span class='no'>models</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,6 +202,10 @@ the effect AND without any higher-order interactions with the effect.</p></td>
     <tr>
       <th>prior_odds</th>
       <td><p>optional vector of prior odds for the models. See <code>BayesFactor::priorOdds</code></p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
     

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • bayestestR</title>
+<title>Compute Monte-Carlo Standard Error (MCSE) — mcse • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,7 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Compute Monte-Carlo Standard Error (MCSE) — mcse" />
+
+<meta property="og:description" content="This function returns the Monte Carlo Standard Error (MCSE)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -69,7 +71,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -167,192 +169,84 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Compute Monte-Carlo Standard Error (MCSE)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/mcse.R'><code>R/mcse.R</code></a></small>
+    <div class="hidden name"><code>mcse.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>This function returns the Monte Carlo Standard Error (MCSE).</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>mcse</span>(<span class='no'>model</span>, <span class='no'>...</span>)
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="area_under_curve.html">area_under_curve()</a></code> <code><a href="area_under_curve.html">auc()</a></code> </p>
-        </td>
-        <td><p>Area under the Curve (AUC)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as.data.frame.density.html">as.data.frame(<i>&lt;density&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Coerce to a Data Frame</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as.numeric.p_direction.html">as.numeric(<i>&lt;p_direction&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Numeric Vectors</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as.numeric.p_map.html">as.numeric(<i>&lt;p_map&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Numeric Vectors</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as.numeric.p_rope.html">as.numeric(<i>&lt;p_rope&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Numeric Vectors</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> </p>
-        </td>
-        <td><p>Get inclusion BFs for effects across Bayesian models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bayesfactor_models.html">bayesfactor_models()</a></code> </p>
-        </td>
-        <td><p>Extract Bayes Factors from fitted models</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="bayesfactor_savagedickey.html">bayesfactor_savagedickey()</a></code> </p>
-        </td>
-        <td><p>Savage-Dickey density ratio Bayes factor</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ci.html">ci()</a></code> </p>
-        </td>
-        <td><p>Confidence/Credible Interval</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="density_at.html">density_at()</a></code> <code><a href="density_at.html">probability_at()</a></code> </p>
-        </td>
-        <td><p>Probability of a Given Point</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="describe_posterior.html">describe_posterior()</a></code> </p>
-        </td>
-        <td><p>Describe Posterior Distributions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="diagnostic_posterior.html">diagnostic_posterior()</a></code> </p>
-        </td>
-        <td><p>Posteriors Sampling Diagnostic</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="distribution.html">distribution()</a></code> <code><a href="distribution.html">distribution_normal()</a></code> <code><a href="distribution.html">distribution_cauchy()</a></code> <code><a href="distribution.html">distribution_poisson()</a></code> <code><a href="distribution.html">distribution_student()</a></code> <code><a href="distribution.html">distribution_chisquared()</a></code> <code><a href="distribution.html">distribution_uniform()</a></code> <code><a href="distribution.html">distribution_beta()</a></code> <code><a href="distribution.html">distribution_custom()</a></code> <code><a href="distribution.html">rnorm_perfect()</a></code> </p>
-        </td>
-        <td><p>Empirical Distributions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="effective_sample.html">effective_sample()</a></code> </p>
-        </td>
-        <td><p>Effective Sample Size (ESS)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="equivalence_test.html">equivalence_test()</a></code> </p>
-        </td>
-        <td><p>Test for Practical Equivalence</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="estimate_density.html">estimate_density()</a></code> <code><a href="estimate_density.html">estimate_probability()</a></code> </p>
-        </td>
-        <td><p>Density Estimation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hdi.html">hdi()</a></code> </p>
-        </td>
-        <td><p>Highest Density Interval (HDI)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="map_estimate.html">map_estimate()</a></code> </p>
-        </td>
-        <td><p>Maximum A Posteriori (MAP) Estimate</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="mcse.html">mcse()</a></code> </p>
-        </td>
-        <td><p>Compute Monte-Carlo Standard Error (MCSE)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="point_estimate.html">point_estimate()</a></code> </p>
-        </td>
-        <td><p>Compute point-estimates of posterior distributions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="p_direction.html">p_direction()</a></code> <code><a href="p_direction.html">pd()</a></code> </p>
-        </td>
-        <td><p>Probability of Direction (pd)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="p_map.html">p_map()</a></code> </p>
-        </td>
-        <td><p>Bayesian p-value based on the density at the Maximum A Priori (MAP)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="p_rope.html">p_rope()</a></code> </p>
-        </td>
-        <td><p>ROPE-based p-value</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rope.html">rope()</a></code> </p>
-        </td>
-        <td><p>Region of Practical Equivalence (ROPE)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rope_range.html">rope_range()</a></code> </p>
-        </td>
-        <td><p>Find Default Equivalence (ROPE) Region Bounds</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="update.bayesfactor_models.html">update(<i>&lt;bayesfactor_models&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Update bayesfactor_models</p></td>
-      </tr>
-    </tbody>
+<span class='co'># S3 method for stanreg</span>
+<span class='fu'>mcse</span>(<span class='no'>model</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>model</th>
+      <td><p>A <code>stanreg</code>, <code>stanfit</code>, or <code>brmsfit</code> object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Currently not used.</p></td>
+    </tr>
+    <tr>
+      <th>effects</th>
+      <td><p>Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>parameters</th>
+      <td><p>Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+filtered by default, so only parameters that typically appear in the
+<code><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
+for the output.</p></td>
+    </tr>
     </table>
-  </div>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p><strong>Monte Carlo Standard Error (MCSE)</strong> is another measure of
+accuracy of the chains. It is defined as standard deviation of the chains
+divided by their effective sample size (the formula for <code>mcse()</code> is
+from Kruschke 2015, p. 187). The MCSE &#8220;provides a quantitative
+suggestion of how big the estimation noise is&#8221;.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
+
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>am</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'>mcse</span>(<span class='no'>model</span>)
+<span class='co'># }</span></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#references">References</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

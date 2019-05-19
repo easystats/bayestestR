@@ -68,7 +68,6 @@ lines(density_default$x, density_default$y, col = "black", lwd = 3)
 
 df <- data.frame(replicate(4, rnorm(100)))
 estimate_density(df)
-
 \dontrun{
 # rstanarm models
 # -----------------------------------------------
@@ -82,7 +81,6 @@ library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 estimate_density(model)
 }
-
 
 }
 \references{
