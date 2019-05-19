@@ -8,14 +8,12 @@
 \usage{
 diagnostic_posterior(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 
-\method{diagnostic_posterior}{stanreg}(posteriors, diagnostic = c("ESS",
-  "Rhat"), effects = c("fixed", "random", "all"), parameters = NULL,
-  ...)
+\method{diagnostic_posterior}{stanreg}(posteriors, diagnostic = "all",
+  effects = c("fixed", "random", "all"), parameters = NULL, ...)
 
-\method{diagnostic_posterior}{brmsfit}(posteriors, diagnostic = c("ESS",
-  "Rhat"), effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL, ...)
+\method{diagnostic_posterior}{brmsfit}(posteriors, diagnostic = "all",
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), parameters = NULL, ...)
 }
 \arguments{
 \item{posteriors}{A stanreg or brms model.}

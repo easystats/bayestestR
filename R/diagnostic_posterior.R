@@ -57,7 +57,7 @@ diagnostic_posterior.BFBayesFactor <- diagnostic_posterior.numeric
 #' @inheritParams insight::get_parameters
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.stanreg <- function(posteriors, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE")
@@ -67,7 +67,7 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = c("ESS", "Rhat
 
   # Get indices and rename
   diagnostic_df <- as.data.frame(posteriors$stan_summary)
-  diagnostic_df$Parameter <- make.names(row.names(diagnostic_df))
+  diagnostic_df$Parameter <- row.names(diagnostic_df)
   diagnostic_df$ESS <- round(diagnostic_df$n_eff)
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
   MCSE <- mcse(posteriors, effects = "all")
@@ -90,7 +90,7 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = c("ESS", "Rhat
 #' @inheritParams insight::get_parameters
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE") # Add MCSE
@@ -107,8 +107,8 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = c("ESS", "Rhat
   diagnostic_df$Parameter <- make.names(row.names(diagnostic_df))
   diagnostic_df$ESS <- round(diagnostic_df$n_eff)
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
-  # MCSE <- mcse(posteriors, effects = "all", component = "all")
-  # diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
+  MCSE <- mcse(posteriors, effects = "all", component = "all")
+  diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns
   diagnostic_df <- diagnostic_df[, c("Parameter", diagnostic)]
