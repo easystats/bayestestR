@@ -51,7 +51,7 @@ point_estimate <- function(x, estimate = "median", dispersion = FALSE, ...) {
 
 #' @export
 point_estimate.numeric <- function(x, estimate = "median", dispersion = FALSE, ...) {
-  estimate <- match.arg(estimate, c("median", "mean", "map", "all"), several.ok = TRUE)
+  estimate <- match.arg(tolower(estimate), c("median", "mean", "map", "all"), several.ok = TRUE)
   if ("all" %in% estimate) {
     estimate_list <- c("median", "mean", "map")
   } else {

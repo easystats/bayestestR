@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
       </span>
     </div>
 
@@ -73,10 +73,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/example1_LM.html">1. Linear Models</a>
+      <a href="../articles/example1.html">1. Initiation to Bayesian models</a>
     </li>
     <li>
-      <a href="../articles/example2_GLM.html">2. General Linear Models</a>
+      <a href="../articles/example2.html">2. Confirmation of Bayesian skills</a>
+    </li>
+    <li>
+      <a href="../articles/example3.html">3. Become a Bayesian Master</a>
     </li>
   </ul>
 </li>
@@ -254,6 +257,11 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <th align="right">ROPE_low</th>
 <th align="right">ROPE_high</th>
 <th align="right">ROPE_Percentage</th>
+<th align="right">ESS</th>
+<th align="right">Rhat</th>
+<th align="left">Prior_Distribution</th>
+<th align="right">Prior_Location</th>
+<th align="right">Prior_Scale</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -267,6 +275,11 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <td align="right">-0.08</td>
 <td align="right">0.08</td>
 <td align="right">0</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="left">normal</td>
+<td align="right">0</td>
+<td align="right">8.3</td>
 </tr>
 <tr class="even">
 <td align="left">Petal.Length</td>
@@ -279,11 +292,16 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <td align="right">-0.08</td>
 <td align="right">0.08</td>
 <td align="right">0</td>
+<td align="right">4311</td>
+<td align="right">1</td>
+<td align="left">normal</td>
+<td align="right">0</td>
+<td align="right">1.2</td>
 </tr>
 </tbody>
 </table>
 <p><strong>That’s it!</strong> You fitted a Bayesian version of the model by simply using <a href="https://mc-stan.org/rstanarm/reference/stan_glm.html"><code>stan_glm()</code></a> instead of <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code> and described the posterior distributions of the parameters. The conclusion that we can drawn, for this example, are very similar. The effect (<em>the median of the effect’s posterior distribution</em>) is about <code>0.41</code>, and it can be also be considered as <em>significant</em> in the Bayesian sense (more on that later).</p>
-<p><strong>So, ready to learn more?</strong> Check out the <a href="https://easystats.github.io/bayestestR/articles/example1_LM.html"><strong>next tutorial</strong></a>!</p>
+<p><strong>So, ready to learn more?</strong> Check out the <a href="https://easystats.github.io/bayestestR/articles/example1.html"><strong>next tutorial</strong></a>!</p>
 </div>
 </div>
 <div id="references" class="section level2 unnumbered">

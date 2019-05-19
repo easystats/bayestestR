@@ -34,7 +34,6 @@
 #'
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' estimate_density(df)
-#'
 #' \dontrun{
 #' # rstanarm models
 #' # -----------------------------------------------
@@ -48,7 +47,6 @@
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' estimate_density(model)
 #' }
-#'
 #'
 #' @references Deng, H., \& Wickham, H. (2011). Density estimation in R. Electronic publication.
 #'
@@ -117,8 +115,8 @@ estimate_probability <- estimate_density
 
 
 #' @export
-estimate_density.numeric <- function(x, ...) {
-  out <- .estimate_density(x, ...)
+estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
+  out <- .estimate_density(x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
   class(out) <- c("estimate_density", "see_estimate_density", class(out))
   out
 }
@@ -129,9 +127,9 @@ estimate_density.numeric <- function(x, ...) {
 
 
 #' @export
-estimate_density.data.frame <- function(x, ...) {
+estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
   x <- .select_nums(x)
-  out <- sapply(x, estimate_density, simplify = FALSE)
+  out <- sapply(x, estimate_density, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, simplify = FALSE)
   for (i in names(out)) {
     out[[i]]$Parameter <- i
   }
@@ -147,23 +145,23 @@ estimate_density.data.frame <- function(x, ...) {
 
 #' @importFrom insight get_parameters
 #' @export
-estimate_density.stanreg <- function(x, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+estimate_density.stanreg <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
 
-  out <- estimate_density(insight::get_parameters(x, effects = effects, parameters = parameters), ...)
+  out <- estimate_density(insight::get_parameters(x, effects = effects, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
 
   out
 }
 
 
+
 #' @importFrom insight get_parameters
 #' @export
-estimate_density.brmsfit <- function(x, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
-
+estimate_density.brmsfit <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
-  out <- estimate_density(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ...)
+  out <- estimate_density(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
 
   out
 }

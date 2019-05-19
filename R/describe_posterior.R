@@ -75,7 +75,7 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
 
   # Uncertainty
   if (!is.null(ci)) {
-    ci_method <- match.arg(ci_method, c("hdi", "quantile", "ci", "eti"))
+    ci_method <- match.arg(tolower(ci_method), c("hdi", "quantile", "ci", "eti"))
     if (ci_method == "hdi") {
       uncertainty <- hdi(x, ci = ci)
     } else {
@@ -90,7 +90,7 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
 
   # Effect Existence
   if (!is.null(test)) {
-    test <- match.arg(test, c(
+    test <- match.arg(tolower(test), c(
       "pd", "p_direction", "pdir", "mpe",
       "rope", "equivalence", "equivalence_test", "equitest",
       "bf", "bayesfactor", "bayes_factor", "all"
@@ -210,15 +210,23 @@ describe_posterior.data.frame <- describe_posterior.numeric
 
 #' @inheritParams insight::get_parameters
 #' @inheritParams diagnostic_posterior
+#' @param priors Add the prior used for each parameter.
 #' @rdname describe_posterior
 #' @export
-describe_posterior.stanreg <- function(posteriors, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+describe_posterior.stanreg <- function(posteriors, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   out <- .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
 
   if (!is.null(diagnostic)) {
     col_order <- out$Parameter
-    diagnostic <- diagnostic_posterior(posteriors, diagnostic, effects, parameters, ...)
+    diagnostic <- diagnostic_posterior(posteriors, diagnostic, effects = effects, parameters = parameters, ...)
     out <- merge(out, diagnostic, all = TRUE)
+    out <- out[match(col_order, out$Parameter), ]
+  }
+
+  if (priors) {
+    col_order <- out$Parameter
+    priors_data <- describe_prior(posteriors, ...)
+    out <- merge(out, priors_data, all = TRUE)
     out <- out[match(col_order, out$Parameter), ]
   }
   out
@@ -227,6 +235,14 @@ describe_posterior.stanreg <- function(posteriors, estimate = "median", dispersi
 #' @inheritParams describe_posterior.stanreg
 #' @rdname describe_posterior
 #' @export
-describe_posterior.brmsfit <- function(posteriors, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
-  .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, effects = effects, component = component, parameters = parameters, ...)
+describe_posterior.brmsfit <- function(posteriors, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+  out <- .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, effects = effects, component = component, parameters = parameters, ...)
+
+  if (!is.null(diagnostic)) {
+    col_order <- out$Parameter
+    diagnostic <- diagnostic_posterior(posteriors, diagnostic, effects = effects, component = component, parameters = parameters, ...)
+    out <- merge(out, diagnostic, all = TRUE)
+    out <- out[match(col_order, out$Parameter), ]
+  }
+  out
 }

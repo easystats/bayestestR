@@ -1,7 +1,6 @@
 #' Extract Bayes Factors from fitted models
 #'
-#' @description This function computes Bayes factors from fitted models or extracts
-#'   the Bayes factor from objects of class \code{BFBayesFactor}.
+#' @description This function computes or extracts Bayes factors from fitted models.
 #'
 #' @author Mattan S. Ben-Shachar
 #'
@@ -33,6 +32,7 @@
 #'
 #' @examples
 #' # With lm objects:
+#' # ----------------
 #' lm1 <- lm(Sepal.Length ~ 1, data = iris)
 #' lm2 <- lm(Sepal.Length ~ Species, data = iris)
 #' lm3 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
@@ -42,6 +42,7 @@
 #' bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
 #'
 #' # With lmerMod objects:
+#' # ---------------------
 #' library(lme4)
 #' lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
 #' lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
@@ -52,17 +53,8 @@
 #' bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
 #' bayesfactor_models(lmer1, lmer2, lmer3, denominator = lmer1)
 #' \dontrun{
-#' # With BFBayesFactor objects:
-#' library(BayesFactor)
-#' data(puzzles)
-#' BF <- anovaBF(RT ~ shape * color + ID,
-#'   data = puzzles,
-#'   whichRandom = "ID", progress = FALSE
-#' )
-#' BF
-#' bayesfactor_models(BF) # basically the same
-#'
 #' # with brmfit objects:
+#' # --------------------
 #' # (note the save_all_pars MUST be set to TRUE in order to work)
 #' library(brms)
 #' brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
@@ -74,6 +66,38 @@
 #' )
 #'
 #' bayesfactor_models(brm1, brm2, brm3, denominator = 1)
+#'
+#' # with stanreg objects:
+#' # ---------------------
+#' # (note that a unique diagnostic_file MUST be specified in order to work)
+#' library(rstanarm)
+#' stan_m0 <- stan_glm(Sepal.Length ~ 1,
+#'   data = iris,
+#'   family = gaussian(),
+#'   diagnostic_file = file.path(tempdir(), "df0.csv")
+#' )
+#' stan_m1 <- stan_glm(Sepal.Length ~ Species,
+#'   data = iris,
+#'   family = gaussian(),
+#'   diagnostic_file = file.path(tempdir(), "df1.csv")
+#' )
+#' stan_m2 <- stan_glm(Sepal.Length ~ Species + Petal.Length,
+#'   data = iris,
+#'   family = gaussian(),
+#'   diagnostic_file = file.path(tempdir(), "df2.csv")
+#' )
+#' bayesfactor_models(stan_m1, stan_m2, denominator = stan_m0)
+#'
+#' # With BFBayesFactor objects:
+#' # ---------------------------
+#' library(BayesFactor)
+#' data(puzzles)
+#' BF <- anovaBF(RT ~ shape * color + ID,
+#'   data = puzzles,
+#'   whichRandom = "ID", progress = FALSE
+#' )
+#' BF
+#' bayesfactor_models(BF) # basically the same
 #' }
 #'
 #' @references
@@ -151,7 +175,7 @@ bayesfactor_models.default <- function(..., denominator = 1) {
   # Warn
   n_samps <- sapply(mods, function(x) {
     alg <- insight::find_algorithm(x)
-    (alg$chains - alg$warmup) * alg$iterations
+    (alg$iterations - alg$warmup) * alg$chains
   })
   if (any(n_samps < 4e4)) {
     warning(

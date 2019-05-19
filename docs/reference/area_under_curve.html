@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
       </span>
     </div>
 
@@ -113,10 +113,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/example1_LM.html">1. Linear Models</a>
+      <a href="../articles/example1.html">1. Initiation to Bayesian models</a>
     </li>
     <li>
-      <a href="../articles/example2_GLM.html">2. General Linear Models</a>
+      <a href="../articles/example2.html">2. Confirmation of Bayesian skills</a>
+    </li>
+    <li>
+      <a href="../articles/example3.html">3. Become a Bayesian Master</a>
     </li>
   </ul>
 </li>
@@ -182,9 +185,9 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>area_under_curve</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"trapezoid"</span>, <span class='st'>"step"</span>, <span class='st'>"spline"</span>))
+    <pre class="usage"><span class='fu'>area_under_curve</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"trapezoid"</span>, <span class='st'>"step"</span>, <span class='st'>"spline"</span>), <span class='no'>...</span>)
 
-<span class='fu'>auc</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"trapezoid"</span>, <span class='st'>"step"</span>, <span class='st'>"spline"</span>))</pre>
+<span class='fu'>auc</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"trapezoid"</span>, <span class='st'>"step"</span>, <span class='st'>"spline"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -200,6 +203,10 @@
     <tr>
       <th>method</th>
       <td><p>Can be "trapezoid" (default), "step" or "spline".</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
     

@@ -13,14 +13,15 @@ describe_posterior(posteriors, estimate = "median", dispersion = TRUE,
 \method{describe_posterior}{stanreg}(posteriors, estimate = "median",
   dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL,
-  diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"),
-  parameters = NULL, ...)
+  diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = c("fixed",
+  "random", "all"), parameters = NULL, ...)
 
 \method{describe_posterior}{brmsfit}(posteriors, estimate = "median",
   dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL,
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), parameters = NULL, ...)
+  diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL, ...)
 }
 \arguments{
 \item{posteriors}{A vector, dataframe or model of posterior draws.}
@@ -45,6 +46,8 @@ to be estimated. Named Credible Interval (CI) for consistency.}
 \item{...}{Additional arguments to be passed to or from methods.}
 
 \item{diagnostic}{Diagnostic metrics to compute. Can be a character or a list with "ESS", "Rhat", "MCSE" or "all".}
+
+\item{priors}{Add the prior used for each parameter.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}

@@ -1,0 +1,44 @@
+---
+title: "Example 3: Become a Bayesian Master"
+output: 
+  github_document:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 10.08
+    fig_height: 6
+tags: [r, bayesian, posterior, test]
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{Example 3: Become a Bayesian Master}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+bibliography: bibliography.bib
+---
+
+This vignette can be referred to by citing the package:
+
+- Makowski, D., Ben-Shachar M. S. \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using bayestestR*. Available from https://github.com/easystats/bayestestR. DOI: [10.5281/zenodo.2556486](https://zenodo.org/record/2556486).
+
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+options(knitr.kable.NA = '')
+knitr::opts_chunk$set(comment=">")
+options(digits=2)
+
+set.seed(333)
+```
+
+```{r echo=FALSE, fig.cap="Yoda Bayes (896 BBY - 4 ABY).", fig.align='center', out.width="80%"}
+knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/YodaBayes.png")
+```
+
+
+
+TO BE CONTINUED.
+

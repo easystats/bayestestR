@@ -1,4 +1,4 @@
-# bayestestR 0.1.5
+# bayestestR 0.1.6
 
 ## Breaking changes
 
