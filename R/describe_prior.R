@@ -41,12 +41,11 @@ describe_prior <- function(model, ...) {
   # Format names
   names(priors) <- tools::toTitleCase(names(priors))
   names(priors)[-1] <- paste0("Prior_", names(priors)[-1])
-  names(priors) <- gsub("Prior_Adjusted_scale", "Prior_Scale_adjusted", names(priors))
 
-  # If the prior scale has been adjusted, it is the actual scale.
-  if ("Prior_Scale_adjusted" %in% names(priors)) {
-    priors$Prior_Scale[!is.na(priors$Prior_Scale_adjusted)] <- priors$Prior_Scale_adjusted[!is.na(priors$Prior_Scale_adjusted)]
-    priors$Prior_Scale_adjusted <- NULL
+  # If the prior scale has been adjusted, it is the actual scale that was used.
+  if ("Prior_Adjusted_scale" %in% names(priors)) {
+    priors$Prior_Scale[!is.na(priors$Prior_Adjusted_scale)] <- priors$Prior_Adjusted_scale[!is.na(priors$Prior_Adjusted_scale)]
+    priors$Prior_Adjusted_scale <- NULL
   }
 
   priors
