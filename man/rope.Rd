@@ -79,7 +79,7 @@ Statistically, the probability of a posterior distribution of being
   ROPE as an index for "null-hypothesis" testing (as understood under the
   Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
   \cr \cr
-  \strong{Non-independent covariates}
+  \strong{Multicollinearity: Non-independent covariates}
   \cr \cr
   When parameters show strong correlations, i.e. when covariates are not
   independent, the joint parameter distributions may shift towards or

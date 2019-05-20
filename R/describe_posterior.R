@@ -161,10 +161,10 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
     test_bf <- data.frame("Parameter" = NA)
   }
 
-  out <- merge(estimates, uncertainty, all = TRUE)
-  out <- merge(out, test_pd, all = TRUE)
-  out <- merge(out, test_rope, all = TRUE)
-  out <- merge(out, test_bf, all = TRUE)
+  out <- merge(estimates, uncertainty, by = "Parameter", all = TRUE)
+  out <- merge(out, test_pd, by = "Parameter", all = TRUE)
+  out <- merge(out, test_rope, by = "Parameter", all = TRUE)
+  out <- merge(out, test_bf, by = "Parameter", all = TRUE)
   out <- out[!is.na(out$Parameter), ]
 
   # Restore columns order
