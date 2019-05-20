@@ -180,7 +180,7 @@ p_direction.BFBayesFactor <- function(x, method = "direct", ...) {
 }
 
 
-#' Numeric Vectors
+#' Convert to Numeric
 #'
 #' @inheritParams base::as.numeric
 #' @method as.numeric p_direction

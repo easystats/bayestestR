@@ -3,7 +3,7 @@
 \name{mcse}
 \alias{mcse}
 \alias{mcse.stanreg}
-\title{Compute Monte-Carlo Standard Error (MCSE)}
+\title{Monte-Carlo Standard Error (MCSE)}
 \usage{
 mcse(model, ...)
 

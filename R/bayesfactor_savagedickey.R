@@ -1,4 +1,4 @@
-#' Savage-Dickey density ratio Bayes factor
+#' Savage-Dickey density ratio Bayes Factor (BF)
 #'
 #' This method computes the ratio between the density of a single value (typically the null)
 #' in two distributions. When the compared distributions are the posterior and the prior distributions,
@@ -102,10 +102,12 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
 }
 
 #' @rdname bayesfactor_savagedickey
-#' @export
+#'
 #' @importFrom insight find_algorithm
 #' @importFrom stats update
 #' @importFrom utils capture.output
+#' @importFrom methods is
+#' @export
 bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
                                              direction = "two-sided", hypothesis = 0,
                                              effects = c("fixed", "random", "all"),

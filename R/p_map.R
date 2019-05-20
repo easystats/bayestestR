@@ -137,9 +137,7 @@ p_map.BFBayesFactor <- function(x, precision = 2^10, ...) {
 }
 
 
-#' Numeric Vectors
-#'
-#' @inheritParams base::as.numeric
+#' @rdname as.numeric.p_direction
 #' @method as.numeric p_map
 #' @export
 as.numeric.p_map <- function(x, ...) {

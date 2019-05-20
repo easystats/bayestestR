@@ -1,4 +1,4 @@
-#' Compute Monte-Carlo Standard Error (MCSE)
+#' Monte-Carlo Standard Error (MCSE)
 #'
 #' This function returns the Monte Carlo Standard Error (MCSE).
 #'
