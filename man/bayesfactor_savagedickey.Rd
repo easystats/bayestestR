@@ -28,7 +28,7 @@ bayesfactor_savagedickey(posterior, prior = NULL,
 \arguments{
 \item{posterior}{Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object (see Details).}
 
-\item{prior}{Vector representing a prior distribution (If \code{posterior} is a vector) / A data frame with column names matching \code{posterior}'s (if \code{posterior} is a data frame) Otherwise ignored).}
+\item{prior}{Vector representing a prior distribution (If \code{posterior} is a vector) / A data frame with column names matching \code{posterior}'s (if \code{posterior} is a data frame). Otherwise ignored.}
 
 \item{direction}{Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
 \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).}
