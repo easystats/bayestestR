@@ -18,7 +18,7 @@ print.bayesfactor_savagedickey <- function(x, digits = 2, log = FALSE, ...) {
 
   insight::print_color("# Bayes Factor (Savage-Dickey density ratio)\n\n", "blue")
 
-  print.data.frame(BFE, digits = digits)
+  print.data.frame(BFE, digits = digits, row.names = FALSE)
   cat("---\n")
   cat(paste0("Evidence Against Test Value: ", round(hypothesis, digits), "\n"))
   if (direction < 0) {
