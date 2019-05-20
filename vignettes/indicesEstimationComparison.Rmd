@@ -168,22 +168,19 @@ This suggests that, in order to delineate between the presence and the absence o
 
 
 
-## Experiment 3: Relationship with Priors Specification
-
 ### Methods
 
 The simulation aimed at modulating the following characteristics:
 
 - **Model type**: linear or logistic.
 - **"True" effect** (original regression coefficient from which data is drawn): Can be 1 or 0 (no effect).
-- **chains**: from 1 to 8
-- **iterations**: from 100 to 4000 by step of 100.
-- **warmup**: Ratio of warmup iterations. from 1/10 to 9/10 by step of 0.1.
+- **draws**: from 10 to 5000 by step of 5 (1000 iterations).
+- **warmup**: Ratio of warmup iterations. from 1/10 to 9/10 by step of 0.1 (9 iterations).
 
 We generated 3 datasets for each combination of these characteristics, resulting in a total of `2 * 2 * 8 * 40 * 9 * 3 = 34560` Bayesian and frequentist models. The code used for generation is avaible [here](https://easystats.github.io/circus/articles/bayesian_indices.html) (please note that it takes usually several days/weeks to complete).
 
 ```{r message=FALSE, warning=FALSE}
-df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study3.csv")
+df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study2.csv")
 ```
 
 ### Results
@@ -232,6 +229,8 @@ df %>%
   xlab("\nNumber of Iterations") +
   facet_wrap(~ outcome_type * true_effect, scales="free") 
 ```
+
+## Experiment 3: Relationship with Priors Specification
 
 
 ## Discussion
