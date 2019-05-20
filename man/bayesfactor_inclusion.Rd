@@ -2,7 +2,7 @@
 % Please edit documentation in R/bayesfactor_inclusion.R
 \name{bayesfactor_inclusion}
 \alias{bayesfactor_inclusion}
-\title{Get inclusion BFs for effects across Bayesian models}
+\title{Inclusion Bayes Factors for effects across Bayesian models}
 \usage{
 bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL,
   ...)
@@ -23,7 +23,7 @@ the effect AND without any higher-order interactions with the effect.}
 a data frame containing the prior and posterior probabilities, and BF for each effect.
 }
 \description{
-Get inclusion BFs for effects across Bayesian models
+Inclusion Bayes Factors for effects across Bayesian models
 }
 \details{
 Inclusion Bayes factors answer the question: Given the observed data,

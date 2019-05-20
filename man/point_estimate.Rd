@@ -5,7 +5,7 @@
 \alias{point_estimate.stanreg}
 \alias{point_estimate.brmsfit}
 \alias{point_estimate.BFBayesFactor}
-\title{Compute point-estimates of posterior distributions}
+\title{Point-estimates of posterior distributions}
 \usage{
 point_estimate(x, estimate = "median", dispersion = FALSE, ...)
 

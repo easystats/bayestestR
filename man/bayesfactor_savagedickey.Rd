@@ -6,7 +6,7 @@
 \alias{bayesfactor_savagedickey.stanreg}
 \alias{bayesfactor_savagedickey.brmsfit}
 \alias{bayesfactor_savagedickey.data.frame}
-\title{Savage-Dickey density ratio Bayes factor}
+\title{Savage-Dickey density ratio Bayes Factor (BF)}
 \usage{
 bayesfactor_savagedickey(posterior, prior = NULL,
   direction = "two-sided", hypothesis = 0, ...)

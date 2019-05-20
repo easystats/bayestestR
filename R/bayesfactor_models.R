@@ -1,4 +1,4 @@
-#' Extract Bayes Factors from fitted models
+#' Bayes Factors (BF) for model comparison
 #'
 #' @description This function computes or extracts Bayes factors from fitted models.
 #'

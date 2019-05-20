@@ -1,4 +1,4 @@
-#' Savage-Dickey density ratio Bayes factor
+#' Savage-Dickey density ratio Bayes Factor (BF)
 #'
 #' This method computes the ratio between the density of a single value (typically the null)
 #' in two distributions. When the compared distributions are the posterior and the prior distributions,
@@ -102,10 +102,12 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
 }
 
 #' @rdname bayesfactor_savagedickey
-#' @export
+#'
 #' @importFrom insight find_algorithm
 #' @importFrom stats update
 #' @importFrom utils capture.output
+#' @importFrom methods is
+#' @export
 bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
                                              direction = "two-sided", hypothesis = 0,
                                              effects = c("fixed", "random", "all"),
@@ -321,8 +323,40 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     samples
   }
 
-  rbind(
-    estimate_samples_density(posterior),
-    estimate_samples_density(prior)
+  estimate_point_density <- function(samples) {
+    nm <- deparse(substitute(samples))
+    samples <- utils::stack(samples)
+    samples <- split(samples, samples$ind)
+
+    point0 <- lapply(samples, function(data) {
+      d <- data.frame(x = hypothesis,
+                      y = density_at(
+                        data$values, hypothesis,
+                        method = density_method,
+                        extend = TRUE, extend_scale = 0.05
+                      )
+      )
+      if (direction > 0) {
+        d$y <- d$y / mean(data$values > hypothesis)
+      } else if (direction < 0) {
+        d$y <- d$y / mean(data$values < hypothesis)
+      }
+      d$ind <- data$ind[1]
+      d
+    })
+    point0 <- do.call("rbind", point0)
+    point0$Distribution <- nm
+    point0
+  }
+
+  list(
+    plot_data = rbind(
+      estimate_samples_density(posterior),
+      estimate_samples_density(prior)
+    ),
+    d_points = rbind(
+      estimate_point_density(posterior),
+      estimate_point_density(prior)
+    )
   )
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/bayesfactor_models.R
 \name{bayesfactor_models}
 \alias{bayesfactor_models}
-\title{Extract Bayes Factors from fitted models}
+\title{Bayes Factors (BF) for model comparison}
 \usage{
 bayesfactor_models(..., denominator = 1)
 }

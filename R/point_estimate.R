@@ -1,4 +1,4 @@
-#' Compute point-estimates of posterior distributions
+#' Point-estimates of posterior distributions
 #'
 #' Compute various point-estimates, such as the mean, the median or the MAP, to describe posterior distributions.
 #'

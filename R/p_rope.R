@@ -184,9 +184,7 @@ p_rope.brmsfit <- function(x, range = "default", precision = .1, effects = c("fi
 
 
 
-#' Numeric Vectors
-#'
-#' @inheritParams base::as.numeric
+#' @rdname as.numeric.p_direction
 #' @method as.numeric p_rope
 #' @export
 as.numeric.p_rope <- function(x, ...) {
