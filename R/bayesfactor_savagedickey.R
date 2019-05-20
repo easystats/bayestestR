@@ -323,8 +323,40 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     samples
   }
 
-  rbind(
-    estimate_samples_density(posterior),
-    estimate_samples_density(prior)
+  estimate_point_density <- function(samples) {
+    nm <- deparse(substitute(samples))
+    samples <- utils::stack(samples)
+    samples <- split(samples, samples$ind)
+
+    point0 <- lapply(samples, function(data) {
+      d <- data.frame(x = hypothesis,
+                      y = density_at(
+                        data$values, hypothesis,
+                        method = density_method,
+                        extend = TRUE, extend_scale = 0.05
+                      )
+      )
+      if (direction > 0) {
+        d$y <- d$y / mean(data$values > hypothesis)
+      } else if (direction < 0) {
+        d$y <- d$y / mean(data$values < hypothesis)
+      }
+      d$ind <- data$ind[1]
+      d
+    })
+    point0 <- do.call("rbind", point0)
+    point0$Distribution <- nm
+    point0
+  }
+
+  list(
+    plot_data = rbind(
+      estimate_samples_density(posterior),
+      estimate_samples_density(prior)
+    ),
+    d_points = rbind(
+      estimate_point_density(posterior),
+      estimate_point_density(prior)
+    )
   )
 }
