@@ -9,8 +9,7 @@
 #' @param direction Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
 #' \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).
 #' @param hypothesis Value to be tested against (usually \code{0} in the context of null hypothesis testing).
-#' @param effects Should results for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.
-#' @param ... Currently not used.
+#' @inheritParams hdi
 #'
 #' @return A data frame containing the Bayes factor representing evidence \emph{against} the (point) null effect model.
 #'
@@ -64,7 +63,7 @@
 #' @author Mattan S. Ben-Shachar
 #'
 #' @export
-bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, ...) {
+bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, verbose = TRUE, ...) {
   UseMethod("bayesfactor_savagedickey")
 }
 
@@ -72,17 +71,20 @@ bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-s
 #' @rdname bayesfactor_savagedickey
 #' @export
 #' @importFrom stats rcauchy sd
-bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, ...) {
+bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, verbose = TRUE, ...) {
   # find direction
   direction <- .get_direction(direction)
 
   if (is.null(prior)) {
     prior <- posterior
-    warning(
-      "Prior not specified! ",
-      "Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)')",
-      " to get meaningful results."
-    )
+    if(verbose){
+      warning(
+        "Prior not specified! ",
+        "Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)')",
+        " to get meaningful results."
+      )
+    }
+
   }
 
   bf_val <- data.frame(BF = .bayesfactor_savagedickey(posterior, prior,
@@ -110,6 +112,7 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
 #' @export
 bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
                                              direction = "two-sided", hypothesis = 0,
+                                             verbose = TRUE,
                                              effects = c("fixed", "random", "all"),
                                              ...) {
   if (!requireNamespace("rstanarm")) {
@@ -121,7 +124,9 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
   # Get Priors
   if (is.null(prior)) {
     alg <- insight::find_algorithm(posterior)
-    message("Computation of Bayes factors: sampling priors, please wait...")
+    if(verbose){
+      message("Computation of Bayes factors: sampling priors, please wait...")
+    }
     capture.output(prior <- suppressWarnings(
       stats::update(
         posterior,
@@ -193,6 +198,7 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
 #' @export
 bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
                                                 direction = "two-sided", hypothesis = 0,
+                                                verbose = TRUE,
                                                 ...) {
   # find direction
   direction <- .get_direction(direction)

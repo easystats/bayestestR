@@ -9,21 +9,21 @@
 \title{Savage-Dickey density ratio Bayes Factor (BF)}
 \usage{
 bayesfactor_savagedickey(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0, ...)
+  direction = "two-sided", hypothesis = 0, verbose = TRUE, ...)
 
 \method{bayesfactor_savagedickey}{numeric}(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0, ...)
+  direction = "two-sided", hypothesis = 0, verbose = TRUE, ...)
 
 \method{bayesfactor_savagedickey}{stanreg}(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0, effects = c("fixed",
-  "random", "all"), ...)
+  direction = "two-sided", hypothesis = 0, verbose = TRUE,
+  effects = c("fixed", "random", "all"), ...)
 
 \method{bayesfactor_savagedickey}{brmsfit}(posterior, prior = NULL,
   direction = "two-sided", hypothesis = 0, effects = c("fixed",
   "random", "all"), ...)
 
 \method{bayesfactor_savagedickey}{data.frame}(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0, ...)
+  direction = "two-sided", hypothesis = 0, verbose = TRUE, ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object (see Details).}
@@ -35,9 +35,12 @@ bayesfactor_savagedickey(posterior, prior = NULL,
 
 \item{hypothesis}{Value to be tested against (usually \code{0} in the context of null hypothesis testing).}
 
+\item{verbose}{Toggle off warnings.}
+
 \item{...}{Currently not used.}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.}
 }
 \value{
 A data frame containing the Bayes factor representing evidence \emph{against} the (point) null effect model.
