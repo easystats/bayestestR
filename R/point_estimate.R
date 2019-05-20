@@ -98,7 +98,7 @@ point_estimate.data.frame <- function(x, estimate = "median", dispersion = FALSE
     estimates <- do.call(rbind, estimates)
   }
 
-  out <- cbind(data.frame("Parameter" = names(x)), estimates)
+  out <- cbind(data.frame("Parameter" = names(x),  stringsAsFactors = FALSE), estimates)
   rownames(out) <- NULL
 
   out
@@ -110,7 +110,7 @@ point_estimate.data.frame <- function(x, estimate = "median", dispersion = FALSE
 #' @keywords internal
 .point_estimate_models <- function(x, effects, component, parameters, estimate = "median", dispersion = FALSE, ...) {
   out <- point_estimate(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), estimate = estimate, dispersion = dispersion, ...)
-  out$Parameter <- .get_parameter_names(x, effects = effects, component = component, parameters = parameters)
+  # out$Parameter <- .get_parameter_names(x, effects = effects, component = component, parameters = parameters)
 
   out
 }

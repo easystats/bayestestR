@@ -129,7 +129,7 @@ p_direction.data.frame <- function(x, method = "direct", ...) {
 #' @keywords internal
 .p_direction_models <- function(x, effects, component, parameters, method = "direct", ...) {
   out <- p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, ...)
-  out$Parameter <- .get_parameter_names(x, effects = effects, component = component, parameters = parameters)
+  # out$Parameter <- .get_parameter_names(x, effects = effects, component = component, parameters = parameters)
 
   out
 }
