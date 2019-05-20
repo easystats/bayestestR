@@ -154,6 +154,7 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 #' @importFrom stats update
 bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
                                              direction = "two-sided", hypothesis = 0,
+                                             verbose = TRUE,
                                              effects = c("fixed", "random", "all"),
                                              ...) {
   if (!requireNamespace("brms")) {

@@ -19,8 +19,8 @@ bayesfactor_savagedickey(posterior, prior = NULL,
   effects = c("fixed", "random", "all"), ...)
 
 \method{bayesfactor_savagedickey}{brmsfit}(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0, effects = c("fixed",
-  "random", "all"), ...)
+  direction = "two-sided", hypothesis = 0, verbose = TRUE,
+  effects = c("fixed", "random", "all"), ...)
 
 \method{bayesfactor_savagedickey}{data.frame}(posterior, prior = NULL,
   direction = "two-sided", hypothesis = 0, verbose = TRUE, ...)
