@@ -37,7 +37,7 @@
 #' # rstanarm models
 #' # ---------------
 #' library(rstanarm)
-#' stan_model <- stan_glm(extra ~ group, data = sleep)
+#' stan_model <- stan_lmer(extra ~ group + (1|ID), data = sleep)
 #' bayesfactor_savagedickey(stan_model)
 #'
 #' # brms models
@@ -72,35 +72,32 @@ bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-s
 #' @export
 #' @importFrom stats rcauchy sd
 bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, verbose = TRUE, ...) {
+  # nm <- deparse(substitute(posterior))
+
   # find direction
   direction <- .get_direction(direction)
 
   if (is.null(prior)) {
     prior <- posterior
-    if(verbose){
+    if (verbose) {
       warning(
         "Prior not specified! ",
         "Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)')",
         " to get meaningful results."
       )
     }
-
   }
+  posterior <- data.frame(X = posterior)
+  prior <- data.frame(X = prior)
+  colnames(posterior) <- colnames(prior) <- "X" # nm
 
-  bf_val <- data.frame(BF = .bayesfactor_savagedickey(posterior, prior,
-    direction = direction,
-    hypothesis = hypothesis
-  ))
-  class(bf_val) <- c("bayesfactor_savagedickey", "see_bayesfactor_savagedickey", class(bf_val))
-  attr(bf_val, "hypothesis") <- hypothesis
-  attr(bf_val, "direction") <- direction
-  attr(bf_val, "plot_data") <- .make_sdBF_plot_data(
-    data.frame(X = posterior),
-    data.frame(X = prior),
-    direction, hypothesis
+  # Get savage-dickey BFs
+  sdbf <- bayesfactor_savagedickey.data.frame(
+    posterior = posterior, prior = prior,
+    direction = direction, hypothesis = hypothesis
   )
-
-  bf_val
+  sdbf$Parameter <- NULL
+  sdbf
 }
 
 #' @rdname bayesfactor_savagedickey
@@ -124,7 +121,7 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
   # Get Priors
   if (is.null(prior)) {
     alg <- insight::find_algorithm(posterior)
-    if(verbose){
+    if (verbose) {
       message("Computation of Bayes factors: sampling priors, please wait...")
     }
     capture.output(prior <- suppressWarnings(
@@ -166,8 +163,10 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
   # Get Priors
   if (is.null(prior)) {
     alg <- insight::find_algorithm(posterior)
-
-    capture.output(prior <- try(suppressWarnings(
+    if (verbose) {
+      message("Computation of Bayes factors: sampling priors, please wait...")
+    }
+    capture.output(prior <- try(suppressMessages(suppressWarnings(
       stats::update(
         posterior,
         sample_prior = "only",
@@ -175,10 +174,10 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
         chains = alg$chains,
         warmup = alg$warmup
       )
-    ), silent = TRUE))
+    )), silent = TRUE))
     if (is(prior,"try-error")) {
       if (grepl('proper priors', prior)) {
-        stop("Cannot compute BF for 'brmsfit' models fit with default priors. See '?bayesfactor_savagedickey'")
+        stop("Cannot compute BF for 'brmsfit' models fit with default priors.\nSee '?bayesfactor_savagedickey'")
       } else {
         stop(prior)
       }
@@ -223,15 +222,15 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     )
   }
 
-  bf_val <- data.frame(Parameter = colnames(posterior), BF = sdbf)
+  bf_val <- data.frame(Parameter = colnames(posterior),
+                       BF = sdbf,
+                       stringsAsFactors = FALSE)
 
-  class(bf_val) <- unique(
-    c(
+  class(bf_val) <- unique(c(
       "bayesfactor_savagedickey",
       "see_bayesfactor_savagedickey",
       class(bf_val)
-    )
-  )
+  ))
 
   attr(bf_val, "hypothesis") <- hypothesis
   attr(bf_val, "direction") <- direction
@@ -305,65 +304,60 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   } else {
     density_method <- "kernel"
   }
+
   estimate_samples_density <- function(samples) {
     nm <- deparse(substitute(samples))
     samples <- utils::stack(samples)
     samples <- split(samples, samples$ind)
 
     samples <- lapply(samples, function(data) {
-      d <- estimate_density(data$values,
+      # 1. estimate density
+      d_points <- estimate_density(
+        data$values,
         method = density_method,
-        extend = TRUE, extend_scale = 0.05
+        extend = TRUE,
+        extend_scale = 0.05,
+        precision = 2 ^ 8
       )
-      if (direction > 0) {
-        d <- d[d$x > hypothesis, , drop = FALSE]
-        d$y <- d$y / mean(data$values > hypothesis)
-      } else if (direction < 0) {
-        d <- d[d$x < hypothesis, , drop = FALSE]
-        d$y <- d$y / mean(data$values < hypothesis)
-      }
-      d$ind <- data$ind[1]
-      d
-    })
-    samples <- do.call("rbind", samples)
-    samples$Distribution <- nm
-    samples
-  }
 
-  estimate_point_density <- function(samples) {
-    nm <- deparse(substitute(samples))
-    samples <- utils::stack(samples)
-    samples <- split(samples, samples$ind)
+      # 2. estimate points
+      d_null <- stats::approx(d_points$x, d_points$y, xout = hypothesis)
+      d_null$y[is.na(d_null$y)] <- 0
 
-    point0 <- lapply(samples, function(data) {
-      d <- data.frame(x = hypothesis,
-                      y = density_at(
-                        data$values, hypothesis,
-                        method = density_method,
-                        extend = TRUE, extend_scale = 0.05
-                      )
-      )
+      # 3. direction?
       if (direction > 0) {
-        d$y <- d$y / mean(data$values > hypothesis)
+        d_points <- d_points[d_points$x > hypothesis, , drop = FALSE]
+        d_points$y <- d_points$y / mean(data$values > hypothesis)
+        d_null$y <- d_null$y / mean(data$values > hypothesis)
       } else if (direction < 0) {
-        d$y <- d$y / mean(data$values < hypothesis)
+        d_points <- d_points[d_points$x < hypothesis, , drop = FALSE]
+        d_points$y <- d_points$y / mean(data$values < hypothesis)
+        d_null$y <- d_null$y / mean(data$values < hypothesis)
       }
-      d$ind <- data$ind[1]
-      d
+
+      d_points$ind <- d_null$ind <- data$ind[1]
+      list(d_points, d_null)
     })
+
+    # 4a. orgenize
+    point0 <- lapply(samples, function(.) as.data.frame(.[[2]]))
     point0 <- do.call("rbind", point0)
-    point0$Distribution <- nm
-    point0
+
+    samplesX <- lapply(samples, function(.) .[[1]])
+    samplesX <- do.call("rbind", samplesX)
+
+    samplesX$Distribution <- point0$Distribution <- nm
+    rownames(samplesX) <- rownames(point0) <- c()
+
+    list(samplesX, point0)
   }
+
+  # 4b. orgenize
+  posterior <- estimate_samples_density(posterior)
+  prior <- estimate_samples_density(prior)
 
   list(
-    plot_data = rbind(
-      estimate_samples_density(posterior),
-      estimate_samples_density(prior)
-    ),
-    d_points = rbind(
-      estimate_point_density(posterior),
-      estimate_point_density(prior)
-    )
+    plot_data = rbind(posterior[[1]],prior[[1]]),
+    d_points = rbind(posterior[[2]],prior[[2]])
   )
 }

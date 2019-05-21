@@ -6,7 +6,7 @@
 #' @param ci_method The type of index used for Credible Interval. Can be \link{hdi} (default) or "quantile" (see \link{ci}).
 #' @param test The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".
 #' @param rope_range \href{https://easystats.github.io/bayestestR/rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
-#' @param rope_full If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.
+#' @param rope_ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.
 #' @param bf_prior Distribution representing a prior for the computation of \href{https://easystats.github.io/bayestestR/bayesfactor_savagedickey}{Bayes factors}. Used if the input is a posterior, otherwise (in the case of models) ignored.
 #'
 #' @inheritParams point_estimate
@@ -52,7 +52,7 @@
 #' @importFrom stats mad median sd setNames
 #'
 #' @export
-describe_posterior <- function(posteriors, estimate = "median", dispersion = TRUE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, ...) {
+describe_posterior <- function(posteriors, estimate = "median", dispersion = TRUE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, ...) {
   UseMethod("describe_posterior")
 }
 
@@ -60,7 +60,7 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
 
 
 #' @keywords internal
-.describe_posterior <- function(x, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, ...) {
+.describe_posterior <- function(x, estimate = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, ...) {
 
 
   # Point-estimates
@@ -109,11 +109,9 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
 
     # ROPE
     if (any(c("rope") %in% test)) {
-      if (rope_full) {
-        test_rope <- rope(x, range = rope_range, ci = 1, ...)
-      } else {
-        test_rope <- rope(x, range = rope_range, ci = ci, ...)
-      }
+
+      test_rope <- rope(x, range = rope_range, ci = rope_ci, ...)
+
       if (!"Parameter" %in% names(test_rope)) {
         test_rope <- cbind(data.frame("Parameter" = "Posterior"), test_rope)
       }
@@ -130,11 +128,8 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
         equi_warnings <- TRUE
       }
 
-      if (rope_full) {
-        test_equi <- equivalence_test(x, range = rope_range, ci = 1, verbose = equi_warnings, ...)
-      } else {
-        test_equi <- equivalence_test(x, range = rope_range, ci = ci, verbose = equi_warnings, ...)
-      }
+      test_equi <- equivalence_test(x, range = rope_range, ci = rope_ci, verbose = equi_warnings, ...)
+
       if (!"Parameter" %in% names(test_equi)) {
         test_equi <- cbind(data.frame("Parameter" = "Posterior"), test_equi)
       }
@@ -189,8 +184,8 @@ describe_posterior <- function(posteriors, estimate = "median", dispersion = TRU
 
 
 #' @export
-describe_posterior.numeric <- function(posteriors, estimate = "median", dispersion = TRUE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, ...) {
-  .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, ...)
+describe_posterior.numeric <- function(posteriors, estimate = "median", dispersion = TRUE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, ...) {
+  .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, ...)
 }
 
 #' @export
@@ -211,8 +206,8 @@ describe_posterior.data.frame <- describe_posterior.numeric
 #' @param priors Add the prior used for each parameter.
 #' @rdname describe_posterior
 #' @export
-describe_posterior.stanreg <- function(posteriors, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
-  out <- .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
+describe_posterior.stanreg <- function(posteriors, estimate = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  out <- .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
 
   if (!is.null(diagnostic)) {
     col_order <- out$Parameter
@@ -233,8 +228,8 @@ describe_posterior.stanreg <- function(posteriors, estimate = "median", dispersi
 #' @inheritParams describe_posterior.stanreg
 #' @rdname describe_posterior
 #' @export
-describe_posterior.brmsfit <- function(posteriors, estimate = "median", dispersion = FALSE, ci = .90, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
-  out <- .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_full = rope_full, bf_prior = bf_prior, effects = effects, component = component, parameters = parameters, ...)
+describe_posterior.brmsfit <- function(posteriors, estimate = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+  out <- .describe_posterior(posteriors, estimate = estimate, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, component = component, parameters = parameters, ...)
 
   if (!is.null(diagnostic)) {
     col_order <- out$Parameter

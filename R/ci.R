@@ -79,7 +79,7 @@ ci <- function(x, ...) {
 
 #' @rdname ci
 #' @export
-ci.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
+ci.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .credible_interval(x = x, ci = i, verbose = verbose)
   }))
@@ -92,7 +92,7 @@ ci.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
 
 #' @rdname ci
 #' @export
-ci.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
+ci.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "ci")
   attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   dat
@@ -101,7 +101,7 @@ ci.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
 
 #' @rdname ci
 #' @export
-ci.stanreg <- function(x, ci = .90, effects = c("fixed", "random", "all"),
+ci.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"),
                        parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   out <- .compute_interval_stanreg(x, ci, effects, parameters, verbose, fun = "ci")
@@ -112,7 +112,7 @@ ci.stanreg <- function(x, ci = .90, effects = c("fixed", "random", "all"),
 
 #' @rdname ci
 #' @export
-ci.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"),
+ci.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"),
                        component = c("conditional", "zi", "zero_inflated", "all"),
                        parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
@@ -125,7 +125,7 @@ ci.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"),
 
 #' @rdname ci
 #' @export
-ci.BFBayesFactor <- function(x, ci = .90, verbose = TRUE, ...) {
+ci.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
   out <- ci(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out

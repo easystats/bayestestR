@@ -8,17 +8,17 @@
 \usage{
 describe_posterior(posteriors, estimate = "median", dispersion = TRUE,
   ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
-  rope_range = "default", rope_full = TRUE, bf_prior = NULL, ...)
+  rope_range = "default", rope_ci = 0.9, bf_prior = NULL, ...)
 
 \method{describe_posterior}{stanreg}(posteriors, estimate = "median",
   dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
-  "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL,
+  "rope"), rope_range = "default", rope_ci = 0.9, bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = c("fixed",
   "random", "all"), parameters = NULL, ...)
 
 \method{describe_posterior}{brmsfit}(posteriors, estimate = "median",
   dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
-  "rope"), rope_range = "default", rope_full = TRUE, bf_prior = NULL,
+  "rope"), rope_range = "default", rope_ci = 0.9, bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL, ...)
@@ -39,7 +39,7 @@ to be estimated. Named Credible Interval (CI) for consistency.}
 
 \item{rope_range}{\href{https://easystats.github.io/bayestestR/rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.}
 
-\item{rope_full}{If TRUE, use the proportion of the entire posterior distribution for the equivalence test. Otherwise, use the proportion of HDI as indicated by the \code{ci} argument.}
+\item{rope_ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.}
 
 \item{bf_prior}{Distribution representing a prior for the computation of \href{https://easystats.github.io/bayestestR/bayesfactor_savagedickey}{Bayes factors}. Used if the input is a posterior, otherwise (in the case of models) ignored.}
 

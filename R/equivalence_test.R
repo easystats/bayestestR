@@ -119,7 +119,7 @@ equivalence_test.default <- function(x, ...) {
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
+equivalence_test.numeric <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
   rope_data <- rope(x, range = range, ci = ci)
   out <- as.data.frame(rope_data)
 
@@ -149,7 +149,7 @@ equivalence_test.numeric <- function(x, range = "default", ci = .95, verbose = T
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.data.frame <- function(x, range = "default", ci = .95, verbose = TRUE, ...) {
+equivalence_test.data.frame <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
   l <- .compact_list(lapply(
     x,
     equivalence_test,
@@ -175,7 +175,7 @@ equivalence_test.data.frame <- function(x, range = "default", ci = .95, verbose 
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.BFBayesFactor <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
+equivalence_test.BFBayesFactor <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
   out <- equivalence_test(insight::get_parameters(x), range = range, ci = ci, verbose = verbose, ...)
   out
 }
@@ -185,7 +185,7 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = .90, verbo
 
 #' @importFrom stats sd
 #' @keywords internal
-.equivalence_test_models <- function(x, range = "default", ci = .95, parameters = NULL, verbose = TRUE) {
+.equivalence_test_models <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE) {
   if (all(range == "default")) {
     range <- rope_range(x)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
@@ -217,7 +217,7 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = .90, verbo
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.stanreg <- function(x, range = "default", ci = .95, parameters = NULL, verbose = TRUE, ...) {
+equivalence_test.stanreg <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
   out <- .equivalence_test_models(x, range, ci, parameters, verbose)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
@@ -226,7 +226,7 @@ equivalence_test.stanreg <- function(x, range = "default", ci = .95, parameters 
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.brmsfit <- function(x, range = "default", ci = .95, parameters = NULL, verbose = TRUE, ...) {
+equivalence_test.brmsfit <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
   out <- .equivalence_test_models(x, range, ci, parameters, verbose)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out

@@ -6,10 +6,13 @@
 #'   of the distribution, the HDI is \emph{not} equal-tailed and therefore always
 #'   includes the mode(s) of posterior distributions.
 #'   \cr \cr
-#'   By default, \code{hdi()} returns the 90\% intervals (\code{ci = 0.9}),
-#'   deemed to be more stable than, for instance, 95\% intervals (\cite{Kruschke, 2015}).
+#'   By default, \code{hdi()} returns the 89\% intervals (\code{ci = 0.89}),
+#'   deemed to be more stable than, for instance, 95\% intervals (\cite{Kruschke, 2014}).
 #'   An effective sample size of at least 10.000 is recommended if 95\% intervals
-#'   should be computed (\cite{Kruschke, 2015, p. 183ff}).
+#'   should be computed (\cite{Kruschke, 2014, p. 183ff}). Moreover, 89 is the
+#'   highest prime number that does not exceed the already unstable 95\% threshold.
+#'   What does it have to do with anything? Nothing, but it reminds us of the total
+#'   arbitrarity of any of these threshold values (McElreath, 2018).
 #'
 #' @param x Vector representing a posterior distribution. Can also be a
 #'   \code{stanreg} or \code{brmsfit} model.
@@ -39,7 +42,7 @@
 #' library(bayestestR)
 #'
 #' posterior <- rnorm(1000)
-#' hdi(posterior, ci = .90)
+#' hdi(posterior, ci = .89)
 #' hdi(posterior, ci = c(.80, .90, .95))
 #'
 #' df <- data.frame(replicate(4, rnorm(100)))
@@ -64,7 +67,10 @@
 #'
 #' @author Credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute} and \href{https://github.com/mikemeredith/HDInterval}{HDInterval}.
 #'
-#' @references Kruschke, J. (2015). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
+#' @references \itemize{
+#'   \item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
+#'   \item McElreath, R. (2018). Statistical rethinking: A Bayesian course with examples in R and Stan. Chapman and Hall/CRC.
+#' }
 #'
 #' @export
 hdi <- function(x, ...) {
@@ -75,7 +81,7 @@ hdi <- function(x, ...) {
 
 #' @rdname hdi
 #' @export
-hdi.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
+hdi.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .hdi(x, ci = i, verbose = verbose)
   }))
@@ -88,7 +94,7 @@ hdi.numeric <- function(x, ci = .90, verbose = TRUE, ...) {
 
 #' @rdname hdi
 #' @export
-hdi.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
+hdi.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "hdi")
   attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   dat
@@ -99,7 +105,7 @@ hdi.data.frame <- function(x, ci = .90, verbose = TRUE, ...) {
 #' @importFrom insight get_parameters
 #' @rdname hdi
 #' @export
-hdi.stanreg <- function(x, ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+hdi.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   out <- .compute_interval_stanreg(x, ci, effects, parameters, verbose, fun = "hdi")
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
@@ -110,7 +116,7 @@ hdi.stanreg <- function(x, ci = .90, effects = c("fixed", "random", "all"), para
 
 #' @rdname hdi
 #' @export
-hdi.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
+hdi.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
   out <- .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose, fun = "hdi")
@@ -121,7 +127,7 @@ hdi.brmsfit <- function(x, ci = .90, effects = c("fixed", "random", "all"), comp
 
 #' @rdname hdi
 #' @export
-hdi.BFBayesFactor <- function(x, ci = .90, verbose = TRUE, ...) {
+hdi.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
   out <- hdi(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
@@ -129,7 +135,7 @@ hdi.BFBayesFactor <- function(x, ci = .90, verbose = TRUE, ...) {
 
 
 #' @keywords internal
-.hdi <- function(x, ci = .90, verbose = TRUE) {
+.hdi <- function(x, ci = .89, verbose = TRUE) {
   check_ci <- .check_ci_argument(x, ci, verbose)
 
   if (!is.null(check_ci)) {

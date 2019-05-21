@@ -207,13 +207,13 @@ range(posteriors$Petal.Length)
 
 But does it make sense to include all these extreme values? Probably not. Thus, we will compute a [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html). Long story short, it's kind of similar to a frequentist **confidence interval**, but it is easier to interpret and easier to compute. *And it makes more sense*.
 
-We will compute this **credible interval** based on the [Highest Density Interval (HDI)](https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis). It will give us the range containing the 90\% more probable effect values. **Note that we will use 90\% CIs** instead of 95\% CIs (as in the frequentist framework), as the 90\% level gives more [stable results](https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-90)**.
+We will compute this **credible interval** based on the [Highest Density Interval (HDI)](https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis). It will give us the range containing the 89\% more probable effect values. **Note that we will use 89\% CIs** instead of 95\% CIs (as in the frequentist framework), as the 89\% level gives more [stable results](https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89) [@kruschke2014doing] and reminds us about the arbitrarity of such conventions [@mcelreath2018statistical].
 
 ```{r message=FALSE, warning=FALSE}
-hdi(posteriors$Petal.Length, ci=0.90)
+hdi(posteriors$Petal.Length, ci=0.89)
 ```
 
-Nice, so we can conclude that **the effect has 90\% chance of falling within the `[0.38, 0.44]` range**. We have just computed the two most important information to describe our effects. 
+Nice, so we can conclude that **the effect has 89\% chance of falling within the `[0.38, 0.44]` range**. We have just computed the two most important information to describe our effects. 
 
 #### Effect significance
 
@@ -267,7 +267,7 @@ median(posteriors$feedsunflower)
 hdi(posteriors$feedsunflower)
 ```
 
-It makes you fat by around `51` (the median). However, the uncertainty is quite high: **there is 90\% chance that the difference between the two feed types is between `6.21` and `88.67`.**
+It makes you fat by around `51` (the median). However, the uncertainty is quite high: **there is 89\% chance that the difference between the two feed types is between `6.21` and `88.67`.**
 
 > **Is this effect different from 0?**
 
@@ -287,14 +287,14 @@ However, one way to assess **significance** could be to define an area around 0,
 -- ***I am Prof Howard. An expert in chicks... I mean chickens. Just calling to let you know that based on my expert knowledge, an effect between -20 and 20 is negligible. Bye.***
 
 
-Well, that's convenient. Now we know that we can define the ROPE as the `[-20, 20]` range. All effects within this range are considered as *null* (negligible). We can now compute the **proportion of the 90\% most probable values (the 90\% CI) which are not null**, *i.e.*, which are outside this range. 
+Well, that's convenient. Now we know that we can define the ROPE as the `[-20, 20]` range. All effects within this range are considered as *null* (negligible). We can now compute the **proportion of the 89\% most probable values (the 89\% CI) which are not null**, *i.e.*, which are outside this range. 
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
-rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.90)
+rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.89)
 ```
 
 
-**8.33\% of the 90\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
+**8.33\% of the 89\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
 
 Although, to be honest, I have **some doubts about this Prof Howard**. I don't really trust **his definition of ROPE**. Is there a more **objective** way of defining it?
 
@@ -316,10 +316,10 @@ rope_range
 Let's recompute the **percentage in ROPE**:
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
-rope(posteriors$feedsunflower, range = rope_range, ci=0.90)
+rope(posteriors$feedsunflower, range = rope_range, ci=0.89)
 ```
 
-With this reasonable definition of ROPE, we observe that that the 90\% of the posterior distribution of the effect does **not** overlap with the ROPE. Thus, we can conclude that **the effect is significant**.
+With this reasonable definition of ROPE, we observe that that the 89\% of the posterior distribution of the effect does **not** overlap with the ROPE. Thus, we can conclude that **the effect is significant**.
 
 
 ### Probability of Direction (pd)
