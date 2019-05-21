@@ -59,7 +59,7 @@ Where the middle term is the Bayes factor:
 $$
 BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 $$
-Bayes factor are typically computed as the ratio of marginal likelihoods of two competing hypotheses / models, but as we can see from the equation above, they can also be computed by dividing the posterior-odds by the prior-odds. Importantly, **Bayes factors cover a wide range of indices and applications**, and come in different flavors.
+Bayes factors indicate which of the compared models provide a better fit (or better describes) the observed data. These are usually computed as the ratio of marginal likelihoods of two competing hypotheses / models, but as we can see from the equation above, they can also be computed by dividing the posterior-odds by the prior-odds. Importantly, **Bayes factors cover a wide range of indices and applications**, and come in different flavors.
 
 ## Savage-Dickey density ratio Bayes factor
 
