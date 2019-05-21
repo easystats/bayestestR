@@ -305,65 +305,60 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   } else {
     density_method <- "kernel"
   }
+
   estimate_samples_density <- function(samples) {
     nm <- deparse(substitute(samples))
     samples <- utils::stack(samples)
     samples <- split(samples, samples$ind)
 
     samples <- lapply(samples, function(data) {
-      d <- estimate_density(data$values,
+      # 1. estimate density
+      d_points <- estimate_density(
+        data$values,
         method = density_method,
-        extend = TRUE, extend_scale = 0.05
+        extend = TRUE,
+        extend_scale = 0.05,
+        precision = 2 ^ 8
       )
-      if (direction > 0) {
-        d <- d[d$x > hypothesis, , drop = FALSE]
-        d$y <- d$y / mean(data$values > hypothesis)
-      } else if (direction < 0) {
-        d <- d[d$x < hypothesis, , drop = FALSE]
-        d$y <- d$y / mean(data$values < hypothesis)
-      }
-      d$ind <- data$ind[1]
-      d
-    })
-    samples <- do.call("rbind", samples)
-    samples$Distribution <- nm
-    samples
-  }
 
-  estimate_point_density <- function(samples) {
-    nm <- deparse(substitute(samples))
-    samples <- utils::stack(samples)
-    samples <- split(samples, samples$ind)
+      # 2. estimate points
+      d_null <- stats::approx(d_points$x, d_points$y, xout = hypothesis)
+      d_null$y[is.na(d_null$y)] <- 0
 
-    point0 <- lapply(samples, function(data) {
-      d <- data.frame(x = hypothesis,
-                      y = density_at(
-                        data$values, hypothesis,
-                        method = density_method,
-                        extend = TRUE, extend_scale = 0.05
-                      )
-      )
+      # 3. direction?
       if (direction > 0) {
-        d$y <- d$y / mean(data$values > hypothesis)
+        d_points <- d_points[d_points$x > hypothesis, , drop = FALSE]
+        d_points$y <- d_points$y / mean(data$values > hypothesis)
+        d_null$y <- d_null$y / mean(data$values > hypothesis)
       } else if (direction < 0) {
-        d$y <- d$y / mean(data$values < hypothesis)
+        d_points <- d_points[d_points$x < hypothesis, , drop = FALSE]
+        d_points$y <- d_points$y / mean(data$values < hypothesis)
+        d_null$y <- d_null$y / mean(data$values < hypothesis)
       }
-      d$ind <- data$ind[1]
-      d
+
+      d_points$ind <- d_null$ind <- data$ind[1]
+      list(d_points, d_null)
     })
+
+    # 4a. orgenize
+    point0 <- lapply(samples, function(.) as.data.frame(.[[2]]))
     point0 <- do.call("rbind", point0)
-    point0$Distribution <- nm
-    point0
+
+    samplesX <- lapply(samples, function(.) .[[1]])
+    samplesX <- do.call("rbind", samplesX)
+
+    samplesX$Distribution <- point0$Distribution <- nm
+    rownames(samplesX) <- rownames(point0) <- c()
+
+    list(samplesX, point0)
   }
+
+  # 4b. orgenize
+  posterior <- estimate_samples_density(posterior)
+  prior <- estimate_samples_density(prior)
 
   list(
-    plot_data = rbind(
-      estimate_samples_density(posterior),
-      estimate_samples_density(prior)
-    ),
-    d_points = rbind(
-      estimate_point_density(posterior),
-      estimate_point_density(prior)
-    )
+    plot_data = rbind(posterior[[1]],prior[[1]]),
+    d_points = rbind(posterior[[2]],prior[[2]])
   )
 }
