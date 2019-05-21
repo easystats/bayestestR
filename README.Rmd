@@ -73,7 +73,7 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 #### Articles
 
-- [Credible Intervals](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+- [Credible Intervals (CIs)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
 - [Probability of Direction (pd)](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
 - [Region of Practical Equivalence (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
 - [Bayes Factors (BF)](https://easystats.github.io/bayestestR/articles/bayes_factors.html)

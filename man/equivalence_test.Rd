@@ -36,7 +36,7 @@ equivalence_test(x, ...)
 
 \item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.}
 
-\item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.}
+\item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.}
 
 \item{verbose}{Toggle off warnings.}
 
