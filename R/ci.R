@@ -41,7 +41,7 @@
 #'
 #' \strong{Frequentist models}
 #' \cr \cr
-#'  This function is implemented in the \href{https://github.com/easystats/parameters}{parameters} pacakge and attemps to retrieve, or compute, the Confidence Interval (default \code{ci} level: \code{.95}).
+#'  This function is implemented in the \href{https://github.com/easystats/parameters}{parameters} package and attemps to retrieve, or compute, the Confidence Interval (default \code{ci} level: \code{.95}).
 #'
 #' @examples
 #' library(bayestestR)
