@@ -27,9 +27,9 @@ Inclusion Bayes Factors for effects across Bayesian models
 }
 \details{
 Inclusion Bayes factors answer the question: Given the observed data,
-how much more likely have models with a particular effect become, compared to
-models without that particular effect? In other words, on average - are
-models with effect X better than models without effect X? See also
+how much more likely are models with a particular effect, compared to models
+without that particular effect? In other words, on average - do models with
+effect X better fit (or describe) the data compared to models without effect X? See also
 \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{this vignette}.
 }
 \note{

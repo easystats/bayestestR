@@ -47,7 +47,7 @@ A data frame containing the Bayes factor representing evidence \emph{against} th
 }
 \description{
 This method computes the ratio between the density of a single value (typically the null)
-in two distributions. When the compared distributions are the posterior and the prior distributions,
+of two distributions. When the compared distributions are the posterior and the prior distributions,
 this results in an approximation of a Bayes factor against the (point) null model.
 }
 \details{

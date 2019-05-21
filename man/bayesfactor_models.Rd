@@ -32,10 +32,10 @@ In order to correctly and precisely estimate Bayes Factors, a rule of thumb are
 the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful \strong{P}osterior
 (i.e. probably at leat 40,000 samples instead of the default of 4,000).
 \cr \cr
-A Bayes factor greater than 1 can be interpereted as evidence against the null,
-at which one convention is that a Bayes factor greater than 3 can be considered
-as "substantial" evidence against the null (and vice versa, a Bayes factor
-smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
+A Bayes factor greater than 1 can be interpereted as evidence against the compared-to
+model (the denominator). One convention is that a Bayes factor greater than 3 can be considered
+as "substantial" evidence against the denominator model (and vice versa, a Bayes factor
+smaller than 1/3 indicates substantial evidence in favor of the denominator model)
 (\cite{Wetzels et al. 2011}).
 }
 \examples{
