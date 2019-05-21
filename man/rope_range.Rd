@@ -7,12 +7,15 @@
 rope_range(x)
 }
 \arguments{
-\item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{x}{A \code{stanreg}, \code{brmsfit} or \code{BFBayesFactor} object.}
 }
 \description{
 This function attempts at automatically finding suitable "default"
-  values for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests
-  that such null value could be set, by default, to a range from \code{-0.1} to
+  values for the Region Of Practical Equivalence (ROPE).
+}
+\details{
+\cite{Kruschke (2018)} suggests that the region of practical
+  equivalence could be set, by default, to a range from \code{-0.1} to
   \code{0.1} of a standardized parameter (negligible effect size
   according to Cohen, 1988), which can be generalised for linear models
   to \ifelse{html}{\out{-0.1 * SD<sub>y</sub>, 0.1 * SD<sub>y</sub>}}{\eqn{[-0.1*SD_{y}, 0.1*SD_{y}]}}.
