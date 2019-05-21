@@ -84,5 +84,5 @@ estimate_density(model)
 
 }
 \references{
-Deng, H., \& Wickham, H. (2011). Density estimation in R. Electronic publication.
+Deng, H., & Wickham, H. (2011). Density estimation in R. Electronic publication.
 }
