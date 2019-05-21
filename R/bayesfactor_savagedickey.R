@@ -37,7 +37,7 @@
 #' # rstanarm models
 #' # ---------------
 #' library(rstanarm)
-#' stan_model <- stan_glm(extra ~ group, data = sleep)
+#' stan_model <- stan_lmer(extra ~ group + (1|ID), data = sleep)
 #' bayesfactor_savagedickey(stan_model)
 #'
 #' # brms models
@@ -72,35 +72,30 @@ bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-s
 #' @export
 #' @importFrom stats rcauchy sd
 bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, verbose = TRUE, ...) {
+  # nm <- deparse(substitute(posterior))
+
   # find direction
   direction <- .get_direction(direction)
 
   if (is.null(prior)) {
     prior <- posterior
-    if(verbose){
+    if (verbose) {
       warning(
         "Prior not specified! ",
         "Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)')",
         " to get meaningful results."
       )
     }
-
   }
+  posterior <- data.frame(X = posterior)
+  prior <- data.frame(X = prior)
+  colnames(posterior) <- colnames(prior) <- "X" # nm
 
-  bf_val <- data.frame(BF = .bayesfactor_savagedickey(posterior, prior,
-    direction = direction,
-    hypothesis = hypothesis
-  ))
-  class(bf_val) <- c("bayesfactor_savagedickey", "see_bayesfactor_savagedickey", class(bf_val))
-  attr(bf_val, "hypothesis") <- hypothesis
-  attr(bf_val, "direction") <- direction
-  attr(bf_val, "plot_data") <- .make_sdBF_plot_data(
-    data.frame(X = posterior),
-    data.frame(X = prior),
-    direction, hypothesis
+  # Get savage-dickey BFs
+  bayesfactor_savagedickey.data.frame(
+    posterior = posterior, prior = prior,
+    direction = direction, hypothesis = hypothesis
   )
-
-  bf_val
 }
 
 #' @rdname bayesfactor_savagedickey
@@ -124,7 +119,7 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
   # Get Priors
   if (is.null(prior)) {
     alg <- insight::find_algorithm(posterior)
-    if(verbose){
+    if (verbose) {
       message("Computation of Bayes factors: sampling priors, please wait...")
     }
     capture.output(prior <- suppressWarnings(
@@ -166,8 +161,10 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
   # Get Priors
   if (is.null(prior)) {
     alg <- insight::find_algorithm(posterior)
-
-    capture.output(prior <- try(suppressWarnings(
+    if (verbose) {
+      message("Computation of Bayes factors: sampling priors, please wait...")
+    }
+    capture.output(prior <- try(suppressMessages(suppressWarnings(
       stats::update(
         posterior,
         sample_prior = "only",
@@ -175,10 +172,10 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
         chains = alg$chains,
         warmup = alg$warmup
       )
-    ), silent = TRUE))
+    )), silent = TRUE))
     if (is(prior,"try-error")) {
       if (grepl('proper priors', prior)) {
-        stop("Cannot compute BF for 'brmsfit' models fit with default priors. See '?bayesfactor_savagedickey'")
+        stop("Cannot compute BF for 'brmsfit' models fit with default priors.\nSee '?bayesfactor_savagedickey'")
       } else {
         stop(prior)
       }
@@ -223,15 +220,15 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     )
   }
 
-  bf_val <- data.frame(Parameter = colnames(posterior), BF = sdbf)
+  bf_val <- data.frame(Parameter = colnames(posterior),
+                       BF = sdbf,
+                       stringsAsFactors = FALSE)
 
-  class(bf_val) <- unique(
-    c(
+  class(bf_val) <- unique(c(
       "bayesfactor_savagedickey",
       "see_bayesfactor_savagedickey",
       class(bf_val)
-    )
-  )
+  ))
 
   attr(bf_val, "hypothesis") <- hypothesis
   attr(bf_val, "direction") <- direction
