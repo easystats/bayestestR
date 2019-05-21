@@ -46,9 +46,15 @@
 #' @references Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
 #'
 #' @importFrom insight get_response model_info is_multivariate
-#' @importFrom stats qlogis sd
+#' @importFrom stats sd
 #' @export
-rope_range <- function(x) {
+rope_range <- function(x, ...) {
+  UseMethod("rope_range")
+}
+
+
+#' @export
+rope_range.brmsfit <- function(x, ...) {
   response <- insight::get_response(x)
   information <- insight::model_info(x)
 
@@ -58,6 +64,15 @@ rope_range <- function(x) {
     .rope_range(x, information, response)
   }
 }
+
+
+#' @export
+rope_range.stanreg <- rope_range.brmsfit
+
+#' @export
+rope_range.BFBayesFactor <- rope_range.brmsfit
+
+
 
 .rope_range <- function(x, information, response) {
 

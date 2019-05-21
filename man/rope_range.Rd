@@ -4,7 +4,7 @@
 \alias{rope_range}
 \title{Find Default Equivalence (ROPE) Region Bounds}
 \usage{
-rope_range(x)
+rope_range(x, ...)
 }
 \arguments{
 \item{x}{A \code{stanreg}, \code{brmsfit} or \code{BFBayesFactor} object.}
