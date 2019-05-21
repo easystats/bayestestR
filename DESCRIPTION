@@ -32,7 +32,7 @@ Depends:
   methods,
   utils
 Imports:
-	insight
+	insight (>= 0.3.0)
 Suggests:
 	BayesFactor,
 	bridgesampling,
