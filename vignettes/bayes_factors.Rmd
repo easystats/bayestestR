@@ -34,7 +34,7 @@ options(digits=2)
 set.seed(5)
 ```
 
-The adoption of the Bayesian framework for applied statistics, especially in social or psychological sciences, seems to be developing in two distinct directions. One of the key topics marking their separation is their opinion about the **Bayes factor**. In short, some authors (*e.g.*, the "Amsterdam school", led by [Wagenmakers](https://www.bayesianspectacles.org/)) advocate its use and emphasise its qualities as a statistical index, while others point to its limits and prefer, instead, the precise description of posterior distributions (using [CIs](https://easystats.github.io/bayestestR/reference/hdi.html), [ROPEs](https://easystats.github.io/bayestestR/reference/rope.html), etc.). 
+The adoption of the Bayesian framework for applied statistics, especially in social or psychological sciences, seems to be developing in two distinct directions. One of the key topics marking their separation is their opinion about the **Bayes factor**. In short, some authors (*e.g.*, the "Amsterdam school", led by [Wagenmakers](https://www.bayesianspectacles.org/)) advocate its use and emphasize its qualities as a statistical index, while others point to its limits and prefer, instead, the precise description of posterior distributions (using [CIs](https://easystats.github.io/bayestestR/reference/hdi.html), [ROPEs](https://easystats.github.io/bayestestR/reference/rope.html), etc.). 
 
 `bayestestR` does not take a side in this debate, rather offering tools to help you in whatever analysis you want to achieve. Instead, it strongly supports the notion of an *informed choice:* **discover the methods, try them, understand them, learn about them, and decide for yourself**.
 
@@ -59,15 +59,15 @@ Where the middle term is the Bayes factor:
 $$
 BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 $$
-Bayes factor are typically computed as the ratio of marginal likelihoods of two competing hypotheses / models, but as we can see from the equation above, they can also be computed by dividing the posterior-odds by the prior-odds. Importantly, **Bayes factors cover a wide range of indices and applications**, and come in different flavours.
+Bayes factors indicate which of the compared models provide a better fit (or better describes) the observed data. These are usually computed as the ratio of marginal likelihoods of two competing hypotheses / models, but as we can see from the equation above, they can also be computed by dividing the posterior-odds by the prior-odds. Importantly, **Bayes factors cover a wide range of indices and applications**, and come in different flavors.
 
 ## Savage-Dickey density ratio Bayes factor
 
 The ***Savage-Dickey density ratio*** can be used to answer the question:
 
-> **Given the data, is the null more, or less likely?**
+> **Given the observed data, is the null more, or less probable?**
 
-This is done by comparing the density (likelihood) of the null value under the prior between the prior and posterior distributions, and is an approximation of a Bayes factor against the (point) null model:
+This is done by comparing the density of the null value between the prior and posterior distributions, and is an approximation of a Bayes factor against the (point) null model:
 
 > "[...] the Bayes factor for H0 versus H1 could be obtained by analytically integrating out the model parameter theta. However, the Bayes factor may likewise be obtained by only considering H1, and dividing the height of the posterior for theta by the height of the prior for theta, at the point of interest." [@wagenmakers2010bayesian]
 
@@ -145,7 +145,7 @@ bayesfactor_savagedickey(data.frame(group2 = posterior),
 
 ```
 
-Looking at the distributions, we can see that the posterior is centred at `r round(median(posterior), 2)`. But this does not mean that an effect of 0 is necessarily less likely. To test that, we will use `bayesfactor_savagedickey`!
+Looking at the distributions, we can see that the posterior is centred at `r round(median(posterior), 2)`. But this does not mean that an effect of 0 is necessarily less probable. To test that, we will use `bayesfactor_savagedickey`!
 
 ### Compute the Savage-Dickey's BF
 
@@ -154,7 +154,7 @@ test_group2 <- bayesfactor_savagedickey(posterior = posterior, prior = prior)
 test_group2
 ```
 
-This BF indicates the **likelihood of an effect of 0 (the point-null effect model) is `r round(test_group2$BF[1],2)` less likely given the data**. In other words, a null effect model has become 1/`r round(test_group2$BF[1],2)` = `r 1/round(test_group2$BF[1],2)` time more likely given the observed data. Thus, although the centre of distribution has shifted, it is still quite dense around the null.
+This BF indicates **likelihood of an effect of 0 (the point-null effect model) is `r round(test_group2$BF[1],2)` less probable given the data**. In other words, a null effect model is 1/`r round(test_group2$BF[1],2)` = `r 1/round(test_group2$BF[1],2)` time more likely than a model with an effect! Thus, although the centre of distribution has shifted, it is still quite dense around the null.
 
 Note that **interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). 
 
@@ -207,7 +207,7 @@ bayesfactor_savagedickey(model)
 
 Besides comparing distributions, Bayes factors can also be used to compare whole models. In these cases they can answer the question:
 
-> **Is the observed data more likely under Model 1, or Model 2?**
+> **Given the observed data, which model is more likely?**
 
 This is usually done by computing the marginal likelihoods of two models. In such a case, the Bayes factor is a measure of relative evidence between the two compared models. Note that the compared models *do not* need to be nested models (see `brms2` and `brms3` below).
 
@@ -281,7 +281,7 @@ bayesfactor_models(m1, m2, m3, m4, denominator = m0)
 
 Inclusion Bayes factors answer the question:
 
-> **Given the observed data, how much more likely have models with a particular effect become, compared to models without that particular effect?**
+> **Given the observed data, how much more likely are models with a particular effect, compared to models without that particular effect?**
 
 In other words, on average - are models with effect $X$ better than models without effect $X$?
 
@@ -291,7 +291,7 @@ Lets use the `brms` example from above:
 bayesfactor_inclusion(comparison)
 ```
 
-As we can see, across all 5 models, the addition of each effect term makes the model on average, more likely.
+If we examine the interaction term's inclusion Bayes factor, we can see that across all 5 models, a model with the interaction term (`Species:Petal.Length`) is 5 times more likely than a model without the interaction term.
 
 We can also compare only matched models - i.e., a model without effect $A$ will only be compared to models *with* effect $A$, but not with models with higher-level interaction. (See explanation for why you might want to do this [here](https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp).)
 

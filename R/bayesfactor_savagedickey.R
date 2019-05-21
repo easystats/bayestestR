@@ -1,7 +1,7 @@
 #' Savage-Dickey density ratio Bayes Factor (BF)
 #'
 #' This method computes the ratio between the density of a single value (typically the null)
-#' in two distributions. When the compared distributions are the posterior and the prior distributions,
+#' of two distributions. When the compared distributions are the posterior and the prior distributions,
 #' this results in an approximation of a Bayes factor against the (point) null model.
 #'
 #' @param posterior Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object (see Details).
