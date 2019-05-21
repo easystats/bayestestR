@@ -23,7 +23,7 @@
 #'   \link{rope_range} function.
 #'   \cr \cr
 #'   Kruschke (2010, 2011, 2014) suggests using the proportion of  the 95\%
-#'   (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the
+#'   (or 89\%, considered more stable) \link[=hdi]{HDI} that falls within the
 #'   ROPE as an index for "null-hypothesis" testing (as understood under the
 #'   Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
 #'   \cr \cr
@@ -103,7 +103,7 @@ rope.default <- function(x, ...) {
 
 #' @rdname rope
 #' @export
-rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
+rope.numeric <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
   if (all(range == "default")) {
     range <- c(-0.1, 0.1)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
@@ -140,7 +140,7 @@ rope.numeric <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
 
 #' @rdname rope
 #' @export
-rope.data.frame <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
+rope.data.frame <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
   out <- .prepare_rope_df(x, range, ci, verbose)
   HDI_area_attributes <- .compact_list(out$HDI_area)
   dat <- data.frame(
@@ -161,14 +161,14 @@ rope.data.frame <- function(x, range = "default", ci = .90, verbose = TRUE, ...)
 
 #' @rdname rope
 #' @export
-rope.BFBayesFactor <- function(x, range = "default", ci = .90, verbose = TRUE, ...) {
+rope.BFBayesFactor <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
   out <- rope(insight::get_parameters(x), range = range, ci = ci, verbose = verbose, ...)
   out
 }
 
 
 
-.rope <- function(x, range = c(-0.1, 0.1), ci = .90, verbose = TRUE) {
+.rope <- function(x, range = c(-0.1, 0.1), ci = .89, verbose = TRUE) {
   HDI_area <- .hdi_area <- hdi(x, ci, verbose)
 
   if (anyNA(HDI_area)) {
@@ -196,7 +196,7 @@ rope.BFBayesFactor <- function(x, range = "default", ci = .90, verbose = TRUE, .
 
 #' @rdname rope
 #' @export
-rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+rope.stanreg <- function(x, range = "default", ci = .89, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
 
   if (all(range == "default")) {
@@ -264,7 +264,7 @@ rope.stanreg <- function(x, range = "default", ci = .90, effects = c("fixed", "r
 
 #' @rdname rope
 #' @export
-rope.brmsfit <- function(x, range = "default", ci = .90, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
+rope.brmsfit <- function(x, range = "default", ci = .89, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
