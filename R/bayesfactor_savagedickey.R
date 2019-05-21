@@ -92,10 +92,12 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
   colnames(posterior) <- colnames(prior) <- "X" # nm
 
   # Get savage-dickey BFs
-  bayesfactor_savagedickey.data.frame(
+  sdbf <- bayesfactor_savagedickey.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, hypothesis = hypothesis
   )
+  sdbf$Parameter <- NULL
+  sdbf
 }
 
 #' @rdname bayesfactor_savagedickey
