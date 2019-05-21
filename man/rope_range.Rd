@@ -8,6 +8,8 @@ rope_range(x, ...)
 }
 \arguments{
 \item{x}{A \code{stanreg}, \code{brmsfit} or \code{BFBayesFactor} object.}
+
+\item{...}{Currently not used.}
 }
 \description{
 This function attempts at automatically finding suitable "default"

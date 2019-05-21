@@ -27,6 +27,7 @@
 #'   For all other models, \code{-0.1, 0.1} is used to determine the ROPE limits.
 #'
 #' @param x A \code{stanreg}, \code{brmsfit} or \code{BFBayesFactor} object.
+#' @inheritParams rope
 #'
 #' @examples
 #' \dontrun{
