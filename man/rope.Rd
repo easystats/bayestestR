@@ -14,20 +14,20 @@ rope(x, ...)
 
 \method{rope}{default}(x, ...)
 
-\method{rope}{numeric}(x, range = "default", ci = 0.9,
+\method{rope}{numeric}(x, range = "default", ci = 0.89,
   verbose = TRUE, ...)
 
-\method{rope}{data.frame}(x, range = "default", ci = 0.9,
+\method{rope}{data.frame}(x, range = "default", ci = 0.89,
   verbose = TRUE, ...)
 
-\method{rope}{BFBayesFactor}(x, range = "default", ci = 0.9,
+\method{rope}{BFBayesFactor}(x, range = "default", ci = 0.89,
   verbose = TRUE, ...)
 
-\method{rope}{stanreg}(x, range = "default", ci = 0.9,
+\method{rope}{stanreg}(x, range = "default", ci = 0.89,
   effects = c("fixed", "random", "all"), parameters = NULL,
   verbose = TRUE, ...)
 
-\method{rope}{brmsfit}(x, range = "default", ci = 0.9,
+\method{rope}{brmsfit}(x, range = "default", ci = 0.89,
   effects = c("fixed", "random", "all"), component = c("conditional",
   "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE,
   ...)
@@ -75,7 +75,7 @@ Statistically, the probability of a posterior distribution of being
   \link{rope_range} function.
   \cr \cr
   Kruschke (2010, 2011, 2014) suggests using the proportion of  the 95\%
-  (or 90\%, considered more stable) \link[=hdi]{HDI} that falls within the
+  (or 89\%, considered more stable) \link[=hdi]{HDI} that falls within the
   ROPE as an index for "null-hypothesis" testing (as understood under the
   Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
   \cr \cr

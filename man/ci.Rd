@@ -11,18 +11,18 @@
 \usage{
 ci(x, ...)
 
-\method{ci}{numeric}(x, ci = 0.9, verbose = TRUE, ...)
+\method{ci}{numeric}(x, ci = 0.89, verbose = TRUE, ...)
 
-\method{ci}{data.frame}(x, ci = 0.9, verbose = TRUE, ...)
+\method{ci}{data.frame}(x, ci = 0.89, verbose = TRUE, ...)
 
-\method{ci}{stanreg}(x, ci = 0.9, effects = c("fixed", "random",
+\method{ci}{stanreg}(x, ci = 0.89, effects = c("fixed", "random",
   "all"), parameters = NULL, verbose = TRUE, ...)
 
-\method{ci}{brmsfit}(x, ci = 0.9, effects = c("fixed", "random",
+\method{ci}{brmsfit}(x, ci = 0.89, effects = c("fixed", "random",
   "all"), component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL, verbose = TRUE, ...)
 
-\method{ci}{BFBayesFactor}(x, ci = 0.9, verbose = TRUE, ...)
+\method{ci}{BFBayesFactor}(x, ci = 0.89, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{A \code{stanreg} or \code{brmsfit} model , or a vector representing a posterior distribution.}

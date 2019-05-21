@@ -14,19 +14,19 @@ equivalence_test(x, ...)
 
 \method{equivalence_test}{default}(x, ...)
 
-\method{equivalence_test}{numeric}(x, range = "default", ci = 0.95,
+\method{equivalence_test}{numeric}(x, range = "default", ci = 0.89,
   verbose = TRUE, ...)
 
-\method{equivalence_test}{data.frame}(x, range = "default", ci = 0.95,
+\method{equivalence_test}{data.frame}(x, range = "default", ci = 0.89,
   verbose = TRUE, ...)
 
 \method{equivalence_test}{BFBayesFactor}(x, range = "default",
-  ci = 0.9, verbose = TRUE, ...)
+  ci = 0.89, verbose = TRUE, ...)
 
-\method{equivalence_test}{stanreg}(x, range = "default", ci = 0.95,
+\method{equivalence_test}{stanreg}(x, range = "default", ci = 0.89,
   parameters = NULL, verbose = TRUE, ...)
 
-\method{equivalence_test}{brmsfit}(x, range = "default", ci = 0.95,
+\method{equivalence_test}{brmsfit}(x, range = "default", ci = 0.89,
   parameters = NULL, verbose = TRUE, ...)
 }
 \arguments{
