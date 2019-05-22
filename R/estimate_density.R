@@ -75,6 +75,9 @@ estimate_probability <- estimate_density
     x_range[2] <- x_range[2] + extension_scale
   }
 
+  # Replace inf values if needed
+  x_range[is.infinite(x_range)] <- 5.565423e+156
+
   # Kernel
   if (method == "kernel") {
     return(as.data.frame(density(x, n = precision, bw = bw, from = x_range[1], to = x_range[2], ...)))
