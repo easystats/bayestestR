@@ -48,7 +48,7 @@
 #' estimate_density(model)
 #' }
 #'
-#' @references Deng, H., \& Wickham, H. (2011). Density estimation in R. Electronic publication.
+#' @references Deng, H., & Wickham, H. (2011). Density estimation in R. Electronic publication.
 #'
 #' @importFrom stats density
 #' @importFrom utils install.packages

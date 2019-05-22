@@ -1,8 +1,10 @@
 #' @title Find Default Equivalence (ROPE) Region Bounds
 #'
 #' @description This function attempts at automatically finding suitable "default"
-#'   values for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests
-#'   that such null value could be set, by default, to a range from \code{-0.1} to
+#'   values for the Region Of Practical Equivalence (ROPE).
+#'
+#' @details \cite{Kruschke (2018)} suggests that the region of practical
+#'   equivalence could be set, by default, to a range from \code{-0.1} to
 #'   \code{0.1} of a standardized parameter (negligible effect size
 #'   according to Cohen, 1988), which can be generalised for linear models
 #'   to \ifelse{html}{\out{-0.1 * SD<sub>y</sub>, 0.1 * SD<sub>y</sub>}}{\eqn{[-0.1*SD_{y}, 0.1*SD_{y}]}}.
@@ -24,6 +26,7 @@
 #'   \cr \cr
 #'   For all other models, \code{-0.1, 0.1} is used to determine the ROPE limits.
 #'
+#' @param x A \code{stanreg}, \code{brmsfit} or \code{BFBayesFactor} object.
 #' @inheritParams rope
 #'
 #' @examples
@@ -44,9 +47,15 @@
 #' @references Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
 #'
 #' @importFrom insight get_response model_info is_multivariate
-#' @importFrom stats qlogis sd
+#' @importFrom stats sd
 #' @export
-rope_range <- function(x) {
+rope_range <- function(x, ...) {
+  UseMethod("rope_range")
+}
+
+
+#' @export
+rope_range.brmsfit <- function(x, ...) {
   response <- insight::get_response(x)
   information <- insight::model_info(x)
 
@@ -57,6 +66,15 @@ rope_range <- function(x) {
   }
 }
 
+
+#' @export
+rope_range.stanreg <- rope_range.brmsfit
+
+#' @export
+rope_range.BFBayesFactor <- rope_range.brmsfit
+
+
+
 .rope_range <- function(x, information, response) {
 
   # Linear Models
@@ -65,13 +83,7 @@ rope_range <- function(x) {
 
     # General Linear Models
   } else if (information$is_binomial) {
-    # https://github.com/easystats/bayestestR/issues/20
-    # numeric_response <- as.numeric(as.factor(response))
-    # prob_resp <- mean(numeric_response - min(numeric_response))
-    # eff_size <- prob_resp / pi
-    # negligible_value <- (stats::qlogis(prob_resp + eff_size) - stats::qlogis(prob_resp - eff_size)) / 4
     negligible_value <- 0.1 * sqrt(3) / pi
-
 
     # T-tests
   } else if (information$is_ttest) {

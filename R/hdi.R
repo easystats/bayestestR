@@ -12,7 +12,7 @@
 #'   should be computed (\cite{Kruschke, 2014, p. 183ff}). Moreover, 89 is the
 #'   highest prime number that does not exceed the already unstable 95\% threshold.
 #'   What does it have to do with anything? Nothing, but it reminds us of the total
-#'   arbitrarity of any of these threshold values (McElreath, 2018).
+#'   arbitrarity of any of these threshold values (McElreath, 2015).
 #'
 #' @param x Vector representing a posterior distribution. Can also be a
 #'   \code{stanreg} or \code{brmsfit} model.
@@ -69,7 +69,7 @@
 #'
 #' @references \itemize{
 #'   \item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
-#'   \item McElreath, R. (2018). Statistical rethinking: A Bayesian course with examples in R and Stan. Chapman and Hall/CRC.
+#'   \item McElreath, R. (2015). Statistical rethinking: A Bayesian course with examples in R and Stan. Chapman and Hall/CRC.
 #' }
 #'
 #' @export

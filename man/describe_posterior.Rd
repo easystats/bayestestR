@@ -7,18 +7,18 @@
 \title{Describe Posterior Distributions}
 \usage{
 describe_posterior(posteriors, estimate = "median", dispersion = TRUE,
-  ci = 0.9, ci_method = "hdi", test = c("pd", "rope"),
-  rope_range = "default", rope_ci = 0.9, bf_prior = NULL, ...)
+  ci = 0.89, ci_method = "hdi", test = c("pd", "rope"),
+  rope_range = "default", rope_ci = 0.89, bf_prior = NULL, ...)
 
 \method{describe_posterior}{stanreg}(posteriors, estimate = "median",
-  dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
-  "rope"), rope_range = "default", rope_ci = 0.9, bf_prior = NULL,
+  dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
+  "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = c("fixed",
   "random", "all"), parameters = NULL, ...)
 
 \method{describe_posterior}{brmsfit}(posteriors, estimate = "median",
-  dispersion = FALSE, ci = 0.9, ci_method = "hdi", test = c("pd",
-  "rope"), rope_range = "default", rope_ci = 0.9, bf_prior = NULL,
+  dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
+  "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL, ...)
