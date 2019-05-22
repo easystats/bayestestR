@@ -40,6 +40,6 @@ Some type of Bayes factor, depending on the input. See \code{\link{bayesfactor_s
 \description{
 This is a wrapper function for See \code{\link{bayesfactor_savagedickey}}, \code{\link{bayesfactor_models}}
 and \code{\link{bayesfactor_inclusion}}.
-\cr
+\cr\cr
 For a complete overview of these functions, read the \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes factor vignette}.
 }

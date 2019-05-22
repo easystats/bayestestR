@@ -26,7 +26,7 @@ bayesfactor <-
 
     if (length(mods) > 1) {
       bayesfactor_models(..., denominator = denominator)
-    } else if (is(mods[[1]],"bayesfactor_models") || is(mods[[1]],"BFBayesFactor")) {
+    } else if (inherits(mods[[1]],c("bayesfactor_models","BFBayesFactor"))) {
       bayesfactor_inclusion(..., match_models = match_models, prior_odds = prior_odds)
     } else {
       bayesfactor_savagedickey(...,prior = prior, direction = direction,
