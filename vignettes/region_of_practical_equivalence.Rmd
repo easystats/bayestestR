@@ -72,7 +72,7 @@ If the **full ROPE** is used (*i.e.*, 100\% of the HDI), then the null hypothesi
 
 # Sensitivity to the parameter's scale
 
-However, keep in mind that unlike indices of effect *existence* (such as the [`pd`](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)), indices of effect *size*, such as the **ROPE percentage**, depend on the unit of its parameter, and can thus be easily changed *via* the scaling of the predictors.
+However, keep in mind that unlike other indices of effect **existence** (such as the [`pd`](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)), **ROPE percentage** depend on the unit of its parameter, thus correct interpretation of the ROPE as representing a region of practical equivalence to zero is dependent on the scaling of the predictors.
 
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
@@ -120,7 +120,7 @@ p_direction(model)
 rope(model, ci=1)
 ```
 
-As you can see, by simply dividing the predictory by 100, we **drastically** changed (*we divided it by 100*) the conclusion related to the **percentage in ROPE** (which became very close to `0`): the effect could now be **interpreted as being significant**. Thus, we recommend, when reporting or reading ROPE results, to pay close attention to the unit of the predictors.
+As you can see, by simply dividing the predictor by 100, we **drastically** changed the conclusion related to the **percentage in ROPE** (which became very close to `0`): the effect could now be **interpreted as being significant**. Thus, we recommend paying close attention to the unit of the predictors when selecting the ROPE range (e.g., what coefficient would correspond to a small effect?), and when reporting or reading ROPE results.
 
 
 # Collinearity of Predictors
