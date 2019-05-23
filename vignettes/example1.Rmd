@@ -163,7 +163,7 @@ Unfortunately, it is often not practical to report the whole posterior distribut
 
 **What single value can best represent my posterior distribution?**
 
-Let's check the **mean**:
+Centrality indices, such as the *mean*, the *median* or the *mode* are usually used as point-estimates. What's the difference? Let's check the **mean**:
 
 ```{r message=FALSE, warning=FALSE}
 mean(posteriors$Petal.Length)

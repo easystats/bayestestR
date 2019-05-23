@@ -6,17 +6,18 @@
 \alias{describe_posterior.brmsfit}
 \title{Describe Posterior Distributions}
 \usage{
-describe_posterior(posteriors, estimate = "median", dispersion = TRUE,
-  ci = 0.89, ci_method = "hdi", test = c("pd", "rope"),
-  rope_range = "default", rope_ci = 0.89, bf_prior = NULL, ...)
+describe_posterior(posteriors, centrality = "median",
+  dispersion = TRUE, ci = 0.89, ci_method = "hdi", test = c("pd",
+  "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL,
+  ...)
 
-\method{describe_posterior}{stanreg}(posteriors, estimate = "median",
+\method{describe_posterior}{stanreg}(posteriors, centrality = "median",
   dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = c("fixed",
   "random", "all"), parameters = NULL, ...)
 
-\method{describe_posterior}{brmsfit}(posteriors, estimate = "median",
+\method{describe_posterior}{brmsfit}(posteriors, centrality = "median",
   dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"),
@@ -26,7 +27,7 @@ describe_posterior(posteriors, estimate = "median", dispersion = TRUE,
 \arguments{
 \item{posteriors}{A vector, dataframe or model of posterior draws.}
 
-\item{estimate}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
+\item{centrality}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
 
 \item{dispersion}{if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
@@ -68,12 +69,12 @@ Compute indices relevant to describe and characterise the posterior distribution
 \examples{
 x <- rnorm(1000)
 describe_posterior(x)
-describe_posterior(x, estimate = "all", dispersion = TRUE, test = "all")
+describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
 describe_posterior(x, ci = c(0.80, 0.90))
 
 df <- data.frame(replicate(4, rnorm(100)))
 describe_posterior(df)
-describe_posterior(df, estimate = "all", dispersion = TRUE, test = "all")
+describe_posterior(df, centrality = "all", dispersion = TRUE, test = "all")
 describe_posterior(df, ci = c(0.80, 0.90))
 \dontrun{
 # rstanarm models
@@ -81,7 +82,7 @@ describe_posterior(df, ci = c(0.80, 0.90))
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 describe_posterior(model)
-describe_posterior(model, estimate = "all", dispersion = TRUE, test = "all")
+describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
 describe_posterior(model, ci = c(0.80, 0.90))
 
 # brms models
@@ -89,7 +90,7 @@ describe_posterior(model, ci = c(0.80, 0.90))
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 describe_posterior(model)
-describe_posterior(model, estimate = "all", dispersion = TRUE, test = "all")
+describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
 describe_posterior(model, ci = c(0.80, 0.90))
 
 # BayesFactor objects
@@ -97,7 +98,7 @@ describe_posterior(model, ci = c(0.80, 0.90))
 library(BayesFactor)
 bf <- ttestBF(x = rnorm(100, 1, 1))
 describe_posterior(bf)
-describe_posterior(bf, estimate = "all", dispersion = TRUE, test = "all")
+describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
 describe_posterior(bbf, ci = c(0.80, 0.90))
 }
 
