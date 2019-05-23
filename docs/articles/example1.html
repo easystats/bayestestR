@@ -254,7 +254,7 @@
 <h4 class="hasAnchor">
 <a href="#point-estimate" class="anchor"></a>Point-estimate</h4>
 <p><strong>What single value can best represent my posterior distribution?</strong></p>
-<p>Let’s check the <strong>mean</strong>:</p>
+<p>Centrality indices, such as the <em>mean</em>, the <em>median</em> or the <em>mode</em> are usually used as point-estimates. What’s the difference? Let’s check the <strong>mean</strong>:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(posteriors<span class="op">$</span>Petal.Length)</a></code></pre></div>
 <pre><code>&gt; [1] 0.41</code></pre>
 <p>This is close to the frequentist beta. But as we know, the mean is quite sensitive to outliers or extremes values. Maybe the <strong>median</strong> could be more robust?</p>
