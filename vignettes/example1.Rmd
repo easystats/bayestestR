@@ -70,7 +70,7 @@ library(ggplot2)  # Load the package
 # The ggplot function takes the data as argument, and then the variables 
 # related to aesthetic features such as the x and y axes.
 ggplot(iris, aes(x=Petal.Length, y=Sepal.Length)) +
-  geom_point() +  # This adds the point
+  geom_point() +  # This adds the points
   geom_smooth(method="lm") # This adds a regression line
 ```
 

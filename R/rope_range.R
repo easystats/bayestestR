@@ -74,6 +74,12 @@ rope_range.stanreg <- rope_range.brmsfit
 #' @export
 rope_range.BFBayesFactor <- rope_range.brmsfit
 
+#' @export
+rope_range.lm <- rope_range.brmsfit
+
+#' @export
+rope_range.merMod <- rope_range.brmsfit
+
 
 
 .rope_range <- function(x, information, response) {
