@@ -38,8 +38,37 @@ the effect AND without any higher-order interactions with the effect.}
 Some type of Bayes factor, depending on the input. See \code{\link{bayesfactor_savagedickey}}, \code{\link{bayesfactor_models}} or \code{\link{bayesfactor_inclusion}}
 }
 \description{
-This is a wrapper function for See \code{\link{bayesfactor_savagedickey}}, \code{\link{bayesfactor_models}}
-and \code{\link{bayesfactor_inclusion}}.
+This function compte the Bayes factors (BFs) that are appropriate to the input.
+For vectors or single models, it will compute \code{\link[=bayesfactor_savagedickey]{Savage-Dickey's BFs}}. For multiple models, it will return the BF corresponding to \code{\link[=bayesfactor_models]{comparison between models}} and if a comparison is passed, it will compute the \code{\link[=bayesfactor_inclusion]{inclusion BF}}.
 \cr\cr
 For a complete overview of these functions, read the \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes factor vignette}.
+}
+\examples{
+library(bayestestR)
+
+# Vectors
+prior <- distribution_normal(1000, mean = 0, sd = 1)
+posterior <- distribution_normal(1000, mean = .5, sd = .3)
+
+bayesfactor(posterior, prior = prior)
+
+\dontrun{
+# rstanarm models
+# ---------------
+library(rstanarm)
+model <- stan_lmer(extra ~ group + (1|ID), data = sleep)
+bayesfactor(model)
+}
+
+# Frequentist models
+# ---------------
+m0 <- lm(extra ~ 1, data = sleep)
+m1 <- lm(extra ~ group, data = sleep)
+m2 <- lm(extra ~ group + ID, data = sleep)
+
+comparison <- bayesfactor(m0, m1, m2)
+comparison
+
+bayesfactor(comparison)
+
 }

@@ -41,8 +41,8 @@
   
 <meta property="og:title" content="Bayes Factors (BF) — bayesfactor" />
 
-<meta property="og:description" content="This is a wrapper function for See bayesfactor_savagedickey, bayesfactor_models
-and bayesfactor_inclusion.
+<meta property="og:description" content="This function compte the Bayes factors (BFs) that are appropriate to the input.
+For vectors or single models, it will compute Savage-Dickey's BFs. For multiple models, it will return the BF corresponding to comparison between models and if a comparison is passed, it will compute the inclusion BF.
 
 For a complete overview of these functions, read the Bayes factor vignette." />
 
@@ -184,8 +184,8 @@ For a complete overview of these functions, read the Bayes factor vignette." />
 
     <div class="ref-description">
     
-    <p>This is a wrapper function for See <code><a href='bayesfactor_savagedickey.html'>bayesfactor_savagedickey</a></code>, <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code>
-and <code><a href='bayesfactor_inclusion.html'>bayesfactor_inclusion</a></code>.
+    <p>This function compte the Bayes factors (BFs) that are appropriate to the input.
+For vectors or single models, it will compute <code><a href='bayesfactor_savagedickey.html'>Savage-Dickey's BFs</a></code>. For multiple models, it will return the BF corresponding to <code><a href='bayesfactor_models.html'>comparison between models</a></code> and if a comparison is passed, it will compute the <code><a href='bayesfactor_inclusion.html'>inclusion BF</a></code>.
 <br /><br />
 For a complete overview of these functions, read the <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>Bayes factor vignette</a>.</p>
     
@@ -248,6 +248,48 @@ the effect AND without any higher-order interactions with the effect.</p></td>
     <p>Some type of Bayes factor, depending on the input. See <code><a href='bayesfactor_savagedickey.html'>bayesfactor_savagedickey</a></code>, <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code> or <code><a href='bayesfactor_inclusion.html'>bayesfactor_inclusion</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
+
+<span class='co'># Vectors</span>
+<span class='no'>prior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.3</span>)
+
+<span class='fu'>bayesfactor</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
+#&gt; 
+#&gt; </span><span> Bayes Factor
+#&gt;           1.2
+#&gt; ---
+#&gt; Evidence Against Test Value: 0</div><div class='input'>
+</div></span><span class='co'># NOT RUN {</span>
+<span class='co'># rstanarm models</span>
+<span class='co'># ---------------</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glmer'>stan_lmer</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span><span class='kw'>|</span><span class='no'>ID</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
+<span class='fu'>bayesfactor</span>(<span class='no'>model</span>)
+<span class='co'># }</span><div class='input'>
+<span class='co'># Frequentist models</span>
+<span class='co'># ---------------</span>
+<span class='no'>m0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>extra</span> ~ <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
+<span class='no'>m1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
+<span class='no'>m2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + <span class='no'>ID</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
+
+<span class='no'>comparison</span> <span class='kw'>&lt;-</span> <span class='fu'>bayesfactor</span>(<span class='no'>m0</span>, <span class='no'>m1</span>, <span class='no'>m2</span>)
+<span class='no'>comparison</span></div><div class='output co'>#&gt; Bayes factor analysis
+#&gt; --------------                         
+#&gt; [2] group             1.3
+#&gt; [3] group + ID    11227.1
+#&gt; 
+#&gt; Against denominator:
+#&gt; 	 [1] (Intercept only)   
+#&gt; ---
+#&gt; Bayes factor type:  BIC approximation </div><div class='input'>
+<span class='fu'>bayesfactor</span>(<span class='no'>comparison</span>)</div><div class='output co'>#&gt;       Pr(prior) Pr(posterior) Inclusion BF
+#&gt; group      0.67             1         5614
+#&gt; ID         0.33             1         9767
+#&gt; ---
+#&gt; Inclusion BFs compared among all models.</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -255,7 +297,9 @@ the effect AND without any higher-order interactions with the effect.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

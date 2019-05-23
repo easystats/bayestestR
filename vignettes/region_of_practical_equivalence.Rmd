@@ -39,19 +39,19 @@ set.seed(333)
 
 Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against "zero". Indeed, the Bayesian framework offers a probalistic view of the parameters, allowing to assess the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as **"practically no effect"** (*i.e.*, a negligible magnitude) is sufficient. This range is called the **region of practical equivalence (ROPE)**.
 
-Indeed, statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are **equivalent to the null** value for practical purposes [@kruschke2010believe, @kruschke2012time, @kruschke2014doing].
+Indeed, statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are **equivalent to the null** value for practical purposes [@kruschke2010believe; @kruschke2012time; @kruschke2014doing].
 
 # Equivalence Test
 
 
-The ROPE, being a region corresponding to a "null" hypothesis, is used for the **equivalence test**, to test whether a parameter is **significant** (in the sense of *important* enough to be cared about). This test is usually based on the **"HDI+ROPE decision rule"** [@kruschke2014doing, @kruschke2018bayesian] to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (*i.e.*, a ROPE). In other words, it checks the percentage of Credible Interval (CI) that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.
+The ROPE, being a region corresponding to a "null" hypothesis, is used for the **equivalence test**, to test whether a parameter is **significant** (in the sense of *important* enough to be cared about). This test is usually based on the **"HDI+ROPE decision rule"** [@kruschke2014doing; @kruschke2018bayesian] to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (*i.e.*, a ROPE). In other words, it checks the percentage of Credible Interval (CI) that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.
 
 
 
 
-# CI in ROPE *vs* Full ROPE
+# Credible interval in ROPE *vs* full posterior in ROPE
 
-Using the ROPE and the HDI as Credible Interval, Kruschke (2018) suggests using the percentage of the 95\% HDI that falls within the ROPE as a decision rule. However, as the 89\% HDI [is considered a better choice](https://easystats.github.io/bayestestR/articles/credible_interval.html) [@kruschke2014doing, @mcelreath2014rethinking, @mcelreath2018statistical], `bayestestR` provides by default the percentage of the 89\% HDI that falls within the ROPE.
+Using the ROPE and the HDI as Credible Interval, Kruschke (2018) suggests using the percentage of the 95\% HDI that falls within the ROPE as a decision rule. However, as the 89\% HDI [is considered a better choice](https://easystats.github.io/bayestestR/articles/credible_interval.html) [@kruschke2014doing; @mcelreath2014rethinking; @mcelreath2018statistical], `bayestestR` provides by default the percentage of the 89\% HDI that falls within the ROPE.
 
 However, [*preliminary data*](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html) tend to suggest that using the percentage of the full posterior distribution, instead of a CI, might be more sensitive (especially do delineate highly significant effects). Thus, we recommend the user to consider using the ***full* ROPE** percentage (by setting `ci = 1`), which will return the portion of the entire posterior distribution in the ROPE.
 
@@ -72,7 +72,7 @@ If the **full ROPE** is used (*i.e.*, 100\% of the HDI), then the null hypothesi
 
 # Sensitivity to the parameter's scale
 
-However, keep in mind that unlike indices of effect *existence* (such as the [`pd`](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)), indices of effect *size*, such as the **ROPE percentage**, depend on the unit of its parameter, and can thus be easily changed *via* the scaling of the predictors.
+However, keep in mind that unlike other indices of effect **existence** (such as the [`pd`](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)), **ROPE percentage** depend on the unit of its parameter, thus correct interpretation of the ROPE as representing a region of practical equivalence to zero is dependent on the scaling of the predictors.
 
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
@@ -120,7 +120,7 @@ p_direction(model)
 rope(model, ci=1)
 ```
 
-As you can see, by simply dividing the predictory by 100, we **drastically** changed (*we divided it by 100*) the conclusion related to the **percentage in ROPE** (which became very close to `0`): the effect could now be **interpreted as being significant**. Thus, we recommend, when reporting or reading ROPE results, to pay close attention to the unit of the predictors.
+As you can see, by simply dividing the predictor by 100, we **drastically** changed the conclusion related to the **percentage in ROPE** (which became very close to `0`): the effect could now be **interpreted as being significant**. Thus, we recommend paying close attention to the unit of the predictors when selecting the ROPE range (e.g., what coefficient would correspond to a small effect?), and when reporting or reading ROPE results.
 
 
 # Collinearity of Predictors
