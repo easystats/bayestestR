@@ -39,8 +39,36 @@ set.seed(333)
 
 Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against "zero". Indeed, the Bayesian framework offers a probalistic view of the parameters, allowing to assess the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as **"practically no effect"** (*i.e.*, a negligible magnitude) is sufficient. This range is called the **region of practical equivalence (ROPE)**.
 
+Indeed, statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are **equivalent to the null** value for practical purposes [@kruschke2010believe, @kruschke2012time, @kruschke2014doing].
 
-TBD.
+# Equivalence Test
+
+
+The ROPE, being a region corresponding to a "null" hypothesis, is used for the **equivalence test**, to test whether a parameter is **significant** (in the sense of *important* enough to be cared about). This test is usually based on the **"HDI+ROPE decision rule"** [@kruschke2014doing, @kruschke2018bayesian] to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (*i.e.*, a ROPE). In other words, it checks the percentage of Credible Interval (CI) that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.
+
+
+
+
+# CI in ROPE *vs* Full ROPE
+
+Using the ROPE and the HDI as Credible Interval, Kruschke (2018) suggests using the percentage of the 95\% HDI that falls within the ROPE as a decision rule. However, as the 89\% HDI [is considered a better choice](https://easystats.github.io/bayestestR/articles/credible_interval.html) [@kruschke2014doing, @mcelreath2014rethinking, @mcelreath2018statistical], `bayestestR` provides by default the percentage of the 89\% HDI that falls within the ROPE.
+
+However, [*preliminary data*](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html) tend to suggest that using the percentage of the full posterior distribution, instead of a CI, might be more sensitive (especially do delineate highly significant effects). Thus, we recommend the user to consider using the ***full* ROPE** percentage (by setting `ci = 1`), which will return the portion of the entire posterior distribution in the ROPE.
+
+# What percentage in ROPE to accept or to reject?
+
+If the HDI is completely outside the ROPE, the "null hypothesis" for this parameter is "rejected". If the ROPE completely covers the HDI, *i.e.*, all most credible values of a parameter are inside the region of practical equivalence, the null hypothesis is accepted. Else, it’s undecided whether to accept or reject the null hypothesis. 
+
+If the **full ROPE** is used (*i.e.*, 100\% of the HDI), then the null hypothesis is rejected or accepted if the percentage of the posterior within the ROPE is smaller than to 2.5\% or greater than 97.5\%. Desirable results are low proportions inside the ROPE  (the closer to zero the better).
+
+
+# How to define the ROPE range?
+
+- Kruschke (2018) suggests that the ROPE could be set, by default, to a range from `-0.1` to `0.1` of a standardized parameter (negligible effect size according to Cohen, 1988), which can be generalised for linear models to: $$[-0.1*SD_{y}, 0.1*SD_{y}]$$.
+- For **logistic models**, the parameters expressed in log odds ratio can be converted to standardized difference through the formula: $$\sqrt{3}/\pi$$, resulting in a range of `-0.055` to `-0.055`. For other models with binary outcome, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.
+- For **t-tests**, the standard deviation of the response is used, similarly to linear models (see above).
+- For **correlations**, `-0.05, 0.05` is used, *i.e.*, half the value of a negligible correlation as suggested by Cohen's (1988) rules of thumb.
+- For all other models, `-0.1, 0.1` is used to determine the ROPE limits, but it is strongly advised to specify it manually.
 
 # Sensitivity to the parameter's scale
 
@@ -69,7 +97,7 @@ p_direction(model)
 rope(model, ci=1)
 ```
 
-We can see that the *pd* and the percentage in ROPE of the linear relationship between **Sepal.Length** and **Sepal.Width** are respectively of about `92.17%` and `15.95%`, corresponding to an **uncertain** and **not significant** effect. What happen if we scale our predictor? 
+We can see that the *pd* and the percentage in ROPE of the linear relationship between **Sepal.Length** and **Sepal.Width** are respectively of about `92.95%` and `15.95%`, corresponding to an **uncertain** and **not significant** effect. What happen if we scale our predictor? 
 
 
 
@@ -93,3 +121,13 @@ rope(model, ci=1)
 ```
 
 As you can see, by simply dividing the predictory by 100, we **drastically** changed (*we divided it by 100*) the conclusion related to the **percentage in ROPE** (which became very close to `0`): the effect could now be **interpreted as being significant**. Thus, we recommend, when reporting or reading ROPE results, to pay close attention to the unit of the predictors.
+
+
+# Collinearity of Predictors
+
+When parameters show strong correlations, i.e. when covariates are not independent, the joint parameter distributions may shift towards or away from the ROPE. Collinearity invalidates ROPE and hypothesis testing based on univariate marginals, as the probabilities are conditional on independence. Most problematic are parameters that only have partial overlap with the ROPE region. In case of collinearity, the (joint) distributions  of these parameters may either get an increased or decreased ROPE, which means that inferences based on ROPE are inappropriate [@kruschke2014doing].
+
+The `equivalence_test()` and `rope()` functions perform a simple check for pairwise correlations between parameters, but as there can be collinearity between more than two variables, a first step to check the assumptions of this hypothesis testing is to look at different pair plots. An even more sophisticated check is the projection predictive variable selection [@piironen2017comparison].
+
+
+

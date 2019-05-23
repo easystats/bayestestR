@@ -12,7 +12,7 @@
 #'   should be computed (\cite{Kruschke, 2014, p. 183ff}). Moreover, 89 is the
 #'   highest prime number that does not exceed the already unstable 95\% threshold.
 #'   What does it have to do with anything? Nothing, but it reminds us of the total
-#'   arbitrarity of any of these threshold values (McElreath, 2015).
+#'   arbitrarity of any of these conventions (McElreath, 2015).
 #'
 #' @param x Vector representing a posterior distribution. Can also be a
 #'   \code{stanreg} or \code{brmsfit} model.

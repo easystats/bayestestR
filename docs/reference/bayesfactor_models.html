@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract Bayes Factors from fitted models — bayesfactor_models • bayestestR</title>
+<title>Bayes Factors (BF) for model comparison — bayesfactor_models • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,7 +39,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Extract Bayes Factors from fitted models — bayesfactor_models" />
+<meta property="og:title" content="Bayes Factors (BF) for model comparison — bayesfactor_models" />
 
 <meta property="og:description" content="This function computes or extracts Bayes factors from fitted models." />
 
@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
       </span>
     </div>
 
@@ -119,7 +119,7 @@
       <a href="../articles/example2.html">2. Confirmation of Bayesian skills</a>
     </li>
     <li>
-      <a href="../articles/example3.html">3. Become a Bayesian Master</a>
+      <a href="../articles/example3.html">3. Become a Bayesian master</a>
     </li>
   </ul>
 </li>
@@ -174,7 +174,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract Bayes Factors from fitted models</h1>
+    <h1>Bayes Factors (BF) for model comparison</h1>
     <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/bayesfactor_models.R'><code>R/bayesfactor_models.R</code></a></small>
     <div class="hidden name"><code>bayesfactor_models.Rd</code></div>
     </div>
@@ -218,10 +218,10 @@ or a model to use as a denominator. Ignored for <code>BFBayesFactor</code>.</p><
 the 4 P's: <strong>P</strong>roper <strong>P</strong>riors and <strong>P</strong>lentiful <strong>P</strong>osterior
 (i.e. probably at leat 40,000 samples instead of the default of 4,000).
 <br /> <br />
-A Bayes factor greater than 1 can be interpereted as evidence against the null,
-at which one convention is that a Bayes factor greater than 3 can be considered
-as "substantial" evidence against the null (and vice versa, a Bayes factor
-smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
+A Bayes factor greater than 1 can be interpereted as evidence against the compared-to
+model (the denominator). One convention is that a Bayes factor greater than 3 can be considered
+as "substantial" evidence against the denominator model (and vice versa, a Bayes factor
+smaller than 1/3 indicates substantial evidence in favor of the denominator model)
 (<cite>Wetzels et al. 2011</cite>).</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

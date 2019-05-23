@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
       </span>
     </div>
 
@@ -79,7 +79,7 @@
       <a href="articles/example2.html">2. Confirmation of Bayesian skills</a>
     </li>
     <li>
-      <a href="articles/example3.html">3. Become a Bayesian Master</a>
+      <a href="articles/example3.html">3. Become a Bayesian master</a>
     </li>
   </ul>
 </li>
@@ -156,11 +156,21 @@
 <a href="#documentation" class="anchor"></a>Documentation</h2>
 <p><a href="https://easystats.github.io/bayestestR/"><img src="https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63" alt="Documentation"></a> <a href="https://easystats.github.io/blog/posts/"><img src="https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800" alt="Blog"></a> <a href="https://easystats.github.io/bayestestR/reference/index.html"><img src="https://img.shields.io/badge/features-bayestestR-orange.svg?colorB=2196F3" alt="Features"></a></p>
 <p>Click on the buttons above to access the package <a href="https://easystats.github.io/bayestestR/"><strong>documentation</strong></a> and the <a href="https://easystats.github.io/blog/posts/"><strong>easystats blog</strong></a>, and check-out these vignettes:</p>
+<div id="tutorials" class="section level4">
+<h4 class="hasAnchor">
+<a href="#tutorials" class="anchor"></a>Tutorials</h4>
 <ul>
 <li><a href="https://easystats.github.io/bayestestR/articles/bayestestR.html">Get Started with Bayesian Analysis</a></li>
-<li><a href="https://easystats.github.io/bayestestR/articles/example1.html">Example 1: Initiation to Bayesian Models</a></li>
+<li><a href="https://easystats.github.io/bayestestR/articles/example1.html">Example 1: Initiation to Bayesian models</a></li>
 <li><a href="https://easystats.github.io/bayestestR/articles/example2.html">Example 2: Confirmation of Bayesian skills</a></li>
-<li><a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">Credible Intervals</a></li>
+<li><a href="https://easystats.github.io/bayestestR/articles/example3.html">Example 3: Become a Bayesian master</a></li>
+</ul>
+</div>
+<div id="articles" class="section level4">
+<h4 class="hasAnchor">
+<a href="#articles" class="anchor"></a>Articles</h4>
+<ul>
+<li><a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">Credible Intervals (CIs)</a></li>
 <li><a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html">Probability of Direction (pd)</a></li>
 <li><a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a></li>
 <li><a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html">Bayes Factors (BF)</a></li>
@@ -168,6 +178,7 @@
 <li><a href="https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html">Comparison of Indices of Effect Existence</a></li>
 <li><a href="https://easystats.github.io/bayestestR/articles/guidelines.html">Reporting Guidelines</a></li>
 </ul>
+</div>
 </div>
 </div>
 <div id="features" class="section level1">
@@ -194,8 +205,8 @@
 <a href="#highest-density-interval-hdi---the-credible-interval-ci" class="anchor"></a>Highest Density Interval (HDI) - The <em>Credible</em> Interval (CI)</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/hdi.html"><strong><code><a href="reference/hdi.html">hdi()</a></code></strong></a> computes the <strong>Highest Density Interval (HDI)</strong> of a posterior distribution, <em>i.e.</em>, the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as <strong>Credible Interval (CI)</strong>.</p>
 <p>Unlike equal-tailed intervals (see <a href="https://easystats.github.io/bayestestR/reference/ci.html">ci</a>) that typically exclude 2.5% from each tail of the distribution, the HDI is <em>not</em> equal-tailed and therefore always includes the mode(s) of posterior distributions.</p>
-<p>By default, hdi() returns the 90% intervals (<code>ci = 0.9</code>), deemed to be more stable than, for instance, 95% intervals (Kruschke, 2015). An effective sample size of at least 10.000 is recommended if 95% intervals should be computed (Kruschke 2015, p. 183ff).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="reference/hdi.html">hdi</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>), <span class="dt">ci =</span> <span class="fl">.90</span>)</a></code></pre></div>
+<p>By default, <code><a href="reference/hdi.html">hdi()</a></code> returns the 89% intervals (<code>ci = 0.89</code>), deemed to be more stable than, for instance, 95% intervals (Kruschke, 2014). An effective sample size of at least 10.000 is recommended if 95% intervals should be computed (Kruschke 2014, p. 183ff). Moreover, 89 is the highest prime number that does not exceed the already unstable 95% threshold (McElreath, 2015).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="reference/hdi.html">hdi</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>), <span class="dt">ci =</span> <span class="fl">.89</span>)</a></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-8-1.png" width="3281.25"></p>
 </div>
 </div>
@@ -205,7 +216,7 @@
 <div id="rope" class="section level3">
 <h3 class="hasAnchor">
 <a href="#rope" class="anchor"></a>ROPE</h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/rope.html"><strong><code><a href="reference/rope.html">rope()</a></code></strong></a> computes the proportion (in percentage) of the HDI (default to the 90% HDI) of a posterior distribution that lies within a region of practical equivalence.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/rope.html"><strong><code><a href="reference/rope.html">rope()</a></code></strong></a> computes the proportion (in percentage) of the HDI (default to the 89% HDI) of a posterior distribution that lies within a region of practical equivalence.</p>
 <p>Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are <em>equivalent to the null</em> value for practical purposes (Kruschke 2010, 2011, 2014).</p>
 <p>Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as <code>0 +/- .1 * sd(y)</code>. This ROPE range can be automatically computed for models using the <a href="https://easystats.github.io/bayestestR/reference/rope_range.html">rope_range</a> function.</p>
 <p>Kruschke (2010, 2011, 2014) suggests using the proportion of the 95% (or 90%, considered more stable) HDI that falls within the ROPE as an index for “null-hypothesis” testing (as understood under the Bayesian framework, see <a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html">equivalence_test</a>).</p>

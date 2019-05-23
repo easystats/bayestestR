@@ -70,7 +70,7 @@ library(ggplot2)  # Load the package
 # The ggplot function takes the data as argument, and then the variables 
 # related to aesthetic features such as the x and y axes.
 ggplot(iris, aes(x=Petal.Length, y=Sepal.Length)) +
-  geom_point() +  # This adds the point
+  geom_point() +  # This adds the points
   geom_smooth(method="lm") # This adds a regression line
 ```
 
@@ -163,7 +163,7 @@ Unfortunately, it is often not practical to report the whole posterior distribut
 
 **What single value can best represent my posterior distribution?**
 
-Let's check the **mean**:
+Centrality indices, such as the *mean*, the *median* or the *mode* are usually used as point-estimates. What's the difference? Let's check the **mean**:
 
 ```{r message=FALSE, warning=FALSE}
 mean(posteriors$Petal.Length)
@@ -207,7 +207,7 @@ range(posteriors$Petal.Length)
 
 But does it make sense to include all these extreme values? Probably not. Thus, we will compute a [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html). Long story short, it's kind of similar to a frequentist **confidence interval**, but it is easier to interpret and easier to compute. *And it makes more sense*.
 
-We will compute this **credible interval** based on the [Highest Density Interval (HDI)](https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis). It will give us the range containing the 89\% more probable effect values. **Note that we will use 89\% CIs** instead of 95\% CIs (as in the frequentist framework), as the 89\% level gives more [stable results](https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89) [@kruschke2014doing] and reminds us about the arbitrarity of such conventions [@mcelreath2018statistical].
+We will compute this **credible interval** based on the [Highest Density Interval (HDI)](https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis). It will give us the range containing the 89\% more probable effect values. **Note that we will use 89\% CIs instead of 95\%** CIs (as in the frequentist framework), as the 89\% level gives more [stable results](https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89) [@kruschke2014doing] and reminds us about the arbitrarity of such conventions [@mcelreath2018statistical].
 
 ```{r message=FALSE, warning=FALSE}
 hdi(posteriors$Petal.Length, ci=0.89)
@@ -267,7 +267,7 @@ median(posteriors$feedsunflower)
 hdi(posteriors$feedsunflower)
 ```
 
-It makes you fat by around `51` (the median). However, the uncertainty is quite high: **there is 89\% chance that the difference between the two feed types is between `6.21` and `88.67`.**
+It makes you fat by around `51` (the median). However, the uncertainty is quite high: **there is 89\% chance that the difference between the two feed types is between `7.77` and `87.66`.**
 
 > **Is this effect different from 0?**
 
@@ -294,7 +294,7 @@ rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.89)
 ```
 
 
-**8.33\% of the 89\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
+**7.75\% of the 89\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
 
 Although, to be honest, I have **some doubts about this Prof Howard**. I don't really trust **his definition of ROPE**. Is there a more **objective** way of defining it?
 
@@ -319,19 +319,26 @@ Let's recompute the **percentage in ROPE**:
 rope(posteriors$feedsunflower, range = rope_range, ci=0.89)
 ```
 
-With this reasonable definition of ROPE, we observe that that the 89\% of the posterior distribution of the effect does **not** overlap with the ROPE. Thus, we can conclude that **the effect is significant**.
+With this reasonable definition of ROPE, we observe that the 89\% of the posterior distribution of the effect does **not** overlap with the ROPE. Thus, we can conclude that **the effect is significant** (in the sense of *important* enough to be noted).
 
 
 ### Probability of Direction (pd)
 
 Maybe we are not interested in whether the effect is not-negligible. Maybe **we just want to know if this effect is positive or negative**. In this case, we can simply compute the proportion of the posterior that is positive, no matter the "size" of the effect. 
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 n_positive <- posteriors %>% 
   filter(feedsunflower > 0) %>% # select only positive values
   nrow() # Get length
 n_positive / nrow(posteriors) * 100
 ```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+n_positive <- posteriors %>% 
+  filter(feedsunflower > 0) %>% # select only positive values
+  nrow() # Get length
+round(n_positive / nrow(posteriors) * 100, 2)
+```
+
 
 We can conclude that **the effect is positive with a probability of 97.82\%**. We call this index the [**Probability of Direction (pd)**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html). It can, in fact, be computed more easily with the following:
 

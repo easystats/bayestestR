@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
       </span>
     </div>
 
@@ -79,7 +79,7 @@
       <a href="../articles/example2.html">2. Confirmation of Bayesian skills</a>
     </li>
     <li>
-      <a href="../articles/example3.html">3. Become a Bayesian Master</a>
+      <a href="../articles/example3.html">3. Become a Bayesian master</a>
     </li>
   </ul>
 </li>
@@ -448,10 +448,6 @@
 <div id="experiment-2-relationship-with-sampling-characteristics" class="section level2">
 <h2 class="hasAnchor">
 <a href="#experiment-2-relationship-with-sampling-characteristics" class="anchor"></a>Experiment 2: Relationship with Sampling Characteristics</h2>
-</div>
-<div id="experiment-3-relationship-with-priors-specification" class="section level2">
-<h2 class="hasAnchor">
-<a href="#experiment-3-relationship-with-priors-specification" class="anchor"></a>Experiment 3: Relationship with Priors Specification</h2>
 <div id="methods-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#methods-1" class="anchor"></a>Methods</h3>
@@ -462,14 +458,12 @@
 <li>
 <strong>“True” effect</strong> (original regression coefficient from which data is drawn): Can be 1 or 0 (no effect).</li>
 <li>
-<strong>chains</strong>: from 1 to 8</li>
+<strong>draws</strong>: from 10 to 5000 by step of 5 (1000 iterations).</li>
 <li>
-<strong>iterations</strong>: from 100 to 4000 by step of 100.</li>
-<li>
-<strong>warmup</strong>: Ratio of warmup iterations. from 1/10 to 9/10 by step of 0.1.</li>
+<strong>warmup</strong>: Ratio of warmup iterations. from 1/10 to 9/10 by step of 0.1 (9 iterations).</li>
 </ul>
 <p>We generated 3 datasets for each combination of these characteristics, resulting in a total of <code>2 * 2 * 8 * 40 * 9 * 3 = 34560</code> Bayesian and frequentist models. The code used for generation is avaible <a href="https://easystats.github.io/circus/articles/bayesian_indices.html">here</a> (please note that it takes usually several days/weeks to complete).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayesSim_study3.csv"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayesSim_study2.csv"</span>)</a></code></pre></div>
 </div>
 <div id="results-1" class="section level3">
 <h3 class="hasAnchor">
@@ -518,6 +512,10 @@
 <p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 </div>
+</div>
+<div id="experiment-3-relationship-with-priors-specification" class="section level2">
+<h2 class="hasAnchor">
+<a href="#experiment-3-relationship-with-priors-specification" class="anchor"></a>Experiment 3: Relationship with Priors Specification</h2>
 </div>
 <div id="discussion" class="section level2">
 <h2 class="hasAnchor">

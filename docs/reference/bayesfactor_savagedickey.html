@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Savage-Dickey density ratio Bayes factor — bayesfactor_savagedickey • bayestestR</title>
+<title>Savage-Dickey density ratio Bayes Factor (BF) — bayesfactor_savagedickey • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,10 +39,10 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Savage-Dickey density ratio Bayes factor — bayesfactor_savagedickey" />
+<meta property="og:title" content="Savage-Dickey density ratio Bayes Factor (BF) — bayesfactor_savagedickey" />
 
 <meta property="og:description" content="This method computes the ratio between the density of a single value (typically the null)
-in two distributions. When the compared distributions are the posterior and the prior distributions,
+of two distributions. When the compared distributions are the posterior and the prior distributions,
 this results in an approximation of a Bayes factor against the (point) null model." />
 
 <meta property="og:image" content="/logo.png" />
@@ -86,7 +86,7 @@ this results in an approximation of a Bayes factor against the (point) null mode
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
       </span>
     </div>
 
@@ -121,7 +121,7 @@ this results in an approximation of a Bayes factor against the (point) null mode
       <a href="../articles/example2.html">2. Confirmation of Bayesian skills</a>
     </li>
     <li>
-      <a href="../articles/example3.html">3. Become a Bayesian Master</a>
+      <a href="../articles/example3.html">3. Become a Bayesian master</a>
     </li>
   </ul>
 </li>
@@ -176,7 +176,7 @@ this results in an approximation of a Bayes factor against the (point) null mode
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Savage-Dickey density ratio Bayes factor</h1>
+    <h1>Savage-Dickey density ratio Bayes Factor (BF)</h1>
     <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/bayesfactor_savagedickey.R'><code>R/bayesfactor_savagedickey.R</code></a></small>
     <div class="hidden name"><code>bayesfactor_savagedickey.Rd</code></div>
     </div>
@@ -184,31 +184,31 @@ this results in an approximation of a Bayes factor against the (point) null mode
     <div class="ref-description">
     
     <p>This method computes the ratio between the density of a single value (typically the null)
-in two distributions. When the compared distributions are the posterior and the prior distributions,
+of two distributions. When the compared distributions are the posterior and the prior distributions,
 this results in an approximation of a Bayes factor against the (point) null model.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
 <span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>,
-  <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for brmsfit</span>
 <span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>,
-  <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
 <span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -219,7 +219,7 @@ this results in an approximation of a Bayes factor against the (point) null mode
     </tr>
     <tr>
       <th>prior</th>
-      <td><p>Vector representing a prior distribution (If <code>posterior</code> is a vector) / A data frame with column names matching <code>posterior</code>'s (if <code>posterior</code> is a data frame) Otherwise ignored).</p></td>
+      <td><p>Vector representing a prior distribution (If <code>posterior</code> is a vector) / A data frame with column names matching <code>posterior</code>'s (if <code>posterior</code> is a data frame). Otherwise ignored.</p></td>
     </tr>
     <tr>
       <th>direction</th>
@@ -231,12 +231,17 @@ this results in an approximation of a Bayes factor against the (point) null mode
       <td><p>Value to be tested against (usually <code>0</code> in the context of null hypothesis testing).</p></td>
     </tr>
     <tr>
+      <th>verbose</th>
+      <td><p>Toggle off warnings.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Currently not used.</p></td>
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be returned? Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     </table>
     
@@ -273,14 +278,14 @@ smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
 
 <span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
 #&gt; 
-#&gt; </span><span>  Bayes Factor
-#&gt; 1          1.2
+#&gt; </span><span> Bayes Factor
+#&gt;           1.2
 #&gt; ---
 #&gt; Evidence Against Test Value: 0</div></span><span class='co'># NOT RUN {</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>stan_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
+<span class='no'>stan_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glmer'>stan_lmer</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span><span class='kw'>|</span><span class='no'>ID</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
 <span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>stan_model</span>)
 
 <span class='co'># brms models</span>

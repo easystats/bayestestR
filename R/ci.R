@@ -48,26 +48,26 @@
 #'
 #' posterior <- rnorm(1000)
 #' ci(posterior)
-#' ci(posterior, ci = c(.80, .90, .95))
+#' ci(posterior, ci = c(.80, .89, .95))
 #'
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' ci(df)
-#' ci(df, ci = c(.80, .90, .95))
+#' ci(df, ci = c(.80, .89, .95))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' ci(model)
-#' ci(model, ci = c(.80, .90, .95))
+#' ci(model, ci = c(.80, .89, .95))
 #'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' ci(model)
-#' ci(model, ci = c(.80, .90, .95))
+#' ci(model, ci = c(.80, .89, .95))
 #'
 #' library(BayesFactor)
 #' bf <- ttestBF(x = rnorm(100, 1, 1))
 #' ci(bf)
-#' ci(bf, ci = c(.80, .90, .95))
+#' ci(bf, ci = c(.80, .89, .95))
 #' }
 #'
 #' @export

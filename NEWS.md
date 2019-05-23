@@ -1,7 +1,8 @@
-# bayestestR 0.1.6
+# bayestestR 0.1.7
 
 ## Breaking changes
 
+- `estimate` argument name in `describe_posterior` and `point_estimate` changed to `centrality`
 - `hdi`, `ci`, `rope` and `equivalence_test` default `ci` to `0.89`
 - `rnorm_perfect()` deprecated in favour of `distribution_normal()`
 - `map_estimate()` now returns a single value instead of a dataframe and the `density` parameter has been removed. The MAP density value is now accessible via `attributes(map_output)$MAP_density`
