@@ -213,27 +213,6 @@ bayesfactor_savagedickey(posterior, prior, direction = "two-sided", hypothesis =
 
 ![](man/figures/unnamed-chunk-15-1.png)<!-- -->
 
-### ROPE-based probability
-
-[**`p_rope()`**](https://easystats.github.io/bayestestR/reference/p_rope.html)
-Compute the ROPE-based p-value, an exploratory index representing the
-maximum percentage of
-[HDI](https://easystats.github.io/bayestestR/reference/hdi.html) that
-does not contain (positive values) or is entirely contained (negative
-values) in the negligible values space defined by the
-[ROPE](https://easystats.github.io/bayestestR/reference/rope.html). It
-differs from the ROPE percentage, *i.e.*, from the proportion of a given
-CI in the ROPE, as it represents the maximum CI to reach a ROPE
-proportion of 0% (positive values) or 100% (negative values). A
-ROPE-based *p* of 97% means that there is a probability of .97 that a
-parameter (described by its posterior distribution) is outside the ROPE.
-On the contrary, a ROPE-based p of -97% means that there is a
-probability of .97 that the parameter is inside the ROPE.
-
-``` r
-p_rope(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
-```
-
 ### MAP-based *p*-value
 
 [**`p_map()`**](https://easystats.github.io/bayestestR/reference/p_map.html)
@@ -248,7 +227,7 @@ divided by the density of the MAP estimate.
 p_map(rnorm(1000, 1, 1))
 ```
 
-![](man/figures/unnamed-chunk-18-1.png)<!-- -->
+![](man/figures/unnamed-chunk-17-1.png)<!-- -->
 
 ## Utilities
 
