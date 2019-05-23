@@ -150,7 +150,7 @@ posterior %>%
   theme_classic() +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
   scale_fill_manual(values=c("high"="#FFC107", "low"="#FFC107", "middle"="#E91E63"), guide=FALSE) +
-  annotate("text", x=0.4, y=1, label="The 90% HDI", color="white", size=8) +
+  annotate("text", x=0.4, y=1, label="The 89% HDI", color="white", size=8) +
   xlab("\nParameter Value") +
   ylab("Probability Density\n")
 ```

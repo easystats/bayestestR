@@ -42,16 +42,16 @@ check-out these vignettes:
   - [Get Started with Bayesian
     Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
   - [Example 1: Initiation to Bayesian
-    Models](https://easystats.github.io/bayestestR/articles/example1.html)
+    models](https://easystats.github.io/bayestestR/articles/example1.html)
   - [Example 2: Confirmation of Bayesian
     skills](https://easystats.github.io/bayestestR/articles/example2.html)
   - [Example 3: Become a Bayesian
-    Master](https://easystats.github.io/bayestestR/articles/example3.html)
+    master](https://easystats.github.io/bayestestR/articles/example3.html)
 
 #### Articles
 
-  - [Credible
-    Intervals](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+  - [Credible Intervals
+    (CIs)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
   - [Probability of Direction
     (pd)](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
   - [Region of Practical Equivalence
@@ -106,13 +106,15 @@ typically exclude 2.5% from each tail of the distribution, the HDI is
 *not* equal-tailed and therefore always includes the mode(s) of
 posterior distributions.
 
-By default, hdi() returns the 90% intervals (`ci = 0.9`), deemed to be
-more stable than, for instance, 95% intervals (Kruschke, 2015). An
+By default, `hdi()` returns the 89% intervals (`ci = 0.89`), deemed to
+be more stable than, for instance, 95% intervals (Kruschke, 2014). An
 effective sample size of at least 10.000 is recommended if 95% intervals
-should be computed (Kruschke 2015, p. 183ff).
+should be computed (Kruschke 2014, p. 183ff). Moreover, 89 is the
+highest prime number that does not exceed the already unstable 95%
+threshold (McElreath, 2015).
 
 ``` r
-hdi(rnorm(1000), ci = .90)
+hdi(rnorm(1000), ci = .89)
 ```
 
 ![](man/figures/unnamed-chunk-8-1.png)<!-- -->
@@ -122,7 +124,7 @@ hdi(rnorm(1000), ci = .90)
 ### ROPE
 
 [**`rope()`**](https://easystats.github.io/bayestestR/reference/rope.html)
-computes the proportion (in percentage) of the HDI (default to the 90%
+computes the proportion (in percentage) of the HDI (default to the 89%
 HDI) of a posterior distribution that lies within a region of practical
 equivalence.
 
