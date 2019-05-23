@@ -153,17 +153,17 @@
 <a href="#what-is-the-rope" class="anchor"></a>What is the <em>ROPE?</em>
 </h1>
 <p>Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against “zero”. Indeed, the Bayesian framework offers a probalistic view of the parameters, allowing to assess the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as <strong>“practically no effect”</strong> (<em>i.e.</em>, a negligible magnitude) is sufficient. This range is called the <strong>region of practical equivalence (ROPE)</strong>.</p>
-<p>Indeed, statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are <strong>equivalent to the null</strong> value for practical purposes <span class="citation">(Kruschke 2010, @kruschke2012time, @kruschke2014doing)</span>.</p>
+<p>Indeed, statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are <strong>equivalent to the null</strong> value for practical purposes <span class="citation">(Kruschke 2010, 2014; Kruschke, Aguinis, and Joo 2012)</span>.</p>
 </div>
 <div id="equivalence-test" class="section level1">
 <h1 class="hasAnchor">
 <a href="#equivalence-test" class="anchor"></a>Equivalence Test</h1>
-<p>The ROPE, being a region corresponding to a “null” hypothesis, is used for the <strong>equivalence test</strong>, to test whether a parameter is <strong>significant</strong> (in the sense of <em>important</em> enough to be cared about). This test is usually based on the <strong>“HDI+ROPE decision rule”</strong> <span class="citation">(Kruschke 2014, @kruschke2018bayesian)</span> to check whether parameter values should be accepted or rejected against an explicitly formulated “null hypothesis” (<em>i.e.</em>, a ROPE). In other words, it checks the percentage of Credible Interval (CI) that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.</p>
+<p>The ROPE, being a region corresponding to a “null” hypothesis, is used for the <strong>equivalence test</strong>, to test whether a parameter is <strong>significant</strong> (in the sense of <em>important</em> enough to be cared about). This test is usually based on the <strong>“HDI+ROPE decision rule”</strong> <span class="citation">(Kruschke 2014; Kruschke and Liddell 2018)</span> to check whether parameter values should be accepted or rejected against an explicitly formulated “null hypothesis” (<em>i.e.</em>, a ROPE). In other words, it checks the percentage of Credible Interval (CI) that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.</p>
 </div>
-<div id="ci-in-rope-vs-full-rope" class="section level1">
+<div id="credible-interval-in-rope-vs-full-posterior-in-rope" class="section level1">
 <h1 class="hasAnchor">
-<a href="#ci-in-rope-vs-full-rope" class="anchor"></a>CI in ROPE <em>vs</em> Full ROPE</h1>
-<p>Using the ROPE and the HDI as Credible Interval, Kruschke (2018) suggests using the percentage of the 95% HDI that falls within the ROPE as a decision rule. However, as the 89% HDI <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">is considered a better choice</a> <span class="citation">(Kruschke 2014, @mcelreath2014rethinking, @mcelreath2018statistical)</span>, <code>bayestestR</code> provides by default the percentage of the 89% HDI that falls within the ROPE.</p>
+<a href="#credible-interval-in-rope-vs-full-posterior-in-rope" class="anchor"></a>Credible interval in ROPE <em>vs</em> full posterior in ROPE</h1>
+<p>Using the ROPE and the HDI as Credible Interval, Kruschke (2018) suggests using the percentage of the 95% HDI that falls within the ROPE as a decision rule. However, as the 89% HDI <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">is considered a better choice</a> <span class="citation">(Kruschke 2014; McElreath 2014, 2018)</span>, <code>bayestestR</code> provides by default the percentage of the 89% HDI that falls within the ROPE.</p>
 <p>However, <a href="https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html"><em>preliminary data</em></a> tend to suggest that using the percentage of the full posterior distribution, instead of a CI, might be more sensitive (especially do delineate highly significant effects). Thus, we recommend the user to consider using the <strong><em>full</em> ROPE</strong> percentage (by setting <code>ci = 1</code>), which will return the portion of the entire posterior distribution in the ROPE.</p>
 </div>
 <div id="what-percentage-in-rope-to-accept-or-to-reject" class="section level1">
@@ -259,7 +259,7 @@
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#what-is-the-rope">What is the <em>ROPE?</em></a></li>
       <li><a href="#equivalence-test">Equivalence Test</a></li>
-      <li><a href="#ci-in-rope-vs-full-rope">CI in ROPE <em>vs</em> Full ROPE</a></li>
+      <li><a href="#credible-interval-in-rope-vs-full-posterior-in-rope">Credible interval in ROPE <em>vs</em> full posterior in ROPE</a></li>
       <li><a href="#what-percentage-in-rope-to-accept-or-to-reject">What percentage in ROPE to accept or to reject?</a></li>
       <li><a href="#how-to-define-the-rope-range">How to define the ROPE range?</a></li>
       <li><a href="#sensitivity-to-the-parameters-scale">Sensitivity to the parameter’s scale</a></li>
