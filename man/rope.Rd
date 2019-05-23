@@ -89,9 +89,9 @@ Statistically, the probability of a posterior distribution of being
   overlap with the ROPE region. In case of collinearity, the (joint) distributions
   of these parameters may either get an increased or decreased ROPE, which
   means that inferences based on \code{rope()} are inappropriate
-  (\cite{Kruschke 2015, 340f}).
+  (\cite{Kruschke 2014, 340f}).
   \cr \cr
-  \code{rope()} performs a simple check for pairs of correlating
+  \code{rope()} performs a simple check for pairwise correlations between
   parameters, but as there can be collinearity between more than two variables,
   a first step to check the assumptions of this hypothesis testing is to look
   at different pair plots. An even more sophisticated check is the projection

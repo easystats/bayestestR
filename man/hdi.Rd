@@ -70,7 +70,7 @@ Unlike equal-tailed intervals (see \link{ci}) that typically exclude 2.5\% from 
   should be computed (\cite{Kruschke, 2014, p. 183ff}). Moreover, 89 is the
   highest prime number that does not exceed the already unstable 95\% threshold.
   What does it have to do with anything? Nothing, but it reminds us of the total
-  arbitrarity of any of these threshold values (McElreath, 2015).
+  arbitrarity of any of these conventions (McElreath, 2015).
 }
 \examples{
 library(bayestestR)

@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
       </span>
     </div>
 
@@ -117,7 +117,7 @@
       <a href="../articles/example2.html">2. Confirmation of Bayesian skills</a>
     </li>
     <li>
-      <a href="../articles/example3.html">3. Become a Bayesian Master</a>
+      <a href="../articles/example3.html">3. Become a Bayesian master</a>
     </li>
   </ul>
 </li>
@@ -176,14 +176,17 @@
       <small>Source: <a href='https://github.com/easystats/bayestestR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="bayestestr-016" class="section level1">
+    <div id="bayestestr-017" class="section level1">
 <h1 class="page-header">
-<a href="#bayestestr-016" class="anchor"></a>bayestestR 0.1.6<small> Unreleased </small>
+<a href="#bayestestr-017" class="anchor"></a>bayestestR 0.1.7<small> Unreleased </small>
 </h1>
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
 <ul>
+<li>
+<code>hdi</code>, <code>ci</code>, <code>rope</code> and <code>equivalence_test</code> default <code>ci</code> to <code>0.89</code>
+</li>
 <li>
 <code><a href="../reference/distribution.html">rnorm_perfect()</a></code> deprecated in favour of <code><a href="../reference/distribution.html">distribution_normal()</a></code>
 </li>
@@ -197,6 +200,8 @@
 <a href="#new-functions--features" class="anchor"></a>New functions / features</h2>
 <ul>
 <li>
+<code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, <code><a href="../reference/describe_prior.html">describe_prior()</a></code>, <code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code>: added wrapper function</li>
+<li>
 <code><a href="../reference/point_estimate.html">point_estimate()</a></code> added function to compute point estimates</li>
 <li>
 <code><a href="../reference/p_direction.html">p_direction()</a></code>: new argument <code>method</code> to compute pd based on AUC</li>
@@ -205,7 +210,7 @@
 <li>
 <code><a href="../reference/distribution.html">distribution()</a></code> functions have been added</li>
 <li>
-<code>bayesfactor()</code> function has been added</li>
+<code><a href="../reference/bayesfactor_savagedickey.html">bayesfactor_savagedickey()</a></code>, <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> and <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> functions has been added</li>
 <li>Started adding plotting methods (currently in the <a href="https://github.com/easystats/see"><code>see</code></a> package) for <code><a href="../reference/p_direction.html">p_direction()</a></code> and <code><a href="../reference/hdi.html">hdi()</a></code>
 </li>
 <li>
@@ -222,9 +227,9 @@
 <a href="#minor-changes" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Improved documentation</li>
+<li>Improved testing</li>
 <li>
 <code><a href="../reference/p_direction.html">p_direction()</a></code>: improved printing</li>
-<li>Improved testing</li>
 <li>
 <code><a href="../reference/rope.html">rope()</a></code> for model-objects now returns the HDI values for all parameters as attribute in a consistent way</li>
 <li>Changes legend-labels in <code>plot.equivalence_test()</code> to align plots with the output of the <code><a href="https://www.rdocumentation.org/packages/base/topics/print">print()</a></code>-method (<a href='https://github.com/easystats/bayestestR/issues/78'>#78</a>)</li>
@@ -258,7 +263,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#bayestestr-016">0.1.6</a></li>
+        <li><a href="#bayestestr-017">0.1.7</a></li>
         <li><a href="#bayestestr-010">0.1.0</a></li>
       </ul>
     </div>

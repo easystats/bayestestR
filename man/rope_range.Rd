@@ -31,13 +31,14 @@ This function attempts at automatically finding suitable "default"
   manually specify the rope argument. Currently, the same default is applied
   that for logistic models.
   \cr \cr
-  For BayesFactor t-tests, the standard deviation of the response is used,
+  For t-tests, the standard deviation of the response is used,
   similarly to linear models (see above).
   \cr \cr
   For correlations, \code{-0.05, 0.05} is used, i.e., half the value of a
   negligible correlation as suggested by Cohen's (1988) rules of thumb.
   \cr \cr
-  For all other models, \code{-0.1, 0.1} is used to determine the ROPE limits.
+  For all other models, \code{-0.1, 0.1} is used to determine the ROPE limitss,
+  but it is strongly advised to specify it manually.
 }
 \examples{
 \dontrun{

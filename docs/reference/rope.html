@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
       </span>
     </div>
 
@@ -119,7 +119,7 @@
       <a href="../articles/example2.html">2. Confirmation of Bayesian skills</a>
     </li>
     <li>
-      <a href="../articles/example3.html">3. Become a Bayesian Master</a>
+      <a href="../articles/example3.html">3. Become a Bayesian master</a>
     </li>
   </ul>
 </li>
@@ -191,24 +191,24 @@
 <span class='fu'>rope</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>,
   <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>)</pre>
@@ -230,7 +230,7 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use.</p></td>
+      <td><p>The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -274,11 +274,11 @@ applies to <span class="pkg">brms</span>-models.</p></td>
   <a href='rope_range.html'>rope_range</a> function.
   <br /> <br />
   Kruschke (2010, 2011, 2014) suggests using the proportion of  the 95%
-  (or 90%, considered more stable) <a href='hdi.html'>HDI</a> that falls within the
+  (or 89%, considered more stable) <a href='hdi.html'>HDI</a> that falls within the
   ROPE as an index for "null-hypothesis" testing (as understood under the
   Bayesian framework, see <code><a href='equivalence_test.html'>equivalence_test()</a></code>).
   <br /> <br />
-  <strong>Non-independent covariates</strong>
+  <strong>Multicollinearity: Non-independent covariates</strong>
   <br /> <br />
   When parameters show strong correlations, i.e. when covariates are not
   independent, the joint parameter distributions may shift towards or
@@ -288,9 +288,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
   overlap with the ROPE region. In case of collinearity, the (joint) distributions
   of these parameters may either get an increased or decreased ROPE, which
   means that inferences based on <code>rope()</code> are inappropriate
-  (<cite>Kruschke 2015, 340f</cite>).
+  (<cite>Kruschke 2014, 340f</cite>).
   <br /> <br />
-  <code>rope()</code> performs a simple check for pairs of correlating
+  <code>rope()</code> performs a simple check for pairwise correlations between
   parameters, but as there can be collinearity between more than two variables,
   a first step to check the assumptions of this hypothesis testing is to look
   at different pair plots. An even more sophisticated check is the projection
@@ -322,7 +322,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
 #&gt; </span><span> inside ROPE
-#&gt;       9.43 %
+#&gt;       9.54 %
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
 #&gt; </span><span> inside ROPE

@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
       </span>
     </div>
 
@@ -119,7 +119,7 @@
       <a href="../articles/example2.html">2. Confirmation of Bayesian skills</a>
     </li>
     <li>
-      <a href="../articles/example3.html">3. Become a Bayesian Master</a>
+      <a href="../articles/example3.html">3. Become a Bayesian master</a>
     </li>
   </ul>
 </li>
@@ -188,15 +188,13 @@
     <pre class="usage"><span class='fu'>diagnostic_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>diagnostic_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"ESS"</span>,
-  <span class='st'>"Rhat"</span>), <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>)
+<span class='fu'>diagnostic_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>diagnostic_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"ESS"</span>,
-  <span class='st'>"Rhat"</span>), <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>diagnostic_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>,
+  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -215,7 +213,7 @@
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should variables for fixed effects, random effects
+      <td><p>Should parameters for fixed effects, random effects
 or both be returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
@@ -225,7 +223,7 @@ should be returned.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should all predictor variables, predictor variables for the
+      <td><p>Should all parameters, parameters for the
 conditional model, the zero-inflated part of the model, the dispersion
 term or the instrumental variables be returned? Applies to models
 with zero-inflated and/or dispersion formula, or to models with instrumental

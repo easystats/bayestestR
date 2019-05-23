@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>select numerics columns — .select_nums • bayestestR</title>
+<title>Bayes Factors (BF) — bayesfactor • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="select numerics columns — .select_nums" />
+<meta property="og:title" content="Bayes Factors (BF) — bayesfactor" />
 
-<meta property="og:description" content="select numerics columns" />
+<meta property="og:description" content="This is a wrapper function for See bayesfactor_savagedickey, bayesfactor_models
+and bayesfactor_inclusion.
+
+For a complete overview of these functions, read the Bayes factor vignette." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -174,25 +177,85 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>select numerics columns</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>dot-select_nums.Rd</code></div>
+    <h1>Bayes Factors (BF)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/bayesfactor.R'><code>R/bayesfactor.R</code></a></small>
+    <div class="hidden name"><code>bayesfactor.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>select numerics columns</p>
+    <p>This is a wrapper function for See <code><a href='bayesfactor_savagedickey.html'>bayesfactor_savagedickey</a></code>, <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code>
+and <code><a href='bayesfactor_inclusion.html'>bayesfactor_inclusion</a></code>.
+<br /><br />
+For a complete overview of these functions, read the <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>Bayes factor vignette</a>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>.select_nums</span>(<span class='no'>x</span>)</pre>
-        
+    <pre class="usage"><span class='fu'>bayesfactor</span>(<span class='no'>...</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
+  <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>...</th>
+      <td><p>A numeric vector, model object(s), or the output from <code>bayesfactor_models</code>.</p></td>
+    </tr>
+    <tr>
+      <th>prior</th>
+      <td><p>Vector representing a prior distribution (If <code>posterior</code> is a vector) / A data frame with column names matching <code>posterior</code>'s (if <code>posterior</code> is a data frame). Otherwise ignored.</p></td>
+    </tr>
+    <tr>
+      <th>direction</th>
+      <td><p>Test type. One of <code>0</code>, <code>"two-sided"</code> (defult; two tailed),
+<code>-1</code>, <code>"left"</code> (left tailed), <code>1</code>, <code>"right"</code> (right tailed).</p></td>
+    </tr>
+    <tr>
+      <th>hypothesis</th>
+      <td><p>Value to be tested against (usually <code>0</code> in the context of null hypothesis testing).</p></td>
+    </tr>
+    <tr>
+      <th>effects</th>
+      <td><p>Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle off warnings.</p></td>
+    </tr>
+    <tr>
+      <th>denominator</th>
+      <td><p>Either an integer indicating which of the models to use as the denominator,
+or a model to use as a denominator. Ignored for <code>BFBayesFactor</code>.</p></td>
+    </tr>
+    <tr>
+      <th>match_models</th>
+      <td><p>If <code>FALSE</code> (default), Inclustion BFs are computed by
+comparing all models with an effect against all models without the effect. If <code>TRUE</code>,
+Inclusion BFs are computed by comparing all models with an effect against models without
+the effect AND without any higher-order interactions with the effect.</p></td>
+    </tr>
+    <tr>
+      <th>prior_odds</th>
+      <td><p>optional vector of prior odds for the models. See <code>BayesFactor::priorOdds</code></p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Some type of Bayes factor, depending on the input. See <code><a href='bayesfactor_savagedickey.html'>bayesfactor_savagedickey</a></code>, <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code> or <code><a href='bayesfactor_inclusion.html'>bayesfactor_inclusion</a></code></p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
   </div>
 </div>
