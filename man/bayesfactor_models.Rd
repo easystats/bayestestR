@@ -4,13 +4,15 @@
 \alias{bayesfactor_models}
 \title{Bayes Factors (BF) for model comparison}
 \usage{
-bayesfactor_models(..., denominator = 1)
+bayesfactor_models(..., denominator = 1, verbose = TRUE)
 }
 \arguments{
 \item{...}{Fitted models (any models supported by \pkg{insight}), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').}
 
 \item{denominator}{Either an integer indicating which of the models to use as the denominator,
 or a model to use as a denominator. Ignored for \code{BFBayesFactor}.}
+
+\item{verbose}{Toggle off warnings.}
 }
 \value{
 A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs, that prints nicely.
