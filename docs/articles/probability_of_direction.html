@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -152,29 +152,29 @@
 <h1 class="hasAnchor">
 <a href="#what-is-the-pd" class="anchor"></a>What is the <em>pd?</em>
 </h1>
-<p>The <strong>Probability of Direction (pd)</strong> is an index of <strong>effect existence</strong>, ranging from 50% to 100%, representing the certainty with which an effect goes in a particular direction (<em>i.e.</em>, whether it is positive or negative).</p>
-<p>Beyond its simplicity of interpretation, understanding and computation, this index also presents other interesting properties:</p>
+<p>The <strong>Probability of Direction (pd)</strong> is an index of <strong>effect existence</strong>, ranging from 50% to 100%, representing the certainty with which an effect goes in a particular direction (<em>i.e.</em>, is positive or negative).</p>
+<p>Beyond its <strong>simplicity of interpretation, understanding and computation</strong>, this index also presents other interesting properties:</p>
 <ul>
-<li>It is independent from the model: It is solely based on the posterior distributions and does not require any additional information from the data or the model.</li>
-<li>It is not sensitive to the scale of neither the response variable nor the predictor.</li>
-<li>It is strongly correlated with the frequentist <em>p</em>-value, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.</li>
+<li>It is <strong>independent from the model</strong>: It is solely based on the posterior distributions and does not require any additional information from the data or the model.</li>
+<li>It is <strong>robust</strong> to the scale of both the response variable and the predictors.</li>
+<li>It is strongly correlated with the frequentist <strong><em>p</em>-value</strong>, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.</li>
 </ul>
 <div class="figure" style="text-align: center">
 <img src="probability_of_direction_files/figure-html/unnamed-chunk-2-1.png" alt="Correlation between the frequentist p-value and the probability of direction (pd)" width="700"><p class="caption">
 Correlation between the frequentist p-value and the probability of direction (pd)
 </p>
 </div>
-<p>However, this index is not relevant to assess the magnitude and importance of an effect (the real meaning of “significance”), which is better achieved through other indices such as the <a href="https://easystats.github.io/bayestestR/index.html#rope">ROPE percentage</a>. In fact, indices of significance and existence are totally independent. You can have an effect with a <em>pd</em> of <strong>99.99%</strong>, for which the whole posterior distribution is concentrated in the <code>[0.0001, 0.002]</code> range. In this case, the effect is <strong>positive with a high certainty</strong>, but also <strong>not significant</strong> (<em>i.e.</em>, very small).</p>
-<p>Indices of effect existence, such as the <em>pd</em>, are particularly useful in exploratory research or clinical studies, for which the focus is to make sure that the effect of interest is not in the opposite direction (for clinical studies, that a treatment is not harmful). However, once the effect’s direction is confirmed, the focus should shift toward its significance, including a precise estimation of its magnitude and importance.</p>
+<p>However, this index is not relevant to assess the magnitude and importance of an effect (the meaning of “significance”), which is better achieved through other indices such as the <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html">ROPE percentage</a>. In fact, indices of significance and existence are totally independent. You can have an effect with a <em>pd</em> of <strong>99.99%</strong>, for which the whole posterior distribution is concentrated in the <code>[0.0001, 0.002]</code> range. In this case, the effect is <strong>positive with a high certainty</strong>, but also <strong>not significant</strong> (<em>i.e.</em>, very small).</p>
+<p>Indices of effect existence, such as the <em>pd</em>, are particularly useful in exploratory research or clinical studies, for which the focus is to make sure that the effect of interest is not in the opposite direction (for clinical studies, that a treatment is not harmful). However, once the effect’s direction is confirmed, the focus should shift toward its significance, including a precise estimation of its magnitude, relevance and importance.</p>
 <blockquote>
-<p><strong>But if it’s like the <em>p</em>-value, it must be bad because the <em>p</em>-value is bad [insert reference to the reproducibility crisis].</strong></p>
+<p><strong>But if it’s like the <em>p</em>-value, it must be bad because the <em>p</em>-value is bad [<em>insert reference to the reproducibility crisis</em>].</strong></p>
 </blockquote>
-<p>In fact, this aspect of the reproducibility crisis might have been misunderstood. Indeed, it is not that the <em>p</em>-value is intrinsically that bad or wrong index. Rather, it is its <strong>misuse</strong>, <strong>misunderstanding</strong> and <strong>misinterpretation</strong> that fuels the decay of the situation. For instance, the fact that the <strong>pd</strong> is highly correlated with the <em>p</em>-value suggests that the latter is more an index of effect <em>existence</em> than <em>significance</em> (understood in the layman sense “worth of interest”). The Bayesian version, the <strong>pd</strong>, has an intuitive meaning and makes obvious the fact that <strong>all thresholds are arbitrary and none of then really make really sense</strong>. Nevertheless, the <strong>mathematical and interpretative transparency</strong> of the <strong>pd</strong>, and its reconceptualisation as an index of effect existence, offers a valuable insight into the characterization of Bayesian results. Moreover, its concomittant proximity with the frequentist <em>p</em>-value makes it perfect to ease the transition of psychological research into the adoption of the Bayesian framework.</p>
+<p>In fact, this aspect of the reproducibility crisis might have been misunderstood. Indeed, it is not that the <em>p</em>-value is an intrinsically bad or wrong index. Rather, it is its <strong>misuse</strong>, <strong>misunderstanding</strong> and <strong>misinterpretation</strong> that fuels the decay of the situation. For instance, the fact that the <strong>pd</strong> is highly correlated with the <em>p</em>-value suggests that the latter is more an index of effect <em>existence</em> than <em>significance</em> (<em>i.e.</em>, “worth of interest”). The Bayesian version, the <strong>pd</strong>, has an intuitive meaning and makes obvious the fact that <strong>all thresholds are arbitrary</strong>. Nevertheless, the <strong>mathematical and interpretative transparency</strong> of the <strong>pd</strong>, and its reconceptualisation as an index of effect existence, offers a valuable insight into the characterization of Bayesian results. Moreover, its concomittant proximity with the frequentist <em>p</em>-value makes it a perfect metric to ease the transition of psychological research into the adoption of the Bayesian framework.</p>
 </div>
 <div id="methods-of-computation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#methods-of-computation" class="anchor"></a>Methods of computation</h1>
-<p>The most <strong>simple and direct</strong> way to compute the <strong>pd</strong> is to 1) look at the median’s sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This “simple” method is the most straigtfoward, but its precision is a directly tied to the number of posterior draws.</p>
+<p>The most <strong>simple and direct</strong> way to compute the <strong>pd</strong> is to 1) look at the median’s sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This “simple” method is the most straigtfoward, but its precision is directly tied to the number of posterior draws.</p>
 <p>The second approach relies on <a href="https://easystats.github.io/bayestestR/reference/estimate_density.html"><strong>density estimation</strong></a>. It starts by estimating the density function (for which many methods are available), and then computing the <a href="https://easystats.github.io/bayestestR/reference/area_under_curve.html"><strong>area under the curve</strong></a> (AUC) of the density curve on the other side of 0. The density-based method could hypothetically be considered as more precise, but strongly depends on the method used to estimate the density function.</p>
 </div>
 <div id="methods-comparison" class="section level1">

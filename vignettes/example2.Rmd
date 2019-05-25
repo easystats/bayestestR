@@ -42,7 +42,7 @@ Now that [**describing and understanding posterior distributions of linear regre
 Don't worry. Let us all remind and appreciate the fact that **all basic statistical pocedures** such as t-tests, ANOVAs, correlations or Chisquare tests [***are* linear regressions**](https://lindeloev.github.io/tests-as-linear/). Now that we have accepted the beauty of it, we will continue with a general linear model.
 
 
-TO BE CONTINUED.
+## Logistic model
 
 ### Diagnostic Indices
 
@@ -52,3 +52,5 @@ About diagnostic indices such as Rhat and ESS.
 ### Priors
 
 About priors.
+
+## Mixed models
