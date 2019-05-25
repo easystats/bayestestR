@@ -1,14 +1,16 @@
 #' @export
-print.p_rope <- function(x, ...) {
+print.p_rope <- function(x, digits = 2, ...) {
   if ("data_plot" %in% class(x)) {
     print(as.data.frame(x))
   } else {
-    insight::print_color("# ROPE-based p-value:\n\n", "blue")
+    insight::print_color("# ROPE-based p-value\n\n", "blue")
 
     if ("data.frame" %in% class(x)) {
-      cat(paste0(paste0("  - ", x$Parameter, sprintf(": p (ROPE) = %.2f%%", x$pd)), collapse = "\n"))
+      pars <- format(x$Parameter)
+      pmap <- format(sprintf("%.*f%%", digits, x$p_ROPE), justify = "right")
+      cat(paste0("  ", pars, ": ", pmap, collapse = "\n"))
     } else {
-      cat(sprintf("p (ROPE) = %.2f%%", x))
+      cat(sprintf("p (ROPE) = %.*f%%", digits, x))
     }
   }
 }
