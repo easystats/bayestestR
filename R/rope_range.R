@@ -31,13 +31,17 @@
 #' @inheritParams rope
 #'
 #' @examples
+#' library(rstanarm)
+#' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
+#' rope_range(model)
+#'
 #' \dontrun{
 #' library(rstanarm)
-#' model <- rstanarm::stan_glm(vs ~ mpg, data = mtcars, family = "binomial")
+#' model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial")
 #' rope_range(model)
 #'
 #' library(brms)
-#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' model <- brm(mpg ~ wt + cyl, data = mtcars)
 #' rope_range(model)
 #'
 #' library(BayesFactor)
