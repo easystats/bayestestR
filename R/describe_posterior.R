@@ -23,15 +23,16 @@
 #' describe_posterior(df)
 #' describe_posterior(df, centrality = "all", dispersion = TRUE, test = "all")
 #' describe_posterior(df, ci = c(0.80, 0.90))
-#' \dontrun{
+#'
 #' # rstanarm models
 #' # -----------------------------------------------
 #' library(rstanarm)
-#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+#' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 #' describe_posterior(model)
 #' describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
 #' describe_posterior(model, ci = c(0.80, 0.90))
 #'
+#' \dontrun{
 #' # brms models
 #' # -----------------------------------------------
 #' library(brms)
