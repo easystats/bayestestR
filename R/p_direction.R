@@ -8,9 +8,9 @@
 #'
 #' @details \strong{Relationship with the p-value}: In most cases, it seems
 #' that the \emph{p}d corresponds to the frequentist one-sided p-value
-#' through the formula \eqn{p_{two sided} = 2*(1-\frac{p_{d}}{100})} and to
+#' through the formula \ifelse{html}{\out{p<sub>two sided</sub> = 2*(1-p<sub>d</sub>/100)}}{\eqn{p_{two sided} = 2*(1-\frac{p_{d}}{100})}} and to
 #' the two-sided p-value (the most commonly reported one) through
-#' the formula \eqn{p_{one sided} = 2*(1-\frac{p_{d}}{100})}. Thus, a \code{pd}
+#' the formula \ifelse{html}{\out{p<sub>one sided</sub> = 2*(1-p<sub>d</sub>/100)}}{\eqn{p_{one sided} = 2*(1-\frac{p_{d}}{100})}}. Thus, a \code{pd}
 #' of \code{95\%}, \code{97.5\%}, \code{99.5\%} and \code{99.95\%} corresponds
 #' approximately to ap-value of respectively \code{.1}, \code{.05},
 #' \code{.01} and \code{.001}. See the

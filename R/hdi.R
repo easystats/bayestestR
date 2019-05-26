@@ -157,6 +157,18 @@ hdi.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
   }
 
   nCIs <- length(x_sorted) - window_size
+
+  if (nCIs < 1) {
+    if (verbose) {
+      warning("`ci` is too large or x does not contain enough data points, returning NAs.")
+    }
+    return(data.frame(
+      "CI" = ci * 100,
+      "CI_low" = NA,
+      "CI_high" = NA
+    ))
+  }
+
   ci.width <- sapply(1:nCIs, function(.x) x_sorted[.x + window_size] - x_sorted[.x])
 
   # find minimum of width differences, check for multiple minima
