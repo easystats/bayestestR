@@ -8,7 +8,7 @@
 \alias{p_direction.stanreg}
 \alias{p_direction.brmsfit}
 \alias{p_direction.BFBayesFactor}
-\title{Probability of Direction (pd)}
+\title{Probability of Direction (\emph{pd})}
 \usage{
 p_direction(x, ...)
 
@@ -48,18 +48,27 @@ or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \description{
-Compute the \strong{Probability of Direction} (\strong{pd}, also known as the Maximum Probability of Effect - \emph{MPE}). It varies between 50\% and 100\% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist \strong{p-value}.
+Compute the \strong{Probability of Direction} (\strong{\emph{pd}}, also known as the Maximum Probability of Effect - \emph{MPE}). It varies between 50\% and 100\% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist \strong{p-value}.
 }
 \details{
-\strong{Relationship with the p-value}: In most cases, it seems
-that the \emph{p}d corresponds to the frequentist one-sided p-value
-through the formula \ifelse{html}{\out{p<sub>two sided</sub> = 2*(1-p<sub>d</sub>/100)}}{\eqn{p_{two sided} = 2*(1-\frac{p_{d}}{100})}} and to
-the two-sided p-value (the most commonly reported one) through
-the formula \ifelse{html}{\out{p<sub>one sided</sub> = 2*(1-p<sub>d</sub>/100)}}{\eqn{p_{one sided} = 2*(1-\frac{p_{d}}{100})}}. Thus, a \code{pd}
-of \code{95\%}, \code{97.5\%}, \code{99.5\%} and \code{99.95\%} corresponds
-approximately to ap-value of respectively \code{.1}, \code{.05},
-\code{.01} and \code{.001}. See the
-\href{https://easystats.github.io/bayestestR/articles/guidelines.html}{reporting guidelines}.
+\strong{What is the \emph{pd}?}
+\cr
+The Probability of Direction (pd) is an index of effect existence, ranging from 50\% to 100\%, representing the certainty with which an effect goes in a particular direction (i.e., is positive or negative). Beyond its simplicity of interpretation, understanding and computation, this index also presents other interesting properties:
+\itemize{
+  \item It is independent from the model: It is solely based on the posterior distributions and does not require any additional information from the data or the model.
+  \item It is robust to the scale of both the response variable and the predictors.
+  \item It is strongly correlated with the frequentist p-value, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.
+}
+
+\cr \cr
+\strong{Relationship with the p-value}
+\cr
+In most cases, it seems that the \emph{pd} chas a direct correspondance with the frequentist one-sided \emph{p}-value through the formula \ifelse{html}{\out{p<sub>one sided</sub> = 1-p<sub>d</sub>/100}}{\eqn{p_{one sided} = 1-\frac{p_{d}}{100}}} and to the two-sided p-value (the most commonly reported one) through the formula \ifelse{html}{\out{p<sub>one sided</sub> = 2*(1-p<sub>d</sub>/100)}}{\eqn{p_{one sided} = 2*(1-\frac{p_{d}}{100})}}. Thus, a two-sided p-value of respectively \code{.1}, \code{.05}, \code{.01} and \code{.001} would correspond approximately to a \code{pd} of \code{95\%}, \code{97.5\%}, \code{99.5\%} and \code{99.95\%}.
+
+\cr \cr
+\strong{Methods of computation}
+\cr
+The most simple and direct way to compute the \emph{pd} is to 1) look at the median's sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This "simple" method is the most straigtfoward, but its precision is directly tied to the number of posterior draws. The second approach relies on \link[=estimate_density]{density estimation}. It starts by estimating the density function (for which many methods are available), and then computing the \link[=area_under_curve]{area under the curve} (AUC) of the density curve on the other side of 0.
 }
 \examples{
 library(bayestestR)

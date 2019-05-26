@@ -44,6 +44,14 @@ Beyond its **simplicity of interpretation, understanding and computation**, this
 - It is **robust** to the scale of both the response variable and the predictors.
 - It is strongly correlated with the frequentist ***p*-value**, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.
 
+However, this index is not relevant to assess the magnitude and importance of an effect (the meaning of "significance"), which is better achieved through other indices such as the [ROPE percentage](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html). In fact, indices of significance and existence are totally independent. You can have an effect with a *pd* of **99.99\%**, for which the whole posterior distribution is concentrated in the `[0.0001, 0.002]` range. In this case, the effect is **positive with a high certainty**, but also **not significant** (*i.e.*, very small).
+
+Indices of effect existence, such as the *pd*, are particularly useful in exploratory research or clinical studies, for which the focus is to make sure that the effect of interest is not in the opposite direction (for clinical studies, that a treatment is not harmful). However, once the effect's direction is confirmed, the focus should shift toward its significance, including a precise estimation of its magnitude, relevance and importance.
+
+# Relationship with the *p*-value
+
+In most cases, it seems that the *pd* has a direct correspondance with the frequentist **one-sided *p*-value** through the formula: $$p_{one sided} = 1-p_d/100$$ Similarly, the **two-sided *p*-value** (the most commonly reported one) is equivalent through the formula: $$p_{two sided} = 2*(1-p_d/100)$$Thus, the two-sided *p*-value of respectively **.1**, **.05**, **.01** and **.001** would correspond approximately to a *pd* of **95\%**, **97.5\%**, **99.5\%** and **99.95\%** .
+
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, fig.cap="Correlation between the frequentist p-value and the probability of direction (pd)", fig.align='center'}
 library(dplyr)
@@ -54,8 +62,11 @@ read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.cs
   mutate(effect_existence = ifelse(true_effect == 1, "Presence of true effect", "Absence of true effect")) %>% 
   ggplot(aes(x=p_direction, y=p_value, color=effect_existence)) +
   geom_point(alpha=0.1, stroke=0, shape=16) +
+  geom_segment(aes(x=95, y=Inf, xend=95, yend=0.1), color="black", linetype="longdash") +
+  geom_segment(aes(x=-Inf, y=0.1, xend=95, yend=0.1), color="black", linetype="longdash") +
   theme_classic() +
-  scale_y_reverse() +
+  scale_y_reverse(breaks = round(seq(0, 1, length.out = 11), digits=2)) +
+  scale_x_continuous(breaks = round(c(95, seq(50, 100, length.out = 6)))) +
   scale_color_manual(values=c("Presence of true effect"="green", "Absence of true effect"="red")) +
   theme(legend.title = element_blank()) +
   guides(colour = guide_legend(override.aes = list(alpha = 1))) +
@@ -63,9 +74,7 @@ read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.cs
   ylab("Frequentist p-value\n")
 ```
 
-However, this index is not relevant to assess the magnitude and importance of an effect (the meaning of "significance"), which is better achieved through other indices such as the [ROPE percentage](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html). In fact, indices of significance and existence are totally independent. You can have an effect with a *pd* of **99.99\%**, for which the whole posterior distribution is concentrated in the `[0.0001, 0.002]` range. In this case, the effect is **positive with a high certainty**, but also **not significant** (*i.e.*, very small).
 
-Indices of effect existence, such as the *pd*, are particularly useful in exploratory research or clinical studies, for which the focus is to make sure that the effect of interest is not in the opposite direction (for clinical studies, that a treatment is not harmful). However, once the effect's direction is confirmed, the focus should shift toward its significance, including a precise estimation of its magnitude, relevance and importance.
 
 > **But if it's like the *p*-value, it must be bad because the *p*-value is bad [*insert reference to the reproducibility crisis*].**
 

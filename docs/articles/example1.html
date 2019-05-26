@@ -383,7 +383,7 @@
 <pre><code>&gt; [1] 98</code></pre>
 <p>We can conclude that <strong>the effect is positive with a probability of 97.82%</strong>. We call this index the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>Probability of Direction (pd)</strong></a>. It can, in fact, be computed more easily with the following:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(posteriors<span class="op">$</span>feedsunflower)</a></code></pre></div>
-<pre><code>&gt; # Probability of Direction (pd):
+<pre><code>&gt; # Probability of Direction (pd)
 &gt; 
 &gt;   - pd = 97.82%</code></pre>
 <p>Interestingly, it so happens that <strong>this index is usually highly correlated with the frequentist <em>p</em>-value</strong>. We could almost roughly infer the corresponding <em>p</em>-value with a simple transformation:</p>
