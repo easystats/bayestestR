@@ -126,13 +126,6 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   # Organize the models
   mods <- list(...)
 
-  supported_models <- sapply(mods, insight::is_model)
-
-  if (!all(supported_models)) {
-    object_names <- match.call(expand.dots = FALSE)$`...`
-    stop(sprintf("Can't calculate Bayes factor.\nFollowing objects are no (supported) model objects: %s", paste0(object_names[!supported_models], collapse = ", ")), call. = FALSE)
-  }
-
   if (!is.numeric(denominator)) {
     model_name <- deparse(match.call()[["denominator"]])
     arg_names <- sapply(match.call(expand.dots = F)$`...`, deparse)
@@ -144,6 +137,13 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     } else {
       denominator <- denominator_model
     }
+  }
+
+  # supported models
+  supported_models <- sapply(mods, insight::is_model)
+  if (!all(supported_models)) {
+    object_names <- match.call(expand.dots = FALSE)$`...`
+    stop(sprintf("Can't calculate Bayes factor.\nFollowing objects are no (supported) model objects: %s", paste0(object_names[!supported_models], collapse = ", ")), call. = FALSE)
   }
 
   # Test that all is good:
