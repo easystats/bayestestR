@@ -63,21 +63,7 @@ lmer3 <- lmer(
 bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
 bayesfactor_models(lmer1, lmer2, lmer3, denominator = lmer1)
 \dontrun{
-# with brmfit objects:
-# --------------------
-# (note the save_all_pars MUST be set to TRUE in order to work)
-library(brms)
-brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
-brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
-brm3 <- brm(
-  Sepal.Length ~ Species + Petal.Length,
-  data = iris,
-  save_all_pars = TRUE
-)
-
-bayesfactor_models(brm1, brm2, brm3, denominator = 1)
-
-# with stanreg objects:
+# rstanarm models
 # ---------------------
 # (note that a unique diagnostic_file MUST be specified in order to work)
 library(rstanarm)
@@ -98,7 +84,23 @@ stan_m2 <- stan_glm(Sepal.Length ~ Species + Petal.Length,
 )
 bayesfactor_models(stan_m1, stan_m2, denominator = stan_m0)
 
-# With BFBayesFactor objects:
+
+# brms models
+# --------------------
+# (note the save_all_pars MUST be set to TRUE in order to work)
+library(brms)
+brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
+brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
+brm3 <- brm(
+  Sepal.Length ~ Species + Petal.Length,
+  data = iris,
+  save_all_pars = TRUE
+)
+
+bayesfactor_models(brm1, brm2, brm3, denominator = 1)
+
+
+# BayesFactor
 # ---------------------------
 library(BayesFactor)
 data(puzzles)

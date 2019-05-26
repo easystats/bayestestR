@@ -302,21 +302,7 @@ smaller than 1/3 indicates substantial evidence in favor of the denominator mode
 #&gt; 	 [1] Petal.Length + (1 | Species)   
 #&gt; ---
 #&gt; Bayes factor type:  BIC approximation </div><span class='co'># NOT RUN {</span>
-<span class='co'># with brmfit objects:</span>
-<span class='co'># --------------------</span>
-<span class='co'># (note the save_all_pars MUST be set to TRUE in order to work)</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
-<span class='no'>brm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>brm2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>brm3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(
-  <span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='no'>Petal.Length</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>,
-  <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
-
-<span class='fu'>bayesfactor_models</span>(<span class='no'>brm1</span>, <span class='no'>brm2</span>, <span class='no'>brm3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-
-<span class='co'># with stanreg objects:</span>
+<span class='co'># rstanarm models</span>
 <span class='co'># ---------------------</span>
 <span class='co'># (note that a unique diagnostic_file MUST be specified in order to work)</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
@@ -337,7 +323,23 @@ smaller than 1/3 indicates substantial evidence in favor of the denominator mode
 )
 <span class='fu'>bayesfactor_models</span>(<span class='no'>stan_m1</span>, <span class='no'>stan_m2</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>stan_m0</span>)
 
-<span class='co'># With BFBayesFactor objects:</span>
+
+<span class='co'># brms models</span>
+<span class='co'># --------------------</span>
+<span class='co'># (note the save_all_pars MUST be set to TRUE in order to work)</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
+<span class='no'>brm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>brm2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>brm3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(
+  <span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='no'>Petal.Length</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>,
+  <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
+
+<span class='fu'>bayesfactor_models</span>(<span class='no'>brm1</span>, <span class='no'>brm2</span>, <span class='no'>brm3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+
+
+<span class='co'># BayesFactor</span>
 <span class='co'># ---------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>BayesFactor</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>puzzles</span>)

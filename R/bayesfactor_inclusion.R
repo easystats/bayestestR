@@ -24,7 +24,7 @@
 #' @examples
 #' library(bayestestR)
 #'
-#' # Using with bayesfactor_models:
+#' # Using bayesfactor_models:
 #' # ------------------------------
 #' mo0 <- lm(Sepal.Length ~ 1, data = iris)
 #' mo1 <- lm(Sepal.Length ~ Species, data = iris)
@@ -34,7 +34,7 @@
 #' BFmodels <- bayesfactor_models(mo1, mo2, mo3, denominator = mo0)
 #' bayesfactor_inclusion(BFmodels)
 #'
-#' # Using with BayesFactor objects:
+#' # BayesFactor
 #' # -------------------------------
 #' library(BayesFactor)
 #'

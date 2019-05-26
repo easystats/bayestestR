@@ -84,7 +84,6 @@ model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 describe_posterior(model)
 describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
 describe_posterior(model, ci = c(0.80, 0.90))
-
 \dontrun{
 # brms models
 # -----------------------------------------------

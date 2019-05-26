@@ -75,7 +75,7 @@ bayesfactor_savagedickey(posterior, prior)
 # rstanarm models
 # ---------------
 library(rstanarm)
-stan_model <- stan_lmer(extra ~ group + (1|ID), data = sleep)
+stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 bayesfactor_savagedickey(stan_model)
 
 # brms models

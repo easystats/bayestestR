@@ -31,7 +31,6 @@
 #' describe_posterior(model)
 #' describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
 #' describe_posterior(model, ci = c(0.80, 0.90))
-#'
 #' \dontrun{
 #' # brms models
 #' # -----------------------------------------------
@@ -110,7 +109,6 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = T
 
     # ROPE
     if (any(c("rope") %in% test)) {
-
       test_rope <- rope(x, range = rope_range, ci = rope_ci, ...)
 
       if (!"Parameter" %in% names(test_rope)) {
