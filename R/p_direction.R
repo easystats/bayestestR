@@ -6,6 +6,16 @@
 #' @param method Can be \code{"direct"} or one of methods of \link[=estimate_density]{density estimation}, such as \code{"kernel"}, \code{"logspline"} or \code{"KernSmooth"}. If \code{"direct"} (default), the computation is based on the raw ratio of samples superior and inferior to 0. Else, the result is based on the \link[=auc]{Area under the Curve (AUC)} of the estimated \link[=estimate_density]{density} function.
 #' @inheritParams hdi
 #'
+#' @details
+#' \strong{What is the \emph{pd}?}
+#' \cr
+#' The Probability of Direction (pd) is an index of effect existence, ranging from 50\% to 100\%, representing the certainty with which an effect goes in a particular direction (i.e., is positive or negative). Beyond its simplicity of interpretation, understanding and computation, this index also presents other interesting properties:
+#' \itemize{
+#'   \item It is independent from the model: It is solely based on the posterior distributions and does not require any additional information from the data or the model.
+#'   \item It is robust to the scale of both the response variable and the predictors.
+#'   \item It is strongly correlated with the frequentist p-value, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.
+#' }
+#'
 #'
 #'
 #' @examples
