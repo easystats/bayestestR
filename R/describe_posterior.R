@@ -241,7 +241,7 @@ describe_posterior.brmsfit <- function(posteriors, centrality = "median", disper
 
 #' @export
 describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, priors = TRUE, ...) {
-  out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, ...)
+  out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, ...)
 
   if (priors) {
     col_order <- out$Parameter

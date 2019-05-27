@@ -98,8 +98,8 @@ describe_posterior(model, ci = c(0.80, 0.90))
 library(BayesFactor)
 bf <- ttestBF(x = rnorm(100, 1, 1))
 describe_posterior(bf)
-describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
-describe_posterior(bbf, ci = c(0.80, 0.90))
+# describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
+describe_posterior(bf, ci = c(0.80, 0.90))
 }
 
 }
