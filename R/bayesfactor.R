@@ -21,12 +21,11 @@
 #' posterior <- distribution_normal(1000, mean = .5, sd = .3)
 #'
 #' bayesfactor(posterior, prior = prior)
-#'
 #' \dontrun{
 #' # rstanarm models
 #' # ---------------
 #' library(rstanarm)
-#' model <- stan_lmer(extra ~ group + (1|ID), data = sleep)
+#' model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #' bayesfactor(model)
 #' }
 #'
@@ -40,27 +39,34 @@
 #' comparison
 #'
 #' bayesfactor(comparison)
-#'
 #' @export
 bayesfactor <-
   function(...,
-           prior = NULL,
-           direction = "two-sided",
-           hypothesis = 0,
-           effects = c("fixed", "random", "all"),
-           verbose = TRUE,
-           denominator = 1,
-           match_models = FALSE,
-           prior_odds = NULL) {
+             prior = NULL,
+             direction = "two-sided",
+             hypothesis = 0,
+             effects = c("fixed", "random", "all"),
+             verbose = TRUE,
+             denominator = 1,
+             match_models = FALSE,
+             prior_odds = NULL) {
     mods <- list(...)
 
     if (length(mods) > 1) {
       bayesfactor_models(..., denominator = denominator)
-    } else if (inherits(mods[[1]],c("bayesfactor_models","BFBayesFactor"))) {
+    } else if (inherits(mods[[1]], "bayesfactor_models")) {
       bayesfactor_inclusion(..., match_models = match_models, prior_odds = prior_odds)
+    } else if (inherits(mods[[1]], "BFBayesFactor")) {
+      if (class(mods[[1]]@numerator[[1]]) == "BFlinearModel") {
+        bayesfactor_inclusion(..., match_models = match_models, prior_odds = prior_odds)
+      } else {
+        bayesfactor_models(...)
+      }
     } else {
-      bayesfactor_savagedickey(...,prior = prior, direction = direction,
-                               hypothesis = hypothesis, effects = effects,
-                               verbose = verbose)
+      bayesfactor_savagedickey(...,
+        prior = prior, direction = direction,
+        hypothesis = hypothesis, effects = effects,
+        verbose = verbose
+      )
     }
   }

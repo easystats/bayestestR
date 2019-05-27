@@ -36,13 +36,21 @@ set.seed(333)
 
 # What is the *pd?*
 
-The **Probability of Direction (pd)** is an index of **effect existence**, ranging from 50\% to 100\%, representing the certainty with which an effect goes in a particular direction (*i.e.*, whether it is positive or negative). 
+The **Probability of Direction (pd)** is an index of **effect existence**, ranging from 50\% to 100\%, representing the certainty with which an effect goes in a particular direction (*i.e.*, is positive or negative). 
 
-Beyond its simplicity of interpretation, understanding and computation, this index also presents other interesting properties:
+Beyond its **simplicity of interpretation, understanding and computation**, this index also presents other interesting properties:
 
-- It is independent from the model: It is solely based on the posterior distributions and does not require any additional information from the data or the model.
-- It is not sensitive to the scale of neither the response variable nor the predictor.
-- It is strongly correlated with the frequentist *p*-value, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.
+- It is **independent from the model**: It is solely based on the posterior distributions and does not require any additional information from the data or the model.
+- It is **robust** to the scale of both the response variable and the predictors.
+- It is strongly correlated with the frequentist ***p*-value**, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.
+
+However, this index is not relevant to assess the magnitude and importance of an effect (the meaning of "significance"), which is better achieved through other indices such as the [ROPE percentage](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html). In fact, indices of significance and existence are totally independent. You can have an effect with a *pd* of **99.99\%**, for which the whole posterior distribution is concentrated in the `[0.0001, 0.002]` range. In this case, the effect is **positive with a high certainty**, but also **not significant** (*i.e.*, very small).
+
+Indices of effect existence, such as the *pd*, are particularly useful in exploratory research or clinical studies, for which the focus is to make sure that the effect of interest is not in the opposite direction (for clinical studies, that a treatment is not harmful). However, once the effect's direction is confirmed, the focus should shift toward its significance, including a precise estimation of its magnitude, relevance and importance.
+
+# Relationship with the *p*-value
+
+In most cases, it seems that the *pd* has a direct correspondance with the frequentist **one-sided *p*-value** through the formula: $$p_{one sided} = 1-p_d/100$$ Similarly, the **two-sided *p*-value** (the most commonly reported one) is equivalent through the formula: $$p_{two sided} = 2*(1-p_d/100)$$ Thus, the two-sided *p*-value of respectively **.1**, **.05**, **.01** and **.001** would correspond approximately to a *pd* of **95\%**, **97.5\%**, **99.5\%** and **99.95\%** .
 
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, fig.cap="Correlation between the frequentist p-value and the probability of direction (pd)", fig.align='center'}
@@ -54,8 +62,11 @@ read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.cs
   mutate(effect_existence = ifelse(true_effect == 1, "Presence of true effect", "Absence of true effect")) %>% 
   ggplot(aes(x=p_direction, y=p_value, color=effect_existence)) +
   geom_point(alpha=0.1, stroke=0, shape=16) +
+  geom_segment(aes(x=95, y=Inf, xend=95, yend=0.1), color="black", linetype="longdash") +
+  geom_segment(aes(x=-Inf, y=0.1, xend=95, yend=0.1), color="black", linetype="longdash") +
   theme_classic() +
-  scale_y_reverse() +
+  scale_y_reverse(breaks = round(seq(0, 1, length.out = 11), digits=2)) +
+  scale_x_continuous(breaks = round(c(95, seq(50, 100, length.out = 6)))) +
   scale_color_manual(values=c("Presence of true effect"="green", "Absence of true effect"="red")) +
   theme(legend.title = element_blank()) +
   guides(colour = guide_legend(override.aes = list(alpha = 1))) +
@@ -63,17 +74,15 @@ read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.cs
   ylab("Frequentist p-value\n")
 ```
 
-However, this index is not relevant to assess the magnitude and importance of an effect (the real meaning of "significance"), which is better achieved through other indices such as the [ROPE percentage](https://easystats.github.io/bayestestR/index.html#rope). In fact, indices of significance and existence are totally independent. You can have an effect with a *pd* of **99.99\%**, for which the whole posterior distribution is concentrated in the `[0.0001, 0.002]` range. In this case, the effect is **positive with a high certainty**, but also **not significant** (*i.e.*, very small).
 
-Indices of effect existence, such as the *pd*, are particularly useful in exploratory research or clinical studies, for which the focus is to make sure that the effect of interest is not in the opposite direction (for clinical studies, that a treatment is not harmful). However, once the effect's direction is confirmed, the focus should shift toward its significance, including a precise estimation of its magnitude and importance.
 
-> **But if it's like the *p*-value, it must be bad because the *p*-value is bad [insert reference to the reproducibility crisis].**
+> **But if it's like the *p*-value, it must be bad because the *p*-value is bad [*insert reference to the reproducibility crisis*].**
 
-In fact, this aspect of the reproducibility crisis might have been misunderstood. Indeed, it is not that the *p*-value is intrinsically that bad or wrong index. Rather, it is its **misuse**, **misunderstanding** and **misinterpretation** that fuels the decay of the situation. For instance, the fact that the **pd** is highly correlated with the *p*-value suggests that the latter is more an index of effect *existence* than *significance* (understood in the layman sense "worth of interest"). The Bayesian version, the **pd**, has an intuitive meaning and makes obvious the fact that **all thresholds are arbitrary and none of then really make really sense**. Nevertheless, the **mathematical and interpretative transparency** of the **pd**, and its reconceptualisation as an index of effect existence, offers a valuable insight into the characterization of Bayesian results. Moreover, its concomittant proximity with the frequentist *p*-value makes it perfect to ease the transition of psychological research into the adoption of the Bayesian framework.
+In fact, this aspect of the reproducibility crisis might have been misunderstood. Indeed, it is not that the *p*-value is an intrinsically bad or wrong index. Rather, it is its **misuse**, **misunderstanding** and **misinterpretation** that fuels the decay of the situation. For instance, the fact that the **pd** is highly correlated with the *p*-value suggests that the latter is more an index of effect *existence* than *significance* (*i.e.*, "worth of interest"). The Bayesian version, the **pd**, has an intuitive meaning and makes obvious the fact that **all thresholds are arbitrary**. Nevertheless, the **mathematical and interpretative transparency** of the **pd**, and its reconceptualisation as an index of effect existence, offers a valuable insight into the characterization of Bayesian results. Moreover, its concomittant proximity with the frequentist *p*-value makes it a perfect metric to ease the transition of psychological research into the adoption of the Bayesian framework.
 
 # Methods of computation
 
-The most **simple and direct** way to compute the **pd** is to 1) look at the median's sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This "simple" method is the most straigtfoward, but its precision is a directly tied to the number of posterior draws.
+The most **simple and direct** way to compute the **pd** is to 1) look at the median's sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This "simple" method is the most straigtfoward, but its precision is directly tied to the number of posterior draws.
 
 The second approach relies on [**density estimation**](https://easystats.github.io/bayestestR/reference/estimate_density.html). It starts by estimating the density function (for which many methods are available), and then computing the [**area under the curve**](https://easystats.github.io/bayestestR/reference/area_under_curve.html) (AUC) of the density curve on the other side of 0. The density-based method could hypothetically be considered as more precise, but strongly depends on the method used to estimate the density function.
 

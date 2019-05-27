@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -285,50 +285,50 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>.89</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span>       89% HDI
-#&gt;  [-1.56, 1.42]
+#&gt;  [-1.75, 1.52]
 #&gt; </div><div class='input'><span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
 #&gt; </span><span>       80% HDI
-#&gt;  [-1.10, 1.29]
+#&gt;  [-1.21, 1.36]
 #&gt; 
 #&gt; 
 #&gt;        90% HDI
-#&gt;  [-1.67, 1.43]
+#&gt;  [-1.79, 1.58]
 #&gt; 
 #&gt; 
 #&gt;        95% HDI
-#&gt;  [-1.87, 1.88]
+#&gt;  [-2.29, 1.78]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>hdi</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span> Parameter       89% HDI
-#&gt;         X1 [-1.48, 1.16]
-#&gt;         X2 [-1.46, 1.70]
-#&gt;         X3 [-1.64, 1.58]
-#&gt;         X4 [-1.67, 1.27]
+#&gt;         X1 [-1.08, 1.95]
+#&gt;         X2 [-1.44, 1.98]
+#&gt;         X3 [-1.48, 1.48]
+#&gt;         X4 [-1.30, 1.81]
 #&gt; </div><div class='input'><span class='fu'>hdi</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
 #&gt; </span><span> Parameter       80% HDI
-#&gt;         X1 [-1.24, 0.99]
-#&gt;         X2 [-1.25, 1.36]
-#&gt;         X3 [-1.16, 1.47]
-#&gt;         X4 [-1.07, 1.27]
+#&gt;         X1 [-1.00, 1.21]
+#&gt;         X2 [-1.44, 1.36]
+#&gt;         X3 [-1.06, 1.23]
+#&gt;         X4 [-1.30, 1.37]
 #&gt; 
 #&gt; 
 #&gt;  Parameter       90% HDI
-#&gt;         X1 [-1.48, 1.23]
-#&gt;         X2 [-1.46, 1.71]
-#&gt;         X3 [-1.46, 1.86]
-#&gt;         X4 [-1.92, 1.18]
+#&gt;         X1 [-1.08, 2.00]
+#&gt;         X2 [-1.44, 2.04]
+#&gt;         X3 [-1.54, 1.48]
+#&gt;         X4 [-1.30, 1.88]
 #&gt; 
 #&gt; 
 #&gt;  Parameter       95% HDI
-#&gt;         X1 [-1.85, 1.40]
-#&gt;         X2 [-1.93, 1.71]
-#&gt;         X3 [-1.64, 2.30]
-#&gt;         X4 [-2.15, 1.27]
+#&gt;         X1 [-1.66, 2.00]
+#&gt;         X2 [-1.86, 2.21]
+#&gt;         X3 [-1.89, 1.48]
+#&gt;         X4 [-1.68, 2.00]
 #&gt; 
 #&gt; </div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)

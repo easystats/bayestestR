@@ -87,7 +87,7 @@ For a complete overview of these functions, read the Bayes factor vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -260,12 +260,11 @@ the effect AND without any higher-order interactions with the effect.</p></td>
 #&gt; </span><span> Bayes Factor
 #&gt;           1.2
 #&gt; ---
-#&gt; Evidence Against Test Value: 0</div><div class='input'>
-</div></span><span class='co'># NOT RUN {</span>
+#&gt; Evidence Against Test Value: 0</div></span><span class='co'># NOT RUN {</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glmer'>stan_lmer</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span><span class='kw'>|</span><span class='no'>ID</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glmer'>stan_lmer</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
 <span class='fu'>bayesfactor</span>(<span class='no'>model</span>)
 <span class='co'># }</span><div class='input'>
 <span class='co'># Frequentist models</span>
@@ -288,8 +287,7 @@ the effect AND without any higher-order interactions with the effect.</p></td>
 #&gt; group      0.67             1         5614
 #&gt; ID         0.33             1         9767
 #&gt; ---
-#&gt; Inclusion BFs compared among all models.</div><div class='input'>
-</div></pre>
+#&gt; Inclusion BFs compared among all models.</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

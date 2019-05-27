@@ -98,7 +98,7 @@ point_estimate.data.frame <- function(x, centrality = "median", dispersion = FAL
     estimates <- do.call(rbind, estimates)
   }
 
-  out <- cbind(data.frame("Parameter" = names(x),  stringsAsFactors = FALSE), estimates)
+  out <- cbind(data.frame("Parameter" = names(x), stringsAsFactors = FALSE), estimates)
   rownames(out) <- NULL
 
   out

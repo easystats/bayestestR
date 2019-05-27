@@ -51,12 +51,11 @@ prior <- distribution_normal(1000, mean = 0, sd = 1)
 posterior <- distribution_normal(1000, mean = .5, sd = .3)
 
 bayesfactor(posterior, prior = prior)
-
 \dontrun{
 # rstanarm models
 # ---------------
 library(rstanarm)
-model <- stan_lmer(extra ~ group + (1|ID), data = sleep)
+model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 bayesfactor(model)
 }
 
@@ -70,5 +69,4 @@ comparison <- bayesfactor(m0, m1, m2)
 comparison
 
 bayesfactor(comparison)
-
 }

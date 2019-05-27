@@ -37,7 +37,7 @@
 #' # rstanarm models
 #' # ---------------
 #' library(rstanarm)
-#' stan_model <- stan_lmer(extra ~ group + (1|ID), data = sleep)
+#' stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #' bayesfactor_savagedickey(stan_model)
 #'
 #' # brms models
@@ -58,6 +58,7 @@
 #' \itemize{
 #' \item Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.
 #' \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., & Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
+#' \item Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The case of computing Bayes factors for regression parameters. British Journal of Mathematical and Statistical Psychology, 72(2), 316-333.
 #' }
 #'
 #' @author Mattan S. Ben-Shachar
@@ -175,8 +176,8 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
         warmup = alg$warmup
       )
     )), silent = TRUE))
-    if (is(prior,"try-error")) {
-      if (grepl('proper priors', prior)) {
+    if (is(prior, "try-error")) {
+      if (grepl("proper priors", prior)) {
         stop("Cannot compute BF for 'brmsfit' models fit with default priors.\nSee '?bayesfactor_savagedickey'")
       } else {
         stop(prior)
@@ -222,14 +223,16 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     )
   }
 
-  bf_val <- data.frame(Parameter = colnames(posterior),
-                       BF = sdbf,
-                       stringsAsFactors = FALSE)
+  bf_val <- data.frame(
+    Parameter = colnames(posterior),
+    BF = sdbf,
+    stringsAsFactors = FALSE
+  )
 
   class(bf_val) <- unique(c(
-      "bayesfactor_savagedickey",
-      "see_bayesfactor_savagedickey",
-      class(bf_val)
+    "bayesfactor_savagedickey",
+    "see_bayesfactor_savagedickey",
+    class(bf_val)
   ))
 
   attr(bf_val, "hypothesis") <- hypothesis
@@ -317,7 +320,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
         method = density_method,
         extend = TRUE,
         extend_scale = 0.05,
-        precision = 2 ^ 8
+        precision = 2^8
       )
 
       # 2. estimate points
@@ -357,7 +360,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   prior <- estimate_samples_density(prior)
 
   list(
-    plot_data = rbind(posterior[[1]],prior[[1]]),
-    d_points = rbind(posterior[[2]],prior[[2]])
+    plot_data = rbind(posterior[[1]], prior[[1]]),
+    d_points = rbind(posterior[[2]], prior[[2]])
   )
 }

@@ -48,9 +48,8 @@ Extract diagnostic metrics (Effective Sample Size (\code{ESS}), \code{Rhat} and 
 # rstanarm models
 # -----------------------------------------------
 library(rstanarm)
-model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
+model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 diagnostic_posterior(model)
-
 \dontrun{
 # brms models
 # -----------------------------------------------

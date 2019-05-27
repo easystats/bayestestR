@@ -7,6 +7,7 @@
 #' @param ... Fitted models (any models supported by \pkg{insight}), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').
 #' @param denominator Either an integer indicating which of the models to use as the denominator,
 #' or a model to use as a denominator. Ignored for \code{BFBayesFactor}.
+#' @inheritParams hdi
 #'
 #' @details
 #' \itemize{
@@ -53,21 +54,7 @@
 #' bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
 #' bayesfactor_models(lmer1, lmer2, lmer3, denominator = lmer1)
 #' \dontrun{
-#' # with brmfit objects:
-#' # --------------------
-#' # (note the save_all_pars MUST be set to TRUE in order to work)
-#' library(brms)
-#' brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
-#' brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
-#' brm3 <- brm(
-#'   Sepal.Length ~ Species + Petal.Length,
-#'   data = iris,
-#'   save_all_pars = TRUE
-#' )
-#'
-#' bayesfactor_models(brm1, brm2, brm3, denominator = 1)
-#'
-#' # with stanreg objects:
+#' # rstanarm models
 #' # ---------------------
 #' # (note that a unique diagnostic_file MUST be specified in order to work)
 #' library(rstanarm)
@@ -88,7 +75,23 @@
 #' )
 #' bayesfactor_models(stan_m1, stan_m2, denominator = stan_m0)
 #'
-#' # With BFBayesFactor objects:
+#'
+#' # brms models
+#' # --------------------
+#' # (note the save_all_pars MUST be set to TRUE in order to work)
+#' library(brms)
+#' brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
+#' brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
+#' brm3 <- brm(
+#'   Sepal.Length ~ Species + Petal.Length,
+#'   data = iris,
+#'   save_all_pars = TRUE
+#' )
+#'
+#' bayesfactor_models(brm1, brm2, brm3, denominator = 1)
+#'
+#'
+#' # BayesFactor
 #' # ---------------------------
 #' library(BayesFactor)
 #' data(puzzles)
@@ -113,22 +116,15 @@
 #'
 #' @importFrom insight get_response is_model
 #' @export
-bayesfactor_models <- function(..., denominator = 1) {
+bayesfactor_models <- function(..., denominator = 1, verbose = TRUE) {
   UseMethod("bayesfactor_models")
 }
 
 #' @importFrom stats BIC
 #' @export
-bayesfactor_models.default <- function(..., denominator = 1) {
+bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   # Organize the models
   mods <- list(...)
-
-  supported_models <- sapply(mods, insight::is_model)
-
-  if (!all(supported_models)) {
-    object_names <- match.call(expand.dots = FALSE)$`...`
-    stop(sprintf("Can't calculate Bayes factor.\nFollowing objects are no (supported) model objects: %s", paste0(object_names[!supported_models], collapse = ", ")), call. = FALSE)
-  }
 
   if (!is.numeric(denominator)) {
     model_name <- deparse(match.call()[["denominator"]])
@@ -141,6 +137,13 @@ bayesfactor_models.default <- function(..., denominator = 1) {
     } else {
       denominator <- denominator_model
     }
+  }
+
+  # supported models
+  supported_models <- sapply(mods, insight::is_model)
+  if (!all(supported_models)) {
+    object_names <- match.call(expand.dots = FALSE)$`...`
+    stop(sprintf("Can't calculate Bayes factor.\nFollowing objects are no (supported) model objects: %s", paste0(object_names[!supported_models], collapse = ", ")), call. = FALSE)
   }
 
   # Test that all is good:
@@ -171,7 +174,7 @@ bayesfactor_models.default <- function(..., denominator = 1) {
 
 
 #' @importFrom insight get_response find_algorithm
-.bayesfactor_models_stan <- function(..., denominator = 1) {
+.bayesfactor_models_stan <- function(..., denominator = 1, verbose = TRUE) {
   if (!requireNamespace("bridgesampling")) {
     stop("Package \"bridgesampling\" needed for this function to work. Please install it.")
   }
@@ -211,6 +214,9 @@ bayesfactor_models.default <- function(..., denominator = 1) {
   }
 
   # Get BF
+  if (verbose) {
+    message("Computation of Bayes factors: estimating marginal likelihood, please wait...")
+  }
   mML <- lapply(mods, function(x)
     bridgesampling::bridge_sampler(x, silent = TRUE))
   mBFs <- sapply(mML, function(x)
@@ -233,7 +239,7 @@ bayesfactor_models.default <- function(..., denominator = 1) {
 }
 
 #' @export
-bayesfactor_models.stanreg <- function(..., denominator = 1) {
+bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
   }
@@ -241,7 +247,7 @@ bayesfactor_models.stanreg <- function(..., denominator = 1) {
 }
 
 #' @export
-bayesfactor_models.brmsfit <- function(..., denominator = 1) {
+bayesfactor_models.brmsfit <- function(..., denominator = 1, verbose = TRUE) {
   if (!requireNamespace("brms")) {
     stop("Package \"brms\" needed for this function to work. Please install it.")
   }
@@ -253,7 +259,7 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1) {
 
 
 #' @export
-bayesfactor_models.BFBayesFactor <- function(...) {
+bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
   models <- c(...)
   if (!requireNamespace("BayesFactor")) {
     stop("Package \"BayesFactor\" needed for this function to work. Please install it.")

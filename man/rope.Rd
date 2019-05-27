@@ -61,8 +61,8 @@ Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a
 }
 \details{
 Statistically, the probability of a posterior distribution of being
-  different from 0 does not make much sense (the probability of it being
-  different from a single point being 100\%). Therefore, the idea
+  different from 0 does not make much sense (the probability of a single value
+  null hypothesis in a continuous distribution is 0). Therefore, the idea
   underlining ROPE is to let the user define an area around the null value
   enclosing values that are \emph{equivalent to the null} value for practical
   purposes (\cite{Kruschke 2010, 2011, 2014}).

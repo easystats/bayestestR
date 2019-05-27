@@ -7,6 +7,8 @@
 #'
 #' @examples
 #' \dontrun{
+#' library(bayestestR)
+#'
 #' # rstanarm models
 #' # -----------------------------------------------
 #' library(rstanarm)
@@ -21,9 +23,9 @@
 #'
 #' # BayesFactor objects
 #' # -----------------------------------------------
-#' # library(BayesFactor)
-#' # bf <- ttestBF(x = rnorm(100, 1, 1))
-#' # describe_prior(bf)
+#' library(BayesFactor)
+#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' describe_prior(bf)
 #' }
 #'
 #' @importFrom insight get_priors
@@ -58,3 +60,18 @@ describe_prior.stanreg <- .describe_prior
 
 # #' @export
 # describe_prior.brmsfit <- .describe_prior
+
+
+
+
+
+#' @export
+describe_prior.BFBayesFactor <- function(model, ...) {
+  priors <- insight::get_priors(model)
+
+  # Format names
+  names(priors) <- tools::toTitleCase(names(priors))
+  names(priors)[-1] <- paste0("Prior_", names(priors)[-1])
+
+  priors
+}
