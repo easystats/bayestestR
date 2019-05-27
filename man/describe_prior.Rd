@@ -16,6 +16,8 @@ Returns a summary of the priors used in the model.
 }
 \examples{
 \dontrun{
+library(bayestestR)
+
 # rstanarm models
 # -----------------------------------------------
 library(rstanarm)
@@ -30,9 +32,9 @@ describe_prior(model)
 
 # BayesFactor objects
 # -----------------------------------------------
-# library(BayesFactor)
-# bf <- ttestBF(x = rnorm(100, 1, 1))
-# describe_prior(bf)
+library(BayesFactor)
+bf <- ttestBF(x = rnorm(100, 1, 1))
+describe_prior(bf)
 }
 
 }

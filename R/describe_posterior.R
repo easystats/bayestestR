@@ -45,8 +45,8 @@
 #' library(BayesFactor)
 #' bf <- ttestBF(x = rnorm(100, 1, 1))
 #' describe_posterior(bf)
-#' describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
-#' describe_posterior(bbf, ci = c(0.80, 0.90))
+#' # describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
+#' describe_posterior(bf, ci = c(0.80, 0.90))
 #' }
 #'
 #' @importFrom stats mad median sd setNames
@@ -191,9 +191,6 @@ describe_posterior.numeric <- function(posteriors, centrality = "median", disper
 describe_posterior.double <- describe_posterior.numeric
 
 #' @export
-describe_posterior.BFBayesFactor <- describe_posterior.numeric
-
-#' @export
 describe_posterior.data.frame <- describe_posterior.numeric
 
 
@@ -234,6 +231,22 @@ describe_posterior.brmsfit <- function(posteriors, centrality = "median", disper
     col_order <- out$Parameter
     diagnostic <- diagnostic_posterior(posteriors, diagnostic, effects = effects, component = component, parameters = parameters, ...)
     out <- merge(out, diagnostic, all = TRUE)
+    out <- out[match(col_order, out$Parameter), ]
+  }
+  out
+}
+
+
+
+
+#' @export
+describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, priors = TRUE, ...) {
+  out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, ...)
+
+  if (priors) {
+    col_order <- out$Parameter
+    priors_data <- describe_prior(posteriors, ...)
+    out <- merge(out, priors_data, all = TRUE)
     out <- out[match(col_order, out$Parameter), ]
   }
   out
