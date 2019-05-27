@@ -59,14 +59,6 @@ The Probability of Direction (pd) is an index of effect existence, ranging from 
   \item It is robust to the scale of both the response variable and the predictors.
   \item It is strongly correlated with the frequentist p-value, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.
 }
-\cr \cr
-\strong{Relationship with the p-value}
-\cr
-In most cases, it seems that the \emph{pd} chas a direct correspondance with the frequentist one-sided \emph{p}-value through the formula \code{p(one-sided) = 1-pd/100} and to the two-sided p-value (the most commonly reported one) through the formula \code{p(two-sided) = 2*(1-pd/100)}. Thus, a two-sided p-value of respectively \code{.1}, \code{.05}, \code{.01} and \code{.001} would correspond approximately to a \emph{pd} of 95\%, 97.5\%, 99.5\% and 99.95\%.
-\cr \cr
-\strong{Methods of computation}
-\cr
-The most simple and direct way to compute the \emph{pd} is to 1) look at the median's sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This "simple" method is the most straigtfoward, but its precision is directly tied to the number of posterior draws. The second approach relies on \link[=estimate_density]{density estimation}. It starts by estimating the density function (for which many methods are available), and then computing the \link[=area_under_curve]{area under the curve} (AUC) of the density curve on the other side of 0.
 }
 \examples{
 library(bayestestR)
