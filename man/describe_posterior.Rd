@@ -2,11 +2,17 @@
 % Please edit documentation in R/describe_posterior.R
 \name{describe_posterior}
 \alias{describe_posterior}
+\alias{describe_posterior.numeric}
 \alias{describe_posterior.stanreg}
 \alias{describe_posterior.brmsfit}
+\alias{describe_posterior.BFBayesFactor}
 \title{Describe Posterior Distributions}
 \usage{
 describe_posterior(posteriors, centrality = "median",
+  dispersion = TRUE, ci = 0.89, ci_method = "hdi", test = c("pd",
+  "rope"), rope_range = "default", rope_ci = 0.89, ...)
+
+\method{describe_posterior}{numeric}(posteriors, centrality = "median",
   dispersion = TRUE, ci = 0.89, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL,
   ...)
@@ -23,6 +29,11 @@ describe_posterior(posteriors, centrality = "median",
   diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL, ...)
+
+\method{describe_posterior}{BFBayesFactor}(posteriors,
+  centrality = "median", dispersion = FALSE, ci = 0.89,
+  ci_method = "hdi", test = c("pd", "rope"), rope_range = "default",
+  rope_ci = 0.89, priors = TRUE, ...)
 }
 \arguments{
 \item{posteriors}{A vector, dataframe or model of posterior draws.}
@@ -42,9 +53,9 @@ to be estimated. Named Credible Interval (CI) for consistency.}
 
 \item{rope_ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.}
 
-\item{bf_prior}{Distribution representing a prior for the computation of \href{https://easystats.github.io/bayestestR/bayesfactor_savagedickey}{Bayes factors}. Used if the input is a posterior, otherwise (in the case of models) ignored.}
-
 \item{...}{Additional arguments to be passed to or from methods.}
+
+\item{bf_prior}{Distribution representing a prior for the computation of \href{https://easystats.github.io/bayestestR/bayesfactor_savagedickey}{Bayes factors}. Used if the input is a posterior, otherwise (in the case of models) ignored.}
 
 \item{diagnostic}{Diagnostic metrics to compute. Can be a character or a list with "ESS", "Rhat", "MCSE" or "all".}
 
@@ -67,6 +78,8 @@ applies to \pkg{brms}-models.}
 Compute indices relevant to describe and characterise the posterior distributions.
 }
 \examples{
+library(bayestestR)
+
 x <- rnorm(1000)
 describe_posterior(x)
 describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
