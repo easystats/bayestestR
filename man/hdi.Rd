@@ -82,12 +82,13 @@ hdi(posterior, ci = c(.80, .90, .95))
 df <- data.frame(replicate(4, rnorm(100)))
 hdi(df)
 hdi(df, ci = c(.80, .90, .95))
-\dontrun{
+
 library(rstanarm)
-model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 hdi(model)
 hdi(model, ci = c(.80, .90, .95))
 
+\dontrun{
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 hdi(model)

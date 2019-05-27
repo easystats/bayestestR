@@ -67,14 +67,15 @@ lines(density_extended$x, density_extended$y, col = "red", lwd = 3)
 lines(density_default$x, density_default$y, col = "black", lwd = 3)
 
 df <- data.frame(replicate(4, rnorm(100)))
-estimate_density(df)
-\dontrun{
+head(estimate_density(df))
+
 # rstanarm models
 # -----------------------------------------------
 library(rstanarm)
-model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
-estimate_density(model)
+model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
+head(estimate_density(model))
 
+\dontrun{
 # brms models
 # -----------------------------------------------
 library(brms)
