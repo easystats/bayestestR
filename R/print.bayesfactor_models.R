@@ -19,7 +19,7 @@ print.bayesfactor_models <- function(x, digits = 2, log = FALSE, ...) {
   colnames(BFE_) <- ""
 
   cat("Bayes factor analysis
---------------")
+---------------------")
   print.data.frame(BFE_, digits = digits)
   cat("
 Against denominator:
