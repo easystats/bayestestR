@@ -46,7 +46,7 @@
 #' library(BayesFactor)
 #' bf <- ttestBF(x = rnorm(100, 1, 1))
 #' describe_posterior(bf)
-#' # describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
+#' describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
 #' describe_posterior(bf, ci = c(0.80, 0.90))
 #' }
 #'
@@ -141,17 +141,10 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = T
 
     # Bayes Factors
     if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
-
-      if("BFBayesFactor" %in% class(x)){
-        test_bf <- as.data.frame(bayesfactor_models(x, ...))[-1, ]
-
-      } else{
-        test_bf <- bayesfactor_savagedickey(x, prior = bf_prior, ...)
-        if (!"Parameter" %in% names(test_bf)) {
-          test_bf <- cbind(data.frame("Parameter" = "Posterior"), test_bf)
-        }
+      test_bf <- bayesfactor_savagedickey(x, prior = bf_prior, ...)
+      if (!"Parameter" %in% names(test_bf)) {
+        test_bf <- cbind(data.frame("Parameter" = "Posterior"), test_bf)
       }
-
     } else {
       test_bf <- data.frame("Parameter" = NA)
     }
@@ -248,9 +241,40 @@ describe_posterior.brmsfit <- function(posteriors, centrality = "median", disper
 
 #' @rdname describe_posterior
 #' @export
-describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, priors = TRUE, ...) {
+describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope", "bf"), rope_range = "default", rope_ci = 0.89, priors = TRUE, ...) {
+
+  # Match test args  to catch BFs
+  if (!is.null(test)) {
+    test <- match.arg(tolower(test), c(
+      "pd", "p_direction", "pdir", "mpe",
+      "rope", "equivalence", "equivalence_test", "equitest",
+      "bf", "bayesfactor", "bayes_factor", "all"
+    ), several.ok = TRUE)
+
+    if ("all" %in% test) {
+      test <- c("pd", "rope", "equivalence", "bf")
+    }
+  }
+
+  # Remove BF from list
+  if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
+    test <- test[!test %in% c("bf", "bayesfactor", "bayes_factor")]
+    compute_bf <- TRUE
+  } else{
+    compute_bf <- FALSE
+  }
+
+  # Describe posterior
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, ...)
 
+
+  # Compute and readd BF a posteriori
+  if(compute_bf){
+    out$BF <- as.data.frame(bayesfactor_models(posteriors, ...))[-1, ]$BF
+  }
+
+
+  # Add priors
   if (priors) {
     col_order <- out$Parameter
     priors_data <- describe_prior(posteriors, ...)
