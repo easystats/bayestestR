@@ -59,20 +59,13 @@ bayesfactor_inclusion(BF)
 
 # compare only matched models:
 bayesfactor_inclusion(BF, match_models = TRUE)
+
 }
 \references{
 \itemize{
-  \item Hinne, M., Gronau, Q. F., van den Bergh, D., & Wagenmakers,
-E. (2019, March 25). A conceptual introduction to Bayesian Model
-Averaging. https://doi.org/10.31234/osf.io/wgb64
-
-  \item Clyde, M. A., Ghosh, J., & Littman, M. L. (2011). Bayesian
-adaptive sampling for variable selection and model averaging. Journal
-of Computational and Graphical Statistics, 20(1), 80-101.
-
-  \item Mathot. S. (2017). Bayes like a Baws:
-Interpreting Bayesian Repeated Measures in JASP [Blog post].
-Retrieved from https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp
+  \item Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E. (2019, March 25). A conceptual introduction to Bayesian Model Averaging. \doi{10.31234/osf.io/wgb64}
+  \item Clyde, M. A., Ghosh, J., & Littman, M. L. (2011). Bayesian adaptive sampling for variable selection and model averaging. Journal of Computational and Graphical Statistics, 20(1), 80-101.
+  \item Mathot. S. (2017). Bayes like a Baws: Interpreting Bayesian Repeated Measures in JASP [Blog post]. Retrieved from https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp
 }
 }
 \author{
