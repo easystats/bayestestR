@@ -24,7 +24,7 @@ This function attempts at automatically finding suitable "default"
   \cr \cr
   For logistic models, the parameters expressed in log odds ratio can be
   converted to standardized difference through the formula
-  \ifelse{html}{\out{sqrt(3)/pi}}{\eqn{\sqrt{3}/\pi}}, resulting in a range
+  \ifelse{html}{\out{&radic;(3)/&pi;}}{\eqn{\sqrt{3}/\pi}}, resulting in a range
   of \code{-0.055} to \code{-0.055}.
   \cr \cr
   For other models with binary outcome, it is strongly recommended to
@@ -42,7 +42,7 @@ This function attempts at automatically finding suitable "default"
 }
 \examples{
 library(rstanarm)
-model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 rope_range(model)
 \dontrun{
 library(rstanarm)

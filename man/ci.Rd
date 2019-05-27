@@ -52,7 +52,7 @@ A data frame with following columns:
   \itemize{
     \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
     \item \code{CI} The probability of the credible interval.
-    \item \code{CI_low} , \code{CI_high} The lower and upper credible interval limits for the parameters.
+    \item \code{CI_low}, \code{CI_high} The lower and upper credible interval limits for the parameters.
   }
 }
 \description{
@@ -64,7 +64,7 @@ Documentation is accessible for:
   \item \href{https://easystats.github.io/bayestestR/reference/ci.html}{Bayesian models}
   \item \href{https://easystats.github.io/parameters/reference/ci.merMod.html}{Frequentist models}
 }
-
+\cr \cr
 \strong{Bayesian models}
 \cr \cr
 This functions returns, by default, the quantile interval, i.e., an
@@ -72,19 +72,19 @@ equal-tailed interval (ETI). A 90\% ETI has 5\% of the distribution on either
 side of its limits. It indicates the 5th percentile and the 95h percentile.
 In symmetric distributions, the two methods of computing credible intervals,
 the ETI and the \link[=hdi]{HDI}, return similar results.
-
+\cr \cr
 This is not the case for skewed distributions. Indeed, it is possible that
 parameter values in the ETI have lower credibility (are less probable) than
 parameter values outside the ETI. This property seems undesirable as a summary
 of the credible values in a distribution.
-
+\cr \cr
 On the other hand, the ETI range does change when transformations are applied
 to the distribution (for instance, for a log odds scale to probabilities):
 the lower and higher bounds of the transformed distribution will correspond
 to the transformed lower and higher bounds of the original distribution.
 On the contrary, applying transformations to the distribution will change
 the resulting HDI.
-
+\cr \cr
 \strong{Frequentist models}
 \cr \cr
  This function is implemented in the \href{https://github.com/easystats/parameters}{parameters} package and attemps to retrieve, or compute, the Confidence Interval (default \code{ci} level: \code{.95}).
@@ -101,7 +101,7 @@ ci(df)
 ci(df, ci = c(.80, .89, .95))
 
 library(rstanarm)
-model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 ci(model)
 ci(model, ci = c(.80, .89, .95))
 

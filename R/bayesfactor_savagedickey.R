@@ -5,9 +5,9 @@
 #' this results in an approximation of a Bayes factor against the (point) null model.
 #'
 #' @param posterior Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object (see Details).
-#' @param prior Vector representing a prior distribution (If \code{posterior} is a vector) / A data frame with column names matching \code{posterior}'s (if \code{posterior} is a data frame). Otherwise ignored.
-#' @param direction Test type. One of \code{0}, \code{"two-sided"} (defult; two tailed),
-#' \code{-1}, \code{"left"} (left tailed), \code{1}, \code{"right"} (right tailed).
+#' @param prior Vector representing a prior distribution (if \code{posterior} is a vector), or a data frame with column names matching \code{posterior}'s (if \code{posterior} is a data frame). Otherwise ignored.
+#' @param direction Test type. One of \code{0}, \code{"two-sided"} (default, two tailed),
+#' \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).
 #' @param hypothesis Value to be tested against (usually \code{0} in the context of null hypothesis testing).
 #' @inheritParams hdi
 #'
@@ -16,7 +16,7 @@
 #' @details This method is used to compute Bayes factors based on prior and posterior distributions.
 #' When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
 #' extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
-#'
+#' \cr \cr
 #' \strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)} priors. See example below.
 #' \cr \cr
 #' A Bayes factor greater than 1 can be interpereted as evidence against the null,
@@ -32,8 +32,8 @@
 #' posterior <- distribution_normal(1000, mean = .5, sd = .3)
 #'
 #' bayesfactor_savagedickey(posterior, prior)
-#' \dontrun{
 #'
+#' \dontrun{
 #' # rstanarm models
 #' # ---------------
 #' library(rstanarm)
@@ -56,8 +56,8 @@
 #'
 #' @references
 #' \itemize{
-#' \item Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.
-#' \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., & Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
+#' \item Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.
+#' \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 #' \item Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The case of computing Bayes factors for regression parameters. British Journal of Mathematical and Statistical Psychology, 72(2), 316-333.
 #' }
 #'

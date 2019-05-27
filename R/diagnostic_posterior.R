@@ -17,8 +17,9 @@
 #' # rstanarm models
 #' # -----------------------------------------------
 #' library(rstanarm)
-#' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 #' diagnostic_posterior(model)
+#'
 #' \dontrun{
 #' # brms models
 #' # -----------------------------------------------
