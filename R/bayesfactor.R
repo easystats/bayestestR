@@ -54,8 +54,14 @@ bayesfactor <-
 
     if (length(mods) > 1) {
       bayesfactor_models(..., denominator = denominator)
-    } else if (inherits(mods[[1]], c("bayesfactor_models", "BFBayesFactor"))) {
+    } else if (inherits(mods[[1]], "bayesfactor_models")) {
       bayesfactor_inclusion(..., match_models = match_models, prior_odds = prior_odds)
+    } else if (inherits(mods[[1]], "BFBayesFactor")) {
+      if (class(mods[[1]]@numerator[[1]]) == "BFlinearModel") {
+        bayesfactor_inclusion(..., match_models = match_models, prior_odds = prior_odds)
+      } else {
+        bayesfactor_models(...)
+      }
     } else {
       bayesfactor_savagedickey(...,
         prior = prior, direction = direction,
