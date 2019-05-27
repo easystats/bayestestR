@@ -21,10 +21,6 @@
 #' \cr
 #' In most cases, it seems that the \emph{pd} chas a direct correspondance with the frequentist one-sided \emph{p}-value through the formula \code{p(one-sided) = 1-pd/100} and to the two-sided p-value (the most commonly reported one) through the formula \code{p(two-sided) = 2*(1-pd/100)}. Thus, a two-sided p-value of respectively \code{.1}, \code{.05}, \code{.01} and \code{.001} would correspond approximately to a \emph{pd} of \code{95\%}, \code{97.5\%}, \code{99.5\%} and \code{99.95\%}.
 #'
-#' \cr \cr
-#' \strong{Methods of computation}
-#' \cr
-#' The most simple and direct way to compute the \emph{pd} is to 1) look at the median's sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This "simple" method is the most straigtfoward, but its precision is directly tied to the number of posterior draws. The second approach relies on \link[=estimate_density]{density estimation}. It starts by estimating the density function (for which many methods are available), and then computing the \link[=area_under_curve]{area under the curve} (AUC) of the density curve on the other side of 0.
 #'
 #'
 #' @examples
