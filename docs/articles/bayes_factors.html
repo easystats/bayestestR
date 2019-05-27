@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9.9000</span>
       </span>
     </div>
 
@@ -294,7 +294,7 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">comparison &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span>(m1, m2, m3, m4, <span class="dt">denominator =</span> m0)</a>
 <a class="sourceLine" id="cb12-2" title="2">comparison</a></code></pre></div>
 <pre><code>&gt; Bayes factor analysis
-&gt; --------------                                     
+&gt; ---------------------                                     
 &gt; [1] Petal.Length              3.4e+44
 &gt; [2] Species                   5.6e+29
 &gt; [3] Species + Petal.Length    7.1e+55
@@ -307,7 +307,7 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 <p>We can see that the full model is the best model - with <span class="math inline">\(BF_{\text{m0}}=9\times 10^{55}\)</span> compared to the null (intercept only). We can also change the reference model to the main effect model:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/update">update</a></span>(comparison, <span class="dt">reference =</span> <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>&gt; Bayes factor analysis
-&gt; --------------                                     
+&gt; ---------------------                                     
 &gt; [1] Petal.Length              4.8e-12
 &gt; [2] Species                   7.9e-27
 &gt; [4] Species * Petal.Length    1.3e+00
@@ -336,7 +336,7 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 <a class="sourceLine" id="cb16-8" title="8"></a>
 <a class="sourceLine" id="cb16-9" title="9"><span class="kw"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span>(m1, m2, m3, m4, <span class="dt">denominator =</span> m0)</a></code></pre></div>
 <pre><code>&gt; Bayes factor analysis
-&gt; --------------                                                                    
+&gt; ---------------------                                                                    
 &gt; [1] Petal.Length + (1 | Species)                             8.2e+24
 &gt; [2] Petal.Length + (Petal.Length | Species)                  4.8e+23
 &gt; [3] Petal.Length + Petal.Width + (Petal.Length | Species)    1.5e+22

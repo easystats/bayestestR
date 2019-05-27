@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9.9000</span>
       </span>
     </div>
 
@@ -231,11 +231,11 @@ smaller than 1/3 indicates substantial evidence in favor of the denominator mode
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <ul>
-<li><p>Gronau, Q. F., Wagenmakers, E. J., Heck, D. W., &amp; Matzke, D. (2019). A simple method for comparing complex models: Bayesian model comparison for hierarchical multinomial processing tree models using Warp-III bridge sampling. Psychometrika, 84(1), 261-284.</p></li>
-<li><p>Kass, R. E., &amp; Raftery, A. E. (1995). Bayes Factors. Journal of the American Statistical Association, 90(430), 773-795.</p></li>
+<li><p>Gronau, Q. F., Wagenmakers, E. J., Heck, D. W., and Matzke, D. (2019). A simple method for comparing complex models: Bayesian model comparison for hierarchical multinomial processing tree models using Warp-III bridge sampling. Psychometrika, 84(1), 261-284.</p></li>
+<li><p>Kass, R. E., and Raftery, A. E. (1995). Bayes Factors. Journal of the American Statistical Association, 90(430), 773-795.</p></li>
 <li><p>Robert, C. P. (2016). The expected demise of the Bayes factor. Journal of Mathematical Psychology, 72, 33–37.</p></li>
 <li><p>Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin &amp; review, 14(5), 779-804.</p></li>
-<li><p>Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., &amp; Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. doi: <a href='https://doi.org/10.1177/1745691611406923'>10.1177/1745691611406923</a></p></li>
+<li><p>Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. doi: <a href='https://doi.org/10.1177/1745691611406923'>10.1177/1745691611406923</a></p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -251,7 +251,7 @@ smaller than 1/3 indicates substantial evidence in favor of the denominator mode
 <span class='no'>lm3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='no'>lm4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>bayesfactor_models</span>(<span class='no'>lm1</span>, <span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; --------------                                     
+#&gt; ---------------------                                     
 #&gt; [2] Species                   1.7e+29
 #&gt; [3] Species + Petal.Length    5.8e+55
 #&gt; [4] Species * Petal.Length    2.2e+54
@@ -260,7 +260,7 @@ smaller than 1/3 indicates substantial evidence in favor of the denominator mode
 #&gt; 	 [1] (Intercept only)   
 #&gt; ---
 #&gt; Bayes factor type:  BIC approximation </div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lm1</span>) <span class='co'># same result</span></div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; --------------                                     
+#&gt; ---------------------                                     
 #&gt; [1] Species                   1.7e+29
 #&gt; [2] Species + Petal.Length    5.8e+55
 #&gt; [3] Species * Petal.Length    2.2e+54
@@ -269,7 +269,7 @@ smaller than 1/3 indicates substantial evidence in favor of the denominator mode
 #&gt; 	 [4] (Intercept only)   
 #&gt; ---
 #&gt; Bayes factor type:  BIC approximation </div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lm1</span>, <span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lm1</span>) <span class='co'># same result</span></div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; --------------                                     
+#&gt; ---------------------                                     
 #&gt; [2] Species                   1.7e+29
 #&gt; [3] Species + Petal.Length    5.8e+55
 #&gt; [4] Species * Petal.Length    2.2e+54
@@ -286,7 +286,7 @@ smaller than 1/3 indicates substantial evidence in favor of the denominator mode
   <span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Petal.Length</span> <span class='kw'>|</span> <span class='no'>Species</span>) + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Petal.Width</span>),
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
 )</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lmer1</span>, <span class='no'>lmer2</span>, <span class='no'>lmer3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; --------------                                                                         
+#&gt; ---------------------                                                                         
 #&gt; [2] Petal.Length + (Petal.Length | Species)                        0.0579
 #&gt; [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)    0.0047
 #&gt; 
@@ -294,7 +294,7 @@ smaller than 1/3 indicates substantial evidence in favor of the denominator mode
 #&gt; 	 [1] Petal.Length + (1 | Species)   
 #&gt; ---
 #&gt; Bayes factor type:  BIC approximation </div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lmer1</span>, <span class='no'>lmer2</span>, <span class='no'>lmer3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lmer1</span>)</div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; --------------                                                                         
+#&gt; ---------------------                                                                         
 #&gt; [2] Petal.Length + (Petal.Length | Species)                        0.0579
 #&gt; [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)    0.0047
 #&gt; 

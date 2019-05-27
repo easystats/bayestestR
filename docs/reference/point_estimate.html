@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9.9000</span>
       </span>
     </div>
 
@@ -248,19 +248,19 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
 <span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt;        Median
-#&gt; 1 0.006818945</div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;        Median      MAD        Mean       SD        MAP
-#&gt; 1 -0.05510373 1.059837 -0.01375082 1.037202 -0.2047171</div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt;        Median        MAP
-#&gt; 1 -0.05582262 -0.1542899</div><div class='input'>
+#&gt; 1 0.005798944</div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;       Median       MAD       Mean       SD        MAP
+#&gt; 1 0.01368592 0.9549477 0.01286962 1.004968 0.06172409</div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt;        Median        MAP
+#&gt; 1 -0.02431957 0.04178258</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
-<span class='fu'>point_estimate</span>(<span class='no'>df</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   Parameter      Median       MAD        Mean        SD         MAP
-#&gt; 1        X1 -0.05479168 1.1108587 -0.06077818 1.1796719 -0.08298470
-#&gt; 2        X2 -0.09090744 1.0367339 -0.02218926 1.0565594 -0.21623042
-#&gt; 3        X3 -0.05931715 0.8433503 -0.04416962 0.9281189 -0.02172562
-#&gt; 4        X4 -0.14961135 0.9796986 -0.02253690 0.9715938 -0.21878527</div><div class='input'><span class='fu'>point_estimate</span>(<span class='no'>df</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt;   Parameter      Median         MAP
-#&gt; 1        X1 -0.05479168 -0.08298470
-#&gt; 2        X2 -0.09090744 -0.21623042
-#&gt; 3        X3 -0.05931715 -0.02172562
-#&gt; 4        X4 -0.14961135 -0.21878527</div><span class='co'># NOT RUN {</span>
+<span class='fu'>point_estimate</span>(<span class='no'>df</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   Parameter       Median       MAD        Mean        SD         MAP
+#&gt; 1        X1  0.001143461 0.8614773  0.01535459 0.9617557  0.06590497
+#&gt; 2        X2 -0.247038511 0.9180592 -0.20788018 0.9384507 -0.27718741
+#&gt; 3        X3  0.030625577 0.9085149  0.04536611 0.8843417 -0.01915643
+#&gt; 4        X4  0.112958901 1.2025576  0.11966461 1.1054979 -0.09463103</div><div class='input'><span class='fu'>point_estimate</span>(<span class='no'>df</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt;   Parameter       Median         MAP
+#&gt; 1        X1  0.001143461  0.06590497
+#&gt; 2        X2 -0.247038511 -0.27718741
+#&gt; 3        X3  0.030625577 -0.01915643
+#&gt; 4        X4  0.112958901 -0.09463103</div><span class='co'># NOT RUN {</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)

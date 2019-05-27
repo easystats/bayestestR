@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9.9000</span>
       </span>
     </div>
 
@@ -151,20 +151,14 @@
 <div id="reporting-guidelines" class="section level1">
 <h1 class="hasAnchor">
 <a href="#reporting-guidelines" class="anchor"></a>Reporting Guidelines</h1>
-<p>Based on the previous <a href="https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html"><strong>comparison of point-estimates</strong></a> and <a href="https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html"><strong>indices of effect existence</strong></a>, we can conclude that:</p>
-<ul>
-<li>For simple models and normally distributed posteriors, the <strong>MAP estimate</strong> seems to be more biased than the mean and the median of the posterior distribution.</li>
-<li>Aside from being more robust, the <strong>median</strong> makes more sense than the <strong>mean</strong> in a probabilistic framework (<em>e.g.</em>, there is 50% chance that the true effect is either higher or lower than the median).</li>
-<li>The <strong>traditional ROPE</strong> (using a 90% HDI) is not sensitive to delineate highly “significant” effects. The full ROPE (100% HDI) does not present the same flaw.</li>
-<li>The <strong>Probability of Direction (<em>p</em>d)</strong> is the closest index to the frequentist <em>p</em>-value.</li>
-</ul>
-<p>Thus, to minimally <strong>describe the posterior distribution</strong> of a parameter, we suggest reporting the <strong>median</strong> and the <strong>90% CI</strong> (using HDI rather than quantiles) for parameter characterisation and, in the context of null-hypothesis testing, the <strong>Probability of Direction (<em>pd</em>)</strong> for effect existence and, especially in the context of confirmatory analyses, the <strong>ROPE percentage (full)</strong> with an explicitly specified range for effect significance.</p>
-<div id="effect-significance" class="section level2">
-<h2 class="hasAnchor">
-<a href="#effect-significance" class="anchor"></a>Effect <em>Significance</em>
-</h2>
-<p>Note that the two latter indices give different and independent information: The <code>pd</code> is a marker of <strong>existence</strong>, consistency and direction of a parameter (whether a parameter has a consistent effect in one or another direction), whereas the percentage in <strong>ROPE</strong> is a index of <strong>significance</strong> (in its primary meaning); informing us whether a parameter is related or not to a non-negligible change (in terms of magnitude) in the outcome.</p>
+<p>Based on the previous <a href="https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html"><strong>comparison of point-estimates</strong></a> and <a href="https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html"><strong>indices of effect existence</strong></a>, we can draw the following recommendations.</p>
+<p>To minimally <strong>describe the posterior distribution</strong> of a parameter, we suggest reporting 1) the <strong>median</strong> as an index of centrality, 2) the <strong>89% CI</strong> (using HDI rather than quantiles) as an index of centrality and, in the context of null-hypothesis testing, the <strong>Probability of Direction (<em>pd</em>)</strong> for effect existence and, especially in the context of confirmatory analyses, the <strong>ROPE percentage</strong> (full, <em>i.e.</em>, based on the full posterior distribution) with an explicitly specified range for effect significance.</p>
 </div>
+<div id="effect-existence-and-significance" class="section level1">
+<h1 class="hasAnchor">
+<a href="#effect-existence-and-significance" class="anchor"></a>Effect <em>Existence</em> and <em>significance</em>
+</h1>
+<p>The <strong><em>pd</em></strong> and the <strong><em>ROPË</em></strong> are two indices that give different and independent information: The <strong><em>pd</em></strong> is a marker of <strong>existence</strong>, consistency and direction of a parameter (whether a parameter has a consistent effect in one or another direction), whereas the percentage in <strong>ROPE</strong> is a index of <strong>significance</strong> (in its primary meaning); informing us whether a parameter is related or not to a non-negligible change (in terms of magnitude) in the outcome.</p>
 <div id="interpretation-rules-of-thumb" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interpretation-rules-of-thumb" class="anchor"></a>Interpretation Rules of Thumb</h2>
@@ -208,7 +202,7 @@
 <a href="#template-sentence" class="anchor"></a>Template Sentence</h2>
 <p>Based on these suggestions, a template sentence for minimal reporting of a parameter based on its posterior distribution could be:</p>
 <ul>
-<li>“the effect of <em>X</em> has a probability of <strong><em>pd</em></strong> of being <em>negative</em> (Median = <strong><em>median</em></strong>, 90% CI [<strong><em>…</em></strong>, <strong><em>…</em></strong>]) and can be considered as <em>significant</em> (<strong><em>ROPE</em></strong>% in ROPE).”</li>
+<li>“the effect of <em>X</em> has a probability of <strong><em>pd</em></strong> of being <em>negative</em> (Median = <strong><em>median</em></strong>, 89% CI [<strong><em>…</em></strong>, <strong><em>…</em></strong>]) and can be considered as <em>significant</em> (<strong><em>ROPE</em></strong>% in ROPE).”</li>
 </ul>
 </div>
 </div>
@@ -219,10 +213,10 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li>
-<a href="#reporting-guidelines">Reporting Guidelines</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#effect-significance">Effect <em>Significance</em></a></li>
-      <li><a href="#interpretation-rules-of-thumb">Interpretation Rules of Thumb</a></li>
+<li><a href="#reporting-guidelines">Reporting Guidelines</a></li>
+      <li>
+<a href="#effect-existence-and-significance">Effect <em>Existence</em> and <em>significance</em></a><ul class="nav nav-pills nav-stacked">
+<li><a href="#interpretation-rules-of-thumb">Interpretation Rules of Thumb</a></li>
       <li><a href="#template-sentence">Template Sentence</a></li>
       </ul>
 </li>

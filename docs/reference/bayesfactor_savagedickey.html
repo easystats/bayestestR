@@ -86,7 +86,7 @@ this results in an approximation of a Bayes factor against the (point) null mode
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9.9000</span>
       </span>
     </div>
 
@@ -219,12 +219,12 @@ this results in an approximation of a Bayes factor against the (point) null mode
     </tr>
     <tr>
       <th>prior</th>
-      <td><p>Vector representing a prior distribution (If <code>posterior</code> is a vector) / A data frame with column names matching <code>posterior</code>'s (if <code>posterior</code> is a data frame). Otherwise ignored.</p></td>
+      <td><p>Vector representing a prior distribution (if <code>posterior</code> is a vector), or a data frame with column names matching <code>posterior</code>'s (if <code>posterior</code> is a data frame). Otherwise ignored.</p></td>
     </tr>
     <tr>
       <th>direction</th>
-      <td><p>Test type. One of <code>0</code>, <code>"two-sided"</code> (defult; two tailed),
-<code>-1</code>, <code>"left"</code> (left tailed), <code>1</code>, <code>"right"</code> (right tailed).</p></td>
+      <td><p>Test type. One of <code>0</code>, <code>"two-sided"</code> (default, two tailed),
+<code>-1</code>, <code>"left"</code> (left tailed) or <code>1</code>, <code>"right"</code> (right tailed).</p></td>
     </tr>
     <tr>
       <th>hypothesis</th>
@@ -253,8 +253,9 @@ Only applies to mixed models. May be abbreviated.</p></td>
 
     <p>This method is used to compute Bayes factors based on prior and posterior distributions.
 When <code>posterior</code> is a model (<code>stanreg</code>, <code>brmsfit</code>), posterior and prior samples are
-extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.</p>
-<p><strong>NOTE:</strong> For <code>brmsfit</code> models, the model must have been fitted with <em>custom (non-default)</em> priors. See example below.
+extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
+<br /> <br />
+<strong>NOTE:</strong> For <code>brmsfit</code> models, the model must have been fitted with <em>custom (non-default)</em> priors. See example below.
 <br /> <br />
 A Bayes factor greater than 1 can be interpereted as evidence against the null,
 at which one convention is that a Bayes factor greater than 3 can be considered
@@ -265,8 +266,8 @@ smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <ul>
-<li><p>Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., &amp; Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.</p></li>
-<li><p>Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., &amp; Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. doi: <a href='https://doi.org/10.1177/1745691611406923'>10.1177/1745691611406923</a></p></li>
+<li><p>Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.</p></li>
+<li><p>Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. doi: <a href='https://doi.org/10.1177/1745691611406923'>10.1177/1745691611406923</a></p></li>
 <li><p>Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The case of computing Bayes factors for regression parameters. British Journal of Mathematical and Statistical Psychology, 72(2), 316-333.</p></li>
 </ul>
     
@@ -282,7 +283,8 @@ smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
 #&gt; </span><span> Bayes Factor
 #&gt;           1.2
 #&gt; ---
-#&gt; Evidence Against Test Value: 0</div></span><span class='co'># NOT RUN {</span>
+#&gt; Evidence Against Test Value: 0</div><div class='input'>
+</div></span><span class='co'># NOT RUN {</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
