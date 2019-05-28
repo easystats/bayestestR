@@ -25,9 +25,9 @@ point_estimate(x, centrality = "median", dispersion = FALSE, ...)
 \item{x}{Vector representing a posterior distribution. Can also be a
 \code{stanreg} or \code{brmsfit} model.}
 
-\item{centrality}{The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{point-estimate(s)} (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
+\item{centrality}{The point-estimates (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".}
 
-\item{dispersion}{if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
+\item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 
@@ -80,4 +80,7 @@ point_estimate(bf, centrality = "all", dispersion = TRUE)
 point_estimate(bf, centrality = c("median", "MAP"))
 }
 
+}
+\references{
+\href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{Vignette In-Depth 1: Comparison of Point-Estimates}
 }

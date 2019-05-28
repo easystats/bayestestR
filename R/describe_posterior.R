@@ -4,13 +4,17 @@
 #'
 #' @param posteriors A vector, dataframe or model of posterior draws.
 #' @param ci_method The type of index used for Credible Interval. Can be \link{hdi} (default) or "quantile" (see \link{ci}).
-#' @param test The \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{indices of effect existence} to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".
-#' @param rope_range \href{https://easystats.github.io/bayestestR/rope}{ROPE's} lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
+#' @param test The indices of effect existence to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".
+#' @param rope_range ROPE's lower and higher bounds. Should be a list of two values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the bounds are set to \code{x +- 0.1*SD(response)}.
 #' @param rope_ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.
 #'
 #' @inheritParams point_estimate
 #' @inheritParams ci
 #'
+#' @references \itemize{
+#'   \item \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{Vignette In-Depth 1: Comparison of Point-Estimates}
+#'   \item \href{https://easystats.github.io/bayestestR/region_of_practical_equivalence.html}{Region of Practical Equivalence (ROPE)}
+#' }
 #'
 #' @examples
 #' library(bayestestR)

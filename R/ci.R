@@ -2,7 +2,7 @@
 #'
 #' Compute Confidence/Credible Intervals (CI) for Bayesian (using quantiles) and frequentist models.
 #'
-#' @param x A \code{stanreg} or \code{brmsfit} model , or a vector representing a posterior distribution.
+#' @param x A \code{stanreg} or \code{brmsfit} model, or a vector representing a posterior distribution.
 #' @inheritParams hdi
 #'
 #' @return A data frame with following columns:

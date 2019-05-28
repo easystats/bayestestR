@@ -25,7 +25,7 @@ ci(x, ...)
 \method{ci}{BFBayesFactor}(x, ci = 0.89, verbose = TRUE, ...)
 }
 \arguments{
-\item{x}{A \code{stanreg} or \code{brmsfit} model , or a vector representing a posterior distribution.}
+\item{x}{A \code{stanreg} or \code{brmsfit} model, or a vector representing a posterior distribution.}
 
 \item{...}{Currently not used.}
 
