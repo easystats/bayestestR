@@ -1,4 +1,3 @@
-
 # bayestestR <img src='man/figures/logo.png' align="right" height="139" />
 
 [![CRAN](http://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR)
