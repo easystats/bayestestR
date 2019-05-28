@@ -12,13 +12,11 @@
 #'     \item \code{CI_low}, \code{CI_high} The lower and upper credible interval limits for the parameters.
 #'   }
 #'
-#' @details
-#' Documentation is accessible for:
+#' @details Documentation is accessible for:
 #' \itemize{
-#'   \item \href{https://easystats.github.io/bayestestR/reference/ci.html}{Bayesian models}
-#'   \item \href{https://easystats.github.io/parameters/reference/ci.merMod.html}{Frequentist models}
+#'  \item \href{https://easystats.github.io/bayestestR/reference/ci.html}{Bayesian models}
+#'  \item \href{https://easystats.github.io/parameters/reference/ci.merMod.html}{Frequentist models}
 #' }
-#' \cr \cr
 #' \strong{Bayesian models}
 #' \cr \cr
 #' This functions returns, by default, the quantile interval, i.e., an

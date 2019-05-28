@@ -13,7 +13,7 @@
 #'
 #' @references \itemize{
 #'   \item \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{Vignette In-Depth 1: Comparison of Point-Estimates}
-#'   \item \href{https://easystats.github.io/bayestestR/region_of_practical_equivalence.html}{Region of Practical Equivalence (ROPE)}
+#'   \item \href{https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html}{Region of Practical Equivalence (ROPE)}
 #'   \item \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes Factors}
 #' }
 #'

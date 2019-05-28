@@ -12,7 +12,6 @@ vignette: >
 editor_options: 
   chunk_output_type: console
 ---
-
 # bayestestR <img src='man/figures/logo.png' align="right" height="139" />
 
 ```{r, echo = FALSE, warning=FALSE, message=FALSE}
@@ -28,17 +27,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 [![CRAN](http://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR)
 [![downloads](http://cranlogs.r-pkg.org/badges/bayestestR)](https://cran.r-project.org/package=bayestestR)
 [![Build Status](https://travis-ci.org/easystats/bayestestR.svg?branch=master)](https://travis-ci.org/easystats/bayestestR)
 [![codecov](https://codecov.io/gh/easystats/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/easystats/bayestestR)
 [![DOI](https://zenodo.org/badge/165641861.svg)](https://zenodo.org/badge/latestdoi/165641861)
 
-
 ***Become a Bayesian master you will***
-
-
 
 `bayestestR` is a lightweight package providing utilities to describe posterior distributions and Bayesian models.
 
