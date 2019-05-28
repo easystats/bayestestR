@@ -6,9 +6,9 @@ print.p_direction <- function(x, digits = 2, ...) {
     insight::print_color("# Probability of Direction (pd)\n\n", "blue")
 
     if ("data.frame" %in% class(x)) {
-      pars <- format(x$Parameter)
-      pd <- format(sprintf("%.*f%%", digits, x$pd), justify = "right")
-      cat(paste0("  ", pars, ": ", pd, collapse = "\n"))
+      x$Parameter <- as.character(x$Parameter)
+      x$pd <- sprintf("%.*f%%", digits, x$pd)
+      print.data.frame(x, row.names = FALSE)
     } else {
       cat(sprintf("  - pd = %.*f%%", digits, x))
     }
