@@ -17,7 +17,7 @@
 - `bayesfactor_savagedickey()`, `bayesfactor_models()` and `bayesfactor_inclusion()` functions has been added
 - Started adding plotting methods (currently in the [`see`](https://github.com/easystats/see) package) for `p_direction()` and `hdi()`
 - `probability_at()` as alias for `density_at()`
-- `effective_samples()` to return the effective sample size of Stan-models
+- `effective_sample()` to return the effective sample size of Stan-models
 - `mcse()` to return the Monte Carlo standard error of Stan-models
 
 ## Minor changes
