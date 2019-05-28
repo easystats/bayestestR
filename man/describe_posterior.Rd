@@ -55,7 +55,7 @@ to be estimated. Named Credible Interval (CI) for consistency.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 
-\item{bf_prior}{Distribution representing a prior for the computation of \href{https://easystats.github.io/bayestestR/bayesfactor_savagedickey}{Bayes factors}. Used if the input is a posterior, otherwise (in the case of models) ignored.}
+\item{bf_prior}{Distribution representing a prior for the computation of Bayes factors. Used if the input is a posterior, otherwise (in the case of models) ignored.}
 
 \item{diagnostic}{Diagnostic metrics to compute. Can be a character or a list with "ESS", "Rhat", "MCSE" or "all".}
 
@@ -120,5 +120,6 @@ describe_posterior(bf, ci = c(0.80, 0.90))
 \itemize{
   \item \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{Vignette In-Depth 1: Comparison of Point-Estimates}
   \item \href{https://easystats.github.io/bayestestR/region_of_practical_equivalence.html}{Region of Practical Equivalence (ROPE)}
+  \item \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes Factors}
 }
 }

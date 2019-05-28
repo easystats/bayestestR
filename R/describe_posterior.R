@@ -14,6 +14,7 @@
 #' @references \itemize{
 #'   \item \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{Vignette In-Depth 1: Comparison of Point-Estimates}
 #'   \item \href{https://easystats.github.io/bayestestR/region_of_practical_equivalence.html}{Region of Practical Equivalence (ROPE)}
+#'   \item \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes Factors}
 #' }
 #'
 #' @examples
@@ -186,7 +187,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = T
 
 
 #' @rdname describe_posterior
-#' @param bf_prior Distribution representing a prior for the computation of \href{https://easystats.github.io/bayestestR/bayesfactor_savagedickey}{Bayes factors}. Used if the input is a posterior, otherwise (in the case of models) ignored.
+#' @param bf_prior Distribution representing a prior for the computation of Bayes factors. Used if the input is a posterior, otherwise (in the case of models) ignored.
 #' @export
 describe_posterior.numeric <- function(posteriors, centrality = "median", dispersion = TRUE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, ...) {
   .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, ...)
