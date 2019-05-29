@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -278,6 +278,16 @@ applies to <span class="pkg">brms</span>-models.</p></td>
   ROPE as an index for "null-hypothesis" testing (as understood under the
   Bayesian framework, see <code><a href='equivalence_test.html'>equivalence_test()</a></code>).
   <br /> <br />
+  <strong> Sensitivity to parameter's scale</strong>
+  <br /> <br />
+  It is important to consider the unit (i.e., the scale) of the predictors
+  when using an index based on the ROPE, as the correct interpretation of the
+  ROPE as representing a region of practical equivalence to zero is dependent
+  on the scale of the predictors. Indeed, the percentage in ROPE depend on
+  the unit of its parameter. In other words, as the ROPE represents a fixed
+  portion of the response's scale, its proximity with a coefficient depends
+  on the scale of the coefficient itself.
+  <br /> <br />
   <strong>Multicollinearity: Non-independent covariates</strong>
   <br /> <br />
   When parameters show strong correlations, i.e. when covariates are not
@@ -345,8 +355,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 0 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
+#&gt; Chain 1: Gradient evaluation took 0.001 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 10 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -372,8 +382,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
 #&gt; Chain 1:  Elapsed Time: 0.014 seconds (Warm-up)
-#&gt; Chain 1:                0.017 seconds (Sampling)
-#&gt; Chain 1:                0.031 seconds (Total)
+#&gt; Chain 1:                0.016 seconds (Sampling)
+#&gt; Chain 1:                0.03 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -404,9 +414,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.017 seconds (Warm-up)
-#&gt; Chain 2:                0.018 seconds (Sampling)
-#&gt; Chain 2:                0.035 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.015 seconds (Warm-up)
+#&gt; Chain 2:                0.016 seconds (Sampling)
+#&gt; Chain 2:                0.031 seconds (Total)
 #&gt; Chain 2: </div><div class='input'><span class='fu'>rope</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.60, 0.60]:
 #&gt; 
 #&gt; </span><span>   Parameter inside ROPE

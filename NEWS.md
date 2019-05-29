@@ -2,6 +2,7 @@
 
 ## Breaking changes
 
+- plotting functions now require the installation of the `see` package
 - `estimate` argument name in `describe_posterior` and `point_estimate` changed to `centrality`
 - `hdi()`, `ci()`, `rope()` and `equivalence_test()` default `ci` to `0.89`
 - `rnorm_perfect()` deprecated in favour of `distribution_normal()`

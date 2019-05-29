@@ -37,7 +37,7 @@ set.seed(333)
 
 # What is the *ROPE?*
 
-Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against "zero". Indeed, the Bayesian framework offers a probalistic view of the parameters, allowing to assess the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as **"practically no effect"** (*i.e.*, a negligible magnitude) is sufficient. This range is called the **region of practical equivalence (ROPE)**.
+Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against "zero". Indeed, the Bayesian framework offers a probabilistic view of the parameters, allowing to assess the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as **"practically no effect"** (*i.e.*, a negligible magnitude) is sufficient. This range is called the **region of practical equivalence (ROPE)**.
 
 Indeed, statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are **equivalent to the null** value for practical purposes [@kruschke2010believe; @kruschke2012time; @kruschke2014doing].
 
@@ -64,15 +64,20 @@ If the **full ROPE** is used (*i.e.*, 100\% of the HDI), then the null hypothesi
 
 # How to define the ROPE range?
 
-- Kruschke (2018) suggests that the ROPE could be set, by default, to a range from `-0.1` to `0.1` of a standardized parameter (negligible effect size according to Cohen, 1988), which can be generalised for linear models to: $$[-0.1*SD_{y}, 0.1*SD_{y}]$$.
+Kruschke (2018) suggests that the ROPE could be set, by default, to a range from `-0.1` to `0.1` of a standardized parameter (negligible effect size according to Cohen, 1988).
+
+- For **linear models (lm)**, this can be generalised to: $$[-0.1*SD_{y}, 0.1*SD_{y}]$$.
 - For **logistic models**, the parameters expressed in log odds ratio can be converted to standardized difference through the formula: $$\sqrt{3}/\pi$$, resulting in a range of `-0.055` to `-0.055`. For other models with binary outcome, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.
 - For **t-tests**, the standard deviation of the response is used, similarly to linear models (see above).
 - For **correlations**, `-0.05, 0.05` is used, *i.e.*, half the value of a negligible correlation as suggested by Cohen's (1988) rules of thumb.
 - For all other models, `-0.1, 0.1` is used to determine the ROPE limits, but it is strongly advised to specify it manually.
 
-# Sensitivity to the parameter's scale
+# Sensitivity to parameter's scale
 
-However, keep in mind that unlike other indices of effect **existence** (such as the [`pd`](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)), the percentage in **ROPE** depend on the unit of its parameter, thus correct interpretation of the ROPE as representing a region of practical equivalence to zero is dependent on the scaling of the predictors.
+It is important to consider **the unit (*i.e.*, the scale) of the predictors** when using an index based on the ROPE, as the correct interpretation of the ROPE as representing a region of practical equivalence to zero is dependent on the scale of the predictors. Indeed, unlike other indices (such as the [`pd`](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)), the percentage in **ROPE** depend on the unit of its parameter. In other words, as the ROPE represents a fixed portion of the response's scale, its proximity with a coefficient depends on the scale of the coefficient itself. 
+
+
+For instance, if we consider a simple regression `growth ~ time`, modelling the development of **Wookies babies**, a negligible change (the ROPE) is less than **54 cm**. If our `time` variable is **expressed in days**, we will find that the coefficient (representing the growth **by day**) is of about **10 cm** (*the median of the posterior of the coefficient is 10*). Which we would consider as **negligible**. However, if we decide to express the `time` variable **in years**, the coefficient will be scaled by this transformation (as it will now represent the growth **by year**). The coefficient will now be around **3550** cm (`10 * 355`), which we would now consider as **significant**.
 
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
@@ -90,10 +95,9 @@ library(see)
 set.seed(333)
 
 data <- iris  # Use the iris data
-model <- stan_glm(Sepal.Length ~ Sepal.Width, data=data)  # Fit model
-
 junk <- capture.output(model <- stan_glm(Sepal.Length ~ Sepal.Width, data=data))
 ```
+
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE, comment=">"}
 # Compute indices
@@ -141,9 +145,9 @@ percentage_in_rope
 As you can see, by simply dividing the predictor by 100, we **drastically** changed the conclusion related to the **percentage in ROPE** (which became very close to `0`): the effect could now be **interpreted as being significant**. Thus, we recommend paying close attention to the unit of the predictors when selecting the ROPE range (*e.g.*, what coefficient would correspond to a small effect?), and when reporting or reading ROPE results.
 
 
-# Collinearity of Predictors
+# Multicollinearity: Non-independent covariates
 
-When parameters show strong correlations, i.e. when covariates are not independent, the joint parameter distributions may shift towards or away from the ROPE. Collinearity invalidates ROPE and hypothesis testing based on univariate marginals, as the probabilities are conditional on independence. Most problematic are parameters that only have partial overlap with the ROPE region. In case of collinearity, the (joint) distributions  of these parameters may either get an increased or decreased ROPE, which means that inferences based on ROPE are inappropriate [@kruschke2014doing].
+When **parameters show strong correlations**, *i.e.*, when covariates are not independent, the joint parameter distributions may shift towards or away from the ROPE. Collinearity invalidates ROPE and hypothesis testing based on univariate marginals, as the probabilities are conditional on independence. Most problematic are parameters that only have partial overlap with the ROPE region. In case of collinearity, the (joint) distributions  of these parameters may either get an increased or decreased ROPE, which means that inferences based on ROPE are inappropriate [@kruschke2014doing].
 
 The `equivalence_test()` and `rope()` functions perform a simple check for pairwise correlations between parameters, but as there can be collinearity between more than two variables, a first step to check the assumptions of this hypothesis testing is to look at different pair plots. An even more sophisticated check is the projection predictive variable selection [@piironen2017comparison].
 

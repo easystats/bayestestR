@@ -8,5 +8,5 @@ test_that("p_direction", {
   testthat::expect_equal(as.numeric(p_direction(x, method = "kernel")), 84.2, tolerance = 0.1)
   testthat::expect_equal(nrow(p_direction(data.frame(replicate(4, rnorm(100))))), 4)
   testthat::expect_is(pd, "p_direction")
-  testthat::expect_equal(tail(capture.output(print(pd)), 1), "  - pd = 84.14%")
+  testthat::expect_equal(tail(capture.output(print(pd)), 1), "pd = 84.14%")
 })

@@ -79,6 +79,16 @@ Statistically, the probability of a posterior distribution of being
   ROPE as an index for "null-hypothesis" testing (as understood under the
   Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
   \cr \cr
+  \strong{ Sensitivity to parameter's scale}
+  \cr \cr
+  It is important to consider the unit (i.e., the scale) of the predictors
+  when using an index based on the ROPE, as the correct interpretation of the
+  ROPE as representing a region of practical equivalence to zero is dependent
+  on the scale of the predictors. Indeed, the percentage in ROPE depend on
+  the unit of its parameter. In other words, as the ROPE represents a fixed
+  portion of the response's scale, its proximity with a coefficient depends
+  on the scale of the coefficient itself.
+  \cr \cr
   \strong{Multicollinearity: Non-independent covariates}
   \cr \cr
   When parameters show strong correlations, i.e. when covariates are not

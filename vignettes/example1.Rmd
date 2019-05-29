@@ -336,7 +336,7 @@ n_positive / nrow(posteriors) * 100
 n_positive <- posteriors %>% 
   filter(feedsunflower > 0) %>% # select only positive values
   nrow() # Get length
-round(n_positive / nrow(posteriors) * 100, 2)
+format(n_positive / nrow(posteriors) * 100, nsmall = 2)
 ```
 
 

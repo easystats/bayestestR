@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -152,7 +152,7 @@
 <h1 class="hasAnchor">
 <a href="#what-is-the-rope" class="anchor"></a>What is the <em>ROPE?</em>
 </h1>
-<p>Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against “zero”. Indeed, the Bayesian framework offers a probalistic view of the parameters, allowing to assess the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as <strong>“practically no effect”</strong> (<em>i.e.</em>, a negligible magnitude) is sufficient. This range is called the <strong>region of practical equivalence (ROPE)</strong>.</p>
+<p>Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against “zero”. Indeed, the Bayesian framework offers a probabilistic view of the parameters, allowing to assess the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as <strong>“practically no effect”</strong> (<em>i.e.</em>, a negligible magnitude) is sufficient. This range is called the <strong>region of practical equivalence (ROPE)</strong>.</p>
 <p>Indeed, statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are <strong>equivalent to the null</strong> value for practical purposes <span class="citation">(Kruschke 2010, 2014; Kruschke, Aguinis, and Joo 2012)</span>.</p>
 </div>
 <div id="equivalence-test" class="section level1">
@@ -175,164 +175,68 @@
 <div id="how-to-define-the-rope-range" class="section level1">
 <h1 class="hasAnchor">
 <a href="#how-to-define-the-rope-range" class="anchor"></a>How to define the ROPE range?</h1>
+<p>Kruschke (2018) suggests that the ROPE could be set, by default, to a range from <code>-0.1</code> to <code>0.1</code> of a standardized parameter (negligible effect size according to Cohen, 1988).</p>
 <ul>
-<li>Kruschke (2018) suggests that the ROPE could be set, by default, to a range from <code>-0.1</code> to <code>0.1</code> of a standardized parameter (negligible effect size according to Cohen, 1988), which can be generalised for linear models to: <span class="math display">\[[-0.1*SD_{y}, 0.1*SD_{y}]\]</span>.</li>
+<li>For <strong>linear models (lm)</strong>, this can be generalised to: <span class="math display">\[[-0.1*SD_{y}, 0.1*SD_{y}]\]</span>.</li>
 <li>For <strong>logistic models</strong>, the parameters expressed in log odds ratio can be converted to standardized difference through the formula: <span class="math display">\[\sqrt{3}/\pi\]</span>, resulting in a range of <code>-0.055</code> to <code>-0.055</code>. For other models with binary outcome, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.</li>
 <li>For <strong>t-tests</strong>, the standard deviation of the response is used, similarly to linear models (see above).</li>
 <li>For <strong>correlations</strong>, <code>-0.05, 0.05</code> is used, <em>i.e.</em>, half the value of a negligible correlation as suggested by Cohen’s (1988) rules of thumb.</li>
 <li>For all other models, <code>-0.1, 0.1</code> is used to determine the ROPE limits, but it is strongly advised to specify it manually.</li>
 </ul>
 </div>
-<div id="sensitivity-to-the-parameters-scale" class="section level1">
+<div id="sensitivity-to-parameters-scale" class="section level1">
 <h1 class="hasAnchor">
-<a href="#sensitivity-to-the-parameters-scale" class="anchor"></a>Sensitivity to the parameter’s scale</h1>
-<p>However, keep in mind that unlike other indices of effect <strong>existence</strong> (such as the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><code>pd</code></a>), the percentage in <strong>ROPE</strong> depend on the unit of its parameter, thus correct interpretation of the ROPE as representing a region of practical equivalence to zero is dependent on the scaling of the predictors.</p>
+<a href="#sensitivity-to-parameters-scale" class="anchor"></a>Sensitivity to parameter’s scale</h1>
+<p>It is important to consider <strong>the unit (<em>i.e.</em>, the scale) of the predictors</strong> when using an index based on the ROPE, as the correct interpretation of the ROPE as representing a region of practical equivalence to zero is dependent on the scale of the predictors. Indeed, unlike other indices (such as the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><code>pd</code></a>), the percentage in <strong>ROPE</strong> depend on the unit of its parameter. In other words, as the ROPE represents a fixed portion of the response’s scale, its proximity with a coefficient depends on the scale of the coefficient itself.</p>
+<p>For instance, if we consider a simple regression <code>growth ~ time</code>, modelling the development of <strong>Wookies babies</strong>, a negligible change (the ROPE) is less than <strong>54 cm</strong>. If our <code>time</code> variable is <strong>expressed in days</strong>, we will find that the coefficient (representing the growth <strong>by day</strong>) is of about <strong>10 cm</strong> (<em>the median of the posterior of the coefficient is 10</em>). Which we would consider as <strong>negligible</strong>. However, if we decide to express the <code>time</code> variable <strong>in years</strong>, the coefficient will be scaled by this transformation (as it will now represent the growth <strong>by year</strong>). The coefficient will now be around <strong>3550</strong> cm (<code>10 * 355</code>), which we would now consider as <strong>significant</strong>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(see)</a>
 <a class="sourceLine" id="cb1-4" title="4"></a>
 <a class="sourceLine" id="cb1-5" title="5">data &lt;-<span class="st"> </span>iris  <span class="co"># Use the iris data</span></a>
 <a class="sourceLine" id="cb1-6" title="6">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)  <span class="co"># Fit model</span></a></code></pre></div>
-<pre><code>&gt; 
-&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
-&gt; Chain 1: 
-&gt; Chain 1: Gradient evaluation took 0 seconds
-&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
-&gt; Chain 1: Adjust your expectations accordingly!
-&gt; Chain 1: 
-&gt; Chain 1: 
-&gt; Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-&gt; Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-&gt; Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-&gt; Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-&gt; Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-&gt; Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-&gt; Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-&gt; Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-&gt; Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-&gt; Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-&gt; Chain 1: 
-&gt; Chain 1:  Elapsed Time: 0.066 seconds (Warm-up)
-&gt; Chain 1:                0.076 seconds (Sampling)
-&gt; Chain 1:                0.142 seconds (Total)
-&gt; Chain 1: 
-&gt; 
-&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
-&gt; Chain 2: 
-&gt; Chain 2: Gradient evaluation took 0 seconds
-&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
-&gt; Chain 2: Adjust your expectations accordingly!
-&gt; Chain 2: 
-&gt; Chain 2: 
-&gt; Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-&gt; Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-&gt; Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-&gt; Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-&gt; Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-&gt; Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-&gt; Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-&gt; Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-&gt; Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-&gt; Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-&gt; Chain 2: 
-&gt; Chain 2:  Elapsed Time: 0.072 seconds (Warm-up)
-&gt; Chain 2:                0.075 seconds (Sampling)
-&gt; Chain 2:                0.147 seconds (Total)
-&gt; Chain 2: 
-&gt; 
-&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
-&gt; Chain 3: 
-&gt; Chain 3: Gradient evaluation took 0 seconds
-&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
-&gt; Chain 3: Adjust your expectations accordingly!
-&gt; Chain 3: 
-&gt; Chain 3: 
-&gt; Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-&gt; Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-&gt; Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-&gt; Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-&gt; Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-&gt; Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-&gt; Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-&gt; Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-&gt; Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-&gt; Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-&gt; Chain 3: 
-&gt; Chain 3:  Elapsed Time: 0.066 seconds (Warm-up)
-&gt; Chain 3:                0.074 seconds (Sampling)
-&gt; Chain 3:                0.14 seconds (Total)
-&gt; Chain 3: 
-&gt; 
-&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
-&gt; Chain 4: 
-&gt; Chain 4: Gradient evaluation took 0 seconds
-&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
-&gt; Chain 4: Adjust your expectations accordingly!
-&gt; Chain 4: 
-&gt; Chain 4: 
-&gt; Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-&gt; Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-&gt; Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-&gt; Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-&gt; Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-&gt; Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-&gt; Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-&gt; Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-&gt; Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-&gt; Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-&gt; Chain 4: 
-&gt; Chain 4:  Elapsed Time: 0.07 seconds (Warm-up)
-&gt; Chain 4:                0.076 seconds (Sampling)
-&gt; Chain 4:                0.146 seconds (Total)
-&gt; Chain 4:</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Compute indices</span></a>
-<a class="sourceLine" id="cb3-2" title="2">pd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(model)</a>
-<a class="sourceLine" id="cb3-3" title="3">percentage_in_rope &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rope.html">rope</a></span>(model, <span class="dt">ci=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co"># Visualise the pd</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(pd)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># Compute indices</span></a>
+<a class="sourceLine" id="cb2-2" title="2">pd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(model)</a>
+<a class="sourceLine" id="cb2-3" title="3">percentage_in_rope &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rope.html">rope</a></span>(model, <span class="dt">ci=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co"># Visualise the pd</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(pd)</a></code></pre></div>
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">pd</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">pd</a></code></pre></div>
 <pre><code>&gt; # Probability of Direction (pd)
 &gt; 
-&gt;   (Intercept): 100.00%
-&gt;   Sepal.Width:  91.92%</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># Visualise the percentage in ROPE</span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(percentage_in_rope)</a></code></pre></div>
+&gt;    Parameter      pd
+&gt;  (Intercept) 100.00%
+&gt;  Sepal.Width  92.95%</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Visualise the percentage in ROPE</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(percentage_in_rope)</a></code></pre></div>
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">percentage_in_rope</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">percentage_in_rope</a></code></pre></div>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-0.08, 0.08]:
 &gt; 
 &gt;    Parameter inside ROPE
 &gt;  (Intercept)      0.00 %
-&gt;  Sepal.Width     15.32 %</code></pre>
+&gt;  Sepal.Width     15.95 %</code></pre>
 <p>We can see that the <em>pd</em> and the percentage in ROPE of the linear relationship between <strong>Sepal.Length</strong> and <strong>Sepal.Width</strong> are respectively of about <code>92.95%</code> and <code>15.95%</code>, corresponding to an <strong>uncertain</strong> and <strong>not significant</strong> effect. What happen if we scale our predictor?</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">data<span class="op">$</span>Sepal.Width_scaled &lt;-<span class="st"> </span>data<span class="op">$</span>Sepal.Width <span class="op">/</span><span class="st"> </span><span class="dv">100</span>  <span class="co"># Divide predictor by 100</span></a>
-<a class="sourceLine" id="cb9-2" title="2">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width_scaled, <span class="dt">data=</span>data)  <span class="co"># Fit model</span></a></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Compute indices</span></a>
-<a class="sourceLine" id="cb10-2" title="2">pd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(model)</a>
-<a class="sourceLine" id="cb10-3" title="3">percentage_in_rope &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rope.html">rope</a></span>(model, <span class="dt">ci=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb10-4" title="4"></a>
-<a class="sourceLine" id="cb10-5" title="5"><span class="co"># Visualise the pd</span></a>
-<a class="sourceLine" id="cb10-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(pd)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">data<span class="op">$</span>Sepal.Width_scaled &lt;-<span class="st"> </span>data<span class="op">$</span>Sepal.Width <span class="op">/</span><span class="st"> </span><span class="dv">100</span>  <span class="co"># Divide predictor by 100</span></a>
+<a class="sourceLine" id="cb8-2" title="2">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width_scaled, <span class="dt">data=</span>data)  <span class="co"># Fit model</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Compute indices</span></a>
+<a class="sourceLine" id="cb9-2" title="2">pd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(model)</a>
+<a class="sourceLine" id="cb9-3" title="3">percentage_in_rope &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rope.html">rope</a></span>(model, <span class="dt">ci=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb9-4" title="4"></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="co"># Visualise the pd</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(pd)</a></code></pre></div>
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">pd</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">pd</a></code></pre></div>
 <pre><code>&gt; # Probability of Direction (pd)
 &gt; 
-&gt;   (Intercept)       : 100.00%
-&gt;   Sepal.Width_scaled:  92.95%</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># Visualise the percentage in ROPE</span></a>
-<a class="sourceLine" id="cb13-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(percentage_in_rope)</a></code></pre></div>
+&gt;           Parameter      pd
+&gt;         (Intercept) 100.00%
+&gt;  Sepal.Width_scaled  92.95%</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># Visualise the percentage in ROPE</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(percentage_in_rope)</a></code></pre></div>
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">percentage_in_rope</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">percentage_in_rope</a></code></pre></div>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-0.08, 0.08]:
 &gt; 
 &gt;           Parameter inside ROPE
@@ -340,10 +244,10 @@
 &gt;  Sepal.Width_scaled      0.15 %</code></pre>
 <p>As you can see, by simply dividing the predictor by 100, we <strong>drastically</strong> changed the conclusion related to the <strong>percentage in ROPE</strong> (which became very close to <code>0</code>): the effect could now be <strong>interpreted as being significant</strong>. Thus, we recommend paying close attention to the unit of the predictors when selecting the ROPE range (<em>e.g.</em>, what coefficient would correspond to a small effect?), and when reporting or reading ROPE results.</p>
 </div>
-<div id="collinearity-of-predictors" class="section level1">
+<div id="multicollinearity-non-independent-covariates" class="section level1">
 <h1 class="hasAnchor">
-<a href="#collinearity-of-predictors" class="anchor"></a>Collinearity of Predictors</h1>
-<p>When parameters show strong correlations, i.e. when covariates are not independent, the joint parameter distributions may shift towards or away from the ROPE. Collinearity invalidates ROPE and hypothesis testing based on univariate marginals, as the probabilities are conditional on independence. Most problematic are parameters that only have partial overlap with the ROPE region. In case of collinearity, the (joint) distributions of these parameters may either get an increased or decreased ROPE, which means that inferences based on ROPE are inappropriate <span class="citation">(Kruschke 2014)</span>.</p>
+<a href="#multicollinearity-non-independent-covariates" class="anchor"></a>Multicollinearity: Non-independent covariates</h1>
+<p>When <strong>parameters show strong correlations</strong>, <em>i.e.</em>, when covariates are not independent, the joint parameter distributions may shift towards or away from the ROPE. Collinearity invalidates ROPE and hypothesis testing based on univariate marginals, as the probabilities are conditional on independence. Most problematic are parameters that only have partial overlap with the ROPE region. In case of collinearity, the (joint) distributions of these parameters may either get an increased or decreased ROPE, which means that inferences based on ROPE are inappropriate <span class="citation">(Kruschke 2014)</span>.</p>
 <p>The <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> and <code><a href="../reference/rope.html">rope()</a></code> functions perform a simple check for pairwise correlations between parameters, but as there can be collinearity between more than two variables, a first step to check the assumptions of this hypothesis testing is to look at different pair plots. An even more sophisticated check is the projection predictive variable selection <span class="citation">(Piironen and Vehtari 2017)</span>.</p>
 <div id="refs" class="references">
 <div id="ref-kruschke2014doing">
@@ -381,8 +285,8 @@
       <li><a href="#credible-interval-in-rope-vs-full-posterior-in-rope">Credible interval in ROPE <em>vs</em> full posterior in ROPE</a></li>
       <li><a href="#what-percentage-in-rope-to-accept-or-to-reject">What percentage in ROPE to accept or to reject?</a></li>
       <li><a href="#how-to-define-the-rope-range">How to define the ROPE range?</a></li>
-      <li><a href="#sensitivity-to-the-parameters-scale">Sensitivity to the parameter’s scale</a></li>
-      <li><a href="#collinearity-of-predictors">Collinearity of Predictors</a></li>
+      <li><a href="#sensitivity-to-parameters-scale">Sensitivity to parameter’s scale</a></li>
+      <li><a href="#multicollinearity-non-independent-covariates">Multicollinearity: Non-independent covariates</a></li>
       </ul>
 </div>
       </div>

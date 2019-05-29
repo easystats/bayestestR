@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -184,11 +184,12 @@
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
 <ul>
+<li>plotting functions now require the installation of the <code>see</code> package</li>
 <li>
 <code>estimate</code> argument name in <code>describe_posterior</code> and <code>point_estimate</code> changed to <code>centrality</code>
 </li>
 <li>
-<code>hdi</code>, <code>ci</code>, <code>rope</code> and <code>equivalence_test</code> default <code>ci</code> to <code>0.89</code>
+<code><a href="../reference/hdi.html">hdi()</a></code>, <code><a href="../reference/ci.html">ci()</a></code>, <code><a href="../reference/rope.html">rope()</a></code> and <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> default <code>ci</code> to <code>0.89</code>
 </li>
 <li>
 <code><a href="../reference/distribution.html">rnorm_perfect()</a></code> deprecated in favour of <code><a href="../reference/distribution.html">distribution_normal()</a></code>
@@ -220,7 +221,7 @@
 <code><a href="../reference/density_at.html">probability_at()</a></code> as alias for <code><a href="../reference/density_at.html">density_at()</a></code>
 </li>
 <li>
-<code>effective_samples()</code> to return the effective sample size of Stan-models</li>
+<code><a href="../reference/effective_sample.html">effective_sample()</a></code> to return the effective sample size of Stan-models</li>
 <li>
 <code><a href="../reference/mcse.html">mcse()</a></code> to return the Monte Carlo standard error of Stan-models</li>
 </ul>
