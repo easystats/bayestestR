@@ -1,3 +1,4 @@
+
 # bayestestR <img src='man/figures/logo.png' align="right" height="139" />
 
 [![CRAN](http://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR)
@@ -283,4 +284,4 @@ You can cite the package as following:
     and Describe Bayesian Models and Posterior Distributions using
     bayestestR*. Available from
     <https://github.com/easystats/bayestestR>.
-    <DOI:10.5281/zenodo.2556486>.
+    [DOI:10.5281/zenodo.2556486](https://zenodo.org/badge/latestdoi/165641861).
