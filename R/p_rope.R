@@ -63,7 +63,7 @@ p_rope.numeric <- function(x, range = "default", precision = .1, ...) {
   rope_df <- rope(x, range, ci = seq(0, 1, by = precision / 100), verbose = FALSE)
   rope_df <- stats::na.omit(rope_df)
 
-  rope_values <- rope_df$ROPE_percentage
+  rope_values <- rope_df$ROPE_Percentage
 
   if (all(rope_values == min(rope_values))) {
     if (rope_values[1] == 0) {

@@ -11,16 +11,16 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   maxlen_low <- max(nchar(x$HDI_low))
   maxlen_high <- max(nchar(x$HDI_high))
 
-  x$ROPE_percentage <- sprintf("%.*f %%", digits, x$ROPE_percentage)
+  x$ROPE_Percentage <- sprintf("%.*f %%", digits, x$ROPE_Percentage)
   x$HDI <- sprintf("[%*s %*s]", maxlen_low, x$HDI_low, maxlen_high, x$HDI_high)
 
   ci <- unique(x$CI)
-  keep.columns <- c("CI", "Parameter", "ROPE_Equivalence", "ROPE_percentage", "HDI")
+  keep.columns <- c("CI", "Parameter", "ROPE_Equivalence", "ROPE_Percentage", "HDI")
 
   x <- x[, intersect(keep.columns, colnames(x))]
 
   colnames(x)[which(colnames(x) == "ROPE_Equivalence")] <- "H0"
-  colnames(x)[which(colnames(x) == "ROPE_percentage")] <- "inside ROPE"
+  colnames(x)[which(colnames(x) == "ROPE_Percentage")] <- "inside ROPE"
 
   # clean parameter names
   if ("Parameter" %in% colnames(x)) {

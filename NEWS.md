@@ -2,7 +2,6 @@
 
 ## Breaking changes
 
-- `ROPE_Percentage` now becale `ROPE_percentage` 
 - plotting functions now require the installation of the `see` package
 - `estimate` argument name in `describe_posterior` and `point_estimate` changed to `centrality`
 - `hdi()`, `ci()`, `rope()` and `equivalence_test()` default `ci` to `0.89`
