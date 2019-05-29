@@ -3,7 +3,7 @@ language: r
 os:
   #- windows
   - linux
-  - osx
+  #- osx
 
 r:
   - oldrel
