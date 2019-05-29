@@ -2,6 +2,7 @@ context("brms")
 
 test_that("brms", {
   # testthat::skip_on_travis()
+  testthat::skip_on_cran()
 
   set.seed(333)
 

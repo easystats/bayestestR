@@ -1,6 +1,8 @@
 context("rstanarm")
 
 test_that("rstanarm", {
+  testthat::skip_on_cran()
+
   set.seed(333)
 
   library(rstanarm)

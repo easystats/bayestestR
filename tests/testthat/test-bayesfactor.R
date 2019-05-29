@@ -3,6 +3,8 @@ context("bayesfactor_*")
 # bayesfactor_savagedickey ------------------------------------------------
 
 test_that("bayesfactor_savagedickey", {
+  testthat::skip_on_cran()
+
   set.seed(444)
   Xprior <- rnorm(1000)
   Xposterior <- rnorm(1000, 0.7, 0.2)
