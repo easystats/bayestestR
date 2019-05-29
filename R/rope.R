@@ -99,7 +99,7 @@ rope <- function(x, ...) {
 #' @method as.double rope
 #' @export
 as.double.rope <- function(x, ...) {
-  x$ROPE_Percentage
+  x$ROPE_percentage
 }
 
 
@@ -131,7 +131,7 @@ rope.numeric <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
 
   out <- do.call(rbind, rope_values)
   if (nrow(out) > 1) {
-    out$ROPE_Percentage <- as.numeric(out$ROPE_Percentage)
+    out$ROPE_percentage <- as.numeric(out$ROPE_percentage)
   }
 
   # Attributes
@@ -183,11 +183,11 @@ rope.BFBayesFactor <- function(x, range = "default", ci = .89, verbose = TRUE, .
   HDI_area <- .hdi_area <- hdi(x, ci, verbose)
 
   if (anyNA(HDI_area)) {
-    rope_percentage <- NA
+    ROPE_percentage <- NA
   } else {
     HDI_area <- x[x >= HDI_area$CI_low & x <= HDI_area$CI_high]
     area_within <- HDI_area[HDI_area >= min(range) & HDI_area <= max(range)]
-    rope_percentage <- length(area_within) / length(HDI_area) * 100
+    ROPE_percentage <- length(area_within) / length(HDI_area) * 100
   }
 
 
@@ -195,7 +195,7 @@ rope.BFBayesFactor <- function(x, range = "default", ci = .89, verbose = TRUE, .
     "CI" = ci * 100,
     "ROPE_low" = range[1],
     "ROPE_high" = range[2],
-    "ROPE_Percentage" = rope_percentage
+    "ROPE_percentage" = ROPE_percentage
   )
 
   attr(rope, "HDI_area") <- c(.hdi_area$CI_low, .hdi_area$CI_high)
@@ -230,7 +230,7 @@ rope.stanreg <- function(x, range = "default", ci = .89, effects = c("fixed", "r
       tmp <- .clean_up_tmp_stanreg(
         tmp,
         group = .x,
-        cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Group"),
+        cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_percentage", "Group"),
         parms = names(parms)
       )
 
@@ -307,7 +307,7 @@ rope.brmsfit <- function(x, range = "default", ci = .89, effects = c("fixed", "r
         tmp,
         group = .x,
         component = .y,
-        cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Component", "Group"),
+        cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_percentage", "Component", "Group"),
         parms = names(parms)
       )
 

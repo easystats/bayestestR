@@ -59,7 +59,7 @@
 #'     \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
 #'     \item \code{CI} The probability of the HDI.
 #'     \item \code{ROPE_low}, \code{ROPE_high} The limits of the ROPE. These values are identical for all parameters.
-#'     \item \code{ROPE_Percentage} The proportion of the HDI that lies inside the ROPE.
+#'     \item \code{ROPE_percentage} The proportion of the HDI that lies inside the ROPE.
 #'     \item \code{ROPE_Equivalence} The "test result", as character. Either "rejected", "accepted" or "undecided".
 #'     \item \code{HDI_low} , \code{HDI_high} The lower and upper HDI limits for the parameters.
 #'   }
@@ -124,13 +124,13 @@ equivalence_test.numeric <- function(x, range = "default", ci = .89, verbose = T
   out <- as.data.frame(rope_data)
 
   if (all(ci < 1)) {
-    out$ROPE_Equivalence <- ifelse(out$ROPE_Percentage == 0, "rejected",
-      ifelse(out$ROPE_Percentage == 100, "accepted", "undecided")
+    out$ROPE_Equivalence <- ifelse(out$ROPE_percentage == 0, "rejected",
+      ifelse(out$ROPE_percentage == 100, "accepted", "undecided")
     )
   } else {
     # Related to guidelines for full rope (https://easystats.github.io/bayestestR/articles/4_Guidelines.html)
-    out$ROPE_Equivalence <- ifelse(out$ROPE_Percentage < 2.5, "rejected",
-      ifelse(out$ROPE_Percentage > 97.5, "accepted", "undecided")
+    out$ROPE_Equivalence <- ifelse(out$ROPE_percentage < 2.5, "rejected",
+      ifelse(out$ROPE_percentage > 97.5, "accepted", "undecided")
     )
   }
 

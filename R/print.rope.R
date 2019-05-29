@@ -15,7 +15,7 @@ print.rope <- function(x, digits = 2, ...) {
   # why we did this, so I'll comment a bit...
 
   # These are the base columns we want to print
-  cols <- c("Parameter", "ROPE_Percentage", "Component", "Group")
+  cols <- c("Parameter", "ROPE_percentage", "Component", "Group")
 
   # In case we have ropes for different CIs, we also want this information
   # So we first check if values in the CI column differ, and if so, we also
@@ -34,8 +34,8 @@ print.rope <- function(x, digits = 2, ...) {
   x <- subset(x, select = intersect(cols, colnames(x)))
 
   # This is just cosmetics, to have nicer column names and values
-  x$ROPE_Percentage <- sprintf("%.*f %%", digits, x$ROPE_Percentage)
-  colnames(x)[which(colnames(x) == "ROPE_Percentage")] <- "inside ROPE"
+  x$ROPE_percentage <- sprintf("%.*f %%", digits, x$ROPE_percentage)
+  colnames(x)[which(colnames(x) == "ROPE_percentage")] <- "inside ROPE"
 
   # In case we have multiple CI values, we create a subset for each CI value.
   # Else, parameter-rows would be mixed up with both CIs, which is a bit
