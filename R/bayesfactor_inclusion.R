@@ -117,7 +117,7 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
 
   df.effect$BF_inclusion <- df.effect$BF_inclusion
   df.effect <- df.effect[, -1, drop = FALSE]
-  colnames(df.effect) <- c("P.Inc.prior", "P.Inc.posterior", "BF.Inc")
+  colnames(df.effect) <- c("p_prior", "p_posterior", "BF")
   rownames(df.effect) <- effnames
 
 
