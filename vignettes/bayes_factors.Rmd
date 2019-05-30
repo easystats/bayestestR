@@ -161,7 +161,7 @@ Note that **interpretation guides** for Bayes factors can be found [**here**](ht
 
 ### Directional test
 
-We can also conduct a directional test if we have some prior hypothesis about the direction of the effect:
+We can also conduct a directional test if we have some prior hypothesis about the direction of the effect. This is done by setting an order restriction on the prior and posterior distributions [@morey2014simple; @morey_2015_blog].
 
 ```{r prior_n_post_plot_one_sided, echo=FALSE, message=FALSE, warning=FALSE}
 
