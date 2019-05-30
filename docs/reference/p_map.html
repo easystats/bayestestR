@@ -283,8 +283,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
 #&gt; Chain 1:  Elapsed Time: 0.013 seconds (Warm-up)
-#&gt; Chain 1:                0.016 seconds (Sampling)
-#&gt; Chain 1:                0.029 seconds (Total)
+#&gt; Chain 1:                0.015 seconds (Sampling)
+#&gt; Chain 1:                0.028 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -316,14 +316,13 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
 #&gt; Chain 2:  Elapsed Time: 0.01 seconds (Warm-up)
-#&gt; Chain 2:                0.013 seconds (Sampling)
-#&gt; Chain 2:                0.023 seconds (Total)
+#&gt; Chain 2:                0.014 seconds (Sampling)
+#&gt; Chain 2:                0.024 seconds (Total)
 #&gt; Chain 2: </div><div class='input'><span class='fu'>p_map</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># MAP-based p-value
 #&gt; 
 #&gt; </span><span>  (Intercept): 0.000
 #&gt;   wt         : 0.000
-#&gt;   gear       : 0.994</div><div class='input'>
-</div></span><span class='co'># NOT RUN {</span>
+#&gt;   gear       : 0.994</div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>p_map</span>(<span class='no'>model</span>)
