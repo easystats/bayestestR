@@ -373,9 +373,9 @@ the resulting HDI.
 #&gt; Chain 1: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.019 seconds (Warm-up)
-#&gt; Chain 1:                0.02 seconds (Sampling)
-#&gt; Chain 1:                0.039 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.024 seconds (Warm-up)
+#&gt; Chain 1:                0.014 seconds (Sampling)
+#&gt; Chain 1:                0.038 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -407,8 +407,8 @@ the resulting HDI.
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
 #&gt; Chain 2:  Elapsed Time: 0.012 seconds (Warm-up)
-#&gt; Chain 2:                0.013 seconds (Sampling)
-#&gt; Chain 2:                0.025 seconds (Total)
+#&gt; Chain 2:                0.007 seconds (Sampling)
+#&gt; Chain 2:                0.019 seconds (Total)
 #&gt; Chain 2: </div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Interval
 #&gt; 
 #&gt; </span><span>   Parameter         89% CI
@@ -434,8 +434,7 @@ the resulting HDI.
 #&gt;           wt [-6.71, -3.98]
 #&gt;         gear [-1.92,  1.79]
 #&gt; 
-#&gt; </div><div class='input'>
-</div></span><span class='co'># NOT RUN {</span>
+#&gt; </div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>ci</span>(<span class='no'>model</span>)

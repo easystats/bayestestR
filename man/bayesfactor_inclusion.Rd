@@ -59,7 +59,6 @@ bayesfactor_inclusion(BF)
 
 # compare only matched models:
 bayesfactor_inclusion(BF, match_models = TRUE)
-
 }
 \references{
 \itemize{

@@ -44,7 +44,6 @@
 #'
 #' # compare only matched models:
 #' bayesfactor_inclusion(BF, match_models = TRUE)
-#'
 #' @references
 #' \itemize{
 #'   \item Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E. (2019, March 25). A conceptual introduction to Bayesian Model Averaging. \doi{10.31234/osf.io/wgb64}

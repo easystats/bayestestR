@@ -103,7 +103,6 @@ library(rstanarm)
 model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 ci(model)
 ci(model, ci = c(.80, .89, .95))
-
 \dontrun{
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
