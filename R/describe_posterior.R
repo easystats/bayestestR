@@ -265,7 +265,7 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
   if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
     test <- test[!test %in% c("bf", "bayesfactor", "bayes_factor")]
     compute_bf <- TRUE
-  } else{
+  } else {
     compute_bf <- FALSE
   }
 
@@ -274,7 +274,7 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
 
 
   # Compute and readd BF a posteriori
-  if(compute_bf){
+  if (compute_bf) {
     out$BF <- as.data.frame(bayesfactor_models(posteriors, ...))[-1, ]$BF
   }
 

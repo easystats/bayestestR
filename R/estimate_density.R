@@ -40,7 +40,6 @@
 #' library(rstanarm)
 #' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 #' head(estimate_density(model))
-#'
 #' \dontrun{
 #' # brms models
 #' # -----------------------------------------------
