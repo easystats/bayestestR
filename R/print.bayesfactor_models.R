@@ -24,7 +24,7 @@ print.bayesfactor_models <- function(x, digits = 2, log = FALSE, ...) {
   cat("Bayes factor analysis
 ---------------------")
   print.data.frame(BFE, digits = digits)
-  cat("\nAgainst denominator:	", denM)
+  cat("\nAgainst denominator:\n\t\t", denM)
   cat("\n---\nBayes factor type: ", grid.type, "\n")
   if (log) cat("Presenting log(BF)\n")
   invisible(x)
