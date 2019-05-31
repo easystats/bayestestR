@@ -1,3 +1,16 @@
+# bayestestR 0.2.1
+
+## Breaking changes
+## New functions / features
+
+- `pd_to_p` and `p_to_pd`: Functions to convert between probability of direction (pd) and p-value.
+
+
+## Minor changes
+## Bug fixes
+
+
+
 # bayestestR 0.2.0
 
 ## Breaking changes

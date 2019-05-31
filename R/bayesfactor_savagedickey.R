@@ -290,8 +290,8 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     direction <- direction[1]
   }
 
-  String <- c("left", "right", "two-sided", "<", ">", "=", "-1", "0", "1", "+1")
-  Value <- c(-1, 1, 0, -1, 1, 0, -1, 0, 1, 1)
+  String <- c("left", "right", "one-sided", "onesided", "two-sided", "twosided", "<", ">", "=", "-1", "0", "1", "+1")
+  Value <- c(-1, 1, 1, 1,  0, 0, -1, 1, 0, -1, 0, 1, 1)
 
   ind <- String == direction
   if (length(ind) == 0) {
