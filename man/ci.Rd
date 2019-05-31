@@ -7,7 +7,7 @@
 \alias{ci.stanreg}
 \alias{ci.brmsfit}
 \alias{ci.BFBayesFactor}
-\title{Confidence/Credible Interval}
+\title{Confidence/Credible Interval (CI)}
 \usage{
 ci(x, ...)
 

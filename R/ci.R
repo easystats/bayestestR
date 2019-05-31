@@ -1,4 +1,4 @@
-#' Confidence/Credible Interval
+#' Confidence/Credible Interval (CI)
 #'
 #' Compute Confidence/Credible Intervals (CI) for Bayesian (using quantiles) and frequentist models.
 #'
