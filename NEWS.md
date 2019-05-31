@@ -12,7 +12,7 @@
 ## Minor changes
 ## Bug fixes
 
-
+- `describe_posterior`: Fixed column order restoration
 
 # bayestestR 0.2.0
 

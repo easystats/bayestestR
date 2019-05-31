@@ -170,7 +170,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   if ("Parameter" %in% names(col_order)) {
     col_order <- col_order$Parameter
     col_order <- rep(col_order, each = round(nrow(out) / length(col_order)))
-    out[match(col_order, out$Parameter), ]
+    out <- out[match(col_order, out$Parameter), ]
   }
 
   out
