@@ -115,11 +115,11 @@ test_that("bayesfactor_inclusion", {
   )
 
   # with random effects in all models:
-  testthat::expect_true(is.nan(bayestestR::bayesfactor_inclusion(BFM1)[1, "BF.Inc"]))
+  testthat::expect_true(is.nan(bayestestR::bayesfactor_inclusion(BFM1)[1, "BF"]))
 
   # + match_models
   bfinc_matched <- bayestestR::bayesfactor_inclusion(BFM1, match_models = TRUE)
-  testthat::expect_equal(bfinc_matched$P.Inc.prior, c(1, 0.25, 0.5, 0.25), tolerance = 0.1)
-  testthat::expect_equal(bfinc_matched$P.Inc.posterior, c(1, 0.94, 0.06, 0), tolerance = 0.1)
-  testthat::expect_equal(log(bfinc_matched$BF.Inc), c(NaN, 57.37, -2.82, -5.25), tolerance = 0.1)
+  testthat::expect_equal(bfinc_matched$p_prior, c(1, 0.25, 0.5, 0.25), tolerance = 0.1)
+  testthat::expect_equal(bfinc_matched$p_posterior, c(1, 0.94, 0.06, 0), tolerance = 0.1)
+  testthat::expect_equal(log(bfinc_matched$BF), c(NaN, 57.37, -2.82, -5.25), tolerance = 0.1)
 })
