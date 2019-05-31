@@ -63,6 +63,7 @@ We generated a dataset for each combination of these characteristics, resulting 
 library(ggplot2)
 library(dplyr)
 library(tidyr)
+library(see)
 
 df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv")
 ```
@@ -89,11 +90,11 @@ df %>%
   # geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +
   # geom_smooth(method="loess") +
   geom_boxplot(outlier.shape=NA) +
-  theme_classic() +
+  theme_modern() +
   scale_fill_manual(values = c("beta" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
                     name = "Index") +
-  ylab("Point-estimate of the true value 0\n") +
-  xlab("\nNoise") +
+  ylab("Point-estimate") +
+  xlab("Noise") +
   facet_wrap(~ outcome_type * true_effect, scales="free") 
 ```
 
@@ -114,11 +115,11 @@ df %>%
   # geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +
   # geom_smooth(method="loess") +
   geom_boxplot(outlier.shape=NA) +
-  theme_classic() +
+  theme_modern() +
   scale_fill_manual(values = c("beta" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
                     name = "Index") +
-  xlab("Point-estimate of the true value 0\n") +
-  ylab("\nNoise") +
+  ylab("Point-estimate") +
+  xlab("Sample size") +
   facet_wrap(~ outcome_type * true_effect, scales="free")
 ```
 
@@ -132,36 +133,57 @@ We fitted a (frequentist) multiple linear regression to statistically test the t
 df %>%
   select(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) %>%
   gather(estimate, value, -sample_size, -error, -true_effect, -outcome_type) %>%
-  glm(true_effect ~ outcome_type / value * estimate * sample_size * error, data=., family="binomial") %>%
+  glm(true_effect ~ outcome_type / estimate / value, data=., family="binomial") %>%
   broom::tidy() %>%
   select(term, estimate, p=p.value) %>%
   filter(stringr::str_detect(term, 'outcome_type'),
          stringr::str_detect(term, ':value')) %>%
-  mutate(
-    sample_size = stringr::str_detect(term, 'sample_size'),
-    error = stringr::str_detect(term, 'error'),
-    term = stringr::str_remove(term, "estimate"),
-    term = stringr::str_remove(term, "outcome_type"),
-    p = paste0(sprintf("%.2f", p), ifelse(p < .001, "***", ifelse(p < .01, "**", ifelse(p < .05, "*", ""))))) %>%
-  arrange(sample_size, error, term) %>% 
-  select(-sample_size, -error) %>% 
+  arrange(desc(estimate)) %>% 
   knitr::kable(digits=2) 
 ```
 
 
 This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist's beta:
 
-- For linear Models;
+- For linear models, the **Mean** was the better predictor, closely followed by the **Median**, the **MAP** and the frequentist **beta**.
+- For logistic models, the **MAP** was the better predictor, closely followed by the **Median**, the **Mean** and the frequentist **beta**.
 
-  - The **mean**, followed closely by the **median**, and the **MAP** estimate had a superior performance, altough not significantly.
-  - The **mean**, followed closely by the **median**, and the **MAP** estimate, were less affected by noise, altough not significantly.
-  - No difference for the sensitivity to sample size was found.
-    
-- For logistic models:
+Overall, the **median** seems to be appears as an approriate choice, maintaining a a high performance accross different types of models.
 
-  - The **MAP** estimate, followed by the **median** and the **mean**, estimate had a superior performance.
-  - The **MAP** estimate, followed by the **median**, and the **mean**, were less affected by noise, altough not significantly.
-  - The **MAP** estimate, followed by the **mean**, and the **median**, were less affected by sample size, altough not significantly.
+<!-- ```{r, message=FALSE, warning=FALSE} -->
+<!-- df %>% -->
+<!--   select(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) %>% -->
+<!--   gather(estimate, value, -sample_size, -error, -true_effect, -outcome_type) %>% -->
+<!--   glm(true_effect ~ outcome_type / value * estimate * sample_size * error, data=., family="binomial") %>% -->
+<!--   broom::tidy() %>% -->
+<!--   select(term, estimate, p=p.value) %>% -->
+<!--   filter(stringr::str_detect(term, 'outcome_type'), -->
+<!--          stringr::str_detect(term, ':value')) %>% -->
+<!--   mutate( -->
+<!--     sample_size = stringr::str_detect(term, 'sample_size'), -->
+<!--     error = stringr::str_detect(term, 'error'), -->
+<!--     term = stringr::str_remove(term, "estimate"), -->
+<!--     term = stringr::str_remove(term, "outcome_type"), -->
+<!--     p = paste0(sprintf("%.2f", p), ifelse(p < .001, "***", ifelse(p < .01, "**", ifelse(p < .05, "*", ""))))) %>% -->
+<!--   arrange(sample_size, error, term) %>%  -->
+<!--   select(-sample_size, -error) %>%  -->
+<!--   knitr::kable(digits=2)  -->
+<!-- ``` -->
+
+
+<!-- This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist's beta: -->
+
+<!-- - For linear Models; -->
+
+<!--   - The **mean**, followed closely by the **median**, and the **MAP** estimate had a superior performance, altough not significantly. -->
+<!--   - The **mean**, followed closely by the **median**, and the **MAP** estimate, were less affected by noise, altough not significantly. -->
+<!--   - No difference for the sensitivity to sample size was found. -->
+
+<!-- - For logistic models: -->
+
+<!--   - The **MAP** estimate, followed by the **median** and the **mean**, estimate had a superior performance. -->
+<!--   - The **MAP** estimate, followed by the **median**, and the **mean**, were less affected by noise, altough not significantly. -->
+<!--   - The **MAP** estimate, followed by the **mean**, and the **median**, were less affected by sample size, altough not significantly. -->
 
 
 ## Experiment 2: Relationship with Sampling Characteristics
