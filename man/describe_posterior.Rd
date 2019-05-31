@@ -9,11 +9,11 @@
 \title{Describe Posterior Distributions}
 \usage{
 describe_posterior(posteriors, centrality = "median",
-  dispersion = TRUE, ci = 0.89, ci_method = "hdi", test = c("pd",
+  dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_ci = 0.89, ...)
 
 \method{describe_posterior}{numeric}(posteriors, centrality = "median",
-  dispersion = TRUE, ci = 0.89, ci_method = "hdi", test = c("pd",
+  dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL,
   ...)
 
