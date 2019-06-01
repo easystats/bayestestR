@@ -74,7 +74,6 @@ bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-s
 
 #' @rdname bayesfactor_savagedickey
 #' @export
-#' @importFrom stats rcauchy sd
 bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, verbose = TRUE, ...) {
   # nm <- deparse(substitute(posterior))
 
@@ -105,11 +104,7 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
 }
 
 #' @rdname bayesfactor_savagedickey
-#'
 #' @importFrom insight find_algorithm
-#' @importFrom stats update
-#' @importFrom utils capture.output
-#' @importFrom methods is
 #' @export
 bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
                                              direction = "two-sided", hypothesis = 0,
@@ -141,8 +136,6 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 
 #' @rdname bayesfactor_savagedickey
 #' @export
-#' @importFrom insight find_parameters find_algorithm
-#' @importFrom stats update
 bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
                                              direction = "two-sided", hypothesis = 0,
                                              verbose = TRUE,
@@ -239,8 +232,12 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     }
   }
 
-  relative_density(prior) / relative_density(posterior)
+  relative_density(prior) /
+    relative_density(posterior)
 }
+
+
+# UTILS -------------------------------------------------------------------
 
 #' @keywords internal
 .get_direction <- function(direction) {
@@ -327,10 +324,14 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   )
 }
 
+#' @keywords internal
 .update_to_priors <- function(model, verbose = TRUE){
   UseMethod(".update_to_priors")
 }
 
+#' @keywords internal
+#' @importFrom stats update
+#' @importFrom utils capture.output
 .update_to_priors.stanreg <- function(model, verbose = TRUE){
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
@@ -349,6 +350,10 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   model_prior
 }
 
+#' @keywords internal
+#' @importFrom stats update
+#' @importFrom utils capture.output
+#' @importFrom methods is
 .update_to_priors.brmsfit <- function(model, verbose = TRUE){
   if (!requireNamespace("brms")) {
     stop("Package \"brms\" needed for this function to work. Please install it.")
