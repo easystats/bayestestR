@@ -54,6 +54,12 @@
 #' stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #' bayesfactor_savagedickey(stan_model)
 #'
+#' # emmGrid objects
+#' # ---------------
+#' library(emmeans)
+#' group_diff <- pairs(emmeans(stan_model, ~ group))
+#' bayesfactor_savagedickey(group_diff, prior = stan_model)
+#'
 #' # brms models
 #' # -----------
 #' library(brms)
