@@ -142,6 +142,17 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
   out[, c("Parameter", "x", "y")]
 }
 
+#' @export
+estimate_density.emmGrid <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
+  x <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+
+  estimate_density.data.frame(x, method = method, precision = precision,
+                              extend = extend, extend_scale = extend_scale,
+                              bw = bw, ...)
+}
 
 
 

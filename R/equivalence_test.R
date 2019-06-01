@@ -171,6 +171,16 @@ equivalence_test.data.frame <- function(x, range = "default", ci = .89, verbose 
   out
 }
 
+#' @rdname equivalence_test
+#' @export
+equivalence_test.emmGrid <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
+  x <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+
+  equivalence_test.data.frame(x, range = range, ci = ci, verbose = verbose, ...)
+}
 
 
 #' @rdname equivalence_test

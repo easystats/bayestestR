@@ -5,6 +5,7 @@
 \alias{bayesfactor_savagedickey.numeric}
 \alias{bayesfactor_savagedickey.stanreg}
 \alias{bayesfactor_savagedickey.brmsfit}
+\alias{bayesfactor_savagedickey.emmGrid}
 \alias{bayesfactor_savagedickey.data.frame}
 \title{Savage-Dickey density ratio Bayes Factor (BF)}
 \usage{
@@ -22,13 +23,16 @@ bayesfactor_savagedickey(posterior, prior = NULL,
   direction = "two-sided", hypothesis = 0, verbose = TRUE,
   effects = c("fixed", "random", "all"), ...)
 
+\method{bayesfactor_savagedickey}{emmGrid}(posterior, prior = NULL,
+  direction = "two-sided", hypothesis = 0, verbose = TRUE, ...)
+
 \method{bayesfactor_savagedickey}{data.frame}(posterior, prior = NULL,
   direction = "two-sided", hypothesis = 0, verbose = TRUE, ...)
 }
 \arguments{
-\item{posterior}{Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object (see Details).}
+\item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).}
 
-\item{prior}{Vector representing a prior distribution (if \code{posterior} is a vector), or a data frame with column names matching \code{posterior}'s (if \code{posterior} is a data frame). Otherwise ignored.}
+\item{prior}{An object representing a prior distribution (see Details).}
 
 \item{direction}{Test type (see details). One of \code{0}, \code{"two-sided"} (default, two tailed),
 \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).}
@@ -54,17 +58,28 @@ this results in an approximation of a Bayes factor against the (point) null mode
 This method is used to compute Bayes factors based on prior and posterior distributions.
 When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
 extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
-\cr \cr
+
 \strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)} priors. See example below.
-\cr \cr
+
+\subsection{Setting the correct \code{prior}}{
+It is important to provide the correct \code{prior} for meaningful results.
+\itemize{
+  \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
+  \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} \ \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
+  \item When \code{posterior} is a \code{stanreg} \ \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
+  \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column names.
+}}
+\subsection{One-sided Tests (setting an order restriction)}{
 One sided tests (controlled by \code{direction}) are conducted by setting an order restriction on
 the prior and posterior distributions (\cite{Morey & Wagenmakers, 2013}).
-\cr \cr
+}
+\subsection{Interpreting Bayes Factors}{
 A Bayes factor greater than 1 can be interpereted as evidence against the null,
 at which one convention is that a Bayes factor greater than 3 can be considered
 as "substantial" evidence against the null (and vice versa, a Bayes factor
 smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
 (\cite{Wetzels et al. 2011}).
+}
 }
 \examples{
 library(bayestestR)

@@ -4,8 +4,8 @@
 #' of two distributions. When the compared distributions are the posterior and the prior distributions,
 #' this results in an approximation of a Bayes factor against the (point) null model.
 #'
-#' @param posterior Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object (see Details).
-#' @param prior Vector representing a prior distribution (if \code{posterior} is a vector), or a data frame with column names matching \code{posterior}'s (if \code{posterior} is a data frame). Otherwise ignored.
+#' @param posterior A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).
+#' @param prior An object representing a prior distribution (see Details).
 #' @param direction Test type (see details). One of \code{0}, \code{"two-sided"} (default, two tailed),
 #' \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).
 #' @param hypothesis Value to be tested against (usually \code{0} in the context of null hypothesis testing).
@@ -16,17 +16,29 @@
 #' @details This method is used to compute Bayes factors based on prior and posterior distributions.
 #' When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
 #' extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
-#' \cr \cr
+#'
 #' \strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)} priors. See example below.
-#' \cr \cr
+
+#'
+#' \subsection{Setting the correct \code{prior}}{
+#' It is important to provide the correct \code{prior} for meaningful results.
+#' \itemize{
+#'   \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
+#'   \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} \ \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
+#'   \item When \code{posterior} is a \code{stanreg} \ \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
+#'   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column names.
+#' }}
+#' \subsection{One-sided Tests (setting an order restriction)}{
 #' One sided tests (controlled by \code{direction}) are conducted by setting an order restriction on
 #' the prior and posterior distributions (\cite{Morey & Wagenmakers, 2013}).
-#' \cr \cr
+#' }
+#' \subsection{Interpreting Bayes Factors}{
 #' A Bayes factor greater than 1 can be interpereted as evidence against the null,
 #' at which one convention is that a Bayes factor greater than 3 can be considered
 #' as "substantial" evidence against the null (and vice versa, a Bayes factor
 #' smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
 #' (\cite{Wetzels et al. 2011}).
+#' }
 #'
 #' @examples
 #' library(bayestestR)
@@ -90,8 +102,8 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
       )
     }
   }
-  posterior <- data.frame(X = posterior)
   prior <- data.frame(X = prior)
+  posterior <- data.frame(X = posterior)
   colnames(posterior) <- colnames(prior) <- "X" # nm
 
   # Get savage-dickey BFs
@@ -110,20 +122,14 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
                                              verbose = TRUE,
                                              effects = c("fixed", "random", "all"),
                                              ...) {
-  if (!requireNamespace("rstanarm")) {
-    stop("Package \"rstanarm\" needed for this function to work. Please install it.")
-  }
-
   effects <- match.arg(effects)
 
   # Get Priors
   if (is.null(prior)) {
     prior <- .update_to_priors(posterior, verbose = verbose)
-    prior <- insight::get_parameters(prior, effects = effects)
-  } else {
-    prior <- as.data.frame(prior)
   }
 
+  prior <- insight::get_parameters(prior, effects = effects)
   posterior <- insight::get_parameters(posterior, effects = effects)
 
   # Get savage-dickey BFs
@@ -139,6 +145,37 @@ bayesfactor_savagedickey.brmsfit <- bayesfactor_savagedickey.stanreg
 
 #' @rdname bayesfactor_savagedickey
 #' @export
+bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
+                                             direction = "two-sided", hypothesis = 0,
+                                             verbose = TRUE,
+                                             ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
+
+  if (is.null(prior)) {
+    prior <- posterior
+    warning(
+      "Prior not specified! ",
+      "Please provide the original model to get meaningful results."
+    )
+  } else {
+    prior <- .update_to_priors(prior, verbose = verbose)
+    prior <- insight::get_parameters(prior, effects = "fixed")
+    prior <- update(posterior, post.beta = as.matrix(prior))
+  }
+
+  prior <- as.data.frame(as.matrix(as.mcmc.emmGrid(prior, names = FALSE)))
+  posterior <- as.data.frame(as.matrix(as.mcmc.emmGrid(posterior, names = FALSE)))
+
+  bayesfactor_savagedickey.data.frame(
+    posterior = posterior, prior = prior,
+    direction = direction, hypothesis = hypothesis
+  )
+}
+
+#' @rdname bayesfactor_savagedickey
+#' @export
 bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
                                                 direction = "two-sided", hypothesis = 0,
                                                 verbose = TRUE,
@@ -150,11 +187,9 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     prior <- posterior
     warning(
       "Prior not specified! ",
-      "Please specify priors (with columns matching 'posterior')",
+      "Please specify priors (with column names matching 'posterior')",
       " to get meaningful results."
     )
-  } else {
-    prior <- as.data.frame(prior)
   }
 
   sdbf <- numeric(ncol(posterior))

@@ -77,6 +77,14 @@ p_map.data.frame <- function(x, precision = 2^10, ...) {
   out
 }
 
+#' @export
+p_map.emmGrid <- function(x, precision = 2^10, ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
+  x <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+  p_map.data.frame(x, precision = precision, ...)
+}
 
 
 #' @importFrom insight get_parameters

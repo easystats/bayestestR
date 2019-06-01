@@ -5,6 +5,7 @@
 \alias{rope.default}
 \alias{rope.numeric}
 \alias{rope.data.frame}
+\alias{rope.emmGrid}
 \alias{rope.BFBayesFactor}
 \alias{rope.stanreg}
 \alias{rope.brmsfit}
@@ -18,6 +19,9 @@ rope(x, ...)
   verbose = TRUE, ...)
 
 \method{rope}{data.frame}(x, range = "default", ci = 0.89,
+  verbose = TRUE, ...)
+
+\method{rope}{emmGrid}(x, range = "default", ci = 0.89,
   verbose = TRUE, ...)
 
 \method{rope}{BFBayesFactor}(x, range = "default", ci = 0.89,

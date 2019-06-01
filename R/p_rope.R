@@ -120,6 +120,17 @@ p_rope.data.frame <- function(x, range = "default", precision = .1, ...) {
 
 #' @rdname p_rope
 #' @export
+p_rope.emmGrid <- function(x, range = "default", precision = .1, ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
+  x <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+
+  p_rope.data.frame(x , range = range, precision = precision, ...)
+}
+
+#' @rdname p_rope
+#' @export
 p_rope.BFBayesFactor <- function(x, range = "default", precision = .1, ...) {
   out <- p_rope(insight::get_parameters(x), range = range, precision = precision, ...)
   out

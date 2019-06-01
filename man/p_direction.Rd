@@ -5,6 +5,7 @@
 \alias{pd}
 \alias{p_direction.numeric}
 \alias{p_direction.data.frame}
+\alias{p_direction.emmGrid}
 \alias{p_direction.stanreg}
 \alias{p_direction.brmsfit}
 \alias{p_direction.BFBayesFactor}
@@ -17,6 +18,8 @@ pd(x, ...)
 \method{p_direction}{numeric}(x, method = "direct", ...)
 
 \method{p_direction}{data.frame}(x, method = "direct", ...)
+
+\method{p_direction}{emmGrid}(x, method = "direct", ...)
 
 \method{p_direction}{stanreg}(x, effects = c("fixed", "random", "all"),
   parameters = NULL, method = "direct", ...)

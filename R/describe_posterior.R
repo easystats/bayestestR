@@ -199,7 +199,31 @@ describe_posterior.double <- describe_posterior.numeric
 #' @export
 describe_posterior.data.frame <- describe_posterior.numeric
 
+#' @export
+describe_posterior.emmGrid <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
 
+  if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
+    if (is.null(bf_prior)) {
+      bf_prior <- as.data.frame(as.matrix(as.mcmc.emmGrid(posteriors, names = FALSE)))
+      warning(
+        "Prior not specified! ",
+        "Please provide the original model to get meaningful results."
+      )
+    } else {
+      bf_prior <- .update_to_priors(bf_prior)
+      bf_prior <- insight::get_parameters(bf_prior, effects = "fixed")
+      bf_prior <- update(posteriors, post.beta = as.matrix(bf_prior))
+      bf_prior <- as.data.frame(as.matrix(as.mcmc.emmGrid(bf_prior, names = FALSE)))
+    }
+  }
+
+  posteriors <- as.data.frame(as.matrix(as.mcmc.emmGrid(posteriors, names = FALSE)))
+
+  .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, ...)
+}
 
 
 

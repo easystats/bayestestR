@@ -100,6 +100,16 @@ hdi.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
   dat
 }
 
+#' @rdname hdi
+#' @export
+hdi.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
+  x <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+  hdi.data.frame(x , ci = ci, verbose = verbose, ...)
+}
+
 
 
 #' @importFrom insight get_parameters

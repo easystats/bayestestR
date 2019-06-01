@@ -12,7 +12,7 @@ bayesfactor(..., prior = NULL, direction = "two-sided",
 \arguments{
 \item{...}{A numeric vector, model object(s), or the output from \code{bayesfactor_models}.}
 
-\item{prior}{Vector representing a prior distribution (if \code{posterior} is a vector), or a data frame with column names matching \code{posterior}'s (if \code{posterior} is a data frame). Otherwise ignored.}
+\item{prior}{An object representing a prior distribution (see Details).}
 
 \item{direction}{Test type (see details). One of \code{0}, \code{"two-sided"} (default, two tailed),
 \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).}

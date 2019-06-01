@@ -4,6 +4,7 @@
 \alias{ci}
 \alias{ci.numeric}
 \alias{ci.data.frame}
+\alias{ci.emmGrid}
 \alias{ci.stanreg}
 \alias{ci.brmsfit}
 \alias{ci.BFBayesFactor}
@@ -14,6 +15,8 @@ ci(x, ...)
 \method{ci}{numeric}(x, ci = 0.89, verbose = TRUE, ...)
 
 \method{ci}{data.frame}(x, ci = 0.89, verbose = TRUE, ...)
+
+\method{ci}{emmGrid}(x, ci = 0.89, verbose = TRUE, ...)
 
 \method{ci}{stanreg}(x, ci = 0.89, effects = c("fixed", "random",
   "all"), parameters = NULL, verbose = TRUE, ...)

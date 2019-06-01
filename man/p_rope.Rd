@@ -4,6 +4,7 @@
 \alias{p_rope}
 \alias{p_rope.numeric}
 \alias{p_rope.data.frame}
+\alias{p_rope.emmGrid}
 \alias{p_rope.BFBayesFactor}
 \alias{p_rope.stanreg}
 \alias{p_rope.brmsfit}
@@ -14,6 +15,8 @@ p_rope(x, ...)
 \method{p_rope}{numeric}(x, range = "default", precision = 0.1, ...)
 
 \method{p_rope}{data.frame}(x, range = "default", precision = 0.1, ...)
+
+\method{p_rope}{emmGrid}(x, range = "default", precision = 0.1, ...)
 
 \method{p_rope}{BFBayesFactor}(x, range = "default", precision = 0.1,
   ...)

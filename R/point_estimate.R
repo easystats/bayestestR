@@ -105,6 +105,16 @@ point_estimate.data.frame <- function(x, centrality = "median", dispersion = FAL
   out
 }
 
+#' @export
+point_estimate.emmGrid <- function(x, centrality = "median", dispersion = FALSE, ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
+  x <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+
+  point_estimate.data.frame(x, centrality = centrality, dispersion = dispersion, ...)
+}
+
 
 
 #' @importFrom insight get_parameters

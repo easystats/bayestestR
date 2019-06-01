@@ -131,7 +131,15 @@ p_direction.data.frame <- function(x, method = "direct", ...) {
   out
 }
 
-
+#' @rdname p_direction
+#' @export
+p_direction.emmGrid <- function(x, method = "direct", ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
+  x <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+  p_direction.data.frame(x, method = method, ...)
+}
 
 #' @importFrom insight get_parameters
 #' @keywords internal
