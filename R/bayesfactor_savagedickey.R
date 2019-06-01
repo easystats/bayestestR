@@ -104,7 +104,6 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
 }
 
 #' @rdname bayesfactor_savagedickey
-#' @importFrom insight find_algorithm
 #' @export
 bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
                                              direction = "two-sided", hypothesis = 0,
@@ -136,17 +135,7 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 
 #' @rdname bayesfactor_savagedickey
 #' @export
-bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
-                                             direction = "two-sided", hypothesis = 0,
-                                             verbose = TRUE,
-                                             effects = c("fixed", "random", "all"),
-                                             ...) {
-  bayestestR:::bayesfactor_savagedickey.stanreg(posterior,prior,
-                                                direction = direction, hypothesis = hypothesis,
-                                                verbose = verbose,
-                                                effects = effects,
-                                                ...)
-}
+bayesfactor_savagedickey.brmsfit <- bayesfactor_savagedickey.stanreg
 
 #' @rdname bayesfactor_savagedickey
 #' @export
