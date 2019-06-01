@@ -124,20 +124,10 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 
   # Get Priors
   if (is.null(prior)) {
-    alg <- insight::find_algorithm(posterior)
-    if (verbose) {
-      message("Computation of Bayes factors: sampling priors, please wait...")
-    }
-    capture.output(prior <- suppressWarnings(
-      stats::update(
-        posterior,
-        prior_PD = TRUE,
-        iter = alg$iterations,
-        chains = alg$chains,
-        warmup = alg$warmup
-      )
-    ))
+    prior <- .update_to_priors(posterior, verbose = verbose)
     prior <- insight::get_parameters(prior, effects = effects)
+  } else {
+    prior <- as.data.frame(prior)
   }
 
   posterior <- insight::get_parameters(posterior, effects = effects)
@@ -158,44 +148,11 @@ bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
                                              verbose = TRUE,
                                              effects = c("fixed", "random", "all"),
                                              ...) {
-  if (!requireNamespace("brms")) {
-    stop("Package \"brms\" needed for this function to work. Please install it.")
-  }
-
-  effects <- match.arg(effects)
-
-  # Get Priors
-  if (is.null(prior)) {
-    alg <- insight::find_algorithm(posterior)
-    if (verbose) {
-      message("Computation of Bayes factors: sampling priors, please wait...")
-    }
-    capture.output(prior <- try(suppressMessages(suppressWarnings(
-      stats::update(
-        posterior,
-        sample_prior = "only",
-        iter = alg$iterations,
-        chains = alg$chains,
-        warmup = alg$warmup
-      )
-    )), silent = TRUE))
-    if (is(prior, "try-error")) {
-      if (grepl("proper priors", prior)) {
-        stop("Cannot compute BF for 'brmsfit' models fit with default priors.\nSee '?bayesfactor_savagedickey'")
-      } else {
-        stop(prior)
-      }
-    }
-    prior <- insight::get_parameters(prior, effects = effects)
-  }
-
-  posterior <- insight::get_parameters(posterior, effects = effects)
-
-  # Get savage-dickey BFs
-  bayesfactor_savagedickey.data.frame(
-    posterior = posterior, prior = prior,
-    direction = direction, hypothesis = hypothesis
-  )
+  bayestestR:::bayesfactor_savagedickey.stanreg(posterior,prior,
+                                                direction = direction, hypothesis = hypothesis,
+                                                verbose = verbose,
+                                                effects = effects,
+                                                ...)
 }
 
 #' @rdname bayesfactor_savagedickey
@@ -214,6 +171,8 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
       "Please specify priors (with columns matching 'posterior')",
       " to get meaningful results."
     )
+  } else {
+    prior <- as.data.frame(prior)
   }
 
   sdbf <- numeric(ncol(posterior))
@@ -366,4 +325,54 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     plot_data = rbind(posterior[[1]], prior[[1]]),
     d_points = rbind(posterior[[2]], prior[[2]])
   )
+}
+
+.update_to_priors <- function(model, verbose = TRUE){
+  UseMethod(".update_to_priors")
+}
+
+.update_to_priors.stanreg <- function(model, verbose = TRUE){
+  if (!requireNamespace("rstanarm")) {
+    stop("Package \"rstanarm\" needed for this function to work. Please install it.")
+  }
+
+  if (verbose) {
+    message("Computation of Bayes factors: sampling priors, please wait...")
+  }
+
+  capture.output(
+    model_prior <- suppressWarnings(
+      stats::update(model, prior_PD = TRUE)
+    )
+  )
+
+  model_prior
+}
+
+.update_to_priors.brmsfit <- function(model, verbose = TRUE){
+  if (!requireNamespace("brms")) {
+    stop("Package \"brms\" needed for this function to work. Please install it.")
+  }
+
+  if (verbose) {
+    message("Computation of Bayes factors: sampling priors, please wait...")
+  }
+
+  capture.output(
+    model_prior <- try(suppressMessages(suppressWarnings(
+      stats::update(model, sample_prior = "only")
+    )), silent = TRUE)
+  )
+
+  if (is(model_prior, "try-error")) {
+    if (grepl("proper priors", model_prior)) {
+      stop("Cannot compute BF for 'brmsfit' models fit with default priors.\n",
+           "See '?bayesfactor_savagedickey'",
+           call. = FALSE)
+    } else {
+      stop(model_prior)
+    }
+  }
+
+  model_prior
 }
