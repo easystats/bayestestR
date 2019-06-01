@@ -7,6 +7,7 @@
 ## New functions / features
 
 - `pd_to_p` and `p_to_pd`: Functions to convert between probability of direction (pd) and p-value
+- Support of `emmGrid` objects: `ci`, `rope`, `bayesfactor_savagedickey`, `describe_posterior`, ...
 
 
 ## Minor changes
