@@ -176,9 +176,11 @@ rope.emmGrid <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
   if (!requireNamespace("emmeans")) {
     stop("Package \"emmeans\" needed for this function to work. Please install it.")
   }
-  x <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+  xdf <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
 
-  rope.data.frame(x, range = range, ci = ci, verbose = verbose, ...)
+  dat <- rope.data.frame(xdf, range = range, ci = ci, verbose = verbose, ...)
+  attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  dat
 }
 
 

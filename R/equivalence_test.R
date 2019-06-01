@@ -180,9 +180,11 @@ equivalence_test.emmGrid <- function(x, range = "default", ci = .89, verbose = T
   if (!requireNamespace("emmeans")) {
     stop("Package \"emmeans\" needed for this function to work. Please install it.")
   }
-  x <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+  xdf <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
 
-  equivalence_test.data.frame(x, range = range, ci = ci, verbose = verbose, ...)
+  out <- equivalence_test.data.frame(xdf, range = range, ci = ci, verbose = verbose, ...)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
 }
 
 

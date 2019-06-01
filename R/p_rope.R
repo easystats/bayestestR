@@ -127,9 +127,11 @@ p_rope.emmGrid <- function(x, range = "default", precision = .1, ...) {
   if (!requireNamespace("emmeans")) {
     stop("Package \"emmeans\" needed for this function to work. Please install it.")
   }
-  x <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+  xdf <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
 
-  p_rope.data.frame(x , range = range, precision = precision, ...)
+  out <- p_rope.data.frame(xdf , range = range, precision = precision, ...)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
 }
 
 #' @rdname p_rope

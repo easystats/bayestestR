@@ -85,8 +85,10 @@ p_map.emmGrid <- function(x, precision = 2^10, ...) {
   if (!requireNamespace("emmeans")) {
     stop("Package \"emmeans\" needed for this function to work. Please install it.")
   }
-  x <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
-  p_map.data.frame(x, precision = precision, ...)
+  xdf <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+  out <- p_map.data.frame(xdf, precision = precision, ...)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
 }
 
 

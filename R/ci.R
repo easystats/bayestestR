@@ -106,9 +106,9 @@ ci.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
   if (!requireNamespace("emmeans")) {
     stop("Package \"emmeans\" needed for this function to work. Please install it.")
   }
-  x <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+  xdf <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
 
-  dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "ci")
+  dat <- .compute_interval_dataframe(x = xdf, ci = ci, verbose = verbose, fun = "ci")
   attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   dat
 }
