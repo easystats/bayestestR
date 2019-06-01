@@ -47,7 +47,7 @@ Indeed, while one of the strengths of the Bayesian framework is its probabilisti
 
 Thus, the ability of the Bayesian framework to answer psychological questions without the need of such null-hypothesis testing indices is often promoted as the promise of a "a new world without *p*-value" as opposed to the old and flawed frequentist one. Nonetheless, it seems that "effect existence" indices and criteria are useful for Humans to gain an intuitive understanding of the interactions and structure of their data. It is thus unsurprising that the development of Bayesian user-friendly implementations was accompanied with the promotion of the Bayes Factor (BF), an index reflecting the predictive performance of a model against another [*e.g.*, the null vs. the alternative hypothesis; @jeffreys1998theory; @ly2016harold]. It provides many advantages over the *p* value, having a straightforward interpretation ("the data were 3 times (*BF* = 3) more likely to occur under the alternative than the null hypothesis") and allowing to make statements about the alternative, rather than just the null hypothesis [@dienes2014using; @jarosz2014odds]. Moreover, recent mathematical developments allow its computation for complex models [@gronau2017bayesian; @gronau2017simple]. Although the BF lives up to the expectations of a solid, valid, intuitive and better index compared to the p value, its use for model selection is still a matter of debate [@piironen2017comparison]. Indeed, as the predictions used for its computation are generated from the prior distributions on the model parameters, it is highly dependent on priors specification [@etz2018bayesian; @kruschke2018bayesian]. Importantly for the aim of this paper, its use for estimating effect existence of parameters *within* a larger model remains limited, its computation being technically difficult and its interpretation not as straightforward as for "simple" tests such as t-tests or correlations.
 
-Nevertheless, reflecting the need for such information, researchers have developed other indices based on characteristics of the posterior distribution, which represents the probability distribution of different parameter values given the observed data. This uncertainty can be summarized, for example, by presenting point-estimates of centrality (mean, median, ...) and of dispersion (standard deviation, median absolute deviance, ...), often accompanied with a percentage (90\% or 95\%) of the Highest Density Interval (HDI; referred to as the *Credible Interval* - CI). Although the Bayesian framework gives the possibility of computing many effect existence indices, no consensus has yet emerged on the ones to use, as no comparison has ever been done. This might be a rebuttal for scientists interested in adopting the Bayesian framework. Moreover, this grey area can increase the difficulty of readers or reviewers unfamiliar with the Bayesian framework to follow the assumptions and conclusions, which could in turn generate unnecessary doubt upon the entire study. While we think that such indices and their interpretation guidelines (in the form of rules of thumb) are useful in practice, we also strongly believe that such indices should be accompanied with the knowledge of the "behaviour" in relationship with sample size and effect size. This knowledge is important for people to implicitly and intuitively appraise the meaning and implication of the mathematical values they report. This could, in turn, prevent the crystallization of the possible heuristics and categories derived from such indices.
+Nevertheless, reflecting the need for such information, researchers have developed other indices based on characteristics of the posterior distribution, which represents the probability distribution of different parameter values given the observed data. This uncertainty can be summarized, for example, by presenting point-estimates of centrality (mean, median, ...) and of dispersion (standard deviation, median absolute deviance, ...), often accompanied with a percentage (89\%, 90\% or 95\%) of the Highest Density Interval (HDI; referred to as the *Credible Interval* - CI). Although the Bayesian framework gives the possibility of computing many effect existence indices, no consensus has yet emerged on the ones to use, as no comparison has ever been done. This might be a rebuttal for scientists interested in adopting the Bayesian framework. Moreover, this grey area can increase the difficulty of readers or reviewers unfamiliar with the Bayesian framework to follow the assumptions and conclusions, which could in turn generate unnecessary doubt upon the entire study. While we think that such indices and their interpretation guidelines (in the form of rules of thumb) are useful in practice, we also strongly believe that such indices should be accompanied with the knowledge of the "behaviour" in relationship with sample size and effect size. This knowledge is important for people to implicitly and intuitively appraise the meaning and implication of the mathematical values they report. This could, in turn, prevent the crystallization of the possible heuristics and categories derived from such indices.
 
 Thus, based on the simulation of multiple linear regressions (one of the most widely used models), the present work aims at comparing several indices of effect existence solely derived from the posterior distribution, provide visual representations of the "behaviour" of such indices in relationship with sample size, noise, priors and also the frequentist *p*-value (an index which, beyond its many flaws, is well known and could be used as a reference for Bayesian neophytes), and draw recommendations for Bayesian statistics reporting.
 
@@ -57,8 +57,8 @@ For all of the simulated models, we computed the following indices:
 - ***p*-direction**: the "Probability of Direction" corresponds to the probability (expressed in percentage) that the effect is stricly positive or negative (consistently with the median's sign).
 - ***p*-MAP**: the MAP-based *p*-value is related to the odds that a parameter has against the null hypothesis [@mills2014bayesian; @mills2017objective].
 - ***p*-ROPE**: the ROPE-based *p*-value that represents the maximum percentage of HDI that does not contain (positive values) or is entirely contained (negative values) in the negligible values space defined by the ROPE.
-- **ROPE (90\%)**: this index refers to the percentage of the 90\% HDI that lies within the ROPE.
-- **ROPE (95\%)**: this index refers to the percentage of the 95\% HDI that lies within the ROPE.
+- **ROPE (89\%)**: this index refers to the percentage of the 89\% HDI that lies within the ROPE, which is an interval considered as more stable than the frequentist-based 95\% [@mcelreath2014rethinking, @mcelreath2018statistical].
+- **ROPE (95\%)**: this index refers to the percentage of the 95\% HDI that lies within the ROPE. This interval corresponds to the one originally suggested by @kruschke2014doing.
 - **ROPE (full)**: this index refers to the percentage of the whole posterior distribution that lies within the ROPE.
 - **Bayes factor**: TODO.
 
@@ -85,9 +85,7 @@ library(dplyr)
 library(tidyr)
 library(see)
 
-df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv") %>% 
-  mutate(bayesfactor_0707 = log(bayesfactor_0707),
-         bayesfactor_1 = log(bayesfactor_1))
+df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv")
 ```
 
 
@@ -102,10 +100,10 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_stu
 
 ```{r, message=FALSE, warning=FALSE, fig.height=25, fig.width=15}
 df %>%
-  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_90, ROPE_95, ROPE_full, bayesfactor_0707, bayesfactor_1) %>%
+  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_89, ROPE_95, ROPE_full, BF_log) %>%
   gather(index, value, -error, -sample_size, -true_effect, -outcome_type) %>%
   mutate(true_effect = as.factor(true_effect),
-         index = factor(index, levels=c("p_value", "p_direction", "p_MAP", "p_ROPE", "ROPE_90", "ROPE_95", "ROPE_full", "bayesfactor_0707", "bayesfactor_1"))) %>%
+         index = factor(index, levels=c("p_value", "p_direction", "p_MAP", "p_ROPE", "ROPE_89", "ROPE_95", "ROPE_full", "BF_log"))) %>%
   mutate(temp = as.factor(cut(error, 10, labels = FALSE))) %>% 
   group_by(temp) %>% 
   mutate(error_group = round(mean(error), 1)) %>% 
@@ -114,15 +112,13 @@ df %>%
   # geom_jitter(shape=16, alpha=0.02) +
   geom_boxplot(outlier.shape = NA) +
   facet_wrap(~index * outcome_type, scales = "free", ncol=2) +
-  theme_classic() +
-    theme(strip.background = element_blank(),
-          strip.text = element_text(face="bold")) +
+  theme_modern() +
   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A", name="Effect")) +
   scale_fill_manual(values = c("p_value"="#607D8B", "p_MAP" = "#4CAF50", "p_direction" = "#2196F3",
-                               "ROPE_90" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
-                               "p_ROPE"="#E91E63", "bayesfactor_0707"="#9C27B0", "bayesfactor_1"="#673AB7"), guide=FALSE) +
-  ylab("Index Value\n") +
-  xlab("\nNoise")
+                               "ROPE_89" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
+                               "p_ROPE"="#E91E63", "BF_log"="#9C27B0"), guide=FALSE) +
+  ylab("Index Value") +
+  xlab("Noise")
 ```
 
 
@@ -130,10 +126,10 @@ df %>%
 
 ```{r, message=FALSE, warning=FALSE, fig.height=25, fig.width=15}
 df %>%
-  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_90, ROPE_95, ROPE_full, bayesfactor_0707, bayesfactor_1) %>%
+  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_89, ROPE_95, ROPE_full, BF_log) %>%
   gather(index, value, -error, -sample_size, -true_effect, -outcome_type) %>%
   mutate(true_effect = as.factor(true_effect),
-         index = factor(index, levels=c("p_value", "p_direction", "p_MAP", "p_ROPE", "ROPE_90", "ROPE_95", "ROPE_full", "bayesfactor_0707", "bayesfactor_1"))) %>%
+         index = factor(index, levels=c("p_value", "p_direction", "p_MAP", "p_ROPE", "ROPE_89", "ROPE_95", "ROPE_full", "BF_log"))) %>%
   mutate(temp = as.factor(cut(sample_size, 10, labels = FALSE))) %>% 
   group_by(temp) %>% 
   mutate(size_group = round(mean(sample_size))) %>% 
@@ -142,15 +138,13 @@ df %>%
   # geom_jitter(shape=16, alpha=0.02) +
   geom_boxplot(outlier.shape = NA) +
   facet_wrap(~index * outcome_type, scales = "free", ncol=2) +
-  theme_classic() +
-    theme(strip.background = element_blank(),
-          strip.text = element_text(face="bold")) +
+  theme_modern() +
   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A", name="Effect")) +
   scale_fill_manual(values = c("p_value"="#607D8B", "p_MAP" = "#4CAF50", "p_direction" = "#2196F3",
-                               "ROPE_90" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
-                               "p_ROPE"="#E91E63", "bayesfactor_0707"="#9C27B0", "bayesfactor_1"="#673AB7"), guide=FALSE) +
-  ylab("Index Value\n") +
-  xlab("\nSample Size")
+                               "ROPE_89" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
+                               "p_ROPE"="#E91E63", "BF_log"="#9C27B0"), guide=FALSE) +
+  ylab("Index Value") +
+  xlab("Sample Size")
 ```
 
 
@@ -206,10 +200,10 @@ We fitted a (frequentist) multiple linear regression to predict the presence or 
 
 ```{r, message=FALSE, warning=FALSE, fig.height=25, fig.width=15}
 df %>%
-  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_90, ROPE_95, ROPE_full, bayesfactor_0707, bayesfactor_1) %>%
+  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_89, ROPE_95, ROPE_full, BF_log) %>%
   gather(index, value, -error, -sample_size, -true_effect, -outcome_type, -p_value) %>%
   mutate(true_effect = as.factor(true_effect),
-         index = factor(index, levels=c("p_direction", "p_MAP", "p_ROPE", "ROPE_90", "ROPE_95", "ROPE_full", "bayesfactor_0707", "bayesfactor_1"))) %>%
+         index = factor(index, levels=c("p_direction", "p_MAP", "p_ROPE", "ROPE_89", "ROPE_95", "ROPE_full", "BF_log"))) %>%
   mutate(temp = as.factor(cut(sample_size, 3, labels = FALSE))) %>% 
   group_by(temp) %>% 
   mutate(size_group = as.factor(round(mean(sample_size)))) %>% 
@@ -217,9 +211,7 @@ df %>%
   ggplot(aes(x = p_value, y = value, color = true_effect, shape=size_group)) +
   geom_point(alpha=0.025, stroke = 0, shape=16) +
   facet_wrap(~index * outcome_type, scales = "free", ncol=2) +
-  theme_classic() +
-  theme(strip.background = element_blank(),
-        strip.text = element_text(face="bold")) +
+  theme_modern() +
   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") +
   guides(colour = guide_legend(override.aes = list(alpha = 1)),
          shape = guide_legend(override.aes = list(alpha = 1), title="Sample Size"))
@@ -255,11 +247,10 @@ rbind(
     get_data(predictor="p_direction", outcome="sig_001", lbound=99.5, ubound=100),
     get_data(predictor="p_MAP", outcome="sig_001", lbound=0, ubound=0.01),
     get_data(predictor="p_ROPE", outcome="sig_001", lbound=97, ubound=100),
-    get_data(predictor="ROPE_90", outcome="sig_001", lbound=0, ubound=0.5),
+    get_data(predictor="ROPE_89", outcome="sig_001", lbound=0, ubound=0.5),
     get_data(predictor="ROPE_95", outcome="sig_001", lbound=0, ubound=0.5),
     get_data(predictor="ROPE_full", outcome="sig_001", lbound=0, ubound=0.5),
-    get_data(predictor="bayesfactor_0707", outcome="sig_001", lbound=0, ubound=10),
-    get_data(predictor="bayesfactor_1", outcome="sig_001", lbound=0, ubound=10)
+    get_data(predictor="BF_log", outcome="sig_001", lbound=0, ubound=10)
     ) %>% 
     rename("sig"=sig_001) %>% 
     mutate(threshold="p < .001"),
@@ -267,11 +258,10 @@ rbind(
     get_data(predictor="p_direction", outcome="sig_01", lbound=98, ubound=100),
     get_data(predictor="p_MAP", outcome="sig_01", lbound=0, ubound=0.1),
     get_data(predictor="p_ROPE", outcome="sig_01", lbound=85, ubound=100),
-    get_data(predictor="ROPE_90", outcome="sig_01", lbound=0, ubound=2),
+    get_data(predictor="ROPE_89", outcome="sig_01", lbound=0, ubound=2),
     get_data(predictor="ROPE_95", outcome="sig_01", lbound=0, ubound=2),
     get_data(predictor="ROPE_full", outcome="sig_01", lbound=0, ubound=2),
-    get_data(predictor="bayesfactor_0707", outcome="sig_01", lbound=0, ubound=5),
-    get_data(predictor="bayesfactor_1", outcome="sig_01", lbound=0, ubound=5)
+    get_data(predictor="BF_log", outcome="sig_01", lbound=0, ubound=5)
     ) %>% 
     rename("sig"=sig_01) %>% 
     mutate(threshold="p < .01"),
@@ -279,11 +269,10 @@ rbind(
     get_data(predictor="p_direction", outcome="sig_05", lbound=95, ubound=100),
     get_data(predictor="p_MAP", outcome="sig_05", lbound=0, ubound=0.3),
     get_data(predictor="p_ROPE", outcome="sig_05", lbound=50, ubound=100),
-    get_data(predictor="ROPE_90", outcome="sig_05", lbound=0, ubound=10),
+    get_data(predictor="ROPE_89", outcome="sig_05", lbound=0, ubound=10),
     get_data(predictor="ROPE_95", outcome="sig_05", lbound=0, ubound=10),
     get_data(predictor="ROPE_full", outcome="sig_05", lbound=0, ubound=10),
-    get_data(predictor="bayesfactor_0707", outcome="sig_05", lbound=0, ubound=2),
-    get_data(predictor="bayesfactor_1", outcome="sig_05", lbound=0, ubound=2)
+    get_data(predictor="BF_log", outcome="sig_05", lbound=0, ubound=2)
     ) %>%  
     rename("sig"=sig_05) %>% 
     mutate(threshold="p < .05"),
@@ -291,11 +280,10 @@ rbind(
     get_data(predictor="p_direction", outcome="sig_1", lbound=90, ubound=100),
     get_data(predictor="p_MAP", outcome="sig_1", lbound=0, ubound=0.5),
     get_data(predictor="p_ROPE", outcome="sig_1", lbound=25, ubound=100),
-    get_data(predictor="ROPE_90", outcome="sig_1", lbound=0, ubound=20),
+    get_data(predictor="ROPE_89", outcome="sig_1", lbound=0, ubound=20),
     get_data(predictor="ROPE_95", outcome="sig_1", lbound=0, ubound=20),
     get_data(predictor="ROPE_full", outcome="sig_1", lbound=0, ubound=20),
-    get_data(predictor="bayesfactor_0707", outcome="sig_1", lbound=0, ubound=1),
-    get_data(predictor="bayesfactor_1", outcome="sig_1", lbound=0, ubound=1)
+    get_data(predictor="BF_log", outcome="sig_1", lbound=0, ubound=1)
     ) %>% 
     rename("sig"=sig_1) %>% 
     mutate(threshold="p < .1")
@@ -305,14 +293,12 @@ rbind(
   geom_ribbon(aes(ymin=CI_lower, ymax=CI_upper), alpha=0.1) +
   geom_line(aes(color=index), size=1) +
   facet_wrap(~ index * threshold * outcome_type, scales = "free", ncol=8) +
-  theme_classic() +
-  theme(strip.background = element_blank(),
-        strip.text = element_text(face="bold")) +
+  theme_modern() +
   scale_color_manual(values = c("p_value"="#607D8B", "p_MAP" = "#4CAF50", "p_direction" = "#2196F3",
-                               "ROPE_90" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
-                               "p_ROPE"="#E91E63", "bayesfactor_0707"="#9C27B0", "bayesfactor_1"="#673AB7"), guide=FALSE) +
-  ylab("Probability of being significant\n") +
-  xlab("\nIndex Value")
+                               "ROPE_89" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
+                               "p_ROPE"="#E91E63", "BF_log"="#9C27B0"), guide=FALSE) +
+  ylab("Probability of being significant") +
+  xlab("Index Value")
 ```
 
 
@@ -320,46 +306,41 @@ rbind(
 
 ```{r, message=FALSE, warning=FALSE, fig.height=15, fig.width=10}
 df$equivalence_95 <- factor(ifelse(df$ROPE_95 == 0, "significant", "n.s."), levels=c("n.s.", "significant"))
-df$equivalence_90 <- factor(ifelse(df$ROPE_90 == 0, "significant", "n.s."), levels=c("n.s.", "significant"))
+df$equivalence_89 <- factor(ifelse(df$ROPE_89 == 0, "significant", "n.s."), levels=c("n.s.", "significant"))
 
 
 rbind(
   rbind(
-    get_data(predictor="p_direction", outcome="equivalence_95", lbound=99.5, ubound=100),
-    get_data(predictor="p_MAP", outcome="equivalence_95", lbound=0, ubound=0.02),
-    get_data(predictor="p_ROPE", outcome="equivalence_95", lbound=0, ubound=100),
-    get_data(predictor="ROPE_90", outcome="equivalence_95", lbound=0, ubound=0.5),
-    get_data(predictor="ROPE_full", outcome="equivalence_95", lbound=0, ubound=0.5),
-    get_data(predictor="bayesfactor_0707", outcome="equivalence_95", lbound=0, ubound=3),
-    get_data(predictor="bayesfactor_1", outcome="equivalence_95", lbound=0, ubound=3)
+    get_data(predictor="p_direction", outcome="equivalence_95", lbound=97.5, ubound=100),
+    get_data(predictor="p_MAP", outcome="equivalence_95", lbound=0, ubound=0.2),
+    get_data(predictor="p_ROPE", outcome="equivalence_95", lbound=92.5, ubound=97.5),
+    get_data(predictor="ROPE_89", outcome="equivalence_95", lbound=0, ubound=3),
+    get_data(predictor="ROPE_full", outcome="equivalence_95", lbound=0, ubound=3),
+    get_data(predictor="BF_log", outcome="equivalence_95", lbound=0.5, ubound=2.5)
     ) %>% 
     rename("equivalence"=equivalence_95) %>% 
     mutate(level="95 HDI"),
   rbind(
-    get_data(predictor="p_direction", outcome="equivalence_90", lbound=99.5, ubound=100),
-    get_data(predictor="p_MAP", outcome="equivalence_90", lbound=0, ubound=0.02),
-    get_data(predictor="p_ROPE", outcome="equivalence_90", lbound=0, ubound=100),
-    get_data(predictor="ROPE_95", outcome="equivalence_90", lbound=0, ubound=0.5),
-    get_data(predictor="ROPE_full", outcome="equivalence_90", lbound=0, ubound=0.5),
-    get_data(predictor="bayesfactor_0707", outcome="equivalence_90", lbound=0, ubound=3),
-    get_data(predictor="bayesfactor_1", outcome="equivalence_90", lbound=0, ubound=3)
+    get_data(predictor="p_direction", outcome="equivalence_89", lbound=99.5, ubound=100),
+    get_data(predictor="p_MAP", outcome="equivalence_89", lbound=0, ubound=0.02),
+    get_data(predictor="p_ROPE", outcome="equivalence_89", lbound=0, ubound=100),
+    get_data(predictor="ROPE_95", outcome="equivalence_89", lbound=0, ubound=0.5),
+    get_data(predictor="ROPE_full", outcome="equivalence_89", lbound=0, ubound=0.5),
+    get_data(predictor="BF_log", outcome="equivalence_89", lbound=0, ubound=3)
     ) %>% 
-    rename("equivalence"=equivalence_90) %>% 
+    rename("equivalence"=equivalence_89) %>% 
     mutate(level="90 HDI")
 ) %>% 
   ggplot(aes(x=value, y=equivalence)) +
   geom_ribbon(aes(ymin=CI_lower, ymax=CI_upper), alpha=0.1) +
   geom_line(aes(color=index), size=1) +
   facet_wrap(~ index * level * outcome_type, scales = "free", nrow=7) +
-  theme_classic() +
-  theme(strip.background = element_blank(),
-        strip.text = element_text(face="bold")) +
+  theme_modern() +
   scale_color_manual(values = c("p_value"="#607D8B", "p_MAP" = "#4CAF50", "p_direction" = "#2196F3",
-                               "ROPE_90" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
-                               "p_ROPE"="#E91E63", "bayesfactor_0707"="#9C27B0", "bayesfactor_1"="#673AB7"), guide=FALSE) +
-  ylab("Probability of rejecting H0 with the equivalence test\n") +
-  xlab("\nIndex Value")
-
+                               "ROPE_89" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
+                               "p_ROPE"="#E91E63", "BF_log"="#9C27B0"), guide=FALSE) +
+  ylab("Probability of rejecting H0 with the equivalence test") +
+  xlab("Index Value")
 ```
 
 #### Relationship between ROPE (full) and p (direction)
@@ -370,12 +351,10 @@ df %>%
   ggplot(aes(x=p_direction, y=ROPE_full, color=true_effect)) +
   geom_point(alpha=0.025, stroke = 0, shape=16) +
   facet_wrap(~ outcome_type, scales = "free", ncol=2) +
-  theme_classic() +
-  theme(strip.background = element_blank(),
-        strip.text = element_text(face="bold")) +
+  theme_modern() +
   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") +
-  ylab("ROPE (full)\n") +
-  xlab("\nProbability of Direction")
+  ylab("ROPE (full)") +
+  xlab("Probability of Direction (pd)")
 ```
 
 

@@ -146,7 +146,7 @@ df %>%
 This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist's beta:
 
 - For linear models, the **Mean** was the better predictor, closely followed by the **Median**, the **MAP** and the frequentist **beta**.
-- For logistic models, the **MAP** was the better predictor, closely followed by the **Median**, the **Mean** and the frequentist **beta**.
+- For logistic models, the **MAP** was the better predictor, followed by the **Median**, the **Mean** and the frequentist **beta**.
 
 Overall, the **median** seems to be appears as an approriate choice, maintaining a a high performance accross different types of models.
 
