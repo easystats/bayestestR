@@ -27,6 +27,12 @@
 #' point_estimate(model, centrality = "all", dispersion = TRUE)
 #' point_estimate(model, centrality = c("median", "MAP"))
 #'
+#'
+#' # emmeans estimates
+#' # -----------------------------------------------
+#' library(emmeans)
+#' point_estimate(emtrends(model, ~1, "wt"), centrality = c("median", "MAP"))
+#'
 #' # brms models
 #' # -----------------------------------------------
 #' library(brms)

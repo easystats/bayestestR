@@ -46,6 +46,11 @@
 #' p_direction(model)
 #' p_direction(model, method = "kernel")
 #'
+#' # emmeans
+#' # -----------------------------------------------
+#' library(emmeans)
+#' p_direction(emtrends(model, ~1, "wt"))
+#'
 #' # brms models
 #' # -----------------------------------------------
 #' library(brms)

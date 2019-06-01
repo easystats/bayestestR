@@ -16,6 +16,9 @@
 #' library(rstanarm)
 #' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 #' p_map(model)
+#'
+#' library(emmeans)
+#' p_map(emtrends(model, ~1, "wt"))
 #' \dontrun{
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
