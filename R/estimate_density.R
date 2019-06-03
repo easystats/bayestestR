@@ -150,9 +150,9 @@ estimate_density.emmGrid <- function(x, method = "kernel", precision = 2^10, ext
   if (!requireNamespace("emmeans")) {
     stop("Package \"emmeans\" needed for this function to work. Please install it.")
   }
-  x <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+  x <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
 
-  estimate_density.data.frame(x, method = method, precision = precision,
+  estimate_density(x, method = method, precision = precision,
                               extend = extend, extend_scale = extend_scale,
                               bw = bw, ...)
 }

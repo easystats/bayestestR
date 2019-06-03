@@ -142,8 +142,8 @@ p_direction.emmGrid <- function(x, method = "direct", ...) {
   if (!requireNamespace("emmeans")) {
     stop("Package \"emmeans\" needed for this function to work. Please install it.")
   }
-  xdf <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
-  out <- p_direction.data.frame(xdf, method = method, ...)
+  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+  out <- p_direction(xdf, method = method, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }

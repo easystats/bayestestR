@@ -116,9 +116,9 @@ point_estimate.emmGrid <- function(x, centrality = "median", dispersion = FALSE,
   if (!requireNamespace("emmeans")) {
     stop("Package \"emmeans\" needed for this function to work. Please install it.")
   }
-  xdf <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
+  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
 
-  out <- point_estimate.data.frame(xdf, centrality = centrality, dispersion = dispersion, ...)
+  out <- point_estimate(xdf, centrality = centrality, dispersion = dispersion, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }

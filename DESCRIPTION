@@ -40,6 +40,7 @@ Suggests:
 	broom,
 	covr,
 	dplyr,
+	emmeans,
 	tidyr,
 	GGally,
 	ggplot2,

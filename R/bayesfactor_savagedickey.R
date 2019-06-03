@@ -171,8 +171,8 @@ bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
     prior <- update(posterior, post.beta = as.matrix(prior))
   }
 
-  prior <- as.data.frame(as.matrix(as.mcmc.emmGrid(prior, names = FALSE)))
-  posterior <- as.data.frame(as.matrix(as.mcmc.emmGrid(posterior, names = FALSE)))
+  prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(prior, names = FALSE)))
+  posterior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posterior, names = FALSE)))
 
   bayesfactor_savagedickey.data.frame(
     posterior = posterior, prior = prior,

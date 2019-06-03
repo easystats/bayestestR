@@ -109,8 +109,8 @@ hdi.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
   if (!requireNamespace("emmeans")) {
     stop("Package \"emmeans\" needed for this function to work. Please install it.")
   }
-  xdf <- as.data.frame(as.matrix(as.mcmc.emmGrid(x, names = FALSE)))
-  out <- hdi.data.frame(xdf , ci = ci, verbose = verbose, ...)
+  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+  out <- hdi(xdf , ci = ci, verbose = verbose, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
