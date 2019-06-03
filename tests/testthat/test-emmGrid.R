@@ -72,6 +72,7 @@ test_that("emmGrid rope", {
 })
 
 test_that("emmGrid describe_posterior", {
+  testthat::skip_on_travis()
   xpost <- describe_posterior(
     all_,
     centrality = "median", dispersion = TRUE,
