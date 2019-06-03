@@ -230,6 +230,10 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @keywords internal
 #' @importFrom insight print_color
 .bayesfactor_savagedickey <- function(posterior, prior, direction = 0, hypothesis = 0) {
+  if (isTRUE(all.equal(posterior,prior))) {
+    return(1)
+  }
+
   if (requireNamespace("logspline", quietly = TRUE)) {
     relative_density <- function(samples) {
       f_samples <- suppressWarnings(logspline::logspline(samples))
