@@ -40,7 +40,7 @@ To minimally **describe the posterior distribution** of a parameter, we suggest 
 
 # Effect *Existence* and *significance*
 
-The ***pd*** and the ***ROPË*** are two indices that give different and independent information: The ***pd*** is a marker of **existence**, consistency and direction of a parameter (whether a parameter has a consistent effect in one or another direction), whereas the percentage in **ROPE** is a index of **significance** (in its primary meaning); informing us whether a parameter is related or not to a non-negligible change (in terms of magnitude) in the outcome.
+The ***pd*** and the ***ROPE*** are two indices that give different and independent information: The ***pd*** is a marker of **existence**, consistency and direction of a parameter (whether a parameter has a consistent effect in one or another direction), whereas the percentage in **ROPE** is a index of **significance** (in its primary meaning); informing us whether a parameter is related or not to a non-negligible change (in terms of magnitude) in the outcome.
 
 
 
