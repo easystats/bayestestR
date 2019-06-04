@@ -37,6 +37,12 @@
 #' describe_posterior(model)
 #' describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
 #' describe_posterior(model, ci = c(0.80, 0.90))
+#'
+#' # emmeans estimates
+#' # -----------------------------------------------
+#' library(emmeans)
+#' describe_posterior(emtrends(model, ~1, "wt"))
+#'
 #' \dontrun{
 #' # brms models
 #' # -----------------------------------------------
@@ -58,7 +64,7 @@
 #' @importFrom stats mad median sd setNames
 #'
 #' @export
-describe_posterior <- function(posteriors, centrality = "median", dispersion = TRUE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, ...) {
+describe_posterior <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, ...) {
   UseMethod("describe_posterior")
 }
 
@@ -170,7 +176,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = T
   if ("Parameter" %in% names(col_order)) {
     col_order <- col_order$Parameter
     col_order <- rep(col_order, each = round(nrow(out) / length(col_order)))
-    out[match(col_order, out$Parameter), ]
+    out <- out[match(col_order, out$Parameter), ]
   }
 
   out
@@ -189,7 +195,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = T
 #' @rdname describe_posterior
 #' @param bf_prior Distribution representing a prior for the computation of Bayes factors. Used if the input is a posterior, otherwise (in the case of models) ignored.
 #' @export
-describe_posterior.numeric <- function(posteriors, centrality = "median", dispersion = TRUE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, ...) {
+describe_posterior.numeric <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, ...) {
   .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, ...)
 }
 
@@ -199,7 +205,31 @@ describe_posterior.double <- describe_posterior.numeric
 #' @export
 describe_posterior.data.frame <- describe_posterior.numeric
 
+#' @export
+describe_posterior.emmGrid <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
 
+  if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
+    if (is.null(bf_prior)) {
+      bf_prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posteriors, names = FALSE)))
+      warning(
+        "Prior not specified! ",
+        "Please provide the original model to get meaningful results."
+      )
+    } else {
+      bf_prior <- .update_to_priors(bf_prior)
+      bf_prior <- insight::get_parameters(bf_prior, effects = "fixed")
+      bf_prior <- update(posteriors, post.beta = as.matrix(bf_prior))
+      bf_prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(bf_prior, names = FALSE)))
+    }
+  }
+
+  posteriors <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posteriors, names = FALSE)))
+
+  .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, ...)
+}
 
 
 
@@ -218,7 +248,7 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
     out <- out[match(col_order, out$Parameter), ]
   }
 
-  if (priors) {
+  if (isTRUE(priors)){
     col_order <- out$Parameter
     priors_data <- describe_prior(posteriors, ...)
     out <- merge(out, priors_data, all = TRUE)

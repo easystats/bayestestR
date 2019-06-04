@@ -137,6 +137,27 @@ distribution_custom <- function(n, type = "norm", ..., random = FALSE) {
 
 
 
+#' @rdname distribution
+#' @inheritParams stats::rnorm
+#' @importFrom stats rbeta qbeta
+#' @export
+distribution_mixture_normal <- function(n, mean = c(-3, 3), sd = 1, random = FALSE, ...) {
+  n <- round(n / length(mean))
+  sd <- c(sd)
+  if(length(sd) != length(mean)){
+    sd <- rep(sd, length.out = length(mean))
+  }
+
+
+  x <- c()
+  for(i in 1:length(mean)){
+    x <- c(x, distribution_normal(n = n, mean = mean[i], sd = sd[i], random = random))
+  }
+  x
+}
+
+
+
 
 #' @rdname distribution
 #' @inheritParams stats::rnorm

@@ -16,6 +16,9 @@
 #' library(rstanarm)
 #' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 #' p_map(model)
+#'
+#' library(emmeans)
+#' p_map(emtrends(model, ~1, "wt"))
 #' \dontrun{
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
@@ -77,6 +80,16 @@ p_map.data.frame <- function(x, precision = 2^10, ...) {
   out
 }
 
+#' @export
+p_map.emmGrid <- function(x, precision = 2^10, ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
+  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+  out <- p_map(xdf, precision = precision, ...)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}
 
 
 #' @importFrom insight get_parameters

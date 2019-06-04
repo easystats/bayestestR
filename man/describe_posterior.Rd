@@ -9,11 +9,11 @@
 \title{Describe Posterior Distributions}
 \usage{
 describe_posterior(posteriors, centrality = "median",
-  dispersion = TRUE, ci = 0.89, ci_method = "hdi", test = c("pd",
+  dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_ci = 0.89, ...)
 
 \method{describe_posterior}{numeric}(posteriors, centrality = "median",
-  dispersion = TRUE, ci = 0.89, ci_method = "hdi", test = c("pd",
+  dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("pd",
   "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL,
   ...)
 
@@ -97,6 +97,12 @@ model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refres
 describe_posterior(model)
 describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
 describe_posterior(model, ci = c(0.80, 0.90))
+
+# emmeans estimates
+# -----------------------------------------------
+library(emmeans)
+describe_posterior(emtrends(model, ~1, "wt"))
+
 \dontrun{
 # brms models
 # -----------------------------------------------

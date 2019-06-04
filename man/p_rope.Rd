@@ -4,6 +4,7 @@
 \alias{p_rope}
 \alias{p_rope.numeric}
 \alias{p_rope.data.frame}
+\alias{p_rope.emmGrid}
 \alias{p_rope.BFBayesFactor}
 \alias{p_rope.stanreg}
 \alias{p_rope.brmsfit}
@@ -14,6 +15,8 @@ p_rope(x, ...)
 \method{p_rope}{numeric}(x, range = "default", precision = 0.1, ...)
 
 \method{p_rope}{data.frame}(x, range = "default", precision = 0.1, ...)
+
+\method{p_rope}{emmGrid}(x, range = "default", precision = 0.1, ...)
 
 \method{p_rope}{BFBayesFactor}(x, range = "default", precision = 0.1,
   ...)
@@ -68,6 +71,9 @@ p_rope(df, precision = 1)
 library(rstanarm)
 model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 p_rope(model, precision = 1)
+
+library(emmeans)
+p_rope(emtrends(model, ~1, "wt"))
 \dontrun{
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)

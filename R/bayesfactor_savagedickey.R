@@ -4,9 +4,9 @@
 #' of two distributions. When the compared distributions are the posterior and the prior distributions,
 #' this results in an approximation of a Bayes factor against the (point) null model.
 #'
-#' @param posterior Vector representing a posterior distribution, or a \code{stanreg} / \code{brmsfit} object (see Details).
-#' @param prior Vector representing a prior distribution (if \code{posterior} is a vector), or a data frame with column names matching \code{posterior}'s (if \code{posterior} is a data frame). Otherwise ignored.
-#' @param direction Test type. One of \code{0}, \code{"two-sided"} (default, two tailed),
+#' @param posterior A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).
+#' @param prior An object representing a prior distribution (see Details).
+#' @param direction Test type (see details). One of \code{0}, \code{"two-sided"} (default, two tailed),
 #' \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).
 #' @param hypothesis Value to be tested against (usually \code{0} in the context of null hypothesis testing).
 #' @inheritParams hdi
@@ -16,14 +16,29 @@
 #' @details This method is used to compute Bayes factors based on prior and posterior distributions.
 #' When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
 #' extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
-#' \cr \cr
+#'
 #' \strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)} priors. See example below.
-#' \cr \cr
+
+#'
+#' \subsection{Setting the correct \code{prior}}{
+#' It is important to provide the correct \code{prior} for meaningful results.
+#' \itemize{
+#'   \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
+#'   \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} \ \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
+#'   \item When \code{posterior} is a \code{stanreg} \ \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
+#'   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column names.
+#' }}
+#' \subsection{One-sided Tests (setting an order restriction)}{
+#' One sided tests (controlled by \code{direction}) are conducted by setting an order restriction on
+#' the prior and posterior distributions (\cite{Morey & Wagenmakers, 2013}).
+#' }
+#' \subsection{Interpreting Bayes Factors}{
 #' A Bayes factor greater than 1 can be interpereted as evidence against the null,
 #' at which one convention is that a Bayes factor greater than 3 can be considered
 #' as "substantial" evidence against the null (and vice versa, a Bayes factor
 #' smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
 #' (\cite{Wetzels et al. 2011}).
+#' }
 #'
 #' @examples
 #' library(bayestestR)
@@ -38,6 +53,12 @@
 #' library(rstanarm)
 #' stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #' bayesfactor_savagedickey(stan_model)
+#'
+#' # emmGrid objects
+#' # ---------------
+#' library(emmeans)
+#' group_diff <- pairs(emmeans(stan_model, ~ group))
+#' bayesfactor_savagedickey(group_diff, prior = stan_model)
 #'
 #' # brms models
 #' # -----------
@@ -58,6 +79,7 @@
 #' \item Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.
 #' \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 #' \item Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The case of computing Bayes factors for regression parameters. British Journal of Mathematical and Statistical Psychology, 72(2), 316-333.
+#' \item Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
 #' }
 #'
 #' @author Mattan S. Ben-Shachar
@@ -70,7 +92,6 @@ bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-s
 
 #' @rdname bayesfactor_savagedickey
 #' @export
-#' @importFrom stats rcauchy sd
 bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, verbose = TRUE, ...) {
   # nm <- deparse(substitute(posterior))
 
@@ -87,8 +108,8 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
       )
     }
   }
-  posterior <- data.frame(X = posterior)
   prior <- data.frame(X = prior)
+  posterior <- data.frame(X = posterior)
   colnames(posterior) <- colnames(prior) <- "X" # nm
 
   # Get savage-dickey BFs
@@ -101,41 +122,20 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
 }
 
 #' @rdname bayesfactor_savagedickey
-#'
-#' @importFrom insight find_algorithm
-#' @importFrom stats update
-#' @importFrom utils capture.output
-#' @importFrom methods is
 #' @export
 bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
                                              direction = "two-sided", hypothesis = 0,
                                              verbose = TRUE,
                                              effects = c("fixed", "random", "all"),
                                              ...) {
-  if (!requireNamespace("rstanarm")) {
-    stop("Package \"rstanarm\" needed for this function to work. Please install it.")
-  }
-
   effects <- match.arg(effects)
 
   # Get Priors
   if (is.null(prior)) {
-    alg <- insight::find_algorithm(posterior)
-    if (verbose) {
-      message("Computation of Bayes factors: sampling priors, please wait...")
-    }
-    capture.output(prior <- suppressWarnings(
-      stats::update(
-        posterior,
-        prior_PD = TRUE,
-        iter = alg$iterations,
-        chains = alg$chains,
-        warmup = alg$warmup
-      )
-    ))
-    prior <- insight::get_parameters(prior, effects = effects)
+    prior <- .update_to_priors(posterior, verbose = verbose)
   }
 
+  prior <- insight::get_parameters(prior, effects = effects)
   posterior <- insight::get_parameters(posterior, effects = effects)
 
   # Get savage-dickey BFs
@@ -147,47 +147,33 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 
 #' @rdname bayesfactor_savagedickey
 #' @export
-#' @importFrom insight find_parameters find_algorithm
-#' @importFrom stats update
-bayesfactor_savagedickey.brmsfit <- function(posterior, prior = NULL,
+bayesfactor_savagedickey.brmsfit <- bayesfactor_savagedickey.stanreg
+
+#' @rdname bayesfactor_savagedickey
+#' @export
+bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
                                              direction = "two-sided", hypothesis = 0,
                                              verbose = TRUE,
-                                             effects = c("fixed", "random", "all"),
                                              ...) {
-  if (!requireNamespace("brms")) {
-    stop("Package \"brms\" needed for this function to work. Please install it.")
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
   }
 
-  effects <- match.arg(effects)
-
-  # Get Priors
   if (is.null(prior)) {
-    alg <- insight::find_algorithm(posterior)
-    if (verbose) {
-      message("Computation of Bayes factors: sampling priors, please wait...")
-    }
-    capture.output(prior <- try(suppressMessages(suppressWarnings(
-      stats::update(
-        posterior,
-        sample_prior = "only",
-        iter = alg$iterations,
-        chains = alg$chains,
-        warmup = alg$warmup
-      )
-    )), silent = TRUE))
-    if (is(prior, "try-error")) {
-      if (grepl("proper priors", prior)) {
-        stop("Cannot compute BF for 'brmsfit' models fit with default priors.\nSee '?bayesfactor_savagedickey'")
-      } else {
-        stop(prior)
-      }
-    }
-    prior <- insight::get_parameters(prior, effects = effects)
+    prior <- posterior
+    warning(
+      "Prior not specified! ",
+      "Please provide the original model to get meaningful results."
+    )
+  } else {
+    prior <- .update_to_priors(prior, verbose = verbose)
+    prior <- insight::get_parameters(prior, effects = "fixed")
+    prior <- update(posterior, post.beta = as.matrix(prior))
   }
 
-  posterior <- insight::get_parameters(posterior, effects = effects)
+  prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(prior, names = FALSE)))
+  posterior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posterior, names = FALSE)))
 
-  # Get savage-dickey BFs
   bayesfactor_savagedickey.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, hypothesis = hypothesis
@@ -207,7 +193,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     prior <- posterior
     warning(
       "Prior not specified! ",
-      "Please specify priors (with columns matching 'posterior')",
+      "Please specify priors (with column names matching 'posterior')",
       " to get meaningful results."
     )
   }
@@ -244,6 +230,10 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @keywords internal
 #' @importFrom insight print_color
 .bayesfactor_savagedickey <- function(posterior, prior, direction = 0, hypothesis = 0) {
+  if (isTRUE(all.equal(posterior,prior))) {
+    return(1)
+  }
+
   if (requireNamespace("logspline", quietly = TRUE)) {
     relative_density <- function(samples) {
       f_samples <- suppressWarnings(logspline::logspline(samples))
@@ -276,8 +266,12 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     }
   }
 
-  relative_density(prior) / relative_density(posterior)
+  relative_density(prior) /
+    relative_density(posterior)
 }
+
+
+# UTILS -------------------------------------------------------------------
 
 #' @keywords internal
 .get_direction <- function(direction) {
@@ -286,8 +280,8 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     direction <- direction[1]
   }
 
-  String <- c("left", "right", "two-sided", "<", ">", "=", "-1", "0", "1", "+1")
-  Value <- c(-1, 1, 0, -1, 1, 0, -1, 0, 1, 1)
+  String <- c("left", "right", "one-sided", "onesided", "two-sided", "twosided", "<", ">", "=", "-1", "0", "1", "+1")
+  Value <- c(-1, 1, 1, 1,  0, 0, -1, 1, 0, -1, 0, 1, 1)
 
   ind <- String == direction
   if (length(ind) == 0) {
@@ -362,4 +356,62 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     plot_data = rbind(posterior[[1]], prior[[1]]),
     d_points = rbind(posterior[[2]], prior[[2]])
   )
+}
+
+#' @keywords internal
+.update_to_priors <- function(model, verbose = TRUE){
+  UseMethod(".update_to_priors")
+}
+
+#' @keywords internal
+#' @importFrom stats update
+#' @importFrom utils capture.output
+.update_to_priors.stanreg <- function(model, verbose = TRUE){
+  if (!requireNamespace("rstanarm")) {
+    stop("Package \"rstanarm\" needed for this function to work. Please install it.")
+  }
+
+  if (verbose) {
+    message("Computation of Bayes factors: sampling priors, please wait...")
+  }
+
+  capture.output(
+    model_prior <- suppressWarnings(
+      stats::update(model, prior_PD = TRUE)
+    )
+  )
+
+  model_prior
+}
+
+#' @keywords internal
+#' @importFrom stats update
+#' @importFrom utils capture.output
+#' @importFrom methods is
+.update_to_priors.brmsfit <- function(model, verbose = TRUE){
+  if (!requireNamespace("brms")) {
+    stop("Package \"brms\" needed for this function to work. Please install it.")
+  }
+
+  if (verbose) {
+    message("Computation of Bayes factors: sampling priors, please wait...")
+  }
+
+  capture.output(
+    model_prior <- try(suppressMessages(suppressWarnings(
+      stats::update(model, sample_prior = "only")
+    )), silent = TRUE)
+  )
+
+  if (is(model_prior, "try-error")) {
+    if (grepl("proper priors", model_prior)) {
+      stop("Cannot compute BF for 'brmsfit' models fit with default priors.\n",
+           "See '?bayesfactor_savagedickey'",
+           call. = FALSE)
+    } else {
+      stop(model_prior)
+    }
+  }
+
+  model_prior
 }

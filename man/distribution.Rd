@@ -10,6 +10,7 @@
 \alias{distribution_uniform}
 \alias{distribution_beta}
 \alias{distribution_custom}
+\alias{distribution_mixture_normal}
 \alias{rnorm_perfect}
 \title{Empirical Distributions}
 \usage{
@@ -30,6 +31,9 @@ distribution_uniform(n, min = 0, max = 1, random = FALSE, ...)
 distribution_beta(n, shape1, shape2, ncp = 0, random = FALSE, ...)
 
 distribution_custom(n, type = "norm", ..., random = FALSE)
+
+distribution_mixture_normal(n, mean = c(-3, 3), sd = 1,
+  random = FALSE, ...)
 
 rnorm_perfect(n, mean = 0, sd = 1)
 }

@@ -5,6 +5,7 @@
 \alias{equivalence_test.default}
 \alias{equivalence_test.numeric}
 \alias{equivalence_test.data.frame}
+\alias{equivalence_test.emmGrid}
 \alias{equivalence_test.BFBayesFactor}
 \alias{equivalence_test.stanreg}
 \alias{equivalence_test.brmsfit}
@@ -18,6 +19,9 @@ equivalence_test(x, ...)
   verbose = TRUE, ...)
 
 \method{equivalence_test}{data.frame}(x, range = "default", ci = 0.89,
+  verbose = TRUE, ...)
+
+\method{equivalence_test}{emmGrid}(x, range = "default", ci = 0.89,
   verbose = TRUE, ...)
 
 \method{equivalence_test}{BFBayesFactor}(x, range = "default",
@@ -128,6 +132,9 @@ equivalence_test(model, ci = c(.50, 1))
 # plot result
 test <- equivalence_test(model)
 plot(test)
+
+library(emmeans)
+equivalence_test(emtrends(model, ~1, "wt"))
 
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)

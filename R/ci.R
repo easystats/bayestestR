@@ -1,4 +1,4 @@
-#' Confidence/Credible Interval
+#' Confidence/Credible Interval (CI)
 #'
 #' Compute Confidence/Credible Intervals (CI) for Bayesian (using quantiles) and frequentist models.
 #'
@@ -56,6 +56,10 @@
 #' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 #' ci(model)
 #' ci(model, ci = c(.80, .89, .95))
+#'
+#' library(emmeans)
+#' ci(emtrends(model, ~ 1, "wt"))
+#'
 #' \dontrun{
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
@@ -92,6 +96,19 @@ ci.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
 #' @export
 ci.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "ci")
+  attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  dat
+}
+
+#' @rdname ci
+#' @export
+ci.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
+  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+
+  dat <- .compute_interval_dataframe(x = xdf, ci = ci, verbose = verbose, fun = "ci")
   attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   dat
 }

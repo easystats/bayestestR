@@ -27,6 +27,12 @@
 #' point_estimate(model, centrality = "all", dispersion = TRUE)
 #' point_estimate(model, centrality = c("median", "MAP"))
 #'
+#'
+#' # emmeans estimates
+#' # -----------------------------------------------
+#' library(emmeans)
+#' point_estimate(emtrends(model, ~1, "wt"), centrality = c("median", "MAP"))
+#'
 #' # brms models
 #' # -----------------------------------------------
 #' library(brms)
@@ -102,6 +108,18 @@ point_estimate.data.frame <- function(x, centrality = "median", dispersion = FAL
   out <- cbind(data.frame("Parameter" = names(x), stringsAsFactors = FALSE), estimates)
   rownames(out) <- NULL
 
+  out
+}
+
+#' @export
+point_estimate.emmGrid <- function(x, centrality = "median", dispersion = FALSE, ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
+  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+
+  out <- point_estimate(xdf, centrality = centrality, dispersion = dispersion, ...)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
 

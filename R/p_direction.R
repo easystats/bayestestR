@@ -46,6 +46,11 @@
 #' p_direction(model)
 #' p_direction(model, method = "kernel")
 #'
+#' # emmeans
+#' # -----------------------------------------------
+#' library(emmeans)
+#' p_direction(emtrends(model, ~1, "wt"))
+#'
 #' # brms models
 #' # -----------------------------------------------
 #' library(brms)
@@ -131,7 +136,17 @@ p_direction.data.frame <- function(x, method = "direct", ...) {
   out
 }
 
-
+#' @rdname p_direction
+#' @export
+p_direction.emmGrid <- function(x, method = "direct", ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
+  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+  out <- p_direction(xdf, method = method, ...)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}
 
 #' @importFrom insight get_parameters
 #' @keywords internal

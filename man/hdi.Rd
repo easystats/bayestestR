@@ -4,6 +4,7 @@
 \alias{hdi}
 \alias{hdi.numeric}
 \alias{hdi.data.frame}
+\alias{hdi.emmGrid}
 \alias{hdi.stanreg}
 \alias{hdi.brmsfit}
 \alias{hdi.BFBayesFactor}
@@ -14,6 +15,8 @@ hdi(x, ...)
 \method{hdi}{numeric}(x, ci = 0.89, verbose = TRUE, ...)
 
 \method{hdi}{data.frame}(x, ci = 0.89, verbose = TRUE, ...)
+
+\method{hdi}{emmGrid}(x, ci = 0.89, verbose = TRUE, ...)
 
 \method{hdi}{stanreg}(x, ci = 0.89, effects = c("fixed", "random",
   "all"), parameters = NULL, verbose = TRUE, ...)
@@ -87,6 +90,9 @@ library(rstanarm)
 model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 hdi(model)
 hdi(model, ci = c(.80, .90, .95))
+
+library(emmeans)
+hdi(emtrends(model, ~1, "wt"))
 \dontrun{
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)

@@ -1,3 +1,20 @@
+# bayestestR 0.2.1
+
+## Breaking changes
+
+- `describe_posterior.numeric`: `dispersion` defaults to FALSE for consistency with the other methods
+
+## New functions / features
+
+- `pd_to_p` and `p_to_pd`: Functions to convert between probability of direction (pd) and p-value
+- Support of `emmGrid` objects: `ci`, `rope`, `bayesfactor_savagedickey`, `describe_posterior`, ...
+
+
+## Minor changes
+## Bug fixes
+
+- `describe_posterior`: Fixed column order restoration
+
 # bayestestR 0.2.0
 
 ## Breaking changes

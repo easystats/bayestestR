@@ -4,16 +4,19 @@
 \alias{ci}
 \alias{ci.numeric}
 \alias{ci.data.frame}
+\alias{ci.emmGrid}
 \alias{ci.stanreg}
 \alias{ci.brmsfit}
 \alias{ci.BFBayesFactor}
-\title{Confidence/Credible Interval}
+\title{Confidence/Credible Interval (CI)}
 \usage{
 ci(x, ...)
 
 \method{ci}{numeric}(x, ci = 0.89, verbose = TRUE, ...)
 
 \method{ci}{data.frame}(x, ci = 0.89, verbose = TRUE, ...)
+
+\method{ci}{emmGrid}(x, ci = 0.89, verbose = TRUE, ...)
 
 \method{ci}{stanreg}(x, ci = 0.89, effects = c("fixed", "random",
   "all"), parameters = NULL, verbose = TRUE, ...)
@@ -103,6 +106,10 @@ library(rstanarm)
 model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 ci(model)
 ci(model, ci = c(.80, .89, .95))
+
+library(emmeans)
+ci(emtrends(model, ~ 1, "wt"))
+
 \dontrun{
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)

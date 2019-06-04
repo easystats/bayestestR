@@ -76,6 +76,9 @@
 #' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
+#'
+#' library(emmeans)
+#' rope(emtrends(model, ~1, "wt"), ci = c(.90, .95))
 #' \dontrun{
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
@@ -164,6 +167,19 @@ rope.data.frame <- function(x, range = "default", ci = .89, verbose = TRUE, ...)
   attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
 
   class(dat) <- c("rope", "see_rope", "data.frame")
+  dat
+}
+
+#' @rdname rope
+#' @export
+rope.emmGrid <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+  }
+  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+
+  dat <- rope(xdf, range = range, ci = ci, verbose = verbose, ...)
+  attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   dat
 }
 

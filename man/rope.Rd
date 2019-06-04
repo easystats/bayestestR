@@ -5,6 +5,7 @@
 \alias{rope.default}
 \alias{rope.numeric}
 \alias{rope.data.frame}
+\alias{rope.emmGrid}
 \alias{rope.BFBayesFactor}
 \alias{rope.stanreg}
 \alias{rope.brmsfit}
@@ -18,6 +19,9 @@ rope(x, ...)
   verbose = TRUE, ...)
 
 \method{rope}{data.frame}(x, range = "default", ci = 0.89,
+  verbose = TRUE, ...)
+
+\method{rope}{emmGrid}(x, range = "default", ci = 0.89,
   verbose = TRUE, ...)
 
 \method{rope}{BFBayesFactor}(x, range = "default", ci = 0.89,
@@ -119,6 +123,9 @@ library(rstanarm)
 model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
 rope(model)
 rope(model, ci = c(.90, .95))
+
+library(emmeans)
+rope(emtrends(model, ~1, "wt"), ci = c(.90, .95))
 \dontrun{
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
