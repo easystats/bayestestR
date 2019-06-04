@@ -10,8 +10,9 @@ print.bayesfactor_savagedickey <- function(x, digits = 2, log = FALSE, ...) {
 
   xBF <- BFE$BF
   BFE$BF <- as.character(round(xBF, digits = digits))
-  BFE$BF[abs(xBF) >= 1000 | abs(xBF) < 1 / (10 ^ digits)] <-
-    formatC(xBF, format = "e", digits = digits)[abs(xBF) >= 1000 | abs(xBF) < 1 / (10 ^ digits)]
+  big_ind <- abs(xBF) >= 1000 | abs(xBF) < 1 / (10 ^ digits)
+  big_ind <- sapply(big_ind, isTRUE)
+  BFE$BF[big_ind] <- formatC(xBF, format = "e", digits = digits)[big_ind]
 
   if (log) {
     colnames(BFE)[colnames(BFE) == "BF"] <- "log(Bayes Factor)"
