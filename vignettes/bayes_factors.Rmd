@@ -65,7 +65,7 @@ Bayes factors indicate which of the compared models provide a better fit (or bet
 
 The ***Savage-Dickey density ratio*** can be used to answer the question:
 
-> **Given the observed data, is the null more, or less probable?**
+> **Given the observed data, is the null more, or less likely?**
 
 This is done by comparing the density of the null value between the prior and posterior distributions, and is an approximation of a Bayes factor against the (point) null model:
 
@@ -130,7 +130,7 @@ bayesfactor_savagedickey(data.frame(group2 = posterior),
 
 ```
 
-Looking at the distributions, we can see that the posterior is centred at `r round(median(posterior), 2)`. But this does not mean that an effect of 0 is necessarily less probable. To test that, we will use `bayesfactor_savagedickey`!
+Looking at the distributions, we can see that the posterior is centred at `r round(median(posterior), 2)`. But this does not mean that an effect of 0 is necessarily less likely To test that, we will use `bayesfactor_savagedickey`!
 
 ### Compute the Savage-Dickey's BF
 
@@ -139,7 +139,7 @@ test_group2 <- bayesfactor_savagedickey(posterior = posterior, prior = prior)
 test_group2
 ```
 
-This BF indicates **likelihood of an effect of 0 (the point-null effect model) is `r round(test_group2$BF[1],2)` less probable given the data**. In other words, a null effect model is 1/`r round(test_group2$BF[1],2)` = `r 1/round(test_group2$BF[1],2)` time more likely than a model with an effect! Thus, although the centre of distribution has shifted, it is still quite dense around the null.
+This BF indicates **likelihood of an effect of 0 (the point-null effect model) is `r round(test_group2$BF[1],2)` less likely given the data**. In other words, a null effect model is 1/`r round(test_group2$BF[1],2)` = `r 1/round(test_group2$BF[1],2)` time more likely than a model with an effect! Thus, although the centre of distribution has shifted, it is still quite dense around the null.
 
 Note that **interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). 
 
@@ -283,7 +283,7 @@ We can also compare only matched models - i.e., a model without effect $A$ will 
 bayesfactor_inclusion(comparison, match_models = TRUE)
 ```
 
-In this case, it did not change the inclusion Bayes factors by much (by did change the prior and posterior effect probabilities).
+In this case, it did not change the inclusion Bayes factors by much (by did change the prior and posterior probabilities).
 
 ### Comparison with JASP
 
