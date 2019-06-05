@@ -9,7 +9,7 @@ print.hdi <- function(x, digits = 2, ...) {
 
 
 #' @export
-print.ci <- function(x, digits = 2, ...) {
+print.bayestestR_ci <- function(x, digits = 2, ...) {
   if ("data_plot" %in% class(x)) {
     print(as.data.frame(x))
   } else {

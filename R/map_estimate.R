@@ -60,8 +60,8 @@ map_estimate.numeric <- function(x, precision = 2^10, ...) {
   out <- hdp_x
   attr(out, "MAP_density") <- hdp_y
 
-  class(out) <- c(class(out), "MAP")
-  return(out)
+  class(out) <- unique(c("MAP", class(out)))
+  out
 }
 
 
