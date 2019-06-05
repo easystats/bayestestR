@@ -200,7 +200,8 @@
       <td><p>If <code>FALSE</code> (default), Inclustion BFs are computed by
 comparing all models with an effect against all models without the effect. If <code>TRUE</code>,
 Inclusion BFs are computed by comparing all models with an effect against models without
-the effect AND without any higher-order interactions with the effect.</p></td>
+the effect AND without any higher-order interactions with the effect (additionally,
+interactions are compared only to models with the all main effects).</p></td>
     </tr>
     <tr>
       <th>prior_odds</th>
@@ -277,7 +278,7 @@ i.e., <code>(X|G)</code> will become <code>1:G</code> and <code>X:G</code>.</p>
 <span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BF</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;           Pr(prior) Pr(posterior) Inclusion BF
 #&gt; supp            0.4          0.42        22.67
 #&gt; dose            0.4          0.44     3.81e+12
-#&gt; supp:dose       0.2          0.56         5.02
+#&gt; supp:dose       0.2          0.56         1.31
 #&gt; ---
 #&gt; Inclusion BFs compared among matched models only.</div></pre>
   </div>
