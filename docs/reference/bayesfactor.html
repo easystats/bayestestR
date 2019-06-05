@@ -87,7 +87,7 @@ For a complete overview of these functions, read the Bayes factor vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -205,11 +205,11 @@ For a complete overview of these functions, read the <a href='https://easystats.
     </tr>
     <tr>
       <th>prior</th>
-      <td><p>Vector representing a prior distribution (if <code>posterior</code> is a vector), or a data frame with column names matching <code>posterior</code>'s (if <code>posterior</code> is a data frame). Otherwise ignored.</p></td>
+      <td><p>An object representing a prior distribution (see Details).</p></td>
     </tr>
     <tr>
       <th>direction</th>
-      <td><p>Test type. One of <code>0</code>, <code>"two-sided"</code> (default, two tailed),
+      <td><p>Test type (see details). One of <code>0</code>, <code>"two-sided"</code> (default, two tailed),
 <code>-1</code>, <code>"left"</code> (left tailed) or <code>1</code>, <code>"right"</code> (right tailed).</p></td>
     </tr>
     <tr>
@@ -258,9 +258,9 @@ the effect AND without any higher-order interactions with the effect.</p></td>
 <span class='fu'>bayesfactor</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
 #&gt; 
 #&gt; </span><span> Bayes Factor
-#&gt;           1.2
+#&gt;          1.23
 #&gt; ---
-#&gt; Evidence Against Test Value: 0</div></span><span class='co'># NOT RUN {</span>
+#&gt; Evidence Against Test Value:  0 </div></span><span class='co'># NOT RUN {</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
@@ -275,17 +275,17 @@ the effect AND without any higher-order interactions with the effect.</p></td>
 
 <span class='no'>comparison</span> <span class='kw'>&lt;-</span> <span class='fu'>bayesfactor</span>(<span class='no'>m0</span>, <span class='no'>m1</span>, <span class='no'>m2</span>)
 <span class='no'>comparison</span></div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; ---------------------                         
-#&gt; [2] group             1.3
-#&gt; [3] group + ID    11227.1
+#&gt; ---------------------                          
+#&gt; [2] group              1.3
+#&gt; [3] group + ID    1.12e+04
 #&gt; 
 #&gt; Against denominator:
-#&gt; 	 [1] (Intercept only)   
+#&gt; 		 [1] (Intercept only)   
 #&gt; ---
 #&gt; Bayes factor type:  BIC approximation </div><div class='input'>
 <span class='fu'>bayesfactor</span>(<span class='no'>comparison</span>)</div><div class='output co'>#&gt;       Pr(prior) Pr(posterior) Inclusion BF
-#&gt; group      0.67             1         5614
-#&gt; ID         0.33             1         9767
+#&gt; group      0.67             1     5.61e+03
+#&gt; ID         0.33             1     9.77e+03
 #&gt; ---
 #&gt; Inclusion BFs compared among all models.</div></pre>
   </div>

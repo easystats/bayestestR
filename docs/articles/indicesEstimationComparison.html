@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -179,8 +179,9 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)</a>
-<a class="sourceLine" id="cb1-4" title="4"></a>
-<a class="sourceLine" id="cb1-5" title="5">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(see)</a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv"</span>)</a></code></pre></div>
 </div>
 <div id="results" class="section level3">
 <h3 class="hasAnchor">
@@ -201,11 +202,11 @@
 <a class="sourceLine" id="cb2-11" title="11"><span class="st">  </span><span class="co"># geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +</span></a>
 <a class="sourceLine" id="cb2-12" title="12"><span class="st">  </span><span class="co"># geom_smooth(method="loess") +</span></a>
 <a class="sourceLine" id="cb2-13" title="13"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape=</span><span class="ot">NA</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-14" title="14"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="st">  </span><span class="kw">theme_modern</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
 <a class="sourceLine" id="cb2-16" title="16">                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-17" title="17"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-18" title="18"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Noise"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Noise"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-19" title="19"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>outcome_type <span class="op">*</span><span class="st"> </span>true_effect, <span class="dt">scales=</span><span class="st">"free"</span>) </a></code></pre></div>
 <p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
@@ -225,11 +226,11 @@
 <a class="sourceLine" id="cb3-11" title="11"><span class="st">  </span><span class="co"># geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +</span></a>
 <a class="sourceLine" id="cb3-12" title="12"><span class="st">  </span><span class="co"># geom_smooth(method="loess") +</span></a>
 <a class="sourceLine" id="cb3-13" title="13"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape=</span><span class="ot">NA</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="st">  </span><span class="kw">theme_modern</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
 <a class="sourceLine" id="cb3-16" title="16">                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-18" title="18"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Noise"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Sample size"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-19" title="19"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>outcome_type <span class="op">*</span><span class="st"> </span>true_effect, <span class="dt">scales=</span><span class="st">"free"</span>)</a></code></pre></div>
 <p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
@@ -240,208 +241,96 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">df <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">select</span>(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>sample_size, <span class="op">-</span>error, <span class="op">-</span>true_effect, <span class="op">-</span>outcome_type) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(true_effect <span class="op">~</span><span class="st"> </span>outcome_type <span class="op">/</span><span class="st"> </span>value <span class="op">*</span><span class="st"> </span>estimate <span class="op">*</span><span class="st"> </span>sample_size <span class="op">*</span><span class="st"> </span>error, <span class="dt">data=</span>., <span class="dt">family=</span><span class="st">"binomial"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(true_effect <span class="op">~</span><span class="st"> </span>outcome_type <span class="op">/</span><span class="st"> </span>estimate <span class="op">/</span><span class="st"> </span>value, <span class="dt">data=</span>., <span class="dt">family=</span><span class="st">"binomial"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-5" title="5"><span class="st">  </span>broom<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">tidy</a></span>() <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-6" title="6"><span class="st">  </span><span class="kw">select</span>(term, estimate, <span class="dt">p=</span>p.value) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-7" title="7"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(term, <span class="st">'outcome_type'</span>),</a>
 <a class="sourceLine" id="cb4-8" title="8">         stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(term, <span class="st">':value'</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb4-10" title="10">    <span class="dt">sample_size =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(term, <span class="st">'sample_size'</span>),</a>
-<a class="sourceLine" id="cb4-11" title="11">    <span class="dt">error =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(term, <span class="st">'error'</span>),</a>
-<a class="sourceLine" id="cb4-12" title="12">    <span class="dt">term =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(term, <span class="st">"estimate"</span>),</a>
-<a class="sourceLine" id="cb4-13" title="13">    <span class="dt">term =</span> stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span>(term, <span class="st">"outcome_type"</span>),</a>
-<a class="sourceLine" id="cb4-14" title="14">    <span class="dt">p =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sprintf">sprintf</a></span>(<span class="st">"%.2f"</span>, p), <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.001</span>, <span class="st">"***"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.01</span>, <span class="st">"**"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ifelse">ifelse</a></span>(p <span class="op">&lt;</span><span class="st"> </span><span class="fl">.05</span>, <span class="st">"*"</span>, <span class="st">""</span>))))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="st">  </span><span class="kw">arrange</span>(sample_size, error, term) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-16" title="16"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>sample_size, <span class="op">-</span>error) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-17" title="17"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="dt">digits=</span><span class="dv">2</span>) </a></code></pre></div>
+<a class="sourceLine" id="cb4-9" title="9"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(estimate)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="dt">digits=</span><span class="dv">2</span>) </a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">term</th>
 <th align="right">estimate</th>
-<th align="left">p</th>
+<th align="right">p</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">binary:value</td>
-<td align="right">1.64</td>
-<td align="left">0.18</td>
+<td align="left">outcome_typelinear:estimateMAP:value</td>
+<td align="right">10.6</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">binary:value:MAP</td>
-<td align="right">1.08</td>
-<td align="left">0.56</td>
+<td align="left">outcome_typelinear:estimateMedian:value</td>
+<td align="right">10.5</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">binary:value:Mean</td>
-<td align="right">0.90</td>
-<td align="left">0.62</td>
+<td align="left">outcome_typelinear:estimateMean:value</td>
+<td align="right">10.5</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">binary:value:Median</td>
-<td align="right">0.99</td>
-<td align="left">0.59</td>
+<td align="left">outcome_typelinear:estimatebeta:value</td>
+<td align="right">10.3</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">linear:value</td>
-<td align="right">5.71</td>
-<td align="left">0.06</td>
+<td align="left">outcome_typebinary:estimateMAP:value</td>
+<td align="right">5.1</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">linear:value:MAP</td>
-<td align="right">1.03</td>
-<td align="left">0.81</td>
+<td align="left">outcome_typebinary:estimateMedian:value</td>
+<td align="right">4.9</td>
+<td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">linear:value:Mean</td>
-<td align="right">0.72</td>
-<td align="left">0.87</td>
+<td align="left">outcome_typebinary:estimateMean:value</td>
+<td align="right">4.8</td>
+<td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">linear:value:Median</td>
-<td align="right">0.64</td>
-<td align="left">0.88</td>
-</tr>
-<tr class="odd">
-<td align="left">binary:value:error</td>
-<td align="right">-0.56</td>
-<td align="left">0.04*</td>
-</tr>
-<tr class="even">
-<td align="left">binary:value:MAP:error</td>
-<td align="right">-0.19</td>
-<td align="left">0.64</td>
-</tr>
-<tr class="odd">
-<td align="left">binary:value:Mean:error</td>
-<td align="right">-0.16</td>
-<td align="left">0.69</td>
-</tr>
-<tr class="even">
-<td align="left">binary:value:Median:error</td>
-<td align="right">-0.17</td>
-<td align="left">0.66</td>
-</tr>
-<tr class="odd">
-<td align="left">linear:value:error</td>
-<td align="right">-1.73</td>
-<td align="left">0.01**</td>
-</tr>
-<tr class="even">
-<td align="left">linear:value:MAP:error</td>
-<td align="right">-0.17</td>
-<td align="left">0.85</td>
-</tr>
-<tr class="odd">
-<td align="left">linear:value:Mean:error</td>
-<td align="right">-0.13</td>
-<td align="left">0.88</td>
-</tr>
-<tr class="even">
-<td align="left">linear:value:Median:error</td>
-<td align="right">-0.12</td>
-<td align="left">0.89</td>
-</tr>
-<tr class="odd">
-<td align="left">binary:value:MAP:sample_size</td>
-<td align="right">-0.01</td>
-<td align="left">0.87</td>
-</tr>
-<tr class="even">
-<td align="left">binary:value:Mean:sample_size</td>
-<td align="right">-0.01</td>
-<td align="left">0.83</td>
-</tr>
-<tr class="odd">
-<td align="left">binary:value:Median:sample_size</td>
-<td align="right">-0.01</td>
-<td align="left">0.84</td>
-</tr>
-<tr class="even">
-<td align="left">binary:value:sample_size</td>
-<td align="right">0.13</td>
-<td align="left">0.00***</td>
-</tr>
-<tr class="odd">
-<td align="left">linear:value:MAP:sample_size</td>
-<td align="right">-0.02</td>
-<td align="left">0.88</td>
-</tr>
-<tr class="even">
-<td align="left">linear:value:Mean:sample_size</td>
-<td align="right">-0.01</td>
-<td align="left">0.95</td>
-</tr>
-<tr class="odd">
-<td align="left">linear:value:Median:sample_size</td>
-<td align="right">-0.01</td>
-<td align="left">0.96</td>
-</tr>
-<tr class="even">
-<td align="left">linear:value:sample_size</td>
-<td align="right">0.28</td>
-<td align="left">0.00***</td>
-</tr>
-<tr class="odd">
-<td align="left">binary:value:MAP:sample_size:error</td>
-<td align="right">0.00</td>
-<td align="left">0.86</td>
-</tr>
-<tr class="even">
-<td align="left">binary:value:Mean:sample_size:error</td>
-<td align="right">0.00</td>
-<td align="left">0.83</td>
-</tr>
-<tr class="odd">
-<td align="left">binary:value:Median:sample_size:error</td>
-<td align="right">0.00</td>
-<td align="left">0.83</td>
-</tr>
-<tr class="even">
-<td align="left">binary:value:sample_size:error</td>
-<td align="right">0.00</td>
-<td align="left">0.44</td>
-</tr>
-<tr class="odd">
-<td align="left">linear:value:MAP:sample_size:error</td>
-<td align="right">0.00</td>
-<td align="left">0.91</td>
-</tr>
-<tr class="even">
-<td align="left">linear:value:Mean:sample_size:error</td>
-<td align="right">0.00</td>
-<td align="left">0.93</td>
-</tr>
-<tr class="odd">
-<td align="left">linear:value:Median:sample_size:error</td>
-<td align="right">0.00</td>
-<td align="left">0.94</td>
-</tr>
-<tr class="even">
-<td align="left">linear:value:sample_size:error</td>
-<td align="right">0.00</td>
-<td align="left">0.94</td>
+<td align="left">outcome_typebinary:estimatebeta:value</td>
+<td align="right">4.5</td>
+<td align="right">0</td>
 </tr>
 </tbody>
 </table>
 <p>This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist’s beta:</p>
 <ul>
-<li>
-<p>For linear Models;</p>
-<ul>
-<li>The <strong>mean</strong>, followed closely by the <strong>median</strong>, and the <strong>MAP</strong> estimate had a superior performance, altough not significantly.</li>
-<li>The <strong>mean</strong>, followed closely by the <strong>median</strong>, and the <strong>MAP</strong> estimate, were less affected by noise, altough not significantly.</li>
-<li>No difference for the sensitivity to sample size was found.</li>
+<li>For linear models, the <strong>Mean</strong> was the better predictor, closely followed by the <strong>Median</strong>, the <strong>MAP</strong> and the frequentist <strong>beta</strong>.</li>
+<li>For logistic models, the <strong>MAP</strong> was the better predictor, followed by the <strong>Median</strong>, the <strong>Mean</strong> and the frequentist <strong>beta</strong>.</li>
 </ul>
-</li>
-<li>
-<p>For logistic models:</p>
-<ul>
-<li>The <strong>MAP</strong> estimate, followed by the <strong>median</strong> and the <strong>mean</strong>, estimate had a superior performance.</li>
-<li>The <strong>MAP</strong> estimate, followed by the <strong>median</strong>, and the <strong>mean</strong>, were less affected by noise, altough not significantly.</li>
-<li>The <strong>MAP</strong> estimate, followed by the <strong>mean</strong>, and the <strong>median</strong>, were less affected by sample size, altough not significantly.</li>
-</ul>
-</li>
-</ul>
+<p>Overall, the <strong>median</strong> seems to be appears as an approriate choice, maintaining a a high performance accross different types of models.</p>
+<!-- ```{r, message=FALSE, warning=FALSE} -->
+<!-- df %>% -->
+<!--   select(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) %>% -->
+<!--   gather(estimate, value, -sample_size, -error, -true_effect, -outcome_type) %>% -->
+<!--   glm(true_effect ~ outcome_type / value * estimate * sample_size * error, data=., family="binomial") %>% -->
+<!--   broom::tidy() %>% -->
+<!--   select(term, estimate, p=p.value) %>% -->
+<!--   filter(stringr::str_detect(term, 'outcome_type'), -->
+<!--          stringr::str_detect(term, ':value')) %>% -->
+<!--   mutate( -->
+<!--     sample_size = stringr::str_detect(term, 'sample_size'), -->
+<!--     error = stringr::str_detect(term, 'error'), -->
+<!--     term = stringr::str_remove(term, "estimate"), -->
+<!--     term = stringr::str_remove(term, "outcome_type"), -->
+<!--     p = paste0(sprintf("%.2f", p), ifelse(p < .001, "***", ifelse(p < .01, "**", ifelse(p < .05, "*", ""))))) %>% -->
+<!--   arrange(sample_size, error, term) %>%  -->
+<!--   select(-sample_size, -error) %>%  -->
+<!--   knitr::kable(digits=2)  -->
+<!-- ``` -->
+<!-- This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist's beta: -->
+<!-- - For linear Models; -->
+<!--   - The **mean**, followed closely by the **median**, and the **MAP** estimate had a superior performance, altough not significantly. -->
+<!--   - The **mean**, followed closely by the **median**, and the **MAP** estimate, were less affected by noise, altough not significantly. -->
+<!--   - No difference for the sensitivity to sample size was found. -->
+<!-- - For logistic models: -->
+<!--   - The **MAP** estimate, followed by the **median** and the **mean**, estimate had a superior performance. -->
+<!--   - The **MAP** estimate, followed by the **median**, and the **mean**, were less affected by noise, altough not significantly. -->
+<!--   - The **MAP** estimate, followed by the **mean**, and the **median**, were less affected by sample size, altough not significantly. -->
 </div>
 </div>
 </div>

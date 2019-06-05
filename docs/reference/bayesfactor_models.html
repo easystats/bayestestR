@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -251,31 +251,31 @@ smaller than 1/3 indicates substantial evidence in favor of the denominator mode
 <span class='no'>lm3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='no'>lm4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>bayesfactor_models</span>(<span class='no'>lm1</span>, <span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; ---------------------                                     
-#&gt; [2] Species                   1.7e+29
-#&gt; [3] Species + Petal.Length    5.8e+55
-#&gt; [4] Species * Petal.Length    2.2e+54
+#&gt; ---------------------                                      
+#&gt; [2] Species                   1.70e+29
+#&gt; [3] Species + Petal.Length    5.84e+55
+#&gt; [4] Species * Petal.Length    2.20e+54
 #&gt; 
 #&gt; Against denominator:
-#&gt; 	 [1] (Intercept only)   
+#&gt; 		 [1] (Intercept only)   
 #&gt; ---
 #&gt; Bayes factor type:  BIC approximation </div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lm1</span>) <span class='co'># same result</span></div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; ---------------------                                     
-#&gt; [1] Species                   1.7e+29
-#&gt; [2] Species + Petal.Length    5.8e+55
-#&gt; [3] Species * Petal.Length    2.2e+54
+#&gt; ---------------------                                      
+#&gt; [1] Species                   1.70e+29
+#&gt; [2] Species + Petal.Length    5.84e+55
+#&gt; [3] Species * Petal.Length    2.20e+54
 #&gt; 
 #&gt; Against denominator:
-#&gt; 	 [4] (Intercept only)   
+#&gt; 		 [4] (Intercept only)   
 #&gt; ---
 #&gt; Bayes factor type:  BIC approximation </div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lm1</span>, <span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lm1</span>) <span class='co'># same result</span></div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; ---------------------                                     
-#&gt; [2] Species                   1.7e+29
-#&gt; [3] Species + Petal.Length    5.8e+55
-#&gt; [4] Species * Petal.Length    2.2e+54
+#&gt; ---------------------                                      
+#&gt; [2] Species                   1.70e+29
+#&gt; [3] Species + Petal.Length    5.84e+55
+#&gt; [4] Species * Petal.Length    2.20e+54
 #&gt; 
 #&gt; Against denominator:
-#&gt; 	 [1] (Intercept only)   
+#&gt; 		 [1] (Intercept only)   
 #&gt; ---
 #&gt; Bayes factor type:  BIC approximation </div><div class='input'>
 <span class='co'># With lmerMod objects:</span>
@@ -286,20 +286,20 @@ smaller than 1/3 indicates substantial evidence in favor of the denominator mode
   <span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Petal.Length</span> <span class='kw'>|</span> <span class='no'>Species</span>) + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Petal.Width</span>),
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
 )</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lmer1</span>, <span class='no'>lmer2</span>, <span class='no'>lmer3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; ---------------------                                                                         
-#&gt; [2] Petal.Length + (Petal.Length | Species)                        0.0579
-#&gt; [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)    0.0047
+#&gt; ---------------------                                                                           
+#&gt; [2] Petal.Length + (Petal.Length | Species)                            0.06
+#&gt; [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)    4.72e-03
 #&gt; 
 #&gt; Against denominator:
-#&gt; 	 [1] Petal.Length + (1 | Species)   
+#&gt; 		 [1] Petal.Length + (1 | Species)   
 #&gt; ---
 #&gt; Bayes factor type:  BIC approximation </div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lmer1</span>, <span class='no'>lmer2</span>, <span class='no'>lmer3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lmer1</span>)</div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; ---------------------                                                                         
-#&gt; [2] Petal.Length + (Petal.Length | Species)                        0.0579
-#&gt; [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)    0.0047
+#&gt; ---------------------                                                                           
+#&gt; [2] Petal.Length + (Petal.Length | Species)                            0.06
+#&gt; [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)    4.72e-03
 #&gt; 
 #&gt; Against denominator:
-#&gt; 	 [1] Petal.Length + (1 | Species)   
+#&gt; 		 [1] Petal.Length + (1 | Species)   
 #&gt; ---
 #&gt; Bayes factor type:  BIC approximation </div><span class='co'># NOT RUN {</span>
 <span class='co'># rstanarm models</span>
