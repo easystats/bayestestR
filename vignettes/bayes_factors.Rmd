@@ -284,8 +284,6 @@ We can also compare only matched models - i.e., a model without effect $A$ will 
 bayesfactor_inclusion(comparison, match_models = TRUE)
 ```
 
-In this case, it did not change the inclusion Bayes factors by much (by did change the prior and posterior probabilities).
-
 ### Comparison with JASP
 
 `bayesfactor_inclusion` is meant to provide Bayes Factors across model averages, similar to JASP's *Effects* option. Lets compare the two:
