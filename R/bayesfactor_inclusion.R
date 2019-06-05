@@ -6,7 +6,8 @@
 #' @param match_models If \code{FALSE} (default), Inclustion BFs are computed by
 #' comparing all models with an effect against all models without the effect. If \code{TRUE},
 #' Inclusion BFs are computed by comparing all models with an effect against models without
-#' the effect AND without any higher-order interactions with the effect.
+#' the effect AND without any higher-order interactions with the effect (additionally,
+#' interactions are compared only to models with the all main effects).
 #' @param prior_odds optional vector of prior odds for the models. See \code{BayesFactor::priorOdds}
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -66,20 +67,22 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
   effnames <- colnames(df.model)[-(1:3)]
 
   # Build Interaction Matrix #
-  if (match_models) {
-    df.interaction <- data.frame(effnames,
-      stringsAsFactors = FALSE
-    )
+  if (isTRUE(match_models)) {
+    effects.matrix <- as.matrix(df.model[,-c(1:3)])
+
+    df.interaction <- data.frame(effnames, stringsAsFactors = FALSE)
 
     for (eff in effnames) {
       df.interaction[, eff] <- sapply(effnames, function(x) .includes_interaction(x, eff))
     }
     rownames(df.interaction) <- effnames
-    df.interaction <- df.interaction[, -1]
+    df.interaction <- as.matrix(df.interaction[, -1])
+
   }
 
   # Build Effect Table #
-  df.effect <- data.frame(effnames,
+  df.effect <- data.frame(
+    effnames,
     Pinc = rep(NA, length(effnames)),
     PincD = rep(NA, length(effnames)),
     BF_inclusion = rep(NA, length(effnames)),
@@ -87,17 +90,21 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
   )
 
   for (eff in effnames) {
-    df.model_temp <- df.model
+    if (isTRUE(match_models)) {
+      idx1 <- df.interaction[eff, ]
+      idx2 <- df.interaction[, eff]
 
-    if (match_models) {
-      # remove models with higher interactions
-      inter_term <- effnames[unlist(df.interaction[effnames == eff, , drop = TRUE])]
+      has_not_high_order_interactions <- !apply(effects.matrix[, idx1, drop = FALSE], 1, any)
 
-      hashigherinter <- which(rowSums(df.model[, inter_term, drop = FALSE]) > 0)
+      ind_include <- has_not_high_order_interactions & effects.matrix[, eff]
 
-      if (length(hashigherinter) > 0) {
-        df.model_temp <- df.model_temp[-hashigherinter, , drop = FALSE]
-      }
+      ind_exclude <- apply(effects.matrix[, idx2, drop = FALSE], 1, all) &
+        has_not_high_order_interactions &
+        !effects.matrix[, eff]
+
+      df.model_temp <- df.model[ind_include | ind_exclude, ,drop = FALSE]
+    } else {
+      df.model_temp <- df.model
     }
 
     # models with effect
@@ -156,7 +163,8 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
   priorProbs <- priorOdds / sum(priorOdds)
   postProbs <- posterior_odds / sum(posterior_odds)
 
-  df.model <- data.frame(Modelnames,
+  df.model <- data.frame(
+    Modelnames,
     priorProbs,
     postProbs,
     stringsAsFactors = FALSE

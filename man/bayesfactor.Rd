@@ -30,7 +30,8 @@ or a model to use as a denominator. Ignored for \code{BFBayesFactor}.}
 \item{match_models}{If \code{FALSE} (default), Inclustion BFs are computed by
 comparing all models with an effect against all models without the effect. If \code{TRUE},
 Inclusion BFs are computed by comparing all models with an effect against models without
-the effect AND without any higher-order interactions with the effect.}
+the effect AND without any higher-order interactions with the effect (additionally,
+interactions are compared only to models with the all main effects).}
 
 \item{prior_odds}{optional vector of prior odds for the models. See \code{BayesFactor::priorOdds}}
 }

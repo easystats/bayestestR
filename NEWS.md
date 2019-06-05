@@ -14,6 +14,7 @@
 ## Bug fixes
 
 - `describe_posterior`: Fixed column order restoration
+- `bayesfactor_inclusion`: Inclusion BFs for matched models are more inline with JASP results.
 
 # bayestestR 0.2.0
 
