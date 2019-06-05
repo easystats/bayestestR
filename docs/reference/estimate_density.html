@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
       </span>
     </div>
 
@@ -295,9 +295,9 @@
 #&gt; Chain 1: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.013 seconds (Warm-up)
-#&gt; Chain 1:                0.012 seconds (Sampling)
-#&gt; Chain 1:                0.025 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.039 seconds (Warm-up)
+#&gt; Chain 1:                0.029 seconds (Sampling)
+#&gt; Chain 1:                0.068 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -328,16 +328,30 @@
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.014 seconds (Warm-up)
-#&gt; Chain 2:                0.015 seconds (Sampling)
-#&gt; Chain 2:                0.029 seconds (Total)
-#&gt; Chain 2: </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>estimate_density</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;     Parameter        x           y
+#&gt; Chain 2:  Elapsed Time: 0.028 seconds (Warm-up)
+#&gt; Chain 2:                0.037 seconds (Sampling)
+#&gt; Chain 2:                0.065 seconds (Total)
+#&gt; Chain 2: </div><div class='output co'>#&gt; <span class='warning'>Warning: The largest R-hat is 2, indicating chains have not mixed.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#r-hat</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicatingposterior variances and tail quantiles may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>estimate_density</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;     Parameter        x           y
 #&gt; 1 (Intercept) 23.36631 0.001991360
 #&gt; 2 (Intercept) 23.39612 0.002004878
 #&gt; 3 (Intercept) 23.42594 0.002018091
 #&gt; 4 (Intercept) 23.45575 0.002030996
 #&gt; 5 (Intercept) 23.48556 0.002043371
-#&gt; 6 (Intercept) 23.51537 0.002055395</div><span class='co'># NOT RUN {</span>
+#&gt; 6 (Intercept) 23.51537 0.002055395</div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>estimate_density</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>)))</div><div class='output co'>#&gt;   Parameter         x          y
+#&gt; 1   overall -7.493949 0.01472765
+#&gt; 2   overall -7.489622 0.01493394
+#&gt; 3   overall -7.485294 0.01514383
+#&gt; 4   overall -7.480967 0.01535594
+#&gt; 5   overall -7.476639 0.01557029
+#&gt; 6   overall -7.472311 0.01578838</div><span class='co'># NOT RUN {</span>
 <span class='co'># brms models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)

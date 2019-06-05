@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Probability of a Given Point — density_at • bayestestR</title>
+<title>Convert between Probability of Direction (pd) and p-value. — pd_to_p • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Probability of a Given Point — density_at" />
+<meta property="og:title" content="Convert between Probability of Direction (pd) and p-value. — pd_to_p" />
 
-<meta property="og:description" content="Compute the density of a given point of a distribution." />
+<meta property="og:description" content="Enables a conversion between sProbability of Direction (pd) and p-value." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -174,47 +174,50 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Probability of a Given Point</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/estimate_density.R'><code>R/estimate_density.R</code></a></small>
-    <div class="hidden name"><code>density_at.Rd</code></div>
+    <h1>Convert between Probability of Direction (pd) and p-value.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/convert_pd_to_p.R'><code>R/convert_pd_to_p.R</code></a></small>
+    <div class="hidden name"><code>pd_to_p.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Compute the density of a given point of a distribution.</p>
+    <p>Enables a conversion between sProbability of Direction (pd) and p-value.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>density_at</span>(<span class='no'>posterior</span>, <span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>pd_to_p</span>(<span class='no'>pd</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='no'>...</span>)
 
-<span class='fu'>probability_at</span>(<span class='no'>posterior</span>, <span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>p_to_pd</span>(<span class='no'>p</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='no'>...</span>)
+
+<span class='fu'>convert_p_to_pd</span>(<span class='no'>p</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='no'>...</span>)
+
+<span class='fu'>convert_pd_to_p</span>(<span class='no'>pd</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>posterior</th>
-      <td><p>Vector representing a posterior distribution.</p></td>
+      <th>pd</th>
+      <td><p>A Probability of Direction (pd) value.</p></td>
     </tr>
     <tr>
-      <th>x</th>
-      <td><p>The value of which to get the approximate probability.</p></td>
-    </tr>
-    <tr>
-      <th>precision</th>
-      <td><p>Number of points of density data. See the <code>n</code> parameter in <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a>.</p></td>
+      <th>direction</th>
+      <td><p>What type of p-value is requested or provided. Can be <code>"two-sided"</code> (default, two tailed) or <code>"one-sided"</code> (one tailed).</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Currently not used.</p></td>
+      <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
+    <tr>
+      <th>p</th>
+      <td><p>A p-value.</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
-<span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>density_at</span>(<span class='no'>posterior</span>, <span class='fl'>0</span>)</div><div class='output co'>#&gt; [1] 0.3687704</div><div class='input'><span class='fu'>density_at</span>(<span class='no'>posterior</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; [1] 0.3687704 0.2509099</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>pd_to_p</span>(<span class='kw'>pd</span> <span class='kw'>=</span> <span class='fl'>95</span>)</div><div class='output co'>#&gt; [1] 0.1</div><div class='input'><span class='fu'>pd_to_p</span>(<span class='kw'>pd</span> <span class='kw'>=</span> <span class='fl'>95</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"one-sided"</span>)</div><div class='output co'>#&gt; [1] 0.05</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
