@@ -81,11 +81,12 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
   }
 
   # Build Effect Table #
-  df.effect <- data.frame(effnames,
-                          Pinc = rep(NA, length(effnames)),
-                          PincD = rep(NA, length(effnames)),
-                          BF_inclusion = rep(NA, length(effnames)),
-                          stringsAsFactors = FALSE
+  df.effect <- data.frame(
+    effnames,
+    Pinc = rep(NA, length(effnames)),
+    PincD = rep(NA, length(effnames)),
+    BF_inclusion = rep(NA, length(effnames)),
+    stringsAsFactors = FALSE
   )
 
   for (eff in effnames) {
@@ -162,10 +163,11 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
   priorProbs <- priorOdds / sum(priorOdds)
   postProbs <- posterior_odds / sum(posterior_odds)
 
-  df.model <- data.frame(Modelnames,
-                         priorProbs,
-                         postProbs,
-                         stringsAsFactors = FALSE
+  df.model <- data.frame(
+    Modelnames,
+    priorProbs,
+    postProbs,
+    stringsAsFactors = FALSE
   )
 
   # add effects table
