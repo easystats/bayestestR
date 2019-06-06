@@ -34,7 +34,7 @@ options(digits = 2)
 set.seed(5)
 ```
 
-The adoption of the Bayesian framework for applied statistics, especially in social or psychological sciences, seems to be developing in two distinct directions. One of the key topics marking their separation is their opinion about the **Bayes factor**. In short, some authors (*e.g.*, the "Amsterdam school", led by [Wagenmakers](https://www.bayesianspectacles.org/)) advocate its use and emphasize its qualities as a statistical index, while others point to its limits and prefer, instead, the precise description of posterior distributions (using [CIs](https://easystats.github.io/bayestestR/reference/hdi.html), [ROPEs](https://easystats.github.io/bayestestR/reference/rope.html), etc.). 
+The adoption of the Bayesian framework for applied statistics, especially in social or psychological sciences, seems to be developing in two distinct directions. One of the key topics marking their separation is their opinion about the **Bayes factor**. In short, some authors (e.g., the "Amsterdam school", led by [Wagenmakers](https://www.bayesianspectacles.org/)) advocate its use and emphasize its qualities as a statistical index, while others point to its limits and prefer, instead, the precise description of posterior distributions (using [CIs](https://easystats.github.io/bayestestR/reference/hdi.html), [ROPEs](https://easystats.github.io/bayestestR/reference/rope.html), etc.). 
 
 **bayestestR** does not take a side in this debate, rather offering tools to help you in whatever analysis you want to achieve. Instead, it strongly supports the notion of an *informed choice:* **discover the methods, try them, understand them, learn about them, and decide for yourself**.
 
@@ -42,7 +42,7 @@ Having said that, here's an introduction to Bayes factors :)
 
 # Bayes Factors
 
-**Bayes factors (BFs) are indices of *relative* evidence of one "model" (a data generating process) over another**, which are used in Bayesian inference as alternatives to classical (frequentist) hypothesis testing indices. In the Bayesian framework, a Bayes factor can also be thought of as the quantity by which some *prior* beliefs about the relative odds of two models are updated in light of the observed data.
+**Bayes factors (BFs) are indices of *relative* evidence of one "model" (a data generating process) over another**, which are used in Bayesian inference as alternatives to classical (frequentist) hypothesis testing indices. In the Bayesian framework, a Bayes factor can also be thought of as the quantity by which some prior beliefs about the relative odds of two models are updated in light of the observed data.
 
 According to Bayes' theorem:
 
@@ -59,7 +59,7 @@ Where the middle term is the Bayes factor:
 $$
 BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 $$
-Bayes factors indicate which of the compared models provides a better fit (or better describes) the observed data. These are usually computed as the ratio of marginal likelihoods of two competing hypotheses / models, but as we can see from the equation above, they can also be computed by dividing the posterior odds by the prior odds. Importantly, **Bayes factors cover a wide range of indices and applications**, and come in different flavors.
+Bayes factors indicate which of the compared models provides a better fit (or better describes) given the observed data. These are usually computed as the ratio of marginal likelihoods of two competing hypotheses / models, but as we can see from the equation above, they can also be computed by dividing the posterior odds by the prior odds. Importantly, **Bayes factors cover a wide range of indices and applications**, and come in different flavors.
 
 ## Savage-Dickey density ratio Bayes factor
 
@@ -97,7 +97,7 @@ ggplot2::theme_set(see::theme_modern())
 ```
 
 
-We can use `as.data.frame()` on this model to extract the posterior distribution related to the effect of `group2`, and `get_priors()` from the **insight** package to see what prior distribution was used:
+We can use `as.data.frame()` on this model to extract the posterior distribution related to the effect of `group2`, and `get_priors()` from the [**insight** package](https://easystats.github.io/insight/) to see what prior distribution was used:
 
 ```{r prior_n_post, message=FALSE, warning=FALSE, results='hide'}
 posterior <- as.data.frame(model)$group2
@@ -115,7 +115,7 @@ library(bayestestR)
 prior <- distribution_normal(length(posterior), mean = 0, sd = 5.044799)
 ```
 
-We can now plot both the prior and posterior distribution (using the [**see** package](https://easystats.github.io/see/):
+We can now plot both the prior and posterior distribution (using the [**see** package](https://easystats.github.io/see/)):
 
 ```{r prior_n_post_plot, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -138,7 +138,7 @@ test_group2 <- bayesfactor_savagedickey(posterior = posterior, prior = prior)
 test_group2
 ```
 
-This BF indicates that the **likelihood of an effect of 0 (the point-null effect model) is `r round(test_group2$BF[1],2)` less likely given the data**. In other words, a null effect model is 1/`r round(test_group2$BF[1],2)` = `r 1/round(test_group2$BF[1],2)` times more likely than a model with an effect! Thus, although the centre of distribution has shifted, it is still quite dense around the null.
+This BF indicates that the **likelihood of an effect of 0 (the point-null effect model) is `r round(test_group2$BF[1],2)` less likely given the data**. In other words, a null effect model is 1/`r round(test_group2$BF[1],2)` = `r 1/round(test_group2$BF[1],2)` times more likely than a model with an effect! Thus, although the center of distribution has shifted, it is still quite dense around the null.
 
 Note that **interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). 
 
@@ -190,9 +190,9 @@ bayesfactor_savagedickey(group_diff, prior = model)
 
 ## Comparing models
 
-Besides comparing distributions, Bayes factors can also be used to compare whole models. In these cases they can answer the question:
+Besides comparing distributions, Bayes factors can also be used to compare models to answer the question:
 
-> **Given the observed data, which model is more likely?**
+> **Given the observed data, which model is more likely (to provide a better fit or to better describe the data)?**
 
 This is usually done by computing the marginal likelihoods of two models. In such a case, the Bayes factor is a measure of relative evidence between the two compared models. Note that the compared models *do not* need to be nested models (see `brms2` and `brms3` below).
 
