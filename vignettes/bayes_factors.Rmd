@@ -286,7 +286,7 @@ bayesfactor_inclusion(comparison, match_models = TRUE)
 
 ### Comparison with JASP
 
-`bayesfactor_inclusion` is meant to provide Bayes Factors across model averages, similar to JASP's *Effects* option. Lets compare the two:
+`bayesfactor_inclusion()` is meant to provide Bayes Factors across model averages, similar to JASP's *Effects* option. Lets compare the two:
 
 #### Compared across all models
 
