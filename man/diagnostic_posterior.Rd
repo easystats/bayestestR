@@ -18,7 +18,7 @@ diagnostic_posterior(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 \arguments{
 \item{posteriors}{A stanreg or brms model.}
 
-\item{diagnostic}{Diagnostic metrics to compute. Can be a character or a list with "ESS", "Rhat", "MCSE" or "all".}
+\item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}
 
 \item{...}{Currently not used.}
 

@@ -2,7 +2,7 @@
 #'
 #' Compute various point-estimates, such as the mean, the median or the MAP, to describe posterior distributions.
 #'
-#' @param centrality The point-estimates (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".
+#' @param centrality The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.
 #' @param dispersion Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).
 #' @param ... Additional arguments to be passed to or from methods.
 #' @inheritParams hdi

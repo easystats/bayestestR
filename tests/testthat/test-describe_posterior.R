@@ -5,19 +5,19 @@ test_that("describe_posterior", {
 
   # Numeric
   x <- distribution_normal(1000)
-  rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
-  testthat::expect_equal(dim(rez), c(1, 16))
-  rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
-  testthat::expect_equal(dim(rez), c(2, 16))
+  rez <- testthat::expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
+  testthat::expect_equal(dim(rez), c(1, 17))
+  rez <- testthat::expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
+  testthat::expect_equal(dim(rez), c(2, 17))
   rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
   testthat::expect_equal(dim(rez), c(1, 4))
 
   # Dataframes
   x <- data.frame(replicate(4, rnorm(100)))
-  rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
-  testthat::expect_equal(dim(rez), c(4, 16))
-  rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
-  testthat::expect_equal(dim(rez), c(8, 16))
+  rez <- testthat::expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
+  testthat::expect_equal(dim(rez), c(4, 17))
+  rez <- testthat::expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
+  testthat::expect_equal(dim(rez), c(8, 17))
   rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
   testthat::expect_equal(dim(rez), c(4, 4))
 
@@ -25,9 +25,9 @@ test_that("describe_posterior", {
   library(rstanarm)
   x <- insight::download_model("stanreg_lm_1")
   rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
-  testthat::expect_equal(dim(rez), c(2, 21))
+  testthat::expect_equal(dim(rez), c(2, 22))
   rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
-  testthat::expect_equal(dim(rez), c(4, 21))
+  testthat::expect_equal(dim(rez), c(4, 22))
   rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile", diagnostic = NULL, priors = FALSE)
   testthat::expect_equal(dim(rez), c(2, 4))
 
