@@ -186,34 +186,36 @@
     </div>
 
     <pre class="usage"><span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>,
-  <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='no'>...</span>)
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
 <span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>,
-  <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>)
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>,
-  <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>), <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>,
-  <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>),
+  <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for brmsfit</span>
 <span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>,
-  <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>), <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>),
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>,
+  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for BFBayesFactor</span>
 <span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>,
   <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"pd"</span>, <span class='st'>"rope"</span>, <span class='st'>"bf"</span>),
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>, <span class='st'>"bf"</span>),
   <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -225,7 +227,7 @@
     </tr>
     <tr>
       <th>centrality</th>
-      <td><p>The point-estimates (centrality indices) to compute. Can be a character or a list with "median", "mean", "MAP" or "all".</p></td>
+      <td><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></td>
     </tr>
     <tr>
       <th>dispersion</th>
@@ -238,19 +240,30 @@ to be estimated. Named Credible Interval (CI) for consistency.</p></td>
     </tr>
     <tr>
       <th>ci_method</th>
-      <td><p>The type of index used for Credible Interval. Can be <a href='hdi.html'>hdi</a> (default) or "quantile" (see <a href='ci.html'>ci</a>).</p></td>
+      <td><p>The type of index used for Credible Interval. Can be
+<code>"hdi"</code> (default, see <code><a href='hdi.html'>hdi</a></code>) or <code>"quantile"</code>
+(see <code><a href='ci.html'>ci</a></code>).</p></td>
     </tr>
     <tr>
       <th>test</th>
-      <td><p>The indices of effect existence to compute. Can be a character or a list with "p_direction", "rope", "p_map" or "bayesfactor".</p></td>
+      <td><p>The indices of effect existence to compute. Character (vector) or
+list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
+<code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
+<code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.#'
+For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
+(e.g. <code><a href='rope.html'>rope</a></code> or <code><a href='p_direction.html'>p_direction</a></code>) and its results
+included in the summary output.</p></td>
     </tr>
     <tr>
       <th>rope_range</th>
-      <td><p>ROPE's lower and higher bounds. Should be a list of two values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
+      <td><p>ROPE's lower and higher bounds. Should be a list of two
+values (e.g., <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>,
+the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
     </tr>
     <tr>
       <th>rope_ci</th>
-      <td><p>The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.</p></td>
+      <td><p>The Credible Interval (CI) probability, corresponding to the
+proportion of HDI, to use for the percentage in ROPE.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -262,7 +275,7 @@ to be estimated. Named Credible Interval (CI) for consistency.</p></td>
     </tr>
     <tr>
       <th>diagnostic</th>
-      <td><p>Diagnostic metrics to compute. Can be a character or a list with "ESS", "Rhat", "MCSE" or "all".</p></td>
+      <td><p>Diagnostic metrics to compute.  Character (vector) or list with one or more of these options: <code>"ESS"</code>, <code>"Rhat"</code>, <code>"MCSE"</code> or <code>"all"</code>.</p></td>
     </tr>
     <tr>
       <th>priors</th>
@@ -289,6 +302,13 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>One or more components of point estimates (like posterior mean or median),
+  intervals and tests can be ommitted from the summary output by setting the
+  related argument to <code>NULL</code>. For example, <code>test = NULL</code> and
+  <code>centrality = NULL</code> would only return the HDI (or CI).</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <ul>
@@ -307,8 +327,10 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt;   ROPE_Percentage
 #&gt; 1        9.090909</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>x</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)') to get meaningful results.</span></div><div class='output co'>#&gt;   Parameter       Median       MAD       Mean        SD       MAP CI    CI_low
 #&gt; 1 Posterior -0.007622594 0.9444168 0.01846216 0.9831468 -0.157443 89 -1.458814
-#&gt;    CI_high   pd ROPE_CI ROPE_low ROPE_high ROPE_Percentage ROPE_Equivalence BF
-#&gt; 1 1.642115 50.3      89     -0.1       0.1        9.090909        undecided  1</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))</div><div class='output co'>#&gt;   Parameter       Median CI    CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high
+#&gt;    CI_high     p_map   pd ROPE_CI ROPE_low ROPE_high ROPE_Percentage
+#&gt; 1 1.642115 0.9867397 50.3      89     -0.1       0.1        9.090909
+#&gt;   ROPE_Equivalence BF
+#&gt; 1        undecided  1</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))</div><div class='output co'>#&gt;   Parameter       Median CI    CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high
 #&gt; 1 Posterior -0.007622594 80 -1.156738 1.326292 50.3      89     -0.1       0.1
 #&gt; 2 Posterior -0.007622594 90 -1.502799 1.702072 50.3      89     -0.1       0.1
 #&gt;   ROPE_Percentage
@@ -329,11 +351,11 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 2        X2 -0.06598163 1.0276300  0.017577814 1.0433150 -0.164215810 89
 #&gt; 3        X3  0.02456696 0.9886656  0.008467312 1.0260198 -0.045969999 89
 #&gt; 4        X4 -0.10600216 0.9259356 -0.056808696 0.8299671 -0.191238263 89
-#&gt;      CI_low  CI_high pd ROPE_CI ROPE_low ROPE_high ROPE_Percentage
-#&gt; 1 -1.540691 1.189127 51      89     -0.1       0.1        6.666667
-#&gt; 2 -1.721612 1.574241 55      89     -0.1       0.1        8.888889
-#&gt; 3 -1.353669 1.545773 51      89     -0.1       0.1        4.444444
-#&gt; 4 -1.401507 1.113488 54      89     -0.1       0.1        6.666667
+#&gt;      CI_low  CI_high     p_MAP pd ROPE_CI ROPE_low ROPE_high ROPE_Percentage
+#&gt; 1 -1.540691 1.189127 0.9999891 51      89     -0.1       0.1        6.666667
+#&gt; 2 -1.721612 1.574241 0.9804510 55      89     -0.1       0.1        8.888889
+#&gt; 3 -1.353669 1.545773 0.9990385 51      89     -0.1       0.1        4.444444
+#&gt; 4 -1.401507 1.113488 0.9883586 54      89     -0.1       0.1        6.666667
 #&gt;   ROPE_Equivalence BF
 #&gt; 1        undecided  1
 #&gt; 2        undecided  1
@@ -359,13 +381,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The largest R-hat is 2, indicating chains have not mixed.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#r-hat</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicatingposterior variances and tail quantiles may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Markov chains did not converge! Do not analyze results!</span></div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;     Parameter     Median CI    CI_low    CI_high    pd ROPE_CI   ROPE_low
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Markov chains did not converge! Do not analyze results!</span></div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;     Parameter     Median CI    CI_low    CI_high    pd ROPE_CI   ROPE_low
 #&gt; 1 (Intercept) 39.3855775 89 31.629922 47.4603765 100.0      89 -0.6026948
 #&gt; 3          wt -5.4856289 89 -6.666786 -4.4218114 100.0      89 -0.6026948
 #&gt; 2        gear -0.3046848 89 -2.133696  0.9040648  64.5      89 -0.6026948
@@ -380,10 +396,10 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 1 (Intercept) 39.3855775 5.6644413 39.1747056 5.544020 40.2070780 89 31.629922
 #&gt; 3          wt -5.4856289 0.7823561 -5.5232461 0.748915 -5.2672961 89 -6.666786
 #&gt; 2        gear -0.3046848 1.0004455 -0.3465336 1.007950 -0.3059815 89 -2.133696
-#&gt;      CI_high    pd ROPE_CI   ROPE_low ROPE_high ROPE_Percentage
-#&gt; 1 47.4603765 100.0      89 -0.6026948 0.6026948         0.00000
-#&gt; 3 -4.4218114 100.0      89 -0.6026948 0.6026948         0.00000
-#&gt; 2  0.9040648  64.5      89 -0.6026948 0.6026948        49.16201
+#&gt;      CI_high     p_MAP    pd ROPE_CI   ROPE_low ROPE_high ROPE_Percentage
+#&gt; 1 47.4603765 0.0000000 100.0      89 -0.6026948 0.6026948         0.00000
+#&gt; 3 -4.4218114 0.0000000 100.0      89 -0.6026948 0.6026948         0.00000
+#&gt; 2  0.9040648 0.9482844  64.5      89 -0.6026948 0.6026948        49.16201
 #&gt;   ROPE_Equivalence           BF ESS      Rhat Prior_Distribution Prior_Location
 #&gt; 1         rejected 7.042844e+03 204 0.9957722             normal              0
 #&gt; 3         rejected 5.551912e+04 215 0.9979163             normal              0
@@ -443,6 +459,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>

@@ -311,36 +311,23 @@ the resulting HDI.
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
-<span class='fu'>ci</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Interval
-#&gt; 
-#&gt; </span><span> Parameter        89% CI
-#&gt;         X1 [-1.61, 1.51]
-#&gt;         X2 [-1.72, 1.21]
-#&gt;         X3 [-1.46, 1.68]
-#&gt;         X4 [-1.39, 1.95]
-#&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Intervals
-#&gt; 
-#&gt; </span><span> Parameter        80% CI
-#&gt;         X1 [-1.21, 1.33]
-#&gt;         X2 [-1.48, 1.05]
-#&gt;         X3 [-1.23, 1.19]
-#&gt;         X4 [-1.04, 1.57]
-#&gt; 
-#&gt; 
-#&gt;  Parameter        89% CI
-#&gt;         X1 [-1.61, 1.51]
-#&gt;         X2 [-1.72, 1.21]
-#&gt;         X3 [-1.46, 1.68]
-#&gt;         X4 [-1.39, 1.95]
-#&gt; 
-#&gt; 
-#&gt;  Parameter        95% CI
-#&gt;         X1 [-1.88, 1.88]
-#&gt;         X2 [-2.07, 1.45]
-#&gt;         X3 [-1.70, 1.98]
-#&gt;         X4 [-1.86, 2.31]
-#&gt; 
-#&gt; </div><div class='input'>
+<span class='fu'>ci</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt;   Parameter CI    CI_low  CI_high
+#&gt; 1        X1 89 -1.614930 1.511640
+#&gt; 2        X2 89 -1.718089 1.213077
+#&gt; 3        X3 89 -1.461380 1.679200
+#&gt; 4        X4 89 -1.389047 1.954693</div><div class='input'><span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;    Parameter CI    CI_low  CI_high
+#&gt; 1         X1 80 -1.213357 1.328392
+#&gt; 2         X1 89 -1.614930 1.511640
+#&gt; 3         X1 95 -1.883828 1.878565
+#&gt; 4         X2 80 -1.484418 1.048970
+#&gt; 5         X2 89 -1.718089 1.213077
+#&gt; 6         X2 95 -2.071975 1.454381
+#&gt; 7         X3 80 -1.225531 1.186955
+#&gt; 8         X3 89 -1.461380 1.679200
+#&gt; 9         X3 95 -1.702450 1.983010
+#&gt; 10        X4 80 -1.044691 1.574124
+#&gt; 11        X4 89 -1.389047 1.954693
+#&gt; 12        X4 95 -1.855381 2.305285</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'ggplot2':</span>
 #&gt; <span class='message'>  method         from </span>
 #&gt; <span class='message'>  [.quosures     rlang</span>
@@ -376,9 +363,9 @@ the resulting HDI.
 #&gt; Chain 1: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.026 seconds (Warm-up)
-#&gt; Chain 1:                0.023 seconds (Sampling)
-#&gt; Chain 1:                0.049 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.016 seconds (Warm-up)
+#&gt; Chain 1:                0.014 seconds (Sampling)
+#&gt; Chain 1:                0.03 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -409,14 +396,10 @@ the resulting HDI.
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.019 seconds (Warm-up)
-#&gt; Chain 2:                0.026 seconds (Sampling)
-#&gt; Chain 2:                0.045 seconds (Total)
-#&gt; Chain 2: </div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicatingposterior variances and tail quantiles may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Interval
+#&gt; Chain 2:  Elapsed Time: 0.012 seconds (Warm-up)
+#&gt; Chain 2:                0.013 seconds (Sampling)
+#&gt; Chain 2:                0.025 seconds (Total)
+#&gt; Chain 2: </div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Interval
 #&gt; 
 #&gt; </span><span>   Parameter         89% CI
 #&gt;  (Intercept) [31.00, 46.22]
@@ -443,11 +426,8 @@ the resulting HDI.
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='fu'>ci</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~ <span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Interval
-#&gt; 
-#&gt; </span><span> Parameter         89% CI
-#&gt;    overall [-6.52, -4.29]
-#&gt; </div><div class='input'>
+<span class='fu'>ci</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~ <span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt;   Parameter CI    CI_low   CI_high
+#&gt; 1   overall 89 -6.522061 -4.286849</div><div class='input'>
 </div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)

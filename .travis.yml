@@ -3,12 +3,12 @@ language: r
 os:
   #- windows
   - linux
-  #- osx
+  - osx
 
 r:
   - oldrel
   - release
-  # - devel
+  - devel
 
 
 # Copied from broom
