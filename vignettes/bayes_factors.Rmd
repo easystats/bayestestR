@@ -138,7 +138,7 @@ test_group2 <- bayesfactor_savagedickey(posterior = posterior, prior = prior)
 test_group2
 ```
 
-This BF indicates that the **likelihood of an effect of 0 (the point-null effect model) is `r round(test_group2$BF[1],2)` less likely given the data**. In other words, a null effect model is 1/`r round(test_group2$BF[1],2)` = `r 1/round(test_group2$BF[1],2)` times more likely than a model with an effect! Thus, although the centre of distribution has shifted, it is still quite dense around the null.
+This BF indicates that **an effect of 0 (the point-null effect model) is `r round(test_group2$BF[1],2)` less likely given the data**. In other words, a null effect model is 1/`r round(test_group2$BF[1],2)` = `r 1/round(test_group2$BF[1],2)` times more likely than a model with an effect! Thus, although the centre of distribution has shifted, it is still quite dense around the null.
 
 Note that **interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). 
 
