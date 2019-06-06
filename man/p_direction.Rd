@@ -9,7 +9,7 @@
 \alias{p_direction.stanreg}
 \alias{p_direction.brmsfit}
 \alias{p_direction.BFBayesFactor}
-\title{Probability of Direction (\emph{pd})}
+\title{Probability of Direction (pd)}
 \usage{
 p_direction(x, ...)
 
