@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Probability of Direction (<em>pd</em>) — p_direction • bayestestR</title>
+<title>Probability of Direction (pd) — p_direction • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,7 +39,7 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Probability of Direction (<em>pd</em>) — p_direction" />
+<meta property="og:title" content="Probability of Direction (pd) — p_direction" />
 
 <meta property="og:description" content="Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist p-value." />
 
@@ -174,7 +174,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Probability of Direction (<em>pd</em>)</h1>
+    <h1>Probability of Direction (pd)</h1>
     <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/p_direction.R'><code>R/p_direction.R</code></a></small>
     <div class="hidden name"><code>p_direction.Rd</code></div>
     </div>
@@ -256,7 +256,7 @@ The Probability of Direction (pd) is an index of effect existence, ranging from 
 <li><p>It is strongly correlated with the frequentist p-value, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.</p></li>
 </ul><p><strong>Relationship with the p-value</strong>
 <br /> <br />
-In most cases, it seems that the <em>pd</em> chas a direct correspondance with the frequentist one-sided <em>p</em>-value through the formula p<sub>one&nbsp;sided</sub>&nbsp;=&nbsp;1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub> and to the two-sided p-value (the most commonly reported one) through the formula p<sub>two&nbsp;sided</sub>&nbsp;=&nbsp;2&nbsp;*&nbsp;(1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>). Thus, a two-sided p-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code> would correspond approximately to a <em>pd</em> of 95%, 97.5%, 99.5% and 99.95%.
+In most cases, it seems that the <em>pd</em> has a direct correspondance with the frequentist one-sided <em>p</em>-value through the formula p<sub>one&nbsp;sided</sub>&nbsp;=&nbsp;1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub> and to the two-sided p-value (the most commonly reported one) through the formula p<sub>two&nbsp;sided</sub>&nbsp;=&nbsp;2&nbsp;*&nbsp;(1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>). Thus, a two-sided p-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code> would correspond approximately to a <em>pd</em> of 95%, 97.5%, 99.5% and 99.95%.
 <br /> <br />
 <strong>Methods of computation</strong>
 <br /> <br />

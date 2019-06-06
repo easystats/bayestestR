@@ -148,13 +148,13 @@
 <li>Makowski, D., Ben-Shachar M. S. &amp; Lüdecke, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using bayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. DOI: <a href="https://zenodo.org/record/2556486">10.5281/zenodo.2556486</a>.</li>
 </ul>
 <hr>
-<p>The adoption of the Bayesian framework for applied statistics, especially in social or psychological sciences, seems to be developing in two distinct directions. One of the key topics marking their separation is their opinion about the <strong>Bayes factor</strong>. In short, some authors (<em>e.g.</em>, the “Amsterdam school”, led by <a href="https://www.bayesianspectacles.org/">Wagenmakers</a>) advocate its use and emphasize its qualities as a statistical index, while others point to its limits and prefer, instead, the precise description of posterior distributions (using <a href="https://easystats.github.io/bayestestR/reference/hdi.html">CIs</a>, <a href="https://easystats.github.io/bayestestR/reference/rope.html">ROPEs</a>, etc.).</p>
+<p>The adoption of the Bayesian framework for applied statistics, especially in social or psychological sciences, seems to be developing in two distinct directions. One of the key topics marking their separation is their opinion about the <strong>Bayes factor</strong>. In short, some authors (e.g., the “Amsterdam school”, led by <a href="https://www.bayesianspectacles.org/">Wagenmakers</a>) advocate its use and emphasize its qualities as a statistical index, while others point to its limits and prefer, instead, the precise description of posterior distributions (using <a href="https://easystats.github.io/bayestestR/reference/hdi.html">CIs</a>, <a href="https://easystats.github.io/bayestestR/reference/rope.html">ROPEs</a>, etc.).</p>
 <p><strong>bayestestR</strong> does not take a side in this debate, rather offering tools to help you in whatever analysis you want to achieve. Instead, it strongly supports the notion of an <em>informed choice:</em> <strong>discover the methods, try them, understand them, learn about them, and decide for yourself</strong>.</p>
 <p>Having said that, here’s an introduction to Bayes factors :)</p>
 <div id="bayes-factors" class="section level1">
 <h1 class="hasAnchor">
 <a href="#bayes-factors" class="anchor"></a>Bayes Factors</h1>
-<p><strong>Bayes factors (BFs) are indices of <em>relative</em> evidence of one “model” (a data generating process) over another</strong>, which are used in Bayesian inference as alternatives to classical (frequentist) hypothesis testing indices. In the Bayesian framework, a Bayes factor can also be thought of as the quantity by which some <em>prior</em> beliefs about the relative odds of two models are updated in light of the observed data.</p>
+<p><strong>Bayes factors (BFs) are indices of <em>relative</em> evidence of one “model” (a data generating process) over another</strong>, which are used in Bayesian inference as alternatives to classical (frequentist) hypothesis testing indices. In the Bayesian framework, a Bayes factor can also be thought of as the quantity by which some prior beliefs about the relative odds of two models are updated in light of the observed data.</p>
 <p>According to Bayes’ theorem:</p>
 <p><span class="math display">\[
 P(M|D) = \frac{P(D|M)P(M)}{P(D)}
@@ -164,7 +164,7 @@ P(M|D) = \frac{P(D|M)P(M)}{P(D)}
 \frac{P(M_1|D)}{P(M_2|D)} = \frac{P(D|M_1)}{P(D|M_2)} \times \frac{P(M_1)}{P(M_2)}
 \]</span> Where the middle term is the Bayes factor: <span class="math display">\[
 BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
-\]</span> Bayes factors indicate which of the compared models provides a better fit (or better describes) the observed data. These are usually computed as the ratio of marginal likelihoods of two competing hypotheses / models, but as we can see from the equation above, they can also be computed by dividing the posterior odds by the prior odds. Importantly, <strong>Bayes factors cover a wide range of indices and applications</strong>, and come in different flavors.</p>
+\]</span> Bayes factors indicate which of the compared models provides a better fit (or better describes) given the observed data. These are usually computed as the ratio of marginal likelihoods of two competing hypotheses / models, but as we can see from the equation above, they can also be computed by dividing the posterior odds by the prior odds. Importantly, <strong>Bayes factors cover a wide range of indices and applications</strong>, and come in different flavors.</p>
 <div id="savage-dickey-density-ratio-bayes-factor" class="section level2">
 <h2 class="hasAnchor">
 <a href="#savage-dickey-density-ratio-bayes-factor" class="anchor"></a>Savage-Dickey density ratio Bayes factor</h2>
@@ -181,7 +181,7 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 <p>The <strong>bloxplot</strong> suggests that the 2nd group has a higher number of hours of extra sleep. By how much? Let’s fit a simple <a href="https://easystats.github.io/bayestestR/articles/example1_GLM.html">Bayesian linear model</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb1-2" title="2">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(extra <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> sleep)</a></code></pre></div>
-<p>We can use <code><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame()</a></code> on this model to extract the posterior distribution related to the effect of <code>group2</code>, and <code>get_priors()</code> from the <strong>insight</strong> package to see what prior distribution was used:</p>
+<p>We can use <code><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame()</a></code> on this model to extract the posterior distribution related to the effect of <code>group2</code>, and <code>get_priors()</code> from the <a href="https://easystats.github.io/insight/"><strong>insight</strong> package</a> to see what prior distribution was used:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">posterior &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(model)<span class="op">$</span>group2</a>
 <a class="sourceLine" id="cb2-2" title="2">insight<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/insight/topics/get_priors">get_priors</a></span>(model)</a></code></pre></div>
 <table class="table">
@@ -212,7 +212,7 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 <p>For the <code>group2</code> parameter, the prior that was used was a <strong>normal distribution</strong> of <strong>mean</strong> (location) <code>0</code> and <strong>SD</strong> (scale) <code>5.044799</code>. We can simulate this prior distribution as follows:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a>
 <a class="sourceLine" id="cb3-2" title="2">prior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_normal</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(posterior), <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="fl">5.044799</span>)</a></code></pre></div>
-<p>We can now plot both the prior and posterior distribution (using the <a href="https://easystats.github.io/see/"><strong>see</strong> package</a>:</p>
+<p>We can now plot both the prior and posterior distribution (using the <a href="https://easystats.github.io/see/"><strong>see</strong> package</a>):</p>
 <p><img src="bayes_factors_files/figure-html/prior_n_post_plot-1.png" width="700"></p>
 <p>Looking at the distributions, we can see that the posterior is centred at 1.57. But this does not mean that an effect of 0 is necessarily less likely. To test that, we will use <code><a href="../reference/bayesfactor_savagedickey.html">bayesfactor_savagedickey()</a></code>.</p>
 <div id="compute-the-savage-dickeys-bf" class="section level3">
@@ -226,7 +226,7 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 &gt;          0.84
 &gt; ---
 &gt; Evidence Against Test Value:  0</code></pre>
-<p>This BF indicates that the <strong>likelihood of an effect of 0 (the point-null effect model) is 0.84 less likely given the data</strong>. In other words, a null effect model is 1/0.84 = 1.19 times more likely than a model with an effect! Thus, although the centre of distribution has shifted, it is still quite dense around the null.</p>
+<p>This BF indicates that the <strong>likelihood of an effect of 0 (the point-null effect model) is 0.84 less likely given the data</strong>. In other words, a null effect model is 1/0.84 = 1.19 times more likely than a model with an effect! Thus, although the center of distribution has shifted, it is still quite dense around the null.</p>
 <p>Note that <strong>interpretation guides</strong> for Bayes factors can be found <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf"><strong>here</strong></a>.</p>
 </div>
 <div id="directional-test" class="section level3">
@@ -284,9 +284,9 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 <div id="comparing-models" class="section level2">
 <h2 class="hasAnchor">
 <a href="#comparing-models" class="anchor"></a>Comparing models</h2>
-<p>Besides comparing distributions, Bayes factors can also be used to compare whole models. In these cases they can answer the question:</p>
+<p>Besides comparing distributions, Bayes factors can also be used to compare models to answer the question:</p>
 <blockquote>
-<p><strong>Given the observed data, which model is more likely?</strong></p>
+<p><strong>Given the observed data, which model is more likely (to provide a better fit or to better describe the data)?</strong></p>
 </blockquote>
 <p>This is usually done by computing the marginal likelihoods of two models. In such a case, the Bayes factor is a measure of relative evidence between the two compared models. Note that the compared models <em>do not</em> need to be nested models (see <code>brms2</code> and <code>brms3</code> below).</p>
 <div id="bayesian-models-brms-and-rstanarm" class="section level3">
@@ -308,7 +308,7 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 <a class="sourceLine" id="cb16-5" title="5">m2 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb16-6" title="6">m3 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species <span class="op">+</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb16-7" title="7">m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species <span class="op">*</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p>We can now compare these models with the <code>bayesfactor_models</code> function, using the <code>denominator</code> argument to specify which model all models will be compared against (in this case, the constant model):</p>
+<p>We can now compare these models with the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function, using the <code>denominator</code> argument to specify which model all models will be compared against (in this case, the constant model):</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">comparison &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span>(m1, m2, m3, m4, <span class="dt">denominator =</span> m0)</a>
 <a class="sourceLine" id="cb17-2" title="2">comparison</a></code></pre></div>
 <pre><code>&gt; Bayes factor analysis
@@ -335,7 +335,7 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 &gt;        [3] Species + Petal.Length   
 &gt; ---
 &gt; Bayes factor type:  marginal likelihoods (bridgesampling)</code></pre>
-<p>As we can see, though the full model is the best, there hardly any evidence it is preferable to the main effects model.</p>
+<p>As we can see, though the full model is the best, there is hardly any evidence that it is preferable to the main effects model.</p>
 <blockquote>
 <p><strong>NOTE:</strong> In order to correctly and precisely estimate Bayes Factors, you always need the 4 P’s: <strong>P</strong>roper <strong>P</strong>riors <sup>(<a href="https://doi.org/10.1016/j.jmp.2015.08.002">1</a>, <a href="https://doi.org/10.1080/01621459.1995.10476572">2</a>, <a href="https://doi.org/10.1016/S0304-4076(00)00076-2">3</a>)</sup>, and a <strong>P</strong>lentiful <strong>P</strong>osterior <sup>(<a href="https://doi.org/10.1007/s11336-018-9648-3">4</a>)</sup>.</p>
 </blockquote>
@@ -394,7 +394,7 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 <div id="comparison-with-jasp" class="section level3">
 <h3 class="hasAnchor">
 <a href="#comparison-with-jasp" class="anchor"></a>Comparison with JASP</h3>
-<p><code>bayesfactor_inclusion</code> is meant to provide Bayes Factors across model averages, similar to JASP’s <em>Effects</em> option. Lets compare the two:</p>
+<p><code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> is meant to provide Bayes Factors across model averages, similar to JASP’s <em>Effects</em> option. Lets compare the two:</p>
 <div id="compared-across-all-models" class="section level4">
 <h4 class="hasAnchor">
 <a href="#compared-across-all-models" class="anchor"></a>Compared across all models</h4>
