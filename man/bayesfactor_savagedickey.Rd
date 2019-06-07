@@ -67,8 +67,8 @@ extracted for each parameter, and Savage-Dickey Bayes factors are computed for e
 It is important to provide the correct \code{prior} for meaningful results.
 \itemize{
   \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
-  \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} \ \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
-  \item When \code{posterior} is a \code{stanreg} \ \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
+  \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} or \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
+  \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
 }}
 \subsection{One-sided Tests (setting an order restriction)}{

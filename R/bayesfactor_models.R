@@ -19,7 +19,7 @@
 #'   \item For \code{BFBayesFactor}, \code{bayesfactor_models()} is mostly a wraparoud \code{BayesFactor::extractBF()}.
 #'   \item For all other model types (supported by \CRANpkg{insight}), BIC approximations are used to compute Bayes factors.
 #' }
-#' In order to correctly and precisely estimate Bayes Factors, a rule of thumb are
+#' In order to correctly and precisely estimate Bayes factors, a rule of thumb are
 #' the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful \strong{P}osterior
 #' (i.e. probably at leat 40,000 samples instead of the default of 4,000).
 #' \cr \cr
@@ -113,8 +113,6 @@
 #'   \item Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin & review, 14(5), 779-804.
 #'   \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 #' }
-#'
-#' @seealso update.BFGrid
 #'
 #' @importFrom insight get_response is_model
 #' @export
