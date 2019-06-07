@@ -26,7 +26,7 @@
 #'   \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
 #'   \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} \ \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
 #'   \item When \code{posterior} is a \code{stanreg} \ \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
-#'   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column names.
+#'   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
 #' }}
 #' \subsection{One-sided Tests (setting an order restriction)}{
 #' One sided tests (controlled by \code{direction}) are conducted by setting an order restriction on
@@ -193,16 +193,16 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     prior <- posterior
     warning(
       "Prior not specified! ",
-      "Please specify priors (with column names matching 'posterior')",
+      "Please specify priors (with column order matching 'posterior')",
       " to get meaningful results."
     )
   }
 
   sdbf <- numeric(ncol(posterior))
   for (par in seq_along(posterior)) {
-    par_name <- colnames(posterior)[par]
-    sdbf[par] <- .bayesfactor_savagedickey(posterior[[par_name]],
-      prior[[par_name]],
+    sdbf[par] <- .bayesfactor_savagedickey(
+      posterior[[par]],
+      prior[[par]],
       direction = direction,
       hypothesis = hypothesis
     )

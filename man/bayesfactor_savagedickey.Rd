@@ -67,7 +67,7 @@ It is important to provide the correct \code{prior} for meaningful results.
   \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
   \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} \ \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
   \item When \code{posterior} is a \code{stanreg} \ \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
-  \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column names.
+  \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
 }}
 \subsection{One-sided Tests (setting an order restriction)}{
 One sided tests (controlled by \code{direction}) are conducted by setting an order restriction on
