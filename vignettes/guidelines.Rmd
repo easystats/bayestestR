@@ -36,20 +36,17 @@ These guidelines can be referred to by citing the package:
 
 Based on the previous [**comparison of point-estimates**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html) and [**indices of effect existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html), we can draw the following recommendations.
 
-To minimally **describe the posterior distribution** of a parameter, we suggest reporting 1) the **median** as an index of centrality, 2) the **89\% CI** (using HDI rather than quantiles) as an index of centrality and, in the context of null-hypothesis testing, the **Probability of Direction (*pd*)** for effect existence and, especially in the context of confirmatory analyses, the **ROPE percentage** (full, *i.e.*, based on the full posterior distribution) with an explicitly specified range for effect significance. 
+To minimally **describe the posterior distribution** of a parameter, we suggest reporting 1) the **median** as an index of centrality, 2) the **89\% CI** (using HDI rather than quantiles) as an index of centrality and, and in the context of null-hypothesis testing, the **Probability of Direction (*pd*)** for effect existence and, especially in the context of confirmatory analyses, either the **ROPE percentage** (full, *i.e.*, based on the full posterior distribution) with an explicitly specified range for effect significance, or the ***Bayes factor***. 
 
 # Effect *Existence* and *significance*
 
-The ***pd*** and the ***ROPE*** are two indices that give different and independent information: The ***pd*** is a marker of **existence**, consistency and direction of a parameter (whether a parameter has a consistent effect in one or another direction), whereas the percentage in **ROPE** is a index of **significance** (in its primary meaning); informing us whether a parameter is related or not to a non-negligible change (in terms of magnitude) in the outcome.
-
-
-
+The ***pd***, the ***ROPE*** and the ***Bayes factor*** are three indices that give different and independent information: The ***pd*** is a marker of **existence**, consistency and direction of a parameter (whether a parameter has a consistent effect in one or another direction); the percentage in **ROPE** is a index of **significance** (in its primary meaning), informing us whether a parameter is related or not to a non-negligible change (in terms of magnitude) in the outcome; and the [Savage-Dickey Bayes factor](https://easystats.github.io/bayestestR/articles/bayes_factors.html) is a ratio, quantifying relative evidence for the **existence** of an effect, informing us by how much more (or less) the observed data is under a model with the effect compared to a model with a null effect. For human readability, it is recommended to report BFs so that the ratios as larger than 1 - for example, it's harder to understand what it means that the data are *0.84 time less* probable under the null than it is to understand that the data are *1.19 time more* probable under the null.
 
 ## Interpretation Rules of Thumb
 
 **The following thresholds are presented as landmarks only, and any use of such "labels" should be explicitly justified. Please consider with caution.**
 
-- **Probability of Direction (*p*d)**: In most cases, it seems that the *pd* corresponds to the frequentist one-sided *p* value through the formula `p value = (1-pd/100)` and to the two-sided *p* value (the most commonly reported) through the formula `p value = 2*(1-pd/100)`. Thus, a `pd` of `95%`, `97.5%` `99.5%` and `99.95%` corresponds approximately to a two-sided *p* value of respectively `.1`, `.05`, `.01` and `.001`. Thus, for convience, we recommend using the following reference values:
+- **Probability of Direction (*p*d)**: In most cases, it seems that the *pd* corresponds to the frequentist one-sided *p* value through the formula `p value = (1-pd/100)` and to the two-sided *p* value (the most commonly reported) through the formula `p value = 2*(1-pd/100)`. Thus, a `pd` of `95%`, `97.5%` `99.5%` and `99.95%` corresponds approximately to a two-sided *p* value of respectively `.1`, `.05`, `.01` and `.001`. Thus, for convenience, we recommend using the following reference values:
 
     - *pd* **\<= 95\%** ~ *p* \> .1: uncertain
     - *pd* **\> 95\%** ~ *p* \< .1: possibly existing
@@ -64,6 +61,8 @@ The ***pd*** and the ***ROPE*** are two indices that give different and independ
     - **\<= 97.5\%** \& **\>= 2.5\%** in ROPE: undecided significance
     - **\< 2.5\%** in ROPE: probably significant
     - **\< 1\%** in ROPE: significant (we can reject the null hypothesis)
+    
+- **Bayes factor**: A Bayes factor greater than 1 can be interpreted as evidence against the compared-to model (the denominator). [One convention](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf) is that a Bayes factor greater than 3 can be considered as "substantial" evidence against the denominator model (and vice versa, a Bayes factor smaller than 1/3 indicates substantial evidence in favor of the denominator model).
 
 *Note: If you have any advice, opinion or such, we encourage you to let us know by opening an [discussion thread](https://github.com/easystats/bayestestR/issues) or making a pull request.*
 
@@ -71,4 +70,4 @@ The ***pd*** and the ***ROPE*** are two indices that give different and independ
 
 Based on these suggestions, a template sentence for minimal reporting of a parameter based on its posterior distribution could be:
 
-- "the effect of *X* has a probability of ***pd*** of being *negative* (Median = ***median***, 89\% CI [***...***, ***...***]) and can be considered as *significant* (***ROPE***\% in ROPE)."
+- "the effect of *X* has a probability of ***pd*** of being *negative* (Median = ***median***, 89\% CI [***...***, ***...***]) and can be considered as *significant* (***ROPE***\% in ROPE; $BF_{10} = $***BF***, indicating that the data is ... times more/less probable under the null)."
