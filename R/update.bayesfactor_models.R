@@ -1,9 +1,24 @@
 #' Update bayesfactor_models
 #'
-#' @param object A \link{bayesfactor_models} object.
+#' @param object A \code{\link{bayesfactor_models}} object.
 #' @param subset Vector of model indices to keep or remove.
 #' @param reference Index of model to rereference to, or \code{"top"} to reference to the best model, or \code{"bottom"} to reference to the worst model.
 #' @param ... Currently not used.
+#'
+#' @examples
+#' library(lme4)
+#' lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+#' lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
+#' lmer3 <- lmer(
+#'   Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
+#'   data = iris
+#' )
+#'
+#' m <- bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
+#' m
+#'
+#' update(m, reference = "bottom")
+#'
 #' @export
 update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...) {
   if (!is.null(reference)) {
