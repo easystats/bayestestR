@@ -2,13 +2,13 @@
 #'
 #'
 #' @author Mattan S. Ben-Shachar
-#' @param models an object of class \link{bayesfactor_models} or \code{BFBayesFactor}.
-#' @param match_models If \code{FALSE} (default), Inclustion BFs are computed by
+#' @param models An object of class \code{\link{bayesfactor_models}} or \code{BFBayesFactor}.
+#' @param match_models If \code{FALSE} (default), Inclusion BFs are computed by
 #' comparing all models with an effect against all models without the effect. If \code{TRUE},
 #' Inclusion BFs are computed by comparing all models with an effect against models without
 #' the effect AND without any higher-order interactions with the effect (additionally,
 #' interactions are compared only to models with the all main effects).
-#' @param prior_odds optional vector of prior odds for the models. See \code{BayesFactor::priorOdds}
+#' @param prior_odds Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds}}.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @return a data frame containing the prior and posterior probabilities, and BF for each effect.

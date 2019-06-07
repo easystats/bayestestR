@@ -193,11 +193,11 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>models</th>
-      <td><p>an object of class <a href='bayesfactor_models.html'>bayesfactor_models</a> or <code>BFBayesFactor</code>.</p></td>
+      <td><p>An object of class <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code> or <code>BFBayesFactor</code>.</p></td>
     </tr>
     <tr>
       <th>match_models</th>
-      <td><p>If <code>FALSE</code> (default), Inclustion BFs are computed by
+      <td><p>If <code>FALSE</code> (default), Inclusion BFs are computed by
 comparing all models with an effect against all models without the effect. If <code>TRUE</code>,
 Inclusion BFs are computed by comparing all models with an effect against models without
 the effect AND without any higher-order interactions with the effect (additionally,
@@ -205,7 +205,7 @@ interactions are compared only to models with the all main effects).</p></td>
     </tr>
     <tr>
       <th>prior_odds</th>
-      <td><p>optional vector of prior odds for the models. See <code>BayesFactor::priorOdds</code></p></td>
+      <td><p>Optional vector of prior odds for the models. See <code>priorOdds</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -222,7 +222,7 @@ interactions are compared only to models with the all main effects).</p></td>
     <p>Inclusion Bayes factors answer the question: Are the observed data more
 probable under models with a particular effect, than they are under models without
 that particular effect? In other words, on average - are models with effect \(X\)
-more likely to have produce the observed data than models without effect \(X\)?
+more likely to have produced the observed data than models without effect \(X\)?
 <br /> <br />
 See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
     
@@ -264,7 +264,7 @@ i.e., <code>(X|G)</code> will become <code>1:G</code> and <code>X:G</code>.</p>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>Type BFManual() to open the manual.</span>
 #&gt; <span class='message'>************</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: 'BayesFactor'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:testthat':</span>
+#&gt; <span class='message'>Attaching package: ‘BayesFactor’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:testthat’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    compare</span></div><div class='input'>
 <span class='no'>BF</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/generalTestBF'>generalTestBF</a></span>(<span class='no'>len</span> ~ <span class='no'>supp</span> * <span class='no'>dose</span>, <span class='no'>ToothGrowth</span>, <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)

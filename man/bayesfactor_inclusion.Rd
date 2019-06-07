@@ -8,15 +8,15 @@ bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL,
   ...)
 }
 \arguments{
-\item{models}{an object of class \link{bayesfactor_models} or \code{BFBayesFactor}.}
+\item{models}{An object of class \code{\link{bayesfactor_models}} or \code{BFBayesFactor}.}
 
-\item{match_models}{If \code{FALSE} (default), Inclustion BFs are computed by
+\item{match_models}{If \code{FALSE} (default), Inclusion BFs are computed by
 comparing all models with an effect against all models without the effect. If \code{TRUE},
 Inclusion BFs are computed by comparing all models with an effect against models without
 the effect AND without any higher-order interactions with the effect (additionally,
 interactions are compared only to models with the all main effects).}
 
-\item{prior_odds}{optional vector of prior odds for the models. See \code{BayesFactor::priorOdds}}
+\item{prior_odds}{Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds}}.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

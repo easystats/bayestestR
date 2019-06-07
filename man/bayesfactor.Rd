@@ -27,13 +27,13 @@ Only applies to mixed models. May be abbreviated.}
 \item{denominator}{Either an integer indicating which of the models to use as the denominator,
 or a model to use as a denominator. Ignored for \code{BFBayesFactor}.}
 
-\item{match_models}{If \code{FALSE} (default), Inclustion BFs are computed by
+\item{match_models}{If \code{FALSE} (default), Inclusion BFs are computed by
 comparing all models with an effect against all models without the effect. If \code{TRUE},
 Inclusion BFs are computed by comparing all models with an effect against models without
 the effect AND without any higher-order interactions with the effect (additionally,
 interactions are compared only to models with the all main effects).}
 
-\item{prior_odds}{optional vector of prior odds for the models. See \code{BayesFactor::priorOdds}}
+\item{prior_odds}{Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds}}.}
 }
 \value{
 Some type of Bayes factor, depending on the input. See \code{\link{bayesfactor_savagedickey}}, \code{\link{bayesfactor_models}} or \code{\link{bayesfactor_inclusion}}
