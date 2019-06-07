@@ -309,13 +309,34 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 
     samples <- lapply(samples, function(data) {
       # 1. estimate density
-      d_points <- estimate_density(
-        data$values,
-        method = density_method,
-        extend = TRUE,
-        extend_scale = 0.05,
-        precision = 2^8
-      )
+      x <- data$values
+
+      extend_scale <- 0.05
+      precision <- 2^8
+
+      x_range <- range(x)
+      x_rangex <- median(x) + 7*mad(x)*c(-1,1)
+      x_range <- c(max(c(x_range[1],x_rangex[1])),
+                   min(c(x_range[2],x_rangex[2])))
+
+      extension_scale <- diff(x_range) * extend_scale
+      x_range[1] <- x_range[1] - extension_scale
+      x_range[2] <- x_range[2] + extension_scale
+
+      if (requireNamespace("logspline", quietly = TRUE)) {
+        x_axis <- seq(x_range[1], x_range[2], length.out = precision)
+        y <- logspline::dlogspline(x_axis, logspline::logspline(x))
+        d_points <- data.frame(x = x_axis, y = y)
+      } else {
+        d_points <-
+          as.data.frame(density(
+            x,
+            n = precision,
+            bw = "SJ",
+            from = x_range[1],
+            to = x_range[2]
+          ))
+      }
 
       # 2. estimate points
       d_null <- stats::approx(d_points$x, d_points$y, xout = hypothesis)
