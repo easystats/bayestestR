@@ -53,6 +53,8 @@ A data frame containing the Bayes factor representing evidence \emph{against} th
 This method computes the ratio between the density of a single value (typically the null)
 of two distributions. When the compared distributions are the posterior and the prior distributions,
 this results in an approximation of a Bayes factor against the (point) null model.
+\cr \cr
+See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
 \details{
 This method is used to compute Bayes factors based on prior and posterior distributions.

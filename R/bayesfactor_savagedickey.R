@@ -3,6 +3,8 @@
 #' This method computes the ratio between the density of a single value (typically the null)
 #' of two distributions. When the compared distributions are the posterior and the prior distributions,
 #' this results in an approximation of a Bayes factor against the (point) null model.
+#' \cr \cr
+#' See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 #'
 #' @param posterior A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).
 #' @param prior An object representing a prior distribution (see Details).
@@ -18,7 +20,6 @@
 #' extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
 #'
 #' \strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)} priors. See example below.
-
 #'
 #' \subsection{Setting the correct \code{prior}}{
 #' It is important to provide the correct \code{prior} for meaningful results.
