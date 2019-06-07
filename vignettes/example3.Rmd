@@ -42,3 +42,5 @@ knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/f
 
 TO BE CONTINUED.
 
+- [Testing Contrasts from Bayesian Models with 'emmeans' and 'bayestestR'](https://easystats.github.io/blog/posts/bayestestr_emmeans/)
+
