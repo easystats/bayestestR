@@ -53,6 +53,8 @@ A data frame containing the Bayes factor representing evidence \emph{against} th
 This method computes the ratio between the density of a single value (typically the null)
 of two distributions. When the compared distributions are the posterior and the prior distributions,
 this results in an approximation of a Bayes factor against the (point) null model.
+\cr \cr
+See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
 \details{
 This method is used to compute Bayes factors based on prior and posterior distributions.
@@ -67,7 +69,7 @@ It is important to provide the correct \code{prior} for meaningful results.
   \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
   \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} \ \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
   \item When \code{posterior} is a \code{stanreg} \ \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
-  \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column names.
+  \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
 }}
 \subsection{One-sided Tests (setting an order restriction)}{
 One sided tests (controlled by \code{direction}) are conducted by setting an order restriction on

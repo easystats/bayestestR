@@ -30,6 +30,7 @@ library(knitr)
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(comment = ">")
+ggplot2::theme_set(see::theme_modern())
 options(digits = 2)
 set.seed(5)
 ```
@@ -42,7 +43,7 @@ Having said that, here's an introduction to Bayes factors :)
 
 # Bayes Factors
 
-**Bayes factors (BFs) are indices of *relative* evidence of one "model" (a data generating process) over another**, which are used in Bayesian inference as alternatives to classical (frequentist) hypothesis testing indices. In the Bayesian framework, a Bayes factor can also be thought of as the quantity by which some prior beliefs about the relative odds of two models are updated in light of the observed data.
+**Bayes factors (BFs) are indices of *relative* evidence of one "model" over another**, which are used in Bayesian inference as alternatives to classical (frequentist) hypothesis testing indices (such as $p-values$). In the Bayesian framework, a Bayes factor can also be thought of as the quantity by which some prior beliefs about the relative odds of two models are updated in light of the observed data.
 
 According to Bayes' theorem:
 
@@ -59,148 +60,19 @@ Where the middle term is the Bayes factor:
 $$
 BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 $$
-Bayes factors indicate which of the compared models provides a better fit (or better describes) given the observed data. These are usually computed as the ratio of marginal likelihoods of two competing hypotheses / models, but as we can see from the equation above, they can also be computed by dividing the posterior odds by the prior odds. Importantly, **Bayes factors cover a wide range of indices and applications**, and come in different flavors.
-
-## Savage-Dickey density ratio Bayes factor
-
-The ***Savage-Dickey density ratio*** can be used to answer the question:
-
-> **Given the observed data, is the null more, or less likely?**
-
-This is done by comparing the density of the null value between the prior and posterior distributions, and is an approximation of a Bayes factor against the (point) null model:
-
-> "[...] the Bayes factor for H0 versus H1 could be obtained by analytically integrating out the model parameter theta. However, the Bayes factor may likewise be obtained by only considering H1, and dividing the height of the posterior for theta by the height of the prior for theta, at the point of interest." [@wagenmakers2010bayesian]
-
-Let's use the Students' Sleep data, and try and answer the question: ***given the observed data, is it more or less likely that the drug (the variable `group`) has no effect on the numbers of hours of extra sleep (variable `extra`)?***
-
-```{r sleep_boxplot, echo=FALSE, message=FALSE, warning=FALSE}
-library(ggplot2)
-library(dplyr)
-
-ggplot(sleep, aes(x = group, y = extra, fill= group)) +
-  geom_boxplot() +
-  theme_classic()
-```
-
-
-The **bloxplot** suggests that the 2nd group has a higher number of hours of extra sleep. By how much? Let's fit a simple [Bayesian linear model](https://easystats.github.io/bayestestR/articles/example1_GLM.html).
-
-```{r rstanarm_disp, eval=FALSE, message=FALSE, warning=FALSE}
-library(rstanarm)
-model <- stan_glm(extra ~ group, data = sleep)
-```
-
-```{r rstanarm_fit, echo=FALSE, message=FALSE, warning=FALSE}
-library(rstanarm)
-junk <- capture.output(model <- stan_glm(extra ~ group, data = sleep))
-ggplot2::theme_set(see::theme_modern())
-```
-
-
-We can use `as.data.frame()` on this model to extract the posterior distribution related to the effect of `group2`, and `get_priors()` from the [**insight** package](https://easystats.github.io/insight/) to see what prior distribution was used:
-
-```{r prior_n_post, message=FALSE, warning=FALSE, results='hide'}
-posterior <- as.data.frame(model)$group2
-insight::get_priors(model)
-```
-```{r prior_table, echo=FALSE, message=FALSE, warning=FALSE}
-knitr::kable(insight::get_priors(model))
-```
-
-For the `group2` parameter, the prior that was used was a **normal distribution** of **mean** (location) `0` and **SD** (scale) `5.044799`. We can simulate this prior distribution as follows:
-
-
-```{r message=FALSE, warning=FALSE}
-library(bayestestR)
-prior <- distribution_normal(length(posterior), mean = 0, sd = 5.044799)
-```
-
-We can now plot both the prior and posterior distribution (using the [**see** package](https://easystats.github.io/see/)):
-
-```{r prior_n_post_plot, echo=FALSE, message=FALSE, warning=FALSE}
-
-# Using "see"
-bayesfactor_savagedickey(
-  data.frame(group2 = posterior),
-  data.frame(group2 = prior)
-) %>%
-  plot() +
-  theme(legend.position = c(0.2, 0.8))
-
-```
-
-Looking at the distributions, we can see that the posterior is centred at `r round(median(posterior), 2)`. But this does not mean that an effect of 0 is necessarily less likely. To test that, we will use `bayesfactor_savagedickey()`.
-
-### Compute the Savage-Dickey's BF
-
-```{r savagedickey, message=FALSE, warning=FALSE}
-test_group2 <- bayesfactor_savagedickey(posterior = posterior, prior = prior)
-test_group2
-```
-
-This BF indicates that **an effect of 0 (the point-null effect model) is `r round(test_group2$BF[1],2)` less likely given the data**. In other words, a null effect model is 1/`r round(test_group2$BF[1],2)` = `r 1/round(test_group2$BF[1],2)` times more likely than a model with an effect! Thus, although the center of distribution has shifted, it is still quite dense around the null.
-
-Note that **interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). 
-
-
-### Directional test
-
-We can also conduct a directional test if we have prior hypotheses about the direction of the effect. This is done by setting an order restriction on the prior and posterior distributions [@morey2014simple; @morey_2015_blog].
-
-```{r prior_n_post_plot_one_sided, echo=FALSE, message=FALSE, warning=FALSE}
-
-# Using "see"
-bayesfactor_savagedickey(
-  data.frame(group2 = posterior),
-  data.frame(group2 = prior),
-  direction = ">"
-) %>%
-  plot() +
-  theme(legend.position = c(0.8,0.8))
-
-```
-
-```{r savagedickey_one_sided, message=FALSE, warning=FALSE}
-test_group2_right <- bayesfactor_savagedickey(posterior = posterior, prior = prior, direction = ">")
-test_group2_right
-```
-
-As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), **the presence of an effect is `r round(test_group2_right$BF[1],2)` times more likely than the absence of an effect**. This indicates that, given the observed data, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of `r round(test_group2_right$BF[1],2)` is still considered quite [weak evidence](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf)).
-
-### Testing all model parameters
-
-Alternatively, we could also pass our model directly as-is to `bayesfactor_savagedickey()` to simultaneously test all of the model's parameters:
-
-```{r}
-bayesfactor_savagedickey(model)
-```
-
-### Testing Contrasts (with `emmeans`)
-
-We can also use `bayesfactor_savagedickey()` together with [**emmeans**](https://cran.r-project.org/package=emmeans), allowing us to test Bayesian contrasts.
-
-```{r}
-library(emmeans)
-group_diff <- pairs(emmeans(model, ~ group))
-group_diff
-
-# pass the original model via prior
-bayesfactor_savagedickey(group_diff, prior = model)
-```
+These are usually computed as the ratio of marginal likelihoods of two competing hypotheses / models, but as we can see from the equation above, they can also be computed by dividing the posterior odds by the prior odds. Importantly, **Bayes factors cover a wide range of indices and applications**, and come in different flavors.
 
 ## Comparing models
 
-Besides comparing distributions, Bayes factors can also be used to compare models to answer the question:
+Generally speaking, Bayes factors are used to compare models and answer the question:
 
-> **Given the observed data, which model is more likely (to provide a better fit or to better describe the data)?**
+> **Under which model is the the observed data more probable?**
 
-This is usually done by computing the marginal likelihoods of two models. In such a case, the Bayes factor is a measure of relative evidence between the two compared models. Note that the compared models *do not* need to be nested models (see `brms2` and `brms3` below).
-
-
+In other words, which model is more likely to have produce the observed data? This is usually done by computing the marginal likelihoods of two models. In such a case, the Bayes factor is a measure of the relative evidence of one of the compared models over the other.
 
 ### Bayesian models (`brms` and `rstanarm`)
 
-**Note: In order to compute the Bayes factors for models, non-default arguments must be added upon fitting:**
+**Note: In order to compute Bayes factors for models, non-default arguments must be added upon fitting:**
   
   - `brmsfit` models **must** have been fitted with `save_all_pars = TRUE`
   - `stanreg` models **must** have been fitted with a defined `diagnostic_file`.
@@ -217,24 +89,33 @@ m3 <- brm(Sepal.Length ~ Species + Petal.Length, data = iris, save_all_pars = TR
 m4 <- brm(Sepal.Length ~ Species * Petal.Length, data = iris, save_all_pars = TRUE)
 ```
 
-We can now compare these models with the `bayesfactor_models()` function, using the `denominator` argument to specify which model all models will be compared against (in this case, the constant model):
+We can now compare these models with the `bayesfactor_models()` function, using the `denominator` argument to specify which model all models will be compared against (in this case, the intercept-only model):
 
 ```{r brms_models_disp, eval=FALSE}
+library(bayestestR)
 comparison <- bayesfactor_models(m1, m2, m3, m4, denominator = m0)
 comparison
 ```
 
 ```{r brms_models_print, echo=FALSE, message=FALSE, warning=FALSE}
 # dput(comparison)
-
-comparison <- structure(list(Model = c("Petal.Length", "Species", "Species + Petal.Length", 
-"Species * Petal.Length", "1"), BF = exp(c(102.551353996205, 
-68.5028425810333, 128.605282540213, 128.855928380748, 0))), class = c("bayesfactor_models", "see_bayesfactor_models",
-"data.frame"), row.names = c(NA, -5L), denominator = 5L, BF_method = "marginal likelihoods (bridgesampling)")
+library(bayestestR)
+comparison <- structure(
+  list(
+    Model = c("Petal.Length", "Species", "Species + Petal.Length", "Species * Petal.Length", "1"),
+    BF = c(3.44736e+44, 5.628679e+29, 7.121386e+55, 9.149948e+55, 1)
+  ),
+  class = c("bayesfactor_models", "see_bayesfactor_models","data.frame"),
+  row.names = c(NA, -5L),
+  denominator = 5L,
+  BF_method = "marginal likelihoods (bridgesampling)"
+)
 comparison
 ```
 
-We can see that the full model is the best model - with $BF_{\text{m0}}=9\times 10^{55}$ compared to the null (intercept only). We can also change the reference model to the main effect model:
+We can see that the full model is the best model - with $BF_{\text{m0}}=9\times 10^{55}$ compared to the null (intercept only).
+
+We can also change the reference model to the main effect model:
 
 ```{r update_models, message=FALSE, warning=FALSE}
 update(comparison, reference = 3)
@@ -242,11 +123,19 @@ update(comparison, reference = 3)
 
 As we can see, though the full model is the best, there is hardly any evidence that it is preferable to the main effects model.
 
+We can also change the reference model to the `Species` model:
+
+```{r update_models, message=FALSE, warning=FALSE}
+update(comparison, reference = 2)
+```
+
+Notice that in the Bayesian framework the compared models *do not* need to be nested models, as happened here when we compared the `Petal.Length`-only model to the `Species`-only model (something that cannot be done in the frequentists framework, where compared models must be nested in one another).
+
 > **NOTE:** In order to correctly and precisely estimate Bayes Factors, you always need the 4 P's: **P**roper **P**riors <sup>([1](https://doi.org/10.1016/j.jmp.2015.08.002), [2](https://doi.org/10.1080/01621459.1995.10476572), [3](https://doi.org/10.1016/S0304-4076(00)00076-2))</sup>, and a **P**lentiful **P**osterior <sup>([4](https://doi.org/10.1007/s11336-018-9648-3))</sup>.
 
 ### The BIC approximation for Frequentist Models
 
-It is also possible to compute Bayes factors for frequentist models. This is done by comparing BIC measures, which even allows for comparing non-nested models [@wagenmakers2007practical]. Let's try it out on **mixed models**:
+It is also possible to compute Bayes factors for frequentist models. This is done by comparing BIC measures, allowing a Bayesian comparison of non-nested frequentist models [@wagenmakers2007practical]. Let's try it out on some **linear mixed models**:
 
 
 ```{r lme4_models, message=FALSE, warning=FALSE}
@@ -266,9 +155,9 @@ bayesfactor_models(m1, m2, m3, m4, denominator = m0)
 
 Inclusion Bayes factors answer the question:
 
-> **Given the observed data, how much more likely are models with a particular effect, compared to models without that particular effect?**
+> **Are the observed data more probable under models with a particular effect, than they are under models without that particular effect?**
 
-In other words, on average - are models with effect $X$ better than models without effect $X$?
+In other words, on average - are models with effect $X$ more likely to have produce the observed data than models without effect $X$?
 
 Lets use the `brms` example from above:
 
@@ -286,7 +175,7 @@ bayesfactor_inclusion(comparison, match_models = TRUE)
 
 ### Comparison with JASP
 
-`bayesfactor_inclusion()` is meant to provide Bayes Factors across model averages, similar to JASP's *Effects* option. Lets compare the two:
+`bayesfactor_inclusion()` is meant to provide Bayes Factors across model averages, similar to JASP's *Effects* option. Let's compare the two:
 
 #### Compared across all models
 
@@ -328,6 +217,131 @@ bayesfactor_inclusion(BF_ToothGrowth_against_dose)
 
 ```{r JASP_Nuisance_fig, echo=FALSE, message=FALSE, warning=FALSE}
 knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/JASP3.PNG")
+```
+
+## Savage-Dickey density ratio Bayes factor
+
+The ***Savage-Dickey density ratio*** can be used to answer the question:
+
+> **Given the observed data, is the null more, or less likely?**
+
+This is done by comparing the density of the null value between the prior and posterior distributions, and is an approximation of a Bayes factor comparing the provided against the (point) null model:
+
+> "[...] the Bayes factor for $H_0$ versus $H_1$ could be obtained by analytically integrating out the model parameter $\theta$. However, the Bayes factor may likewise be obtained by only considering $H_1$, and dividing the height of the posterior for $\theta$ by the height of the prior for $\theta$, at the point of interest." [@wagenmakers2010bayesian]
+
+Let's use the Students' Sleep data, and try and answer the question: ***given the observed data, is it more or less likely that the drug (the variable `group`) has no effect on the numbers of hours of extra sleep (variable `extra`)?***
+
+```{r sleep_boxplot, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+
+ggplot(sleep, aes(x = group, y = extra, fill= group)) +
+  geom_boxplot() +
+  theme_classic()
+```
+
+The **bloxplot** suggests that the 2nd group has a higher number of hours of extra sleep. By how much? Let's fit a simple [Bayesian linear model](https://easystats.github.io/bayestestR/articles/example1_GLM.html).
+
+```{r rstanarm_disp, eval=FALSE, message=FALSE, warning=FALSE}
+library(rstanarm)
+model <- stan_glm(extra ~ group, data = sleep)
+```
+
+```{r rstanarm_fit, echo=FALSE, message=FALSE, warning=FALSE}
+library(rstanarm)
+junk <- capture.output(model <- stan_glm(extra ~ group, data = sleep))
+```
+
+
+We can use `as.data.frame()` on this model to extract the posterior distribution related to the effect of `group2`, and `get_priors()` from the [**insight** package](https://easystats.github.io/insight/) to see what prior distribution was used:
+
+```{r prior_n_post, message=FALSE, warning=FALSE, results='hide'}
+posterior <- as.data.frame(model)$group2
+
+insight::get_priors(model)
+```
+```{r prior_table, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(insight::get_priors(model))
+```
+
+For the `group2` parameter, the prior that was used was a **normal distribution** of **mean** (location) `0` and **SD** (scale) `5.044799`. We can simulate this prior distribution as follows:
+
+```{r message=FALSE, warning=FALSE}
+library(bayestestR)
+prior <- distribution_normal(length(posterior), mean = 0, sd = 5.044799)
+```
+
+We can now plot both the prior and posterior distribution:
+
+```{r prior_n_post_plot, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Using "see"
+bfsd <- bayesfactor_savagedickey(
+  data.frame(group2 = posterior),
+  data.frame(group2 = prior)
+)
+
+plot(bfsd) +
+  theme(legend.position = c(0.2, 0.8))
+
+```
+
+Looking at the distributions, we can see that the posterior is centred at `r round(median(posterior), 2)`. But this does not mean that an effect of 0 is necessarily less likely. To test that, we will use `bayesfactor_savagedickey()`.
+
+### Compute the Savage-Dickey's BF
+
+```{r savagedickey, message=FALSE, warning=FALSE}
+test_group2 <- bayesfactor_savagedickey(posterior = posterior, prior = prior)
+test_group2
+```
+
+This BF indicates that **an effect of 0 (the point-null effect model) is `r round(test_group2$BF[1],2)` less likely given the data**. Or, when interpreting as a Bayes factor for $H_0$ versus $H_1$, we can say that the observed data is 1/`r round(test_group2$BF[1],2)` = `r round(1/test_group2$BF[1],2)` times more probable under the null than under the model with the effect! Thus, although the center of distribution has shifted away from the null, it is still quite dense around the null.
+
+Note that **interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). 
+
+### Directional test
+
+We can also conduct a directional test (a "one sided" or "one tailed" test) if we have a prior hypotheses about the direction of the effect. This is done by setting an order restriction on the prior and posterior distributions [@morey2014simple; @morey_2015_blog].
+
+```{r prior_n_post_plot_one_sided, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Using "see"
+bfsd <- bayesfactor_savagedickey(
+  data.frame(group2 = posterior),
+  data.frame(group2 = prior),
+  direction = ">"
+)
+
+plot(bfsd) +
+  theme(legend.position = c(0.8,0.8))
+
+```
+
+```{r savagedickey_one_sided, message=FALSE, warning=FALSE}
+test_group2_right <- bayesfactor_savagedickey(posterior = posterior, prior = prior, direction = ">")
+test_group2_right
+```
+
+As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), **the presence of an effect has become `r round(test_group2_right$BF[1],2)` times more likely than the absence of an effect**, given the observed data (or that the data is `r round(test_group2_right$BF[1],2)` time more probable under $H_1$ than $H_0$). This indicates that, given the observed data, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of `r round(test_group2_right$BF[1],2)` is still considered quite [weak evidence](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf)).
+
+### Testing all model parameters
+
+Alternatively, we could also pass our model directly as-is to `bayesfactor_savagedickey()` to simultaneously test all of the model's parameters:
+
+```{r}
+bayesfactor_savagedickey(model)
+```
+
+### Testing Contrasts (with `emmeans`)
+
+We can also use `bayesfactor_savagedickey()` together with [**emmeans**](https://cran.r-project.org/package=emmeans), allowing us to [test Bayesian contrasts](https://easystats.github.io/blog/posts/bayestestr_emmeans/).
+
+```{r}
+library(emmeans)
+group_diff <- pairs(emmeans(model, ~ group))
+group_diff
+
+# pass the original model via prior
+bayesfactor_savagedickey(group_diff, prior = model)
 ```
 
 # References

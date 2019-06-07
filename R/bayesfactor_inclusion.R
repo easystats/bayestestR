@@ -13,11 +13,12 @@
 #'
 #' @return a data frame containing the prior and posterior probabilities, and BF for each effect.
 #'
-#' @details Inclusion Bayes factors answer the question: Given the observed data,
-#' how much more likely are models with a particular effect, compared to models
-#' without that particular effect? In other words, on average - do models with
-#' effect X better fit (or describe) the data compared to models without effect X? See also
-#' \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{this vignette}.
+#' @details Inclusion Bayes factors answer the question: Are the observed data more
+#' probable under models with a particular effect, than they are under models without
+#' that particular effect? In other words, on average - are models with effect \eqn{X}
+#' more likely to have produce the observed data than models without effect \eqn{X}?
+#' \cr \cr
+#' See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 #'
 #' @note Random effects in the \code{lme} style will be displayed as interactions:
 #' i.e., \code{(X|G)} will become \code{1:G} and \code{X:G}.

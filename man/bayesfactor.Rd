@@ -40,7 +40,9 @@ Some type of Bayes factor, depending on the input. See \code{\link{bayesfactor_s
 }
 \description{
 This function compte the Bayes factors (BFs) that are appropriate to the input.
-For vectors or single models, it will compute \code{\link[=bayesfactor_savagedickey]{Savage-Dickey's BFs}}. For multiple models, it will return the BF corresponding to \code{\link[=bayesfactor_models]{comparison between models}} and if a comparison is passed, it will compute the \code{\link[=bayesfactor_inclusion]{inclusion BF}}.
+For vectors or single models, it will compute \code{\link[=bayesfactor_savagedickey]{Savage-Dickey's BFs}}.
+For multiple models, it will return the BF corresponding to \code{\link[=bayesfactor_models]{comparison between models}}
+and if a model comparison is passed, it will compute the \code{\link[=bayesfactor_inclusion]{inclusion BF}}.
 \cr\cr
 For a complete overview of these functions, read the \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes factor vignette}.
 }

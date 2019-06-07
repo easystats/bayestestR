@@ -3,6 +3,8 @@
 #' This method computes the ratio between the density of a single value (typically the null)
 #' of two distributions. When the compared distributions are the posterior and the prior distributions,
 #' this results in an approximation of a Bayes factor against the (point) null model.
+#' \cr \cr
+#' See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 #'
 #' @param posterior A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).
 #' @param prior An object representing a prior distribution (see Details).
@@ -18,7 +20,6 @@
 #' extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
 #'
 #' \strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)} priors. See example below.
-
 #'
 #' \subsection{Setting the correct \code{prior}}{
 #' It is important to provide the correct \code{prior} for meaningful results.
@@ -26,7 +27,7 @@
 #'   \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
 #'   \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} \ \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
 #'   \item When \code{posterior} is a \code{stanreg} \ \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
-#'   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column names.
+#'   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
 #' }}
 #' \subsection{One-sided Tests (setting an order restriction)}{
 #' One sided tests (controlled by \code{direction}) are conducted by setting an order restriction on
@@ -193,16 +194,16 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     prior <- posterior
     warning(
       "Prior not specified! ",
-      "Please specify priors (with column names matching 'posterior')",
+      "Please specify priors (with column order matching 'posterior')",
       " to get meaningful results."
     )
   }
 
   sdbf <- numeric(ncol(posterior))
   for (par in seq_along(posterior)) {
-    par_name <- colnames(posterior)[par]
-    sdbf[par] <- .bayesfactor_savagedickey(posterior[[par_name]],
-      prior[[par_name]],
+    sdbf[par] <- .bayesfactor_savagedickey(
+      posterior[[par]],
+      prior[[par]],
       direction = direction,
       hypothesis = hypothesis
     )
