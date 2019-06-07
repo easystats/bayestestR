@@ -333,7 +333,7 @@ bayesfactor_savagedickey(model)
 
 ### Testing Contrasts (with `emmeans`)
 
-We can also use `bayesfactor_savagedickey()` together with [**emmeans**](https://cran.r-project.org/package=emmeans), allowing us to test Bayesian contrasts.
+We can also use `bayesfactor_savagedickey()` together with [**emmeans**](https://cran.r-project.org/package=emmeans), allowing us to [test Bayesian contrasts](https://easystats.github.io/blog/posts/bayestestr_emmeans/).
 
 ```{r}
 library(emmeans)
