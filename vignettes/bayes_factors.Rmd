@@ -68,7 +68,7 @@ Generally speaking, Bayes factors are used to compare models and answer the ques
 
 > **Under which model is the the observed data more probable?**
 
-In other words, which model is more likely to have produce the observed data? This is usually done by computing the marginal likelihoods of two models. In such a case, the Bayes factor is a measure of the relative evidence of one of the compared models over the other.
+In other words, which model is more likely to have produced the observed data? This is usually done by computing the marginal likelihoods of two models. In such a case, the Bayes factor is a measure of the relative evidence of one of the compared models over the other.
 
 ### Bayesian models (`brms` and `rstanarm`)
 
@@ -117,7 +117,7 @@ We can see that the full model is the best model - with $BF_{\text{m0}}=9\times 
 
 We can also change the reference model to the main effect model:
 
-```{r update_models, message=FALSE, warning=FALSE}
+```{r update_models1, message=FALSE, warning=FALSE}
 update(comparison, reference = 3)
 ```
 
@@ -125,7 +125,7 @@ As we can see, though the full model is the best, there is hardly any evidence t
 
 We can also change the reference model to the `Species` model:
 
-```{r update_models, message=FALSE, warning=FALSE}
+```{r update_models2, message=FALSE, warning=FALSE}
 update(comparison, reference = 2)
 ```
 
