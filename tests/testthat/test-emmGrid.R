@@ -11,6 +11,7 @@ all_ <- rbind(em_, c_)
 all_summ <- summary(all_)
 
 test_that("emmGrid bayesfactor_savagedickey", {
+  testthat::skip_on_travis()
   xsdbf <- bayesfactor_savagedickey(all_, prior = model)
   testthat::expect_equal(log(xsdbf$BF), c(-2.52, 2.02, -0.27), tolerance = 0.2)
   testthat::expect_warning(bayesfactor_savagedickey(all_))
