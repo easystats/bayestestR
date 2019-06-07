@@ -13,13 +13,13 @@ all_summ <- summary(all_)
 test_that("emmGrid bayesfactor_savagedickey", {
   testthat::skip_on_travis()
   xsdbf <- bayesfactor_savagedickey(all_, prior = model)
-  testthat::expect_equal(log(xsdbf$BF), c(-2.52, 2.02, -0.27), tolerance = 0.2)
+  testthat::expect_equal(log(xsdbf$BF), c(-2.5182227343327, 2.02267471659067, -0.26956796404218), tolerance = 1e-4)
   testthat::expect_warning(bayesfactor_savagedickey(all_))
 })
 
 test_that("emmGrid ci", {
   xci <- ci(all_, ci = 0.9)
-  testthat::expect_equal(xci$CI_low, c(-0.24, 1.23, -2.99), tolerance = 0.2)
+  testthat::expect_equal(xci$CI_low, c(-0.236749774206338, 1.23103419307697, -2.99025704276072), tolerance = 1e-4)
   testthat::expect_equal(xci$CI_high, c(1.83, 3.35, -0.02), tolerance = 0.2)
 })
 
