@@ -16,7 +16,7 @@
 #' @details Inclusion Bayes factors answer the question: Are the observed data more
 #' probable under models with a particular effect, than they are under models without
 #' that particular effect? In other words, on average - are models with effect \eqn{X}
-#' more likely to have produce the observed data than models without effect \eqn{X}?
+#' more likely to have produced the observed data than models without effect \eqn{X}?
 #' \cr \cr
 #' See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 #'

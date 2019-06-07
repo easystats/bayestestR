@@ -43,7 +43,9 @@
 
 <meta property="og:description" content="This method computes the ratio between the density of a single value (typically the null)
 of two distributions. When the compared distributions are the posterior and the prior distributions,
-this results in an approximation of a Bayes factor against the (point) null model." />
+this results in an approximation of a Bayes factor against the (point) null model.
+ 
+See also the Bayes factors vignette." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -185,7 +187,9 @@ this results in an approximation of a Bayes factor against the (point) null mode
     
     <p>This method computes the ratio between the density of a single value (typically the null)
 of two distributions. When the compared distributions are the posterior and the prior distributions,
-this results in an approximation of a Bayes factor against the (point) null model.</p>
+this results in an approximation of a Bayes factor against the (point) null model.
+<br /> <br />
+See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
     
     </div>
 
@@ -265,7 +269,7 @@ extracted for each parameter, and Savage-Dickey Bayes factors are computed for e
 <li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>
 <li><p>When <code>posterior</code> is an <code>emmGrid</code> object based on a <code>stanreg</code> \ <code>brmsfit</code> model, <code>prior</code> should be <em>that model object</em> (see example).</p></li>
 <li><p>When <code>posterior</code> is a <code>stanreg</code> \ <code>brmsfit</code> model, there is no need to specify <code>prior</code>, as prior samples are drawn internally.</p></li>
-<li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column names.</p></li>
+<li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
 </ul>
 <h3>One-sided Tests (setting an order restriction)</h3>
     One sided tests (controlled by <code>direction</code>) are conducted by setting an order restriction on
