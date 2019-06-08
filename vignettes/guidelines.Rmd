@@ -84,4 +84,4 @@ The ***pd***, the ***Bayes factor***, and the ***ROPE*** are three indices that 
 
 Based on these suggestions, a template sentence for minimal reporting of a parameter based on its posterior distribution could be:
 
-- "the effect of *X* has a probability of ***pd*** of being *negative* (Median = ***median***, 89\% CI [***...***, ***...***]) and can be considered as *significant* (***ROPE***\% in ROPE; $BF_{10} = $***BF***, indicating that the data is ... times more/less probable under the null)."
+- "the effect of *X* has a probability of ***pd*** of being *negative* (Median = ***median***, 89\% CI [ ***HDI<sub>low</sub>*** , ***HDI<sub>high</sub>*** ], *BF*<sub>10</sub> = ***BF***, indicating that the data is ... times more probable under the alternative) and can be considered as *significant* (***ROPE***\% in ROPE)."
