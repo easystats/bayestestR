@@ -287,8 +287,6 @@ plot(bfsd) +
 
 Looking at the distributions, we can see that the posterior is centred at `r round(median(posterior), 2)`. But this does not mean that an effect of 0 is necessarily less likely. To test that, we will use `bayesfactor_savagedickey()`.
 
-### Compute the Savage-Dickey's BF
-
 ```{r savagedickey, message=FALSE, warning=FALSE}
 test_group2 <- bayesfactor_savagedickey(posterior = posterior, prior = prior)
 test_group2
