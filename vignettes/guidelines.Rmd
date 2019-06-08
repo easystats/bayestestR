@@ -54,7 +54,7 @@ The ***pd***, the ***Bayes factor***, and the ***ROPE*** are three indices that 
     - *pd* **\> 99\%**: probably existing
     - *pd* **\> 99.9\%**: certainly existing
 
-- **Bayes factor**: A Bayes factor greater than 1 can be interpreted as evidence against the compared-to model (the denominator). According to [one convention](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf), the values of a *BF*<sub>10</sub> (comparing the alternative to the null) can be interpreted as:
+- **Bayes factor**: Generally, Bayes factors are continuous measures of relative evidence, with a Bayes factor greater than 1 giving evidence in favor of one of the models (the numerator), and a Bayes factor smaller than 1 giving evidence in favor of the other model (the denominator). Yet, it is common to interpret the **magnitude** of relative evidence based on [a convention of intervals](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf), such that the values of a *BF*<sub>10</sub> (comparing the alternative to the null) can be interpreted as:
 
     - *BF*<sub>10</sub> \< 1/100: Extreme evidence in favor of the null.
     - 1/100 \< *BF*<sub>10</sub> \< 1/30: Very strong evidence in favor of the null.
@@ -67,7 +67,7 @@ The ***pd***, the ***Bayes factor***, and the ***ROPE*** are three indices that 
     - 30 \< *BF*<sub>10</sub> \< 100: Very strong evidence in favor of the alternative.
     - *BF*<sub>10</sub> \> 100: Extreme evidence in favor of the alternative.
     
-(for human readability, it is recommended to report BFs so that the ratios as larger than 1 - for example, it's harder to understand a *BF*<sub>10</sub>\=0.84 (indicating the data are 0.84 times more probable under the alternative) than a *BF*<sub>01</sub>\=1/0.84\=1.19 (indicating the data are 1.19 times more probable under the null).
+(For human readability, it is recommended to report BFs so that the ratios are larger than 1 - for example, it's harder to understand a *BF*<sub>10</sub>\=0.07 (indicating the data are 0.07 times more probable under the alternative) than a *BF*<sub>01</sub>\=1/0.07\=14.3 (indicating the data are 14.3 times more probable under the null).
 
 - **ROPE (full)**: Extra caution is required as its interpretation highly depends on other parameters such as sample size and ROPE range.
 
