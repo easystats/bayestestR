@@ -23,6 +23,7 @@
 #' \cr \cr
 #'  The most simple and direct way to compute the \emph{pd} is to 1) look at the median's sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This "simple" method is the most straigtfoward, but its precision is directly tied to the number of posterior draws. The second approach relies on \link[=estimate_density]{density estimation}. It starts by estimating the density function (for which many methods are available), and then computing the \link[=area_under_curve]{area under the curve} (AUC) of the density curve on the other side of 0.
 #'
+#' @return The probability of direction (pd) expressed in percentage (between 50\% and 100\%).
 #'
 #' @examples
 #' library(bayestestR)
