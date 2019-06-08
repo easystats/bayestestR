@@ -10,13 +10,6 @@ c_ <- pairs(em_)
 all_ <- rbind(em_, c_)
 all_summ <- summary(all_)
 
-test_that("emmGrid bayesfactor_savagedickey", {
-  testthat::skip_on_travis()
-  xsdbf <- bayesfactor_savagedickey(all_, prior = model)
-  testthat::expect_equal(log(xsdbf$BF), c(-2.5182227343327, 2.02267471659067, -0.26956796404218), tolerance = 1e-4)
-  testthat::expect_warning(bayesfactor_savagedickey(all_))
-})
-
 test_that("emmGrid ci", {
   xci <- ci(all_, ci = 0.9)
   testthat::expect_equal(xci$CI_low, c(-0.236749774206338, 1.23103419307697, -2.99025704276072), tolerance = 1e-4)
@@ -72,8 +65,17 @@ test_that("emmGrid rope", {
   testthat::expect_equal(xrope$ROPE_Percentage,  c(5.53, 0, 1.83), tolerance = 0.1)
 })
 
+test_that("emmGrid bayesfactor_savagedickey", {
+  testthat::skip_on_travis()
+  set.seed(4)
+  xsdbf <- bayesfactor_savagedickey(all_, prior = model)
+  testthat::expect_equal(log(xsdbf$BF), c(-2.5764463544813, 2.00205724074489, -0.235346262395184), tolerance = 1e-4)
+  testthat::expect_warning(bayesfactor_savagedickey(all_))
+})
+
 test_that("emmGrid describe_posterior", {
   testthat::skip_on_travis()
+  set.seed(4)
   xpost <- describe_posterior(
     all_,
     centrality = "median", dispersion = TRUE,
