@@ -36,11 +36,11 @@ These guidelines can be referred to by citing the package:
 
 Based on the previous [**comparison of point-estimates**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html) and [**indices of effect existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html), we can draw the following recommendations.
 
-To minimally **describe the posterior distribution** of a parameter, we suggest reporting 1) the **median** as an index of centrality, 2) the **89\% CI** (using HDI rather than quantiles) as an index of centrality and, and in the context of null-hypothesis testing, the **Probability of Direction (*pd*)** for effect existence and, especially in the context of confirmatory analyses, either the **ROPE percentage** (full, *i.e.*, based on the full posterior distribution) with an explicitly specified range for effect significance, or the ***Bayes factor***. 
+To minimally **describe the posterior distribution** of a parameter, we suggest reporting 1) the **median** as an index of centrality, 2) the **89\% CI** (using HDI rather than quantiles) as an index of centrality and, and in the context of null-hypothesis testing, the **Probability of Direction (*pd*)** or the ***Bayes factor*** for effect existence and, especially in the context of confirmatory analyses, either the **ROPE percentage** (full, *i.e.*, based on the full posterior distribution) with an explicitly specified range for effect significance.
 
 # Effect *Existence* and *significance*
 
-The ***pd***, the ***ROPE*** and the ***Bayes factor*** are three indices that give different and independent information: The ***pd*** is a marker of **existence**, consistency and direction of a parameter (whether a parameter has a consistent effect in one or another direction); the percentage in **ROPE** is a index of **significance** (in its primary meaning), informing us whether a parameter is related or not to a non-negligible change (in terms of magnitude) in the outcome; and the [Savage-Dickey Bayes factor](https://easystats.github.io/bayestestR/articles/bayes_factors.html) is a ratio, quantifying relative evidence for the **existence** of an effect, informing us by how much more (or less) the observed data is under a model with the effect compared to a model with a null effect. For human readability, it is recommended to report BFs so that the ratios as larger than 1 - for example, it's harder to understand what it means that the data are *0.84 time less* probable under the null than it is to understand that the data are *1.19 time more* probable under the null.
+The ***pd***, the ***Bayes factor***, and the ***ROPE*** are three indices that give different and independent information: The ***pd*** is a marker of **existence**, consistency and direction of a parameter (whether a parameter has a consistent effect in one or another direction); the [Bayes factor](https://easystats.github.io/bayestestR/articles/bayes_factors.html) is a ratio, quantifying relative evidence for the **existence** of an effect, informing us by how much more (or less) the observed data is under two compared models - usually a model with an effect vs. a model without the effect; the percentage in **ROPE** is a index of **significance** (in its primary meaning), informing us whether a parameter is related or not to a non-negligible change (in terms of magnitude) in the outcome.
 
 ## Interpretation Rules of Thumb
 
@@ -54,6 +54,21 @@ The ***pd***, the ***ROPE*** and the ***Bayes factor*** are three indices that g
     - *pd* **\> 99\%**: probably existing
     - *pd* **\> 99.9\%**: certainly existing
 
+- **Bayes factor**: A Bayes factor greater than 1 can be interpreted as evidence against the compared-to model (the denominator). According to [one convention](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf), the values of a *BF*<sub>10</sub> (comparing the alternative to the null) can be interpreted as:
+
+    - *BF*<sub>10</sub> \< 1/100: Extreme evidence in favor of the null.
+    - 1/100 \< *BF*<sub>10</sub> \< 1/30: Very strong evidence in favor of the null.
+    - 1/30 \< *BF*<sub>10</sub> \< 1/10: Strong evidence in favor of the null.
+    - 1/10 \< *BF*<sub>10</sub> \< 1/3: Moderate evidence in favor of the null.
+    - 1/3 \< *BF*<sub>10</sub> \< 1: Anecdotal evidence in favor of the null.
+    - 1 \< *BF*<sub>10</sub> \< 3: Anecdotal evidence in favor of the alternative.
+    - 3 \< *BF*<sub>10</sub> \< 10: Moderate evidence in favor of the alternative.
+    - 10 \< *BF*<sub>10</sub> \< 30: Strong evidence in favor of the alternative.
+    - 30 \< *BF*<sub>10</sub> \< 100: Very strong evidence in favor of the alternative.
+    - *BF*<sub>10</sub> \> 100: Extreme evidence in favor of the alternative.
+    
+(for human readability, it is recommended to report BFs so that the ratios as larger than 1 - for example, it's harder to understand a *BF*<sub>10</sub>\=0.84 (indicating the data are 0.84 times more probable under the alternative) than a *BF*<sub>01</sub>\=1/0.84\=1.19 (indicating the data are 1.19 times more probable under the null).
+
 - **ROPE (full)**: Extra caution is required as its interpretation highly depends on other parameters such as sample size and ROPE range.
 
     - **\> 99\%** in ROPE: negligible (we can accept the null hypothesis)
@@ -61,8 +76,7 @@ The ***pd***, the ***ROPE*** and the ***Bayes factor*** are three indices that g
     - **\<= 97.5\%** \& **\>= 2.5\%** in ROPE: undecided significance
     - **\< 2.5\%** in ROPE: probably significant
     - **\< 1\%** in ROPE: significant (we can reject the null hypothesis)
-    
-- **Bayes factor**: A Bayes factor greater than 1 can be interpreted as evidence against the compared-to model (the denominator). [One convention](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf) is that a Bayes factor greater than 3 can be considered as "substantial" evidence against the denominator model (and vice versa, a Bayes factor smaller than 1/3 indicates substantial evidence in favor of the denominator model).
+  
 
 *Note: If you have any advice, opinion or such, we encourage you to let us know by opening an [discussion thread](https://github.com/easystats/bayestestR/issues) or making a pull request.*
 
