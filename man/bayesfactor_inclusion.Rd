@@ -16,7 +16,7 @@ Inclusion BFs are computed by comparing all models with an effect against models
 the effect AND without any higher-order interactions with the effect (additionally,
 interactions are compared only to models with the all main effects).}
 
-\item{prior_odds}{Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds}}.}
+\item{prior_odds}{Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds<-}}.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
@@ -51,6 +51,7 @@ mo3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 BFmodels <- bayesfactor_models(mo1, mo2, mo3, denominator = mo0)
 bayesfactor_inclusion(BFmodels)
 
+\dontrun{
 # BayesFactor
 # -------------------------------
 library(BayesFactor)
@@ -61,6 +62,7 @@ bayesfactor_inclusion(BF)
 
 # compare only matched models:
 bayesfactor_inclusion(BF, match_models = TRUE)
+}
 }
 \references{
 \itemize{

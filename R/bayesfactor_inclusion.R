@@ -8,7 +8,7 @@
 #' Inclusion BFs are computed by comparing all models with an effect against models without
 #' the effect AND without any higher-order interactions with the effect (additionally,
 #' interactions are compared only to models with the all main effects).
-#' @param prior_odds Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds}}.
+#' @param prior_odds Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds<-}}.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @return a data frame containing the prior and posterior probabilities, and BF for each effect.
@@ -36,6 +36,7 @@
 #' BFmodels <- bayesfactor_models(mo1, mo2, mo3, denominator = mo0)
 #' bayesfactor_inclusion(BFmodels)
 #'
+#' \dontrun{
 #' # BayesFactor
 #' # -------------------------------
 #' library(BayesFactor)
@@ -46,6 +47,7 @@
 #'
 #' # compare only matched models:
 #' bayesfactor_inclusion(BF, match_models = TRUE)
+#' }
 #' @references
 #' \itemize{
 #'   \item Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E. (2019, March 25). A conceptual introduction to Bayesian Model Averaging. \doi{10.31234/osf.io/wgb64}
