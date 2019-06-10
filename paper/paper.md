@@ -1,56 +1,48 @@
 ---
-title: 'Gala: A Python package for galactic dynamics'
+title: 'Understanding and Describing Bayesian Models with bayestestR'
 tags:
-  - Python
-  - astronomy
-  - dynamics
-  - galactic dynamics
-  - milky way
+  - R
+  - Bayesian statistics
+  - rstan
+  - eaystats
+  - posterior distribution
+  - Region of practical equivalence
+  - ROPE
+  - probability of direction
+  - Bayes factor
 authors:
-  - name: Adrian M. Price-Whelan
-    orcid: 0000-0003-0872-7098
+  - name: Dominique Makowski
+    orcid: 0000-0001-5375-9967
     affiliation: 1
+  - name: Mattan S. Ben-Shachar
+    orcid: 0000-0002-4287-4801
+    affiliation: 2
+  - name: Daniel Lüdecke
+    orcid: 0000-0002-8895-3206
+    affiliation: 3
 affiliations:
- - name: Lyman Spitzer, Jr. Fellow, Princeton University
-   index: 1
-date: 13 August 2017
+  - name: Nanyang Technological University, Singapore
+    index: 1
+  - name: Ben-Gurion University of the Negev, Israel
+    index: 2
+  - name: University Medical Center Hamburg-Eppendorf, Germany
+    index: 3
+date: 09 June 2019
 bibliography: paper.bib
 ---
 
-# Summary
+# Introduction
 
-The forces on stars, galaxies, and dark matter under external gravitational
-fields lead to the dynamical evolution of structures in the universe. The orbits
-of these bodies are therefore key to understanding the formation, history, and
-future state of galaxies. The field of "galactic dynamics," which aims to model
-the gravitating components of galaxies to study their structure and evolution,
-is now well-established, commonly taught, and frequently used in astronomy.
-Aside from toy problems and demonstrations, the majority of problems require
-efficient numerical tools, many of which require the same base code (e.g., for
-performing numerical orbit integration).
 
-``Gala`` is an Astropy-affiliated Python package for galactic dynamics. Python
-enables wrapping low-level languages (e.g., C) for speed without losing
-flexibility or ease-of-use in the user-interface. The API for ``Gala`` was
-designed to provide a class-based and user-friendly interface to fast (C or
-Cython-optimized) implementations of common operations such as gravitational
-potential and force evaluation, orbit integration, dynamical transformations,
-and chaos indicators for nonlinear dynamics. ``Gala`` also relies heavily on and
-interfaces well with the implementations of physical units and astronomical
-coordinate systems in the ``Astropy`` package [@astropy] (``astropy.units`` and
-``astropy.coordinates``).
+# Features
 
-``Gala`` was designed to be used by both astronomical researchers and by
-students in courses on gravitational dynamics or astronomy. It has already been
-used in a number of scientific publications [@Pearson:2017] and has also been
-used in graduate courses on Galactic dynamics to, e.g., provide interactive
-visualizations of textbook material [@Binney:2008]. The combination of speed,
-design, and support for Astropy functionality in ``Gala`` will enable exciting
-scientific explorations of forthcoming data releases from the *Gaia* mission
-[@gaia] by students and experts alike. The source code for ``Gala`` has been
-archived to Zenodo with the linked DOI: [@zenodo]
 
-# Acknowledgements
+# Licensing and Availability
 
-We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong
-Oh, and support from Kathryn Johnston during the genesis of this project.
+**bayestestR** is licensed under the GNU General Public License (v3.0), with all source code stored at GitHub (https://github.com/easystats/bayestestR), with a corresponding issue tracker for bug-reporting and feature enhancements. In the spirit of open science and research, we encourage interaction with our package through requests/tips for fixes, feature updates, as well as general questions and concerns via direct interaction with contributors and developers.
+
+# Acknowledgments
+
+We would like to acknowledge the [easystats team](https://github.com/orgs/easystats/people) as well as all other contributors and users.
+
+# References
