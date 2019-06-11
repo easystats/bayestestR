@@ -22,13 +22,13 @@ diagnostic_posterior(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 
 \item{...}{Currently not used.}
 
-\item{effects}{Should variables for fixed effects, random effects
+\item{effects}{Should parameters for fixed effects, random effects
 or both be returned? Only applies to mixed models. May be abbreviated.}
 
 \item{parameters}{Regular expression pattern that describes the parameters that
 should be returned.}
 
-\item{component}{Should all predictor variables, predictor variables for the
+\item{component}{Should all parameters, parameters for the
 conditional model, the zero-inflated part of the model, the dispersion
 term or the instrumental variables be returned? Applies to models
 with zero-inflated and/or dispersion formula, or to models with instrumental

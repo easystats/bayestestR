@@ -94,7 +94,7 @@ bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-s
 #' @rdname bayesfactor_savagedickey
 #' @export
 bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, verbose = TRUE, ...) {
-  # nm <- deparse(substitute(posterior))
+  # nm <- .safe_deparse(substitute(posterior))
 
   # find direction
   direction <- .get_direction(direction)
@@ -122,6 +122,8 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
   sdbf
 }
 
+
+#' @importFrom insight get_parameters
 #' @rdname bayesfactor_savagedickey
 #' @export
 bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
@@ -146,10 +148,16 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
   )
 }
 
+
+
 #' @rdname bayesfactor_savagedickey
 #' @export
 bayesfactor_savagedickey.brmsfit <- bayesfactor_savagedickey.stanreg
 
+
+
+#' @importFrom stats update
+#' @importFrom insight get_parameters
 #' @rdname bayesfactor_savagedickey
 #' @export
 bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
@@ -169,7 +177,7 @@ bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
   } else {
     prior <- .update_to_priors(prior, verbose = verbose)
     prior <- insight::get_parameters(prior, effects = "fixed")
-    prior <- update(posterior, post.beta = as.matrix(prior))
+    prior <- stats::update(posterior, post.beta = as.matrix(prior))
   }
 
   prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(prior, names = FALSE)))
@@ -180,6 +188,8 @@ bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
     direction = direction, hypothesis = hypothesis
   )
 }
+
+
 
 #' @rdname bayesfactor_savagedickey
 #' @export
@@ -227,6 +237,8 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 
   bf_val
 }
+
+
 
 #' @keywords internal
 #' @importFrom insight print_color
@@ -293,6 +305,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 
 
 
+#' @importFrom stats median mad approx
 #' @importFrom utils stack
 #' @keywords internal
 .make_sdBF_plot_data <- function(posterior, prior, direction, hypothesis) {
@@ -303,7 +316,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   }
 
   estimate_samples_density <- function(samples) {
-    nm <- deparse(substitute(samples))
+    nm <- .safe_deparse(substitute(samples))
     samples <- utils::stack(samples)
     samples <- split(samples, samples$ind)
 
@@ -315,7 +328,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
       precision <- 2^8
 
       x_range <- range(x)
-      x_rangex <- median(x) + 7*mad(x)*c(-1,1)
+      x_rangex <- stats::median(x) + 7 * stats::mad(x) * c(-1, 1)
       x_range <- c(max(c(x_range[1],x_rangex[1])),
                    min(c(x_range[2],x_rangex[2])))
 
@@ -380,10 +393,14 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   )
 }
 
+
+
 #' @keywords internal
 .update_to_priors <- function(model, verbose = TRUE){
   UseMethod(".update_to_priors")
 }
+
+
 
 #' @keywords internal
 #' @importFrom stats update
@@ -405,6 +422,8 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 
   model_prior
 }
+
+
 
 #' @keywords internal
 #' @importFrom stats update
