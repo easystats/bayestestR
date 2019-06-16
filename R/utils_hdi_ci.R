@@ -87,7 +87,7 @@
     dat <- .remove_column(dat, "Group")
   }
 
-  class(dat) <- unique(c(fun, class(dat)))
+  class(dat) <- unique(c(paste0("bayestestR_", fun), paste0("see_", fun), class(dat)))
   dat
 }
 
@@ -151,7 +151,7 @@
     dat <- .remove_column(dat, "Component")
   }
 
-  class(dat) <- unique(c(fun, class(dat)))
+  class(dat) <- unique(c(paste0("bayestestR_", fun), paste0("see_", fun), class(dat)))
   dat
 }
 
@@ -175,6 +175,6 @@
     row.names = NULL
   )
 
-  class(dat) <- unique(c(fun, class(dat)))
+  class(dat) <- unique(c(paste0("bayestestR_", fun), paste0("see_", fun), class(dat)))
   dat
 }
