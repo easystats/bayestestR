@@ -357,10 +357,7 @@ twosided_p
 
 If we ran our model in the frequentist framework, we should approximately observe an effect with a *p*-value of `r round(twosided_p, digits=3)`. **Is that true?**
 
-
-
-
-### Comparison to frequentist
+#### Comparison to frequentist
 
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
@@ -372,6 +369,15 @@ The frequentist model tells us that the difference is **positive and significant
 
 **Although we arrived to a similar conclusion, the Bayesian framework allowed us to develop a more profound and intuitive understanding of our effect, and of the uncertainty of its estimation.**
 
+### Bayes factor (BF)
+
+We can also examine the existence of an effect by examining under which of two models is the observed data more probable: a model with the effect of interest, and a null model without the effect of interest. Such a comparison would produce a [Bayes factor](https://easystats.github.io/bayestestR/articles/bayes_factors.html). To test the effect of feed type, we can use `bayesfactor_savagedickey()` to compute the a Savage-Dickey Bayes factor:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+bayesfactor_savagedickey(model)
+```
+
+We got a *BF*<sub>10</sub> of ~1.5, indicating that the data is 1.5 times less probable under the null compared to the alternative hypothesis, which, though favoring the null, is considered only [weak evidence against the null](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). This might be due to the fact we used `rstanarm`'s default priors that are very weakly-informative - unlike ROPE percentage and probability of direction, Bayes factors are sensitive to and influenced by the model / parameter priors. 
 
 ## All with one function
 
@@ -381,7 +387,7 @@ And yet, I agree, it was a bit **tedious** to extract and compute all the indice
 
 This function computes all of the adored mentioned indices, and can be run directly on the model:
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
-describe_posterior(model)
+describe_posterior(model, test = c("p_direction","rope","bayesfactor"))
 ```
 
 **Tada!** There we have it! The **median**, the **CI**, the **pd** and the **ROPE percentage**!

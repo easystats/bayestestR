@@ -1,3 +1,13 @@
+# trim leading / trailing whitespace
+.trim <- function(x) gsub("^\\s+|\\s+$", "", x)
+
+
+# safe depare, also for very long strings
+.safe_deparse <- function(string) {
+  paste0(sapply(deparse(string, width.cutoff = 500), .trim, simplify = TRUE), collapse = "")
+}
+
+
 # has object an element with given name?
 #' @keywords internal
 .obj_has_name <- function(x, name) {

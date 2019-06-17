@@ -33,7 +33,7 @@ Inclusion BFs are computed by comparing all models with an effect against models
 the effect AND without any higher-order interactions with the effect (additionally,
 interactions are compared only to models with the all main effects).}
 
-\item{prior_odds}{Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds}}.}
+\item{prior_odds}{Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds<-}}.}
 }
 \value{
 Some type of Bayes factor, depending on the input. See \code{\link{bayesfactor_savagedickey}}, \code{\link{bayesfactor_models}} or \code{\link{bayesfactor_inclusion}}
