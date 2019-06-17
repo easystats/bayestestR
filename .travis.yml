@@ -2,8 +2,8 @@ language: r
 
 os:
   #- windows
-  - linux
-  #- osx
+  #- linux
+  - osx
 
 r:
   - oldrel
