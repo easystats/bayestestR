@@ -77,7 +77,7 @@ We see again many things here, but the important indices for now are the **media
 
 ### Bayes factor (BF)
 
-Remember how we said that a correlation test actually compared two hypothese, a null (absence of effect) with an altnernative one (presence of an effect)\? Well the [**Bayes factor (BF)**](https://easystats.github.io/bayestestR/articles/bayes_factors.html) does *exactly* this. It examines the existence of an effect by examining under which of two models is the observed data more probable: a model with the effect of interest, and a null model without the effect of interest. We can use `bayesfactor()` to compute separately the Bayes factor for that model (*and many more*):
+Remember how we said that a correlation test actually compared two hypothese, a null (absence of effect) with an altnernative one (presence of an effect)\? Well the [**Bayes factor (BF)**](https://easystats.github.io/bayestestR/articles/bayes_factors.html) allows us to do *exactly* that, by examining under which of two models the observed data are more probable: a model with the effect of interest, and a null model without the effect of interest. We can use `bayesfactor()` to compute the Bayes factor comparing those models (*and many more*):
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 bayesfactor(result)
@@ -87,11 +87,11 @@ We got a *BF* of `0.51`. **Bayes factors (BF)** are continuous measures of relat
 
 > **Yes, you heard things right, evidence in favour of the null!**
 
-That's one of the reason why the Bayesian framework superior to the frequentist one. Remember from your stats lessons, that the ***p*-value can only be used to reject h0**, but not *accept* it. With the **Bayes factor**, you can measure evidence against - and in favour -, of the null. 
+That's one of the reason why the Bayesian framework is superior to the frequentist one. Remember from your stats lessons, that the ***p*-value can only be used to reject h0**, but not *accept* it. With the **Bayes factor**, you can measure evidence against - and in favour of - the null. 
 
-For human readability, BFs representing the alternative against the null that are smaller than 1 (supporting the null) can be reversed using `1/BF` to give the amount of evidence in favour of the null (which improves human readbility). 
+BFs representing evidence for the alternative against the null can be reversed using $BF_{01}=1/BF_{10}$ to provided evidence of the null agaisnt the alternative. This improves human readbility in cases where the BF of the the alternative against the null is smaller than 1 (in support of the null).
 
-In our case, `BF = 1/0.51 = 2`, indicates that the data is **2 times more probable under the null compared to the alternative hypothesis**, which, though favouring the null, is considered only [anecdotal evidence against the null](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf).
+In our case, `BF = 1/0.51 = 2`, indicates that the data are **2 times more probable under the null compared to the alternative hypothesis**, which, though favouring the null, is considered only [anecdotal evidence against the null](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf).
 
 We can thus conclude that there is **anecdotal evidence in favour of an absence of correlation between the two variables (r<sub>median</sub> = 0.11, BF = 0.51)**, which is a much more informative statement that what we can do with frequentist statistics.
 
