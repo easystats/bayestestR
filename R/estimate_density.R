@@ -152,9 +152,11 @@ estimate_density.emmGrid <- function(x, method = "kernel", precision = 2^10, ext
   }
   x <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
 
-  estimate_density(x, method = method, precision = precision,
-                              extend = extend, extend_scale = extend_scale,
-                              bw = bw, ...)
+  estimate_density(x,
+    method = method, precision = precision,
+    extend = extend, extend_scale = extend_scale,
+    bw = bw, ...
+  )
 }
 
 

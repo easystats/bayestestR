@@ -129,7 +129,7 @@ p_rope.emmGrid <- function(x, range = "default", precision = .1, ...) {
   }
   xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
 
-  out <- p_rope(xdf , range = range, precision = precision, ...)
+  out <- p_rope(xdf, range = range, precision = precision, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }

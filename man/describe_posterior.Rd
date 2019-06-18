@@ -121,7 +121,6 @@ describe_posterior(model, ci = c(0.80, 0.90))
 # -----------------------------------------------
 library(emmeans)
 describe_posterior(emtrends(model, ~1, "wt"))
-
 \dontrun{
 # brms models
 # -----------------------------------------------

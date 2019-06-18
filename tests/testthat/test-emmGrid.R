@@ -5,7 +5,7 @@ library(emmeans)
 set.seed(300)
 junk <- capture.output(model <- stan_glm(extra ~ group, data = sleep))
 
-em_ <- emmeans(model, ~ group)
+em_ <- emmeans(model, ~group)
 c_ <- pairs(em_)
 all_ <- rbind(em_, c_)
 all_summ <- summary(all_)
@@ -28,7 +28,7 @@ test_that("emmGrid estimate_density", {
   testthat::skip_on_travis()
   xestden <- estimate_density(c_, method = "logspline", precision = 5)
   testthat::expect_equal(xestden$x, c(-4.67, -2.91, -1.16, 0.60, 2.35), tolerance = 0.2)
-  testthat::expect_equal(log(xestden$y), c(-6.18, -2.12, -0.86, -3.62,-7.90), tolerance = 0.2)
+  testthat::expect_equal(log(xestden$y), c(-6.18, -2.12, -0.86, -3.62, -7.90), tolerance = 0.2)
 })
 
 test_that("emmGrid hdi", {
@@ -69,7 +69,7 @@ test_that("emmGrid point_estimate", {
 test_that("emmGrid rope", {
   testthat::skip_on_travis()
   xrope <- rope(all_, range = "default", ci = .9)
-  testthat::expect_equal(xrope$ROPE_Percentage,  c(5.53, 0, 1.83), tolerance = 0.1)
+  testthat::expect_equal(xrope$ROPE_Percentage, c(5.53, 0, 1.83), tolerance = 0.1)
 })
 
 test_that("emmGrid bayesfactor_savagedickey", {
@@ -87,10 +87,10 @@ test_that("emmGrid describe_posterior", {
     all_,
     centrality = "median", dispersion = TRUE,
     ci = 0.95, ci_method = "hdi",
-    test = c("pd", "rope","bf"),
+    test = c("pd", "rope", "bf"),
     rope_range = "default", rope_ci = 0.89,
     bf_prior = model
   )
-  testthat::expect_equal(log(xpost$BF),  c(-2.58, 2.00, -0.25), tolerance = 0.1)
+  testthat::expect_equal(log(xpost$BF), c(-2.58, 2.00, -0.25), tolerance = 0.1)
   testthat::expect_warning(describe_posterior(all_, test = "bf"))
 })

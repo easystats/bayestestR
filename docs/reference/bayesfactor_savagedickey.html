@@ -43,7 +43,8 @@
 
 <meta property="og:description" content="This method computes the ratio between the density of a single value (typically the null)
 of two distributions. When the compared distributions are the posterior and the prior distributions,
-this results in an approximation of a Bayes factor against the (point) null model.
+this results is an approximation of a Bayes factor comparing the model against a model in which
+the parameter of choice is restricted to the point null.
  
 See also the Bayes factors vignette." />
 
@@ -135,16 +136,16 @@ See also the Bayes factors vignette." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/credible_interval.html">Credible Intervals</a>
+      <a href="../articles/credible_interval.html">Credible Intervals (CI)</a>
     </li>
     <li>
-      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
     </li>
     <li>
-      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+      <a href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
     </li>
     <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
     </li>
     <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
@@ -187,7 +188,8 @@ See also the Bayes factors vignette." />
     
     <p>This method computes the ratio between the density of a single value (typically the null)
 of two distributions. When the compared distributions are the posterior and the prior distributions,
-this results in an approximation of a Bayes factor against the (point) null model.
+this results is an approximation of a Bayes factor comparing the model against a model in which
+the parameter of choice is restricted to the point null.
 <br /> <br />
 See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
     
@@ -267,8 +269,8 @@ extracted for each parameter, and Savage-Dickey Bayes factors are computed for e
     It is important to provide the correct <code>prior</code> for meaningful results.
 <ul>
 <li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>
-<li><p>When <code>posterior</code> is an <code>emmGrid</code> object based on a <code>stanreg</code> \ <code>brmsfit</code> model, <code>prior</code> should be <em>that model object</em> (see example).</p></li>
-<li><p>When <code>posterior</code> is a <code>stanreg</code> \ <code>brmsfit</code> model, there is no need to specify <code>prior</code>, as prior samples are drawn internally.</p></li>
+<li><p>When <code>posterior</code> is an <code>emmGrid</code> object based on a <code>stanreg</code> or <code>brmsfit</code> model, <code>prior</code> should be <em>that model object</em> (see example).</p></li>
+<li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model, there is no need to specify <code>prior</code>, as prior samples are drawn internally.</p></li>
 <li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
 </ul>
 <h3>One-sided Tests (setting an order restriction)</h3>
@@ -312,7 +314,7 @@ smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
 <span class='co'># emmGrid objects</span>
 <span class='co'># ---------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='no'>group_diff</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/pairs'>pairs</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emmeans'>emmeans</a></span>(<span class='no'>stan_model</span>, ~ <span class='no'>group</span>))
+<span class='no'>group_diff</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/pairs'>pairs</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emmeans'>emmeans</a></span>(<span class='no'>stan_model</span>, ~<span class='no'>group</span>))
 <span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>group_diff</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>stan_model</span>)
 
 <span class='co'># brms models</span>

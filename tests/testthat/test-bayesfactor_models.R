@@ -29,38 +29,42 @@ test_that("bayesfactor_models", {
 
   set.seed(444)
   library(brms)
-  brms_models <- suppressWarnings(bayestestR::bayesfactor_models(brms_4bf_1,brms_4bf_2,brms_4bf_3, brms_4bf_4, brms_4bf_5))
+  brms_models <- suppressWarnings(bayestestR::bayesfactor_models(brms_4bf_1, brms_4bf_2, brms_4bf_3, brms_4bf_4, brms_4bf_5))
 
   library(rstanarm)
-  junk <- capture.output(stan_bf_0 <- stan_glm(Sepal.Length ~ 1, data = iris,
-                                               diagnostic_file = file.path(tempdir(), "df0.csv")))
-  junk <- capture.output(stan_bf_1 <- stan_glm(Sepal.Length ~ Species, data = iris,
-                                               diagnostic_file = file.path(tempdir(), "df1.csv")))
+  junk <- capture.output(stan_bf_0 <- stan_glm(Sepal.Length ~ 1,
+    data = iris,
+    diagnostic_file = file.path(tempdir(), "df0.csv")
+  ))
+  junk <- capture.output(stan_bf_1 <- stan_glm(Sepal.Length ~ Species,
+    data = iris,
+    diagnostic_file = file.path(tempdir(), "df1.csv")
+  ))
 
   # brms
-  testthat::expect_warning(bayestestR::bayesfactor_models(brms_4bf_1,brms_4bf_2))
-  testthat::expect_is(brms_models,"bayesfactor_models")
-  testthat::expect_equal(log(brms_models$BF),c(0, 68.5, 102.5, 128.6, 128.8), tolerance = 0.1)
+  testthat::expect_warning(bayestestR::bayesfactor_models(brms_4bf_1, brms_4bf_2))
+  testthat::expect_is(brms_models, "bayesfactor_models")
+  testthat::expect_equal(log(brms_models$BF), c(0, 68.5, 102.5, 128.6, 128.8), tolerance = 0.1)
 
   # rstanarm
-  testthat::expect_warning(bayestestR::bayesfactor_models(stan_bf_0,stan_bf_1))
-  stan_models <- suppressWarnings(bayestestR::bayesfactor_models(stan_bf_0,stan_bf_1))
-  testthat::expect_is(stan_models,"bayesfactor_models")
-  testthat::expect_equal(log(stan_models$BF),c(0, 65.19), tolerance = 0.1)
+  testthat::expect_warning(bayestestR::bayesfactor_models(stan_bf_0, stan_bf_1))
+  stan_models <- suppressWarnings(bayestestR::bayesfactor_models(stan_bf_0, stan_bf_1))
+  testthat::expect_is(stan_models, "bayesfactor_models")
+  testthat::expect_equal(log(stan_models$BF), c(0, 65.19), tolerance = 0.1)
 
   ## BIC
-  testthat::expect_equal(BFM1,BFM2)
-  testthat::expect_equal(BFM1,BFM3)
+  testthat::expect_equal(BFM1, BFM2)
+  testthat::expect_equal(BFM1, BFM3)
 
   # only on same data!
   testthat::expect_error(bayestestR::bayesfactor_models(mo1, mo2, mo4_e))
 
 
   # update models
-  testthat::expect_equal(log(update(BFM2,subset = c(1,2))$BF),c(0,57.3,54.52), tolerance = 0.1)
+  testthat::expect_equal(log(update(BFM2, subset = c(1, 2))$BF), c(0, 57.3, 54.52), tolerance = 0.1)
 
   # update reference
-  testthat::expect_equal(log(update(BFM2,reference = 1)$BF),c(0,-2.8,-6.2,-57.4),tolerance = 0.1)
+  testthat::expect_equal(log(update(BFM2, reference = 1)$BF), c(0, -2.8, -6.2, -57.4), tolerance = 0.1)
 })
 
 

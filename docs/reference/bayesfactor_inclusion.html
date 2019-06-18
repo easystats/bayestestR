@@ -131,16 +131,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/credible_interval.html">Credible Intervals</a>
+      <a href="../articles/credible_interval.html">Credible Intervals (CI)</a>
     </li>
     <li>
-      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
     </li>
     <li>
-      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+      <a href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
     </li>
     <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
     </li>
     <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
@@ -205,7 +205,7 @@ interactions are compared only to models with the all main effects).</p></td>
     </tr>
     <tr>
       <th>prior_odds</th>
-      <td><p>Optional vector of prior odds for the models. See <code>priorOdds</code>.</p></td>
+      <td><p>Optional vector of prior odds for the models. See <code>priorOdds&lt;-</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -256,32 +256,18 @@ i.e., <code>(X|G)</code> will become <code>1:G</code> and <code>X:G</code>.</p>
 #&gt; Petal.Length              0.50         1.000     3.58e+26
 #&gt; Species:Petal.Length      0.25         0.036         0.11
 #&gt; ---
-#&gt; Inclusion BFs compared among all models.</div><div class='input'>
+#&gt; Inclusion BFs compared among all models.</div><span class='co'># NOT RUN {</span>
 <span class='co'># BayesFactor</span>
 <span class='co'># -------------------------------</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>BayesFactor</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: coda</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; <span class='message'>************</span>
-#&gt; <span class='message'>Welcome to BayesFactor 0.9.12-4.2. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>Type BFManual() to open the manual.</span>
-#&gt; <span class='message'>************</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘BayesFactor’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:testthat’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    compare</span></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>BayesFactor</span>)
+
 <span class='no'>BF</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/generalTestBF'>generalTestBF</a></span>(<span class='no'>len</span> ~ <span class='no'>supp</span> * <span class='no'>dose</span>, <span class='no'>ToothGrowth</span>, <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BF</span>)</div><div class='output co'>#&gt;           Pr(prior) Pr(posterior) Inclusion BF
-#&gt; supp            0.6          0.98        34.94
-#&gt; dose            0.6          1.00     5.73e+12
-#&gt; supp:dose       0.2          0.56         5.02
-#&gt; ---
-#&gt; Inclusion BFs compared among all models.</div><div class='input'>
+<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BF</span>)
+
 <span class='co'># compare only matched models:</span>
-<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BF</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;           Pr(prior) Pr(posterior) Inclusion BF
-#&gt; supp            0.4          0.42        22.67
-#&gt; dose            0.4          0.44     3.81e+12
-#&gt; supp:dose       0.2          0.56         1.31
-#&gt; ---
-#&gt; Inclusion BFs compared among matched models only.</div></pre>
+<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BF</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

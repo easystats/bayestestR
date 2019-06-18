@@ -33,7 +33,7 @@ bibliography: paper.bib
 
 # Introduction
 
-The Bayesian framework for statistics in quickly gaining in popularity among scientists, associated with the general shift towards open and honest science. Reasons to prefer this approach are reliability, accuracy (in noisy data and small samples), the possibility of introducing prior knowledge into the analysis and, critically, results intuitiveness and their straightforward interpretation [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. 
+The Bayesian framework for statistics is quickly gaining in popularity among scientists, associated with the general shift towards open and honest science. Reasons to prefer this approach are reliability, accuracy (in noisy data and small samples), the possibility of introducing prior knowledge into the analysis and, critically, results' intuitiveness and their straightforward interpretation [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. 
 
 In general, the frequentist approach has been associated with the focus on null hypothesis testing, and the misuse of *p*-values has been shown to critically contribute to the reproducibility crisis of psychological science [@chambers2014instead; @szucs2016empirical]. There is a general agreement that the generalization of the Bayesian approach is one way of overcoming these issues [@benjamin2018redefine; @etz2016bayesian].
 
@@ -183,7 +183,8 @@ p_direction(rnorm(1000, mean = 1, sd = 1))
 computes the ratio between the density of a single value (typically the
 null) in two distributions, typically the posterior vs. the prior
 distributions. This method is used to examine if the hypothesis value is
-less or more likely given the observed data.
+less or more likely given the observed data, and is an approximation of a Bayes factor comparing 
+the model against a model in which the parameter of choice is restricted to the point null. 
 
 ``` r
 prior <- rnorm(1000, mean = 0, sd = 1)

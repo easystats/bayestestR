@@ -32,13 +32,13 @@ navbar:
         href: articles/example3.html
   - text: Articles
     menu:
-      - text: 'Credible Intervals'
+      - text: 'Credible Intervals (CI)'
         href: articles/credible_interval.html
-      - text: 'Region of Practical Equivalence'
+      - text: 'Region of Practical Equivalence (ROPE)'
         href: articles/region_of_practical_equivalence.html
-      - text: 'Probability of Direction'
+      - text: 'Probability of Direction (pd)'
         href: articles/probability_of_direction.html
-      - text: 'Bayes Factors'
+      - text: 'Bayes Factors (BF)'
         href: articles/bayes_factors.html
       - text: 'Comparison of Point-Estimates'
         href: articles/indicesEstimationComparison.html

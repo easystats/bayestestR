@@ -30,5 +30,4 @@ Enables a conversion between sProbability of Direction (pd) and p-value.
 \examples{
 pd_to_p(pd = 95)
 pd_to_p(pd = 95, direction = "one-sided")
-
 }

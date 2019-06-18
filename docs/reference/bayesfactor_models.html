@@ -131,16 +131,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/credible_interval.html">Credible Intervals</a>
+      <a href="../articles/credible_interval.html">Credible Intervals (CI)</a>
     </li>
     <li>
-      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
     </li>
     <li>
-      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+      <a href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
     </li>
     <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
     </li>
     <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
@@ -218,7 +218,7 @@ or a model to use as a denominator. Ignored for <code>BFBayesFactor</code>.</p><
 </ul></li>
 <li><p>For <code>BFBayesFactor</code>, <code>bayesfactor_models()</code> is mostly a wraparoud <code><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/extractBF-methods'>BayesFactor::extractBF()</a></code>.</p></li>
 <li><p>For all other model types (supported by <a href='https://CRAN.R-project.org/package=insight'><span class="pkg">insight</span></a>), BIC approximations are used to compute Bayes factors.</p></li>
-</ul><p>In order to correctly and precisely estimate Bayes Factors, a rule of thumb are
+</ul><p>In order to correctly and precisely estimate Bayes factors, a rule of thumb are
 the 4 P's: <strong>P</strong>roper <strong>P</strong>riors and <strong>P</strong>lentiful <strong>P</strong>osterior
 (i.e. probably at leat 40,000 samples instead of the default of 4,000).
 <br /> <br />
@@ -239,10 +239,6 @@ See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.
 <li><p>Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin &amp; review, 14(5), 779-804.</p></li>
 <li><p>Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. doi: <a href='https://doi.org/10.1177/1745691611406923'>10.1177/1745691611406923</a></p></li>
 </ul>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>update.BFGrid</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -282,8 +278,7 @@ See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.
 #&gt; Bayes factor type:  BIC approximation </div><div class='input'>
 <span class='co'># With lmerMod objects:</span>
 <span class='co'># ---------------------</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)
-<span class='no'>lmer1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='input'><span class='no'>lmer1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='no'>lmer2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Petal.Length</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'><span class='no'>lmer3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(
   <span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Petal.Length</span> <span class='kw'>|</span> <span class='no'>Species</span>) + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Petal.Width</span>),
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
@@ -364,8 +359,6 @@ See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.
       <li><a href="#details">Details</a></li>
 
       <li><a href="#references">References</a></li>
-
-      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

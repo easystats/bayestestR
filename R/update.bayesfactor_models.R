@@ -18,7 +18,6 @@
 #' m
 #'
 #' update(m, reference = "bottom")
-#'
 #' @export
 update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...) {
   if (!is.null(reference)) {

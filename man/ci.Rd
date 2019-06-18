@@ -108,8 +108,7 @@ ci(model)
 ci(model, ci = c(.80, .89, .95))
 
 library(emmeans)
-ci(emtrends(model, ~ 1, "wt"))
-
+ci(emtrends(model, ~1, "wt"))
 \dontrun{
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)

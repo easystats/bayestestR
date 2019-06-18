@@ -26,6 +26,8 @@ This vignette can be referred to by citing the package:
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
+library(bayestestR)
+
 library(knitr)
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">")
@@ -35,24 +37,88 @@ set.seed(333)
 ```
 
 
-Now that [**describing and understanding posterior distributions of linear regressions**](https://easystats.github.io/bayestestR/articles/example1.html) has no secrets for you, let's go deeper.
+Now that [**describing and understanding posterior distributions**](https://easystats.github.io/bayestestR/articles/example1.html) of linear regressions has no secrets for you, let's go back and study some simpler models: **correlations** and ***t*-tests**.
 
-> **"But it's only about regressions and I want to do ANOVAs and t-tests"**
+But before we do that, let us take a moment to remind ourselves and appreciate the fact that **all basic statistical pocedures** such as correlations, *t*-tests, ANOVAs or Chisquare tests ***are* linear regressions** (we strongly recommend  [this excellent demonstration](https://lindeloev.github.io/tests-as-linear/)). But still, these simple models will be the occasion to introduce a more complex index, such as the **Bayes factor**.
 
-Don't worry. Let us all remind and appreciate the fact that **all basic statistical pocedures** such as t-tests, ANOVAs, correlations or Chisquare tests [***are* linear regressions**](https://lindeloev.github.io/tests-as-linear/). Now that we have accepted the beauty of it, we will continue with a general linear model.
+## Correlations
+
+### Frequentist version 
+
+Let us start, again, with a **frequentist correlation** between two continuous variables, the **width** and the **length** of the sepals of some flowers. The data is available in R as the `iris`  dataset (the same that was used in the [previous tutorial](https://easystats.github.io/bayestestR/articles/example1.html)). 
+
+Let's compute a Pearson's correlation test, store the results in an object called `result`, then display it:
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+result <- cor.test(iris$Sepal.Width, iris$Sepal.Length)
+result
+```
+
+As you can see in the output, the test that we did actually compared two hypotheses: the **null hypothesis** (no correlation) with the **alternative hypothesis** (a non-null correlation). Based on the *p*-value, the null hypothesis cannot be rejected: the correlation between the two variables is **negative but not significant** (r = -.12, p > .05).
+
+### Bayesian correlation 
+
+To compute a Bayesian correlation test, we will need the [`BayesFactor`](https://richarddmorey.github.io/BayesFactor/) package (you can install it by running `install.packages("BayesFactor")`). We will then load this package, compute the correlation using the `correlationBF()` function and store the results in a similar fashion. 
+ 
+```{r message=FALSE, warning=FALSE, results='hide'}
+library(BayesFactor)
+
+result <- correlationBF(iris$Sepal.Width, iris$Sepal.Length)
+bayestestR::bayesfactor(result)
+```
+
+Let us run our `describe_posterior()` function:
+
+```{r message=FALSE, warning=FALSE}
+describe_posterior(result)
+```
+
+We see again many things here, but the important indices for now are the **median** of the posterior distribution, `-.11`. This is (again) quite close to the frequentist correlation. We could, as previously, describe the [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html), the [**pd**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html) or the [**ROPE percentage**](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html), but we will focus here on another index provided by the Bayesian framework, the **Bayes factor**.
+
+### Bayes factor (BF)
+
+Remember how we said that a correlation test actually compared two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect)\? Well the [**Bayes factor (BF)**](https://easystats.github.io/bayestestR/articles/bayes_factors.html) allows us to do *exactly* that, by examining **under which of two models the observed data are more probable**: a model with the effect of interest, and a null model without the effect of interest. We can use `bayesfactor()` to compute the Bayes factor comparing those models (*and many more*):
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+bayesfactor(result)
+```
+
+We got a *BF* of `0.51`. What does it mean?
+
+**Bayes factors (BF)** are continuous measures of relative evidence, with a Bayes factor greater than 1 giving evidence in favor of one of the models (often reffered to as *the numerator*), and a Bayes factor smaller than 1 giving evidence in favour of the other model (*the denominator*). 
+
+> **Yes, you heard things right, evidence in favour of the null!**
+
+That's one of the reason why the Bayesian framework is sometimes considered as superior to the frequentist framework. Remember from your stats lessons, that the ***p*-value can only be used to reject h0**, but not *accept* it. With the **Bayes factor**, you can measure **evidence against - and in favour of - the null**. 
+
+BFs representing evidence for the alternative against the null can be reversed using $BF_{01}=1/BF_{10}$ to provided evidence of the null agaisnt the alternative. This improves human readbility in cases where the BF of the the alternative against the null is smaller than 1 (in support of the null).
+
+In our case, `BF = 1/0.51 = 2`, indicates that the data are **2 times more probable under the null compared to the alternative hypothesis**, which, though favouring the null, is considered only [anecdotal evidence against the null](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf).
+
+We can thus conclude that there is **anecdotal evidence in favour of an absence of correlation between the two variables (r<sub>median</sub> = 0.11, BF = 0.51)**, which is a much more informative statement that what we can do with frequentist statistics.
+
+**And that's not all!**
+
+### Visualise the Bayes factor
+
+Visualization.
+
+## *t*-tests
+
+### Visualise the indices
 
 
 ## Logistic Model
 
+A hypothesis for which one uses a *t*-test can also be tested using a logistic model. Indeed, one can reformulate the following hypothesis, "*there is a important difference in this variable between my two groups*" by "*this variable is able to discriminate (or classify) between the two groups*".
 
 
-### Make some figures
-
-Visualization.
 
 ### Diagnostic Indices
 
 About diagnostic indices such as Rhat and ESS.
+
+
 
 
 ## Mixed Model
