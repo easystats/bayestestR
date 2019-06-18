@@ -35,7 +35,6 @@
 #'
 #' BFmodels <- bayesfactor_models(mo1, mo2, mo3, denominator = mo0)
 #' bayesfactor_inclusion(BFmodels)
-#'
 #' \dontrun{
 #' # BayesFactor
 #' # -------------------------------
@@ -71,7 +70,7 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
 
   # Build Interaction Matrix #
   if (isTRUE(match_models)) {
-    effects.matrix <- as.matrix(df.model[,-c(1:3)])
+    effects.matrix <- as.matrix(df.model[, -c(1:3)])
 
     df.interaction <- data.frame(effnames, stringsAsFactors = FALSE)
 
@@ -80,7 +79,6 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
     }
     rownames(df.interaction) <- effnames
     df.interaction <- as.matrix(df.interaction[, -1])
-
   }
 
   # Build Effect Table #
@@ -105,7 +103,7 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
         has_not_high_order_interactions &
         !effects.matrix[, eff]
 
-      df.model_temp <- df.model[ind_include | ind_exclude, ,drop = FALSE]
+      df.model_temp <- df.model[ind_include | ind_exclude, , drop = FALSE]
     } else {
       df.model_temp <- df.model
     }

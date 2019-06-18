@@ -59,7 +59,7 @@
 #' # emmGrid objects
 #' # ---------------
 #' library(emmeans)
-#' group_diff <- pairs(emmeans(stan_model, ~ group))
+#' group_diff <- pairs(emmeans(stan_model, ~group))
 #' bayesfactor_savagedickey(group_diff, prior = stan_model)
 #'
 #' # brms models
@@ -244,7 +244,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @keywords internal
 #' @importFrom insight print_color
 .bayesfactor_savagedickey <- function(posterior, prior, direction = 0, hypothesis = 0) {
-  if (isTRUE(all.equal(posterior,prior))) {
+  if (isTRUE(all.equal(posterior, prior))) {
     return(1)
   }
 
@@ -295,7 +295,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   }
 
   String <- c("left", "right", "one-sided", "onesided", "two-sided", "twosided", "<", ">", "=", "-1", "0", "1", "+1")
-  Value <- c(-1, 1, 1, 1,  0, 0, -1, 1, 0, -1, 0, 1, 1)
+  Value <- c(-1, 1, 1, 1, 0, 0, -1, 1, 0, -1, 0, 1, 1)
 
   ind <- String == direction
   if (length(ind) == 0) {
@@ -330,8 +330,10 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 
       x_range <- range(x)
       x_rangex <- stats::median(x) + 7 * stats::mad(x) * c(-1, 1)
-      x_range <- c(max(c(x_range[1],x_rangex[1])),
-                   min(c(x_range[2],x_rangex[2])))
+      x_range <- c(
+        max(c(x_range[1], x_rangex[1])),
+        min(c(x_range[2], x_rangex[2]))
+      )
 
       extension_scale <- diff(x_range) * extend_scale
       x_range[1] <- x_range[1] - extension_scale
@@ -397,7 +399,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 
 
 #' @keywords internal
-.update_to_priors <- function(model, verbose = TRUE){
+.update_to_priors <- function(model, verbose = TRUE) {
   UseMethod(".update_to_priors")
 }
 
@@ -406,7 +408,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @keywords internal
 #' @importFrom stats update
 #' @importFrom utils capture.output
-.update_to_priors.stanreg <- function(model, verbose = TRUE){
+.update_to_priors.stanreg <- function(model, verbose = TRUE) {
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
   }
@@ -430,7 +432,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @importFrom stats update
 #' @importFrom utils capture.output
 #' @importFrom methods is
-.update_to_priors.brmsfit <- function(model, verbose = TRUE){
+.update_to_priors.brmsfit <- function(model, verbose = TRUE) {
   if (!requireNamespace("brms")) {
     stop("Package \"brms\" needed for this function to work. Please install it.")
   }
@@ -448,8 +450,9 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   if (is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior)) {
       stop("Cannot compute BF for 'brmsfit' models fit with default priors.\n",
-           "See '?bayesfactor_savagedickey'",
-           call. = FALSE)
+        "See '?bayesfactor_savagedickey'",
+        call. = FALSE
+      )
     } else {
       stop(model_prior)
     }

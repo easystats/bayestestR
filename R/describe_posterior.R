@@ -58,7 +58,6 @@
 #' # -----------------------------------------------
 #' library(emmeans)
 #' describe_posterior(emtrends(model, ~1, "wt"))
-#'
 #' \dontrun{
 #' # brms models
 #' # -----------------------------------------------

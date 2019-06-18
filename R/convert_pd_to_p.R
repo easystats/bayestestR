@@ -10,12 +10,11 @@
 #' @examples
 #' pd_to_p(pd = 95)
 #' pd_to_p(pd = 95, direction = "one-sided")
-#'
 #' @export
 pd_to_p <- function(pd, direction = "two-sided", ...) {
   direction <- .get_direction(direction)
-  p <- (1 - pd/100)
-  if(direction == 0){
+  p <- (1 - pd / 100)
+  if (direction == 0) {
     p <- 2 * p
   }
   p
@@ -26,10 +25,10 @@ pd_to_p <- function(pd, direction = "two-sided", ...) {
 #' @export
 p_to_pd <- function(p, direction = "two-sided", ...) {
   direction <- .get_direction(direction)
-  if(direction == 0){
+  if (direction == 0) {
     p <- p / 2
   }
-  (1-p)*100
+  (1 - p) * 100
 }
 
 
