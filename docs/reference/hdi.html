@@ -131,16 +131,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/credible_interval.html">Credible Intervals</a>
+      <a href="../articles/credible_interval.html">Credible Intervals (CI)</a>
     </li>
     <li>
-      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
     </li>
     <li>
-      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+      <a href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
     </li>
     <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
     </li>
     <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
@@ -288,50 +288,50 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>.89</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span>       89% HDI
-#&gt;  [-1.75, 1.56]
+#&gt;  [-1.69, 1.47]
 #&gt; </div><div class='input'><span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
 #&gt; </span><span>       80% HDI
-#&gt;  [-1.21, 1.39]
+#&gt;  [-1.17, 1.34]
 #&gt; 
 #&gt; 
 #&gt;        90% HDI
-#&gt;  [-1.75, 1.67]
+#&gt;  [-1.69, 1.61]
 #&gt; 
 #&gt; 
 #&gt;        95% HDI
-#&gt;  [-2.07, 2.03]
+#&gt;  [-2.06, 2.01]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>hdi</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span> Parameter       89% HDI
-#&gt;         X1 [-1.12, 1.96]
-#&gt;         X2 [-1.68, 1.43]
-#&gt;         X3 [-1.62, 1.75]
-#&gt;         X4 [-1.47, 1.31]
+#&gt;         X1 [-1.76, 1.56]
+#&gt;         X2 [-1.76, 1.50]
+#&gt;         X3 [-1.38, 1.37]
+#&gt;         X4 [-1.64, 1.85]
 #&gt; </div><div class='input'><span class='fu'>hdi</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
 #&gt; </span><span> Parameter       80% HDI
-#&gt;         X1 [-1.25, 1.02]
-#&gt;         X2 [-1.16, 1.43]
-#&gt;         X3 [-1.30, 1.29]
-#&gt;         X4 [-0.95, 1.20]
+#&gt;         X1 [-1.12, 1.53]
+#&gt;         X2 [-1.21, 1.48]
+#&gt;         X3 [-0.94, 1.37]
+#&gt;         X4 [-1.35, 1.45]
 #&gt; 
 #&gt; 
 #&gt;  Parameter       90% HDI
-#&gt;         X1 [-1.12, 2.04]
-#&gt;         X2 [-1.58, 1.59]
-#&gt;         X3 [-1.62, 1.88]
-#&gt;         X4 [-1.59, 1.31]
+#&gt;         X1 [-1.31, 2.14]
+#&gt;         X2 [-1.76, 1.65]
+#&gt;         X3 [-1.38, 1.50]
+#&gt;         X4 [-1.47, 2.15]
 #&gt; 
 #&gt; 
 #&gt;  Parameter       95% HDI
-#&gt;         X1 [-1.89, 1.96]
-#&gt;         X2 [-1.78, 1.81]
-#&gt;         X3 [-2.23, 1.75]
-#&gt;         X4 [-1.59, 1.75]
+#&gt;         X1 [-2.26, 1.89]
+#&gt;         X2 [-1.76, 2.04]
+#&gt;         X3 [-2.19, 1.50]
+#&gt;         X4 [-2.16, 1.85]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
@@ -364,9 +364,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 1: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.011 seconds (Warm-up)
-#&gt; Chain 1:                0.011 seconds (Sampling)
-#&gt; Chain 1:                0.022 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.014 seconds (Warm-up)
+#&gt; Chain 1:                0.013 seconds (Sampling)
+#&gt; Chain 1:                0.027 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -397,40 +397,40 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.015 seconds (Warm-up)
-#&gt; Chain 2:                0.014 seconds (Sampling)
-#&gt; Chain 2:                0.029 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.011 seconds (Warm-up)
+#&gt; Chain 2:                0.013 seconds (Sampling)
+#&gt; Chain 2:                0.024 seconds (Total)
 #&gt; Chain 2: </div><div class='input'><span class='fu'>hdi</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span>   Parameter        89% HDI
-#&gt;  (Intercept) [32.36, 46.98]
-#&gt;           wt [-6.56, -4.57]
-#&gt;         gear [-1.69,  1.22]
+#&gt;  (Intercept) [31.83, 49.79]
+#&gt;           wt [-6.65, -4.31]
+#&gt;         gear [-2.05,  1.02]
 #&gt; </div><div class='input'><span class='fu'>hdi</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
 #&gt; </span><span>   Parameter        80% HDI
-#&gt;  (Intercept) [33.70, 44.82]
-#&gt;           wt [-6.38, -4.77]
-#&gt;         gear [-1.43,  0.81]
+#&gt;  (Intercept) [32.85, 47.36]
+#&gt;           wt [-6.67, -4.74]
+#&gt;         gear [-1.69,  0.64]
 #&gt; 
 #&gt; 
 #&gt;    Parameter        90% HDI
-#&gt;  (Intercept) [32.36, 47.57]
-#&gt;           wt [-6.68, -4.61]
-#&gt;         gear [-1.69,  1.31]
+#&gt;  (Intercept) [31.61, 49.79]
+#&gt;           wt [-6.69, -4.31]
+#&gt;         gear [-2.15,  1.04]
 #&gt; 
 #&gt; 
 #&gt;    Parameter        95% HDI
-#&gt;  (Intercept) [29.76, 49.50]
-#&gt;           wt [-6.74, -4.09]
-#&gt;         gear [-2.26,  1.26]
+#&gt;  (Intercept) [28.29, 49.79]
+#&gt;           wt [-7.11, -4.05]
+#&gt;         gear [-2.26,  1.66]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
 <span class='fu'>hdi</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span> Parameter        89% HDI
-#&gt;    overall [-6.56, -4.57]
+#&gt;    overall [-6.65, -4.31]
 #&gt; </div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)

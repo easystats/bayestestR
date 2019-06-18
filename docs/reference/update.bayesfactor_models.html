@@ -131,16 +131,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/credible_interval.html">Credible Intervals</a>
+      <a href="../articles/credible_interval.html">Credible Intervals (CI)</a>
     </li>
     <li>
-      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
     </li>
     <li>
-      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+      <a href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
     </li>
     <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
     </li>
     <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
@@ -175,7 +175,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Update bayesfactor_models</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/bayesfactor_models.R'><code>R/bayesfactor_models.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/update.bayesfactor_models.R'><code>R/update.bayesfactor_models.R</code></a></small>
     <div class="hidden name"><code>update.bayesfactor_models.Rd</code></div>
     </div>
 
@@ -194,7 +194,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>object</th>
-      <td><p>A <a href='bayesfactor_models.html'>bayesfactor_models</a> object.</p></td>
+      <td><p>A <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code> object.</p></td>
     </tr>
     <tr>
       <th>subset</th>
@@ -211,12 +211,40 @@
     </table>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)
+<span class='no'>lmer1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='no'>lmer2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Petal.Length</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'><span class='no'>lmer3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(
+  <span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Petal.Length</span> <span class='kw'>|</span> <span class='no'>Species</span>) + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Petal.Width</span>),
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
+)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'>
+<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bayesfactor_models.html'>bayesfactor_models</a></span>(<span class='no'>lmer1</span>, <span class='no'>lmer2</span>, <span class='no'>lmer3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>m</span></div><div class='output co'>#&gt; Bayes factor analysis
+#&gt; ---------------------                                                                           
+#&gt; [2] Petal.Length + (Petal.Length | Species)                            0.06
+#&gt; [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)    4.72e-03
+#&gt; 
+#&gt; Against denominator:
+#&gt; 		 [1] Petal.Length + (1 | Species)   
+#&gt; ---
+#&gt; Bayes factor type:  BIC approximation </div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/update'>update</a></span>(<span class='no'>m</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='st'>"bottom"</span>)</div><div class='output co'>#&gt; Bayes factor analysis
+#&gt; ---------------------                                                    
+#&gt; [1] Petal.Length + (1 | Species)               211.7
+#&gt; [2] Petal.Length + (Petal.Length | Species)    12.25
+#&gt; 
+#&gt; Against denominator:
+#&gt; 		 [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)   
+#&gt; ---
+#&gt; Bayes factor type:  BIC approximation </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

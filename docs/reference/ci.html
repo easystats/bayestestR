@@ -131,16 +131,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/credible_interval.html">Credible Intervals</a>
+      <a href="../articles/credible_interval.html">Credible Intervals (CI)</a>
     </li>
     <li>
-      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
     </li>
     <li>
-      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+      <a href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
     </li>
     <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
     </li>
     <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
@@ -295,39 +295,39 @@ the resulting HDI.
 <span class='fu'>ci</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Credible Interval
 #&gt; 
 #&gt; </span><span>        89% CI
-#&gt;  [-1.55, 1.66]
+#&gt;  [-1.58, 1.61]
 #&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Intervals
 #&gt; 
 #&gt; </span><span>        80% CI
-#&gt;  [-1.27, 1.32]
+#&gt;  [-1.30, 1.32]
 #&gt; 
 #&gt; 
 #&gt;         89% CI
-#&gt;  [-1.55, 1.66]
+#&gt;  [-1.58, 1.61]
 #&gt; 
 #&gt; 
 #&gt;         95% CI
-#&gt;  [-1.86, 1.96]
+#&gt;  [-1.92, 1.99]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>ci</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt;   Parameter CI    CI_low  CI_high
-#&gt; 1        X1 89 -1.614930 1.511640
-#&gt; 2        X2 89 -1.718089 1.213077
-#&gt; 3        X3 89 -1.461380 1.679200
-#&gt; 4        X4 89 -1.389047 1.954693</div><div class='input'><span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;    Parameter CI    CI_low  CI_high
-#&gt; 1         X1 80 -1.213357 1.328392
-#&gt; 2         X1 89 -1.614930 1.511640
-#&gt; 3         X1 95 -1.883828 1.878565
-#&gt; 4         X2 80 -1.484418 1.048970
-#&gt; 5         X2 89 -1.718089 1.213077
-#&gt; 6         X2 95 -2.071975 1.454381
-#&gt; 7         X3 80 -1.225531 1.186955
-#&gt; 8         X3 89 -1.461380 1.679200
-#&gt; 9         X3 95 -1.702450 1.983010
-#&gt; 10        X4 80 -1.044691 1.574124
-#&gt; 11        X4 89 -1.389047 1.954693
-#&gt; 12        X4 95 -1.855381 2.305285</div><div class='input'>
+#&gt; 1        X1 89 -1.944645 1.506436
+#&gt; 2        X2 89 -1.637042 1.446416
+#&gt; 3        X3 89 -1.663827 1.404621
+#&gt; 4        X4 89 -1.320242 1.406650</div><div class='input'><span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;    Parameter CI    CI_low  CI_high
+#&gt; 1         X1 80 -1.490439 1.232080
+#&gt; 2         X1 89 -1.944645 1.506436
+#&gt; 3         X1 95 -2.133393 1.707241
+#&gt; 4         X2 80 -1.446352 1.121997
+#&gt; 5         X2 89 -1.637042 1.446416
+#&gt; 6         X2 95 -1.880977 1.570841
+#&gt; 7         X3 80 -1.313898 1.215416
+#&gt; 8         X3 89 -1.663827 1.404621
+#&gt; 9         X3 95 -1.857950 1.985016
+#&gt; 10        X4 80 -1.143842 1.190241
+#&gt; 11        X4 89 -1.320242 1.406650
+#&gt; 12        X4 95 -1.659909 1.907851</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'ggplot2':</span>
 #&gt; <span class='message'>  method         from </span>
 #&gt; <span class='message'>  [.quosures     rlang</span>
@@ -337,8 +337,8 @@ the resulting HDI.
 #&gt; <span class='message'>  as.zoo.xts zoo </span></div><div class='output co'>#&gt; <span class='message'>rstanarm (Version 2.18.2, packaged: 2018-11-08 22:19:38 UTC)</span></div><div class='output co'>#&gt; <span class='message'>- Do not expect the default priors to remain the same in future rstanarm versions.</span></div><div class='output co'>#&gt; <span class='message'>Thus, R scripts should specify priors explicitly, even if they are just the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; <span class='message'>- Plotting theme set to bayesplot::theme_default().</span></div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 #&gt; Chain 1: 
-#&gt; Chain 1: Gradient evaluation took 0.001 seconds
-#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 10 seconds.
+#&gt; Chain 1: Gradient evaluation took 0 seconds
+#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
 #&gt; Chain 1: Adjust your expectations accordingly!
 #&gt; Chain 1: 
 #&gt; Chain 1: 
@@ -396,39 +396,38 @@ the resulting HDI.
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.01 seconds (Warm-up)
-#&gt; Chain 2:                0.011 seconds (Sampling)
-#&gt; Chain 2:                0.021 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.015 seconds (Warm-up)
+#&gt; Chain 2:                0.013 seconds (Sampling)
+#&gt; Chain 2:                0.028 seconds (Total)
 #&gt; Chain 2: </div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Interval
 #&gt; 
 #&gt; </span><span>   Parameter         89% CI
-#&gt;  (Intercept) [31.00, 46.22]
-#&gt;           wt [-6.52, -4.29]
-#&gt;         gear [-1.65,  1.08]
+#&gt;  (Intercept) [29.00, 47.76]
+#&gt;           wt [-6.50, -4.13]
+#&gt;         gear [-2.16,  1.30]
 #&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Intervals
 #&gt; 
 #&gt; </span><span>   Parameter         80% CI
-#&gt;  (Intercept) [32.68, 45.27]
-#&gt;           wt [-6.34, -4.52]
-#&gt;         gear [-1.41,  0.78]
+#&gt;  (Intercept) [31.38, 45.92]
+#&gt;           wt [-6.34, -4.39]
+#&gt;         gear [-1.59,  1.03]
 #&gt; 
 #&gt; 
 #&gt;    Parameter         89% CI
-#&gt;  (Intercept) [31.00, 46.22]
-#&gt;           wt [-6.52, -4.29]
-#&gt;         gear [-1.65,  1.08]
+#&gt;  (Intercept) [29.00, 47.76]
+#&gt;           wt [-6.50, -4.13]
+#&gt;         gear [-2.16,  1.30]
 #&gt; 
 #&gt; 
 #&gt;    Parameter         95% CI
-#&gt;  (Intercept) [28.46, 48.15]
-#&gt;           wt [-6.71, -3.98]
-#&gt;         gear [-1.92,  1.79]
+#&gt;  (Intercept) [28.02, 51.67]
+#&gt;           wt [-6.90, -3.83]
+#&gt;         gear [-2.90,  1.75]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='fu'>ci</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~ <span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt;   Parameter CI    CI_low   CI_high
-#&gt; 1   overall 89 -6.522061 -4.286849</div><div class='input'>
-</div></span><span class='co'># NOT RUN {</span>
+<span class='fu'>ci</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt;   Parameter CI    CI_low   CI_high
+#&gt; 1   overall 89 -6.498049 -4.133972</div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>ci</span>(<span class='no'>model</span>)

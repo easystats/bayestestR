@@ -91,16 +91,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/credible_interval.html">Credible Intervals</a>
+      <a href="../articles/credible_interval.html">Credible Intervals (CI)</a>
     </li>
     <li>
-      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
     </li>
     <li>
-      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+      <a href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
     </li>
     <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
     </li>
     <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
@@ -346,7 +346,7 @@
 <p><strong><em>Driing driiiing</em></strong></p>
 </blockquote>
 <p>– <strong><em>The easystats team speaking. How can we help?</em></strong></p>
-<p>– <strong><em>I am Prof Howard. An expert in chicks… I mean chickens. Just calling to let you know that based on my expert knowledge, an effect between -20 and 20 is negligible. Bye.</em></strong></p>
+<p>– <strong><em>I am Prof. Sanders. An expert in chicks… I mean chickens. Just calling to let you know that based on my expert knowledge, an effect between -20 and 20 is negligible. Bye.</em></strong></p>
 <p>Well, that’s convenient. Now we know that we can define the ROPE as the <code>[-20, 20]</code> range. All effects within this range are considered as <em>null</em> (negligible). We can now compute the <strong>proportion of the 89% most probable values (the 89% CI) which are not null</strong>, <em>i.e.</em>, which are outside this range.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw"><a href="../reference/rope.html">rope</a></span>(posteriors<span class="op">$</span>feedsunflower, <span class="dt">range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">20</span>, <span class="dv">20</span>), <span class="dt">ci=</span><span class="fl">0.89</span>)</a></code></pre></div>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-20.00, 20.00]:
@@ -354,8 +354,13 @@
 &gt;  inside ROPE
 &gt;       7.75 %</code></pre>
 <p><strong>7.75% of the 89% CI can be considered as null</strong>. Is that a lot? Based on our <a href="https://easystats.github.io/bayestestR/articles/guidelines.html"><strong>guidelines</strong></a>, yes, it is too much. <strong>Based on this particular definition of ROPE</strong>, we conclude that this effect is not significant (the probability of being negligible is too high).</p>
-<p>Although, to be honest, I have <strong>some doubts about this Prof Howard</strong>. I don’t really trust <strong>his definition of ROPE</strong>. Is there a more <strong>objective</strong> way of defining it?</p>
-<p><strong>Yes.</strong> One of the practice is for instance to use the <strong>tenth (<code>1/10 = 0.1</code>) of the standard deviation (SD)</strong> of the response variable, which can be considered as a “negligible” effect size.</p>
+<p>Although, to be honest, I have <strong>some doubts about this Prof. Sanders</strong>. I don’t really trust <strong>his definition of ROPE</strong>. Is there a more <strong>objective</strong> way of defining it?</p>
+<div class="figure" style="text-align: center">
+<img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/profsanders.png" alt="Prof. Sanders giving default values to define the Region of Practical Equivalence (ROPE)." width="75%"><p class="caption">
+Prof. Sanders giving default values to define the Region of Practical Equivalence (ROPE).
+</p>
+</div>
+<p><strong>Yes.</strong> One of the practice is for instance to use the <strong>tenth (<code>1/10 = 0.1</code>) of the standard deviation (SD)</strong> of the response variable, which can be considered as a “negligible” effect size <span class="citation">(Cohen 1988)</span>.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">rope_value &lt;-<span class="st"> </span><span class="fl">0.1</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/sd">sd</a></span>(data<span class="op">$</span>weight)</a>
 <a class="sourceLine" id="cb33-2" title="2">rope_range &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span>rope_value, rope_value)</a>
 <a class="sourceLine" id="cb33-3" title="3">rope_range</a></code></pre></div>
@@ -393,10 +398,9 @@
 <a class="sourceLine" id="cb43-4" title="4">twosided_p</a></code></pre></div>
 <pre><code>&gt; [1] 0.044</code></pre>
 <p>If we ran our model in the frequentist framework, we should approximately observe an effect with a <em>p</em>-value of 0.04. <strong>Is that true?</strong></p>
-</div>
-<div id="comparison-to-frequentist" class="section level3">
-<h3 class="hasAnchor">
-<a href="#comparison-to-frequentist" class="anchor"></a>Comparison to frequentist</h3>
+<div id="comparison-to-frequentist" class="section level4">
+<h4 class="hasAnchor">
+<a href="#comparison-to-frequentist" class="anchor"></a>Comparison to frequentist</h4>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(weight <span class="op">~</span><span class="st"> </span>feed, <span class="dt">data=</span>data) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb45-2" title="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>()</a></code></pre></div>
 <pre><code>&gt; 
@@ -421,6 +425,7 @@
 <p><strong>Although we arrived to a similar conclusion, the Bayesian framework allowed us to develop a more profound and intuitive understanding of our effect, and of the uncertainty of its estimation.</strong></p>
 </div>
 </div>
+</div>
 <div id="all-with-one-function" class="section level2">
 <h2 class="hasAnchor">
 <a href="#all-with-one-function" class="anchor"></a>All with one function</h2>
@@ -429,16 +434,22 @@
 <p><strong>Behold, <code>describe_posterior</code>!</strong></p>
 </blockquote>
 <p>This function computes all of the adored mentioned indices, and can be run directly on the model:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model)</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model, <span class="dt">test =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_direction"</span>,<span class="st">"rope"</span>,<span class="st">"bayesfactor"</span>))</a></code></pre></div>
 <pre><code>&gt;       Parameter Median CI CI_low CI_high  pd ROPE_CI ROPE_low ROPE_high
 &gt; 1   (Intercept)    277 89  250.2     307 100      89     -6.2       6.2
 &gt; 2 feedsunflower     51 89    7.8      88  98      89     -6.2       6.2
-&gt;   ROPE_Percentage  ESS Rhat Prior_Distribution Prior_Location Prior_Scale
-&gt; 1               0 3437    1             normal              0         617
-&gt; 2               0 3316    1             normal              0         154</code></pre>
+&gt;   ROPE_Percentage      BF  ESS Rhat Prior_Distribution Prior_Location
+&gt; 1               0 8.8e+11 3437    1             normal              0
+&gt; 2               0 1.4e+00 3316    1             normal              0
+&gt;   Prior_Scale
+&gt; 1         617
+&gt; 2         154</code></pre>
 <p><strong>Tada!</strong> There we have it! The <strong>median</strong>, the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE percentage</strong>!</p>
 <p>Understanding and describing posterior distributions is just one aspect of Bayesian modelling… <strong>Are you ready for more?</strong> <a href="https://easystats.github.io/bayestestR/articles/example2_GLM.html"><strong>Click here</strong></a> to see the next example.</p>
 <div id="refs" class="references">
+<div id="ref-cohen1988statistical">
+<p>Cohen, Jacob. 1988. “Statistical Power Analysis for the Social Sciences.”</p>
+</div>
 <div id="ref-kruschke2014doing">
 <p>Kruschke, John. 2014. <em>Doing Bayesian Data Analysis: A Tutorial with R, Jags, and Stan</em>. Academic Press.</p>
 </div>

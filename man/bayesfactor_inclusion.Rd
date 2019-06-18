@@ -50,7 +50,6 @@ mo3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 
 BFmodels <- bayesfactor_models(mo1, mo2, mo3, denominator = mo0)
 bayesfactor_inclusion(BFmodels)
-
 \dontrun{
 # BayesFactor
 # -------------------------------

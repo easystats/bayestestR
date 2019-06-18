@@ -298,11 +298,11 @@ rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.89)
 
 Although, to be honest, I have **some doubts about this Prof. Sanders**. I don't really trust **his definition of ROPE**. Is there a more **objective** way of defining it?
 
-```{r echo=FALSE, fig.cap="Prof. Sanders giving default values to define the Region of Practical Equivalence (ROPE).", fig.align='center', out.width="50%"}
+```{r echo=FALSE, fig.cap="Prof. Sanders giving default values to define the Region of Practical Equivalence (ROPE).", fig.align='center', out.width="75%"}
 knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/profsanders.png")
 ```
 
-**Yes.** One of the practice is for instance to use the **tenth (`1/10 = 0.1`) of the standard deviation (SD)** of the response variable, which can be considered as a "negligible" effect size.
+**Yes.** One of the practice is for instance to use the **tenth (`1/10 = 0.1`) of the standard deviation (SD)** of the response variable, which can be considered as a "negligible" effect size [@cohen1988statistical].
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 rope_value <- 0.1 * sd(data$weight)

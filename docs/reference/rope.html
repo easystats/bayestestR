@@ -131,16 +131,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/credible_interval.html">Credible Intervals</a>
+      <a href="../articles/credible_interval.html">Credible Intervals (CI)</a>
     </li>
     <li>
-      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
     </li>
     <li>
-      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+      <a href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
     </li>
     <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
     </li>
     <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
@@ -336,7 +336,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
 #&gt; </span><span> inside ROPE
-#&gt;       9.20 %
+#&gt;       8.53 %
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
 #&gt; </span><span> inside ROPE
@@ -346,13 +346,13 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 90% HDI:
 #&gt; 
 #&gt; </span><span> inside ROPE
-#&gt;       6.33 %
+#&gt;       4.33 %
 #&gt; 
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 95% HDI:
 #&gt; 
 #&gt; </span><span> inside ROPE
-#&gt;       5.99 %
+#&gt;       4.10 %
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
@@ -418,15 +418,15 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.014 seconds (Warm-up)
-#&gt; Chain 2:                0.014 seconds (Sampling)
-#&gt; Chain 2:                0.028 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.011 seconds (Warm-up)
+#&gt; Chain 2:                0.012 seconds (Sampling)
+#&gt; Chain 2:                0.023 seconds (Total)
 #&gt; Chain 2: </div><div class='input'><span class='fu'>rope</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.60, 0.60]:
 #&gt; 
 #&gt; </span><span>   Parameter inside ROPE
 #&gt;  (Intercept)      0.00 %
 #&gt;           wt      0.00 %
-#&gt;         gear     56.98 %
+#&gt;         gear     43.58 %
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportions of samples inside the ROPE [-0.60, 0.60]:
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 90% HDI:
@@ -434,7 +434,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span>   Parameter inside ROPE
 #&gt;  (Intercept)      0.00 %
 #&gt;           wt      0.00 %
-#&gt;         gear     56.35 %
+#&gt;         gear     43.09 %
 #&gt; 
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 95% HDI:
@@ -442,7 +442,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span>   Parameter inside ROPE
 #&gt;  (Intercept)      0.00 %
 #&gt;           wt      0.00 %
-#&gt;         gear     53.40 %
+#&gt;         gear     40.84 %
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)

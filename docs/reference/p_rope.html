@@ -131,16 +131,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/credible_interval.html">Credible Intervals</a>
+      <a href="../articles/credible_interval.html">Credible Intervals (CI)</a>
     </li>
     <li>
-      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
     </li>
     <li>
-      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+      <a href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
     </li>
     <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
     </li>
     <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
@@ -262,14 +262,14 @@ applies to <span class="pkg">brms</span>-models.</p></td>
   <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>1</span>
 )</div><div class='output co'>#&gt; <span style='color: #0000BB;'># ROPE-based p-value
 #&gt; 
-#&gt; </span><span>p (ROPE) = 58.00%</div><div class='input'>
+#&gt; </span><span>p (ROPE) = 70.00%</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>p_rope</span>(<span class='no'>df</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># ROPE-based p-value
 #&gt; 
-#&gt; </span><span>  X1: 33.00%
-#&gt;   X2: 24.00%
-#&gt;   X3:  2.00%
-#&gt;   X4:  5.00%</div><div class='input'>
+#&gt; </span><span>  X1: 21.00%
+#&gt;   X2: 31.00%
+#&gt;   X3: 31.00%
+#&gt;   X4: 19.00%</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
@@ -300,9 +300,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 1: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.012 seconds (Warm-up)
-#&gt; Chain 1:                0.014 seconds (Sampling)
-#&gt; Chain 1:                0.026 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.015 seconds (Warm-up)
+#&gt; Chain 1:                0.018 seconds (Sampling)
+#&gt; Chain 1:                0.033 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -333,14 +333,14 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.026 seconds (Warm-up)
-#&gt; Chain 2:                0.014 seconds (Sampling)
-#&gt; Chain 2:                0.04 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.019 seconds (Warm-up)
+#&gt; Chain 2:                0.018 seconds (Sampling)
+#&gt; Chain 2:                0.037 seconds (Total)
 #&gt; Chain 2: </div><div class='input'><span class='fu'>p_rope</span>(<span class='no'>model</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># ROPE-based p-value
 #&gt; 
 #&gt; </span><span>  (Intercept): 100.00%
 #&gt;   wt         : 100.00%
-#&gt;   gear       : -16.00%</div><div class='input'>
+#&gt;   gear       :  -1.00%</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
 <span class='fu'>p_rope</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># ROPE-based p-value
 #&gt; 

@@ -32,5 +32,4 @@ m <- bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
 m
 
 update(m, reference = "bottom")
-
 }

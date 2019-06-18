@@ -91,16 +91,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/credible_interval.html">Credible Intervals</a>
+      <a href="../articles/credible_interval.html">Credible Intervals (CI)</a>
     </li>
     <li>
-      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
     </li>
     <li>
-      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+      <a href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
     </li>
     <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
     </li>
     <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
@@ -148,19 +148,89 @@
 <li>Makowski, D., Ben-Shachar M. S. &amp; Lüdecke, D. (2019). <em>Understand and Describe Bayesian Models and Posterior Distributions using bayestestR</em>. Available from <a href="https://github.com/easystats/bayestestR" class="uri">https://github.com/easystats/bayestestR</a>. DOI: <a href="https://zenodo.org/record/2556486">10.5281/zenodo.2556486</a>.</li>
 </ul>
 <hr>
-<p>Now that <a href="https://easystats.github.io/bayestestR/articles/example1.html"><strong>describing and understanding posterior distributions of linear regressions</strong></a> has no secrets for you, let’s go deeper.</p>
+<p>Now that <a href="https://easystats.github.io/bayestestR/articles/example1.html"><strong>describing and understanding posterior distributions</strong></a> of linear regressions has no secrets for you, let’s go back and study some simpler models: <strong>correlations</strong> and <strong><em>t</em>-tests</strong>.</p>
+<p>But before we do that, let us take a moment to remind ourselves and appreciate the fact that <strong>all basic statistical pocedures</strong> such as correlations, <em>t</em>-tests, ANOVAs or Chisquare tests <strong><em>are</em> linear regressions</strong> (we strongly recommend <a href="https://lindeloev.github.io/tests-as-linear/">this excellent demonstration</a>). But still, these simple models will be the occasion to introduce a more complex index, such as the <strong>Bayes factor</strong>.</p>
+<div id="correlations" class="section level2">
+<h2 class="hasAnchor">
+<a href="#correlations" class="anchor"></a>Correlations</h2>
+<div id="frequentist-version" class="section level3">
+<h3 class="hasAnchor">
+<a href="#frequentist-version" class="anchor"></a>Frequentist version</h3>
+<p>Let us start, again, with a <strong>frequentist correlation</strong> between two continuous variables, the <strong>width</strong> and the <strong>length</strong> of the sepals of some flowers. The data is available in R as the <code>iris</code> dataset (the same that was used in the <a href="https://easystats.github.io/bayestestR/articles/example1.html">previous tutorial</a>).</p>
+<p>Let’s compute a Pearson’s correlation test, store the results in an object called <code>result</code>, then display it:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">result &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor.test">cor.test</a></span>(iris<span class="op">$</span>Sepal.Width, iris<span class="op">$</span>Sepal.Length)</a>
+<a class="sourceLine" id="cb1-2" title="2">result</a></code></pre></div>
+<pre><code>&gt; 
+&gt;   Pearson's product-moment correlation
+&gt; 
+&gt; data:  iris$Sepal.Width and iris$Sepal.Length
+&gt; t = -1, df = 148, p-value = 0.2
+&gt; alternative hypothesis: true correlation is not equal to 0
+&gt; 95 percent confidence interval:
+&gt;  -0.273  0.044
+&gt; sample estimates:
+&gt;   cor 
+&gt; -0.12</code></pre>
+<p>As you can see in the output, the test that we did actually compared two hypotheses: the <strong>null hypothesis</strong> (no correlation) with the <strong>alternative hypothesis</strong> (a non-null correlation). Based on the <em>p</em>-value, the null hypothesis cannot be rejected: the correlation between the two variables is <strong>negative but not significant</strong> (r = -.12, p &gt; .05).</p>
+</div>
+<div id="bayesian-correlation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bayesian-correlation" class="anchor"></a>Bayesian correlation</h3>
+<p>To compute a Bayesian correlation test, we will need the <a href="https://richarddmorey.github.io/BayesFactor/"><code>BayesFactor</code></a> package (you can install it by running <code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("BayesFactor")</a></code>). We will then load this package, compute the correlation using the <code>correlationBF()</code> function and store the results in a similar fashion.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(BayesFactor)</a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3">result &lt;-<span class="st"> </span><span class="kw">correlationBF</span>(iris<span class="op">$</span>Sepal.Width, iris<span class="op">$</span>Sepal.Length)</a>
+<a class="sourceLine" id="cb3-4" title="4">bayestestR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/bayestestR/topics/bayesfactor">bayesfactor</a></span>(result)</a></code></pre></div>
+<p>Let us run our <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> function:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(result)</a></code></pre></div>
+<pre><code>&gt;   Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
+&gt; 1       rho  -0.11 89  -0.23    0.02 93      89     -0.1       0.1
+&gt;   ROPE_Percentage   BF Prior_Distribution Prior_Location Prior_Scale
+&gt; 1              43 0.51             cauchy              0        0.33</code></pre>
+<p>We see again many things here, but the important indices for now are the <strong>median</strong> of the posterior distribution, <code>-.11</code>. This is (again) quite close to the frequentist correlation. We could, as previously, describe the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>credible interval</strong></a>, the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>pd</strong></a> or the <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html"><strong>ROPE percentage</strong></a>, but we will focus here on another index provided by the Bayesian framework, the <strong>Bayes factor</strong>.</p>
+</div>
+<div id="bayes-factor-bf" class="section level3">
+<h3 class="hasAnchor">
+<a href="#bayes-factor-bf" class="anchor"></a>Bayes factor (BF)</h3>
+<p>Remember how we said that a correlation test actually compared two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect)? Well the <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html"><strong>Bayes factor (BF)</strong></a> allows us to do <em>exactly</em> that, by examining <strong>under which of two models the observed data are more probable</strong>: a model with the effect of interest, and a null model without the effect of interest. We can use <code><a href="../reference/bayesfactor.html">bayesfactor()</a></code> to compute the Bayes factor comparing those models (<em>and many more</em>):</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/bayesfactor.html">bayesfactor</a></span>(result)</a></code></pre></div>
+<pre><code>&gt; Bayes factor analysis
+&gt; ---------------------                         
+&gt; [2] Alt., r=0.333    0.51
+&gt; 
+&gt; Against denominator:
+&gt;        [1] Null, rho = 0   
+&gt; ---
+&gt; Bayes factor type:  JZS (BayesFactor)</code></pre>
+<p>We got a <em>BF</em> of <code>0.51</code>. What does it mean?</p>
+<p><strong>Bayes factors (BF)</strong> are continuous measures of relative evidence, with a Bayes factor greater than 1 giving evidence in favor of one of the models (often reffered to as <em>the numerator</em>), and a Bayes factor smaller than 1 giving evidence in favour of the other model (<em>the denominator</em>).</p>
 <blockquote>
-<p><strong>“But it’s only about regressions and I want to do ANOVAs and t-tests”</strong></p>
+<p><strong>Yes, you heard things right, evidence in favour of the null!</strong></p>
 </blockquote>
-<p>Don’t worry. Let us all remind and appreciate the fact that <strong>all basic statistical pocedures</strong> such as t-tests, ANOVAs, correlations or Chisquare tests <a href="https://lindeloev.github.io/tests-as-linear/"><strong><em>are</em> linear regressions</strong></a>. Now that we have accepted the beauty of it, we will continue with a general linear model.</p>
+<p>That’s one of the reason why the Bayesian framework is sometimes considered as superior to the frequentist framework. Remember from your stats lessons, that the <strong><em>p</em>-value can only be used to reject h0</strong>, but not <em>accept</em> it. With the <strong>Bayes factor</strong>, you can measure <strong>evidence against - and in favour of - the null</strong>.</p>
+<p>BFs representing evidence for the alternative against the null can be reversed using <span class="math inline">\(BF_{01}=1/BF_{10}\)</span> to provided evidence of the null agaisnt the alternative. This improves human readbility in cases where the BF of the the alternative against the null is smaller than 1 (in support of the null).</p>
+<p>In our case, <code>BF = 1/0.51 = 2</code>, indicates that the data are <strong>2 times more probable under the null compared to the alternative hypothesis</strong>, which, though favouring the null, is considered only <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf">anecdotal evidence against the null</a>.</p>
+<p>We can thus conclude that there is <strong>anecdotal evidence in favour of an absence of correlation between the two variables (r<sub>median</sub> = 0.11, BF = 0.51)</strong>, which is a much more informative statement that what we can do with frequentist statistics.</p>
+<p><strong>And that’s not all!</strong></p>
+</div>
+<div id="visualise-the-bayes-factor" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualise-the-bayes-factor" class="anchor"></a>Visualise the Bayes factor</h3>
+<p>Visualization.</p>
+</div>
+</div>
+<div id="t-tests" class="section level2">
+<h2 class="hasAnchor">
+<a href="#t-tests" class="anchor"></a><em>t</em>-tests</h2>
+<div id="visualise-the-indices" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualise-the-indices" class="anchor"></a>Visualise the indices</h3>
+</div>
+</div>
 <div id="logistic-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#logistic-model" class="anchor"></a>Logistic Model</h2>
-<div id="make-some-figures" class="section level3">
-<h3 class="hasAnchor">
-<a href="#make-some-figures" class="anchor"></a>Make some figures</h3>
-<p>Visualization.</p>
-</div>
+<p>A hypothesis for which one uses a <em>t</em>-test can also be tested using a logistic model. Indeed, one can reformulate the following hypothesis, “<em>there is a important difference in this variable between my two groups</em>” by “<em>this variable is able to discriminate (or classify) between the two groups</em>”.</p>
 <div id="diagnostic-indices" class="section level3">
 <h3 class="hasAnchor">
 <a href="#diagnostic-indices" class="anchor"></a>Diagnostic Indices</h3>
@@ -183,7 +253,9 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#logistic-model">Logistic Model</a></li>
+<li><a href="#correlations">Correlations</a></li>
+      <li><a href="#t-tests"><em>t</em>-tests</a></li>
+      <li><a href="#logistic-model">Logistic Model</a></li>
       <li><a href="#mixed-model">Mixed Model</a></li>
       </ul>
 </div>

@@ -91,16 +91,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/credible_interval.html">Credible Intervals</a>
+      <a href="../articles/credible_interval.html">Credible Intervals (CI)</a>
     </li>
     <li>
-      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
     </li>
     <li>
-      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+      <a href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
     </li>
     <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
     </li>
     <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
@@ -147,7 +147,7 @@
 <h2 class="hasAnchor">
 <a href="#why-use-the-bayesian-framework" class="anchor"></a>Why use the Bayesian Framework?</h2>
 <p>Reasons to prefer this approach are <strong>reliability</strong>, <strong>accuracy</strong> (in noisy data and small samples), the possibility of introducing <strong>prior knowledge</strong> into the analysis and, critically, <strong>results intuitiveness</strong> and their <strong>straightforward interpretation</strong> <span class="citation">(Andrews and Baguley 2013; Etz and Vandekerckhove 2016; Kruschke 2010; Kruschke, Aguinis, and Joo 2012; Wagenmakers et al. 2018)</span>.</p>
-<p>In general, the frequentist approach has been associated with the focus on null hypothesis testing, and the misuse of <em>p</em> values has been shown to critically contribute to the reproducibility crisis of psychological science <span class="citation">(Chambers et al. 2014; Szucs and Ioannidis 2016)</span>. There is a general agreement that the generalization of the Bayesian approach is one way of overcoming these issues <span class="citation">(Benjamin et al. 2018; Etz and Vandekerckhove 2016)</span>.</p>
+<p>In general, the frequentist approach has been associated with the focus on null hypothesis testing, and the misuse of <em>p</em>-values has been shown to critically contribute to the reproducibility crisis of psychological science <span class="citation">(Chambers et al. 2014; Szucs and Ioannidis 2016)</span>. There is a general agreement that the generalization of the Bayesian approach is one way of overcoming these issues <span class="citation">(Benjamin et al. 2018; Etz and Vandekerckhove 2016)</span>.</p>
 <p>Once we agreed that the Bayesian framework is the right way to go, you might wonder <em>what</em> is the Bayesian framework.</p>
 <p><strong>What’s all the fuss about?</strong></p>
 </div>
@@ -155,13 +155,13 @@
 <h2 class="hasAnchor">
 <a href="#what-is-the-bayesian-framework" class="anchor"></a>What is the Bayesian Framework?</h2>
 <p>Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology. Indeed, all the common statistical procedures (t-tests, correlations, ANOVAs, regressions, …) can be achieved using the Bayesian framework. One of the core difference is that in the <strong>frequentist view</strong> (the “classic” statistics, with <em>p</em> and <em>t</em> values, as well as some weird <em>degrees of freedom</em>), <strong>the effects are fixed</strong> (but unknown) and <strong>data are random</strong>. On the contrary, the Bayesian inference process computes the <strong>probability</strong> of different effects <em>given the observed data</em>. Instead of having one estimated value of the “true effect”, this probabilistic approach gives a distribution of values, called the <strong>“posterior” distribution</strong>.</p>
-<p>Bayesian’s uncertainty can be summarized, for instance, by giving the <strong>median</strong> of the distribution, as well as a range of values on the posterior distribution that includes the 95% most probable values (the 95% <strong><em>Credible</em> Interval</strong>). To illustrate the difference of interpretation, the Bayesian framework allows to say <em>“given the observed data, the effect has 95% probability of falling within this range”</em>, while the frequentist less straightforward alternative (the 95% <strong><em>Confidence</em> Interval</strong>) would be “<em>there is a 95% probability that when computing a confidence interval from data of this sort, the effect falls within this range</em>”.</p>
+<p>Bayesian’s uncertainty can be summarized, for instance, by giving the <strong>median</strong> of the distribution, as well as a range of values on the posterior distribution that includes the 95% most probable values (the 95% <strong><em>Credible</em> Interval</strong>). To illustrate the difference of interpretation, the Bayesian framework allows to say <em>“given the observed data, the effect has 95% probability of falling within this range”</em>, while the frequentist less straightforward alternative (the 95% <strong><em>Confidence</em> Interval</strong>) would be <em>“there is a 95% probability that when computing a confidence interval from data of this sort, the effect falls within this range”</em>.</p>
 <p>In other words, omitting the maths behind it, we can say that:</p>
 <ul>
 <li>The frequentist bloke tries to estimate “the <strong>real effect</strong>”. For instance, the “real” value of the correlation between <em>x</em> and <em>y</em>. Hence, frequentist models return a “<strong>point-estimate</strong>” (<em>i.e.</em>, a single value) of the “real” correlation (<em>e.g.</em>, r = 0.42) estimated under a number of obscure assumptions (at a minimum, considering that the data is sampled at random from a “parent”, usually normal distribution).</li>
 <li>
-<strong>The Bayesian master assumes no such thing</strong>. The data are what they are. Based on this observed data (and a <strong>prior</strong> belief about the result), the Bayesian sampling algorithm (sometimes referred to as <strong>MCMC</strong> sampling) returns a probability distribution (called <strong>the posterior</strong>) of the effect that is compatible with the observed data. For the correlation between <em>x</em> and <em>y</em>, it will return a distribution that says, for example, “the most probable effect is 0.42, but this data is also compatible with correlations of 0.12 and 0.74”.</li>
-<li>To characterize our effects, <strong>no need of <em>p</em> values</strong> or other cryptic indices. We simply describe the posterior distribution of the effect. For example, we can report the median, the 90% <em>Credible</em> Interval or <a href="https://easystats.github.io/bayestestR/articles/guidelines.html">other indices</a>.</li>
+<strong>The Bayesian master assumes no such thing</strong>. The data are what they are. Based on this observed data (and a <strong>prior</strong> belief about the result), the Bayesian sampling algorithm (sometimes referred to for example as <strong>MCMC</strong> sampling) returns a probability distribution (called <strong>the posterior</strong>) of the effect that is compatible with the observed data. For the correlation between <em>x</em> and <em>y</em>, it will return a distribution that says, for example, “the most probable effect is 0.42, but this data is also compatible with correlations of 0.12 and 0.74”.</li>
+<li>To characterize our effects, <strong>no need of <em>p</em> values</strong> or other cryptic indices. We simply describe the posterior distribution of the effect. For example, we can report the median, the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">89% <em>Credible</em> Interval</a> or <a href="https://easystats.github.io/bayestestR/articles/guidelines.html">other indices</a>.</li>
 </ul>
 <div class="figure" style="text-align: center">
 <img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/bayesianMaster.png" alt="Accurate depiction of a regular Bayesian user estimating a credible interval." width="50%"><p class="caption">

@@ -131,16 +131,16 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/credible_interval.html">Credible Intervals</a>
+      <a href="../articles/credible_interval.html">Credible Intervals (CI)</a>
     </li>
     <li>
-      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence</a>
+      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
     </li>
     <li>
-      <a href="../articles/probability_of_direction.html">Probability of Direction</a>
+      <a href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
     </li>
     <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors</a>
+      <a href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
     </li>
     <li>
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
@@ -257,12 +257,12 @@
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a></span>(<span class='no'>x</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_extended</span>$<span class='no'>x</span>, <span class='no'>density_extended</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/lines'>lines</a></span>(<span class='no'>density_default</span>$<span class='no'>x</span>, <span class='no'>density_default</span>$<span class='no'>y</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='estimate_density-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>estimate_density</span>(<span class='no'>df</span>))</div><div class='output co'>#&gt;   Parameter         x          y
-#&gt; 1        X1 -2.885939 0.02117072
-#&gt; 2        X1 -2.881250 0.02127937
-#&gt; 3        X1 -2.876561 0.02138182
-#&gt; 4        X1 -2.871873 0.02147990
-#&gt; 5        X1 -2.867184 0.02157366
-#&gt; 6        X1 -2.862495 0.02166207</div><div class='input'>
+#&gt; 1        X1 -2.765666 0.01409057
+#&gt; 2        X1 -2.760065 0.01416791
+#&gt; 3        X1 -2.754464 0.01424385
+#&gt; 4        X1 -2.748863 0.01431865
+#&gt; 5        X1 -2.743262 0.01439262
+#&gt; 6        X1 -2.737661 0.01446539</div><div class='input'>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
@@ -295,9 +295,9 @@
 #&gt; Chain 1: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.01 seconds (Warm-up)
-#&gt; Chain 1:                0.01 seconds (Sampling)
-#&gt; Chain 1:                0.02 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.011 seconds (Warm-up)
+#&gt; Chain 1:                0.013 seconds (Sampling)
+#&gt; Chain 1:                0.024 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -328,24 +328,24 @@
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.011 seconds (Warm-up)
-#&gt; Chain 2:                0.013 seconds (Sampling)
-#&gt; Chain 2:                0.024 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.013 seconds (Warm-up)
+#&gt; Chain 2:                0.015 seconds (Sampling)
+#&gt; Chain 2:                0.028 seconds (Total)
 #&gt; Chain 2: </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>estimate_density</span>(<span class='no'>model</span>))</div><div class='output co'>#&gt;     Parameter        x           y
-#&gt; 1 (Intercept) 23.36631 0.001991360
-#&gt; 2 (Intercept) 23.39612 0.002004878
-#&gt; 3 (Intercept) 23.42594 0.002018091
-#&gt; 4 (Intercept) 23.45575 0.002030996
-#&gt; 5 (Intercept) 23.48556 0.002043371
-#&gt; 6 (Intercept) 23.51537 0.002055395</div><div class='input'>
+#&gt; 1 (Intercept) 26.06477 0.002939537
+#&gt; 2 (Intercept) 26.08769 0.002955634
+#&gt; 3 (Intercept) 26.11061 0.002971017
+#&gt; 4 (Intercept) 26.13353 0.002985868
+#&gt; 5 (Intercept) 26.15645 0.003000082
+#&gt; 6 (Intercept) 26.17937 0.003013451</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'>estimate_density</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>)))</div><div class='output co'>#&gt;   Parameter         x          y
-#&gt; 1   overall -7.493949 0.01472765
-#&gt; 2   overall -7.489622 0.01493394
-#&gt; 3   overall -7.485294 0.01514383
-#&gt; 4   overall -7.480967 0.01535594
-#&gt; 5   overall -7.476639 0.01557029
-#&gt; 6   overall -7.472311 0.01578838</div><span class='co'># NOT RUN {</span>
+#&gt; 1   overall -7.040409 0.02105532
+#&gt; 2   overall -7.037079 0.02135196
+#&gt; 3   overall -7.033749 0.02165223
+#&gt; 4   overall -7.030419 0.02195586
+#&gt; 5   overall -7.027089 0.02226190
+#&gt; 6   overall -7.023759 0.02257161</div><span class='co'># NOT RUN {</span>
 <span class='co'># brms models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
