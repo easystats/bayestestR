@@ -284,7 +284,7 @@ However, one way to assess **significance** could be to define an area around 0,
 
 -- ***The easystats team speaking. How can we help?***
 
--- ***I am Prof Howard. An expert in chicks... I mean chickens. Just calling to let you know that based on my expert knowledge, an effect between -20 and 20 is negligible. Bye.***
+-- ***I am Prof. Sanders. An expert in chicks... I mean chickens. Just calling to let you know that based on my expert knowledge, an effect between -20 and 20 is negligible. Bye.***
 
 
 Well, that's convenient. Now we know that we can define the ROPE as the `[-20, 20]` range. All effects within this range are considered as *null* (negligible). We can now compute the **proportion of the 89\% most probable values (the 89\% CI) which are not null**, *i.e.*, which are outside this range. 
@@ -296,7 +296,11 @@ rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.89)
 
 **7.75\% of the 89\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
 
-Although, to be honest, I have **some doubts about this Prof Howard**. I don't really trust **his definition of ROPE**. Is there a more **objective** way of defining it?
+Although, to be honest, I have **some doubts about this Prof. Sanders**. I don't really trust **his definition of ROPE**. Is there a more **objective** way of defining it?
+
+```{r echo=FALSE, fig.cap="Prof. Sanders giving default values to define the Region of Practical Equivalence (ROPE).", fig.align='center', out.width="50%"}
+knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/profsanders.png")
+```
 
 **Yes.** One of the practice is for instance to use the **tenth (`1/10 = 0.1`) of the standard deviation (SD)** of the response variable, which can be considered as a "negligible" effect size.
 

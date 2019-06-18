@@ -52,7 +52,8 @@ A data frame containing the Bayes factor representing evidence \emph{against} th
 \description{
 This method computes the ratio between the density of a single value (typically the null)
 of two distributions. When the compared distributions are the posterior and the prior distributions,
-this results in an approximation of a Bayes factor against the (point) null model.
+this results is an approximation of a Bayes factor comparing the model against a model in which
+the parameter of choice is restricted to the point null.
 \cr \cr
 See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
