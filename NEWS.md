@@ -2,6 +2,7 @@
 
 ## Breaking changes
 
+- `equivalence_test`: returns capitalized output (e.g., `Rejected` instead of `rejected`)
 - `describe_posterior.numeric`: `dispersion` defaults to FALSE for consistency with the other methods
 
 ## New functions / features
@@ -11,6 +12,9 @@
 
 
 ## Minor changes
+
+- Improved tutorial 2
+
 ## Bug fixes
 
 - `describe_posterior`: Fixed column order restoration

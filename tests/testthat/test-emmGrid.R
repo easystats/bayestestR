@@ -21,7 +21,7 @@ test_that("emmGrid equivalence_test", {
   testthat::skip_on_travis()
   xeqtest <- equivalence_test(all_, ci = 0.9, range = c(-0.1, 0.1))
   testthat::expect_equal(xeqtest$ROPE_Percentage, c(5.53, 0, 1.83), tolerance = 0.2)
-  testthat::expect_equal(xeqtest$ROPE_Equivalence, c("undecided", "rejected", "undecided"))
+  testthat::expect_equal(xeqtest$ROPE_Equivalence, c("Undecided", "Rejected", "Undecided"))
 })
 
 test_that("emmGrid estimate_density", {
