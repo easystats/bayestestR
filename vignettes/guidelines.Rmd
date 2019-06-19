@@ -47,7 +47,7 @@ We suggest reporting the **median** as an index of centrality, as it is more rob
 
 #### **Uncertainty** 
 
-The [**89\% Credible Interval (CI)**](https://easystats.github.io/bayestestR/articles/credible_interval.html) appears as a reasonable range to characterize the uncertainty related to the estimation, being more robust than higher thresholds (such as 90\% and 95\%). We also recommend computing the CI based on the [HDI](https://easystats.github.io/bayestestR/reference/hdi.html) rather than [quantiles](https://easystats.github.io/bayestestR/reference/ci.html), favouring probable, - over central - values.
+The [**89\% Credible Interval (CI)**](https://easystats.github.io/bayestestR/articles/credible_interval.html) appears as a reasonable range to characterize the uncertainty related to the estimation, being more stable than higher thresholds (such as 90\% and 95\%). We also recommend computing the CI based on the [HDI](https://easystats.github.io/bayestestR/reference/hdi.html) rather than [quantiles](https://easystats.github.io/bayestestR/reference/ci.html), favouring probable, - over central - values.
 
 
 #### **Existence** 

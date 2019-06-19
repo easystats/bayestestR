@@ -85,7 +85,7 @@ bayesfactor(result)
 
 We got a *BF* of `0.51`. What does it mean?
 
-Bayes factors are continuous measures of relative evidence, with a Bayes factor greater than 1 giving evidence in favor of one of the models (often referred to as *the numerator*), and a Bayes factor smaller than 1 giving evidence in favour of the other model (*the denominator*). 
+Bayes factors are **continuous measures of relative evidence**, with a Bayes factor greater than 1 giving evidence in favor of one of the models (often referred to as *the numerator*), and a Bayes factor smaller than 1 giving evidence in favour of the other model (*the denominator*). 
 
 > **Yes, you heard things right, evidence in favour of the null!**
 
