@@ -27,6 +27,10 @@ test_that("rstanarm", {
   model <- insight::download_model("stanreg_gamm4_1")
   testthat::expect_equal(rope_range(model)[1], -0.043, tol = 0.1)
 
+  model <- insight::download_model("stanreg_gam_1")
+  params <- describe_posterior(model, centrality = "all", test = "all", dispersion = TRUE)
+  testthat::expect_equal(c(nrow(params), ncol(params)), c(4, 22))
+
   testthat::expect_is(hdi(model), "data.frame")
   testthat::expect_is(ci(model), "data.frame")
   testthat::expect_is(rope(model), "data.frame")
