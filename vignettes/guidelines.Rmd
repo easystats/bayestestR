@@ -36,7 +36,7 @@ These guidelines can be referred to by citing the package:
 
 ## How to describe and report the parameters of a model
 
-The Bayesian inference returns a posterior distribution for each parameter (or *effect*). To minimally describe these distributions, we recommend reporting a point-estimate of [centrality](https://en.wikipedia.org/wiki/Central_tendency) as well as information characterizing the estimation uncertainty (the [dispersion](https://en.wikipedia.org/wiki/Statistical_dispersion)). Additionally, one can also report indices of effect existence and/or significance.
+A Bayesian analysis returns a posterior distribution for each parameter (or *effect*). To minimally describe these distributions, we recommend reporting a point-estimate of [centrality](https://en.wikipedia.org/wiki/Central_tendency) as well as information characterizing the estimation uncertainty (the [dispersion](https://en.wikipedia.org/wiki/Statistical_dispersion)). Additionally, one can also report indices of effect existence and/or significance.
 
 Based on the previous [**comparison of point-estimates**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html) and [**indices of effect existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html), we can draw the following recommendations.
 
@@ -64,7 +64,7 @@ Moreover, it is strongly correlated with the frequentist ***p*-value**, and can 
 
 #### **Significance** 
 
-The percentage in **ROPE** is a index of **significance** (in its primary meaning), informing us whether a parameter is related - or not - to a non-negligible change (in terms of magnitude) in the outcome. We suggest reporting the **percentage of the full posterior distribution** (the *full* ROPE) instead of a given proportion of CI, in the ROPE, which appears as more sensitive (especially do delineate highly significant effects). Rather then using it as a binary, all-or-nothing decision criterion, such as suggested by the original [equivalence test](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html#equivalence-test), we recommend using the percentage as a continuous index of significance. However, based on [simulation data](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html), we suggest the following reference values as an interpretation helpers:
+The percentage in **ROPE** is a index of **significance** (in its primary meaning), informing us whether a parameter is related - or not - to a non-negligible change (in terms of magnitude) in the outcome. We suggest reporting the **percentage of the full posterior distribution** (the *full* ROPE) instead of a given proportion of CI, in the ROPE, which appears as more sensitive (especially do delineate highly significant effects). Rather than using it as a binary, all-or-nothing decision criterion, such as suggested by the original [equivalence test](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html#equivalence-test), we recommend using the percentage as a continuous index of significance. However, based on [simulation data](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html), we suggest the following reference values as an interpretation helpers:
 
 
     - **\> 99\%** in ROPE: negligible (we can accept the null hypothesis)
@@ -85,7 +85,7 @@ Based on these suggestions, a template sentence for minimal reporting of a param
 
 ## How to compare different models
 
-Altough it can also be used to assess effect existence and signficance, the **Bayes factor (BF)** is a versatile index that can be used to directly compare different models (or data generation processes). The [Bayes factor](https://easystats.github.io/bayestestR/articles/bayes_factors.html) is a ratio, informing us by how much more (or less) the observed data is under two compared models - usually a model with an effect *vs.* a model without the effect. Depending on the specifications of the null model (whether it is a point-estimate (*e.g.*, **0**) or an interval), the Bayes factor could be used both in the context of effect existence and significance.
+Altough it can also be used to assess effect existence and signficance, the **Bayes factor (BF)** is a versatile index that can be used to directly compare different models (or data generation processes). The [Bayes factor](https://easystats.github.io/bayestestR/articles/bayes_factors.html) is a ratio, informing us by how much more (or less) likely the observed data are under two compared models - usually a model with an effect vs. a model *without* the effect. Depending on the specifications of the null model (whether it is a point-estimate (e.g., **0**) or an interval), the Bayes factor could be used both in the context of effect existence and significance.
 
 In general, a Bayes factor greater than 1 giving evidence in favour of one of the models, and a Bayes factor smaller than 1 giving evidence in favour of the other model. Several rules of thumb exist to help the interpretation (see [here](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf)), with **\> 3** being one common treshold to categorize non-anecdotal evidence.
  

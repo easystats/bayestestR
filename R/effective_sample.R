@@ -48,7 +48,7 @@ effective_sample.brmsfit <- function(model, effects = c("fixed", "random", "all"
   s <- s[make.names(rownames(s)) %in% colnames(pars), ]
 
   data.frame(
-    Parameter = rownames(s),
+    Parameter = make.names(rownames(s)),
     ESS = round(s[, "n_eff"]),
     stringsAsFactors = FALSE,
     row.names = NULL
