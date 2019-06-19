@@ -48,7 +48,7 @@ library(insight)
 
 ## Simple linear model (*aka* a regression)
 
-We will begin by a simple regression to test the relationship between **Petal.Length** (our predictor, - or *independent*, variable) and **Sepal.Length** (our response, - or *dependent*, variable) from the [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R. 
+We will begin by a simple regression to test the relationship between **Petal.Length** (our predictor, or *independent*, variable) and **Sepal.Length** (our response, or *dependent*, variable) from the [`iris`](https://en.wikipedia.org/wiki/Iris_flower_data_set) dataset, included by default in R. 
 
 
 ### Fitting the model
@@ -136,7 +136,7 @@ In this case, we indeed have **`2 chains * (1000 iterations - 250 warm-up) = 150
 #### Visualizing the posterior distribution
 
 
-Now that we've understood where do these values come from, let's look at them. We will start by visualizing the distribution of our parameter of interest, the effect of `Petal.Length`.
+Now that we've understood where these values come from, let's look at them. We will start by visualizing the distribution of our parameter of interest, the effect of `Petal.Length`.
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -148,7 +148,7 @@ This distribution represents the probability (the y axis) of different effects (
 
 > **Congrats! You've just described your posterior distribution.**
 
-And this is at the heart of Bayesian analysis. We don't need *p*-values, *t*-values or degrees of freedom: **everything is there, under our nose**, within this **posterior distribution**.
+And this is at the heart of Bayesian analysis. We don't need *p*-values, *t*-values or degrees of freedom: **everything is there**, within this **posterior distribution**.
 
 As you can see, our description is consistent with the values of the frequentist regression (which had a beta of **0.41**). This is reassuring! And indeed, in most cases, a **Bayesian analysis does not drastically change the results** or their interpretation. Rather, it makes the results more interpretable, intuitive and easy to understand and describe.
 
@@ -194,7 +194,7 @@ ggplot(posteriors, aes(x = Petal.Length)) +
   geom_vline(xintercept=map_estimate(posteriors$Petal.Length), color="purple", size=1)
 ```
 
-Well, all these values give very similar results. Thus, **we will chose the median**, as this value has a direct meaning from a probabilistic perspective: **there is 50\% chance that the true effect is higher and 50\% chance that the effect is lower** (as it *cuts* the distribution in two equal parts).
+Well, all these values give very similar results. Thus, **we will choose the median**, as this value has a direct meaning from a probabilistic perspective: **there is 50\% chance that the true effect is higher and 50\% chance that the effect is lower** (as it divides the distribution in two equal parts).
 
 
 #### Uncertainty
@@ -275,7 +275,7 @@ It makes you fat by around `51` (the median). However, the uncertainty is quite 
 
 Testing whether this distribution is different from 0 doesn't make sense, as 0 is a single value (*and the probability that any distribution is different from a single value is infinite*). 
 
-However, one way to assess **significance** could be to define an area around 0, which will consider as *equivalent* to zero (to no, - or negligible, effect). This is called the [**Region of Practical Equivalence (ROPE)**](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html), and is one way of testing the significance of parameters.
+However, one way to assess **significance** could be to define an area around 0, which will consider as *equivalent* to zero (*i.e.*, absence of, or negligible, effect). This is called the [**Region of Practical Equivalence (ROPE)**](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html), and is one way of testing the significance of parameters.
 
 **How can we define this region?**
 
@@ -328,7 +328,7 @@ With this reasonable definition of ROPE, we observe that the 89\% of the posteri
 
 ### Probability of Direction (pd)
 
-Maybe we are not interested in whether the effect is not-negligible. Maybe **we just want to know if this effect is positive or negative**. In this case, we can simply compute the proportion of the posterior that is positive, no matter the "size" of the effect. 
+Maybe we are not interested in whether the effect is non-negligible. Maybe **we just want to know if this effect is positive or negative**. In this case, we can simply compute the proportion of the posterior that is positive, no matter the "size" of the effect. 
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 n_positive <- posteriors %>% 
