@@ -75,7 +75,7 @@ ggplot(iris, aes(x=Petal.Length, y=Sepal.Length)) +
 ```
 
 
-Let's fit a **Bayesian version** of the model:
+Let's fit a **Bayesian version** of the model by using the `stan_glm` function in the `rstanarm` package:
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris)
@@ -260,7 +260,7 @@ ggplot(posteriors, aes(x=feedsunflower)) +
   geom_density(fill = "red")
 ```
 
-This represents the **posterior distribution of the difference between meat meals and Sunflowers**. Seems that the difference is rather **positive**... Eating Sunflowers makes you more fat (if you're a chicken). **By how much?** Let us compute the **median** and the **CI**:
+This represents the **posterior distribution of the difference between meat meals and Sunflowers**. Seems that the difference is rather **positive** (the values seems concentrated on the right side of 0)... Eating Sunflowers makes you more fat (*at least, if you're a chicken*). **By how much?** Let us compute the **median** and the **CI**:
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 median(posteriors$feedsunflower)

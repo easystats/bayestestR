@@ -58,22 +58,22 @@ The Bayesian framework allows to neatly delineate different aspects of hypothesi
 
 Moreover, it is strongly correlated with the frequentist ***p*-value**, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics. A **two-sided *p*-value** of respectively `.1`, `.05`, `.01` and `.001` would correspond approximately to a ***pd*** of 95\%, 97.5\%, 99.5\% and 99.95\%. Thus, for convenience, we suggest the following reference values as an interpretation helpers:
 
-    - *pd* **\<= 95\%** ~ *p* \> .1: uncertain
-    - *pd* **\> 95\%** ~ *p* \< .1: possibly existing
-    - *pd* **\> 97\%**: likely existing
-    - *pd* **\> 99\%**: probably existing
-    - *pd* **\> 99.9\%**: certainly existing
+  - *pd* **\<= 95\%** ~ *p* \> .1: uncertain
+  - *pd* **\> 95\%** ~ *p* \< .1: possibly existing
+  - *pd* **\> 97\%**: likely existing
+  - *pd* **\> 99\%**: probably existing
+  - *pd* **\> 99.9\%**: certainly existing
 
 #### **Significance** 
 
 The percentage in **ROPE** is a index of **significance** (in its primary meaning), informing us whether a parameter is related - or not - to a non-negligible change (in terms of magnitude) in the outcome. We suggest reporting the **percentage of the full posterior distribution** (the *full* ROPE) instead of a given proportion of CI, in the ROPE, which appears as more sensitive (especially do delineate highly significant effects). Rather than using it as a binary, all-or-nothing decision criterion, such as suggested by the original [equivalence test](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html#equivalence-test), we recommend using the percentage as a continuous index of significance. However, based on [simulation data](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html), we suggest the following reference values as an interpretation helpers:
 
 
-    - **\> 99\%** in ROPE: negligible (we can accept the null hypothesis)
-    - **\> 97.5\%** in ROPE: probably negligible
-    - **\<= 97.5\%** \& **\>= 2.5\%** in ROPE: undecided significance
-    - **\< 2.5\%** in ROPE: probably significant
-    - **\< 1\%** in ROPE: significant (we can reject the null hypothesis)
+  - **\> 99\%** in ROPE: negligible (we can accept the null hypothesis)
+  - **\> 97.5\%** in ROPE: probably negligible
+  - **\<= 97.5\%** \& **\>= 2.5\%** in ROPE: undecided significance
+  - **\< 2.5\%** in ROPE: probably significant
+  - **\< 1\%** in ROPE: significant (we can reject the null hypothesis)
 
 
 *Note that extra caution is required as its interpretation highly depends on other parameters such as sample size and ROPE range (see [here](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html#sensitivity-to-parameters-scale))*.

@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -179,8 +179,7 @@
 <p>To compute a Bayesian correlation test, we will need the <a href="https://richarddmorey.github.io/BayesFactor/"><code>BayesFactor</code></a> package (you can install it by running <code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("BayesFactor")</a></code>). We will then load this package, compute the correlation using the <code>correlationBF()</code> function and store the results in a similar fashion.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(BayesFactor)</a>
 <a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3">result &lt;-<span class="st"> </span><span class="kw">correlationBF</span>(iris<span class="op">$</span>Sepal.Width, iris<span class="op">$</span>Sepal.Length)</a>
-<a class="sourceLine" id="cb3-4" title="4">bayestestR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/bayestestR/topics/bayesfactor">bayesfactor</a></span>(result)</a></code></pre></div>
+<a class="sourceLine" id="cb3-3" title="3">result &lt;-<span class="st"> </span><span class="kw">correlationBF</span>(iris<span class="op">$</span>Sepal.Width, iris<span class="op">$</span>Sepal.Length)</a></code></pre></div>
 <p>Let us run our <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> function:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(result)</a></code></pre></div>
 <pre><code>&gt;   Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
@@ -192,7 +191,7 @@
 <div id="bayes-factor-bf" class="section level3">
 <h3 class="hasAnchor">
 <a href="#bayes-factor-bf" class="anchor"></a>Bayes factor (BF)</h3>
-<p>Remember how we said that a correlation test actually compared two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect)? Well the <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html"><strong>Bayes factor (BF)</strong></a> allows us to do <em>exactly</em> that, by examining <strong>under which of two models the observed data are more probable</strong>: a model with the effect of interest, and a null model without the effect of interest. We can use <code><a href="../reference/bayesfactor.html">bayesfactor()</a></code> to compute the Bayes factor comparing those models (<em>and many more</em>):</p>
+<p>We said that a correlation actually compares two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect). The <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html"><strong>Bayes factor (BF)</strong></a> allows the same comparison and determines <strong>under which of two models the observed data are more probable</strong>: a model with the effect of interest, and a null model without the effect of interest. We can use <code><a href="../reference/bayesfactor.html">bayesfactor()</a></code> to specifically compute the Bayes factor comparing those models (<em>and many more</em>):</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/bayesfactor.html">bayesfactor</a></span>(result)</a></code></pre></div>
 <pre><code>&gt; Bayes factor analysis
 &gt; ---------------------                         
@@ -203,7 +202,7 @@
 &gt; ---
 &gt; Bayes factor type:  JZS (BayesFactor)</code></pre>
 <p>We got a <em>BF</em> of <code>0.51</code>. What does it mean?</p>
-<p><strong>Bayes factors (BF)</strong> are continuous measures of relative evidence, with a Bayes factor greater than 1 giving evidence in favor of one of the models (often reffered to as <em>the numerator</em>), and a Bayes factor smaller than 1 giving evidence in favour of the other model (<em>the denominator</em>).</p>
+<p>Bayes factors are <strong>continuous measures of relative evidence</strong>, with a Bayes factor greater than 1 giving evidence in favor of one of the models (often referred to as <em>the numerator</em>), and a Bayes factor smaller than 1 giving evidence in favour of the other model (<em>the denominator</em>).</p>
 <blockquote>
 <p><strong>Yes, you heard things right, evidence in favour of the null!</strong></p>
 </blockquote>
@@ -216,7 +215,6 @@
 <div id="visualise-the-bayes-factor" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visualise-the-bayes-factor" class="anchor"></a>Visualise the Bayes factor</h3>
-<p>Visualization.</p>
 </div>
 </div>
 <div id="t-tests" class="section level2">

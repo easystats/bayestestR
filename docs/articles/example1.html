@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -160,7 +160,7 @@
 <div id="simple-linear-model-aka-a-regression" class="section level2">
 <h2 class="hasAnchor">
 <a href="#simple-linear-model-aka-a-regression" class="anchor"></a>Simple linear model (<em>aka</em> a regression)</h2>
-<p>We will begin by a simple regression to test the relationship between <strong>Petal.Length</strong> (our predictor, - or <em>independent</em>, variable) and <strong>Sepal.Length</strong> (our response, - or <em>dependent</em>, variable) from the <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set"><code>iris</code></a> dataset, included by default in R.</p>
+<p>We will begin by a simple regression to test the relationship between <strong>Petal.Length</strong> (our predictor, or <em>independent</em>, variable) and <strong>Sepal.Length</strong> (our response, or <em>dependent</em>, variable) from the <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set"><code>iris</code></a> dataset, included by default in R.</p>
 <div id="fitting-the-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fitting-the-model" class="anchor"></a>Fitting the model</h3>
@@ -194,7 +194,7 @@
 <a class="sourceLine" id="cb4-6" title="6"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st">  </span><span class="co"># This adds the points</span></a>
 <a class="sourceLine" id="cb4-7" title="7"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">"lm"</span>) <span class="co"># This adds a regression line</span></a></code></pre></div>
 <p><img src="example1_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<p>Let’s fit a <strong>Bayesian version</strong> of the model:</p>
+<p>Let’s fit a <strong>Bayesian version</strong> of the model by using the <code>stan_glm</code> function in the <code>rstanarm</code> package:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data=</span>iris)</a></code></pre></div>
 <p>You can see the sampling algorithm being run.</p>
 </div>
@@ -233,15 +233,15 @@
 <div id="visualizing-the-posterior-distribution" class="section level4">
 <h4 class="hasAnchor">
 <a href="#visualizing-the-posterior-distribution" class="anchor"></a>Visualizing the posterior distribution</h4>
-<p>Now that we’ve understood where do these values come from, let’s look at them. We will start by visualizing the distribution of our parameter of interest, the effect of <code>Petal.Length</code>.</p>
+<p>Now that we’ve understood where these values come from, let’s look at them. We will start by visualizing the distribution of our parameter of interest, the effect of <code>Petal.Length</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">ggplot</span>(posteriors, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Length)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb12-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">"orange"</span>)</a></code></pre></div>
 <p><img src="example1_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<p>This distribution represents the probability (the y axis) of different effects (the x axis). The central values are more probable than the extreme values. As you can see, this distribution ranges from about <strong>0.35 to 0.50</strong>, with the bulk of it being at around <strong>0.41</strong>.</p>
+<p>This distribution represents the <a href="https://en.wikipedia.org/wiki/Probability_density_function">probability</a> (the y axis) of different effects (the x axis). The central values are more probable than the extreme values. As you can see, this distribution ranges from about <strong>0.35 to 0.50</strong>, with the bulk of it being at around <strong>0.41</strong>.</p>
 <blockquote>
 <p><strong>Congrats! You’ve just described your posterior distribution.</strong></p>
 </blockquote>
-<p>And this is at the heart of Bayesian analysis. We don’t need <em>p</em>-values, <em>t</em>-values or degrees of freedom: <strong>everything is there, under our nose</strong>, within this <strong>posterior distribution</strong>.</p>
+<p>And this is at the heart of Bayesian analysis. We don’t need <em>p</em>-values, <em>t</em>-values or degrees of freedom: <strong>everything is there</strong>, within this <strong>posterior distribution</strong>.</p>
 <p>As you can see, our description is consistent with the values of the frequentist regression (which had a beta of <strong>0.41</strong>). This is reassuring! And indeed, in most cases, a <strong>Bayesian analysis does not drastically change the results</strong> or their interpretation. Rather, it makes the results more interpretable, intuitive and easy to understand and describe.</p>
 <p>We can now go ahead and <strong>precisely characterize</strong> this posterior distribution.</p>
 </div>
@@ -260,7 +260,7 @@
 <p>This is close to the frequentist beta. But as we know, the mean is quite sensitive to outliers or extremes values. Maybe the <strong>median</strong> could be more robust?</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(posteriors<span class="op">$</span>Petal.Length)</a></code></pre></div>
 <pre><code>&gt; [1] 0.41</code></pre>
-<p>Well, this is <strong>close to the mean</strong>. Maybe we could take the <strong>mode</strong>, the <em>peak</em> of the posterior distribution? In the Bayesian framework, this value is called the <strong>Maximum A Posteriori (MAP)</strong>. Let’s see:</p>
+<p>Well, this is <strong>very close to the mean</strong> (and identical when rounding the values). Maybe we could take the <strong>mode</strong>, the <em>peak</em> of the posterior distribution? In the Bayesian framework, this value is called the <strong>Maximum A Posteriori (MAP)</strong>. Let’s see:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="../reference/map_estimate.html">map_estimate</a></span>(posteriors<span class="op">$</span>Petal.Length)</a></code></pre></div>
 <pre><code>&gt; MAP = 0.41</code></pre>
 <p><strong>They are all very close!</strong> Let’s visualize these values on the posterior distribution:</p>
@@ -273,7 +273,7 @@
 <a class="sourceLine" id="cb19-7" title="7"><span class="st">  </span><span class="co"># The MAP in purple</span></a>
 <a class="sourceLine" id="cb19-8" title="8"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="kw"><a href="../reference/map_estimate.html">map_estimate</a></span>(posteriors<span class="op">$</span>Petal.Length), <span class="dt">color=</span><span class="st">"purple"</span>, <span class="dt">size=</span><span class="dv">1</span>)</a></code></pre></div>
 <p><img src="example1_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
-<p>Well, all these values give very similar results. Thus, <strong>we will chose the median</strong>, as this value has a direct meaning from a probabilistic perspective: <strong>there is 50% chance that the true effect is higher and 50% chance that the effect is lower</strong> (as it <em>cuts</em> the distribution in two equal parts).</p>
+<p>Well, all these values give very similar results. Thus, <strong>we will choose the median</strong>, as this value has a direct meaning from a probabilistic perspective: <strong>there is 50% chance that the true effect is higher and 50% chance that the effect is lower</strong> (as it divides the distribution in two equal parts).</p>
 </div>
 <div id="uncertainty" class="section level4">
 <h4 class="hasAnchor">
@@ -282,7 +282,7 @@
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/range">range</a></span>(posteriors<span class="op">$</span>Petal.Length)</a></code></pre></div>
 <pre><code>&gt; [1] 0.35 0.48</code></pre>
 <p>But does it make sense to include all these extreme values? Probably not. Thus, we will compute a <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>credible interval</strong></a>. Long story short, it’s kind of similar to a frequentist <strong>confidence interval</strong>, but it is easier to interpret and easier to compute. <em>And it makes more sense</em>.</p>
-<p>We will compute this <strong>credible interval</strong> based on the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis">Highest Density Interval (HDI)</a>. It will give us the range containing the 89% more probable effect values. <strong>Note that we will use 89% CIs instead of 95%</strong> CIs (as in the frequentist framework), as the 89% level gives more <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89">stable results</a> <span class="citation">(Kruschke 2014)</span> and reminds us about the arbitrarity of such conventions <span class="citation">(McElreath 2018)</span>.</p>
+<p>We will compute this <strong>credible interval</strong> based on the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis">Highest Density Interval (HDI)</a>. It will give us the range containing the 89% most probable effect values. <strong>Note that we will use 89% CIs instead of 95%</strong> CIs (as in the frequentist framework), as the 89% level gives more <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89">stable results</a> <span class="citation">(Kruschke 2014)</span> and reminds us about the arbitrarity of such conventions <span class="citation">(McElreath 2018)</span>.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="../reference/hdi.html">hdi</a></span>(posteriors<span class="op">$</span>Petal.Length, <span class="dt">ci=</span><span class="fl">0.89</span>)</a></code></pre></div>
 <pre><code>&gt; # Highest Density Interval
 &gt; 
@@ -303,7 +303,7 @@
 <div id="a-linear-model-with-a-categorical-predictor" class="section level2">
 <h2 class="hasAnchor">
 <a href="#a-linear-model-with-a-categorical-predictor" class="anchor"></a>A linear model with a categorical predictor</h2>
-<p>Let’s take interest in the <strong>weight of chickens</strong>, depending on 2 <strong>feed types</strong>. We will start by selecting, from the <code>chickwts</code> dataset (also available in base R), the 2 feed types that are of interest for us (<em>because reasons</em>): <strong>Meat meals</strong> and <strong>Sunflowers</strong>.</p>
+<p>Let’s take interest in the <strong>weight of chickens</strong>, depending on 2 <strong>feed types</strong>. We will start by selecting, from the <code>chickwts</code> dataset (also available in base R), the 2 feed types that are of interest for us (<em>we do have peculiar interests</em>): <strong>Meat meals</strong> and <strong>Sunflowers</strong>.</p>
 <div id="data-preparation-and-model-fitting" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data-preparation-and-model-fitting" class="anchor"></a>Data preparation and model fitting</h3>
@@ -323,7 +323,7 @@
 <a class="sourceLine" id="cb26-3" title="3"><span class="kw">ggplot</span>(posteriors, <span class="kw">aes</span>(<span class="dt">x=</span>feedsunflower)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb26-4" title="4"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">"red"</span>)</a></code></pre></div>
 <p><img src="example1_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
-<p>This represents the <strong>posterior distribution of the difference between meat meals and Sunflowers</strong>. Seems that the difference is rather <strong>positive</strong>… Eating Sunflowers makes you more fat (if you’re a chicken). <strong>By how much?</strong> Let us compute the <strong>median</strong> and the <strong>CI</strong>:</p>
+<p>This represents the <strong>posterior distribution of the difference between meat meals and Sunflowers</strong>. Seems that the difference is rather <strong>positive</strong> (the values seems concentrated on the right side of 0)… Eating Sunflowers makes you more fat (<em>at least, if you’re a chicken</em>). <strong>By how much?</strong> Let us compute the <strong>median</strong> and the <strong>CI</strong>:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(posteriors<span class="op">$</span>feedsunflower)</a></code></pre></div>
 <pre><code>&gt; [1] 51</code></pre>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw"><a href="../reference/hdi.html">hdi</a></span>(posteriors<span class="op">$</span>feedsunflower)</a></code></pre></div>
@@ -340,7 +340,7 @@
 <h3 class="hasAnchor">
 <a href="#rope-percentage" class="anchor"></a>ROPE Percentage</h3>
 <p>Testing whether this distribution is different from 0 doesn’t make sense, as 0 is a single value (<em>and the probability that any distribution is different from a single value is infinite</em>).</p>
-<p>However, one way to assess <strong>significance</strong> could be to define an area around 0, which will consider as <em>equivalent</em> to zero (to no, - or negligible, effect). This is called the <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html"><strong>Region of Practical Equivalence (ROPE)</strong></a>, and is one way of testing the significance of parameters.</p>
+<p>However, one way to assess <strong>significance</strong> could be to define an area around 0, which will consider as <em>equivalent</em> to zero (<em>i.e.</em>, absence of, or negligible, effect). This is called the <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html"><strong>Region of Practical Equivalence (ROPE)</strong></a>, and is one way of testing the significance of parameters.</p>
 <p><strong>How can we define this region?</strong></p>
 <blockquote>
 <p><strong><em>Driing driiiing</em></strong></p>
@@ -380,7 +380,7 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <div id="probability-of-direction-pd" class="section level3">
 <h3 class="hasAnchor">
 <a href="#probability-of-direction-pd" class="anchor"></a>Probability of Direction (pd)</h3>
-<p>Maybe we are not interested in whether the effect is not-negligible. Maybe <strong>we just want to know if this effect is positive or negative</strong>. In this case, we can simply compute the proportion of the posterior that is positive, no matter the “size” of the effect.</p>
+<p>Maybe we are not interested in whether the effect is non-negligible. Maybe <strong>we just want to know if this effect is positive or negative</strong>. In this case, we can simply compute the proportion of the posterior that is positive, no matter the “size” of the effect.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">n_positive &lt;-<span class="st"> </span>posteriors <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb39-2" title="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(feedsunflower <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># select only positive values</span></a>
 <a class="sourceLine" id="cb39-3" title="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>() <span class="co"># Get length</span></a>
