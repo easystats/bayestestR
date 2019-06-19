@@ -104,7 +104,7 @@ posteriors <- insight::get_parameters(model)
 head(posteriors)  # Show the first 6 rows
 ```
 
-As we can see, the parameters take the form of a wide dataframe with two columns, corresponding to the intercept and the effect of `Petal.Length`. These columns contain the **posterior distributions** of these two parameters. In simple terms, the posterior distribution is a set of different plausible values for each parameter.
+As we can see, the parameters take the form of a lengthy dataframe with two columns, corresponding to the `intercept` and the effect of `Petal.Length`. These columns contain the **posterior distributions** of these two parameters. In simple terms, the posterior distribution is a set of different plausible values for each parameter.
 
 #### About posterior draws
 
@@ -147,7 +147,7 @@ This distribution represents the [probability](https://en.wikipedia.org/wiki/Pro
 
 > **Congrats! You've just described your posterior distribution.**
 
-And this is at the heart of Bayesian analysis. We don't need *p* values, *t* values or degrees of freedom: **everything is there**, within this posterior distribution.
+And this is at the heart of Bayesian analysis. We don't need *p*-values, *t*-values or degrees of freedom: **everything is there**, within this posterior distribution.
 
 Our description above is consistent with the values obtained from the frequentist regression (which resulted in a beta of **0.41**). This is reassuring! Indeed, **in most cases a Bayesian analysis does not drastically change the results** or their interpretation. Rather, it makes the results more interpretable and intuitive, and eaasier to understand and describe.
 
@@ -159,7 +159,7 @@ Unfortunately, it is often not practical to report the whole posterior distribut
 
 1. A **point-estimate** which is a one-value summary (similar to the *beta* in frequentist regressions).
 2. A **credible interval** representing the associated uncertainty.
-3. And some **indices of significance**, giving information about the relative importance of this effect.
+3. Some **indices of significance**, giving information about the relative importance of this effect.
 
 
 #### Point-estimate
