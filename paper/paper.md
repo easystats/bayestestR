@@ -266,6 +266,6 @@ density_at(rnorm(1000, 1, 1), 1)
 
 # Acknowledgments
 
-We would like to thank the [easystats team](https://github.com/orgs/easystats/people), all other contributors as well as the users.
+We would like to thank the [council of masters](https://github.com/orgs/easystats/people) of easystats, all other padawan contributors as well as the users.
 
 # References
