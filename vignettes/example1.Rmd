@@ -144,7 +144,7 @@ ggplot(posteriors, aes(x = Petal.Length)) +
   geom_density(fill = "orange")
 ```
 
-This distribution represents the probability (the y axis) of different effects (the x axis). The central values are more probable than the extreme values. As you can see, this distribution ranges from about **0.35 to 0.50**, with the bulk of it being at around **0.41**.
+This distribution represents the [probability](https://en.wikipedia.org/wiki/Probability_density_function) (the y axis) of different effects (the x axis). The central values are more probable than the extreme values. As you can see, this distribution ranges from about **0.35 to 0.50**, with the bulk of it being at around **0.41**.
 
 > **Congrats! You've just described your posterior distribution.**
 
@@ -175,7 +175,7 @@ This is close to the frequentist beta. But as we know, the mean is quite sensiti
 median(posteriors$Petal.Length)
 ```
 
-Well, this is **close to the mean**. Maybe we could take the **mode**, the *peak* of the posterior distribution? In the Bayesian framework, this value is called the **Maximum A Posteriori (MAP)**. Let's see:
+Well, this is **very close to the mean** (and identical when rounding the values). Maybe we could take the **mode**, the *peak* of the posterior distribution? In the Bayesian framework, this value is called the **Maximum A Posteriori (MAP)**. Let's see:
 
 ```{r message=FALSE, warning=FALSE}
 map_estimate(posteriors$Petal.Length)
@@ -207,7 +207,7 @@ range(posteriors$Petal.Length)
 
 But does it make sense to include all these extreme values? Probably not. Thus, we will compute a [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html). Long story short, it's kind of similar to a frequentist **confidence interval**, but it is easier to interpret and easier to compute. *And it makes more sense*.
 
-We will compute this **credible interval** based on the [Highest Density Interval (HDI)](https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis). It will give us the range containing the 89\% more probable effect values. **Note that we will use 89\% CIs instead of 95\%** CIs (as in the frequentist framework), as the 89\% level gives more [stable results](https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89) [@kruschke2014doing] and reminds us about the arbitrarity of such conventions [@mcelreath2018statistical].
+We will compute this **credible interval** based on the [Highest Density Interval (HDI)](https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis). It will give us the range containing the 89\% most probable effect values. **Note that we will use 89\% CIs instead of 95\%** CIs (as in the frequentist framework), as the 89\% level gives more [stable results](https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89) [@kruschke2014doing] and reminds us about the arbitrarity of such conventions [@mcelreath2018statistical].
 
 ```{r message=FALSE, warning=FALSE}
 hdi(posteriors$Petal.Length, ci=0.89)
@@ -228,7 +228,7 @@ But this index is not very fine-grained, isn't it? **Can we do better? Yes.**
 
 ## A linear model with a categorical predictor
 
-Let's take interest in the **weight of chickens**, depending on 2 **feed types**. We will start by selecting, from the `chickwts` dataset (also available in base R), the 2 feed types that are of interest for us (*because reasons*): **Meat meals** and **Sunflowers**.
+Let's take interest in the **weight of chickens**, depending on 2 **feed types**. We will start by selecting, from the `chickwts` dataset (also available in base R), the 2 feed types that are of interest for us (*we do have peculiar interests*): **Meat meals** and **Sunflowers**.
 
 ### Data preparation and model fitting
 

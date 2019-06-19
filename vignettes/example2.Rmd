@@ -64,7 +64,6 @@ To compute a Bayesian correlation test, we will need the [`BayesFactor`](https:/
 library(BayesFactor)
 
 result <- correlationBF(iris$Sepal.Width, iris$Sepal.Length)
-bayestestR::bayesfactor(result)
 ```
 
 Let us run our `describe_posterior()` function:
@@ -77,7 +76,7 @@ We see again many things here, but the important indices for now are the **media
 
 ### Bayes factor (BF)
 
-We said that a correlation actually compares two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect). The [**Bayes factor (BF)**](https://easystats.github.io/bayestestR/articles/bayes_factors.html) allows the same comparison and determines **under which of two models the observed data are more probable**: a model with the effect of interest, and a null model without the effect of interest. We can use `bayesfactor()` to compute the Bayes factor comparing those models (*and many more*):
+We said that a correlation actually compares two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect). The [**Bayes factor (BF)**](https://easystats.github.io/bayestestR/articles/bayes_factors.html) allows the same comparison and determines **under which of two models the observed data are more probable**: a model with the effect of interest, and a null model without the effect of interest. We can use `bayesfactor()` to specifically compute the Bayes factor comparing those models (*and many more*):
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 bayesfactor(result)
@@ -101,7 +100,6 @@ We can thus conclude that there is **anecdotal evidence in favour of an absence 
 
 ### Visualise the Bayes factor
 
-Visualization.
 
 ## *t*-tests
 
