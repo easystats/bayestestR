@@ -190,9 +190,9 @@ map_estimate(posteriors$Petal.Length)
 ggplot(posteriors, aes(x = Petal.Length)) +
   geom_density(fill = "wheat") +
   # The mean in blue
-  geom_vline(xintercept=mean(posteriors$Petal.Length), color="steelblue3", size=1) +
+  geom_vline(xintercept=mean(posteriors$Petal.Length), color="blue", size=1) +
   # The median in red
-  geom_vline(xintercept=median(posteriors$Petal.Length), color="tomato3", size=1) +
+  geom_vline(xintercept=median(posteriors$Petal.Length), color="red", size=1) +
   # The MAP in purple
   geom_vline(xintercept=map_estimate(posteriors$Petal.Length), color="purple", size=1)
 ```
