@@ -42,7 +42,7 @@ Based on the previous [**comparison of point-estimates**](https://easystats.gith
 
 #### **Centrality**
 
-We suggest reporting the **median** as an index of centrality, as it is more robust compared to the mean or the MAP. However, in case of severly skewed posterior distributions, the MAP could be a good alternative.
+We suggest reporting the [**median**](https://easystats.github.io/bayestestR/reference/point_estimate.html) as an index of centrality, as it is more robust compared to the [mean](https://easystats.github.io/bayestestR/reference/point_estimate.html) or the [MAP estimate](https://easystats.github.io/bayestestR/reference/map_estimate.html). However, in case of severly skewed posterior distributions, the MAP estimate could be a good alternative.
  
 
 #### **Uncertainty** 

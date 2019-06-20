@@ -1,4 +1,4 @@
-#' Inclusion Bayes Factors for effects across Bayesian models
+#' Inclusion Bayes Factors for testing effects across Bayesian models
 #'
 #'
 #' @author Mattan S. Ben-Shachar
