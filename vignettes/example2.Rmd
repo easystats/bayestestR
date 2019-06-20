@@ -27,7 +27,7 @@ This vignette can be referred to by citing the package:
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(bayestestR)
-
+data(iris)
 library(knitr)
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">")
@@ -62,15 +62,22 @@ To compute a Bayesian correlation test, we will need the [`BayesFactor`](https:/
  
 ```{r message=FALSE, warning=FALSE, results='hide'}
 library(BayesFactor)
-
 result <- correlationBF(iris$Sepal.Width, iris$Sepal.Length)
 ```
 
 Let us run our `describe_posterior()` function:
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 describe_posterior(result)
 ```
+```{r echo=FALSE}
+structure(list(Parameter = "rho", Median = -0.114149129692488, 
+    CI = 89, CI_low = -0.240766308855643, CI_high = 0.00794997655649642, 
+    pd = 91.6, ROPE_CI = 89, ROPE_low = -0.1, ROPE_high = 0.1, 
+    ROPE_Percentage = 42.0949171581017, BF = 0.509017511647702, 
+    Prior_Distribution = "cauchy", Prior_Location = 0, Prior_Scale = 0.333333333333333), row.names = 1L, class = "data.frame")
+```
+
 
 We see again many things here, but the important indices for now are the **median** of the posterior distribution, `-.11`. This is (again) quite close to the frequentist correlation. We could, as previously, describe the [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html), the [**pd**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html) or the [**ROPE percentage**](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html), but we will focus here on another index provided by the Bayesian framework, the **Bayes factor**.
 
