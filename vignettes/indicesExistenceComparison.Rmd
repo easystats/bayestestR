@@ -206,7 +206,7 @@ df %>%
          index = factor(index, levels=c("p_direction", "p_MAP", "p_ROPE", "ROPE_89", "ROPE_95", "ROPE_full", "BF_log"))) %>%
   mutate(temp = as.factor(cut(sample_size, 3, labels = FALSE))) %>% 
   group_by(temp) %>% 
-  mutate(size_group = as.factor(round(mean(sample_size)))) %>% 
+  mutate(size_group = as.character(round(mean(sample_size)))) %>% 
   ungroup() %>% 
   ggplot(aes(x = p_value, y = value, color = true_effect, shape=size_group)) +
   geom_point(alpha=0.025, stroke = 0, shape=16) +
@@ -227,7 +227,7 @@ df$sig_001 <- factor(ifelse(df$p_value >= .001, "n.s.", "***"), levels=c("n.s.",
 
 
 get_data <- function(predictor, outcome, lbound=0, ubound=0.3){
-  fit <- glm(paste(outcome, "~ outcome_type * ", predictor), data=df, family = "binomial")
+  fit <- suppressWarnings(glm(paste(outcome, "~ outcome_type * ", predictor), data=df, family = "binomial"))
   # data <- data.frame(x=rep(1:100, 2))
   data <- data.frame(outcome_type=rep(c("linear", "binary"), each=100))
   data[predictor] <- rep(seq(lbound, ubound, length.out = 100), 2)
