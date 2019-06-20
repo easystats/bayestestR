@@ -236,7 +236,16 @@ get_data <- function(predictor, outcome, lbound=0, ubound=0.3){
   data[outcome] <- predict_fit$fit 
   data$CI_lower <- predict_fit$fit - (qnorm(0.99) * predict_fit$se.fit)
   data$CI_upper <- predict_fit$fit + (qnorm(0.99) * predict_fit$se.fit)
-  data <- select_(data, "value"=predictor, outcome, "outcome_type", "index", "CI_lower", "CI_upper")
+  data <-
+    select(
+      data,
+      "value" := !!predictor,
+      !!outcome,
+      .data$outcome_type,
+      .data$index,
+      .data$CI_lower,
+      .data$CI_upper
+    )
   return(data)
 }
 
