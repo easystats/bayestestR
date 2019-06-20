@@ -74,6 +74,7 @@ test_that("emmGrid rope", {
 
 test_that("emmGrid bayesfactor_savagedickey", {
   testthat::skip_on_travis()
+  testthat::skip_on_cran()
   set.seed(4)
   xsdbf <- bayesfactor_savagedickey(all_, prior = model)
   testthat::expect_equal(log(xsdbf$BF), c(-2.5764463544813, 2.00205724074489, -0.235346262395184), tolerance = 1e-4)
@@ -82,6 +83,7 @@ test_that("emmGrid bayesfactor_savagedickey", {
 
 test_that("emmGrid describe_posterior", {
   testthat::skip_on_travis()
+  testthat::skip_on_cran()
   set.seed(4)
   xpost <- describe_posterior(
     all_,
