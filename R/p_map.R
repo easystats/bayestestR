@@ -96,7 +96,6 @@ p_map.emmGrid <- function(x, precision = 2^10, ...) {
 #' @keywords internal
 .p_map_models <- function(x, precision, effects, component, parameters, ...) {
   out <- p_map(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), precision = precision, ...)
-  out$Parameter <- .get_parameter_names(x, effects = effects, component = component, parameters = parameters)
 
   out
 }

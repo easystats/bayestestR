@@ -21,7 +21,7 @@ test_that("emmGrid equivalence_test", {
   testthat::skip_on_travis()
   xeqtest <- equivalence_test(all_, ci = 0.9, range = c(-0.1, 0.1))
   testthat::expect_equal(xeqtest$ROPE_Percentage, c(5.53, 0, 1.83), tolerance = 0.2)
-  testthat::expect_equal(xeqtest$ROPE_Equivalence, c("undecided", "rejected", "undecided"))
+  testthat::expect_equal(xeqtest$ROPE_Equivalence, c("Undecided", "Rejected", "Undecided"))
 })
 
 test_that("emmGrid estimate_density", {
@@ -74,6 +74,7 @@ test_that("emmGrid rope", {
 
 test_that("emmGrid bayesfactor_savagedickey", {
   testthat::skip_on_travis()
+  testthat::skip_on_cran()
   set.seed(4)
   xsdbf <- bayesfactor_savagedickey(all_, prior = model)
   testthat::expect_equal(log(xsdbf$BF), c(-2.5764463544813, 2.00205724074489, -0.235346262395184), tolerance = 1e-4)
@@ -82,6 +83,7 @@ test_that("emmGrid bayesfactor_savagedickey", {
 
 test_that("emmGrid describe_posterior", {
   testthat::skip_on_travis()
+  testthat::skip_on_cran()
   set.seed(4)
   xpost <- describe_posterior(
     all_,

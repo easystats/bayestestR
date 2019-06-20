@@ -40,7 +40,7 @@ test_that("bayesfactor_savagedickey BRMS", {
   library(brms)
   brms_mixed_6 <- insight::download_model("brms_mixed_6")
   set.seed(222)
-  bfsd <- bayesfactor_savagedickey(brms_mixed_6, effects = "fixed")
+  bfsd <- bayestestR::bayesfactor_savagedickey(brms_mixed_6, effects = "fixed")
   testthat::expect_equal(log(bfsd$BF), c(-6.0, -5.8, 0.7, -2.7, -7.4), tolerance = 0.2)
 
   brms_mixed_1 <- insight::download_model("brms_mixed_1")

@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
       </span>
     </div>
 
@@ -323,28 +323,28 @@ for the output.</p></td>
 #&gt; </span><span>  ROPE: [-0.10 0.10]
 #&gt; 
 #&gt;        H0 inside ROPE      89% HDI
-#&gt;  accepted    100.00 % [-0.01 0.01]
+#&gt;  Accepted    100.00 % [-0.01 0.01]
 #&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
 #&gt; </span><span>  ROPE: [-0.10 0.10]
 #&gt; 
 #&gt;         H0 inside ROPE      89% HDI
-#&gt;  undecided      8.98 % [-1.34 1.83]
+#&gt;  Undecided      8.98 % [-1.34 1.83]
 #&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
 #&gt; </span><span>  ROPE: [-0.10 0.10]
 #&gt; 
 #&gt;        H0 inside ROPE     89% HDI
-#&gt;  rejected      0.00 % [0.98 1.01]
+#&gt;  Rejected      0.00 % [0.98 1.01]
 #&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>.99</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
 #&gt; </span><span>  ROPE: [-0.10 0.10]
 #&gt; 
 #&gt;        H0 inside ROPE      50% HDI
-#&gt;  rejected      0.00 % [ 0.30 1.57]
+#&gt;  Rejected      0.00 % [ 0.30 1.57]
 #&gt; 
 #&gt;         H0 inside ROPE      99% HDI
-#&gt;  undecided      5.25 % [-1.81 3.38]
+#&gt;  Undecided      5.25 % [-1.81 3.38]
 #&gt; </div><div class='input'>
 <span class='co'># print more digits</span>
 <span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'>equivalence_test</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>.99</span>))
@@ -353,10 +353,10 @@ for the output.</p></td>
 #&gt; </span><span>  ROPE: [-0.1000 0.1000]
 #&gt; 
 #&gt;        H0 inside ROPE          50% HDI
-#&gt;  rejected    0.0000 % [ 0.4613 1.7716]
+#&gt;  Rejected    0.0000 % [ 0.4613 1.7716]
 #&gt; 
 #&gt;         H0 inside ROPE          99% HDI
-#&gt;  undecided    5.3481 % [-1.5969 3.3517]
+#&gt;  Undecided    5.3481 % [-1.5969 3.3517]
 #&gt; </div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
@@ -403,7 +403,7 @@ for the output.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>.</p>
+  <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, <a href='http://www.humanfactors.io'>Michael D. Wilson</a>.</p>
 </div>
 
 <div class="pkgdown">

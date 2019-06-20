@@ -27,7 +27,7 @@ This vignette can be referred to by citing the package:
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(bayestestR)
-
+data(iris)
 library(knitr)
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">")
@@ -62,22 +62,28 @@ To compute a Bayesian correlation test, we will need the [`BayesFactor`](https:/
  
 ```{r message=FALSE, warning=FALSE, results='hide'}
 library(BayesFactor)
-
 result <- correlationBF(iris$Sepal.Width, iris$Sepal.Length)
-bayestestR::bayesfactor(result)
 ```
 
 Let us run our `describe_posterior()` function:
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 describe_posterior(result)
 ```
+```{r echo=FALSE}
+structure(list(Parameter = "rho", Median = -0.114149129692488, 
+    CI = 89, CI_low = -0.240766308855643, CI_high = 0.00794997655649642, 
+    pd = 91.6, ROPE_CI = 89, ROPE_low = -0.1, ROPE_high = 0.1, 
+    ROPE_Percentage = 42.0949171581017, BF = 0.509017511647702, 
+    Prior_Distribution = "cauchy", Prior_Location = 0, Prior_Scale = 0.333333333333333), row.names = 1L, class = "data.frame")
+```
+
 
 We see again many things here, but the important indices for now are the **median** of the posterior distribution, `-.11`. This is (again) quite close to the frequentist correlation. We could, as previously, describe the [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html), the [**pd**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html) or the [**ROPE percentage**](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html), but we will focus here on another index provided by the Bayesian framework, the **Bayes factor**.
 
 ### Bayes factor (BF)
 
-We said that a correlation actually compares two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect). The [**Bayes factor (BF)**](https://easystats.github.io/bayestestR/articles/bayes_factors.html) allows the same comparison and determines **under which of two models the observed data are more probable**: a model with the effect of interest, and a null model without the effect of interest. We can use `bayesfactor()` to compute the Bayes factor comparing those models (*and many more*):
+We said that a correlation actually compares two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect). The [**Bayes factor (BF)**](https://easystats.github.io/bayestestR/articles/bayes_factors.html) allows the same comparison and determines **under which of two models the observed data are more probable**: a model with the effect of interest, and a null model without the effect of interest. We can use `bayesfactor()` to specifically compute the Bayes factor comparing those models (*and many more*):
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 bayesfactor(result)
@@ -85,7 +91,7 @@ bayesfactor(result)
 
 We got a *BF* of `0.51`. What does it mean?
 
-Bayes factors are continuous measures of relative evidence, with a Bayes factor greater than 1 giving evidence in favor of one of the models (often referred to as *the numerator*), and a Bayes factor smaller than 1 giving evidence in favour of the other model (*the denominator*). 
+Bayes factors are **continuous measures of relative evidence**, with a Bayes factor greater than 1 giving evidence in favor of one of the models (often referred to as *the numerator*), and a Bayes factor smaller than 1 giving evidence in favour of the other model (*the denominator*). 
 
 > **Yes, you heard things right, evidence in favour of the null!**
 
@@ -101,7 +107,6 @@ We can thus conclude that there is **anecdotal evidence in favour of an absence 
 
 ### Visualise the Bayes factor
 
-Visualization.
 
 ## *t*-tests
 
