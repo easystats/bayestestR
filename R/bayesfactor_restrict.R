@@ -1,4 +1,4 @@
-#' Savage-Dickey density ratio Bayes Factor (BF)
+#' Bayes Factors (BF) for Order Restrict Models
 #'
 #' This method computes the
 #'
@@ -7,9 +7,29 @@
 #' @param hypothesis String ...
 #' @inheritParams hdi
 #'
-#' @details
-#' Order restriction are conducted by setting an order restriction on the prior and
-#' posterior distributions (\cite{Morey & Wagenmakers, 2013}).
+#' @details This method is used to compute Bayes factors for order-restricted models vs un-restricted
+#' models by setting an order restriction on the prior and posterior distributions
+#' (\cite{Morey & Wagenmakers, 2013}).
+#'
+#' When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
+#' extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
+#'
+#' \strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)} priors. See example below.
+#'
+#' \subsection{Setting the correct \code{prior}}{
+#' It is important to provide the correct \code{prior} for meaningful results.
+#' \itemize{
+#'   \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} or \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
+#'   \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
+#'   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column names.
+#' }}
+#' \subsection{Interpreting Bayes Factors}{
+#' A Bayes factor greater than 1 can be interpereted as evidence against the null,
+#' at which one convention is that a Bayes factor greater than 3 can be considered
+#' as "substantial" evidence against the null (and vice versa, a Bayes factor
+#' smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
+#' (\cite{Wetzels et al. 2011}).
+#' }
 #'
 #' @return A data frame containing the Bayes factor representing evidence \emph{against} the un-restricted model.
 #'
@@ -33,21 +53,32 @@
 #' library(rstanarm)
 #' fit_stan <- stan_glm(mpg ~ wt + cyl + am,
 #'                      data = mtcars)
-#' hyps <- c("am > 0 & cyl < 0","cyl < 0",
+#' hyps <- c("am > 0 & cyl < 0",
+#'           "cyl < 0",
 #'           "wt - cyl > 0")
 #' bayesfactor_restrict(fit_stan, hypothesis = hyps)
 #'
 #' # emmGrid objects
 #' # ---------------
 #' library(emmeans)
-#' fit <- stan_glm(mpg  ~ factor(cyl), mtcars, family = gaussian())
-#' em_cyl <- emmeans(fit, ~ cyl)
-#' em_cyl
-#' hyps <- c("`4` > 0", # note the ticks!
-#'           "`4` > `6`",
-#'           "`4` > `6` & `6` > `8`")
-#' bayesfactor_restrict(em_cyl, prior = fit, hypothesis = hyps)
-#' }
+#' options(contrasts=c('contr.bayes', 'contr.bayes')) # see `bfrms` package
+#'
+#' # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html
+#' disgust_data <- read.table(url('http://www.learnbayes.org/disgust_example.txt'),header=TRUE)
+#'
+#' fit_model <- stan_glm(score ~ condition, data = disgust_data, family = gaussian())
+#'
+#' em_condition <- emmeans(fit_model, ~ condition)
+#' hyps <- c("lemon < control & control < sulfur")
+#'
+#' bayesfactor_restrict(em_condition, prior = fit_model, hypothesis = hyps)
+#' #> # Bayes Factor (Order-Restriction)
+#' #>
+#' #>                          Hypothesis P(Prior) P(Posterior) Bayes Factor
+#' #>  lemon < control & control < sulfur     0.17         0.75         4.49
+#' #> ---
+#' #> Bayes factors for the restricted movel vs. the un-restricted model.
+#'}
 #'
 #' @references
 #' Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
