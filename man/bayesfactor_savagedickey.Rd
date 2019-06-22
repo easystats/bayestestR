@@ -10,24 +10,24 @@
 \title{Savage-Dickey density ratio Bayes Factor (BF)}
 \usage{
 bayesfactor_savagedickey(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0, verbose = TRUE, ...)
+  direction = "two-sided", null = 0, verbose = TRUE, ...)
 
 \method{bayesfactor_savagedickey}{numeric}(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0, verbose = TRUE, ...)
+  direction = "two-sided", null = 0, verbose = TRUE, ...)
 
 \method{bayesfactor_savagedickey}{stanreg}(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0, verbose = TRUE,
+  direction = "two-sided", null = 0, verbose = TRUE,
   effects = c("fixed", "random", "all"), ...)
 
 \method{bayesfactor_savagedickey}{brmsfit}(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0, verbose = TRUE,
+  direction = "two-sided", null = 0, verbose = TRUE,
   effects = c("fixed", "random", "all"), ...)
 
 \method{bayesfactor_savagedickey}{emmGrid}(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0, verbose = TRUE, ...)
+  direction = "two-sided", null = 0, verbose = TRUE, ...)
 
 \method{bayesfactor_savagedickey}{data.frame}(posterior, prior = NULL,
-  direction = "two-sided", hypothesis = 0, verbose = TRUE, ...)
+  direction = "two-sided", null = 0, verbose = TRUE, ...)
 }
 \arguments{
 \item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).}
@@ -37,7 +37,7 @@ bayesfactor_savagedickey(posterior, prior = NULL,
 \item{direction}{Test type (see details). One of \code{0}, \code{"two-sided"} (default, two tailed),
 \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).}
 
-\item{hypothesis}{Value to be tested against (usually \code{0} in the context of null hypothesis testing).}
+\item{null}{Value of the null model. If can be a scaler (for point-null model) or a a range (for a interval-null model). Defaults to \code{0} for a "classic" point-null test.}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -45,6 +45,8 @@ bayesfactor_savagedickey(posterior, prior = NULL,
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
+
+\item{hypothesis}{Depricated. use \code{null} instead.}
 }
 \value{
 A data frame containing the Bayes factor representing evidence \emph{against} the (point) null effect model.
@@ -72,7 +74,8 @@ It is important to provide the correct \code{prior} for meaningful results.
   \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
 }}
-\subsection{One-sided Tests (setting an order restriction)}{
+\subsection{One-sided & Intervall-Null Tests (setting an order restriction)}{
+## EDIT ##
 One sided tests (controlled by \code{direction}) are conducted by setting an order restriction on
 the prior and posterior distributions (\cite{Morey & Wagenmakers, 2013}).
 }
@@ -80,7 +83,7 @@ the prior and posterior distributions (\cite{Morey & Wagenmakers, 2013}).
 A Bayes factor greater than 1 can be interpereted as evidence against the null,
 at which one convention is that a Bayes factor greater than 3 can be considered
 as "substantial" evidence against the null (and vice versa, a Bayes factor
-smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
+smaller than 1/3 indicates substantial evidence in favor of the null-model)
 (\cite{Wetzels et al. 2011}).
 }
 }

@@ -7,13 +7,13 @@ test_that("bayesfactor_savagedickey numeric", {
   Xprior <- rnorm(1000)
   Xposterior <- rnorm(1000, 0.7, 0.2)
 
-  bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, hypothesis = 0, direction = 0)
+  bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, null = 0, direction = 0)
   testthat::expect_equal(log(bfsd$BF), 3.7, tolerance = 0.1)
 
-  bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, hypothesis = 0, direction = 1)
+  bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, null = 0, direction = 1)
   testthat::expect_equal(log(bfsd$BF), 4.3, tolerance = 0.1)
 
-  bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, hypothesis = 0, direction = -1)
+  bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, null = 0, direction = -1)
   testthat::expect_equal(log(bfsd$BF), -2.5, tolerance = 0.1)
 
   bfsd <- bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, hypothesis = 1, direction = 0)

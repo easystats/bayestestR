@@ -1,7 +1,7 @@
 #' @export
 print.bayesfactor_savagedickey <- function(x, digits = 2, log = FALSE, ...) {
   BFE <- x
-  hypothesis <- attr(BFE, "hypothesis")
+  null <- attr(BFE, "hypothesis")
   direction <- attr(BFE, "direction")
 
   if (log) {
@@ -26,7 +26,7 @@ print.bayesfactor_savagedickey <- function(x, digits = 2, log = FALSE, ...) {
 
   print.data.frame(BFE, digits = digits, row.names = FALSE)
   cat("---\n")
-  cat("Evidence Against Test Value: ", round(hypothesis, digits), "\n")
+  cat("Evidence Against The Null: [", paste0(round(null, digits),collapse = ", "), "]\n")
   if (direction < 0) {
     cat("Left-Sided test\n")
   } else if (direction > 0) {

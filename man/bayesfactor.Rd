@@ -17,7 +17,7 @@ bayesfactor(..., prior = NULL, direction = "two-sided",
 \item{direction}{Test type (see details). One of \code{0}, \code{"two-sided"} (default, two tailed),
 \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).}
 
-\item{hypothesis}{Value to be tested against (usually \code{0} in the context of null hypothesis testing).}
+\item{hypothesis}{Depricated. use \code{null} instead.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}

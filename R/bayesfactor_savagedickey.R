@@ -11,7 +11,8 @@
 #' @param prior An object representing a prior distribution (see Details).
 #' @param direction Test type (see details). One of \code{0}, \code{"two-sided"} (default, two tailed),
 #' \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).
-#' @param hypothesis Value to be tested against (usually \code{0} in the context of null hypothesis testing).
+#' @param null Value of the null model. If can be a scaler (for point-null model) or a a range (for a interval-null model). Defaults to \code{0} for a "classic" point-null test.
+#' @param hypothesis Depricated. use \code{null} instead.
 #' @inheritParams hdi
 #'
 #' @return A data frame containing the Bayes factor representing evidence \emph{against} the (point) null effect model.
@@ -30,7 +31,8 @@
 #'   \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
 #'   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
 #' }}
-#' \subsection{One-sided Tests (setting an order restriction)}{
+#' \subsection{One-sided & Intervall-Null Tests (setting an order restriction)}{
+#' ## EDIT ##
 #' One sided tests (controlled by \code{direction}) are conducted by setting an order restriction on
 #' the prior and posterior distributions (\cite{Morey & Wagenmakers, 2013}).
 #' }
@@ -38,7 +40,7 @@
 #' A Bayes factor greater than 1 can be interpereted as evidence against the null,
 #' at which one convention is that a Bayes factor greater than 3 can be considered
 #' as "substantial" evidence against the null (and vice versa, a Bayes factor
-#' smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
+#' smaller than 1/3 indicates substantial evidence in favor of the null-model)
 #' (\cite{Wetzels et al. 2011}).
 #' }
 #'
@@ -87,18 +89,15 @@
 #' @author Mattan S. Ben-Shachar
 #'
 #' @export
-bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, verbose = TRUE, ...) {
+bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
   UseMethod("bayesfactor_savagedickey")
 }
 
 
 #' @rdname bayesfactor_savagedickey
 #' @export
-bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", hypothesis = 0, verbose = TRUE, ...) {
-  # nm <- .safe_deparse(substitute(posterior))
-
-  # find direction
-  direction <- .get_direction(direction)
+bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
+  # nm <- .safe_deparse(substitute(posterior)
 
   if (is.null(prior)) {
     prior <- posterior
@@ -112,12 +111,12 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
   }
   prior <- data.frame(X = prior)
   posterior <- data.frame(X = posterior)
-  colnames(posterior) <- colnames(prior) <- "X" # nm
+  # colnames(posterior) <- colnames(prior) <- nm
 
   # Get savage-dickey BFs
   sdbf <- bayesfactor_savagedickey.data.frame(
     posterior = posterior, prior = prior,
-    direction = direction, hypothesis = hypothesis
+    direction = direction, null = null, ...
   )
   sdbf$Parameter <- NULL
   sdbf
@@ -128,7 +127,7 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
 #' @rdname bayesfactor_savagedickey
 #' @export
 bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
-                                             direction = "two-sided", hypothesis = 0,
+                                             direction = "two-sided", null = 0,
                                              verbose = TRUE,
                                              effects = c("fixed", "random", "all"),
                                              ...) {
@@ -145,7 +144,7 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
   # Get savage-dickey BFs
   bayesfactor_savagedickey.data.frame(
     posterior = posterior, prior = prior,
-    direction = direction, hypothesis = hypothesis
+    direction = direction, null = null, ...
   )
 }
 
@@ -162,7 +161,7 @@ bayesfactor_savagedickey.brmsfit <- bayesfactor_savagedickey.stanreg
 #' @rdname bayesfactor_savagedickey
 #' @export
 bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
-                                             direction = "two-sided", hypothesis = 0,
+                                             direction = "two-sided", null = 0,
                                              verbose = TRUE,
                                              ...) {
   if (!requireNamespace("emmeans")) {
@@ -186,7 +185,7 @@ bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
 
   bayesfactor_savagedickey.data.frame(
     posterior = posterior, prior = prior,
-    direction = direction, hypothesis = hypothesis
+    direction = direction, null = null, ...
   )
 }
 
@@ -195,9 +194,14 @@ bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
 #' @rdname bayesfactor_savagedickey
 #' @export
 bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
-                                                direction = "two-sided", hypothesis = 0,
+                                                direction = "two-sided", null = 0,
                                                 verbose = TRUE,
                                                 ...) {
+  dots <- list(...)
+  if (!is.null(dots$hypothesis)) {
+    null <- dots$hypothesis
+    warning("The 'hypothesis' argument is depricated. Please use 'null' instead.")
+  }
   # find direction
   direction <- .get_direction(direction)
 
@@ -216,7 +220,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
       posterior[[par]],
       prior[[par]],
       direction = direction,
-      hypothesis = hypothesis
+      null = null
     )
   }
 
@@ -232,9 +236,9 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     class(bf_val)
   ))
 
-  attr(bf_val, "hypothesis") <- hypothesis
+  attr(bf_val, "hypothesis") <- null
   attr(bf_val, "direction") <- direction
-  attr(bf_val, "plot_data") <- .make_sdBF_plot_data(posterior, prior, direction, hypothesis)
+  attr(bf_val, "plot_data") <- .make_sdBF_plot_data(posterior, prior, direction, null)
 
   bf_val
 }
@@ -243,45 +247,98 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 
 #' @keywords internal
 #' @importFrom insight print_color
-.bayesfactor_savagedickey <- function(posterior, prior, direction = 0, hypothesis = 0) {
+.bayesfactor_savagedickey <- function(posterior, prior, direction = 0, null = 0) {
   if (isTRUE(all.equal(posterior, prior))) {
     return(1)
   }
 
-  if (requireNamespace("logspline", quietly = TRUE)) {
-    relative_density <- function(samples) {
-      f_samples <- suppressWarnings(logspline::logspline(samples))
-      d_samples <- logspline::dlogspline(hypothesis, f_samples)
-
-      if (direction < 0) {
-        norm_samples <- logspline::plogspline(hypothesis, f_samples)
-      } else if (direction > 0) {
-        norm_samples <- 1 - logspline::plogspline(hypothesis, f_samples)
-      } else {
-        norm_samples <- 1
-      }
-
-      d_samples / norm_samples
-    }
-  } else {
-    insight::print_color("Consider installing the \"logspline\" package for a more robust estimate.\n", "red")
-    relative_density <- function(samples) {
-      d_samples <- density_at(samples, hypothesis)
-
-      if (direction < 0) {
-        norm_samples <- mean(samples < hypothesis)
-      } else if (direction > 0) {
-        norm_samples <- 1 - mean(samples < 0)
-      } else {
-        norm_samples <- 1
-      }
-
-      d_samples / norm_samples
-    }
+  if (!requireNamespace("rstanarm")) {
+    stop("Package \"logspline\" needed for this function to work. Please install it.")
   }
 
-  relative_density(prior) /
-    relative_density(posterior)
+
+  if (length(null) == 1) {
+    relative_density <- function(samples) {
+      f_samples <- suppressWarnings(logspline::logspline(samples))
+      d_samples <- logspline::dlogspline(null, f_samples)
+
+      if (direction < 0) {
+        norm_samples <- logspline::plogspline(null, f_samples)
+      } else if (direction > 0) {
+        norm_samples <- 1 - logspline::plogspline(null, f_samples)
+      } else {
+        norm_samples <- 1
+      }
+
+      d_samples / norm_samples
+    }
+
+    return(relative_density(prior) /
+             relative_density(posterior))
+
+  } else if (length(null) == 2) {
+    # this isn't *really* a sdBF... :/
+    null <- sort(null)
+    null[is.infinite(null)] <- 1.797693e+308 * sign(null[is.infinite(null)])
+
+    f_prior <- logspline::logspline(prior)
+    f_posterior <- logspline::logspline(posterior)
+
+    h0_prior <- diff(logspline::plogspline(null,f_prior))
+    h0_post <- diff(logspline::plogspline(null,f_posterior))
+
+    BF_null_full <- h0_post/h0_prior
+
+    if (direction < 0) {
+      h1_prior <- logspline::plogspline(min(null),f_prior)
+      h1_post <- logspline::plogspline(min(null),f_posterior)
+    } else if (direction > 0) {
+      h1_prior <- 1 - logspline::plogspline(max(null),f_prior)
+      h1_post <- 1 - logspline::plogspline(max(null),f_posterior)
+    } else {
+      h1_prior <- 1 - h0_prior
+      h1_post <- 1 - h0_post
+    }
+    BF_alt_full <- h1_post/h1_prior
+
+    return(BF_alt_full / BF_null_full)
+  } else {
+    stop("'null' must be of length 1 or 2")
+  }
+#   if (requireNamespace("logspline", quietly = TRUE)) {
+#     relative_density <- function(samples) {
+#       f_samples <- suppressWarnings(logspline::logspline(samples))
+#       d_samples <- logspline::dlogspline(null, f_samples)
+#
+#       if (direction < 0) {
+#         norm_samples <- logspline::plogspline(null, f_samples)
+#       } else if (direction > 0) {
+#         norm_samples <- 1 - logspline::plogspline(null, f_samples)
+#       } else {
+#         norm_samples <- 1
+#       }
+#
+#       d_samples / norm_samples
+#     }
+#   } else {
+#     insight::print_color("Consider installing the \"logspline\" package for a more robust estimate.\n", "red")
+#     relative_density <- function(samples) {
+#       d_samples <- density_at(samples, null)
+#
+#       if (direction < 0) {
+#         norm_samples <- mean(samples < null)
+#       } else if (direction > 0) {
+#         norm_samples <- 1 - mean(samples < 0)
+#       } else {
+#         norm_samples <- 1
+#       }
+#
+#       d_samples / norm_samples
+#     }
+#   }
+#
+#   relative_density(prior) /
+#     relative_density(posterior)
 }
 
 
@@ -309,7 +366,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @importFrom stats median mad approx
 #' @importFrom utils stack
 #' @keywords internal
-.make_sdBF_plot_data <- function(posterior, prior, direction, hypothesis) {
+.make_sdBF_plot_data <- function(posterior, prior, direction, null) {
   if (requireNamespace("logspline", quietly = TRUE)) {
     density_method <- "logspline"
   } else {
@@ -355,18 +412,18 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
       }
 
       # 2. estimate points
-      d_null <- stats::approx(d_points$x, d_points$y, xout = hypothesis)
+      d_null <- stats::approx(d_points$x, d_points$y, xout = null)
       d_null$y[is.na(d_null$y)] <- 0
 
       # 3. direction?
       if (direction > 0) {
-        d_points <- d_points[d_points$x > hypothesis, , drop = FALSE]
-        d_points$y <- d_points$y / mean(data$values > hypothesis)
-        d_null$y <- d_null$y / mean(data$values > hypothesis)
+        d_points <- d_points[d_points$x > null, , drop = FALSE]
+        d_points$y <- d_points$y / mean(data$values > null)
+        d_null$y <- d_null$y / mean(data$values > null)
       } else if (direction < 0) {
-        d_points <- d_points[d_points$x < hypothesis, , drop = FALSE]
-        d_points$y <- d_points$y / mean(data$values < hypothesis)
-        d_null$y <- d_null$y / mean(data$values < hypothesis)
+        d_points <- d_points[d_points$x < null, , drop = FALSE]
+        d_points$y <- d_points$y / mean(data$values < null)
+        d_null$y <- d_null$y / mean(data$values < null)
       }
 
       d_points$ind <- d_null$ind <- data$ind[1]
