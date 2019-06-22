@@ -252,7 +252,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
     return(1)
   }
 
-  if (!requireNamespace("rstanarm")) {
+  if (!requireNamespace("logspline")) {
     stop("Package \"logspline\" needed for this function to work. Please install it.")
   }
 
@@ -367,10 +367,8 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @importFrom utils stack
 #' @keywords internal
 .make_sdBF_plot_data <- function(posterior, prior, direction, null) {
-  if (requireNamespace("logspline", quietly = TRUE)) {
-    density_method <- "logspline"
-  } else {
-    density_method <- "kernel"
+  if (!requireNamespace("logspline")) {
+    stop("Package \"logspline\" needed for this function to work. Please install it.")
   }
 
   estimate_samples_density <- function(samples) {
@@ -396,20 +394,10 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
       x_range[1] <- x_range[1] - extension_scale
       x_range[2] <- x_range[2] + extension_scale
 
-      if (requireNamespace("logspline", quietly = TRUE)) {
-        x_axis <- seq(x_range[1], x_range[2], length.out = precision)
-        y <- logspline::dlogspline(x_axis, logspline::logspline(x))
-        d_points <- data.frame(x = x_axis, y = y)
-      } else {
-        d_points <-
-          as.data.frame(density(
-            x,
-            n = precision,
-            bw = "SJ",
-            from = x_range[1],
-            to = x_range[2]
-          ))
-      }
+      x_axis <- seq(x_range[1], x_range[2], length.out = precision)
+      f_x <- logspline::logspline(x)
+      y <- logspline::dlogspline(x_axis, f_x)
+      d_points <- data.frame(x = x_axis, y = y)
 
       # 2. estimate points
       d_null <- stats::approx(d_points$x, d_points$y, xout = null)
@@ -418,12 +406,14 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
       # 3. direction?
       if (direction > 0) {
         d_points <- d_points[d_points$x > null, , drop = FALSE]
-        d_points$y <- d_points$y / mean(data$values > null)
-        d_null$y <- d_null$y / mean(data$values > null)
+        norm_factor <- 1 - logspline::plogspline(null,f_x)
+        d_points$y <- d_points$y / norm_factor
+        d_null$y <- d_null$y / norm_factor
       } else if (direction < 0) {
         d_points <- d_points[d_points$x < null, , drop = FALSE]
-        d_points$y <- d_points$y / mean(data$values < null)
-        d_null$y <- d_null$y / mean(data$values < null)
+        norm_factor <- logspline::plogspline(null,f_x)
+        d_points$y <- d_points$y / norm_factor
+        d_null$y <- d_null$y / norm_factor
       }
 
       d_points$ind <- d_null$ind <- data$ind[1]
