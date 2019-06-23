@@ -39,9 +39,11 @@ Only applies to mixed models. May be abbreviated.}
 A data frame containing the Bayes factor representing evidence \emph{against} the un-restricted model.
 }
 \description{
-This method computes the
+This method computes the...
 }
 \details{
+\emp{Should only be used for confirmatory analysis...}
+
 This method is used to compute Bayes factors for order-restricted models vs un-restricted
 models by setting an order restriction on the prior and posterior distributions
 (\cite{Morey & Wagenmakers, 2013}).
