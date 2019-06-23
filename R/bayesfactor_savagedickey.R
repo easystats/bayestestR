@@ -305,40 +305,6 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   } else {
     stop("'null' must be of length 1 or 2")
   }
-#   if (requireNamespace("logspline", quietly = TRUE)) {
-#     relative_density <- function(samples) {
-#       f_samples <- suppressWarnings(logspline::logspline(samples))
-#       d_samples <- logspline::dlogspline(null, f_samples)
-#
-#       if (direction < 0) {
-#         norm_samples <- logspline::plogspline(null, f_samples)
-#       } else if (direction > 0) {
-#         norm_samples <- 1 - logspline::plogspline(null, f_samples)
-#       } else {
-#         norm_samples <- 1
-#       }
-#
-#       d_samples / norm_samples
-#     }
-#   } else {
-#     insight::print_color("Consider installing the \"logspline\" package for a more robust estimate.\n", "red")
-#     relative_density <- function(samples) {
-#       d_samples <- density_at(samples, null)
-#
-#       if (direction < 0) {
-#         norm_samples <- mean(samples < null)
-#       } else if (direction > 0) {
-#         norm_samples <- 1 - mean(samples < 0)
-#       } else {
-#         norm_samples <- 1
-#       }
-#
-#       d_samples / norm_samples
-#     }
-#   }
-#
-#   relative_density(prior) /
-#     relative_density(posterior)
 }
 
 

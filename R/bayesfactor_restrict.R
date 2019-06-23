@@ -1,6 +1,8 @@
 #' Bayes Factors (BF) for Order Restrict Models
 #'
-#' This method computes the
+#' This method computes the...
+#'
+#' \emp{Should only be used for confirmatory analysis...}
 #'
 #' @param posterior A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).
 #' @param prior An object representing a prior distribution (see Details).
@@ -164,7 +166,17 @@ bayesfactor_restrict.data.frame <- function(posterior, prior = NULL, hypothesis)
   }
 
   .get_prob <- function(x,data){
-    mean(eval(x, envir = data))
+    x_logical <- try(eval(x, envir = data), silent = TRUE)
+    if (inherits(x_logical,"try-error")) {
+      cnames <- colnames(data)
+      is_name <- make.names(cnames) == cnames
+      cnames[!is_name] <- paste0("`",cnames[!is_name],"`")
+      cnames <- paste0(cnames, collapse = ", ")
+      stop(x_logical,"Available parameters are: ",cnames)
+    } else if (!all(is.logical(x_logical))) {
+      stop("Hypotheses must be logical")
+    }
+    mean(x_logical)
   }
 
   posterior_p <- sapply(p_hypothesis, .get_prob, data = posterior)
