@@ -200,7 +200,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   dots <- list(...)
   if (!is.null(dots$hypothesis)) {
     null <- dots$hypothesis
-    warning("The 'hypothesis' argument is depricated. Please use 'null' instead.")
+    warning("The 'hypothesis' argument is deprecated. Please use 'null' instead.")
   }
   # find direction
   direction <- .get_direction(direction)
