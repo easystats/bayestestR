@@ -1,5 +1,5 @@
 #' @export
-print.bayesfactor_restrict <- function(x, digits = 2, log = FALSE, ...) {
+print.bayesfactor_restricted <- function(x, digits = 2, log = FALSE, ...) {
   BFE <- x
 
   if (log) {

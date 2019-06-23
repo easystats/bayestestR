@@ -1,4 +1,4 @@
-#' Bayes Factors (BF) for Order Restrict Models
+#' Bayes Factors (BF) for Order Restricted Models
 #'
 #' This method computes the...
 #'
@@ -12,6 +12,9 @@
 #' @details This method is used to compute Bayes factors for order-restricted models vs un-restricted
 #' models by setting an order restriction on the prior and posterior distributions
 #' (\cite{Morey & Wagenmakers, 2013}).
+#'
+#' Though it is possible to use \code{bayesfactor_restricted} to test interval restrictions,
+#' it is more suitable for testing order restrictions (see examples).
 #'
 #' When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
 #' extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
@@ -48,7 +51,7 @@
 #' hyps = c("X > X1 & X1 > X3",
 #'          "X > X1")
 #'
-#' bayesfactor_restrict(posterior,prior,hypothesis = hyps)
+#' bayesfactor_restricted(posterior,prior,hypothesis = hyps)
 #' \dontrun{
 #' # rstanarm models
 #' # ---------------
@@ -58,7 +61,7 @@
 #' hyps <- c("am > 0 & cyl < 0",
 #'           "cyl < 0",
 #'           "wt - cyl > 0")
-#' bayesfactor_restrict(fit_stan, hypothesis = hyps)
+#' bayesfactor_restricted(fit_stan, hypothesis = hyps)
 #'
 #' # emmGrid objects
 #' # ---------------
@@ -73,7 +76,7 @@
 #' em_condition <- emmeans(fit_model, ~ condition)
 #' hyps <- c("lemon < control & control < sulfur")
 #'
-#' bayesfactor_restrict(em_condition, prior = fit_model, hypothesis = hyps)
+#' bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
 #' #> # Bayes Factor (Order-Restriction)
 #' #>
 #' #>                          Hypothesis P(Prior) P(Posterior) Bayes Factor
@@ -86,14 +89,14 @@
 #' Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
 #'
 #' @export
-bayesfactor_restrict <- function(posterior, prior = NULL, hypothesis, verbose = TRUE, ...) {
-  UseMethod("bayesfactor_restrict")
+bayesfactor_restricted <- function(posterior, prior = NULL, hypothesis, verbose = TRUE, ...) {
+  UseMethod("bayesfactor_restricted")
 }
 
 #' @importFrom insight get_parameters
-#' @rdname bayesfactor_restrict
+#' @rdname bayesfactor_restricted
 #' @export
-bayesfactor_restrict.stanreg <- function(posterior, prior = NULL,
+bayesfactor_restricted.stanreg <- function(posterior, prior = NULL,
                                          hypothesis,
                                          verbose = TRUE,
                                          effects = c("fixed", "random", "all"),
@@ -109,21 +112,21 @@ bayesfactor_restrict.stanreg <- function(posterior, prior = NULL,
   posterior <- insight::get_parameters(posterior, effects = effects)
 
   # Get savage-dickey BFs
-  bayesfactor_restrict.data.frame(
+  bayesfactor_restricted.data.frame(
     posterior = posterior, prior = prior,
     hypothesis = hypothesis
   )
 }
 
-#' @rdname bayesfactor_restrict
+#' @rdname bayesfactor_restricted
 #' @export
-bayesfactor_restrict.brmsfit <- bayesfactor_restrict.stanreg
+bayesfactor_restricted.brmsfit <- bayesfactor_restricted.stanreg
 
 #' @importFrom stats update
 #' @importFrom insight get_parameters
-#' @rdname bayesfactor_restrict
+#' @rdname bayesfactor_restricted
 #' @export
-bayesfactor_restrict.emmGrid <- function(posterior, prior = NULL,
+bayesfactor_restricted.emmGrid <- function(posterior, prior = NULL,
                                          hypothesis,
                                          verbose = TRUE,
                                          ...) {
@@ -146,14 +149,14 @@ bayesfactor_restrict.emmGrid <- function(posterior, prior = NULL,
   prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(prior, names = FALSE)))
   posterior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posterior, names = FALSE)))
 
-  bayesfactor_restrict.data.frame(
+  bayesfactor_restricted.data.frame(
     posterior = posterior, prior = prior,
     hypothesis = hypothesis
   )
 }
 
 #' @export
-bayesfactor_restrict.data.frame <- function(posterior, prior = NULL, hypothesis) {
+bayesfactor_restricted.data.frame <- function(posterior, prior = NULL, hypothesis) {
   p_hypothesis <- parse(text = hypothesis)
 
   if (is.null(prior)) {
@@ -190,7 +193,7 @@ bayesfactor_restrict.data.frame <- function(posterior, prior = NULL, hypothesis)
                     BF = BF)
 
   class(res) <- unique(c(
-    "bayesfactor_restrict",
+    "bayesfactor_restricted",
     class(res)
   ))
 
