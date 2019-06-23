@@ -8,13 +8,7 @@ print.bayesfactor_models <- function(x, digits = 2, log = FALSE, ...) {
   if (log) {
     BFE$BF <- log(BFE$BF)
   }
-  xBF <- BFE$BF
-  BFE$BF <- as.character(round(xBF, digits = digits))
-  big_ind <- abs(xBF) >= 1000 | abs(xBF) < 1 / (10^digits)
-  big_ind <- sapply(big_ind, isTRUE)
-  if (isTRUE(any(big_ind))) {
-    BFE$BF[big_ind] <- formatC(xBF, format = "e", digits = digits)[big_ind]
-  }
+  BFE$BF <- format_big_small(BFE$BF, digits = digits)
 
   # indicate null-model
   BFE$Model[BFE$Model == "1"] <- "(Intercept only)"
