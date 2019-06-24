@@ -20,7 +20,7 @@ print.bayesfactor_savagedickey <- function(x, digits = 2, log = FALSE, ...) {
 
   print.data.frame(BFE, digits = digits, row.names = FALSE)
   cat("---\n")
-  cat("Evidence Against The Null: [", paste0(round(null, digits),collapse = ", "), "]\n")
+  cat("Evidence Against The Null: [", paste0(round(null, digits),collapse = ", "), "]\n", sep = "")
   if (direction < 0) {
     cat("Left-Sided test\n")
   } else if (direction > 0) {
