@@ -43,7 +43,7 @@ test_that("emmGrid hdi", {
 test_that("emmGrid p_direction", {
   testthat::skip_on_travis()
   xpd <- p_direction(all_, method = "direct")
-  testthat::expect_equal(xpd$pd, c(90.25, 99.9, 95.2), tolerance = 0.1)
+  testthat::expect_equal(xpd$pd, c(0.9025, 0.999, 0.952), tolerance = 0.01)
 })
 
 test_that("emmGrid p_map", {
@@ -55,7 +55,7 @@ test_that("emmGrid p_map", {
 test_that("emmGrid p_rope", {
   testthat::skip_on_travis()
   xprope <- p_rope(all_, range = c(-0.1, 0.1), precision = 0.5)
-  testthat::expect_equal(xprope$p_ROPE, c(69.5, 100, 87), tolerance = 0.1)
+  testthat::expect_equal(xprope$p_ROPE, c(0.695, 1, 0.87), tolerance = 0.01)
 })
 
 test_that("emmGrid point_estimate", {

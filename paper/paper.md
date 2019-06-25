@@ -152,7 +152,7 @@ equivalence_test(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
 
 [**`p_direction()`**](https://easystats.github.io/bayestestR/reference/p_direction.html)
 computes the **Probability of Direction** (***p*d**, also known as the
-Maximum Probability of Effect - *MPE*). It varies between 50% and 100%
+Maximum Probability of Effect - *MPE*). It varies between 50% and 100% (*i.e.*, `0.5` and `1`)
 and can be interpreted as the probability (expressed in percentage) that
 a parameter (described by its posterior distribution) is strictly
 positive or negative (whichever is the most probable). It is

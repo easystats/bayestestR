@@ -1,3 +1,15 @@
+# bayestestR 0.2.3
+
+## Breaking changes
+
+- `p_direction`: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 ([#168](https://github.com/easystats/bayestestR/issues/168))
+
+## New functions / features
+
+## Minor changes
+
+
+
 # bayestestR 0.2.2
 
 ## Breaking changes

@@ -140,7 +140,7 @@ Now that we've understood where these values come from, let's look at them. We w
 
 ```{r message=FALSE, warning=FALSE}
 ggplot(posteriors, aes(x = Petal.Length)) +
-  geom_density(fill = "wheat")
+  geom_density(fill = "orange")
 ```
 
 This distribution represents the [probability](https://en.wikipedia.org/wiki/Probability_density_function) (the y axis) of different effects (the x axis). The central values are more probable than the extreme values. As you can see, this distribution ranges from about **0.35 to 0.50**, with the bulk of it being at around **0.41**.
@@ -188,7 +188,7 @@ map_estimate(posteriors$Petal.Length)
 
 ```{r message=FALSE, warning=FALSE}
 ggplot(posteriors, aes(x = Petal.Length)) +
-  geom_density(fill = "wheat") +
+  geom_density(fill = "orange") +
   # The mean in blue
   geom_vline(xintercept=mean(posteriors$Petal.Length), color="blue", size=1) +
   # The median in red
@@ -260,7 +260,7 @@ model <- stan_glm(weight ~ feed, data=data)
 posteriors <- insight::get_parameters(model)
 
 ggplot(posteriors, aes(x=feedsunflower)) +
-  geom_density(fill = "wheat")
+  geom_density(fill = "red")
 ```
 
 This represents the **posterior distribution of the difference between `meatmeal` and `sunflowers`**. Seems that the difference is rather **positive** (the values seems concentrated on the right side of 0)... Eating sunflowers makes you more fat (*at least, if you're a chicken*). But, **by how much?** Let us compute the **median** and the **CI**:
