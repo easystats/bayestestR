@@ -178,14 +178,13 @@
 <a href="#bayesian-correlation" class="anchor"></a>Bayesian correlation</h3>
 <p>To compute a Bayesian correlation test, we will need the <a href="https://richarddmorey.github.io/BayesFactor/"><code>BayesFactor</code></a> package (you can install it by running <code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("BayesFactor")</a></code>). We will then load this package, compute the correlation using the <code>correlationBF()</code> function and store the results in a similar fashion.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(BayesFactor)</a>
-<a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3">result &lt;-<span class="st"> </span><span class="kw">correlationBF</span>(iris<span class="op">$</span>Sepal.Width, iris<span class="op">$</span>Sepal.Length)</a></code></pre></div>
+<a class="sourceLine" id="cb3-2" title="2">result &lt;-<span class="st"> </span><span class="kw">correlationBF</span>(iris<span class="op">$</span>Sepal.Width, iris<span class="op">$</span>Sepal.Length)</a></code></pre></div>
 <p>Let us run our <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> function:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(result)</a></code></pre></div>
 <pre><code>&gt;   Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
-&gt; 1       rho  -0.11 89  -0.23    0.02 93      89     -0.1       0.1
+&gt; 1       rho  -0.11 89  -0.24  0.0079 92      89     -0.1       0.1
 &gt;   ROPE_Percentage   BF Prior_Distribution Prior_Location Prior_Scale
-&gt; 1              43 0.51             cauchy              0        0.33</code></pre>
+&gt; 1              42 0.51             cauchy              0        0.33</code></pre>
 <p>We see again many things here, but the important indices for now are the <strong>median</strong> of the posterior distribution, <code>-.11</code>. This is (again) quite close to the frequentist correlation. We could, as previously, describe the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>credible interval</strong></a>, the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>pd</strong></a> or the <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html"><strong>ROPE percentage</strong></a>, but we will focus here on another index provided by the Bayesian framework, the <strong>Bayes factor</strong>.</p>
 </div>
 <div id="bayes-factor-bf" class="section level3">

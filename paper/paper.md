@@ -1,50 +1,48 @@
 ---
-title: 'Understanding and Describing Bayesian Models with bayestestR'
-tags:
-  - R
-  - Bayesian statistics
-  - rstan
-  - eaystats
-  - posterior distribution
-  - Region of practical equivalence
-  - ROPE
-  - probability of direction
-  - Bayes factor
+title: "Understanding and Describing Bayesian Models with bayestestR"
 authors:
-  - name: Dominique Makowski
-    orcid: 0000-0001-5375-9967
-    affiliation: 1
-  - name: Mattan S. Ben-Shachar
-    orcid: 0000-0002-4287-4801
-    affiliation: 2
-  - name: Daniel Lüdecke
-    orcid: 0000-0002-8895-3206
-    affiliation: 3
-affiliations:
-  - name: Nanyang Technological University, Singapore
-    index: 1
-  - name: Ben-Gurion University of the Negev, Israel
-    index: 2
-  - name: University Medical Center Hamburg-Eppendorf, Germany
-    index: 3
-date: 09 June 2019
+- affiliation: 1
+  name: Dominique Makowski
+  orcid: 0000-0001-5375-9967
+- affiliation: 2
+  name: Mattan S. Ben-Shachar
+  orcid: 0000-0002-4287-4801
+- affiliation: 3
+  name: Daniel Lüdecke
+  orcid: 0000-0002-8895-3206
+date: "09 June 2019"
+output: pdf_document
 bibliography: paper.bib
+tags:
+- R
+- Bayesian statistics
+- rstan
+- eaystats
+- posterior distribution
+- Region of practical equivalence
+- ROPE
+- probability of direction
+- Bayes factor
+affiliations:
+- index: 1
+  name: Nanyang Technological University, Singapore
+- index: 2
+  name: Ben-Gurion University of the Negev, Israel
+- index: 3
+  name: University Medical Center Hamburg-Eppendorf, Germany
 ---
 
 # Introduction
 
-The Bayesian framework for statistics is quickly gaining in popularity among scientists, associated with the general shift towards open and honest science. Reasons to prefer this approach are reliability, accuracy (in noisy data and small samples), the possibility of introducing prior knowledge into the analysis and, critically, results' intuitiveness and their straightforward interpretation [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. 
+The Bayesian framework for statistics is quickly gaining in popularity among scientists, for reasons such as reliability and accuracy (particularly in noisy data and small samples), the possibility to incorporate prior knowledge into the analysis or the intuitive interpretation of results [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. 
 
-In general, the frequentist approach has been associated with the focus on null hypothesis testing, and the misuse of *p*-values has been shown to critically contribute to the reproducibility crisis of psychological science [@chambers2014instead; @szucs2016empirical]. There is a general agreement that the generalization of the Bayesian approach is one way of overcoming these issues [@benjamin2018redefine; @etz2016bayesian].
+Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology. All the common statistical procedures (t-tests, correlations, ANOVAs, regressions, ...) can also be achieved within the Bayesian framework. One of the core difference is that in the *frequentist* view, the effects are fixed (but unknown) and data are random. On the contrary, the Bayesian inference process computes the probability of different effects *given the observed data*. Instead of having estimates of the "true effect", the probabilistic approach gives a distribution of possible values for the parameters, called the *posterior distribution*. 
 
-Importantly, adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology. Indeed, all the common statistical procedures (t-tests, correlations, ANOVAs, regressions, ...) can be achieved using the Bayesian framework. One of the core difference is that in the *frequentist* view, the effects are fixed (but unknown) and data are random. On the contrary, the Bayesian inference process computes the probability of different effects *given the observed data*. Instead of having one estimated value of the "true effect", this probabilistic approach gives a distribution of values, called the *posterior distribution*. 
+The uncertainty in Bayesian inference can be summarized, for instance, by the *median* of the distribution, as well as a range of values of the posterior distribution that includes the 95\% most probable values (the 95\% *credible interval*). Cum grano salis, these are considered the counterparts to the point-estimate and confidence interval in a frequentist framework. To illustrate the difference of interpretation, the Bayesian framework allows to say *"given the observed data, the effect has 95\% probability of falling within this range"*, while the frequentist less straightforward alternative would be *"there is a 95\% probability that when repeatedly computing a confidence interval from data of this sort, the effect falls within this range"*. In essence, the Bayesian sampling algorithms (such as MCMC sampling) return a probability distribution (*the posterior*) of an effect that is compatible with the observed data. The effect can be described by [characterizing the posterior distribution](https://easystats.github.io/bayestestR/articles/guidelines.html) of the related effect in relation to its centrality (point-estimates), uncertainty, existance and significane.
 
-Bayesian’s uncertainty can be summarized, for instance, by giving the *median* of the distribution, as well as a range of values on the posterior distribution that includes the 95% most probable values (the 95\% *Credible* Interval). To illustrate the difference of interpretation, the Bayesian framework allows to say *"given the observed data, the effect has 95% probability of falling within this range"*, while the frequentist less straightforward alternative (the 95\% *Confidence* Interval) would be *"there is a 95\% probability that when computing a confidence interval from data of this sort, the effect falls within this range"*. 
 
-In other words, frequentists try to estimate the *"real effect"*. For instance, the "real" value of the correlation between *x* and *y*. Hence, frequentist models return a "point-estimate" (*i.e.*, a single value) of the "real" correlation (*e.g.*, r = 0.42) estimated under a number of assumptions (*e.g.*, considering that the data is sampled at random from a "parent", usually normal distribution). On the contrary, Bayesian users assume no such thing. The data are what they are. Based on this observed data (and a *prior* belief about the result), the Bayesian sampling algorithm (*e.g.*, the MCMC sampling) returns a probability distribution (*the posterior*) of the effect that is compatible with the observed data. For the correlation between *x* and *y*, it will return a distribution that says, for example, "the most probable effect is 0.42, but this data is also compatible with correlations of 0.12 and 0.74". To characterize the effects, Bayesian users simply describe the posterior distribution of the effect, by reporting for example the median, the [89% *Credible* Interval](https://easystats.github.io/bayestestR/articles/credible_interval.html) or [other indices](https://easystats.github.io/bayestestR/articles/guidelines.html).
 
-The `bayestestR` package provides tools to compute and report these indices from a variety of models objects, including popular modeling packages such as `rstanarm` [@goodrich2018rstanarm], `brms`[@burkner2017brms] or `BayesFactor`[@morey2014bayesfactor]. The main functions are described below.
-
+The `bayestestR` package provides tools to compute and report these indices from a variety of models objects, including popular modeling packages such as `rstanarm` [@goodrich2018rstanarm], `brms` [@burkner2017brms] or `BayesFactor` [@morey2014bayesfactor]. The main functions are described below.
 
 # Features
 
@@ -56,7 +54,7 @@ cited below *at once*.
 describe_posterior(rnorm(1000))
 ```
 
-## Point-estimates
+## Indices of Centrality: Point-estimates
 
 ### MAP Estimate
 
@@ -65,7 +63,8 @@ find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior,
 *i.e.,* the most probable value.
 
 ``` r
-map_estimate(rnorm(1000, 1, 1))
+map_estimate(rnorm(1000, .4, 1))
+#> MAP = 0.39
 ```
 
 ![](Figure1.png)<!-- -->
@@ -76,7 +75,7 @@ map_estimate(rnorm(1000, 1, 1))
 
 [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html)
 computes the **Highest Density Interval (HDI)** of a posterior
-distribution, *i.e.*, the interval which contains all points within the
+distribution, i.e., the interval which contains all points within the
 interval have a higher probability density than points outside the
 interval. The HDI can be used in the context of Bayesian posterior
 characterisation as **Credible Interval (CI)**.
@@ -142,7 +141,7 @@ rope(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
 a **Test for Practical Equivalence** based on the *“HDI+ROPE decision
 rule”* (Kruschke, 2018) to check whether parameter values should be
 accepted or rejected against an explicitly formulated “null hypothesis”
-(*i.e.*, a
+(i.e., a
 [ROPE](https://easystats.github.io/bayestestR/reference/rope.html)).
 
 ``` r
@@ -159,7 +158,7 @@ a parameter (described by its posterior distribution) is strictly
 positive or negative (whichever is the most probable). It is
 mathematically defined as the proportion of the posterior distribution
 that is of the median’s sign. Although differently expressed, this index
-is fairly similar (*i.e.*, is strongly correlated) to the frequentist
+is fairly similar (i.e., is strongly correlated) to the frequentist
 ***p*-value**.
 
 **Relationship with the p-value**: In most cases, it seems that the *pd*

@@ -40,16 +40,15 @@ or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \value{
-A numeric value if \code{posterior} is a vector.
-  If \code{density = TRUE}, or if \code{posterior} is a model-object, returns
-  a data frame with following columns:
+A numeric value if \code{posterior} is a vector. If \code{posterior}
+is a model-object, returns a data frame with following columns:
   \itemize{
     \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
-    \item \code{MAP} The MAP estimate for the posterior or each model parameter.
+    \item \code{MAP_Estimate} The MAP estimate for the posterior or each model parameter.
   }
 }
 \description{
-Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior, \emph{i.e.,} the most probable value. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution. Note this function relies on \link{estimate_density}, which by default uses a different smoothing bandwidth (\code{"SJ"}) from the legacy default implemented the base R \link{density} function (\code{"nrd0"}).
+Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior, i.e., the most probable value. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution. Note this function relies on \link{estimate_density}, which by default uses a different smoothing bandwidth (\code{"SJ"}) from the legacy default implemented the base R \link{density} function (\code{"nrd0"}).
 }
 \examples{
 library(bayestestR)
