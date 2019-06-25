@@ -30,7 +30,7 @@ options(digits=2)
 
 ## Why use the Bayesian Framework?
 
-Reasons to prefer this approach are **reliability**, **accuracy** (in noisy data and small samples), the possibility of introducing **prior knowledge** into the analysis and, critically, **results intuitiveness** and their **straightforward interpretation** [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. 
+The Bayesian framework for statistics is quickly gaining in popularity among scientists, associated with the general shift towards **open and honest science**. Reasons to prefer this approach are **reliability**, **accuracy** (in noisy data and small samples), the possibility of introducing **prior knowledge** into the analysis and, critically, **results intuitiveness** and their **straightforward interpretation** [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. 
 
 In general, the frequentist approach has been associated with the focus on null hypothesis testing, and the misuse of *p*-values has been shown to critically contribute to the reproducibility crisis of psychological science [@chambers2014instead; @szucs2016empirical]. There is a general agreement that the generalization of the Bayesian approach is one way of overcoming these issues [@benjamin2018redefine; @etz2016bayesian].
 
