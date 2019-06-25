@@ -122,7 +122,7 @@ posterior %>%
 
 ## Uncertainty
 
-### Highest Density Interval (HDI) - The *Credible* Interval (CI)
+### Highest Density Interval (HDI) - *Credible* Interval (CI)
 
 [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html) computes the **Highest Density Interval (HDI)** of a posterior distribution, *i.e.*, the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as **Credible Interval (CI)**.
 
