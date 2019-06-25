@@ -47,14 +47,6 @@ Existing R packages allow users to easily fit a large variety of models and extr
 
 # Features
 
-[**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html)
-is the master function with which you can compute all of the indices
-cited below *at once*.
-
-``` r
-describe_posterior(rnorm(1000))
-```
-
 <!-- Need a introductory paragraph -->
 
 ## Indices of Centrality: Point-estimates
@@ -64,8 +56,8 @@ describe_posterior(rnorm(1000))
 ### MAP Estimate
 
 [**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html)
-find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior,
-*i.e.,* the most probable value.
+finds the **Highest Maximum A Posteriori (MAP)** estimate of a posterior distribution,
+i.e., its most probable value.
 
 ``` r
 map_estimate(rnorm(1000, .4, 1))
