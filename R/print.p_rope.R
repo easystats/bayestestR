@@ -7,10 +7,10 @@ print.p_rope <- function(x, digits = 2, ...) {
 
     if ("data.frame" %in% class(x)) {
       pars <- format(x$Parameter)
-      pmap <- format(sprintf("%.*f%%", digits, x$p_ROPE), justify = "right")
+      pmap <- format(sprintf("%.*f%%", digits, x$p_ROPE * 100), justify = "right")
       cat(paste0("  ", pars, ": ", pmap, collapse = "\n"))
     } else {
-      cat(sprintf("p (ROPE) = %.*f%%", digits, x))
+      cat(sprintf("p (ROPE) = %.*f%%", digits, x * 100))
     }
   }
 }

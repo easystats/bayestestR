@@ -460,3 +460,23 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 
   model_prior
 }
+
+
+
+#' Convert to Numeric
+#'
+#' @inheritParams base::as.numeric
+#' @method as.numeric bayesfactor_savagedickey
+#' @export
+as.numeric.bayesfactor_savagedickey <- function(x, ...) {
+  if ("data.frame" %in% class(x)) {
+    return(as.numeric(as.vector(x$BF)))
+  } else {
+    return(as.vector(x))
+  }
+}
+
+
+#' @method as.double bayesfactor_savagedickey
+#' @export
+as.double.bayesfactor_savagedickey <- as.numeric.bayesfactor_savagedickey

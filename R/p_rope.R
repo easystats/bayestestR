@@ -69,9 +69,9 @@ p_rope.numeric <- function(x, range = "default", precision = .1, ...) {
 
   if (all(rope_values == min(rope_values))) {
     if (rope_values[1] == 0) {
-      p <- 100
+      p <- 1
     } else {
-      p <- -100
+      p <- -1
     }
   } else {
     min_rope <- min(rope_values)
@@ -87,7 +87,7 @@ p_rope.numeric <- function(x, range = "default", precision = .1, ...) {
       h0 <- -1
     }
     p <- rope_df$CI[CI_position]
-    p <- as.numeric(unlist(p))
+    p <- as.numeric(unlist(p)) / 100
     p <- h0 * p
     # p <- 1/p  # Convert to probability
   }
