@@ -7,10 +7,10 @@ print.p_direction <- function(x, digits = 2, ...) {
 
     if ("data.frame" %in% class(x)) {
       x$Parameter <- as.character(x$Parameter)
-      x$pd <- sprintf("%.*f%%", digits, x$pd)
+      x$pd <- sprintf("%.*f%%", digits, x$pd * 100)
       print.data.frame(x, row.names = FALSE)
     } else {
-      cat(sprintf("pd = %.*f%%", digits, x))
+      cat(sprintf("pd = %.*f%%", digits, x * 100))
     }
   }
 }
