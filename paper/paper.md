@@ -52,7 +52,11 @@ cited below *at once*.
 describe_posterior(rnorm(1000))
 ```
 
+<!-- Need a introductory paragraph -->
+
 ## Indices of Centrality: Point-estimates
+
+<!-- Need a introductory paragraph -->
 
 ### MAP Estimate
 
@@ -69,7 +73,7 @@ map_estimate(rnorm(1000, .4, 1))
 
 ## Uncertainty
 
-### Highest Density Interval (HDI) - The *Credible* Interval (CI)
+### Highest Density Interval (HDI) - The Credible Interval (CI)
 
 [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html)
 computes the **Highest Density Interval (HDI)** of a posterior
