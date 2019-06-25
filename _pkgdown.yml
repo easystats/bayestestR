@@ -22,7 +22,7 @@ reference:
   - map_estimate
   - hdi
   - ci
-  
+
 - title: "Effect Existence and Significance"
   contents:
   - p_direction
@@ -32,34 +32,37 @@ reference:
   - equivalence_test
   - p_rope
   - p_map
+
+- title: "Effect Existence and Significance - Bayes factors"
+  contents:
   - bayesfactor
   - bayesfactor_savagedickey
   - bayesfactor_inclusion
   - bayesfactor_models
-  
+
 - title: "Model Diagnostics"
   contents:
   - diagnostic_posterior
   - describe_prior
   - effective_sample
   - mcse
-  
+
 - title: "Density Estimation"
   contents:
   - estimate_density
   - density_at
   - area_under_curve
-  
+
 - title: "Distributions"
   contents:
   - distribution
-  
+
 - title: "Utilities"
   contents:
   - as.numeric.p_direction
   - as.data.frame.density
-  
-  
+
+
 navbar:
   type: default
   left:
