@@ -10,8 +10,39 @@ Status](https://travis-ci.org/easystats/bayestestR.svg?branch=master)](https://t
 
 ***Become a Bayesian master you will***
 
-`bayestestR` is a lightweight package providing utilities to describe
-posterior distributions and Bayesian models.
+The Bayesian framework for statistics is quickly gaining in popularity
+among scientists, for reasons such as reliability and accuracy
+(particularly in noisy data and small samples), the possibility to
+incorporate prior knowledge into the analysis or the intuitive
+interpretation of results. Bayesian statistics compute the probability
+of different effects *given the observed data*. Instead of having
+estimates of the “true effect”, the probabilistic approach gives a
+distribution of possible values for the parameters, called the
+*posterior distribution*.
+
+The uncertainty in Bayesian inference can be summarized, for instance,
+by the *median* of the distribution, as well as a range of values of the
+posterior distribution that includes the 95% most probable values (the
+95% *credible interval*). In essence, the Bayesian sampling algorithms
+(such as MCMC sampling) return a probability distribution (*the
+posterior*) of an effect that is compatible with the observed data. The
+effect can be described by [characterizing the posterior
+distribution](https://easystats.github.io/bayestestR/articles/guidelines.html)
+of the related effect in relation to its centrality (point-estimates),
+uncertainty, existance and significane.
+
+Packages for R already exist that mostly help users to compute
+point-estimates or uncertainty intervals, and in particular to visualize
+posterior draws from Bayesian models. However, to our knowledge, there
+are no packages that provide a comprehensive and consistent set of
+functions to also analyize and describe the existance of effects, and
+their “significance” (in terms of evidence for the existence of
+effects). `bayestestR` is lightweight package that provides tools to
+compute and report these indices from a variety of models objects,
+including popular modeling packages such as `rstanarm`, `brms` or
+`BayesFactor`. The main functions are described below, but we also like
+to point users to the [accompanying
+website](https://easystats.github.io/bayestestR).
 
 ## Installation
 
@@ -51,7 +82,7 @@ check-out these vignettes:
 #### Articles
 
   - [Credible Intervals
-    (CIs)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+    (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
   - [Probability of Direction
     (pd)](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
   - [Region of Practical Equivalence
@@ -173,13 +204,13 @@ equivalence_test(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
 [**`p_direction()`**](https://easystats.github.io/bayestestR/reference/p_direction.html)
 computes the **Probability of Direction** (***p*d**, also known as the
 Maximum Probability of Effect - *MPE*). It varies between 50% and 100%
-and can be interpreted as the probability (expressed in percentage) that
-a parameter (described by its posterior distribution) is strictly
-positive or negative (whichever is the most probable). It is
-mathematically defined as the proportion of the posterior distribution
-that is of the median’s sign. Although differently expressed, this index
-is fairly similar (*i.e.*, is strongly correlated) to the frequentist
-***p*-value**.
+(*i.e.*, `0.5` and `1`) and can be interpreted as the probability
+(expressed in percentage) that a parameter (described by its posterior
+distribution) is strictly positive or negative (whichever is the most
+probable). It is mathematically defined as the proportion of the
+posterior distribution that is of the median’s sign. Although
+differently expressed, this index is fairly similar (*i.e.*, is strongly
+correlated) to the frequentist ***p*-value**.
 
 **Relationship with the p-value**: In most cases, it seems that the *pd*
 corresponds to the frequentist one-sided *p*-value through the formula
@@ -200,9 +231,10 @@ p_direction(rnorm(1000, mean = 1, sd = 1))
 
 [**`bayesfactor_savagedickey()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_savagedickey.html)
 computes the ratio between the density of a single value (typically the
-null) in two distributions, typically the posterior vs. the prior
-distributions. This method is used to examine if the hypothesis value is
-less or more likely given the observed data.
+null) of two distributions. When the compared distributions are the
+posterior and the prior distributions, this results is an approximation
+of a Bayes factor comparing the model against a model in which the
+parameter of choice is restricted to the point null.
 
 ``` r
 prior <- rnorm(1000, mean = 0, sd = 1)
