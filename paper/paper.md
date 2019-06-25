@@ -42,7 +42,7 @@ The uncertainty in Bayesian inference can be summarized, for instance, by the *m
 
 
 
-The `bayestestR` package provides tools to compute and report these indices from a variety of models objects, including popular modeling packages such as `rstanarm` [@goodrich2018rstanarm], `brms`[@burkner2017brms] or `BayesFactor`[@morey2014bayesfactor]. The main functions are described below.
+The `bayestestR` package provides tools to compute and report these indices from a variety of models objects, including popular modeling packages such as `rstanarm` [@goodrich2018rstanarm], `brms` [@burkner2017brms] or `BayesFactor` [@morey2014bayesfactor]. The main functions are described below.
 
 # Features
 
@@ -54,7 +54,7 @@ cited below *at once*.
 describe_posterior(rnorm(1000))
 ```
 
-## Point-estimates
+## Indices of Centrality: Point-estimates
 
 ### MAP Estimate
 
@@ -63,7 +63,8 @@ find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior,
 *i.e.,* the most probable value.
 
 ``` r
-map_estimate(rnorm(1000, 1, 1))
+map_estimate(rnorm(1000, .4, 1))
+#> MAP = 0.39
 ```
 
 ![](Figure1.png)<!-- -->

@@ -1,16 +1,15 @@
 #' Maximum A Posteriori (MAP) Estimate
 #'
-#' Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior, \emph{i.e.,} the most probable value. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution. Note this function relies on \link{estimate_density}, which by default uses a different smoothing bandwidth (\code{"SJ"}) from the legacy default implemented the base R \link{density} function (\code{"nrd0"}).
+#' Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior, i.e., the most probable value. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution. Note this function relies on \link{estimate_density}, which by default uses a different smoothing bandwidth (\code{"SJ"}) from the legacy default implemented the base R \link{density} function (\code{"nrd0"}).
 #'
 #' @inheritParams hdi
 #' @inheritParams estimate_density
 #'
-#' @return A numeric value if \code{posterior} is a vector.
-#'   If \code{density = TRUE}, or if \code{posterior} is a model-object, returns
-#'   a data frame with following columns:
+#' @return A numeric value if \code{posterior} is a vector. If \code{posterior}
+#' is a model-object, returns a data frame with following columns:
 #'   \itemize{
 #'     \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
-#'     \item \code{MAP} The MAP estimate for the posterior or each model parameter.
+#'     \item \code{MAP_Estimate} The MAP estimate for the posterior or each model parameter.
 #'   }
 #'
 #' @examples
@@ -41,8 +40,11 @@ map_estimate <- function(x, ...) {
 
 
 #' @export
-print.MAP <- function(x, ...) {
-  cat(sprintf("MAP = %.2f", x))
+print.map_estimate <- function(x, ...) {
+  if (inherits(x, "data.frame"))
+    print.data.frame(x)
+  else
+    cat(sprintf("MAP = %.2f", x))
 }
 
 
@@ -60,7 +62,7 @@ map_estimate.numeric <- function(x, precision = 2^10, ...) {
   out <- hdp_x
   attr(out, "MAP_density") <- hdp_y
 
-  class(out) <- unique(c("MAP", class(out)))
+  class(out) <- unique(c("map_estimate", class(out)))
   out
 }
 
@@ -73,11 +75,18 @@ map_estimate.numeric <- function(x, precision = 2^10, ...) {
 #' @importFrom insight get_parameters
 #' @keywords internal
 .map_estimate_models <- function(x, precision, ...) {
-  list <- sapply(x, map_estimate, precision = precision, simplify = FALSE, ...)
-  out <- .flatten_list(list, name = "Parameter")
-  rownames(out) <- NULL
+  l <- sapply(x, map_estimate, precision = precision, simplify = FALSE, ...)
 
-  as.data.frame(out)
+  out <- data.frame(
+    Parameter = colnames(x),
+    MAP_Estimate = unlist(l),
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
+
+  attr(out, "MAP_density") <- sapply(l, attr, "MAP_density")
+  class(out) <- unique(c("map_estimate", class(out)))
+  out
 }
 
 #' @rdname map_estimate
@@ -102,3 +111,23 @@ map_estimate.brmsfit <- function(x, precision = 2^10, effects = c("fixed", "rand
     precision = precision
   )
 }
+
+
+
+#' @rdname as.numeric.p_direction
+#' @method as.numeric map_estimate
+#' @export
+as.numeric.map_estimate <- function(x, ...) {
+  if (inherits(x, "data.frame")) {
+    me <- as.numeric(as.vector(x$MAP_Estimate))
+    names(me) <- x$Parameter
+    me
+  } else {
+    as.vector(x)
+  }
+}
+
+
+#' @method as.double map_estimate
+#' @export
+as.double.map_estimate <- as.numeric.map_estimate
