@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -181,7 +181,7 @@
 
     <div class="ref-description">
     
-    <p>Find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.,</em> the most probable value. It corresponds to the "peak" (or the <em>mode</em>) of the posterior distribution. Note this function relies on <a href='estimate_density.html'>estimate_density</a>, which by default uses a different smoothing bandwidth (<code>"SJ"</code>) from the legacy default implemented the base R <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a> function (<code>"nrd0"</code>).</p>
+    <p>Find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, i.e., the most probable value. It corresponds to the "peak" (or the <em>mode</em>) of the posterior distribution. Note this function relies on <a href='estimate_density.html'>estimate_density</a>, which by default uses a different smoothing bandwidth (<code>"SJ"</code>) from the legacy default implemented the base R <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a> function (<code>"nrd0"</code>).</p>
     
     </div>
 
@@ -238,11 +238,10 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A numeric value if <code>posterior</code> is a vector.
-  If <code>density = TRUE</code>, or if <code>posterior</code> is a model-object, returns
-  a data frame with following columns:</p><ul>
+    <p>A numeric value if <code>posterior</code> is a vector. If <code>posterior</code>
+is a model-object, returns a data frame with following columns:</p><ul>
 <li><p><code>Parameter</code> The model parameter(s), if <code>x</code> is a model-object. If <code>x</code> is a vector, this column is missing.</p></li>
-<li><p><code>MAP</code> The MAP estimate for the posterior or each model parameter.</p></li>
+<li><p><code>MAP_Estimate</code> The MAP estimate for the posterior or each model parameter.</p></li>
 </ul>
 
     

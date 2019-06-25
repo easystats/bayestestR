@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -176,13 +176,34 @@
       <small>Source: <a href='https://github.com/easystats/bayestestR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="bayestestr-022" class="section level1">
+    <div id="bayestestr-023" class="section level1">
 <h1 class="page-header">
-<a href="#bayestestr-022" class="anchor"></a>bayestestR 0.2.2<small> 2019-06-20 </small>
+<a href="#bayestestr-023" class="anchor"></a>bayestestR 0.2.3<small> Unreleased </small>
 </h1>
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>
+<code>p_direction</code>: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 (<a href="https://github.com/easystats/bayestestR/issues/168"><a href='https://github.com/easystats/bayestestR/issues/168'>#168</a></a>)</li>
+</ul>
+</div>
+<div id="new-functions--features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions--features" class="anchor"></a>New functions / features</h2>
+</div>
+<div id="minor-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+</div>
+</div>
+    <div id="bayestestr-022" class="section level1">
+<h1 class="page-header">
+<a href="#bayestestr-022" class="anchor"></a>bayestestR 0.2.2<small> 2019-06-20 </small>
+</h1>
+<div id="breaking-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
 <code>equivalence_test</code>: returns capitalized output (e.g., <code>Rejected</code> instead of <code>rejected</code>)</li>
@@ -190,18 +211,18 @@
 <code>describe_posterior.numeric</code>: <code>dispersion</code> defaults to FALSE for consistency with the other methods</li>
 </ul>
 </div>
-<div id="new-functions--features" class="section level2">
+<div id="new-functions--features-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions--features" class="anchor"></a>New functions / features</h2>
+<a href="#new-functions--features-1" class="anchor"></a>New functions / features</h2>
 <ul>
 <li>
 <code>pd_to_p</code> and <code>p_to_pd</code>: Functions to convert between probability of direction (pd) and p-value</li>
 <li>Support of <code>emmGrid</code> objects: <code>ci</code>, <code>rope</code>, <code>bayesfactor_savagedickey</code>, <code>describe_posterior</code>, …</li>
 </ul>
 </div>
-<div id="minor-changes" class="section level2">
+<div id="minor-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Improved tutorial 2</li>
 </ul>
@@ -221,9 +242,9 @@
 <h1 class="page-header">
 <a href="#bayestestr-020" class="anchor"></a>bayestestR 0.2.0<small> 2019-05-29 </small>
 </h1>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>plotting functions now require the installation of the <code>see</code> package</li>
 <li>
@@ -240,9 +261,9 @@
 </li>
 </ul>
 </div>
-<div id="new-functions--features-1" class="section level2">
+<div id="new-functions--features-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions--features-1" class="anchor"></a>New functions / features</h2>
+<a href="#new-functions--features-2" class="anchor"></a>New functions / features</h2>
 <ul>
 <li>
 <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, <code><a href="../reference/describe_prior.html">describe_prior()</a></code>, <code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code>: added wrapper function</li>
@@ -267,9 +288,9 @@
 <code><a href="../reference/mcse.html">mcse()</a></code> to return the Monte Carlo standard error of Stan-models</li>
 </ul>
 </div>
-<div id="minor-changes-1" class="section level2">
+<div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Improved documentation</li>
 <li>Improved testing</li>
@@ -308,6 +329,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#bayestestr-023">0.2.3</a></li>
         <li><a href="#bayestestr-022">0.2.2</a></li>
         <li><a href="#bayestestr-020">0.2.0</a></li>
         <li><a href="#bayestestr-010">0.1.0</a></li>

@@ -41,7 +41,7 @@
   
 <meta property="og:title" content="Probability of Direction (pd) — p_direction" />
 
-<meta property="og:description" content="Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist p-value." />
+<meta property="og:description" content="Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% (i.e., 0.5 and 1) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist p-value." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -181,7 +181,7 @@
 
     <div class="ref-description">
     
-    <p>Compute the <strong>Probability of Direction</strong> (<strong><em>pd</em></strong>, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist <strong>p-value</strong>.</p>
+    <p>Compute the <strong>Probability of Direction</strong> (<strong><em>pd</em></strong>, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% (<em>i.e.</em>, <code>0.5</code> and <code>1</code>) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Altough differently expressed, this index is fairly similar (<em>i.e.</em>, is strongly correlated) to the frequentist <strong>p-value</strong>.</p>
     
     </div>
 
@@ -254,7 +254,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
     <p><strong>What is the <em>pd</em>?</strong>
 <br /> <br />
-The Probability of Direction (pd) is an index of effect existence, ranging from 50% to 100%, representing the certainty with which an effect goes in a particular direction (i.e., is positive or negative). Beyond its simplicity of interpretation, understanding and computation, this index also presents other interesting properties:</p><ul>
+The Probability of Direction (pd) is an index of effect existence, ranging from 50% to 100%, representing the certainty with which an effect goes in a particular direction (<em>i.e.</em>, is positive or negative). Beyond its simplicity of interpretation, understanding and computation, this index also presents other interesting properties:</p><ul>
 <li><p>It is independent from the model: It is solely based on the posterior distributions and does not require any additional information from the data or the model.</p></li>
 <li><p>It is robust to the scale of both the response variable and the predictors.</p></li>
 <li><p>It is strongly correlated with the frequentist p-value, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.</p></li>
