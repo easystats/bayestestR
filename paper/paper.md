@@ -46,7 +46,9 @@ The following demonstration of functions in `bayestestR` is accompanied by figur
 
 ## Indices of Centrality: Point-estimates
 
-`bayestestR` offers two functions to compute point-estimates from posterior distributions: `map_estimate()` and `point_estimate()`, the latter providing options to calculate the mean, median or MAP estimate of a posterior distribution. [**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html) is a convenient function that finds the **Highest Maximum A Posteriori (MAP)** estimate of a posterior distribution, i.e., its most probable value.
+`bayestestR` offers two functions to compute point-estimates from posterior distributions: `map_estimate()` and `point_estimate()`, the latter providing options to calculate the mean, median or MAP estimate of a posterior distribution. [`map_estimate()`](https://easystats.github.io/bayestestR/reference/map_estimate.html) is a convenient function to calculate the MAP directly.
+
+The **posterior mean** minimizes expected _squared_ error, whereas the **posterior median** minimizes expected _absolute_ error (i.e. the difference of estimates from true values over samples). The highest **Maximum A Posteriori** (MAP) estimate is the most probable value of a posterior distribution.
 
 ``` r
 posterior = rchisq(100, 3)
