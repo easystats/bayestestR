@@ -41,7 +41,7 @@ effective_sample.brmsfit <- function(model, effects = c("fixed", "random", "all"
     )
 
   if (!requireNamespace("rstan", quietly = TRUE)) {
-    stop("Package 'rstan' required for this function to work. Please install it.")
+    stop("Package 'rstan' required for this function to work. Please install it by running `install.packages('stan')`.")
   }
 
   s <- rstan::summary(model$fit)$summary
