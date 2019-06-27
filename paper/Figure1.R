@@ -2,6 +2,7 @@ library(bayestestR)
 library(ggplot2)
 library(strengejacke)
 
+set.seed(123)
 posterior <- distribution_chisquared(100, 3)
 dat <- as.data.frame(density(posterior))
 

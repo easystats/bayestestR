@@ -51,18 +51,19 @@ The following demonstration of functions in `bayestestR` is accompanied by figur
 The **posterior mean** minimizes expected _squared_ error, whereas the **posterior median** minimizes expected _absolute_ error (i.e. the difference of estimates from true values over samples). The highest **Maximum A Posteriori** (MAP) estimate is the most probable value of a posterior distribution.
 
 ``` r
-posterior = rchisq(100, 3)
+set.seed(1)
+posterior <- rchisq(100, 3)
 map_estimate(posterior)
-#> MAP = 1.34
+#> MAP = 1.46
 
 point_estimate(posterior)
-#> Median = 2.26
+#> Median = 2.31
 
 point_estimate(posterior, centrality = "mean")
 #> Mean = 2.96
 
 point_estimate(posterior, centrality = "map")
-#> MAP = 1.34
+#> MAP = 1.46
 ```
 
 ![](Figure1.png)<!-- -->
@@ -92,7 +93,11 @@ highest prime number that does not exceed the already unstable 95%
 threshold (McElreath, 2015).
 
 ``` r
-hdi(rnorm(1000), ci = .89)
+hdi(posterior, ci = .89)
+#> # Highest Density Interval
+#> 
+#>       89% HDI
+#>  [0.11, 6.05]
 ```
 
 ![](Figure2.png)<!-- -->
