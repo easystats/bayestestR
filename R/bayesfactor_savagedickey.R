@@ -171,7 +171,7 @@ bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
                                              verbose = TRUE,
                                              ...) {
   if (!requireNamespace("emmeans")) {
-    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
   }
 
   if (is.null(prior)) {
@@ -415,7 +415,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @importFrom utils capture.output
 .update_to_priors.stanreg <- function(model, verbose = TRUE) {
   if (!requireNamespace("rstanarm")) {
-    stop("Package \"rstanarm\" needed for this function to work. Please install it.")
+    stop("Package 'rstanarm' required for this function to work. Please install it by running `install.packages('rstanarm')`.")
   }
 
   if (verbose) {
@@ -439,7 +439,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @importFrom methods is
 .update_to_priors.brmsfit <- function(model, verbose = TRUE) {
   if (!requireNamespace("brms")) {
-    stop("Package \"brms\" needed for this function to work. Please install it.")
+    stop("Package 'brms' required for this function to work. Please install it by running `install.packages('brms')`.")
   }
 
   if (verbose) {

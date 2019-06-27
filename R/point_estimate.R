@@ -114,7 +114,7 @@ point_estimate.data.frame <- function(x, centrality = "median", dispersion = FAL
 #' @export
 point_estimate.emmGrid <- function(x, centrality = "median", dispersion = FALSE, ...) {
   if (!requireNamespace("emmeans")) {
-    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
   }
   xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
 

@@ -125,7 +125,7 @@ p_rope.data.frame <- function(x, range = "default", precision = .1, ...) {
 #' @export
 p_rope.emmGrid <- function(x, range = "default", precision = .1, ...) {
   if (!requireNamespace("emmeans")) {
-    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
   }
   xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
 

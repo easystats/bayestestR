@@ -176,7 +176,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 #' @importFrom insight get_response find_algorithm
 .bayesfactor_models_stan <- function(..., denominator = 1, verbose = TRUE) {
   if (!requireNamespace("bridgesampling")) {
-    stop("Package \"bridgesampling\" needed for this function to work. Please install it.")
+    stop("Package 'bridgesampling' required for this function to work. Please install it by running `install.packages('bridgesampling')`.")
   }
 
   # Orgenize the models
@@ -241,7 +241,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 #' @export
 bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
   if (!requireNamespace("rstanarm")) {
-    stop("Package \"rstanarm\" needed for this function to work. Please install it.")
+    stop("Package 'rstanarm' required for this function to work. Please install it by running `install.packages('rstanarm')`.")
   }
   .bayesfactor_models_stan(..., denominator = denominator)
 }
@@ -249,10 +249,10 @@ bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
 #' @export
 bayesfactor_models.brmsfit <- function(..., denominator = 1, verbose = TRUE) {
   if (!requireNamespace("brms")) {
-    stop("Package \"brms\" needed for this function to work. Please install it.")
+    stop("Package 'brms' required for this function to work. Please install it by running `install.packages('brms')`.")
   }
   if (!("brms" %in% .packages())) {
-    stop("This function requires package \"brms\" to be loaded. Please run \"library(brms)\".")
+    stop("This function requires package 'brms' to be loaded. Please run `library(brms)`.")
   }
   .bayesfactor_models_stan(..., denominator = denominator)
 }
@@ -262,7 +262,7 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1, verbose = TRUE) {
 bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
   models <- c(...)
   if (!requireNamespace("BayesFactor")) {
-    stop("Package \"BayesFactor\" needed for this function to work. Please install it.")
+    stop("Package 'BayesFactor' required for this function to work. Please install it by running `install.packages('BayesFactor')`.")
   }
   mBFs <- c(0, BayesFactor::extractBF(models, TRUE, TRUE))
   mforms <- sapply(c(models@denominator, models@numerator), function(x) x@shortName)

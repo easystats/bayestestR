@@ -98,7 +98,7 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects
   }
 
   if (!requireNamespace("rstan", quietly = TRUE)) {
-    stop("Package 'rstan' required for this function to work. Please install it.")
+    stop("Package 'rstan' required for this function to work. Please install it by running `install.packages('rstan')`.")
   }
 
   # Get indices and rename
