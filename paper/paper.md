@@ -34,16 +34,18 @@ affiliations:
 
 # Introduction
 
-The Bayesian framework for statistics is quickly gaining in popularity among scientists, for reasons such as reliability and accuracy (particularly in noisy data and small samples), the possibility to incorporate prior knowledge into the analysis or the intuitive interpretation of results [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology. All the common statistical procedures (*t*-tests, correlations, ANOVAs, regressions, ...) can also be achieved within the Bayesian framework. One of the core difference is that in the *frequentist* view, the effects are fixed (but unknown) and data are random. On the contrary, the Bayesian inference process computes the probability of different effects *given the observed data*. Instead of having estimates of the "true effect", the probabilistic approach gives a distribution of possible values for the parameters, called the *posterior distribution*. 
+The Bayesian framework for statistics is quickly gaining in popularity among scientists, for reasons such as reliability and accuracy (particularly in noisy data and small samples), the possibility to incorporate prior knowledge into the analysis or the intuitive interpretation of results [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology; All the common statistical procedures (*t*-tests, correlations, ANOVAs, regressions, etc.) can also be achieved within the Bayesian framework. One of the core difference is that in the *frequentist* view, the effects are fixed (but unknown) and data are random. On the other hand, in the Bayesian inference process, instead of having estimates of the "true effect", the probability of different effects *given the observed data* is computed, resulting in a distribution of possible values for the parameters, called the *posterior distribution*. 
 
-The uncertainty in Bayesian inference can be summarized, for instance, by the *median* of the distribution, as well as a range of values of the posterior distribution that includes the 95\% most probable values (the 95\% *credible interval*). Cum grano salis, these are considered the counterparts to the point-estimate and confidence interval in a frequentist framework. To illustrate the difference of interpretation, the Bayesian framework allows to say *"given the observed data, the effect has 95\% probability of falling within this range"*, while the frequentist less straightforward alternative would be *"there is a 95\% probability that when repeatedly computing a confidence interval from data of this sort, the effect falls within this range"*. In essence, the Bayesian sampling algorithms (such as MCMC sampling) return a probability distribution (*the posterior*) of an effect that is compatible with the observed data. The effect can be described by [characterizing the posterior distribution](https://easystats.github.io/bayestestR/articles/guidelines.html) of the related effect in relation to its centrality (point-estimates), uncertainty, existence and significance 
+The uncertainty in Bayesian inference can be summarized, for instance, by the *median* of the distribution, as well as a range of values of the posterior distribution that includes the 95\% most probable values (the 95\% *credible interval*). Cum grano salis, these are considered the counterparts to the point-estimate and confidence interval in a frequentist framework. To illustrate the difference of interpretation, the Bayesian framework allows to say *"given the observed data, the effect has 95\% probability of falling within this range"*, while the frequentist less straightforward alternative would be *"when repeatedly computing confidence intervals from data of this sort, there is a 95\% probability that the effect falls within a given range"*. In essence, the Bayesian sampling algorithms (such as MCMC sampling) return a probability distribution (*the posterior*) of an effect that is compatible with the observed data. Thus, an effect can be described by [characterizing its posterior distribution](https://easystats.github.io/bayestestR/articles/guidelines.html) in relation to its centrality (point-estimates), uncertainty, as well as existence and significance (difference from a null).
 
 ***Needs better wording***
+<!-- MSB: tried this... Not sure I got to the heart of what you meant.-->
+<!-- MSB: Could still use some love... -->
 
-(null-hypothesis significance testing, though in a Bayesian framework there is not necessarily a null-hypothesis, nor is statistical significance in its classical meaning, with associated p-values).
+(Note that null-hypothesis significance testing (NHST), though possible in a Bayesian framework, can be extended to general testing, nut just of a *null*-hypothesis, and thus does not perfectly map onto statistical significance testing in its classical meaning, with associated p-values).
 
 
-Existing R packages allow users to easily fit a large variety of models and extract, and visualize, the posterior draws. However, most of these packages only return a limited set of indices (*e.g.*, point-estimates and CI). `bayestestR` provides a comprehensive and consistent set of functions to analyze and describe a variety of models objects, including popular modeling packages such as `rstanarm` [@goodrich2018rstanarm], `brms` [@burkner2017brms] or `BayesFactor` [@morey2014bayesfactor]. Beyond computing point-estimates (mean, median or MAP estimate) and quantifying the related uncertainty (with different types of CIs), `bayestestR` focuses on implementing a null-hypothesis testing framework. By providing access to both established and exploratory indices of effect existence and significance, `bayestestR` appears as a useful tool supporting Bayesian statistics. The main functions are described below, and a full documentation is available on the [package's website](https://easystats.github.io/bayestestR).
+Existing R packages allow users to easily fit a large variety of models and extract and visualize the posterior draws. However, most of these packages only return a limited set of indices (*e.g.*, point-estimates and CIs). `bayestestR` provides a comprehensive and consistent set of functions to analyze and describe posterior distributions generated by a variety of models objects, including popular modeling packages such as `rstanarm` [@goodrich2018rstanarm], `brms` [@burkner2017brms] or `BayesFactor` [@morey2014bayesfactor]. <!-- MSB: Currently only limited to simple models. Should we mention that? --> Beyond computing point-estimates (mean, median or MAP estimate) and quantifying the related uncertainty (with different types of CIs), `bayestestR` focuses on implementing a Bayesian null-hypothesis testing framework. By providing access to both established and exploratory indices of effect existence and significance, `bayestestR` appears as a useful tool supporting Bayesian statistics. The main functions are described below, and a full documentation is available on the [package's website](https://easystats.github.io/bayestestR).
 
 # Features
 
@@ -78,7 +80,7 @@ interval. The HDI can be used in the context of Bayesian posterior
 characterisation as **Credible Interval (CI)**.
 
 Unlike equal-tailed intervals (see
-[ci](https://easystats.github.io/bayestestR/reference/ci.html)) that
+[`ci()`](https://easystats.github.io/bayestestR/reference/ci.html)) that
 typically exclude 2.5% from each tail of the distribution, the HDI is
 *not* equal-tailed and therefore always includes the mode(s) of
 posterior distributions.
@@ -177,10 +179,14 @@ p_direction(rnorm(1000, mean = 1, sd = 1))
 
 [**`bayesfactor_savagedickey()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_savagedickey.html)
 computes the ratio between the density of a single value (typically the
-null) in two distributions, typically the posterior vs. the prior
-distributions. This method is used to examine if the hypothesis value is
-less or more likely given the observed data, and is an approximation of a Bayes factor comparing 
-the model against a model in which the parameter of choice is restricted to the point null. 
+null) in two distributions. When these distributions are the prior and the posterior
+distributions, this ratio can be used to examine the degree by which the mass of
+the posterior distribution has shifted further away from or closer to the null value
+(relative to the prior distribution), thus indicating if the null value has become
+less or more likely given the observed data. The Savage-Dickey density ratio is
+also an approximation of a Bayes factor comparing the marginal likelihoods of
+the model against a model in which the tested parameter has been restricted to
+the point null [@wagenmakers2010bayesian].
 
 ``` r
 prior <- rnorm(1000, mean = 0, sd = 1)
