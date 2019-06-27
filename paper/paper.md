@@ -70,34 +70,27 @@ point_estimate(posterior, centrality = "map")
 
 ## Indices of Uncertainty
 
+To measure the uncertainty in the estimation, `bayestestR` provides two functions: `ci()`, the "classical", equal-tailed credible interval, and `hdi()`, the highest density interval. 
+
 ### Highest Density Interval (HDI) - Credible Interval (CI)
 
 [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html)
-computes the **Highest Density Interval (HDI)** of a posterior
-distribution, i.e., the interval which contains all points within the
-interval have a higher probability density than points outside the
-interval. The HDI can be used in the context of Bayesian posterior
-characterisation as **Credible Interval (CI)**.
+computes the **Highest Density Interval (HDI)** of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as **Credible Interval (CI)**, however, HDIs have a particular property: Unlike equal-tailed intervals (see [`ci()`](https://easystats.github.io/bayestestR/reference/ci.html)) that typically exclude 2.5% from each tail of the distribution, the HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior distributions.
 
-Unlike equal-tailed intervals (see
-[`ci()`](https://easystats.github.io/bayestestR/reference/ci.html)) that
-typically exclude 2.5% from each tail of the distribution, the HDI is
-*not* equal-tailed and therefore always includes the mode(s) of
-posterior distributions.
-
-By default, `hdi()` returns the 89% intervals (`ci = 0.89`), deemed to
-be more stable than, for instance, 95% intervals (Kruschke, 2014). An
-effective sample size of at least 10.000 is recommended if 95% intervals
-should be computed (Kruschke 2014, p. 183ff). Moreover, 89 is the
-highest prime number that does not exceed the already unstable 95%
-threshold (McElreath, 2015).
+By default, `hdi()` and `ci()` return the 89% intervals (`ci = 0.89`), deemed to be more stable than, for instance, 95% intervals. An effective sample size of at least 10.000 is recommended if 95% intervals should be computed [@kruschke2015doing]. Moreover, 89 is the highest prime number that does not exceed the already unstable 95% threshold [@mcelreath2018statistical].
 
 ``` r
-hdi(posterior, ci = .89)
+hdi(posterior)
 #> # Highest Density Interval
 #> 
 #>       89% HDI
 #>  [0.11, 6.05]
+
+ci(posterior)
+#> # Credible Interval
+#> 
+#>        89% CI
+#>  [0.42, 7.27]
 ```
 
 ![](Figure2.png)<!-- -->
@@ -116,7 +109,7 @@ different from 0 does not make much sense (the probability of it being
 different from a single point being infinite). Therefore, the idea
 underlining ROPE is to let the user define an area around the null value
 enclosing values that are *equivalent to the null* value for practical
-purposes (Kruschke 2010, 2011, 2014).
+purposes [@kruschke2018bayesian; @kruschke_rejecting_2018].
 
 Kruschke (2018) suggests that such null value could be set, by default,
 to the -0.1 to 0.1 range of a standardized parameter (negligible effect
