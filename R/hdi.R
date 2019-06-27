@@ -2,7 +2,7 @@
 #'
 #' Compute the \strong{Highest Density Interval (HDI)} of a posterior distribution, i.e., all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as \strong{Credible Interval (CI)}.
 #'
-#' @details Unlike equal-tailed intervals (see \link{ci}) that typically exclude 2.5\% from each tail
+#' @details Unlike equal-tailed intervals (see \link{\code{ci()}}) that typically exclude 2.5\% from each tail
 #'   of the distribution, the HDI is \emph{not} equal-tailed and therefore always
 #'   includes the mode(s) of posterior distributions.
 #'   \cr \cr
@@ -107,7 +107,7 @@ hdi.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
 #' @export
 hdi.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
   if (!requireNamespace("emmeans")) {
-    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
   }
   xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
   out <- hdi(xdf, ci = ci, verbose = verbose, ...)

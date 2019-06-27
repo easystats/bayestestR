@@ -127,7 +127,7 @@ posterior %>%
 
 [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html) computes the **Highest Density Interval (HDI)** of a posterior distribution, *i.e.*, the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as **Credible Interval (CI)**.
 
-Unlike equal-tailed intervals (see [ci](https://easystats.github.io/bayestestR/reference/ci.html)) that typically exclude 2.5\% from each tail of the distribution, the HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior distributions. 
+Unlike equal-tailed intervals (see [`ci()`](https://easystats.github.io/bayestestR/reference/ci.html)) that typically exclude 2.5\% from each tail of the distribution, the HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior distributions. 
 
 By default, `hdi()` returns the 89\% intervals (`ci = 0.89`), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2014). An effective sample size of at least 10.000 is recommended if 95\% intervals should be computed (Kruschke 2014, p. 183ff). Moreover, 89 is the highest prime number that does not exceed the already unstable 95\% threshold (McElreath, 2015).
 
@@ -231,7 +231,16 @@ posterior %>%
 
 ### Bayes Factor
 
-[**`bayesfactor_savagedickey()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_savagedickey.html) computes  the ratio between the density of a single value (typically the null) of two distributions. When the compared distributions are the posterior and the prior distributions, this results is an approximation of a Bayes factor comparing the model against a model in which the parameter of choice is restricted to the point null.
+[**`bayesfactor_savagedickey()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_savagedickey.html)
+computes the ratio between the density of a single value (typically the
+null) in two distributions. When these distributions are the prior and the posterior
+distributions, this ratio can be used to examine the degree by which the mass of
+the posterior distribution has shifted further away from or closer to the null value
+(relative to the prior distribution), thus indicating if the null value has become
+less or more likely given the observed data. The Savage-Dickey density ratio is
+also an approximation of a Bayes factor comparing the marginal likelihoods of
+the model against a model in which the tested parameter has been restricted to
+the point null (Wagenmakers et al., 2010).
 
 
 ```{r message=FALSE, warning=FALSE, results='hide'}

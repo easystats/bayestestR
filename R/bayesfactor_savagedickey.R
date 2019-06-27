@@ -1,9 +1,14 @@
 #' Savage-Dickey density ratio Bayes Factor (BF)
 #'
 #' This method computes the ratio between the density of a single value (typically the null)
-#' of two distributions. When the compared distributions are the posterior and the prior distributions,
-#' this results is an approximation of a Bayes factor comparing the model against a model in which
-#' the parameter of choice is restricted to the point null.
+#' in two distributions. When these distributions are the prior and the posterior distributions,
+#' this ratio can be used to examine the degree by which the mass of the posterior distribution
+#' has shifted further away from or closer to the null value (relative to the prior distribution),
+#' thus indicating if the null value has become less or more likely given the observed data.
+#'
+#' The Savage-Dickey density ratio is also an approximation of a Bayes factor comparing the
+#' marginal likelihoods of the model against a model in which the tested parameter has been
+#' restricted to the point null
 #' \cr \cr
 #' See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 #'
@@ -166,7 +171,7 @@ bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
                                              verbose = TRUE,
                                              ...) {
   if (!requireNamespace("emmeans")) {
-    stop("Package \"emmeans\" needed for this function to work. Please install it.")
+    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
   }
 
   if (is.null(prior)) {
@@ -410,7 +415,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @importFrom utils capture.output
 .update_to_priors.stanreg <- function(model, verbose = TRUE) {
   if (!requireNamespace("rstanarm")) {
-    stop("Package \"rstanarm\" needed for this function to work. Please install it.")
+    stop("Package 'rstanarm' required for this function to work. Please install it by running `install.packages('rstanarm')`.")
   }
 
   if (verbose) {
@@ -434,7 +439,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 #' @importFrom methods is
 .update_to_priors.brmsfit <- function(model, verbose = TRUE) {
   if (!requireNamespace("brms")) {
-    stop("Package \"brms\" needed for this function to work. Please install it.")
+    stop("Package 'brms' required for this function to work. Please install it by running `install.packages('brms')`.")
   }
 
   if (verbose) {
