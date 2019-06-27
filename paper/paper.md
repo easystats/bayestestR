@@ -159,6 +159,9 @@ The demonstration of the *pd* only makes sense for distribution that in principl
 
 ``` r
 p_direction(distribution_normal(100, 0.4, 0.2))
+#> # Probability of Direction (pd)
+#> 
+#> pd = 98.00%
 ```
 
 ![](Figure4.png)<!-- -->
@@ -191,10 +194,12 @@ bayesfactor_savagedickey(posterior, prior, direction = "two-sided", hypothesis =
 
 ``` r
 p_map(posterior)
+#> # MAP-based p-value
+#> 
+#> p (MAP) = 0.000
 ```
 
 ![](Figure6.png)<!-- -->
-
 
 # Licensing and Availability
 
