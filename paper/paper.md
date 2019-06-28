@@ -179,7 +179,7 @@ bayesfactor_savagedickey(posterior, prior, direction = "two-sided", hypothesis =
 
 ### MAP-based p-value
 
-[`p_map()`](https://easystats.github.io/bayestestR/reference/p_map.html) computes a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (*h0*) using Mills’ (2014, 2017) *Objective Bayesian Hypothesis Testing* framework. It is mathematically based on the density at the Maximum A Priori (MAP) and corresponds to the density value at 0 divided by the density of the MAP estimate (see figure 3, panel D).
+[`p_map()`](https://easystats.github.io/bayestestR/reference/p_map.html) computes a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (*h0*) using Mills’ *Objective Bayesian Hypothesis Testing* framework [@mills2018objective; @mills2014bayesian]. It is mathematically based on the density at the Maximum A Priori (MAP) and corresponds to the density value at 0 divided by the density of the MAP estimate (see figure 3, panel D).
 
 ``` r
 p_map(posterior)
