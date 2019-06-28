@@ -51,13 +51,18 @@ A data frame containing the Bayes factor representing evidence \emph{against} th
 }
 \description{
 This method computes the ratio between the density of a single value (typically the null)
-of two distributions. When the compared distributions are the posterior and the prior distributions,
-this results is an approximation of a Bayes factor comparing the model against a model in which
-the parameter of choice is restricted to the point null.
-\cr \cr
-See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
+in two distributions. When these distributions are the prior and the posterior distributions,
+this ratio can be used to examine the degree by which the mass of the posterior distribution
+has shifted further away from or closer to the null value (relative to the prior distribution),
+thus indicating if the null value has become less or more likely given the observed data.
 }
 \details{
+The Savage-Dickey density ratio is also an approximation of a Bayes factor comparing the
+marginal likelihoods of the model against a model in which the tested parameter has been
+restricted to the point null
+\cr \cr
+See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
+
 This method is used to compute Bayes factors based on prior and posterior distributions.
 When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
 extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
