@@ -33,6 +33,6 @@ p2 <- dat %>% mutate(fill = ifelse(x < ci(posterior)$CI_low, "low",
   xlab("\nParameter Value") +
   ylab("Probability Density\n")
 
-p <- see::plots(p1, p2)
+p <- see::plots(p1, p2, tags = TRUE)
 
 ggsave("paper/Figure2.png", plot = p, width = 13, height = 8, units = "in", dpi = 300)

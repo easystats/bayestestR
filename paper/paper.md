@@ -34,7 +34,7 @@ affiliations:
 
 # Introduction
 
-The Bayesian framework for statistics is quickly gaining in popularity among scientists, for reasons such as reliability and accuracy (particularly in noisy data and small samples), the possibility to incorporate prior knowledge into the analysis or the intuitive interpretation of results [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology; All the common statistical procedures (*t*-tests, correlations, ANOVAs, regressions, etc.) can also be achieved within the Bayesian framework. One of the core difference is that in the *frequentist* view, the effects are fixed (but unknown) and data are random. On the other hand, instead of having single estimates of the "true effect", the Bayesian inference process computes the probability of different effects *given the observed data*, resulting in a distribution of possible values for the parameters, called the *posterior distribution*. 
+The Bayesian framework for statistics is quickly gaining in popularity among scientists, for reasons such as reliability and accuracy (particularly in noisy data and small samples), the possibility of incorporating prior knowledge into the analysis and the intuitive interpretation of results [@andrews2013prior; @etz2016bayesian; @kruschke2010believe; @kruschke2012time; @wagenmakers2018bayesian]. Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology; All the common statistical procedures (*t*-tests, correlations, ANOVAs, regressions, etc.) can also be achieved within the Bayesian framework. One of the core difference is that in the *frequentist* view, the effects are fixed (but unknown) and data are random. On the other hand, instead of having single estimates of the "true effect", the Bayesian inference process computes the probability of different effects *given the observed data*, resulting in a distribution of possible values for the parameters, called the *posterior distribution*. 
 
 Effects in the Bayesian framework can be described by [characterizing their posterior distribution](https://easystats.github.io/bayestestR/articles/guidelines.html). Commonly reported indices include measures of centrality (e.g., the median, mean or MAP) and uncertainty (the [*credible* interval](https://easystats.github.io/bayestestR/articles/credible_interval.html)). *Cum grano salis*, these are considered the counterparts to the coefficient point-estimates and confidence intervals of the frequentist framework. Additionally, `bayestestR` also focuses on implementing a Bayesian null-hypothesis testing framework (in a Bayesian meaning, i.e., extended to general testing of "effect existence") by providing access to both established and exploratory indices of effect *existence* and *significance* (such as the ROPE, @kruschke2018bayesian; the MAP-based *p* value, @mills2018objective; or the Probability of Direction - *pd*).
 
@@ -67,6 +67,7 @@ point_estimate(posterior, centrality = "map")
 ```
 
 ![](Figure1.png)<!-- -->
+*Figure 1. Indices of centrality of the posterior distribution: the mean (in green), median (in red), and MAP (in blue).*
 
 ## Indices of Uncertainty: HDI and CI
 
@@ -92,6 +93,7 @@ ci(posterior)
 ```
 
 ![](Figure2.png)<!-- -->
+*Figure 2. Indices of uncertainty of the posterior distribution: (A) the 89% HDI; (B) the 89% CI.*
 
 ## Null-Hypothesis Significance Testing (NHST)
 
@@ -117,25 +119,14 @@ rope(posterior, range = c(-0.5, 0.5))
 ```
 
 ![](Figure3.png)<!-- -->
+*Figrue 3. Null-Hypothesis Significance Testing: (A) The ROPE; (B) Probability of direction; (C) The Savage-Dickey Bayes factor; (D) The p-MAP.*
 
 ### Test for Practical Equivalence
 
 [**`equivalence_test()`**](https://easystats.github.io/bayestestR/reference/equivalence_test.html)
-is a **Test for Practical Equivalence** based on the “HDI+ROPE decision rule” [@kruschke_rejecting_2018] to check whether parameter values should be accepted or rejected against an explicitly formulated “null hypothesis” (i.e., a [ROPE](https://easystats.github.io/bayestestR/reference/rope.html)).
+is a **Test for Practical Equivalence** based on the “HDI+ROPE decision rule” [@kruschke2018rejecting] to check whether parameter values should be accepted or rejected against an explicitly formulated “null hypothesis” (i.e., a [ROPE](https://easystats.github.io/bayestestR/reference/rope.html)).
 
 The percentage of the HDI that falls within the ROPE serves as decision rule: If the HDI is completely outside the ROPE, the "null hypothesis" for this parameter is "rejected". If the ROPE completely covers the HDI, i.e., all most credible values of a parameter are inside the region of practical equivalence, the null hypothesis is accepted. Else, it’s undecided whether to accept or reject the null hypothesis.
-
-``` r
-equivalence_test(posterior, range = c(-0.5, 0.5))
-#> # Test for Practical Equivalence
-#> 
-#>   ROPE: [-0.50 0.50]
-#> 
-#>         H0 inside ROPE     89% HDI
-#>  Undecided      8.89 % [0.11 6.05]
-```
-
-As said above, for regression models `equivalence_test()` will automatically find an appropriate range for the ROPE. However, it is also possible to define a custom range using the `range`-argument.
 
 ``` r
 library(rstanarm)
@@ -151,11 +142,23 @@ equivalence_test(model)
 #>         gear Undecided     52.54 % [-1.76  1.23]
 ```
 
+As said above, for regression models `equivalence_test()` will automatically find an appropriate range for the ROPE. However, it is also possible to define a custom range using the `range`-argument.
+
+``` r
+equivalence_test(posterior, range = c(-0.5, 0.5))
+#> # Test for Practical Equivalence
+#> 
+#>   ROPE: [-0.50 0.50]
+#> 
+#>         H0 inside ROPE     89% HDI
+#>  Undecided      8.89 % [0.11 6.05]
+```
+
 ### Probability of Direction (*p*d)
 
-[**`p_direction()`**](https://easystats.github.io/bayestestR/reference/p_direction.html) computes the **Probability of Direction** (*pd*, also known as the Maximum Probability of Effect - *MPE*). It varies between 50% and 100% (i.e., `0.5` and `1`) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Although differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist *p-value*: the *pd* corresponds to the frequentist one-sided p-value through the formula `p-value = (1-pd/100)` and to the two-sided p-value (the most commonly reported) through the formula `p-value = 2*(1-pd/100)`. Thus, a `pd` of `95%`, `97.5%` `99.5%` and `99.95%` corresponds approximately to a two-sided *p*-value of respectively `.1`, `.05`, `.01` and `.001`. See the [*reporting guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
+[**`p_direction()`**](https://easystats.github.io/bayestestR/reference/p_direction.html) computes the **Probability of Direction** (*pd*, also known as the Maximum Probability of Effect - *MPE*). It varies between 50% and 100% (i.e., `0.5` and `1`) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign.
 
-The demonstration of the *pd* only makes sense for distribution that in principle can have both positive and negative values, so we use a normal distribution with values approximately ranging from `-.1` to `.9` for the next example.
+The demonstration of the *pd* only makes sense for distributions that in principle can have both positive and negative values, so for the next example a normal distribution is used with values approximately ranging from `-.1` to `.9`.
 
 ``` r
 p_direction(distribution_normal(100, 0.4, 0.2))
@@ -163,8 +166,6 @@ p_direction(distribution_normal(100, 0.4, 0.2))
 #> 
 #> pd = 98.00%
 ```
-
-![](Figure4.png)<!-- -->
 
 ### Bayes Factor
 
@@ -186,8 +187,6 @@ posterior <- rnorm(1000, mean = 1, sd = 0.7)
 bayesfactor_savagedickey(posterior, prior, direction = "two-sided", hypothesis = 0)
 ```
 
-![](Figure5.png)<!-- -->
-
 ### MAP-based *p*-value
 
 [**`p_map()`**](https://easystats.github.io/bayestestR/reference/p_map.html) computes a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (*h0*) using Mills’ (2014, 2017) *Objective Bayesian Hypothesis Testing* framework. It is mathematically based on the density at the Maximum A Priori (MAP) and corresponds to the density value at 0 divided by the density of the MAP estimate.
@@ -198,8 +197,6 @@ p_map(posterior)
 #> 
 #> p (MAP) = 0.000
 ```
-
-![](Figure6.png)<!-- -->
 
 # Licensing and Availability
 
