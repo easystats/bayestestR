@@ -17,6 +17,15 @@ plot.p_direction <- function(x, ...) {
 
 
 #' @export
+plot.point_estimate <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot point-estimates. Please install it by running `install.packages('see')`.")
+  }
+  NextMethod()
+}
+
+
+#' @export
 plot.rope <- function(x, ...) {
   if (!requireNamespace("see", quietly = TRUE)) {
     stop("Package 'see' needed to plot ROPE. Please install it by running `install.packages('see')`.")
@@ -28,7 +37,7 @@ plot.rope <- function(x, ...) {
 #' @export
 plot.hdi <- function(x, ...) {
   if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot HDI Please install it by running `install.packages('see')`.")
+    stop("Package 'see' needed to plot HDI. Please install it by running `install.packages('see')`.")
   }
   NextMethod()
 }
