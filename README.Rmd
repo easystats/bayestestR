@@ -240,7 +240,7 @@ the posterior distribution has shifted further away from or closer to the null v
 less or more likely given the observed data. The Savage-Dickey density ratio is
 also an approximation of a Bayes factor comparing the marginal likelihoods of
 the model against a model in which the tested parameter has been restricted to
-the point null [@wagenmakers2010bayesian].
+the point null (Wagenmakers et al., 2010).
 
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
