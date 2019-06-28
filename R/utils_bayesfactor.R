@@ -62,7 +62,7 @@
 }
 
 #' @keywords internal
-format_big_small <- function(BF, digits = 2) {
+.format_big_small <- function(BF, digits = 2) {
   BFx <- as.character(round(BF, digits = digits))
   big_ind <- abs(BF) >= (10*10^digits) | abs(BF) < 1 / (10^digits)
   big_ind <- sapply(big_ind, isTRUE)

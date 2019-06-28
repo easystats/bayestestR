@@ -8,7 +8,7 @@ print.bayesfactor_savagedickey <- function(x, digits = 2, log = FALSE, ...) {
     BFE$BF <- log(BFE$BF)
   }
 
-  BFE$BF <- format_big_small(BFE$BF, digits = digits)
+  BFE$BF <- .format_big_small(BFE$BF, digits = digits)
 
   colnames(BFE)[colnames(BFE) == "BF"] <- "Bayes Factor"
 

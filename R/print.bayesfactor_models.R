@@ -9,7 +9,7 @@ print.bayesfactor_models <- function(x, digits = 2, log = FALSE, ...) {
   if (log) {
     BFE$BF <- log(BFE$BF)
   }
-  BFE$BF <- format_big_small(BFE$BF, digits = digits)
+  BFE$BF <- .format_big_small(BFE$BF, digits = digits)
 
   # indicate null-model
   BFE$Model[BFE$Model == "1"] <- "(Intercept only)"
