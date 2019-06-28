@@ -1,13 +1,16 @@
 library(bayestestR)
 library(tidyverse)
-library(strengejacke)
+# library(strengejacke)
+
+
+# ROPE --------------------------------------------------------------------
 
 set.seed(123)
 posterior <- distribution_chisquared(100, 3)
 dat <- as.data.frame(density(posterior))
 
-dat %>% mutate(fill = ifelse(x < -.5, "low",
-                     ifelse(x > .5, "high", "middle"))) %>%
+p1 <- dat %>% mutate(fill = ifelse(x < -.5, "low",
+                             ifelse(x > .5, "high", "middle"))) %>%
   ggplot(aes(x=x, y=y, fill=fill)) +
   geom_ribbon(aes(ymin=0, ymax=y)) +
   geom_vline(xintercept=0, linetype="dotted") +
@@ -17,4 +20,81 @@ dat %>% mutate(fill = ifelse(x < -.5, "low",
   xlab(NULL) +
   ylab("Probability Density\n")
 
-ggsave("paper/Figure3.png", width = 13, height = 6, units = "in", dpi = 300)
+
+
+# PD ----------------------------------------------------------------------
+
+posterior <- distribution_normal(100, 0.4, 0.2)
+p2 <- posterior %>%
+  density() %>%
+  as.data.frame() %>%
+  mutate(fill = ifelse(x < 0, "low", "high")) %>%
+  ggplot(aes(x=x, y=y, fill=fill)) +
+  geom_ribbon(aes(ymin=0, ymax=y)) +
+  geom_vline(xintercept=0, linetype="dotted") +
+  theme_classic(base_size = 20) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
+  scale_fill_manual(values=c("high"="#FFC107", "low"="#E91E63"), guide=FALSE) +
+  xlab("\nParameter Value") +
+  ylab("Probability Density\n")
+
+
+# sdBF --------------------------------------------------------------------
+
+
+posterior <- distribution_normal(1000, mean = 1, sd = 0.7) %>%
+  density() %>%
+  as.data.frame()
+prior <- distribution_normal(1000, mean = 0, sd = 1) %>%
+  density() %>%
+  as.data.frame()
+
+p3 <- posterior %>%
+  ggplot(aes(x=x, y=y)) +
+  geom_ribbon(aes(ymin=0, ymax=y), fill="#FFC107") +
+  geom_line(data=prior, size=1, linetype="dotted") +
+  geom_segment(x=0, xend=0, y=0, yend=max(prior$y), color="#2196F3", size=1) +
+  geom_point(x=0, y=max(prior$y), color="#2196F3", size=5) +
+  geom_segment(x=0, xend=0, y=0, yend=density_at(posterior$x, 0, bw="nrd0"), color="#E91E63", size=1) +
+  geom_point(x=0, y=density_at(posterior$x, 0, bw="nrd0"), color="#E91E63", size=5) +
+  theme_classic(base_size = 20) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.65)) +
+  scale_fill_manual(values=c("high"="#FFC107", "low"="#E91E63"), guide=FALSE) +
+  xlab("\nParameter Value") +
+  ylab("Probability Density\n")
+
+
+# p-MAP -------------------------------------------------------------------
+
+set.seed(123)
+posterior <- distribution_chisquared(100, 3)
+dat <- as.data.frame(density(posterior))
+
+m2 <- map_estimate(posterior)
+ypos2 <- dat$y[which.min(abs(dat$x - m2))]
+
+ypos_null <- dat$y[which.min(abs(dat$x))]
+
+p4 <- ggplot(dat, aes(x=x, y=y)) +
+  geom_ribbon(aes(ymin=0, ymax=y), fill="#FFC107") +
+  geom_segment(x=m2, xend=m2, y=0, yend=ypos2, color="#E91E63", size=1) +
+  geom_point(x=m2, y=ypos2, color="#E91E63", size=5) +
+  geom_segment(x=0, xend=0, y=0, yend=ypos_null, color="#E91E63", size=1) +
+  geom_point(x=0, y=ypos_null, color="#E91E63", size=5) +
+  geom_vline(xintercept=0, linetype="dotted") +
+  theme_classic(base_size = 20) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, .25)) +
+  xlab("\nParameter Value") +
+  ylab("Probability Density\n")
+
+
+# Combine -----------------------------------------------------------------
+
+p <- see::plots(p1, p2, p3, p4, tags = TRUE) # axis are not aligned...
+
+p <- patchwork::wrap_plots(p1, p2, p3, p4, ncol = 2) +
+  patchwork::plot_annotation(tag_levels = "A")
+
+# Save --------------------------------------------------------------------
+
+ggsave("paper/Figure3.png", plot = p, width = 13, height = 8, units = "in", dpi = 300)

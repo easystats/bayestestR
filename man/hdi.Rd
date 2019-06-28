@@ -63,7 +63,7 @@ A data frame with following columns:
 Compute the \strong{Highest Density Interval (HDI)} of a posterior distribution, i.e., all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as \strong{Credible Interval (CI)}.
 }
 \details{
-Unlike equal-tailed intervals (see \code{\link{ci}}) that typically exclude 2.5\% from each tail
+Unlike equal-tailed intervals (see \code{ci()}) that typically exclude 2.5\% from each tail
   of the distribution, the HDI is \emph{not} equal-tailed and therefore always
   includes the mode(s) of posterior distributions.
   \cr \cr
