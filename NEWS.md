@@ -6,6 +6,8 @@
 
 ## New functions / features
 
+`eti`: Computes equal-tailed intervals
+
 ## Minor changes
 
 

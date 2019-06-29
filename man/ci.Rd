@@ -32,8 +32,8 @@ ci(x, ...)
 
 \item{...}{Currently not used.}
 
-\item{ci}{Value or vector of probability of the interval (between 0 and 1)
-to be estimated. Named Credible Interval (CI) for consistency.}
+\item{ci}{Value or vector of probability of the CI (between 0 and 1)
+to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95} (95\%) for frequentist models.}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -59,37 +59,13 @@ A data frame with following columns:
   }
 }
 \description{
-Compute Confidence/Credible Intervals (CI) for Bayesian (using quantiles) and frequentist models.
+Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models. The Documentation is accessible for:
 }
 \details{
-Documentation is accessible for:
 \itemize{
- \item \href{https://easystats.github.io/bayestestR/reference/ci.html}{Bayesian models}
+ \item \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{Bayesian models}
  \item \href{https://easystats.github.io/parameters/reference/ci.merMod.html}{Frequentist models}
 }
-\strong{Bayesian models}
-\cr \cr
-This functions returns, by default, the quantile interval, i.e., an
-equal-tailed interval (ETI). A 90\% ETI has 5\% of the distribution on either
-side of its limits. It indicates the 5th percentile and the 95h percentile.
-In symmetric distributions, the two methods of computing credible intervals,
-the ETI and the \link[=hdi]{HDI}, return similar results.
-\cr \cr
-This is not the case for skewed distributions. Indeed, it is possible that
-parameter values in the ETI have lower credibility (are less probable) than
-parameter values outside the ETI. This property seems undesirable as a summary
-of the credible values in a distribution.
-\cr \cr
-On the other hand, the ETI range does change when transformations are applied
-to the distribution (for instance, for a log odds scale to probabilities):
-the lower and higher bounds of the transformed distribution will correspond
-to the transformed lower and higher bounds of the original distribution.
-On the contrary, applying transformations to the distribution will change
-the resulting HDI.
-\cr \cr
-\strong{Frequentist models}
-\cr \cr
- This function is implemented in the \href{https://github.com/easystats/parameters}{parameters} package and attemps to retrieve, or compute, the Confidence Interval (default \code{ci} level: \code{.95}).
 }
 \examples{
 library(bayestestR)

@@ -23,7 +23,7 @@ point_estimate(x, centrality = "median", dispersion = FALSE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a
-\code{stanreg} or \code{brmsfit} model.}
+\code{stanreg}, \code{brmsfit} or a \code{BayesFactor} model.}
 
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
