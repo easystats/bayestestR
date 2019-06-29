@@ -12,20 +12,26 @@
 \usage{
 ci(x, ...)
 
-\method{ci}{numeric}(x, ci = 0.89, verbose = TRUE, ...)
+\method{ci}{numeric}(x, ci = 0.89, method = "ETI", verbose = TRUE,
+  ...)
 
-\method{ci}{data.frame}(x, ci = 0.89, verbose = TRUE, ...)
+\method{ci}{data.frame}(x, ci = 0.89, method = "ETI", verbose = TRUE,
+  ...)
 
-\method{ci}{emmGrid}(x, ci = 0.89, verbose = TRUE, ...)
+\method{ci}{emmGrid}(x, ci = 0.89, method = "ETI", verbose = TRUE,
+  ...)
 
-\method{ci}{stanreg}(x, ci = 0.89, effects = c("fixed", "random",
-  "all"), parameters = NULL, verbose = TRUE, ...)
+\method{ci}{stanreg}(x, ci = 0.89, method = "ETI",
+  effects = c("fixed", "random", "all"), parameters = NULL,
+  verbose = TRUE, ...)
 
-\method{ci}{brmsfit}(x, ci = 0.89, effects = c("fixed", "random",
-  "all"), component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL, verbose = TRUE, ...)
+\method{ci}{brmsfit}(x, ci = 0.89, method = "ETI",
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE,
+  ...)
 
-\method{ci}{BFBayesFactor}(x, ci = 0.89, verbose = TRUE, ...)
+\method{ci}{BFBayesFactor}(x, ci = 0.89, method = "ETI",
+  verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{A \code{stanreg} or \code{brmsfit} model, or a vector representing a posterior distribution.}
@@ -34,6 +40,8 @@ ci(x, ...)
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
 to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95} (95\%) for frequentist models.}
+
+\item{method}{Can be \link[=eti]{'ETI'} (default) or \link[=hdi]{'HDI'}.}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -71,30 +79,32 @@ Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models. 
 library(bayestestR)
 
 posterior <- rnorm(1000)
-ci(posterior)
-ci(posterior, ci = c(.80, .89, .95))
+ci(posterior, method = "ETI")
+ci(posterior, method = "HDI")
 
 df <- data.frame(replicate(4, rnorm(100)))
-ci(df)
-ci(df, ci = c(.80, .89, .95))
+ci(df, method = "ETI", ci = c(.80, .89, .95))
+ci(df, method = "HDI", ci = c(.80, .89, .95))
 
 library(rstanarm)
 model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
-ci(model)
-ci(model, ci = c(.80, .89, .95))
+ci(model, method = "ETI", ci = c(.80, .89))
+ci(model, method = "HDI", ci = c(.80, .89))
 
 library(emmeans)
-ci(emtrends(model, ~1, "wt"))
+model <- emtrends(model, ~1, "wt")
+ci(model, method = "ETI")
+ci(model, method = "HDI")
 \dontrun{
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-ci(model)
-ci(model, ci = c(.80, .89, .95))
+ci(model, method = "ETI")
+ci(model, method = "HDI")
 
 library(BayesFactor)
 bf <- ttestBF(x = rnorm(100, 1, 1))
-ci(bf)
-ci(bf, ci = c(.80, .89, .95))
+ci(bf, method = "ETI")
+ci(bf, method = "HDI")
 }
 
 }
