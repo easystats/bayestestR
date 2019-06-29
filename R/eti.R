@@ -81,7 +81,7 @@ eti.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
 #' @rdname eti
 #' @export
 eti.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"),
-                       parameters = NULL, verbose = TRUE, ...) {
+                        parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   out <- .compute_interval_stanreg(x, ci, effects, parameters, verbose, fun = "eti")
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
@@ -92,8 +92,8 @@ eti.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"),
 #' @rdname eti
 #' @export
 eti.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"),
-                       component = c("conditional", "zi", "zero_inflated", "all"),
-                       parameters = NULL, verbose = TRUE, ...) {
+                        component = c("conditional", "zi", "zero_inflated", "all"),
+                        parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
   out <- .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose, fun = "eti")

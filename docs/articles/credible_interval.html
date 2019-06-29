@@ -165,7 +165,7 @@
 <div id="different-types-of-cis" class="section level1">
 <h1 class="hasAnchor">
 <a href="#different-types-of-cis" class="anchor"></a>Different types of CIs</h1>
-<p>The reader might notice that <code>bayestestR</code> provides <strong>two methods</strong> to compute credible intervals, the <strong>Highest Density Interval (HDI)</strong> and the <strong>Equal-tailed Interval (ETI)</strong>, obtained via the quantile method. What is the difference? Let’s see:</p>
+<p>The reader might notice that <code>bayestestR</code> provides <strong>two methods</strong> to compute credible intervals, the <strong>Highest Density Interval (HDI)</strong> (<code><a href="../reference/hdi.html">hdi()</a></code>) and the <strong>Equal-tailed Interval (ETI)</strong> (<code><a href="../reference/eti.html">eti()</a></code>). These methods can also be changed via the <code>method</code> argument of the <code><a href="../reference/ci.html">ci()</a></code> function. What is the difference? Let’s see:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a>
 <a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
@@ -173,9 +173,9 @@
 <a class="sourceLine" id="cb1-5" title="5"><span class="co"># Generate a normal distribution</span></a>
 <a class="sourceLine" id="cb1-6" title="6">posterior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_normal</a></span>(<span class="dv">1000</span>)</a>
 <a class="sourceLine" id="cb1-7" title="7"></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="co"># Compute HDI and Quantile CI</span></a>
-<a class="sourceLine" id="cb1-9" title="9">ci_hdi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hdi.html">hdi</a></span>(posterior)</a>
-<a class="sourceLine" id="cb1-10" title="10">ci_eti &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior)</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co"># Compute HDI and ETI</span></a>
+<a class="sourceLine" id="cb1-9" title="9">ci_hdi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior, <span class="dt">method =</span> <span class="st">"HDI"</span>)</a>
+<a class="sourceLine" id="cb1-10" title="10">ci_eti &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior, <span class="dt">method =</span> <span class="st">"ETI"</span>)</a>
 <a class="sourceLine" id="cb1-11" title="11"></a>
 <a class="sourceLine" id="cb1-12" title="12"><span class="co"># Plot the distribution and add the limits of the two CIs</span></a>
 <a class="sourceLine" id="cb1-13" title="13">posterior <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -202,8 +202,8 @@
 <a class="sourceLine" id="cb2-6" title="6">posterior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_beta</a></span>(<span class="dv">1000</span>, <span class="dv">6</span>, <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb2-7" title="7"></a>
 <a class="sourceLine" id="cb2-8" title="8"><span class="co"># Compute HDI and Quantile CI</span></a>
-<a class="sourceLine" id="cb2-9" title="9">ci_hdi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hdi.html">hdi</a></span>(posterior)</a>
-<a class="sourceLine" id="cb2-10" title="10">ci_eti &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior)</a>
+<a class="sourceLine" id="cb2-9" title="9">ci_hdi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior, <span class="dt">method =</span> <span class="st">"HDI"</span>)</a>
+<a class="sourceLine" id="cb2-10" title="10">ci_eti &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior, <span class="dt">method =</span> <span class="st">"ETI"</span>)</a>
 <a class="sourceLine" id="cb2-11" title="11"></a>
 <a class="sourceLine" id="cb2-12" title="12"><span class="co"># Plot the distribution and add the limits of the two CIs</span></a>
 <a class="sourceLine" id="cb2-13" title="13">posterior <span class="op">%&gt;%</span><span class="st"> </span></a>

@@ -98,7 +98,7 @@ p_direction.numeric <- function(x, method = "direct", ...) {
       dens <- dens[dens$x < 0, ]
     }
     pdir <- area_under_curve(dens$x, dens$y, method = "spline")
-    if (pdir >= 1) pdir <- 1  # Enforce bounds
+    if (pdir >= 1) pdir <- 1 # Enforce bounds
   }
 
   attr(pdir, "method") <- method

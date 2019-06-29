@@ -54,7 +54,7 @@ Thus, by default, the CIs are computed with 89\% intervals (`ci = 0.89`), deemed
 
 # Different types of CIs
 
-The reader might notice that `bayestestR` provides **two methods** to compute credible intervals, the **Highest Density Interval (HDI)** and the **Equal-tailed Interval (ETI)**, obtained via the quantile method. What is the difference? Let's see:
+The reader might notice that `bayestestR` provides **two methods** to compute credible intervals, the **Highest Density Interval (HDI)** (`hdi()`) and the **Equal-tailed Interval (ETI)** (`eti()`). These methods can also be changed via the `method` argument of the `ci()` function. What is the difference? Let's see:
 
 ```{r warning=FALSE, message=FALSE}
 library(bayestestR)
@@ -64,9 +64,9 @@ library(ggplot2)
 # Generate a normal distribution
 posterior <- distribution_normal(1000)
 
-# Compute HDI and Quantile CI
-ci_hdi <- hdi(posterior)
-ci_eti <- ci(posterior)
+# Compute HDI and ETI
+ci_hdi <- ci(posterior, method = "HDI")
+ci_eti <- ci(posterior, method = "ETI")
 
 # Plot the distribution and add the limits of the two CIs
 posterior %>% 
@@ -95,8 +95,8 @@ library(ggplot2)
 posterior <- distribution_beta(1000, 6, 2)
 
 # Compute HDI and Quantile CI
-ci_hdi <- hdi(posterior)
-ci_eti <- ci(posterior)
+ci_hdi <- ci(posterior, method = "HDI")
+ci_eti <- ci(posterior, method = "ETI")
 
 # Plot the distribution and add the limits of the two CIs
 posterior %>% 

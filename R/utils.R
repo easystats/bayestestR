@@ -22,9 +22,12 @@
 #' @keywords internal
 .is_empty_object <- function(x) {
   if (is.list(x)) {
-    x <- tryCatch(
-      {.compact_list(x)},
-      error = function(x) { x }
+    x <- tryCatch({
+      .compact_list(x)
+    },
+    error = function(x) {
+      x
+    }
     )
   }
   # this is an ugly fix because of ugly tibbles

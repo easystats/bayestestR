@@ -60,11 +60,11 @@ ci <- function(x, ...) {
 
 #' @keywords internal
 .ci_bayesian <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
-  if(tolower(method) %in% c("eti", "equal", "ci", "quantile")){
+  if (tolower(method) %in% c("eti", "equal", "ci", "quantile")) {
     return(eti(x, ci = ci, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))
-  } else if(tolower(method) %in% c("hdi")){
+  } else if (tolower(method) %in% c("hdi")) {
     return(hdi(x, ci = ci, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))
-  } else{
+  } else {
     stop("`method` should be 'ETI' (for equal-tailed interval) or 'HDI' (for highest density interval).")
   }
 }
