@@ -275,25 +275,25 @@ In most cases, it seems that the <em>pd</em> has a direct correspondance with th
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='fu'>p_direction</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Probability of Direction (pd)
 #&gt; 
-#&gt; </span><span>pd = 85.40%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
+#&gt; </span><span>pd = 83.20%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
 #&gt; 
-#&gt; </span><span>pd = 84.62%</div><div class='input'>
+#&gt; </span><span>pd = 82.75%</div><div class='input'>
 <span class='co'># Simulate a dataframe of posterior distributions</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>p_direction</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
 #&gt; 
 #&gt; </span><span> Parameter     pd
-#&gt;         X1 57.00%
-#&gt;         X2 50.00%
-#&gt;         X3 60.00%
-#&gt;         X4 54.00%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
+#&gt;         X1 53.00%
+#&gt;         X2 51.00%
+#&gt;         X3 53.00%
+#&gt;         X4 55.00%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
 #&gt; 
 #&gt; </span><span> Parameter     pd
-#&gt;         X1 55.74%
-#&gt;         X2 49.29%
-#&gt;         X3 59.21%
-#&gt;         X4 52.97%</div></span><span class='co'># NOT RUN {</span>
+#&gt;         X1 52.51%
+#&gt;         X2 53.37%
+#&gt;         X3 54.15%
+#&gt;         X4 53.26%</div></span><span class='co'># NOT RUN {</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)

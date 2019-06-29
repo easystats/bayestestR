@@ -440,9 +440,9 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 </blockquote>
 <p>This function computes all of the adored mentioned indices, and can be run directly on the model:</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model, <span class="dt">test =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_direction"</span>,<span class="st">"rope"</span>,<span class="st">"bayesfactor"</span>))</a></code></pre></div>
-<pre><code>&gt;       Parameter Median CI CI_low CI_high  pd ROPE_CI ROPE_low ROPE_high
-&gt; 1   (Intercept)    277 89  250.2     307 100      89     -6.2       6.2
-&gt; 2 feedsunflower     51 89    7.8      88  98      89     -6.2       6.2
+<pre><code>&gt;       Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
+&gt; 1   (Intercept)    277 89  250.2     307 1.00      89     -6.2       6.2
+&gt; 2 feedsunflower     51 89    7.8      88 0.98      89     -6.2       6.2
 &gt;   ROPE_Percentage      BF  ESS Rhat Prior_Distribution Prior_Location
 &gt; 1               0 8.8e+11 3437    1             normal              0
 &gt; 2               0 1.4e+00 3316    1             normal              0

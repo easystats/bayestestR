@@ -41,7 +41,7 @@
   
 <meta property="og:title" content="Highest Density Interval (HDI) — hdi" />
 
-<meta property="og:description" content="Compute the Highest Density Interval (HDI) of a posterior distribution, i.e., all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as Credible Interval (CI)." />
+<meta property="og:description" content="Compute the Highest Density Interval (HDI) of posterior distributions. All points within this interval have a higher probability density than points outside the interval. The HDI can be used in the context of uncertainty characterisation of posterior distributions as Credible Interval (CI)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -181,7 +181,7 @@
 
     <div class="ref-description">
     
-    <p>Compute the <strong>Highest Density Interval (HDI)</strong> of a posterior distribution, i.e., all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as <strong>Credible Interval (CI)</strong>.</p>
+    <p>Compute the <strong>Highest Density Interval (HDI)</strong> of posterior distributions. All points within this interval have a higher probability density than points outside the interval. The HDI can be used in the context of uncertainty characterisation of posterior distributions as <strong>Credible Interval (CI)</strong>.</p>
     
     </div>
 
@@ -214,7 +214,7 @@
     <tr>
       <th>x</th>
       <td><p>Vector representing a posterior distribution. Can also be a
-<code>stanreg</code> or <code>brmsfit</code> model.</p></td>
+<code>stanreg</code>, <code>brmsfit</code> or a <code>BayesFactor</code> model.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -222,8 +222,8 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Value or vector of probability of the interval (between 0 and 1)
-to be estimated. Named Credible Interval (CI) for consistency.</p></td>
+      <td><p>Value or vector of probability of the (credible) interval - CI (between 0 and 1)
+to be estimated. Default to <code>.89</code> (89%).</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -254,24 +254,40 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
     <p>A data frame with following columns:</p><ul>
 <li><p><code>Parameter</code> The model parameter(s), if <code>x</code> is a model-object. If <code>x</code> is a vector, this column is missing.</p></li>
-<li><p><code>CI</code> The probability of the HDI.</p></li>
-<li><p><code>CI_low</code> , <code>CI_high</code> The lower and upper HDI limits for the parameters.</p></li>
+<li><p><code>CI</code> The probability of the credible interval.</p></li>
+<li><p><code>CI_low</code>, <code>CI_high</code> The lower and upper credible interval limits for the parameters.</p></li>
 </ul>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Unlike equal-tailed intervals (see <a href='ci.html'>ci</a>) that typically exclude 2.5% from each tail
-  of the distribution, the HDI is <em>not</em> equal-tailed and therefore always
-  includes the mode(s) of posterior distributions.
-  <br /> <br />
-  By default, <code>hdi()</code> returns the 89% intervals (<code>ci = 0.89</code>),
-  deemed to be more stable than, for instance, 95% intervals (<cite>Kruschke, 2014</cite>).
-  An effective sample size of at least 10.000 is recommended if 95% intervals
-  should be computed (<cite>Kruschke, 2014, p. 183ff</cite>). Moreover, 89 is the
-  highest prime number that does not exceed the already unstable 95% threshold.
-  What does it have to do with anything? Nothing, but it reminds us of the total
-  arbitrarity of any of these conventions (McElreath, 2015).</p>
+    <p>Unlike equal-tailed intervals (see <code><a href='eti.html'>eti()</a></code>) that typically exclude 2.5%
+from each tail of the distribution and always include the median, the HDI is
+<em>not</em> equal-tailed and therefore always includes the mode(s) of posterior
+distributions.
+<br /> <br />
+By default, <code>hdi()</code> and <code><a href='eti.html'>eti()</a></code> returns the 89% intervals (<code>ci = 0.89</code>),
+deemed to be more stable than, for instance, 95% intervals (<cite>Kruschke, 2014</cite>).
+An effective sample size of at least 10.000 is recommended if 95% intervals
+should be computed (<cite>Kruschke, 2014, p. 183ff</cite>). Moreover, 89 is the
+not exceed the already unstable and arbitrary 95% threshold (McElreath, 2015).
+<br /> <br />
+A 90% equal-tailed interval (ETI) has 5% of the distribution on either
+side of its limits. It indicates the 5th percentile and the 95h percentile.
+In symmetric distributions, the two methods of computing credible intervals,
+the ETI and the HDI, return similar results.
+<br /> <br />
+This is not the case for skewed distributions. Indeed, it is possible that
+parameter values in the ETI have lower credibility (are less probable) than
+parameter values outside the ETI. This property seems undesirable as a summary
+of the credible values in a distribution.
+<br /> <br />
+On the other hand, the ETI range does change when transformations are applied
+to the distribution (for instance, for a log odds scale to probabilities):
+the lower and higher bounds of the transformed distribution will correspond
+to the transformed lower and higher bounds of the original distribution.
+On the contrary, applying transformations to the distribution will change
+the resulting HDI.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -288,39 +304,39 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>.89</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span>       89% HDI
-#&gt;  [-1.69, 1.47]
+#&gt;  [-1.56, 1.59]
 #&gt; </div><div class='input'><span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
 #&gt; </span><span>       80% HDI
-#&gt;  [-1.17, 1.34]
+#&gt;  [-1.33, 1.23]
 #&gt; 
 #&gt; 
 #&gt;        90% HDI
-#&gt;  [-1.69, 1.61]
+#&gt;  [-1.60, 1.62]
 #&gt; 
 #&gt; 
 #&gt;        95% HDI
-#&gt;  [-2.06, 2.01]
+#&gt;  [-1.87, 1.92]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>hdi</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt;   Parameter CI    CI_low  CI_high
-#&gt; 1        X1 89 -1.756127 1.557337
-#&gt; 2        X2 89 -1.756837 1.498023
-#&gt; 3        X3 89 -1.378006 1.371371
-#&gt; 4        X4 89 -1.635228 1.851398</div><div class='input'><span class='fu'>hdi</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;    Parameter CI     CI_low  CI_high
-#&gt; 1         X1 80 -1.1235008 1.526563
-#&gt; 2         X1 90 -1.3116774 2.135601
-#&gt; 3         X1 95 -2.2628297 1.886451
-#&gt; 4         X2 80 -1.2103472 1.479340
-#&gt; 5         X2 90 -1.7568372 1.652023
-#&gt; 6         X2 95 -1.7568372 2.039058
-#&gt; 7         X3 80 -0.9445802 1.371371
-#&gt; 8         X3 90 -1.3780063 1.496618
-#&gt; 9         X3 95 -2.1930038 1.496618
-#&gt; 10        X4 80 -1.3473655 1.448740
-#&gt; 11        X4 90 -1.4701032 2.150622
-#&gt; 12        X4 95 -2.1607770 1.851398</div><div class='input'>
+#&gt; 1        X1 89 -1.300505 1.257247
+#&gt; 2        X2 89 -1.568323 1.438602
+#&gt; 3        X3 89 -1.229221 1.978189
+#&gt; 4        X4 89 -1.573218 1.569997</div><div class='input'><span class='fu'>hdi</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;    Parameter CI     CI_low  CI_high
+#&gt; 1         X1 80 -0.9241309 1.204938
+#&gt; 2         X1 90 -1.4214774 1.204938
+#&gt; 3         X1 95 -1.7155863 1.427259
+#&gt; 4         X2 80 -1.0276404 1.438602
+#&gt; 5         X2 90 -1.6643895 1.438602
+#&gt; 6         X2 95 -1.6643895 1.893846
+#&gt; 7         X3 80 -1.2292210 1.025117
+#&gt; 8         X3 90 -1.3145439 1.978189
+#&gt; 9         X3 95 -2.1990455 1.978189
+#&gt; 10        X4 80 -0.8573989 1.738921
+#&gt; 11        X4 90 -1.5732176 1.648390
+#&gt; 12        X4 95 -1.8480610 1.812818</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
@@ -351,9 +367,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 1: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.013 seconds (Warm-up)
-#&gt; Chain 1:                0.014 seconds (Sampling)
-#&gt; Chain 1:                0.027 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.012 seconds (Warm-up)
+#&gt; Chain 1:                0.013 seconds (Sampling)
+#&gt; Chain 1:                0.025 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -384,38 +400,38 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.011 seconds (Warm-up)
-#&gt; Chain 2:                0.012 seconds (Sampling)
-#&gt; Chain 2:                0.023 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.014 seconds (Warm-up)
+#&gt; Chain 2:                0.011 seconds (Sampling)
+#&gt; Chain 2:                0.025 seconds (Total)
 #&gt; Chain 2: </div><div class='input'><span class='fu'>hdi</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span>   Parameter        89% HDI
-#&gt;  (Intercept) [31.83, 49.79]
-#&gt;           wt [-6.65, -4.31]
-#&gt;         gear [-2.05,  1.02]
+#&gt;  (Intercept) [30.31, 46.92]
+#&gt;           wt [-6.61, -4.39]
+#&gt;         gear [-1.62,  1.27]
 #&gt; </div><div class='input'><span class='fu'>hdi</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
 #&gt; </span><span>   Parameter        80% HDI
-#&gt;  (Intercept) [32.85, 47.36]
-#&gt;           wt [-6.67, -4.74]
-#&gt;         gear [-1.69,  0.64]
+#&gt;  (Intercept) [32.31, 46.10]
+#&gt;           wt [-6.39, -4.66]
+#&gt;         gear [-1.62,  0.84]
 #&gt; 
 #&gt; 
 #&gt;    Parameter        90% HDI
-#&gt;  (Intercept) [31.61, 49.79]
-#&gt;           wt [-6.69, -4.31]
-#&gt;         gear [-2.15,  1.04]
+#&gt;  (Intercept) [30.31, 47.45]
+#&gt;           wt [-6.66, -4.39]
+#&gt;         gear [-1.62,  1.36]
 #&gt; 
 #&gt; 
 #&gt;    Parameter        95% HDI
-#&gt;  (Intercept) [28.29, 49.79]
-#&gt;           wt [-7.11, -4.05]
-#&gt;         gear [-2.26,  1.66]
+#&gt;  (Intercept) [28.48, 48.14]
+#&gt;           wt [-6.66, -3.82]
+#&gt;         gear [-1.98,  1.45]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='fu'>hdi</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt;   Parameter CI    CI_low   CI_high
-#&gt; 1   overall 89 -6.646407 -4.307165</div></span><span class='co'># NOT RUN {</span>
+<span class='fu'>hdi</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt;   Parameter CI   CI_low   CI_high
+#&gt; 1   overall 89 -6.61034 -4.389893</div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>hdi</span>(<span class='no'>model</span>)

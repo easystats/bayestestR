@@ -146,7 +146,7 @@
 <div id="why-use-the-bayesian-framework" class="section level2">
 <h2 class="hasAnchor">
 <a href="#why-use-the-bayesian-framework" class="anchor"></a>Why use the Bayesian Framework?</h2>
-<p>Reasons to prefer this approach are <strong>reliability</strong>, <strong>accuracy</strong> (in noisy data and small samples), the possibility of introducing <strong>prior knowledge</strong> into the analysis and, critically, <strong>results intuitiveness</strong> and their <strong>straightforward interpretation</strong> <span class="citation">(Andrews and Baguley 2013; Etz and Vandekerckhove 2016; Kruschke 2010; Kruschke, Aguinis, and Joo 2012; Wagenmakers et al. 2018)</span>.</p>
+<p>The Bayesian framework for statistics is quickly gaining in popularity among scientists, associated with the general shift towards <strong>open and honest science</strong>. Reasons to prefer this approach are <strong>reliability</strong>, <strong>accuracy</strong> (in noisy data and small samples), the possibility of introducing <strong>prior knowledge</strong> into the analysis and, critically, <strong>results intuitiveness</strong> and their <strong>straightforward interpretation</strong> <span class="citation">(Andrews and Baguley 2013; Etz and Vandekerckhove 2016; Kruschke 2010; Kruschke, Aguinis, and Joo 2012; Wagenmakers et al. 2018)</span>.</p>
 <p>In general, the frequentist approach has been associated with the focus on null hypothesis testing, and the misuse of <em>p</em>-values has been shown to critically contribute to the reproducibility crisis of psychological science <span class="citation">(Chambers et al. 2014; Szucs and Ioannidis 2016)</span>. There is a general agreement that the generalization of the Bayesian approach is one way of overcoming these issues <span class="citation">(Benjamin et al. 2018; Etz and Vandekerckhove 2016)</span>.</p>
 <p>Once we agreed that the Bayesian framework is the right way to go, you might wonder <em>what</em> is the Bayesian framework.</p>
 <p><strong>What’s all the fuss about?</strong></p>
@@ -154,8 +154,8 @@
 <div id="what-is-the-bayesian-framework" class="section level2">
 <h2 class="hasAnchor">
 <a href="#what-is-the-bayesian-framework" class="anchor"></a>What is the Bayesian Framework?</h2>
-<p>Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology. Indeed, all the common statistical procedures (t-tests, correlations, ANOVAs, regressions, …) can be achieved using the Bayesian framework. One of the core difference is that in the <strong>frequentist view</strong> (the “classic” statistics, with <em>p</em> and <em>t</em> values, as well as some weird <em>degrees of freedom</em>), <strong>the effects are fixed</strong> (but unknown) and <strong>data are random</strong>. On the contrary, the Bayesian inference process computes the <strong>probability</strong> of different effects <em>given the observed data</em>. Instead of having one estimated value of the “true effect”, this probabilistic approach gives a distribution of values, called the <strong>“posterior” distribution</strong>.</p>
-<p>Bayesian’s uncertainty can be summarized, for instance, by giving the <strong>median</strong> of the distribution, as well as a range of values on the posterior distribution that includes the 95% most probable values (the 95% <strong><em>Credible</em> Interval</strong>). To illustrate the difference of interpretation, the Bayesian framework allows to say <em>“given the observed data, the effect has 95% probability of falling within this range”</em>, while the frequentist less straightforward alternative (the 95% <strong><em>Confidence</em> Interval</strong>) would be <em>“there is a 95% probability that when computing a confidence interval from data of this sort, the effect falls within this range”</em>.</p>
+<p>Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology. Indeed, all the common statistical procedures (t-tests, correlations, ANOVAs, regressions, …) can be achieved using the Bayesian framework. One of the core difference is that in the <strong>frequentist view</strong> (the “classic” statistics, with <em>p</em> and <em>t</em> values, as well as some weird <em>degrees of freedom</em>), <strong>the effects are fixed</strong> (but unknown) and <strong>data are random</strong>. On the other hand, in the Bayesian inference process, instead of having estimates of the “true effect”, the probability of different effects <em>given the observed data</em> is computed, resulting in a distribution of possible values for the parameters, called the <strong><em>posterior distribution</em></strong>.</p>
+<p>The uncertainty in Bayesian inference can be summarized, for instance, by the <strong>median</strong> of the distribution, as well as a range of values of the posterior distribution that includes the 95% most probable values (the 95% <strong><em>credible</em> interval</strong><em>). </em>Cum grano salis<em>, these are considered the counterparts to the point-estimate and confidence interval in a frequentist framework. To illustrate the difference of interpretation, the Bayesian framework allows to say </em>“given the observed data, the effect has 95% probability of falling within this range”<em>, while the frequentist less straightforward alternative would be </em>“when repeatedly computing confidence intervals from data of this sort, there is a 95% probability that the effect falls within a given range”<em>. In essence, the Bayesian sampling algorithms (such as MCMC sampling) return a probability distribution (</em>the posterior*) of an effect that is compatible with the observed data. Thus, an effect can be described by <a href="https://easystats.github.io/bayestestR/articles/guidelines.html">characterizing its posterior distribution</a> in relation to its centrality (point-estimates), uncertainty, as well as existence and significance</p>
 <p>In other words, omitting the maths behind it, we can say that:</p>
 <ul>
 <li>The frequentist bloke tries to estimate “the <strong>real effect</strong>”. For instance, the “real” value of the correlation between <em>x</em> and <em>y</em>. Hence, frequentist models return a “<strong>point-estimate</strong>” (<em>i.e.</em>, a single value) of the “real” correlation (<em>e.g.</em>, r = 0.42) estimated under a number of obscure assumptions (at a minimum, considering that the data is sampled at random from a “parent”, usually normal distribution).</li>
@@ -270,7 +270,7 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <td align="right">89</td>
 <td align="right">4.18</td>
 <td align="right">4.43</td>
-<td align="right">100</td>
+<td align="right">1</td>
 <td align="right">89</td>
 <td align="right">-0.08</td>
 <td align="right">0.08</td>
@@ -287,7 +287,7 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <td align="right">89</td>
 <td align="right">0.38</td>
 <td align="right">0.44</td>
-<td align="right">100</td>
+<td align="right">1</td>
 <td align="right">89</td>
 <td align="right">-0.08</td>
 <td align="right">0.08</td>

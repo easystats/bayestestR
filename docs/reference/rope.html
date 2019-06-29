@@ -336,7 +336,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
 #&gt; </span><span> inside ROPE
-#&gt;       8.53 %
+#&gt;       9.99 %
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
 #&gt; </span><span> inside ROPE
@@ -346,13 +346,13 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 90% HDI:
 #&gt; 
 #&gt; </span><span> inside ROPE
-#&gt;       4.33 %
+#&gt;       5.22 %
 #&gt; 
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 95% HDI:
 #&gt; 
 #&gt; </span><span> inside ROPE
-#&gt;       4.10 %
+#&gt;       4.94 %
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
@@ -386,8 +386,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
 #&gt; Chain 1:  Elapsed Time: 0.011 seconds (Warm-up)
-#&gt; Chain 1:                0.013 seconds (Sampling)
-#&gt; Chain 1:                0.024 seconds (Total)
+#&gt; Chain 1:                0.012 seconds (Sampling)
+#&gt; Chain 1:                0.023 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -418,15 +418,15 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.011 seconds (Warm-up)
-#&gt; Chain 2:                0.011 seconds (Sampling)
-#&gt; Chain 2:                0.022 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.013 seconds (Warm-up)
+#&gt; Chain 2:                0.013 seconds (Sampling)
+#&gt; Chain 2:                0.026 seconds (Total)
 #&gt; Chain 2: </div><div class='input'><span class='fu'>rope</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.60, 0.60]:
 #&gt; 
 #&gt; </span><span>   Parameter inside ROPE
 #&gt;  (Intercept)      0.00 %
 #&gt;           wt      0.00 %
-#&gt;         gear     43.58 %
+#&gt;         gear     55.31 %
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportions of samples inside the ROPE [-0.60, 0.60]:
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 90% HDI:
@@ -434,7 +434,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span>   Parameter inside ROPE
 #&gt;  (Intercept)      0.00 %
 #&gt;           wt      0.00 %
-#&gt;         gear     43.09 %
+#&gt;         gear     54.70 %
 #&gt; 
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 95% HDI:
@@ -442,7 +442,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span>   Parameter inside ROPE
 #&gt;  (Intercept)      0.00 %
 #&gt;           wt      0.00 %
-#&gt;         gear     40.84 %
+#&gt;         gear     51.83 %
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
