@@ -9,6 +9,16 @@ print.hdi <- function(x, digits = 2, ...) {
 
 
 #' @export
+print.eti <- function(x, digits = 2, ...) {
+  if ("data_plot" %in% class(x)) {
+    print(as.data.frame(x))
+  } else {
+    .print_hdi(x, digits, title = "Equal-Tailed Interval", ci_string = "ETI", ...)
+  }
+}
+
+
+#' @export
 print.bayestestR_ci <- function(x, digits = 2, ...) {
   if ("data_plot" %in% class(x)) {
     print(as.data.frame(x))
