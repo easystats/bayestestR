@@ -4,10 +4,9 @@
 \alias{bayesfactor}
 \title{Bayes Factors (BF)}
 \usage{
-bayesfactor(..., prior = NULL, direction = "two-sided",
-  hypothesis = 0, effects = c("fixed", "random", "all"),
-  verbose = TRUE, denominator = 1, match_models = FALSE,
-  prior_odds = NULL)
+bayesfactor(..., prior = NULL, direction = "two-sided", null = 0,
+  effects = c("fixed", "random", "all"), verbose = TRUE,
+  denominator = 1, match_models = FALSE, prior_odds = NULL)
 }
 \arguments{
 \item{...}{A numeric vector, model object(s), or the output from \code{bayesfactor_models}.}
@@ -17,7 +16,7 @@ bayesfactor(..., prior = NULL, direction = "two-sided",
 \item{direction}{Test type (see details). One of \code{0}, \code{"two-sided"} (default, two tailed),
 \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).}
 
-\item{hypothesis}{Depricated. use \code{null} instead.}
+\item{null}{Value of the null model. If can be a scaler (for point-null model) or a a range (for a interval-null model). Defaults to \code{0} for a "classic" point-null test.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
