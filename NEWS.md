@@ -1,3 +1,19 @@
+# bayestestR 0.2.x
+
+## Breaking changes
+
+- `bayesfactor_savagedickey`: `hypothesis` argument replaced with `null`.
+
+## New functions / features
+
+- `bayesfactor_interval`: Function for computing Bayes factors agaisnt an interval-null.
+- `bayesfactor_restricted`: Function for computing Bayes factors for order restricted models.
+
+
+## Minor changes
+
+## Bug fixes
+
 # bayestestR 0.2.2
 
 ## Breaking changes
