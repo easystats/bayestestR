@@ -1,23 +1,11 @@
 #' Highest Density Interval (HDI)
 #'
-#' Compute the \strong{Highest Density Interval (HDI)} of a posterior distribution, i.e., all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as \strong{Credible Interval (CI)}.
-#'
-#' @details Unlike equal-tailed intervals (see \code{ci()}) that typically exclude 2.5\% from each tail
-#'   of the distribution, the HDI is \emph{not} equal-tailed and therefore always
-#'   includes the mode(s) of posterior distributions.
-#'   \cr \cr
-#'   By default, \code{hdi()} returns the 89\% intervals (\code{ci = 0.89}),
-#'   deemed to be more stable than, for instance, 95\% intervals (\cite{Kruschke, 2014}).
-#'   An effective sample size of at least 10.000 is recommended if 95\% intervals
-#'   should be computed (\cite{Kruschke, 2014, p. 183ff}). Moreover, 89 is the
-#'   highest prime number that does not exceed the already unstable 95\% threshold.
-#'   What does it have to do with anything? Nothing, but it reminds us of the total
-#'   arbitrarity of any of these conventions (McElreath, 2015).
+#' Compute the \strong{Highest Density Interval (HDI)} of posterior distributions. All points within this interval have a higher probability density than points outside the interval. The HDI can be used in the context of uncertainty characterisation of posterior distributions as \strong{Credible Interval (CI)}.
 #'
 #' @param x Vector representing a posterior distribution. Can also be a
-#'   \code{stanreg} or \code{brmsfit} model.
-#' @param ci Value or vector of probability of the interval (between 0 and 1)
-#'   to be estimated. Named Credible Interval (CI) for consistency.
+#'   \code{stanreg}, \code{brmsfit} or a \code{BayesFactor} model.
+#' @param ci Value or vector of probability of the (credible) interval - CI (between 0 and 1)
+#'   to be estimated. Default to \code{.89} (89\%).
 #' @param effects Should results for fixed effects, random effects or both be returned?
 #'   Only applies to mixed models. May be abbreviated.
 #' @param component Should results for all parameters, parameters for the conditional model
@@ -31,12 +19,37 @@
 #' @param verbose Toggle off warnings.
 #' @param ... Currently not used.
 #'
-#' @return A data frame with following columns:
-#'   \itemize{
-#'     \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
-#'     \item \code{CI} The probability of the HDI.
-#'     \item \code{CI_low} , \code{CI_high} The lower and upper HDI limits for the parameters.
-#'   }
+#'
+#'
+#' @details Unlike equal-tailed intervals (see \code{eti()}) that typically exclude 2.5\%
+#' from each tail of the distribution and always include the median, the HDI is
+#' \emph{not} equal-tailed and therefore always includes the mode(s) of posterior
+#' distributions.
+#' \cr \cr
+#' By default, \code{hdi()} and \code{eti()} returns the 89\% intervals (\code{ci = 0.89}),
+#' deemed to be more stable than, for instance, 95\% intervals (\cite{Kruschke, 2014}).
+#' An effective sample size of at least 10.000 is recommended if 95\% intervals
+#' should be computed (\cite{Kruschke, 2014, p. 183ff}). Moreover, 89 is the
+#' not exceed the already unstable and arbitrary 95\% threshold (McElreath, 2015).
+#' \cr \cr
+#' A 90\% equal-tailed interval (ETI) has 5\% of the distribution on either
+#' side of its limits. It indicates the 5th percentile and the 95h percentile.
+#' In symmetric distributions, the two methods of computing credible intervals,
+#' the ETI and the \link[=hdi]{HDI}, return similar results.
+#' \cr \cr
+#' This is not the case for skewed distributions. Indeed, it is possible that
+#' parameter values in the ETI have lower credibility (are less probable) than
+#' parameter values outside the ETI. This property seems undesirable as a summary
+#' of the credible values in a distribution.
+#' \cr \cr
+#' On the other hand, the ETI range does change when transformations are applied
+#' to the distribution (for instance, for a log odds scale to probabilities):
+#' the lower and higher bounds of the transformed distribution will correspond
+#' to the transformed lower and higher bounds of the original distribution.
+#' On the contrary, applying transformations to the distribution will change
+#' the resulting HDI.
+#'
+#' @inherit ci return
 #'
 #' @examples
 #' library(bayestestR)
@@ -88,7 +101,7 @@ hdi.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .hdi(x, ci = i, verbose = verbose)
   }))
-  class(out) <- unique(c("hdi", "see_hdi", class(out)))
+  class(out) <- unique(c("hdi", "see_hdi", "bayestestR_ci", "see_ci", class(out)))
   attr(out, "data") <- x
   out
 }

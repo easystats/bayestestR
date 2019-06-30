@@ -42,11 +42,10 @@
 <meta property="og:title" content="Savage-Dickey density ratio Bayes Factor (BF) — bayesfactor_savagedickey" />
 
 <meta property="og:description" content="This method computes the ratio between the density of a single value (typically the null)
-of two distributions. When the compared distributions are the posterior and the prior distributions,
-this results is an approximation of a Bayes factor comparing the model against a model in which
-the parameter of choice is restricted to the point null.
- 
-See also the Bayes factors vignette." />
+in two distributions. When these distributions are the prior and the posterior distributions,
+this ratio can be used to examine the degree by which the mass of the posterior distribution
+has shifted further away from or closer to the null value (relative to the prior distribution),
+thus indicating if the null value has become less or more likely given the observed data." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -187,11 +186,10 @@ See also the Bayes factors vignette." />
     <div class="ref-description">
     
     <p>This method computes the ratio between the density of a single value (typically the null)
-of two distributions. When the compared distributions are the posterior and the prior distributions,
-this results is an approximation of a Bayes factor comparing the model against a model in which
-the parameter of choice is restricted to the point null.
-<br /> <br />
-See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
+in two distributions. When these distributions are the prior and the posterior distributions,
+this ratio can be used to examine the degree by which the mass of the posterior distribution
+has shifted further away from or closer to the null value (relative to the prior distribution),
+thus indicating if the null value has become less or more likely given the observed data.</p>
     
     </div>
 
@@ -261,7 +259,12 @@ Only applies to mixed models. May be abbreviated.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This method is used to compute Bayes factors based on prior and posterior distributions.
+    <p>The Savage-Dickey density ratio is also an approximation of a Bayes factor comparing the
+marginal likelihoods of the model against a model in which the tested parameter has been
+restricted to the point null
+<br /> <br />
+See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
+<p>This method is used to compute Bayes factors based on prior and posterior distributions.
 When <code>posterior</code> is a model (<code>stanreg</code>, <code>brmsfit</code>), posterior and prior samples are
 extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.</p>
 <p><strong>NOTE:</strong> For <code>brmsfit</code> models, the model must have been fitted with <em>custom (non-default)</em> priors. See example below.</p>

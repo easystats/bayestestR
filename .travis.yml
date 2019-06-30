@@ -2,13 +2,13 @@ language: r
 
 os:
   #- windows
-  #- linux
+  # - linux
   - osx
 
 r:
   - oldrel
   - release
-  #- devel
+  # - devel
 
 
 # Copied from broom

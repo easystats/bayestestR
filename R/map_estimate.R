@@ -41,10 +41,11 @@ map_estimate <- function(x, ...) {
 
 #' @export
 print.map_estimate <- function(x, ...) {
-  if (inherits(x, "data.frame"))
+  if (inherits(x, "data.frame")) {
     print.data.frame(x)
-  else
+  } else {
     cat(sprintf("MAP = %.2f", x))
+  }
 }
 
 

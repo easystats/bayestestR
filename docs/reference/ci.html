@@ -41,7 +41,7 @@
   
 <meta property="og:title" content="Confidence/Credible Interval (CI) — ci" />
 
-<meta property="og:description" content="Compute Confidence/Credible Intervals (CI) for Bayesian (using quantiles) and frequentist models." />
+<meta property="og:description" content="Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models. The Documentation is accessible for:" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -181,32 +181,38 @@
 
     <div class="ref-description">
     
-    <p>Compute Confidence/Credible Intervals (CI) for Bayesian (using quantiles) and frequentist models.</p>
+    <p>Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models. The Documentation is accessible for:</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>ci</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>)
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>,
-  <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>,
-  <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>,
+  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>)
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -221,8 +227,12 @@
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Value or vector of probability of the interval (between 0 and 1)
-to be estimated. Named Credible Interval (CI) for consistency.</p></td>
+      <td><p>Value or vector of probability of the CI (between 0 and 1)
+to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code>.95</code> (95%) for frequentist models.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>Can be <a href='eti.html'>'ETI'</a> (default) or <a href='hdi.html'>'HDI'</a>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -260,87 +270,51 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Documentation is accessible for:</p><ul>
-<li><p><a href='https://easystats.github.io/bayestestR/reference/ci.html'>Bayesian models</a></p></li>
+    <ul>
+<li><p><a href='https://easystats.github.io/bayestestR/articles/credible_interval.html'>Bayesian models</a></p></li>
 <li><p><a href='https://easystats.github.io/parameters/reference/ci.merMod.html'>Frequentist models</a></p></li>
-</ul><p><strong>Bayesian models</strong>
-<br /> <br />
-This functions returns, by default, the quantile interval, i.e., an
-equal-tailed interval (ETI). A 90% ETI has 5% of the distribution on either
-side of its limits. It indicates the 5th percentile and the 95h percentile.
-In symmetric distributions, the two methods of computing credible intervals,
-the ETI and the <a href='hdi.html'>HDI</a>, return similar results.
-<br /> <br />
-This is not the case for skewed distributions. Indeed, it is possible that
-parameter values in the ETI have lower credibility (are less probable) than
-parameter values outside the ETI. This property seems undesirable as a summary
-of the credible values in a distribution.
-<br /> <br />
-On the other hand, the ETI range does change when transformations are applied
-to the distribution (for instance, for a log odds scale to probabilities):
-the lower and higher bounds of the transformed distribution will correspond
-to the transformed lower and higher bounds of the original distribution.
-On the contrary, applying transformations to the distribution will change
-the resulting HDI.
-<br /> <br />
-<strong>Frequentist models</strong>
-<br /> <br />
- This function is implemented in the <a href='https://github.com/easystats/parameters'>parameters</a> package and attemps to retrieve, or compute, the Confidence Interval (default <code>ci</code> level: <code>.95</code>).</p>
+</ul>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
 
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>)
-<span class='fu'>ci</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Credible Interval
+<span class='fu'>ci</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Equal-Tailed Interval
 #&gt; 
-#&gt; </span><span>        89% CI
+#&gt; </span><span>       89% ETI
 #&gt;  [-1.58, 1.61]
-#&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Intervals
+#&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
-#&gt; </span><span>        80% CI
-#&gt;  [-1.30, 1.32]
-#&gt; 
-#&gt; 
-#&gt;         89% CI
-#&gt;  [-1.58, 1.61]
-#&gt; 
-#&gt; 
-#&gt;         95% CI
-#&gt;  [-1.92, 1.99]
-#&gt; 
+#&gt; </span><span>       89% HDI
+#&gt;  [-1.65, 1.52]
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
-<span class='fu'>ci</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Interval
-#&gt; 
-#&gt; </span><span> Parameter        89% CI
-#&gt;         X1 [-1.94, 1.51]
-#&gt;         X2 [-1.64, 1.45]
-#&gt;         X3 [-1.66, 1.40]
-#&gt;         X4 [-1.32, 1.41]
-#&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Intervals
-#&gt; 
-#&gt; </span><span> Parameter        80% CI
-#&gt;         X1 [-1.49, 1.23]
-#&gt;         X2 [-1.45, 1.12]
-#&gt;         X3 [-1.31, 1.22]
-#&gt;         X4 [-1.14, 1.19]
-#&gt; 
-#&gt; 
-#&gt;  Parameter        89% CI
-#&gt;         X1 [-1.94, 1.51]
-#&gt;         X2 [-1.64, 1.45]
-#&gt;         X3 [-1.66, 1.40]
-#&gt;         X4 [-1.32, 1.41]
-#&gt; 
-#&gt; 
-#&gt;  Parameter        95% CI
-#&gt;         X1 [-2.13, 1.71]
-#&gt;         X2 [-1.88, 1.57]
-#&gt;         X3 [-1.86, 1.99]
-#&gt;         X4 [-1.66, 1.91]
-#&gt; 
-#&gt; </div><div class='input'>
+<span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;    Parameter CI    CI_low  CI_high
+#&gt; 1         X1 80 -1.490439 1.232080
+#&gt; 2         X1 89 -1.944645 1.506436
+#&gt; 3         X1 95 -2.133393 1.707241
+#&gt; 4         X2 80 -1.446352 1.121997
+#&gt; 5         X2 89 -1.637042 1.446416
+#&gt; 6         X2 95 -1.880977 1.570841
+#&gt; 7         X3 80 -1.313898 1.215416
+#&gt; 8         X3 89 -1.663827 1.404621
+#&gt; 9         X3 95 -1.857950 1.985016
+#&gt; 10        X4 80 -1.143842 1.190241
+#&gt; 11        X4 89 -1.320242 1.406650
+#&gt; 12        X4 95 -1.659909 1.907851</div><div class='input'><span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;    Parameter CI    CI_low  CI_high
+#&gt; 1         X1 80 -1.474538 1.251884
+#&gt; 2         X1 89 -2.137098 1.251884
+#&gt; 3         X1 95 -2.137098 1.763131
+#&gt; 4         X2 80 -1.494426 1.078478
+#&gt; 5         X2 89 -1.551560 1.467187
+#&gt; 6         X2 95 -1.902304 1.582238
+#&gt; 7         X3 80 -1.134850 1.330580
+#&gt; 8         X3 89 -1.869362 1.229287
+#&gt; 9         X3 95 -1.951440 1.795036
+#&gt; 10        X4 80 -1.169853 1.130172
+#&gt; 11        X4 89 -1.373862 1.417529
+#&gt; 12        X4 95 -1.697192 1.583013</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'xts':</span>
 #&gt; <span class='message'>  method     from</span>
 #&gt; <span class='message'>  as.zoo.xts zoo </span></div><div class='output co'>#&gt; <span class='message'>rstanarm (Version 2.18.2, packaged: 2018-11-08 22:19:38 UTC)</span></div><div class='output co'>#&gt; <span class='message'>- Do not expect the default priors to remain the same in future rstanarm versions.</span></div><div class='output co'>#&gt; <span class='message'>Thus, R scripts should specify priors explicitly, even if they are just the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; <span class='message'>- Plotting theme set to bayesplot::theme_default().</span></div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; 
@@ -373,8 +347,8 @@ the resulting HDI.
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
 #&gt; Chain 1:  Elapsed Time: 0.011 seconds (Warm-up)
-#&gt; Chain 1:                0.011 seconds (Sampling)
-#&gt; Chain 1:                0.022 seconds (Total)
+#&gt; Chain 1:                0.012 seconds (Sampling)
+#&gt; Chain 1:                0.023 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -405,50 +379,50 @@ the resulting HDI.
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.01 seconds (Warm-up)
-#&gt; Chain 2:                0.01 seconds (Sampling)
-#&gt; Chain 2:                0.02 seconds (Total)
-#&gt; Chain 2: </div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Interval
+#&gt; Chain 2:  Elapsed Time: 0.011 seconds (Warm-up)
+#&gt; Chain 2:                0.011 seconds (Sampling)
+#&gt; Chain 2:                0.022 seconds (Total)
+#&gt; Chain 2: </div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Intervals
 #&gt; 
-#&gt; </span><span>   Parameter         89% CI
-#&gt;  (Intercept) [29.00, 47.76]
-#&gt;           wt [-6.50, -4.13]
-#&gt;         gear [-2.16,  1.30]
-#&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Intervals
-#&gt; 
-#&gt; </span><span>   Parameter         80% CI
+#&gt; </span><span>   Parameter        80% ETI
 #&gt;  (Intercept) [31.38, 45.92]
 #&gt;           wt [-6.34, -4.39]
 #&gt;         gear [-1.59,  1.03]
 #&gt; 
 #&gt; 
-#&gt;    Parameter         89% CI
+#&gt;    Parameter        89% ETI
 #&gt;  (Intercept) [29.00, 47.76]
 #&gt;           wt [-6.50, -4.13]
 #&gt;         gear [-2.16,  1.30]
 #&gt; 
+#&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
-#&gt;    Parameter         95% CI
-#&gt;  (Intercept) [28.02, 51.67]
-#&gt;           wt [-6.90, -3.83]
-#&gt;         gear [-2.90,  1.75]
+#&gt; </span><span>   Parameter        80% HDI
+#&gt;  (Intercept) [31.96, 46.00]
+#&gt;           wt [-6.50, -4.63]
+#&gt;         gear [-1.59,  1.02]
+#&gt; 
+#&gt; 
+#&gt;    Parameter        89% HDI
+#&gt;  (Intercept) [28.04, 46.18]
+#&gt;           wt [-6.56, -4.22]
+#&gt;         gear [-1.61,  1.76]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='fu'>ci</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Credible Interval
-#&gt; 
-#&gt; </span><span> Parameter         89% CI
-#&gt;    overall [-6.50, -4.13]
-#&gt; </div></span><span class='co'># NOT RUN {</span>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>)
+<span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>)</div><div class='output co'>#&gt;   Parameter CI    CI_low   CI_high
+#&gt; 1   overall 89 -6.498049 -4.133972</div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>)</div><div class='output co'>#&gt;   Parameter CI    CI_low   CI_high
+#&gt; 1   overall 89 -6.561035 -4.219537</div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'>ci</span>(<span class='no'>model</span>)
-<span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))
+<span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>)
+<span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>)
 
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>BayesFactor</span>)
 <span class='no'>bf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/ttestBF'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
-<span class='fu'>ci</span>(<span class='no'>bf</span>)
-<span class='fu'>ci</span>(<span class='no'>bf</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))
+<span class='fu'>ci</span>(<span class='no'>bf</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>)
+<span class='fu'>ci</span>(<span class='no'>bf</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>

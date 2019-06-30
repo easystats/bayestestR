@@ -30,7 +30,7 @@ p_rope(x, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a
-\code{stanreg} or \code{brmsfit} model.}
+\code{stanreg}, \code{brmsfit} or a \code{BayesFactor} model.}
 
 \item{...}{Currently not used.}
 

@@ -12,28 +12,36 @@
 \usage{
 ci(x, ...)
 
-\method{ci}{numeric}(x, ci = 0.89, verbose = TRUE, ...)
+\method{ci}{numeric}(x, ci = 0.89, method = "ETI", verbose = TRUE,
+  ...)
 
-\method{ci}{data.frame}(x, ci = 0.89, verbose = TRUE, ...)
+\method{ci}{data.frame}(x, ci = 0.89, method = "ETI", verbose = TRUE,
+  ...)
 
-\method{ci}{emmGrid}(x, ci = 0.89, verbose = TRUE, ...)
+\method{ci}{emmGrid}(x, ci = 0.89, method = "ETI", verbose = TRUE,
+  ...)
 
-\method{ci}{stanreg}(x, ci = 0.89, effects = c("fixed", "random",
-  "all"), parameters = NULL, verbose = TRUE, ...)
+\method{ci}{stanreg}(x, ci = 0.89, method = "ETI",
+  effects = c("fixed", "random", "all"), parameters = NULL,
+  verbose = TRUE, ...)
 
-\method{ci}{brmsfit}(x, ci = 0.89, effects = c("fixed", "random",
-  "all"), component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL, verbose = TRUE, ...)
+\method{ci}{brmsfit}(x, ci = 0.89, method = "ETI",
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE,
+  ...)
 
-\method{ci}{BFBayesFactor}(x, ci = 0.89, verbose = TRUE, ...)
+\method{ci}{BFBayesFactor}(x, ci = 0.89, method = "ETI",
+  verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{A \code{stanreg} or \code{brmsfit} model, or a vector representing a posterior distribution.}
 
 \item{...}{Currently not used.}
 
-\item{ci}{Value or vector of probability of the interval (between 0 and 1)
-to be estimated. Named Credible Interval (CI) for consistency.}
+\item{ci}{Value or vector of probability of the CI (between 0 and 1)
+to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95} (95\%) for frequentist models.}
+
+\item{method}{Can be \link[=eti]{'ETI'} (default) or \link[=hdi]{'HDI'}.}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -59,66 +67,44 @@ A data frame with following columns:
   }
 }
 \description{
-Compute Confidence/Credible Intervals (CI) for Bayesian (using quantiles) and frequentist models.
+Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models. The Documentation is accessible for:
 }
 \details{
-Documentation is accessible for:
 \itemize{
- \item \href{https://easystats.github.io/bayestestR/reference/ci.html}{Bayesian models}
+ \item \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{Bayesian models}
  \item \href{https://easystats.github.io/parameters/reference/ci.merMod.html}{Frequentist models}
 }
-\strong{Bayesian models}
-\cr \cr
-This functions returns, by default, the quantile interval, i.e., an
-equal-tailed interval (ETI). A 90\% ETI has 5\% of the distribution on either
-side of its limits. It indicates the 5th percentile and the 95h percentile.
-In symmetric distributions, the two methods of computing credible intervals,
-the ETI and the \link[=hdi]{HDI}, return similar results.
-\cr \cr
-This is not the case for skewed distributions. Indeed, it is possible that
-parameter values in the ETI have lower credibility (are less probable) than
-parameter values outside the ETI. This property seems undesirable as a summary
-of the credible values in a distribution.
-\cr \cr
-On the other hand, the ETI range does change when transformations are applied
-to the distribution (for instance, for a log odds scale to probabilities):
-the lower and higher bounds of the transformed distribution will correspond
-to the transformed lower and higher bounds of the original distribution.
-On the contrary, applying transformations to the distribution will change
-the resulting HDI.
-\cr \cr
-\strong{Frequentist models}
-\cr \cr
- This function is implemented in the \href{https://github.com/easystats/parameters}{parameters} package and attemps to retrieve, or compute, the Confidence Interval (default \code{ci} level: \code{.95}).
 }
 \examples{
 library(bayestestR)
 
 posterior <- rnorm(1000)
-ci(posterior)
-ci(posterior, ci = c(.80, .89, .95))
+ci(posterior, method = "ETI")
+ci(posterior, method = "HDI")
 
 df <- data.frame(replicate(4, rnorm(100)))
-ci(df)
-ci(df, ci = c(.80, .89, .95))
+ci(df, method = "ETI", ci = c(.80, .89, .95))
+ci(df, method = "HDI", ci = c(.80, .89, .95))
 
 library(rstanarm)
 model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
-ci(model)
-ci(model, ci = c(.80, .89, .95))
+ci(model, method = "ETI", ci = c(.80, .89))
+ci(model, method = "HDI", ci = c(.80, .89))
 
 library(emmeans)
-ci(emtrends(model, ~1, "wt"))
+model <- emtrends(model, ~1, "wt")
+ci(model, method = "ETI")
+ci(model, method = "HDI")
 \dontrun{
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-ci(model)
-ci(model, ci = c(.80, .89, .95))
+ci(model, method = "ETI")
+ci(model, method = "HDI")
 
 library(BayesFactor)
 bf <- ttestBF(x = rnorm(100, 1, 1))
-ci(bf)
-ci(bf, ci = c(.80, .89, .95))
+ci(bf, method = "ETI")
+ci(bf, method = "HDI")
 }
 
 }
