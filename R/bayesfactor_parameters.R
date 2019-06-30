@@ -12,7 +12,6 @@
 #' @param direction Test type (see details). One of \code{0}, \code{"two-sided"} (default, two tailed),
 #' \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).
 #' @param null Value of the null model. If can be a scaler (for point-null model) or a a range (for a interval-null model). Defaults to \code{0} for a "classic" point-null test.
-#' @param hypothesis Depricated. use \code{null} instead.
 #' @inheritParams hdi
 #'
 #' @return A data frame containing the Bayes factor representing evidence \emph{against} the (point) null effect model.
@@ -50,19 +49,19 @@
 #' prior <- distribution_normal(1000, mean = 0, sd = 1)
 #' posterior <- distribution_normal(1000, mean = .5, sd = .3)
 #'
-#' bayesfactor_savagedickey(posterior, prior)
+#' bayesfactor_parameters(posterior, prior)
 #' \dontrun{
 #' # rstanarm models
 #' # ---------------
 #' library(rstanarm)
 #' stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
-#' bayesfactor_savagedickey(stan_model)
+#' bayesfactor_parameters(stan_model)
 #'
 #' # emmGrid objects
 #' # ---------------
 #' library(emmeans)
 #' group_diff <- pairs(emmeans(stan_model, ~group))
-#' bayesfactor_savagedickey(group_diff, prior = stan_model)
+#' bayesfactor_parameters(group_diff, prior = stan_model)
 #'
 #' # brms models
 #' # -----------
@@ -75,7 +74,7 @@
 #'   data = sleep,
 #'   prior = my_custom_priors
 #' )
-#' bayesfactor_savagedickey(brms_model)
+#' bayesfactor_parameters(brms_model)
 #' }
 #'
 #' @references
@@ -89,14 +88,45 @@
 #' @author Mattan S. Ben-Shachar
 #'
 #' @export
-bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
-  UseMethod("bayesfactor_savagedickey")
+bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
+  UseMethod("bayesfactor_parameters")
 }
 
-
-#' @rdname bayesfactor_savagedickey
+#' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
+bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
+  if (length(null) == 2) {
+    warning("'null' is an interval - computing an interval Bayes factor.")
+  }
+  bayesfactor_parameters(
+    posterior = posterior,
+    prior = prior,
+    direction = direction,
+    null = null,
+    verbose = verbose,
+    ...
+  )
+}
+
+#' @rdname bayesfactor_parameters
+#' @export
+bayesfactor_interval <- function(posterior, prior = NULL, direction = "two-sided", null = rope_range(posterior), verbose = TRUE, ...) {
+  if (length(null) == 1) {
+    warning("'null' is a point - computing a Savage-Dickey Bayes factor.")
+  }
+  bayesfactor_parameters(
+    posterior = posterior,
+    prior = prior,
+    direction = direction,
+    null = null,
+    verbose = verbose,
+    ...
+  )
+}
+
+#' @rdname bayesfactor_parameters
+#' @export
+bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
   # nm <- .safe_deparse(substitute(posterior)
 
   if (is.null(prior)) {
@@ -114,7 +144,7 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
   # colnames(posterior) <- colnames(prior) <- nm
 
   # Get savage-dickey BFs
-  sdbf <- bayesfactor_savagedickey.data.frame(
+  sdbf <- bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, null = null, ...
   )
@@ -124,9 +154,9 @@ bayesfactor_savagedickey.numeric <- function(posterior, prior = NULL, direction 
 
 
 #' @importFrom insight get_parameters
-#' @rdname bayesfactor_savagedickey
+#' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
+bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
                                              direction = "two-sided", null = 0,
                                              verbose = TRUE,
                                              effects = c("fixed", "random", "all"),
@@ -142,7 +172,7 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
   posterior <- insight::get_parameters(posterior, effects = effects)
 
   # Get savage-dickey BFs
-  bayesfactor_savagedickey.data.frame(
+  bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, null = null, ...
   )
@@ -150,17 +180,17 @@ bayesfactor_savagedickey.stanreg <- function(posterior, prior = NULL,
 
 
 
-#' @rdname bayesfactor_savagedickey
+#' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_savagedickey.brmsfit <- bayesfactor_savagedickey.stanreg
+bayesfactor_parameters.brmsfit <- bayesfactor_parameters.stanreg
 
 
 
 #' @importFrom stats update
 #' @importFrom insight get_parameters
-#' @rdname bayesfactor_savagedickey
+#' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
+bayesfactor_parameters.emmGrid <- function(posterior, prior = NULL,
                                              direction = "two-sided", null = 0,
                                              verbose = TRUE,
                                              ...) {
@@ -183,7 +213,7 @@ bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
   prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(prior, names = FALSE)))
   posterior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posterior, names = FALSE)))
 
-  bayesfactor_savagedickey.data.frame(
+  bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, null = null, ...
   )
@@ -191,9 +221,9 @@ bayesfactor_savagedickey.emmGrid <- function(posterior, prior = NULL,
 
 
 
-#' @rdname bayesfactor_savagedickey
+#' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
+bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
                                                 direction = "two-sided", null = 0,
                                                 verbose = TRUE,
                                                 ...) {
@@ -216,7 +246,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 
   sdbf <- numeric(ncol(posterior))
   for (par in seq_along(posterior)) {
-    sdbf[par] <- .bayesfactor_savagedickey(
+    sdbf[par] <- .bayesfactor_parameters(
       posterior[[par]],
       prior[[par]],
       direction = direction,
@@ -231,7 +261,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
   )
 
   class(bf_val) <- unique(c(
-    "bayesfactor_savagedickey",
+    "bayesfactor_parameters",
     "see_bayesfactor_savagedickey",
     class(bf_val)
   ))
@@ -247,7 +277,7 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 
 #' @keywords internal
 #' @importFrom insight print_color
-.bayesfactor_savagedickey <- function(posterior, prior, direction = 0, null = 0) {
+.bayesfactor_parameters <- function(posterior, prior, direction = 0, null = 0) {
   if (isTRUE(all.equal(posterior, prior))) {
     return(1)
   }
@@ -277,7 +307,6 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
              relative_density(posterior))
 
   } else if (length(null) == 2) {
-    # this isn't *really* a sdBF... :/
     null <- sort(null)
     null[is.infinite(null)] <- 1.797693e+308 * sign(null[is.infinite(null)])
 
@@ -371,13 +400,13 @@ bayesfactor_savagedickey.data.frame <- function(posterior, prior = NULL,
 
       # 3. direction?
       if (direction > 0) {
-        d_points <- d_points[d_points$x > null, , drop = FALSE]
-        norm_factor <- 1 - logspline::plogspline(null,f_x)
+        d_points <- d_points[d_points$x > min(null), , drop = FALSE]
+        norm_factor <- 1 - logspline::plogspline(min(null),f_x)
         d_points$y <- d_points$y / norm_factor
         d_null$y <- d_null$y / norm_factor
       } else if (direction < 0) {
-        d_points <- d_points[d_points$x < null, , drop = FALSE]
-        norm_factor <- logspline::plogspline(null,f_x)
+        d_points <- d_points[d_points$x < max(null), , drop = FALSE]
+        norm_factor <- logspline::plogspline(max(null),f_x)
         d_points$y <- d_points$y / norm_factor
         d_null$y <- d_null$y / norm_factor
       }

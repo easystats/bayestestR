@@ -1,6 +1,6 @@
 #' Bayes Factors (BF) for Order Restricted Models
 #'
-#' This method computes the... \emp{Should only be used for confirmatory analysis...}
+#' This method computes the... \emph{Should only be used for confirmatory analysis...}
 #'
 #' @param posterior A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).
 #' @param prior An object representing a prior distribution (see Details).

@@ -1,5 +1,5 @@
 #' @export
-print.bayesfactor_savagedickey <- function(x, digits = 2, log = FALSE, ...) {
+print.bayesfactor_parameters <- function(x, digits = 2, log = FALSE, ...) {
   BFE <- x
   null <- attr(BFE, "hypothesis")
   direction <- attr(BFE, "direction")
@@ -12,7 +12,11 @@ print.bayesfactor_savagedickey <- function(x, digits = 2, log = FALSE, ...) {
 
   colnames(BFE)[colnames(BFE) == "BF"] <- "Bayes Factor"
 
-  insight::print_color("# Bayes Factor (Savage-Dickey density ratio)\n\n", "blue")
+  if (length(null) == 1) {
+    insight::print_color("# Bayes Factor (Savage-Dickey density ratio)\n\n", "blue")
+  } else {
+    insight::print_color("# Bayes Factor (Null-Interval)\n\n", "blue")
+  }
 
   print.data.frame(BFE, digits = digits, row.names = FALSE)
   cat("\n")
