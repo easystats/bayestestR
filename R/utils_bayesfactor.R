@@ -50,7 +50,6 @@
   if (is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior)) {
       stop("Cannot compute BF for 'brmsfit' models fit with default priors.\n",
-           "See '?bayesfactor_savagedickey'",
            call. = FALSE
       )
     } else {
