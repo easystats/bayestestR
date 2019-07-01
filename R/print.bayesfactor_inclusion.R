@@ -7,31 +7,28 @@ print.bayesfactor_inclusion <- function(x, digits = 2, log = FALSE, ...) {
     BFE$BF <- log(BFE$BF)
   }
 
-  xBF <- BFE$BF
-  BFE$BF <- as.character(round(xBF, digits = digits))
-  big_ind <- abs(xBF) >= 1000 | abs(xBF) < 1 / (10^digits)
-  big_ind <- sapply(big_ind, isTRUE)
-  if (isTRUE(any(big_ind))) {
-    BFE$BF[big_ind] <- formatC(xBF, format = "e", digits = digits)[big_ind]
-  }
+  BFE$BF <- .format_big_small(BFE$BF, digits = digits)
 
-  if (log) {
-    colnames(BFE) <- c("Pr(prior)", "Pr(posterior)", "log(Inclusion BF)")
-  } else {
-    colnames(BFE) <- c("Pr(prior)", "Pr(posterior)", "Inclusion BF")
-  }
+  colnames(BFE) <- c("Pr(prior)", "Pr(posterior)", "Inclusion BF")
 
+  insight::print_color("# Inclusion Bayes Factors (Model Averaged)\n\n", "blue")
   print.data.frame(BFE, digits = digits)
 
-  cat("---\n")
+  cat("\n")
+  cat("* Compared among: ")
   if (attr(BFE, "matched")) {
-    cat("Inclusion BFs compared among matched models only.\n")
+    insight::print_color("matched models only\n", "cyan")
   } else {
-    cat("Inclusion BFs compared among all models.\n")
+    insight::print_color("all models\n", "cyan")
   }
 
+  cat("*    Priors odds: ")
   if (!is.null(priorOdds)) {
-    cat("Priors based on custom prior-odds.\n")
+    insight::print_color("custom\n", "cyan")
+  } else {
+    insight::print_color("uniform-equal\n", "cyan")
   }
+
+  if (log) insight::print_color("\nBayes Factors are on the log-scale.\n", "red")
   invisible(x)
 }
