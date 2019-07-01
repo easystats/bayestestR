@@ -31,7 +31,7 @@ more likely to have produced the observed data than models without effect \eqn{X
 For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 
 \subsection{Match Models}{
-If \code{FALSE} (default), Inclusion BFs are computed by comparing all models
+If \code{match_models=FALSE} (default), Inclusion BFs are computed by comparing all models
 with a predictor against all models without that predictor. If \code{TRUE},
 comparison is restricted to models that (1) do not include any interactions
 with the predictor of interest; (2) for interaction predictors, averaging is done
