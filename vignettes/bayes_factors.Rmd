@@ -78,7 +78,7 @@ Critically, Bayes factors could be regrouped by two different applications: **te
 
 A ***Bayes factor for a single parameter*** can be used to answer the question:
 
-> **Given the observed data, is the null hypothesis of an absence effect (parameter = 0) more, or less likely?**
+> **Given the observed data, is the null hypothesis of an absence effect more, or less likely?**
 
 Let's use the Students' Sleep data set (`sleep`), and try and answer the question: *given the observed data, how likely it is that the **drug** (the variable `group`) **has no effect** on the numbers of hours of extra sleep (variable `extra`)?*
 
