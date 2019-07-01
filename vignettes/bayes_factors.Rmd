@@ -86,7 +86,7 @@ knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/f
 ```
 
 
-Let's use the Students' (1908) Sleep data set (`sleep`), in which **people took some drug** and where the researchers measured the number of hours of **extra hours of sleep** that they slept after. We will try answering the following question: *given the observed data, how likely it is that the **drug** (the variable `group`) **has no effect** on the numbers of hours of **extra sleep** (variable `extra`)?*
+Let's use the Students' (1908) Sleep data set (`sleep`), in which **people took some drug** and where the researchers measured the **extra hours of sleep** that they slept after. We will try answering the following question: *given the observed data, how likely it is that the **drug** (the variable `group`) **has no effect** on the numbers of hours of **extra sleep** (variable `extra`)?*
 
 ```{r sleep_boxplot, echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(sleep, aes(x = group, y = extra, fill= group)) +
@@ -94,12 +94,12 @@ ggplot(sleep, aes(x = group, y = extra, fill= group)) +
   theme_classic()
 ```
 
-The **bloxplot** suggests that the 2nd group has a higher number of hours of extra sleep. By how much? Let's fit a simple [Bayesian linear model](https://easystats.github.io/bayestestR/articles/example1_GLM.html).
+The **bloxplot** suggests that the 2nd group has a higher number of hours of extra sleep. *By how much?* Let's fit a simple [Bayesian linear model](https://easystats.github.io/bayestestR/articles/example1_GLM.html).
 
 ### Testing against a Null-*Region*
 
 
-One way ofWe can do this by setting an null interval, such that an effect within the interval would be practically equivalent to the drug having no effect at all. We can then compute the prior probability of the drug's effect falling *within the null-interval*, and the prior probability of the drug's effect falling *outside the null-interval* to get out prior odds. Say any effect smaller than half an hour of extra sleep is practically equivalent to being no effect at all, out prior odds would be:
+One way of operationlizing the null-hypothesis is by setting a null region (for example the `[-0.1, 0.1]` interval), such that an effect that falls within this interval would be practically equivalent to the the null. In our case, that means defining a region where we would consider the drug having no effect at all. We can then compute the prior probability of the drug's effect falling *within the null-interval*, and the prior probability of the drug's effect falling *outside the null-interval* to get out prior odds. Say any effect smaller than half an hour of extra sleep is practically equivalent to being no effect at all, out prior odds would be:
 
 $$
 \frac
