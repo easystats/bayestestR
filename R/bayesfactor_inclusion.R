@@ -1,13 +1,9 @@
-#' Inclusion Bayes Factors for testing effects across Bayesian models
+#' Inclusion Bayes Factors for testing predictors across Bayesian models
 #'
 #'
 #' @author Mattan S. Ben-Shachar
 #' @param models An object of class \code{\link{bayesfactor_models}} or \code{BFBayesFactor}.
-#' @param match_models If \code{FALSE} (default), Inclusion BFs are computed by
-#' comparing all models with an effect against all models without the effect. If \code{TRUE},
-#' Inclusion BFs are computed by comparing all models with an effect against models without
-#' the effect AND without any higher-order interactions with the effect (additionally,
-#' interactions are compared only to models with the all main effects).
+#' @param match_models See details.
 #' @param prior_odds Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds<-}}.
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -18,7 +14,16 @@
 #' that particular effect? In other words, on average - are models with effect \eqn{X}
 #' more likely to have produced the observed data than models without effect \eqn{X}?
 #' \cr \cr
-#' See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
+#' For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
+#'
+#' \subsection{Match Models}{
+#' If \code{match_models=FALSE} (default), Inclusion BFs are computed by comparing all models
+#' with a predictor against all models without that predictor. If \code{TRUE},
+#' comparison is restricted to models that (1) do not include any interactions
+#' with the predictor of interest; (2) for interaction predictors, averaging is done
+#' only across models that containe the main effect from which the interaction
+#' predictor is comprised.
+#' }
 #'
 #' @note Random effects in the \code{lme} style will be displayed as interactions:
 #' i.e., \code{(X|G)} will become \code{1:G} and \code{X:G}.

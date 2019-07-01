@@ -38,14 +38,16 @@ bayesfactor_interval(posterior, prior = NULL, direction = "two-sided",
   direction = "two-sided", null = 0, verbose = TRUE, ...)
 }
 \arguments{
-\item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).}
+\item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}
+or a data frame - representing a posterior distribution(s) from (see Details).}
 
 \item{prior}{An object representing a prior distribution (see Details).}
 
 \item{direction}{Test type (see details). One of \code{0}, \code{"two-sided"} (default, two tailed),
 \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).}
 
-\item{null}{Value of the null model. If can be a scaler (for point-null model) or a a range (for a interval-null model). Defaults to \code{0} for a "classic" point-null test.}
+\item{null}{Value of the null, either a scaler (for point-null) or a a range
+(for a interval-null).}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -58,19 +60,21 @@ Only applies to mixed models. May be abbreviated.}
 A data frame containing the Bayes factor representing evidence \emph{against} the (point) null effect model.
 }
 \description{
-This method computes the ratio between the density of a single value (typically the null)
-of two distributions. When the compared distributions are the posterior and the prior distributions,
-this results is an approximation of a Bayes factor comparing the model against a model in which
-the parameter of choice is restricted to the point null.
+This method computes Bayes factors against the null (either a point or an interval),
+bases on prior and posterior samples of a single parameter. When the null is a point,
+a Savage-Dickey density ratio is computed; when the null is an interval, the Bayes
+factor is computed by comparing the prior and posterior odds of the parameter falling
+within or outside the null.
 \cr \cr
-See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
+For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
 \details{
 This method is used to compute Bayes factors based on prior and posterior distributions.
 When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
 extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
 
-\strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)} priors. See example below.
+\strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)}
+priors. See example below.
 
 \subsection{Setting the correct \code{prior}}{
 It is important to provide the correct \code{prior} for meaningful results.
@@ -80,10 +84,12 @@ It is important to provide the correct \code{prior} for meaningful results.
   \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
 }}
-\subsection{One-sided & Intervall-Null Tests (setting an order restriction)}{
-## EDIT ##
-One sided tests (controlled by \code{direction}) are conducted by setting an order restriction on
-the prior and posterior distributions (\cite{Morey & Wagenmakers, 2013}).
+\subsection{One-sided Tests (setting an order restriction)}{
+One sided tests (controlled by \code{direction}) are conducted by restricting the prior and
+posterior of the non-null values (the "alternative") to one side of the null only
+(\cite{Morey & Wagenmakers, 2013}). For example, if we have a prior hypothesis that the
+parameter should be positive, the alternative will be restricted to the region to the right
+of the null (point or interval).
 }
 \subsection{Interpreting Bayes Factors}{
 A Bayes factor greater than 1 can be interpereted as evidence against the null,
@@ -106,6 +112,7 @@ bayesfactor_parameters(posterior, prior)
 library(rstanarm)
 stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 bayesfactor_parameters(stan_model)
+bayesfactor_parameters(stan_model, null = rope_range(stan_model))
 
 # emmGrid objects
 # ---------------
@@ -134,6 +141,7 @@ bayesfactor_parameters(brms_model)
 \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 \item Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The case of computing Bayes factors for regression parameters. British Journal of Mathematical and Statistical Psychology, 72(2), 316-333.
 \item Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
+\item Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.
 }
 }
 \author{

@@ -6,7 +6,7 @@
 #'
 #' @param ... Fitted models (any models supported by \pkg{insight}), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').
 #' @param denominator Either an integer indicating which of the models to use as the denominator,
-#' or a model to use as a denominator. Ignored for \code{BFBayesFactor}.
+#' or a model to be used as a denominator. Ignored for \code{BFBayesFactor}.
 #' @inheritParams hdi
 #'
 #' @details

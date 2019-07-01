@@ -1,7 +1,8 @@
 #' Bayes Factors (BF)
 #'
 #' This function compte the Bayes factors (BFs) that are appropriate to the input.
-#' For vectors or single models, it will compute \code{\link[=bayesfactor_savagedickey]{Savage-Dickey's BFs}}.
+#' For vectors or single models, it will compute \code{\link[=bayesfactor_parameters]{BFs for single parameters}},
+#' or is \code{hypothesis} is specified, \code{\link[=bayesfactor_restricted]{BFs for restricted models}}.
 #' For multiple models, it will return the BF corresponding to \code{\link[=bayesfactor_models]{comparison between models}}
 #' and if a model comparison is passed, it will compute the \code{\link[=bayesfactor_inclusion]{inclusion BF}}.
 #' \cr\cr
@@ -48,6 +49,7 @@ bayesfactor <-
            prior = NULL,
            direction = "two-sided",
            null = 0,
+           hypothesis = NULL,
            effects = c("fixed", "random", "all"),
            verbose = TRUE,
            denominator = 1,
@@ -65,7 +67,7 @@ bayesfactor <-
       } else {
         bayesfactor_models(...)
       }
-    } else if ("hypothesis" %in% names(list(...))) {
+    } else if (!is.null(hypothesis)) {
       bayesfactor_restricted(...,
                              prior = prior,
                              verbose = verbose,

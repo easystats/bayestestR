@@ -26,7 +26,7 @@ bayesfactor_restricted(posterior, prior = NULL, hypothesis,
 
 \item{prior}{An object representing a prior distribution (see Details).}
 
-\item{hypothesis}{String ...}
+\item{hypothesis}{A character vector specifying the restrictions as logical conditions (see examples below).}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -39,15 +39,18 @@ Only applies to mixed models. May be abbreviated.}
 A data frame containing the Bayes factor representing evidence \emph{against} the un-restricted model.
 }
 \description{
-This method computes the... \emp{Should only be used for confirmatory analysis...}
+This method computes Bayes factors for comparing a model with an order restrictions on its parameters
+with the fully unrestricted model. \emph{Note that this method should only be used for confirmatory analyses}.
+\cr \cr
+For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
 \details{
 This method is used to compute Bayes factors for order-restricted models vs un-restricted
 models by setting an order restriction on the prior and posterior distributions
 (\cite{Morey & Wagenmakers, 2013}).
 
-Though it is possible to use \code{bayesfactor_restricted} to test interval restrictions,
-it is more suitable for testing order restrictions (see examples).
+(Though it is possible to use \code{bayesfactor_restricted} to test interval restrictions,
+it is more suitable for testing order restrictions (see examples)).
 
 When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
 extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
@@ -119,4 +122,6 @@ bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
 }
 \references{
 Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
+Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.
+Morey, R. D. (Jan, 2015). Multiple Comparisons with BayesFactor, Part 2 – order restrictions. Retrived from https://richarddmorey.org/category/order-restrictions/.
 }

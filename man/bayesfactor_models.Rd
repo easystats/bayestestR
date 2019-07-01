@@ -10,7 +10,7 @@ bayesfactor_models(..., denominator = 1, verbose = TRUE)
 \item{...}{Fitted models (any models supported by \pkg{insight}), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').}
 
 \item{denominator}{Either an integer indicating which of the models to use as the denominator,
-or a model to use as a denominator. Ignored for \code{BFBayesFactor}.}
+or a model to be used as a denominator. Ignored for \code{BFBayesFactor}.}
 
 \item{verbose}{Toggle off warnings.}
 }
