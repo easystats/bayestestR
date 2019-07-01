@@ -76,13 +76,13 @@ Importantly, **Bayes factors come in many different flavours and cover a wide ra
 
 Critically, Bayes factors could be regrouped by two different applications: **testing parameters (coefficients) within models** and **comparing statistical models themselves**.
 
-## Testing a Model's Parameters with Bayes Factors
+## Testing Models' Parameters with Bayes Factors
 
 A ***Bayes factor for a single parameter*** can be used to answer the question:
 
-> **Given the observed data, is the null more, or less likely?**
+> **Given the observed data, is the null hypothesis of an absence effect (parameter = 0) more, or less likely?**
 
-Let's use the Students' Sleep data set (`sleep`), and try and answer the question: ***given the observed data, is it more or less likely that the drug (the variable `group`) has no effect on the numbers of hours of extra sleep (variable `extra`)?***
+Let's use the Students' Sleep data set (`sleep`), and try and answer the question: *given the observed data, how likely it is that the **drug** (the variable `group`) **has no effect** on the numbers of hours of extra sleep (variable `extra`)?*
 
 ```{r sleep_boxplot, echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(sleep, aes(x = group, y = extra, fill= group)) +
