@@ -53,7 +53,7 @@ Having said that, here's an introduction to Bayes factors :)
 
 # Bayes Factors
 
-**Bayes factors (BFs) are indices of *relative* evidence of one "model" over another**, which are used in Bayesian inference as alternatives to classical (frequentist) hypothesis testing indices (such as $p-values$).
+**Bayes factors (BFs) are indices of *relative* evidence of one "model" over another**, which can be used in the Bayesian framework as alternatives to classical (frequentist) hypothesis testing indices (such as $p-values$).
 
 According to Bayes' theorem:
 
@@ -70,9 +70,13 @@ Where the middle term is the Bayes factor:
 $$
 BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 $$
-Importantly, **Bayes factors cover a wide range of indices and applications**, and come in different flavors. For example, in the Bayesian framework, a Bayes factor can also be seen as the quantity by which some prior beliefs about the relative odds of two models are updated in light of the observed data - and in fact one way to compute Bayes factors is to divide posterior odds by prior odds, as we will soon demonstrate.
+Importantly, **Bayes factors come in many different flavours and cover a wide range applications**. For example, in the Bayesian framework, a Bayes factor can also be seen as the quantity by which some prior beliefs about the relative odds of two models are updated in light of the observed data - and in fact one way to compute Bayes factors is to divide posterior odds by prior odds, as we will soon demonstrate.
 
-## Bayes Factors for a Single Parameter
+<!-- I would rephase the sentence that comes after "For example, ..." to smoothen the transition and be more straightforward. For example, the "can also be seen" is unclear, can *also* be seen besides what? -->
+
+Critically, Bayes factors could be regrouped by two different applications: **testing parameters (coefficients) within models** and **comparing statistical models themselves**.
+
+## Testing a Model's Parameters with Bayes Factors
 
 A ***Bayes factor for a single parameter*** can be used to answer the question:
 
@@ -262,7 +266,7 @@ group_diff
 bayesfactor_parameters(group_diff, prior = model)
 ```
 
-## Comparing Models
+## Comparing Models using Bayes Factors
 
 Generally speaking, Bayes factors for model comparison answer the question:
 
@@ -434,7 +438,7 @@ bayesfactor_inclusion(BF_ToothGrowth_against_dose)
 knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/JASP3.PNG")
 ```
 
-## >>>>> HERE >>>>>
+## >>>>> HERE >>>>> (???)
 
 ### Order Restricted Models
 
