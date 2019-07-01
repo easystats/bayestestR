@@ -70,11 +70,9 @@ Where the middle term is the Bayes factor:
 $$
 BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 $$
-Importantly, **Bayes factors come in many different flavours and cover a wide range applications**. For example, in the Bayesian framework, a Bayes factor can also be seen as the quantity by which some prior beliefs about the relative odds of two models are updated in light of the observed data - and in fact one way to compute Bayes factors is to divide posterior odds by prior odds, as we will soon demonstrate.
+Thus, Bayes factors can be seen either as a ratio quantifying ***the relative likelihood of two models in light of some observed data*** as they can be computed by comparing marginal likelihoods, or as ***the degree by which some prior beliefs about the relative odds of two models are to be updated*** as they can be computed by dividing posterior odds by prior odds, as we will soon demonstrate.
 
-<!-- I would rephase the sentence that comes after "For example, ..." to smoothen the transition and be more straightforward. For example, the "can also be seen" is unclear, can *also* be seen besides what? -->
-
-Critically, Bayes factors could be regrouped by two different applications: **testing parameters (coefficients) within models** and **comparing statistical models themselves**.
+Critically, Bayes factors could be regrouped by two different applications: **testing single parameters (coefficients) within a model** and **comparing statistical models themselves**.
 
 ## Testing a Model's Parameters with Bayes Factors
 
@@ -437,8 +435,6 @@ bayesfactor_inclusion(BF_ToothGrowth_against_dose)
 ```{r JASP_Nuisance_fig, echo=FALSE, message=FALSE, warning=FALSE}
 knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/JASP3.PNG")
 ```
-
-## >>>>> HERE >>>>> (???)
 
 ### Order Restricted Models
 
