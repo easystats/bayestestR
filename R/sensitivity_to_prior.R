@@ -54,7 +54,7 @@ sensitivity_to_prior.stanreg <- function(model, index = "Median", magnitude = 10
 
   # Clean up
   sensitivity <- as.data.frame(sensitivity)
-  names(sensitivity) <- names(params_updated)[-1]
+  names(sensitivity) <- paste0("Sensitivity_", names(params_updated)[-1])
   sensitivity <- cbind(params_updated[1], sensitivity)
   row.names(sensitivity) <- NULL
   sensitivity
