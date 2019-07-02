@@ -25,7 +25,7 @@
 #' # -----------------------------------------------
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' sensitivity_to_prior(model)
+#' # sensitivity_to_prior(model)
 #'
 #' }
 #' @importFrom stats update

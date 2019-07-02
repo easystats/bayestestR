@@ -72,6 +72,7 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 $$
 Thus, Bayes factors can be seen either as a ratio quantifying ***the relative likelihood of two models in light of some observed data*** as they can be computed by comparing marginal likelihoods, or as ***the degree by which some prior beliefs about the relative odds of two models are to be updated*** as they can be computed by dividing posterior odds by prior odds, as we will soon demonstrate.
 
+
 Critically, Bayes factors could be regrouped by two different applications: **testing single parameters (coefficients) within a model** and **comparing statistical models themselves**.
 
 ## Testing Models' Parameters with Bayes Factors
@@ -397,7 +398,7 @@ We can also compare only matched models - such that averaging is done only acros
 bayesfactor_inclusion(comparison, match_models = TRUE)
 ```
 
-#### Comparison with JASP
+#### Comparison with the JASP software
 
 `bayesfactor_inclusion()` is meant to provide Bayes Factors per predictor, similar to JASP's *Effects* option. Let's compare the two:
 
