@@ -17,6 +17,7 @@ vignette: >
 editor_options: 
   chunk_output_type: console
 bibliography: bibliography.bib
+csl: apa.csl
 ---
 
 This vignette can be referred to by citing the package:

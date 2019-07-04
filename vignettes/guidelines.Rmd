@@ -16,6 +16,8 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
+bibliography: bibliography.bib
+csl: apa.csl
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
