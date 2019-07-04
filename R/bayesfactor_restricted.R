@@ -159,7 +159,7 @@ bayesfactor_restricted.emmGrid <- function(posterior, prior = NULL,
 }
 
 #' @export
-bayesfactor_restricted.data.frame <- function(posterior, prior = NULL, hypothesis) {
+bayesfactor_restricted.data.frame <- function(posterior, prior = NULL, hypothesis, ...) {
   p_hypothesis <- parse(text = hypothesis)
 
   if (is.null(prior)) {
