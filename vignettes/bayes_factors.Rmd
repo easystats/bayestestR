@@ -9,6 +9,8 @@ output:
     toc: true
     fig_width: 10.08
     fig_height: 6
+toc:
+  depth: 3
 tags: [r, bayesian, bayes factors]
 vignette: >
   \usepackage[utf8]{inputenc}
@@ -284,7 +286,7 @@ In other words, which model is more likely to have produced the observed data? T
 
 Let's use Bayes factors for model comparison to find a model that best describes the length of an iris' sepal using the `iris` data set.
 
-### Comparing Bayesian models (`brms` and `rstanarm`)
+### For Bayesian models (`brms` and `rstanarm`)
 
 **Note: In order to compute Bayes factors for models, non-default arguments must be added upon fitting:**
   
@@ -357,7 +359,7 @@ Notice that in the Bayesian framework the compared models *do not* need to be ne
 
 > **NOTE:** In order to correctly and precisely estimate Bayes Factors, you always need the 4 P's: **P**roper **P**riors ^[[Robert, 2016](https://doi.org/10.1016/j.jmp.2015.08.002); [Kass & Raftery, 1993](https://doi.org/10.1080/01621459.1995.10476572); [Fernández, Ley, & Steel, 2001](https://doi.org/10.1016/S0304-4076(00)00076-2)], and a **P**lentiful **P**osterior ^[[Gronau, Wagenmakers, Heck, & Matzke, 2019](https://doi.org/10.1007/s11336-018-9648-3)].
 
-### Comparing Frequentist models via the BIC approximation 
+### For Frequentist models via the BIC approximation 
 
 It is also possible to compute Bayes factors for frequentist models. This is done by comparing BIC measures, allowing a Bayesian comparison of non-nested frequentist models [@wagenmakers2007practical]. Let's try it out on some **linear mixed models**:
 
@@ -456,18 +458,18 @@ ggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) +
   theme(legend.position = c(0.2, 0.8))
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE, eval = FALSE}
 iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
                        data = iris)
 ```
 
+
 What are our priors (here, `rstanarm`'s default priors) for this model's parameters? They all take the shape of a normal distribution centered at 0:
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-junk <- capture.output(
-  iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
-                       data = iris)
-)
+iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
+                       data = iris, refresh = 0)
+
 model_prior <- bayestestR:::.update_to_priors.stanreg(iris_model)
 priors <- insight::get_parameters(model_prior)
 priors$`(Intercept)` <- NULL
