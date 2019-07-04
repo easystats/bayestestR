@@ -36,7 +36,7 @@ sensitivity_to_prior(model, index = c("Median", "MAP"))
 # -----------------------------------------------
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-sensitivity_to_prior(model)
+# sensitivity_to_prior(model)
 
 }
 }

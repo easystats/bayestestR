@@ -2,14 +2,15 @@
 
 ## Breaking changes
 
+- `rope`: returns a proportion (between 0 and 1) instead of a value between 0 and 100
 - `p_direction`: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 ([#168](https://github.com/easystats/bayestestR/issues/168))
-- `bayesfactor_savagedickey`: `hypothesis` argument replaced with `null`.
+- `bayesfactor_savagedickey`: `hypothesis` argument replaced with `null`
 
 ## New functions / features
 
 - `eti`: Computes equal-tailed intervals
-- `bayesfactor_interval`: Function for computing Bayes factors agaisnt an interval-null.
-- `bayesfactor_restricted`: Function for computing Bayes factors for order restricted models.
+- `bayesfactor_interval`: Function for computing Bayes factors agaisnt an interval-null
+- `bayesfactor_restricted`: Function for computing Bayes factors for order restricted models
 
 ## Minor changes
 

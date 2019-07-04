@@ -20,7 +20,7 @@ test_that("emmGrid ci", {
 test_that("emmGrid equivalence_test", {
   testthat::skip_on_travis()
   xeqtest <- equivalence_test(all_, ci = 0.9, range = c(-0.1, 0.1))
-  testthat::expect_equal(xeqtest$ROPE_Percentage, c(5.53, 0, 1.83), tolerance = 0.2)
+  testthat::expect_equal(xeqtest$ROPE_Percentage, c(0.0553, 0, 0.0183), tolerance = 0.2)
   testthat::expect_equal(xeqtest$ROPE_Equivalence, c("Undecided", "Rejected", "Undecided"))
 })
 
@@ -69,7 +69,7 @@ test_that("emmGrid point_estimate", {
 test_that("emmGrid rope", {
   testthat::skip_on_travis()
   xrope <- rope(all_, range = "default", ci = .9)
-  testthat::expect_equal(xrope$ROPE_Percentage, c(5.53, 0, 1.83), tolerance = 0.1)
+  testthat::expect_equal(xrope$ROPE_Percentage, c(0.0553, 0, 0.0183), tolerance = 0.1)
 })
 
 test_that("emmGrid bayesfactor_parameters", {

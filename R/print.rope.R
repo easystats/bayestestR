@@ -34,7 +34,7 @@ print.rope <- function(x, digits = 2, ...) {
   x <- subset(x, select = intersect(cols, colnames(x)))
 
   # This is just cosmetics, to have nicer column names and values
-  x$ROPE_Percentage <- sprintf("%.*f %%", digits, x$ROPE_Percentage)
+  x$ROPE_Percentage <- sprintf("%.*f %%", digits, x$ROPE_Percentage * 100)
   colnames(x)[which(colnames(x) == "ROPE_Percentage")] <- "inside ROPE"
 
   # In case we have multiple CI values, we create a subset for each CI value.
