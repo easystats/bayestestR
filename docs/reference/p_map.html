@@ -249,7 +249,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
 <span class='fu'>p_map</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; <span style='color: #0000BB;'># MAP-based p-value
 #&gt; 
-#&gt; </span><span>p (MAP) = 0.990</div><div class='input'><span class='fu'>p_map</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>10</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># MAP-based p-value
+#&gt; </span><span>p (MAP) = 0.999</div><div class='input'><span class='fu'>p_map</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>10</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># MAP-based p-value
 #&gt; 
 #&gt; </span><span>p (MAP) = 0.000</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
@@ -282,9 +282,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 1: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.012 seconds (Warm-up)
-#&gt; Chain 1:                0.015 seconds (Sampling)
-#&gt; Chain 1:                0.027 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.013 seconds (Warm-up)
+#&gt; Chain 1:                0.013 seconds (Sampling)
+#&gt; Chain 1:                0.026 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -315,14 +315,20 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.014 seconds (Warm-up)
-#&gt; Chain 2:                0.014 seconds (Sampling)
-#&gt; Chain 2:                0.028 seconds (Total)
-#&gt; Chain 2: </div><div class='input'><span class='fu'>p_map</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># MAP-based p-value
+#&gt; Chain 2:  Elapsed Time: 0.009 seconds (Warm-up)
+#&gt; Chain 2:                0.01 seconds (Sampling)
+#&gt; Chain 2:                0.019 seconds (Total)
+#&gt; Chain 2: </div><div class='output co'>#&gt; <span class='warning'>Warning: The largest R-hat is 1.06, indicating chains have not mixed.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#r-hat</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>p_map</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># MAP-based p-value
 #&gt; 
 #&gt; </span><span>  (Intercept): 0.000
 #&gt;   wt         : 0.000
-#&gt;   gear       : 0.948</div><div class='input'>
+#&gt;   gear       : 0.772</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
 <span class='fu'>p_map</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># MAP-based p-value
 #&gt; 

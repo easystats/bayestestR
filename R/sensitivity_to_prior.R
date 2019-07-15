@@ -26,7 +26,6 @@
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' # sensitivity_to_prior(model)
-#'
 #' }
 #' @importFrom stats update
 #' @seealso DescTools
@@ -76,13 +75,13 @@ sensitivity_to_prior.stanreg <- function(model, index = "Median", magnitude = 10
 #' @keywords internal
 .extract_parameters <- function(model, index = "Median", ...) {
   # Handle BF
-  test = c("pd", "rope", "p_map")
-  if(any(c("bf", "bayesfactor", "bayes_factor") %in% c(index))){
+  test <- c("pd", "rope", "p_map")
+  if (any(c("bf", "bayesfactor", "bayes_factor") %in% c(index))) {
     test <- c(test, "bf")
   }
   params <- suppressMessages(describe_posterior(model, centrality = "all", dispersion = TRUE, test = test, ...))
 
-  params <- params[params$Parameter!="(Intercept)",]
+  params <- params[params$Parameter != "(Intercept)", ]
   params[unique(c("Parameter", "Median", index))]
 }
 
@@ -91,7 +90,7 @@ sensitivity_to_prior.stanreg <- function(model, index = "Median", magnitude = 10
 
 #' Set a new location for a prior
 #' @keywords internal
-.prior_new_location <- function(prior, sign, magnitude = 10){
+.prior_new_location <- function(prior, sign, magnitude = 10) {
   prior$location <- -1 * sign * magnitude * prior$scale
   prior
 }
@@ -102,11 +101,11 @@ sensitivity_to_prior.stanreg <- function(model, index = "Median", magnitude = 10
 
 #' Extract and Returns the priors formatted for rstanarm
 #' @keywords internal
-.extract_priors_rstanarm <- function(model, ...){
+.extract_priors_rstanarm <- function(model, ...) {
   priors <- rstanarm::prior_summary(model)
 
   # Deal with adjusted scale
-  if(!is.null(priors$prior$adjusted_scale)){
+  if (!is.null(priors$prior$adjusted_scale)) {
     priors$prior$scale <- priors$prior$adjusted_scale
     priors$prior$adjusted_scale <- NULL
   }

@@ -185,13 +185,25 @@
 <a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
+<code>rope</code>: returns a proportion (between 0 and 1) instead of a value between 0 and 100</li>
+<li>
 <code>p_direction</code>: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 (<a href="https://github.com/easystats/bayestestR/issues/168"><a href='https://github.com/easystats/bayestestR/issues/168'>#168</a></a>)</li>
+<li>
+<code>bayesfactor_savagedickey</code>: <code>hypothesis</code> argument replaced with <code>null</code>
+</li>
 </ul>
 </div>
 <div id="new-functions--features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions--features" class="anchor"></a>New functions / features</h2>
-<p><code>eti</code>: Computes equal-tailed intervals</p>
+<ul>
+<li>
+<code>eti</code>: Computes equal-tailed intervals</li>
+<li>
+<code>bayesfactor_interval</code>: Function for computing Bayes factors agaisnt an interval-null</li>
+<li>
+<code>bayesfactor_restricted</code>: Function for computing Bayes factors for order restricted models</li>
+</ul>
 </div>
 <div id="minor-changes" class="section level2">
 <h2 class="hasAnchor">
@@ -277,7 +289,7 @@
 <li>
 <code><a href="../reference/distribution.html">distribution()</a></code> functions have been added</li>
 <li>
-<code><a href="../reference/bayesfactor_savagedickey.html">bayesfactor_savagedickey()</a></code>, <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> and <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> functions has been added</li>
+<code><a href="../reference/bayesfactor_parameters.html">bayesfactor_savagedickey()</a></code>, <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> and <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> functions has been added</li>
 <li>Started adding plotting methods (currently in the <a href="https://github.com/easystats/see"><code>see</code></a> package) for <code><a href="../reference/p_direction.html">p_direction()</a></code> and <code><a href="../reference/hdi.html">hdi()</a></code>
 </li>
 <li>

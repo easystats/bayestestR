@@ -41,50 +41,59 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' prior <- data.frame(X = rnorm(100),
-#'                     X1 = rnorm(100),
-#'                     X3 = rnorm(100))
+#' prior <- data.frame(
+#'   X = rnorm(100),
+#'   X1 = rnorm(100),
+#'   X3 = rnorm(100)
+#' )
 #'
-#' posterior <- data.frame(X = rnorm(100,.4),
-#'                         X1 = rnorm(100,-.2),
-#'                         X3 = rnorm(100))
+#' posterior <- data.frame(
+#'   X = rnorm(100, .4),
+#'   X1 = rnorm(100, -.2),
+#'   X3 = rnorm(100)
+#' )
 #'
-#' hyps = c("X > X1 & X1 > X3",
-#'          "X > X1")
+#' hyps <- c(
+#'   "X > X1 & X1 > X3",
+#'   "X > X1"
+#' )
 #'
-#' bayesfactor_restricted(posterior,prior,hypothesis = hyps)
+#' bayesfactor_restricted(posterior, prior, hypothesis = hyps)
 #' \dontrun{
 #' # rstanarm models
 #' # ---------------
 #' library(rstanarm)
 #' fit_stan <- stan_glm(mpg ~ wt + cyl + am,
-#'                      data = mtcars)
-#' hyps <- c("am > 0 & cyl < 0",
-#'           "cyl < 0",
-#'           "wt - cyl > 0")
+#'   data = mtcars
+#' )
+#' hyps <- c(
+#'   "am > 0 & cyl < 0",
+#'   "cyl < 0",
+#'   "wt - cyl > 0"
+#' )
 #' bayesfactor_restricted(fit_stan, hypothesis = hyps)
 #'
 #' # emmGrid objects
 #' # ---------------
 #' library(emmeans)
-#' options(contrasts=c('contr.bayes', 'contr.bayes')) # see `bfrms` package
+#' options(contrasts = c("contr.bayes", "contr.bayes")) # see `bfrms` package
 #'
 #' # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html
-#' disgust_data <- read.table(url('http://www.learnbayes.org/disgust_example.txt'),header=TRUE)
+#' disgust_data <- read.table(url("http://www.learnbayes.org/disgust_example.txt"), header = TRUE)
 #'
 #' fit_model <- stan_glm(score ~ condition, data = disgust_data, family = gaussian())
 #'
-#' em_condition <- emmeans(fit_model, ~ condition)
+#' em_condition <- emmeans(fit_model, ~condition)
 #' hyps <- c("lemon < control & control < sulfur")
 #'
 #' bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
-#' #> # Bayes Factor (Order-Restriction)
-#' #>
-#' #>                          Hypothesis P(Prior) P(Posterior) Bayes Factor
-#' #>  lemon < control & control < sulfur     0.17         0.75         4.49
-#' #> ---
-#' #> Bayes factors for the restricted movel vs. the un-restricted model.
-#'}
+#' # > # Bayes Factor (Order-Restriction)
+#' # >
+#' # >                          Hypothesis P(Prior) P(Posterior) Bayes Factor
+#' # >  lemon < control & control < sulfur     0.17         0.75         4.49
+#' # > ---
+#' # > Bayes factors for the restricted movel vs. the un-restricted model.
+#' }
 #'
 #' @references
 #' \itemize{
@@ -102,10 +111,10 @@ bayesfactor_restricted <- function(posterior, prior = NULL, hypothesis, verbose 
 #' @rdname bayesfactor_restricted
 #' @export
 bayesfactor_restricted.stanreg <- function(posterior, prior = NULL,
-                                         hypothesis,
-                                         verbose = TRUE,
-                                         effects = c("fixed", "random", "all"),
-                                         ...) {
+                                           hypothesis,
+                                           verbose = TRUE,
+                                           effects = c("fixed", "random", "all"),
+                                           ...) {
   effects <- match.arg(effects)
 
   # Get Priors
@@ -132,9 +141,9 @@ bayesfactor_restricted.brmsfit <- bayesfactor_restricted.stanreg
 #' @rdname bayesfactor_restricted
 #' @export
 bayesfactor_restricted.emmGrid <- function(posterior, prior = NULL,
-                                         hypothesis,
-                                         verbose = TRUE,
-                                         ...) {
+                                           hypothesis,
+                                           verbose = TRUE,
+                                           ...) {
   if (!requireNamespace("emmeans")) {
     stop("Package \"emmeans\" needed for this function to work. Please install it.")
   }
@@ -173,14 +182,14 @@ bayesfactor_restricted.data.frame <- function(posterior, prior = NULL, hypothesi
     )
   }
 
-  .get_prob <- function(x,data){
+  .get_prob <- function(x, data) {
     x_logical <- try(eval(x, envir = data), silent = TRUE)
-    if (inherits(x_logical,"try-error")) {
+    if (inherits(x_logical, "try-error")) {
       cnames <- colnames(data)
       is_name <- make.names(cnames) == cnames
-      cnames[!is_name] <- paste0("`",cnames[!is_name],"`")
+      cnames[!is_name] <- paste0("`", cnames[!is_name], "`")
       cnames <- paste0(cnames, collapse = ", ")
-      stop(x_logical,"Available parameters are: ",cnames)
+      stop(x_logical, "Available parameters are: ", cnames)
     } else if (!all(is.logical(x_logical))) {
       stop("Hypotheses must be logical")
     }
@@ -192,10 +201,12 @@ bayesfactor_restricted.data.frame <- function(posterior, prior = NULL, hypothesi
 
 
   BF <- posterior_p / prior_p
-  res <- data.frame(Hypothesis = hypothesis,
-                    Prior_prob = prior_p,
-                    Posterior_prob = posterior_p,
-                    BF = BF)
+  res <- data.frame(
+    Hypothesis = hypothesis,
+    Prior_prob = prior_p,
+    Posterior_prob = posterior_p,
+    BF = BF
+  )
 
   class(res) <- unique(c(
     "bayesfactor_restricted",

@@ -197,7 +197,7 @@
     <tr>
       <th>denominator</th>
       <td><p>Either an integer indicating which of the models to use as the denominator,
-or a model to use as a denominator. Ignored for <code>BFBayesFactor</code>.</p></td>
+or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -248,57 +248,52 @@ See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.
 <span class='no'>lm2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='no'>lm3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='no'>lm4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='fu'>bayesfactor_models</span>(<span class='no'>lm1</span>, <span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; ---------------------                                      
-#&gt; [2] Species                   1.70e+29
-#&gt; [3] Species + Petal.Length    5.84e+55
-#&gt; [4] Species * Petal.Length    2.20e+54
+<span class='fu'>bayesfactor_models</span>(<span class='no'>lm1</span>, <span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
-#&gt; Against denominator:
-#&gt; 		 [1] (Intercept only)   
-#&gt; ---
-#&gt; Bayes factor type:  BIC approximation </div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lm1</span>) <span class='co'># same result</span></div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; ---------------------                                      
-#&gt; [1] Species                   1.70e+29
-#&gt; [2] Species + Petal.Length    5.84e+55
-#&gt; [3] Species * Petal.Length    2.20e+54
+#&gt; </span><span>  Model                      Bayes Factor
+#&gt;   [2] Species                    1.70e+29
+#&gt;   [3] Species + Petal.Length     5.84e+55
+#&gt;   [4] Species * Petal.Length     2.20e+54
 #&gt; 
-#&gt; Against denominator:
-#&gt; 		 [4] (Intercept only)   
-#&gt; ---
-#&gt; Bayes factor type:  BIC approximation </div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lm1</span>, <span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lm1</span>) <span class='co'># same result</span></div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; ---------------------                                      
-#&gt; [2] Species                   1.70e+29
-#&gt; [3] Species + Petal.Length    5.84e+55
-#&gt; [4] Species * Petal.Length    2.20e+54
+#&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
+#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lm1</span>) <span class='co'># same result</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
-#&gt; Against denominator:
-#&gt; 		 [1] (Intercept only)   
-#&gt; ---
-#&gt; Bayes factor type:  BIC approximation </div><div class='input'>
+#&gt; </span><span>  Model                      Bayes Factor
+#&gt;   [1] Species                    1.70e+29
+#&gt;   [2] Species + Petal.Length     5.84e+55
+#&gt;   [3] Species * Petal.Length     2.20e+54
+#&gt; 
+#&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[4] (Intercept only)</span><span>
+#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lm1</span>, <span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lm1</span>) <span class='co'># same result</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
+#&gt; 
+#&gt; </span><span>  Model                      Bayes Factor
+#&gt;   [2] Species                    1.70e+29
+#&gt;   [3] Species + Petal.Length     5.84e+55
+#&gt;   [4] Species * Petal.Length     2.20e+54
+#&gt; 
+#&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
+#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'>
 <span class='co'># With lmerMod objects:</span>
 <span class='co'># ---------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='input'><span class='no'>lmer1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='no'>lmer2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Petal.Length</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'><span class='no'>lmer3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(
   <span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Petal.Length</span> <span class='kw'>|</span> <span class='no'>Species</span>) + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Petal.Width</span>),
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
-)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lmer1</span>, <span class='no'>lmer2</span>, <span class='no'>lmer3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; ---------------------                                                                           
-#&gt; [2] Petal.Length + (Petal.Length | Species)                            0.06
-#&gt; [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)    4.72e-03
+)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lmer1</span>, <span class='no'>lmer2</span>, <span class='no'>lmer3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
-#&gt; Against denominator:
-#&gt; 		 [1] Petal.Length + (1 | Species)   
-#&gt; ---
-#&gt; Bayes factor type:  BIC approximation </div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lmer1</span>, <span class='no'>lmer2</span>, <span class='no'>lmer3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lmer1</span>)</div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; ---------------------                                                                           
-#&gt; [2] Petal.Length + (Petal.Length | Species)                            0.06
-#&gt; [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)    4.72e-03
+#&gt; </span><span>  Model                                                           Bayes Factor
+#&gt;   [2] Petal.Length + (Petal.Length | Species)                             0.06
+#&gt;   [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)     4.72e-03
 #&gt; 
-#&gt; Against denominator:
-#&gt; 		 [1] Petal.Length + (1 | Species)   
-#&gt; ---
-#&gt; Bayes factor type:  BIC approximation </div><span class='co'># NOT RUN {</span>
+#&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] Petal.Length + (1 | Species)</span><span>
+#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lmer1</span>, <span class='no'>lmer2</span>, <span class='no'>lmer3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lmer1</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
+#&gt; 
+#&gt; </span><span>  Model                                                           Bayes Factor
+#&gt;   [2] Petal.Length + (Petal.Length | Species)                             0.06
+#&gt;   [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)     4.72e-03
+#&gt; 
+#&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] Petal.Length + (1 | Species)</span><span>
+#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div></span><span class='co'># NOT RUN {</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------------</span>
 <span class='co'># (note that a unique diagnostic_file MUST be specified in order to work)</span>

@@ -50,7 +50,7 @@
   if (is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior)) {
       stop("Cannot compute BF for 'brmsfit' models fit with default priors.\n",
-           call. = FALSE
+        call. = FALSE
       )
     } else {
       stop(model_prior)
@@ -63,7 +63,7 @@
 #' @keywords internal
 .format_big_small <- function(BF, digits = 2) {
   BFx <- as.character(round(BF, digits = digits))
-  big_ind <- abs(BF) >= (10*10^digits) | abs(BF) < 1 / (10^digits)
+  big_ind <- abs(BF) >= (10 * 10^digits) | abs(BF) < 1 / (10^digits)
   big_ind <- sapply(big_ind, isTRUE)
   if (isTRUE(any(big_ind))) {
     BFx[big_ind] <- formatC(BF, format = "e", digits = digits)[big_ind]

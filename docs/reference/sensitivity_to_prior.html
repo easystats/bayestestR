@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Update bayesfactor_models — update.bayesfactor_models • bayestestR</title>
+<title>Sensitivity to Prior — sensitivity_to_prior • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Update bayesfactor_models — update.bayesfactor_models" />
+<meta property="og:title" content="Sensitivity to Prior — sensitivity_to_prior" />
 
-<meta property="og:description" content="Update bayesfactor_models" />
+<meta property="og:description" content="Computes the sensitivity to priors specification. This represents the proportion of change in some indices when the model is fitted with an antagonistic prior (a prior of same shape located on the opposite of the effect)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -174,73 +174,73 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Update bayesfactor_models</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/update.bayesfactor_models.R'><code>R/update.bayesfactor_models.R</code></a></small>
-    <div class="hidden name"><code>update.bayesfactor_models.Rd</code></div>
+    <h1>Sensitivity to Prior</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/sensitivity_to_prior.R'><code>R/sensitivity_to_prior.R</code></a></small>
+    <div class="hidden name"><code>sensitivity_to_prior.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Update bayesfactor_models</p>
+    <p>Computes the sensitivity to priors specification. This represents the proportion of change in some indices when the model is fitted with an antagonistic prior (a prior of same shape located on the opposite of the effect).</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for bayesfactor_models</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/update'>update</a></span>(<span class='no'>object</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>reference</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>sensitivity_to_prior</span>(<span class='no'>model</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='st'>"Median"</span>, <span class='kw'>magnitude</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
-      <td><p>A <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code> object.</p></td>
+      <th>model</th>
+      <td><p>A Bayesian model (<code>stanreg</code> or <code>brmsfit</code>).</p></td>
     </tr>
     <tr>
-      <th>subset</th>
-      <td><p>Vector of model indices to keep or remove.</p></td>
+      <th>index</th>
+      <td><p>The indices from which to compute the sensitivity. Can be one or multiple names of the columns returned by <code>describe_posterior</code>. The case is important here (e.g., write 'Median' instead of 'median').</p></td>
     </tr>
     <tr>
-      <th>reference</th>
-      <td><p>Index of model to rereference to, or <code>"top"</code> to reference to the best model, or <code>"bottom"</code> to reference to the worst model.</p></td>
+      <th>magnitude</th>
+      <td><p>This represent the magnitude by which to shift the antagonistic prior (to test the sensitivity). For instance, a magnitude of 10 (default) means that the mode wil be updated with a prior located at 10 standard deviations from its original location.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Currently not used.</p></td>
+      <td><p>Arguments passed to or from other methods.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>DescTools</p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)
-<span class='no'>lmer1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='no'>lmer2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Petal.Length</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'><span class='no'>lmer3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(
-  <span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Petal.Length</span> <span class='kw'>|</span> <span class='no'>Species</span>) + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Petal.Width</span>),
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
-)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'>
-<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bayesfactor_models.html'>bayesfactor_models</a></span>(<span class='no'>lmer1</span>, <span class='no'>lmer2</span>, <span class='no'>lmer3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>m</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factors for Model Comparison
-#&gt; 
-#&gt; </span><span>  Model                                                           Bayes Factor
-#&gt;   [2] Petal.Length + (Petal.Length | Species)                             0.06
-#&gt;   [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)     4.72e-03
-#&gt; 
-#&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] Petal.Length + (1 | Species)</span><span>
-#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/update'>update</a></span>(<span class='no'>m</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='st'>"bottom"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
-#&gt; 
-#&gt; </span><span>  Model                                       Bayes Factor
-#&gt;   [1] Petal.Length + (1 | Species)                   211.7
-#&gt;   [2] Petal.Length + (Petal.Length | Species)        12.25
-#&gt; 
-#&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)</span><span>
-#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div></span></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
+
+<span class='co'># rstanarm models</span>
+<span class='co'># -----------------------------------------------</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='fu'>sensitivity_to_prior</span>(<span class='no'>model</span>)
+
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='fu'>sensitivity_to_prior</span>(<span class='no'>model</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Median"</span>, <span class='st'>"MAP"</span>))
+
+
+<span class='co'># brms models</span>
+<span class='co'># -----------------------------------------------</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='co'># sensitivity_to_prior(model)</span>
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#see-also">See also</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

@@ -74,49 +74,58 @@ smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
 }
 \examples{
 library(bayestestR)
-prior <- data.frame(X = rnorm(100),
-                    X1 = rnorm(100),
-                    X3 = rnorm(100))
+prior <- data.frame(
+  X = rnorm(100),
+  X1 = rnorm(100),
+  X3 = rnorm(100)
+)
 
-posterior <- data.frame(X = rnorm(100,.4),
-                        X1 = rnorm(100,-.2),
-                        X3 = rnorm(100))
+posterior <- data.frame(
+  X = rnorm(100, .4),
+  X1 = rnorm(100, -.2),
+  X3 = rnorm(100)
+)
 
-hyps = c("X > X1 & X1 > X3",
-         "X > X1")
+hyps <- c(
+  "X > X1 & X1 > X3",
+  "X > X1"
+)
 
-bayesfactor_restricted(posterior,prior,hypothesis = hyps)
+bayesfactor_restricted(posterior, prior, hypothesis = hyps)
 \dontrun{
 # rstanarm models
 # ---------------
 library(rstanarm)
 fit_stan <- stan_glm(mpg ~ wt + cyl + am,
-                     data = mtcars)
-hyps <- c("am > 0 & cyl < 0",
-          "cyl < 0",
-          "wt - cyl > 0")
+  data = mtcars
+)
+hyps <- c(
+  "am > 0 & cyl < 0",
+  "cyl < 0",
+  "wt - cyl > 0"
+)
 bayesfactor_restricted(fit_stan, hypothesis = hyps)
 
 # emmGrid objects
 # ---------------
 library(emmeans)
-options(contrasts=c('contr.bayes', 'contr.bayes')) # see `bfrms` package
+options(contrasts = c("contr.bayes", "contr.bayes")) # see `bfrms` package
 
 # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html
-disgust_data <- read.table(url('http://www.learnbayes.org/disgust_example.txt'),header=TRUE)
+disgust_data <- read.table(url("http://www.learnbayes.org/disgust_example.txt"), header = TRUE)
 
 fit_model <- stan_glm(score ~ condition, data = disgust_data, family = gaussian())
 
-em_condition <- emmeans(fit_model, ~ condition)
+em_condition <- emmeans(fit_model, ~condition)
 hyps <- c("lemon < control & control < sulfur")
 
 bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
-#> # Bayes Factor (Order-Restriction)
-#>
-#>                          Hypothesis P(Prior) P(Posterior) Bayes Factor
-#>  lemon < control & control < sulfur     0.17         0.75         4.49
-#> ---
-#> Bayes factors for the restricted movel vs. the un-restricted model.
+# > # Bayes Factor (Order-Restriction)
+# >
+# >                          Hypothesis P(Prior) P(Posterior) Bayes Factor
+# >  lemon < control & control < sulfur     0.17         0.75         4.49
+# > ---
+# > Bayes factors for the restricted movel vs. the un-restricted model.
 }
 
 }
