@@ -24,26 +24,26 @@ test_that("bayesfactor_parameters numeric", {
   testthat::expect_equal(log(bfsd$BF), 0, tolerance = 0.1)
 
   # interval
-  bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-.1,.1), direction = 0)
+  bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-.1, .1), direction = 0)
   testthat::expect_equal(log(bfsd$BF), 3.7, tolerance = 0.1)
 
-  bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-.1,.1), direction = 1)
+  bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-.1, .1), direction = 1)
   testthat::expect_equal(log(bfsd$BF), 4.3, tolerance = 0.1)
 
-  bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-.1,.1), direction = -1)
+  bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-.1, .1), direction = -1)
   testthat::expect_equal(log(bfsd$BF), -3.88, tolerance = 0.1)
 
   # interval with inf
-  bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-.1,Inf))
+  bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-.1, Inf))
   testthat::expect_equal(log(bfsd$BF), -7.94, tolerance = 0.1)
 
-  bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-Inf,.1))
+  bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-Inf, .1))
   testthat::expect_equal(log(bfsd$BF), 5.97, tolerance = 0.1)
 
   # alias
-  testthat::expect_warning(bayestestR::bayesfactor_interval(Xposterior, prior = Xprior,null = 0))
+  testthat::expect_warning(bayestestR::bayesfactor_interval(Xposterior, prior = Xprior, null = 0))
 
-  testthat::expect_warning(bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior,null = c(-.1,.1)))
+  testthat::expect_warning(bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior, null = c(-.1, .1)))
 })
 
 test_that("bayesfactor_parameters RSTANARM", {

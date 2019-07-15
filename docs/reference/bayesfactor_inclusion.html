@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Inclusion Bayes Factors for testing effects across Bayesian models — bayesfactor_inclusion • bayestestR</title>
+<title>Inclusion Bayes Factors for testing predictors across Bayesian models — bayesfactor_inclusion • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Inclusion Bayes Factors for testing effects across Bayesian models — bayesfactor_inclusion" />
+<meta property="og:title" content="Inclusion Bayes Factors for testing predictors across Bayesian models — bayesfactor_inclusion" />
 
-<meta property="og:description" content="Inclusion Bayes Factors for testing effects across Bayesian models" />
+<meta property="og:description" content="Inclusion Bayes Factors for testing predictors across Bayesian models" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -174,14 +174,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Inclusion Bayes Factors for testing effects across Bayesian models</h1>
+    <h1>Inclusion Bayes Factors for testing predictors across Bayesian models</h1>
     <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/bayesfactor_inclusion.R'><code>R/bayesfactor_inclusion.R</code></a></small>
     <div class="hidden name"><code>bayesfactor_inclusion.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Inclusion Bayes Factors for testing effects across Bayesian models</p>
+    <p>Inclusion Bayes Factors for testing predictors across Bayesian models</p>
     
     </div>
 
@@ -197,11 +197,7 @@
     </tr>
     <tr>
       <th>match_models</th>
-      <td><p>If <code>FALSE</code> (default), Inclusion BFs are computed by
-comparing all models with an effect against all models without the effect. If <code>TRUE</code>,
-Inclusion BFs are computed by comparing all models with an effect against models without
-the effect AND without any higher-order interactions with the effect (additionally,
-interactions are compared only to models with the all main effects).</p></td>
+      <td><p>See details.</p></td>
     </tr>
     <tr>
       <th>prior_odds</th>
@@ -224,7 +220,14 @@ probable under models with a particular effect, than they are under models witho
 that particular effect? In other words, on average - are models with effect \(X\)
 more likely to have produced the observed data than models without effect \(X\)?
 <br /> <br />
-See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
+For more info, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
+<h3>Match Models</h3>
+    If <code>match_models=FALSE</code> (default), Inclusion BFs are computed by comparing all models
+with a predictor against all models without that predictor. If <code>TRUE</code>,
+comparison is restricted to models that (1) do not include any interactions
+with the predictor of interest; (2) for interaction predictors, averaging is done
+only across models that containe the main effect from which the interaction
+predictor is comprised.
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -251,12 +254,16 @@ i.e., <code>(X|G)</code> will become <code>1:G</code> and <code>X:G</code>.</p>
 <span class='no'>mo3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 
 <span class='no'>BFmodels</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bayesfactor_models.html'>bayesfactor_models</a></span>(<span class='no'>mo1</span>, <span class='no'>mo2</span>, <span class='no'>mo3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>mo0</span>)
-<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BFmodels</span>)</div><div class='output co'>#&gt;                      Pr(prior) Pr(posterior) Inclusion BF
+<span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BFmodels</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)
+#&gt; 
+#&gt; </span><span>                     Pr(prior) Pr(posterior) Inclusion BF
 #&gt; Species                   0.75         1.000     2.02e+55
 #&gt; Petal.Length              0.50         1.000     3.58e+26
 #&gt; Species:Petal.Length      0.25         0.036         0.11
-#&gt; ---
-#&gt; Inclusion BFs compared among all models.</div><span class='co'># NOT RUN {</span>
+#&gt; 
+#&gt; * Compared among: </span><span style='color: #00BBBB;'>all models
+#&gt; </span><span>*    Priors odds: </span><span style='color: #00BBBB;'>uniform-equal
+#&gt; </span><span></div></span><span class='co'># NOT RUN {</span>
 <span class='co'># BayesFactor</span>
 <span class='co'># -------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>BayesFactor</span>)

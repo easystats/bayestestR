@@ -154,28 +154,142 @@
 <div id="bayes-factors" class="section level1">
 <h1 class="hasAnchor">
 <a href="#bayes-factors" class="anchor"></a>Bayes Factors</h1>
-<p><strong>Bayes factors (BFs) are indices of <em>relative</em> evidence of one “model” over another</strong>, which are used in Bayesian inference as alternatives to classical (frequentist) hypothesis testing indices (such as <span class="math inline">\(p-values\)</span>). In the Bayesian framework, a Bayes factor can also be thought of as the quantity by which some prior beliefs about the relative odds of two models are updated in light of the observed data.</p>
+<p><strong>Bayes factors (BFs) are indices of <em>relative</em> evidence of one “model” over another</strong>, which can be used in the Bayesian framework as alternatives to classical (frequentist) hypothesis testing indices (such as <span class="math inline">\(p-values\)</span>).</p>
 <p>According to Bayes’ theorem:</p>
 <p><span class="math display">\[
-P(M|D) = \frac{P(D|M)P(M)}{P(D)}
-\]</span></p>
-<p>Then by comparing two models, we get:</p>
+P(M|D) = \frac{P(D|M)\times P(M)}{P(D)}
+\]</span> Then by comparing two models, we get:</p>
 <p><span class="math display">\[
 \frac{P(M_1|D)}{P(M_2|D)} = \frac{P(D|M_1)}{P(D|M_2)} \times \frac{P(M_1)}{P(M_2)}
 \]</span> Where the middle term is the Bayes factor: <span class="math display">\[
 BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
-\]</span> These are usually computed as the ratio of marginal likelihoods of two competing hypotheses / models, but as we can see from the equation above, they can also be computed by dividing the posterior odds by the prior odds. Importantly, <strong>Bayes factors cover a wide range of indices and applications</strong>, and come in different flavors.</p>
-<div id="comparing-models" class="section level2">
+\]</span> Thus, Bayes factors can be seen either as a ratio quantifying <strong><em>the relative likelihood of two models in light of some observed data</em></strong> as they can be computed by comparing marginal likelihoods, or as <strong><em>the degree by which some prior beliefs about the relative odds of two models are to be updated</em></strong> as they can be computed by dividing posterior odds by prior odds, as we will soon demonstrate.</p>
+<p>Here we provide functions for computing Bayes factors in two different applications: <strong>testing single parameters (coefficients) within a model</strong> and <strong>comparing statistical models themselves</strong>.</p>
+<div id="testing-models-parameters-with-bayes-factors" class="section level2">
 <h2 class="hasAnchor">
-<a href="#comparing-models" class="anchor"></a>Comparing models</h2>
-<p>Generally speaking, Bayes factors are used to compare models and answer the question:</p>
+<a href="#testing-models-parameters-with-bayes-factors" class="anchor"></a>Testing Models’ Parameters with Bayes Factors</h2>
+<p>A <strong><em>Bayes factor for a single parameter</em></strong> can be used to answer the question:</p>
 <blockquote>
-<p><strong>Under which model is the the observed data more probable?</strong></p>
+<p><strong>Given the observed data, is the null hypothesis of an absence of an effect more, or less likely?</strong></p>
 </blockquote>
-<p>In other words, which model is more likely to have produced the observed data? This is usually done by computing the marginal likelihoods of two models. In such a case, the Bayes factor is a measure of the relative evidence of one of the compared models over the other.</p>
-<div id="bayesian-models-brms-and-rstanarm" class="section level3">
+<div class="figure" style="text-align: center">
+<img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/deathsticks.png" alt="Bayesian analysis of the Students' (1908) Sleep data set." width="80%"><p class="caption">
+Bayesian analysis of the Students’ (1908) Sleep data set.
+</p>
+</div>
+<p>Let’s use the Students’ (1908) Sleep data set (<code><a href="https://www.rdocumentation.org/packages/utils/topics/data">data("sleep")</a></code>), in which <strong>people took some drug</strong> and where the researchers measured the <strong>extra hours of sleep</strong> that they slept afterwards. We will try answering the following question: <em>given the observed data, how likely it is that the <strong>drug</strong> (the variable <code>group</code>) <strong>has no effect</strong> on the numbers of hours of <strong>extra sleep</strong> (variable <code>extra</code>)?</em></p>
+<p><img src="bayes_factors_files/figure-html/sleep_boxplot-1.png" width="700"></p>
+<p>The <strong>bloxplot</strong> suggests that the 2nd group has a higher number of hours of extra sleep. <em>By how much?</em> Let’s fit a simple <a href="https://easystats.github.io/bayestestR/articles/example1_GLM.html">Bayesian linear model</a>.</p>
+<div id="testing-against-a-null-region" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bayesian-models-brms-and-rstanarm" class="anchor"></a>Bayesian models (<code>brms</code> and <code>rstanarm</code>)</h3>
+<a href="#testing-against-a-null-region" class="anchor"></a>Testing against a Null-<em>Region</em>
+</h3>
+<p>One way of operationlizing the null-hypothesis is by setting a null region (for example the <span class="math inline">\([-0.1, 0.1]\)</span> interval), such that an effect that falls within this interval would be practically equivalent to the the null. In our case, that means defining a region where we would consider the drug having no effect at all. We can then compute the prior probability of the drug’s effect falling <em>within this null-region</em>, and the prior probability of the drug’s effect falling <em>outside the null-region</em> to get our <em>prior odds</em>. Say any effect smaller than half an hour of extra sleep is practically equivalent to being no effect at all, we would define our prior odds as:</p>
+<p><span class="math display">\[
+\frac
+{P(b_{drug} \in [-0.5, 0.5])}
+{P(b_{drug} \notin [-0.5, 0.5])}
+\]</span></p>
+<p>If we set our prior to have a normal distribution centered at 0 hours with a scale (an SD) of 2.5 hours, our prior would look like this:</p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p>The prior odds would be 5.3.</p>
+<p>We can now fit our model:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
+<a class="sourceLine" id="cb1-2" title="2">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(extra <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> sleep)</a></code></pre></div>
+<p>By looking at the posterior distribution, can now compute the posterior probability of the drug’s effect falling <em>within the null-region</em>, and the posterior probability of the drug’s effect falling <em>outside the null-region</em> to get our <em>posterior odds</em>:</p>
+<p><span class="math display">\[
+\frac
+{P(b_{drug} \in [-0.5,0.5] | Data)}
+{P(b_{drug} \notin [-0.5,0.5] | Data)}
+\]</span></p>
+<p><img src="bayes_factors_files/figure-html/rstanarm_fit-1.png" width="700"></p>
+<p>We can see that the centre of the posterior distribution has shifted away from 0 (to ~1.6). Likewise, the posterior odds are 3.3 - which seems to favour <strong>the effect being non-null</strong>, but… <em>does this mean the data support the alternative more than the null?</em> Hard to say, since even before the data were observed, the priors already favoured the alternative - so we need to take our priors into account here!</p>
+<p>Let’s compute the Bayes factor as the change from the prior odds to the posterior odds: <span class="math inline">\(BF_{10} = Odds_{posterior} / Odds_{prior} = 0.6\)</span>! This BF indicates that the data provide 1/0.6 = 1.6 times more evidence for the effect of the drug being practically nothing than it does for the drug having some clinically significant effect. Alternatively, we can say that the observed data are 1.63 times more probable if effect of the drug was within the null interval than if it was outside of it! Thus, although the center of distribution has shifted away from 0, and the posterior favors the non-null values, it seems that given the observed data, the probability mass has <em>overall</em> shifted closer to the null interval, making the values in the null interval more probable! <span class="citation">(see <em>Non-overlapping Hypotheses</em> in Morey &amp; Rouder, 2011)</span></p>
+<p>Note that <strong>interpretation guides</strong> for Bayes factors can be found <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf"><strong>here</strong></a>.</p>
+<p>All of this can be achieved with the function <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code>, which gives a Bayes factor for each of the model’s parameters:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">My_first_BF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span>(model, <span class="dt">null =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span>.<span class="dv">5</span>,.<span class="dv">5</span>))</a>
+<a class="sourceLine" id="cb2-2" title="2">My_first_BF</a></code></pre></div>
+<pre><code>&gt; # Bayes Factor (Null-Interval)
+&gt; 
+&gt;    Parameter Bayes Factor
+&gt;  (Intercept)         0.04
+&gt;       group2         0.61
+&gt; 
+&gt; * Evidence Against The Null: [-0.5, 0.5]</code></pre>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+</div>
+<div id="testing-against-the-null-as-a-single-point-0" class="section level3">
+<h3 class="hasAnchor">
+<a href="#testing-against-the-null-as-a-single-point-0" class="anchor"></a>Testing against the null as a single point (0)</h3>
+<p><strong>What if we don’t know what region would be practically equivalent to 0?</strong> Or if we just want the null to be exactly zero? Not a problem - as the width of null region shrinks to zero, the change from the prior and posterior probability of the null - no longer an interval, but now a point-null - can be estimated by comparing the the density of the null value between the two distributions.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> This ratio is called the <strong>Savage-Dickey ratio</strong>, and has the added benefit of also being an approximation of a Bayes factor comparing the estimated model against the a model in which the parameter of interest has been restricted to a point-null:</p>
+<blockquote>
+<p>“[…] the Bayes factor for <span class="math inline">\(H_0\)</span> versus <span class="math inline">\(H_1\)</span> could be obtained by analytically integrating out the model parameter <span class="math inline">\(\theta\)</span>. However, the Bayes factor may likewise be obtained by only considering <span class="math inline">\(H_1\)</span>, and dividing the height of the posterior for <span class="math inline">\(\theta\)</span> by the height of the prior for <span class="math inline">\(\theta\)</span>, at the point of interest.” <span class="citation">(Wagenmakers, Lodewyckx, Kuriyal, &amp; Grasman, 2010)</span></p>
+</blockquote>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">My_second_BF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span>(model, <span class="dt">null =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2">My_second_BF</a></code></pre></div>
+<pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
+&gt; 
+&gt;    Parameter Bayes Factor
+&gt;  (Intercept)         0.07
+&gt;       group2         0.82
+&gt; 
+&gt; * Evidence Against The Null: [0]</code></pre>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p>By default, <code>null</code> is set to 0, resulting in the computation of a Savage-Dickey ratio.</p>
+</div>
+<div id="one-sided-tests" class="section level3">
+<h3 class="hasAnchor">
+<a href="#one-sided-tests" class="anchor"></a>One-Sided Tests</h3>
+<p>We can also conduct a directional test (a “one sided” or “one tailed” test) if we have a prior hypotheses about the direction of the effect. This is done by setting an order restriction on the prior and posterior distributions of the alternative <span class="citation">(Morey &amp; Wagenmakers, 2014)</span>. For example, if we have a prior hypothesis that the effect of the drug is positive, the alternative will be restricted to the region to the right of the null (point or interval):</p>
+<p><img src="bayes_factors_files/figure-html/prior_n_post_plot_one_sided-1.png" width="700"></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">test_group2_right &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span>(model, <span class="dt">direction =</span> <span class="st">"&gt;"</span>)</a>
+<a class="sourceLine" id="cb6-2" title="2">test_group2_right</a></code></pre></div>
+<pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
+&gt; 
+&gt;    Parameter Bayes Factor
+&gt;  (Intercept)         0.12
+&gt;       group2         1.54
+&gt; 
+&gt; * Evidence Against The Null: [0]
+&gt; *                 Direction: Right-Sided test</code></pre>
+<p>As we can see, given that we have an <em>a priori</em> assumption about the direction of the effect (<em>that the effect is positive</em>), <strong>the presence of an effect is 1.5 times more likely than the absence of an effect</strong>, given the observed data (or that the data are 1.5 time more probable under <span class="math inline">\(H_1\)</span> than <span class="math inline">\(H_0\)</span>). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 1.5 is still considered quite <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf">weak evidence</a>).</p>
+</div>
+<div id="testing-contrasts-with-emmeans" class="section level3">
+<h3 class="hasAnchor">
+<a href="#testing-contrasts-with-emmeans" class="anchor"></a>Testing Contrasts (with <code>emmeans</code>)</h3>
+<!-- MSB: is this section needed? I feel like not... -->
+<!-- DM: Not sure either it's up to you -->
+<p>We can also use <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> together with <a href="https://cran.r-project.org/package=emmeans"><strong>emmeans</strong></a>, allowing us to <a href="https://easystats.github.io/blog/posts/bayestestr_emmeans/">test Bayesian contrasts</a>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(emmeans)</a>
+<a class="sourceLine" id="cb8-2" title="2">group_diff &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/pairs">pairs</a></span>(<span class="kw">emmeans</span>(model, <span class="op">~</span><span class="st"> </span>group))</a>
+<a class="sourceLine" id="cb8-3" title="3">group_diff</a></code></pre></div>
+<pre><code>&gt;  contrast estimate lower.HPD upper.HPD
+&gt;  1 - 2       -1.57      -3.3     0.187
+&gt; 
+&gt; HPD interval probability: 0.95</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># pass the original model via prior</span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="kw"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span>(group_diff, <span class="dt">prior =</span> model)</a></code></pre></div>
+<pre><code>&gt; Computation of Bayes factors: sampling priors, please wait...</code></pre>
+<pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
+&gt; 
+&gt;  Parameter Bayes Factor
+&gt;      1 - 2          0.9
+&gt; 
+&gt; * Evidence Against The Null: [0]</code></pre>
+</div>
+</div>
+<div id="comparing-models-using-bayes-factors" class="section level2">
+<h2 class="hasAnchor">
+<a href="#comparing-models-using-bayes-factors" class="anchor"></a>Comparing Models using Bayes Factors</h2>
+<p>Bayes factors can also be used to compare statistical models, for which they answer the question:</p>
+<blockquote>
+<p><strong>Under which model are the the observed data more probable?</strong></p>
+</blockquote>
+<p>In other words, which model is more likely to have produced the observed data? This is usually done by comparing the marginal likelihoods of two models. In such a case, the Bayes factor is a measure of the <em>relative</em> evidence of one of the compared models over the other.</p>
+<p>Let’s use Bayes factors for model comparison to find a model that best describes the length of an iris’ sepal using the <code>iris</code> data set.</p>
+<div id="for-bayesian-models-brms-and-rstanarm" class="section level3">
+<h3 class="hasAnchor">
+<a href="#for-bayesian-models-brms-and-rstanarm" class="anchor"></a>For Bayesian models (<code>brms</code> and <code>rstanarm</code>)</h3>
 <p><strong>Note: In order to compute Bayes factors for models, non-default arguments must be added upon fitting:</strong></p>
 <ul>
 <li>
@@ -185,282 +299,229 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 <code>stanreg</code> models <strong>must</strong> have been fitted with a defined <code>diagnostic_file</code>.</li>
 </ul>
 <p>Let’s first fit 5 Bayesian regressions with <code>brms</code> to predict <code>Sepal.Length</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(brms)</a>
-<a class="sourceLine" id="cb1-2" title="2"></a>
-<a class="sourceLine" id="cb1-3" title="3">m0 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb1-4" title="4">m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb1-5" title="5">m2 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb1-6" title="6">m3 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species <span class="op">+</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb1-7" title="7">m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species <span class="op">*</span><span class="st"> </span>Petal.Length, <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(brms)</a>
+<a class="sourceLine" id="cb13-2" title="2"></a>
+<a class="sourceLine" id="cb13-3" title="3">m0 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="co"># intercept only model</span></a>
+<a class="sourceLine" id="cb13-4" title="4">          <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb13-5" title="5">m1 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length,</a>
+<a class="sourceLine" id="cb13-6" title="6">          <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb13-7" title="7">m2 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species,</a>
+<a class="sourceLine" id="cb13-8" title="8">          <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb13-9" title="9">m3 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species <span class="op">+</span><span class="st"> </span>Petal.Length,</a>
+<a class="sourceLine" id="cb13-10" title="10">          <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb13-11" title="11">m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species <span class="op">*</span><span class="st"> </span>Petal.Length,</a>
+<a class="sourceLine" id="cb13-12" title="12">          <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>We can now compare these models with the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function, using the <code>denominator</code> argument to specify which model all models will be compared against (in this case, the intercept-only model):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a>
-<a class="sourceLine" id="cb2-2" title="2">comparison &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span>(m1, m2, m3, m4, <span class="dt">denominator =</span> m0)</a>
-<a class="sourceLine" id="cb2-3" title="3">comparison</a></code></pre></div>
-<pre><code>&gt; Bayes factor analysis
-&gt; ---------------------                                      
-&gt; [1] Petal.Length              3.45e+44
-&gt; [2] Species                   5.63e+29
-&gt; [3] Species + Petal.Length    7.12e+55
-&gt; [4] Species * Petal.Length    9.15e+55
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a>
+<a class="sourceLine" id="cb14-2" title="2">comparison &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span>(m1, m2, m3, m4, <span class="dt">denominator =</span> m0)</a>
+<a class="sourceLine" id="cb14-3" title="3">comparison</a></code></pre></div>
+<pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
-&gt; Against denominator:
-&gt;        [5] (Intercept only)   
-&gt; ---
-&gt; Bayes factor type:  marginal likelihoods (bridgesampling)</code></pre>
+&gt;   Model                      Bayes Factor
+&gt;   [1] Petal.Length               3.45e+44
+&gt;   [2] Species                    5.63e+29
+&gt;   [3] Species + Petal.Length     7.12e+55
+&gt;   [4] Species * Petal.Length     9.15e+55
+&gt; 
+&gt; * Against Denominator: [5] (Intercept only)
+&gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>We can see that the full model is the best model - with <span class="math inline">\(BF_{\text{m0}}=9\times 10^{55}\)</span> compared to the null (intercept only).</p>
-<p>We can also change the reference model to the main effect model:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/update">update</a></span>(comparison, <span class="dt">reference =</span> <span class="dv">3</span>)</a></code></pre></div>
-<pre><code>&gt; Bayes factor analysis
-&gt; ---------------------                                      
-&gt; [1] Petal.Length              4.84e-12
-&gt; [2] Species                   7.90e-27
-&gt; [4] Species * Petal.Length        1.28
-&gt; [5] (Intercept only)          1.40e-56
+<p>Due to the transitive property of Bayes factors, we can easily change the reference model to the main effects model:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/update">update</a></span>(comparison, <span class="dt">reference =</span> <span class="dv">3</span>)</a></code></pre></div>
+<pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
-&gt; Against denominator:
-&gt;        [3] Species + Petal.Length   
-&gt; ---
-&gt; Bayes factor type:  marginal likelihoods (bridgesampling)</code></pre>
+&gt;   Model                      Bayes Factor
+&gt;   [1] Petal.Length               4.84e-12
+&gt;   [2] Species                    7.90e-27
+&gt;   [4] Species * Petal.Length         1.28
+&gt;   [5] (Intercept only)           1.40e-56
+&gt; 
+&gt; * Against Denominator: [3] Species + Petal.Length
+&gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>As we can see, though the full model is the best, there is hardly any evidence that it is preferable to the main effects model.</p>
 <p>We can also change the reference model to the <code>Species</code> model:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/update">update</a></span>(comparison, <span class="dt">reference =</span> <span class="dv">2</span>)</a></code></pre></div>
-<pre><code>&gt; Bayes factor analysis
-&gt; ---------------------                                      
-&gt; [1] Petal.Length              6.12e+14
-&gt; [3] Species + Petal.Length    1.27e+26
-&gt; [4] Species * Petal.Length    1.63e+26
-&gt; [5] (Intercept only)          1.78e-30
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/update">update</a></span>(comparison, <span class="dt">reference =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
-&gt; Against denominator:
-&gt;        [2] Species   
-&gt; ---
-&gt; Bayes factor type:  marginal likelihoods (bridgesampling)</code></pre>
+&gt;   Model                      Bayes Factor
+&gt;   [1] Petal.Length               6.12e+14
+&gt;   [3] Species + Petal.Length     1.27e+26
+&gt;   [4] Species * Petal.Length     1.63e+26
+&gt;   [5] (Intercept only)           1.78e-30
+&gt; 
+&gt; * Against Denominator: [2] Species
+&gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>Notice that in the Bayesian framework the compared models <em>do not</em> need to be nested models, as happened here when we compared the <code>Petal.Length</code>-only model to the <code>Species</code>-only model (something that cannot be done in the frequentists framework, where compared models must be nested in one another).</p>
 <blockquote>
-<p><strong>NOTE:</strong> In order to correctly and precisely estimate Bayes Factors, you always need the 4 P’s: <strong>P</strong>roper <strong>P</strong>riors <sup>(<a href="https://doi.org/10.1016/j.jmp.2015.08.002">1</a>, <a href="https://doi.org/10.1080/01621459.1995.10476572">2</a>, <a href="https://doi.org/10.1016/S0304-4076(00)00076-2">3</a>)</sup>, and a <strong>P</strong>lentiful <strong>P</strong>osterior <sup>(<a href="https://doi.org/10.1007/s11336-018-9648-3">4</a>)</sup>.</p>
+<p><strong>NOTE:</strong> In order to correctly and precisely estimate Bayes Factors, you always need the 4 P’s: <strong>P</strong>roper <strong>P</strong>riors,<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> and a <strong>P</strong>lentiful <strong>P</strong>osterior.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 </blockquote>
 </div>
-<div id="the-bic-approximation-for-frequentist-models" class="section level3">
+<div id="for-frequentist-models-via-the-bic-approximation" class="section level3">
 <h3 class="hasAnchor">
-<a href="#the-bic-approximation-for-frequentist-models" class="anchor"></a>The BIC approximation for Frequentist Models</h3>
-<p>It is also possible to compute Bayes factors for frequentist models. This is done by comparing BIC measures, allowing a Bayesian comparison of non-nested frequentist models <span class="citation">(Wagenmakers 2007)</span>. Let’s try it out on some <strong>linear mixed models</strong>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
-<a class="sourceLine" id="cb8-2" title="2"></a>
-<a class="sourceLine" id="cb8-3" title="3">m0 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
-<a class="sourceLine" id="cb8-4" title="4">m1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
-<a class="sourceLine" id="cb8-5" title="5">m2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(Petal.Length <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
-<a class="sourceLine" id="cb8-6" title="6">m3 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>(Petal.Length <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
-<a class="sourceLine" id="cb8-7" title="7">m4 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">*</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>(Petal.Length <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
-<a class="sourceLine" id="cb8-8" title="8"></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="kw"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span>(m1, m2, m3, m4, <span class="dt">denominator =</span> m0)</a></code></pre></div>
-<pre><code>&gt; Bayes factor analysis
-&gt; ---------------------                                                                     
-&gt; [1] Petal.Length + (1 | Species)                             8.24e+24
-&gt; [2] Petal.Length + (Petal.Length | Species)                  4.77e+23
-&gt; [3] Petal.Length + Petal.Width + (Petal.Length | Species)    1.52e+22
-&gt; [4] Petal.Length * Petal.Width + (Petal.Length | Species)    5.93e+20
+<a href="#for-frequentist-models-via-the-bic-approximation" class="anchor"></a>For Frequentist models via the BIC approximation</h3>
+<p>It is also possible to compute Bayes factors for frequentist models. This is done by comparing BIC measures, allowing a Bayesian comparison of non-nested frequentist models <span class="citation">(Wagenmakers, 2007)</span>. Let’s try it out on some <strong>linear mixed models</strong>:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
+<a class="sourceLine" id="cb20-2" title="2"></a>
+<a class="sourceLine" id="cb20-3" title="3">m0 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
+<a class="sourceLine" id="cb20-4" title="4">m1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
+<a class="sourceLine" id="cb20-5" title="5">m2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(Petal.Length <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
+<a class="sourceLine" id="cb20-6" title="6">m3 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>(Petal.Length <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
+<a class="sourceLine" id="cb20-7" title="7">m4 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">*</span><span class="st"> </span>Petal.Width <span class="op">+</span><span class="st"> </span>(Petal.Length <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
+<a class="sourceLine" id="cb20-8" title="8"></a>
+<a class="sourceLine" id="cb20-9" title="9"><span class="kw"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span>(m1, m2, m3, m4, <span class="dt">denominator =</span> m0)</a></code></pre></div>
+<pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
-&gt; Against denominator:
-&gt;        [5] 1 + (1 | Species)   
-&gt; ---
-&gt; Bayes factor type:  BIC approximation</code></pre>
+&gt;   Model                                                     Bayes Factor
+&gt;   [1] Petal.Length + (1 | Species)                              8.24e+24
+&gt;   [2] Petal.Length + (Petal.Length | Species)                   4.77e+23
+&gt;   [3] Petal.Length + Petal.Width + (Petal.Length | Species)     1.52e+22
+&gt;   [4] Petal.Length * Petal.Width + (Petal.Length | Species)     5.93e+20
+&gt; 
+&gt; * Against Denominator: [5] 1 + (1 | Species)
+&gt; *   Bayes Factor Type: BIC approximation</code></pre>
 </div>
-</div>
-<div id="inclusion-bayes-factors-via-bayesian-model-averaging" class="section level2">
-<h2 class="hasAnchor">
-<a href="#inclusion-bayes-factors-via-bayesian-model-averaging" class="anchor"></a>Inclusion Bayes factors via Bayesian model averaging</h2>
+<div id="inclusion-bayes-factors-via-bayesian-model-averaging" class="section level3">
+<h3 class="hasAnchor">
+<a href="#inclusion-bayes-factors-via-bayesian-model-averaging" class="anchor"></a>Inclusion Bayes factors via Bayesian model averaging</h3>
 <p>Inclusion Bayes factors answer the question:</p>
 <blockquote>
-<p><strong>Are the observed data more probable under models with a particular effect, than they are under models without that particular effect?</strong></p>
+<p><strong>Are the observed data more probable under models with a particular predictor, than they are under models without that particular predictor?</strong></p>
 </blockquote>
-<p>In other words, on average - are models with effect <span class="math inline">\(X\)</span> more likely to have produce the observed data than models without effect <span class="math inline">\(X\)</span>?</p>
+<p>In other words, on average - are models with predictor <span class="math inline">\(X\)</span> more likely to have produce the observed data than models without predictor <span class="math inline">\(X\)</span>?<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<p>Since each model has a prior probability, it is possible to sum the prior probability of all models that include a predictor of interest (the <em>prior inclusion probability</em>), and of all models that do not include that predictor (the <em>prior exclusion probability</em>). After the data are observed, we can similarly consider the sums of the posterior models’ probabilities to obtain the <em>posterior inclusion probability</em> and the <em>posterior exclusion probability</em>. Again, the change from prior to posterior inclusion odds is the Inclusion Bayes factor <span class="citation">(“<span class="math inline">\(BF_{Inclusion}\)</span>”; Clyde, Ghosh, &amp; Littman, 2011)</span>.</p>
 <p>Lets use the <code>brms</code> example from above:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(comparison)</a></code></pre></div>
-<pre><code>&gt;                      Pr(prior) Pr(posterior) Inclusion BF
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(comparison)</a></code></pre></div>
+<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+&gt; 
+&gt;                      Pr(prior) Pr(posterior) Inclusion BF
 &gt; Petal.Length               0.6          1.00     1.93e+26
 &gt; Species                    0.6          1.00     3.15e+11
 &gt; Species:Petal.Length       0.2          0.56         5.14
-&gt; ---
-&gt; Inclusion BFs compared among all models.</code></pre>
-<p>If we examine the interaction term’s inclusion Bayes factor, we can see that across all 5 models, a model with the interaction term (<code>Species:Petal.Length</code>) is 5 times more likely than a model without the interaction term.</p>
-<p>We can also compare only matched models - i.e., a model without effect <span class="math inline">\(A\)</span> will only be compared to models <em>with</em> effect <span class="math inline">\(A\)</span>, but not with models with higher-level interaction (see explanation for why you might want to do this <a href="https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp">here</a>).</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(comparison, <span class="dt">match_models =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<pre><code>&gt;                      Pr(prior) Pr(posterior) Inclusion BF
+&gt; 
+&gt; * Compared among: all models
+&gt; *    Priors odds: uniform-equal</code></pre>
+<p>If we examine the interaction term’s inclusion Bayes factor, we can see that across all 5 models, a model with the interaction term (<code>Species:Petal.Length</code>) is 5 times more likely than a model without the interaction term. <strong>Note</strong> that <code>Species</code>, a factor represented in the model with several parameters, gets a single Bayes factor - inclusion Bayes factors are given per predictor!</p>
+<p>We can also compare only matched models - such that averaging is done only across models that (1) do not include any interactions with the predictor of interest; (2) for interaction predictors, averaging is done only across models that contain the main effect from which the interaction predictor is comprised (see explanation for why you might want to do this <a href="https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp">here</a>).</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(comparison, <span class="dt">match_models =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+&gt; 
+&gt;                      Pr(prior) Pr(posterior) Inclusion BF
 &gt; Petal.Length               0.4          0.44     1.27e+26
 &gt; Species                    0.4          0.44     2.07e+11
 &gt; Species:Petal.Length       0.2          0.56         1.28
-&gt; ---
-&gt; Inclusion BFs compared among matched models only.</code></pre>
-<div id="comparison-with-jasp" class="section level3">
-<h3 class="hasAnchor">
-<a href="#comparison-with-jasp" class="anchor"></a>Comparison with JASP</h3>
-<p><code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> is meant to provide Bayes Factors across model averages, similar to JASP’s <em>Effects</em> option. Let’s compare the two:</p>
-<div id="compared-across-all-models" class="section level4">
+&gt; 
+&gt; * Compared among: matched models only
+&gt; *    Priors odds: uniform-equal</code></pre>
+<div id="comparison-with-the-jasp-software" class="section level4">
 <h4 class="hasAnchor">
-<a href="#compared-across-all-models" class="anchor"></a>Compared across all models</h4>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(BayesFactor)</a>
-<a class="sourceLine" id="cb14-2" title="2">ToothGrowth<span class="op">$</span>dose &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(ToothGrowth<span class="op">$</span>dose)</a>
-<a class="sourceLine" id="cb14-3" title="3">BF_ToothGrowth &lt;-<span class="st"> </span><span class="kw">anovaBF</span>(len <span class="op">~</span><span class="st"> </span>dose<span class="op">*</span>supp, ToothGrowth)</a>
-<a class="sourceLine" id="cb14-4" title="4"></a>
-<a class="sourceLine" id="cb14-5" title="5"><span class="kw"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(BF_ToothGrowth)</a></code></pre></div>
-<pre><code>&gt;           Pr(prior) Pr(posterior) Inclusion BF
-&gt; supp            0.6          1.00       147.54
-&gt; dose            0.6          1.00     3.36e+14
-&gt; supp:dose       0.2          0.73        11.06
-&gt; ---
-&gt; Inclusion BFs compared among all models.</code></pre>
+<a href="#comparison-with-the-jasp-software" class="anchor"></a>Comparison with the JASP software</h4>
+<p><code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> is meant to provide Bayes Factors per predictor, similar to JASP’s <em>Effects</em> option. Let’s compare the two:</p>
+<ol style="list-style-type: decimal">
+<li>Across all models:</li>
+</ol>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(BayesFactor)</a>
+<a class="sourceLine" id="cb26-2" title="2">ToothGrowth<span class="op">$</span>dose &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(ToothGrowth<span class="op">$</span>dose)</a>
+<a class="sourceLine" id="cb26-3" title="3">BF_ToothGrowth &lt;-<span class="st"> </span><span class="kw">anovaBF</span>(len <span class="op">~</span><span class="st"> </span>dose<span class="op">*</span>supp, ToothGrowth)</a>
+<a class="sourceLine" id="cb26-4" title="4"></a>
+<a class="sourceLine" id="cb26-5" title="5"><span class="kw"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(BF_ToothGrowth)</a></code></pre></div>
+<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+&gt; 
+&gt;           Pr(prior) Pr(posterior) Inclusion BF
+&gt; supp            0.6          1.00       140.37
+&gt; dose            0.6          1.00     3.20e+14
+&gt; supp:dose       0.2          0.72         10.4
+&gt; 
+&gt; * Compared among: all models
+&gt; *    Priors odds: uniform-equal</code></pre>
 <p><img src="https://github.com/easystats/bayestestR/raw/master/man/figures/JASP1.PNG"><!-- --></p>
-</div>
-<div id="compared-across-matched-models" class="section level4">
-<h4 class="hasAnchor">
-<a href="#compared-across-matched-models" class="anchor"></a>Compared across matched models</h4>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(BF_ToothGrowth, <span class="dt">match_models =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<pre><code>&gt;           Pr(prior) Pr(posterior) Inclusion BF
-&gt; supp            0.4          0.26        58.06
-&gt; dose            0.4          0.27     1.34e+14
-&gt; supp:dose       0.2          0.73         2.81
-&gt; ---
-&gt; Inclusion BFs compared among matched models only.</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Across matched models:</li>
+</ol>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(BF_ToothGrowth, <span class="dt">match_models =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+&gt; 
+&gt;           Pr(prior) Pr(posterior) Inclusion BF
+&gt; supp            0.4          0.27        57.77
+&gt; dose            0.4          0.28     1.33e+14
+&gt; supp:dose       0.2          0.72         2.64
+&gt; 
+&gt; * Compared among: matched models only
+&gt; *    Priors odds: uniform-equal</code></pre>
 <p><img src="https://github.com/easystats/bayestestR/raw/master/man/figures/JASP2.PNG"><!-- --></p>
-</div>
-<div id="with-nuisance-effects" class="section level4">
-<h4 class="hasAnchor">
-<a href="#with-nuisance-effects" class="anchor"></a>With Nuisance Effects</h4>
+<ol start="3" style="list-style-type: decimal">
+<li>With Nuisance Effects:</li>
+</ol>
 <p>We’ll add <code>dose</code> to the null model in JASP, and do the same in <code>R</code>:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">BF_ToothGrowth_against_dose &lt;-<span class="st"> </span>BF_ToothGrowth[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>]<span class="op">/</span>BF_ToothGrowth[<span class="dv">2</span>] <span class="co"># OR: </span></a>
-<a class="sourceLine" id="cb18-2" title="2"><span class="co"># update(bayesfactor_models(BF_ToothGrowth), subset = c(4,5), reference = 3)</span></a>
-<a class="sourceLine" id="cb18-3" title="3">BF_ToothGrowth_against_dose</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">BF_ToothGrowth_against_dose &lt;-<span class="st"> </span>BF_ToothGrowth[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>]<span class="op">/</span>BF_ToothGrowth[<span class="dv">2</span>] <span class="co"># OR: </span></a>
+<a class="sourceLine" id="cb30-2" title="2"><span class="co"># update(bayesfactor_models(BF_ToothGrowth),</span></a>
+<a class="sourceLine" id="cb30-3" title="3"><span class="co">#        subset = c(4, 5),</span></a>
+<a class="sourceLine" id="cb30-4" title="4"><span class="co">#        reference = 3)</span></a>
+<a class="sourceLine" id="cb30-5" title="5">BF_ToothGrowth_against_dose</a></code></pre></div>
 <pre><code>&gt; Bayes factor analysis
 &gt; --------------
-&gt; [1] supp + dose             : 58  ±1.6%
-&gt; [2] supp + dose + supp:dose : 163 ±3.5%
+&gt; [1] supp + dose             : 58  ±3.6%
+&gt; [2] supp + dose + supp:dose : 153 ±1.2%
 &gt; 
 &gt; Against denominator:
 &gt;   len ~ dose 
 &gt; ---
 &gt; Bayes factor type: BFlinearModel, JZS</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(BF_ToothGrowth_against_dose)</a></code></pre></div>
-<pre><code>&gt;           Pr(prior) Pr(posterior) Inclusion BF
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(BF_ToothGrowth_against_dose)</a></code></pre></div>
+<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+&gt; 
+&gt;           Pr(prior) Pr(posterior) Inclusion BF
 &gt; dose           1.00          1.00          NaN
-&gt; supp           0.67          1.00       110.66
-&gt; supp:dose      0.33          0.73         5.53
-&gt; ---
-&gt; Inclusion BFs compared among all models.</code></pre>
+&gt; supp           0.67          1.00       105.27
+&gt; supp:dose      0.33          0.72          5.2
+&gt; 
+&gt; * Compared among: all models
+&gt; *    Priors odds: uniform-equal</code></pre>
 <p><img src="https://github.com/easystats/bayestestR/raw/master/man/figures/JASP3.PNG"><!-- --></p>
 </div>
 </div>
-</div>
-<div id="savage-dickey-density-ratio-bayes-factor" class="section level2">
-<h2 class="hasAnchor">
-<a href="#savage-dickey-density-ratio-bayes-factor" class="anchor"></a>Savage-Dickey density ratio Bayes factor</h2>
-<p>The <strong><em>Savage-Dickey density ratio</em></strong> can be used to answer the question:</p>
-<blockquote>
-<p><strong>Given the observed data, is the null more, or less likely?</strong></p>
-</blockquote>
-<p>This is done by comparing the density of the null value between the prior and posterior distributions, and is an approximation of a Bayes factor comparing the provided against the (point) null model:</p>
-<blockquote>
-<p>“[…] the Bayes factor for <span class="math inline">\(H_0\)</span> versus <span class="math inline">\(H_1\)</span> could be obtained by analytically integrating out the model parameter <span class="math inline">\(\theta\)</span>. However, the Bayes factor may likewise be obtained by only considering <span class="math inline">\(H_1\)</span>, and dividing the height of the posterior for <span class="math inline">\(\theta\)</span> by the height of the prior for <span class="math inline">\(\theta\)</span>, at the point of interest.” <span class="citation">(Wagenmakers et al. 2010)</span></p>
-</blockquote>
-<p>Let’s use the Students’ Sleep data, and try and answer the question: <strong><em>given the observed data, is it more or less likely that the drug (the variable <code>group</code>) has no effect on the numbers of hours of extra sleep (variable <code>extra</code>)?</em></strong></p>
-<p><img src="bayes_factors_files/figure-html/sleep_boxplot-1.png" width="700"></p>
-<p>The <strong>bloxplot</strong> suggests that the 2nd group has a higher number of hours of extra sleep. By how much? Let’s fit a simple <a href="https://easystats.github.io/bayestestR/articles/example1_GLM.html">Bayesian linear model</a>.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
-<a class="sourceLine" id="cb22-2" title="2">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(extra <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> sleep)</a></code></pre></div>
-<p>We can use <code><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame()</a></code> on this model to extract the posterior distribution related to the effect of <code>group2</code>, and <code>get_priors()</code> from the <a href="https://easystats.github.io/insight/"><strong>insight</strong> package</a> to see what prior distribution was used:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">posterior &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/as.data.frame">as.data.frame</a></span>(model)<span class="op">$</span>group2</a>
-<a class="sourceLine" id="cb23-2" title="2"></a>
-<a class="sourceLine" id="cb23-3" title="3">insight<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/insight/topics/get_priors">get_priors</a></span>(model)</a></code></pre></div>
-<table class="table">
-<thead><tr class="header">
-<th align="left">parameter</th>
-<th align="left">distribution</th>
-<th align="right">location</th>
-<th align="right">scale</th>
-<th align="right">adjusted_scale</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="left">normal</td>
-<td align="right">0</td>
-<td align="right">10.0</td>
-<td align="right">20</td>
-</tr>
-<tr class="even">
-<td align="left">group2</td>
-<td align="left">normal</td>
-<td align="right">0</td>
-<td align="right">2.5</td>
-<td align="right">5</td>
-</tr>
-</tbody>
-</table>
-<p>For the <code>group2</code> parameter, the prior that was used was a <strong>normal distribution</strong> of <strong>mean</strong> (location) <code>0</code> and <strong>SD</strong> (scale) <code>5.044799</code>. We can simulate this prior distribution as follows:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a>
-<a class="sourceLine" id="cb24-2" title="2">prior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_normal</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(posterior), <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="fl">5.044799</span>)</a></code></pre></div>
-<p>We can now plot both the prior and posterior distribution:</p>
-<p><img src="bayes_factors_files/figure-html/prior_n_post_plot-1.png" width="700"></p>
-<p>Looking at the distributions, we can see that the posterior is centred at 1.56. But this does not mean that an effect of 0 is necessarily less likely. To test that, we will use <code><a href="../reference/bayesfactor_savagedickey.html">bayesfactor_savagedickey()</a></code>.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">test_group2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_savagedickey.html">bayesfactor_savagedickey</a></span>(<span class="dt">posterior =</span> posterior, <span class="dt">prior =</span> prior)</a>
-<a class="sourceLine" id="cb25-2" title="2">test_group2</a></code></pre></div>
-<pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
-&gt; 
-&gt;  Bayes Factor
-&gt;          0.88
-&gt; ---
-&gt; Evidence Against Test Value:  0</code></pre>
-<p>This BF indicates that <strong>an effect of 0 (the point-null effect model) is 0.88 less likely given the data</strong>. Or, when interpreting as a Bayes factor for <span class="math inline">\(H_0\)</span> versus <span class="math inline">\(H_1\)</span>, we can say that the observed data is 1/0.88 = 1.14 times more probable under the null than under the model with the effect! Thus, although the center of distribution has shifted away from the null, it is still quite dense around the null.</p>
-<p>Note that <strong>interpretation guides</strong> for Bayes factors can be found <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf"><strong>here</strong></a>.</p>
-<div id="directional-test" class="section level3">
+<div id="order-restricted-models" class="section level3">
 <h3 class="hasAnchor">
-<a href="#directional-test" class="anchor"></a>Directional test</h3>
-<p>We can also conduct a directional test (a “one sided” or “one tailed” test) if we have a prior hypotheses about the direction of the effect. This is done by setting an order restriction on the prior and posterior distributions <span class="citation">(Morey and Wagenmakers 2014; Morey 2015)</span>.</p>
-<p><img src="bayes_factors_files/figure-html/prior_n_post_plot_one_sided-1.png" width="700"></p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">test_group2_right &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_savagedickey.html">bayesfactor_savagedickey</a></span>(<span class="dt">posterior =</span> posterior, <span class="dt">prior =</span> prior, <span class="dt">direction =</span> <span class="st">"&gt;"</span>)</a>
-<a class="sourceLine" id="cb27-2" title="2">test_group2_right</a></code></pre></div>
-<pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
-&gt; 
-&gt;  Bayes Factor
-&gt;          1.69
-&gt; ---
-&gt; Evidence Against Test Value:  0 
-&gt; Right-Sided test</code></pre>
-<p>As we can see, given that we have an <em>a priori</em> assumption about the direction of the effect (<em>that the effect is positive</em>), <strong>the presence of an effect has become 1.69 times more likely than the absence of an effect</strong>, given the observed data (or that the data is 1.69 time more probable under <span class="math inline">\(H_1\)</span> than <span class="math inline">\(H_0\)</span>). This indicates that, given the observed data, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 1.69 is still considered quite <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf">weak evidence</a>).</p>
-</div>
-<div id="testing-all-model-parameters" class="section level3">
-<h3 class="hasAnchor">
-<a href="#testing-all-model-parameters" class="anchor"></a>Testing all model parameters</h3>
-<p>Alternatively, we could also pass our model directly as-is to <code><a href="../reference/bayesfactor_savagedickey.html">bayesfactor_savagedickey()</a></code> to simultaneously test all of the model’s parameters:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw"><a href="../reference/bayesfactor_savagedickey.html">bayesfactor_savagedickey</a></span>(model)</a></code></pre></div>
+<a href="#order-restricted-models" class="anchor"></a>Order Restricted Models</h3>
+<p>Consider the following model, in which we predict the length of an iris’ sepal from the length of its petal, as well as from its species. <img src="bayes_factors_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">iris_model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species <span class="op">+</span><span class="st"> </span>Petal.Length,</a>
+<a class="sourceLine" id="cb34-2" title="2">                       <span class="dt">data =</span> iris)</a></code></pre></div>
+<p>What are our priors (here, <code>rstanarm</code>’s default priors) for this model’s parameters? They all take the shape of some normal distribution centered at 0:</p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<p>These priors are unrestricted - that is, all of the model’s parameter have some non-zero probability (no matter how small) of being any of the values between <span class="math inline">\(-\infty\)</span> and <span class="math inline">\(\infty\)</span> (this is true for both the prior and posterior distribution). Subsequently, <em>a priori</em> the ordering of the parameters relating to the iris species can have any ordering, such that (a priori) setosa can have larger sepals than virginica, but it is also possible for virginica to have larger sepals than setosa!</p>
+<p>Does it make sense to let our priors cover all of these possibilities? That depends on our <em>prior</em> knowledge or assumptions. For example, even a novice botanist will assume that it is unlikely that petal length will be <em>negatively</em> associated with sepal length - an iris with longer petals is likely larger, and thus will also have a longer sepal. And an expert botanist will perhaps assume that setosas have smaller sepals than both versicolors and virginica. All of these prior assumptions can be formulated as order restrictions <span class="citation">(Morey, 2015; Morey &amp; Rouder, 2011)</span>:</p>
+<ol style="list-style-type: decimal">
+<li>The novice botanist: <span class="math inline">\(b_{petal} &gt; 0\)</span>
+</li>
+<li>The expert botanist: <span class="math inline">\(b_{versicolors} &gt; 0\ \&amp;\ b_{virginica} &gt; 0\)</span>
+</li>
+</ol>
+<p>By testing these restrictions on prior and posterior samples, we can see how the probability of the restrictions changes after observing the data. This can be achieved with <code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code>, that compute a Bayes factor for these restricted model vs the unrestricted model. Let’s first specify these restrictions as logical conditions:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">botanist_hypotheses &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(</a>
+<a class="sourceLine" id="cb35-2" title="2">  <span class="st">"Petal.Length &gt; 0"</span>,</a>
+<a class="sourceLine" id="cb35-3" title="3">  <span class="st">"(Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)"</span></a>
+<a class="sourceLine" id="cb35-4" title="4">)</a></code></pre></div>
+<p>Let’s test these hypotheses:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">botanist_BFs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span>(iris_model, <span class="dt">hypothesis =</span> botanist_hypotheses)</a></code></pre></div>
 <pre><code>&gt; Computation of Bayes factors: sampling priors, please wait...</code></pre>
-<pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">botanist_BFs</a></code></pre></div>
+<pre><code>&gt; # Bayes Factor (Order-Restriction)
 &gt; 
-&gt;    Parameter Bayes Factor
-&gt;  (Intercept)         0.07
-&gt;       group2         0.86
-&gt; ---
-&gt; Evidence Against Test Value:  0</code></pre>
-</div>
-<div id="testing-contrasts-with-emmeans" class="section level3">
-<h3 class="hasAnchor">
-<a href="#testing-contrasts-with-emmeans" class="anchor"></a>Testing Contrasts (with <code>emmeans</code>)</h3>
-<p>We can also use <code><a href="../reference/bayesfactor_savagedickey.html">bayesfactor_savagedickey()</a></code> together with <a href="https://cran.r-project.org/package=emmeans"><strong>emmeans</strong></a>, allowing us to <a href="https://easystats.github.io/blog/posts/bayestestr_emmeans/">test Bayesian contrasts</a>.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(emmeans)</a>
-<a class="sourceLine" id="cb32-2" title="2">group_diff &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/pairs">pairs</a></span>(<span class="kw">emmeans</span>(model, <span class="op">~</span><span class="st"> </span>group))</a>
-<a class="sourceLine" id="cb32-3" title="3">group_diff</a></code></pre></div>
-<pre><code>&gt;  contrast estimate lower.HPD upper.HPD
-&gt;  1 - 2       -1.56      -3.3     0.258
+&gt;                                        Hypothesis P(Prior) P(Posterior)
+&gt;                                  Petal.Length &gt; 0     0.51            1
+&gt;  (Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)     0.25            0
+&gt;  Bayes Factor
+&gt;          1.97
+&gt;      0.00e+00
 &gt; 
-&gt; HPD interval probability: 0.95</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="co"># pass the original model via prior</span></a>
-<a class="sourceLine" id="cb34-2" title="2"><span class="kw"><a href="../reference/bayesfactor_savagedickey.html">bayesfactor_savagedickey</a></span>(group_diff, <span class="dt">prior =</span> model)</a></code></pre></div>
-<pre><code>&gt; Computation of Bayes factors: sampling priors, please wait...</code></pre>
-<pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
-&gt; 
-&gt;  Parameter Bayes Factor
-&gt;      1 - 2         0.91
-&gt; ---
-&gt; Evidence Against Test Value:  0</code></pre>
+&gt; * Bayes factors for the restricted movel vs. the un-restricted model.</code></pre>
+<p>We can see that the novice botanist’s hypothesis gets a Bayes factor of ~2, indicating the data provides twice as much evidence for a model in which petal length is restricted to be positively associated with sepal length than for a model with not such restriction.</p>
+<p>What about our expert botanist? He seems to have failed miserably, with a BF favoring the unrestricted model many many times over (<span class="math inline">\(BF\gg1,000\)</span>). How is this possible? It seems that when <em>controlling for petal length</em>, versicolor and virginica actually have shorter sepals!</p>
+<p>Note that these Bayes factors compare the restricted model to the unrestricted model. If we wanted to compare the restricted model to the null model, we could use the transitive property of Bayes factors like so:</p>
+<p><span class="math display">\[
+BF_{restricted / NULL} = \frac
+{BF_{restricted / un-restricted}}
+{BF_{un-restricted / NULL}}
+\]</span> &gt; <strong>NOTE:</strong> Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (<em>a priori</em>) hypotheses, and should not be used for any post hoc comparisons <span class="citation">(Morey, 2015)</span>.</p>
 </div>
 </div>
 </div>
@@ -468,19 +529,34 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
 <div id="refs" class="references">
+<div id="ref-clyde2011bayesian">
+<p>Clyde, M. A., Ghosh, J., &amp; Littman, M. L. (2011). Bayesian adaptive sampling for variable selection and model averaging. <em>Journal of Computational and Graphical Statistics</em>, <em>20</em>(1), 80–101.</p>
+</div>
 <div id="ref-morey_2015_blog">
-<p>Morey, Richard D. 2015. “Multiple Comparisons with Bayesfactor, Part 2 – Order Restrictions.” <a href="https://richarddmorey.org/category/order-restrictions/">https://richarddmorey.org/category/order-restrictions/</a>.</p>
+<p>Morey, R. D. (2015). <em>Multiple comparisons with bayesfactor, part 2 – order restrictions</em>. Retrieved from <a href="https://richarddmorey.org/category/order-restrictions/">https://richarddmorey.org/category/order-restrictions/</a></p>
+</div>
+<div id="ref-morey2011bayesinterval">
+<p>Morey, R. D., &amp; Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. <em>Psychological Methods</em>, <em>16</em>(4), 406.</p>
 </div>
 <div id="ref-morey2014simple">
-<p>Morey, Richard D, and Eric-Jan Wagenmakers. 2014. “Simple Relation Between Bayesian Order-Restricted and Point-Null Hypothesis Tests.” <em>Statistics &amp; Probability Letters</em> 92: 121–24.</p>
+<p>Morey, R. D., &amp; Wagenmakers, E.-J. (2014). Simple relation between bayesian order-restricted and point-null hypothesis tests. <em>Statistics &amp; Probability Letters</em>, <em>92</em>, 121–124.</p>
 </div>
 <div id="ref-wagenmakers2007practical">
-<p>Wagenmakers, Eric-Jan. 2007. “A Practical Solution to the Pervasive Problems Ofp Values.” <em>Psychonomic Bulletin &amp; Review</em> 14 (5): 779–804.</p>
+<p>Wagenmakers, E.-J. (2007). A practical solution to the pervasive problems ofp values. <em>Psychonomic Bulletin &amp; Review</em>, <em>14</em>(5), 779–804.</p>
 </div>
 <div id="ref-wagenmakers2010bayesian">
-<p>Wagenmakers, Eric-Jan, Tom Lodewyckx, Himanshu Kuriyal, and Raoul Grasman. 2010. “Bayesian Hypothesis Testing for Psychologists: A Tutorial on the Savage–Dickey Method.” <em>Cognitive Psychology</em> 60 (3): 158–89.</p>
+<p>Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., &amp; Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the savage–dickey method. <em>Cognitive Psychology</em>, <em>60</em>(3), 158–189.</p>
 </div>
 </div>
+</div>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Note that as the width of null interval shrinks to zero, the prior and posterior probability of the alternative tends towards 1.00.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p><a href="https://doi.org/10.1016/j.jmp.2015.08.002">Robert, 2016</a>; <a href="https://doi.org/10.1080/01621459.1995.10476572">Kass &amp; Raftery, 1993</a>; <a href="https://doi.org/10.1016/S0304-4076(00)00076-2">Fernández, Ley, &amp; Steel, 2001</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p><a href="https://doi.org/10.1007/s11336-018-9648-3">Gronau, Wagenmakers, Heck, &amp; Matzke, 2019</a><a href="#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>A model without predictor <span class="math inline">\(X\)</span> can be thought of as a model in which the parameter(s) of the predictor have been restricted to a null-point of 0.<a href="#fnref4" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
   </div>
 
@@ -488,17 +564,8 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li>
-<a href="#bayes-factors">Bayes Factors</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#comparing-models">Comparing models</a></li>
-      <li><a href="#inclusion-bayes-factors-via-bayesian-model-averaging">Inclusion Bayes factors via Bayesian model averaging</a></li>
-      <li><a href="#savage-dickey-density-ratio-bayes-factor">Savage-Dickey density ratio Bayes factor</a></li>
-      </ul>
-</li>
-      <li><a href="#references">References</a></li>
-      </ul>
-</div>
+      true
+    </div>
       </div>
 
 </div>

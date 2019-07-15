@@ -171,10 +171,10 @@ bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = 
 #' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
-                                             direction = "two-sided", null = 0,
-                                             verbose = TRUE,
-                                             effects = c("fixed", "random", "all"),
-                                             ...) {
+                                           direction = "two-sided", null = 0,
+                                           verbose = TRUE,
+                                           effects = c("fixed", "random", "all"),
+                                           ...) {
   effects <- match.arg(effects)
 
   # Get Priors
@@ -205,9 +205,9 @@ bayesfactor_parameters.brmsfit <- bayesfactor_parameters.stanreg
 #' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_parameters.emmGrid <- function(posterior, prior = NULL,
-                                             direction = "two-sided", null = 0,
-                                             verbose = TRUE,
-                                             ...) {
+                                           direction = "two-sided", null = 0,
+                                           verbose = TRUE,
+                                           ...) {
   if (!requireNamespace("emmeans")) {
     stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
   }
@@ -234,7 +234,7 @@ bayesfactor_parameters.emmGrid <- function(posterior, prior = NULL,
 }
 
 #' @export
-bayesfactor_parameters.bayesfactor_models <- function(...){
+bayesfactor_parameters.bayesfactor_models <- function(...) {
   stop(
     "Oh no, 'bayesfactor_parameters()' does not know how to deal with multiple models :(\n",
     "You want might want to use 'bayesfactor_inclusion()' here to test specific terms across models."
@@ -245,9 +245,9 @@ bayesfactor_parameters.bayesfactor_models <- function(...){
 #' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
-                                                direction = "two-sided", null = 0,
-                                                verbose = TRUE,
-                                                ...) {
+                                              direction = "two-sided", null = 0,
+                                              verbose = TRUE,
+                                              ...) {
   dots <- list(...)
   if (!is.null(dots$hypothesis)) {
     null <- dots$hypothesis
@@ -325,8 +325,7 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
     }
 
     return(relative_density(prior) /
-             relative_density(posterior))
-
+      relative_density(posterior))
   } else if (length(null) == 2) {
     null <- sort(null)
     null[is.infinite(null)] <- 1.797693e+308 * sign(null[is.infinite(null)])
@@ -334,22 +333,22 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
     f_prior <- logspline::logspline(prior)
     f_posterior <- logspline::logspline(posterior)
 
-    h0_prior <- diff(logspline::plogspline(null,f_prior))
-    h0_post <- diff(logspline::plogspline(null,f_posterior))
+    h0_prior <- diff(logspline::plogspline(null, f_prior))
+    h0_post <- diff(logspline::plogspline(null, f_posterior))
 
-    BF_null_full <- h0_post/h0_prior
+    BF_null_full <- h0_post / h0_prior
 
     if (direction < 0) {
-      h1_prior <- logspline::plogspline(min(null),f_prior)
-      h1_post <- logspline::plogspline(min(null),f_posterior)
+      h1_prior <- logspline::plogspline(min(null), f_prior)
+      h1_post <- logspline::plogspline(min(null), f_posterior)
     } else if (direction > 0) {
-      h1_prior <- 1 - logspline::plogspline(max(null),f_prior)
-      h1_post <- 1 - logspline::plogspline(max(null),f_posterior)
+      h1_prior <- 1 - logspline::plogspline(max(null), f_prior)
+      h1_post <- 1 - logspline::plogspline(max(null), f_posterior)
     } else {
       h1_prior <- 1 - h0_prior
       h1_post <- 1 - h0_post
     }
-    BF_alt_full <- h1_post/h1_prior
+    BF_alt_full <- h1_post / h1_prior
 
     return(BF_alt_full / BF_null_full)
   } else {
@@ -422,12 +421,12 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
       # 3. direction?
       if (direction > 0) {
         d_points <- d_points[d_points$x > min(null), , drop = FALSE]
-        norm_factor <- 1 - logspline::plogspline(min(null),f_x)
+        norm_factor <- 1 - logspline::plogspline(min(null), f_x)
         d_points$y <- d_points$y / norm_factor
         d_null$y <- d_null$y / norm_factor
       } else if (direction < 0) {
         d_points <- d_points[d_points$x < max(null), , drop = FALSE]
-        norm_factor <- logspline::plogspline(max(null),f_x)
+        norm_factor <- logspline::plogspline(max(null), f_x)
         d_points$y <- d_points$y / norm_factor
         d_null$y <- d_null$y / norm_factor
       }

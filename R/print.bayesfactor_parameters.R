@@ -22,16 +22,16 @@ print.bayesfactor_parameters <- function(x, digits = 2, log = FALSE, ...) {
   cat("\n")
   cat("* Evidence Against The Null: ")
   insight::print_color(
-    paste0("[", paste0(round(null, digits),collapse = ", "), "]\n", sep = ""),
+    paste0("[", paste0(round(null, digits), collapse = ", "), "]\n", sep = ""),
     "cyan"
   )
 
   if (direction < 0) {
     cat("*                 Direction: ")
-    insight::print_color("Left-Sided test\n","cyan")
+    insight::print_color("Left-Sided test\n", "cyan")
   } else if (direction > 0) {
     cat("*                 Direction: ")
-    insight::print_color("Right-Sided test\n","cyan")
+    insight::print_color("Right-Sided test\n", "cyan")
   }
 
   if (log) insight::print_color("\nBayes Factors are on the log-scale.\n", "red")

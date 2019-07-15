@@ -158,9 +158,9 @@
 <div id="why-is-the-default-89" class="section level1">
 <h1 class="hasAnchor">
 <a href="#why-is-the-default-89" class="anchor"></a>Why is the default 89%?</h1>
-<p>Naturally, when it came about choosing the CI level to report by default, <strong>people started using 95%</strong>, the arbitrary convention used in the <strong>frequentist</strong> world. However, some authors suggested that 95% might not be the most apppropriate for Bayesian posterior distributions, potentially lacking stability if not enough posterior samples are drawn <span class="citation">(Kruschke 2014)</span>.</p>
+<p>Naturally, when it came about choosing the CI level to report by default, <strong>people started using 95%</strong>, the arbitrary convention used in the <strong>frequentist</strong> world. However, some authors suggested that 95% might not be the most apppropriate for Bayesian posterior distributions, potentially lacking stability if not enough posterior samples are drawn <span class="citation">(Kruschke, 2014)</span>.</p>
 <p>The proposition was to use 90% instead of 95%. However, recently, McElreath (2014, 2018) suggested that if we were to use arbitrary tresholds in the first place, why not use 89% as this value has the additional argument of being a prime number.</p>
-<p>Thus, by default, the CIs are computed with 89% intervals (<code>ci = 0.89</code>), deemed to be more stable than, for instance, 95% intervals <span class="citation">(Kruschke 2014)</span>. An effective sample size (ESS; see <a href="https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html">here</a>) of at least 10.000 is recommended if 95% intervals should be computed (Kruschke, 2014, p. 183ff). Moreover, 89 is the highest <strong>prime number</strong> that does not exceed the already unstable 95% threshold. What does it have to do with anything? <em>Nothing</em>, but it reminds us of the total arbitrarity of any of these conventions <span class="citation">(McElreath 2014, @mcelreath2018statistical)</span>.</p>
+<p>Thus, by default, the CIs are computed with 89% intervals (<code>ci = 0.89</code>), deemed to be more stable than, for instance, 95% intervals <span class="citation">(Kruschke, 2014)</span>. An effective sample size (ESS; see <a href="https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html">here</a>) of at least 10.000 is recommended if 95% intervals should be computed (Kruschke, 2014, p. 183ff). Moreover, 89 is the highest <strong>prime number</strong> that does not exceed the already unstable 95% threshold. What does it have to do with anything? <em>Nothing</em>, but it reminds us of the total arbitrarity of any of these conventions <span class="citation">(McElreath, 2014, p. @mcelreath2018statistical)</span>.</p>
 </div>
 <div id="different-types-of-cis" class="section level1">
 <h1 class="hasAnchor">
@@ -230,13 +230,13 @@
 <a href="#references" class="anchor"></a>References</h1>
 <div id="refs" class="references">
 <div id="ref-kruschke2014doing">
-<p>Kruschke, John. 2014. <em>Doing Bayesian Data Analysis: A Tutorial with R, Jags, and Stan</em>. Academic Press.</p>
+<p>Kruschke, J. (2014). <em>Doing bayesian data analysis: A tutorial with r, jags, and stan</em>. Academic Press.</p>
 </div>
 <div id="ref-mcelreath2014rethinking">
-<p>McElreath, R. 2014. “Rethinking: Statistical Rethinking Book Package. R Package Version 1.391.”</p>
+<p>McElreath, R. (2014). <em>Rethinking: Statistical rethinking book package. R package version 1.391</em>.</p>
 </div>
 <div id="ref-mcelreath2018statistical">
-<p>McElreath, Richard. 2018. <em>Statistical Rethinking: A Bayesian Course with Examples in R and Stan</em>. Chapman; Hall/CRC.</p>
+<p>McElreath, R. (2018). <em>Statistical rethinking: A bayesian course with examples in r and stan</em>. Chapman; Hall/CRC.</p>
 </div>
 </div>
 </div>

@@ -304,39 +304,39 @@ the resulting HDI.</p>
 <span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>.89</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span>       89% HDI
-#&gt;  [-1.56, 1.59]
+#&gt;  [-1.63, 1.60]
 #&gt; </div><div class='input'><span class='fu'>hdi</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
 #&gt; </span><span>       80% HDI
-#&gt;  [-1.33, 1.23]
+#&gt;  [-1.25, 1.27]
 #&gt; 
 #&gt; 
 #&gt;        90% HDI
-#&gt;  [-1.60, 1.62]
+#&gt;  [-1.61, 1.71]
 #&gt; 
 #&gt; 
 #&gt;        95% HDI
-#&gt;  [-1.87, 1.92]
+#&gt;  [-2.17, 1.86]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>hdi</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt;   Parameter CI    CI_low  CI_high
-#&gt; 1        X1 89 -1.300505 1.257247
-#&gt; 2        X2 89 -1.568323 1.438602
-#&gt; 3        X3 89 -1.229221 1.978189
-#&gt; 4        X4 89 -1.573218 1.569997</div><div class='input'><span class='fu'>hdi</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;    Parameter CI     CI_low  CI_high
-#&gt; 1         X1 80 -0.9241309 1.204938
-#&gt; 2         X1 90 -1.4214774 1.204938
-#&gt; 3         X1 95 -1.7155863 1.427259
-#&gt; 4         X2 80 -1.0276404 1.438602
-#&gt; 5         X2 90 -1.6643895 1.438602
-#&gt; 6         X2 95 -1.6643895 1.893846
-#&gt; 7         X3 80 -1.2292210 1.025117
-#&gt; 8         X3 90 -1.3145439 1.978189
-#&gt; 9         X3 95 -2.1990455 1.978189
-#&gt; 10        X4 80 -0.8573989 1.738921
-#&gt; 11        X4 90 -1.5732176 1.648390
-#&gt; 12        X4 95 -1.8480610 1.812818</div><div class='input'>
+#&gt; 1        X1 89 -1.661651 1.561213
+#&gt; 2        X2 89 -1.406116 1.826320
+#&gt; 3        X3 89 -1.533729 1.663738
+#&gt; 4        X4 89 -1.626538 1.506512</div><div class='input'><span class='fu'>hdi</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;    Parameter CI    CI_low  CI_high
+#&gt; 1         X1 80 -1.448216 1.404471
+#&gt; 2         X1 90 -1.630196 1.703493
+#&gt; 3         X1 95 -2.026692 1.703493
+#&gt; 4         X2 80 -1.406116 1.217964
+#&gt; 5         X2 90 -1.653797 1.653508
+#&gt; 6         X2 95 -1.653797 2.150041
+#&gt; 7         X3 80 -1.637334 1.001949
+#&gt; 8         X3 90 -1.533729 1.681119
+#&gt; 9         X3 95 -1.882425 2.016106
+#&gt; 10        X4 80 -1.521842 1.030051
+#&gt; 11        X4 90 -1.626538 1.633639
+#&gt; 12        X4 95 -1.626538 1.969543</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
@@ -367,15 +367,15 @@ the resulting HDI.</p>
 #&gt; Chain 1: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.013 seconds (Warm-up)
+#&gt; Chain 1:  Elapsed Time: 0.012 seconds (Warm-up)
 #&gt; Chain 1:                0.014 seconds (Sampling)
-#&gt; Chain 1:                0.027 seconds (Total)
+#&gt; Chain 1:                0.026 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 #&gt; Chain 2: 
-#&gt; Chain 2: Gradient evaluation took 0.001 seconds
-#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 10 seconds.
+#&gt; Chain 2: Gradient evaluation took 0 seconds
+#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
 #&gt; Chain 2: Adjust your expectations accordingly!
 #&gt; Chain 2: 
 #&gt; Chain 2: 
@@ -400,38 +400,44 @@ the resulting HDI.</p>
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.014 seconds (Warm-up)
-#&gt; Chain 2:                0.011 seconds (Sampling)
-#&gt; Chain 2:                0.025 seconds (Total)
-#&gt; Chain 2: </div><div class='input'><span class='fu'>hdi</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Interval
+#&gt; Chain 2:  Elapsed Time: 0.017 seconds (Warm-up)
+#&gt; Chain 2:                0.013 seconds (Sampling)
+#&gt; Chain 2:                0.03 seconds (Total)
+#&gt; Chain 2: </div><div class='output co'>#&gt; <span class='warning'>Warning: The largest R-hat is 1.06, indicating chains have not mixed.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#r-hat</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>hdi</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span>   Parameter        89% HDI
-#&gt;  (Intercept) [30.31, 46.92]
-#&gt;           wt [-6.61, -4.39]
-#&gt;         gear [-1.62,  1.27]
+#&gt;  (Intercept) [29.79, 45.19]
+#&gt;           wt [-6.54, -4.28]
+#&gt;         gear [-1.55,  1.35]
 #&gt; </div><div class='input'><span class='fu'>hdi</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
 #&gt; </span><span>   Parameter        80% HDI
-#&gt;  (Intercept) [32.31, 46.10]
-#&gt;           wt [-6.39, -4.66]
-#&gt;         gear [-1.62,  0.84]
+#&gt;  (Intercept) [32.15, 44.86]
+#&gt;           wt [-6.43, -4.73]
+#&gt;         gear [-1.20,  1.16]
 #&gt; 
 #&gt; 
 #&gt;    Parameter        90% HDI
-#&gt;  (Intercept) [30.31, 47.45]
-#&gt;           wt [-6.66, -4.39]
-#&gt;         gear [-1.62,  1.36]
+#&gt;  (Intercept) [30.62, 46.14]
+#&gt;           wt [-6.51, -4.17]
+#&gt;         gear [-1.55,  1.50]
 #&gt; 
 #&gt; 
 #&gt;    Parameter        95% HDI
-#&gt;  (Intercept) [28.48, 48.14]
-#&gt;           wt [-6.66, -3.82]
-#&gt;         gear [-1.98,  1.45]
+#&gt;  (Intercept) [28.55, 48.16]
+#&gt;           wt [-6.82, -4.03]
+#&gt;         gear [-2.07,  1.50]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
 <span class='fu'>hdi</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt;   Parameter CI   CI_low   CI_high
-#&gt; 1   overall 89 -6.61034 -4.389893</div></span><span class='co'># NOT RUN {</span>
+#&gt; 1   overall 89 -6.54033 -4.279254</div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>hdi</span>(<span class='no'>model</span>)
