@@ -147,7 +147,7 @@ p_direction(distribution_normal(100, 0.4, 0.2))
 
 ### Bayes Factor
 
-[`bayesfactor_savagedickey()`](https://easystats.github.io/bayestestR/reference/bayesfactor_savagedickey.html) computes the ratio between the density of a single value (typically the
+[`bayesfactor_parameters()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html) computes the ratio between the density of a single value (typically the
 null) in two distributions. When these distributions are the prior and the posterior
 distributions, this ratio can be used to examine the degree by which the mass of
 the posterior distribution has shifted further away from or closer to the null value
@@ -158,7 +158,7 @@ less or more likely given the observed data (see figure 3, panel C). The Savage-
 prior <- distribution_normal(1000, mean = 0, sd = 1)
 posterior <- distribution_normal(1000, mean = 1, sd = 0.7)
 
-bayesfactor_savagedickey(posterior, prior, direction = "two-sided", hypothesis = 0)
+bayesfactor_parameters(posterior, prior, direction = "two-sided", hypothesis = 0)
 #> # Bayes Factor (Savage-Dickey density ratio)
 #> 
 #>  Bayes Factor

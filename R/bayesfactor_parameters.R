@@ -106,6 +106,7 @@ bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sid
   UseMethod("bayesfactor_parameters")
 }
 
+#' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
   .Deprecated("bayesfactor_parameters")

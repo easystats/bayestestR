@@ -14,7 +14,7 @@
 #' @inheritParams bayesfactor_models
 #' @inheritParams bayesfactor_inclusion
 #'
-#' @return Some type of Bayes factor, depending on the input. See \code{\link{bayesfactor_savagedickey}}, \code{\link{bayesfactor_models}} or \code{\link{bayesfactor_inclusion}}
+#' @return Some type of Bayes factor, depending on the input. See \code{\link{bayesfactor_parameters}}, \code{\link{bayesfactor_models}} or \code{\link{bayesfactor_inclusion}}
 #'
 #'
 #' @examples

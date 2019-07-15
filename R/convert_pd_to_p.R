@@ -2,18 +2,18 @@
 #'
 #' Enables a conversion between sProbability of Direction (pd) and p-value.
 #'
-#' @param pd A Probability of Direction (pd) value.
+#' @param pd A Probability of Direction (pd) value (between 0 and 1).
 #' @param p A p-value.
 #' @param direction What type of p-value is requested or provided. Can be \code{"two-sided"} (default, two tailed) or \code{"one-sided"} (one tailed).
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples
-#' pd_to_p(pd = 95)
-#' pd_to_p(pd = 95, direction = "one-sided")
+#' pd_to_p(pd = 0.95)
+#' pd_to_p(pd = 0.95, direction = "one-sided")
 #' @export
 pd_to_p <- function(pd, direction = "two-sided", ...) {
   direction <- .get_direction(direction)
-  p <- (1 - pd / 100)
+  p <- (1 - pd)
   if (direction == 0) {
     p <- 2 * p
   }
@@ -28,7 +28,7 @@ p_to_pd <- function(p, direction = "two-sided", ...) {
   if (direction == 0) {
     p <- p / 2
   }
-  (1 - p) * 100
+  (1 - p)
 }
 
 

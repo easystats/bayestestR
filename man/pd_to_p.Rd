@@ -16,7 +16,7 @@ convert_p_to_pd(p, direction = "two-sided", ...)
 convert_pd_to_p(pd, direction = "two-sided", ...)
 }
 \arguments{
-\item{pd}{A Probability of Direction (pd) value.}
+\item{pd}{A Probability of Direction (pd) value (between 0 and 1).}
 
 \item{direction}{What type of p-value is requested or provided. Can be \code{"two-sided"} (default, two tailed) or \code{"one-sided"} (one tailed).}
 
@@ -28,6 +28,6 @@ convert_pd_to_p(pd, direction = "two-sided", ...)
 Enables a conversion between sProbability of Direction (pd) and p-value.
 }
 \examples{
-pd_to_p(pd = 95)
-pd_to_p(pd = 95, direction = "one-sided")
+pd_to_p(pd = 0.95)
+pd_to_p(pd = 0.95, direction = "one-sided")
 }
