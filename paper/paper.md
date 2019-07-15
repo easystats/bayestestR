@@ -49,7 +49,7 @@ The following demonstration of functions is accompanied by figures to illustrate
 
 **bayestestR** offers two functions to compute point-estimates from posterior distributions: `map_estimate()` and `point_estimate()`, the latter providing options to calculate the mean, median or MAP estimate of a posterior distribution. [`map_estimate()`](https://easystats.github.io/bayestestR/reference/map_estimate.html) is a convenient function to calculate the **Maximum A Posteriori** (MAP) estimate directly.
 
-The **posterior mean** minimizes expected _squared_ error, whereas the **posterior median** minimizes expected _absolute_ error (i.e. the difference of estimates from true values over samples). The **MAP estimate** is the most probable value of a posterior distribution.
+The **posterior mean** minimizes expected _squared_ error, whereas the **posterior median** minimizes expected _absolute_ error (i.e. the difference of estimates from true values over samples). The **MAP estimate** corresponds to the most probable value of a posterior distribution.
 
 ``` r
 set.seed(1)
@@ -169,7 +169,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", hypothesis = 0
 
 ### MAP-based *p*-value
 
-[`p_map()`](https://easystats.github.io/bayestestR/reference/p_map.html) computes the odds that a parameter (described by its posterior distribution) has against the null hypothesis (*h0*) using Mills’ *Objective Bayesian Hypothesis Testing* framework [@mills2018objective; @mills2014bayesian]. It is mathematically based on the density at the Maximum A Priori (MAP) and corresponds to the density value at 0 divided by the density at the MAP estimate (see figure 3, panel D).
+[`p_map()`](https://easystats.github.io/bayestestR/reference/p_map.html) computes the odds that a parameter (described by its posterior distribution) has against the null hypothesis (*h0*) using Mills’ *Objective Bayesian Hypothesis Testing* framework [@mills2018objective; @mills2014bayesian]. It corresponds to the density value at 0 divided by the density at the MAP - the Maximum A Posteriori (see figure 3, panel D).
 
 ``` r
 p_map(distribution_normal(1000, mean = 1))
