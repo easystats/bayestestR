@@ -233,6 +233,13 @@ bayesfactor_parameters.emmGrid <- function(posterior, prior = NULL,
   )
 }
 
+#' @export
+bayesfactor_parameters.bayesfactor_models <- function(...){
+  stop(
+    "Oh no, 'bayesfactor_parameters()' does not know how to deal with multiple models :(\n",
+    "You want might want to use 'bayesfactor_inclusion()' here to test specific terms across models."
+  )
+}
 
 
 #' @rdname bayesfactor_parameters
