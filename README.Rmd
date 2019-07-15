@@ -91,7 +91,7 @@ describe_posterior(rnorm(1000))
 
 ### MAP Estimate
 
-[**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html) find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior, *i.e.,* the most probable value.
+[**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html) find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior, *i.e.*, the value associated with the highest probability density (the "peak" of the posterior distribution). In other words, it is an estimation of the *mode* for continuous parameters.
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
 map_estimate(rnorm(1000, 1, 1))

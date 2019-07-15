@@ -1,6 +1,6 @@
 #' Maximum A Posteriori (MAP) Estimate
 #'
-#' Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior, i.e., the most probable value. It corresponds to the "peak" (or the \emph{mode}) of the posterior distribution. Note this function relies on \link{estimate_density}, which by default uses a different smoothing bandwidth (\code{"SJ"}) from the legacy default implemented the base R \link{density} function (\code{"nrd0"}).
+#' Find the \strong{Highest Maximum A Posteriori (MAP)} estimate of a posterior, i.e., the value associated with the highest probability density (the "peak" of the posterior distribution). In other words, it is an estimation of the \emph{mode} for continuous parameters. Note that this function relies on \link{estimate_density}, which by default uses a different smoothing bandwidth (\code{"SJ"}) from the legacy default implemented the base R \link{density} function (\code{"nrd0"}).
 #'
 #' @inheritParams hdi
 #' @inheritParams estimate_density
