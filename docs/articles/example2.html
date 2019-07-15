@@ -192,14 +192,13 @@
 <a href="#bayes-factor-bf" class="anchor"></a>Bayes factor (BF)</h3>
 <p>We said that a correlation actually compares two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect). The <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html"><strong>Bayes factor (BF)</strong></a> allows the same comparison and determines <strong>under which of two models the observed data are more probable</strong>: a model with the effect of interest, and a null model without the effect of interest. We can use <code><a href="../reference/bayesfactor.html">bayesfactor()</a></code> to specifically compute the Bayes factor comparing those models (<em>and many more</em>):</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/bayesfactor.html">bayesfactor</a></span>(result)</a></code></pre></div>
-<pre><code>&gt; Bayes factor analysis
-&gt; ---------------------                         
-&gt; [2] Alt., r=0.333    0.51
+<pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
-&gt; Against denominator:
-&gt;        [1] Null, rho = 0   
-&gt; ---
-&gt; Bayes factor type:  JZS (BayesFactor)</code></pre>
+&gt;   Model             Bayes Factor
+&gt;   [2] Alt., r=0.333         0.51
+&gt; 
+&gt; * Against Denominator: [1] Null, rho = 0
+&gt; *   Bayes Factor Type: JZS (BayesFactor)</code></pre>
 <p>We got a <em>BF</em> of <code>0.51</code>. What does it mean?</p>
 <p>Bayes factors are <strong>continuous measures of relative evidence</strong>, with a Bayes factor greater than 1 giving evidence in favor of one of the models (often referred to as <em>the numerator</em>), and a Bayes factor smaller than 1 giving evidence in favour of the other model (<em>the denominator</em>).</p>
 <blockquote>

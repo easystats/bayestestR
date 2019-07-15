@@ -42,7 +42,8 @@
 <meta property="og:title" content="Bayes Factors (BF) — bayesfactor" />
 
 <meta property="og:description" content="This function compte the Bayes factors (BFs) that are appropriate to the input.
-For vectors or single models, it will compute Savage-Dickey's BFs.
+For vectors or single models, it will compute BFs for single parameters,
+or is hypothesis is specified, BFs for restricted models.
 For multiple models, it will return the BF corresponding to comparison between models
 and if a model comparison is passed, it will compute the inclusion BF.
 
@@ -187,7 +188,8 @@ For a complete overview of these functions, read the Bayes factor vignette." />
     <div class="ref-description">
     
     <p>This function compte the Bayes factors (BFs) that are appropriate to the input.
-For vectors or single models, it will compute <code><a href='bayesfactor_savagedickey.html'>Savage-Dickey's BFs</a></code>.
+For vectors or single models, it will compute <code><a href='bayesfactor_parameters.html'>BFs for single parameters</a></code>,
+or is <code>hypothesis</code> is specified, <code><a href='bayesfactor_restricted.html'>BFs for restricted models</a></code>.
 For multiple models, it will return the BF corresponding to <code><a href='bayesfactor_models.html'>comparison between models</a></code>
 and if a model comparison is passed, it will compute the <code><a href='bayesfactor_inclusion.html'>inclusion BF</a></code>.
 <br /><br />
@@ -195,8 +197,8 @@ For a complete overview of these functions, read the <a href='https://easystats.
     
     </div>
 
-    <pre class="usage"><span class='fu'>bayesfactor</span>(<span class='no'>...</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
-  <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+    <pre class="usage"><span class='fu'>bayesfactor</span>(<span class='no'>...</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
@@ -217,8 +219,13 @@ For a complete overview of these functions, read the <a href='https://easystats.
 <code>-1</code>, <code>"left"</code> (left tailed) or <code>1</code>, <code>"right"</code> (right tailed).</p></td>
     </tr>
     <tr>
+      <th>null</th>
+      <td><p>Value of the null, either a scaler (for point-null) or a a range
+(for a interval-null).</p></td>
+    </tr>
+    <tr>
       <th>hypothesis</th>
-      <td><p>Value to be tested against (usually <code>0</code> in the context of null hypothesis testing).</p></td>
+      <td><p>A character vector specifying the restrictions as logical conditions (see examples below).</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -232,15 +239,11 @@ Only applies to mixed models. May be abbreviated.</p></td>
     <tr>
       <th>denominator</th>
       <td><p>Either an integer indicating which of the models to use as the denominator,
-or a model to use as a denominator. Ignored for <code>BFBayesFactor</code>.</p></td>
+or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.</p></td>
     </tr>
     <tr>
       <th>match_models</th>
-      <td><p>If <code>FALSE</code> (default), Inclusion BFs are computed by
-comparing all models with an effect against all models without the effect. If <code>TRUE</code>,
-Inclusion BFs are computed by comparing all models with an effect against models without
-the effect AND without any higher-order interactions with the effect (additionally,
-interactions are compared only to models with the all main effects).</p></td>
+      <td><p>See details.</p></td>
     </tr>
     <tr>
       <th>prior_odds</th>
@@ -250,7 +253,7 @@ interactions are compared only to models with the all main effects).</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Some type of Bayes factor, depending on the input. See <code><a href='bayesfactor_savagedickey.html'>bayesfactor_savagedickey</a></code>, <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code> or <code><a href='bayesfactor_inclusion.html'>bayesfactor_inclusion</a></code></p>
+    <p>Some type of Bayes factor, depending on the input. See <code><a href='bayesfactor_parameters.html'>bayesfactor_savagedickey</a></code>, <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code> or <code><a href='bayesfactor_inclusion.html'>bayesfactor_inclusion</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -260,12 +263,13 @@ interactions are compared only to models with the all main effects).</p></td>
 <span class='no'>prior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.3</span>)
 
-<span class='fu'>bayesfactor</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
+<span class='fu'>bayesfactor</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: logspline</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
 #&gt; 
 #&gt; </span><span> Bayes Factor
 #&gt;          1.23
-#&gt; ---
-#&gt; Evidence Against Test Value:  0 </div></span><span class='co'># NOT RUN {</span>
+#&gt; 
+#&gt; * Evidence Against The Null: </span><span style='color: #00BBBB;'>[0]
+#&gt; </span><span></div></span><span class='co'># NOT RUN {</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
@@ -279,20 +283,23 @@ interactions are compared only to models with the all main effects).</p></td>
 <span class='no'>m2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + <span class='no'>ID</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
 
 <span class='no'>comparison</span> <span class='kw'>&lt;-</span> <span class='fu'>bayesfactor</span>(<span class='no'>m0</span>, <span class='no'>m1</span>, <span class='no'>m2</span>)
-<span class='no'>comparison</span></div><div class='output co'>#&gt; Bayes factor analysis
-#&gt; ---------------------                          
-#&gt; [2] group              1.3
-#&gt; [3] group + ID    1.12e+04
+<span class='no'>comparison</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
-#&gt; Against denominator:
-#&gt; 		 [1] (Intercept only)   
-#&gt; ---
-#&gt; Bayes factor type:  BIC approximation </div><div class='input'>
-<span class='fu'>bayesfactor</span>(<span class='no'>comparison</span>)</div><div class='output co'>#&gt;       Pr(prior) Pr(posterior) Inclusion BF
+#&gt; </span><span>  Model          Bayes Factor
+#&gt;   [2] group               1.3
+#&gt;   [3] group + ID     1.12e+04
+#&gt; 
+#&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
+#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'>
+<span class='fu'>bayesfactor</span>(<span class='no'>comparison</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)
+#&gt; 
+#&gt; </span><span>      Pr(prior) Pr(posterior) Inclusion BF
 #&gt; group      0.67             1     5.61e+03
 #&gt; ID         0.33             1     9.77e+03
-#&gt; ---
-#&gt; Inclusion BFs compared among all models.</div></pre>
+#&gt; 
+#&gt; * Compared among: </span><span style='color: #00BBBB;'>all models
+#&gt; </span><span>*    Priors odds: </span><span style='color: #00BBBB;'>uniform-equal
+#&gt; </span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

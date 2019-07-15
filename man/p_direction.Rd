@@ -31,7 +31,7 @@ pd(x, ...)
 \method{p_direction}{BFBayesFactor}(x, method = "direct", ...)
 }
 \arguments{
-\item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
+\item{x}{Vector representing a posterior distribution. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit} or \code{BayesFactor}).}
 
 \item{...}{Currently not used.}
 

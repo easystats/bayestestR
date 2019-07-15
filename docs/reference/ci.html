@@ -283,38 +283,38 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='fu'>ci</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Equal-Tailed Interval
 #&gt; 
 #&gt; </span><span>       89% ETI
-#&gt;  [-1.58, 1.61]
+#&gt;  [-1.55, 1.45]
 #&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span>       89% HDI
-#&gt;  [-1.65, 1.52]
+#&gt;  [-1.55, 1.45]
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
-<span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;    Parameter CI    CI_low  CI_high
-#&gt; 1         X1 80 -1.490439 1.232080
-#&gt; 2         X1 89 -1.944645 1.506436
-#&gt; 3         X1 95 -2.133393 1.707241
-#&gt; 4         X2 80 -1.446352 1.121997
-#&gt; 5         X2 89 -1.637042 1.446416
-#&gt; 6         X2 95 -1.880977 1.570841
-#&gt; 7         X3 80 -1.313898 1.215416
-#&gt; 8         X3 89 -1.663827 1.404621
-#&gt; 9         X3 95 -1.857950 1.985016
-#&gt; 10        X4 80 -1.143842 1.190241
-#&gt; 11        X4 89 -1.320242 1.406650
-#&gt; 12        X4 95 -1.659909 1.907851</div><div class='input'><span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;    Parameter CI    CI_low  CI_high
-#&gt; 1         X1 80 -1.474538 1.251884
-#&gt; 2         X1 89 -2.137098 1.251884
-#&gt; 3         X1 95 -2.137098 1.763131
-#&gt; 4         X2 80 -1.494426 1.078478
-#&gt; 5         X2 89 -1.551560 1.467187
-#&gt; 6         X2 95 -1.902304 1.582238
-#&gt; 7         X3 80 -1.134850 1.330580
-#&gt; 8         X3 89 -1.869362 1.229287
-#&gt; 9         X3 95 -1.951440 1.795036
-#&gt; 10        X4 80 -1.169853 1.130172
-#&gt; 11        X4 89 -1.373862 1.417529
-#&gt; 12        X4 95 -1.697192 1.583013</div><div class='input'>
+<span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;    Parameter CI     CI_low  CI_high
+#&gt; 1         X1 80 -1.1235861 1.420311
+#&gt; 2         X1 89 -1.5521258 1.499673
+#&gt; 3         X1 95 -1.8501064 1.730293
+#&gt; 4         X2 80 -0.9342044 1.326031
+#&gt; 5         X2 89 -1.1672727 1.786824
+#&gt; 6         X2 95 -1.7537273 2.237525
+#&gt; 7         X3 80 -1.3077067 1.147545
+#&gt; 8         X3 89 -1.5844043 1.421733
+#&gt; 9         X3 95 -1.7376447 1.658063
+#&gt; 10        X4 80 -1.1883270 1.419216
+#&gt; 11        X4 89 -1.3559219 1.597249
+#&gt; 12        X4 95 -1.5937890 1.735085</div><div class='input'><span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt;    Parameter CI     CI_low  CI_high
+#&gt; 1         X1 80 -0.8263522 1.494513
+#&gt; 2         X1 89 -1.2282168 1.747150
+#&gt; 3         X1 95 -1.8604613 1.747150
+#&gt; 4         X2 80 -0.9751487 1.264450
+#&gt; 5         X2 89 -1.0629114 1.905956
+#&gt; 6         X2 95 -1.9337842 2.095734
+#&gt; 7         X3 80 -1.1298292 1.270263
+#&gt; 8         X3 89 -1.5647347 1.434468
+#&gt; 9         X3 95 -1.7871996 1.674899
+#&gt; 10        X4 80 -1.2158733 1.050564
+#&gt; 11        X4 89 -1.2628600 1.694146
+#&gt; 12        X4 95 -1.5944260 1.772124</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'xts':</span>
 #&gt; <span class='message'>  method     from</span>
 #&gt; <span class='message'>  as.zoo.xts zoo </span></div><div class='output co'>#&gt; <span class='message'>rstanarm (Version 2.18.2, packaged: 2018-11-08 22:19:38 UTC)</span></div><div class='output co'>#&gt; <span class='message'>- Do not expect the default priors to remain the same in future rstanarm versions.</span></div><div class='output co'>#&gt; <span class='message'>Thus, R scripts should specify priors explicitly, even if they are just the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; <span class='message'>- Plotting theme set to bayesplot::theme_default().</span></div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; 
@@ -346,9 +346,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 1: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.011 seconds (Warm-up)
+#&gt; Chain 1:  Elapsed Time: 0.01 seconds (Warm-up)
 #&gt; Chain 1:                0.012 seconds (Sampling)
-#&gt; Chain 1:                0.023 seconds (Total)
+#&gt; Chain 1:                0.022 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -379,41 +379,45 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.011 seconds (Warm-up)
-#&gt; Chain 2:                0.011 seconds (Sampling)
+#&gt; Chain 2:  Elapsed Time: 0.01 seconds (Warm-up)
+#&gt; Chain 2:                0.012 seconds (Sampling)
 #&gt; Chain 2:                0.022 seconds (Total)
-#&gt; Chain 2: </div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Intervals
+#&gt; Chain 2: </div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
+#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
+#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Intervals
 #&gt; 
 #&gt; </span><span>   Parameter        80% ETI
-#&gt;  (Intercept) [31.38, 45.92]
-#&gt;           wt [-6.34, -4.39]
-#&gt;         gear [-1.59,  1.03]
+#&gt;  (Intercept) [31.44, 46.03]
+#&gt;           wt [-6.48, -4.56]
+#&gt;         gear [-1.50,  1.08]
 #&gt; 
 #&gt; 
 #&gt;    Parameter        89% ETI
-#&gt;  (Intercept) [29.00, 47.76]
-#&gt;           wt [-6.50, -4.13]
-#&gt;         gear [-2.16,  1.30]
+#&gt;  (Intercept) [30.43, 46.85]
+#&gt;           wt [-6.70, -4.33]
+#&gt;         gear [-1.85,  1.42]
 #&gt; 
 #&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
 #&gt; </span><span>   Parameter        80% HDI
-#&gt;  (Intercept) [31.96, 46.00]
-#&gt;           wt [-6.50, -4.63]
-#&gt;         gear [-1.59,  1.02]
+#&gt;  (Intercept) [32.57, 46.26]
+#&gt;           wt [-6.59, -4.71]
+#&gt;         gear [-1.62,  0.89]
 #&gt; 
 #&gt; 
 #&gt;    Parameter        89% HDI
-#&gt;  (Intercept) [28.04, 46.18]
-#&gt;           wt [-6.56, -4.22]
-#&gt;         gear [-1.61,  1.76]
+#&gt;  (Intercept) [30.36, 46.84]
+#&gt;           wt [-6.59, -4.29]
+#&gt;         gear [-1.62,  1.63]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>)
 <span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>)</div><div class='output co'>#&gt;   Parameter CI    CI_low   CI_high
-#&gt; 1   overall 89 -6.498049 -4.133972</div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>)</div><div class='output co'>#&gt;   Parameter CI    CI_low   CI_high
-#&gt; 1   overall 89 -6.561035 -4.219537</div></span><span class='co'># NOT RUN {</span>
+#&gt; 1   overall 89 -6.701621 -4.333578</div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>)</div><div class='output co'>#&gt;   Parameter CI    CI_low   CI_high
+#&gt; 1   overall 89 -6.586088 -4.292849</div></span><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>)

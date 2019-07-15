@@ -202,7 +202,7 @@ rope.BFBayesFactor <- function(x, range = "default", ci = .89, verbose = TRUE, .
   } else {
     HDI_area <- x[x >= HDI_area$CI_low & x <= HDI_area$CI_high]
     area_within <- HDI_area[HDI_area >= min(range) & HDI_area <= max(range)]
-    rope_percentage <- length(area_within) / length(HDI_area) * 100
+    rope_percentage <- length(area_within) / length(HDI_area)
   }
 
 
