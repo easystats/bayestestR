@@ -147,24 +147,21 @@ p_direction(distribution_normal(100, 0.4, 0.2))
 
 ### Bayes Factor
 
-[`bayesfactor_parameters()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html) computes the ratio between the density of a single value (typically the
-null) in two distributions. When these distributions are the prior and the posterior
-distributions, this ratio can be used to examine the degree by which the mass of
-the posterior distribution has shifted further away from or closer to the null value
-(relative to the prior distribution), thus indicating if the null value has become
-less or more likely given the observed data (see figure 3, panel C). The Savage-Dickey density ratio is also an approximation of a Bayes factor comparing the marginal likelihoods of the model against a model in which the tested parameter has been restricted to the point null [@wagenmakers2010bayesian].
+[**`bayesfactor_parameters()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html) computes Bayes factors against the null (either a point or an interval), bases on prior and posterior samples of a single parameter. This Bayes factor indicates the degree by which the mass of the posterior distribution has shifted further away from or closer to the null value(s) (relative to the prior distribution), thus indicating if the null value has become less or more likely given the observed data. 
+
+When the null is an interval, the Bayes factor is computed by comparing the prior and posterior odds of the parameter falling within or outside the null; When the null is a point, a Savage-Dickey density ratio is computed, which is also an approximation of a Bayes factor comparing the marginal likelihoods of the model against a model in which the tested parameter has been restricted to the point null [@wagenmakers2010bayesian]. 
 
 ``` r
 prior <- distribution_normal(1000, mean = 0, sd = 1)
 posterior <- distribution_normal(1000, mean = 1, sd = 0.7)
 
-bayesfactor_parameters(posterior, prior, direction = "two-sided", hypothesis = 0)
+bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 #> # Bayes Factor (Savage-Dickey density ratio)
 #> 
 #>  Bayes Factor
 #>          1.98
-#> ---
-#> Evidence Against Test Value:  0 
+#> 
+#> * Evidence Against The Null: [0]
 ```
 
 ### MAP-based *p*-value
