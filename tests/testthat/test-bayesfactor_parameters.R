@@ -39,11 +39,6 @@ test_that("bayesfactor_parameters numeric", {
 
   bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-Inf,.1))
   testthat::expect_equal(log(bfsd$BF), 5.97, tolerance = 0.1)
-
-  # alias
-  testthat::expect_warning(bayestestR::bayesfactor_interval(Xposterior, prior = Xprior,null = 0))
-
-  testthat::expect_warning(bayestestR::bayesfactor_savagedickey(Xposterior, prior = Xprior,null = c(-.1,.1)))
 })
 
 test_that("bayesfactor_parameters RSTANARM", {
@@ -55,7 +50,7 @@ test_that("bayesfactor_parameters RSTANARM", {
   bfsd <- bayestestR::bayesfactor_parameters(model)
   testthat::expect_equal(log(bfsd$BF), c(-2.69, -0.14), tolerance = 0.2)
 
-  bfsd <- bayestestR::bayesfactor_interval(model)
+  bfsd <- bayestestR::bayesfactor_parameters(model, null = rope_range(model))
   testthat::expect_equal(log(bfsd$BF), c(-2.96, -0.18), tolerance = 0.2)
 })
 
@@ -69,7 +64,7 @@ test_that("bayesfactor_parameters BRMS", {
   bfsd <- bayestestR::bayesfactor_parameters(brms_mixed_6, effects = "fixed")
   testthat::expect_equal(log(bfsd$BF), c(-6.0, -5.8, 0.7, -2.7, -7.4), tolerance = 0.2)
 
-  bfsd <- bayestestR::bayesfactor_interval(brms_mixed_6)
+  bfsd <- bayestestR::bayesfactor_parameters(brms_mixed_6, null = rope_range(brms_mixed_6))
   testthat::expect_equal(log(bfsd$BF), c(-6.33, -12.8, -36.48, -2.6, -29.88), tolerance = 0.2)
 
   brms_mixed_1 <- insight::download_model("brms_mixed_1")

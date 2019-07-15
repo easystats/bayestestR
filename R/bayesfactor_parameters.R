@@ -106,28 +106,10 @@ bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sid
   UseMethod("bayesfactor_parameters")
 }
 
-#' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
-  if (length(null) == 2) {
-    warning("'null' is an interval - computing an interval Bayes factor.")
-  }
-  bayesfactor_parameters(
-    posterior = posterior,
-    prior = prior,
-    direction = direction,
-    null = null,
-    verbose = verbose,
-    ...
-  )
-}
+  .Deprecated("bayesfactor_parameters")
 
-#' @rdname bayesfactor_parameters
-#' @export
-bayesfactor_interval <- function(posterior, prior = NULL, direction = "two-sided", null = rope_range(posterior), verbose = TRUE, ...) {
-  if (length(null) == 1) {
-    warning("'null' is a point - computing a Savage-Dickey Bayes factor.")
-  }
   bayesfactor_parameters(
     posterior = posterior,
     prior = prior,
