@@ -41,13 +41,13 @@
 #'
 #' @examples
 #' library(bayestestR)
-#' posterior <- data.frame(X = rnorm(100),
-#'                         X1 = rnorm(100),
-#'                         X3 = rnorm(100))
-#'
-#' prior <- data.frame(X = rnorm(100,.4),
-#'                     X1 = rnorm(100,-.2),
+#' prior <- data.frame(X = rnorm(100),
+#'                     X1 = rnorm(100),
 #'                     X3 = rnorm(100))
+#'
+#' posterior <- data.frame(X = rnorm(100,.4),
+#'                         X1 = rnorm(100,-.2),
+#'                         X3 = rnorm(100))
 #'
 #' hyps = c("X > X1 & X1 > X3",
 #'          "X > X1")
@@ -87,9 +87,11 @@
 #'}
 #'
 #' @references
-#' Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
-#' Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.
-#' Morey, R. D. (Jan, 2015). Multiple Comparisons with BayesFactor, Part 2 – order restrictions. Retrived from https://richarddmorey.org/category/order-restrictions/.
+#' \itemize{
+#' \item Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
+#' \item Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.
+#' \item Morey, R. D. (Jan, 2015). Multiple Comparisons with BayesFactor, Part 2 – order restrictions. Retrived from https://richarddmorey.org/category/order-restrictions/.
+#' }
 #'
 #' @export
 bayesfactor_restricted <- function(posterior, prior = NULL, hypothesis, verbose = TRUE, ...) {

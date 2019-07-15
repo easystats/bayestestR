@@ -203,26 +203,32 @@ p_direction(rnorm(1000, mean = 1, sd = 1))
 
 ### Bayes Factor
 
-[**`bayesfactor_savagedickey()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_savagedickey.html)
-computes the ratio between the density of a single value (typically the
-null) in two distributions. When these distributions are the prior
-and the posterior distributions, this ratio can be used to examine the
-degree by which the mass of the posterior distribution has shifted
-further away from or closer to the null value (relative to the prior
-distribution), thus indicating if the null value has become less or more
-likely given the observed data. The Savage-Dickey density ratio is also
-an approximation of a Bayes factor comparing the marginal likelihoods of
-the model against a model in which the tested parameter has been
-restricted to the point null (Wagenmakers et al., 2010).
+[**`bayesfactor_parameters()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html)
+computes Bayes factors against the null (either a point or an interval),
+bases on prior and posterior samples of a single parameter. This Bayes
+factor indicates the degree by which the mass of the posterior
+distribution has shifted further away from or closer to the null
+value(s) (relative to the prior distribution), thus indicating if the
+null value has become less or more likely given the observed data.
+
+When the null is an interval, the Bayes factor is computed by comparing
+the prior and posterior odds of the parameter falling within or outside
+the null; When the null is a point, a Savage-Dickey density ratio is
+computed, which is also an approximation of a Bayes factor comparing the
+marginal likelihoods of the model against a model in which the tested
+parameter has been restricted to the point null.
 
 ``` r
 prior <- rnorm(1000, mean = 0, sd = 1)
 posterior <- rnorm(1000, mean = 1, sd = 0.7)
 
-bayesfactor_savagedickey(posterior, prior, direction = "two-sided", hypothesis = 0)
+bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ```
 
 ![](man/figures/unnamed-chunk-15-1.png)<!-- -->
+
+For more info, see [the Bayes factors
+vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 
 ### MAP-based *p*-value
 

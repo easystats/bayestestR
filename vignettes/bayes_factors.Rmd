@@ -63,7 +63,6 @@ According to Bayes' theorem:
 $$
 P(M|D) = \frac{P(D|M)\times P(M)}{P(D)}
 $$
-
 Then by comparing two models, we get:
 
 $$
@@ -75,14 +74,13 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 $$
 Thus, Bayes factors can be seen either as a ratio quantifying ***the relative likelihood of two models in light of some observed data*** as they can be computed by comparing marginal likelihoods, or as ***the degree by which some prior beliefs about the relative odds of two models are to be updated*** as they can be computed by dividing posterior odds by prior odds, as we will soon demonstrate.
 
-
-Critically, Bayes factors could be regrouped by two different applications: **testing single parameters (coefficients) within a model** and **comparing statistical models themselves**.
+Here we provide functions for computing Bayes factors in two different applications: **testing single parameters (coefficients) within a model** and **comparing statistical models themselves**.
 
 ## Testing Models' Parameters with Bayes Factors
 
 A ***Bayes factor for a single parameter*** can be used to answer the question:
 
-> **Given the observed data, is the null hypothesis of an absence effect more, or less likely?**
+> **Given the observed data, is the null hypothesis of an absence of an effect more, or less likely?**
 
 
 ```{r echo=FALSE, fig.cap="Bayesian analysis of the Students' (1908) Sleep data set.", fig.align='center', out.width="80%"}
@@ -90,7 +88,7 @@ knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/f
 ```
 
 
-Let's use the Students' (1908) Sleep data set (`sleep`), in which **people took some drug** and where the researchers measured the **extra hours of sleep** that they slept after. We will try answering the following question: *given the observed data, how likely it is that the **drug** (the variable `group`) **has no effect** on the numbers of hours of **extra sleep** (variable `extra`)?*
+Let's use the Students' (1908) Sleep data set (`data("sleep")`), in which **people took some drug** and where the researchers measured the **extra hours of sleep** that they slept afterwards. We will try answering the following question: *given the observed data, how likely it is that the **drug** (the variable `group`) **has no effect** on the numbers of hours of **extra sleep** (variable `extra`)?*
 
 ```{r sleep_boxplot, echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(sleep, aes(x = group, y = extra, fill= group)) +
@@ -103,7 +101,7 @@ The **bloxplot** suggests that the 2nd group has a higher number of hours of ext
 ### Testing against a Null-*Region*
 
 
-One way of operationlizing the null-hypothesis is by setting a null region (for example the `[-0.1, 0.1]` interval), such that an effect that falls within this interval would be practically equivalent to the the null. In our case, that means defining a region where we would consider the drug having no effect at all. We can then compute the prior probability of the drug's effect falling *within this null-region*, and the prior probability of the drug's effect falling *outside the null-region* to get out prior odds. Say any effect smaller than half an hour of extra sleep is practically equivalent to being no effect at all, out prior odds would be:
+One way of operationlizing the null-hypothesis is by setting a null region (for example the $[-0.1, 0.1]$ interval), such that an effect that falls within this interval would be practically equivalent to the the null. In our case, that means defining a region where we would consider the drug having no effect at all. We can then compute the prior probability of the drug's effect falling *within this null-region*, and the prior probability of the drug's effect falling *outside the null-region* to get our *prior odds*. Say any effect smaller than half an hour of extra sleep is practically equivalent to being no effect at all, we would define our prior odds as:
 
 $$
 \frac
@@ -111,7 +109,7 @@ $$
 {P(b_{drug} \notin [-0.5, 0.5])}
 $$
 
-If we set our prior to have a normal distribution centered at 0 hours with a scale (an SD) of 2.5 hours, or prior would look like this:
+If we set our prior to have a normal distribution centered at 0 hours with a scale (an SD) of 2.5 hours, our prior would look like this:
 
 ```{r, echo=FALSE}
 null <- c(-.5,.5)
@@ -146,7 +144,7 @@ library(rstanarm)
 model <- stan_glm(extra ~ group, data = sleep)
 ```
 
-By looking at the posterior distribution, can now compute the posterior probability of the drug's effect falling *within the null-region*, and the posterior probability of the drug's effect falling *outside the null-region* to get out posterior odds:
+By looking at the posterior distribution, can now compute the posterior probability of the drug's effect falling *within the null-region*, and the posterior probability of the drug's effect falling *outside the null-region* to get our *posterior odds*:
 
 $$
 \frac
@@ -451,7 +449,7 @@ knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/
 
 ### Order Restricted Models
 
-Consider the following model, in which we predict length of an iris' sepal from the length of its petal, as well as from the species of iris.
+Consider the following model, in which we predict the length of an iris' sepal from the length of its petal, as well as from its species.
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) + 
   geom_point() + 
@@ -465,11 +463,11 @@ iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
 ```
 
 
-What are our priors (here, `rstanarm`'s default priors) for this model's parameters? They all take the shape of a normal distribution centered at 0:
+What are our priors (here, `rstanarm`'s default priors) for this model's parameters? They all take the shape of some normal distribution centered at 0:
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
-                       data = iris, refresh = 0)
+junk <- capture.output(iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
+                       data = iris, refresh = 0))
 
 model_prior <- bayestestR:::.update_to_priors.stanreg(iris_model)
 priors <- insight::get_parameters(model_prior)
@@ -485,9 +483,9 @@ ggplot(stack(priors), aes(values, fill = ind)) +
 # describe_posterior(iris_model)
 ```
 
-These priors are unrestricted - all parameter have a non-zero probability of getting any value between $-\infty$ and $\infty$, no matter how small (this is true for both the prior and posterior distribution). Additionally, *a priori* the ordering of the parameters relating to the iris species can have any ordering, such that (a priori) setosa can have larger sepals than virginica, but it is also possible for virginica to have larger sepals than setosa!
+These priors are unrestricted - that is, all of the model's parameter have some non-zero probability (no matter how small) of being any of the values between $-\infty$ and $\infty$ (this is true for both the prior and posterior distribution). Subsequently, *a priori* the ordering of the parameters relating to the iris species can have any ordering, such that (a priori) setosa can have larger sepals than virginica, but it is also possible for virginica to have larger sepals than setosa!
 
-Does it make sense to let our priors cover all of these possibilities? That depends on our prior knowledge or assumptions. For example, even a novice botanist will assume that it is unlikely that petal length will be negatively associated with sepal length - an iris with longer petals is likely larger, and thus will also have a longer sepal. And an expert botanist will perhaps assume that setosas have smaller sepals than both versicolors and virginica. All of these prior assumptions can be formulated as order restrictions [@morey_2015_blog; @morey2011bayesinterval]:
+Does it make sense to let our priors cover all of these possibilities? That depends on our *prior* knowledge or assumptions. For example, even a novice botanist will assume that it is unlikely that petal length will be *negatively* associated with sepal length - an iris with longer petals is likely larger, and thus will also have a longer sepal. And an expert botanist will perhaps assume that setosas have smaller sepals than both versicolors and virginica. All of these prior assumptions can be formulated as order restrictions [@morey_2015_blog; @morey2011bayesinterval]:
 
 1. The novice botanist: $b_{petal} > 0$
 2. The expert botanist: $b_{versicolors} > 0\ \&\ b_{virginica} > 0$
@@ -518,6 +516,6 @@ BF_{restricted / NULL} = \frac
 {BF_{restricted / un-restricted}}
 {BF_{un-restricted / NULL}}
 $$
-> **NOTE:** Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (*a priori*) hypotheses, and should not be used for any post hoc comparisons.
+> **NOTE:** Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (*a priori*) hypotheses, and should not be used for any post hoc comparisons [@morey_2015_blog].
 
 # References
