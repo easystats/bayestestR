@@ -167,6 +167,7 @@ equivalence_test.data.frame <- function(x, range = "default", ci = .89, verbose 
     dat,
     stringsAsFactors = FALSE
   )
+  row.names(out) <- NULL
 
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))

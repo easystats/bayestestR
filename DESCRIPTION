@@ -26,7 +26,7 @@ Authors@R: c(
 	person("Paul-Christian", 
 		"Bürkner", 
 		role = c("rev"), 
-		email = "paul.buerkner@gmail.com"))
+		email = "paul.buerkner@gmail.com")
 	)
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
 URL: https://github.com/easystats/bayestestR
