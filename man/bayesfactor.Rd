@@ -35,7 +35,7 @@ or a model to be used as a denominator. Ignored for \code{BFBayesFactor}.}
 \item{prior_odds}{Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds<-}}.}
 }
 \value{
-Some type of Bayes factor, depending on the input. See \code{\link{bayesfactor_savagedickey}}, \code{\link{bayesfactor_models}} or \code{\link{bayesfactor_inclusion}}
+Some type of Bayes factor, depending on the input. See \code{\link{bayesfactor_parameters}}, \code{\link{bayesfactor_models}} or \code{\link{bayesfactor_inclusion}}
 }
 \description{
 This function compte the Bayes factors (BFs) that are appropriate to the input.

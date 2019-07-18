@@ -185,7 +185,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
     # Bayes Factors
 
     if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
-      test_bf <- bayesfactor_savagedickey(x, prior = bf_prior, ...)
+      test_bf <- bayesfactor_parameters(x, prior = bf_prior, ...)
       if (!"Parameter" %in% names(test_bf)) {
         test_bf <- cbind(data.frame("Parameter" = "Posterior"), test_bf)
       }

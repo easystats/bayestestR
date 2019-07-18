@@ -2,6 +2,7 @@
 % Please edit documentation in R/bayesfactor_parameters.R
 \name{bayesfactor_parameters}
 \alias{bayesfactor_parameters}
+\alias{bayesfactor_savagedickey}
 \alias{bayesfactor_parameters.numeric}
 \alias{bayesfactor_parameters.stanreg}
 \alias{bayesfactor_parameters.brmsfit}
@@ -10,6 +11,9 @@
 \title{Savage-Dickey density ratio Bayes Factor (BF)}
 \usage{
 bayesfactor_parameters(posterior, prior = NULL,
+  direction = "two-sided", null = 0, verbose = TRUE, ...)
+
+bayesfactor_savagedickey(posterior, prior = NULL,
   direction = "two-sided", null = 0, verbose = TRUE, ...)
 
 \method{bayesfactor_parameters}{numeric}(posterior, prior = NULL,
