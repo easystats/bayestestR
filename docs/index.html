@@ -192,7 +192,7 @@
 <div id="map-estimate" class="section level3">
 <h3 class="hasAnchor">
 <a href="#map-estimate" class="anchor"></a>MAP Estimate</h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/map_estimate.html"><strong><code><a href="reference/map_estimate.html">map_estimate()</a></code></strong></a> find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.,</em> the most probable value.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/map_estimate.html"><strong><code><a href="reference/map_estimate.html">map_estimate()</a></code></strong></a> find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.</em>, the value associated with the highest probability density (the “peak” of the posterior distribution). In other words, it is an estimation of the <em>mode</em> for continuous parameters.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/map_estimate.html">map_estimate</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-6-1.png" width="3281.25"></p>
 </div>
@@ -252,7 +252,7 @@
 <div id="map-based-p-value" class="section level3">
 <h3 class="hasAnchor">
 <a href="#map-based-p-value" class="anchor"></a>MAP-based <em>p</em>-value</h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/p_map.html"><strong><code><a href="reference/p_map.html">p_map()</a></code></strong></a> computes a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (<em>h0</em>) using Mills’ (2014, 2017) <em>Objective Bayesian Hypothesis Testing</em> framework. It is mathematically based on the density at the Maximum A Priori (MAP) and corresponds to the density value at 0 divided by the density of the MAP estimate.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/p_map.html"><strong><code><a href="reference/p_map.html">p_map()</a></code></strong></a> computes a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (<em>h0</em>) using Mills’ (2014, 2017) <em>Objective Bayesian Hypothesis Testing</em> framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP).</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="reference/p_map.html">p_map</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Normal">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>))</a></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-17-1.png" width="3281.25"></p>
 </div>
@@ -330,6 +330,7 @@
 <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-4287-4801" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
 <li>
 <a href="http://www.humanfactors.io">Michael D. Wilson</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-4143-7308" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
 
