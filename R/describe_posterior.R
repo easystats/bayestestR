@@ -246,7 +246,7 @@ describe_posterior.emmGrid <- function(posteriors, centrality = "median", disper
     stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
   }
 
-  if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
+  if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test))) {
     if (is.null(bf_prior)) {
       bf_prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posteriors, names = FALSE)))
       warning(
