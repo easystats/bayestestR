@@ -1,5 +1,5 @@
 ---
-title: "Example 1: Initiation to Bayesian models"
+title: "1. Initiation to Bayesian models"
 output: 
   github_document:
     toc: true
