@@ -12,4 +12,4 @@
 ^pkgdown/.
 ^paper.*$
 ^man/figures/.
-^vignettes/templates/.
+^vignettes/2019_frontiers/.

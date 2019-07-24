@@ -33,7 +33,8 @@ csl: apa.csl
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 options(knitr.kable.NA = '')
-knitr::opts_chunk$set(comment=">")
+knitr::opts_chunk$set(comment=">",
+  dpi=100)
 options(digits=2)
 ```
 
@@ -95,6 +96,7 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(see)
+library(ggExtra)
 
 df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv")
 ```
@@ -109,39 +111,44 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_stu
 
 ##### Sensitivity to Noise
 
-```{r, message=FALSE, warning=FALSE, fig.height=25, fig.width=15}
-df %>%
-  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_89, ROPE_95, ROPE_full, BF_log) %>%
+```{r, message=FALSE, warning=FALSE, fig.height=25, fig.width=15, eval=FALSE}
+figure1 <- df %>%
+  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, ROPE_95, ROPE_full, BF_log) %>%
   gather(index, value, -error, -sample_size, -true_effect, -outcome_type) %>%
   mutate(true_effect = as.factor(true_effect),
-         index = factor(index, levels=c("p_value", "p_direction", "p_MAP", "p_ROPE", "ROPE_89", "ROPE_95", "ROPE_full", "BF_log"))) %>%
-  mutate(temp = as.factor(cut(error, 10, labels = FALSE))) %>% 
+         index = factor(index, levels=c("p_value", "p_direction", "p_MAP", "ROPE_95", "ROPE_full", "BF_log"))) %>%
+  mutate(temp = as.factor(cut(error, 8, labels = FALSE))) %>% 
   group_by(temp) %>% 
   mutate(error_group = round(mean(error), 1)) %>% 
   ungroup() %>% 
   ggplot(aes(x = error_group, y = value, fill = index, colour=true_effect, group = interaction(index, true_effect, error_group))) +
-  # geom_jitter(shape=16, alpha=0.02) +
   geom_boxplot(outlier.shape = NA) +
   facet_wrap(~index * outcome_type, scales = "free", ncol=2) +
   theme_modern() +
-  scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A", name="Effect")) +
+  scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") +
   scale_fill_manual(values = c("p_value"="#607D8B", "p_MAP" = "#4CAF50", "p_direction" = "#2196F3",
-                               "ROPE_89" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
-                               "p_ROPE"="#E91E63", "BF_log"="#9C27B0"), guide=FALSE) +
+                               "ROPE_95" = "#FFC107", "ROPE_full" = "#FF9800", "BF_log"="#E91E63"), 
+                    guide=FALSE) +
   ylab("Index Value") +
   xlab("Noise")
+figure1
 ```
+```{r, message=FALSE, warning=FALSE, fig.cap="Figure 1.", fig.align='center', out.width="100%", echo=FALSE}
+ggsave("2019_frontiers/figure1.png", figure1, width=21*0.5, height=29.7*0.5, dpi=600)
+ggsave("2019_frontiers/figure1_small.png", figure1, width=21*0.5, height=29.7*0.5, dpi=150)
 
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/vignettes/2019_frontiers/figure1_small.png")
+```
 
 ##### Sensitivity to Sample Size
 
-```{r, message=FALSE, warning=FALSE, fig.height=25, fig.width=15}
-df %>%
-  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_89, ROPE_95, ROPE_full, BF_log) %>%
+```{r, message=FALSE, warning=FALSE, fig.height=25, fig.width=15, eval=FALSE}
+figure2 <- df %>%
+  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, ROPE_95, ROPE_full, BF_log) %>%
   gather(index, value, -error, -sample_size, -true_effect, -outcome_type) %>%
   mutate(true_effect = as.factor(true_effect),
-         index = factor(index, levels=c("p_value", "p_direction", "p_MAP", "p_ROPE", "ROPE_89", "ROPE_95", "ROPE_full", "BF_log"))) %>%
-  mutate(temp = as.factor(cut(sample_size, 10, labels = FALSE))) %>% 
+         index = factor(index, levels=c("p_value", "p_direction", "p_MAP", "ROPE_95", "ROPE_full", "BF_log"))) %>%
+  mutate(temp = as.factor(cut(sample_size, 8, labels = FALSE))) %>% 
   group_by(temp) %>% 
   mutate(size_group = round(mean(sample_size))) %>% 
   ungroup() %>% 
@@ -150,13 +157,21 @@ df %>%
   geom_boxplot(outlier.shape = NA) +
   facet_wrap(~index * outcome_type, scales = "free", ncol=2) +
   theme_modern() +
-  scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A", name="Effect")) +
+  scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") +
   scale_fill_manual(values = c("p_value"="#607D8B", "p_MAP" = "#4CAF50", "p_direction" = "#2196F3",
-                               "ROPE_89" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
-                               "p_ROPE"="#E91E63", "BF_log"="#9C27B0"), guide=FALSE) +
+                               "ROPE_95" = "#FFC107", "ROPE_full" = "#FF9800", "BF_log"="#E91E63"), 
+                    guide=FALSE) +
   ylab("Index Value") +
   xlab("Sample Size")
+figure2
 ```
+```{r, message=FALSE, warning=FALSE, fig.cap="Figure 1.", fig.align='center', out.width="100%", echo=FALSE}
+ggsave("2019_frontiers/figure2.png", figure2, width=21*0.5, height=29.7*0.5, dpi=600)
+ggsave("2019_frontiers/figure2_small.png", figure2, width=21*0.5, height=29.7*0.5, dpi=150)
+
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/vignettes/2019_frontiers/figure2_small.png")
+```
+
 
 
 ##### Statistical Modelling
@@ -205,16 +220,16 @@ We fitted a (frequentist) multiple linear regression to predict the presence or 
 <!--   - The **MAP** estimate, followed by the **mean**, and the **median**, were less affected by sample size, altough not significantly. -->
 
 
-#### Relationship with the frequentist *p* value
+#### Relationship with the frequentist *p*-value
 
 
 
-```{r, message=FALSE, warning=FALSE, fig.height=25, fig.width=15}
-df %>%
-  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, p_ROPE, ROPE_89, ROPE_95, ROPE_full, BF_log) %>%
+```{r, message=FALSE, warning=FALSE, fig.height=25, fig.width=15, eval = FALSE}
+figure3 <- df %>%
+  select(outcome_type, true_effect, error, sample_size, p_value, p_direction, p_MAP, ROPE_95, ROPE_full, BF_log) %>%
   gather(index, value, -error, -sample_size, -true_effect, -outcome_type, -p_value) %>%
   mutate(true_effect = as.factor(true_effect),
-         index = factor(index, levels=c("p_direction", "p_MAP", "p_ROPE", "ROPE_89", "ROPE_95", "ROPE_full", "BF_log"))) %>%
+         index = factor(index, levels=c("p_direction", "p_MAP", "ROPE_95", "ROPE_full", "BF_log"))) %>%
   mutate(temp = as.factor(cut(sample_size, 3, labels = FALSE))) %>% 
   group_by(temp) %>% 
   mutate(size_group = as.character(round(mean(sample_size)))) %>% 
@@ -226,11 +241,19 @@ df %>%
   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") +
   guides(colour = guide_legend(override.aes = list(alpha = 1)),
          shape = guide_legend(override.aes = list(alpha = 1), title="Sample Size"))
+figure3
 ```
+```{r, message=FALSE, warning=FALSE, fig.cap="Figure 1.", fig.align='center', out.width="100%", echo=FALSE}
+ggsave("2019_frontiers/figure3.png", figure3, width=21*0.5, height=29.7*0.5, dpi=600)
+ggsave("2019_frontiers/figure3_small.png", figure3, width=21*0.5, height=29.7*0.5, dpi=150)
+
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/vignettes/2019_frontiers/figure3_small.png")
+```
+
 
 #### Relationship with frequentist *p*-based arbitrary clusters
 
-```{r, message=FALSE, warning=FALSE, fig.height=15, fig.width=10}
+```{r, message=FALSE, warning=FALSE, eval = FALSE}
 df$sig_1 <- factor(ifelse(df$p_value >= .1, "n.s.", "-"), levels=c("n.s.", "-"))
 df$sig_05 <- factor(ifelse(df$p_value >= .05, "n.s.", "*"), levels=c("n.s.", "*"))
 df$sig_01 <- factor(ifelse(df$p_value >= .01, "n.s.", "**"), levels=c("n.s.", "**"))
@@ -262,47 +285,39 @@ get_data <- function(predictor, outcome, lbound=0, ubound=0.3){
 
 
 
-rbind(
+figure4 <- rbind(
   rbind(
-    get_data(predictor="p_direction", outcome="sig_001", lbound=99.5, ubound=100),
+    get_data(predictor="p_direction", outcome="sig_001", lbound=0.995, ubound=1),
     get_data(predictor="p_MAP", outcome="sig_001", lbound=0, ubound=0.01),
-    get_data(predictor="p_ROPE", outcome="sig_001", lbound=97, ubound=100),
-    get_data(predictor="ROPE_89", outcome="sig_001", lbound=0, ubound=0.5),
-    get_data(predictor="ROPE_95", outcome="sig_001", lbound=0, ubound=0.5),
-    get_data(predictor="ROPE_full", outcome="sig_001", lbound=0, ubound=0.5),
+    get_data(predictor="ROPE_95", outcome="sig_001", lbound=0, ubound=0.005),
+    get_data(predictor="ROPE_full", outcome="sig_001", lbound=0, ubound=0.005),
     get_data(predictor="BF_log", outcome="sig_001", lbound=0, ubound=10)
     ) %>% 
     rename("sig"=sig_001) %>% 
     mutate(threshold="p < .001"),
   rbind(
-    get_data(predictor="p_direction", outcome="sig_01", lbound=98, ubound=100),
-    get_data(predictor="p_MAP", outcome="sig_01", lbound=0, ubound=0.1),
-    get_data(predictor="p_ROPE", outcome="sig_01", lbound=85, ubound=100),
-    get_data(predictor="ROPE_89", outcome="sig_01", lbound=0, ubound=2),
-    get_data(predictor="ROPE_95", outcome="sig_01", lbound=0, ubound=2),
-    get_data(predictor="ROPE_full", outcome="sig_01", lbound=0, ubound=2),
+    get_data(predictor="p_direction", outcome="sig_01", lbound=0.98, ubound=1),
+    get_data(predictor="p_MAP", outcome="sig_01", lbound=0, ubound=0.075),
+    get_data(predictor="ROPE_95", outcome="sig_01", lbound=0, ubound=0.02),
+    get_data(predictor="ROPE_full", outcome="sig_01", lbound=0, ubound=0.02),
     get_data(predictor="BF_log", outcome="sig_01", lbound=0, ubound=5)
     ) %>% 
     rename("sig"=sig_01) %>% 
     mutate(threshold="p < .01"),
   rbind(
-    get_data(predictor="p_direction", outcome="sig_05", lbound=95, ubound=100),
-    get_data(predictor="p_MAP", outcome="sig_05", lbound=0, ubound=0.3),
-    get_data(predictor="p_ROPE", outcome="sig_05", lbound=50, ubound=100),
-    get_data(predictor="ROPE_89", outcome="sig_05", lbound=0, ubound=10),
-    get_data(predictor="ROPE_95", outcome="sig_05", lbound=0, ubound=10),
-    get_data(predictor="ROPE_full", outcome="sig_05", lbound=0, ubound=10),
+    get_data(predictor="p_direction", outcome="sig_05", lbound=0.95, ubound=1),
+    get_data(predictor="p_MAP", outcome="sig_05", lbound=0.05, ubound=0.25),
+    get_data(predictor="ROPE_95", outcome="sig_05", lbound=0, ubound=0.01),
+    get_data(predictor="ROPE_full", outcome="sig_05", lbound=0, ubound=0.01),
     get_data(predictor="BF_log", outcome="sig_05", lbound=0, ubound=2)
     ) %>%  
     rename("sig"=sig_05) %>% 
     mutate(threshold="p < .05"),
   rbind(
-    get_data(predictor="p_direction", outcome="sig_1", lbound=90, ubound=100),
-    get_data(predictor="p_MAP", outcome="sig_1", lbound=0, ubound=0.5),
-    get_data(predictor="p_ROPE", outcome="sig_1", lbound=25, ubound=100),
-    get_data(predictor="ROPE_89", outcome="sig_1", lbound=0, ubound=20),
-    get_data(predictor="ROPE_95", outcome="sig_1", lbound=0, ubound=20),
-    get_data(predictor="ROPE_full", outcome="sig_1", lbound=0, ubound=20),
+    get_data(predictor="p_direction", outcome="sig_1", lbound=0.90, ubound=1),
+    get_data(predictor="p_MAP", outcome="sig_1", lbound=0.15, ubound=0.35),
+    get_data(predictor="ROPE_95", outcome="sig_1", lbound=0, ubound=0.2),
+    get_data(predictor="ROPE_full", outcome="sig_1", lbound=0, ubound=0.2),
     get_data(predictor="BF_log", outcome="sig_1", lbound=0, ubound=1)
     ) %>% 
     rename("sig"=sig_1) %>% 
@@ -315,58 +330,55 @@ rbind(
   facet_wrap(~ index * threshold * outcome_type, scales = "free", ncol=8) +
   theme_modern() +
   scale_color_manual(values = c("p_value"="#607D8B", "p_MAP" = "#4CAF50", "p_direction" = "#2196F3",
-                               "ROPE_89" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
-                               "p_ROPE"="#E91E63", "BF_log"="#9C27B0"), guide=FALSE) +
+                               "ROPE_95" = "#FFC107", "ROPE_full" = "#FF9800", "BF_log"="#E91E63"), 
+                     guide=FALSE) +
   ylab("Probability of being significant") +
   xlab("Index Value")
+figure4
 ```
+```{r, message=FALSE, warning=FALSE, fig.cap="Figure 1.", fig.align='center', out.width="100%", echo=FALSE}
+ggsave("2019_frontiers/figure4.png", figure4, width=21*0.5, height=29.7*0.5, dpi=600)
+ggsave("2019_frontiers/figure4_small.png", figure4, width=21*0.5, height=29.7*0.5, dpi=150)
 
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/vignettes/2019_frontiers/figure4_small.png")
+```
 
 #### Relationship with Equivalence test
 
-```{r, message=FALSE, warning=FALSE, fig.height=15, fig.width=10}
-df$equivalence_95 <- factor(ifelse(df$ROPE_95 == 0, "significant", "n.s."), levels=c("n.s.", "significant"))
-df$equivalence_89 <- factor(ifelse(df$ROPE_89 == 0, "significant", "n.s."), levels=c("n.s.", "significant"))
+```{r, message=FALSE, warning=FALSE, eval = FALSE}
+df$equivalence <- factor(ifelse(df$ROPE_95 == 0, "significant", "n.s."), levels=c("n.s.", "significant"))
 
 
-rbind(
-  rbind(
-    get_data(predictor="p_direction", outcome="equivalence_95", lbound=97.5, ubound=100),
-    get_data(predictor="p_MAP", outcome="equivalence_95", lbound=0, ubound=0.2),
-    get_data(predictor="p_ROPE", outcome="equivalence_95", lbound=92.5, ubound=97.5),
-    get_data(predictor="ROPE_89", outcome="equivalence_95", lbound=0, ubound=3),
-    get_data(predictor="ROPE_full", outcome="equivalence_95", lbound=0, ubound=3),
-    get_data(predictor="BF_log", outcome="equivalence_95", lbound=0.5, ubound=2.5)
+figure5 <- rbind(
+    get_data(predictor="p_direction", outcome="equivalence", lbound=0.975, ubound=1),
+    get_data(predictor="p_MAP", outcome="equivalence", lbound=0, ubound=0.2),
+    get_data(predictor="ROPE_full", outcome="equivalence", lbound=0, ubound=0.03),
+    get_data(predictor="BF_log", outcome="equivalence", lbound=0.5, ubound=2.25)
     ) %>% 
-    rename("equivalence"=equivalence_95) %>% 
-    mutate(level="95 HDI"),
-  rbind(
-    get_data(predictor="p_direction", outcome="equivalence_89", lbound=99.5, ubound=100),
-    get_data(predictor="p_MAP", outcome="equivalence_89", lbound=0, ubound=0.02),
-    get_data(predictor="p_ROPE", outcome="equivalence_89", lbound=0, ubound=100),
-    get_data(predictor="ROPE_95", outcome="equivalence_89", lbound=0, ubound=0.5),
-    get_data(predictor="ROPE_full", outcome="equivalence_89", lbound=0, ubound=0.5),
-    get_data(predictor="BF_log", outcome="equivalence_89", lbound=0, ubound=3)
-    ) %>% 
-    rename("equivalence"=equivalence_89) %>% 
-    mutate(level="90 HDI")
-) %>% 
   ggplot(aes(x=value, y=equivalence)) +
   geom_ribbon(aes(ymin=CI_lower, ymax=CI_upper), alpha=0.1) +
   geom_line(aes(color=index), size=1) +
-  facet_wrap(~ index * level * outcome_type, scales = "free", nrow=7) +
+  facet_wrap(~ index * outcome_type, scales = "free", nrow=7) +
   theme_modern() +
   scale_color_manual(values = c("p_value"="#607D8B", "p_MAP" = "#4CAF50", "p_direction" = "#2196F3",
-                               "ROPE_89" = "#FFC107", "ROPE_95" = "#FF9800", "ROPE_full" = "#FF5722",
-                               "p_ROPE"="#E91E63", "BF_log"="#9C27B0"), guide=FALSE) +
+                               "ROPE_95" = "#FFC107", "ROPE_full" = "#FF9800", "BF_log"="#E91E63"), 
+                     guide=FALSE) +
   ylab("Probability of rejecting H0 with the equivalence test") +
   xlab("Index Value")
+figure5
 ```
+```{r, message=FALSE, warning=FALSE, fig.cap="Figure 1.", fig.align='center', out.width="100%", echo=FALSE}
+ggsave("2019_frontiers/figure5.png", figure5, width=21*0.5, height=29.7*0.5, dpi=600)
+ggsave("2019_frontiers/figure5_small.png", figure5, width=21*0.5, height=29.7*0.5, dpi=150)
+
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/vignettes/2019_frontiers/figure5_small.png")
+```
+
 
 #### Relationship between ROPE (full), p (direction) and Bayes Factor
 
-```{r, message=FALSE, warning=FALSE, fig.height=6, fig.width=10.08}
-df %>%
+```{r, message=FALSE, warning=FALSE, eval = FALSE}
+p1 <- df %>%
   mutate(true_effect = as.factor(true_effect)) %>% 
   ggplot(aes(x=p_direction, y=ROPE_full, color=true_effect)) +
   geom_point2(alpha=0.03, size = 2) +
@@ -374,31 +386,43 @@ df %>%
   theme_modern() +
   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") +
   ylab("ROPE (full)") +
-  xlab("Probability of Direction (pd)")
-```
-
-```{r, message=FALSE, warning=FALSE, fig.height=6, fig.width=10.08}
-df %>%
+  xlab("")
+p2 <- df %>%
   mutate(true_effect = as.factor(true_effect)) %>% 
   ggplot(aes(x=p_direction, y=BF_log, color=true_effect)) +
   geom_point2(alpha=0.03, size = 2) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
   facet_wrap(~ outcome_type, scales = "free", ncol=2) +
   theme_modern() +
   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") +
   ylab("BF_log") +
   xlab("Probability of Direction (pd)")
+figure6 <- see::plots(p1, p2, nrow = 2)
+figure6
+```
+```{r, message=FALSE, warning=FALSE, fig.cap="Figure 1.", fig.align='center', out.width="100%", echo=FALSE}
+ggsave("2019_frontiers/figure6.png", figure6, width=21*0.5, height=21*0.5, dpi=600)
+ggsave("2019_frontiers/figure6_small.png", figure6, width=21*0.5, height=21*0.5, dpi=150)
+
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/vignettes/2019_frontiers/figure6_small.png")
 ```
 
-
-## Study 2: Relationship with Sampling Characteristics
-## Study 3: Relationship with Priors Specification
-
 ## Discussion
+
+
+
 
 Based on the simulation of multiple linear regressions, the present work aimed at comparing several indices of effect existence solely derived from the posterior distribution, provide visual representations of the "behaviour" of such indices in relationship with sample size, noise, priors and the frequentist *p*-value.
 
 While this comparison with a frequentist index may seem counterintuitive or wrong (as the Bayesian thinking is intrinsically different from the frequentist framework), we believe that this comparison is interesting for didactic reasons. The frequentist *p*-value "speaks" to many and can thus be seen as a reference and a way to facilitate the shift toward the Bayesian framework. This does not preclude, however, that a change in the general paradigm of effect existence seeking in necessary, and that Bayesian indices are fundamentally different from the frequentist *p*, rather than mere approximations or equivalents. Critically, we strongly agree on the distinction and possible dissociation between an effect’s existence and meaningfulness [@lakens2018equivalence]. Nevertheless, we believe that assessing whether an effect is "meaningful" is highly dependent on the literature, priors, novelty, context or field, and that it cannot be assessed based solely on a statistical index (even though some of the indices, such as the ROPE-related ones, attempt at bridging existence with meaningfulness). Thus, researchers should rely on statistics to assess effect existence (as well as size and direction estimation), and systematically, but contextually, discuss its meaning and importance within a larger perspective.
 
 Conclusions can be found in the [guidelines section](https://easystats.github.io/bayestestR/articles/guidelines.html).
+
+## Ideas
+
+- ROPE based indices seems to be the most sensitive to different model types, as equivalent ROPE ranges are not straightforward to select.
+- ROPE seems also strongly affected by sample
+- pd and BF might be two relevant indices, being both intuitive, providing different information and appearing as undependent from the model type.
+- On the other hand, BF and pd seems quite closely related: ROPE might give a different perspective, altough to be taken with caution.
 
 # References

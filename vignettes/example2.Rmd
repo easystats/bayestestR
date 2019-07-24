@@ -114,7 +114,7 @@ It is an intuitive way of interpreting the strength of evidence provided by BFs 
 
 
 ```{r echo=FALSE, fig.cap="Wagenmakers' pizza poking analogy. From the great 'www.bayesianspectacles.org' blog.", fig.align='center', out.width="100%"}
-knitr::include_graphics("https://i1.wp.com/www.bayesianspectacles.org/wp-content/uploads/2018/07/LetsPokeAPizza.jpg", dpi = 300)
+knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/LetsPokeAPizza.jpg")
 ```
 
 

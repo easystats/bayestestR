@@ -204,11 +204,13 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   out <- out[!is.na(out$Parameter), ]
 
   # Restore columns order
-  col_order <- point_estimate(x, centrality = "median", dispersion = FALSE, ci = NULL, ...)
-  if ("Parameter" %in% names(col_order)) {
-    col_order <- col_order$Parameter
-    col_order <- rep(col_order, each = round(nrow(out) / length(col_order)))
-    out <- out[match(col_order, out$Parameter), ]
+  if(length(ci) == 1){
+    col_order <- point_estimate(x, centrality = "median", dispersion = FALSE, ci = NULL, ...)
+    if ("Parameter" %in% names(col_order)) {
+      col_order <- col_order$Parameter
+      col_order <- rep(col_order, each = round(nrow(out) / length(col_order)))
+      out <- out[match(col_order, out$Parameter), ]
+    }
   }
 
   out

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Maximum A Posteriori (MAP) Estimate — map_estimate • bayestestR</title>
+<title>Maximum A Posteriori probability estimate (MAP) — map_estimate • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Maximum A Posteriori (MAP) Estimate — map_estimate" />
+<meta property="og:title" content="Maximum A Posteriori probability estimate (MAP) — map_estimate" />
 
-<meta property="og:description" content="Find the Highest Maximum A Posteriori (MAP) estimate of a posterior, i.e., the most probable value. It corresponds to the &quot;peak&quot; (or the mode) of the posterior distribution. Note this function relies on estimate_density, which by default uses a different smoothing bandwidth (&quot;SJ&quot;) from the legacy default implemented the base R density function (&quot;nrd0&quot;)." />
+<meta property="og:description" content="Find the Highest Maximum A Posteriori probability estimate (MAP) of a posterior, i.e., the value associated with the highest probability density (the &quot;peak&quot; of the posterior distribution). In other words, it is an estimation of the mode for continuous parameters. Note that this function relies on estimate_density, which by default uses a different smoothing bandwidth (&quot;SJ&quot;) compared to the legacy default implemented the base R density function (&quot;nrd0&quot;)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -174,14 +174,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Maximum A Posteriori (MAP) Estimate</h1>
+    <h1>Maximum A Posteriori probability estimate (MAP)</h1>
     <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/map_estimate.R'><code>R/map_estimate.R</code></a></small>
     <div class="hidden name"><code>map_estimate.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, i.e., the most probable value. It corresponds to the "peak" (or the <em>mode</em>) of the posterior distribution. Note this function relies on <a href='estimate_density.html'>estimate_density</a>, which by default uses a different smoothing bandwidth (<code>"SJ"</code>) from the legacy default implemented the base R <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a> function (<code>"nrd0"</code>).</p>
+    <p>Find the <strong>Highest Maximum A Posteriori probability estimate (MAP)</strong> of a posterior, i.e., the value associated with the highest probability density (the "peak" of the posterior distribution). In other words, it is an estimation of the <em>mode</em> for continuous parameters. Note that this function relies on <a href='estimate_density.html'>estimate_density</a>, which by default uses a different smoothing bandwidth (<code>"SJ"</code>) compared to the legacy default implemented the base R <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a> function (<code>"nrd0"</code>).</p>
     
     </div>
 

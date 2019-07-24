@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bayesian p-value based on the density at the Maximum A Priori (MAP) — p_map • bayestestR</title>
+<title>Bayesian p-value based on the density at the Maximum A Posteriori (MAP) — p_map • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Bayesian p-value based on the density at the Maximum A Priori (MAP) — p_map" />
+<meta property="og:title" content="Bayesian p-value based on the density at the Maximum A Posteriori (MAP) — p_map" />
 
-<meta property="og:description" content="Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing framework. It is mathematically based on the density at the Maximum A Priori (MAP) and corresponds to the density value at 0 divided by the density at the MAP estimate." />
+<meta property="og:description" content="Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -174,14 +174,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Bayesian p-value based on the density at the Maximum A Priori (MAP)</h1>
+    <h1>Bayesian p-value based on the density at the Maximum A Posteriori (MAP)</h1>
     <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/p_map.R'><code>R/p_map.R</code></a></small>
     <div class="hidden name"><code>p_map.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (<em>h0</em>) using Mills' (2014, 2017) <em>Objective Bayesian Hypothesis Testing</em> framework. It is mathematically based on the density at the Maximum A Priori (MAP) and corresponds to the density value at 0 divided by the density at the MAP estimate.</p>
+    <p>Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (<em>h0</em>) using Mills' (2014, 2017) <em>Objective Bayesian Hypothesis Testing</em> framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP).</p>
     
     </div>
 
@@ -283,8 +283,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
 #&gt; Chain 1:  Elapsed Time: 0.013 seconds (Warm-up)
-#&gt; Chain 1:                0.013 seconds (Sampling)
-#&gt; Chain 1:                0.026 seconds (Total)
+#&gt; Chain 1:                0.014 seconds (Sampling)
+#&gt; Chain 1:                0.027 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -316,8 +316,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
 #&gt; Chain 2:  Elapsed Time: 0.009 seconds (Warm-up)
-#&gt; Chain 2:                0.01 seconds (Sampling)
-#&gt; Chain 2:                0.019 seconds (Total)
+#&gt; Chain 2:                0.011 seconds (Sampling)
+#&gt; Chain 2:                0.02 seconds (Total)
 #&gt; Chain 2: </div><div class='output co'>#&gt; <span class='warning'>Warning: The largest R-hat is 1.06, indicating chains have not mixed.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#r-hat</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>

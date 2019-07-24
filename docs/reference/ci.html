@@ -379,8 +379,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.01 seconds (Warm-up)
-#&gt; Chain 2:                0.012 seconds (Sampling)
+#&gt; Chain 2:  Elapsed Time: 0.011 seconds (Warm-up)
+#&gt; Chain 2:                0.011 seconds (Sampling)
 #&gt; Chain 2:                0.022 seconds (Total)
 #&gt; Chain 2: </div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
@@ -413,8 +413,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt;         gear [-1.62,  1.63]
 #&gt; 
 #&gt; </div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'emmeans' was built under R version 3.6.1</span></div><div class='input'><span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>)
 <span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>)</div><div class='output co'>#&gt;   Parameter CI    CI_low   CI_high
 #&gt; 1   overall 89 -6.701621 -4.333578</div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>)</div><div class='output co'>#&gt;   Parameter CI    CI_low   CI_high
 #&gt; 1   overall 89 -6.586088 -4.292849</div></span><span class='co'># NOT RUN {</span>
