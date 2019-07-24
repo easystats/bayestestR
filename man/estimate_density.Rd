@@ -72,7 +72,7 @@ head(estimate_density(df))
 # rstanarm models
 # -----------------------------------------------
 library(rstanarm)
-model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
+model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 head(estimate_density(model))
 
 library(emmeans)

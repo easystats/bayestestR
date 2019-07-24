@@ -52,7 +52,7 @@ p_map(rnorm(1000, 0, 1))
 p_map(rnorm(1000, 10, 1))
 
 library(rstanarm)
-model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
+model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 p_map(model)
 
 library(emmeans)
