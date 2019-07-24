@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • bayestestR</title>
+<title>Reshape CI between wide/long formats — reshape_ci • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,7 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Reshape CI between wide/long formats — reshape_ci" />
+
+<meta property="og:description" content="Reshape CI between wide/long formats." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -69,7 +71,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -172,27 +174,58 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Reshape CI between wide/long formats</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/utils_hdi_ci.R'><code>R/utils_hdi_ci.R</code></a></small>
+    <div class="hidden name"><code>reshape_ci.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="bayestestR.html">Get Started with Bayesian Analysis</a></li>
-        <li><a href="bayes_factors.html">Bayes Factors</a></li>
-        <li><a href="credible_interval.html">Credible Intervals (CI)</a></li>
-        <li><a href="example1.html">1. Initiation to Bayesian models</a></li>
-        <li><a href="example2.html">2. Confirmation of Bayesian skills</a></li>
-        <li><a href="example3.html">3. Become a Bayesian master</a></li>
-        <li><a href="guidelines.html">Reporting Guidelines</a></li>
-        <li><a href="indicesEstimationComparison.html">In-Depth 1: Comparison of Point-Estimates</a></li>
-        <li><a href="indicesExistenceComparison.html">In-Depth 2: Comparison of Indices of Effect Existence and Significance</a></li>
-        <li><a href="probability_of_direction.html">Probability of Direction (pd)</a></li>
-        <li><a href="region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p>Reshape CI between wide/long formats.</p>
+    
     </div>
+
+    <pre class="usage"><span class='fu'>reshape_ci</span>(<span class='no'>x</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A data.frame containing <code>CI_low</code> and <code>CI_high</code>.</p></td>
+    </tr>
+    </table>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.68</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span>))
+<span class='fu'>reshape_ci</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Parameter  CI_low_68 CI_high_68 CI_low_89 CI_high_89 CI_low_95 CI_high_95
+#&gt; 1        X1 -0.9288844  0.9183050 -1.224556   1.369760 -1.616946   1.517234
+#&gt; 2        X2 -0.8735949  0.9384387 -1.485577   1.558253 -1.715870   1.859410
+#&gt; 3        X3 -1.0887625  1.1907155 -1.686155   1.766932 -2.104696   1.922662
+#&gt; 4        X4 -0.7282173  0.9773763 -1.183589   1.317665 -1.715239   1.671268</div><div class='input'><span class='fu'>reshape_ci</span>(<span class='fu'>reshape_ci</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;    Parameter CI     CI_low   CI_high
+#&gt; 1         X1 68 -0.9288844 0.9183050
+#&gt; 2         X1 89 -1.2245561 1.3697602
+#&gt; 3         X1 95 -1.6169460 1.5172340
+#&gt; 4         X2 68 -0.8735949 0.9384387
+#&gt; 5         X2 89 -1.4855772 1.5582527
+#&gt; 6         X2 95 -1.7158697 1.8594098
+#&gt; 7         X3 68 -1.0887625 1.1907155
+#&gt; 8         X3 89 -1.6861545 1.7669319
+#&gt; 9         X3 95 -2.1046959 1.9226621
+#&gt; 10        X4 68 -0.7282173 0.9773763
+#&gt; 11        X4 89 -1.1835891 1.3176655
+#&gt; 12        X4 95 -1.7152390 1.6712682</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 

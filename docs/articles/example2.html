@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
       </span>
     </div>
 
@@ -179,7 +179,7 @@
 <p>To compute a Bayesian correlation test, we will need the <a href="https://richarddmorey.github.io/BayesFactor/"><code>BayesFactor</code></a> package (you can install it by running <code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("BayesFactor")</a></code>). We can then load this package, compute the correlation using the <code>correlationBF()</code> function and store the results in a similar fashion.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(BayesFactor)</a>
 <a class="sourceLine" id="cb3-2" title="2">result &lt;-<span class="st"> </span><span class="kw">correlationBF</span>(iris<span class="op">$</span>Sepal.Width, iris<span class="op">$</span>Sepal.Length)</a></code></pre></div>
-<p>Now, let us run our <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> functio on that:</p>
+<p>Now, let us run our <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> function on that:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(result)</a></code></pre></div>
 <pre><code>&gt;   Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
 &gt; 1       rho  -0.11 89  -0.24  0.0079 92      89     -0.1       0.1
@@ -216,7 +216,7 @@
 <p>In general, <strong>pie charts are an absolute no-go in data visualisation</strong>, as our brain’s perceptive system heavily distorts the information presented in such way. Nevertheless, there is one exeption: pizza charts.</p>
 <p>It is an intuitive way of interpreting the strength of evidence provided by BFs as an amount of surprise.</p>
 <div class="figure" style="text-align: center">
-<img src="https://i1.wp.com/www.bayesianspectacles.org/wp-content/uploads/2018/07/LetsPokeAPizza.jpg" alt="Wagenmakers' pizza poking analogy. From the great 'www.bayesianspectacles.org' blog." width="100%"><p class="caption">
+<img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/LetsPokeAPizza.jpg" alt="Wagenmakers' pizza poking analogy. From the great 'www.bayesianspectacles.org' blog." width="100%"><p class="caption">
 Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.org’ blog.
 </p>
 </div>
@@ -232,37 +232,87 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <div id="t-tests" class="section level2">
 <h2 class="hasAnchor">
 <a href="#t-tests" class="anchor"></a><em>t</em>-tests</h2>
-<p><strong><em>“I know that I know nothing, and especially not if <em>versicolor</em> and <em>virginica</em> differ in terms of Petal.Length”</em>, famously said Socrates</strong>. Time to finally answer this answer this crucial question!</p>
+<p><strong><em>“I know that I know nothing, and especially not if <em>versicolor</em> and <em>virginica</em> differ in terms of Sepal.Width”</em>, famously said Socrates</strong>. Time to finally answer this answer this crucial question!</p>
 <div id="versicolor-vs--virginica" class="section level3">
 <h3 class="hasAnchor">
 <a href="#versicolor-vs--virginica" class="anchor"></a>Versicolor <em>vs.</em> virginica</h3>
-<p>Bayesian <em>t</em>-tests can be performed in a very similar way to correlations. As we are particularly interested in two levels of the <code>Species</code> factor, <em>versicolor</em> and <em>virginica</em>. We will start by filtering out from <code>iris</code> the non-relevant observations corresponding to the <em>setosa</em> specie, and we will then visualise the observations and the distribution of the <code>Petal.Length</code> variable.</p>
+<p>Bayesian <em>t</em>-tests can be performed in a very similar way to correlations. As we are particularly interested in two levels of the <code>Species</code> factor, <em>versicolor</em> and <em>virginica</em>. We will start by filtering out from <code>iris</code> the non-relevant observations corresponding to the <em>setosa</em> specie, and we will then visualise the observations and the distribution of the <code>Sepal.Width</code> variable.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
 <a class="sourceLine" id="cb9-3" title="3"></a>
 <a class="sourceLine" id="cb9-4" title="4"><span class="co"># Select only two relevant species</span></a>
 <a class="sourceLine" id="cb9-5" title="5">data &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(Species <span class="op">!=</span><span class="st"> "setosa"</span>)</a>
-<a class="sourceLine" id="cb9-7" title="7"></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="co"># Visualise distributions and observations</span></a>
-<a class="sourceLine" id="cb9-9" title="9">data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-10" title="10"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Petal.Length, <span class="dt">fill =</span> Species)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-11" title="11"><span class="st">  </span><span class="kw">geom_violindot</span>(<span class="dt">fill_dots =</span> <span class="st">"black"</span>, <span class="dt">size_dots =</span> <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="st">  </span><span class="kw">scale_fill_material</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-13" title="13"><span class="st">  </span><span class="kw">theme_modern</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb9-6" title="6"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(Species <span class="op">!=</span><span class="st"> "setosa"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/droplevels">droplevels</a></span>()</a>
+<a class="sourceLine" id="cb9-8" title="8"></a>
+<a class="sourceLine" id="cb9-9" title="9"><span class="co"># Visualise distributions and observations</span></a>
+<a class="sourceLine" id="cb9-10" title="10">data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Species, <span class="dt">y =</span> Sepal.Width, <span class="dt">fill =</span> Species)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="st">  </span><span class="kw">geom_violindot</span>(<span class="dt">fill_dots =</span> <span class="st">"black"</span>, <span class="dt">size_dots =</span> <span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="st">  </span><span class="kw">scale_fill_material</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-14" title="14"><span class="st">  </span><span class="kw">theme_modern</span>()</a></code></pre></div>
 <p><img src="example2_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<p>It <em>seems</em> (visually) that <em>virgnica</em> flowers have, on average, a higer length of petals. Let’s assess this difference statistically.</p>
-<p>Visually ### Compute the Bayesian <em>t</em>-test</p>
+<p>It <em>seems</em> (visually) that <em>virgnica</em> flowers have, on average, a slightly higer width of sepals. Let’s assess this difference statistically by using the <code>ttestBF</code> in the <code>BayesFactor</code> package.</p>
 </div>
-<div id="visualise-the-indices" class="section level3">
+<div id="compute-the-bayesian-t-test" class="section level3">
 <h3 class="hasAnchor">
-<a href="#visualise-the-indices" class="anchor"></a>Visualise the indices</h3>
+<a href="#compute-the-bayesian-t-test" class="anchor"></a>Compute the Bayesian <em>t</em>-test</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">result &lt;-<span class="st"> </span>BayesFactor<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BayesFactor/topics/ttestBF">ttestBF</a></span>(<span class="dt">formula =</span> Sepal.Width <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> data)</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(result)</a></code></pre></div>
+<pre><code>&gt;    Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
+&gt; 1 Difference  -0.19 89  -0.29  -0.089  1      89     -0.1       0.1
+&gt;   ROPE_Percentage BF Prior_Distribution Prior_Location Prior_Scale
+&gt; 1           0.028 18             cauchy              0        0.71</code></pre>
+<p>From the indices, we can say that the difference of <code>Sepal.Width</code> between <em>virginica</em> and <em>versicolor</em> has a probability of <strong>100% of being negative</strong> [<em>from the pd and the sign of the median</em>] (median = -0.19, 89% CI [-0.29, -0.092]). The data provides a <strong>strong evidence against the null hypothesis</strong> (BF = 18).</p>
+<p>Keep that in mind as we will see another way of investigating this question.</p>
 </div>
 </div>
 <div id="logistic-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#logistic-model" class="anchor"></a>Logistic Model</h2>
-<p>A hypothesis for which one uses a <em>t</em>-test can also be tested using a logistic model. Indeed, one can reformulate the following hypothesis, “<em>there is a important difference in this variable between my two groups</em>” by “<em>this variable is able to discriminate (or classify) between the two groups</em>”.</p>
+<p>A hypothesis for which one uses a <em>t</em>-test can also be tested using a binomial model (<em>e.g.</em>, a <strong>logistic model</strong>). Indeed, it is possible to reformulate the following hypothesis, “<em>there is an important difference in this variable between the two groups</em>” by “<em>this variable is able to discriminate between (or classify) the two groups</em>”. However, these models are much more powerful than a regular <em>t</em>-test.</p>
+<p>In the case of the difference of <code>Sepal.Width</code> between <em>virginica</em> and <em>versicolor</em>, the question becomes, <em>how well can we classify the two species using only</em> <code>Sepal.Width</code>.</p>
+<div id="fit-the-model" class="section level3">
+<h3 class="hasAnchor">
+<a href="#fit-the-model" class="anchor"></a>Fit the model</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
+<a class="sourceLine" id="cb12-2" title="2"></a>
+<a class="sourceLine" id="cb12-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Species <span class="op">~</span><span class="st"> </span>Sepal.Width, <span class="dt">data =</span> data, <span class="dt">family =</span> <span class="st">"binomial"</span>)</a></code></pre></div>
+</div>
+<div id="visualise-the-model" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualise-the-model" class="anchor"></a>Visualise the model</h3>
+<p>Using the <a href="https://github.com/easystats/estimate"><code>estimate</code></a> package. <strong>Wait until estimate is on CRAN</strong>.</p>
+</div>
+<div id="performance-and-parameters" class="section level3">
+<h3 class="hasAnchor">
+<a href="#performance-and-parameters" class="anchor"></a>Performance and Parameters</h3>
+<p>TO DO.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(performance)</a>
+<a class="sourceLine" id="cb13-2" title="2"></a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="kw">model_performance</span>(model)</a></code></pre></div>
+<pre><code>&gt; Can't calculate log-loss.</code></pre>
+<pre><code>&gt;   ELPD ELPD_SE LOOIC LOOIC_SE WAIC    R2 R2_SE RMSE LOGLOSS SCORE_LOG
+&gt; 1  -66     3.1   133      6.2  133 0.099 0.043 0.48      NA      -106
+&gt;   SCORE_SPHERICAL
+&gt; 1            0.01</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model, <span class="dt">test =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span>))</a></code></pre></div>
+<pre><code>&gt;     Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
+&gt; 1 (Intercept)   -6.2 89   -9.3    -2.9  1      89   -0.055     0.055
+&gt; 2 Sepal.Width    2.2 89    1.0     3.2  1      89   -0.055     0.055
+&gt;   ROPE_Percentage BF  ESS Rhat Prior_Distribution Prior_Location
+&gt; 1               0 13 2633    1             normal              0
+&gt; 2               0 11 2663    1             normal              0
+&gt;   Prior_Scale
+&gt; 1        10.0
+&gt; 2         7.5</code></pre>
+</div>
+<div id="visualise-the-indices" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualise-the-indices" class="anchor"></a>Visualise the indices</h3>
+<p>TO DO.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># plot(rope(result))</span></a></code></pre></div>
+</div>
 <div id="diagnostic-indices" class="section level3">
 <h3 class="hasAnchor">
 <a href="#diagnostic-indices" class="anchor"></a>Diagnostic Indices</h3>
