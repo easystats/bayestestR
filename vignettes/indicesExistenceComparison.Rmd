@@ -34,7 +34,7 @@ csl: apa.csl
 library(knitr)
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">",
-  dpi=100)
+  dpi=75)
 options(digits=2)
 ```
 
@@ -133,7 +133,7 @@ figure1
 ```
 ```{r, message=FALSE, warning=FALSE, fig.cap="Figure 1.", fig.align='center', out.width="100%", echo=FALSE}
 # ggsave("2019_frontiers/figure1.png", figure1, width=21*0.5, height=29.7*0.5, dpi=600)
-# ggsave("2019_frontiers/figure1_small.png", figure1, width=21*0.5, height=29.7*0.5, dpi=100)
+# ggsave("2019_frontiers/figure1_small.png", figure1, width=21*0.5, height=29.7*0.5, dpi=75)
 
 knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/vignettes/2019_frontiers/figure1_small.png")
 ```
@@ -165,7 +165,7 @@ figure2
 ```
 ```{r, message=FALSE, warning=FALSE, fig.cap="Figure 2.", fig.align='center', out.width="100%", echo=FALSE}
 # ggsave("2019_frontiers/figure2.png", figure2, width=21*0.5, height=29.7*0.5, dpi=600)
-# ggsave("2019_frontiers/figure2_small.png", figure2, width=21*0.5, height=29.7*0.5, dpi=100)
+# ggsave("2019_frontiers/figure2_small.png", figure2, width=21*0.5, height=29.7*0.5, dpi=75)
 
 knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/vignettes/2019_frontiers/figure2_small.png")
 ```
@@ -243,7 +243,7 @@ figure3
 ```
 ```{r, message=FALSE, warning=FALSE, fig.cap="Figure 3.", fig.align='center', out.width="100%", echo=FALSE}
 # ggsave("2019_frontiers/figure3.png", figure3, width=21*0.5, height=29.7*0.5, dpi=600)
-# ggsave("2019_frontiers/figure3_small.png", figure3, width=21*0.5, height=29.7*0.5, dpi=100)
+# ggsave("2019_frontiers/figure3_small.png", figure3, width=21*0.5, height=29.7*0.5, dpi=75)
 
 knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/vignettes/2019_frontiers/figure3_small.png")
 ```
@@ -336,7 +336,7 @@ figure4
 ```
 ```{r, message=FALSE, warning=FALSE, fig.cap="Figure 4.", fig.align='center', out.width="100%", echo=FALSE}
 # ggsave("2019_frontiers/figure4.png", figure4, width=21*0.5, height=29.7*0.5, dpi=600)
-# ggsave("2019_frontiers/figure4_small.png", figure4, width=21*0.5, height=29.7*0.5, dpi=100)
+# ggsave("2019_frontiers/figure4_small.png", figure4, width=21*0.5, height=29.7*0.5, dpi=75)
 
 knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/vignettes/2019_frontiers/figure4_small.png")
 ```
@@ -367,7 +367,7 @@ figure5
 ```
 ```{r, message=FALSE, warning=FALSE, fig.cap="Figure 5.", fig.align='center', out.width="100%", echo=FALSE}
 # ggsave("2019_frontiers/figure5.png", figure5, width=21*0.5, height=29.7*0.5, dpi=600)
-# ggsave("2019_frontiers/figure5_small.png", figure5, width=21*0.5, height=29.7*0.5, dpi=100)
+# ggsave("2019_frontiers/figure5_small.png", figure5, width=21*0.5, height=29.7*0.5, dpi=75)
 
 knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/vignettes/2019_frontiers/figure5_small.png")
 ```
@@ -400,7 +400,7 @@ figure6
 ```
 ```{r, message=FALSE, warning=FALSE, fig.cap="Figure 6.", fig.align='center', out.width="100%", echo=FALSE}
 # ggsave("2019_frontiers/figure6.png", figure6, width=21*0.5, height=21*0.5, dpi=600)
-# ggsave("2019_frontiers/figure6_small.png", figure6, width=21*0.5, height=21*0.5, dpi=100)
+# ggsave("2019_frontiers/figure6_small.png", figure6, width=21*0.5, height=21*0.5, dpi=75)
 
 knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/vignettes/2019_frontiers/figure6_small.png")
 ```

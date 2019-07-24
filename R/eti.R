@@ -18,7 +18,7 @@
 #' eti(df, ci = c(.80, .89, .95))
 #'
 #' library(rstanarm)
-#' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
+#' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' eti(model)
 #' eti(model, ci = c(.80, .89, .95))
 #'
