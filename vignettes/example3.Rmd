@@ -51,7 +51,7 @@ TO BE CONTINUED.
 TO BE CONTINUED.
 
 
-## What next?
+## What's next?
 
 The journey to become a true Bayesian master is not over. It is merely the beginning. It is now time to leave the `bayestestR` universe and apply the Bayesian framework in a variety of other statistical contexts: 
 

@@ -20,6 +20,8 @@ test_that("describe_posterior", {
   testthat::expect_equal(dim(rez), c(8, 17))
   rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
   testthat::expect_equal(dim(rez), c(4, 4))
+  # rez <- testthat::expect_warning(describe_posterior(x, ci = c(0.8, 0.9)))
+  # testthat::expect_equal(dim(rez), c(8, 17))
 
   # Rstanarm
   library(rstanarm)

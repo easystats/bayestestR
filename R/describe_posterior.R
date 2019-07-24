@@ -105,11 +105,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
 
   if (!is.null(ci)) {
     ci_method <- match.arg(tolower(ci_method), c("hdi", "quantile", "ci", "eti"))
-    if (ci_method == "hdi") {
-      uncertainty <- hdi(x, ci = ci, ...)
-    } else {
-      uncertainty <- eti(x, ci = ci, ...)
-    }
+    uncertainty <- ci(x, ci = ci, method = ci_method, ...)
     if (!"Parameter" %in% names(uncertainty)) {
       uncertainty <- cbind(data.frame("Parameter" = "Posterior"), uncertainty)
     }

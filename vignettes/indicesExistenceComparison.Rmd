@@ -363,17 +363,29 @@ rbind(
   xlab("Index Value")
 ```
 
-#### Relationship between ROPE (full) and p (direction)
+#### Relationship between ROPE (full), p (direction) and Bayes Factor
 
 ```{r, message=FALSE, warning=FALSE, fig.height=6, fig.width=10.08}
 df %>%
   mutate(true_effect = as.factor(true_effect)) %>% 
   ggplot(aes(x=p_direction, y=ROPE_full, color=true_effect)) +
-  geom_point(alpha=0.025, stroke = 0, shape=16) +
+  geom_point2(alpha=0.03, size = 2) +
   facet_wrap(~ outcome_type, scales = "free", ncol=2) +
   theme_modern() +
   scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") +
   ylab("ROPE (full)") +
+  xlab("Probability of Direction (pd)")
+```
+
+```{r, message=FALSE, warning=FALSE, fig.height=6, fig.width=10.08}
+df %>%
+  mutate(true_effect = as.factor(true_effect)) %>% 
+  ggplot(aes(x=p_direction, y=BF_log, color=true_effect)) +
+  geom_point2(alpha=0.03, size = 2) +
+  facet_wrap(~ outcome_type, scales = "free", ncol=2) +
+  theme_modern() +
+  scale_color_manual(values = c(`0` = "#f44336", `1` = "#8BC34A"), name="Effect") +
+  ylab("BF_log") +
   xlab("Probability of Direction (pd)")
 ```
 

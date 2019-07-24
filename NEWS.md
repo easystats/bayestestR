@@ -8,6 +8,7 @@
 
 ## New functions / features
 
+- `reshape_ci`: Reshape CIs between wide/long
 - `eti`: Computes equal-tailed intervals
 - `bayesfactor_interval`: Function for computing Bayes factors agaisnt an interval-null
 - `bayesfactor_restricted`: Function for computing Bayes factors for order restricted models

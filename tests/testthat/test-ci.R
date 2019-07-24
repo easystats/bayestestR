@@ -10,4 +10,10 @@ test_that("ci", {
   testthat::expect_warning(ci(c(2, 3, NA)))
   testthat::expect_warning(ci(c(2, 3)))
   testthat::expect_warning(ci(rnorm_perfect(1000), ci = 950))
+
+  x <- data.frame(replicate(4, rnorm(100)))
+  x <- ci(x, ci = c(0.68, 0.89, 0.95))
+  a <- reshape_ci(x)
+  testthat::expect_equal(c(nrow(x), ncol(x)), c(12, 4))
+  testthat::expect_true(all(reshape_ci(a) == x))
 })
