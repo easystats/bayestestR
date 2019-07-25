@@ -204,14 +204,8 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   out <- out[!is.na(out$Parameter), ]
 
   # Restore columns order
-  if(length(ci) == 1){
-    col_order <- point_estimate(x, centrality = "median", dispersion = FALSE, ci = NULL, ...)
-    if ("Parameter" %in% names(col_order)) {
-      col_order <- col_order$Parameter
-      col_order <- rep(col_order, each = round(nrow(out) / length(col_order)))
-      out <- out[match(col_order, out$Parameter), ]
-    }
-  }
+
+  out <- .reoder_rows(x, out, ci = ci)
 
   out
 }
@@ -286,7 +280,6 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
 
   if (!is.null(diagnostic)) {
-    col_order <- out$Parameter
     diagnostic <-
       diagnostic_posterior(
         posteriors,
@@ -296,18 +289,14 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
         ...
       )
     out <- merge(out, diagnostic, all = TRUE)
-    if(length(ci) == 1){
-      out <- out[match(col_order, out$Parameter), ]
-    }
+    out <- .reoder_rows(posteriors, out, ci = ci)
   }
 
   if (isTRUE(priors)) {
-    col_order <- out$Parameter
+    # col_order <- out$Parameter
     priors_data <- describe_prior(posteriors, ...)
     out <- merge(out, priors_data, all = TRUE)
-    if(length(ci) == 1){
-      out <- out[match(col_order, out$Parameter), ]
-    }
+    out <- .reoder_rows(posteriors, out, ci = ci)
   }
   out
 }
@@ -319,7 +308,6 @@ describe_posterior.brmsfit <- function(posteriors, centrality = "median", disper
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, component = component, parameters = parameters, ...)
 
   if (!is.null(diagnostic)) {
-    col_order <- out$Parameter
     diagnostic <-
       diagnostic_posterior(
         posteriors,
@@ -330,9 +318,7 @@ describe_posterior.brmsfit <- function(posteriors, centrality = "median", disper
         ...
       )
     out <- merge(out, diagnostic, all = TRUE)
-    if(length(ci) == 1){
-      out <- out[match(col_order, out$Parameter), ]
-    }
+    out <- .reoder_rows(posteriors, out, ci = ci)
   }
   out
 }
@@ -382,12 +368,9 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
 
   # Add priors
   if (priors) {
-    col_order <- out$Parameter
     priors_data <- describe_prior(posteriors, ...)
     out <- merge(out, priors_data, all = TRUE)
-    if(length(ci) == 1){
-      out <- out[match(col_order, out$Parameter), ]
-    }
+    out <- .reoder_rows(posteriors, out, ci = ci)
   }
   out
 }

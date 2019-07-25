@@ -18,6 +18,9 @@
 #' reshape_ci(reshape_ci(x))
 #' @export
 reshape_ci <- function(x){
+
+  remove_parameter <- TRUE
+
   # Long to wide ----------------
   if("CI_low" %in% names(x) & "CI_high" %in% names(x) & "CI" %in% names(x)){
 
@@ -28,7 +31,6 @@ reshape_ci <- function(x){
 
       if(!"Parameter" %in% names(x)){
         x$Parameter <- x$CI
-        remove_parameter <- TRUE
       } else{
         remove_parameter <- FALSE
       }
@@ -54,7 +56,6 @@ reshape_ci <- function(x){
 
     if(!"Parameter" %in% names(x)){
       x$Parameter <- 1:nrow(x)
-      remove_parameter <- TRUE
     } else{
       remove_parameter <- FALSE
     }
