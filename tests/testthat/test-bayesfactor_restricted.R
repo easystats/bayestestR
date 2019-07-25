@@ -25,6 +25,8 @@ test_that("bayesfactor_restricted df", {
   testthat::expect_equal(bfr$Posterior_prob, c(0.32, 0.99), tolerance = 0.1)
   testthat::expect_equal(log(bfr$BF), c(0.52, 0.76), tolerance = 0.1)
   testthat::expect_equal(bfr$BF, bfr$Posterior_prob / bfr$Prior_prob, tolerance = 0.1)
+
+  testthat::expect_error(bayestestR::bayesfactor_restricted(posterior, prior, hypothesis = "Y < 0"))
 })
 
 
