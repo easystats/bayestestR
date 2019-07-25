@@ -305,7 +305,9 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
     col_order <- out$Parameter
     priors_data <- describe_prior(posteriors, ...)
     out <- merge(out, priors_data, all = TRUE)
-    out <- out[match(col_order, out$Parameter), ]
+    if(length(ci) == 1){
+      out <- out[match(col_order, out$Parameter), ]
+    }
   }
   out
 }
