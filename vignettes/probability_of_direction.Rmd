@@ -169,3 +169,10 @@ data %>%
 ```
 
 The "Kernel" based density methods seems to consistently underestimate the *pd*. Interestingly, the "direct" method appears as being the more reliable, even in the case of small number of posterior draws.
+
+
+## Can the pd be 100\%?
+
+`p = 0.000` is coined as one of the term to avoid when reporting results [@lilienfeld2015fifty], even if often displayed by statistical software. The rationale is that for every probability distribution, there is no value with a probability of exactly 0. There is always some infinitesimal probability associated with each data point, and the `p = 0.000` returned by software is due to approximations related, among other, to finite memory hardware.
+
+One could apply this rationale for the *pd*: since all data points have a non-null probability density, then the *pd* (a particular portion of the probability density) can *never* be 100\%. While this is an entirely valid point, people using the *direct* method might argue that their *pd* is based on the posterior draws, rather than on the theoretical, hidden, true posterior distribution (which is only approximated by the posterior draws). These posterior draws represent a finite sample for which `pd = 100%` is a valid statement. 
