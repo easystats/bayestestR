@@ -114,8 +114,14 @@ bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sid
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
+bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, hypothesis = NULL,...) {
   .Deprecated("bayesfactor_parameters")
+
+  dots <- list(...)
+  if (!is.null(hypothesis)) {
+    null <- hypothesis
+    warning("The 'hypothesis' argument is deprecated. Please use 'null' instead.")
+  }
 
   bayesfactor_parameters(
     posterior = posterior,
@@ -237,11 +243,6 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
                                               direction = "two-sided", null = 0,
                                               verbose = TRUE,
                                               ...) {
-  dots <- list(...)
-  if (!is.null(dots$hypothesis)) {
-    null <- dots$hypothesis
-    warning("The 'hypothesis' argument is deprecated. Please use 'null' instead.")
-  }
   # find direction
   direction <- .get_direction(direction)
 
