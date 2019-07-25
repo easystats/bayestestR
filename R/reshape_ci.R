@@ -25,7 +25,14 @@ reshape_ci <- function(x){
 
     # Reshape
     if(length(unique(x$CI)) > 1){
-      if(!"Parameter" %in% names(x)) x$Parameter <- as.character(1:nrow(x))
+
+      if(!"Parameter" %in% names(x)){
+        x$Parameter <- x$CI
+        remove_parameter <- TRUE
+      } else{
+        remove_parameter <- FALSE
+      }
+
       x <- reshape(x,
                    idvar = "Parameter",
                    timevar = "CI",
@@ -40,9 +47,18 @@ reshape_ci <- function(x){
     colnames_1 <- names(x)[0:(ci_position-1)][!names(x)[0:(ci_position-1)] %in% ci_colname]
     colnames_2 <- names(x)[!names(x) %in% c(ci_colname, colnames_1)]
     x <- x[c(colnames_1, ci_colname, colnames_2)]
+    if(remove_parameter) x$Parameter <- NULL
 
     # Wide to long --------------
   } else{
+
+    if(!"Parameter" %in% names(x)){
+      x$Parameter <- 1:nrow(x)
+      remove_parameter <- TRUE
+    } else{
+      remove_parameter <- FALSE
+    }
+
     lows <- grepl("CI_low_*", names(x))
     highs <- grepl("CI_high_*", names(x))
     ci <- as.numeric(gsub("CI_low_", "", names(x)[lows]))
@@ -69,6 +85,7 @@ reshape_ci <- function(x){
       x$id <- NULL
       x <- x[order(x$Parameter),]
       row.names(x) <- NULL
+      if(remove_parameter) x$Parameter <- NULL
     }
 
     # Replace at the right place
