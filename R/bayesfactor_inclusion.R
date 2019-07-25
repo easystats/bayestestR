@@ -4,7 +4,7 @@
 #' @author Mattan S. Ben-Shachar
 #' @param models An object of class \code{\link{bayesfactor_models}} or \code{BFBayesFactor}.
 #' @param match_models See details.
-#' @param prior_odds Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds<-}}.
+#' @param prior_odds Optional vector of prior odds for the models. See \code{BayesFactor::priorOdds<-}.
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @return a data frame containing the prior and posterior probabilities, and BF for each effect.

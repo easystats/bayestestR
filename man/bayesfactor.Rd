@@ -32,7 +32,7 @@ or a model to be used as a denominator. Ignored for \code{BFBayesFactor}.}
 
 \item{match_models}{See details.}
 
-\item{prior_odds}{Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds<-}}.}
+\item{prior_odds}{Optional vector of prior odds for the models. See \code{BayesFactor::priorOdds<-}.}
 }
 \value{
 Some type of Bayes factor, depending on the input. See \code{\link{bayesfactor_parameters}}, \code{\link{bayesfactor_models}} or \code{\link{bayesfactor_inclusion}}
