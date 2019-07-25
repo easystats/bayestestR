@@ -53,7 +53,7 @@ or a data frame - representing a posterior distribution(s) from (see Details).}
 Only applies to mixed models. May be abbreviated.}
 }
 \value{
-A data frame containing the Bayes factor representing evidence \emph{against} the (point) null effect model.
+A data frame containing the Bayes factor representing evidence \emph{against} the null.
 }
 \description{
 This method computes Bayes factors against the null (either a point or an interval),
@@ -82,9 +82,15 @@ priors. See example below.
 It is important to provide the correct \code{prior} for meaningful results.
 \itemize{
   \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
-  \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} or \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
-  \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
+  \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
+    \item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
+    \item \code{prior} can also be a model equvilant to \code{posterior} but with samples from the priors \emph{only}.
+  }
+  \item When \code{posterior} is an \code{emmGrid} object: \itemize{
+    \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
+    \item \code{prior} can also be an \code{emmGrid} object equvilant to \code{posterior} but created with a model of priors samples \emph{only}.
+  }
 }}
 \subsection{One-sided Tests (setting an order restriction)}{
 One sided tests (controlled by \code{direction}) are conducted by restricting the prior and

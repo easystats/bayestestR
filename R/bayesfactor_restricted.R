@@ -25,9 +25,15 @@
 #' \subsection{Setting the correct \code{prior}}{
 #' It is important to provide the correct \code{prior} for meaningful results.
 #' \itemize{
-#'   \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} or \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
-#'   \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
-#'   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column names.
+#'   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
+#'   \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
+#'     \item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
+#'     \item \code{prior} can also be a model equvilant to \code{posterior} but with samples from the priors \emph{only}.
+#'   }
+#'   \item When \code{posterior} is an \code{emmGrid} object: \itemize{
+#'     \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
+#'     \item \code{prior} can also be an \code{emmGrid} object equvilant to \code{posterior} but created with a model of priors samples \emph{only}.
+#'   }
 #' }}
 #' \subsection{Interpreting Bayes Factors}{
 #' A Bayes factor greater than 1 can be interpereted as evidence against the null,
@@ -154,7 +160,7 @@ bayesfactor_restricted.emmGrid <- function(posterior, prior = NULL,
       "Prior not specified! ",
       "Please provide the original model to get meaningful results."
     )
-  } else {
+  } else if (!inherits(prior, "emmGrid")) { # then is it a model
     prior <- .update_to_priors(prior, verbose = verbose)
     prior <- insight::get_parameters(prior, effects = "fixed")
     prior <- stats::update(posterior, post.beta = as.matrix(prior))
