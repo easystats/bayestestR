@@ -62,7 +62,7 @@ point_estimate.numeric <- function(x, centrality = "median", dispersion = FALSE,
   if ("all" %in% centrality) {
     estimate_list <- c("median", "mean", "map")
   } else {
-    estimate_list <- c(centrality)
+    estimate_list <- centrality
   }
 
   out <- data.frame(".temp" = 0)
@@ -90,6 +90,7 @@ point_estimate.numeric <- function(x, centrality = "median", dispersion = FALSE,
 
   out <- out[names(out) != ".temp"]
   attr(out, "data") <- x
+  attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 
   out
@@ -111,6 +112,7 @@ point_estimate.data.frame <- function(x, centrality = "median", dispersion = FAL
   out <- cbind(data.frame("Parameter" = names(x), stringsAsFactors = FALSE), estimates)
   rownames(out) <- NULL
   attr(out, "data") <- x
+  attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 
   out
@@ -125,6 +127,7 @@ point_estimate.emmGrid <- function(x, centrality = "median", dispersion = FALSE,
 
   out <- point_estimate(xdf, centrality = centrality, dispersion = dispersion, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 
   out
@@ -158,6 +161,7 @@ point_estimate.stanreg <- function(x, centrality = "median", dispersion = FALSE,
     ...
   )
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 
   out
@@ -179,6 +183,7 @@ point_estimate.brmsfit <- function(x, centrality = "median", dispersion = FALSE,
     ...
   )
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 
   out
@@ -190,6 +195,7 @@ point_estimate.brmsfit <- function(x, centrality = "median", dispersion = FALSE,
 point_estimate.BFBayesFactor <- function(x, centrality = "median", dispersion = FALSE, ...) {
   out <- point_estimate(insight::get_parameters(x), centrality = centrality, dispersion = dispersion, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 
   out
