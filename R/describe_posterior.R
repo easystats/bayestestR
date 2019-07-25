@@ -296,7 +296,9 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
         ...
       )
     out <- merge(out, diagnostic, all = TRUE)
-    out <- out[match(col_order, out$Parameter), ]
+    if(length(ci) == 1){
+      out <- out[match(col_order, out$Parameter), ]
+    }
   }
 
   if (isTRUE(priors)) {
@@ -326,7 +328,9 @@ describe_posterior.brmsfit <- function(posteriors, centrality = "median", disper
         ...
       )
     out <- merge(out, diagnostic, all = TRUE)
-    out <- out[match(col_order, out$Parameter), ]
+    if(length(ci) == 1){
+      out <- out[match(col_order, out$Parameter), ]
+    }
   }
   out
 }
@@ -379,7 +383,9 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
     col_order <- out$Parameter
     priors_data <- describe_prior(posteriors, ...)
     out <- merge(out, priors_data, all = TRUE)
-    out <- out[match(col_order, out$Parameter), ]
+    if(length(ci) == 1){
+      out <- out[match(col_order, out$Parameter), ]
+    }
   }
   out
 }
