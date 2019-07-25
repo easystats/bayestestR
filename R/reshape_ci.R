@@ -37,9 +37,9 @@ reshape_ci <- function(x){
 
     # Replace at the right place
     ci_colname <- names(x)[c(grepl("CI_low_*", names(x)) | grepl("CI_high_*", names(x)))]
-    x <- cbind(x[names(x)[0:(ci_position-1)][!names(x)[0:(ci_position-1)] %in% ci_colname]],
-               x[ci_colname],
-               x[names(x)[ci_position:(length(names(x))-1)][!names(x)[ci_position:(length(names(x))-1)] %in% ci_colname]])
+    colnames_1 <- names(x)[0:(ci_position-1)][!names(x)[0:(ci_position-1)] %in% ci_colname]
+    colnames_2 <- names(x)[!names(x) %in% c(ci_colname, colnames_1)]
+    x <- x[c(colnames_1, ci_colname, colnames_2)]
 
     # Wide to long --------------
   } else{
@@ -74,10 +74,9 @@ reshape_ci <- function(x){
     # Replace at the right place
     ci_position <- which(lows)[1]
     ci_colname <- c("CI", "CI_low", "CI_high")
-    x <- cbind(x[names(x)[0:(ci_position-1)][!names(x)[0:(ci_position-1)] %in% ci_colname]],
-               x[ci_colname],
-               x[names(x)[ci_position:(length(names(x))-1)][!names(x)[ci_position:(length(names(x))-1)] %in% ci_colname]])
-
+    colnames_1 <- names(x)[0:(ci_position-1)][!names(x)[0:(ci_position-1)] %in% ci_colname]
+    colnames_2 <- names(x)[!names(x) %in% c(ci_colname, colnames_1)]
+    x <- x[c(colnames_1, ci_colname, colnames_2)]
   }
   x
 }
