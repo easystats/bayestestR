@@ -7,26 +7,26 @@
 \alias{bayesfactor_restricted.emmGrid}
 \title{Bayes Factors (BF) for Order Restricted Models}
 \usage{
-bayesfactor_restricted(posterior, prior = NULL, hypothesis,
+bayesfactor_restricted(posterior, hypothesis, prior = NULL,
   verbose = TRUE, ...)
 
-\method{bayesfactor_restricted}{stanreg}(posterior, prior = NULL,
-  hypothesis, verbose = TRUE, effects = c("fixed", "random", "all"),
-  ...)
+\method{bayesfactor_restricted}{stanreg}(posterior, hypothesis,
+  prior = NULL, verbose = TRUE, effects = c("fixed", "random",
+  "all"), ...)
 
-\method{bayesfactor_restricted}{brmsfit}(posterior, prior = NULL,
-  hypothesis, verbose = TRUE, effects = c("fixed", "random", "all"),
-  ...)
+\method{bayesfactor_restricted}{brmsfit}(posterior, hypothesis,
+  prior = NULL, verbose = TRUE, effects = c("fixed", "random",
+  "all"), ...)
 
-\method{bayesfactor_restricted}{emmGrid}(posterior, prior = NULL,
-  hypothesis, verbose = TRUE, ...)
+\method{bayesfactor_restricted}{emmGrid}(posterior, hypothesis,
+  prior = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{posterior}{A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).}
 
-\item{prior}{An object representing a prior distribution (see Details).}
-
 \item{hypothesis}{A character vector specifying the restrictions as logical conditions (see examples below).}
+
+\item{prior}{An object representing a prior distribution (see Details).}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -97,7 +97,7 @@ hyps <- c(
   "X > X1"
 )
 
-bayesfactor_restricted(posterior, prior, hypothesis = hyps)
+bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior)
 \dontrun{
 # rstanarm models
 # ---------------

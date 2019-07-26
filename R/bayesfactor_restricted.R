@@ -6,8 +6,8 @@
 #' For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 #'
 #' @param posterior A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).
-#' @param prior An object representing a prior distribution (see Details).
 #' @param hypothesis A character vector specifying the restrictions as logical conditions (see examples below).
+#' @param prior An object representing a prior distribution (see Details).
 #' @inheritParams hdi
 #'
 #' @details This method is used to compute Bayes factors for order-restricted models vs un-restricted
@@ -64,7 +64,7 @@
 #'   "X > X1"
 #' )
 #'
-#' bayesfactor_restricted(posterior, prior, hypothesis = hyps)
+#' bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior)
 #' \dontrun{
 #' # rstanarm models
 #' # ---------------
@@ -109,15 +109,14 @@
 #' }
 #'
 #' @export
-bayesfactor_restricted <- function(posterior, prior = NULL, hypothesis, verbose = TRUE, ...) {
+bayesfactor_restricted <- function(posterior, hypothesis, prior = NULL, verbose = TRUE, ...) {
   UseMethod("bayesfactor_restricted")
 }
 
 #' @importFrom insight get_parameters
 #' @rdname bayesfactor_restricted
 #' @export
-bayesfactor_restricted.stanreg <- function(posterior, prior = NULL,
-                                           hypothesis,
+bayesfactor_restricted.stanreg <- function(posterior, hypothesis, prior = NULL,
                                            verbose = TRUE,
                                            effects = c("fixed", "random", "all"),
                                            ...) {
@@ -146,8 +145,7 @@ bayesfactor_restricted.brmsfit <- bayesfactor_restricted.stanreg
 #' @importFrom insight get_parameters
 #' @rdname bayesfactor_restricted
 #' @export
-bayesfactor_restricted.emmGrid <- function(posterior, prior = NULL,
-                                           hypothesis,
+bayesfactor_restricted.emmGrid <- function(posterior, hypothesis, prior = NULL,
                                            verbose = TRUE,
                                            ...) {
   if (!requireNamespace("emmeans")) {
@@ -176,7 +174,7 @@ bayesfactor_restricted.emmGrid <- function(posterior, prior = NULL,
 }
 
 #' @export
-bayesfactor_restricted.data.frame <- function(posterior, prior = NULL, hypothesis, ...) {
+bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NULL, ...) {
   p_hypothesis <- parse(text = hypothesis)
 
   if (is.null(prior)) {

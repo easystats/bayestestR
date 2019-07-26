@@ -19,7 +19,7 @@ test_that("bayesfactor_restricted df", {
     "X > X1"
   )
 
-  bfr <- bayestestR::bayesfactor_restricted(posterior, prior, hypothesis = hyps)
+  bfr <- bayestestR::bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior)
 
   testthat::expect_equal(bfr$Prior_prob, c(1 / 6, 1 / 2), tolerance = 0.1)
   testthat::expect_equal(bfr$Posterior_prob, c(0.32, 0.99), tolerance = 0.1)
