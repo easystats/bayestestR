@@ -17,8 +17,8 @@ test_that("bayesfactor_parameters numeric", {
   bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, null = 0, direction = -1)
   testthat::expect_equal(log(bfsd$BF), -2.5, tolerance = 0.1)
 
-  testthat::expect_warning(bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, hypothesis = 1, direction = 0))
-  testthat::expect_equal(log(bfsd$BF), -0.8, tolerance = 0.1)
+  bfsd <- bayestestR::bayesfactor_parameters(Xposterior, prior = Xprior, hypothesis = 1, direction = 0)
+  testthat::expect_equal(log(bfsd$BF), 0, tolerance = 0.1)
 
   testthat::expect_warning(bfsd <- bayestestR::bayesfactor_parameters(Xposterior))
   testthat::expect_equal(log(bfsd$BF), 0, tolerance = 0.1)

@@ -14,7 +14,8 @@ bayesfactor_parameters(posterior, prior = NULL,
   direction = "two-sided", null = 0, verbose = TRUE, ...)
 
 bayesfactor_savagedickey(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE, ...)
+  direction = "two-sided", null = 0, verbose = TRUE,
+  hypothesis = NULL, ...)
 
 \method{bayesfactor_parameters}{numeric}(posterior, prior = NULL,
   direction = "two-sided", null = 0, verbose = TRUE, ...)
@@ -48,6 +49,8 @@ or a data frame - representing a posterior distribution(s) from (see Details).}
 \item{verbose}{Toggle off warnings.}
 
 \item{...}{Currently not used.}
+
+\item{hypothesis}{Deprecated in favour of \code{null}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}

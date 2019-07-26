@@ -21,6 +21,7 @@
 #' \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).
 #' @param null Value of the null, either a scaler (for point-null) or a a range
 #' (for a interval-null).
+#' @param hypothesis Deprecated in favour of \code{null}.
 #' @inheritParams hdi
 #'
 #' @return A data frame containing the Bayes factor representing evidence \emph{against} the null.
