@@ -12,7 +12,7 @@ bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL,
 
 \item{match_models}{See details.}
 
-\item{prior_odds}{Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds<-}}.}
+\item{prior_odds}{Optional vector of prior odds for the models. See \code{BayesFactor::priorOdds<-}.}
 
 \item{...}{Arguments passed to or from other methods.}
 }

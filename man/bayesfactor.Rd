@@ -20,7 +20,7 @@ bayesfactor(..., prior = NULL, direction = "two-sided", null = 0,
 \item{null}{Value of the null, either a scaler (for point-null) or a a range
 (for a interval-null).}
 
-\item{hypothesis}{A character vector specifying the restrictions as logical conditions (see examples below).}
+\item{hypothesis}{Deprecated in favour of \code{null}.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
@@ -32,7 +32,7 @@ or a model to be used as a denominator. Ignored for \code{BFBayesFactor}.}
 
 \item{match_models}{See details.}
 
-\item{prior_odds}{Optional vector of prior odds for the models. See \code{\link[BayesFactor]{priorOdds<-}}.}
+\item{prior_odds}{Optional vector of prior odds for the models. See \code{BayesFactor::priorOdds<-}.}
 }
 \value{
 Some type of Bayes factor, depending on the input. See \code{\link{bayesfactor_parameters}}, \code{\link{bayesfactor_models}} or \code{\link{bayesfactor_inclusion}}

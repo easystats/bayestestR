@@ -73,7 +73,7 @@
 #' rope(x = rnorm(1000, 1, 1), ci = c(.90, .95))
 #'
 #' library(rstanarm)
-#' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
+#' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
 #'

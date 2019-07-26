@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
       </span>
     </div>
 
@@ -190,7 +190,7 @@
 <h4 class="hasAnchor">
 <a href="#sensitivity-to-noise" class="anchor"></a>Sensitivity to Noise</h4>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">select</span>(error, true_effect, outcome_type, beta, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">select</span>(error, true_effect, outcome_type, Coefficient, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>error, <span class="op">-</span>true_effect, <span class="op">-</span>outcome_type) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cut">cut</a></span>(error, <span class="dv">10</span>, <span class="dt">labels =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(temp) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -203,7 +203,7 @@
 <a class="sourceLine" id="cb2-12" title="12"><span class="st">  </span><span class="co"># geom_smooth(method="loess") +</span></a>
 <a class="sourceLine" id="cb2-13" title="13"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape=</span><span class="ot">NA</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-14" title="14"><span class="st">  </span><span class="kw">theme_modern</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Coefficient"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
 <a class="sourceLine" id="cb2-16" title="16">                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-17" title="17"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-18" title="18"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Noise"</span>) <span class="op">+</span></a>
@@ -214,7 +214,7 @@
 <h4 class="hasAnchor">
 <a href="#sensitivity-to-sample-size" class="anchor"></a>Sensitivity to Sample Size</h4>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="st">  </span><span class="kw">select</span>(sample_size, true_effect, outcome_type, beta, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="st">  </span><span class="kw">select</span>(sample_size, true_effect, outcome_type, Coefficient, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>sample_size, <span class="op">-</span>true_effect, <span class="op">-</span>outcome_type) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cut">cut</a></span>(sample_size, <span class="dv">10</span>, <span class="dt">labels =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(temp) <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -227,7 +227,7 @@
 <a class="sourceLine" id="cb3-12" title="12"><span class="st">  </span><span class="co"># geom_smooth(method="loess") +</span></a>
 <a class="sourceLine" id="cb3-13" title="13"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape=</span><span class="ot">NA</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-14" title="14"><span class="st">  </span><span class="kw">theme_modern</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Coefficient"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
 <a class="sourceLine" id="cb3-16" title="16">                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-17" title="17"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-18" title="18"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Sample size"</span>) <span class="op">+</span></a>
@@ -239,7 +239,7 @@
 <a href="#statistical-modelling" class="anchor"></a>Statistical Modelling</h4>
 <p>We fitted a (frequentist) multiple linear regression to statistically test the the predict the presence or absence of effect with the estimates as well as their interaction with noise and sample size.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">select</span>(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">select</span>(sample_size, error, true_effect, outcome_type, Coefficient, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>sample_size, <span class="op">-</span>error, <span class="op">-</span>true_effect, <span class="op">-</span>outcome_type) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-4" title="4"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(true_effect <span class="op">~</span><span class="st"> </span>outcome_type <span class="op">/</span><span class="st"> </span>estimate <span class="op">/</span><span class="st"> </span>value, <span class="dt">data=</span>., <span class="dt">family=</span><span class="st">"binomial"</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-5" title="5"><span class="st">  </span>broom<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">tidy</a></span>() <span class="op">%&gt;%</span></a>
@@ -256,53 +256,53 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">outcome_typelinear:estimateMAP:value</td>
-<td align="right">10.6</td>
+<td align="left">outcome_typelinear:estimateMean:value</td>
+<td align="right">10.8</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">outcome_typelinear:estimateMedian:value</td>
-<td align="right">10.5</td>
+<td align="right">10.8</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">outcome_typelinear:estimateMean:value</td>
-<td align="right">10.5</td>
+<td align="left">outcome_typelinear:estimateMAP:value</td>
+<td align="right">10.7</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">outcome_typelinear:estimatebeta:value</td>
-<td align="right">10.3</td>
+<td align="left">outcome_typelinear:estimateCoefficient:value</td>
+<td align="right">10.5</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">outcome_typebinary:estimateMAP:value</td>
-<td align="right">5.1</td>
+<td align="right">4.4</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">outcome_typebinary:estimateMedian:value</td>
-<td align="right">4.9</td>
+<td align="right">4.3</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">outcome_typebinary:estimateMean:value</td>
-<td align="right">4.8</td>
+<td align="right">4.2</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">outcome_typebinary:estimatebeta:value</td>
-<td align="right">4.5</td>
+<td align="left">outcome_typebinary:estimateCoefficient:value</td>
+<td align="right">3.9</td>
 <td align="right">0</td>
 </tr>
 </tbody>
 </table>
 <p>This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist’s beta:</p>
 <ul>
-<li>For linear models, the <strong>Mean</strong> was the better predictor, closely followed by the <strong>Median</strong>, the <strong>MAP</strong> and the frequentist <strong>beta</strong>.</li>
-<li>For logistic models, the <strong>MAP</strong> was the better predictor, followed by the <strong>Median</strong>, the <strong>Mean</strong> and the frequentist <strong>beta</strong>.</li>
+<li>For linear models, the <strong>Mean</strong> was the better predictor, closely followed by the <strong>Median</strong>, the <strong>MAP</strong> and the frequentist <strong>Coefficient</strong>.</li>
+<li>For logistic models, the <strong>MAP</strong> was the better predictor, followed by the <strong>Median</strong>, the <strong>Mean</strong> and, behind, the frequentist <strong>Coefficient</strong>.</li>
 </ul>
-<p>Overall, the <strong>median</strong> seems to be appears as an approriate choice, maintaining a a high performance accross different types of models.</p>
+<p>Overall, the <strong>median</strong> seems to be appears as a safe and approriate choice, maintaining a a high performance accross different types of models.</p>
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>% -->
 <!--   select(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) %>% -->

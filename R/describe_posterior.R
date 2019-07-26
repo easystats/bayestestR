@@ -4,8 +4,8 @@
 #'
 #' @param posteriors A vector, dataframe or model of posterior draws.
 #' @param ci_method The type of index used for Credible Interval. Can be
-#'   \code{"hdi"} (default, see \code{\link{hdi}}) or \code{"quantile"}
-#'   (see \code{\link{ci}}).
+#'   \code{"HDI"} (default, see \code{\link{hdi}}) or \code{"ETI"}
+#'   (see \code{\link{eti}}).
 #' @param test The indices of effect existence to compute. Character (vector) or
 #'   list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
 #'   \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
@@ -105,11 +105,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
 
   if (!is.null(ci)) {
     ci_method <- match.arg(tolower(ci_method), c("hdi", "quantile", "ci", "eti"))
-    if (ci_method == "hdi") {
-      uncertainty <- hdi(x, ci = ci, ...)
-    } else {
-      uncertainty <- eti(x, ci = ci, ...)
-    }
+    uncertainty <- ci(x, ci = ci, method = ci_method, ...)
     if (!"Parameter" %in% names(uncertainty)) {
       uncertainty <- cbind(data.frame("Parameter" = "Posterior"), uncertainty)
     }
@@ -208,12 +204,8 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   out <- out[!is.na(out$Parameter), ]
 
   # Restore columns order
-  col_order <- point_estimate(x, centrality = "median", dispersion = FALSE, ci = NULL, ...)
-  if ("Parameter" %in% names(col_order)) {
-    col_order <- col_order$Parameter
-    col_order <- rep(col_order, each = round(nrow(out) / length(col_order)))
-    out <- out[match(col_order, out$Parameter), ]
-  }
+
+  out <- .reoder_rows(x, out, ci = ci)
 
   out
 }
@@ -246,7 +238,7 @@ describe_posterior.emmGrid <- function(posteriors, centrality = "median", disper
     stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
   }
 
-  if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
+  if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test))) {
     if (is.null(bf_prior)) {
       bf_prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posteriors, names = FALSE)))
       warning(
@@ -288,7 +280,6 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
 
   if (!is.null(diagnostic)) {
-    col_order <- out$Parameter
     diagnostic <-
       diagnostic_posterior(
         posteriors,
@@ -298,14 +289,14 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
         ...
       )
     out <- merge(out, diagnostic, all = TRUE)
-    out <- out[match(col_order, out$Parameter), ]
+    out <- .reoder_rows(posteriors, out, ci = ci)
   }
 
   if (isTRUE(priors)) {
-    col_order <- out$Parameter
+    # col_order <- out$Parameter
     priors_data <- describe_prior(posteriors, ...)
     out <- merge(out, priors_data, all = TRUE)
-    out <- out[match(col_order, out$Parameter), ]
+    out <- .reoder_rows(posteriors, out, ci = ci)
   }
   out
 }
@@ -317,7 +308,6 @@ describe_posterior.brmsfit <- function(posteriors, centrality = "median", disper
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, component = component, parameters = parameters, ...)
 
   if (!is.null(diagnostic)) {
-    col_order <- out$Parameter
     diagnostic <-
       diagnostic_posterior(
         posteriors,
@@ -328,7 +318,7 @@ describe_posterior.brmsfit <- function(posteriors, centrality = "median", disper
         ...
       )
     out <- merge(out, diagnostic, all = TRUE)
-    out <- out[match(col_order, out$Parameter), ]
+    out <- .reoder_rows(posteriors, out, ci = ci)
   }
   out
 }
@@ -378,10 +368,9 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
 
   # Add priors
   if (priors) {
-    col_order <- out$Parameter
     priors_data <- describe_prior(posteriors, ...)
     out <- merge(out, priors_data, all = TRUE)
-    out <- out[match(col_order, out$Parameter), ]
+    out <- .reoder_rows(posteriors, out, ci = ci)
   }
   out
 }

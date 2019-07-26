@@ -7,26 +7,26 @@
 \alias{bayesfactor_restricted.emmGrid}
 \title{Bayes Factors (BF) for Order Restricted Models}
 \usage{
-bayesfactor_restricted(posterior, prior = NULL, hypothesis,
+bayesfactor_restricted(posterior, hypothesis, prior = NULL,
   verbose = TRUE, ...)
 
-\method{bayesfactor_restricted}{stanreg}(posterior, prior = NULL,
-  hypothesis, verbose = TRUE, effects = c("fixed", "random", "all"),
-  ...)
+\method{bayesfactor_restricted}{stanreg}(posterior, hypothesis,
+  prior = NULL, verbose = TRUE, effects = c("fixed", "random",
+  "all"), ...)
 
-\method{bayesfactor_restricted}{brmsfit}(posterior, prior = NULL,
-  hypothesis, verbose = TRUE, effects = c("fixed", "random", "all"),
-  ...)
+\method{bayesfactor_restricted}{brmsfit}(posterior, hypothesis,
+  prior = NULL, verbose = TRUE, effects = c("fixed", "random",
+  "all"), ...)
 
-\method{bayesfactor_restricted}{emmGrid}(posterior, prior = NULL,
-  hypothesis, verbose = TRUE, ...)
+\method{bayesfactor_restricted}{emmGrid}(posterior, hypothesis,
+  prior = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{posterior}{A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).}
 
-\item{prior}{An object representing a prior distribution (see Details).}
-
 \item{hypothesis}{A character vector specifying the restrictions as logical conditions (see examples below).}
+
+\item{prior}{An object representing a prior distribution (see Details).}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -60,9 +60,15 @@ extracted for each parameter, and Savage-Dickey Bayes factors are computed for e
 \subsection{Setting the correct \code{prior}}{
 It is important to provide the correct \code{prior} for meaningful results.
 \itemize{
-  \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} or \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
-  \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
-  \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column names.
+  \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
+  \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
+    \item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
+    \item \code{prior} can also be a model equvilant to \code{posterior} but with samples from the priors \emph{only}.
+  }
+  \item When \code{posterior} is an \code{emmGrid} object: \itemize{
+    \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
+    \item \code{prior} can also be an \code{emmGrid} object equvilant to \code{posterior} but created with a model of priors samples \emph{only}.
+  }
 }}
 \subsection{Interpreting Bayes Factors}{
 A Bayes factor greater than 1 can be interpereted as evidence against the null,
@@ -91,7 +97,7 @@ hyps <- c(
   "X > X1"
 )
 
-bayesfactor_restricted(posterior, prior, hypothesis = hyps)
+bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior)
 \dontrun{
 # rstanarm models
 # ---------------

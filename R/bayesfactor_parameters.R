@@ -21,9 +21,10 @@
 #' \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).
 #' @param null Value of the null, either a scaler (for point-null) or a a range
 #' (for a interval-null).
+#' @param hypothesis Deprecated in favour of \code{null}.
 #' @inheritParams hdi
 #'
-#' @return A data frame containing the Bayes factor representing evidence \emph{against} the (point) null effect model.
+#' @return A data frame containing the Bayes factor representing evidence \emph{against} the null.
 #'
 #' @details This method is used to compute Bayes factors based on prior and posterior distributions.
 #' When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
@@ -36,9 +37,15 @@
 #' It is important to provide the correct \code{prior} for meaningful results.
 #' \itemize{
 #'   \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
-#'   \item When \code{posterior} is an \code{emmGrid} object based on a \code{stanreg} or \code{brmsfit} model, \code{prior} should be \emph{that model object} (see example).
-#'   \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model, there is no need to specify \code{prior}, as prior samples are drawn internally.
 #'   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
+#'   \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
+#'     \item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
+#'     \item \code{prior} can also be a model equvilant to \code{posterior} but with samples from the priors \emph{only}.
+#'   }
+#'   \item When \code{posterior} is an \code{emmGrid} object: \itemize{
+#'     \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
+#'     \item \code{prior} can also be an \code{emmGrid} object equvilant to \code{posterior} but created with a model of priors samples \emph{only}.
+#'   }
 #' }}
 #' \subsection{One-sided Tests (setting an order restriction)}{
 #' One sided tests (controlled by \code{direction}) are conducted by restricting the prior and
@@ -108,8 +115,14 @@ bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sid
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
+bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, hypothesis = NULL,...) {
   .Deprecated("bayesfactor_parameters")
+
+  dots <- list(...)
+  if (!is.null(hypothesis)) {
+    null <- hypothesis
+    warning("The 'hypothesis' argument is deprecated. Please use 'null' instead.")
+  }
 
   bayesfactor_parameters(
     posterior = posterior,
@@ -201,7 +214,7 @@ bayesfactor_parameters.emmGrid <- function(posterior, prior = NULL,
       "Prior not specified! ",
       "Please provide the original model to get meaningful results."
     )
-  } else {
+  } else if (!inherits(prior, "emmGrid")) { # then is it a model
     prior <- .update_to_priors(prior, verbose = verbose)
     prior <- insight::get_parameters(prior, effects = "fixed")
     prior <- stats::update(posterior, post.beta = as.matrix(prior))
@@ -231,11 +244,6 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
                                               direction = "two-sided", null = 0,
                                               verbose = TRUE,
                                               ...) {
-  dots <- list(...)
-  if (!is.null(dots$hypothesis)) {
-    null <- dots$hypothesis
-    warning("The 'hypothesis' argument is deprecated. Please use 'null' instead.")
-  }
   # find direction
   direction <- .get_direction(direction)
 

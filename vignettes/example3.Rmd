@@ -1,5 +1,5 @@
 ---
-title: "Example 3: Become a Bayesian master"
+title: "3. Become a Bayesian master"
 output: 
   github_document:
     toc: true
@@ -41,7 +41,20 @@ knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/f
 
 
 
+
+## Mixed Models
+
 TO BE CONTINUED.
 
-- [Testing Contrasts from Bayesian Models with 'emmeans' and 'bayestestR'](https://easystats.github.io/blog/posts/bayestestr_emmeans/)
+### Priors
 
+TO BE CONTINUED.
+
+
+## What's next?
+
+The journey to become a true Bayesian master is not over. It is merely the beginning. It is now time to leave the `bayestestR` universe and apply the Bayesian framework in a variety of other statistical contexts: 
+
+- [**Marginal means**](https://easystats.github.io/estimate/articles/marginal_means.html)
+- [**Contrast analysis**](https://easystats.github.io/estimate/articles/contrast_analysis.html)
+- [**Testing Contrasts from Bayesian Models with 'emmeans' and 'bayestestR'**](https://easystats.github.io/blog/posts/bayestestr_emmeans/)

@@ -48,8 +48,8 @@ describe_posterior(posteriors, centrality = "median",
 to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95} (95\%) for frequentist models.}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"hdi"} (default, see \code{\link{hdi}}) or \code{"quantile"}
-(see \code{\link{ci}}).}
+\code{"HDI"} (default, see \code{\link{hdi}}) or \code{"ETI"}
+(see \code{\link{eti}}).}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),

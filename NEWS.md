@@ -2,15 +2,16 @@
 
 ## Breaking changes
 
-- `rope`: returns a proportion (between 0 and 1) instead of a value between 0 and 100
-- `p_direction`: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 ([#168](https://github.com/easystats/bayestestR/issues/168))
-- `bayesfactor_savagedickey`: `hypothesis` argument replaced with `null`
+- `rope()`: returns a proportion (between 0 and 1) instead of a value between 0 and 100
+- `p_direction()`: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 ([#168](https://github.com/easystats/bayestestR/issues/168))
+- `bayesfactor_savagedickey()`: `hypothesis` argument replaced by `null` as part of the new `bayesfactor_parameters()` function.
 
 ## New functions / features
 
-- `eti`: Computes equal-tailed intervals
-- `bayesfactor_interval`: Function for computing Bayes factors agaisnt an interval-null
-- `bayesfactor_restricted`: Function for computing Bayes factors for order restricted models
+- `reshape_ci()`: Reshape CIs between wide/long
+- `eti()`: Computes equal-tailed intervals
+- `bayesfactor_parameters()`: New function, replacing `bayesfactor_savagedickey()`, allows for computing Bayes factors agaisnt a *point-null* or an *interval-null*.
+- `bayesfactor_restricted()`: Function for computing Bayes factors for order restricted models
 
 ## Minor changes
 
@@ -18,13 +19,13 @@
 
 ## Breaking changes
 
-- `equivalence_test`: returns capitalized output (e.g., `Rejected` instead of `rejected`)
-- `describe_posterior.numeric`: `dispersion` defaults to FALSE for consistency with the other methods
+- `equivalence_test()`: returns capitalized output (e.g., `Rejected` instead of `rejected`)
+- `describe_posterior.numeric()`: `dispersion` defaults to `FALSE` for consistency with the other methods
 
 ## New functions / features
 
-- `pd_to_p` and `p_to_pd`: Functions to convert between probability of direction (pd) and p-value
-- Support of `emmGrid` objects: `ci`, `rope`, `bayesfactor_savagedickey`, `describe_posterior`, ...
+- `pd_to_p()` and `p_to_pd()`: Functions to convert between probability of direction (pd) and p-value
+- Support of `emmGrid` objects: `ci()`, `rope()`, `bayesfactor_savagedickey()`, `describe_posterior()`, ...
 
 
 ## Minor changes
@@ -33,15 +34,15 @@
 
 ## Bug fixes
 
-- `describe_posterior`: Fixed column order restoration
-- `bayesfactor_inclusion`: Inclusion BFs for matched models are more inline with JASP results.
+- `describe_posterior()`: Fixed column order restoration
+- `bayesfactor_inclusion()`: Inclusion BFs for matched models are more inline with JASP results.
 
 # bayestestR 0.2.0
 
 ## Breaking changes
 
 - plotting functions now require the installation of the `see` package
-- `estimate` argument name in `describe_posterior` and `point_estimate` changed to `centrality`
+- `estimate` argument name in `describe_posterior()` and `point_estimate()` changed to `centrality`
 - `hdi()`, `ci()`, `rope()` and `equivalence_test()` default `ci` to `0.89`
 - `rnorm_perfect()` deprecated in favour of `distribution_normal()`
 - `map_estimate()` now returns a single value instead of a dataframe and the `density` parameter has been removed. The MAP density value is now accessible via `attributes(map_output)$MAP_density`
