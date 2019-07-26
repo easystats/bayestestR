@@ -44,7 +44,7 @@ plot.hdi <- function(x, ...) {
 
 
 #' @export
-plot.bayestestR_ci <- function(x, ...) {
+plot.eti <- function(x, ...) {
   if (!requireNamespace("see", quietly = TRUE)) {
     stop("Package 'see' needed to plot credible intervals. Please install it by running `install.packages('see')`.")
   }
