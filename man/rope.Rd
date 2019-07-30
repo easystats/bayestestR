@@ -16,10 +16,10 @@ rope(x, ...)
 \method{rope}{default}(x, ...)
 
 \method{rope}{numeric}(x, range = "default", ci = 0.89,
-  verbose = TRUE, ...)
+  ci_method = "HDI", verbose = TRUE, ...)
 
 \method{rope}{data.frame}(x, range = "default", ci = 0.89,
-  verbose = TRUE, ...)
+  ci_method = "HDI", verbose = TRUE, ...)
 
 \method{rope}{emmGrid}(x, range = "default", ci = 0.89,
   verbose = TRUE, ...)
@@ -28,13 +28,13 @@ rope(x, ...)
   verbose = TRUE, ...)
 
 \method{rope}{stanreg}(x, range = "default", ci = 0.89,
-  effects = c("fixed", "random", "all"), parameters = NULL,
-  verbose = TRUE, ...)
+  ci_method = "HDI", effects = c("fixed", "random", "all"),
+  parameters = NULL, verbose = TRUE, ...)
 
 \method{rope}{brmsfit}(x, range = "default", ci = 0.89,
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE,
-  ...)
+  ci_method = "HDI", effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
@@ -44,6 +44,8 @@ rope(x, ...)
 \item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.}
+
+\item{ci_method}{The type of interval to use to quantify the percentage in ROPE. Can be 'HDI' (default) or 'ETI'. See \code{\link{ci}}.}
 
 \item{verbose}{Toggle off warnings.}
 

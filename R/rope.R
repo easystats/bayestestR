@@ -5,6 +5,7 @@
 #' @param x Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param range ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.
 #' @param ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.
+#' @param ci_method The type of interval to use to quantify the percentage in ROPE. Can be 'HDI' (default) or 'ETI'. See \code{\link{ci}}.
 #'
 #' @inheritParams hdi
 #'
@@ -116,7 +117,7 @@ rope.default <- function(x, ...) {
 
 #' @rdname rope
 #' @export
-rope.numeric <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
+rope.numeric <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
   if (all(range == "default")) {
     range <- c(-0.1, 0.1)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
@@ -124,7 +125,7 @@ rope.numeric <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
   }
 
   rope_values <- lapply(ci, function(i) {
-    .rope(x, range = range, ci = i, verbose = verbose)
+    .rope(x, range = range, ci = i, ci_method = ci_method, verbose = verbose)
   })
 
   # "do.call(rbind)" does not bind attribute values together
@@ -153,8 +154,8 @@ rope.numeric <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
 
 #' @rdname rope
 #' @export
-rope.data.frame <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
-  out <- .prepare_rope_df(x, range, ci, verbose)
+rope.data.frame <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
+  out <- .prepare_rope_df(x, range, ci, ci_method, verbose)
   HDI_area_attributes <- .compact_list(out$HDI_area)
   dat <- data.frame(
     Parameter = rep(names(HDI_area_attributes), each = length(ci)),
@@ -193,9 +194,9 @@ rope.BFBayesFactor <- function(x, range = "default", ci = .89, verbose = TRUE, .
 }
 
 
-
-.rope <- function(x, range = c(-0.1, 0.1), ci = .89, verbose = TRUE) {
-  HDI_area <- .hdi_area <- hdi(x, ci, verbose)
+#' @keywords internal
+.rope <- function(x, range = c(-0.1, 0.1), ci = .89, ci_method = "HDI", verbose = TRUE) {
+  HDI_area <- .hdi_area <- ci(x, ci = ci, method = ci_method, verbose = verbose)
 
   if (anyNA(HDI_area)) {
     rope_percentage <- NA
@@ -222,7 +223,7 @@ rope.BFBayesFactor <- function(x, range = "default", ci = .89, verbose = TRUE, .
 
 #' @rdname rope
 #' @export
-rope.stanreg <- function(x, range = "default", ci = .89, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+rope.stanreg <- function(x, range = "default", ci = .89, ci_method = "HDI", effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
 
   if (all(range == "default")) {
@@ -237,7 +238,7 @@ rope.stanreg <- function(x, range = "default", ci = .89, effects = c("fixed", "r
   list <- lapply(c("fixed", "random"), function(.x) {
     parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
 
-    getropedata <- .prepare_rope_df(parms, range, ci, verbose)
+    getropedata <- .prepare_rope_df(parms, range, ci, ci_method, verbose)
     tmp <- getropedata$tmp
     HDI_area <- getropedata$HDI_area
 
@@ -290,7 +291,7 @@ rope.stanreg <- function(x, range = "default", ci = .89, effects = c("fixed", "r
 
 #' @rdname rope
 #' @export
-rope.brmsfit <- function(x, range = "default", ci = .89, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
+rope.brmsfit <- function(x, range = "default", ci = .89, ci_method = "HDI", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
@@ -313,7 +314,7 @@ rope.brmsfit <- function(x, range = "default", ci = .89, effects = c("fixed", "r
   .get_rope <- function(.x, .y) {
     parms <- insight::get_parameters(x, effects = .x, component = .y, parameters = parameters)
 
-    getropedata <- .prepare_rope_df(parms, range, ci, verbose)
+    getropedata <- .prepare_rope_df(parms, range, ci, ci_method, verbose)
     tmp <- getropedata$tmp
     HDI_area <- getropedata$HDI_area
 
@@ -379,12 +380,13 @@ rope.brmsfit <- function(x, range = "default", ci = .89, effects = c("fixed", "r
 
 
 #' @keywords internal
-.prepare_rope_df <- function(parms, range, ci, verbose) {
+.prepare_rope_df <- function(parms, range, ci, ci_method, verbose) {
   tmp <- sapply(
     parms,
     rope,
     range = range,
     ci = ci,
+    ci_method = ci_method,
     verbose = verbose,
     simplify = FALSE
   )
