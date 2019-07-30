@@ -213,7 +213,7 @@ posterior %>%
 
 ### Equivalence test
 
-[**`equivalence_test()`**](https://easystats.github.io/bayestestR/reference/equivalence_test.html) a 
+[**`equivalence_test()`**](https://easystats.github.io/bayestestR/reference/equivalence_test.html) is a 
 **Test for Practical Equivalence** based on the *"HDI+ROPE decision rule"* (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (*i.e.*, a [ROPE](https://easystats.github.io/bayestestR/reference/rope.html)).
 
 
