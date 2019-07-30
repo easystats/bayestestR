@@ -12,6 +12,7 @@ model <- stan_glm(Petal.Width ~ Petal.Length * Sepal.Width, data = iris)
 # Store results
 result_pd <- p_direction(model)
 
+# Print and plot results
 print(result_pd)
 plot(result_pd)
 
