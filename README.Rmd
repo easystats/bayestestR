@@ -10,6 +10,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 bibliography: paper/paper.bib
+csl: vignettes/apa.csl
 editor_options: 
   chunk_output_type: console
 ---
