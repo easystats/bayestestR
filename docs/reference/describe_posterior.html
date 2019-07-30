@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -330,12 +330,12 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt;    CI_high     p_map    pd ROPE_CI ROPE_low ROPE_high ROPE_Percentage
 #&gt; 1 1.516557 0.9995711 0.515      89     -0.1       0.1      0.09090909
 #&gt;   ROPE_Equivalence BF
-#&gt; 1        Undecided  1</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))</div><div class='output co'>#&gt;   Parameter    Median CI    CI_low  CI_high    pd ROPE_CI ROPE_low ROPE_high
-#&gt; 1 Posterior 0.0336808 80 -1.481386 1.123909 0.515      89     -0.1       0.1
-#&gt; 2 Posterior 0.0336808 90 -1.500780 1.777941 0.515      89     -0.1       0.1
+#&gt; 1        Undecided  1</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))</div><div class='output co'>#&gt;   Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
+#&gt; 1      &lt;NA&gt;     NA NA     NA      NA NA      NA       NA        NA
+#&gt; 2      &lt;NA&gt;     NA NA     NA      NA NA      NA       NA        NA
 #&gt;   ROPE_Percentage
-#&gt; 1      0.09090909
-#&gt; 2      0.09090909</div><div class='input'>
+#&gt; 1              NA
+#&gt; 2              NA</div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>describe_posterior</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt;   Parameter      Median CI    CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high
 #&gt; 1        X1  0.03683574 89 -1.792781 1.311301 0.52      89     -0.1       0.1
@@ -387,51 +387,51 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;     Parameter     Median CI    CI_low   CI_high    pd ROPE_CI   ROPE_low
 #&gt; 1 (Intercept) 39.4499167 89 31.565557 47.566166 1.000      89 -0.6026948
-#&gt; 3          wt -5.4817002 89 -6.718247 -4.399036 1.000      89 -0.6026948
-#&gt; 2        gear -0.3422758 89 -1.695148  1.100377 0.635      89 -0.6026948
+#&gt; 2          wt -5.4817002 89 -6.718247 -4.399036 1.000      89 -0.6026948
+#&gt; 3        gear -0.3422758 89 -1.695148  1.100377 0.635      89 -0.6026948
 #&gt;   ROPE_high ROPE_Percentage ESS     Rhat Prior_Distribution Prior_Location
 #&gt; 1 0.6026948       0.0000000 212 1.000945             normal              0
-#&gt; 3 0.6026948       0.0000000 223 1.000373             normal              0
-#&gt; 2 0.6026948       0.4748603 233 1.001920             normal              0
+#&gt; 2 0.6026948       0.0000000 223 1.000373             normal              0
+#&gt; 3 0.6026948       0.4748603 233 1.001920             normal              0
 #&gt;   Prior_Scale
 #&gt; 1    60.26948
-#&gt; 3    15.39911
-#&gt; 2    20.42191</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Computation of Bayes factors: sampling priors, please wait...</span></div><div class='output co'>#&gt;     Parameter     Median       MAD       Mean        SD        MAP CI    CI_low
+#&gt; 2    15.39911
+#&gt; 3    20.42191</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Computation of Bayes factors: sampling priors, please wait...</span></div><div class='output co'>#&gt;     Parameter     Median       MAD       Mean        SD        MAP CI    CI_low
 #&gt; 1 (Intercept) 39.4499167 5.3638837 39.0397579 5.1245289 40.2974904 89 31.565557
-#&gt; 3          wt -5.4817002 0.7376005 -5.5224993 0.7636675 -5.3897288 89 -6.718247
-#&gt; 2        gear -0.3422758 0.9680601 -0.3180788 0.9213700 -0.5520105 89 -1.695148
+#&gt; 2          wt -5.4817002 0.7376005 -5.5224993 0.7636675 -5.3897288 89 -6.718247
+#&gt; 3        gear -0.3422758 0.9680601 -0.3180788 0.9213700 -0.5520105 89 -1.695148
 #&gt;     CI_high     p_MAP    pd ROPE_CI   ROPE_low ROPE_high ROPE_Percentage
 #&gt; 1 47.566166 0.0000000 1.000      89 -0.6026948 0.6026948       0.0000000
-#&gt; 3 -4.399036 0.0000000 1.000      89 -0.6026948 0.6026948       0.0000000
-#&gt; 2  1.100377 0.8877973 0.635      89 -0.6026948 0.6026948       0.4748603
+#&gt; 2 -4.399036 0.0000000 1.000      89 -0.6026948 0.6026948       0.0000000
+#&gt; 3  1.100377 0.8877973 0.635      89 -0.6026948 0.6026948       0.4748603
 #&gt;   ROPE_Equivalence           BF ESS     Rhat Prior_Distribution Prior_Location
 #&gt; 1         Rejected 2.959977e+04 212 1.000945             normal              0
-#&gt; 3         Rejected 2.655481e+04 223 1.000373             normal              0
-#&gt; 2        Undecided 5.536644e-02 233 1.001920             normal              0
+#&gt; 2         Rejected 2.655481e+04 223 1.000373             normal              0
+#&gt; 3        Undecided 5.536644e-02 233 1.001920             normal              0
 #&gt;   Prior_Scale
 #&gt; 1    60.26948
+#&gt; 2    15.39911
+#&gt; 3    20.42191</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))</div><div class='output co'>#&gt;     Parameter     Median CI    CI_low    CI_high    pd ROPE_CI   ROPE_low
+#&gt; 1 (Intercept) 39.4499167 80 32.029803 44.7142675 1.000      89 -0.6026948
+#&gt; 2 (Intercept) 39.4499167 90 29.667488 46.3935618 1.000      89 -0.6026948
+#&gt; 3          wt -5.4817002 80 -6.384793 -4.4963720 1.000      89 -0.6026948
+#&gt; 4          wt -5.4817002 90 -6.689700 -4.2429754 1.000      89 -0.6026948
+#&gt; 5        gear -0.3422758 80 -1.256913  0.9985041 0.635      89 -0.6026948
+#&gt; 6        gear -0.3422758 90 -1.695148  1.2540259 0.635      89 -0.6026948
+#&gt;   ROPE_high ROPE_Percentage ESS     Rhat Prior_Distribution Prior_Location
+#&gt; 1 0.6026948       0.0000000 212 1.000945             normal              0
+#&gt; 2 0.6026948       0.0000000 212 1.000945             normal              0
+#&gt; 3 0.6026948       0.0000000 223 1.000373             normal              0
+#&gt; 4 0.6026948       0.0000000 223 1.000373             normal              0
+#&gt; 5 0.6026948       0.4748603 233 1.001920             normal              0
+#&gt; 6 0.6026948       0.4748603 233 1.001920             normal              0
+#&gt;   Prior_Scale
+#&gt; 1    60.26948
+#&gt; 2    60.26948
 #&gt; 3    15.39911
-#&gt; 2    20.42191</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))</div><div class='output co'>#&gt;       Parameter     Median CI    CI_low    CI_high    pd ROPE_CI   ROPE_low
-#&gt; 1   (Intercept) 39.4499167 80 32.029803 44.7142675 1.000      89 -0.6026948
-#&gt; 1.1 (Intercept) 39.4499167 80 32.029803 44.7142675 1.000      89 -0.6026948
-#&gt; 3          gear -0.3422758 80 -1.256913  0.9985041 0.635      89 -0.6026948
-#&gt; 3.1        gear -0.3422758 80 -1.256913  0.9985041 0.635      89 -0.6026948
-#&gt; 5            wt -5.4817002 80 -6.384793 -4.4963720 1.000      89 -0.6026948
-#&gt; 5.1          wt -5.4817002 80 -6.384793 -4.4963720 1.000      89 -0.6026948
-#&gt;     ROPE_high ROPE_Percentage ESS     Rhat Prior_Distribution Prior_Location
-#&gt; 1   0.6026948       0.0000000 212 1.000945             normal              0
-#&gt; 1.1 0.6026948       0.0000000 212 1.000945             normal              0
-#&gt; 3   0.6026948       0.4748603 233 1.001920             normal              0
-#&gt; 3.1 0.6026948       0.4748603 233 1.001920             normal              0
-#&gt; 5   0.6026948       0.0000000 223 1.000373             normal              0
-#&gt; 5.1 0.6026948       0.0000000 223 1.000373             normal              0
-#&gt;     Prior_Scale
-#&gt; 1      60.26948
-#&gt; 1.1    60.26948
-#&gt; 3      20.42191
-#&gt; 3.1    20.42191
-#&gt; 5      15.39911
-#&gt; 5.1    15.39911</div><div class='input'>
+#&gt; 4    15.39911
+#&gt; 5    20.42191
+#&gt; 6    20.42191</div><div class='input'>
 <span class='co'># emmeans estimates</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)

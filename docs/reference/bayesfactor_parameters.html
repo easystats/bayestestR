@@ -96,7 +96,7 @@ For more info, see the Bayes factors vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -213,7 +213,8 @@ For more info, see <a href='https://easystats.github.io/bayestestR/articles/baye
   <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
 <span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -268,6 +269,10 @@ or a data frame - representing a posterior distribution(s) from (see Details).</
       <td><p>Currently not used.</p></td>
     </tr>
     <tr>
+      <th>hypothesis</th>
+      <td><p>Deprecated in favour of <code>null</code>.</p></td>
+    </tr>
+    <tr>
       <th>effects</th>
       <td><p>Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.</p></td>
@@ -276,7 +281,7 @@ Only applies to mixed models. May be abbreviated.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame containing the Bayes factor representing evidence <em>against</em> the (point) null effect model.</p>
+    <p>A data frame containing the Bayes factor representing evidence <em>against</em> the null.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -289,9 +294,15 @@ priors. See example below.</p>
     It is important to provide the correct <code>prior</code> for meaningful results.
 <ul>
 <li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>
-<li><p>When <code>posterior</code> is an <code>emmGrid</code> object based on a <code>stanreg</code> or <code>brmsfit</code> model, <code>prior</code> should be <em>that model object</em> (see example).</p></li>
-<li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model, there is no need to specify <code>prior</code>, as prior samples are drawn internally.</p></li>
 <li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
+<li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model:</p><ul>
+<li><p><code>prior</code> can be set to <code>NULL</code>, in which case prior samples are drawn internally.</p></li>
+<li><p><code>prior</code> can also be a model equvilant to <code>posterior</code> but with samples from the priors <em>only</em>.</p></li>
+</ul></li>
+<li><p>When <code>posterior</code> is an <code>emmGrid</code> object:</p><ul>
+<li><p><code>prior</code> should be the <code>stanreg</code> or <code>brmsfit</code> model used to create the <code>emmGrid</code> objects.</p></li>
+<li><p><code>prior</code> can also be an <code>emmGrid</code> object equvilant to <code>posterior</code> but created with a model of priors samples <em>only</em>.</p></li>
+</ul></li>
 </ul>
 <h3>One-sided Tests (setting an order restriction)</h3>
     One sided tests (controlled by <code>direction</code>) are conducted by restricting the prior and

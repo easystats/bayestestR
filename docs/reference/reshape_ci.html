@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -175,7 +175,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Reshape CI between wide/long formats</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/utils_hdi_ci.R'><code>R/utils_hdi_ci.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/reshape_ci.R'><code>R/reshape_ci.R</code></a></small>
     <div class="hidden name"><code>reshape_ci.Rd</code></div>
     </div>
 
@@ -198,7 +198,9 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
+
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ci.html'>ci</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.68</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span>))
 <span class='fu'>reshape_ci</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Parameter  CI_low_68 CI_high_68 CI_low_89 CI_high_89 CI_low_95 CI_high_95
 #&gt; 1        X1 -0.9288844  0.9183050 -1.224556   1.369760 -1.616946   1.517234
@@ -216,7 +218,44 @@
 #&gt; 9         X3 95 -2.1046959 1.9226621
 #&gt; 10        X4 68 -0.7282173 0.9773763
 #&gt; 11        X4 89 -1.1835891 1.3176655
-#&gt; 12        X4 95 -1.7152390 1.6712682</div></pre>
+#&gt; 12        X4 95 -1.7152390 1.6712682</div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)))
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='describe_posterior.html'>describe_posterior</a></span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0.68</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span>))
+<span class='fu'>reshape_ci</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   Parameter     Median  CI_low_68 CI_high_68 CI_low_89 CI_high_89 CI_low_95
+#&gt; 1        X1 -0.1910732 -1.1259728  0.6993927 -1.535975   1.384067 -1.678999
+#&gt; 2        X2  0.1474839 -0.6872927  1.2671559 -1.336921   1.796918 -2.013256
+#&gt; 3        X3 -0.1927495 -0.9860032  0.7626895 -1.526567   1.441928 -1.809352
+#&gt; 4        X4 -0.1222675 -0.8384166  1.1562827 -1.415651   1.776586 -2.145562
+#&gt;   CI_high_95   pd ROPE_CI ROPE_low ROPE_high ROPE_Percentage
+#&gt; 1   1.738932 0.57      89     -0.1       0.1      0.11111111
+#&gt; 2   1.796918 0.54      89     -0.1       0.1      0.05555556
+#&gt; 3   1.501262 0.61      89     -0.1       0.1      0.07777778
+#&gt; 4   2.083564 0.57      89     -0.1       0.1      0.10000000</div><div class='input'><span class='fu'>reshape_ci</span>(<span class='fu'>reshape_ci</span>(<span class='no'>x</span>))</div><div class='output co'>#&gt;    Parameter     Median CI     CI_low   CI_high   pd ROPE_CI ROPE_low ROPE_high
+#&gt; 1         X1 -0.1910732 68 -1.1259728 0.6993927 0.57      89     -0.1       0.1
+#&gt; 2         X1 -0.1910732 89 -1.5359753 1.3840668 0.57      89     -0.1       0.1
+#&gt; 3         X1 -0.1910732 95 -1.6789988 1.7389322 0.57      89     -0.1       0.1
+#&gt; 4         X2  0.1474839 68 -0.6872927 1.2671559 0.54      89     -0.1       0.1
+#&gt; 5         X2  0.1474839 89 -1.3369211 1.7969184 0.54      89     -0.1       0.1
+#&gt; 6         X2  0.1474839 95 -2.0132564 1.7969184 0.54      89     -0.1       0.1
+#&gt; 7         X3 -0.1927495 68 -0.9860032 0.7626895 0.61      89     -0.1       0.1
+#&gt; 8         X3 -0.1927495 89 -1.5265671 1.4419282 0.61      89     -0.1       0.1
+#&gt; 9         X3 -0.1927495 95 -1.8093518 1.5012616 0.61      89     -0.1       0.1
+#&gt; 10        X4 -0.1222675 68 -0.8384166 1.1562827 0.57      89     -0.1       0.1
+#&gt; 11        X4 -0.1222675 89 -1.4156508 1.7765861 0.57      89     -0.1       0.1
+#&gt; 12        X4 -0.1222675 95 -2.1455616 2.0835635 0.57      89     -0.1       0.1
+#&gt;    ROPE_Percentage
+#&gt; 1       0.11111111
+#&gt; 2       0.11111111
+#&gt; 3       0.11111111
+#&gt; 4       0.05555556
+#&gt; 5       0.05555556
+#&gt; 6       0.05555556
+#&gt; 7       0.07777778
+#&gt; 8       0.07777778
+#&gt; 9       0.07777778
+#&gt; 10      0.10000000
+#&gt; 11      0.10000000
+#&gt; 12      0.10000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -87,7 +87,7 @@ For more info, see the Bayes factors vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -191,22 +191,22 @@ For more info, see <a href='https://easystats.github.io/bayestestR/articles/baye
     
     </div>
 
-    <pre class="usage"><span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>hypothesis</span>,
+    <pre class="usage"><span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='no'>hypothesis</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>hypothesis</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  <span class='no'>...</span>)
+<span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='no'>hypothesis</span>,
+  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>,
+  <span class='st'>"all"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>hypothesis</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  <span class='no'>...</span>)
+<span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='no'>hypothesis</span>,
+  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>,
+  <span class='st'>"all"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>hypothesis</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='no'>hypothesis</span>,
+  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -216,12 +216,12 @@ For more info, see <a href='https://easystats.github.io/bayestestR/articles/baye
       <td><p>A <code>stanreg</code> / <code>brmsfit</code> object, <code>emmGrid</code> or a data frame - representing a posterior distribution(s) from (see Details).</p></td>
     </tr>
     <tr>
-      <th>prior</th>
-      <td><p>An object representing a prior distribution (see Details).</p></td>
-    </tr>
-    <tr>
       <th>hypothesis</th>
       <td><p>A character vector specifying the restrictions as logical conditions (see examples below).</p></td>
+    </tr>
+    <tr>
+      <th>prior</th>
+      <td><p>An object representing a prior distribution (see Details).</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -255,9 +255,15 @@ extracted for each parameter, and Savage-Dickey Bayes factors are computed for e
 <h3>Setting the correct <code>prior</code></h3>
     It is important to provide the correct <code>prior</code> for meaningful results.
 <ul>
-<li><p>When <code>posterior</code> is an <code>emmGrid</code> object based on a <code>stanreg</code> or <code>brmsfit</code> model, <code>prior</code> should be <em>that model object</em> (see example).</p></li>
-<li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model, there is no need to specify <code>prior</code>, as prior samples are drawn internally.</p></li>
-<li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column names.</p></li>
+<li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
+<li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model:</p><ul>
+<li><p><code>prior</code> can be set to <code>NULL</code>, in which case prior samples are drawn internally.</p></li>
+<li><p><code>prior</code> can also be a model equvilant to <code>posterior</code> but with samples from the priors <em>only</em>.</p></li>
+</ul></li>
+<li><p>When <code>posterior</code> is an <code>emmGrid</code> object:</p><ul>
+<li><p><code>prior</code> should be the <code>stanreg</code> or <code>brmsfit</code> model used to create the <code>emmGrid</code> objects.</p></li>
+<li><p><code>prior</code> can also be an <code>emmGrid</code> object equvilant to <code>posterior</code> but created with a model of priors samples <em>only</em>.</p></li>
+</ul></li>
 </ul>
 <h3>Interpreting Bayes Factors</h3>
     A Bayes factor greater than 1 can be interpereted as evidence against the null,
@@ -294,7 +300,7 @@ smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
   <span class='st'>"X &gt; X1"</span>
 )
 
-<span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='no'>hyps</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Order-Restriction)
+<span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='no'>hyps</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Order-Restriction)
 #&gt; 
 #&gt; </span><span>       Hypothesis P(Prior) P(Posterior) Bayes Factor
 #&gt;  X &gt; X1 &amp; X1 &gt; X3     0.20         0.23         1.15
