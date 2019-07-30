@@ -1,7 +1,7 @@
 Package: bayestestR
 Type: Package
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.2.4
+Version: 0.2.5
 Authors@R: c(
     person("Dominique", 
         "Makowski", 
@@ -26,7 +26,11 @@ Authors@R: c(
 	person("Paul-Christian", 
 		"Bürkner", 
 		role = c("rev"), 
-		email = "paul.buerkner@gmail.com")
+		email = "paul.buerkner@gmail.com"),
+	person("Tristan", 
+		"Mahr", 
+		role = c("rev"), 
+		email = "tristan.mahr@gmail.com")
 	)
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
 URL: https://github.com/easystats/bayestestR
