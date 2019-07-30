@@ -78,6 +78,10 @@ cited below *at once*.
 
 ``` r
 describe_posterior(rnorm(1000))
+##   Parameter  Median CI CI_low CI_high  pd ROPE_CI ROPE_low ROPE_high
+## 1 Posterior -0.0013 89   -1.6     1.5 0.5      89     -0.1       0.1
+##   ROPE_Percentage
+## 1             0.1
 ```
 
 ## Point-estimates
@@ -91,7 +95,9 @@ find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior,
 estimation of the *mode* for continuous parameters.
 
 ``` r
-map_estimate(rnorm(1000, 1, 1))
+posterior <- distribution_normal(100, 0.4, 0.2)
+map_estimate(posterior)
+## MAP = 0.40
 ```
 
 ![](man/figures/unnamed-chunk-6-1.png)<!-- -->
@@ -121,7 +127,12 @@ highest prime number that does not exceed the already unstable 95%
 threshold (McElreath, 2015).
 
 ``` r
-hdi(rnorm(1000), ci = .89)
+posterior <- distribution_normal(100, 0.4, 0.2)
+hdi(posterior, ci = .89)
+## # Highest Density Interval
+## 
+##       89% HDI
+##  [0.09, 0.71]
 ```
 
 ![](man/figures/unnamed-chunk-8-1.png)<!-- -->
@@ -157,7 +168,12 @@ framework, see
 [equivalence\_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
 ``` r
-rope(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
+posterior <- distribution_normal(100, 0.4, 0.2)
+rope(posterior, range = c(-0.1, 0.1))
+## # Proportion of samples inside the ROPE [-0.10, 0.10]:
+## 
+##  inside ROPE
+##       1.11 %
 ```
 
 ![](man/figures/unnamed-chunk-10-1.png)<!-- -->
@@ -172,7 +188,14 @@ accepted or rejected against an explicitly formulated “null hypothesis”
 [ROPE](https://easystats.github.io/bayestestR/reference/rope.html)).
 
 ``` r
-equivalence_test(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
+posterior <- distribution_normal(100, 0.4, 0.2)
+equivalence_test(posterior, range = c(-0.1, 0.1))
+## # Test for Practical Equivalence
+## 
+##   ROPE: [-0.10 0.10]
+## 
+##         H0 inside ROPE     89% HDI
+##  Undecided      0.01 % [0.09 0.71]
 ```
 
 ### Probability of Direction (*p*d)
@@ -198,7 +221,11 @@ the [*reporting
 guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
 
 ``` r
-p_direction(rnorm(1000, mean = 1, sd = 1))
+posterior <- distribution_normal(100, 0.4, 0.2)
+p_direction(posterior)
+## # Probability of Direction (pd)
+## 
+## pd = 98.00%
 ```
 
 ![](man/figures/unnamed-chunk-13-1.png)<!-- -->
@@ -225,9 +252,26 @@ prior <- rnorm(1000, mean = 0, sd = 1)
 posterior <- rnorm(1000, mean = 1, sd = 0.7)
 
 bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
+## # Bayes Factor (Savage-Dickey density ratio)
+## 
+##  Bayes Factor
+##          1.69
+## 
+## * Evidence Against The Null: [0]
 ```
 
 ![](man/figures/unnamed-chunk-15-1.png)<!-- -->
+
+<center>
+
+*The lollipops represent the density of a point-null on the prior
+distribution (the blue lollipop on the dotted distribution) and on the
+posterior distribution (the red lollipop on the yellow distribution).
+The ratio between the two - the Svage-Dickey ratio - indicates the
+degree by which the mass of the parameter distribution has shifted away
+from or closer to the null.*
+
+</center>
 
 For more info, see [the Bayes factors
 vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
@@ -242,7 +286,11 @@ Hypothesis Testing* framework. It corresponds to the density value at 0
 divided by the density at the Maximum A Posteriori (MAP).
 
 ``` r
-p_map(rnorm(1000, 1, 1))
+posterior <- distribution_normal(100, 0.4, 0.2)
+p_map(posterior)
+## # MAP-based p-value
+## 
+## p (MAP) = 0.193
 ```
 
 ![](man/figures/unnamed-chunk-17-1.png)<!-- -->
@@ -283,6 +331,7 @@ Generate a sample of size n with near-perfect distributions.
 
 ``` r
 distribution(n = 10)
+##  [1] -1.28 -0.88 -0.59 -0.34 -0.11  0.11  0.34  0.59  0.88  1.28
 ```
 
 ### Probability of a Value
@@ -292,6 +341,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
+## [1] 0.39
 ```
 
 ## Credits
