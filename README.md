@@ -86,7 +86,9 @@ describe_posterior(rnorm(1000))
 
 [**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html)
 find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior,
-*i.e.,* the most probable value.
+*i.e.*, the value associated with the highest probability density (the
+“peak” of the posterior distribution). In other words, it is an
+estimation of the *mode* for continuous parameters.
 
 ``` r
 map_estimate(rnorm(1000, 1, 1))
@@ -236,9 +238,8 @@ vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 computes a Bayesian equivalent of the p-value, related to the odds that
 a parameter (described by its posterior distribution) has against the
 null hypothesis (*h0*) using Mills’ (2014, 2017) *Objective Bayesian
-Hypothesis Testing* framework. It is mathematically based on the density
-at the Maximum A Priori (MAP) and corresponds to the density value at 0
-divided by the density of the MAP estimate.
+Hypothesis Testing* framework. It corresponds to the density value at 0
+divided by the density at the Maximum A Posteriori (MAP).
 
 ``` r
 p_map(rnorm(1000, 1, 1))
