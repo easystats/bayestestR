@@ -85,9 +85,9 @@ cited below at once.
 ``` r
 describe_posterior(rnorm(1000))
 ##   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
-## 1 Posterior -0.025 89   -1.7     1.5 0.51      89     -0.1       0.1
+## 1 Posterior  0.036 89   -1.6     1.5 0.51      89     -0.1       0.1
 ##   ROPE_Percentage
-## 1             0.1
+## 1           0.091
 ```
 
 ## Point-estimates
@@ -270,23 +270,19 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## # Bayes Factor (Savage-Dickey density ratio)
 ## 
 ##  Bayes Factor
-##          1.69
+##          2.16
 ## 
 ## * Evidence Against The Null: [0]
 ```
 
 ![](man/figures/unnamed-chunk-15-1.png)<!-- -->
 
-<center>
-
-*The lollipops represent the density of a point-null on the prior
+<sup>*The lollipops represent the density of a point-null on the prior
 distribution (the blue lollipop on the dotted distribution) and on the
 posterior distribution (the red lollipop on the yellow distribution).
-The ratio between the two - the Svage-Dickey ratio - indicates the
+The ratio between the two - the Savage-Dickey ratio - indicates the
 degree by which the mass of the parameter distribution has shifted away
-from or closer to the null.*
-
-</center>
+from or closer to the null.*</sup>
 
 For more info, see [the Bayes factors
 vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
@@ -356,7 +352,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.4
+## [1] 0.37
 ```
 
 ## Credits
