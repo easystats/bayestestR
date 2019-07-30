@@ -84,10 +84,10 @@ cited below at once.
 
 ``` r
 describe_posterior(rnorm(1000))
-##   Parameter  Median CI CI_low CI_high  pd ROPE_CI ROPE_low ROPE_high
-## 1 Posterior -0.0011 89   -1.6     1.4 0.5      89     -0.1       0.1
+##   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
+## 1 Posterior 0.0082 89   -1.5     1.6 0.51      89     -0.1       0.1
 ##   ROPE_Percentage
-## 1           0.095
+## 1            0.11
 ```
 
 ## Point-estimates
@@ -195,7 +195,7 @@ rope(posterior, range = c(-0.1, 0.1))
 ### Equivalence test
 
 [**`equivalence_test()`**](https://easystats.github.io/bayestestR/reference/equivalence_test.html)
-a **Test for Practical Equivalence** based on the *“HDI+ROPE decision
+is a **Test for Practical Equivalence** based on the *“HDI+ROPE decision
 rule”* (Kruschke 2018) to check whether parameter values should be
 accepted or rejected against an explicitly formulated “null hypothesis”
 (*i.e.*, a
@@ -270,7 +270,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## # Bayes Factor (Savage-Dickey density ratio)
 ## 
 ##  Bayes Factor
-##          1.63
+##          1.71
 ## 
 ## * Evidence Against The Null: [0]
 ```
@@ -356,7 +356,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.39
+## [1] 0.35
 ```
 
 ## Credits
