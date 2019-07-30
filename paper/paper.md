@@ -47,7 +47,7 @@ The following demonstration of functions is accompanied by figures to illustrate
 
 ## Indices of Centrality: Point-estimates
 
-**bayestestR** offers two functions to compute point-estimates from posterior distributions: `map_estimate()` and `point_estimate()`, the latter providing options to calculate the mean, median or MAP estimate of a posterior distribution. [`map_estimate()`](https://easystats.github.io/bayestestR/reference/map_estimate.html) is a convenient function to calculate the **Maximum A Posteriori** (MAP) estimate directly.
+**bayestestR** offers two functions to compute point-estimates from posterior distributions: `map_estimate()` and `point_estimate()`, the latter providing options to calculate the mean, median or MAP estimate of a posterior distribution (see **Figure 1**). [`map_estimate()`](https://easystats.github.io/bayestestR/reference/map_estimate.html) is a convenient function to calculate the **Maximum A Posteriori** (MAP) estimate directly.
 
 The **posterior mean** minimizes expected _squared_ error, whereas the **posterior median** minimizes expected _absolute_ error (i.e., the difference of estimates from true values over samples). The **MAP estimate** corresponds to the most probable value of a posterior distribution.
 
@@ -71,10 +71,10 @@ point_estimate(posterior, centrality = "map")
 
 ## Quantifying Uncertainty: The Credible Interval (CI)
 
-In order to measure the uncertainty associated with the estimation, **bayestestR** provides two functions: `eti()`, the Equal-Tailed Interval **ETI**, and `hdi()`, the **Highest Density Interval (HDI)**. Both indices (accessible via the `method` argument in the `ci()` function) can be used in the context of Bayesian posterior characterisation as **Credible Interval (CI)**.
+In order to measure the uncertainty associated with the estimation, **bayestestR** provides two functions: `eti()`, the **Equal-Tailed Interval (ETI)**, and `hdi()`, the **Highest Density Interval (HDI)**. Both indices (accessible via the `method` argument in the `ci()` function) can be used in the context of Bayesian posterior characterisation as **Credible Interval (CI)**.
 
 [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.html)
-computes the HDI of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. HDIs have a particular property: Unlike an equal-tailed interval (computed by [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html)) that typically exclude 2.5% from each tail of the distribution, the HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior distributions.
+computes the HDI of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval (see **Figure 2**). HDIs have a particular property: Unlike an equal-tailed interval (computed by [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html)) that typically exclude 2.5% from each tail of the distribution, the HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior distributions.
 
 By default, `hdi()` and `eti()` return the 89% intervals (`ci = 0.89`), deemed to be more stable than, for instance, 95% intervals. An effective sample size of at least 10.000 is recommended if 95% intervals should be computed [@kruschke2015doing]. Moreover, 89 is the highest prime number that does not exceed the already unstable and arbritrary 95% threshold [@mcelreath2018statistical].
 
@@ -101,7 +101,7 @@ The Bayesian framework allows one to neatly delineate and quantify different asp
 
 ### ROPE and Test for Practical Equivalence
 
-[`rope()`](https://easystats.github.io/bayestestR/reference/rope.html) computes the proportion of the HDI (default to the 89% HDI) of a posterior distribution that lies within a Region Of Practical Equivalence (the **ROPE**; see figure 3, panel A).
+[`rope()`](https://easystats.github.io/bayestestR/reference/rope.html) computes the proportion of the HDI (default to the 89% HDI) of a posterior distribution that lies within a Region Of Practical Equivalence (the **ROPE**; see **Figure 3**, panel A).
 
 Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are *equivalent to the null* value for practical purposes [@kruschke2018bayesian; @kruschke2018rejecting]. In the absence of user-provided values, **bayestestR** will automatically find an appropriate range for the ROPE using the  [`rope_range()`](https://easystats.github.io/bayestestR/reference/rope_range.html) function.
 
@@ -136,7 +136,7 @@ equivalence_test(model)
 
 ### Probability of Direction (*pd*)
 
-[`p_direction()`](https://easystats.github.io/bayestestR/reference/p_direction.html) computes the **Probability of Direction** (*pd*, also known as the Maximum Probability of Effect - *MPE*). This index of effect existence varies between 50% and 100% and can be interpreted as the probability that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign (see figure 3, panel B).
+[`p_direction()`](https://easystats.github.io/bayestestR/reference/p_direction.html) computes the **Probability of Direction** (*pd*, also known as the Maximum Probability of Effect - *MPE*). This index of effect existence varies between 50% and 100% and can be interpreted as the probability that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign (see **Figure 3**, panel B).
 
 ``` r
 p_direction(distribution_normal(100, 0.4, 0.2))
@@ -166,7 +166,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 
 ### MAP-based *p*-value
 
-[`p_map()`](https://easystats.github.io/bayestestR/reference/p_map.html) computes the odds that a parameter (described by its posterior distribution) has against the null hypothesis (*h0*) using Mills’ *Objective Bayesian Hypothesis Testing* framework [@mills2018objective; @mills2014bayesian]. It corresponds to the density value at 0 divided by the density at the MAP - the Maximum A Posteriori (see figure 3, panel D).
+[`p_map()`](https://easystats.github.io/bayestestR/reference/p_map.html) computes the odds that a parameter (described by its posterior distribution) has against the null hypothesis (*h0*) using Mills’ *Objective Bayesian Hypothesis Testing* framework [@mills2018objective; @mills2014bayesian]. It corresponds to the density value at 0 divided by the density at the MAP - the Maximum A Posteriori (see **Figure 3**, panel D).
 
 ``` r
 p_map(distribution_normal(1000, mean = 1))
