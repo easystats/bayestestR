@@ -9,6 +9,7 @@ vignette: >
   %\VignetteIndexEntry{README}
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
+bibliography: paper/paper.bib
 editor_options: 
   chunk_output_type: console
 ---
@@ -128,7 +129,7 @@ posterior %>%
 
 Unlike equal-tailed intervals (see [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html)) that typically exclude 2.5\% from each tail of the distribution, the HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior distributions. 
 
-By default, `hdi()` returns the 89\% intervals (`ci = 0.89`), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2014). An effective sample size of at least 10.000 is recommended if 95\% intervals should be computed (Kruschke 2014, p. 183ff). Moreover, 89 indicates the arbitrariness of interval limits - its only remarkable property is being the highest prime number that does not exceed the already unstable 95\% threshold (McElreath, 2015).
+By default, `hdi()` returns the 89\% intervals (`ci = 0.89`), deemed to be more stable than, for instance, 95\% intervals. An effective sample size of at least 10.000 is recommended if 95\% intervals should be computed [@kruschke2015doing]. Moreover, 89 indicates the arbitrariness of interval limits - its only remarkable property is being the highest prime number that does not exceed the already unstable 95\% threshold [@mcelreath2018statistical].
 
 ```{r message=FALSE, warning=FALSE}
 posterior <- distribution_chisquared(100, 3)
@@ -180,11 +181,11 @@ p <- see::plots(p1, p2, tags = TRUE)
 
 [**`rope()`**](https://easystats.github.io/bayestestR/reference/rope.html) computes the proportion (in percentage) of the HDI (default to the 89\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 
-Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are *equivalent to the null* value for practical purposes (Kruschke 2010, 2011, 2014).
+Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are *equivalent to the null* value for practical purposes [@kruschke2018bayesian, @kruschke2018rejecting].
 
-Kruschke (2018) suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as `0 +/- .1 * sd(y)`. This ROPE range can be automatically computed for models using the [rope_range](https://easystats.github.io/bayestestR/reference/rope_range.html) function.
+Kruschke suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as `0 +/- .1 * sd(y)`. This ROPE range can be automatically computed for models using the [rope_range](https://easystats.github.io/bayestestR/reference/rope_range.html) function.
 
-Kruschke (2010, 2011, 2014) suggests using the proportion of the 95\% (or 90\%, considered more stable) HDI that falls within the ROPE as an index for "null-hypothesis" testing (as understood under the Bayesian framework, see [equivalence_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
+Kruschke suggests using the proportion of the 95\% (or 90\%, considered more stable) HDI that falls within the ROPE as an index for "null-hypothesis" testing (as understood under the Bayesian framework, see [equivalence_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
 ```{r message=FALSE, warning=FALSE}
 posterior <- distribution_normal(100, 0.4, 0.2)
@@ -214,7 +215,7 @@ posterior %>%
 ### Equivalence test
 
 [**`equivalence_test()`**](https://easystats.github.io/bayestestR/reference/equivalence_test.html) a 
-**Test for Practical Equivalence** based on the *"HDI+ROPE decision rule"* (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (*i.e.*, a [ROPE](https://easystats.github.io/bayestestR/reference/rope.html)).
+**Test for Practical Equivalence** based on the *"HDI+ROPE decision rule"* [@kruschke2018rejecting] to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (*i.e.*, a [ROPE](https://easystats.github.io/bayestestR/reference/rope.html)).
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -255,7 +256,7 @@ posterior %>%
 
 [**`bayesfactor_parameters()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html) computes Bayes factors against the null (either a point or an interval), bases on prior and posterior samples of a single parameter. This Bayes factor indicates the degree by which the mass of the posterior distribution has shifted further away from or closer to the null value(s) (relative to the prior distribution), thus indicating if the null value has become less or more likely given the observed data. 
 
-When the null is an interval, the Bayes factor is computed by comparing the prior and posterior odds of the parameter falling within or outside the null; When the null is a point, a Savage-Dickey density ratio is computed, which is also an approximation of a Bayes factor comparing the marginal likelihoods of the model against a model in which the tested parameter has been restricted to the point null. 
+When the null is an interval, the Bayes factor is computed by comparing the prior and posterior odds of the parameter falling within or outside the null; When the null is a point, a Savage-Dickey density ratio is computed, which is also an approximation of a Bayes factor comparing the marginal likelihoods of the model against a model in which the tested parameter has been restricted to the point null [@wagenmakers2010bayesian]. 
 
 ```{r message=FALSE, warning=FALSE}
 prior <- rnorm(1000, mean = 0, sd = 1)
@@ -325,7 +326,7 @@ posterior %>%
 
 ### Find ROPE's appropriate range
 
-[**`rope_range()`**](https://easystats.github.io/bayestestR/reference/rope_range.html): This function attempts at automatically finding suitable "default" values for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests that such null value could be set, by default, to a range from `-0.1` to `0.1` of a standardized parameter (negligible effect size according to Cohen, 1988), which can be generalised for linear models to `-0.1 * sd(y), 0.1 * sd(y)`. For logistic models, the parameters expressed in log odds ratio can be converted to standardized difference through the formula `sqrt(3)/pi`, resulting in a range of `-0.05` to `-0.05`.
+[**`rope_range()`**](https://easystats.github.io/bayestestR/reference/rope_range.html): This function attempts at automatically finding suitable "default" values for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests that such null value could be set, by default, to a range from `-0.1` to `0.1` of a standardized parameter (negligible effect size according to Cohen, 1988), which can be generalised for linear models to `-0.1 * sd(y), 0.1 * sd(y)`. For logistic models, the parameters expressed in log odds ratio can be converted to standardized difference through the formula `sqrt(3)/pi`, resulting in a range of `-0.05` to `0.05`.
 
 ```{r message=FALSE, warning=FALSE, results='hide', eval=FALSE}
 rope_range(model)
@@ -355,10 +356,10 @@ density_at(rnorm(1000, 1, 1), 1)
 ```
 
 
-
-
 ## Credits
 
 You can cite the package as following:
 
 - Makowski, D., Ben-Shachar M. S., \& Lüdecke, D. (2019). *Understand and Describe Bayesian Models and Posterior Distributions using bayestestR*. Available from https://github.com/easystats/bayestestR. [DOI:10.5281/zenodo.2556486](https://zenodo.org/badge/latestdoi/165641861).
+
+# References

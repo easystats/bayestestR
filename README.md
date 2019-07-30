@@ -84,10 +84,10 @@ cited below at once.
 
 ``` r
 describe_posterior(rnorm(1000))
-##   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
-## 1 Posterior  0.053 89   -1.5     1.7 0.52      89     -0.1       0.1
+##   Parameter  Median CI CI_low CI_high  pd ROPE_CI ROPE_low ROPE_high
+## 1 Posterior -0.0011 89   -1.6     1.4 0.5      89     -0.1       0.1
 ##   ROPE_Percentage
-## 1           0.084
+## 1           0.095
 ```
 
 ## Point-estimates
@@ -126,12 +126,12 @@ is *not* equal-tailed and therefore always includes the mode(s) of
 posterior distributions.
 
 By default, `hdi()` returns the 89% intervals (`ci = 0.89`), deemed to
-be more stable than, for instance, 95% intervals (Kruschke, 2014). An
-effective sample size of at least 10.000 is recommended if 95% intervals
-should be computed (Kruschke 2014, p. 183ff). Moreover, 89 indicates the
-arbitrariness of interval limits - its only remarkable property is being
-the highest prime number that does not exceed the already unstable 95%
-threshold (McElreath, 2015).
+be more stable than, for instance, 95% intervals. An effective sample
+size of at least 10.000 is recommended if 95% intervals should be
+computed (Kruschke 2015). Moreover, 89 indicates the arbitrariness of
+interval limits - its only remarkable property is being the highest
+prime number that does not exceed the already unstable 95% threshold
+(McElreath 2018).
 
 ``` r
 posterior <- distribution_chisquared(100, 3)
@@ -165,20 +165,20 @@ different from 0 does not make much sense (the probability of it being
 different from a single point being infinite). Therefore, the idea
 underlining ROPE is to let the user define an area around the null value
 enclosing values that are *equivalent to the null* value for practical
-purposes (Kruschke 2010, 2011, 2014).
+purposes (Kruschke and Liddell 2018, @kruschke2018rejecting).
 
-Kruschke (2018) suggests that such null value could be set, by default,
-to the -0.1 to 0.1 range of a standardized parameter (negligible effect
-size according to Cohen, 1988). This could be generalized: For instance,
-for linear models, the ROPE could be set as `0 +/- .1 * sd(y)`. This
-ROPE range can be automatically computed for models using the
+Kruschke suggests that such null value could be set, by default, to the
+-0.1 to 0.1 range of a standardized parameter (negligible effect size
+according to Cohen, 1988). This could be generalized: For instance, for
+linear models, the ROPE could be set as `0 +/- .1 * sd(y)`. This ROPE
+range can be automatically computed for models using the
 [rope\_range](https://easystats.github.io/bayestestR/reference/rope_range.html)
 function.
 
-Kruschke (2010, 2011, 2014) suggests using the proportion of the 95% (or
-90%, considered more stable) HDI that falls within the ROPE as an index
-for “null-hypothesis” testing (as understood under the Bayesian
-framework, see
+Kruschke suggests using the proportion of the 95% (or 90%, considered
+more stable) HDI that falls within the ROPE as an index for
+“null-hypothesis” testing (as understood under the Bayesian framework,
+see
 [equivalence\_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
 ``` r
@@ -196,7 +196,7 @@ rope(posterior, range = c(-0.1, 0.1))
 
 [**`equivalence_test()`**](https://easystats.github.io/bayestestR/reference/equivalence_test.html)
 a **Test for Practical Equivalence** based on the *“HDI+ROPE decision
-rule”* (Kruschke, 2018) to check whether parameter values should be
+rule”* (Kruschke 2018) to check whether parameter values should be
 accepted or rejected against an explicitly formulated “null hypothesis”
 (*i.e.*, a
 [ROPE](https://easystats.github.io/bayestestR/reference/rope.html)).
@@ -259,7 +259,8 @@ the prior and posterior odds of the parameter falling within or outside
 the null; When the null is a point, a Savage-Dickey density ratio is
 computed, which is also an approximation of a Bayes factor comparing the
 marginal likelihoods of the model against a model in which the tested
-parameter has been restricted to the point null.
+parameter has been restricted to the point null (Wagenmakers et al.
+2010).
 
 ``` r
 prior <- rnorm(1000, mean = 0, sd = 1)
@@ -269,7 +270,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## # Bayes Factor (Savage-Dickey density ratio)
 ## 
 ##  Bayes Factor
-##          2.15
+##          1.63
 ## 
 ## * Evidence Against The Null: [0]
 ```
@@ -322,7 +323,7 @@ according to Cohen, 1988), which can be generalised for linear models to
 `-0.1 * sd(y), 0.1 * sd(y)`. For logistic models, the parameters
 expressed in log odds ratio can be converted to standardized difference
 through the formula `sqrt(3)/pi`, resulting in a range of `-0.05` to
-`-0.05`.
+`0.05`.
 
 ``` r
 rope_range(model)
@@ -355,7 +356,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.37
+## [1] 0.39
 ```
 
 ## Credits
@@ -367,3 +368,49 @@ You can cite the package as following:
     bayestestR*. Available from
     <https://github.com/easystats/bayestestR>.
     [DOI:10.5281/zenodo.2556486](https://zenodo.org/badge/latestdoi/165641861).
+
+# References
+
+<div id="refs" class="references">
+
+<div id="ref-kruschke2015doing">
+
+Kruschke, John K. 2015. *Doing Bayesian Data Analysis: A Tutorial with
+R, JAGS, and Stan*. 2. ed. Amsterdam: Elsevier, Academic Press.
+
+</div>
+
+<div id="ref-kruschke2018rejecting">
+
+———. 2018. “Rejecting or Accepting Parameter Values in Bayesian
+Estimation.” *Advances in Methods and Practices in Psychological
+Science* 1 (2): 270–80. <https://doi.org/10.1177/2515245918771304>.
+
+</div>
+
+<div id="ref-kruschke2018bayesian">
+
+Kruschke, John K, and Torrin M Liddell. 2018. “The Bayesian New
+Statistics: Hypothesis Testing, Estimation, Meta-Analysis, and Power
+Analysis from a Bayesian Perspective.” *Psychonomic Bulletin & Review*
+25 (1): 178–206. <https://doi.org/10.3758/s13423-016-1221-4>.
+
+</div>
+
+<div id="ref-mcelreath2018statistical">
+
+McElreath, Richard. 2018. *Statistical Rethinking*. Chapman; Hall/CRC.
+<https://doi.org/10.1201/9781315372495>.
+
+</div>
+
+<div id="ref-wagenmakers2010bayesian">
+
+Wagenmakers, Eric-Jan, Tom Lodewyckx, Himanshu Kuriyal, and Raoul
+Grasman. 2010. “Bayesian Hypothesis Testing for Psychologists: A
+Tutorial on the SavageDickey Method.” *Cognitive Psychology* 60 (3):
+158–89. <https://doi.org/10.1016/j.cogpsych.2009.12.001>.
+
+</div>
+
+</div>
