@@ -29,8 +29,9 @@ Authors@R: c(
 		email = "paul.buerkner@gmail.com"),
 	person("Tristan", 
 		"Mahr", 
-		role = c("rev"), 
-		email = "tristan.mahr@gmail.com")
+		role = c("rev"),
+		email = "tristan.mahr@wisc.edu",
+		comment = c(ORCID = "0000-0002-8890-5116"))
 	)
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
 URL: https://github.com/easystats/bayestestR
