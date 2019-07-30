@@ -274,7 +274,7 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
 
   class(bf_val) <- unique(c(
     "bayesfactor_parameters",
-    "see_bayesfactor_savagedickey",
+    "see_bayesfactor_parameters",
     class(bf_val)
   ))
 

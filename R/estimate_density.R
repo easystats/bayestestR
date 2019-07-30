@@ -60,10 +60,6 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
   UseMethod("estimate_density")
 }
 
-#' @rdname estimate_density
-#' @export
-estimate_probability <- estimate_density
-
 
 
 #' @keywords internal
@@ -200,9 +196,9 @@ as.data.frame.density <- function(x, ...) {
 
 
 
-#' Probability of a Given Point
+#' Density Probability at a Given Value
 #'
-#' Compute the density of a given point of a distribution.
+#' Compute the density value at a given point of a distribution (i.e., the value of the \code{y} axis of a value \code{x} of a distribution).
 #'
 #' @param posterior Vector representing a posterior distribution.
 #' @param x The value of which to get the approximate probability.
@@ -220,8 +216,3 @@ density_at <- function(posterior, x, precision = 2^10, ...) {
   stats::approx(density$x, density$y, xout = x)$y
 }
 
-
-
-#' @rdname density_at
-#' @export
-probability_at <- density_at

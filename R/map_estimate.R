@@ -63,7 +63,10 @@ map_estimate.numeric <- function(x, precision = 2^10, ...) {
   out <- hdp_x
   attr(out, "MAP_density") <- hdp_y
 
-  class(out) <- unique(c("map_estimate", class(out)))
+  attr(out, "data") <- x
+  attr(out, "centrality") <- "map"
+  class(out) <- unique(c("map_estimate", "see_point_estimate", class(out)))
+
   out
 }
 
@@ -86,6 +89,10 @@ map_estimate.numeric <- function(x, precision = 2^10, ...) {
   )
 
   attr(out, "MAP_density") <- sapply(l, attr, "MAP_density")
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "centrality") <- "map"
+  class(out) <- unique(c("map_estimate", "see_point_estimate", class(out)))
+
   class(out) <- unique(c("map_estimate", class(out)))
   out
 }

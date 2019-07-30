@@ -2,13 +2,9 @@
 % Please edit documentation in R/estimate_density.R
 \name{estimate_density}
 \alias{estimate_density}
-\alias{estimate_probability}
 \title{Density Estimation}
 \usage{
 estimate_density(x, method = "kernel", precision = 2^10,
-  extend = FALSE, extend_scale = 0.1, bw = "SJ", ...)
-
-estimate_probability(x, method = "kernel", precision = 2^10,
   extend = FALSE, extend_scale = 0.1, bw = "SJ", ...)
 }
 \arguments{

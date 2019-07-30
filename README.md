@@ -72,12 +72,22 @@ check-out these vignettes:
 
 # Features
 
+The following figures are meant to illustrate the (statistical) concepts
+behind the functions. However, for most functions, `plot()`-methods are
+available from the [see-package](http://easystats.github.io/see).
+
+## Describing the Posterior Distribution
+
 [**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html)
 is the master function with which you can compute all of the indices
-cited below *at once*.
+cited below at once.
 
 ``` r
 describe_posterior(rnorm(1000))
+##   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
+## 1 Posterior 0.0082 89   -1.5     1.6 0.51      89     -0.1       0.1
+##   ROPE_Percentage
+## 1            0.11
 ```
 
 ## Point-estimates
@@ -86,40 +96,57 @@ describe_posterior(rnorm(1000))
 
 [**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html)
 find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior,
-*i.e.,* the most probable value.
+*i.e.*, the value associated with the highest probability density (the
+“peak” of the posterior distribution). In other words, it is an
+estimation of the *mode* for continuous parameters.
 
 ``` r
-map_estimate(rnorm(1000, 1, 1))
+posterior <- distribution_normal(100, 0.4, 0.2)
+map_estimate(posterior)
+## MAP = 0.40
 ```
 
 ![](man/figures/unnamed-chunk-6-1.png)<!-- -->
 
 ## Uncertainty
 
-### Highest Density Interval (HDI) - *Credible* Interval (CI)
+### Highest Density Interval (HDI) and Equal-Tailed Interval (ETI)
 
 [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html)
 computes the **Highest Density Interval (HDI)** of a posterior
-distribution, *i.e.*, the interval which contains all points within the
+distribution, i.e., the interval which contains all points within the
 interval have a higher probability density than points outside the
 interval. The HDI can be used in the context of Bayesian posterior
 characterisation as **Credible Interval (CI)**.
 
 Unlike equal-tailed intervals (see
-[`ci()`](https://easystats.github.io/bayestestR/reference/ci.html)) that
-typically exclude 2.5% from each tail of the distribution, the HDI is
-*not* equal-tailed and therefore always includes the mode(s) of
+[`eti()`](https://easystats.github.io/bayestestR/reference/eti.html))
+that typically exclude 2.5% from each tail of the distribution, the HDI
+is *not* equal-tailed and therefore always includes the mode(s) of
 posterior distributions.
 
 By default, `hdi()` returns the 89% intervals (`ci = 0.89`), deemed to
-be more stable than, for instance, 95% intervals (Kruschke, 2014). An
-effective sample size of at least 10.000 is recommended if 95% intervals
-should be computed (Kruschke 2014, p. 183ff). Moreover, 89 is the
-highest prime number that does not exceed the already unstable 95%
-threshold (McElreath, 2015).
+be more stable than, for instance, 95% intervals. An effective sample
+size of at least 10.000 is recommended if 95% intervals should be
+computed (Kruschke 2015). Moreover, 89 indicates the arbitrariness of
+interval limits - its only remarkable property is being the highest
+prime number that does not exceed the already unstable 95% threshold
+(McElreath 2018).
 
 ``` r
-hdi(rnorm(1000), ci = .89)
+posterior <- distribution_chisquared(100, 3)
+
+hdi(posterior, ci = .89)
+## # Highest Density Interval
+## 
+##       89% HDI
+##  [0.11, 6.05]
+
+eti(posterior, ci = .89)
+## # Equal-Tailed Interval
+## 
+##       89% ETI
+##  [0.42, 7.27]
 ```
 
 ![](man/figures/unnamed-chunk-8-1.png)<!-- -->
@@ -138,24 +165,29 @@ different from 0 does not make much sense (the probability of it being
 different from a single point being infinite). Therefore, the idea
 underlining ROPE is to let the user define an area around the null value
 enclosing values that are *equivalent to the null* value for practical
-purposes (Kruschke 2010, 2011, 2014).
+purposes (Kruschke and Liddell 2018, @kruschke2018rejecting).
 
-Kruschke (2018) suggests that such null value could be set, by default,
-to the -0.1 to 0.1 range of a standardized parameter (negligible effect
-size according to Cohen, 1988). This could be generalized: For instance,
-for linear models, the ROPE could be set as `0 +/- .1 * sd(y)`. This
-ROPE range can be automatically computed for models using the
+Kruschke suggests that such null value could be set, by default, to the
+-0.1 to 0.1 range of a standardized parameter (negligible effect size
+according to Cohen, 1988). This could be generalized: For instance, for
+linear models, the ROPE could be set as `0 +/- .1 * sd(y)`. This ROPE
+range can be automatically computed for models using the
 [rope\_range](https://easystats.github.io/bayestestR/reference/rope_range.html)
 function.
 
-Kruschke (2010, 2011, 2014) suggests using the proportion of the 95% (or
-90%, considered more stable) HDI that falls within the ROPE as an index
-for “null-hypothesis” testing (as understood under the Bayesian
-framework, see
+Kruschke suggests using the proportion of the 95% (or 90%, considered
+more stable) HDI that falls within the ROPE as an index for
+“null-hypothesis” testing (as understood under the Bayesian framework,
+see
 [equivalence\_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
 ``` r
-rope(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
+posterior <- distribution_normal(100, 0.4, 0.2)
+rope(posterior, range = c(-0.1, 0.1))
+## # Proportion of samples inside the ROPE [-0.10, 0.10]:
+## 
+##  inside ROPE
+##       1.11 %
 ```
 
 ![](man/figures/unnamed-chunk-10-1.png)<!-- -->
@@ -163,14 +195,21 @@ rope(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
 ### Equivalence test
 
 [**`equivalence_test()`**](https://easystats.github.io/bayestestR/reference/equivalence_test.html)
-a **Test for Practical Equivalence** based on the *“HDI+ROPE decision
-rule”* (Kruschke, 2018) to check whether parameter values should be
+is a **Test for Practical Equivalence** based on the *“HDI+ROPE decision
+rule”* (Kruschke 2018) to check whether parameter values should be
 accepted or rejected against an explicitly formulated “null hypothesis”
 (*i.e.*, a
 [ROPE](https://easystats.github.io/bayestestR/reference/rope.html)).
 
 ``` r
-equivalence_test(rnorm(1000, 1, 1), range = c(-0.1, 0.1))
+posterior <- distribution_normal(100, 0.4, 0.2)
+equivalence_test(posterior, range = c(-0.1, 0.1))
+## # Test for Practical Equivalence
+## 
+##   ROPE: [-0.10 0.10]
+## 
+##         H0 inside ROPE     89% HDI
+##  Undecided      0.01 % [0.09 0.71]
 ```
 
 ### Probability of Direction (*p*d)
@@ -196,7 +235,11 @@ the [*reporting
 guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
 
 ``` r
-p_direction(rnorm(1000, mean = 1, sd = 1))
+posterior <- distribution_normal(100, 0.4, 0.2)
+p_direction(posterior)
+## # Probability of Direction (pd)
+## 
+## pd = 98.00%
 ```
 
 ![](man/figures/unnamed-chunk-13-1.png)<!-- -->
@@ -216,16 +259,34 @@ the prior and posterior odds of the parameter falling within or outside
 the null; When the null is a point, a Savage-Dickey density ratio is
 computed, which is also an approximation of a Bayes factor comparing the
 marginal likelihoods of the model against a model in which the tested
-parameter has been restricted to the point null.
+parameter has been restricted to the point null (Wagenmakers et al.
+2010).
 
 ``` r
 prior <- rnorm(1000, mean = 0, sd = 1)
 posterior <- rnorm(1000, mean = 1, sd = 0.7)
 
 bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
+## # Bayes Factor (Savage-Dickey density ratio)
+## 
+##  Bayes Factor
+##          1.71
+## 
+## * Evidence Against The Null: [0]
 ```
 
 ![](man/figures/unnamed-chunk-15-1.png)<!-- -->
+
+<center>
+
+*The lollipops represent the density of a point-null on the prior
+distribution (the blue lollipop on the dotted distribution) and on the
+posterior distribution (the red lollipop on the yellow distribution).
+The ratio between the two - the Svage-Dickey ratio - indicates the
+degree by which the mass of the parameter distribution has shifted away
+from or closer to the null.*
+
+</center>
 
 For more info, see [the Bayes factors
 vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
@@ -236,12 +297,15 @@ vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 computes a Bayesian equivalent of the p-value, related to the odds that
 a parameter (described by its posterior distribution) has against the
 null hypothesis (*h0*) using Mills’ (2014, 2017) *Objective Bayesian
-Hypothesis Testing* framework. It is mathematically based on the density
-at the Maximum A Priori (MAP) and corresponds to the density value at 0
-divided by the density of the MAP estimate.
+Hypothesis Testing* framework. It corresponds to the density value at 0
+divided by the density at the Maximum A Posteriori (MAP).
 
 ``` r
-p_map(rnorm(1000, 1, 1))
+posterior <- distribution_normal(100, 0.4, 0.2)
+p_map(posterior)
+## # MAP-based p-value
+## 
+## p (MAP) = 0.193
 ```
 
 ![](man/figures/unnamed-chunk-17-1.png)<!-- -->
@@ -259,7 +323,7 @@ according to Cohen, 1988), which can be generalised for linear models to
 `-0.1 * sd(y), 0.1 * sd(y)`. For logistic models, the parameters
 expressed in log odds ratio can be converted to standardized difference
 through the formula `sqrt(3)/pi`, resulting in a range of `-0.05` to
-`-0.05`.
+`0.05`.
 
 ``` r
 rope_range(model)
@@ -282,6 +346,7 @@ Generate a sample of size n with near-perfect distributions.
 
 ``` r
 distribution(n = 10)
+##  [1] -1.28 -0.88 -0.59 -0.34 -0.11  0.11  0.34  0.59  0.88  1.28
 ```
 
 ### Probability of a Value
@@ -291,6 +356,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
+## [1] 0.35
 ```
 
 ## Credits
@@ -302,3 +368,49 @@ You can cite the package as following:
     bayestestR*. Available from
     <https://github.com/easystats/bayestestR>.
     [DOI:10.5281/zenodo.2556486](https://zenodo.org/badge/latestdoi/165641861).
+
+# References
+
+<div id="refs" class="references">
+
+<div id="ref-kruschke2015doing">
+
+Kruschke, John K. 2015. *Doing Bayesian Data Analysis: A Tutorial with
+R, JAGS, and Stan*. 2. ed. Amsterdam: Elsevier, Academic Press.
+
+</div>
+
+<div id="ref-kruschke2018rejecting">
+
+———. 2018. “Rejecting or Accepting Parameter Values in Bayesian
+Estimation.” *Advances in Methods and Practices in Psychological
+Science* 1 (2): 270–80. <https://doi.org/10.1177/2515245918771304>.
+
+</div>
+
+<div id="ref-kruschke2018bayesian">
+
+Kruschke, John K, and Torrin M Liddell. 2018. “The Bayesian New
+Statistics: Hypothesis Testing, Estimation, Meta-Analysis, and Power
+Analysis from a Bayesian Perspective.” *Psychonomic Bulletin & Review*
+25 (1): 178–206. <https://doi.org/10.3758/s13423-016-1221-4>.
+
+</div>
+
+<div id="ref-mcelreath2018statistical">
+
+McElreath, Richard. 2018. *Statistical Rethinking*. Chapman; Hall/CRC.
+<https://doi.org/10.1201/9781315372495>.
+
+</div>
+
+<div id="ref-wagenmakers2010bayesian">
+
+Wagenmakers, Eric-Jan, Tom Lodewyckx, Himanshu Kuriyal, and Raoul
+Grasman. 2010. “Bayesian Hypothesis Testing for Psychologists: A
+Tutorial on the SavageDickey Method.” *Cognitive Psychology* 60 (3):
+158–89. <https://doi.org/10.1016/j.cogpsych.2009.12.001>.
+
+</div>
+
+</div>
