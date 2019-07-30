@@ -79,7 +79,11 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 # Features
 
-[**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html) is the master function with which you can compute all of the indices cited below *at once*.
+The following figures are meant to illustrate the (statistical) concepts behind the functions. However, for most functions, `plot()`-methods are available from the [see-package](http://easystats.github.io/see).
+
+## Describing the Posterior Distribution
+
+[**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html) is the master function with which you can compute all of the indices cited below at once.
 
 ```{r message=FALSE, warning=FALSE}
 describe_posterior(rnorm(1000))
@@ -87,7 +91,6 @@ describe_posterior(rnorm(1000))
 
 
 ## Point-estimates
-
 
 ### MAP Estimate
 
@@ -110,7 +113,7 @@ posterior %>%
   geom_segment(x=0.4, xend=0.4, y=0, yend=attributes(map_result)$MAP_density, color="#E91E63", size=1) +
   geom_point(x=map_result, y=attributes(map_result)$MAP_density, color="#E91E63", size=5) +
   geom_vline(xintercept=0, linetype="dotted") +
-  theme_classic() +
+  theme_classic(base_size = 12) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
   xlab("\nParameter Value") +
   ylab("Probability Density\n")
@@ -119,36 +122,55 @@ posterior %>%
 
 ## Uncertainty
 
-### Highest Density Interval (HDI) - *Credible* Interval (CI)
+### Highest Density Interval (HDI) and Equal-Tailed Interval (ETI)
 
-[**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html) computes the **Highest Density Interval (HDI)** of a posterior distribution, *i.e.*, the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as **Credible Interval (CI)**.
+[**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html) computes the **Highest Density Interval (HDI)** of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as **Credible Interval (CI)**.
 
-Unlike equal-tailed intervals (see [`ci()`](https://easystats.github.io/bayestestR/reference/ci.html)) that typically exclude 2.5\% from each tail of the distribution, the HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior distributions. 
+Unlike equal-tailed intervals (see [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html)) that typically exclude 2.5\% from each tail of the distribution, the HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior distributions. 
 
-By default, `hdi()` returns the 89\% intervals (`ci = 0.89`), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2014). An effective sample size of at least 10.000 is recommended if 95\% intervals should be computed (Kruschke 2014, p. 183ff). Moreover, 89 is the highest prime number that does not exceed the already unstable 95\% threshold (McElreath, 2015).
+By default, `hdi()` returns the 89\% intervals (`ci = 0.89`), deemed to be more stable than, for instance, 95\% intervals (Kruschke, 2014). An effective sample size of at least 10.000 is recommended if 95\% intervals should be computed (Kruschke 2014, p. 183ff). Moreover, 89 indicates the arbitrariness of interval limits - its only remarkable property is being the highest prime number that does not exceed the already unstable 95\% threshold (McElreath, 2015).
 
 ```{r message=FALSE, warning=FALSE}
-posterior <- distribution_normal(100, 0.4, 0.2)
+posterior <- distribution_chisquared(100, 3)
+
 hdi(posterior, ci = .89)
+
+eti(posterior, ci = .89)
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-posterior <- distribution_normal(100, 0.4, 0.2)
+posterior <- distribution_chisquared(100, 3)
 
-posterior %>% 
-  density() %>%
-  as.data.frame() %>% 
-  mutate(fill = ifelse(x < hdi(posterior)$CI_low, "low",
-                       ifelse(x > hdi(posterior)$CI_high, "high", "middle"))) %>% 
+dat <- as.data.frame(density(posterior))
+
+p1 <- dat %>% mutate(fill = ifelse(x < hdi(posterior)$CI_low, "low",
+                     ifelse(x > hdi(posterior)$CI_high, "high", "middle"))) %>%
   ggplot(aes(x=x, y=y, fill=fill)) +
   geom_ribbon(aes(ymin=0, ymax=y)) +
   geom_vline(xintercept=0, linetype="dotted") +
-  theme_classic() +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
+  theme_classic(base_size = 12) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, .25)) +
   scale_fill_manual(values=c("high"="#FFC107", "low"="#FFC107", "middle"="#E91E63"), guide=FALSE) +
-  annotate("text", x=0.4, y=1, label="The 89% HDI", color="white", size=8) +
+  annotate("text", x=2.5, y=.05, label="The 89% HDI", color="white", size=5) +
+  xlab(NULL) +
+  ylab("Probability Density\n")
+
+# ggsave("paper/Figure2.png", width = 13, height = 8, units = "in", dpi = 300)
+
+
+p2 <- dat %>% mutate(fill = ifelse(x < ci(posterior)$CI_low, "low",
+                             ifelse(x > ci(posterior)$CI_high, "high", "middle"))) %>%
+  ggplot(aes(x=x, y=y, fill=fill)) +
+  geom_ribbon(aes(ymin=0, ymax=y)) +
+  geom_vline(xintercept=0, linetype="dotted") +
+  theme_classic(base_size = 12) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, .25)) +
+  scale_fill_manual(values=c("high"="#FFC107", "low"="#FFC107", "middle"="#2196F3"), guide=FALSE) +
+  annotate("text", x=2.9, y=.05, label="The 89% ETI", color="white", size=5) +
   xlab("\nParameter Value") +
   ylab("Probability Density\n")
+
+p <- see::plots(p1, p2, tags = TRUE)
 ```
 
 
@@ -179,7 +201,7 @@ posterior %>%
   ggplot(aes(x=x, y=y, fill=fill)) +
   geom_ribbon(aes(ymin=0, ymax=y)) +
   geom_vline(xintercept=0, linetype="dotted") +
-  theme_classic() +
+  theme_classic(base_size = 12) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
   scale_x_continuous(breaks = c(-0.1, 0.1, 0.4)) +
   scale_fill_manual(values=c("high"="#FFC107", "low"="#FFC107", "middle"="#E91E63"), guide=FALSE) +
@@ -222,7 +244,7 @@ posterior %>%
   ggplot(aes(x=x, y=y, fill=fill)) +
   geom_ribbon(aes(ymin=0, ymax=y)) +
   geom_vline(xintercept=0, linetype="dotted") +
-  theme_classic() +
+  theme_classic(base_size = 12) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
   scale_fill_manual(values=c("high"="#FFC107", "low"="#E91E63"), guide=FALSE) +
   xlab("\nParameter Value") +
@@ -258,7 +280,7 @@ posterior %>%
   geom_point(x=0, y=max(prior$y), color="#2196F3", size=5) +
   geom_segment(x=0, xend=0, y=0, yend=density_at(posterior$x, 0, bw="nrd0"), color="#E91E63", size=1) +
   geom_point(x=0, y=density_at(posterior$x, 0, bw="nrd0"), color="#E91E63", size=5) +
-  theme_classic() +
+  theme_classic(base_size = 12) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 0.65)) +
   scale_fill_manual(values=c("high"="#FFC107", "low"="#E91E63"), guide=FALSE) +
   xlab("\nParameter Value") +
@@ -292,7 +314,7 @@ posterior %>%
   geom_point(x=map_result, y=attributes(map_result)$MAP_density, color="#E91E63", size=5) +
   geom_point(x=0, y=density_at(posterior, 0, bw="nrd0"), color="#E91E63", size=5) +
   geom_vline(xintercept=0, linetype="dotted") +
-  theme_classic() +
+  theme_classic(base_size = 12) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
   xlab("\nParameter Value") +
   ylab("Probability Density\n")

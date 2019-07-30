@@ -80,7 +80,7 @@ In order to measure the uncertainty associated with the estimation, **bayestestR
 [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.html)
 computes the HDI of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval (see **Figure 2**). HDIs have a particular property: Unlike an equal-tailed interval (computed by [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html)) that typically exclude 2.5% from each tail of the distribution, the HDI is *not* equal-tailed and therefore always includes the mode(s) of posterior distributions.
 
-By default, `hdi()` and `eti()` return the 89% intervals (`ci = 0.89`), deemed to be more stable than, for instance, 95% intervals. An effective sample size of at least 10.000 is recommended if 95% intervals should be computed [@kruschke2015doing]. Moreover, 89 is the highest prime number that does not exceed the already unstable and arbritrary 95% threshold [@mcelreath2018statistical].
+By default, `hdi()` and `eti()` return the 89% intervals (`ci = 0.89`), deemed to be more stable than, for instance, 95% intervals. An effective sample size of at least 10.000 is recommended if 95% intervals should be computed [@kruschke2015doing]. Moreover, 89 indicates the arbitrariness of interval limits - its only remarkable property is being the highest prime number that does not exceed the already unstable 95\% threshold [@mcelreath2018statistical].
 
 ``` r
 hdi(posterior)

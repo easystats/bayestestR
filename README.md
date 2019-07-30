@@ -72,16 +72,22 @@ check-out these vignettes:
 
 # Features
 
+The following figures are meant to illustrate the (statistical) concepts
+behind the functions. However, for most functions, `plot()`-methods are
+available from the [see-package](http://easystats.github.io/see).
+
+## Describing the Posterior Distribution
+
 [**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html)
 is the master function with which you can compute all of the indices
-cited below *at once*.
+cited below at once.
 
 ``` r
 describe_posterior(rnorm(1000))
-##   Parameter  Median CI CI_low CI_high  pd ROPE_CI ROPE_low ROPE_high
-## 1 Posterior -0.0013 89   -1.6     1.5 0.5      89     -0.1       0.1
+##   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
+## 1 Posterior  0.053 89   -1.5     1.7 0.52      89     -0.1       0.1
 ##   ROPE_Percentage
-## 1             0.1
+## 1           0.084
 ```
 
 ## Point-estimates
@@ -104,35 +110,43 @@ map_estimate(posterior)
 
 ## Uncertainty
 
-### Highest Density Interval (HDI) - *Credible* Interval (CI)
+### Highest Density Interval (HDI) and Equal-Tailed Interval (ETI)
 
 [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html)
 computes the **Highest Density Interval (HDI)** of a posterior
-distribution, *i.e.*, the interval which contains all points within the
+distribution, i.e., the interval which contains all points within the
 interval have a higher probability density than points outside the
 interval. The HDI can be used in the context of Bayesian posterior
 characterisation as **Credible Interval (CI)**.
 
 Unlike equal-tailed intervals (see
-[`ci()`](https://easystats.github.io/bayestestR/reference/ci.html)) that
-typically exclude 2.5% from each tail of the distribution, the HDI is
-*not* equal-tailed and therefore always includes the mode(s) of
+[`eti()`](https://easystats.github.io/bayestestR/reference/eti.html))
+that typically exclude 2.5% from each tail of the distribution, the HDI
+is *not* equal-tailed and therefore always includes the mode(s) of
 posterior distributions.
 
 By default, `hdi()` returns the 89% intervals (`ci = 0.89`), deemed to
 be more stable than, for instance, 95% intervals (Kruschke, 2014). An
 effective sample size of at least 10.000 is recommended if 95% intervals
-should be computed (Kruschke 2014, p. 183ff). Moreover, 89 is the
-highest prime number that does not exceed the already unstable 95%
+should be computed (Kruschke 2014, p. 183ff). Moreover, 89 indicates the
+arbitrariness of interval limits - its only remarkable property is being
+the highest prime number that does not exceed the already unstable 95%
 threshold (McElreath, 2015).
 
 ``` r
-posterior <- distribution_normal(100, 0.4, 0.2)
+posterior <- distribution_chisquared(100, 3)
+
 hdi(posterior, ci = .89)
 ## # Highest Density Interval
 ## 
 ##       89% HDI
-##  [0.09, 0.71]
+##  [0.11, 6.05]
+
+eti(posterior, ci = .89)
+## # Equal-Tailed Interval
+## 
+##       89% ETI
+##  [0.42, 7.27]
 ```
 
 ![](man/figures/unnamed-chunk-8-1.png)<!-- -->
@@ -255,7 +269,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## # Bayes Factor (Savage-Dickey density ratio)
 ## 
 ##  Bayes Factor
-##          1.69
+##          2.15
 ## 
 ## * Evidence Against The Null: [0]
 ```
@@ -341,7 +355,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.39
+## [1] 0.37
 ```
 
 ## Credits
