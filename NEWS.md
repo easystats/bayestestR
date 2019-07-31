@@ -1,3 +1,16 @@
+# bayestestR 0.2.5
+
+## Breaking changes
+## New functions / features
+
+- `rope()`: `ci_method` argument added
+- `eti()`: Computes equal-tailed intervals
+- `reshape_ci()`: Reshape CIs between wide/long
+
+## Minor changes
+
+
+
 # bayestestR 0.2.3
 
 ## Breaking changes
