@@ -1,6 +1,7 @@
 # bayestestR 0.2.5
 
 ## Breaking changes
+
 ## New functions / features
 
 - `rope()`: `ci_method` argument added
@@ -8,7 +9,6 @@
 - `reshape_ci()`: Reshape CIs between wide/long
 
 ## Minor changes
-
 
 
 # bayestestR 0.2.3
@@ -23,7 +23,7 @@
 
 - `reshape_ci()`: Reshape CIs between wide/long
 - `eti()`: Computes equal-tailed intervals
-- `bayesfactor_parameters()`: New function, replacing `bayesfactor_savagedickey()`, allows for computing Bayes factors agaisnt a *point-null* or an *interval-null*.
+- `bayesfactor_parameters()`: New function, replacing `bayesfactor_savagedickey()`, allows for computing Bayes factors against a *point-null* or an *interval-null*.
 - `bayesfactor_restricted()`: Function for computing Bayes factors for order restricted models
 
 ## Minor changes
