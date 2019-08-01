@@ -183,6 +183,14 @@
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>
+<code><a href="../reference/rope.html">rope()</a></code>: returns a proportion (between 0 and 1) instead of a value between 0 and 100</li>
+<li>
+<code><a href="../reference/p_direction.html">p_direction()</a></code>: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 (<a href="https://github.com/easystats/bayestestR/issues/168"><a href='https://github.com/easystats/bayestestR/issues/168'>#168</a></a>)</li>
+<li>
+<code><a href="../reference/bayesfactor_parameters.html">bayesfactor_savagedickey()</a></code>: <code>hypothesis</code> argument replaced by <code>null</code> as part of the new <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> function.</li>
+</ul>
 </div>
 <div id="new-functions--features" class="section level2">
 <h2 class="hasAnchor">
@@ -194,6 +202,10 @@
 <code><a href="../reference/eti.html">eti()</a></code>: Computes equal-tailed intervals</li>
 <li>
 <code><a href="../reference/reshape_ci.html">reshape_ci()</a></code>: Reshape CIs between wide/long</li>
+<li>
+<code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code>: New function, replacing <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_savagedickey()</a></code>, allows for computing Bayes factors against a <em>point-null</em> or an <em>interval-null</em>.</li>
+<li>
+<code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code>: Function for computing Bayes factors for order restricted models</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level2">
@@ -201,48 +213,13 @@
 <a href="#minor-changes" class="anchor"></a>Minor changes</h2>
 </div>
 </div>
-    <div id="bayestestr-023" class="section level1">
-<h1 class="page-header">
-<a href="#bayestestr-023" class="anchor"></a>bayestestR 0.2.3<small> Unreleased </small>
-</h1>
-<div id="breaking-changes-1" class="section level2">
-<h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
-<ul>
-<li>
-<code><a href="../reference/rope.html">rope()</a></code>: returns a proportion (between 0 and 1) instead of a value between 0 and 100</li>
-<li>
-<code><a href="../reference/p_direction.html">p_direction()</a></code>: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 (<a href="https://github.com/easystats/bayestestR/issues/168"><a href='https://github.com/easystats/bayestestR/issues/168'>#168</a></a>)</li>
-<li>
-<code><a href="../reference/bayesfactor_parameters.html">bayesfactor_savagedickey()</a></code>: <code>hypothesis</code> argument replaced by <code>null</code> as part of the new <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> function.</li>
-</ul>
-</div>
-<div id="new-functions--features-1" class="section level2">
-<h2 class="hasAnchor">
-<a href="#new-functions--features-1" class="anchor"></a>New functions / features</h2>
-<ul>
-<li>
-<code><a href="../reference/reshape_ci.html">reshape_ci()</a></code>: Reshape CIs between wide/long</li>
-<li>
-<code><a href="../reference/eti.html">eti()</a></code>: Computes equal-tailed intervals</li>
-<li>
-<code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code>: New function, replacing <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_savagedickey()</a></code>, allows for computing Bayes factors agaisnt a <em>point-null</em> or an <em>interval-null</em>.</li>
-<li>
-<code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code>: Function for computing Bayes factors for order restricted models</li>
-</ul>
-</div>
-<div id="minor-changes-1" class="section level2">
-<h2 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
-</div>
-</div>
     <div id="bayestestr-022" class="section level1">
 <h1 class="page-header">
 <a href="#bayestestr-022" class="anchor"></a>bayestestR 0.2.2<small> 2019-06-20 </small>
 </h1>
-<div id="breaking-changes-2" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
 <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code>: returns capitalized output (e.g., <code>Rejected</code> instead of <code>rejected</code>)</li>
@@ -250,18 +227,18 @@
 <code><a href="../reference/describe_posterior.html">describe_posterior.numeric()</a></code>: <code>dispersion</code> defaults to <code>FALSE</code> for consistency with the other methods</li>
 </ul>
 </div>
-<div id="new-functions--features-2" class="section level2">
+<div id="new-functions--features-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions--features-2" class="anchor"></a>New functions / features</h2>
+<a href="#new-functions--features-1" class="anchor"></a>New functions / features</h2>
 <ul>
 <li>
 <code><a href="../reference/pd_to_p.html">pd_to_p()</a></code> and <code><a href="../reference/pd_to_p.html">p_to_pd()</a></code>: Functions to convert between probability of direction (pd) and p-value</li>
 <li>Support of <code>emmGrid</code> objects: <code><a href="../reference/ci.html">ci()</a></code>, <code><a href="../reference/rope.html">rope()</a></code>, <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_savagedickey()</a></code>, <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, …</li>
 </ul>
 </div>
-<div id="minor-changes-2" class="section level2">
+<div id="minor-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-1" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Improved tutorial 2</li>
 </ul>
@@ -281,9 +258,9 @@
 <h1 class="page-header">
 <a href="#bayestestr-020" class="anchor"></a>bayestestR 0.2.0<small> 2019-05-29 </small>
 </h1>
-<div id="breaking-changes-3" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-3" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>plotting functions now require the installation of the <code>see</code> package</li>
 <li>
@@ -300,9 +277,9 @@
 </li>
 </ul>
 </div>
-<div id="new-functions--features-3" class="section level2">
+<div id="new-functions--features-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions--features-3" class="anchor"></a>New functions / features</h2>
+<a href="#new-functions--features-2" class="anchor"></a>New functions / features</h2>
 <ul>
 <li>
 <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, <code><a href="../reference/describe_prior.html">describe_prior()</a></code>, <code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code>: added wrapper function</li>
@@ -327,9 +304,9 @@
 <code><a href="../reference/mcse.html">mcse()</a></code> to return the Monte Carlo standard error of Stan-models</li>
 </ul>
 </div>
-<div id="minor-changes-3" class="section level2">
+<div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor changes</h2>
+<a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
 <ul>
 <li>Improved documentation</li>
 <li>Improved testing</li>
@@ -369,7 +346,6 @@
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
         <li><a href="#bayestestr-025">0.2.5</a></li>
-        <li><a href="#bayestestr-023">0.2.3</a></li>
         <li><a href="#bayestestr-022">0.2.2</a></li>
         <li><a href="#bayestestr-020">0.2.0</a></li>
         <li><a href="#bayestestr-010">0.1.0</a></li>

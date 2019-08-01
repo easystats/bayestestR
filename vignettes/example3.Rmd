@@ -30,13 +30,14 @@ This vignette can be referred to by citing the package:
 library(knitr)
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">")
+knitr::opts_chunk$set(dpi=300)
 options(digits=2)
 
 set.seed(333)
 ```
 
 ```{r echo=FALSE, fig.cap="Yoda Bayes (896 BBY - 4 ABY).", fig.align='center', out.width="80%"}
-knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/YodaBayes.png")
+knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/YodaBayes.jpg")
 ```
 
 
