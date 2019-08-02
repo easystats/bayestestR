@@ -2,6 +2,7 @@
 
 ## Breaking changes
 
+- `rope_range()` for binomial model has now a different default (-.18; .18 ; instead of -.055; .055)
 - `rope()`: returns a proportion (between 0 and 1) instead of a value between 0 and 100
 - `p_direction()`: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 ([#168](https://github.com/easystats/bayestestR/issues/168))
 - `bayesfactor_savagedickey()`: `hypothesis` argument replaced by `null` as part of the new `bayesfactor_parameters()` function.
