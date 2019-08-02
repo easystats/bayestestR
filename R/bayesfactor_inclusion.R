@@ -66,6 +66,7 @@ bayesfactor_inclusion <- function(models, match_models = FALSE, prior_odds = NUL
 }
 
 
+#' @importFrom utils packageVersion
 #' @export
 bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALSE, prior_odds = NULL, ...) {
   if (utils::packageVersion("base") < "3.6.0") {
