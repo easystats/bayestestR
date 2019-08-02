@@ -66,9 +66,13 @@ bayesfactor_inclusion <- function(models, match_models = FALSE, prior_odds = NUL
 }
 
 
-
 #' @export
 bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALSE, prior_odds = NULL, ...) {
+  if (utils::packageVersion("base") < "3.6.0") {
+    stop("'bayesfactor_inclusion' requires R 3.6.0 or later to work.\nYou might find the 'installr' package useful.")
+  }
+
+
   # Build Models Table #
   df.model <- .get_model_table(models, priorOdds = prior_odds)
   effnames <- colnames(df.model)[-(1:3)]
