@@ -17,6 +17,10 @@
 
 ## Minor changes
 
+## Bug fixes
+
+- `bayesfactor_inclusion()` now works with `R < 3.6`.
+
 # bayestestR 0.2.2
 
 ## Breaking changes
