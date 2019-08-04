@@ -7,10 +7,9 @@ output:
     fig_height: 6
   rmarkdown::html_vignette:
     toc: true
+    toc_depth: 2
     fig_width: 10.08
     fig_height: 6
-toc:
-  depth: 3
 tags: [r, bayesian, bayes factors]
 vignette: >
   \usepackage[utf8]{inputenc}
