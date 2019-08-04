@@ -210,7 +210,7 @@
   according to Cohen, 1988).</p>
 <p></p><ul>
 <li><p>For <strong>linear models (lm)</strong>, this can be generalised to -0.1 * SD<sub>y</sub>, 0.1 * SD<sub>y</sub>.</p></li>
-<li><p>For <strong>logistic models</strong>, the parameters expressed in log odds ratio can be converted to standardized difference through the formula &radic;(3)/&pi;, resulting in a range of <code>-0.055</code> to <code>-0.055</code>.</p></li>
+<li><p>For <strong>logistic models</strong>, the parameters expressed in log odds ratio can be converted to standardized difference through the formula &pi;/&radic;(3), resulting in a range of <code>-0.18</code> to <code>0.18</code>.</p></li>
 <li><p>For other models with <strong>binary outcome</strong>, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.</p></li>
 <li><p>For <strong>t-tests</strong>, the standard deviation of the response is used, similarly to linear models (see above).</p></li>
 <li><p>For <strong>correlations</strong>, <code>-0.05, 0.05</code> is used, i.e., half the value of a negligible correlation as suggested by Cohen's (1988) rules of thumb.</p></li>

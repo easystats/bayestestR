@@ -225,7 +225,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <a class="sourceLine" id="cb8-2" title="2"></a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="../reference/bayesfactor.html">bayesfactor</a></span>(result)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="kw">scale_fill_pizza</span>()</a></code></pre></div>
-<p><img src="example2_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="example2_files/figure-html/unnamed-chunk-8-1.png" width="2187.5"></p>
 <p>So, after seeing this pizza, how much would you be suprised by the outcome of a blinded poke?</p>
 </div>
 </div>
@@ -251,7 +251,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <a class="sourceLine" id="cb9-12" title="12"><span class="st">  </span><span class="kw">geom_violindot</span>(<span class="dt">fill_dots =</span> <span class="st">"black"</span>, <span class="dt">size_dots =</span> <span class="dv">1</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb9-13" title="13"><span class="st">  </span><span class="kw">scale_fill_material</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb9-14" title="14"><span class="st">  </span><span class="kw">theme_modern</span>()</a></code></pre></div>
-<p><img src="example2_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p><img src="example2_files/figure-html/unnamed-chunk-9-1.png" width="2187.5"></p>
 <p>It <em>seems</em> (visually) that <em>virgnica</em> flowers have, on average, a slightly higer width of sepals. Let’s assess this difference statistically by using the <code>ttestBF</code> in the <code>BayesFactor</code> package.</p>
 </div>
 <div id="compute-the-bayesian-t-test" class="section level3">
@@ -292,10 +292,12 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <a class="sourceLine" id="cb13-2" title="2"></a>
 <a class="sourceLine" id="cb13-3" title="3"><span class="kw">model_performance</span>(model)</a></code></pre></div>
 <pre><code>&gt; Can't calculate log-loss.</code></pre>
-<pre><code>&gt;   ELPD ELPD_SE LOOIC LOOIC_SE WAIC    R2 R2_SE RMSE LOGLOSS SCORE_LOG
-&gt; 1  -66     3.1   133      6.1  133 0.098 0.043 0.48      NA      -106
-&gt;   SCORE_SPHERICAL
-&gt; 1            0.01</code></pre>
+<pre><code>&gt; # Indices of model performance
+&gt; 
+&gt;  ELPD ELPD_SE LOOIC LOOIC_SE WAIC    R2 R2_SE RMSE LOGLOSS SCORE_LOG
+&gt;   -66     3.1   133      6.1  133 0.098 0.043 0.48      NA      -106
+&gt;  SCORE_SPHERICAL
+&gt;             0.01</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model, <span class="dt">test =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span>))</a></code></pre></div>
 <pre><code>&gt;     Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
 &gt; 1 (Intercept)   -6.2 89   -9.5    -3.0  1      89   -0.055     0.055
