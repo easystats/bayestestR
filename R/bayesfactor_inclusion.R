@@ -68,11 +68,6 @@ bayesfactor_inclusion <- function(models, match_models = FALSE, prior_odds = NUL
 
 #' @export
 bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALSE, prior_odds = NULL, ...) {
-  if (utils::packageVersion("base") < "3.6.0") {
-    stop("'bayesfactor_inclusion' requires R 3.6.0 or later to work.\nYou might find the 'installr' package useful.")
-  }
-
-
   # Build Models Table #
   df.model <- .get_model_table(models, priorOdds = prior_odds)
   effnames <- colnames(df.model)[-(1:3)]
@@ -216,6 +211,8 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
   for (m in seq_len(nrow(df.model))) {
     tmp_terms <- make_terms(df.model$Modelnames[m])
     if (length(tmp_terms) > 0) {
+      missing_terms <- !tmp_terms %in% colnames(df.model) # For R < 3.6.0
+      if (any(missing_terms)) df.model[,tmp_terms[missing_terms]] <- NA # For R < 3.6.0
       df.model[m, tmp_terms] <- TRUE
     }
   }
