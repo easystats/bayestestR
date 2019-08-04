@@ -32,6 +32,7 @@ data(iris)
 library(knitr)
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">")
+knitr::opts_chunk$set(dpi=300)
 options(digits=2)
 
 set.seed(333)

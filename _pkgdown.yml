@@ -20,18 +20,19 @@ reference:
   - describe_posterior
   - point_estimate
   - map_estimate
+  - eti
   - hdi
   - ci
 
 - title: "Effect Existence and Significance"
   contents:
   - p_direction
-  - convert_pd_to_p
+  - p_rope
+  - p_map
   - rope
   - rope_range
   - equivalence_test
-  - p_rope
-  - p_map
+  - convert_pd_to_p
 
 - title: "Effect Existence and Significance - Bayes factors"
   contents:
@@ -39,11 +40,13 @@ reference:
   - bayesfactor_savagedickey
   - bayesfactor_inclusion
   - bayesfactor_models
+  - bayesfactor_restricted
 
 - title: "Model Diagnostics"
   contents:
   - diagnostic_posterior
   - describe_prior
+  - sensivity_to_prior
   - effective_sample
   - mcse
 
@@ -61,6 +64,7 @@ reference:
   contents:
   - as.numeric.p_direction
   - as.data.frame.density
+  - reshape_ci
 
 
 navbar:

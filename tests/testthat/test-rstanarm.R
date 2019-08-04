@@ -19,10 +19,10 @@ test_that("rstanarm", {
   testthat::expect_equal(rope_range(model)[1], -0.097, tol = 0.1)
 
   model <- insight::download_model("stanreg_glm_1")
-  testthat::expect_equal(rope_range(model)[1], -0.055, tol = 0.1)
+  testthat::expect_equal(rope_range(model)[1], -0.18, tol = 0.1)
 
   model <- insight::download_model("stanreg_merMod_1")
-  testthat::expect_equal(rope_range(model)[1], -0.055, tol = 0.1)
+  testthat::expect_equal(rope_range(model)[1], -0.18, tol = 0.1)
 
   model <- insight::download_model("stanreg_gamm4_1")
   testthat::expect_equal(rope_range(model)[1], -0.043, tol = 0.1)

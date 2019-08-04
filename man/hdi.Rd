@@ -68,11 +68,13 @@ from each tail of the distribution and always include the median, the HDI is
 \emph{not} equal-tailed and therefore always includes the mode(s) of posterior
 distributions.
 \cr \cr
-By default, \code{hdi()} and \code{eti()} returns the 89\% intervals (\code{ci = 0.89}),
+By default, \code{hdi()} and \code{eti()} return the 89\% intervals (\code{ci = 0.89}),
 deemed to be more stable than, for instance, 95\% intervals (\cite{Kruschke, 2014}).
 An effective sample size of at least 10.000 is recommended if 95\% intervals
-should be computed (\cite{Kruschke, 2014, p. 183ff}). Moreover, 89 is the
-not exceed the already unstable and arbitrary 95\% threshold (McElreath, 2015).
+should be computed (\cite{Kruschke, 2014, p. 183ff}). Moreover, 89 indicates
+the arbitrariness of interval limits - its only remarkable property is being
+the highest prime number that does not exceed the already unstable 95\%
+threshold (\cite{McElreath, 2015}).
 \cr \cr
 A 90\% equal-tailed interval (ETI) has 5\% of the distribution on either
 side of its limits. It indicates the 5th percentile and the 95h percentile.

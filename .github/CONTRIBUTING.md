@@ -29,7 +29,7 @@ Software contributions are getting more and more valued in the academic world, s
 ## Code
 
 - Please document and comment your code, so that the purpose of each step (or code line) is stated in a clear and understandable way.
-- Before submitting a change, please read the [**R style guide**](https://style.tidyverse.org/) to keep some consistency in code formatting.
+- Before submitting a change, please read the [**R style guide**](https://style.tidyverse.org/) and in particular our [**easystats convention of code-style**](https://github.com/easystats/easystats#convention-of-code-style) to keep some consistency in code formatting.
 - Regarding the style guide, note this exception: we put readability and clarity before everything. Thus, we like underscores and full names (prefer `model_performance` over `modelperf` and `interpret_odds_logistic` over `intoddslog`).
 - Before you start to code, make sure you're on the `dev` branch (the most "advanced"). Then, you can create a new branch named by your feature (e.g., `feature_lightsaber`) and do your changes. Finally, submit your branch to be merged into the `dev` branch. Then, every now and then, the dev branch will merge into `master`, as a new package version.
 

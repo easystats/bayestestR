@@ -4,10 +4,10 @@ Title: Understand and Describe Bayesian Models and Posterior Distributions
 Version: 0.2.5
 Authors@R: c(
     person("Dominique", 
-        "Makowski", 
-        email = "dom.makowski@gmail.com",
-        role = c("aut", "cre"), 
-        comment = c(ORCID = "0000-0001-5375-9967")),
+		"Makowski", 
+		email = "dom.makowski@gmail.com",
+		role = c("aut", "cre"), 
+		comment = c(ORCID = "0000-0001-5375-9967")),
 	person("Daniel", 
 		"Lüdecke", 
 		role = c("aut"), 
@@ -29,8 +29,9 @@ Authors@R: c(
 		email = "paul.buerkner@gmail.com"),
 	person("Tristan", 
 		"Mahr", 
-		role = c("rev"), 
-		email = "tristan.mahr@gmail.com")
+		role = c("rev"),
+		email = "tristan.mahr@wisc.edu",
+		comment = c(ORCID = "0000-0002-8890-5116"))
 	)
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
 URL: https://github.com/easystats/bayestestR
@@ -54,7 +55,6 @@ Suggests:
 	covr,
 	dplyr,
 	emmeans,
-	tidyr,
 	GGally,
 	ggplot2,
 	ggridges,
@@ -63,12 +63,13 @@ Suggests:
 	lme4,
 	logspline,
 	performance,
-	see,
 	rmarkdown,
 	rstan,
 	rstanarm,
+	see,
 	stringr,
-	testthat
+	testthat,
+	tidyr
 RoxygenNote: 6.1.1
 Language: en-GB
 VignetteBuilder: knitr

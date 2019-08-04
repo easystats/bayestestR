@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -266,11 +266,13 @@ from each tail of the distribution and always include the median, the HDI is
 <em>not</em> equal-tailed and therefore always includes the mode(s) of posterior
 distributions.
 <br /> <br />
-By default, <code>hdi()</code> and <code><a href='eti.html'>eti()</a></code> returns the 89% intervals (<code>ci = 0.89</code>),
+By default, <code>hdi()</code> and <code><a href='eti.html'>eti()</a></code> return the 89% intervals (<code>ci = 0.89</code>),
 deemed to be more stable than, for instance, 95% intervals (<cite>Kruschke, 2014</cite>).
 An effective sample size of at least 10.000 is recommended if 95% intervals
-should be computed (<cite>Kruschke, 2014, p. 183ff</cite>). Moreover, 89 is the
-not exceed the already unstable and arbitrary 95% threshold (McElreath, 2015).
+should be computed (<cite>Kruschke, 2014, p. 183ff</cite>). Moreover, 89 indicates
+the arbitrariness of interval limits - its only remarkable property is being
+the highest prime number that does not exceed the already unstable 95%
+threshold (<cite>McElreath, 2015</cite>).
 <br /> <br />
 A 90% equal-tailed interval (ETI) has 5% of the distribution on either
 side of its limits. It indicates the 5th percentile and the 95h percentile.
@@ -367,9 +369,9 @@ the resulting HDI.</p>
 #&gt; Chain 1: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.015 seconds (Warm-up)
+#&gt; Chain 1:  Elapsed Time: 0.012 seconds (Warm-up)
 #&gt; Chain 1:                0.014 seconds (Sampling)
-#&gt; Chain 1:                0.029 seconds (Total)
+#&gt; Chain 1:                0.026 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
 #&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
@@ -400,8 +402,8 @@ the resulting HDI.</p>
 #&gt; Chain 2: Iteration: 180 / 200 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 200 / 200 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.018 seconds (Warm-up)
-#&gt; Chain 2:                0.013 seconds (Sampling)
+#&gt; Chain 2:  Elapsed Time: 0.017 seconds (Warm-up)
+#&gt; Chain 2:                0.014 seconds (Sampling)
 #&gt; Chain 2:                0.031 seconds (Total)
 #&gt; Chain 2: </div><div class='output co'>#&gt; <span class='warning'>Warning: The largest R-hat is 1.06, indicating chains have not mixed.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>

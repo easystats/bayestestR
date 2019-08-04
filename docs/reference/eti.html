@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
       </span>
     </div>
 
@@ -266,11 +266,13 @@ from each tail of the distribution and always include the median, the HDI is
 <em>not</em> equal-tailed and therefore always includes the mode(s) of posterior
 distributions.
 <br /> <br />
-By default, <code><a href='hdi.html'>hdi()</a></code> and <code>eti()</code> returns the 89% intervals (<code>ci = 0.89</code>),
+By default, <code><a href='hdi.html'>hdi()</a></code> and <code>eti()</code> return the 89% intervals (<code>ci = 0.89</code>),
 deemed to be more stable than, for instance, 95% intervals (<cite>Kruschke, 2014</cite>).
 An effective sample size of at least 10.000 is recommended if 95% intervals
-should be computed (<cite>Kruschke, 2014, p. 183ff</cite>). Moreover, 89 is the
-not exceed the already unstable and arbitrary 95% threshold (McElreath, 2015).
+should be computed (<cite>Kruschke, 2014, p. 183ff</cite>). Moreover, 89 indicates
+the arbitrariness of interval limits - its only remarkable property is being
+the highest prime number that does not exceed the already unstable 95%
+threshold (<cite>McElreath, 2015</cite>).
 <br /> <br />
 A 90% equal-tailed interval (ETI) has 5% of the distribution on either
 side of its limits. It indicates the 5th percentile and the 95h percentile.

@@ -10,6 +10,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
   %\VignetteEngine{knitr::rmarkdown}
 bibliography: paper/paper.bib
+csl: vignettes/apa.csl
 editor_options: 
   chunk_output_type: console
 ---
@@ -289,7 +290,7 @@ posterior %>%
   ylab("Probability Density\n")
 ```
 
-<center>*The lollipops represent the density of a point-null on the prior distribution (the blue lollipop on the dotted distribution) and on the posterior distribution (the red lollipop on the yellow distribution). The ratio between the two - the Svage-Dickey ratio - indicates the degree by which the mass of the parameter distribution has shifted away from or closer to the null.*</center>
+<sup>*The lollipops represent the density of a point-null on the prior distribution (the blue lollipop on the dotted distribution) and on the posterior distribution (the red lollipop on the yellow distribution). The ratio between the two - the Savage-Dickey ratio - indicates the degree by which the mass of the parameter distribution has shifted away from or closer to the null.*</sup>
 
 For more info, see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 

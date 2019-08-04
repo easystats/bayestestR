@@ -47,4 +47,4 @@ This vignette can be referred to by citing the package:
 
 # Indices of Effect *Existence* and *Significance* in the Bayesian Framework
 
-This document is accessible [**here**](https://github.com/DominiqueMakowski/publications/tree/master/makowski_2019_bayesian/manuscript).
+This document is accessible [**here**](https://github.com/easystats/easystats/tree/master/publications/makowski_2019_bayesian).

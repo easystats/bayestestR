@@ -71,6 +71,7 @@ test_that("bayesfactor_models BRMS", {
 # bayesfactor_inclusion ---------------------------------------------------
 
 test_that("bayesfactor_inclusion", {
+<<<<<<< HEAD
   set.seed(444)
   # BayesFactor
   ToothGrowth$dose <- as.factor(ToothGrowth$dose)
@@ -93,4 +94,29 @@ test_that("bayesfactor_inclusion", {
   testthat::expect_equal(bfinc_matched$p_prior, c(1, 0.2, 0.6, 0.2, 0.2), tolerance = 0.1)
   testthat::expect_equal(bfinc_matched$p_posterior, c(1, 0.94, 0.06, 0.01, 0), tolerance = 0.1)
   testthat::expect_equal(log(bfinc_matched$BF), c(NaN, 57.37, -3.92, -5.25, -3.25), tolerance = 0.1)
+=======
+  if(utils::packageVersion("base") >= "3.6.0"){
+    # BayesFactor
+    ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+    BF_ToothGrowth <- BayesFactor::anovaBF(len ~ dose * supp, ToothGrowth)
+    testthat::expect_equal(
+      bayestestR::bayesfactor_inclusion(BF_ToothGrowth),
+      bayestestR::bayesfactor_inclusion(bayestestR::bayesfactor_models(BF_ToothGrowth))
+    )
+
+    # with random effects in all models:
+    testthat::expect_true(is.nan(bayestestR::bayesfactor_inclusion(BFM1)[1, "BF"]))
+
+    bfinc_all <- bayestestR::bayesfactor_inclusion(BFM4, match_models = FALSE)
+    testthat::expect_equal(bfinc_all$p_prior, c(1, 0.8, 0.6, 0.4, 0.2), tolerance = 0.1)
+    testthat::expect_equal(bfinc_all$p_posterior, c(1, 1, 0.06, 0.01, 0), tolerance = 0.1)
+    testthat::expect_equal(log(bfinc_all$BF), c(NaN, 56.04, -3.22, -5.9, -8.21), tolerance = 0.1)
+
+    # + match_models
+    bfinc_matched <- bayestestR::bayesfactor_inclusion(BFM4, match_models = TRUE)
+    testthat::expect_equal(bfinc_matched$p_prior, c(1, 0.2, 0.6, 0.2, 0.2), tolerance = 0.1)
+    testthat::expect_equal(bfinc_matched$p_posterior, c(1, 0.94, 0.06, 0.01, 0), tolerance = 0.1)
+    testthat::expect_equal(log(bfinc_matched$BF), c(NaN, 57.37, -3.92, -5.25, -3.25), tolerance = 0.1)
+  }
+>>>>>>> master
 })

@@ -10,7 +10,7 @@
 #'
 #'   \itemize{
 #'     \item For \strong{linear models (lm)}, this can be generalised to \ifelse{html}{\out{-0.1 * SD<sub>y</sub>, 0.1 * SD<sub>y</sub>}}{\eqn{[-0.1*SD_{y}, 0.1*SD_{y}]}}.
-#'     \item For \strong{logistic models}, the parameters expressed in log odds ratio can be converted to standardized difference through the formula \ifelse{html}{\out{&radic;(3)/&pi;}}{\eqn{\sqrt{3}/\pi}}, resulting in a range of \code{-0.055} to \code{-0.055}.
+#'     \item For \strong{logistic models}, the parameters expressed in log odds ratio can be converted to standardized difference through the formula \ifelse{html}{\out{&pi;/&radic;(3)}}{\eqn{\pi/\sqrt{3}}}, resulting in a range of \code{-0.18} to \code{0.18}.
 #'     \item For other models with \strong{binary outcome}, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.
 #'     \item For \strong{t-tests}, the standard deviation of the response is used, similarly to linear models (see above).
 #'     \item For \strong{correlations}, \code{-0.05, 0.05} is used, i.e., half the value of a negligible correlation as suggested by Cohen's (1988) rules of thumb.
@@ -83,7 +83,7 @@ rope_range.merMod <- rope_range.brmsfit
 
     # General Linear Models
   } else if (information$is_binomial) {
-    negligible_value <- 0.1 * sqrt(3) / pi
+    negligible_value <- 0.1 * pi / sqrt(3)
 
     # T-tests
   } else if (information$is_ttest) {

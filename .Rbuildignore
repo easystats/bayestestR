@@ -7,10 +7,8 @@
 ^LICENSE
 ^data/.
 ^docs/.
-^logo.png
 ^README.Rmd
-^logo.png
 ^pkgdown/.
 ^paper.*$
-^man/figures/.
+^man/figures/JASP*
 ^vignettes/2019_frontiers/.
