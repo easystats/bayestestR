@@ -32,7 +32,7 @@
 #'
 #' @importFrom stats density
 #' @export
-map_estimate <- function(x, ...) {
+map_estimate <- function(x, precision = 2^10, method = "kernel", ...) {
   UseMethod("map_estimate")
 }
 
@@ -54,8 +54,8 @@ print.map_estimate <- function(x, ...) {
 
 #' @rdname map_estimate
 #' @export
-map_estimate.numeric <- function(x, precision = 2^10, ...) {
-  d <- estimate_density(x, precision = precision, ...)
+map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
+  d <- estimate_density(x, precision = precision, method = method, ...)
 
   hdp_x <- d$x[which.max(d$y)]
   hdp_y <- max(d$y)
@@ -78,8 +78,8 @@ map_estimate.numeric <- function(x, precision = 2^10, ...) {
 
 #' @importFrom insight get_parameters
 #' @keywords internal
-.map_estimate_models <- function(x, precision, ...) {
-  l <- sapply(x, map_estimate, precision = precision, simplify = FALSE, ...)
+.map_estimate_models <- function(x, precision, method, ...) {
+  l <- sapply(x, map_estimate, precision = precision, method = method, simplify = FALSE, ...)
 
   out <- data.frame(
     Parameter = colnames(x),
@@ -99,24 +99,25 @@ map_estimate.numeric <- function(x, precision = 2^10, ...) {
 
 #' @rdname map_estimate
 #' @export
-map_estimate.stanreg <- function(x, precision = 2^10, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+map_estimate.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
 
   .map_estimate_models(
     x = insight::get_parameters(x, effects = effects, parameters = parameters),
-    precision = precision
+    precision = precision,
+    method = method
   )
 }
 
 #' @rdname map_estimate
 #' @export
-map_estimate.brmsfit <- function(x, precision = 2^10, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+map_estimate.brmsfit <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
   .map_estimate_models(
     x = insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
-    precision = precision
+    precision = precision, method = method
   )
 }
 

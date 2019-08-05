@@ -7,14 +7,15 @@
 \alias{map_estimate.brmsfit}
 \title{Maximum A Posteriori probability estimate (MAP)}
 \usage{
-map_estimate(x, ...)
+map_estimate(x, precision = 2^10, method = "kernel", ...)
 
-\method{map_estimate}{numeric}(x, precision = 2^10, ...)
+\method{map_estimate}{numeric}(x, precision = 2^10, method = "kernel",
+  ...)
 
-\method{map_estimate}{stanreg}(x, precision = 2^10,
+\method{map_estimate}{stanreg}(x, precision = 2^10, method = "kernel",
   effects = c("fixed", "random", "all"), parameters = NULL, ...)
 
-\method{map_estimate}{brmsfit}(x, precision = 2^10,
+\method{map_estimate}{brmsfit}(x, precision = 2^10, method = "kernel",
   effects = c("fixed", "random", "all"), component = c("conditional",
   "zi", "zero_inflated", "all"), parameters = NULL, ...)
 }
@@ -22,9 +23,11 @@ map_estimate(x, ...)
 \item{x}{Vector representing a posterior distribution. Can also be a
 \code{stanreg}, \code{brmsfit} or a \code{BayesFactor} model.}
 
-\item{...}{Currently not used.}
-
 \item{precision}{Number of points of density data. See the \code{n} parameter in \link[=density]{density}.}
+
+\item{method}{Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.}
+
+\item{...}{Currently not used.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}

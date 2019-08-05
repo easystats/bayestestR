@@ -2,10 +2,10 @@
 #'
 #' Compute a Bayesian equivalent of the \emph{p}-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (\emph{h0}) using Mills' (2014, 2017) \emph{Objective Bayesian Hypothesis Testing} framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP).
 #'
-#'
-#' @param precision Number of points for density estimation. See the \code{n}-parameter in \link[=density]{density}.
+#' @details Note that this method is sensitive to the density estimation \code{method} (see the secion in the examples below).
 #'
 #' @inheritParams hdi
+#' @inheritParams density_at
 #'
 #' @examples
 #' library(bayestestR)
@@ -29,6 +29,26 @@
 #' p_map(bf)
 #' }
 #'
+#' \donttest{
+#' # ---------------------------------------
+#' # Robustness to density estimation method
+#' set.seed(333)
+#' data <- data.frame()
+#' for(iteration in 1:250){
+#'   x <- rnorm(1000, 1, 1)
+#'   result <- data.frame("Kernel" = p_map(x, method = "kernel"),
+#'                        "KernSmooth" = p_map(x, method = "KernSmooth"),
+#'                        "logspline" = p_map(x, method = "logspline"))
+#'   data <- rbind(data, result)
+#' }
+#' data$KernSmooth <- data$Kernel - data$KernSmooth
+#' data$logspline <- data$Kernel - data$logspline
+#'
+#' summary(data$KernSmooth)
+#' summary(data$logspline)
+#' boxplot(data[c("KernSmooth", "logspline")])
+#' }
+#'
 #' @seealso \href{https://www.youtube.com/watch?v=Ip8Ci5KUVRc}{Jeff Mill's talk}
 #'
 #' @references \itemize{
@@ -37,7 +57,7 @@
 #'
 #' @importFrom stats density
 #' @export
-p_map <- function(x, ...) {
+p_map <- function(x, precision = 2^10, method = "kernel", ...) {
   UseMethod("p_map")
 }
 
@@ -48,12 +68,12 @@ p_map <- function(x, ...) {
 
 #' @rdname p_map
 #' @export
-p_map.numeric <- function(x, precision = 2^10, ...) {
+p_map.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
   # Density at MAP
-  map <- attributes(map_estimate(x, precision = precision, ...))$MAP_density
+  map <- attributes(map_estimate(x, precision = precision, method = method, ...))$MAP_density
 
   # Density at 0
-  d_0 <- density_at(x, 0, precision = precision)
+  d_0 <- density_at(x, 0, precision = precision, method = method, ...)
   if (is.na(d_0)) d_0 <- 0
 
   # Odds
@@ -65,13 +85,13 @@ p_map.numeric <- function(x, precision = 2^10, ...) {
 
 
 #' @export
-p_map.data.frame <- function(x, precision = 2^10, ...) {
+p_map.data.frame <- function(x, precision = 2^10, method = "kernel", ...) {
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
-    p_MAP <- p_map(x[, 1], precision = precision, ...)
+    p_MAP <- p_map(x[, 1], precision = precision, method = method, ...)
   } else {
-    p_MAP <- sapply(x, p_map, precision = precision, simplify = TRUE, ...)
+    p_MAP <- sapply(x, p_map, precision = precision, method = method, simplify = TRUE, ...)
   }
 
   out <- data.frame(
@@ -85,12 +105,12 @@ p_map.data.frame <- function(x, precision = 2^10, ...) {
 }
 
 #' @export
-p_map.emmGrid <- function(x, precision = 2^10, ...) {
+p_map.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {
   if (!requireNamespace("emmeans")) {
     stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
   }
   xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
-  out <- p_map(xdf, precision = precision, ...)
+  out <- p_map(xdf, precision = precision, method = method, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
@@ -98,20 +118,21 @@ p_map.emmGrid <- function(x, precision = 2^10, ...) {
 
 #' @importFrom insight get_parameters
 #' @keywords internal
-.p_map_models <- function(x, precision, effects, component, parameters, ...) {
-  out <- p_map(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), precision = precision, ...)
+.p_map_models <- function(x, precision, method, effects, component, parameters, ...) {
+  out <- p_map(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), precision = precision, method = method, ...)
 
   out
 }
 
 #' @rdname p_map
 #' @export
-p_map.stanreg <- function(x, precision = 2^10, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+p_map.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
 
   out <- .p_map_models(
     x = x,
     precision = precision,
+    method = method,
     effects = effects,
     component = "conditional",
     parameters = parameters,
@@ -124,13 +145,14 @@ p_map.stanreg <- function(x, precision = 2^10, effects = c("fixed", "random", "a
 
 #' @rdname p_map
 #' @export
-p_map.brmsfit <- function(x, precision = 2^10, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+p_map.brmsfit <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
   out <- .p_map_models(
     x = x,
     precision = precision,
+    method = method,
     effects = effects,
     component = component,
     parameters = parameters,
@@ -146,8 +168,8 @@ p_map.brmsfit <- function(x, precision = 2^10, effects = c("fixed", "random", "a
 
 #' @rdname p_map
 #' @export
-p_map.BFBayesFactor <- function(x, precision = 2^10, ...) {
-  out <- p_map(insight::get_parameters(x), precision = precision, ...)
+p_map.BFBayesFactor <- function(x, precision = 2^10, method = "kernel", ...) {
+  out <- p_map(insight::get_parameters(x), precision = precision, method = method, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
