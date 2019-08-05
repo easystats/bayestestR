@@ -69,5 +69,10 @@ p_map(bf)
 
 }
 \references{
-\href{https://www.youtube.com/watch?v=Ip8Ci5KUVRc}{Mill's talk}
+\itemize{
+  \item Mills, J. A. (2018). Objective Bayesian Precise Hypothesis Testing. University of Cincinnati.
+}
+}
+\seealso{
+\href{https://www.youtube.com/watch?v=Ip8Ci5KUVRc}{Jeff Mill's talk}
 }

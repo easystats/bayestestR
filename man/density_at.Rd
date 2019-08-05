@@ -4,7 +4,7 @@
 \alias{density_at}
 \title{Density Probability at a Given Value}
 \usage{
-density_at(posterior, x, precision = 2^10, ...)
+density_at(posterior, x, precision = 2^10, method = "kernel", ...)
 }
 \arguments{
 \item{posterior}{Vector representing a posterior distribution.}
@@ -12,6 +12,8 @@ density_at(posterior, x, precision = 2^10, ...)
 \item{x}{The value of which to get the approximate probability.}
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \link[=density]{density}.}
+
+\item{method}{Method of density estimation. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.}
 
 \item{...}{Currently not used.}
 }

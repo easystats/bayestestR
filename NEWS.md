@@ -9,6 +9,7 @@
 
 ## New functions / features
 
+- `density_at()`: `method` argument added
 - `rope()`: `ci_method` argument added
 - `eti()`: Computes equal-tailed intervals
 - `reshape_ci()`: Reshape CIs between wide/long
