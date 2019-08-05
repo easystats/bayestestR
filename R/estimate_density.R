@@ -4,7 +4,7 @@
 #'
 #' @inheritParams hdi
 #' @inheritParams stats::density
-#' @param method Method of density estimation. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.
+#' @param method Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.
 #' @param precision Number of points of density data. See the \code{n} parameter in \link[=density]{density}.
 #' @param extend Extend the range of the x axis by a factor of \code{extend_scale}.
 #' @param extend_scale Ratio of range by which to extend the x axis. A value of \code{0.1} means that the x axis will be extended by \code{1/10} of the range of the data.
@@ -211,8 +211,8 @@ as.data.frame.density <- function(x, ...) {
 #' density_at(posterior, c(0, 1))
 #' @importFrom stats approx density
 #' @export
-density_at <- function(posterior, x, precision = 2^10, ...) {
-  density <- estimate_density(posterior, precision = precision, ...)
+density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
+  density <- estimate_density(posterior, precision = precision, method = method, ...)
   stats::approx(density$x, density$y, xout = x)$y
 }
 
