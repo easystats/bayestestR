@@ -18,17 +18,15 @@
 #' reshape_ci(reshape_ci(x))
 #' @importFrom stats reshape
 #' @export
-reshape_ci <- function(x){
+reshape_ci <- function(x) {
 
 
   # Long to wide ----------------
   if ("CI_low" %in% names(x) & "CI_high" %in% names(x) & "CI" %in% names(x)) {
-
     ci_position <- which(names(x) == "CI")
 
     # Reshape
     if (length(unique(x$CI)) > 1) {
-
       if (!"Parameter" %in% names(x)) {
         x$Parameter <- x$CI
         remove_parameter <- TRUE
@@ -56,8 +54,7 @@ reshape_ci <- function(x){
 
 
     # Wide to long --------------
-  } else{
-
+  } else {
     if (!"Parameter" %in% names(x)) {
       x$Parameter <- 1:nrow(x)
       remove_parameter <- TRUE

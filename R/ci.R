@@ -32,14 +32,9 @@
 #' ci(df, method = "HDI", ci = c(.80, .89, .95))
 #'
 #' library(rstanarm)
-#' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200)
+#' model <- stan_glm(mpg ~ wt, data = mtcars, chains = 2, iter = 200)
 #' ci(model, method = "ETI", ci = c(.80, .89))
 #' ci(model, method = "HDI", ci = c(.80, .89))
-#'
-#' library(emmeans)
-#' model <- emtrends(model, ~1, "wt")
-#' ci(model, method = "ETI")
-#' ci(model, method = "HDI")
 #' \dontrun{
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
@@ -50,6 +45,11 @@
 #' bf <- ttestBF(x = rnorm(100, 1, 1))
 #' ci(bf, method = "ETI")
 #' ci(bf, method = "HDI")
+#'
+#' library(emmeans)
+#' model <- emtrends(model, ~1, "wt")
+#' ci(model, method = "ETI")
+#' ci(model, method = "HDI")
 #' }
 #'
 #' @export

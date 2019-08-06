@@ -185,22 +185,23 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='no'>...</span>)
+<span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>,
-  <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>,
-  <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>,
-  <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"conditional"</span>,
+  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -211,12 +212,16 @@
 <code>stanreg</code>, <code>brmsfit</code> or a <code>BayesFactor</code> model.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Currently not used.</p></td>
+      <th>precision</th>
+      <td><p>Number of points of density data. See the <code>n</code> parameter in <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a>.</p></td>
     </tr>
     <tr>
-      <th>precision</th>
-      <td><p>Number of points for density estimation. See the <code>n</code>-parameter in <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a>.</p></td>
+      <th>method</th>
+      <td><p>Density estimation method. Can be <code>"kernel"</code> (default), <code>"logspline"</code> or <code>"KernSmooth"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Currently not used.</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -239,9 +244,19 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Note that this method is sensitive to the density estimation <code>method</code> (see the secion in the examples below).</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p><a href='https://www.youtube.com/watch?v=Ip8Ci5KUVRc'>Mill's talk</a></p>
+    <ul>
+<li><p>Mills, J. A. (2018). Objective Bayesian Precise Hypothesis Testing. University of Cincinnati.</p></li>
+</ul>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='https://www.youtube.com/watch?v=Ip8Ci5KUVRc'>Jeff Mill's talk</a></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -276,6 +291,25 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='no'>bf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/ttestBF'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
 <span class='fu'>p_map</span>(<span class='no'>bf</span>)
 <span class='co'># }</span><div class='input'>
+</div><div class='input'><span class='co'># ---------------------------------------</span>
+<span class='co'># Robustness to density estimation method</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>333</span>)
+<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>()
+<span class='kw'>for</span> (<span class='no'>iteration</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>250</span>) {
+  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>)
+  <span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
+    <span class='st'>"Kernel"</span> <span class='kw'>=</span> <span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>),
+    <span class='st'>"KernSmooth"</span> <span class='kw'>=</span> <span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"KernSmooth"</span>),
+    <span class='st'>"logspline"</span> <span class='kw'>=</span> <span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"logspline"</span>)
+  )
+  <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>rbind</a></span>(<span class='no'>data</span>, <span class='no'>result</span>)
+}
+<span class='no'>data</span>$<span class='no'>KernSmooth</span> <span class='kw'>&lt;-</span> <span class='no'>data</span>$<span class='no'>Kernel</span> - <span class='no'>data</span>$<span class='no'>KernSmooth</span>
+<span class='no'>data</span>$<span class='no'>logspline</span> <span class='kw'>&lt;-</span> <span class='no'>data</span>$<span class='no'>Kernel</span> - <span class='no'>data</span>$<span class='no'>logspline</span>
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>data</span>$<span class='no'>KernSmooth</span>)</div><div class='output co'>#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+#&gt; -0.039649 -0.007867 -0.003854 -0.005315 -0.001114  0.056255 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>data</span>$<span class='no'>logspline</span>)</div><div class='output co'>#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+#&gt; -0.092188 -0.008938  0.022446  0.027466  0.069449  0.168656 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/boxplot'>boxplot</a></span>(<span class='no'>data</span>[<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"KernSmooth"</span>, <span class='st'>"logspline"</span>)])</div><div class='img'><img src='p_map-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -283,7 +317,11 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#references">References</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

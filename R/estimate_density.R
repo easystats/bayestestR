@@ -215,4 +215,3 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
   density <- estimate_density(posterior, precision = precision, method = method, ...)
   stats::approx(density$x, density$y, xout = x)$y
 }
-
