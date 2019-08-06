@@ -212,7 +212,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
     tmp_terms <- make_terms(df.model$Modelnames[m])
     if (length(tmp_terms) > 0) {
       missing_terms <- !tmp_terms %in% colnames(df.model) # For R < 3.6.0
-      if (any(missing_terms)) df.model[,tmp_terms[missing_terms]] <- NA # For R < 3.6.0
+      if (any(missing_terms)) df.model[, tmp_terms[missing_terms]] <- NA # For R < 3.6.0
       df.model[m, tmp_terms] <- TRUE
     }
   }

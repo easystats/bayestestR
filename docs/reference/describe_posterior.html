@@ -434,8 +434,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 6    20.42191</div><div class='input'>
 <span class='co'># emmeans estimates</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt;   Parameter  Median CI    CI_low   CI_high pd ROPE_CI ROPE_low ROPE_high
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'emmeans' was built under R version 3.6.1</span></div><div class='input'><span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emtrends'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt;   Parameter  Median CI    CI_low   CI_high pd ROPE_CI ROPE_low ROPE_high
 #&gt; 1   overall -5.4817 89 -6.718247 -4.399036  1      89     -0.1       0.1
 #&gt;   ROPE_Percentage
 #&gt; 1               0</div><span class='co'># NOT RUN {</span>

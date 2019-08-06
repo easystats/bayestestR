@@ -178,9 +178,3 @@
   class(dat) <- unique(c(paste0("bayestestR_", fun), paste0("see_", fun), class(dat)))
   dat
 }
-
-
-
-
-
-

@@ -115,7 +115,7 @@ bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sid
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, hypothesis = NULL,...) {
+bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, hypothesis = NULL, ...) {
   .Deprecated("bayesfactor_parameters")
 
   dots <- list(...)

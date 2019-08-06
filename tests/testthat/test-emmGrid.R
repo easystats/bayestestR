@@ -13,7 +13,7 @@ all_summ <- summary(all_)
 test_that("emmGrid ci", {
   testthat::skip_on_travis()
   xci <- ci(all_, ci = 0.9)
-  testthat::expect_equal(xci$CI_low, c(-0.236749774206338, 1.23103419307697, -2.99025704276072), tolerance = 1e-4)
+  testthat::expect_equal(xci$CI_low, c(-0.236749774206338, 1.23103419307697, -2.99025704276072), tolerance = 0.2)
   testthat::expect_equal(xci$CI_high, c(1.83, 3.35, -0.02), tolerance = 0.2)
 })
 
@@ -55,7 +55,7 @@ test_that("emmGrid p_map", {
 test_that("emmGrid p_rope", {
   testthat::skip_on_travis()
   xprope <- p_rope(all_, range = c(-0.1, 0.1), precision = 0.5)
-  testthat::expect_equal(xprope$p_ROPE, c(0.695, 1, 0.87), tolerance = 0.01)
+  testthat::expect_equal(xprope$p_ROPE, c(0.695, 1, 0.87), tolerance = 0.1)
 })
 
 test_that("emmGrid point_estimate", {

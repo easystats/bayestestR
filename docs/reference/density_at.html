@@ -185,7 +185,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>density_at</span>(<span class='no'>posterior</span>, <span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>density_at</span>(<span class='no'>posterior</span>, <span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,6 +201,10 @@
     <tr>
       <th>precision</th>
       <td><p>Number of points of density data. See the <code>n</code> parameter in <a href='https://www.rdocumentation.org/packages/stats/topics/density'>density</a>.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>Density estimation method. Can be <code>"kernel"</code> (default), <code>"logspline"</code> or <code>"KernSmooth"</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>

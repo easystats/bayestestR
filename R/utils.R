@@ -83,16 +83,15 @@
 #' Used in describe_posterior
 #' @keywords internal
 .reoder_rows <- function(x, out, ci = NULL) {
-
-  if(!is.data.frame(out) || nrow(out) == 1){
+  if (!is.data.frame(out) || nrow(out) == 1) {
     return(out)
   }
 
-  if(is.null(ci)){
+  if (is.null(ci)) {
     refdata <- point_estimate(x, centrality = "median", dispersion = FALSE)
     order <- refdata$Parameter
     out <- out[match(order, out$Parameter), ]
-  } else{
+  } else {
     uncertainty <- ci(x, ci = ci)
     order <- paste0(uncertainty$Parameter, uncertainty$CI)
     out <- out[match(order, paste0(out$Parameter, out$CI)), ]
