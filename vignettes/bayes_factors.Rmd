@@ -202,15 +202,23 @@ All of this can be achieved with the function `bayesfactor_parameters()`, which 
 My_first_BF <- bayesfactor_parameters(model, null = c(-.5,.5))
 My_first_BF
 ```
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 print(My_first_BF)
+```
 
+```{r, echo=TRUE, eval=FALSE}
+plot(My_first_BF)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 plot(bayesfactor_parameters(
   data.frame(group2 = posterior),
   data.frame(group2 = prior),
   null = c(-.5,.5))) + 
   theme(legend.position = c(0.2, 0.8))
 ```
+
 
 ### Testing against the null as a single point (0)
 
@@ -221,6 +229,10 @@ plot(bayesfactor_parameters(
 ```{r, message=FALSE, warning=FALSE}
 My_second_BF <- bayesfactor_parameters(model, null = 0)
 My_second_BF
+```
+
+```{r, echo=TRUE, eval=FALSE}
+plot(My_first_BF)
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
