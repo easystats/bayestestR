@@ -232,7 +232,7 @@ My_second_BF
 ```
 
 ```{r, echo=TRUE, eval=FALSE}
-plot(My_first_BF)
+plot(My_second_BF)
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
