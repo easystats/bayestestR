@@ -6,7 +6,7 @@
 [![Build
 Status](https://travis-ci.org/easystats/bayestestR.svg?branch=master)](https://travis-ci.org/easystats/bayestestR)
 [![codecov](https://codecov.io/gh/easystats/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/easystats/bayestestR)
-[![DOI](https://zenodo.org/badge/165641861.svg)](https://zenodo.org/badge/latestdoi/165641861)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.01541/status.svg)](https://doi.org/10.21105/joss.01541)
 
 ***Become a Bayesian master you will***
 
@@ -85,9 +85,9 @@ cited below at once.
 ``` r
 describe_posterior(rnorm(1000))
 ##   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
-## 1 Posterior  0.036 89   -1.6     1.5 0.51      89     -0.1       0.1
+## 1 Posterior  0.042 89   -1.8     1.4 0.52      89     -0.1       0.1
 ##   ROPE_Percentage
-## 1           0.091
+## 1           0.097
 ```
 
 ## Point-estimates
@@ -270,7 +270,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## # Bayes Factor (Savage-Dickey density ratio)
 ## 
 ##  Bayes Factor
-##          2.16
+##          2.13
 ## 
 ## * Evidence Against The Null: [0]
 ```
@@ -352,7 +352,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.37
+## [1] 0.41
 ```
 
 ## Credits
@@ -379,16 +379,16 @@ R, JAGS, and Stan* (2. ed). Amsterdam: Elsevier, Academic Press.
 <div id="ref-kruschke2018rejecting">
 
 Kruschke, J. K. (2018). Rejecting or accepting parameter values in
-bayesian estimation. *Advances in Methods and Practices in Psychological
+Bayesian estimation. *Advances in Methods and Practices in Psychological
 Science*, *1*(2), 270–280. <https://doi.org/10.1177/2515245918771304>
 
 </div>
 
 <div id="ref-kruschke2018bayesian">
 
-Kruschke, J. K., & Liddell, T. M. (2018). The bayesian new statistics:
+Kruschke, J. K., & Liddell, T. M. (2018). The Bayesian new statistics:
 Hypothesis testing, estimation, meta-analysis, and power analysis from a
-bayesian perspective. *Psychonomic Bulletin & Review*, *25*(1), 178–206.
+Bayesian perspective. *Psychonomic Bulletin & Review*, *25*(1), 178–206.
 <https://doi.org/10.3758/s13423-016-1221-4>
 
 </div>
@@ -404,7 +404,7 @@ McElreath, R. (2018). *Statistical rethinking*.
 
 Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010).
 Bayesian hypothesis testing for psychologists: A tutorial on the
-savageDickey method. *Cognitive Psychology*, *60*(3), 158–189.
+SavageDickey method. *Cognitive Psychology*, *60*(3), 158–189.
 <https://doi.org/10.1016/j.cogpsych.2009.12.001>
 
 </div>
