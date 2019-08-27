@@ -118,7 +118,6 @@ bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sid
 bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, hypothesis = NULL, ...) {
   .Deprecated("bayesfactor_parameters")
 
-  dots <- list(...)
   if (!is.null(hypothesis)) {
     null <- hypothesis
     warning("The 'hypothesis' argument is deprecated. Please use 'null' instead.")
@@ -211,12 +210,17 @@ bayesfactor_parameters.sim.merMod <- function(posterior, prior = NULL,
       distribution_normal(nrow(posterior), mean = 0, sd = 2)
     }))
     colnames(prior) <- params
-    warning(
-      "Prior not specified! ",
-      "Please specify priors (with column order matching 'posterior')",
-      " to get meaningful results. Using normally distributed priors with",
-      " location=0 and scale=2 as default."
-    )
+    if (verbose) {
+      warning(
+        "Prior not specified! ",
+        "Please specify priors (with column order matching 'posterior', or by",
+        " providing the model object as 'prior' argument)",
+        " to get meaningful results. Using normally distributed priors with",
+        " location=0 and scale=2 as default.", call. = FALSE
+      )
+    }
+  } else if (insight::is_model(prior)) {
+    prior <- .armsim_weakly_priors(prior, nrow(posterior))
   }
 
 
@@ -247,12 +251,17 @@ bayesfactor_parameters.sim <- function(posterior, prior = NULL,
       distribution_normal(nrow(posterior), mean = 0, sd = 2)
     }))
     colnames(prior) <- params
-    warning(
-      "Prior not specified! ",
-      "Please specify priors (with column order matching 'posterior')",
-      " to get meaningful results. Using normally distributed priors with",
-      " location=0 and scale=2 as default."
-    )
+    if (verbose) {
+      warning(
+        "Prior not specified! ",
+        "Please specify priors (with column order matching 'posterior', or by",
+        " providing the model object as 'prior' argument)",
+        " to get meaningful results. Using normally distributed priors with",
+        " location=0 and scale=2 as default.", call. = FALSE
+      )
+    }
+  } else if (insight::is_model(prior)) {
+    prior <- .armsim_weakly_priors(prior, nrow(posterior))
   }
 
 
@@ -522,4 +531,44 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
     plot_data = rbind(posterior[[1]], prior[[1]]),
     d_points = rbind(posterior[[2]], prior[[2]])
   )
+}
+
+
+
+#' @importFrom stats sd
+#' @importFrom insight get_response get_data find_predictors find_parameters
+.armsim_weakly_priors <- function(m, nsim) {
+  y <- insight::get_response(m)
+  d <- insight::get_data(m, effects = "fixed")
+  pred <- insight::find_predictors(m, effects = "fixed", flatten = TRUE)
+
+  scale.factor <- stats::sd(y, na.rm = TRUE)
+  scale.b <- 2.5 * scale.factor
+  scale.y <- 10 * scale.factor
+  scale.pred <- NULL
+
+  priors <- distribution_normal(nsim, mean = 0, sd = round(scale.y, 2))
+
+  # we need to check which predictors are categorical and then "mimic"
+  # their coefficient name as it is represented in the model (i.e. variable
+  # name + category name)
+
+  for (i in pred) {
+    f <- d[[i]]
+    if (is.factor(f)) {
+      i <- sprintf("%s%s", i, levels(f)[2:nlevels(f)])
+      scale.pred <- c(scale.pred, rep(scale.b, nlevels(f) - 1))
+    } else {
+      scale.pred <- c(scale.pred, scale.b / stats::sd(f, na.rm = TRUE))
+    }
+  }
+
+  for (i in scale.pred) {
+    priors <- cbind(priors, distribution_normal(nsim, mean = 0, sd = round(i, 2)))
+  }
+
+  priors <- as.data.frame(priors)
+  colnames(priors) <- insight::find_parameters(m, effects = "fixed", flatten = TRUE)
+
+  priors
 }
