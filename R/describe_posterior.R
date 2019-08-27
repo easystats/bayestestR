@@ -122,6 +122,8 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
       test <- c("p_map", "pd", "rope", "equivalence", "bf")
     }
 
+    ## TODO no BF for arm::sim
+    if (inherits(x, c("sim", "sim.merMod"))) test <- setdiff(test, "bf")
 
     # MAP-based p-value
 
