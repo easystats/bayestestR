@@ -240,6 +240,22 @@ equivalence_test.stanreg <- function(x, range = "default", ci = .89, parameters 
 }
 
 
+#' @export
+equivalence_test.sim.merMod <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
+  out <- .equivalence_test_models(x, range, ci, parameters, verbose = FALSE)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}
+
+
+#' @export
+equivalence_test.sim <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
+  out <- .equivalence_test_models(x, range, ci, parameters, verbose = FALSE)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}
+
+
 #' @rdname equivalence_test
 #' @export
 equivalence_test.brmsfit <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
