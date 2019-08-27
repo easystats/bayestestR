@@ -103,7 +103,7 @@ hdi.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .hdi(x, ci = i, verbose = verbose)
   }))
-  class(out) <- unique(c("hdi", "see_hdi", "bayestestR_ci", "see_ci", class(out)))
+  class(out) <- unique(c("bayestestR_hdi", "see_hdi", "bayestestR_ci", "see_ci", class(out)))
   attr(out, "data") <- x
   out
 }

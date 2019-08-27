@@ -49,7 +49,7 @@ eti.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .eti(x = x, ci = i, verbose = verbose)
   }))
-  class(out) <- unique(c("eti", "see_eti", "bayestestR_ci", "see_ci", class(out)))
+  class(out) <- unique(c("bayestestR_eti", "see_eti", "bayestestR_ci", "see_ci", class(out)))
   attr(out, "data") <- x
   out
 }
