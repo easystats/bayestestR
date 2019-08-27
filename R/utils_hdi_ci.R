@@ -187,33 +187,18 @@
   random <- random.data <- NULL
 
   if (effects %in% c("fixed", "all")) {
-    fixed.data <- as.data.frame(x@fixef)
+    fixed.data <- insight::get_parameters(x, effects = "fixed", parameters = parameters)
     fixed <- .compute_interval_dataframe(fixed.data, ci, verbose, fun)
     fixed$Group <- "fixed"
   }
 
   if (effects %in% c("random", "all")) {
-    random.data <- .prepare_ranef_armsim(x)
+    random.data <- insight::get_parameters(x, effects = "random", parameters = parameters)
     random <- .compute_interval_dataframe(random.data, ci, verbose, fun)
     random$Group <- "random"
   }
 
   d <- do.call(rbind, list(fixed, random))
-
-  if (!is.null(parameters)) {
-    keep <- grepl(pattern = parameters, x = d$Parameter, perl = TRUE)
-    if (any(keep)) d <- d[keep, ]
-
-    if (!is.null(fixed.data)) {
-      keep <- grepl(pattern = parameters, x = colnames(fixed.data), perl = TRUE)
-      if (any(keep)) fixed.data <- fixed.data[, keep, drop = FALSE]
-    }
-
-    if (!is.null(random.data)) {
-      keep <- grepl(pattern = parameters, x = colnames(random.data), perl = TRUE)
-      if (any(keep)) random.data <- random.data[, keep, drop = FALSE]
-    }
-  }
 
   if (length(unique(d$Group)) == 1) {
     d <- .remove_column(d, "Group")
@@ -226,38 +211,7 @@
 
 #' @keywords internal
 .compute_interval_sim <- function(x, ci, parameters, verbose, fun) {
-  d <- fixed.data <- NULL
-
-  fixed.data <- as.data.frame(x@coef)
+  fixed.data <- insight::get_parameters(x, parameters = parameters)
   d <- .compute_interval_dataframe(fixed.data, ci, verbose, fun)
-
-  if (!is.null(parameters)) {
-    keep <- grepl(pattern = parameters, x = d$Parameter, perl = TRUE)
-    if (any(keep)) d <- d[keep, ]
-  }
-
   list(result = d, data = fixed.data)
-}
-
-
-
-#' @keywords internal
-.prepare_ranef_armsim <- function(x) {
-  re <- x@ranef
-  f <- data.frame()
-
-  for (i in 1:length(re)) {
-    dn <- dimnames(re[[i]])[[2]]
-    l <- lapply(1:length(dn), function(j) {
-      d <- as.data.frame(re[[i]][, j, ])
-      colnames(d) <- sprintf("%s.%s", colnames(d), dn[j])
-      d
-    })
-    if (ncol(f) == 0)
-      f <- do.call(cbind, l)
-    else
-      f <- cbind(f, do.call(cbind, l))
-  }
-
-  f
 }
