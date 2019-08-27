@@ -190,6 +190,81 @@ bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
 
 
 
+#' @importFrom insight get_parameters
+#' @export
+bayesfactor_parameters.sim.merMod <- function(posterior, prior = NULL,
+                                              direction = "two-sided", null = 0,
+                                              verbose = TRUE,
+                                              effects = c("fixed", "random", "all"),
+                                              ...) {
+  effects <- match.arg(effects)
+
+  # find direction
+  direction <- .get_direction(direction)
+
+  posterior <- insight::get_parameters(posterior, effects = effects)
+  params <- colnames(posterior)
+
+  # Get Priors
+  if (is.null(prior)) {
+    prior <- as.data.frame(lapply(params, function(p) {
+      distribution_normal(nrow(posterior), mean = 0, sd = 2)
+    }))
+    colnames(prior) <- params
+    warning(
+      "Prior not specified! ",
+      "Please specify priors (with column order matching 'posterior')",
+      " to get meaningful results. Using normally distributed priors with",
+      " location=0 and scale=2 as default."
+    )
+  }
+
+
+  # Get savage-dickey BFs
+  bayesfactor_parameters.data.frame(
+    posterior = posterior, prior = prior,
+    direction = direction, null = null, ...
+  )
+}
+
+
+
+#' @importFrom insight get_parameters
+#' @export
+bayesfactor_parameters.sim <- function(posterior, prior = NULL,
+                                       direction = "two-sided", null = 0,
+                                       verbose = TRUE,
+                                       ...) {
+  # find direction
+  direction <- .get_direction(direction)
+
+  posterior <- insight::get_parameters(posterior)
+  params <- colnames(posterior)
+
+  # Get Priors
+  if (is.null(prior)) {
+    prior <- as.data.frame(lapply(params, function(p) {
+      distribution_normal(nrow(posterior), mean = 0, sd = 2)
+    }))
+    colnames(prior) <- params
+    warning(
+      "Prior not specified! ",
+      "Please specify priors (with column order matching 'posterior')",
+      " to get meaningful results. Using normally distributed priors with",
+      " location=0 and scale=2 as default."
+    )
+  }
+
+
+  # Get savage-dickey BFs
+  bayesfactor_parameters.data.frame(
+    posterior = posterior, prior = prior,
+    direction = direction, null = null, ...
+  )
+}
+
+
+
 #' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_parameters.brmsfit <- bayesfactor_parameters.stanreg
