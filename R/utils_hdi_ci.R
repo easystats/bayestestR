@@ -244,16 +244,3 @@
 
   f
 }
-
-
-.filter_sim_pars <- function(l, parameters) {
-  lapply(l, function(component) {
-    unlist(unname(sapply(
-      parameters,
-      function(pattern) {
-        component[grepl(pattern = pattern, x = component, perl = TRUE)]
-      },
-      simplify = FALSE
-    )))
-  })
-}
