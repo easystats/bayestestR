@@ -15,7 +15,7 @@
 
 ## New functions / features
 
-- `density_at()`, `p_map` and `map_estimate`: `method` argument added
+- `density_at()`, `p_map()` and `map_estimate()`: `method` argument added
 - `rope()`: `ci_method` argument added
 - `eti()`: Computes equal-tailed intervals
 - `reshape_ci()`: Reshape CIs between wide/long
