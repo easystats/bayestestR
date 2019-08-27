@@ -64,6 +64,18 @@ eti.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
   dat
 }
 
+
+#' @rdname eti
+#' @export
+eti.sim.merMod <- function(x, ci = .89, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+  effects <- match.arg(effects)
+  out <- .compute_interval_sim(x = x, ci = ci, effects = effects, parameters = parameters, verbose = verbose, fun = "eti")
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}
+
+
+
 #' @rdname eti
 #' @export
 eti.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {

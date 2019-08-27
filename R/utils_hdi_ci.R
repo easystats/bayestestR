@@ -178,3 +178,70 @@
   class(dat) <- unique(c(paste0("bayestestR_", fun), paste0("see_", fun), class(dat)))
   dat
 }
+
+
+
+#' @keywords internal
+.compute_interval_sim <- function(x, ci, effects, parameters, verbose, fun) {
+  fixed <- NULL
+  random <- NULL
+
+  if (effects %in% c("fixed", "all")) {
+    fixed <- .compute_interval_dataframe(as.data.frame(x@fixef), ci, verbose, fun)
+    fixed$Group <- "fixed"
+  }
+
+  if (effects %in% c("random", "all")) {
+    random <- .compute_interval_dataframe(.prepare_ranef_armsim(x), ci, verbose, fun)
+    random$Group <- "random"
+  }
+
+  d <- do.call(rbind, list(fixed, random))
+
+  if (!is.null(parameters)) {
+    keep <- grepl(pattern = parameters, x = d$Parameter, perl = TRUE)
+    if (any(keep)) d <- d[keep, ]
+  }
+
+  if (length(unique(d$Group)) == 1) {
+    d <- .remove_column(d, "Group")
+  }
+
+  d
+}
+
+
+
+#' @keywords internal
+.prepare_ranef_armsim <- function(x) {
+  re <- x@ranef
+  f <- data.frame()
+
+  for (i in 1:length(re)) {
+    dn <- dimnames(re[[i]])[[2]]
+    l <- lapply(1:length(dn), function(j) {
+      d <- as.data.frame(re[[i]][, j, ])
+      colnames(d) <- sprintf("%s.%s", colnames(d), dn[j])
+      d
+    })
+    if (ncol(f) == 0)
+      f <- do.call(cbind, l)
+    else
+      f <- cbind(f, do.call(cbind, l))
+  }
+
+  f
+}
+
+
+.filter_sim_pars <- function(l, parameters) {
+  lapply(l, function(component) {
+    unlist(unname(sapply(
+      parameters,
+      function(pattern) {
+        component[grepl(pattern = pattern, x = component, perl = TRUE)]
+      },
+      simplify = FALSE
+    )))
+  })
+}

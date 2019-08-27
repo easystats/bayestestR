@@ -5,6 +5,7 @@
 \alias{ci.numeric}
 \alias{ci.data.frame}
 \alias{ci.emmGrid}
+\alias{ci.sim.merMod}
 \alias{ci.stanreg}
 \alias{ci.brmsfit}
 \alias{ci.BFBayesFactor}
@@ -20,6 +21,10 @@ ci(x, ...)
 
 \method{ci}{emmGrid}(x, ci = 0.89, method = "ETI", verbose = TRUE,
   ...)
+
+\method{ci}{sim.merMod}(x, ci = 0.89, method = "ETI",
+  effects = c("fixed", "random", "all"), parameters = NULL,
+  verbose = TRUE, ...)
 
 \method{ci}{stanreg}(x, ci = 0.89, method = "ETI",
   effects = c("fixed", "random", "all"), parameters = NULL,

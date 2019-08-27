@@ -1,3 +1,9 @@
+# bayestestR 0.3.0
+
+## Changes to functions
+
+* `hdi()`, `ci()` and `eti()` now support `sim.merMod`-objects (from `arm::sim()`).
+
 # bayestestR 0.2.5
 
 ## Breaking changes

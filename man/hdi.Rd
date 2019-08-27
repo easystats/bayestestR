@@ -4,6 +4,7 @@
 \alias{hdi}
 \alias{hdi.numeric}
 \alias{hdi.data.frame}
+\alias{hdi.sim.merMod}
 \alias{hdi.emmGrid}
 \alias{hdi.stanreg}
 \alias{hdi.brmsfit}
@@ -15,6 +16,9 @@ hdi(x, ...)
 \method{hdi}{numeric}(x, ci = 0.89, verbose = TRUE, ...)
 
 \method{hdi}{data.frame}(x, ci = 0.89, verbose = TRUE, ...)
+
+\method{hdi}{sim.merMod}(x, ci = 0.89, effects = c("fixed", "random",
+  "all"), parameters = NULL, verbose = TRUE, ...)
 
 \method{hdi}{emmGrid}(x, ci = 0.89, verbose = TRUE, ...)
 
