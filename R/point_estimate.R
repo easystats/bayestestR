@@ -190,6 +190,48 @@ point_estimate.brmsfit <- function(x, centrality = "median", dispersion = FALSE,
 }
 
 
+#' @export
+point_estimate.sim.merMod <- function(x, centrality = "median", dispersion = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  effects <- match.arg(effects)
+
+  out <- .point_estimate_models(
+    x = x,
+    effects = effects,
+    component = "conditional",
+    parameters = parameters,
+    centrality = centrality,
+    dispersion = dispersion,
+    ...
+  )
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "centrality") <- centrality
+  class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
+
+  out
+}
+
+
+
+#' @export
+point_estimate.sim <- function(x, centrality = "median", dispersion = FALSE, parameters = NULL, ...) {
+  out <- .point_estimate_models(
+    x = x,
+    effects = "fixed",
+    component = "conditional",
+    parameters = parameters,
+    centrality = centrality,
+    dispersion = dispersion,
+    ...
+  )
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "centrality") <- centrality
+  class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
+
+  out
+}
+
+
+
 #' @rdname point_estimate
 #' @export
 point_estimate.BFBayesFactor <- function(x, centrality = "median", dispersion = FALSE, ...) {
