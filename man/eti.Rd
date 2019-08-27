@@ -5,6 +5,7 @@
 \alias{eti.numeric}
 \alias{eti.data.frame}
 \alias{eti.sim.merMod}
+\alias{eti.sim}
 \alias{eti.emmGrid}
 \alias{eti.stanreg}
 \alias{eti.brmsfit}
@@ -19,6 +20,9 @@ eti(x, ...)
 
 \method{eti}{sim.merMod}(x, ci = 0.89, effects = c("fixed", "random",
   "all"), parameters = NULL, verbose = TRUE, ...)
+
+\method{eti}{sim}(x, ci = 0.89, parameters = NULL, verbose = TRUE,
+  ...)
 
 \method{eti}{emmGrid}(x, ci = 0.89, verbose = TRUE, ...)
 

@@ -119,15 +119,28 @@ hdi.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
 }
 
 
+
 #' @rdname hdi
 #' @export
 hdi.sim.merMod <- function(x, ci = .89, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
-  dat <- .compute_interval_sim(x = x, ci = ci, effects = effects, parameters = parameters, verbose = verbose, fun = "hdi")
+  dat <- .compute_interval_simMerMod(x = x, ci = ci, effects = effects, parameters = parameters, verbose = verbose, fun = "hdi")
   out <- dat$result
   attr(out, "data") <- dat$data
   out
 }
+
+
+
+#' @rdname hdi
+#' @export
+hdi.sim <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
+  dat <- .compute_interval_sim(x = x, ci = ci, parameters = parameters, verbose = verbose, fun = "hdi")
+  out <- dat$result
+  attr(out, "data") <- dat$data
+  out
+}
+
 
 
 #' @rdname hdi

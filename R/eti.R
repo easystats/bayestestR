@@ -65,11 +65,23 @@ eti.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
 }
 
 
+
 #' @rdname eti
 #' @export
 eti.sim.merMod <- function(x, ci = .89, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
-  dat <- .compute_interval_sim(x = x, ci = ci, effects = effects, parameters = parameters, verbose = verbose, fun = "eti")
+  dat <- .compute_interval_simMerMod(x = x, ci = ci, effects = effects, parameters = parameters, verbose = verbose, fun = "eti")
+  out <- dat$result
+  attr(out, "data") <- dat$data
+  out
+}
+
+
+
+#' @rdname eti
+#' @export
+eti.sim <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
+  dat <- .compute_interval_sim(x = x, ci = ci, parameters = parameters, verbose = verbose, fun = "eti")
   out <- dat$result
   attr(out, "data") <- dat$data
   out

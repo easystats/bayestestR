@@ -182,7 +182,7 @@
 
 
 #' @keywords internal
-.compute_interval_sim <- function(x, ci, effects, parameters, verbose, fun) {
+.compute_interval_simMerMod <- function(x, ci, effects, parameters, verbose, fun) {
   fixed <- fixed.data <- NULL
   random <- random.data <- NULL
 
@@ -220,6 +220,23 @@
   }
 
   list(result = d, data = do.call(cbind, .compact_list(list(fixed.data, random.data))))
+}
+
+
+
+#' @keywords internal
+.compute_interval_sim <- function(x, ci, parameters, verbose, fun) {
+  d <- fixed.data <- NULL
+
+  fixed.data <- as.data.frame(x@coef)
+  d <- .compute_interval_dataframe(fixed.data, ci, verbose, fun)
+
+  if (!is.null(parameters)) {
+    keep <- grepl(pattern = parameters, x = d$Parameter, perl = TRUE)
+    if (any(keep)) d <- d[keep, ]
+  }
+
+  list(result = d, data = fixed.data)
 }
 
 
