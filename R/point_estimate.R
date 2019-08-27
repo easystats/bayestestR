@@ -203,7 +203,7 @@ point_estimate.sim.merMod <- function(x, centrality = "median", dispersion = FAL
     dispersion = dispersion,
     ...
   )
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "data") <- insight::get_parameters(x, effects = effects, parameters = parameters)
   attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 
@@ -223,7 +223,7 @@ point_estimate.sim <- function(x, centrality = "median", dispersion = FALSE, par
     dispersion = dispersion,
     ...
   )
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "data") <- insight::get_parameters(x, parameters = parameters)
   attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 
