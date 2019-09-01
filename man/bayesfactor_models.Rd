@@ -7,7 +7,7 @@
 bayesfactor_models(..., denominator = 1, verbose = TRUE)
 }
 \arguments{
-\item{...}{Fitted models (any models supported by \pkg{insight}), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').}
+\item{...}{Fitted models (see details), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').}
 
 \item{denominator}{Either an integer indicating which of the models to use as the denominator,
 or a model to be used as a denominator. Ignored for \code{BFBayesFactor}.}
@@ -21,6 +21,10 @@ A data frame containing the models' formulas (reconstructed fixed and random eff
 This function computes or extracts Bayes factors from fitted models.
 }
 \details{
+If the passed models are supported by \pkg{insight} the DV of all models will be tested for equality
+(else this is assumed to be true), and the models' terms will be extracted (allowing for follow-up
+analysis with \code{bayesfactor_inclusion}).
+
 \itemize{
   \item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
   \itemize{

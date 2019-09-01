@@ -16,7 +16,7 @@ BFM2 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, denominator = mo1)
 BFM3 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, mo1, denominator = mo1)
 BFM4 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, mo5, mo1, denominator = mo1)
 
-test_that("bayesfactor_models FREQ", {
+test_that("bayesfactor_models BIC", {
   set.seed(444)
 
   testthat::expect_equal(BFM1, BFM2)

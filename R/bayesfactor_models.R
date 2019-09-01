@@ -4,12 +4,16 @@
 #'
 #' @author Mattan S. Ben-Shachar
 #'
-#' @param ... Fitted models (any models supported by \pkg{insight}), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').
+#' @param ... Fitted models (see details), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').
 #' @param denominator Either an integer indicating which of the models to use as the denominator,
 #' or a model to be used as a denominator. Ignored for \code{BFBayesFactor}.
 #' @inheritParams hdi
 #'
 #' @details
+#' If the passed models are supported by \pkg{insight} the DV of all models will be tested for equality
+#' (else this is assumed to be true), and the models' terms will be extracted (allowing for follow-up
+#' analysis with \code{bayesfactor_inclusion}).
+#'
 #' \itemize{
 #'   \item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
 #'   \itemize{
@@ -123,16 +127,17 @@ bayesfactor_models <- function(..., denominator = 1, verbose = TRUE) {
 #' @importFrom stats BIC
 #' @export
 bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
-  # Organize the models
+  # Organize the models and their names
   mods <- list(...)
+  mnames <- sapply(match.call(expand.dots = F)$`...`, .safe_deparse)
 
   if (!is.numeric(denominator)) {
     model_name <- .safe_deparse(match.call()[["denominator"]])
-    arg_names <- sapply(match.call(expand.dots = F)$`...`, .safe_deparse)
-    denominator_model <- which(arg_names == model_name)
+    denominator_model <- which(mnames == model_name)
 
     if (length(denominator_model) == 0) {
       mods <- c(mods, list(denominator))
+      mnames <- c(mnames,model_name)
       denominator <- length(mods)
     } else {
       denominator <- denominator_model
@@ -141,23 +146,28 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   # supported models
   supported_models <- sapply(mods, insight::is_model)
-  if (!all(supported_models)) {
-    object_names <- match.call(expand.dots = FALSE)$`...`
-    stop(sprintf("Can't calculate Bayes factor.\nFollowing objects are no (supported) model objects: %s", paste0(object_names[!supported_models], collapse = ", ")), call. = FALSE)
-  }
+  if (all(supported_models)) {
+    # Test that all is good:
+    resps <- lapply(mods, insight::get_response)
+    if (!all(sapply(resps[-denominator], function(x) identical(x, resps[[denominator]])))) {
+      stop("Models were not computed from the same data.")
+    }
 
-  # Test that all is good:
-  resps <- lapply(mods, insight::get_response)
-  if (!all(sapply(resps[-denominator], function(x) identical(x, resps[[denominator]])))) {
-    stop("Models were not computed from the same data.")
+    # Get formula
+    mforms <- sapply(mods, .find_full_formula)
+  } else {
+    if (verbose) {
+      object_names <- match.call(expand.dots = FALSE)$`...`
+      warning(sprintf("Unable to extract terms or validate that all models use the same data - following objects are not (supported) model objects (yet!): \n%s",
+                   paste0(mnames[!supported_models], collapse = ", ")), call. = FALSE)
+    }
+
+    mforms <- mnames
   }
 
   # Get BF
   mBIC <- sapply(mods, BIC)
   mBFs <- (mBIC - mBIC[denominator]) / (-2)
-
-  # Get formula
-  mforms <- sapply(mods, .find_full_formula)
 
   res <- data.frame(
     Model = mforms,
