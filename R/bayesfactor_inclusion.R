@@ -68,6 +68,10 @@ bayesfactor_inclusion <- function(models, match_models = FALSE, prior_odds = NUL
 
 #' @export
 bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALSE, prior_odds = NULL, ...) {
+  if (isFALSE(attr(models, "supported_models"))) {
+    stop("Can not compte inclusion Bayes factors - passed models are not (yet!) supportd.", call. = FALSE)
+  }
+
   # Build Models Table #
   df.model <- .get_model_table(models, priorOdds = prior_odds)
   effnames <- colnames(df.model)[-(1:3)]

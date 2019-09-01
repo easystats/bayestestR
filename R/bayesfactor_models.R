@@ -145,8 +145,8 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   }
 
   # supported models
-  supported_models <- sapply(mods, insight::is_model)
-  if (all(supported_models)) {
+  supported_models <- all(sapply(mods, insight::is_model))
+  if (supported_models) {
     # Test that all is good:
     resps <- lapply(mods, insight::get_response)
     if (!all(sapply(resps[-denominator], function(x) identical(x, resps[[denominator]])))) {
@@ -177,6 +177,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- "BIC approximation"
+  attr(res, "supported_models") <- supported_models
   class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
