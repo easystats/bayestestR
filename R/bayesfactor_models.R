@@ -118,7 +118,7 @@
 #'   \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 #' }
 #'
-#' @importFrom insight get_response is_model
+#' @importFrom insight get_response is_model_supported
 #' @export
 bayesfactor_models <- function(..., denominator = 1, verbose = TRUE) {
   UseMethod("bayesfactor_models")
@@ -145,7 +145,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   }
 
   # supported models
-  supported_models <- all(sapply(mods, insight::is_model))
+  supported_models <- all(sapply(mods, insight::is_model_supported))
   if (supported_models) {
     # Test that all is good:
     resps <- lapply(mods, insight::get_response)
