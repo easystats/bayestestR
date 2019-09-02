@@ -4,6 +4,10 @@
 
 * Added support for `sim` and `sim.merMod`-objects (from `arm::sim()`) to many functions (like `hdi()`, `ci()`, `eti()`, `rope()`, `p_direction()`, `point_estimate()`, ...).
 
+## New functions / features
+
+* `distribution_gamma()` to generate a (near-perfect or random) Gamma distribution.
+
 # bayestestR 0.2.5
 
 ## Breaking changes

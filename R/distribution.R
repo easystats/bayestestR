@@ -2,7 +2,7 @@
 #'
 #' Generate a sequence of n-quantiles, i.e., a sample of size \code{n} with a near-perfect distribution.
 #'
-#' @param type Can be \code{"normal"} (default), \code{"cauchy"}, \code{"poisson"}, \code{"chisquared"}, \code{"uniform"}, \code{"student"} or \code{"beta"}.
+#' @param type Can be \code{"normal"} (default), \code{"cauchy"}, \code{"poisson"}, \code{"gamma"}, \code{"chisquared"}, \code{"uniform"}, \code{"student"} or \code{"beta"}.
 #' @param random Generate near-perfect or random (simple wrappers for the base R \code{r*} functions) distributions.
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -13,10 +13,11 @@
 #' @export
 distribution <- function(type = "normal", ...) {
   switch(
-    match.arg(arg = type, choices = c("normal", "cauchy", "poisson", "student", "chisquared", "uniform", "beta")),
+    match.arg(arg = type, choices = c("normal", "cauchy", "poisson", "gamma", "student", "chisquared", "uniform", "beta")),
     "normal" = distribution_normal(...),
     "cauchy" = distribution_cauchy(...),
     "poisson" = distribution_poisson(...),
+    "gamma" = distribution_gamma(...),
     "student" = distribution_student(...),
     "chisquared" = distribution_chisquared(...),
     "uniform" = distribution_uniform(...),
@@ -118,6 +119,19 @@ distribution_beta <- function(n, shape1, shape2, ncp = 0, random = FALSE, ...) {
     stats::rbeta(n, shape1, shape2, ncp = ncp)
   } else {
     stats::qbeta(seq(1 / n, 1 - 1 / n, length.out = n), shape1, shape2, ncp = ncp, ...)
+  }
+}
+
+
+#' @rdname distribution
+#' @inheritParams stats::rgamma
+#' @importFrom stats rgamma qgamma
+#' @export
+distribution_gamma <- function(n, shape, scale = 1, random = FALSE, ...) {
+  if (random) {
+    stats::rgamma(n = n, shape = shape, scale = scale)
+  } else {
+    stats::qgamma(p = seq(1 / n, 1 - 1 / n, length.out = n), shape = shape, scale = scale)
   }
 }
 
