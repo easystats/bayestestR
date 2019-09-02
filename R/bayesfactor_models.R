@@ -177,7 +177,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- "BIC approximation"
-  attr(res, "supported_models") <- supported_models
+  attr(res, "support_inclusion") <- supported_models
   class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
@@ -244,7 +244,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- "marginal likelihoods (bridgesampling)"
-  attr(res, "supported_models") <- TRUE
+  attr(res, "support_inclusion") <- TRUE
   class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
@@ -288,7 +288,7 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
 
   attr(res, "denominator") <- 1
   attr(res, "BF_method") <- "JZS (BayesFactor)"
-  attr(res, "supported_models") <- TRUE
+  attr(res, "support_inclusion") <- TRUE
   class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
