@@ -68,7 +68,7 @@ bayesfactor_inclusion <- function(models, match_models = FALSE, prior_odds = NUL
 
 #' @export
 bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALSE, prior_odds = NULL, ...) {
-  if (isFALSE(attr(models, "support_inclusion"))) {
+  if (isTRUE(attr(models, "unsupported_models"))) {
     stop("Can not compute inclusion Bayes factors - passed models are not (yet) supported.", call. = FALSE)
   }
 
