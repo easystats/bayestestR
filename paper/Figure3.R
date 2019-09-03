@@ -75,42 +75,83 @@ p3 <- posterior %>%
 
 
 set.seed(123)
-posterior <- distribution_chisquared(1000, 3) %>%
-  density() %>%
-  as.data.frame() %>%
-  mutate(fill = ifelse(x < -.5, "low2", ifelse(x > .5, "high2", "middle2")))
-prior <- distribution_normal(1000, mean = 0, sd = 1) %>%
-  density() %>%
-  as.data.frame() %>%
-  mutate(fill = ifelse(x < -.5, "low", ifelse(x > .5, "high", "middle")))
+# posterior <- distribution_chisquared(1000, 3) %>%
+#   density() %>%
+#   as.data.frame() %>%
+#   mutate(fill = ifelse(x < -.5, "low2", ifelse(x > .5, "high2", "middle2")))
+# prior <- distribution_normal(1000, mean = 0, sd = 1) %>%
+#   density() %>%
+#   as.data.frame() %>%
+#   mutate(fill = ifelse(x < -.5, "low", ifelse(x > .5, "high", "middle")))
+#
+# # alpha
+# ribalpha <- .5
+#
+# ggplot() +
+#   geom_ribbon(data = prior, aes(x=x, fill=fill, ymin=0, ymax=y), alpha = ribalpha) +
+#   geom_ribbon(data = posterior, aes(x=x, fill=fill, ymin=0, ymax=y), alpha = ribalpha) +
+#   # geom_line(data = prior, aes(x=x, y=y), color = "black", linetype = "dotted") +
+#   # geom_line(data = posterior, aes(x=x, y=y), color = "black", linetype = "dotted") +
+#   geom_vline(xintercept=0, linetype="dotted") +
+#   theme_classic(base_size = 20) +
+#   scale_y_continuous(expand = c(0, 0)) +
+#   scale_fill_manual(
+#     values = c(
+#       "high" = "#FFC107",
+#       "high2" = "#4CAF50",
+#       "low" = "#FFC107",
+#       "low2" = "#4CAF50",
+#       "middle" = "#E91E63",
+#       "middle2" = "#2196F3"
+#     ),
+#     guide = FALSE
+#   ) +
+#   ggtitle("Bayes factor (ROPE)") +
+#   theme(plot.title = element_text(hjust = 0.5, size = 18, face = "italic")) +
+#   xlab(NULL) +
+#   ylab(NULL)
+
+x <- seq(-5,5, length.out = 1000)
+posterior <- data.frame(x = x,
+                        y = dnorm(x, 1,0.7),
+                        fill = case_when(x < -.5 ~ "-out1",
+                                         x > 0.5 ~ "+out1",
+                                         TRUE    ~ "in1"))
+prior <- data.frame(x = x,
+                        y = dnorm(x, 0,1),
+                        fill = case_when(x < -.5 ~ "-out2",
+                                         x > 0.5 ~ "+out2",
+                                         TRUE    ~ "in2"))
 
 # alpha
-ribalpha <- .5
+ribalpha <- 0.8
+
+
 
 ggplot() +
-  geom_ribbon(data = prior, aes(x=x, fill=fill, ymin=0, ymax=y), alpha = ribalpha) +
-  geom_ribbon(data = posterior, aes(x=x, fill=fill, ymin=0, ymax=y), alpha = ribalpha) +
-  # geom_line(data = prior, aes(x=x, y=y), color = "black", linetype = "dotted") +
-  # geom_line(data = posterior, aes(x=x, y=y), color = "black", linetype = "dotted") +
-  geom_vline(xintercept=0, linetype="dotted") +
+  geom_ribbon(data = posterior,
+              aes(x = x, fill = fill, ymin = 0, ymax = y), alpha = ribalpha) +
+  geom_ribbon(data = prior,
+              aes(x = x, fill = fill, ymin = 0, ymax = y), alpha = ribalpha) +
+  geom_line(data = prior, aes(x = x, y = y), color = "black", linetype = "dotted", size = 1) +
+  geom_vline(xintercept=c(-.5,.5), linetype="solid") +
   theme_classic(base_size = 20) +
   scale_y_continuous(expand = c(0, 0)) +
   scale_fill_manual(
     values = c(
-      "high" = "#FFC107",
-      "high2" = "#4CAF50",
-      "low" = "#FFC107",
-      "low2" = "#4CAF50",
-      "middle" = "#E91E63",
-      "middle2" = "#2196F3"
-    ),
-    guide = FALSE
+      "-out1" = "#FFC107",
+      "-out2" = NA,
+      "+out1" = "#FFC107",
+      "+out2" = NA,
+      "in1" = "#E91E63",
+      "in2" = "#2196F3"
+    )
+    ,guide = FALSE
   ) +
   ggtitle("Bayes factor (ROPE)") +
   theme(plot.title = element_text(hjust = 0.5, size = 18, face = "italic")) +
   xlab(NULL) +
   ylab(NULL)
-
 
 
 # p-MAP -------------------------------------------------------------------
