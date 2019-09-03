@@ -111,7 +111,7 @@ set.seed(123)
 #   xlab(NULL) +
 #   ylab(NULL)
 
-x <- seq(-5,5, length.out = 1000)
+x <- seq(-4,4, length.out = 1000)
 posterior <- data.frame(x = x,
                         y = dnorm(x, 1,0.7),
                         fill = case_when(x < -.5 ~ "-out1",
@@ -137,6 +137,7 @@ ggplot() +
   geom_vline(xintercept=c(-.5,.5), linetype="solid") +
   theme_classic(base_size = 20) +
   scale_y_continuous(expand = c(0, 0)) +
+  scale_x_continuous(expand = c(0, 0)) +
   scale_fill_manual(
     values = c(
       "-out1" = "#FFC107",
