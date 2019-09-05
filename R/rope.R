@@ -194,6 +194,16 @@ rope.BFBayesFactor <- function(x, range = "default", ci = .89, verbose = TRUE, .
 }
 
 
+#' @rdname rope
+#' @export
+rope.MCMCglmm <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
+  nF <- x$Fixed$nfl
+  d <- as.data.frame(x$Sol[, 1:nF, drop = FALSE])
+  out <- rope(d, range = range, ci = ci, verbose = verbose, ...)
+  out
+}
+
+
 #' @keywords internal
 .rope <- function(x, range = c(-0.1, 0.1), ci = .89, ci_method = "HDI", verbose = TRUE) {
   HDI_area <- .hdi_area <- ci(x, ci = ci, method = ci_method, verbose = verbose)

@@ -4,6 +4,7 @@
 \alias{eti}
 \alias{eti.numeric}
 \alias{eti.data.frame}
+\alias{eti.MCMCglmm}
 \alias{eti.sim.merMod}
 \alias{eti.sim}
 \alias{eti.emmGrid}
@@ -17,6 +18,8 @@ eti(x, ...)
 \method{eti}{numeric}(x, ci = 0.89, verbose = TRUE, ...)
 
 \method{eti}{data.frame}(x, ci = 0.89, verbose = TRUE, ...)
+
+\method{eti}{MCMCglmm}(x, ci = 0.89, verbose = TRUE, ...)
 
 \method{eti}{sim.merMod}(x, ci = 0.89, effects = c("fixed", "random",
   "all"), parameters = NULL, verbose = TRUE, ...)

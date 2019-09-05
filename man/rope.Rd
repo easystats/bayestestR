@@ -7,6 +7,7 @@
 \alias{rope.data.frame}
 \alias{rope.emmGrid}
 \alias{rope.BFBayesFactor}
+\alias{rope.MCMCglmm}
 \alias{rope.stanreg}
 \alias{rope.brmsfit}
 \title{Region of Practical Equivalence (ROPE)}
@@ -25,6 +26,9 @@ rope(x, ...)
   verbose = TRUE, ...)
 
 \method{rope}{BFBayesFactor}(x, range = "default", ci = 0.89,
+  verbose = TRUE, ...)
+
+\method{rope}{MCMCglmm}(x, range = "default", ci = 0.89,
   verbose = TRUE, ...)
 
 \method{rope}{stanreg}(x, range = "default", ci = 0.89,

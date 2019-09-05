@@ -4,6 +4,7 @@
 \alias{effective_sample}
 \alias{effective_sample.brmsfit}
 \alias{effective_sample.stanreg}
+\alias{effective_sample.MCMCglmm}
 \title{Effective Sample Size (ESS)}
 \usage{
 effective_sample(model, ...)
@@ -13,6 +14,9 @@ effective_sample(model, ...)
   parameters = NULL, ...)
 
 \method{effective_sample}{stanreg}(model, effects = c("fixed", "random",
+  "all"), parameters = NULL, ...)
+
+\method{effective_sample}{MCMCglmm}(model, effects = c("fixed", "random",
   "all"), parameters = NULL, ...)
 }
 \arguments{

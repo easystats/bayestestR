@@ -10,6 +10,7 @@
 \alias{ci.stanreg}
 \alias{ci.brmsfit}
 \alias{ci.BFBayesFactor}
+\alias{ci.MCMCglmm}
 \title{Confidence/Credible Interval (CI)}
 \usage{
 ci(x, ...)
@@ -41,6 +42,9 @@ ci(x, ...)
 
 \method{ci}{BFBayesFactor}(x, ci = 0.89, method = "ETI",
   verbose = TRUE, ...)
+
+\method{ci}{MCMCglmm}(x, ci = 0.89, method = "ETI", verbose = TRUE,
+  ...)
 }
 \arguments{
 \item{x}{A \code{stanreg} or \code{brmsfit} model, or a vector representing a posterior distribution.}

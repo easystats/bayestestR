@@ -137,6 +137,15 @@ p_direction.data.frame <- function(x, method = "direct", ...) {
   out
 }
 
+
+#' @rdname p_direction
+#' @export
+p_direction.MCMCglmm <- function(x, method = "direct", ...) {
+  nF <- x$Fixed$nfl
+  p_direction(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), method = method, ...)
+}
+
+
 #' @rdname p_direction
 #' @export
 p_direction.emmGrid <- function(x, method = "direct", ...) {
