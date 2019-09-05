@@ -101,7 +101,7 @@ effective_sample.MCMCglmm <- function(model, effects = c("fixed", "random", "all
 
   es <- data.frame(
     Parameter = rownames(s.fixed),
-    ESS = s.fixed[["eff.samp"]],
+    ESS = round(s.fixed[["eff.samp"]]),
     stringsAsFactors = FALSE,
     row.names = NULL
   )
@@ -109,7 +109,7 @@ effective_sample.MCMCglmm <- function(model, effects = c("fixed", "random", "all
   if (nrow(s.random) > 0) {
     es <- rbind(es, data.frame(
       Parameter = rownames(s.random),
-      ESS = s.random[["eff.samp"]],
+      ESS = round(s.random[["eff.samp"]]),
       stringsAsFactors = FALSE,
       row.names = NULL
     ))
