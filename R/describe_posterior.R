@@ -235,10 +235,6 @@ describe_posterior.data.frame <- describe_posterior.numeric
 
 
 #' @export
-describe_posterior.MCMCglmm <- describe_posterior.numeric
-
-
-#' @export
 describe_posterior.sim.merMod <- describe_posterior.numeric
 
 
@@ -314,6 +310,24 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
   }
   out
 }
+
+
+#' @inheritParams describe_posterior.stanreg
+#' @rdname describe_posterior
+#' @export
+describe_posterior.MCMCglmm <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, diagnostic = "ESS", parameters = NULL, ...) {
+  out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = NULL, effects = "fixed", parameters = parameters, ...)
+
+  if (!is.null(diagnostic) && diagnostic == "ESS") {
+    diagnostic <- effective_sample(posteriors, effects = "fixed", parameters = parameters, ...)
+    out <- merge(out, diagnostic, all = TRUE)
+    out <- .reoder_rows(posteriors, out, ci = ci)
+  }
+
+  out
+}
+
+
 
 #' @inheritParams describe_posterior.stanreg
 #' @rdname describe_posterior
