@@ -235,6 +235,10 @@ describe_posterior.data.frame <- describe_posterior.numeric
 
 
 #' @export
+describe_posterior.MCMCglmm <- describe_posterior.numeric
+
+
+#' @export
 describe_posterior.sim.merMod <- describe_posterior.numeric
 
 
