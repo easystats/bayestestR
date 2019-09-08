@@ -229,14 +229,6 @@ bayesfactor_parameters.emmGrid <- function(posterior, prior = NULL,
   )
 }
 
-#' @export
-bayesfactor_parameters.bayesfactor_models <- function(...) {
-  stop(
-    "Oh no, 'bayesfactor_parameters()' does not know how to deal with multiple models :(\n",
-    "You want might want to use 'bayesfactor_inclusion()' here to test specific terms across models."
-  )
-}
-
 
 #' @rdname bayesfactor_parameters
 #' @export
@@ -462,3 +454,24 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
     d_points = rbind(posterior[[2]], prior[[2]])
   )
 }
+
+
+# Bad Methods -------------------------------------------------------------
+
+#' @export
+bayesfactor_parameters.bayesfactor_models <- function(...) {
+  stop(
+    "Oh no, 'bayesfactor_parameters()' does not know how to deal with multiple models :(\n",
+    "You might want to use 'bayesfactor_inclusion()' here to test specific terms across models."
+  )
+}
+
+#' @export
+bayesfactor_parameters.sim <- function(...){
+  stop("Bayes factors are based on the shift from a prior to a posterior. ",
+       "Since simulated draws are not based on any priors, computing Bayes factors does not make sense :(\n",
+       "You might want to try `rope`, `ci`, `pd` or `pmap` for posterior-based inference.")
+}
+
+#' @export
+bayesfactor_parameters.sim.merMod <- bayesfactor_parameters.sim
