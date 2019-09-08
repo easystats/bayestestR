@@ -46,7 +46,6 @@
 #'     \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
 #'     \item \code{prior} can also be an \code{emmGrid} object equvilant to \code{posterior} but created with a model of priors samples \emph{only}.
 #'   }
-#'   \item When \code{posterior} is a \code{sim} object, \code{prior} is ignored - these will always return a non-seneschal Bayes factor of \code{0}, as there are no prior corresponding to simulated posteriors.
 #' }}
 #' \subsection{One-sided Tests (setting an order restriction)}{
 #' One sided tests (controlled by \code{direction}) are conducted by restricting the prior and
@@ -238,70 +237,6 @@ bayesfactor_parameters.bayesfactor_models <- function(...) {
   )
 }
 
-#' @importFrom insight get_parameters
-#' @export
-bayesfactor_parameters.sim.merMod <- function(posterior, prior = NULL,
-                                              direction = "two-sided", null = 0,
-                                              verbose = TRUE,
-                                              effects = c("fixed", "random", "all"),
-                                              ...) {
-  effects <- match.arg(effects)
-
-  posterior <- insight::get_parameters(posterior, effects = effects)
-  prior <- posterior
-
-  warning(
-    "Simulated posteriors cannot be compared to non-existant priors. ",
-    "Bayes factors are by definition equal to zero. ",
-    call. = FALSE
-  )
-
-
-  # Get BFs
-  bfr <- bayesfactor_parameters.data.frame(
-    posterior = posterior, prior = prior,
-    direction = direction, null = null, ...
-  )
-
-  bfr$BF <- 0
-  attr(bfr,"plot_data") <- lapply(attr(bfr,"plot_data"), function(x) {
-    x$y[x$Distribution == "prior"] <- 0
-    x
-  })
-  bfr
-}
-
-
-#' @importFrom insight get_parameters
-#' @export
-bayesfactor_parameters.sim <- function(posterior, prior = NULL,
-                                       direction = "two-sided", null = 0,
-                                       verbose = TRUE,
-                                       ...) {
-
-  posterior <- insight::get_parameters(posterior)
-  prior <- posterior
-
-  warning(
-    "Simulated posteriors cannot be compared to non-existant priors. ",
-    "Bayes factors are by definition equal to zero. ",
-    call. = FALSE
-  )
-
-  # Get BFs
-  bfr <- bayesfactor_parameters.data.frame(
-    posterior = posterior, prior = prior,
-    direction = direction, null = null, ...
-  )
-
-  bfr$BF <- 0
-  attr(bfr,"plot_data") <- lapply(attr(bfr,"plot_data"), function(x) {
-    x$y[x$Distribution == "prior"] <- 0
-    x
-  })
-  bfr
-}
-
 
 #' @rdname bayesfactor_parameters
 #' @export
@@ -345,7 +280,7 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
 
   attr(bf_val, "hypothesis") <- null
   attr(bf_val, "direction") <- direction
-  attr(bf_val, "plot_data") <- .make_sdBF_plot_data(posterior, prior, direction, null)
+  attr(bf_val, "plot_data") <- .make_BF_plot_data(posterior, prior, direction, null)
 
   bf_val
 }
@@ -417,19 +352,33 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
 
 #' @keywords internal
 .get_direction <- function(direction) {
-  if (length(direction) > 1) {
-    warning("Using first 'direction' value.")
-    direction <- direction[1]
+  if (length(direction) > 1) warning("Using first 'direction' value.")
+
+  if (is.numeric(direction[1])) {
+    return(direction[1])
   }
 
-  String <- c("left", "right", "one-sided", "onesided", "two-sided", "twosided", "<", ">", "=", "-1", "0", "1", "+1")
-  Value <- c(-1, 1, 1, 1, 0, 0, -1, 1, 0, -1, 0, 1, 1)
+  Value <- c(
+    "left"      = -1,
+    "right"     =  1,
+    "two-sided" =  0,
+    "twosided"  =  0,
+    "<"         = -1,
+    ">"         =  1,
+    "="         =  0,
+    "=="        =  0,
+    "-1"        = -1,
+    "0"         =  0,
+    "1"         =  1,
+    "+1"        =  1
+  )
 
-  ind <- String == direction
-  if (length(ind) == 0) {
+  direction <- Value[tolower(direction[1])]
+
+  if (is.na(direction)) {
     stop("Unrecognized 'direction' argument.")
   }
-  Value[ind]
+  direction
 }
 
 
@@ -437,7 +386,7 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
 #' @importFrom stats median mad approx
 #' @importFrom utils stack
 #' @keywords internal
-.make_sdBF_plot_data <- function(posterior, prior, direction, null) {
+.make_BF_plot_data <- function(posterior, prior, direction, null) {
   if (!requireNamespace("logspline")) {
     stop("Package \"logspline\" needed for this function to work. Please install it.")
   }
