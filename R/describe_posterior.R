@@ -9,7 +9,7 @@
 #' @param test The indices of effect existence to compute. Character (vector) or
 #'   list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
 #'   \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
-#'   \code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.#'
+#'   \code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.
 #'   For each "test", the corresponding \pkg{bayestestR} function is called
 #'   (e.g. \code{\link{rope}} or \code{\link{p_direction}}) and its results
 #'   included in the summary output.
@@ -122,6 +122,8 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
       test <- c("p_map", "pd", "rope", "equivalence", "bf")
     }
 
+    ## TODO no BF for arm::sim
+    if (inherits(x, c("sim", "sim.merMod"))) test <- setdiff(test, "bf")
 
     # MAP-based p-value
 
@@ -233,6 +235,14 @@ describe_posterior.data.frame <- describe_posterior.numeric
 
 
 #' @export
+describe_posterior.sim.merMod <- describe_posterior.numeric
+
+
+#' @export
+describe_posterior.sim <- describe_posterior.numeric
+
+
+#' @export
 describe_posterior.emmGrid <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, ...) {
   if (!requireNamespace("emmeans")) {
     stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
@@ -300,6 +310,24 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
   }
   out
 }
+
+
+#' @inheritParams describe_posterior.stanreg
+#' @rdname describe_posterior
+#' @export
+describe_posterior.MCMCglmm <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, diagnostic = "ESS", parameters = NULL, ...) {
+  out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = NULL, effects = "fixed", parameters = parameters, ...)
+
+  if (!is.null(diagnostic) && diagnostic == "ESS") {
+    diagnostic <- effective_sample(posteriors, effects = "fixed", parameters = parameters, ...)
+    out <- merge(out, diagnostic, all = TRUE)
+    out <- .reoder_rows(posteriors, out, ci = ci)
+  }
+
+  out
+}
+
+
 
 #' @inheritParams describe_posterior.stanreg
 #' @rdname describe_posterior

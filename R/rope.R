@@ -194,6 +194,16 @@ rope.BFBayesFactor <- function(x, range = "default", ci = .89, verbose = TRUE, .
 }
 
 
+#' @rdname rope
+#' @export
+rope.MCMCglmm <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
+  nF <- x$Fixed$nfl
+  d <- as.data.frame(x$Sol[, 1:nF, drop = FALSE])
+  out <- rope(d, range = range, ci = ci, verbose = verbose, ...)
+  out
+}
+
+
 #' @keywords internal
 .rope <- function(x, range = c(-0.1, 0.1), ci = .89, ci_method = "HDI", verbose = TRUE) {
   HDI_area <- .hdi_area <- ci(x, ci = ci, method = ci_method, verbose = verbose)
@@ -376,6 +386,107 @@ rope.brmsfit <- function(x, range = "default", ci = .89, ci_method = "HDI", effe
 
   dat
 }
+
+
+
+#' @export
+rope.sim.merMod <- function(x, range = "default", ci = .89, ci_method = "HDI", effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+  effects <- match.arg(effects)
+
+  if (all(range == "default")) {
+    range <- rope_range(x)
+  } else if (!all(is.numeric(range)) || length(range) != 2) {
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+  }
+
+  list <- lapply(c("fixed", "random"), function(.x) {
+    parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
+
+    getropedata <- .prepare_rope_df(parms, range, ci, ci_method, verbose)
+    tmp <- getropedata$tmp
+    HDI_area <- getropedata$HDI_area
+
+    if (!.is_empty_object(tmp)) {
+      tmp <- .clean_up_tmp_stanreg(
+        tmp,
+        group = .x,
+        cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Group"),
+        parms = names(parms)
+      )
+
+      if (!.is_empty_object(HDI_area)) {
+        attr(tmp, "HDI_area") <- HDI_area
+      }
+    } else {
+      tmp <- NULL
+    }
+
+    tmp
+  })
+
+  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
+
+  dat <- switch(
+    effects,
+    fixed = .select_rows(dat, "Group", "fixed"),
+    random = .select_rows(dat, "Group", "random"),
+    dat
+  )
+
+  if (all(dat$Group == dat$Group[1])) {
+    dat <- .remove_column(dat, "Group")
+  }
+
+  HDI_area_attributes <- lapply(.compact_list(list), attr, "HDI_area")
+
+  if (effects != "all") {
+    HDI_area_attributes <- HDI_area_attributes[[1]]
+  } else {
+    names(HDI_area_attributes) <- c("fixed", "random")
+  }
+
+  attr(dat, "HDI_area") <- HDI_area_attributes
+  attr(dat, "object_name") <- .safe_deparse(substitute(x))
+
+  dat
+}
+
+
+
+#' @export
+rope.sim <- function(x, range = "default", ci = .89, ci_method = "HDI", parameters = NULL, verbose = TRUE, ...) {
+  if (all(range == "default")) {
+    range <- rope_range(x)
+  } else if (!all(is.numeric(range)) || length(range) != 2) {
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+  }
+
+  parms <- insight::get_parameters(x, parameters = parameters)
+  getropedata <- .prepare_rope_df(parms, range, ci, ci_method, verbose)
+
+  dat <- getropedata$tmp
+  HDI_area <- getropedata$HDI_area
+
+  if (!.is_empty_object(dat)) {
+    dat <- .clean_up_tmp_stanreg(
+      dat,
+      group = "fixed",
+      cols = c("CI", "ROPE_low", "ROPE_high", "ROPE_Percentage"),
+      parms = names(parms)
+    )
+
+    if (!.is_empty_object(HDI_area)) {
+      attr(dat, "HDI_area") <- HDI_area
+    }
+  } else {
+    dat <- NULL
+  }
+
+  attr(dat, "object_name") <- .safe_deparse(substitute(x))
+
+  dat
+}
+
 
 
 

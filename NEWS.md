@@ -1,3 +1,13 @@
+# bayestestR 0.3.0
+
+## Changes to functions
+
+* Added support for `sim`, `sim.merMod` and `MCMCglmm`-objects (from `arm::sim()`) to many functions (like `hdi()`, `ci()`, `eti()`, `rope()`, `p_direction()`, `point_estimate()`, ...).
+
+## New functions / features
+
+* `distribution_gamma()` to generate a (near-perfect or random) Gamma distribution.
+
 # bayestestR 0.2.5
 
 ## Breaking changes
@@ -9,7 +19,7 @@
 
 ## New functions / features
 
-- `density_at()`, `p_map` and `map_estimate`: `method` argument added
+- `density_at()`, `p_map()` and `map_estimate()`: `method` argument added
 - `rope()`: `ci_method` argument added
 - `eti()`: Computes equal-tailed intervals
 - `reshape_ci()`: Reshape CIs between wide/long

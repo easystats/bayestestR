@@ -118,6 +118,14 @@ point_estimate.data.frame <- function(x, centrality = "median", dispersion = FAL
   out
 }
 
+
+#' @export
+point_estimate.MCMCglmm <- function(x, centrality = "median", dispersion = FALSE, ...) {
+  nF <- x$Fixed$nfl
+  point_estimate(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), centrality = centrality, dispersion = dispersion, ...)
+}
+
+
 #' @export
 point_estimate.emmGrid <- function(x, centrality = "median", dispersion = FALSE, ...) {
   if (!requireNamespace("emmeans")) {
@@ -188,6 +196,48 @@ point_estimate.brmsfit <- function(x, centrality = "median", dispersion = FALSE,
 
   out
 }
+
+
+#' @export
+point_estimate.sim.merMod <- function(x, centrality = "median", dispersion = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  effects <- match.arg(effects)
+
+  out <- .point_estimate_models(
+    x = x,
+    effects = effects,
+    component = "conditional",
+    parameters = parameters,
+    centrality = centrality,
+    dispersion = dispersion,
+    ...
+  )
+  attr(out, "data") <- insight::get_parameters(x, effects = effects, parameters = parameters)
+  attr(out, "centrality") <- centrality
+  class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
+
+  out
+}
+
+
+
+#' @export
+point_estimate.sim <- function(x, centrality = "median", dispersion = FALSE, parameters = NULL, ...) {
+  out <- .point_estimate_models(
+    x = x,
+    effects = "fixed",
+    component = "conditional",
+    parameters = parameters,
+    centrality = centrality,
+    dispersion = dispersion,
+    ...
+  )
+  attr(out, "data") <- insight::get_parameters(x, parameters = parameters)
+  attr(out, "centrality") <- centrality
+  class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
+
+  out
+}
+
 
 
 #' @rdname point_estimate

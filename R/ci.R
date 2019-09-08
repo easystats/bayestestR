@@ -86,6 +86,24 @@ ci.data.frame <- ci.numeric
 ci.emmGrid <- ci.numeric
 
 
+
+#' @rdname ci
+#' @export
+ci.sim.merMod <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random", "all"),
+                       parameters = NULL, verbose = TRUE, ...) {
+  .ci_bayesian(x, ci = ci, method = method, effects = effects, parameters = parameters, verbose = verbose, ...)
+}
+
+
+
+#' @rdname ci
+#' @export
+ci.sim <- function(x, ci = .89, method = "ETI", parameters = NULL, verbose = TRUE, ...) {
+  .ci_bayesian(x, ci = ci, method = method, parameters = parameters, verbose = verbose, ...)
+}
+
+
+
 #' @rdname ci
 #' @export
 ci.stanreg <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random", "all"),
@@ -106,3 +124,13 @@ ci.brmsfit <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random
 #' @rdname ci
 #' @export
 ci.BFBayesFactor <- ci.numeric
+
+
+
+
+#' @rdname ci
+#' @export
+ci.MCMCglmm <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
+  nF <- x$Fixed$nfl
+  ci(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), ci = ci, method = method, verbose = verbose, ...)
+}

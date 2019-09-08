@@ -137,6 +137,15 @@ p_direction.data.frame <- function(x, method = "direct", ...) {
   out
 }
 
+
+#' @rdname p_direction
+#' @export
+p_direction.MCMCglmm <- function(x, method = "direct", ...) {
+  nF <- x$Fixed$nfl
+  p_direction(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), method = method, ...)
+}
+
+
 #' @rdname p_direction
 #' @export
 p_direction.emmGrid <- function(x, method = "direct", ...) {
@@ -159,6 +168,39 @@ p_direction.emmGrid <- function(x, method = "direct", ...) {
 }
 
 
+#' @export
+p_direction.sim.merMod <- function(x, effects = c("fixed", "random", "all"), parameters = NULL, method = "direct", ...) {
+  effects <- match.arg(effects)
+
+  out <- .p_direction_models(
+    x = x,
+    effects = effects,
+    component = "conditional",
+    parameters = parameters,
+    method = method,
+    ...
+  )
+  attr(out, "data") <- insight::get_parameters(x, effects = effects, parameters = parameters)
+  out
+}
+
+
+#' @export
+p_direction.sim <- function(x, parameters = NULL, method = "direct", ...) {
+  out <- .p_direction_models(
+    x = x,
+    effects = "fixed",
+    component = "conditional",
+    parameters = parameters,
+    method = method,
+    ...
+  )
+  attr(out, "data") <- insight::get_parameters(x, parameters = parameters)
+  out
+}
+
+
+
 #' @rdname p_direction
 #' @export
 p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parameters = NULL, method = "direct", ...) {
@@ -175,6 +217,7 @@ p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parame
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
+
 
 #' @rdname p_direction
 #' @export

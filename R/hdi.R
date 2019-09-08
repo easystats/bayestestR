@@ -103,7 +103,7 @@ hdi.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .hdi(x, ci = i, verbose = verbose)
   }))
-  class(out) <- unique(c("hdi", "see_hdi", "bayestestR_ci", "see_ci", class(out)))
+  class(out) <- unique(c("bayestestR_hdi", "see_hdi", "bayestestR_ci", "see_ci", class(out)))
   attr(out, "data") <- x
   out
 }
@@ -117,6 +117,43 @@ hdi.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
   attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   dat
 }
+
+
+
+#' @rdname hdi
+#' @export
+hdi.MCMCglmm <- function(x, ci = .89, verbose = TRUE, ...) {
+  nF <- x$Fixed$nfl
+  d <- as.data.frame(x$Sol[, 1:nF, drop = FALSE])
+  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
+  attr(dat, "data") <- deparse(substitute(x), width.cutoff = 500)
+  dat
+}
+
+
+
+#' @rdname hdi
+#' @export
+hdi.sim.merMod <- function(x, ci = .89, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+  effects <- match.arg(effects)
+  dat <- .compute_interval_simMerMod(x = x, ci = ci, effects = effects, parameters = parameters, verbose = verbose, fun = "hdi")
+  out <- dat$result
+  attr(out, "data") <- dat$data
+  out
+}
+
+
+
+#' @rdname hdi
+#' @export
+hdi.sim <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
+  dat <- .compute_interval_sim(x = x, ci = ci, parameters = parameters, verbose = verbose, fun = "hdi")
+  out <- dat$result
+  attr(out, "data") <- dat$data
+  out
+}
+
+
 
 #' @rdname hdi
 #' @export

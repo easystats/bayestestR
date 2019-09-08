@@ -80,3 +80,40 @@ effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"
     row.names = NULL
   )
 }
+
+
+
+#' @rdname effective_sample
+#' @export
+effective_sample.MCMCglmm <- function(model, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  # check arguments
+  effects <- match.arg(effects)
+
+  pars <-
+    insight::get_parameters(
+      model,
+      effects = effects,
+      parameters = parameters
+    )
+
+  s.fixed <- as.data.frame(summary(model)$solutions)
+  s.random <- as.data.frame(summary(model)$Gcovariances)
+
+  es <- data.frame(
+    Parameter = rownames(s.fixed),
+    ESS = round(s.fixed[["eff.samp"]]),
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
+
+  if (nrow(s.random) > 0) {
+    es <- rbind(es, data.frame(
+      Parameter = rownames(s.random),
+      ESS = round(s.random[["eff.samp"]]),
+      stringsAsFactors = FALSE,
+      row.names = NULL
+    ))
+  }
+
+  es[match(pars$parameter, es$Parameter), ]
+}

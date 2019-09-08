@@ -44,7 +44,7 @@ plot.rope <- function(x, ...) {
 
 
 #' @export
-plot.hdi <- function(x, ...) {
+plot.bayestestR_hdi <- function(x, ...) {
   if (!requireNamespace("see", quietly = TRUE)) {
     stop("Package 'see' needed to plot HDI. Please install it by running `install.packages('see')`.")
   }
@@ -53,7 +53,7 @@ plot.hdi <- function(x, ...) {
 
 
 #' @export
-plot.eti <- function(x, ...) {
+plot.bayestestR_eti <- function(x, ...) {
   if (!requireNamespace("see", quietly = TRUE)) {
     stop("Package 'see' needed to plot credible intervals. Please install it by running `install.packages('see')`.")
   }
