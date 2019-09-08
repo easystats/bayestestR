@@ -94,6 +94,7 @@ It is important to provide the correct \code{prior} for meaningful results.
     \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
     \item \code{prior} can also be an \code{emmGrid} object equvilant to \code{posterior} but created with a model of priors samples \emph{only}.
   }
+  \item When \code{posterior} is a \code{sim} object, \code{prior} is ignored - these will always return a non-seneschal Bayes factor of \code{0}, as there are no prior corresponding to simulated posteriors.
 }}
 \subsection{One-sided Tests (setting an order restriction)}{
 One sided tests (controlled by \code{direction}) are conducted by restricting the prior and

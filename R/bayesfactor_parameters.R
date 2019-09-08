@@ -46,6 +46,7 @@
 #'     \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
 #'     \item \code{prior} can also be an \code{emmGrid} object equvilant to \code{posterior} but created with a model of priors samples \emph{only}.
 #'   }
+#'   \item When \code{posterior} is a \code{sim} object, \code{prior} is ignored - these will always return a non-seneschal Bayes factor of \code{0}, as there are no prior corresponding to simulated posteriors.
 #' }}
 #' \subsection{One-sided Tests (setting an order restriction)}{
 #' One sided tests (controlled by \code{direction}) are conducted by restricting the prior and
@@ -152,7 +153,7 @@ bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = 
   posterior <- data.frame(X = posterior)
   # colnames(posterior) <- colnames(prior) <- nm
 
-  # Get savage-dickey BFs
+  # Get BFs
   sdbf <- bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, null = null, ...
@@ -180,7 +181,7 @@ bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
   prior <- insight::get_parameters(prior, effects = effects)
   posterior <- insight::get_parameters(posterior, effects = effects)
 
-  # Get savage-dickey BFs
+  # Get BFs
   bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, null = null, ...
@@ -222,6 +223,7 @@ bayesfactor_parameters.emmGrid <- function(posterior, prior = NULL,
   prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(prior, names = FALSE)))
   posterior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posterior, names = FALSE)))
 
+  # Get BFs
   bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, null = null, ...
@@ -234,6 +236,70 @@ bayesfactor_parameters.bayesfactor_models <- function(...) {
     "Oh no, 'bayesfactor_parameters()' does not know how to deal with multiple models :(\n",
     "You want might want to use 'bayesfactor_inclusion()' here to test specific terms across models."
   )
+}
+
+#' @importFrom insight get_parameters
+#' @export
+bayesfactor_parameters.sim.merMod <- function(posterior, prior = NULL,
+                                              direction = "two-sided", null = 0,
+                                              verbose = TRUE,
+                                              effects = c("fixed", "random", "all"),
+                                              ...) {
+  effects <- match.arg(effects)
+
+  posterior <- insight::get_parameters(posterior, effects = effects)
+  prior <- posterior
+
+  warning(
+    "Simulated posteriors cannot be compared to non-existant priors. ",
+    "Bayes factors are by definition equal to zero. ",
+    call. = FALSE
+  )
+
+
+  # Get BFs
+  bfr <- bayesfactor_parameters.data.frame(
+    posterior = posterior, prior = prior,
+    direction = direction, null = null, ...
+  )
+
+  bfr$BF <- 0
+  attr(bfr,"plot_data") <- lapply(attr(bfr,"plot_data"), function(x) {
+    x$y[x$Distribution == "prior"] <- 0
+    x
+  })
+  bfr
+}
+
+
+#' @importFrom insight get_parameters
+#' @export
+bayesfactor_parameters.sim <- function(posterior, prior = NULL,
+                                       direction = "two-sided", null = 0,
+                                       verbose = TRUE,
+                                       ...) {
+
+  posterior <- insight::get_parameters(posterior)
+  prior <- posterior
+
+  warning(
+    "Simulated posteriors cannot be compared to non-existant priors. ",
+    "Bayes factors are by definition equal to zero. ",
+    call. = FALSE
+  )
+
+  # Get BFs
+  bfr <- bayesfactor_parameters.data.frame(
+    posterior = posterior, prior = prior,
+    direction = direction, null = null, ...
+  )
+
+  bfr$BF <- 0
+  attr(bfr,"plot_data") <- lapply(attr(bfr,"plot_data"), function(x) {
+    x$y[x$Distribution == "prior"] <- 0
+    x
+  })
+  bfr
 }
 
 
