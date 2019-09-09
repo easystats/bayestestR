@@ -152,7 +152,7 @@ bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = 
   posterior <- data.frame(X = posterior)
   # colnames(posterior) <- colnames(prior) <- nm
 
-  # Get savage-dickey BFs
+  # Get BFs
   sdbf <- bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, null = null, ...
@@ -180,7 +180,7 @@ bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
   prior <- insight::get_parameters(prior, effects = effects)
   posterior <- insight::get_parameters(posterior, effects = effects)
 
-  # Get savage-dickey BFs
+  # Get BFs
   bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, null = null, ...
@@ -222,17 +222,10 @@ bayesfactor_parameters.emmGrid <- function(posterior, prior = NULL,
   prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(prior, names = FALSE)))
   posterior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posterior, names = FALSE)))
 
+  # Get BFs
   bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, null = null, ...
-  )
-}
-
-#' @export
-bayesfactor_parameters.bayesfactor_models <- function(...) {
-  stop(
-    "Oh no, 'bayesfactor_parameters()' does not know how to deal with multiple models :(\n",
-    "You want might want to use 'bayesfactor_inclusion()' here to test specific terms across models."
   )
 }
 
@@ -279,7 +272,7 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
 
   attr(bf_val, "hypothesis") <- null
   attr(bf_val, "direction") <- direction
-  attr(bf_val, "plot_data") <- .make_sdBF_plot_data(posterior, prior, direction, null)
+  attr(bf_val, "plot_data") <- .make_BF_plot_data(posterior, prior, direction, null)
 
   bf_val
 }
@@ -351,19 +344,33 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
 
 #' @keywords internal
 .get_direction <- function(direction) {
-  if (length(direction) > 1) {
-    warning("Using first 'direction' value.")
-    direction <- direction[1]
+  if (length(direction) > 1) warning("Using first 'direction' value.")
+
+  if (is.numeric(direction[1])) {
+    return(direction[1])
   }
 
-  String <- c("left", "right", "one-sided", "onesided", "two-sided", "twosided", "<", ">", "=", "-1", "0", "1", "+1")
-  Value <- c(-1, 1, 1, 1, 0, 0, -1, 1, 0, -1, 0, 1, 1)
+  Value <- c(
+    "left"      = -1,
+    "right"     =  1,
+    "two-sided" =  0,
+    "twosided"  =  0,
+    "<"         = -1,
+    ">"         =  1,
+    "="         =  0,
+    "=="        =  0,
+    "-1"        = -1,
+    "0"         =  0,
+    "1"         =  1,
+    "+1"        =  1
+  )
 
-  ind <- String == direction
-  if (length(ind) == 0) {
+  direction <- Value[tolower(direction[1])]
+
+  if (is.na(direction)) {
     stop("Unrecognized 'direction' argument.")
   }
-  Value[ind]
+  direction
 }
 
 
@@ -371,7 +378,7 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
 #' @importFrom stats median mad approx
 #' @importFrom utils stack
 #' @keywords internal
-.make_sdBF_plot_data <- function(posterior, prior, direction, null) {
+.make_BF_plot_data <- function(posterior, prior, direction, null) {
   if (!requireNamespace("logspline")) {
     stop("Package \"logspline\" needed for this function to work. Please install it.")
   }
@@ -447,3 +454,24 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
     d_points = rbind(posterior[[2]], prior[[2]])
   )
 }
+
+
+# Bad Methods -------------------------------------------------------------
+
+#' @export
+bayesfactor_parameters.bayesfactor_models <- function(...) {
+  stop(
+    "Oh no, 'bayesfactor_parameters()' does not know how to deal with multiple models :(\n",
+    "You might want to use 'bayesfactor_inclusion()' here to test specific terms across models."
+  )
+}
+
+#' @export
+bayesfactor_parameters.sim <- function(...){
+  stop("Bayes factors are based on the shift from a prior to a posterior. ",
+       "Since simulated draws are not based on any priors, computing Bayes factors does not make sense :(\n",
+       "You might want to try `rope`, `ci`, `pd` or `pmap` for posterior-based inference.")
+}
+
+#' @export
+bayesfactor_parameters.sim.merMod <- bayesfactor_parameters.sim
