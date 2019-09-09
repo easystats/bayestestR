@@ -153,6 +153,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
       stop("Models were not computed from the same data.")
     }
 
+
     # Get formula
     mforms <- sapply(mods, .find_full_formula)
   } else {
