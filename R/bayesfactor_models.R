@@ -114,7 +114,7 @@
 #'   \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 #' }
 #'
-#' @importFrom insight get_response is_model
+#' @importFrom insight get_response is_model_supported
 #' @export
 bayesfactor_models <- function(..., denominator = 1, verbose = TRUE) {
   UseMethod("bayesfactor_models")
@@ -140,7 +140,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   }
 
   # supported models
-  supported_models <- sapply(mods, insight::is_model)
+  supported_models <- sapply(mods, insight::is_model_supported)
   if (!all(supported_models)) {
     object_names <- match.call(expand.dots = FALSE)$`...`
     stop(sprintf("Can't calculate Bayes factor.\nFollowing objects are no (supported) model objects: %s", paste0(object_names[!supported_models], collapse = ", ")), call. = FALSE)

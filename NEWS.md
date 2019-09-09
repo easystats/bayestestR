@@ -2,7 +2,7 @@
 
 ## Changes to functions
 
-* Added support for `sim`, `sim.merMod` and `MCMCglmm`-objects (from `arm::sim()`) to many functions (like `hdi()`, `ci()`, `eti()`, `rope()`, `p_direction()`, `point_estimate()`, ...).
+* Added support for `sim`, `sim.merMod` (from `arm::sim()`) and `MCMCglmm`-objects to many functions (like `hdi()`, `ci()`, `eti()`, `rope()`, `p_direction()`, `point_estimate()`, ...).
 
 ## New functions / features
 
