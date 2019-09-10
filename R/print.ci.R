@@ -1,5 +1,5 @@
 #' @export
-print.hdi <- function(x, digits = 2, ...) {
+print.bayestestR_hdi <- function(x, digits = 2, ...) {
   if ("data_plot" %in% class(x)) {
     print(as.data.frame(x))
   } else {
@@ -9,7 +9,7 @@ print.hdi <- function(x, digits = 2, ...) {
 
 
 #' @export
-print.eti <- function(x, digits = 2, ...) {
+print.bayestestR_eti <- function(x, digits = 2, ...) {
   if ("data_plot" %in% class(x)) {
     print(as.data.frame(x))
   } else {
@@ -81,17 +81,17 @@ print_data_frame <- function(x, digits) {
   out <- list(x)
   names(out) <- "fixed"
 
-  if (all(c("Group", "Component") %in% colnames(x))) {
-    x$split <- sprintf("%s_%s", x$Group, x$Component)
-  } else if ("Group" %in% colnames(x)) {
-    colnames(x)[which(colnames(x) == "Group")] <- "split"
+  if (all(c("Effects", "Component") %in% colnames(x))) {
+    x$split <- sprintf("%s_%s", x$Effects, x$Component)
+  } else if ("Effects" %in% colnames(x)) {
+    colnames(x)[which(colnames(x) == "Effects")] <- "split"
   } else if ("Component" %in% colnames(x)) {
     colnames(x)[which(colnames(x) == "Component")] <- "split"
   }
 
   if ("split" %in% colnames(x)) {
     out <- lapply(split(x, f = x$split), function(i) {
-      .remove_column(i, c("split", "Component", "Group"))
+      .remove_column(i, c("split", "Component", "Effects"))
     })
   }
 
@@ -102,9 +102,12 @@ print_data_frame <- function(x, digits) {
       "fixed_conditional" = ,
       "fixed" = "# fixed effects, conditional component",
       "zi" = ,
+      "zero_inflated" = ,
+      "fixed_zero_inflated" = ,
       "fixed_zi" = "# fixed effects, zero-inflation component",
       "random" = ,
       "random_conditional" = "# random effects, conditional component",
+      "random_zero_inflated" = ,
       "random_zi" = "# random effects, zero-inflation component"
     )
 

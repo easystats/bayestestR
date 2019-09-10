@@ -206,13 +206,11 @@ p_direction.sim <- function(x, parameters = NULL, method = "direct", ...) {
 p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parameters = NULL, method = "direct", ...) {
   effects <- match.arg(effects)
 
-  out <- .compute_pd_stanreg(
-    x = x,
-    effects = effects,
-    parameters = parameters,
-    method = method,
-    ...
+  out <- .prepare_output(
+    p_direction(insight::get_parameters(x, effects = effects, parameters = parameters)),
+    insight::clean_parameters(x)
   )
+
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
@@ -224,14 +222,11 @@ p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), compon
   effects <- match.arg(effects)
   component <- match.arg(component)
 
-  out <- .compute_pd_brmsfit(
-    x = x,
-    effects = effects,
-    component = component,
-    parameters = parameters,
-    method = method,
-    ...
+  out <- .prepare_output(
+    p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters)),
+    insight::clean_parameters(x)
   )
+
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }

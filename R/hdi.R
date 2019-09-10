@@ -174,8 +174,14 @@ hdi.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
 #' @export
 hdi.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
-  out <- .compute_interval_stanreg(x, ci, effects, parameters, verbose, fun = "hdi")
+
+  out <- .prepare_output(
+    hdi(insight::get_parameters(x, effects = effects, parameters = parameters), ci = ci, verbose = verbose),
+    insight::clean_parameters(x)
+  )
+
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
   out
 }
 
@@ -186,8 +192,14 @@ hdi.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"), para
 hdi.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-  out <- .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose, fun = "hdi")
+
+  out <- .prepare_output(
+    hdi(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose),
+    insight::clean_parameters(x)
+  )
+
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
   out
 }
 
