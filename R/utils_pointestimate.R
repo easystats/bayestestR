@@ -37,32 +37,12 @@
   }
 
   list <- mapply(.get_point_estimate, eff, com, SIMPLIFY = FALSE)
-  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
 
-  dat <- switch(
-    effects,
-    fixed = .select_rows(dat, "Group", "fixed"),
-    random = .select_rows(dat, "Group", "random"),
-    dat
+  .select_effects_component(
+    do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE)),
+    effects = effects,
+    component = component
   )
-
-  dat <- switch(
-    component,
-    conditional = .select_rows(dat, "Component", "conditional"),
-    zi = ,
-    zero_inflated = .select_rows(dat, "Component", "zero_inflated"),
-    dat
-  )
-
-  if (all(dat$Group == dat$Group[1])) {
-    dat <- .remove_column(dat, "Group")
-  }
-
-  if (all(dat$Component == dat$Component[1])) {
-    dat <- .remove_column(dat, "Component")
-  }
-
-  dat
 }
 
 
@@ -102,18 +82,9 @@
     tmp
   })
 
-  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
-
-  dat <- switch(
-    effects,
-    fixed = .select_rows(dat, "Group", "fixed"),
-    random = .select_rows(dat, "Group", "random"),
-    dat
+  .select_effects_component(
+    do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE)),
+    effects = effects,
+    component = NULL
   )
-
-  if (all(dat$Group == dat$Group[1])) {
-    dat <- .remove_column(dat, "Group")
-  }
-
-  dat
 }

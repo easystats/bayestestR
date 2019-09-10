@@ -74,18 +74,11 @@
     tmp
   })
 
-  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
-
-  dat <- switch(
-    effects,
-    fixed = .select_rows(dat, "Group", "fixed"),
-    random = .select_rows(dat, "Group", "random"),
-    dat
+  dat <- .select_effects_component(
+    do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE)),
+    effects = effects,
+    component = NULL
   )
-
-  if (all(dat$Group == dat$Group[1])) {
-    dat <- .remove_column(dat, "Group")
-  }
 
   class(dat) <- unique(c(paste0("bayestestR_", fun), paste0("see_", fun), class(dat)))
   dat
@@ -126,30 +119,12 @@
   }
 
   list <- mapply(.get_hdi, eff, com, SIMPLIFY = FALSE)
-  dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
 
-  dat <- switch(
-    effects,
-    fixed = .select_rows(dat, "Group", "fixed"),
-    random = .select_rows(dat, "Group", "random"),
-    dat
+  dat <- .select_effects_component(
+    do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE)),
+    effects = effects,
+    component = component
   )
-
-  dat <- switch(
-    component,
-    conditional = .select_rows(dat, "Component", "conditional"),
-    zi = ,
-    zero_inflated = .select_rows(dat, "Component", "zero_inflated"),
-    dat
-  )
-
-  if (all(dat$Group == dat$Group[1])) {
-    dat <- .remove_column(dat, "Group")
-  }
-
-  if (all(dat$Component == dat$Component[1])) {
-    dat <- .remove_column(dat, "Component")
-  }
 
   class(dat) <- unique(c(paste0("bayestestR_", fun), paste0("see_", fun), class(dat)))
   dat
@@ -214,4 +189,35 @@
   fixed.data <- insight::get_parameters(x, parameters = parameters)
   d <- .compute_interval_dataframe(fixed.data, ci, verbose, fun)
   list(result = d, data = fixed.data)
+}
+
+
+
+.select_effects_component <- function(dat, effects, component = NULL) {
+  dat <- switch(
+    effects,
+    fixed = .select_rows(dat, "Group", "fixed"),
+    random = .select_rows(dat, "Group", "random"),
+    dat
+  )
+
+  if (!is.null(component)) {
+    dat <- switch(
+      component,
+      conditional = .select_rows(dat, "Component", "conditional"),
+      zi = ,
+      zero_inflated = .select_rows(dat, "Component", "zero_inflated"),
+      dat
+    )
+  }
+
+  if (all(dat$Group == dat$Group[1])) {
+    dat <- .remove_column(dat, "Group")
+  }
+
+  if ("Component" %in% colnames(dat) && all(dat$Component == dat$Component[1])) {
+    dat <- .remove_column(dat, "Component")
+  }
+
+  dat
 }
