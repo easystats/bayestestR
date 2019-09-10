@@ -190,36 +190,3 @@
   d <- .compute_interval_dataframe(fixed.data, ci, verbose, fun)
   list(result = d, data = fixed.data)
 }
-
-
-
-.select_effects_component <- function(dat, effects, component = NULL) {
-  if ("Group" %in% colnames(dat)) {
-    dat <- switch(
-      effects,
-      fixed = .select_rows(dat, "Group", "fixed"),
-      random = .select_rows(dat, "Group", "random"),
-      dat
-    )
-  }
-
-  if (!is.null(component) && "Component" %in% colnames(dat)) {
-    dat <- switch(
-      component,
-      conditional = .select_rows(dat, "Component", "conditional"),
-      zi = ,
-      zero_inflated = .select_rows(dat, "Component", "zero_inflated"),
-      dat
-    )
-  }
-
-  if ("Group" %in% colnames(dat) && all(dat$Group == dat$Group[1])) {
-    dat <- .remove_column(dat, "Group")
-  }
-
-  if ("Component" %in% colnames(dat) && all(dat$Component == dat$Component[1])) {
-    dat <- .remove_column(dat, "Component")
-  }
-
-  dat
-}

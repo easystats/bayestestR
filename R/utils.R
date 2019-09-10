@@ -141,16 +141,63 @@
 #' resHDI <- hdi(model, effects = "all")
 #' tabs <- .get_eff_com(model)
 #' merge(x = resBF, y = tabs, by = "Parameter", all.x = TRUE)
-.get_eff_com <- function(model, effects, component, parameters) {
-  eff <- c("fixed", "fixed", "random", "random")
-  com <- c("conditional", "zi", "conditional", "zi")
+.get_eff_com <- function(model, effects = NULL, component = NULL, parameters = NULL) {
+  if (inherits(model, "brmsfit")) {
+    eff <- c("fixed", "fixed", "random", "random")
+    com <- c("conditional", "zi", "conditional", "zi")
+  } else {
+    eff <- c("fixed", "random")
+    com <- c("conditional", "conditional")
+  }
 
   .get_tab <- function(.x, .y) {
-    parms <- insight::get_parameters(model, effects = .x, component = .y)
+    parms <- insight::get_parameters(model, effects = .x, component = .y, parameters = parameters)
 
-    data.frame(Parameter = colnames(parms), Effect = .x, Component = .y)
+    if (nrow(parms) > 0 && ncol(parms) > 0)
+      data.frame(Parameter = colnames(parms), Group = .x, Component = .y)
+    else
+      NULL
   }
 
   tab <- mapply(.get_tab, eff, com, SIMPLIFY = FALSE)
-  tab <- do.call(rbind,tab)
+
+  .select_effects_component(
+    do.call(rbind, tab),
+    effects = effects,
+    component = component
+  )
+}
+
+
+
+.select_effects_component <- function(dat, effects, component = NULL) {
+  if ("Group" %in% colnames(dat)) {
+    dat <- switch(
+      effects,
+      fixed = .select_rows(dat, "Group", "fixed"),
+      random = .select_rows(dat, "Group", "random"),
+      dat
+    )
+  }
+
+  if (!is.null(component) && "Component" %in% colnames(dat)) {
+    dat <- switch(
+      component,
+      conditional = .select_rows(dat, "Component", "conditional"),
+      zi = ,
+      zero_inflated = .select_rows(dat, "Component", "zero_inflated"),
+      dat
+    )
+  }
+
+  if ("Group" %in% colnames(dat) && all(dat$Group == dat$Group[1])) {
+    dat <- .remove_column(dat, "Group")
+  }
+
+  if ("Component" %in% colnames(dat) && all(dat$Component == dat$Component[1])) {
+    dat <- .remove_column(dat, "Component")
+  }
+
+  rownames(dat) <- NULL
+  dat
 }

@@ -173,6 +173,7 @@ bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
                                            ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
+  model <- posterior
 
   # Get Priors
   if (is.null(prior)) {
@@ -188,7 +189,7 @@ bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
     direction = direction, null = null, ...
   )
 
-  tab <- .get_eff_com(model)
+  tab <- .get_eff_com(model, effects, component)
   bf_val <- merge(x = temp, y = tab, by = "Parameter", all.x = TRUE)
 
   class(bf_val) <- class(temp)
