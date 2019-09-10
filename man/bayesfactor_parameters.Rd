@@ -22,11 +22,13 @@ bayesfactor_savagedickey(posterior, prior = NULL,
 
 \method{bayesfactor_parameters}{stanreg}(posterior, prior = NULL,
   direction = "two-sided", null = 0, verbose = TRUE,
-  effects = c("fixed", "random", "all"), ...)
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), ...)
 
 \method{bayesfactor_parameters}{brmsfit}(posterior, prior = NULL,
   direction = "two-sided", null = 0, verbose = TRUE,
-  effects = c("fixed", "random", "all"), ...)
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), ...)
 
 \method{bayesfactor_parameters}{emmGrid}(posterior, prior = NULL,
   direction = "two-sided", null = 0, verbose = TRUE, ...)
@@ -54,6 +56,10 @@ or a data frame - representing a posterior distribution(s) from (see Details).}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
+
+\item{component}{Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the model be returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \value{
 A data frame containing the Bayes factor representing evidence \emph{against} the null.

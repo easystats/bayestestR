@@ -14,7 +14,7 @@ check_prior(model, method = "gelman", ...)
 \item{...}{Currently not used.}
 }
 \description{
-Performs a simple test to check whether the prior is informative to the posterior.
+Performs a simple test to check whether the prior is informative to the posterior. This idea, and the accompanying heuristics, were discussed in \href{https://statmodeling.stat.columbia.edu/2019/08/10/}{this blogpost}.
 }
 \examples{
 library(bayestestR)
