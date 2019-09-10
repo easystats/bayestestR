@@ -11,6 +11,10 @@
 - Added support for `sim`, `sim.merMod` (from `arm::sim()`) and `MCMCglmm`-objects to many functions (like `hdi()`, `ci()`, `eti()`, `rope()`, `p_direction()`, `point_estimate()`, ...)
 - More user-friendly warning for non-supported models in `bayesfactor()`-methods
 
+## Bug fixes
+
+- Fixed bug in `bayesfactor_inclusion` where the same interaction sometimes appeared more than once ( #223 ).
+
 # bayestestR 0.2.5
 
 ## Breaking changes
