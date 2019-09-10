@@ -1,6 +1,6 @@
 #' @importFrom insight get_parameters
 #' @keywords internal
-.compute_pointestimate_brmsfit <- function(x, effects, component, parameters, centrality, dispersion) {
+.compute_pointestimate_brmsfit <- function(x, effects, component, parameters, centrality, dispersion, ...) {
   eff <- c("fixed", "fixed", "random", "random")
   com <- c("conditional", "zi", "conditional", "zi")
 
@@ -50,7 +50,7 @@
 
 #' @importFrom insight get_parameters
 #' @keywords internal
-.compute_pointestimate_stanreg <- function(x, effects, parameters, centrality, dispersion) {
+.compute_pointestimate_stanreg <- function(x, effects, parameters, centrality, dispersion, ...) {
   list <- lapply(c("fixed", "random"), function(.x) {
     parms <- insight::get_parameters(x, effects = .x, parameters = parameters)
     tmp <- do.call(rbind, sapply(
