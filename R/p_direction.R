@@ -206,10 +206,9 @@ p_direction.sim <- function(x, parameters = NULL, method = "direct", ...) {
 p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parameters = NULL, method = "direct", ...) {
   effects <- match.arg(effects)
 
-  out <- .p_direction_models(
+  out <- .compute_pd_stanreg(
     x = x,
     effects = effects,
-    component = "conditional",
     parameters = parameters,
     method = method,
     ...
@@ -225,7 +224,7 @@ p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), compon
   effects <- match.arg(effects)
   component <- match.arg(component)
 
-  out <- .p_direction_models(
+  out <- .compute_pd_brmsfit(
     x = x,
     effects = effects,
     component = component,

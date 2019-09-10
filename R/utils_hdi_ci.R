@@ -194,14 +194,16 @@
 
 
 .select_effects_component <- function(dat, effects, component = NULL) {
-  dat <- switch(
-    effects,
-    fixed = .select_rows(dat, "Group", "fixed"),
-    random = .select_rows(dat, "Group", "random"),
-    dat
-  )
+  if ("Group" %in% colnames(dat)) {
+    dat <- switch(
+      effects,
+      fixed = .select_rows(dat, "Group", "fixed"),
+      random = .select_rows(dat, "Group", "random"),
+      dat
+    )
+  }
 
-  if (!is.null(component)) {
+  if (!is.null(component) && "Component" %in% colnames(dat)) {
     dat <- switch(
       component,
       conditional = .select_rows(dat, "Component", "conditional"),
@@ -211,7 +213,7 @@
     )
   }
 
-  if (all(dat$Group == dat$Group[1])) {
+  if ("Group" %in% colnames(dat) && all(dat$Group == dat$Group[1])) {
     dat <- .remove_column(dat, "Group")
   }
 
