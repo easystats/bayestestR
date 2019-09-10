@@ -4,7 +4,7 @@
   eff <- c("fixed", "fixed", "random", "random")
   com <- c("conditional", "zi", "conditional", "zi")
 
-  .get_point_estimate <- function(.x, .y) {
+  .get_pd <- function(.x, .y) {
     parms <- insight::get_parameters(x, effects = .x, component = .y, parameters = parameters)
     tmp <- p_direction(parms, method = method, ...)
 
@@ -23,7 +23,7 @@
     tmp
   }
 
-  list <- mapply(.get_point_estimate, eff, com, SIMPLIFY = FALSE)
+  list <- mapply(.get_pd, eff, com, SIMPLIFY = FALSE)
 
   .select_effects_component(
     do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE)),
