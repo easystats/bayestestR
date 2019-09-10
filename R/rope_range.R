@@ -84,32 +84,40 @@ rope_range.sim <- rope_range.sim.merMod
 
 .rope_range <- function(x, information, response) {
 
-  # Linear Models
-  if (information$is_linear) {
-    negligible_value <- 0.1 * stats::sd(response)
+  negligible_value <- tryCatch(
+    {
+      # Linear Models
+      if (information$is_linear) {
+        0.1 * stats::sd(response)
 
-    # General Linear Models
-  } else if (information$is_binomial) {
-    negligible_value <- 0.1 * pi / sqrt(3)
+        # General Linear Models
+      } else if (information$is_binomial) {
+        0.1 * pi / sqrt(3)
 
-    # T-tests
-  } else if (information$is_ttest) {
-    if ("BFBayesFactor" %in% class(x)) {
-      negligible_value <- 0.1 * stats::sd(x@data[, 1])
-    } else {
-      warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.")
-      negligible_value <- 0.1
+        # T-tests
+      } else if (information$is_ttest) {
+        if ("BFBayesFactor" %in% class(x)) {
+          0.1 * stats::sd(x@data[, 1])
+        } else {
+          warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.", call. = FALSE)
+          0.1
+        }
+
+        # Correlations
+      } else if (information$is_correlation) {
+        # https://github.com/easystats/bayestestR/issues/121
+        0.05
+
+        # Default
+      } else {
+        0.1
+      }
+    },
+    error = function(e) {
+      warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.", call. = FALSE)
+      0.1
     }
-
-    # Correlations
-  } else if (information$is_correlation) {
-    # https://github.com/easystats/bayestestR/issues/121
-    negligible_value <- 0.05
-
-    # Default
-  } else {
-    negligible_value <- 0.1
-  }
+  )
 
   c(-1, 1) * negligible_value
 }
