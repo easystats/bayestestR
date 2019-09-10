@@ -1,6 +1,6 @@
 #' Check if Prior is Informative
 #'
-#' Performs a simple test to check whether the prior is informative to the posterior.
+#' Performs a simple test to check whether the prior is informative to the posterior. This idea, and the accompanying heuristics, were discussed in \href{https://statmodeling.stat.columbia.edu/2019/08/10/}{this blogpost}.
 #'
 #' @inheritParams effective_sample
 #' @param method Can be "gelman" or "lakeland". For the "gelman" method, if the SD of the posterior is more than 0.1 times the SD of the prior, then the prior is considered as informative. For the "lakeland" method, the prior is considered as informative if the posterior falls within the 95\% HDI of the prior.
@@ -92,7 +92,7 @@ check_prior.stanreg <- function(model, method = "gelman", effects = c("fixed", "
       if (stats::sd(posterior) > 0.1 * stats::sd(prior)) {
         result <- c(result, "informative")
       } else{
-        result <- c(result, "misinformative")
+        result <- c(result, "uninformative")
       }
     } else if (method == "lakeland") {
       hdi <- hdi(prior, ci = .95)
