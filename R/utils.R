@@ -134,3 +134,23 @@
   }
   direction
 }
+
+#' @keywords internal
+#' This function can be used to add the component and effects columns to results
+#' tables. E.g.
+#' resHDI <- hdi(model, effects = "all")
+#' tabs <- .get_eff_com(model)
+#' merge(x = resBF, y = tabs, by = "Parameter", all.x = TRUE)
+.get_eff_com <- function(model, effects, component, parameters) {
+  eff <- c("fixed", "fixed", "random", "random")
+  com <- c("conditional", "zi", "conditional", "zi")
+
+  .get_tab <- function(.x, .y) {
+    parms <- insight::get_parameters(model, effects = .x, component = .y)
+
+    data.frame(Parameter = colnames(parms), Effect = .x, Component = .y)
+  }
+
+  tab <- mapply(.get_tab, eff, com, SIMPLIFY = FALSE)
+  tab <- do.call(rbind,tab)
+}
