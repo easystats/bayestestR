@@ -169,16 +169,18 @@ bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
                                            direction = "two-sided", null = 0,
                                            verbose = TRUE,
                                            effects = c("fixed", "random", "all"),
+                                           component = c("conditional", "zi", "zero_inflated", "all"),
                                            ...) {
   effects <- match.arg(effects)
+  component <- match.arg(component)
 
   # Get Priors
   if (is.null(prior)) {
     prior <- .update_to_priors(posterior, verbose = verbose)
   }
 
-  prior <- insight::get_parameters(prior, effects = effects)
-  posterior <- insight::get_parameters(posterior, effects = effects)
+  prior <- insight::get_parameters(prior, effects = effects, component = component)
+  posterior <- insight::get_parameters(posterior, effects = effects, component = component)
 
   # Get BFs
   bayesfactor_parameters.data.frame(
