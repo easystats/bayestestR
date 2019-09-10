@@ -148,7 +148,6 @@ point_estimate.emmGrid <- function(x, centrality = "median", dispersion = FALSE,
 .point_estimate_models <- function(x, effects, component, parameters, centrality = "median", dispersion = FALSE, ...) {
   out <- point_estimate(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), centrality = centrality, dispersion = dispersion, ...)
   # out$Parameter <- .get_parameter_names(x, effects = effects, component = component, parameters = parameters)
-
   out
 }
 
@@ -159,10 +158,9 @@ point_estimate.emmGrid <- function(x, centrality = "median", dispersion = FALSE,
 point_estimate.stanreg <- function(x, centrality = "median", dispersion = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
 
-  out <- .point_estimate_models(
+  out <- .compute_pointestimate_stanreg(
     x = x,
     effects = effects,
-    component = "conditional",
     parameters = parameters,
     centrality = centrality,
     dispersion = dispersion,
@@ -181,7 +179,7 @@ point_estimate.brmsfit <- function(x, centrality = "median", dispersion = FALSE,
   effects <- match.arg(effects)
   component <- match.arg(component)
 
-  out <- .point_estimate_models(
+  out <- .compute_pointestimate_brmsfit(
     x = x,
     effects = effects,
     component = component,
