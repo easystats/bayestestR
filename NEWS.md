@@ -2,12 +2,14 @@
 
 ## New functions / features
 
-* `distribution_gamma()` to generate a (near-perfect or random) Gamma distribution.
+- `check_prior()` to check if prior is informative
+- `simulate_prior()` to simulate model's priors as distributions
+- `distribution_gamma()` to generate a (near-perfect or random) Gamma distribution
 
 ## Changes to functions
 
-* Added support for `sim`, `sim.merMod` (from `arm::sim()`) and `MCMCglmm`-objects to many functions (like `hdi()`, `ci()`, `eti()`, `rope()`, `p_direction()`, `point_estimate()`, ...).
-* More user-friendly warning for non-supported models in `bayesfactor()`-methods.
+- Added support for `sim`, `sim.merMod` (from `arm::sim()`) and `MCMCglmm`-objects to many functions (like `hdi()`, `ci()`, `eti()`, `rope()`, `p_direction()`, `point_estimate()`, ...)
+- More user-friendly warning for non-supported models in `bayesfactor()`-methods
 
 # bayestestR 0.2.5
 
@@ -16,7 +18,7 @@
 - `rope_range()` for binomial model has now a different default (-.18; .18 ; instead of -.055; .055)
 - `rope()`: returns a proportion (between 0 and 1) instead of a value between 0 and 100
 - `p_direction()`: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 ([#168](https://github.com/easystats/bayestestR/issues/168))
-- `bayesfactor_savagedickey()`: `hypothesis` argument replaced by `null` as part of the new `bayesfactor_parameters()` function.
+- `bayesfactor_savagedickey()`: `hypothesis` argument replaced by `null` as part of the new `bayesfactor_parameters()` function
 
 ## New functions / features
 
@@ -24,7 +26,7 @@
 - `rope()`: `ci_method` argument added
 - `eti()`: Computes equal-tailed intervals
 - `reshape_ci()`: Reshape CIs between wide/long
-- `bayesfactor_parameters()`: New function, replacing `bayesfactor_savagedickey()`, allows for computing Bayes factors against a *point-null* or an *interval-null*.
+- `bayesfactor_parameters()`: New function, replacing `bayesfactor_savagedickey()`, allows for computing Bayes factors against a *point-null* or an *interval-null*
 - `bayesfactor_restricted()`: Function for computing Bayes factors for order restricted models
 
 ## Minor changes

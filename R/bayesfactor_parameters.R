@@ -342,39 +342,6 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
 
 # UTILS -------------------------------------------------------------------
 
-#' @keywords internal
-.get_direction <- function(direction) {
-  if (length(direction) > 1) warning("Using first 'direction' value.")
-
-  if (is.numeric(direction[1])) {
-    return(direction[1])
-  }
-
-  Value <- c(
-    "left"      = -1,
-    "right"     =  1,
-    "two-sided" =  0,
-    "twosided"  =  0,
-    "<"         = -1,
-    ">"         =  1,
-    "="         =  0,
-    "=="        =  0,
-    "-1"        = -1,
-    "0"         =  0,
-    "1"         =  1,
-    "+1"        =  1
-  )
-
-  direction <- Value[tolower(direction[1])]
-
-  if (is.na(direction)) {
-    stop("Unrecognized 'direction' argument.")
-  }
-  direction
-}
-
-
-
 #' @importFrom stats median mad approx
 #' @importFrom utils stack
 #' @keywords internal
