@@ -75,29 +75,29 @@ check_prior.stanreg <- function(model, method = "gelman", effects = c("fixed", "
 
 
 
-
+#' @importFrom stats sd
 #' @keywords internal
 .check_prior <- function(priors, posteriors, method = "gelman"){
 
   result <- c()
 
   # iterate over parameters
-  for(param in names(posteriors)){
+  for (param in names(posteriors)) {
 
     posterior <- posteriors[[param]]
     prior <- priors[[param]]
 
     # Gelman
-    if(method == "gelman"){
-      if(sd(posterior) > 0.1 * sd(prior)){
+    if (method == "gelman") {
+      if (stats::sd(posterior) > 0.1 * stats::sd(prior)) {
         result <- c(result, "informative")
       } else{
         result <- c(result, "misinformative")
       }
-    } else if(method == "lakeland"){
+    } else if (method == "lakeland") {
       hdi <- hdi(prior, ci = .95)
       r <- rope(posterior, ci = 1, range = c(hdi$CI_low, hdi$CI_high))
-      if(as.numeric(r) > 0.99){
+      if (as.numeric(r) > 0.99) {
         result <- c(result, "informative")
       } else{
         result <- c(result, "misinformative")
@@ -107,6 +107,9 @@ check_prior.stanreg <- function(model, method = "gelman", effects = c("fixed", "
     }
   }
 
-  data.frame(Parameter = names(posteriors),
-             Prior_Quality = result)
+  data.frame(
+    Parameter = names(posteriors),
+    Prior_Quality = result,
+    stringsAsFactors = FALSE
+  )
 }
