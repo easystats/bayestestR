@@ -46,7 +46,8 @@
 # remove column
 #' @keywords internal
 .remove_column <- function(data, variables) {
-  data[, -which(colnames(data) %in% variables), drop = FALSE]
+  data[variables] <- NULL
+  data
 }
 
 
