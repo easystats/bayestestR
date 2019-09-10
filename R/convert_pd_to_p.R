@@ -12,9 +12,8 @@
 #' pd_to_p(pd = 0.95, direction = "one-sided")
 #' @export
 pd_to_p <- function(pd, direction = "two-sided", ...) {
-  direction <- .get_direction(direction)
   p <- (1 - pd)
-  if (direction == 0) {
+  if (.get_direction(direction) == 0) {
     p <- 2 * p
   }
   p
@@ -24,8 +23,7 @@ pd_to_p <- function(pd, direction = "two-sided", ...) {
 #' @rdname pd_to_p
 #' @export
 p_to_pd <- function(p, direction = "two-sided", ...) {
-  direction <- .get_direction(direction)
-  if (direction == 0) {
+  if (.get_direction(direction) == 0) {
     p <- p / 2
   }
   (1 - p)

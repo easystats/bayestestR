@@ -70,3 +70,37 @@
   }
   BFx
 }
+
+
+
+# As numeric vector -------------------------------------------------------
+
+#' @export
+as.numeric.bayesfactor_inclusion <- function(x, ...) {
+  if ("data.frame" %in% class(x)) {
+    return(as.numeric(as.vector(x$BF)))
+  } else {
+    return(as.vector(x))
+  }
+}
+
+#' @export
+as.numeric.bayesfactor_models <- as.numeric.bayesfactor_inclusion
+
+#' @export
+as.numeric.bayesfactor_parameters <- as.numeric.bayesfactor_inclusion
+
+#' @export
+as.numeric.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion
+
+#' @export
+as.double.bayesfactor_inclusion <- as.numeric.bayesfactor_inclusion
+
+#' @export
+as.double.bayesfactor_models <- as.numeric.bayesfactor_inclusion
+
+#' @export
+as.double.bayesfactor_parameters <- as.numeric.bayesfactor_inclusion
+
+#' @export
+as.double.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion

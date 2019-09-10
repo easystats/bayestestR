@@ -169,22 +169,35 @@ bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
                                            direction = "two-sided", null = 0,
                                            verbose = TRUE,
                                            effects = c("fixed", "random", "all"),
+                                           component = c("conditional", "zi", "zero_inflated", "all"),
                                            ...) {
   effects <- match.arg(effects)
+  component <- match.arg(component)
+  model <- posterior
 
   # Get Priors
   if (is.null(prior)) {
     prior <- .update_to_priors(posterior, verbose = verbose)
   }
 
-  prior <- insight::get_parameters(prior, effects = effects)
-  posterior <- insight::get_parameters(posterior, effects = effects)
+  prior <- insight::get_parameters(prior, effects = effects, component = component)
+  posterior <- insight::get_parameters(posterior, effects = effects, component = component)
 
   # Get BFs
-  bayesfactor_parameters.data.frame(
+  temp <- bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, null = null, ...
   )
+
+  tab <- .get_eff_com(model, effects, component)
+  bf_val <- merge(x = temp, y = tab, by = "Parameter", all.x = TRUE)
+
+  class(bf_val) <- class(temp)
+  attr(bf_val, "hypothesis") <- attr(temp, "hypothesis")
+  attr(bf_val, "direction") <- attr(temp, "direction")
+  attr(bf_val, "plot_data") <- attr(temp, "plot_data")
+
+  bf_val
 }
 
 
@@ -341,39 +354,6 @@ bayesfactor_parameters.data.frame <- function(posterior, prior = NULL,
 
 
 # UTILS -------------------------------------------------------------------
-
-#' @keywords internal
-.get_direction <- function(direction) {
-  if (length(direction) > 1) warning("Using first 'direction' value.")
-
-  if (is.numeric(direction[1])) {
-    return(direction[1])
-  }
-
-  Value <- c(
-    "left"      = -1,
-    "right"     =  1,
-    "two-sided" =  0,
-    "twosided"  =  0,
-    "<"         = -1,
-    ">"         =  1,
-    "="         =  0,
-    "=="        =  0,
-    "-1"        = -1,
-    "0"         =  0,
-    "1"         =  1,
-    "+1"        =  1
-  )
-
-  direction <- Value[tolower(direction[1])]
-
-  if (is.na(direction)) {
-    stop("Unrecognized 'direction' argument.")
-  }
-  direction
-}
-
-
 
 #' @importFrom stats median mad approx
 #' @importFrom utils stack
