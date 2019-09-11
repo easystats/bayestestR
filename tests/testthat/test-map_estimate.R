@@ -7,3 +7,30 @@ test_that("map_estimate", {
     tolerance = 0.01
   )
 })
+
+
+
+
+if (require("insight")) {
+  m <- insight::download_model("stanreg_merMod_5")
+  p <- insight::get_parameters(m, effects = "all")
+
+  test_that("map_estimate", {
+    testthat::expect_equal(
+      rope(m, effects = "all")$ROPE_Percentage,
+      rope(p)$ROPE_Percentage,
+      tolerance = 1e-3
+    )
+  })
+
+  m <- insight::download_model("brms_zi_3")
+  p <- insight::get_parameters(m, effects = "all", component = "all")
+
+  test_that("map_estimate", {
+    testthat::expect_equal(
+      rope(m, effects = "all", component = "all")$ROPE_Percentage,
+      rope(p)$ROPE_Percentage,
+      tolerance = 1e-3
+    )
+  })
+}
