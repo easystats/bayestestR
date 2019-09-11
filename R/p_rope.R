@@ -151,9 +151,12 @@ p_rope.BFBayesFactor <- function(x, range = "default", precision = .1, ...) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  out <- p_rope(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), range = range, precision = precision, ...)
-  out$Parameter <- .get_parameter_names(x, effects = effects, component = component, parameters = parameters)
+  out <- .prepare_output(
+    p_rope(insight::get_parameters(x, effects = effects, parameters = parameters), range = range, precision = precision, ...),
+    insight::clean_parameters(x)
+  )
 
+  class(out) <- unique(c("p_rope", class(out)))
   out
 }
 
