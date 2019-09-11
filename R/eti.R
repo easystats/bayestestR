@@ -120,7 +120,13 @@ eti.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
 eti.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"),
                         parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
-  out <- .compute_interval_stanreg(x, ci, effects, parameters, verbose, fun = "eti")
+
+  out <- .prepare_output(
+    eti(insight::get_parameters(x, effects = effects, parameters = parameters), ci = ci, verbose = verbose),
+    insight::clean_parameters(x)
+  )
+
+  class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
@@ -133,7 +139,13 @@ eti.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"),
                         parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-  out <- .compute_interval_brmsfit(x, ci, effects, component, parameters, verbose, fun = "eti")
+
+  out <- .prepare_output(
+    eti(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose),
+    insight::clean_parameters(x)
+  )
+
+  class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }

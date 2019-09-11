@@ -162,7 +162,7 @@ bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = 
 }
 
 
-#' @importFrom insight get_parameters
+#' @importFrom insight get_parameters clean_parameters
 #' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
@@ -173,7 +173,7 @@ bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
                                            ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-  model <- posterior
+  cleaned_parameters <- insight::clean_parameters(posterior)
 
   # Get Priors
   if (is.null(prior)) {
@@ -189,9 +189,14 @@ bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
     direction = direction, null = null, ...
   )
 
+  bf_val <- .prepare_output(temp, cleaned_parameters)
 
-  tab <- .get_eff_com(model, effects, component)
-  .merge_keep_Xattr_Xroword(bf_val, tab, by = "Parameter")
+  class(bf_val) <- class(temp)
+  attr(bf_val, "hypothesis") <- attr(temp, "hypothesis")
+  attr(bf_val, "direction") <- attr(temp, "direction")
+  attr(bf_val, "plot_data") <- attr(temp, "plot_data")
+
+  bf_val
 }
 
 

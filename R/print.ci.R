@@ -1,5 +1,5 @@
 #' @export
-print.hdi <- function(x, digits = 2, ...) {
+print.bayestestR_hdi <- function(x, digits = 2, ...) {
   if ("data_plot" %in% class(x)) {
     print(as.data.frame(x))
   } else {
@@ -9,7 +9,7 @@ print.hdi <- function(x, digits = 2, ...) {
 
 
 #' @export
-print.eti <- function(x, digits = 2, ...) {
+print.bayestestR_eti <- function(x, digits = 2, ...) {
   if ("data_plot" %in% class(x)) {
     print(as.data.frame(x))
   } else {
@@ -58,71 +58,5 @@ print.bayestestR_ci <- function(x, digits = 2, ...) {
       print_data_frame(xsub, digits = digits)
       cat("\n")
     }
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-print_data_frame <- function(x, digits) {
-  out <- list(x)
-  names(out) <- "fixed"
-
-  if (all(c("Group", "Component") %in% colnames(x))) {
-    x$split <- sprintf("%s_%s", x$Group, x$Component)
-  } else if ("Group" %in% colnames(x)) {
-    colnames(x)[which(colnames(x) == "Group")] <- "split"
-  } else if ("Component" %in% colnames(x)) {
-    colnames(x)[which(colnames(x) == "Component")] <- "split"
-  }
-
-  if ("split" %in% colnames(x)) {
-    out <- lapply(split(x, f = x$split), function(i) {
-      .remove_column(i, c("split", "Component", "Group"))
-    })
-  }
-
-  for (i in names(out)) {
-    header <- switch(
-      i,
-      "conditional" = ,
-      "fixed_conditional" = ,
-      "fixed" = "# fixed effects, conditional component",
-      "zi" = ,
-      "fixed_zi" = "# fixed effects, zero-inflation component",
-      "random" = ,
-      "random_conditional" = "# random effects, conditional component",
-      "random_zi" = "# random effects, zero-inflation component"
-    )
-
-    if ("Parameter" %in% colnames(out[[i]])) {
-      # clean parameters names
-      out[[i]]$Parameter <- gsub("^(b_zi_|bs_|b_|bsp_|bcs_)(.*)", "\\2", out[[i]]$Parameter)
-      # remove ".1" etc. suffix
-      out[[i]]$Parameter <- gsub("(.*)(\\.)(\\d)$", "\\1 \\3", out[[i]]$Parameter)
-      # remove "__zi"
-      out[[i]]$Parameter <- gsub("__zi", "", out[[i]]$Parameter)
-    }
-
-    if (length(out) > 1) {
-      insight::print_color(header, "red")
-      cat("\n\n")
-    }
-
-    print.data.frame(out[[i]], row.names = FALSE, digits = digits)
-    cat("\n")
   }
 }

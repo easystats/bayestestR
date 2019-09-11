@@ -152,20 +152,17 @@ point_estimate.emmGrid <- function(x, centrality = "median", dispersion = FALSE,
 }
 
 
-
+#' @importFrom insight get_parameters clean_parameters
 #' @rdname point_estimate
 #' @export
 point_estimate.stanreg <- function(x, centrality = "median", dispersion = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
 
-  out <- .compute_pointestimate_stanreg(
-    x = x,
-    effects = effects,
-    parameters = parameters,
-    centrality = centrality,
-    dispersion = dispersion,
-    ...
+  out <- .prepare_output(
+    point_estimate(insight::get_parameters(x, effects = effects, parameters = parameters), centrality = centrality, dispersion = dispersion),
+    insight::clean_parameters(x)
   )
+
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
@@ -179,15 +176,11 @@ point_estimate.brmsfit <- function(x, centrality = "median", dispersion = FALSE,
   effects <- match.arg(effects)
   component <- match.arg(component)
 
-  out <- .compute_pointestimate_brmsfit(
-    x = x,
-    effects = effects,
-    component = component,
-    parameters = parameters,
-    centrality = centrality,
-    dispersion = dispersion,
-    ...
+  out <- .prepare_output(
+    point_estimate(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), centrality = centrality, dispersion = dispersion),
+    insight::clean_parameters(x)
   )
+
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
