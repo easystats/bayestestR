@@ -169,7 +169,7 @@ p_map.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("f
   effects <- match.arg(effects)
 
   out <- .prepare_output(
-    p_map(insight::get_parameters(x, effects = effects, parameters = parameters), precision = precision, method = method, ...),
+    p_map(insight::get_parameters(x, effects = effects, parameters = parameters), precision = precision, method = method),
     insight::clean_parameters(x)
   )
 
