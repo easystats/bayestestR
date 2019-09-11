@@ -211,6 +211,7 @@ p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parame
     insight::clean_parameters(x)
   )
 
+  class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
@@ -227,6 +228,7 @@ p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), compon
     insight::clean_parameters(x)
   )
 
+  class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }

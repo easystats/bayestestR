@@ -138,8 +138,11 @@
 
 
 .prepare_output <- function(temp, cleaned_parameters) {
-  out <- merge(x = temp, y = cleaned_parameters, by = "Parameter", all.x = TRUE)
-  .remove_column(out, c("Group", "Cleaned_Parameter", "Response"))
+  merge_by <- intersect(c("Parameter", "Effects", "Component"), colnames(temp))
+  temp$.roworder <- 1:nrow(temp)
+  out <- merge(x = temp, y = cleaned_parameters, by = merge_by, all.x = TRUE)
+  attr(out, "Cleaned_Parameter") <- out$Cleaned_Parameter
+  .remove_column(out[order(out$.roworder), ], c("Group", "Cleaned_Parameter", "Response", ".roworder"))
 }
 
 #' #' @keywords internal
