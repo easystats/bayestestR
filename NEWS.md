@@ -1,5 +1,9 @@
 # bayestestR 0.3.0
 
+## General
+
+- revised `print()`-methods for functions like `rope()`, `p_direction()`, `describe_posterior()` etc., in particular for model objects with random effects and/or zero-inflation component.
+
 ## New functions / features
 
 - `check_prior()` to check if prior is informative
@@ -9,11 +13,12 @@
 ## Changes to functions
 
 - Added support for `sim`, `sim.merMod` (from `arm::sim()`) and `MCMCglmm`-objects to many functions (like `hdi()`, `ci()`, `eti()`, `rope()`, `p_direction()`, `point_estimate()`, ...)
+- `describe_posterior()` gets an `effects` and `component` argument, to include the description of posterior samples from random effects and/or zero-inflation component.
 - More user-friendly warning for non-supported models in `bayesfactor()`-methods
 
 ## Bug fixes
 
-- Fixed bug in `bayesfactor_inclusion` where the same interaction sometimes appeared more than once ( #223 ).
+- Fixed bug in `bayesfactor_inclusion()` where the same interaction sometimes appeared more than once ( #223 ).
 
 # bayestestR 0.2.5
 
