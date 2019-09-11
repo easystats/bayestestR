@@ -19,7 +19,7 @@ test_that("brms", {
   testthat::expect_is(p_rope(model), "data.frame")
   testthat::expect_is(p_direction(model), "data.frame")
 
-  testthat::expect_equal(colnames(hdi(model)), c("Parameter", "CI", "CI_low", "CI_high"))
-  testthat::expect_equal(colnames(hdi(model, effects = "all")), c("Parameter", "CI", "CI_low", "CI_high", "Group"))
+  testthat::expect_equal(colnames(hdi(model)), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
+  testthat::expect_equal(colnames(hdi(model, effects = "all")), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
   # testthat::expect_equal(nrow(equivalence_test(model)), 2)
 })
