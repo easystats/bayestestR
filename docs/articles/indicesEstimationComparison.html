@@ -13,8 +13,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="In-Depth 1: Comparison of Point-Estimates">
 <meta property="og:description" content="">
@@ -44,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
       </span>
     </div>
 
@@ -117,7 +118,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/easystats/bayestestR">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -130,6 +131,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -177,12 +179,12 @@
 <strong>Error</strong>: Gaussian noise applied to the predictor with SD uniformly spread between 0.33 and 6.66 (with 1000 different values).</li>
 </ul>
 <p>We generated a dataset for each combination of these characteristics, resulting in a total of <code>2 * 2 * 9 * 1000 = 36000</code> Bayesian and frequentist models. The code used for generation is avaible <a href="https://easystats.github.io/circus/articles/bayesian_indices.html">here</a> (please note that it takes usually several days/weeks to complete).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tidyr)</a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(see)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyr)</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(see)</a>
 <a class="sourceLine" id="cb1-5" title="5"></a>
-<a class="sourceLine" id="cb1-6" title="6">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-6" title="6">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv"</span>)</a></code></pre></div>
 </div>
 <div id="results" class="section level3">
 <h3 class="hasAnchor">
@@ -193,18 +195,18 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">df <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="st">  </span><span class="kw">select</span>(error, true_effect, outcome_type, Coefficient, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>error, <span class="op">-</span>true_effect, <span class="op">-</span>outcome_type) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cut">cut</a></span>(error, <span class="dv">10</span>, <span class="dt">labels =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/cut.html">cut</a></span>(error, <span class="dv">10</span>, <span class="dt">labels =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(temp) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">error_group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(error), <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">error_group =</span> <span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(error), <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb2-7" title="7"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(value <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> error_group, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/interaction">interaction</a></span>(estimate, error_group))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(value <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> error_group, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">group =</span> <span class="kw"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span>(estimate, error_group))) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-10" title="10"><span class="st">  </span><span class="co"># geom_hline(yintercept = 0) +</span></a>
 <a class="sourceLine" id="cb2-11" title="11"><span class="st">  </span><span class="co"># geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +</span></a>
 <a class="sourceLine" id="cb2-12" title="12"><span class="st">  </span><span class="co"># geom_smooth(method="loess") +</span></a>
 <a class="sourceLine" id="cb2-13" title="13"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape=</span><span class="ot">NA</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-14" title="14"><span class="st">  </span><span class="kw">theme_modern</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Coefficient"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Coefficient"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
 <a class="sourceLine" id="cb2-16" title="16">                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-17" title="17"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb2-18" title="18"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Noise"</span>) <span class="op">+</span></a>
@@ -217,18 +219,18 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">df <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="st">  </span><span class="kw">select</span>(sample_size, true_effect, outcome_type, Coefficient, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>sample_size, <span class="op">-</span>true_effect, <span class="op">-</span>outcome_type) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cut">cut</a></span>(sample_size, <span class="dv">10</span>, <span class="dt">labels =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/cut.html">cut</a></span>(sample_size, <span class="dv">10</span>, <span class="dt">labels =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(temp) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">size_group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(sample_size))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">size_group =</span> <span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(sample_size))) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-7" title="7"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(value <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> size_group, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/interaction">interaction</a></span>(estimate, size_group))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(value <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> size_group, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">group =</span> <span class="kw"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span>(estimate, size_group))) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-10" title="10"><span class="st">  </span><span class="co"># geom_hline(yintercept = 0) +</span></a>
 <a class="sourceLine" id="cb3-11" title="11"><span class="st">  </span><span class="co"># geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +</span></a>
 <a class="sourceLine" id="cb3-12" title="12"><span class="st">  </span><span class="co"># geom_smooth(method="loess") +</span></a>
 <a class="sourceLine" id="cb3-13" title="13"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape=</span><span class="ot">NA</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-14" title="14"><span class="st">  </span><span class="kw">theme_modern</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Coefficient"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Coefficient"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
 <a class="sourceLine" id="cb3-16" title="16">                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-17" title="17"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-18" title="18"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Sample size"</span>) <span class="op">+</span></a>
@@ -242,13 +244,13 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">df <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="st">  </span><span class="kw">select</span>(sample_size, error, true_effect, outcome_type, Coefficient, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>sample_size, <span class="op">-</span>error, <span class="op">-</span>true_effect, <span class="op">-</span>outcome_type) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(true_effect <span class="op">~</span><span class="st"> </span>outcome_type <span class="op">/</span><span class="st"> </span>estimate <span class="op">/</span><span class="st"> </span>value, <span class="dt">data=</span>., <span class="dt">family=</span><span class="st">"binomial"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="st">  </span>broom<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/broom/topics/reexports">tidy</a></span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(true_effect <span class="op">~</span><span class="st"> </span>outcome_type <span class="op">/</span><span class="st"> </span>estimate <span class="op">/</span><span class="st"> </span>value, <span class="dt">data=</span>., <span class="dt">family=</span><span class="st">"binomial"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="st">  </span>broom<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/broom/man/reexports.html">tidy</a></span>() <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-6" title="6"><span class="st">  </span><span class="kw">select</span>(term, estimate, <span class="dt">p=</span>p.value) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(term, <span class="st">'outcome_type'</span>),</a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(term, <span class="st">'outcome_type'</span>),</a>
 <a class="sourceLine" id="cb4-8" title="8">         stringr<span class="op">::</span><span class="kw"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(term, <span class="st">':value'</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-9" title="9"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(estimate)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="dt">digits=</span><span class="dv">2</span>) </a></code></pre></div>
+<a class="sourceLine" id="cb4-10" title="10"><span class="st">  </span>knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="dt">digits=</span><span class="dv">2</span>) </a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">term</th>
@@ -353,7 +355,7 @@
 <strong>warmup</strong>: Ratio of warmup iterations. from 1/10 to 9/10 by step of 0.1 (9 iterations).</li>
 </ul>
 <p>We generated 3 datasets for each combination of these characteristics, resulting in a total of <code>2 * 2 * 8 * 40 * 9 * 3 = 34560</code> Bayesian and frequentist models. The code used for generation is avaible <a href="https://easystats.github.io/circus/articles/bayesian_indices.html">here</a> (please note that it takes usually several days/weeks to complete).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/read.table">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayesSim_study2.csv"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayesSim_study2.csv"</span>)</a></code></pre></div>
 </div>
 <div id="results-1" class="section level3">
 <h3 class="hasAnchor">
@@ -364,15 +366,15 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">df <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">select</span>(iterations, true_effect, outcome_type, beta, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>iterations, <span class="op">-</span>true_effect, <span class="op">-</span>outcome_type) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cut">cut</a></span>(iterations, <span class="dv">5</span>, <span class="dt">labels =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/cut.html">cut</a></span>(iterations, <span class="dv">5</span>, <span class="dt">labels =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(temp) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">iterations_group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(iterations), <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">iterations_group =</span> <span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(iterations), <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb6-7" title="7"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(value <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-9" title="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> iterations_group, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/interaction">interaction</a></span>(estimate, iterations_group))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(value <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> iterations_group, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">group =</span> <span class="kw"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span>(estimate, iterations_group))) <span class="op">+</span></a>
 <a class="sourceLine" id="cb6-10" title="10"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape=</span><span class="ot">NA</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb6-11" title="11"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-12" title="12"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
 <a class="sourceLine" id="cb6-13" title="13">                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb6-14" title="14"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb6-15" title="15"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Number of Iterations"</span>) <span class="op">+</span></a>
@@ -386,15 +388,15 @@
 <a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">warmup =</span> warmup <span class="op">/</span><span class="st"> </span>iterations) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw">select</span>(warmup, true_effect, outcome_type, beta, Median, Mean, MAP) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw">gather</span>(estimate, value, <span class="op">-</span>warmup, <span class="op">-</span>true_effect, <span class="op">-</span>outcome_type) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cut">cut</a></span>(warmup, <span class="dv">3</span>, <span class="dt">labels =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temp =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/cut.html">cut</a></span>(warmup, <span class="dv">3</span>, <span class="dt">labels =</span> <span class="ot">FALSE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw">group_by</span>(temp) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">warmup_group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Round">round</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(warmup), <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">warmup_group =</span> <span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(warmup), <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(value <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb7-10" title="10"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> warmup_group, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/interaction">interaction</a></span>(estimate, warmup_group))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(value <span class="op">&lt;</span><span class="st"> </span><span class="dv">6</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> warmup_group, <span class="dt">y =</span> value, <span class="dt">fill =</span> estimate, <span class="dt">group =</span> <span class="kw"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span>(estimate, warmup_group))) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-11" title="11"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape=</span><span class="ot">NA</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-12" title="12"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"beta"</span> =<span class="st"> "#607D8B"</span>, <span class="st">"MAP"</span> =<span class="st"> "#795548"</span>, <span class="st">"Mean"</span> =<span class="st"> "#FF9800"</span>, <span class="st">"Median"</span> =<span class="st"> "#FFEB3B"</span>),</a>
 <a class="sourceLine" id="cb7-14" title="14">                    <span class="dt">name =</span> <span class="st">"Index"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-15" title="15"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">"Point-estimate of the true value 0</span><span class="ch">\n</span><span class="st">"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-16" title="16"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Number of Iterations"</span>) <span class="op">+</span></a>
@@ -416,6 +418,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -436,17 +439,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, <a href="http://www.humanfactors.io">Michael D. Wilson</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
