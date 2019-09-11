@@ -159,7 +159,7 @@ point_estimate.stanreg <- function(x, centrality = "median", dispersion = FALSE,
   effects <- match.arg(effects)
 
   out <- .prepare_output(
-    point_estimate(insight::get_parameters(x, effects = effects, parameters = parameters)),
+    point_estimate(insight::get_parameters(x, effects = effects, parameters = parameters), centrality = centrality, dispersion = dispersion),
     insight::clean_parameters(x)
   )
 
@@ -177,7 +177,7 @@ point_estimate.brmsfit <- function(x, centrality = "median", dispersion = FALSE,
   component <- match.arg(component)
 
   out <- .prepare_output(
-    point_estimate(insight::get_parameters(x, effects = effects, component = component, parameters = parameters)),
+    point_estimate(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), centrality = centrality, dispersion = dispersion),
     insight::clean_parameters(x)
   )
 
