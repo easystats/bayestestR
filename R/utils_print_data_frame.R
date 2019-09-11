@@ -29,7 +29,8 @@ print_data_frame <- function(x, digits) {
       "random" = ,
       "random_conditional" = "# random effects, conditional component",
       "random_zero_inflated" = ,
-      "random_zi" = "# random effects, zero-inflation component"
+      "random_zi" = "# random effects, zero-inflation component",
+      "fixed_smooth_sd" = "# smooth terms"
     )
 
     if ("Parameter" %in% colnames(out[[i]])) {
@@ -40,6 +41,9 @@ print_data_frame <- function(x, digits) {
       out[[i]]$Parameter <- gsub("r_(.*)\\.(.*)\\.", "\\1", out[[i]]$Parameter)
       out[[i]]$Parameter <- gsub("b\\[\\(Intercept\\) (.*)\\]", "\\1", out[[i]]$Parameter)
       out[[i]]$Parameter <- gsub("b\\[(.*) (.*)\\]", "\\2", out[[i]]$Parameter)
+      # clean smooth terms
+      out[[i]]$Parameter <- gsub("^smooth_sd\\[(.*)\\]", "\\1", out[[i]]$Parameter)
+      out[[i]]$Parameter <- gsub("^sds_", "\\1", out[[i]]$Parameter)
       # remove ".1" etc. suffix
       out[[i]]$Parameter <- gsub("(.*)(\\.)(\\d)$", "\\1 \\3", out[[i]]$Parameter)
       # remove "__zi"
