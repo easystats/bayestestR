@@ -205,7 +205,7 @@
 .merge_keep_Xattr_Xroword <- function(x, y, by, all.x = TRUE, ...) {
   # Row order
   x$row_num <- seq_len(nrow(x))
-  x_y <- merge(x,y,...)
+  x_y <- merge(x,y,all.x = all.x,...)
   x_y <- x_y[order(x_y$row_num), ]
   row.names(x_y) <- x_y$row_num
   x_y$row_num <- NULL
