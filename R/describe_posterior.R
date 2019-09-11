@@ -308,7 +308,7 @@ describe_posterior.emmGrid <- function(posteriors, centrality = "median", disper
 #' @param priors Add the prior used for each parameter.
 #' @rdname describe_posterior
 #' @export
-describe_posterior.stanreg <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+describe_posterior.stanreg <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
 
   if (!is.null(diagnostic)) {
@@ -324,10 +324,8 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
   }
 
   if (isTRUE(priors)) {
-    # col_order <- out$Parameter
     priors_data <- describe_prior(posteriors, ...)
-    out <- merge(out, priors_data, all = TRUE)
-    out <- .reorder_rows(posteriors, out, ci = ci)
+    out <- .merge_and_sort(out, priors_data, by = "Parameter", all = TRUE)
   }
 
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
@@ -343,8 +341,7 @@ describe_posterior.MCMCglmm <- function(posteriors, centrality = "median", dispe
 
   if (!is.null(diagnostic) && diagnostic == "ESS") {
     diagnostic <- effective_sample(posteriors, effects = "fixed", parameters = parameters, ...)
-    out <- merge(out, diagnostic, all = TRUE)
-    out <- .reorder_rows(posteriors, out, ci = ci)
+    out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
   }
 
   out
