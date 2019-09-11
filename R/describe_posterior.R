@@ -228,10 +228,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   out <- out[!is.na(out$Parameter), ]
 
   # Restore columns order
-
-  # out <- .reorder_rows(x, out, ci = ci)
-  out <- .remove_column(out[order(out$.rowid), ], ".rowid")
-
+  .remove_column(out[order(out$.rowid), ], ".rowid")
 }
 
 
