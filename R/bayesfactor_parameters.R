@@ -184,7 +184,7 @@ bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
   posterior <- insight::get_parameters(posterior, effects = effects, component = component)
 
   # Get BFs
-  bf_val <- bayesfactor_parameters.data.frame(
+  temp <- bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, null = null, ...
   )
