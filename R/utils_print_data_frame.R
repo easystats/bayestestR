@@ -30,6 +30,7 @@ print_data_frame <- function(x, digits) {
       "random_conditional" = "# random effects, conditional component",
       "random_zero_inflated" = ,
       "random_zi" = "# random effects, zero-inflation component",
+      "smooth_sd" = ,
       "fixed_smooth_sd" = "# smooth terms"
     )
 
