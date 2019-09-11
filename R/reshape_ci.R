@@ -102,5 +102,7 @@ reshape_ci <- function(x) {
     colnames_2 <- names(x)[!names(x) %in% c(ci_colname, colnames_1)]
     x <- x[c(colnames_1, ci_colname, colnames_2)]
   }
+
+  class(x) <- intersect(c("data.frame", "numeric"), class(x))
   x
 }
