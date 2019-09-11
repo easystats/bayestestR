@@ -184,20 +184,14 @@ bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
   posterior <- insight::get_parameters(posterior, effects = effects, component = component)
 
   # Get BFs
-  temp <- bayesfactor_parameters.data.frame(
+  bf_val <- bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
     direction = direction, null = null, ...
   )
 
+
   tab <- .get_eff_com(model, effects, component)
-  bf_val <- merge(x = temp, y = tab, by = "Parameter", all.x = TRUE)
-
-  class(bf_val) <- class(temp)
-  attr(bf_val, "hypothesis") <- attr(temp, "hypothesis")
-  attr(bf_val, "direction") <- attr(temp, "direction")
-  attr(bf_val, "plot_data") <- attr(temp, "plot_data")
-
-  bf_val
+  .merge_keep_Xattr_Xroword(bf_val, tab, by = "Parameter")
 }
 
 

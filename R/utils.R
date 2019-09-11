@@ -142,13 +142,12 @@
 #' tabs <- .get_eff_com(model)
 #' merge(x = resBF, y = tabs, by = "Parameter", all.x = TRUE)
 .get_eff_com <- function(model, effects = NULL, component = NULL, parameters = NULL) {
+  eff <- c("fixed", "random")
+  com <- c("conditional")
   if (inherits(model, "brmsfit")) {
-    eff <- c("fixed", "fixed", "random", "random")
-    com <- c("conditional", "zi", "conditional", "zi")
-  } else {
-    eff <- c("fixed", "random")
-    com <- c("conditional", "conditional")
+    com <- c(com, "zi")
   }
+  eff_com_comb <- expand.grid(eff = eff, com = com, stringsAsFactors = FALSE)
 
   .get_tab <- function(.x, .y) {
     parms <- insight::get_parameters(model, effects = .x, component = .y, parameters = parameters)
@@ -159,7 +158,7 @@
       NULL
   }
 
-  tab <- mapply(.get_tab, eff, com, SIMPLIFY = FALSE)
+  tab <- mapply(.get_tab, eff_com_comb$eff, eff_com_comb$com, SIMPLIFY = FALSE)
 
   .select_effects_component(
     do.call(rbind, tab),
@@ -200,4 +199,22 @@
 
   rownames(dat) <- NULL
   dat
+}
+
+#' @keywords internal
+.merge_keep_Xattr_Xroword <- function(x, y, by, all.x = TRUE, ...) {
+  # Row order
+  x$row_num <- seq_len(nrow(x))
+  x_y <- merge(x,y,...)
+  x_y <- x_y[order(x_y$row_num), ]
+  row.names(x_y) <- x_y$row_num
+  x_y$row_num <- NULL
+
+  # Attributes
+  old_attr <- attributes(x)
+  old_attr <- old_attr[!names(old_attr) %in% c("names","row.names")]
+  for (a in names(old_attr)) {
+    attr(x_y,a) <- old_attr[[a]]
+  }
+  x_y
 }
