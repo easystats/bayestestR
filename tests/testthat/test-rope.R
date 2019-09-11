@@ -36,7 +36,8 @@ if (require("insight")) {
 
   test_that("rope", {
     testthat::expect_equal(
-      rope(m, effects = "all")$ROPE_Percentage,
+      # fix range to -.1/.1, to compare to data frame method
+      rope(m, range = c(-.1, .1), effects = "all")$ROPE_Percentage,
       rope(p)$ROPE_Percentage,
       tolerance = 1e-3
     )

@@ -13,25 +13,19 @@ test_that("map_estimate", {
 
 if (require("insight")) {
   m <- insight::download_model("stanreg_merMod_5")
-  p <- insight::get_parameters(m, effects = "all")
 
   test_that("map_estimate", {
     testthat::expect_equal(
-      # fix range to -.1/.1, to compare to data frame method
-      rope(m, range = c(-.1, .1), effects = "all")$ROPE_Percentage,
-      rope(p)$ROPE_Percentage,
-      tolerance = 1e-3
+      map_estimate(m, effects = "all")$Parameter,
+      colnames(as.data.frame(m))[1:20]
     )
   })
 
   m <- insight::download_model("brms_zi_3")
-  p <- insight::get_parameters(m, effects = "all", component = "all")
+  cn <- colnames(as.data.frame(m))
+  cn <- cn[!grepl("^(sd_|lp_)", cn)]
 
   test_that("map_estimate", {
-    testthat::expect_equal(
-      rope(m, range = c(-.1, .1), effects = "all", component = "all")$ROPE_Percentage,
-      rope(p)$ROPE_Percentage,
-      tolerance = 1e-3
-    )
+    testthat::expect_equal(map_estimate(m, effects = "all", component = "all")$Parameter, cn)
   })
 }
