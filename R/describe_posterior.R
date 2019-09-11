@@ -415,9 +415,9 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
   # Add priors
   if (priors) {
     priors_data <- describe_prior(posteriors, ...)
-    out <- merge(out, priors_data, all = TRUE)
-    out <- .reorder_rows(posteriors, out, ci = ci)
+    out <- .merge_and_sort(out, priors_data, by = intersect(names(out), names(priors_data)), all = TRUE)
   }
+
   out
 }
 
