@@ -260,7 +260,7 @@ rope.stanreg <- function(x, range = "default", ci = .89, ci_method = "HDI", effe
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   class(out) <- class(rope_data)
 
-  dat
+  out
 }
 
 
