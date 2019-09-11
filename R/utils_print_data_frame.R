@@ -34,7 +34,12 @@ print_data_frame <- function(x, digits) {
 
     if ("Parameter" %in% colnames(out[[i]])) {
       # clean parameters names
-      out[[i]]$Parameter <- gsub("^(b_zi_|bs_|b_|bsp_|bcs_)(.*)", "\\2", out[[i]]$Parameter)
+      out[[i]]$Parameter <- gsub("(b_|bs_|bsp_|bcs_)(?!zi_)(.*)", "\\2", out[[i]]$Parameter, perl = TRUE)
+      out[[i]]$Parameter <- gsub("(b_zi_|bs_zi_|bsp_zi_|bcs_zi_)(.*)", "\\2", out[[i]]$Parameter, perl = TRUE)
+      # clean random effect parameters names
+      out[[i]]$Parameter <- gsub("r_(.*)\\.(.*)\\.", "\\1", out[[i]]$Parameter)
+      out[[i]]$Parameter <- gsub("b\\[\\(Intercept\\) (.*)\\]", "\\1", out[[i]]$Parameter)
+      out[[i]]$Parameter <- gsub("b\\[(.*) (.*)\\]", "\\2", out[[i]]$Parameter)
       # remove ".1" etc. suffix
       out[[i]]$Parameter <- gsub("(.*)(\\.)(\\d)$", "\\1 \\3", out[[i]]$Parameter)
       # remove "__zi"

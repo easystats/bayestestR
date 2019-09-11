@@ -83,7 +83,7 @@
 
 #' Used in describe_posterior
 #' @keywords internal
-.reoder_rows <- function(x, out, ci = NULL) {
+.reorder_rows <- function(x, out, ci = NULL) {
   if (!is.data.frame(out) || nrow(out) == 1) {
     return(out)
   }
@@ -144,6 +144,14 @@
   attr(out, "Cleaned_Parameter") <- out$Cleaned_Parameter[order(out$.roworder)]
   .remove_column(out[order(out$.roworder), ], c("Group", "Cleaned_Parameter", "Response", ".roworder"))
 }
+
+
+.merge_and_sort <- function(x, y, by, all) {
+  x$.rowid <- 1:nrow(x)
+  x <- merge(x, y, by = by, all = all)
+  .remove_column(x[order(x$.rowid), ], ".rowid")
+}
+
 
 #' #' @keywords internal
 #' #' This function can be used to add the component and effects columns to results
