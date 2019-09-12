@@ -11,7 +11,7 @@
 \alias{ci.brmsfit}
 \alias{ci.BFBayesFactor}
 \alias{ci.MCMCglmm}
-\title{Confidence/Credible Interval (CI)}
+\title{Confidence/Credible/Compatibility Interval (CI)}
 \usage{
 ci(x, ...)
 
@@ -80,13 +80,19 @@ A data frame with following columns:
   }
 }
 \description{
-Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models. The Documentation is accessible for:
+Compute Confidence/Credible/Compatibility Intervals (CI) for Bayesian and frequentist models. The Documentation is accessible for:
 }
 \details{
 \itemize{
  \item \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{Bayesian models}
  \item \href{https://easystats.github.io/parameters/reference/ci.merMod.html}{Frequentist models}
 }
+}
+\note{
+When it comes to interpretation, we recommend thinking of the CI in terms of
+  an "uncertainty" or "compatibility" interval, the latter being defined as
+  \dQuote{Given any value in the interval and the background assumptions,
+  the data should not seem very surprising} (\cite{Gelman & Greenland 2019}).
 }
 \examples{
 library(bayestestR)
@@ -120,4 +126,7 @@ ci(model, method = "ETI")
 ci(model, method = "HDI")
 }
 
+}
+\references{
+Gelman A, Greenland S. Are confidence intervals better termed "uncertainty intervals"? BMJ 2019;l5381. \doi{10.1136/bmj.l5381}
 }

@@ -207,7 +207,7 @@ p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parame
   effects <- match.arg(effects)
 
   out <- .prepare_output(
-    p_direction(insight::get_parameters(x, effects = effects, parameters = parameters)),
+    p_direction(insight::get_parameters(x, effects = effects, parameters = parameters), method = method, ...),
     insight::clean_parameters(x)
   )
 
@@ -224,7 +224,7 @@ p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), compon
   component <- match.arg(component)
 
   out <- .prepare_output(
-    p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters)),
+    p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, ...),
     insight::clean_parameters(x)
   )
 

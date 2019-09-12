@@ -15,21 +15,25 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -39,8 +43,8 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Savage-Dickey density ratio Bayes Factor (BF) — bayesfactor_parameters" />
 
+<meta property="og:title" content="Savage-Dickey density ratio Bayes Factor (BF) — bayesfactor_parameters" />
 <meta property="og:description" content="This method computes Bayes factors against the null (either a point or an interval),
 bases on prior and posterior samples of a single parameter. This Bayes factor indicates
 the degree by which the mass of the posterior distribution has shifted further away
@@ -54,9 +58,9 @@ an approximation of a Bayes factor comparing the marginal likelihoods of the mod
 against a model in which the tested parameter has been restricted to the point null.
  
 For more info, see the Bayes factors vignette." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -80,6 +84,7 @@ For more info, see the Bayes factors vignette." />
   gtag('config', 'UA-97457476-7');
 </script>
 
+
   </head>
 
   <body>
@@ -96,7 +101,7 @@ For more info, see the Bayes factors vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
       </span>
     </div>
 
@@ -166,11 +171,10 @@ For more info, see the Bayes factors vignette." />
   <a href="../articles/guidelines.html">Guidelines</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/bayestestR">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -181,6 +185,7 @@ For more info, see the Bayes factors vignette." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -192,7 +197,6 @@ For more info, see the Bayes factors vignette." />
     </div>
 
     <div class="ref-description">
-    
     <p>This method computes Bayes factors against the null (either a point or an interval),
 bases on prior and posterior samples of a single parameter. This Bayes factor indicates
 the degree by which the mass of the posterior distribution has shifted further away
@@ -206,7 +210,6 @@ an approximation of a Bayes factor comparing the marginal likelihoods of the mod
 against a model in which the tested parameter has been restricted to the point null.
 <br /> <br />
 For more info, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -223,12 +226,14 @@ For more info, see <a href='https://easystats.github.io/bayestestR/articles/baye
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>,
+  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for brmsfit</span>
 <span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>,
+  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for emmGrid</span>
 <span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -237,7 +242,7 @@ For more info, see <a href='https://easystats.github.io/bayestestR/articles/baye
 <span class='co'># S3 method for data.frame</span>
 <span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -277,12 +282,17 @@ or a data frame - representing a posterior distribution(s) from (see Details).</
       <td><p>Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the model be returned? May be abbreviated. Only
+applies to <span class="pkg">brms</span>-models.</p></td>
+    </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame containing the Bayes factor representing evidence <em>against</em> the null.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This method is used to compute Bayes factors based on prior and posterior distributions.
@@ -291,8 +301,7 @@ extracted for each parameter, and Savage-Dickey Bayes factors are computed for e
 <p><strong>NOTE:</strong> For <code>brmsfit</code> models, the model must have been fitted with <em>custom (non-default)</em>
 priors. See example below.</p>
 <h3>Setting the correct <code>prior</code></h3>
-    It is important to provide the correct <code>prior</code> for meaningful results.
-<ul>
+<p>It is important to provide the correct <code>prior</code> for meaningful results.</p><ul>
 <li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>
 <li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
 <li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model:</p><ul>
@@ -305,31 +314,32 @@ priors. See example below.</p>
 </ul></li>
 </ul>
 <h3>One-sided Tests (setting an order restriction)</h3>
-    One sided tests (controlled by <code>direction</code>) are conducted by restricting the prior and
+<p>One sided tests (controlled by <code>direction</code>) are conducted by restricting the prior and
 posterior of the non-null values (the "alternative") to one side of the null only
 (<cite>Morey &amp; Wagenmakers, 2013</cite>). For example, if we have a prior hypothesis that the
 parameter should be positive, the alternative will be restricted to the region to the right
-of the null (point or interval).
-    <h3>Interpreting Bayes Factors</h3>
-    A Bayes factor greater than 1 can be interpereted as evidence against the null,
+of the null (point or interval).</p>
+<h3>Interpreting Bayes Factors</h3>
+<p>A Bayes factor greater than 1 can be interpereted as evidence against the null,
 at which one convention is that a Bayes factor greater than 3 can be considered
 as "substantial" evidence against the null (and vice versa, a Bayes factor
 smaller than 1/3 indicates substantial evidence in favor of the null-model)
-(<cite>Wetzels et al. 2011</cite>).
-    
+(<cite>Wetzels et al. 2011</cite>).</p>
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <ul>
+    
+<ul>
 <li><p>Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.</p></li>
 <li><p>Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. doi: <a href='https://doi.org/10.1177/1745691611406923'>10.1177/1745691611406923</a></p></li>
 <li><p>Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The case of computing Bayes factors for regression parameters. British Journal of Mathematical and Statistical Psychology, 72(2), 316-333.</p></li>
 <li><p>Morey, R. D., &amp; Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics &amp; Probability Letters, 92, 121-124.</p></li>
 <li><p>Morey, R. D., &amp; Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.</p></li>
 </ul>
-    
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bayestestR</span>)
 
 <span class='no'>prior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.3</span>)
@@ -340,46 +350,41 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 #&gt;          1.23
 #&gt; 
 #&gt; * Evidence Against The Null: </span><span style='color: #00BBBB;'>[0]
-#&gt; </span><span></div></span><span class='co'># NOT RUN {</span>
+#&gt; </span><span></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>stan_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glmer'>stan_lmer</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
+<span class='no'>stan_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glmer.html'>stan_lmer</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
 <span class='fu'>bayesfactor_parameters</span>(<span class='no'>stan_model</span>)
 <span class='fu'>bayesfactor_parameters</span>(<span class='no'>stan_model</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fu'><a href='rope_range.html'>rope_range</a></span>(<span class='no'>stan_model</span>))
 
 <span class='co'># emmGrid objects</span>
 <span class='co'># ---------------</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='no'>group_diff</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/pairs'>pairs</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emmeans'>emmeans</a></span>(<span class='no'>stan_model</span>, ~<span class='no'>group</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
+<span class='no'>group_diff</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emmeans.html'>emmeans</a></span>(<span class='no'>stan_model</span>, ~<span class='no'>group</span>))
 <span class='fu'>bayesfactor_parameters</span>(<span class='no'>group_diff</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>stan_model</span>)
 
 <span class='co'># brms models</span>
 <span class='co'># -----------</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>my_custom_priors</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/set_prior'>set_prior</a></span>(<span class='st'>"student_t(3, 0, 1)"</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"b"</span>) +
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/set_prior'>set_prior</a></span>(<span class='st'>"student_t(3, 0, 1)"</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"sd"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>set_prior</a></span>(<span class='st'>"student_t(3, 0, 1)"</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"b"</span>) +
+  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>set_prior</a></span>(<span class='st'>"student_t(3, 0, 1)"</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"sd"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>)
 
-<span class='no'>brms_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>),
+<span class='no'>brms_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>),
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
   <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>my_custom_priors</span>
 )
 <span class='fu'>bayesfactor_parameters</span>(<span class='no'>brms_model</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
+}</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -388,19 +393,23 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, <a href='http://www.humanfactors.io'>Michael D. Wilson</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

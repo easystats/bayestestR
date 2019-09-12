@@ -191,29 +191,74 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
       test_bf <- data.frame("Parameter" = NA)
     }
   } else {
-    test_pd <- data.frame("Parameter" = NA)
-    test_rope <- data.frame("Parameter" = NA)
-    test_bf <- data.frame("Parameter" = NA)
-    test_pmap <- data.frame("Parameter" = NA)
+    test_pd <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
+    test_rope <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
+    test_bf <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
+    test_pmap <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
   }
 
 
-  out <- merge(estimates, uncertainty, by = "Parameter", all = TRUE)
-  out <- merge(out, test_pmap, by = "Parameter", all = TRUE)
-  out <- merge(out, test_pd, by = "Parameter", all = TRUE)
-  out <- merge(out, test_rope, by = "Parameter", all = TRUE)
-  out <- merge(out, test_bf, by = "Parameter", all = TRUE)
+  # for data frames or numeric, and even for some models, we don't
+  # have the "Effects" or "Component" column for all data frames.
+  # To make "merge()" work, we add those columns to all data frames,
+  # filled with NA, and remove the columns later if necessary
+
+  estimates <- .add_effects_component_column(estimates)
+  uncertainty <- .add_effects_component_column(uncertainty)
+  test_pmap <- .add_effects_component_column(test_pmap)
+  test_pd <- .add_effects_component_column(test_pd)
+  test_rope <- .add_effects_component_column(test_rope)
+  test_bf <- .add_effects_component_column(test_bf)
+
+  merge_by <- c("Parameter", "Effects", "Component")
+
+
+  # at least one "valid" data frame needs a row id, to restore
+  # row-order after merging
+
+  if (!all(is.na(estimates$Parameter))) {
+    estimates$.rowid <- 1:nrow(estimates)
+  } else if (!all(is.na(test_pmap$Parameter))) {
+    test_pmap$.rowid <- 1:nrow(test_pmap)
+  } else if (!all(is.na(test_pd$Parameter))) {
+    test_pd$.rowid <- 1:nrow(test_pd)
+  } else if (!all(is.na(test_rope$Parameter))) {
+    test_rope$.rowid <- 1:nrow(test_rope)
+  } else if (!all(is.na(test_bf$Parameter))) {
+    test_bf$.rowid <- 1:nrow(test_bf)
+  } else {
+    estimates$.rowid <- 1:nrow(estimates)
+  }
+
+
+  # merge all data frames
+
+  out <- merge(estimates, uncertainty, by = merge_by, all = TRUE)
+  out <- merge(out, test_pmap, by = merge_by, all = TRUE)
+  out <- merge(out, test_pd, by = merge_by, all = TRUE)
+  out <- merge(out, test_rope, by = merge_by, all = TRUE)
+  out <- merge(out, test_bf, by = merge_by, all = TRUE)
   out <- out[!is.na(out$Parameter), ]
 
+
+  # check which columns can be removed at the end. In any case, we don't
+  # need .rowid in the returned data frame, and when the Effects or Component
+  # column consist only of missing values, we remove those columns as well
+
+  remove_columns <- ".rowid"
+  if (all(is.na(out$Effects)) || length(unique(out$Effects)) < 2) remove_columns <- c(remove_columns, "Effects")
+  if (all(is.na(out$Component)) || length(unique(out$Component)) < 2) remove_columns <- c(remove_columns, "Component")
+
   # Restore columns order
-
-  out <- .reoder_rows(x, out, ci = ci)
-
-  out
+  .remove_column(out[order(out$.rowid), ], remove_columns)
 }
 
 
-
+.add_effects_component_column <- function(x) {
+  if (!"Effects" %in% names(x)) x <- cbind(x, data.frame("Effects" = NA))
+  if (!"Component" %in% names(x)) x <- cbind(x, data.frame("Component" = NA))
+  x
+}
 
 
 
@@ -286,7 +331,7 @@ describe_posterior.emmGrid <- function(posteriors, centrality = "median", disper
 #' @param priors Add the prior used for each parameter.
 #' @rdname describe_posterior
 #' @export
-describe_posterior.stanreg <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = TRUE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+describe_posterior.stanreg <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
 
   if (!is.null(diagnostic)) {
@@ -298,16 +343,15 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
         parameters = parameters,
         ...
       )
-    out <- merge(out, diagnostic, all = TRUE)
-    out <- .reoder_rows(posteriors, out, ci = ci)
+    out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
   }
 
   if (isTRUE(priors)) {
-    # col_order <- out$Parameter
     priors_data <- describe_prior(posteriors, ...)
-    out <- merge(out, priors_data, all = TRUE)
-    out <- .reoder_rows(posteriors, out, ci = ci)
+    out <- .merge_and_sort(out, priors_data, by = "Parameter", all = TRUE)
   }
+
+  class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
 
@@ -320,8 +364,7 @@ describe_posterior.MCMCglmm <- function(posteriors, centrality = "median", dispe
 
   if (!is.null(diagnostic) && diagnostic == "ESS") {
     diagnostic <- effective_sample(posteriors, effects = "fixed", parameters = parameters, ...)
-    out <- merge(out, diagnostic, all = TRUE)
-    out <- .reoder_rows(posteriors, out, ci = ci)
+    out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
   }
 
   out
@@ -345,9 +388,10 @@ describe_posterior.brmsfit <- function(posteriors, centrality = "median", disper
         parameters = parameters,
         ...
       )
-    out <- merge(out, diagnostic, all = TRUE)
-    out <- .reoder_rows(posteriors, out, ci = ci)
+    out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
   }
+
+  class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
 
@@ -397,9 +441,9 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
   # Add priors
   if (priors) {
     priors_data <- describe_prior(posteriors, ...)
-    out <- merge(out, priors_data, all = TRUE)
-    out <- .reoder_rows(posteriors, out, ci = ci)
+    out <- .merge_and_sort(out, priors_data, by = intersect(names(out), names(priors_data)), all = TRUE)
   }
+
   out
 }
 

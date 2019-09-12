@@ -176,7 +176,7 @@ hdi.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"), para
   effects <- match.arg(effects)
 
   out <- .prepare_output(
-    hdi(insight::get_parameters(x, effects = effects, parameters = parameters), ci = ci, verbose = verbose),
+    hdi(insight::get_parameters(x, effects = effects, parameters = parameters), ci = ci, verbose = verbose, ...),
     insight::clean_parameters(x)
   )
 
@@ -194,7 +194,7 @@ hdi.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"), comp
   component <- match.arg(component)
 
   out <- .prepare_output(
-    hdi(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose),
+    hdi(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose, ...),
     insight::clean_parameters(x)
   )
 

@@ -1,6 +1,6 @@
-#' Confidence/Credible Interval (CI)
+#' Confidence/Credible/Compatibility Interval (CI)
 #'
-#' Compute Confidence/Credible Intervals (CI) for Bayesian and frequentist models. The Documentation is accessible for:
+#' Compute Confidence/Credible/Compatibility Intervals (CI) for Bayesian and frequentist models. The Documentation is accessible for:
 #'
 #' \itemize{
 #'  \item \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{Bayesian models}
@@ -19,6 +19,13 @@
 #'     \item \code{CI} The probability of the credible interval.
 #'     \item \code{CI_low}, \code{CI_high} The lower and upper credible interval limits for the parameters.
 #'   }
+#'
+#' @note When it comes to interpretation, we recommend thinking of the CI in terms of
+#'   an "uncertainty" or "compatibility" interval, the latter being defined as
+#'   \dQuote{Given any value in the interval and the background assumptions,
+#'   the data should not seem very surprising} (\cite{Gelman & Greenland 2019}).
+#'
+#' @references Gelman A, Greenland S. Are confidence intervals better termed "uncertainty intervals"? BMJ 2019;l5381. \doi{10.1136/bmj.l5381}
 #'
 #' @examples
 #' library(bayestestR)

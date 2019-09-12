@@ -10,3 +10,28 @@ test_that("p_direction", {
   testthat::expect_is(pd, "p_direction")
   testthat::expect_equal(tail(capture.output(print(pd)), 1), "pd = 84.14%")
 })
+
+
+if (require("insight")) {
+  m <- insight::download_model("stanreg_merMod_5")
+  p <- insight::get_parameters(m, effects = "all")
+
+  test_that("p_direction", {
+    testthat::expect_equal(
+      p_direction(m, effects = "all")$pd,
+      p_direction(p)$pd,
+      tolerance = 1e-3
+    )
+  })
+
+  m <- insight::download_model("brms_zi_3")
+  p <- insight::get_parameters(m, effects = "all", component = "all")
+
+  test_that("p_direction", {
+    testthat::expect_equal(
+      p_direction(m, effects = "all", component = "all")$pd,
+      p_direction(p)$pd,
+      tolerance = 1e-3
+    )
+  })
+}

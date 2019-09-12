@@ -46,7 +46,9 @@ reference:
   contents:
   - diagnostic_posterior
   - describe_prior
-  - sensivity_to_prior
+  - sensitivity_to_prior
+  - check_prior
+  - simulate_prior
   - effective_sample
   - mcse
 

@@ -81,25 +81,27 @@
 
 
 
-#' Used in describe_posterior
-#' @keywords internal
-.reoder_rows <- function(x, out, ci = NULL) {
-  if (!is.data.frame(out) || nrow(out) == 1) {
-    return(out)
-  }
+## TODO remove?!?
 
-  if (is.null(ci)) {
-    refdata <- point_estimate(x, centrality = "median", dispersion = FALSE)
-    order <- refdata$Parameter
-    out <- out[match(order, out$Parameter), ]
-  } else {
-    uncertainty <- ci(x, ci = ci)
-    order <- paste0(uncertainty$Parameter, uncertainty$CI)
-    out <- out[match(order, paste0(out$Parameter, out$CI)), ]
-  }
-  rownames(out) <- NULL
-  out
-}
+# #' Used in describe_posterior
+# #' @keywords internal
+# .reorder_rows <- function(x, out, ci = NULL) {
+#   if (!is.data.frame(out) || nrow(out) == 1) {
+#     return(out)
+#   }
+#
+#   if (is.null(ci)) {
+#     refdata <- point_estimate(x, centrality = "median", dispersion = FALSE)
+#     order <- refdata$Parameter
+#     out <- out[match(order, out$Parameter), ]
+#   } else {
+#     uncertainty <- ci(x, ci = ci)
+#     order <- paste0(uncertainty$Parameter, uncertainty$CI)
+#     out <- out[match(order, paste0(out$Parameter, out$CI)), ]
+#   }
+#   rownames(out) <- NULL
+#   out
+# }
 
 
 #' @keywords internal
@@ -140,8 +142,9 @@
   temp$.roworder <- 1:nrow(temp)
   out <- merge(x = temp, y = cleaned_parameters, by = merge_by, all.x = TRUE)
   attr(out, "Cleaned_Parameter") <- out$Cleaned_Parameter[order(out$.roworder)]
-  .remove_column(out[order(out$.roworder), ], c("Group", "Cleaned_Parameter", "Response", ".roworder"))
+  .remove_column(out[order(out$.roworder), ], c("Group", "Cleaned_Parameter", "Response", "Function", ".roworder"))
 }
+
 
 #' #' @keywords internal
 #' #' This function can be used to add the component and effects columns to results
@@ -209,3 +212,10 @@
 #'   rownames(dat) <- NULL
 #'   dat
 #' }
+
+
+.merge_and_sort <- function(x, y, by, all) {
+  x$.rowid <- 1:nrow(x)
+  x <- merge(x, y, by = by, all = all)
+  .remove_column(x[order(x$.rowid), ], ".rowid")
+}

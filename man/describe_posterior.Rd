@@ -23,7 +23,7 @@ describe_posterior(posteriors, centrality = "median",
   dispersion = FALSE, ci = 0.89, ci_method = "hdi",
   test = c("p_direction", "rope"), rope_range = "default",
   rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"),
-  priors = TRUE, effects = c("fixed", "random", "all"),
+  priors = FALSE, effects = c("fixed", "random", "all"),
   parameters = NULL, ...)
 
 \method{describe_posterior}{MCMCglmm}(posteriors, centrality = "median",

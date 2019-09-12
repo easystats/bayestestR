@@ -15,7 +15,7 @@ print.rope <- function(x, digits = 2, ...) {
   # why we did this, so I'll comment a bit...
 
   # These are the base columns we want to print
-  cols <- c("Parameter", "ROPE_Percentage", "Component", "Group")
+  cols <- c("Parameter", "ROPE_Percentage", "Effects", "Component")
 
   # In case we have ropes for different CIs, we also want this information
   # So we first check if values in the CI column differ, and if so, we also

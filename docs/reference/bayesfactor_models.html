@@ -15,21 +15,25 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -39,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Bayes Factors (BF) for model comparison — bayesfactor_models" />
-
 <meta property="og:description" content="This function computes or extracts Bayes factors from fitted models." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -68,6 +72,7 @@
   gtag('config', 'UA-97457476-7');
 </script>
 
+
   </head>
 
   <body>
@@ -84,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
       </span>
     </div>
 
@@ -154,11 +159,10 @@
   <a href="../articles/guidelines.html">Guidelines</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/bayestestR">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -169,6 +173,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -180,19 +185,17 @@
     </div>
 
     <div class="ref-description">
-    
     <p>This function computes or extracts Bayes factors from fitted models.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>bayesfactor_models</span>(<span class='no'>...</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...</th>
-      <td><p>Fitted models (any models supported by <span class="pkg">insight</span>), all fit on the same data, or a single <code>BFBayesFactor</code> object (see 'Details').</p></td>
+      <td><p>Fitted models (see details), all fit on the same data, or a single <code>BFBayesFactor</code> object (see 'Details').</p></td>
     </tr>
     <tr>
       <th>denominator</th>
@@ -204,19 +207,21 @@ or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.<
       <td><p>Toggle off warnings.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs, that prints nicely.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <ul>
+    <p>If the passed models are supported by <span class="pkg">insight</span> the DV of all models will be tested for equality
+(else this is assumed to be true), and the models' terms will be extracted (allowing for follow-up
+analysis with <code>bayesfactor_inclusion</code>).</p>
+<ul>
 <li><p>For <code>brmsfit</code> or <code>stanreg</code> models, Bayes factors are computed using the <a href='https://CRAN.R-project.org/package=bridgesampling'><span class="pkg">bridgesampling</span></a> package.</p><ul>
 <li><p><code>brmsfit</code> models must have been fitted with <code>save_all_pars = TRUE</code>.</p></li>
 <li><p><code>stanreg</code> models must have been fitted with a defined <code>diagnostic_file</code>.</p></li>
 </ul></li>
-<li><p>For <code>BFBayesFactor</code>, <code>bayesfactor_models()</code> is mostly a wraparoud <code><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/extractBF-methods'>BayesFactor::extractBF()</a></code>.</p></li>
+<li><p>For <code>BFBayesFactor</code>, <code>bayesfactor_models()</code> is mostly a wraparoud <code><a href='https://rdrr.io/pkg/BayesFactor/man/extractBF-methods.html'>BayesFactor::extractBF()</a></code>.</p></li>
 <li><p>For all other model types (supported by <a href='https://CRAN.R-project.org/package=insight'><span class="pkg">insight</span></a>), BIC approximations are used to compute Bayes factors.</p></li>
 </ul><p>In order to correctly and precisely estimate Bayes factors, a rule of thumb are
 the 4 P's: <strong>P</strong>roper <strong>P</strong>riors and <strong>P</strong>lentiful <strong>P</strong>osterior
@@ -229,25 +234,25 @@ smaller than 1/3 indicates substantial evidence in favor of the denominator mode
 (<cite>Wetzels et al. 2011</cite>).
 <br /> <br />
 See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <ul>
+    
+<ul>
 <li><p>Gronau, Q. F., Wagenmakers, E. J., Heck, D. W., and Matzke, D. (2019). A simple method for comparing complex models: Bayesian model comparison for hierarchical multinomial processing tree models using Warp-III bridge sampling. Psychometrika, 84(1), 261-284.</p></li>
 <li><p>Kass, R. E., and Raftery, A. E. (1995). Bayes Factors. Journal of the American Statistical Association, 90(430), 773-795.</p></li>
 <li><p>Robert, C. P. (2016). The expected demise of the Bayes factor. Journal of Mathematical Psychology, 72, 33–37.</p></li>
 <li><p>Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin &amp; review, 14(5), 779-804.</p></li>
 <li><p>Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. doi: <a href='https://doi.org/10.1177/1745691611406923'>10.1177/1745691611406923</a></p></li>
 </ul>
-    
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># With lm objects:</span>
 <span class='co'># ----------------</span>
-<span class='no'>lm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='no'>lm2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='no'>lm3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='no'>lm4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='no'>lm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='no'>lm2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='no'>lm3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='no'>lm4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>bayesfactor_models</span>(<span class='no'>lm1</span>, <span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
 #&gt; </span><span>  Model                      Bayes Factor
@@ -275,8 +280,8 @@ See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'>
 <span class='co'># With lmerMod objects:</span>
 <span class='co'># ---------------------</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>lme4</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='input'><span class='no'>lmer1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
-<span class='no'>lmer2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Petal.Length</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'><span class='no'>lmer3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/lme4/topics/lmer'>lmer</a></span>(
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>lme4</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='input'><span class='no'>lmer1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
+<span class='no'>lmer2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Petal.Length</span> <span class='kw'>|</span> <span class='no'>Species</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'><span class='no'>lmer3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(
   <span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='no'>Petal.Length</span> <span class='kw'>|</span> <span class='no'>Species</span>) + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Petal.Width</span>),
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>
 )</div><div class='output co'>#&gt; <span class='message'>boundary (singular) fit: see ?isSingular</span></div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lmer1</span>, <span class='no'>lmer2</span>, <span class='no'>lmer3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
@@ -293,25 +298,25 @@ See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.
 #&gt;   [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)     4.72e-03
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] Petal.Length + (1 | Species)</span><span>
-#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div></span><span class='co'># NOT RUN {</span>
+#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------------</span>
 <span class='co'># (note that a unique diagnostic_file MUST be specified in order to work)</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>stan_m0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='fl'>1</span>,
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
+<span class='no'>stan_m0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glm.html'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='fl'>1</span>,
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/family'>gaussian</a></span>(),
-  <span class='kw'>diagnostic_file</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.path'>file.path</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>"df0.csv"</span>)
+  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
+  <span class='kw'>diagnostic_file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df0.csv"</span>)
 )
-<span class='no'>stan_m1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>,
+<span class='no'>stan_m1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glm.html'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>,
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/family'>gaussian</a></span>(),
-  <span class='kw'>diagnostic_file</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.path'>file.path</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>"df1.csv"</span>)
+  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
+  <span class='kw'>diagnostic_file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df1.csv"</span>)
 )
-<span class='no'>stan_m2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='no'>Petal.Length</span>,
+<span class='no'>stan_m2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glm.html'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='no'>Petal.Length</span>,
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/family'>gaussian</a></span>(),
-  <span class='kw'>diagnostic_file</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.path'>file.path</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>"df2.csv"</span>)
+  <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
+  <span class='kw'>diagnostic_file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df2.csv"</span>)
 )
 <span class='fu'>bayesfactor_models</span>(<span class='no'>stan_m1</span>, <span class='no'>stan_m2</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>stan_m0</span>)
 
@@ -319,10 +324,10 @@ See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.
 <span class='co'># brms models</span>
 <span class='co'># --------------------</span>
 <span class='co'># (note the save_all_pars MUST be set to TRUE in order to work)</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>brms</span>)
-<span class='no'>brm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>brm2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>brm3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/brms/topics/brm'>brm</a></span>(
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)
+<span class='no'>brm1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>brm2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>brm3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(
   <span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> + <span class='no'>Petal.Length</span>,
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>,
   <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
@@ -333,28 +338,23 @@ See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.
 
 <span class='co'># BayesFactor</span>
 <span class='co'># ---------------------------</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>BayesFactor</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>puzzles</span>)
-<span class='no'>BF</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/BayesFactor/topics/anovaBF'>anovaBF</a></span>(<span class='no'>RT</span> ~ <span class='no'>shape</span> * <span class='no'>color</span> + <span class='no'>ID</span>,
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>BayesFactor</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>puzzles</span>)
+<span class='no'>BF</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/anovaBF.html'>anovaBF</a></span>(<span class='no'>RT</span> ~ <span class='no'>shape</span> * <span class='no'>color</span> + <span class='no'>ID</span>,
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>puzzles</span>,
   <span class='kw'>whichRandom</span> <span class='kw'>=</span> <span class='st'>"ID"</span>, <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )
 <span class='no'>BF</span>
 <span class='fu'>bayesfactor_models</span>(<span class='no'>BF</span>) <span class='co'># basically the same</span>
-<span class='co'># }</span><div class='input'>
-</div></pre>
+}</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -363,19 +363,23 @@ See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by <a href='https://dominiquemakowski.github.io/'>Dominique Makowski</a>, <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>, <a href='https://github.com/mattansb'>Mattan S. Ben-Shachar</a>, <a href='http://www.humanfactors.io'>Michael D. Wilson</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

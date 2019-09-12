@@ -122,7 +122,7 @@ eti.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"),
   effects <- match.arg(effects)
 
   out <- .prepare_output(
-    eti(insight::get_parameters(x, effects = effects, parameters = parameters), ci = ci, verbose = verbose),
+    eti(insight::get_parameters(x, effects = effects, parameters = parameters), ci = ci, verbose = verbose, ...),
     insight::clean_parameters(x)
   )
 
@@ -141,7 +141,7 @@ eti.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"),
   component <- match.arg(component)
 
   out <- .prepare_output(
-    eti(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose),
+    eti(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose, ...),
     insight::clean_parameters(x)
   )
 

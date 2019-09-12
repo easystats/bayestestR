@@ -27,9 +27,9 @@ test_that("describe_posterior", {
   library(rstanarm)
   x <- insight::download_model("stanreg_lm_1")
   rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
-  testthat::expect_equal(dim(rez), c(2, 22))
+  testthat::expect_equal(dim(rez), c(2, 19))
   rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
-  testthat::expect_equal(dim(rez), c(4, 22))
+  testthat::expect_equal(dim(rez), c(4, 19))
   rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile", diagnostic = NULL, priors = FALSE)
   testthat::expect_equal(dim(rez), c(2, 4))
 
@@ -54,3 +54,28 @@ test_that("describe_posterior", {
   # rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method="quantile")
   # testthat::expect_equal(dim(rez), c(4, 4))
 })
+
+
+if (require("insight")) {
+  m <- insight::download_model("stanreg_merMod_5")
+  p <- insight::get_parameters(m, effects = "all")
+
+  test_that("describe_posterior", {
+    testthat::expect_equal(
+      describe_posterior(m, effects = "all")$Median,
+      describe_posterior(p)$Median,
+      tolerance = 1e-3
+    )
+  })
+
+  m <- insight::download_model("brms_zi_3")
+  p <- insight::get_parameters(m, effects = "all", component = "all")
+
+  test_that("describe_posterior", {
+    testthat::expect_equal(
+      describe_posterior(m, effects = "all", component = "all")$Median,
+      describe_posterior(p)$Median,
+      tolerance = 1e-3
+    )
+  })
+}
