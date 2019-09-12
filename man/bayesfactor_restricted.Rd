@@ -42,6 +42,8 @@ A data frame containing the Bayes factor representing evidence \emph{against} th
 This method computes Bayes factors for comparing a model with an order restrictions on its parameters
 with the fully unrestricted model. \emph{Note that this method should only be used for confirmatory analyses}.
 \cr \cr
+\strong{For correct restriction of 3 or more factor levels, see see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
+\cr \cr
 For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
 \details{
