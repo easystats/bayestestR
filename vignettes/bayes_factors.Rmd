@@ -586,7 +586,7 @@ You can read more about why this happens in [@rouder2012default, section 7.2], b
 What we need to do, is use a different type of factor coding, available from the [`bfrms`](https://github.com/bayesstuff/bfrms) package as `contr.bayes`.
 
 You can either specify this factor coding per-factor:
-```{r}
+```{r eval=FALSE}
 contrasts(iris$Species) <- bfrms::contr.bayes
 ```
 
@@ -595,20 +595,33 @@ Or you can set this option globally:
 contr.bayes <- bfrms::contr.bayes
 options(contrasts = c('contr.bayes', 'contr.poly'))
 ```
+
 Once this is set, simple run your analyses as usual:
 ```{r, eval=FALSE}
 fit <- stan_glm(Sepal.Length ~ Species, data = iris,
                 family = gaussian())
-```
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-junk <- capture.output(fit <- stan_glm(Sepal.Length ~ Species, data = iris,
-                                       family = gaussian()))
-```
-```{r}
+
 em_ <- emmeans(fit, ~Species)
 em_ # the posterior marginal means
+#>  Species    emmean lower.HPD upper.HPD
+#>  setosa       5.01      4.86      5.16
+#>  versicolor   5.94      5.78      6.07
+#>  virginica    6.59      6.45      6.73
+#> 
+#> HPD interval probability: 0.95 
 
 bayesfactor_restricted(em_, fit, hypothesis = hyp)
+#> # Bayes Factor (Order-Restriction)
+#> 
+#>                                        Hypothesis P(Prior) P(Posterior)  Bayes Factor
+#>                               setosa > versicolor     0.51            0      0.00e+00
+#>                                setosa > virginica     0.50            0      0.00e+00
+#>                            versicolor > virginica     0.50            0      0.00e+00
+#>  setosa    < virginica  & virginica  < versicolor     0.16            0      0.00e+00
+#>  virginica < setosa     & setosa     < versicolor     0.17            0      0.00e+00
+#>   setosa    < versicolor & versicolor < virginica     0.16            1          6.11
+#> 
+#> * Bayes factors for the restricted movel vs. the un-restricted model.
 ```
 
 When comparing the results from the two factor coding schemes, we find:
