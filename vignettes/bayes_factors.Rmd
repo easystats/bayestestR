@@ -459,7 +459,7 @@ bayesfactor_inclusion(BF_ToothGrowth_against_dose)
 knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP3.PNG")
 ```
 
-### Order Restricted Models
+## Order Restricted Models
 
 Consider the following model, in which we predict the length of an iris' sepal from the length of its petal, as well as from its species.
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -528,6 +528,92 @@ BF_{restricted / NULL} = \frac
 {BF_{restricted / un-restricted}}
 {BF_{un-restricted / NULL}}
 $$
-> **NOTE:** Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (*a priori*) hypotheses, and should not be used for any post hoc comparisons [@morey_2015_blog].
+
+***NOTE:** Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (*a priori*) hypotheses, and should not be used for any post hoc comparisons [@morey_2015_blog].*
+
+### Restricting More than 2 Factor-Levels
+
+***Special care should be taken when restricting the order of more than 2 levels of the same factor.***
+
+If we want to test an order restriction among 3 groups A, B, and C, the*a priori* probability of obtaining the order A > C > B is 1/6 (reach back to intro to stats year 1...). And so when testing and order restriction on the ordering of levels in a factor, we would the priors or be 1/6.... But...
+
+For our example, we will be interested in the following order restrictions in the `iris` data (each line is a separate restriction):
+
+```{r}
+hyp <- c(
+  # comparing 2 levels
+  "setosa > versicolor",
+  "setosa > virginica",
+  "versicolor > virginica",
+  
+  # comparing 3 (or more) levels
+  "setosa    < virginica  & virginica  < versicolor",
+  "virginica < setosa     & setosa     < versicolor",
+  "setosa    < versicolor & versicolor < virginica"
+)
+```
+
+
+```{r, eval=FALSE}
+library(bayestestR)
+library(rstanarm)
+library(emmeans)
+```
+
+With the default factor coding, this looks like this:
+
+```{r, eval=FALSE}
+fit <- stan_glm(Sepal.Length ~ Species, data = iris,
+                family = gaussian())
+```
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+junk <- capture.output(fit <- stan_glm(Sepal.Length ~ Species, data = iris,
+                                       family = gaussian()))
+```
+```{r}
+em_ <- emmeans(fit, ~Species)
+em_ # the posterior marginal means
+
+bayesfactor_restricted(em_, fit, hypothesis = hyp)
+```
+
+What happened???
+1. The comparison of 2 levels all have a prior of 0.5, as expected.
+2. The comparison of 3 levels has different priors, depending on the order restriction - i.e. **some orders are *a priori* more likely than others!!!**
+
+You can read more about why this happens in [@rouder2012default, section 7.2], but for now, let's focus on the solution...
+
+What we need to do, is use a different type of factor coding, available from the [`bfrms`](https://github.com/bayesstuff/bfrms) package as `contr.bayes`.
+
+You can either specify this factor coding per-factor:
+```{r}
+contrasts(iris$Species) <- bfrms::contr.bayes
+```
+
+Or you can set this option globally:
+```{r, eval=FALSE}
+contr.bayes <- bfrms::contr.bayes
+options(contrasts = c('contr.bayes', 'contr.poly'))
+```
+Once this is set, simple run your analyses as usual:
+```{r, eval=FALSE}
+fit <- stan_glm(Sepal.Length ~ Species, data = iris,
+                family = gaussian())
+```
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+junk <- capture.output(fit <- stan_glm(Sepal.Length ~ Species, data = iris,
+                                       family = gaussian()))
+```
+```{r}
+em_ <- emmeans(fit, ~Species)
+em_ # the posterior marginal means
+
+bayesfactor_restricted(em_, fit, hypothesis = hyp)
+```
+
+When comparing the results from the two factor coding schemes, we find:
+1. In both cases, the estimated (posterior) means are identical.
+2. In both cases, the comparison of 2 levels the proper prior probability of 0.5.
+3. Only with `contr.bayes`, the comparison of 3 (or more) levels the proper prior probability of - here that of 1/6 = 0.166.
 
 # References

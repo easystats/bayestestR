@@ -137,8 +137,6 @@
   direction
 }
 
-
-
 .prepare_output <- function(temp, cleaned_parameters) {
   merge_by <- intersect(c("Parameter", "Effects", "Component"), colnames(temp))
   temp$.roworder <- 1:nrow(temp)
@@ -148,78 +146,76 @@
 }
 
 
+#' #' @keywords internal
+#' #' This function can be used to add the component and effects columns to results
+#' #' tables. E.g.
+#' #' resHDI <- hdi(model, effects = "all")
+#' #' tabs <- .get_eff_com(model)
+#' #' merge(x = resBF, y = tabs, by = "Parameter", all.x = TRUE)
+#' .get_eff_com <- function(model, effects = NULL, component = NULL, parameters = NULL) {
+#'   if (inherits(model, "brmsfit")) {
+#'     eff <- c("fixed", "fixed", "random", "random")
+#'     com <- c("conditional", "zero_inflated", "conditional", "zero_inflated")
+#'   } else {
+#'     eff <- c("fixed", "random")
+#'     com <- c("conditional", "conditional")
+#'   }
+#'
+#'   .get_tab <- function(.x, .y) {
+#'     parms <- insight::get_parameters(model, effects = .x, component = .y, parameters = parameters)
+#'
+#'     if (nrow(parms) > 0 && ncol(parms) > 0)
+#'       data.frame(Parameter = colnames(parms), Group = .x, Component = .y)
+#'     else
+#'       NULL
+#'   }
+#'
+#'   tab <- mapply(.get_tab, eff, com, SIMPLIFY = FALSE)
+#'
+#'   .select_effects_component(
+#'     do.call(rbind, tab),
+#'     effects = effects,
+#'     component = component
+#'   )
+#' }
+#'
+#'
+#'
+#' .select_effects_component <- function(dat, effects, component = NULL) {
+#'   if ("Group" %in% colnames(dat)) {
+#'     dat <- switch(
+#'       effects,
+#'       fixed = .select_rows(dat, "Group", "fixed"),
+#'       random = .select_rows(dat, "Group", "random"),
+#'       dat
+#'     )
+#'   }
+#'
+#'   if (!is.null(component) && "Component" %in% colnames(dat)) {
+#'     dat <- switch(
+#'       component,
+#'       conditional = .select_rows(dat, "Component", "conditional"),
+#'       zi = ,
+#'       zero_inflated = .select_rows(dat, "Component", "zero_inflated"),
+#'       dat
+#'     )
+#'   }
+#'
+#'   if ("Group" %in% colnames(dat) && all(dat$Group == dat$Group[1])) {
+#'     dat <- .remove_column(dat, "Group")
+#'   }
+#'
+#'   if ("Component" %in% colnames(dat) && all(dat$Component == dat$Component[1])) {
+#'     dat <- .remove_column(dat, "Component")
+#'   }
+#'
+#'   rownames(dat) <- NULL
+#'   dat
+#' }
+
+
 .merge_and_sort <- function(x, y, by, all) {
   x$.rowid <- 1:nrow(x)
   x <- merge(x, y, by = by, all = all)
   .remove_column(x[order(x$.rowid), ], ".rowid")
 }
-
-
-## TODO remove?!?
-
-# #' @keywords internal
-# #' This function can be used to add the component and effects columns to results
-# #' tables. E.g.
-# #' resHDI <- hdi(model, effects = "all")
-# #' tabs <- .get_eff_com(model)
-# #' merge(x = resBF, y = tabs, by = "Parameter", all.x = TRUE)
-# .get_eff_com <- function(model, effects = NULL, component = NULL, parameters = NULL) {
-#   if (inherits(model, "brmsfit")) {
-#     eff <- c("fixed", "fixed", "random", "random")
-#     com <- c("conditional", "zero_inflated", "conditional", "zero_inflated")
-#   } else {
-#     eff <- c("fixed", "random")
-#     com <- c("conditional", "conditional")
-#   }
-#
-#   .get_tab <- function(.x, .y) {
-#     parms <- insight::get_parameters(model, effects = .x, component = .y, parameters = parameters)
-#
-#     if (nrow(parms) > 0 && ncol(parms) > 0)
-#       data.frame(Parameter = colnames(parms), Group = .x, Component = .y)
-#     else
-#       NULL
-#   }
-#
-#   tab <- mapply(.get_tab, eff, com, SIMPLIFY = FALSE)
-#
-#   .select_effects_component(
-#     do.call(rbind, tab),
-#     effects = effects,
-#     component = component
-#   )
-# }
-#
-#
-#
-# .select_effects_component <- function(dat, effects, component = NULL) {
-#   if ("Group" %in% colnames(dat)) {
-#     dat <- switch(
-#       effects,
-#       fixed = .select_rows(dat, "Group", "fixed"),
-#       random = .select_rows(dat, "Group", "random"),
-#       dat
-#     )
-#   }
-#
-#   if (!is.null(component) && "Component" %in% colnames(dat)) {
-#     dat <- switch(
-#       component,
-#       conditional = .select_rows(dat, "Component", "conditional"),
-#       zi = ,
-#       zero_inflated = .select_rows(dat, "Component", "zero_inflated"),
-#       dat
-#     )
-#   }
-#
-#   if ("Group" %in% colnames(dat) && all(dat$Group == dat$Group[1])) {
-#     dat <- .remove_column(dat, "Group")
-#   }
-#
-#   if ("Component" %in% colnames(dat) && all(dat$Component == dat$Component[1])) {
-#     dat <- .remove_column(dat, "Component")
-#   }
-#
-#   rownames(dat) <- NULL
-#   dat
-# }
