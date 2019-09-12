@@ -12,6 +12,8 @@
 #' an approximation of a Bayes factor comparing the marginal likelihoods of the model
 #' against a model in which the tested parameter has been restricted to the point null.
 #' \cr \cr
+#' \strong{For info on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
+#' \cr \cr
 #' For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 #'
 #' @param posterior A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}
@@ -177,9 +179,10 @@ bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
 
   # Get Priors
   if (is.null(prior)) {
-    prior <- .update_to_priors(posterior, verbose = verbose)
+    prior <- posterior
   }
 
+  prior <- .update_to_priors(prior, verbose = verbose)
   prior <- insight::get_parameters(prior, effects = effects, component = component)
   posterior <- insight::get_parameters(posterior, effects = effects, component = component)
 

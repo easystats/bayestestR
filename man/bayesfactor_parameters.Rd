@@ -77,6 +77,8 @@ When the null is a point, a Savage-Dickey density ratio is computed, which is al
 an approximation of a Bayes factor comparing the marginal likelihoods of the model
 against a model in which the tested parameter has been restricted to the point null.
 \cr \cr
+\strong{For info on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
+\cr \cr
 For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
 \details{
