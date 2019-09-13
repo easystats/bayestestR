@@ -129,7 +129,7 @@ bayesfactor_parameters(posterior, prior)
 # rstanarm models
 # ---------------
 library(rstanarm)
-contrasts(sleep$group) <- contr.bayesian # see vingette
+contrasts(sleep$group) <- contr.bayes # see vingette
 stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 bayesfactor_parameters(stan_model)
 bayesfactor_parameters(stan_model, null = rope_range(stan_model))
@@ -143,7 +143,7 @@ bayesfactor_parameters(group_diff, prior = stan_model)
 # brms models
 # -----------
 library(brms)
-contrasts(sleep$group) <- contr.bayesian # see vingette
+contrasts(sleep$group) <- contr.bayes # see vingette
 my_custom_priors <-
   set_prior("student_t(3, 0, 1)", class = "b") +
   set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")
