@@ -23,12 +23,12 @@
 #'
 #' @examples
 #' \dontrun{
-#' contr.bayes(2)  ## Q_2 in Rouder et al. (2012, p. 363)
+#' contr.bayesian(2)  ## Q_2 in Rouder et al. (2012, p. 363)
 #' #            [,1]
 #' # [1,] -0.7071068
 #' # [2,]  0.7071068
 #'
-#' contr.bayes(5)  ## equivalent to Q_5 in Rouder et al. (2012, p. 363)
+#' contr.bayesian(5)  ## equivalent to Q_5 in Rouder et al. (2012, p. 363)
 #'            [,1]       [,2]       [,3]       [,4]
 #' [1,]  0.0000000  0.8944272  0.0000000  0.0000000
 #' [2,]  0.0000000 -0.2236068 -0.5000000  0.7071068
@@ -37,7 +37,7 @@
 #' [5,]  0.0000000 -0.2236068  0.8333333  0.2357023
 #'
 #' ## check decomposition
-#' Q3 <- contr.bayes(3)
+#' Q3 <- contr.bayesian(3)
 #' Q3 %*% t(Q3)
 #'            [,1]       [,2]       [,3]
 #' [1,]  0.6666667 -0.3333333 -0.3333333
@@ -47,7 +47,7 @@
 #'}
 #'
 #' @export
-contr.bayes <- function(n, contrasts = TRUE) {
+contr.bayesian <- function(n, contrasts = TRUE) {
   # validate n
   if (length(n) <= 1L) {
     if (is.numeric(n) && length(n) == 1L && n > 1L) {

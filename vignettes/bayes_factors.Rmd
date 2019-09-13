@@ -532,7 +532,7 @@ $$
 
 ## Specifying Correct Priors for Factors with More Than 2 Levels
 
-***Special care should be taken when working with factors which have 3 or more levels.*** This section introduces the biased priors obtained when using the common *effects* factor coding (`contr.sum`), and the solution of using orthogonal factor coding (`contr.bayes`) [as outlined in @rouder2012default, section 7.2].
+***Special care should be taken when working with factors which have 3 or more levels.*** This section introduces the biased priors obtained when using the common *effects* factor coding (`contr.sum`), and the solution of using orthogonal factor coding (`contr.bayesian`) [as outlined in @rouder2012default, section 7.2].
 
 ### Contrasts (and Marginal Means)
 
@@ -580,16 +580,16 @@ plot(bayesfactor_parameters(c_sum, fit_sum)) +
 ***What happened???***  
 It seems that not all pairwise differences have the same prior distribution!! Specifically, the mass of the difference between setosa and versicolor is closer to 0 than for any of the other differences! This is caused by an inherent bias introduced by the *effects* coding (it's even worse with the default treatment coding, because the prior for the intercept is usually drastically different from the effect's parameters).
 
-The solution is to use *orthogonal* factor coding, a-la `conrt.bayes`, which can either specify this factor coding per-factor:
+The solution is to use *orthogonal* factor coding, a-la `contr.bayesian`, which can either specify this factor coding per-factor:
 
 ```{r}
-contrasts(iris$Species) <- contr.bayes
+contrasts(iris$Species) <- contr.bayesian
 ```
 
 Or you can set it globally:
 
 ```{r, eval=FALSE}
-options(contrasts = c('contr.bayes', 'contr.poly'))
+options(contrasts = c('contr.bayesian', 'contr.poly'))
 ```
 
 Once this is set, simply run your analyses as usual:
@@ -623,7 +623,7 @@ plot(bayesfactor_parameters(c_bayes, fit_bayes)) +
 When comparing the results from the two factor coding schemes, we find:
 1. In both cases, the estimated (posterior) means are similar.  
 2. The Bayes factors differ between the two schemes.
-3. Only with `contr.bayes`, the prior distributions of the differences is unbiased.
+3. Only with `contr.bayesian`, the prior distributions of the differences is unbiased.
 
 ### Order Restrictions
 
@@ -672,6 +672,6 @@ bayesfactor_restricted(em_bayes, fit_bayes, hypothesis = hyp)
 When comparing the results from the two factor coding schemes, we find:  
 1. In both cases, the estimated (posterior) means are identical.  
 2. In both cases, the comparison of 2 levels the proper prior probability of 0.5.  
-3. Only with `contr.bayes`, the comparison of 3 (or more) levels the proper prior probability of - here that of 1/6 = 0.166.
+3. Only with `contr.bayesian`, the comparison of 3 (or more) levels the proper prior probability of - here that of 1/6 = 0.166.
 
 # References
