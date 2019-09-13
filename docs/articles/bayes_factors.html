@@ -531,7 +531,7 @@ BF_{restricted / NULL} = \frac
 <div id="specifying-correct-priors-for-factors-with-more-than-2-levels" class="section level2">
 <h2 class="hasAnchor">
 <a href="#specifying-correct-priors-for-factors-with-more-than-2-levels" class="anchor"></a>Specifying Correct Priors for Factors with More Than 2 Levels</h2>
-<p><strong><em>Special care should be taken when working with factors which have 3 or more levels.</em></strong> This section introduces the biased priors obtained when using the common <em>effects</em> factor coding (<code>contr.sum</code>), and the solution of using orthogonal factor coding (<code>contr.bayesian</code>) <span class="citation">(as outlined in Rouder, Morey, Speckman, &amp; Province, 2012, sec. 7.2)</span>.</p>
+<p>This section introduces the biased priors obtained when using the common <em>effects</em> factor coding (<code>contr.sum</code>), and the solution of using orthogonal factor coding (<code>contr.bayes</code>) <span class="citation">(as outlined in Rouder, Morey, Speckman, &amp; Province, 2012, sec. 7.2)</span>. Specifically, <strong><em>special care should be taken when working with factors which have 3 or more levels.</em></strong></p>
 <div id="contrasts-and-marginal-means" class="section level3">
 <h3 class="hasAnchor">
 <a href="#contrasts-and-marginal-means" class="anchor"></a>Contrasts (and Marginal Means)</h3>
@@ -559,10 +559,10 @@ BF_{restricted / NULL} = \frac
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-16-1.png" width="2187.5"></p>
 <p><strong><em>What happened???</em></strong><br>
 It seems that not all pairwise differences have the same prior distribution!! Specifically, the mass of the difference between setosa and versicolor is closer to 0 than for any of the other differences! This is caused by an inherent bias introduced by the <em>effects</em> coding (it’s even worse with the default treatment coding, because the prior for the intercept is usually drastically different from the effect’s parameters).</p>
-<p>The solution is to use <em>orthogonal</em> factor coding, a-la <code>contr.bayesian</code>, which can either specify this factor coding per-factor:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/contrasts">contrasts</a></span>(iris<span class="op">$</span>Species) &lt;-<span class="st"> </span>contr.bayesian</a></code></pre></div>
+<p>The solution is to use <em>orthogonal</em> factor coding, a-la <code>contr.bayes</code>, which can either specify this factor coding per-factor:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/contrasts">contrasts</a></span>(iris<span class="op">$</span>Species) &lt;-<span class="st"> </span>contr.bayes</a></code></pre></div>
 <p>Or you can set it globally:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">contrasts =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'contr.bayesian'</span>, <span class="st">'contr.poly'</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">contrasts =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'contr.bayes'</span>, <span class="st">'contr.poly'</span>))</a></code></pre></div>
 <p>Once this is set, simply run your analyses as usual:</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1">fit_bayes &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris,</a>
 <a class="sourceLine" id="cb46-2" title="2">                      <span class="dt">prior =</span> <span class="kw">normal</span>(<span class="dv">0</span>,<span class="fl">0.1</span>),</a>
@@ -578,7 +578,7 @@ It seems that not all pairwise differences have the same prior distribution!! Sp
 <p>Let’s plot the priors and posteriors of these differences:</p>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-21-1.png" width="2187.5"></p>
 <p>When comparing the results from the two factor coding schemes, we find: 1. In both cases, the estimated (posterior) means are similar.<br>
-2. The Bayes factors differ between the two schemes. 3. Only with <code>contr.bayesian</code>, the prior distributions of the differences is unbiased.</p>
+2. The Bayes factors differ between the two schemes. 3. Only with <code>contr.bayes</code>, the prior distributions of the differences is unbiased.</p>
 </div>
 <div id="order-restrictions" class="section level3">
 <h3 class="hasAnchor">
@@ -659,7 +659,7 @@ It seems that not all pairwise differences have the same prior distribution!! Sp
 <p>When comparing the results from the two factor coding schemes, we find:<br>
 1. In both cases, the estimated (posterior) means are identical.<br>
 2. In both cases, the comparison of 2 levels the proper prior probability of 0.5.<br>
-3. Only with <code>contr.bayesian</code>, the comparison of 3 (or more) levels the proper prior probability of - here that of 1/6 = 0.166.</p>
+3. Only with <code>contr.bayes</code>, the comparison of 3 (or more) levels the proper prior probability of - here that of 1/6 = 0.166.</p>
 </div>
 </div>
 </div>
