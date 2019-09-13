@@ -9,7 +9,7 @@
 - `check_prior()` to check if prior is informative
 - `simulate_prior()` to simulate model's priors as distributions
 - `distribution_gamma()` to generate a (near-perfect or random) Gamma distribution
-
+- `contr.bayes` function for orthogonal factor coding (implementation from Singmann & Gronau's [`bfrms`](https://github.com/bayesstuff/bfrms/), used for proper prior estimation when factor have 3 levels or more. See Bayes factor vignette.
 ## Changes to functions
 
 - Added support for `sim`, `sim.merMod` (from `arm::sim()`) and `MCMCglmm`-objects to many functions (like `hdi()`, `ci()`, `eti()`, `rope()`, `p_direction()`, `point_estimate()`, ...)
