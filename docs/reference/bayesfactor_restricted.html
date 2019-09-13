@@ -15,25 +15,21 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -43,15 +39,17 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-
 <meta property="og:title" content="Bayes Factors (BF) for Order Restricted Models — bayesfactor_restricted" />
+
 <meta property="og:description" content="This method computes Bayes factors for comparing a model with an order restrictions on its parameters
 with the fully unrestricted model. Note that this method should only be used for confirmatory analyses.
  
+For info on specifying correct priors for factors with more than 2 levels, see the Bayes factors vignette.
+ 
 For more info, see the Bayes factors vignette." />
+
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
-
 
 
 
@@ -74,7 +72,6 @@ For more info, see the Bayes factors vignette." />
 
   gtag('config', 'UA-97457476-7');
 </script>
-
 
   </head>
 
@@ -162,10 +159,11 @@ For more info, see the Bayes factors vignette." />
   <a href="../articles/guidelines.html">Guidelines</a>
 </li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/bayestestR">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -176,7 +174,6 @@ For more info, see the Bayes factors vignette." />
 </div><!--/.navbar -->
 
       
-
       </header>
 
 <div class="row">
@@ -188,10 +185,14 @@ For more info, see the Bayes factors vignette." />
     </div>
 
     <div class="ref-description">
+    
     <p>This method computes Bayes factors for comparing a model with an order restrictions on its parameters
 with the fully unrestricted model. <em>Note that this method should only be used for confirmatory analyses</em>.
 <br /> <br />
+<strong>For info on specifying correct priors for factors with more than 2 levels, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</strong>
+<br /> <br />
 For more info, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
+    
     </div>
 
     <pre class="usage"><span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='no'>hypothesis</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -199,18 +200,18 @@ For more info, see <a href='https://easystats.github.io/bayestestR/articles/baye
 
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='no'>hypothesis</span>,
-  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>,
+  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>,
   <span class='st'>"all"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for brmsfit</span>
 <span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='no'>hypothesis</span>,
-  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>,
+  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>,
   <span class='st'>"all"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for emmGrid</span>
 <span class='fu'>bayesfactor_restricted</span>(<span class='no'>posterior</span>, <span class='no'>hypothesis</span>,
   <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
-
+    
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -240,10 +241,11 @@ For more info, see <a href='https://easystats.github.io/bayestestR/articles/baye
 Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     </table>
-
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame containing the Bayes factor representing evidence <em>against</em> the un-restricted model.</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This method is used to compute Bayes factors for order-restricted models vs un-restricted
@@ -255,7 +257,8 @@ it is more suitable for testing order restrictions (see examples)).</p>
 extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.</p>
 <p><strong>NOTE:</strong> For <code>brmsfit</code> models, the model must have been fitted with <em>custom (non-default)</em> priors. See example below.</p>
 <h3>Setting the correct <code>prior</code></h3>
-<p>It is important to provide the correct <code>prior</code> for meaningful results.</p><ul>
+    It is important to provide the correct <code>prior</code> for meaningful results.
+<ul>
 <li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
 <li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model:</p><ul>
 <li><p><code>prior</code> can be set to <code>NULL</code>, in which case prior samples are drawn internally.</p></li>
@@ -267,37 +270,36 @@ extracted for each parameter, and Savage-Dickey Bayes factors are computed for e
 </ul></li>
 </ul>
 <h3>Interpreting Bayes Factors</h3>
-<p>A Bayes factor greater than 1 can be interpereted as evidence against the null,
+    A Bayes factor greater than 1 can be interpereted as evidence against the null,
 at which one convention is that a Bayes factor greater than 3 can be considered
 as "substantial" evidence against the null (and vice versa, a Bayes factor
 smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
-(<cite>Wetzels et al. 2011</cite>).</p>
-
+(<cite>Wetzels et al. 2011</cite>).
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    
-<ul>
+    <ul>
 <li><p>Morey, R. D., &amp; Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics &amp; Probability Letters, 92, 121-124.</p></li>
 <li><p>Morey, R. D., &amp; Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.</p></li>
 <li><p>Morey, R. D. (Jan, 2015). Multiple Comparisons with BayesFactor, Part 2 – order restrictions. Retrived from https://richarddmorey.org/category/order-restrictions/.</p></li>
 </ul>
-
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bayestestR</span>)
-<span class='no'>prior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  <span class='kw'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>),
-  <span class='kw'>X1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>),
-  <span class='kw'>X3</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>bayestestR</span>)
+<span class='no'>prior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
+  <span class='kw'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>),
+  <span class='kw'>X1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>),
+  <span class='kw'>X3</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)
 )
 
-<span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  <span class='kw'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>.4</span>),
-  <span class='kw'>X1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, -<span class='fl'>.2</span>),
-  <span class='kw'>X3</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)
+<span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(
+  <span class='kw'>X</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>.4</span>),
+  <span class='kw'>X1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>, -<span class='fl'>.2</span>),
+  <span class='kw'>X3</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>100</span>)
 )
 
-<span class='no'>hyps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+<span class='no'>hyps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(
   <span class='st'>"X &gt; X1 &amp; X1 &gt; X3"</span>,
   <span class='st'>"X &gt; X1"</span>
 )
@@ -308,14 +310,14 @@ smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
 #&gt;  X &gt; X1 &amp; X1 &gt; X3     0.20         0.23         1.15
 #&gt;            X &gt; X1     0.47         0.74         1.57
 #&gt; 
-#&gt; * Bayes factors for the restricted movel vs. the un-restricted model.</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; * Bayes factors for the restricted movel vs. the un-restricted model.</div></span><span class='co'># NOT RUN {</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>fit_stan</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span> + <span class='no'>am</span>,
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rstanarm</span>)
+<span class='no'>fit_stan</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span> + <span class='no'>am</span>,
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>
 )
-<span class='no'>hyps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+<span class='no'>hyps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(
   <span class='st'>"am &gt; 0 &amp; cyl &lt; 0"</span>,
   <span class='st'>"cyl &lt; 0"</span>,
   <span class='st'>"wt - cyl &gt; 0"</span>
@@ -324,16 +326,16 @@ smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
 
 <span class='co'># emmGrid objects</span>
 <span class='co'># ---------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='kw'>contrasts</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"contr.bayes"</span>, <span class='st'>"contr.bayes"</span>)) <span class='co'># see `bfrms` package</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>emmeans</span>)
 
 <span class='co'># replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html</span>
-<span class='no'>disgust_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.table</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/connections.html'>url</a></span>(<span class='st'>"http://www.learnbayes.org/disgust_example.txt"</span>), <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>disgust_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/read.table'>read.table</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/connections'>url</a></span>(<span class='st'>"http://www.learnbayes.org/disgust_example.txt"</span>), <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='no'>fit_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glm.html'>stan_glm</a></span>(<span class='no'>score</span> ~ <span class='no'>condition</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>disgust_data</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>())
+<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/contrasts'>contrasts</a></span>(<span class='no'>disgust_data</span>$<span class='no'>condition</span>) <span class='kw'>&lt;-</span> <span class='no'>contr.bayesian</span> <span class='co'># see vignette</span>
+<span class='no'>fit_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rstanarm/topics/stan_glm'>stan_glm</a></span>(<span class='no'>score</span> ~ <span class='no'>condition</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>disgust_data</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/family'>gaussian</a></span>())
 
-<span class='no'>em_condition</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emmeans.html'>emmeans</a></span>(<span class='no'>fit_model</span>, ~<span class='no'>condition</span>)
-<span class='no'>hyps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lemon &lt; control &amp; control &lt; sulfur"</span>)
+<span class='no'>em_condition</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/emmeans/topics/emmeans'>emmeans</a></span>(<span class='no'>fit_model</span>, ~<span class='no'>condition</span>)
+<span class='no'>hyps</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"lemon &lt; control &amp; control &lt; sulfur"</span>)
 
 <span class='fu'>bayesfactor_restricted</span>(<span class='no'>em_condition</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>fit_model</span>, <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='no'>hyps</span>)
 <span class='co'># &gt; # Bayes Factor (Order-Restriction)</span>
@@ -342,21 +344,25 @@ smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
 <span class='co'># &gt;  lemon &lt; control &amp; control &lt; sulfur     0.17         0.75         4.49</span>
 <span class='co'># &gt; ---</span>
 <span class='co'># &gt; Bayes factors for the restricted movel vs. the un-restricted model.</span>
-}</div></span></pre>
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      
       <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
+
       <li><a href="#references">References</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
-
 
       <footer>
       <div class="copyright">
@@ -364,16 +370,13 @@ smaller than 1/3 indicates substantial evidence in favor of the null-hypothesis)
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
-
       </footer>
    </div>
 
   
 
-
   </body>
 </html>
-
 
