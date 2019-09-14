@@ -42,7 +42,7 @@
     stop("Package \"brms\" needed for this function to work. Please install it.")
   }
 
-  if (isTRUE(attr(model$prior, "sample_prior")=="only")) {
+  if (isTRUE(attr(model$prior, "sample_prior") == "only")) {
     return(model)
   }
 

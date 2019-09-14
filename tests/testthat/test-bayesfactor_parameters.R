@@ -54,7 +54,7 @@ test_that("bayesfactor_parameters RSTANARM", {
   testthat::expect_equal(log(bfsd$BF), c(-2.96, -0.18), tolerance = 0.2)
 
   junk <- capture.output(model_p <- update(model, prior_PD = TRUE))
-  bfsd <- bayestestR::bayesfactor_parameters(model,model_p)
+  bfsd <- bayestestR::bayesfactor_parameters(model, model_p)
   testthat::expect_equal(log(bfsd$BF), c(-2.69, -0.14), tolerance = 0.2)
 })
 

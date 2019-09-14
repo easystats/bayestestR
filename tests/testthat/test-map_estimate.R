@@ -26,10 +26,12 @@ if (require("insight")) {
   test_that("map_estimate", {
     testthat::expect_equal(
       map_estimate(m, effects = "all", component = "all")$Parameter,
-      c("b_Intercept", "b_child", "b_camper", "r_persons.1.Intercept.",
+      c(
+        "b_Intercept", "b_child", "b_camper", "r_persons.1.Intercept.",
         "r_persons.2.Intercept.", "r_persons.3.Intercept.", "r_persons.4.Intercept.",
         "b_zi_Intercept", "b_zi_child", "b_zi_camper", "r_persons__zi.1.Intercept.",
-        "r_persons__zi.2.Intercept.", "r_persons__zi.3.Intercept.", "r_persons__zi.4.Intercept.")
+        "r_persons__zi.2.Intercept.", "r_persons__zi.3.Intercept.", "r_persons__zi.4.Intercept."
+      )
     )
   })
 }

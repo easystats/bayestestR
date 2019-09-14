@@ -451,10 +451,12 @@ bayesfactor_parameters.bayesfactor_models <- function(...) {
 }
 
 #' @export
-bayesfactor_parameters.sim <- function(...){
-  stop("Bayes factors are based on the shift from a prior to a posterior. ",
-       "Since simulated draws are not based on any priors, computing Bayes factors does not make sense :(\n",
-       "You might want to try `rope`, `ci`, `pd` or `pmap` for posterior-based inference.")
+bayesfactor_parameters.sim <- function(...) {
+  stop(
+    "Bayes factors are based on the shift from a prior to a posterior. ",
+    "Since simulated draws are not based on any priors, computing Bayes factors does not make sense :(\n",
+    "You might want to try `rope`, `ci`, `pd` or `pmap` for posterior-based inference."
+  )
 }
 
 #' @export

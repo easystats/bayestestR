@@ -12,14 +12,14 @@ contr.bayes(n, contrasts = TRUE)
 \item{contrasts}{logical indicating whether contrasts should be computed.}
 }
 \value{
-A `matrix` with n rows and k columns, with k=n-1 if contrasts is
-  `TRUE`` and k=n if contrasts is `FALSE`.
+A \code{matrix} with n rows and k columns, with k=n-1 if contrasts is
+  \code{TRUE} and k=n if contrasts is \code{FALSE}.
 }
 \description{
 Returns a design or model matrix of orthonormal contrasts such that the
 marginal prior on all effects is identical. Implementation from Singmann
-& Gronau's \href{https://github.com/bayesstuff/bfrms/}{\code{bfrms}},
-following the description in Rouder, Morey, Speckman, & Province (2012, p. 363).
+\& Gronau's \href{https://github.com/bayesstuff/bfrms/}{\code{bfrms}},
+following the description in Rouder, Morey, Speckman, \& Province (2012, p. 363).
 }
 \details{
 Though using this factor coding scheme might obscure the interpretation of
@@ -30,32 +30,32 @@ priors for factors with more than 2 levels in
 }
 \examples{
 \dontrun{
-contr.bayes(2)  ## Q_2 in Rouder et al. (2012, p. 363)
+contr.bayes(2) # Q_2 in Rouder et al. (2012, p. 363)
 #            [,1]
 # [1,] -0.7071068
 # [2,]  0.7071068
 
-contr.bayes(5)  ## equivalent to Q_5 in Rouder et al. (2012, p. 363)
-           [,1]       [,2]       [,3]       [,4]
-[1,]  0.0000000  0.8944272  0.0000000  0.0000000
-[2,]  0.0000000 -0.2236068 -0.5000000  0.7071068
-[3,]  0.7071068 -0.2236068 -0.1666667 -0.4714045
-[4,] -0.7071068 -0.2236068 -0.1666667 -0.4714045
-[5,]  0.0000000 -0.2236068  0.8333333  0.2357023
+contr.bayes(5) # equivalent to Q_5 in Rouder et al. (2012, p. 363)
+#            [,1]       [,2]       [,3]       [,4]
+# [1,]  0.0000000  0.8944272  0.0000000  0.0000000
+# [2,]  0.0000000 -0.2236068 -0.5000000  0.7071068
+# [3,]  0.7071068 -0.2236068 -0.1666667 -0.4714045
+# [4,] -0.7071068 -0.2236068 -0.1666667 -0.4714045
+# [5,]  0.0000000 -0.2236068  0.8333333  0.2357023
 
 ## check decomposition
 Q3 <- contr.bayes(3)
 Q3 \%*\% t(Q3)
-           [,1]       [,2]       [,3]
-[1,]  0.6666667 -0.3333333 -0.3333333
-[2,] -0.3333333  0.6666667 -0.3333333
-[3,] -0.3333333 -0.3333333  0.6666667
+#            [,1]       [,2]       [,3]
+# [1,]  0.6666667 -0.3333333 -0.3333333
+# [2,] -0.3333333  0.6666667 -0.3333333
+# [3,] -0.3333333 -0.3333333  0.6666667
 ## 2/3 on diagonal and -1/3 on off-diagonal elements
 }
 
 }
 \references{
-Rouder, J. N., Morey, R. D., Speckman, P. L., & Province, J. M.
+Rouder, J. N., Morey, R. D., Speckman, P. L., \& Province, J. M.
   (2012). Default Bayes factors for ANOVA designs. *Journal of Mathematical
   Psychology*, 56(5), 356-374. https://doi.org/10.1016/j.jmp.2012.08.001
 }

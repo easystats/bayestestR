@@ -11,10 +11,9 @@
 #' model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
 #' check_prior(model, method = "gelman")
 #' check_prior(model, method = "lakeland")
-#'
 #' @references https://statmodeling.stat.columbia.edu/2019/08/10/
 #' @export
-check_prior <- function(model, method = "gelman", ...){
+check_prior <- function(model, method = "gelman", ...) {
   UseMethod("check_prior")
 }
 
@@ -77,13 +76,11 @@ check_prior.stanreg <- function(model, method = "gelman", effects = c("fixed", "
 
 #' @importFrom stats sd
 #' @keywords internal
-.check_prior <- function(priors, posteriors, method = "gelman"){
-
+.check_prior <- function(priors, posteriors, method = "gelman") {
   result <- c()
 
   # iterate over parameters
   for (param in names(posteriors)) {
-
     posterior <- posteriors[[param]]
     prior <- priors[[param]]
 
@@ -91,7 +88,7 @@ check_prior.stanreg <- function(model, method = "gelman", effects = c("fixed", "
     if (method == "gelman") {
       if (stats::sd(posterior) > 0.1 * stats::sd(prior)) {
         result <- c(result, "informative")
-      } else{
+      } else {
         result <- c(result, "uninformative")
       }
     } else if (method == "lakeland") {
@@ -99,10 +96,10 @@ check_prior.stanreg <- function(model, method = "gelman", effects = c("fixed", "
       r <- rope(posterior, ci = 1, range = c(hdi$CI_low, hdi$CI_high))
       if (as.numeric(r) > 0.99) {
         result <- c(result, "informative")
-      } else{
+      } else {
         result <- c(result, "misinformative")
       }
-    } else{
+    } else {
       stop("method should be 'gelman' or 'lakeland'.")
     }
   }

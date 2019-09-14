@@ -137,7 +137,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
     if (length(denominator_model) == 0) {
       mods <- c(mods, list(denominator))
-      mnames <- c(mnames,model_name)
+      mnames <- c(mnames, model_name)
       denominator <- length(mods)
     } else {
       denominator <- denominator_model
@@ -159,8 +159,10 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   } else {
     if (verbose) {
       object_names <- match.call(expand.dots = FALSE)$`...`
-      warning(sprintf("Unable to extract terms or validate that all models use the same data - following objects are not (supported) model objects (yet!): \n%s",
-                   paste0(mnames[!supported_models], collapse = ", ")), call. = FALSE)
+      warning(sprintf(
+        "Unable to extract terms or validate that all models use the same data - following objects are not (supported) model objects (yet!): \n%s",
+        paste0(mnames[!supported_models], collapse = ", ")
+      ), call. = FALSE)
     }
 
     mforms <- mnames

@@ -19,7 +19,6 @@
 #'
 #' model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
 #' mcse(model)
-#'
 #' @importFrom insight get_parameters
 #' @export
 mcse <- function(model, ...) {
