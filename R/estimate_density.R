@@ -164,6 +164,7 @@ estimate_density.stanreg <- function(x, method = "kernel", precision = 2^10, ext
   effects <- match.arg(effects)
 
   out <- estimate_density(insight::get_parameters(x, effects = effects, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
 
   out
 }
@@ -177,6 +178,7 @@ estimate_density.brmsfit <- function(x, method = "kernel", precision = 2^10, ext
   component <- match.arg(component)
 
   out <- estimate_density(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
 
   out
 }
