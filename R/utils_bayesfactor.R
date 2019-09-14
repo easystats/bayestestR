@@ -6,14 +6,14 @@
 
 
 #' @keywords internal
-#' @importFrom stats update
+#' @importFrom stats update getCall
 #' @importFrom utils capture.output
 .update_to_priors.stanreg <- function(model, verbose = TRUE) {
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
   }
 
-  prior_PD <- getCall(model)$prior_PD
+  prior_PD <- stats::getCall(model)$prior_PD
   if (!is.null(prior_PD) && isTRUE(eval(parse(text = prior_PD)))) {
     return(model)
   }
