@@ -57,13 +57,6 @@ diagnostic_posterior.BFBayesFactor <- diagnostic_posterior.numeric
 #' @rdname diagnostic_posterior
 #' @export
 diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
-
-  model_algorithm <- insight::find_algorithm(posteriors)
-
-  if (model_algorithm$algorithm %in% c("fullrank", "meanfield")) {
-    stop("Model diagnostic not available for stanreg-models fitted with 'fullrank' or 'meanfield'-algorithm.\n", "red")
-  }
-
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE")
