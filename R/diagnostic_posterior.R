@@ -73,7 +73,8 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns
-  diagnostic_df <- diagnostic_df[, c("Parameter", diagnostic)]
+  available_columns <- intersect(colnames(diagnostic_df), c("Parameter", diagnostic))
+  diagnostic_df <- diagnostic_df[available_columns]
   row.names(diagnostic_df) <- NULL
 
   # Select rows

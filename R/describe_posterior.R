@@ -328,6 +328,7 @@ describe_posterior.emmGrid <- function(posteriors, centrality = "median", disper
 
 #' @inheritParams insight::get_parameters
 #' @inheritParams diagnostic_posterior
+#' @importFrom insight find_algorithm
 #' @param priors Add the prior used for each parameter.
 #' @rdname describe_posterior
 #' @export
@@ -335,15 +336,21 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
 
   if (!is.null(diagnostic)) {
-    diagnostic <-
-      diagnostic_posterior(
-        posteriors,
-        diagnostic,
-        effects = effects,
-        parameters = parameters,
-        ...
-      )
-    out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
+    model_algorithm <- insight::find_algorithm(posteriors)
+
+    if (model_algorithm$algorithm != "fullrank") {
+      diagnostic <-
+        diagnostic_posterior(
+          posteriors,
+          diagnostic,
+          effects = effects,
+          parameters = parameters,
+          ...
+        )
+      out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
+    } else {
+      insight::print_color("Model diagnostic not available for stanreg-models fitted with 'fullrank'-algorithm.\n", "red")
+    }
   }
 
   if (isTRUE(priors)) {
