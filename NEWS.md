@@ -18,7 +18,8 @@
 
 ## Bug fixes
 
-- Fixed bug in `bayesfactor_inclusion()` where the same interaction sometimes appeared more than once ( #223 ).
+- Fixed bug in `bayesfactor_inclusion()` where the same interaction sometimes appeared more than once (#223).
+- Fixed bug in `describe_posterior()` for *stanreg* models fitted with fullrank-algorithm.
 
 # bayestestR 0.2.5
 
