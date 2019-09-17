@@ -338,7 +338,9 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
   if (!is.null(diagnostic)) {
     model_algorithm <- insight::find_algorithm(posteriors)
 
-    if (model_algorithm$algorithm != "fullrank") {
+    if (model_algorithm$algorithm %in% c("fullrank", "meanfield")) {
+      insight::print_color("Model diagnostic not available for stanreg-models fitted with 'fullrank' or 'meanfield'-algorithm.\n", "red")
+    } else {
       diagnostic <-
         diagnostic_posterior(
           posteriors,
@@ -348,8 +350,6 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
           ...
         )
       out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
-    } else {
-      insight::print_color("Model diagnostic not available for stanreg-models fitted with 'fullrank'-algorithm.\n", "red")
     }
   }
 
