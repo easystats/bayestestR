@@ -12,6 +12,8 @@
 #' an approximation of a Bayes factor comparing the marginal likelihoods of the model
 #' against a model in which the tested parameter has been restricted to the point null.
 #' \cr \cr
+#' \strong{For info on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
+#' \cr \cr
 #' For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 #'
 #' @param posterior A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}
@@ -73,6 +75,7 @@
 #' # rstanarm models
 #' # ---------------
 #' library(rstanarm)
+#' contrasts(sleep$group) <- contr.bayes # see vingette
 #' stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #' bayesfactor_parameters(stan_model)
 #' bayesfactor_parameters(stan_model, null = rope_range(stan_model))
@@ -86,6 +89,7 @@
 #' # brms models
 #' # -----------
 #' library(brms)
+#' contrasts(sleep$group) <- contr.bayes # see vingette
 #' my_custom_priors <-
 #'   set_prior("student_t(3, 0, 1)", class = "b") +
 #'   set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")
@@ -177,9 +181,10 @@ bayesfactor_parameters.stanreg <- function(posterior, prior = NULL,
 
   # Get Priors
   if (is.null(prior)) {
-    prior <- .update_to_priors(posterior, verbose = verbose)
+    prior <- posterior
   }
 
+  prior <- .update_to_priors(prior, verbose = verbose)
   prior <- insight::get_parameters(prior, effects = effects, component = component)
   posterior <- insight::get_parameters(posterior, effects = effects, component = component)
 
@@ -446,10 +451,12 @@ bayesfactor_parameters.bayesfactor_models <- function(...) {
 }
 
 #' @export
-bayesfactor_parameters.sim <- function(...){
-  stop("Bayes factors are based on the shift from a prior to a posterior. ",
-       "Since simulated draws are not based on any priors, computing Bayes factors does not make sense :(\n",
-       "You might want to try `rope`, `ci`, `pd` or `pmap` for posterior-based inference.")
+bayesfactor_parameters.sim <- function(...) {
+  stop(
+    "Bayes factors are based on the shift from a prior to a posterior. ",
+    "Since simulated draws are not based on any priors, computing Bayes factors does not make sense :(\n",
+    "You might want to try `rope`, `ci`, `pd` or `pmap` for posterior-based inference."
+  )
 }
 
 #' @export

@@ -13,9 +13,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Bayes Factors">
 <meta property="og:description" content="">
@@ -118,7 +117,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/easystats/bayestestR">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -131,7 +130,6 @@
 <!--/.navbar -->
 
       
-
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -180,7 +178,7 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 Bayesian analysis of the Students’ (1908) Sleep data set.
 </p>
 </div>
-<p>Let’s use the Students’ (1908) Sleep data set (<code><a href="https://rdrr.io/r/utils/data.html">data("sleep")</a></code>), in which <strong>people took some drug</strong> and where the researchers measured the <strong>extra hours of sleep</strong> that they slept afterwards. We will try answering the following question: <em>given the observed data, how likely it is that the <strong>drug</strong> (the variable <code>group</code>) <strong>has no effect</strong> on the numbers of hours of <strong>extra sleep</strong> (variable <code>extra</code>)?</em></p>
+<p>Let’s use the Students’ (1908) Sleep data set (<code><a href="https://www.rdocumentation.org/packages/utils/topics/data">data("sleep")</a></code>), in which <strong>people took some drug</strong> and where the researchers measured the <strong>extra hours of sleep</strong> that they slept afterwards. We will try answering the following question: <em>given the observed data, how likely it is that the <strong>drug</strong> (the variable <code>group</code>) <strong>has no effect</strong> on the numbers of hours of <strong>extra sleep</strong> (variable <code>extra</code>)?</em></p>
 <p><img src="bayes_factors_files/figure-html/sleep_boxplot-1.png" width="2187.5"></p>
 <p>The <strong>bloxplot</strong> suggests that the 2nd group has a higher number of hours of extra sleep. <em>By how much?</em> Let’s fit a simple <a href="https://easystats.github.io/bayestestR/articles/example1_GLM.html">Bayesian linear model</a>.</p>
 <div id="testing-against-a-null-region" class="section level3">
@@ -194,10 +192,10 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 {P(b_{drug} \notin [-0.5, 0.5])}
 \]</span></p>
 <p>If we set our prior to have a normal distribution centered at 0 hours with a scale (an SD) of 2.5 hours, our prior would look like this:</p>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-2-1.png" width="2187.5"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-1-1.png" width="2187.5"></p>
 <p>The prior odds would be 5.3.</p>
 <p>We can now fit our model:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb1-2" title="2">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(extra <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> sleep)</a></code></pre></div>
 <p>By looking at the posterior distribution, can now compute the posterior probability of the drug’s effect falling <em>within the null-region</em>, and the posterior probability of the drug’s effect falling <em>outside the null-region</em> to get our <em>posterior odds</em>:</p>
 <p><span class="math display">\[
@@ -210,7 +208,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <p>Let’s compute the Bayes factor as the change from the prior odds to the posterior odds: <span class="math inline">\(BF_{10} = Odds_{posterior} / Odds_{prior} = 0.6\)</span>! This BF indicates that the data provide 1/0.6 = 1.6 times more evidence for the effect of the drug being practically nothing than it does for the drug having some clinically significant effect. Alternatively, we can say that the observed data are 1.63 times more probable if effect of the drug was within the null interval than if it was outside of it! Thus, although the center of distribution has shifted away from 0, and the posterior favors the non-null values, it seems that given the observed data, the probability mass has <em>overall</em> shifted closer to the null interval, making the values in the null interval more probable! <span class="citation">(see <em>Non-overlapping Hypotheses</em> in Morey &amp; Rouder, 2011)</span></p>
 <p>Note that <strong>interpretation guides</strong> for Bayes factors can be found <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf"><strong>here</strong></a>.</p>
 <p>All of this can be achieved with the function <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code>, which gives a Bayes factor for each of the model’s parameters:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">My_first_BF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span>(model, <span class="dt">null =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span>.<span class="dv">5</span>,.<span class="dv">5</span>))</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">My_first_BF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span>(model, <span class="dt">null =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span>.<span class="dv">5</span>,.<span class="dv">5</span>))</a>
 <a class="sourceLine" id="cb2-2" title="2">My_first_BF</a></code></pre></div>
 <pre><code>&gt; # Bayes Factor (Null-Interval)
 &gt; 
@@ -219,8 +217,8 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt;       group2         0.61   fixed conditional
 &gt; 
 &gt; * Evidence Against The Null: [-0.5, 0.5]</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(My_first_BF)</a></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-6-1.png" width="2187.5"></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(My_first_BF)</a></code></pre></div>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-5-1.png" width="2187.5"></p>
 </div>
 <div id="testing-against-the-null-as-a-single-point-0" class="section level3">
 <h3 class="hasAnchor">
@@ -238,8 +236,8 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt;       group2         0.82   fixed conditional
 &gt; 
 &gt; * Evidence Against The Null: [0]</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(My_second_BF)</a></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-9-1.png" width="2187.5"></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(My_second_BF)</a></code></pre></div>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-8-1.png" width="2187.5"></p>
 <p>By default, <code>null</code> is set to 0, resulting in the computation of a Savage-Dickey ratio.</p>
 </div>
 <div id="one-sided-tests" class="section level3">
@@ -262,11 +260,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <div id="testing-contrasts-with-emmeans" class="section level3">
 <h3 class="hasAnchor">
 <a href="#testing-contrasts-with-emmeans" class="anchor"></a>Testing Contrasts (with <code>emmeans</code>)</h3>
-<!-- MSB: is this section needed? I feel like not... -->
-<!-- DM: Not sure either it's up to you -->
 <p>We can also use <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> together with <a href="https://cran.r-project.org/package=emmeans"><strong>emmeans</strong></a>, allowing us to <a href="https://easystats.github.io/blog/posts/bayestestr_emmeans/">test Bayesian contrasts</a>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(emmeans)</a>
-<a class="sourceLine" id="cb10-2" title="2">group_diff &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span>(<span class="kw">emmeans</span>(model, <span class="op">~</span><span class="st"> </span>group))</a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(emmeans)</a>
+<a class="sourceLine" id="cb10-2" title="2">group_diff &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/pairs">pairs</a></span>(<span class="kw">emmeans</span>(model, <span class="op">~</span><span class="st"> </span>group))</a>
 <a class="sourceLine" id="cb10-3" title="3">group_diff</a></code></pre></div>
 <pre><code>&gt;  contrast estimate lower.HPD upper.HPD
 &gt;  1 - 2       -1.57      -3.3     0.187
@@ -281,6 +277,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt;      1 - 2          0.9
 &gt; 
 &gt; * Evidence Against The Null: [0]</code></pre>
+<p><strong>NOTE</strong>: See the <em>Specifying Correct Priors for Factors with More Than 2 Levels</em> section below.</p>
 </div>
 </div>
 <div id="comparing-models-using-bayes-factors" class="section level2">
@@ -304,7 +301,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <code>stanreg</code> models <strong>must</strong> have been fitted with a defined <code>diagnostic_file</code>.</li>
 </ul>
 <p>Let’s first fit 5 Bayesian regressions with <code>brms</code> to predict <code>Sepal.Length</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(brms)</a>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(brms)</a>
 <a class="sourceLine" id="cb15-2" title="2"></a>
 <a class="sourceLine" id="cb15-3" title="3">m0 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="co"># intercept only model</span></a>
 <a class="sourceLine" id="cb15-4" title="4">          <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a>
@@ -317,7 +314,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <a class="sourceLine" id="cb15-11" title="11">m4 &lt;-<span class="st"> </span><span class="kw">brm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species <span class="op">*</span><span class="st"> </span>Petal.Length,</a>
 <a class="sourceLine" id="cb15-12" title="12">          <span class="dt">data =</span> iris, <span class="dt">save_all_pars =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>We can now compare these models with the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function, using the <code>denominator</code> argument to specify which model all models will be compared against (in this case, the intercept-only model):</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bayestestR)</a>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a>
 <a class="sourceLine" id="cb16-2" title="2">comparison &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span>(m1, m2, m3, m4, <span class="dt">denominator =</span> m0)</a>
 <a class="sourceLine" id="cb16-3" title="3">comparison</a></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison
@@ -332,7 +329,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>We can see that the full model is the best model - with <span class="math inline">\(BF_{\text{m0}}=9\times 10^{55}\)</span> compared to the null (intercept only).</p>
 <p>Due to the transitive property of Bayes factors, we can easily change the reference model to the main effects model:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw"><a href="https://rdrr.io/r/stats/update.html">update</a></span>(comparison, <span class="dt">reference =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/update">update</a></span>(comparison, <span class="dt">reference =</span> <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
 &gt;   Model                      Bayes Factor
@@ -345,7 +342,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>As we can see, though the full model is the best, there is hardly any evidence that it is preferable to the main effects model.</p>
 <p>We can also change the reference model to the <code>Species</code> model:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="https://rdrr.io/r/stats/update.html">update</a></span>(comparison, <span class="dt">reference =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/update">update</a></span>(comparison, <span class="dt">reference =</span> <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
 &gt;   Model                      Bayes Factor
@@ -365,7 +362,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <h3 class="hasAnchor">
 <a href="#for-frequentist-models-via-the-bic-approximation" class="anchor"></a>For Frequentist models via the BIC approximation</h3>
 <p>It is also possible to compute Bayes factors for frequentist models. This is done by comparing BIC measures, allowing a Bayesian comparison of non-nested frequentist models <span class="citation">(Wagenmakers, 2007)</span>. Let’s try it out on some <strong>linear mixed models</strong>:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lme4)</a>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(lme4)</a>
 <a class="sourceLine" id="cb22-2" title="2"></a>
 <a class="sourceLine" id="cb22-3" title="3">m0 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
 <a class="sourceLine" id="cb22-4" title="4">m1 &lt;-<span class="st"> </span><span class="kw">lmer</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>Species), <span class="dt">data =</span> iris)</a>
@@ -424,8 +421,8 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <ol style="list-style-type: decimal">
 <li>Across all models:</li>
 </ol>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(BayesFactor)</a>
-<a class="sourceLine" id="cb28-2" title="2">ToothGrowth<span class="op">$</span>dose &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(ToothGrowth<span class="op">$</span>dose)</a>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(BayesFactor)</a>
+<a class="sourceLine" id="cb28-2" title="2">ToothGrowth<span class="op">$</span>dose &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/factor">as.factor</a></span>(ToothGrowth<span class="op">$</span>dose)</a>
 <a class="sourceLine" id="cb28-3" title="3">BF_ToothGrowth &lt;-<span class="st"> </span><span class="kw">anovaBF</span>(len <span class="op">~</span><span class="st"> </span>dose<span class="op">*</span>supp, ToothGrowth)</a>
 <a class="sourceLine" id="cb28-4" title="4"></a>
 <a class="sourceLine" id="cb28-5" title="5"><span class="kw"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(BF_ToothGrowth)</a></code></pre></div>
@@ -484,15 +481,14 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <p><img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP3.PNG"><!-- --></p>
 </div>
 </div>
-</div>
-<div id="order-restricted-models" class="section level2">
-<h2 class="hasAnchor">
-<a href="#order-restricted-models" class="anchor"></a>Order Restricted Models</h2>
-<p>Consider the following model, in which we predict the length of an iris’ sepal from the length of its petal, as well as from its species. <img src="bayes_factors_files/figure-html/unnamed-chunk-11-1.png" width="2187.5"></p>
+<div id="order-restricted-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#order-restricted-models" class="anchor"></a>Order Restricted Models</h3>
+<p>Consider the following model, in which we predict the length of an iris’ sepal from the length of its petal, as well as from its species. <img src="bayes_factors_files/figure-html/plot_iris-1.png" width="2187.5"></p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">iris_model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species <span class="op">+</span><span class="st"> </span>Petal.Length,</a>
 <a class="sourceLine" id="cb36-2" title="2">                       <span class="dt">data =</span> iris)</a></code></pre></div>
 <p>What are our priors (here, <code>rstanarm</code>’s default priors) for this model’s parameters? They all take the shape of some normal distribution centered at 0:</p>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-13-1.png" width="2187.5"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-11-1.png" width="2187.5"></p>
 <p>These priors are unrestricted - that is, all of the model’s parameter have some non-zero probability (no matter how small) of being any of the values between <span class="math inline">\(-\infty\)</span> and <span class="math inline">\(\infty\)</span> (this is true for both the prior and posterior distribution). Subsequently, <em>a priori</em> the ordering of the parameters relating to the iris species can have any ordering, such that (a priori) setosa can have larger sepals than virginica, but it is also possible for virginica to have larger sepals than setosa!</p>
 <p>Does it make sense to let our priors cover all of these possibilities? That depends on our <em>prior</em> knowledge or assumptions. For example, even a novice botanist will assume that it is unlikely that petal length will be <em>negatively</em> associated with sepal length - an iris with longer petals is likely larger, and thus will also have a longer sepal. And an expert botanist will perhaps assume that setosas have smaller sepals than both versicolors and virginica. All of these prior assumptions can be formulated as order restrictions <span class="citation">(Morey, 2015; Morey &amp; Rouder, 2011)</span>:</p>
 <ol style="list-style-type: decimal">
@@ -502,7 +498,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 </li>
 </ol>
 <p>By testing these restrictions on prior and posterior samples, we can see how the probability of the restrictions changes after observing the data. This can be achieved with <code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code>, that compute a Bayes factor for these restricted model vs the unrestricted model. Let’s first specify these restrictions as logical conditions:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">botanist_hypotheses &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(</a>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">botanist_hypotheses &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(</a>
 <a class="sourceLine" id="cb37-2" title="2">  <span class="st">"Petal.Length &gt; 0"</span>,</a>
 <a class="sourceLine" id="cb37-3" title="3">  <span class="st">"(Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)"</span></a>
 <a class="sourceLine" id="cb37-4" title="4">)</a></code></pre></div>
@@ -528,92 +524,142 @@ BF_{restricted / NULL} = \frac
 {BF_{restricted / un-restricted}}
 {BF_{un-restricted / NULL}}
 \]</span></p>
-<p><em><strong>NOTE:</strong> Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (</em>a priori<em>) hypotheses, and should not be used for any post hoc comparisons <span class="citation">(Morey, 2015)</span>.</em></p>
-<div id="restricting-more-than-2-factor-levels" class="section level3">
+<p><strong>Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (<em>a priori</em>) hypotheses, and should not be used for any post hoc comparisons <span class="citation">(Morey, 2015)</span>.</strong></p>
+<p><strong>NOTE</strong>: See the <em>Specifying Correct Priors for Factors with More Than 2 Levels</em> section below.</p>
+</div>
+</div>
+<div id="specifying-correct-priors-for-factors-with-more-than-2-levels" class="section level2">
+<h2 class="hasAnchor">
+<a href="#specifying-correct-priors-for-factors-with-more-than-2-levels" class="anchor"></a>Specifying Correct Priors for Factors with More Than 2 Levels</h2>
+<p>This section introduces the biased priors obtained when using the common <em>effects</em> factor coding (<code>contr.sum</code>), and the solution of using orthogonal factor coding (<code>contr.bayes</code>) <span class="citation">(as outlined in Rouder, Morey, Speckman, &amp; Province, 2012, sec. 7.2)</span>. Specifically, <strong><em>special care should be taken when working with factors which have 3 or more levels.</em></strong></p>
+<div id="contrasts-and-marginal-means" class="section level3">
 <h3 class="hasAnchor">
-<a href="#restricting-more-than-2-factor-levels" class="anchor"></a>Restricting More than 2 Factor-Levels</h3>
-<p><strong><em>Special care should be taken when restricting the order of more than 2 levels of the same factor.</em></strong></p>
-<p>If we want to test an order restriction among 3 groups A, B, and C, the<em>a priori</em> probability of obtaining the order A &gt; C &gt; B is 1/6 (reach back to intro to stats year 1…). And so when testing and order restriction on the ordering of levels in a factor, we would the priors or be 1/6…. But…</p>
-<p>For our example, we will be interested in the following order restrictions in the <code>iris</code> data (each line is a separate restriction):</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">hyp &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(</a>
-<a class="sourceLine" id="cb42-2" title="2">  <span class="co"># comparing 2 levels</span></a>
-<a class="sourceLine" id="cb42-3" title="3">  <span class="st">"setosa &gt; versicolor"</span>,</a>
-<a class="sourceLine" id="cb42-4" title="4">  <span class="st">"setosa &gt; virginica"</span>,</a>
-<a class="sourceLine" id="cb42-5" title="5">  <span class="st">"versicolor &gt; virginica"</span>,</a>
-<a class="sourceLine" id="cb42-6" title="6">  </a>
-<a class="sourceLine" id="cb42-7" title="7">  <span class="co"># comparing 3 (or more) levels</span></a>
-<a class="sourceLine" id="cb42-8" title="8">  <span class="st">"setosa    &lt; virginica  &amp; virginica  &lt; versicolor"</span>,</a>
-<a class="sourceLine" id="cb42-9" title="9">  <span class="st">"virginica &lt; setosa     &amp; setosa     &lt; versicolor"</span>,</a>
-<a class="sourceLine" id="cb42-10" title="10">  <span class="st">"setosa    &lt; versicolor &amp; versicolor &lt; virginica"</span></a>
-<a class="sourceLine" id="cb42-11" title="11">)</a></code></pre></div>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bayestestR)</a>
-<a class="sourceLine" id="cb43-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
-<a class="sourceLine" id="cb43-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(emmeans)</a></code></pre></div>
-<p>With the default factor coding, this looks like this:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">fit &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris,</a>
-<a class="sourceLine" id="cb44-2" title="2">                <span class="dt">family =</span> <span class="kw"><a href="https://rdrr.io/r/stats/family.html">gaussian</a></span>())</a></code></pre></div>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1">em_ &lt;-<span class="st"> </span><span class="kw">emmeans</span>(fit, <span class="op">~</span>Species)</a>
-<a class="sourceLine" id="cb45-2" title="2">em_ <span class="co"># the posterior marginal means</span></a></code></pre></div>
-<pre><code>&gt;  Species    emmean lower.HPD upper.HPD
-&gt;  setosa        5.0       4.9       5.1
-&gt;  versicolor    5.9       5.8       6.1
-&gt;  virginica     6.6       6.4       6.7
+<a href="#contrasts-and-marginal-means" class="anchor"></a>Contrasts (and Marginal Means)</h3>
+<p>The <em>effects</em> factor coding commonly used in factorial analysis carries a hidden bias when it is applies to Bayesian priors. For example, if we want to test all pairwise differences between 3 levels of the same factor, we would expect all <em>a priori</em> differences to have the same distribution, but…</p>
+<p>For our example, we will be test all pairwise differences between the 3 species in the <code>iris</code> data-set.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a>
+<a class="sourceLine" id="cb42-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
+<a class="sourceLine" id="cb42-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(emmeans)</a>
+<a class="sourceLine" id="cb42-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb42-5" title="5"></a>
+<a class="sourceLine" id="cb42-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/contrasts">contrasts</a></span>(iris<span class="op">$</span>Species) &lt;-<span class="st"> </span>contr.sum</a>
+<a class="sourceLine" id="cb42-7" title="7"></a>
+<a class="sourceLine" id="cb42-8" title="8">fit_sum &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris,</a>
+<a class="sourceLine" id="cb42-9" title="9">                    <span class="dt">prior =</span> <span class="kw">normal</span>(<span class="dv">0</span>,<span class="fl">0.1</span>), <span class="co"># just to drive the point home</span></a>
+<a class="sourceLine" id="cb42-10" title="10">                    <span class="dt">family =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/family">gaussian</a></span>())</a>
+<a class="sourceLine" id="cb42-11" title="11">c_sum &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/pairs">pairs</a></span>(<span class="kw">emmeans</span>(fit_sum, <span class="op">~</span><span class="st"> </span>Species))</a>
+<a class="sourceLine" id="cb42-12" title="12">c_sum</a></code></pre></div>
+<pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
+&gt;  setosa - versicolor       -0.59     -0.76     -0.42
+&gt;  setosa - virginica        -1.23     -1.42     -1.02
+&gt;  versicolor - virginica    -0.64     -0.83     -0.44
 &gt; 
 &gt; HPD interval probability: 0.95</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span>(em_, fit, <span class="dt">hypothesis =</span> hyp)</a></code></pre></div>
+<p>Let’s plot the priors and posteriors of these differences:</p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-16-1.png" width="2187.5"></p>
+<p><strong><em>What happened???</em></strong><br>
+It seems that not all pairwise differences have the same prior distribution!! Specifically, the mass of the difference between setosa and versicolor is closer to 0 than for any of the other differences! This is caused by an inherent bias introduced by the <em>effects</em> coding (it’s even worse with the default treatment coding, because the prior for the intercept is usually drastically different from the effect’s parameters).</p>
+<p>The solution is to use <em>orthogonal</em> factor coding, a-la <code>contr.bayes</code>, which can either specify this factor coding per-factor:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/contrasts">contrasts</a></span>(iris<span class="op">$</span>Species) &lt;-<span class="st"> </span>contr.bayes</a></code></pre></div>
+<p>Or you can set it globally:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">contrasts =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'contr.bayes'</span>, <span class="st">'contr.poly'</span>))</a></code></pre></div>
+<p>Once this is set, simply run your analyses as usual:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1">fit_bayes &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris,</a>
+<a class="sourceLine" id="cb46-2" title="2">                      <span class="dt">prior =</span> <span class="kw">normal</span>(<span class="dv">0</span>,<span class="fl">0.1</span>),</a>
+<a class="sourceLine" id="cb46-3" title="3">                      <span class="dt">family =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/family">gaussian</a></span>())</a>
+<a class="sourceLine" id="cb46-4" title="4">c_bayes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/pairs">pairs</a></span>(<span class="kw">emmeans</span>(fit_bayes, <span class="op">~</span><span class="st"> </span>Species))</a>
+<a class="sourceLine" id="cb46-5" title="5">c_bayes</a></code></pre></div>
+<pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
+&gt;  setosa - versicolor       -0.72     -0.92     -0.53
+&gt;  setosa - virginica        -1.24     -1.42     -1.03
+&gt;  versicolor - virginica    -0.51     -0.69     -0.33
+&gt; 
+&gt; HPD interval probability: 0.95</code></pre>
+<p>Let’s plot the priors and posteriors of these differences:</p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-21-1.png" width="2187.5"></p>
+<p>When comparing the results from the two factor coding schemes, we find: 1. In both cases, the estimated (posterior) means are similar.<br>
+2. The Bayes factors differ between the two schemes. 3. Only with <code>contr.bayes</code>, the prior distributions of the differences is unbiased.</p>
+</div>
+<div id="order-restrictions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#order-restrictions" class="anchor"></a>Order Restrictions</h3>
+<p>This bias also affect order restrictions involving 3 or more levels. For example, if we want to test an order restriction among A, B, and C, the <em>a priori</em> probability of obtaining the order A &gt; C &gt; B is 1/6 (reach back to <em>intro to stats</em> year 1), but…</p>
+<p>For our example, we will be interested in the following order restrictions in the <code>iris</code> data-set (each line is a separate restriction):</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1">hyp &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(</a>
+<a class="sourceLine" id="cb48-2" title="2">  <span class="co"># comparing 2 levels</span></a>
+<a class="sourceLine" id="cb48-3" title="3">  <span class="st">"setosa &gt; versicolor"</span>,</a>
+<a class="sourceLine" id="cb48-4" title="4">  <span class="st">"setosa &gt; virginica"</span>,</a>
+<a class="sourceLine" id="cb48-5" title="5">  <span class="st">"versicolor &gt; virginica"</span>,</a>
+<a class="sourceLine" id="cb48-6" title="6">  </a>
+<a class="sourceLine" id="cb48-7" title="7">  <span class="co"># comparing 3 (or more) levels</span></a>
+<a class="sourceLine" id="cb48-8" title="8">  <span class="st">"setosa    &lt; virginica  &amp; virginica  &lt; versicolor"</span>,</a>
+<a class="sourceLine" id="cb48-9" title="9">  <span class="st">"virginica &lt; setosa     &amp; setosa     &lt; versicolor"</span>,</a>
+<a class="sourceLine" id="cb48-10" title="10">  <span class="st">"setosa    &lt; versicolor &amp; versicolor &lt; virginica"</span></a>
+<a class="sourceLine" id="cb48-11" title="11">)</a></code></pre></div>
+<p>With the default factor coding, this looks like this:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1">em_sum &lt;-<span class="st"> </span><span class="kw">emmeans</span>(fit_sum, <span class="op">~</span>Species)</a>
+<a class="sourceLine" id="cb49-2" title="2">em_sum <span class="co"># the posterior marginal means</span></a></code></pre></div>
+<pre><code>&gt;  Species    emmean lower.HPD upper.HPD
+&gt;  setosa        5.2       5.1       5.4
+&gt;  versicolor    5.8       5.7       5.9
+&gt;  virginica     6.5       6.3       6.6
+&gt; 
+&gt; HPD interval probability: 0.95</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span>(em_sum, fit_sum, <span class="dt">hypothesis =</span> hyp)</a></code></pre></div>
 <pre><code>&gt; Computation of Bayes factors: sampling priors, please wait...</code></pre>
 <pre><code>&gt; # Bayes Factor (Order-Restriction)
 &gt; 
 &gt;                                        Hypothesis P(Prior) P(Posterior)
-&gt;                               setosa &gt; versicolor     0.49            0
-&gt;                                setosa &gt; virginica     0.51            0
+&gt;                               setosa &gt; versicolor     0.50            0
+&gt;                                setosa &gt; virginica     0.50            0
 &gt;                            versicolor &gt; virginica     0.51            0
-&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.13            0
-&gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor     0.26            0
-&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica     0.12            1
+&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.10            0
+&gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor     0.20            0
+&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica     0.20            1
 &gt;  Bayes Factor
 &gt;      0.00e+00
 &gt;      0.00e+00
 &gt;      0.00e+00
 &gt;      0.00e+00
 &gt;      0.00e+00
-&gt;          8.15
+&gt;          4.94
 &gt; 
 &gt; * Bayes factors for the restricted movel vs. the un-restricted model.</code></pre>
-<p>What happened??? 1. The comparison of 2 levels all have a prior of 0.5, as expected. 2. The comparison of 3 levels has different priors, depending on the order restriction - i.e. <strong>some orders are <em>a priori</em> more likely than others!!!</strong></p>
-<p>You can read more about why this happens in <span class="citation">(Rouder, Morey, Speckman, &amp; Province, 2012, sec. 7.2)</span>, but for now, let’s focus on the solution…</p>
-<p>What we need to do, is use a different type of factor coding, available from the <a href="https://github.com/bayesstuff/bfrms"><code>bfrms</code></a> package as <code>contr.bayes</code>.</p>
-<p>You can either specify this factor coding per-factor:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span>(iris<span class="op">$</span>Species) &lt;-<span class="st"> </span>bfrms<span class="op">::</span>contr.bayes</a></code></pre></div>
-<p>Or you can set this option globally:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">contr.bayes &lt;-<span class="st"> </span>bfrms<span class="op">::</span>contr.bayes</a>
-<a class="sourceLine" id="cb51-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="dt">contrasts =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'contr.bayes'</span>, <span class="st">'contr.poly'</span>))</a></code></pre></div>
-<p>Once this is set, simple run your analyses as usual:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">fit &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> iris,</a>
-<a class="sourceLine" id="cb52-2" title="2">                <span class="dt">family =</span> <span class="kw"><a href="https://rdrr.io/r/stats/family.html">gaussian</a></span>())</a>
-<a class="sourceLine" id="cb52-3" title="3"></a>
-<a class="sourceLine" id="cb52-4" title="4">em_ &lt;-<span class="st"> </span><span class="kw">emmeans</span>(fit, <span class="op">~</span>Species)</a>
-<a class="sourceLine" id="cb52-5" title="5">em_ <span class="co"># the posterior marginal means</span></a>
-<a class="sourceLine" id="cb52-6" title="6"><span class="co">#&gt;  Species    emmean lower.HPD upper.HPD</span></a>
-<a class="sourceLine" id="cb52-7" title="7"><span class="co">#&gt;  setosa       5.01      4.86      5.16</span></a>
-<a class="sourceLine" id="cb52-8" title="8"><span class="co">#&gt;  versicolor   5.94      5.78      6.07</span></a>
-<a class="sourceLine" id="cb52-9" title="9"><span class="co">#&gt;  virginica    6.59      6.45      6.73</span></a>
-<a class="sourceLine" id="cb52-10" title="10"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb52-11" title="11"><span class="co">#&gt; HPD interval probability: 0.95 </span></a>
-<a class="sourceLine" id="cb52-12" title="12"></a>
-<a class="sourceLine" id="cb52-13" title="13"><span class="kw"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span>(em_, fit, <span class="dt">hypothesis =</span> hyp)</a>
-<a class="sourceLine" id="cb52-14" title="14"><span class="co">#&gt; # Bayes Factor (Order-Restriction)</span></a>
-<a class="sourceLine" id="cb52-15" title="15"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb52-16" title="16"><span class="co">#&gt;                                        Hypothesis P(Prior) P(Posterior)  Bayes Factor</span></a>
-<a class="sourceLine" id="cb52-17" title="17"><span class="co">#&gt;                               setosa &gt; versicolor     0.51            0      0.00e+00</span></a>
-<a class="sourceLine" id="cb52-18" title="18"><span class="co">#&gt;                                setosa &gt; virginica     0.50            0      0.00e+00</span></a>
-<a class="sourceLine" id="cb52-19" title="19"><span class="co">#&gt;                            versicolor &gt; virginica     0.50            0      0.00e+00</span></a>
-<a class="sourceLine" id="cb52-20" title="20"><span class="co">#&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.16            0      0.00e+00</span></a>
-<a class="sourceLine" id="cb52-21" title="21"><span class="co">#&gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor     0.17            0      0.00e+00</span></a>
-<a class="sourceLine" id="cb52-22" title="22"><span class="co">#&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica     0.16            1          6.11</span></a>
-<a class="sourceLine" id="cb52-23" title="23"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb52-24" title="24"><span class="co">#&gt; * Bayes factors for the restricted movel vs. the un-restricted model.</span></a></code></pre></div>
-<p>When comparing the results from the two factor coding schemes, we find: 1. In both cases, the estimated (posterior) means are identical. 2. In both cases, the comparison of 2 levels the proper prior probability of 0.5. 3. Only with <code>contr.bayes</code>, the comparison of 3 (or more) levels the proper prior probability of - here that of 1/6 = 0.166.</p>
+<p><strong><em>What happened???</em></strong><br>
+1. The comparison of 2 levels all have a prior of 0.5, as expected. 2. The comparison of 3 levels has different priors, depending on the order restriction - i.e. <strong>some orders are <em>a priori</em> more likely than others!!!</strong></p>
+<p>Again, this is solved by using the <em>orthogonal</em> factor coding (from above).</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1">em_bayes &lt;-<span class="st"> </span><span class="kw">emmeans</span>(fit_bayes, <span class="op">~</span>Species)</a>
+<a class="sourceLine" id="cb54-2" title="2">em_bayes <span class="co"># the posterior marginal means</span></a></code></pre></div>
+<pre><code>&gt;  Species    emmean lower.HPD upper.HPD
+&gt;  setosa        5.2       5.0       5.3
+&gt;  versicolor    5.9       5.8       6.1
+&gt;  virginica     6.4       6.3       6.6
+&gt; 
+&gt; HPD interval probability: 0.95</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span>(em_bayes, fit_bayes, <span class="dt">hypothesis =</span> hyp)</a></code></pre></div>
+<pre><code>&gt; Computation of Bayes factors: sampling priors, please wait...</code></pre>
+<pre><code>&gt; # Bayes Factor (Order-Restriction)
+&gt; 
+&gt;                                        Hypothesis P(Prior) P(Posterior)
+&gt;                               setosa &gt; versicolor     0.49            0
+&gt;                                setosa &gt; virginica     0.49            0
+&gt;                            versicolor &gt; virginica     0.49            0
+&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.17            0
+&gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor     0.16            0
+&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica     0.17            1
+&gt;  Bayes Factor
+&gt;      0.00e+00
+&gt;      0.00e+00
+&gt;      0.00e+00
+&gt;      0.00e+00
+&gt;      0.00e+00
+&gt;          5.88
+&gt; 
+&gt; * Bayes factors for the restricted movel vs. the un-restricted model.</code></pre>
+<p>When comparing the results from the two factor coding schemes, we find:<br>
+1. In both cases, the estimated (posterior) means are identical.<br>
+2. In both cases, the comparison of 2 levels the proper prior probability of 0.5.<br>
+3. Only with <code>contr.bayes</code>, the comparison of 3 (or more) levels the proper prior probability of - here that of 1/6 = 0.166.</p>
 </div>
 </div>
 </div>
@@ -656,7 +702,6 @@ BF_{restricted / NULL} = \frac
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -665,7 +710,7 @@ BF_{restricted / NULL} = \frac
 <a href="#bayes-factors">Bayes Factors</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#testing-models-parameters-with-bayes-factors">Testing Models’ Parameters with Bayes Factors</a></li>
       <li><a href="#comparing-models-using-bayes-factors">Comparing Models using Bayes Factors</a></li>
-      <li><a href="#order-restricted-models">Order Restricted Models</a></li>
+      <li><a href="#specifying-correct-priors-for-factors-with-more-than-2-levels">Specifying Correct Priors for Factors with More Than 2 Levels</a></li>
       </ul>
 </li>
       <li><a href="#references">References</a></li>
@@ -676,20 +721,17 @@ BF_{restricted / NULL} = \frac
 </div>
 
 
-
       <footer><div class="copyright">
   <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, <a href="http://www.humanfactors.io">Michael D. Wilson</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
-
       </footer>
 </div>
 
   
-
 
   </body>
 </html>

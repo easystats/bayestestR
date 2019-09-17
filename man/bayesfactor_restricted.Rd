@@ -42,7 +42,7 @@ A data frame containing the Bayes factor representing evidence \emph{against} th
 This method computes Bayes factors for comparing a model with an order restrictions on its parameters
 with the fully unrestricted model. \emph{Note that this method should only be used for confirmatory analyses}.
 \cr \cr
-\strong{For correct restriction of 3 or more factor levels, see see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
+\strong{For info on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 \cr \cr
 For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
@@ -117,11 +117,11 @@ bayesfactor_restricted(fit_stan, hypothesis = hyps)
 # emmGrid objects
 # ---------------
 library(emmeans)
-options(contrasts = c("contr.bayes", "contr.bayes")) # see `bfrms` package
 
 # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html
 disgust_data <- read.table(url("http://www.learnbayes.org/disgust_example.txt"), header = TRUE)
 
+contrasts(disgust_data$condition) <- contr.bayes # see vignette
 fit_model <- stan_glm(score ~ condition, data = disgust_data, family = gaussian())
 
 em_condition <- emmeans(fit_model, ~condition)

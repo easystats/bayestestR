@@ -34,7 +34,6 @@ library(bayestestR)
 library(ggplot2)
 library(see)
 library(emmeans)
-# library(brms)
 library(lme4)
 library(BayesFactor)
 
@@ -83,7 +82,7 @@ A ***Bayes factor for a single parameter*** can be used to answer the question:
 > **Given the observed data, is the null hypothesis of an absence of an effect more, or less likely?**
 
 
-```{r echo=FALSE, fig.cap="Bayesian analysis of the Students' (1908) Sleep data set.", fig.align='center', out.width="80%"}
+```{r deathsticks_fig, echo=FALSE, fig.cap="Bayesian analysis of the Students' (1908) Sleep data set.", fig.align='center', out.width="80%"}
 knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/deathsticks.jpg")
 ```
 
@@ -272,10 +271,6 @@ As we can see, given that we have an *a priori* assumption about the direction o
 
 ### Testing Contrasts (with `emmeans`)
 
-<!-- MSB: is this section needed? I feel like not... -->
-
-<!-- DM: Not sure either it's up to you -->
-
 We can also use `bayesfactor_parameters()` together with [**emmeans**](https://cran.r-project.org/package=emmeans), allowing us to [test Bayesian contrasts](https://easystats.github.io/blog/posts/bayestestr_emmeans/).
 
 ```{r}
@@ -286,6 +281,8 @@ group_diff
 # pass the original model via prior
 bayesfactor_parameters(group_diff, prior = model)
 ```
+
+**NOTE**: See the *Specifying Correct Priors for Factors with More Than 2 Levels* section below.
 
 ## Comparing Models using Bayes Factors
 
@@ -459,10 +456,10 @@ bayesfactor_inclusion(BF_ToothGrowth_against_dose)
 knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP3.PNG")
 ```
 
-## Order Restricted Models
+### Order Restricted Models
 
 Consider the following model, in which we predict the length of an iris' sepal from the length of its petal, as well as from its species.
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r plot_iris, echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) + 
   geom_point() + 
   scale_color_flat() + 
@@ -529,15 +526,110 @@ BF_{restricted / NULL} = \frac
 {BF_{un-restricted / NULL}}
 $$
 
-***NOTE:** Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (*a priori*) hypotheses, and should not be used for any post hoc comparisons [@morey_2015_blog].*
+**Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (*a priori*) hypotheses, and should not be used for any post hoc comparisons [@morey_2015_blog].**
 
-### Restricting More than 2 Factor-Levels
+**NOTE**: See the *Specifying Correct Priors for Factors with More Than 2 Levels* section below.
 
-***Special care should be taken when restricting the order of more than 2 levels of the same factor.***
+## Specifying Correct Priors for Factors with More Than 2 Levels
 
-If we want to test an order restriction among 3 groups A, B, and C, the*a priori* probability of obtaining the order A > C > B is 1/6 (reach back to intro to stats year 1...). And so when testing and order restriction on the ordering of levels in a factor, we would the priors or be 1/6.... But...
+This section introduces the biased priors obtained when using the common *effects* factor coding (`contr.sum`), and the solution of using orthogonal factor coding (`contr.bayes`) [as outlined in @rouder2012default, section 7.2]. Specifically, ***special care should be taken when working with factors which have 3 or more levels.***
 
-For our example, we will be interested in the following order restrictions in the `iris` data (each line is a separate restriction):
+### Contrasts (and Marginal Means)
+
+The *effects* factor coding commonly used in factorial analysis carries a hidden bias when it is applies to Bayesian priors. For example, if we want to test all pairwise differences between 3 levels of the same factor, we would expect all *a priori* differences to have the same distribution, but...
+
+For our example, we will be test all pairwise differences between the 3 species in the `iris` data-set.
+
+```{r, eval=FALSE}
+library(bayestestR)
+library(rstanarm)
+library(emmeans)
+library(ggplot2)
+
+contrasts(iris$Species) <- contr.sum
+
+fit_sum <- stan_glm(Sepal.Length ~ Species, data = iris,
+                    prior = normal(0,0.1), # just to drive the point home
+                    family = gaussian())
+c_sum <- pairs(emmeans(fit_sum, ~ Species))
+c_sum
+```
+
+```{r, warning=FALSE, echo=FALSE}
+contrasts(iris$Species) <- contr.sum
+set.seed(5)
+junk <- capture.output(
+  fit_sum <- stan_glm(Sepal.Length ~ Species, data = iris,
+                      # just to drive the point home, we'll use ultra-narrow priors
+                      # (probably should not be used)
+                      prior = normal(0,0.1),
+                      family = gaussian())
+)
+c_sum <- pairs(emmeans(fit_sum, ~ Species))
+c_sum
+```
+
+Let's plot the priors and posteriors of these differences:
+
+```{r, message=FALSE, echo=FALSE}
+plot(bayesfactor_parameters(c_sum, fit_sum)) +
+  coord_cartesian(xlim = c(-2,1))
+```
+
+
+***What happened???***  
+It seems that not all pairwise differences have the same prior distribution!! Specifically, the mass of the difference between setosa and versicolor is closer to 0 than for any of the other differences! This is caused by an inherent bias introduced by the *effects* coding (it's even worse with the default treatment coding, because the prior for the intercept is usually drastically different from the effect's parameters).
+
+The solution is to use *orthogonal* factor coding, a-la `contr.bayes`, which can either specify this factor coding per-factor:
+
+```{r}
+contrasts(iris$Species) <- contr.bayes
+```
+
+Or you can set it globally:
+
+```{r, eval=FALSE}
+options(contrasts = c('contr.bayes', 'contr.poly'))
+```
+
+Once this is set, simply run your analyses as usual:
+
+```{r, eval=FALSE}
+fit_bayes <- stan_glm(Sepal.Length ~ Species, data = iris,
+                      prior = normal(0,0.1),
+                      family = gaussian())
+c_bayes <- pairs(emmeans(fit_bayes, ~ Species))
+c_bayes
+```
+
+```{r, warning=FALSE, echo=FALSE}
+set.seed(5)
+junk <- capture.output(
+  fit_bayes <- stan_glm(Sepal.Length ~ Species, data = iris,
+                        prior = normal(0,0.1), # just to drive the point home
+                        family = gaussian())
+)
+c_bayes <- pairs(emmeans(fit_bayes, ~ Species))
+c_bayes
+```
+
+Let's plot the priors and posteriors of these differences:
+
+```{r, message=FALSE, echo=FALSE}
+plot(bayesfactor_parameters(c_bayes, fit_bayes)) +
+  coord_cartesian(xlim = c(-2,1))
+```
+
+When comparing the results from the two factor coding schemes, we find:
+1. In both cases, the estimated (posterior) means are similar.  
+2. The Bayes factors differ between the two schemes.
+3. Only with `contr.bayes`, the prior distributions of the differences is unbiased.
+
+### Order Restrictions
+
+This bias also affect order restrictions involving 3 or more levels. For example, if we want to test an order restriction among A, B, and C, the *a priori* probability of obtaining the order A > C > B is 1/6 (reach back to *intro to stats* year 1), but...
+
+For our example, we will be interested in the following order restrictions in the `iris` data-set (each line is a separate restriction):
 
 ```{r}
 hyp <- c(
@@ -554,79 +646,32 @@ hyp <- c(
 ```
 
 
-```{r, eval=FALSE}
-library(bayestestR)
-library(rstanarm)
-library(emmeans)
-```
-
 With the default factor coding, this looks like this:
 
-```{r, eval=FALSE}
-fit <- stan_glm(Sepal.Length ~ Species, data = iris,
-                family = gaussian())
-```
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-junk <- capture.output(fit <- stan_glm(Sepal.Length ~ Species, data = iris,
-                                       family = gaussian()))
-```
 ```{r}
-em_ <- emmeans(fit, ~Species)
-em_ # the posterior marginal means
-
-bayesfactor_restricted(em_, fit, hypothesis = hyp)
+em_sum <- emmeans(fit_sum, ~Species)
+em_sum # the posterior marginal means
+  
+bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
 ```
 
-What happened???
+***What happened???***  
 1. The comparison of 2 levels all have a prior of 0.5, as expected.
 2. The comparison of 3 levels has different priors, depending on the order restriction - i.e. **some orders are *a priori* more likely than others!!!**
 
-You can read more about why this happens in [@rouder2012default, section 7.2], but for now, let's focus on the solution...
+Again, this is solved by using the *orthogonal* factor coding (from above).
 
-What we need to do, is use a different type of factor coding, available from the [`bfrms`](https://github.com/bayesstuff/bfrms) package as `contr.bayes`.
 
-You can either specify this factor coding per-factor:
-```{r eval=FALSE}
-contrasts(iris$Species) <- bfrms::contr.bayes
+```{r}
+em_bayes <- emmeans(fit_bayes, ~Species)
+em_bayes # the posterior marginal means
+  
+bayesfactor_restricted(em_bayes, fit_bayes, hypothesis = hyp)
 ```
 
-Or you can set this option globally:
-```{r, eval=FALSE}
-contr.bayes <- bfrms::contr.bayes
-options(contrasts = c('contr.bayes', 'contr.poly'))
-```
-
-Once this is set, simple run your analyses as usual:
-```{r, eval=FALSE}
-fit <- stan_glm(Sepal.Length ~ Species, data = iris,
-                family = gaussian())
-
-em_ <- emmeans(fit, ~Species)
-em_ # the posterior marginal means
-#>  Species    emmean lower.HPD upper.HPD
-#>  setosa       5.01      4.86      5.16
-#>  versicolor   5.94      5.78      6.07
-#>  virginica    6.59      6.45      6.73
-#> 
-#> HPD interval probability: 0.95 
-
-bayesfactor_restricted(em_, fit, hypothesis = hyp)
-#> # Bayes Factor (Order-Restriction)
-#> 
-#>                                        Hypothesis P(Prior) P(Posterior)  Bayes Factor
-#>                               setosa > versicolor     0.51            0      0.00e+00
-#>                                setosa > virginica     0.50            0      0.00e+00
-#>                            versicolor > virginica     0.50            0      0.00e+00
-#>  setosa    < virginica  & virginica  < versicolor     0.16            0      0.00e+00
-#>  virginica < setosa     & setosa     < versicolor     0.17            0      0.00e+00
-#>   setosa    < versicolor & versicolor < virginica     0.16            1          6.11
-#> 
-#> * Bayes factors for the restricted movel vs. the un-restricted model.
-```
-
-When comparing the results from the two factor coding schemes, we find:
-1. In both cases, the estimated (posterior) means are identical.
-2. In both cases, the comparison of 2 levels the proper prior probability of 0.5.
+When comparing the results from the two factor coding schemes, we find:  
+1. In both cases, the estimated (posterior) means are identical.  
+2. In both cases, the comparison of 2 levels the proper prior probability of 0.5.  
 3. Only with `contr.bayes`, the comparison of 3 (or more) levels the proper prior probability of - here that of 1/6 = 0.166.
 
 # References

@@ -97,7 +97,7 @@ ci.emmGrid <- ci.numeric
 #' @rdname ci
 #' @export
 ci.sim.merMod <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random", "all"),
-                       parameters = NULL, verbose = TRUE, ...) {
+                          parameters = NULL, verbose = TRUE, ...) {
   .ci_bayesian(x, ci = ci, method = method, effects = effects, parameters = parameters, verbose = verbose, ...)
 }
 

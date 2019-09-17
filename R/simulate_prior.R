@@ -12,7 +12,7 @@
 #' model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
 #' simulate_prior(model)
 #' @export
-simulate_prior <- function(model, n = 1000, ...){
+simulate_prior <- function(model, n = 1000, ...) {
   UseMethod("simulate_prior")
 }
 
@@ -57,19 +57,17 @@ simulate_prior.brmsfit <- function(model, n = 1000, effects = c("fixed", "random
 
 
 #' @keywords internal
-.simulate_prior <- function(priors, n = 1000){
-
+.simulate_prior <- function(priors, n = 1000) {
   simulated <- data.frame(.bamboozled = 1:n)
 
   # iterate over parameters
-  for(param in priors[[1]]){
-
+  for (param in priors[[1]]) {
     prior <- priors[priors[[1]] == param, ]
 
     # Get actual scale
-    if("adjusted_scale" %in% names(prior)){
+    if ("adjusted_scale" %in% names(prior)) {
       scale <- prior$adjusted_scale
-    } else{
+    } else {
       scale <- prior$scale
     }
 

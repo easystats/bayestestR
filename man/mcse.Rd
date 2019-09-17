@@ -40,7 +40,6 @@ library(rstanarm)
 
 model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
 mcse(model)
-
 }
 \references{
 Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.

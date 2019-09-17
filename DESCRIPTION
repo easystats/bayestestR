@@ -31,7 +31,16 @@ Authors@R: c(
 		"Mahr", 
 		role = c("rev"),
 		email = "tristan.mahr@wisc.edu",
-		comment = c(ORCID = "0000-0002-8890-5116"))
+		comment = c(ORCID = "0000-0002-8890-5116")),
+	person("Henrik",
+		"Singmann",
+		role = c("ctb"),
+		email = "singmann@gmail.com",
+		comment = c(ORCID = "0000-0002-4842-3657")),
+	person("Quentin F.",
+		"Gronau",
+		role = c("ctb"),
+		comment = c(ORCID = "0000-0001-5510-6943"))
 	)
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
 URL: https://github.com/easystats/bayestestR
@@ -44,9 +53,9 @@ Depends:
   R (>= 3.0)
 Imports:
 	insight (>= 0.5.0),
-  methods,
-  stats,
-  utils
+	methods,
+	stats,
+	utils
 Suggests:
 	BayesFactor,
 	bridgesampling,

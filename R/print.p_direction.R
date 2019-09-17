@@ -16,4 +16,3 @@ print.p_direction <- function(x, digits = 2, ...) {
   x$pd <- sprintf("%.*f%%", digits, x$pd * 100)
   print_data_frame(x, digits = digits)
 }
-

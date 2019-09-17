@@ -181,7 +181,7 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
 
   # add effects table
   make_terms <- function(formula) {
-    sort_interactions <- function(x){
+    sort_interactions <- function(x) {
       if (grepl("\\:", x)) {
         effs <- unlist(strsplit(x, "\\:"))
         x <- paste0(sort(effs), collapse = ":")
