@@ -18,8 +18,8 @@ print.bayesfactor_parameters <- function(x, digits = 2, log = FALSE, ...) {
     insight::print_color("# Bayes Factor (Null-Interval)\n\n", "blue")
   }
 
-  print.data.frame(BFE, digits = digits, row.names = FALSE)
-  cat("\n")
+  print_data_frame(BFE, digits = digits)
+
   cat("* Evidence Against The Null: ")
   insight::print_color(
     paste0("[", paste0(round(null, digits), collapse = ", "), "]\n", sep = ""),
