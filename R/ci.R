@@ -39,7 +39,7 @@
 #' ci(df, method = "HDI", ci = c(.80, .89, .95))
 #'
 #' library(rstanarm)
-#' model <- stan_glm(mpg ~ wt, data = mtcars, chains = 2, iter = 200)
+#' model <- stan_glm(mpg ~ wt, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' ci(model, method = "ETI", ci = c(.80, .89))
 #' ci(model, method = "HDI", ci = c(.80, .89))
 #' \dontrun{

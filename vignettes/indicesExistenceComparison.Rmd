@@ -48,4 +48,4 @@ This vignette can be referred to by citing the following:
 
 # Indices of Effect *Existence* and *Significance* in the Bayesian Framework
 
-This document is accessible [**here**](https://github.com/easystats/easystats/tree/master/publications/makowski_2019_bayesian).
+A comparison of different Bayesian indices (*pd*, *BFs*, ROPE etc.) is accessible [**here**](https://doi.org/10.31234/osf.io/2zexr).
