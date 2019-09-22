@@ -9,7 +9,7 @@
 #' library(bayestestR)
 #' library(rstanarm)
 #'
-#' model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
+#' model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
 #' simulate_prior(model)
 #' @export
 simulate_prior <- function(model, n = 1000, ...) {

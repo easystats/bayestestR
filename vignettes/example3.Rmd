@@ -22,7 +22,7 @@ csl: apa.csl
 
 This vignette can be referred to by citing the package:
 
-- Makowski, Ben-Shachar, \& Lüdecke (2019). *bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework*. Journal of Open Source Software, 4(40), 1541, https://doi.org/10.21105/joss.01541
+- Makowski, D., Ben-Shachar, M. S., \& Lüdecke, D. (2019). *bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework*. Journal of Open Source Software, 4(40), 1541. https://doi.org/10.21105/joss.01541
 
 ---
 

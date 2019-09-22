@@ -1,6 +1,6 @@
 bibentry(
     bibtype="Article",
-	  title="bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework.",
+	title="bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework.",
 	author=c(person("Dominique", "Makowski"), person("Mattan S.", "Ben-Shachar"), person("Daniel", "Lüdecke")),
     journal="Journal of Open Source Software",
     doi="10.21105/joss.01541",
@@ -9,7 +9,6 @@ bibentry(
 	volume = "4",
 	pages = "1541",
 	url="https://joss.theoj.org/papers/10.21105/joss.01541",
-	textVersion =
-  	paste("Makowski D, Ben-Shachar M, Lüdecke D. bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework. Journal of Open Source Software 2019;4:1541. doi:10.21105/joss.01541", sep=" "),
+	textVersion = "Makowski, D., Ben-Shachar, M., & Lüdecke, D. (2019). bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework. Journal of Open Source Software, 4(40), 1541. doi:10.21105/joss.01541",
 	mheader = "To cite bayestestR in publications use:"
 )
