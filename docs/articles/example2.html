@@ -13,8 +13,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="2. Confirmation of Bayesian skills">
 <meta property="og:description" content="">
@@ -44,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -117,7 +118,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/easystats/bayestestR">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -130,6 +131,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -145,7 +147,7 @@
     
 <p>This vignette can be referred to by citing the package:</p>
 <ul>
-<li>Makowski, Ben-Shachar, &amp; Lüdecke (2019). <em>bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework</em>. Journal of Open Source Software, 4(40), 1541, <a href="https://doi.org/10.21105/joss.01541" class="uri">https://doi.org/10.21105/joss.01541</a>
+<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019). <em>bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework</em>. Journal of Open Source Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="uri">https://doi.org/10.21105/joss.01541</a>
 </li>
 </ul>
 <hr>
@@ -159,7 +161,7 @@
 <a href="#frequentist-version" class="anchor"></a>Frequentist version</h3>
 <p>Let us start, again, with a <strong>frequentist correlation</strong> between two continuous variables, the <strong>width</strong> and the <strong>length</strong> of the sepals of some flowers. The data is available in R as the <code>iris</code> dataset (the same that was used in the <a href="https://easystats.github.io/bayestestR/articles/example1.html">previous tutorial</a>).</p>
 <p>We will compute a Pearson’s correlation test, store the results in an object called <code>result</code>, then display it:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">result &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cor.test">cor.test</a></span>(iris<span class="op">$</span>Sepal.Width, iris<span class="op">$</span>Sepal.Length)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">result &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span>(iris<span class="op">$</span>Sepal.Width, iris<span class="op">$</span>Sepal.Length)</a>
 <a class="sourceLine" id="cb1-2" title="2">result</a></code></pre></div>
 <pre><code>&gt; 
 &gt;   Pearson's product-moment correlation
@@ -177,8 +179,8 @@
 <div id="bayesian-correlation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#bayesian-correlation" class="anchor"></a>Bayesian correlation</h3>
-<p>To compute a Bayesian correlation test, we will need the <a href="https://richarddmorey.github.io/BayesFactor/"><code>BayesFactor</code></a> package (you can install it by running <code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("BayesFactor")</a></code>). We can then load this package, compute the correlation using the <code>correlationBF()</code> function and store the results in a similar fashion.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(BayesFactor)</a>
+<p>To compute a Bayesian correlation test, we will need the <a href="https://richarddmorey.github.io/BayesFactor/"><code>BayesFactor</code></a> package (you can install it by running <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("BayesFactor")</a></code>). We can then load this package, compute the correlation using the <code>correlationBF()</code> function and store the results in a similar fashion.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(BayesFactor)</a>
 <a class="sourceLine" id="cb3-2" title="2">result &lt;-<span class="st"> </span><span class="kw">correlationBF</span>(iris<span class="op">$</span>Sepal.Width, iris<span class="op">$</span>Sepal.Length)</a></code></pre></div>
 <p>Now, let us run our <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> function on that:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(result)</a></code></pre></div>
@@ -221,10 +223,10 @@
 Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.org’ blog.
 </p>
 </div>
-<p>Such “pizza plots” can be directly created through the <a href="https://github.com/easystats/see"><code>see</code></a> visualisation companion package for easystats (you can install it by running <code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("see")</a></code>):</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(see)</a>
+<p>Such “pizza plots” can be directly created through the <a href="https://github.com/easystats/see"><code>see</code></a> visualisation companion package for easystats (you can install it by running <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("see")</a></code>):</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(see)</a>
 <a class="sourceLine" id="cb8-2" title="2"></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="../reference/bayesfactor.html">bayesfactor</a></span>(result)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="kw"><a href="../reference/bayesfactor.html">bayesfactor</a></span>(result)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="kw">scale_fill_pizza</span>()</a></code></pre></div>
 <p><img src="example2_files/figure-html/unnamed-chunk-8-1.png" width="2187.5"></p>
 <p>So, after seeing this pizza, how much would you be suprised by the outcome of a blinded poke?</p>
@@ -238,13 +240,13 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <h3 class="hasAnchor">
 <a href="#versicolor-vs--virginica" class="anchor"></a>Versicolor <em>vs.</em> virginica</h3>
 <p>Bayesian <em>t</em>-tests can be performed in a very similar way to correlations. As we are particularly interested in two levels of the <code>Species</code> factor, <em>versicolor</em> and <em>virginica</em>. We will start by filtering out from <code>iris</code> the non-relevant observations corresponding to the <em>setosa</em> specie, and we will then visualise the observations and the distribution of the <code>Sepal.Width</code> variable.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)</a>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
 <a class="sourceLine" id="cb9-3" title="3"></a>
 <a class="sourceLine" id="cb9-4" title="4"><span class="co"># Select only two relevant species</span></a>
 <a class="sourceLine" id="cb9-5" title="5">data &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(Species <span class="op">!=</span><span class="st"> "setosa"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/droplevels">droplevels</a></span>()</a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(Species <span class="op">!=</span><span class="st"> "setosa"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/droplevels.html">droplevels</a></span>()</a>
 <a class="sourceLine" id="cb9-8" title="8"></a>
 <a class="sourceLine" id="cb9-9" title="9"><span class="co"># Visualise distributions and observations</span></a>
 <a class="sourceLine" id="cb9-10" title="10">data <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -258,7 +260,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <div id="compute-the-bayesian-t-test" class="section level3">
 <h3 class="hasAnchor">
 <a href="#compute-the-bayesian-t-test" class="anchor"></a>Compute the Bayesian <em>t</em>-test</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">result &lt;-<span class="st"> </span>BayesFactor<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BayesFactor/topics/ttestBF">ttestBF</a></span>(<span class="dt">formula =</span> Sepal.Width <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> data)</a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">result &lt;-<span class="st"> </span>BayesFactor<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF</a></span>(<span class="dt">formula =</span> Sepal.Width <span class="op">~</span><span class="st"> </span>Species, <span class="dt">data =</span> data)</a>
 <a class="sourceLine" id="cb10-2" title="2"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(result)</a></code></pre></div>
 <pre><code>&gt;    Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
 &gt; 1 Difference  -0.19 89  -0.29  -0.089  1      89     -0.1       0.1
@@ -276,7 +278,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <div id="fit-the-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fit-the-model" class="anchor"></a>Fit the model</h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
 <a class="sourceLine" id="cb12-2" title="2"></a>
 <a class="sourceLine" id="cb12-3" title="3">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Species <span class="op">~</span><span class="st"> </span>Sepal.Width, <span class="dt">data =</span> data, <span class="dt">family =</span> <span class="st">"binomial"</span>)</a></code></pre></div>
 </div>
@@ -289,7 +291,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <h3 class="hasAnchor">
 <a href="#performance-and-parameters" class="anchor"></a>Performance and Parameters</h3>
 <p>TO DO.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(performance)</a>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(performance)</a>
 <a class="sourceLine" id="cb13-2" title="2"></a>
 <a class="sourceLine" id="cb13-3" title="3"><span class="kw">model_performance</span>(model)</a></code></pre></div>
 <pre><code>&gt; Can't calculate log-loss.</code></pre>
@@ -299,15 +301,15 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 &gt;   -66     3.1   133      6.1  133 0.097 0.48      NA      -106
 &gt;  SCORE_SPHERICAL
 &gt;             0.01</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model, <span class="dt">test =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model, <span class="dt">test =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span>))</a></code></pre></div>
 <pre><code>&gt; # Description of Posterior Distributions
 &gt; 
 &gt;    Parameter Median CI CI_low CI_high    pd ROPE_CI ROPE_low ROPE_high
 &gt;  (Intercept)  -6.17 89  -9.52   -3.03 0.999      89   -0.181     0.181
 &gt;  Sepal.Width   2.15 89   1.10    3.34 1.000      89   -0.181     0.181
-&gt;  ROPE_Percentage   BF  ESS  Rhat
-&gt;                0 10.8 2747 0.999
-&gt;                0 10.2 2770 0.999</code></pre>
+&gt;  ROPE_Percentage    BF  Rhat  ESS
+&gt;                0  8.97 0.999 2747
+&gt;                0 16.94 0.999 2770</code></pre>
 </div>
 <div id="visualise-the-indices" class="section level3">
 <h3 class="hasAnchor">
@@ -338,17 +340,20 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, <a href="http://www.humanfactors.io">Michael D. Wilson</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

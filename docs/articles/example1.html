@@ -13,8 +13,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="1. Initiation to Bayesian models">
 <meta property="og:description" content="">
@@ -44,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -117,7 +118,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/easystats/bayestestR">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -130,6 +131,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -145,7 +147,7 @@
     
 <p>This vignette can be referred to by citing the package:</p>
 <ul>
-<li>Makowski, Ben-Shachar, &amp; Lüdecke (2019). <em>bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework</em>. Journal of Open Source Software, 4(40), 1541, <a href="https://doi.org/10.21105/joss.01541" class="uri">https://doi.org/10.21105/joss.01541</a>
+<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019). <em>bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework</em>. Journal of Open Source Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="uri">https://doi.org/10.21105/joss.01541</a>
 </li>
 </ul>
 <hr>
@@ -154,9 +156,9 @@
 <h2 class="hasAnchor">
 <a href="#loading-the-packages" class="anchor"></a>Loading the packages</h2>
 <p>Once you’ve <a href="https://easystats.github.io/bayestestR/articles/bayestestR.html#bayestestr-installation">installed</a> the necessary packages, we can load <code>rstanarm</code> (to fit the models), <code>bayestestR</code> (to compute useful indices) and <code>insight</code> (to access the parameters).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(rstanarm)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bayestestR)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(insight)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bayestestR)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(insight)</a></code></pre></div>
 </div>
 <div id="simple-linear-model-aka-a-regression" class="section level2">
 <h2 class="hasAnchor">
@@ -166,8 +168,8 @@
 <h3 class="hasAnchor">
 <a href="#fitting-the-model" class="anchor"></a>Fitting the model</h3>
 <p>Let’s start by fitting the <strong>frequentist</strong> version of the model, just to have a reference point:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data=</span>iris)</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(model)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">model &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data=</span>iris)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(model)</a></code></pre></div>
 <pre><code>&gt; 
 &gt; Call:
 &gt; lm(formula = Sepal.Length ~ Petal.Length, data = iris)
@@ -187,7 +189,7 @@
 &gt; Multiple R-squared:  0.76,    Adjusted R-squared:  0.758 
 &gt; F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <p>In this model, the linear relationship between <code>Petal.Length</code> and <code>Sepal.Length</code> is <strong>positive and significant</strong> (beta = 0.41, <em>t</em>(148) = 21.6, <em>p</em> &lt; .001). This means that for each one-unit increase in <code>Petal.Length</code> (the predictor), you can expect <code>Sepal.Length</code> (the response) to increase by <strong>0.41</strong>. This effect can be visualized by plotting the predictor values on the <code>x</code> axis and the response values as <code>y</code> using the <code>ggplot2</code> package:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(ggplot2)  <span class="co"># Load the package</span></a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)  <span class="co"># Load the package</span></a>
 <a class="sourceLine" id="cb4-2" title="2"></a>
 <a class="sourceLine" id="cb4-3" title="3"><span class="co"># The ggplot function takes the data as argument, and then the variables </span></a>
 <a class="sourceLine" id="cb4-4" title="4"><span class="co"># related to aesthetic features such as the x and y axes.</span></a>
@@ -203,9 +205,9 @@
 <h3 class="hasAnchor">
 <a href="#extracting-the-posterior" class="anchor"></a>Extracting the posterior</h3>
 <p>Once it is done, let us extract the parameters (<em>i.e.</em>, coefficients) of the model.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">posteriors &lt;-<span class="st"> </span>insight<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/insight/topics/get_parameters">get_parameters</a></span>(model)</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">posteriors &lt;-<span class="st"> </span>insight<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/insight/man/get_parameters.html">get_parameters</a></span>(model)</a>
 <a class="sourceLine" id="cb6-2" title="2"></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(posteriors)  <span class="co"># Show the first 6 rows</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-3" title="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(posteriors)  <span class="co"># Show the first 6 rows</span></a></code></pre></div>
 <pre><code>&gt;   (Intercept) Petal.Length
 &gt; 1         4.4         0.40
 &gt; 2         4.5         0.37
@@ -218,7 +220,7 @@
 <h4 class="hasAnchor">
 <a href="#about-posterior-draws" class="anchor"></a>About posterior draws</h4>
 <p>Let’s look at the length of the posteriors.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(posteriors)  <span class="co"># Size (number of rows)</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(posteriors)  <span class="co"># Size (number of rows)</span></a></code></pre></div>
 <pre><code>&gt; [1] 4000</code></pre>
 <blockquote>
 <p><strong>Why is the size 4000, and not more or less?</strong></p>
@@ -227,7 +229,7 @@
 <p>If we look at the documentation (<code>?sampling</code>) for the rstanarm <code>"sampling"</code> algorithm used by default in the model above, we can see several parameters that influence the number of posterior draws. By default, there are <strong>4</strong> <code>chains</code> (you can see it as distinct sampling runs), that each create <strong>2000</strong> <code>iter</code> (draws). However, only half of these iterations are kept, as half are used for <code>warm-up</code> (the convergence of the algorithm). Thus, the total is <strong><code>4 chains * (2000 iterations - 1000 warm-up) = 4000</code></strong> posterior draws. We can change that, for instance:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Petal.Length, <span class="dt">data=</span>iris, <span class="dt">chains =</span> <span class="dv">2</span>, <span class="dt">iter =</span> <span class="dv">1000</span>, <span class="dt">warmup =</span> <span class="dv">250</span>)</a>
 <a class="sourceLine" id="cb10-2" title="2"> </a>
-<a class="sourceLine" id="cb10-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(insight<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/insight/topics/get_parameters">get_parameters</a></span>(model))  <span class="co"># Size (number of rows)</span></a></code></pre></div>
+<a class="sourceLine" id="cb10-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(insight<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/insight/man/get_parameters.html">get_parameters</a></span>(model))  <span class="co"># Size (number of rows)</span></a></code></pre></div>
 <pre><code>[1] 1500</code></pre>
 <p>In this case, as would be expected, we have <strong><code>2 chains * (1000 iterations - 250 warm-up) = 1500</code></strong> posterior draws. However, let’s keep our first model with the default setup.</p>
 </div>
@@ -261,10 +263,10 @@
 <a href="#point-estimate" class="anchor"></a>Point-estimate</h4>
 <p><strong>What single value can best represent my posterior distribution?</strong></p>
 <p>Centrality indices, such as the <em>mean</em>, the <em>median</em> or the <em>mode</em> are usually used as point-estimates - but what’s the difference between them? Let’s answer this by first inspecting the <strong>mean</strong>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(posteriors<span class="op">$</span>Petal.Length)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(posteriors<span class="op">$</span>Petal.Length)</a></code></pre></div>
 <pre><code>&gt; [1] 0.41</code></pre>
 <p>This is close to the frequentist beta. But as we know, the mean is quite sensitive to outliers or extremes values. Maybe the <strong>median</strong> could be more robust?</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(posteriors<span class="op">$</span>Petal.Length)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="https://rdrr.io/r/stats/median.html">median</a></span>(posteriors<span class="op">$</span>Petal.Length)</a></code></pre></div>
 <pre><code>&gt; [1] 0.41</code></pre>
 <p>Well, this is <strong>very close to the mean</strong> (and identical when rounding the values). Maybe we could take the <strong>mode</strong>, that is, the <em>peak</em> of the posterior distribution? In the Bayesian framework, this value is called the <strong>Maximum A Posteriori (MAP)</strong>. Let’s see:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="../reference/map_estimate.html">map_estimate</a></span>(posteriors<span class="op">$</span>Petal.Length)</a></code></pre></div>
@@ -273,9 +275,9 @@
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">ggplot</span>(posteriors, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Length)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb19-2" title="2"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">"orange"</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb19-3" title="3"><span class="st">  </span><span class="co"># The mean in blue</span></a>
-<a class="sourceLine" id="cb19-4" title="4"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(posteriors<span class="op">$</span>Petal.Length), <span class="dt">color=</span><span class="st">"blue"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-4" title="4"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(posteriors<span class="op">$</span>Petal.Length), <span class="dt">color=</span><span class="st">"blue"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb19-5" title="5"><span class="st">  </span><span class="co"># The median in red</span></a>
-<a class="sourceLine" id="cb19-6" title="6"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(posteriors<span class="op">$</span>Petal.Length), <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-6" title="6"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="kw"><a href="https://rdrr.io/r/stats/median.html">median</a></span>(posteriors<span class="op">$</span>Petal.Length), <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb19-7" title="7"><span class="st">  </span><span class="co"># The MAP in purple</span></a>
 <a class="sourceLine" id="cb19-8" title="8"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="kw"><a href="../reference/map_estimate.html">map_estimate</a></span>(posteriors<span class="op">$</span>Petal.Length), <span class="dt">color=</span><span class="st">"purple"</span>, <span class="dt">size=</span><span class="dv">1</span>)</a></code></pre></div>
 <p><img src="example1_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
@@ -285,7 +287,7 @@
 <h4 class="hasAnchor">
 <a href="#uncertainty" class="anchor"></a>Uncertainty</h4>
 <p>Now that the have a point-estimate, we have to <strong>describe the uncertainty</strong>. We could compute the range:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/range">range</a></span>(posteriors<span class="op">$</span>Petal.Length)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/range.html">range</a></span>(posteriors<span class="op">$</span>Petal.Length)</a></code></pre></div>
 <pre><code>&gt; [1] 0.35 0.48</code></pre>
 <p>But does it make sense to include all these extreme values? Probably not. Thus, we will compute a <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>credible interval</strong></a>. Long story short, it’s kind of similar to a frequentist <strong>confidence interval</strong>, but easier to interpret and easier to compute — <em>and it makes more sense</em>.</p>
 <p>We will compute this <strong>credible interval</strong> based on the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis">Highest Density Interval (HDI)</a>. It will give us the range containing the 89% most probable effect values. <strong>Note that we will use 89% CIs instead of 95%</strong> CIs (as in the frequentist framework), as the 89% level gives more <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89">stable results</a> <span class="citation">(Kruschke, 2014)</span> and reminds us about the arbitrarity of such conventions <span class="citation">(McElreath, 2018)</span>.</p>
@@ -313,24 +315,24 @@
 <div id="data-preparation-and-model-fitting" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data-preparation-and-model-fitting" class="anchor"></a>Data preparation and model fitting</h3>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb24-2" title="2"></a>
 <a class="sourceLine" id="cb24-3" title="3"><span class="co"># We keep only rows for which feed is meatmeal or sunflower</span></a>
 <a class="sourceLine" id="cb24-4" title="4">data &lt;-<span class="st"> </span>chickwts <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-5" title="5"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(feed <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"meatmeal"</span>, <span class="st">"sunflower"</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb24-5" title="5"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(feed <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"meatmeal"</span>, <span class="st">"sunflower"</span>))</a></code></pre></div>
 <p>Let’s run another Bayesian regression to predict the <strong>weight</strong> with the <strong>two types of feed type</strong>.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(weight <span class="op">~</span><span class="st"> </span>feed, <span class="dt">data=</span>data)</a></code></pre></div>
 </div>
 <div id="posterior-description" class="section level3">
 <h3 class="hasAnchor">
 <a href="#posterior-description" class="anchor"></a>Posterior description</h3>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">posteriors &lt;-<span class="st"> </span>insight<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/insight/topics/get_parameters">get_parameters</a></span>(model)</a>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">posteriors &lt;-<span class="st"> </span>insight<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/insight/man/get_parameters.html">get_parameters</a></span>(model)</a>
 <a class="sourceLine" id="cb26-2" title="2"></a>
 <a class="sourceLine" id="cb26-3" title="3"><span class="kw">ggplot</span>(posteriors, <span class="kw">aes</span>(<span class="dt">x=</span>feedsunflower)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb26-4" title="4"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">"red"</span>)</a></code></pre></div>
 <p><img src="example1_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
 <p>This represents the <strong>posterior distribution of the difference between <code>meatmeal</code> and <code>sunflowers</code></strong>. Seems that the difference is rather <strong>positive</strong> (the values seems concentrated on the right side of 0)… Eating sunflowers makes you more fat (<em>at least, if you’re a chicken</em>). But, <strong>by how much?</strong> Let us compute the <strong>median</strong> and the <strong>CI</strong>:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(posteriors<span class="op">$</span>feedsunflower)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw"><a href="https://rdrr.io/r/stats/median.html">median</a></span>(posteriors<span class="op">$</span>feedsunflower)</a></code></pre></div>
 <pre><code>&gt; [1] 51</code></pre>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw"><a href="../reference/hdi.html">hdi</a></span>(posteriors<span class="op">$</span>feedsunflower)</a></code></pre></div>
 <pre><code>&gt; # Highest Density Interval
@@ -354,7 +356,7 @@
 <p>– <strong><em>The easystats team speaking. How can we help?</em></strong></p>
 <p>– <strong><em>I am Prof. Sanders. An expert in chicks… I mean chickens. Just calling to let you know that based on my expert knowledge, an effect between -20 and 20 is negligible. Bye.</em></strong></p>
 <p>Well, that’s convenient. Now we know that we can define the ROPE as the <code>[-20, 20]</code> range. All effects within this range are considered as <em>null</em> (negligible). We can now compute the <strong>proportion of the 89% most probable values (the 89% CI) which are not null</strong>, <em>i.e.</em>, which are outside this range.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw"><a href="../reference/rope.html">rope</a></span>(posteriors<span class="op">$</span>feedsunflower, <span class="dt">range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">20</span>, <span class="dv">20</span>), <span class="dt">ci=</span><span class="fl">0.89</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw"><a href="../reference/rope.html">rope</a></span>(posteriors<span class="op">$</span>feedsunflower, <span class="dt">range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="dv">20</span>, <span class="dv">20</span>), <span class="dt">ci=</span><span class="fl">0.89</span>)</a></code></pre></div>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-20.00, 20.00]:
 &gt; 
 &gt;  inside ROPE
@@ -367,8 +369,8 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 </p>
 </div>
 <p><strong>Yes.</strong> One of the practice is for instance to use the <strong>tenth (<code>1/10 = 0.1</code>) of the standard deviation (SD)</strong> of the response variable, which can be considered as a “negligible” effect size <span class="citation">(Cohen, 1988)</span>.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">rope_value &lt;-<span class="st"> </span><span class="fl">0.1</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/sd">sd</a></span>(data<span class="op">$</span>weight)</a>
-<a class="sourceLine" id="cb33-2" title="2">rope_range &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span>rope_value, rope_value)</a>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">rope_value &lt;-<span class="st"> </span><span class="fl">0.1</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(data<span class="op">$</span>weight)</a>
+<a class="sourceLine" id="cb33-2" title="2">rope_range &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span>rope_value, rope_value)</a>
 <a class="sourceLine" id="cb33-3" title="3">rope_range</a></code></pre></div>
 <pre><code>&gt; [1] -6.2  6.2</code></pre>
 <p>Let’s redefine our ROPE as the region within the <code>[-6.2, 6.2]</code> range. <strong>Note that this can be directly obtained by the <code>rope_range</code> function :)</strong></p>
@@ -388,9 +390,9 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <a href="#probability-of-direction-pd" class="anchor"></a>Probability of Direction (pd)</h3>
 <p>Maybe we are not interested in whether the effect is non-negligible. Maybe <strong>we just want to know if this effect is positive or negative</strong>. In this case, we can simply compute the proportion of the posterior that is positive, no matter the “size” of the effect.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">n_positive &lt;-<span class="st"> </span>posteriors <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb39-2" title="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(feedsunflower <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># select only positive values</span></a>
-<a class="sourceLine" id="cb39-3" title="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>() <span class="co"># Get length</span></a>
-<a class="sourceLine" id="cb39-4" title="4">n_positive <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(posteriors) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a></code></pre></div>
+<a class="sourceLine" id="cb39-2" title="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(feedsunflower <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># select only positive values</span></a>
+<a class="sourceLine" id="cb39-3" title="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>() <span class="co"># Get length</span></a>
+<a class="sourceLine" id="cb39-4" title="4">n_positive <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(posteriors) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a></code></pre></div>
 <pre><code>&gt; [1] "97.82"</code></pre>
 <p>We can conclude that <strong>the effect is positive with a probability of 97.82%</strong>. We call this index the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>Probability of Direction (pd)</strong></a>. It can, in fact, be computed more easily with the following:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(posteriors<span class="op">$</span>feedsunflower)</a></code></pre></div>
@@ -405,8 +407,8 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <div id="comparison-to-frequentist" class="section level4">
 <h4 class="hasAnchor">
 <a href="#comparison-to-frequentist" class="anchor"></a>Comparison to frequentist</h4>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(weight <span class="op">~</span><span class="st"> </span>feed, <span class="dt">data=</span>data) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb45-2" title="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(weight <span class="op">~</span><span class="st"> </span>feed, <span class="dt">data=</span>data) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb45-2" title="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>()</a></code></pre></div>
 <pre><code>&gt; 
 &gt; Call:
 &gt; lm(formula = weight ~ feed, data = data)
@@ -438,15 +440,15 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <p><strong>Behold, <code>describe_posterior</code>!</strong></p>
 </blockquote>
 <p>This function computes all of the adored mentioned indices, and can be run directly on the model:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model, <span class="dt">test =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"p_direction"</span>,<span class="st">"rope"</span>,<span class="st">"bayesfactor"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model, <span class="dt">test =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"p_direction"</span>,<span class="st">"rope"</span>,<span class="st">"bayesfactor"</span>))</a></code></pre></div>
 <pre><code>&gt; # Description of Posterior Distributions
 &gt; 
 &gt;      Parameter Median CI CI_low CI_high    pd ROPE_CI ROPE_low ROPE_high
 &gt;    (Intercept)  277.3 89 250.19   307.4 1.000      89    -6.17      6.17
 &gt;  feedsunflower   50.8 89   7.77    87.7 0.978      89    -6.17      6.17
-&gt;  ROPE_Percentage       BF  ESS Rhat
-&gt;                0 8.80e+11 3437    1
-&gt;                0 1.37e+00 3316    1</code></pre>
+&gt;  ROPE_Percentage       BF Rhat  ESS
+&gt;                0 8.80e+11    1 3437
+&gt;                0 1.37e+00    1 3316</code></pre>
 <p><strong>Tada!</strong> There we have it! The <strong>median</strong>, the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE percentage</strong>!</p>
 <p>Understanding and describing posterior distributions is just one aspect of Bayesian modelling… <strong>Are you ready for more?</strong> <a href="https://easystats.github.io/bayestestR/articles/example2_GLM.html"><strong>Click here</strong></a> to see the next example.</p>
 </div>
@@ -484,17 +486,20 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, <a href="http://www.humanfactors.io">Michael D. Wilson</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
