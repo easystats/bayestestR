@@ -20,7 +20,7 @@ Performs a simple test to check whether the prior is informative to the posterio
 library(bayestestR)
 library(rstanarm)
 
-model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1)
+model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
 check_prior(model, method = "gelman")
 check_prior(model, method = "lakeland")
 }
