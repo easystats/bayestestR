@@ -26,7 +26,7 @@ You can reference the package and its documentation as follows:
     4(40), 1541. <https://doi.org/10.21105/joss.01541>
   - Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., & Lüdecke, D.
     (2019). *Indices of Effect Existence and Significance in the
-    Bayesian Framework*. *Under review*.
+    Bayesian Framework*. Retrieved from
     <https://doi.org/10.31234/osf.io/2zexr>
 
 ## Installation
@@ -91,9 +91,9 @@ cited below at once.
 ``` r
 describe_posterior(rnorm(1000))
 ##   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
-## 1 Posterior  0.039 89   -1.8     1.6 0.52      89     -0.1       0.1
+## 1 Posterior -0.085 89   -1.9     1.3 0.53      89     -0.1       0.1
 ##   ROPE_Percentage
-## 1             0.1
+## 1           0.081
 ```
 
 ## Point-estimates
@@ -274,7 +274,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## # Bayes Factor (Savage-Dickey density ratio)
 ## 
 ##  Bayes Factor
-##          2.08
+##          1.79
 ## 
 ## * Evidence Against The Null: [0]
 ```
@@ -354,7 +354,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.38
+## [1] 0.42
 ```
 
 # References
