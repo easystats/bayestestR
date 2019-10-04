@@ -1,3 +1,9 @@
+# bayestestR 0.3.1
+
+## Bug fixes
+
+- Fixed bug in `simulate_prior()` for stanreg-models when `autoscale` was set to `FALSE`.
+
 # bayestestR 0.3.0
 
 ## General
