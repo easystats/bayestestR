@@ -37,6 +37,7 @@ describe_prior <- function(model, ...) {
 
 
 
+#' @importFrom tools toTitleCase
 #' @keywords internal
 .describe_prior <- function(model, ...) {
   priors <- insight::get_priors(model, ...)
