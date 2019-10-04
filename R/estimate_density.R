@@ -61,7 +61,7 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 }
 
 
-
+#' @importFrom stats predict
 #' @keywords internal
 .estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
   method <- match.arg(method, c("kernel", "logspline", "KernSmooth", "smooth"))
