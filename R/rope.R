@@ -206,12 +206,12 @@ rope.MCMCglmm <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
 
 #' @keywords internal
 .rope <- function(x, range = c(-0.1, 0.1), ci = .89, ci_method = "HDI", verbose = TRUE) {
-  HDI_area <- .hdi_area <- ci(x, ci = ci, method = ci_method, verbose = verbose)
+  ci_bounds <- ci(x, ci = ci, method = ci_method, verbose = verbose)
 
-  if (anyNA(HDI_area)) {
+  if (anyNA(ci_bounds)) {
     rope_percentage <- NA
   } else {
-    HDI_area <- x[x >= HDI_area$CI_low & x <= HDI_area$CI_high]
+    HDI_area <- x[x >= ci_bounds$CI_low & x <= ci_bounds$CI_high]
     area_within <- HDI_area[HDI_area >= min(range) & HDI_area <= max(range)]
     rope_percentage <- length(area_within) / length(HDI_area)
   }
@@ -224,7 +224,8 @@ rope.MCMCglmm <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
     "ROPE_Percentage" = rope_percentage
   )
 
-  attr(rope, "HDI_area") <- c(.hdi_area$CI_low, .hdi_area$CI_high)
+  attr(rope, "HDI_area") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
+  attr(rope, "CI_bounds") <- c(ci_bounds$CI_low, ci_bounds$CI_high)
   class(rope) <- unique(c("rope", "see_rope", class(rope)))
   rope
 }
