@@ -3,11 +3,25 @@
 \name{p_significance}
 \alias{p_significance}
 \alias{p_significance.numeric}
+\alias{p_significance.data.frame}
+\alias{p_significance.MCMCglmm}
+\alias{p_significance.emmGrid}
+\alias{p_significance.stanreg}
 \title{Practical Significance (ps)}
 \usage{
 p_significance(x, ...)
 
 \method{p_significance}{numeric}(x, threshold = "default", ...)
+
+\method{p_significance}{data.frame}(x, threshold = "default", ...)
+
+\method{p_significance}{MCMCglmm}(x, threshold = "default", ...)
+
+\method{p_significance}{emmGrid}(x, threshold = "default", ...)
+
+\method{p_significance}{stanreg}(x, threshold = "default",
+  effects = c("fixed", "random", "all"), parameters = NULL,
+  verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
@@ -15,12 +29,23 @@ p_significance(x, ...)
 \item{...}{Currently not used.}
 
 \item{threshold}{The threshold value that separates significant from negligible effect. If \code{"default"}, the range is set to \code{0.1} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.}
+
+\item{effects}{Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.}
+
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
+
+\item{verbose}{Toggle off warnings.}
 }
 \value{
 Values between 0.5 and 1 corresponding to the probability of practical significance (ps).
 }
 \description{
-Compute the probability of \strong{Practical Significance} (\strong{\emph{ps}}), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.
+Compute the probability of \strong{Practical Significance} (\strong{\emph{ps}}), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.
 }
 \examples{
 library(bayestestR)
@@ -29,5 +54,17 @@ library(bayestestR)
 # ----------------------------------------------------
 posterior <- rnorm(1000, mean = 1, sd = 1)
 p_significance(posterior)
+
+# Simulate a dataframe of posterior distributions
+# -----------------------------------------------
+df <- data.frame(replicate(4, rnorm(100)))
+p_significance(df)
+
+# rstanarm models
+# -----------------------------------------------
+library(rstanarm)
+model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars,
+                            chains = 2, refresh = 0)
+p_significance(model)
 
 }

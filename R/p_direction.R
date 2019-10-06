@@ -39,14 +39,16 @@
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' p_direction(df)
 #' p_direction(df, method = "kernel")
-#' \dontrun{
+#'
 #' # rstanarm models
 #' # -----------------------------------------------
 #' library(rstanarm)
-#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars,
+#'                             chains = 2, refresh = 0)
 #' p_direction(model)
 #' p_direction(model, method = "kernel")
 #'
+#' \dontrun{
 #' # emmeans
 #' # -----------------------------------------------
 #' library(emmeans)
@@ -162,7 +164,6 @@ p_direction.emmGrid <- function(x, method = "direct", ...) {
 #' @keywords internal
 .p_direction_models <- function(x, effects, component, parameters, method = "direct", ...) {
   out <- p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, ...)
-  # out$Parameter <- .get_parameter_names(x, effects = effects, component = component, parameters = parameters)
 
   out
 }

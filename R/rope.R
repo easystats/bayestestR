@@ -198,8 +198,7 @@ rope.BFBayesFactor <- function(x, range = "default", ci = .89, verbose = TRUE, .
 #' @export
 rope.MCMCglmm <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
-  d <- as.data.frame(x$Sol[, 1:nF, drop = FALSE])
-  out <- rope(d, range = range, ci = ci, verbose = verbose, ...)
+  out <- rope(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), range = range, ci = ci, verbose = verbose, ...)
   out
 }
 
@@ -435,18 +434,3 @@ rope.sim <- function(x, range = "default", ci = .89, ci_method = "HDI", paramete
 }
 
 
-
-
-
-
-#' @keywords internal
-# .rope_probabilistic <- function(x, range = c(-0.1/3, 0.1/3)) {
-#
-#   location <- mean(c(range[2], range[1]))
-#   scale <- range[2] - location
-#   rope <- distribution_normal(length(x), location, scale)
-#
-#
-#   rope_overlap <- overlap(posterior, norm) * 100
-#
-# }

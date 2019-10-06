@@ -90,14 +90,16 @@ p_direction(posterior, method = "kernel")
 df <- data.frame(replicate(4, rnorm(100)))
 p_direction(df)
 p_direction(df, method = "kernel")
-\dontrun{
+
 # rstanarm models
 # -----------------------------------------------
 library(rstanarm)
-model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars,
+                            chains = 2, refresh = 0)
 p_direction(model)
 p_direction(model, method = "kernel")
 
+\dontrun{
 # emmeans
 # -----------------------------------------------
 library(emmeans)

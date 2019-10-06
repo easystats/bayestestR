@@ -16,7 +16,7 @@ if (require("insight")) {
   m <- insight::download_model("stanreg_merMod_5")
   p <- insight::get_parameters(m, effects = "all")
 
-  test_that("p_direction", {
+  testthat::test_that("p_direction", {
     testthat::expect_equal(
       p_direction(m, effects = "all")$pd,
       p_direction(p)$pd,
@@ -27,7 +27,7 @@ if (require("insight")) {
   m <- insight::download_model("brms_zi_3")
   p <- insight::get_parameters(m, effects = "all", component = "all")
 
-  test_that("p_direction", {
+  testthat::test_that("p_direction", {
     testthat::expect_equal(
       p_direction(m, effects = "all", component = "all")$pd,
       p_direction(p)$pd,
