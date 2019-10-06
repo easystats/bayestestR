@@ -8,7 +8,7 @@ test_that("estimate_density", {
   set.seed(333)
   x <- distribution_normal(500, 1)
 
-  #' Methods
+  # Methods
   density_kernel <- estimate_density(x, method = "kernel")
   density_logspline <- estimate_density(x, method = "logspline")
   density_KernSmooth <- estimate_density(x, method = "KernSmooth")

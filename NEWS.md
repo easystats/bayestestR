@@ -2,24 +2,25 @@
 
 ## New functions / features
 
+- `overlap()` Compute overlap between two empirical distributions
 - `estimate_density()`: `method = "mixture"` argument added for mixture density estimation
 
 ## Bug fixes
 
-- Fixed bug in `simulate_prior()` for stanreg-models when `autoscale` was set to `FALSE`.
+- Fixed bug in `simulate_prior()` for stanreg-models when `autoscale` was set to `FALSE`
 
 # bayestestR 0.3.0
 
 ## General
 
-- revised `print()`-methods for functions like `rope()`, `p_direction()`, `describe_posterior()` etc., in particular for model objects with random effects and/or zero-inflation component.
+- revised `print()`-methods for functions like `rope()`, `p_direction()`, `describe_posterior()` etc., in particular for model objects with random effects and/or zero-inflation component
 
 ## New functions / features
 
 - `check_prior()` to check if prior is informative
 - `simulate_prior()` to simulate model's priors as distributions
 - `distribution_gamma()` to generate a (near-perfect or random) Gamma distribution
-- `contr.bayes` function for orthogonal factor coding (implementation from Singmann & Gronau's [`bfrms`](https://github.com/bayesstuff/bfrms/), used for proper prior estimation when factor have 3 levels or more. See Bayes factor vignette.
+- `contr.bayes` function for orthogonal factor coding (implementation from Singmann & Gronau's [`bfrms`](https://github.com/bayesstuff/bfrms/), used for proper prior estimation when factor have 3 levels or more. See Bayes factor vignette
 ## Changes to functions
 
 - Added support for `sim`, `sim.merMod` (from `arm::sim()`) and `MCMCglmm`-objects to many functions (like `hdi()`, `ci()`, `eti()`, `rope()`, `p_direction()`, `point_estimate()`, ...)
@@ -28,8 +29,8 @@
 
 ## Bug fixes
 
-- Fixed bug in `bayesfactor_inclusion()` where the same interaction sometimes appeared more than once (#223).
-- Fixed bug in `describe_posterior()` for *stanreg* models fitted with fullrank-algorithm.
+- Fixed bug in `bayesfactor_inclusion()` where the same interaction sometimes appeared more than once (#223)
+- Fixed bug in `describe_posterior()` for *stanreg* models fitted with fullrank-algorithm
 
 # bayestestR 0.2.5
 

@@ -14,21 +14,18 @@ auc(x, y, method = c("trapezoid", "step", "spline"), ...)
 
 \item{y}{Vector of y values.}
 
-\item{method}{Can be "trapezoid" (default), "step" or "spline".}
+\item{method}{Method to compute the Area Under the Curve (AUC). Can be \code{"trapezoid"} (default), \code{"step"} or \code{"spline"}. If "trapezoid", the curve is formed by connecting all points by a direct line (composite trapezoid rule). If "step" is chosen then a stepwise connection of two points is used. For calculating the area under a spline interpolation the splinefun function is used in combination with integrate.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-Based on the DescTools \code{AUC} function. It calculates the area under the curve with a naive algorithm and with a more elaborated spline approach. The curve must be given by vectors of xy-coordinates.
-}
-\details{
-If method is set to "trapezoid" then the curve is formed by connecting all points by a direct line (composite trapezoid rule). If "step" is chosen then a stepwise connection of two points is used. For calculating the area under a spline interpolation the splinefun function is used in combination with integrate. The AUC function will handle unsorted x values (by sorting x) and ties for the x values (by ignoring duplicates).
+Based on the DescTools \code{AUC} function. It can calculate the area under the curve with a naive algorithm or a more elaborated spline approach. The curve must be given by vectors of xy-coordinates. This function can handle unsorted x values (by sorting x) and ties for the x values (by ignoring duplicates).
 }
 \examples{
 library(bayestestR)
 posterior <- distribution_normal(1000)
 
-dens <- as.data.frame(density(posterior))
+dens <- estimate_density(posterior)
 dens <- dens[dens$x > 0, ]
 x <- dens$x
 y <- dens$y
