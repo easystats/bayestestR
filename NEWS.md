@@ -1,7 +1,8 @@
 # bayestestR 0.3.1
 
 ## New functions / features
-- `estimate_density()`: `method = "kernel"` argument added for mixture density estimation
+
+- `estimate_density()`: `method = "mixture"` argument added for mixture density estimation
 
 ## Bug fixes
 

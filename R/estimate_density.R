@@ -12,17 +12,20 @@
 #' @examples
 #' library(bayestestR)
 #'
+#' set.seed(1)
 #' x <- rnorm(250, 1)
 #'
 #' # Methods
 #' density_kernel <- estimate_density(x, method = "kernel")
 #' density_logspline <- estimate_density(x, method = "logspline")
 #' density_KernSmooth <- estimate_density(x, method = "KernSmooth")
+#' density_mixture <- estimate_density(x, method = "mixture")
 #'
 #' hist(x, prob = TRUE)
 #' lines(density_kernel$x, density_kernel$y, col = "black", lwd = 2)
 #' lines(density_logspline$x, density_logspline$y, col = "red", lwd = 2)
 #' lines(density_KernSmooth$x, density_KernSmooth$y, col = "blue", lwd = 2)
+#' lines(density_mixture$x, density_mixture$y, col = "green", lwd = 2)
 #'
 #' # Extension
 #' density_extended <- estimate_density(x, extend = TRUE)
@@ -64,7 +67,7 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 #' @importFrom stats predict
 #' @keywords internal
 .estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
-  method <- match.arg(method, c("kernel", "logspline", "KernSmooth", "smooth"))
+  method <- match.arg(method, c("kernel", "logspline", "KernSmooth", "smooth", "mixture", "mclust"))
 
   # Range
   x_range <- range(x)
@@ -107,8 +110,23 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
       }
     }
     return(as.data.frame(KernSmooth::bkde(x, range.x = x_range, gridsize = precision, truncate = TRUE, ...)))
+
+    # Mixturre
+  } else if (method %in% c("mixture", "mclust")) {
+    if (!requireNamespace("mclust")) {
+      if (interactive()) {
+        readline("Package \"mclust\" needed for this function. Press ENTER to install or ESCAPE to abort.")
+        install.packages("KernSmooth")
+      } else {
+        stop("Package \"mclust\" needed for this function. Press run 'install.packages(\"mclust\")'.")
+      }
+    }
+
+    x_axis <- seq(x_range[1], x_range[2], length.out = precision)
+    y <- predict(mclust::densityMclust(x, verbose = FALSE), newdata = x_axis)
+    return(data.frame(x = x_axis, y = y))
   } else {
-    stop("method should be one of 'kernel', 'logspline' or 'KernSmooth'")
+    stop("method should be one of 'kernel', 'logspline', 'KernSmooth' or 'mixture'.")
   }
 }
 

@@ -3,6 +3,7 @@ context("estimate_density")
 test_that("estimate_density", {
   library(logspline)
   library(KernSmooth)
+  library(mclust)
 
   set.seed(333)
   x <- distribution_normal(500, 1)
