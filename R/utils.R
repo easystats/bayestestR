@@ -109,7 +109,7 @@
   if (length(direction) > 1) warning("Using first 'direction' value.")
 
   if (is.numeric(direction[1])) {
-    return(direction[1])
+    return(sign(direction[1]))
   }
 
   Value <- c(
