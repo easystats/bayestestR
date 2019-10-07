@@ -42,6 +42,19 @@ distribution_normal <- function(n, mean = 0, sd = 1, random = FALSE, ...) {
   }
 }
 
+#' @rdname distribution
+#' @inheritParams stats::rbinom
+#' @importFrom stats qbinom rbinom
+#' @export
+distribution_binomial <- function(n, size = 1, prob = 0.5, random = FALSE, ...) {
+  if (random) {
+    stats::rbinom(n, size, prob)
+  } else {
+    stats::qbinom(seq(1 / n, 1 - 1 / n, length.out = n), size, prob, ...)
+  }
+}
+
+
 
 #' @rdname distribution
 #' @inheritParams stats::rcauchy

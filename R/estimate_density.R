@@ -67,7 +67,7 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 #' @importFrom stats predict
 #' @keywords internal
 .estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
-  method <- match.arg(method, c("kernel", "logspline", "KernSmooth", "smooth", "mixture", "mclust"))
+  method <- match.arg(tolower(method), c("kernel", "logspline", "kernsmooth", "smooth", "mixture", "mclust"))
 
   # Remove NA
   x <- x[!is.na(x)]
@@ -103,7 +103,7 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
     return(data.frame(x = x_axis, y = y))
 
     # KernSmooth
-  } else if (method %in% c("KernSmooth", "smooth")) {
+  } else if (method %in% c("kernsmooth", "smooth")) {
     if (!requireNamespace("KernSmooth")) {
       if (interactive()) {
         readline("Package \"KernSmooth\" needed for this function. Press ENTER to install or ESCAPE to abort.")
