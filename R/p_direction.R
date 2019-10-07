@@ -23,7 +23,7 @@
 #' \cr \cr
 #'  The most simple and direct way to compute the \emph{pd} is to 1) look at the median's sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This "simple" method is the most straigtfoward, but its precision is directly tied to the number of posterior draws. The second approach relies on \link[=estimate_density]{density estimation}. It starts by estimating the density function (for which many methods are available), and then computing the \link[=area_under_curve]{area under the curve} (AUC) of the density curve on the other side of 0.
 #'
-#' @return The probability of direction (pd) expressed in percentage (between 50\% and 100\%).
+#' @return Values between 0.5 and 1 corresponding to the probability of direction (pd).
 #'
 #' @examples
 #' library(bayestestR)
@@ -39,14 +39,16 @@
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' p_direction(df)
 #' p_direction(df, method = "kernel")
-#' \dontrun{
+#'
 #' # rstanarm models
 #' # -----------------------------------------------
 #' library(rstanarm)
-#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars,
+#'                             chains = 2, refresh = 0)
 #' p_direction(model)
 #' p_direction(model, method = "kernel")
 #'
+#' \dontrun{
 #' # emmeans
 #' # -----------------------------------------------
 #' library(emmeans)
@@ -162,7 +164,6 @@ p_direction.emmGrid <- function(x, method = "direct", ...) {
 #' @keywords internal
 .p_direction_models <- function(x, effects, component, parameters, method = "direct", ...) {
   out <- p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, ...)
-  # out$Parameter <- .get_parameter_names(x, effects = effects, component = component, parameters = parameters)
 
   out
 }

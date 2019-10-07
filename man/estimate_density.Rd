@@ -42,17 +42,20 @@ This function is a wrapper over different methods of density estimation. By defa
 \examples{
 library(bayestestR)
 
+set.seed(1)
 x <- rnorm(250, 1)
 
 # Methods
 density_kernel <- estimate_density(x, method = "kernel")
 density_logspline <- estimate_density(x, method = "logspline")
 density_KernSmooth <- estimate_density(x, method = "KernSmooth")
+density_mixture <- estimate_density(x, method = "mixture")
 
 hist(x, prob = TRUE)
 lines(density_kernel$x, density_kernel$y, col = "black", lwd = 2)
 lines(density_logspline$x, density_logspline$y, col = "red", lwd = 2)
 lines(density_KernSmooth$x, density_KernSmooth$y, col = "blue", lwd = 2)
+lines(density_mixture$x, density_mixture$y, col = "green", lwd = 2)
 
 # Extension
 density_extended <- estimate_density(x, extend = TRUE)

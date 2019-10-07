@@ -3,6 +3,7 @@
 \name{distribution}
 \alias{distribution}
 \alias{distribution_normal}
+\alias{distribution_binomial}
 \alias{distribution_cauchy}
 \alias{distribution_poisson}
 \alias{distribution_student}
@@ -18,6 +19,8 @@
 distribution(type = "normal", ...)
 
 distribution_normal(n, mean = 0, sd = 1, random = FALSE, ...)
+
+distribution_binomial(n, size = 1, prob = 0.5, random = FALSE, ...)
 
 distribution_cauchy(n, location = 0, scale = 1, random = FALSE, ...)
 
@@ -53,6 +56,10 @@ rnorm_perfect(n, mean = 0, sd = 1)
 \item{sd}{vector of standard deviations.}
 
 \item{random}{Generate near-perfect or random (simple wrappers for the base R \code{r*} functions) distributions.}
+
+\item{size}{number of trials (zero or more).}
+
+\item{prob}{probability of success on each trial.}
 
 \item{location}{location and scale parameters.}
 
