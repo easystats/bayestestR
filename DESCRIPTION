@@ -69,6 +69,7 @@ Suggests:
 	ggridges,
 	KernSmooth,
 	knitr,
+	MASS,
 	mclust,
 	lme4,
 	logspline,

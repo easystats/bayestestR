@@ -69,6 +69,9 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 .estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
   method <- match.arg(method, c("kernel", "logspline", "KernSmooth", "smooth", "mixture", "mclust"))
 
+  # Remove NA
+  x <- x[!is.na(x)]
+
   # Range
   x_range <- range(x)
   if (extend) {

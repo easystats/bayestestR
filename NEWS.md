@@ -2,6 +2,7 @@
 
 ## New functions / features
 
+- `simulate_correlation()` Simulate correlated datasets
 - `p_significance()` Compute the probability of Practical Significance (ps)
 - `overlap()` Compute overlap between two empirical distributions
 - `estimate_density()`: `method = "mixture"` argument added for mixture density estimation
