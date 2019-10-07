@@ -33,9 +33,7 @@ test_that("bayesfactor_restricted df", {
 test_that("bayesfactor_restricted RSTANARM", {
   set.seed(444)
   library(rstanarm)
-  junk <- capture.output(fit_stan <- stan_glm(mpg ~ wt + cyl + am,
-    data = mtcars
-  ))
+  fit_stan <- stan_glm(mpg ~ wt + cyl + am, data = mtcars, refresh = 0)
 
   hyps <- c(
     "am > 0 & cyl < 0",

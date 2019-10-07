@@ -155,7 +155,7 @@ library(rstanarm)
 library(bayestestR)
 set.seed(333)
 
-junk <- capture.output(model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris))
+model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris, refresh = 0)
 knitr::kable(describe_posterior(model), digits=2)
 ```
 

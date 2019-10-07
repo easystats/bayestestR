@@ -153,7 +153,7 @@ $$
 $$
 
 ```{r rstanarm_fit, echo=FALSE, message=FALSE, warning=FALSE}
-junk <- capture.output(model <- stan_glm(extra ~ group, data = sleep))
+model <- stan_glm(extra ~ group, data = sleep, refresh = 0)
 model_prior <- bayestestR:::.update_to_priors.stanreg(model)
 posterior <- insight::get_parameters(model)$group2
 prior <- insight::get_parameters(model_prior)$group2
@@ -476,8 +476,8 @@ iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
 What are our priors (here, `rstanarm`'s default priors) for this model's parameters? They all take the shape of some normal distribution centered at 0:
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-junk <- capture.output(iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
-                       data = iris, refresh = 0))
+iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
+                       data = iris, refresh = 0)
 
 model_prior <- bayestestR:::.update_to_priors.stanreg(iris_model)
 priors <- insight::get_parameters(model_prior)
@@ -559,13 +559,12 @@ c_sum
 ```{r, warning=FALSE, echo=FALSE}
 contrasts(iris$Species) <- contr.sum
 set.seed(5)
-junk <- capture.output(
-  fit_sum <- stan_glm(Sepal.Length ~ Species, data = iris,
-                      # just to drive the point home, we'll use ultra-narrow priors
-                      # (probably should not be used)
-                      prior = normal(0,0.1),
-                      family = gaussian())
-)
+fit_sum <- stan_glm(Sepal.Length ~ Species, data = iris,
+                    # just to drive the point home, we'll use ultra-narrow priors
+                    # (probably should not be used)
+                    prior = normal(0,0.1),
+                    family = gaussian(),
+                    refresh = 0)
 c_sum <- pairs(emmeans(fit_sum, ~ Species))
 c_sum
 ```
@@ -605,11 +604,10 @@ c_bayes
 
 ```{r, warning=FALSE, echo=FALSE}
 set.seed(5)
-junk <- capture.output(
-  fit_bayes <- stan_glm(Sepal.Length ~ Species, data = iris,
-                        prior = normal(0,0.1), # just to drive the point home
-                        family = gaussian())
-)
+fit_bayes <- stan_glm(Sepal.Length ~ Species, data = iris,
+                      prior = normal(0,0.1), # just to drive the point home
+                      family = gaussian(),
+                      refresh = 0)
 c_bayes <- pairs(emmeans(fit_bayes, ~ Species))
 c_bayes
 ```
