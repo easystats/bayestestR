@@ -291,7 +291,7 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
 
   attr(res, "denominator") <- 1
   attr(res, "BF_method") <- "JZS (BayesFactor)"
-  attr(res, "unsupported_models") <- FALSE
+  attr(res, "unsupported_models") <- !"BFlinearModel" %in% class(models@denominator)
   class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res

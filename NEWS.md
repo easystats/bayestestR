@@ -2,6 +2,7 @@
 
 ## New functions / features
 
+- `format_bf()` moved from parameters to bayestestR
 - `distribution_binomial()` for perfect binomial distributions
 - `simulate_correlation()` Simulate correlated datasets
 - `p_significance()` Compute the probability of Practical Significance (ps)

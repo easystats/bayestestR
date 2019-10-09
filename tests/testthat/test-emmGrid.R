@@ -3,7 +3,7 @@ context("emmGrid_*")
 library(rstanarm)
 library(emmeans)
 set.seed(300)
-junk <- capture.output(model <- stan_glm(extra ~ group, data = sleep))
+model <- stan_glm(extra ~ group, data = sleep, refresh = 0)
 
 em_ <- emmeans(model, ~group)
 c_ <- pairs(em_)

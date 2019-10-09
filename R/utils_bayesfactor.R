@@ -7,7 +7,6 @@
 
 #' @keywords internal
 #' @importFrom stats update getCall
-#' @importFrom utils capture.output
 .update_to_priors.stanreg <- function(model, verbose = TRUE) {
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
@@ -22,10 +21,8 @@
     message("Computation of Bayes factors: sampling priors, please wait...")
   }
 
-  utils::capture.output(
-    model_prior <- suppressWarnings(
-      stats::update(model, prior_PD = TRUE)
-    )
+  model_prior <- suppressWarnings(
+    stats::update(model, prior_PD = TRUE, refresh = 0)
   )
 
   model_prior
@@ -52,7 +49,7 @@
 
   utils::capture.output(
     model_prior <- try(suppressMessages(suppressWarnings(
-      stats::update(model, sample_prior = "only")
+      stats::update(model, sample_prior = "only", refresh = 0)
     )), silent = TRUE)
   )
 

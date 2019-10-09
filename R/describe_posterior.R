@@ -254,6 +254,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
 }
 
 
+#' @keywords internal
 .add_effects_component_column <- function(x) {
   if (!"Effects" %in% names(x)) x <- cbind(x, data.frame("Effects" = NA))
   if (!"Component" %in% names(x)) x <- cbind(x, data.frame("Component" = NA))
