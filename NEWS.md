@@ -3,6 +3,7 @@
 ## New functions / features
 
 - `distribution_binomial()` for perfect binomial distributions
+- `simulate_ttest()` Simulate data with a mean difference
 - `simulate_correlation()` Simulate correlated datasets
 - `p_significance()` Compute the probability of Practical Significance (ps)
 - `overlap()` Compute overlap between two empirical distributions
