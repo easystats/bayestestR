@@ -137,10 +137,7 @@ p_significance.stanreg <- function(x, threshold = "default", effects = c("fixed"
 
 
 
-#' Convert to Numeric
-#'
-#' @inheritParams base::as.numeric
-#' @method as.numeric p_significance
+#' @rdname as.numeric.p_direction
 #' @export
 as.numeric.p_significance <- function(x, ...) {
   if ("data.frame" %in% class(x)) {

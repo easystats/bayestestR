@@ -23,12 +23,14 @@ reference:
   - eti
   - hdi
   - ci
+  - reshape_ci
 
 - title: "Effect Existence and Significance"
   contents:
   - p_direction
   - p_rope
   - p_map
+  - p_significance
   - rope
   - rope_range
   - equivalence_test
@@ -57,6 +59,7 @@ reference:
   - estimate_density
   - density_at
   - area_under_curve
+  - overlap
 
 - title: "Distributions"
   contents:
@@ -64,9 +67,11 @@ reference:
 
 - title: "Utilities"
   contents:
+  - simulate_correlation
+  - contr.bayes
   - as.numeric.p_direction
   - as.data.frame.density
-  - reshape_ci
+  - update.bayesfactor_models
 
 
 navbar:

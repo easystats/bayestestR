@@ -1,4 +1,4 @@
-# bayestestR 0.3.2
+# bayestestR 0.3.3
 
 ## New functions / features
 
