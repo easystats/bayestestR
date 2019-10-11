@@ -101,7 +101,7 @@ For more info, see the Bayes factors vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -363,7 +363,7 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 <span class='co'># ---------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/contrasts.html'>contrasts</a></span>(<span class='no'>sleep</span>$<span class='no'>group</span>) <span class='kw'>&lt;-</span> <span class='no'>contr.bayes</span> <span class='co'># see vingette</span>
-<span class='no'>stan_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glmer.html'>stan_lmer</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
+<span class='no'>stan_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_lmer</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
 <span class='fu'>bayesfactor_parameters</span>(<span class='no'>stan_model</span>)
 <span class='fu'>bayesfactor_parameters</span>(<span class='no'>stan_model</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fu'><a href='rope_range.html'>rope_range</a></span>(<span class='no'>stan_model</span>))
 

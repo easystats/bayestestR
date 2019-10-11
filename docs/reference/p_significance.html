@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Area under the Curve (AUC) — area_under_curve • bayestestR</title>
+<title>Practical Significance (ps) — p_significance • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -41,9 +41,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Area under the Curve (AUC) — area_under_curve" />
+<meta property="og:title" content="Practical Significance (ps) — p_significance" />
 
-<meta property="og:description" content="Based on the DescTools AUC function. It can calculate the area under the curve with a naive algorithm or a more elaborated spline approach. The curve must be given by vectors of xy-coordinates. This function can handle unsorted x values (by sorting x) and ties for the x values (by ignoring duplicates)." />
+<meta property="og:description" content="Compute the probability of Practical Significance (ps), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -178,64 +178,113 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Area under the Curve (AUC)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/area_under_curve.R'><code>R/area_under_curve.R</code></a></small>
-    <div class="hidden name"><code>area_under_curve.Rd</code></div>
+    <h1>Practical Significance (ps)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/p_significance.R'><code>R/p_significance.R</code></a></small>
+    <div class="hidden name"><code>p_significance.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Based on the DescTools <code>AUC</code> function. It can calculate the area under the curve with a naive algorithm or a more elaborated spline approach. The curve must be given by vectors of xy-coordinates. This function can handle unsorted x values (by sorting x) and ties for the x values (by ignoring duplicates).</p>
+    <p>Compute the probability of <strong>Practical Significance</strong> (<strong><em>ps</em></strong>), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>area_under_curve</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"trapezoid"</span>, <span class='st'>"step"</span>, <span class='st'>"spline"</span>), <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>p_significance</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>auc</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"trapezoid"</span>, <span class='st'>"step"</span>, <span class='st'>"spline"</span>), <span class='no'>...</span>)</pre>
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>p_significance</span>(<span class='no'>x</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>p_significance</span>(<span class='no'>x</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for MCMCglmm</span>
+<span class='fu'>p_significance</span>(<span class='no'>x</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for emmGrid</span>
+<span class='fu'>p_significance</span>(<span class='no'>x</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for stanreg</span>
+<span class='fu'>p_significance</span>(<span class='no'>x</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>Vector of x values.</p></td>
-    </tr>
-    <tr>
-      <th>y</th>
-      <td><p>Vector of y values.</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>Method to compute the Area Under the Curve (AUC). Can be <code>"trapezoid"</code> (default), <code>"step"</code> or <code>"spline"</code>. If "trapezoid", the curve is formed by connecting all points by a direct line (composite trapezoid rule). If "step" is chosen then a stepwise connection of two points is used. For calculating the area under a spline interpolation the splinefun function is used in combination with integrate.</p></td>
+      <td><p>Vector representing a posterior distribution. Can also be a <code>stanreg</code> or <code>brmsfit</code> model.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to or from other methods.</p></td>
+      <td><p>Currently not used.</p></td>
+    </tr>
+    <tr>
+      <th>threshold</th>
+      <td><p>The threshold value that separates significant from negligible effect. If <code>"default"</code>, the range is set to <code>0.1</code> if input is a vector, and based on <code><a href='rope_range.html'>rope_range()</a></code> if a Bayesian model is provided.</p></td>
+    </tr>
+    <tr>
+      <th>effects</th>
+      <td><p>Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>parameters</th>
+      <td><p>Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+filtered by default, so only parameters that typically appear in the
+<code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
+for the output.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle off warnings.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <div class='dont-index'><p>DescTools</p></div>
+    <p>Values between 0.5 and 1 corresponding to the probability of practical significance (ps).</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bayestestR</span>)
-<span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>)
 
-<span class='no'>dens</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='estimate_density.html'>estimate_density</a></span>(<span class='no'>posterior</span>)
-<span class='no'>dens</span> <span class='kw'>&lt;-</span> <span class='no'>dens</span>[<span class='no'>dens</span>$<span class='no'>x</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>, ]
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>dens</span>$<span class='no'>x</span>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='no'>dens</span>$<span class='no'>y</span>
-
-<span class='fu'>area_under_curve</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"trapezoid"</span>)</div><div class='output co'>#&gt; [1] 0.4980976</div><div class='input'><span class='fu'>area_under_curve</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"step"</span>)</div><div class='output co'>#&gt; [1] 0.4992463</div><div class='input'><span class='fu'>area_under_curve</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"spline"</span>)</div><div class='output co'>#&gt; [1] 0.4980982</div></pre>
+<span class='co'># Simulate a posterior distribution of mean 1 and SD 1</span>
+<span class='co'># ----------------------------------------------------</span>
+<span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'>p_significance</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; ps [0.10] = 82.30%</div><div class='input'>
+<span class='co'># Simulate a dataframe of posterior distributions</span>
+<span class='co'># -----------------------------------------------</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
+<span class='fu'>p_significance</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Probability of Significance (ps [0.10])
+#&gt; 
+#&gt; </span><span> Parameter     ps
+#&gt;         X1 49.00%
+#&gt;         X2 47.00%
+#&gt;         X3 49.00%
+#&gt;         X4 48.00%
+#&gt; </div><div class='input'>
+<span class='co'># rstanarm models</span>
+<span class='co'># -----------------------------------------------</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>,
+                            <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+<span class='fu'>p_significance</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Significance (ps [0.60])
+#&gt; 
+#&gt; </span><span>   Parameter      ps
+#&gt;  (Intercept) 100.00%
+#&gt;           wt  99.65%
+#&gt;          cyl  98.05%
+#&gt; </div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#value">Value</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
