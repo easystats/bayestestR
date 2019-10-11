@@ -40,9 +40,9 @@ set.seed(333)
 
 Credible intervals are an important concept in Bayesian statistics. Its core purpose is to describe and summarise **the uncertainty** related to your parameters. In this regards, it could appear as quite similar to the frequentist **Confidence Intervals**. However, while their goal is similar, **their statistical definition annd meaning is very different**. Indeed, while the latter is obtained through a complex algorithm full of rarely-tested assumptions and approximations, the credible intervals are fairly straightforward to compute. 
 
-As the Bayesian inference returns a distribution of possible effect values (the posterior), the credible interval is just the range containing a particular percentage of probable values. For instance, the 95\% credible interval simply is the central portion of the posterior distribution that contains 95\% of the values. 
+As the Bayesian inference returns a distribution of possible effect values (the posterior), the credible interval is just the range containing a particular percentage of probable values. For instance, the 95\% credible interval is simply the central portion of the posterior distribution that contains 95\% of the values. 
 
-Note that this drastically improve the interpretability of the Bayesian interval compared to the frequentist one. Indeed, the Bayesian framework allows to say *"given the observed data, the effect has 95% probability of falling within this range"*, while the frequentist less straightforward alternative (the 95\% ***Confidence* Interval**) would be "*there is a 95\% probability that when computing a confidence interval from data of this sort, the effect falls within this range*".
+Note that this drastically improve the interpretability of the Bayesian interval compared to the frequentist one. Indeed, the Bayesian framework allows us to say *"given the observed data, the effect has 95% probability of falling within this range"*, while the frequentist less straightforward alternative (the 95\% ***Confidence* Interval**) would be "*there is a 95\% probability that when computing a confidence interval from data of this sort, the effect falls within this range*".
 
 
 # Why is the default 89\%?
@@ -115,7 +115,7 @@ posterior %>%
 
 > **The difference is strong with this one.**
 
-Contrary to the **HDI**, for which all points within the interval have a higher probability density than points outside the interval, the **ETI** is **equal-tailed**. This means that a 90\% interval has 5\% of the distribution on either side of its limits. It indicates the 5th percentile and the 95h percentile. In symmetric distributions, the two methods of computing credible intervals, the ETI and the HDI, return similar results.
+Contrary to the **HDI**, for which all points within the interval have a higher probability density than points outside the interval, the **ETI** is **equal-tailed**. This means that a 90\% interval has 5\% of the distribution on either side of its limits. It indicates the 5th percentile and the 95th percentile. In symmetric distributions, the two methods of computing credible intervals, the ETI and the HDI, return similar results.
 
 This is not the case for skewed distributions. Indeed, it is possible that parameter values in the ETI have lower credibility (are less probable) than parameter values outside the ETI. This property seems undesirable as a summary of the credible values in a distribution.
 

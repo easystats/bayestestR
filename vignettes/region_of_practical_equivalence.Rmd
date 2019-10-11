@@ -38,9 +38,9 @@ set.seed(333)
 
 # What is the *ROPE?*
 
-Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against "zero". Indeed, the Bayesian framework offers a probabilistic view of the parameters, allowing to assess the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as **"practically no effect"** (*i.e.*, a negligible magnitude) is sufficient. This range is called the **region of practical equivalence (ROPE)**.
+Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against "zero". Indeed, the Bayesian framework offers a probabilistic view of the parameters, allowing assessment of the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as **"practically no effect"** (*i.e.*, a negligible magnitude) is sufficient. This range is called the **region of practical equivalence (ROPE)**.
 
-Indeed, statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are **equivalent to the null** value for practical purposes [@kruschke2010believe; @kruschke2012time; @kruschke2014doing].
+Indeed, statistically, the probability of a posterior distribution being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are **equivalent to the null** value for practical purposes [@kruschke2010believe; @kruschke2012time; @kruschke2014doing].
 
 # Equivalence Test
 
@@ -54,11 +54,11 @@ The ROPE, being a region corresponding to a "null" hypothesis, is used for the *
 
 Using the ROPE and the HDI as Credible Interval, Kruschke (2018) suggests using the percentage of the 95\% HDI that falls within the ROPE as a decision rule. However, as the 89\% HDI [is considered a better choice](https://easystats.github.io/bayestestR/articles/credible_interval.html) [@kruschke2014doing; @mcelreath2014rethinking; @mcelreath2018statistical], `bayestestR` provides by default the percentage of the 89\% HDI that falls within the ROPE.
 
-However, [*preliminary data*](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html) tend to suggest that using the percentage of the full posterior distribution, instead of a CI, might be more sensitive (especially do delineate highly significant effects). Thus, we recommend the user to consider using the ***full* ROPE** percentage (by setting `ci = 1`), which will return the portion of the entire posterior distribution in the ROPE.
+However, [*preliminary data*](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html) tend to suggest that using the percentage of the full posterior distribution, instead of a CI, might be more sensitive (especially do delineate highly significant effects). Thus, we recommend that the user considers using the ***full* ROPE** percentage (by setting `ci = 1`), which will return the portion of the entire posterior distribution in the ROPE.
 
 # What percentage in ROPE to accept or to reject?
 
-If the HDI is completely outside the ROPE, the "null hypothesis" for this parameter is "rejected". If the ROPE completely covers the HDI, *i.e.*, all most credible values of a parameter are inside the region of practical equivalence, the null hypothesis is accepted. Else, it’s undecided whether to accept or reject the null hypothesis. 
+If the HDI is completely outside the ROPE, the "null hypothesis" for this parameter is "rejected". If the ROPE completely covers the HDI, *i.e.*, all most credible values of a parameter are inside the region of practical equivalence, the null hypothesis is accepted. Else, it’s unclear whether the null hypothesis should be accepted or rejected. 
 
 If the **full ROPE** is used (*i.e.*, 100\% of the HDI), then the null hypothesis is rejected or accepted if the percentage of the posterior within the ROPE is smaller than to 2.5\% or greater than 97.5\%. Desirable results are low proportions inside the ROPE  (the closer to zero the better).
 
