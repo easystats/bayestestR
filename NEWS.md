@@ -2,6 +2,7 @@
 
 ## New functions / features
 
+- `convert_bayesian_to_frequentist` Convert (refit) Bayesian model as frequentist
 - `distribution_binomial()` for perfect binomial distributions
 - `simulate_ttest()` Simulate data with a mean difference
 - `simulate_correlation()` Simulate correlated datasets
