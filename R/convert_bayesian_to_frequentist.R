@@ -30,9 +30,9 @@
 #'
 #' @importFrom stats lm glm
 #' @export
-convert_bayesian_as_frequentist <- function(model, data = NULL){
+convert_bayesian_as_frequentist <- function(model, data = NULL) {
 
-  if(is.null(data)){
+  if (is.null(data)) {
     data <- insight::get_data(model)
   }
 
@@ -45,20 +45,20 @@ convert_bayesian_as_frequentist <- function(model, data = NULL){
   formula <- called$formula
   family <- called$family
 
-  if(info$is_mixed){
+  if (info$is_mixed) {
     if (!requireNamespace("lme4", quietly = TRUE)) {
       stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
     }
-    if(info$is_linear){
+    if (info$is_linear) {
       freq <- lme4::lmer(formula, data = data)
     } else{
       freq <- lme4::glmer(formula, data = data, family = family)
     }
   } else{
-    if(info$is_linear){
-      freq <- lm(formula, data = data)
+    if (info$is_linear) {
+      freq <- stats::lm(formula, data = data)
     } else{
-      freq <- glm(formula, data = data, family = family)
+      freq <- stats::glm(formula, data = data, family = family)
     }
   }
 
