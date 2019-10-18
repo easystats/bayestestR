@@ -63,8 +63,8 @@ describe_prior <- function(model, ...) {
 #' @export
 describe_prior.stanreg <- .describe_prior
 
-# #' @export
-# describe_prior.brmsfit <- .describe_prior
+#' @export
+describe_prior.brmsfit <- .describe_prior
 
 
 
