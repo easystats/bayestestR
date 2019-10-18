@@ -77,7 +77,7 @@ test_that("emmGrid bayesfactor_parameters", {
   testthat::skip_on_cran()
   set.seed(4)
   xsdbf <- bayesfactor_parameters(all_, prior = model)
-  testthat::expect_equal(log(xsdbf$BF), c(-2.5764463544813, 2.00205724074489, -0.235346262395184), tolerance = 1e-4)
+  testthat::expect_equal(log(xsdbf$BF), c(-2.5756125848835, 1.69713280431204, -0.212277519930343), tolerance = .1)
   testthat::expect_warning(bayesfactor_savagedickey(all_))
 })
 
@@ -87,7 +87,7 @@ test_that("emmGrid bayesfactor_restricted", {
   set.seed(4)
   hyps <- c("`1` < `2`", "`1` < 0")
   xrbf <- bayesfactor_restricted(em_, prior = model, hypothesis = hyps)
-  testthat::expect_equal(log(xrbf$BF), c(0.64846709184706, -1.64272389006757), tolerance = 1e-4)
+  testthat::expect_equal(log(xrbf$BF), c(0.667225563308528, -1.62521030757486), tolerance = .1)
   testthat::expect_equal(xrbf$Prior_prob, c(0.49775, 0.504), tolerance = 1e-2)
   testthat::expect_equal(xrbf$Posterior_prob, c(0.952, 0.0975), tolerance = 1e-2)
   testthat::expect_warning(bayesfactor_restricted(em_, hypothesis = hyps))
