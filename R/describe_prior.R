@@ -43,14 +43,18 @@ describe_prior <- function(model, ...) {
   priors <- insight::get_priors(model, ...)
 
   # Format names
-  names(priors) <- tools::toTitleCase(names(priors))
-  names(priors)[-1] <- paste0("Prior_", names(priors)[-1])
+  names(priors) <- tolower(names(priors))
+  names(priors)[-1] <- paste0("prior_", names(priors)[-1])
 
   # If the prior scale has been adjusted, it is the actual scale that was used.
-  if ("prior_adjusted_scale" %in% tolower(names(priors))){
-    priors$Prior_Scale[!is.na(priors$Prior_Adjusted_scale)] <- priors$Prior_Adjusted_scale[!is.na(priors$Prior_Adjusted_scale)]
-    priors$Prior_Adjusted_scale <- NULL
+  if ("prior_adjusted_scale" %in% names(priors)) {
+    priors$prior_scale[!is.na(priors$prior_adjusted_scale)] <- priors$prior_adjusted_scale[!is.na(priors$prior_adjusted_scale)]
+    priors$prior_adjusted_scale <- NULL
   }
+
+  string <- strsplit(names(priors), "_", fixed = TRUE)
+  string <- lapply(string, tools::toTitleCase)
+  names(priors) <- unlist(lapply(string, paste0, collapse = "_"))
 
   priors
 }
