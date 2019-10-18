@@ -47,7 +47,7 @@ describe_prior <- function(model, ...) {
   names(priors)[-1] <- paste0("Prior_", names(priors)[-1])
 
   # If the prior scale has been adjusted, it is the actual scale that was used.
-  if ("Prior_Adjusted_scale" %in% names(priors)) {
+  if ("prior_adjusted_scale" %in% tolower(names(priors))){
     priors$Prior_Scale[!is.na(priors$Prior_Adjusted_scale)] <- priors$Prior_Adjusted_scale[!is.na(priors$Prior_Adjusted_scale)]
     priors$Prior_Adjusted_scale <- NULL
   }
