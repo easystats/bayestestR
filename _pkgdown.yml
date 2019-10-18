@@ -68,6 +68,7 @@ reference:
 - title: "Utilities"
   contents:
   - simulate_correlation
+  - convert_bayesian_as_frequentist
   - contr.bayes
   - as.numeric.p_direction
   - as.data.frame.density
