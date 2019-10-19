@@ -16,7 +16,6 @@
 #'
 #' overlap(x, y)
 #' plot(overlap(x, y))
-#'
 #' @importFrom stats approxfun
 #' @export
 overlap <- function(x, y, method_density = "kernel", method_auc = "trapezoid", precision = 2^10, extend = TRUE, extend_scale = 0.1, ...) {
@@ -53,7 +52,7 @@ overlap <- function(x, y, method_density = "kernel", method_auc = "trapezoid", p
 
 
 #' @export
-print.overlap <- function(x, ...){
+print.overlap <- function(x, ...) {
   insight::print_color("# Overlap\n\n", "blue")
   cat(sprintf("%.2f", as.numeric(x)))
 }
@@ -61,9 +60,9 @@ print.overlap <- function(x, ...){
 
 #' @importFrom graphics plot polygon
 #' @export
-plot.overlap <- function(x, ...){
+plot.overlap <- function(x, ...) {
   # Can be improved through see
   data <- attributes(x)$data
-  plot(data$x, data$exclusion, type="l")
+  plot(data$x, data$exclusion, type = "l")
   polygon(data$x, data$intersection, col = "red")
 }

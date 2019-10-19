@@ -20,5 +20,4 @@ if (require("insight")) {
     0.988,
     tolerance = 1e-3
   )
-
 }
