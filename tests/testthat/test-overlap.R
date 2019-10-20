@@ -1,7 +1,6 @@
 context("overlap")
 
 test_that("overlap", {
-
   set.seed(333)
   x <- distribution_normal(1000, 2, 0.5)
   y <- distribution_normal(1000, 0, 1)

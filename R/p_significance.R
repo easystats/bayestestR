@@ -23,10 +23,11 @@
 #' # rstanarm models
 #' # -----------------------------------------------
 #' library(rstanarm)
-#' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars,
-#'                             chains = 2, refresh = 0)
+#' model <- rstanarm::stan_glm(mpg ~ wt + cyl,
+#'   data = mtcars,
+#'   chains = 2, refresh = 0
+#' )
 #' p_significance(model)
-#'
 #' @export
 p_significance <- function(x, ...) {
   UseMethod("p_significance")
@@ -38,7 +39,6 @@ p_significance <- function(x, ...) {
 #' @rdname p_significance
 #' @export
 p_significance.numeric <- function(x, threshold = "default", ...) {
-
   threshold <- .select_threshold_ps(x = x, threshold = threshold)
 
   psig <- max(
@@ -60,7 +60,6 @@ p_significance.numeric <- function(x, threshold = "default", ...) {
 #' @rdname p_significance
 #' @export
 p_significance.data.frame <- function(x, threshold = "default", ...) {
-
   threshold <- .select_threshold_ps(x = x, threshold = threshold)
   x <- .select_nums(x)
 
@@ -122,7 +121,8 @@ p_significance.stanreg <- function(x, threshold = "default", effects = c("fixed"
 
   data <- p_significance(
     insight::get_parameters(x, effects = effects, parameters = parameters),
-    threshold = threshold)
+    threshold = threshold
+  )
 
   out <- .prepare_output(data, insight::clean_parameters(x))
 
@@ -155,11 +155,11 @@ as.double.p_significance <- as.numeric.p_significance
 
 
 #' @keywords internal
-.select_threshold_ps <- function(x = NULL, model = NULL, threshold = "default"){
+.select_threshold_ps <- function(x = NULL, model = NULL, threshold = "default") {
   if (all(threshold == "default")) {
-    if(!is.null(model)){
+    if (!is.null(model)) {
       threshold <- rope_range(model)[2]
-    } else{
+    } else {
       threshold <- 0.1
     }
   } else if (!all(is.numeric(threshold))) {
@@ -167,4 +167,3 @@ as.double.p_significance <- as.numeric.p_significance
   }
   threshold
 }
-

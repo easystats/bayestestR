@@ -432,5 +432,3 @@ rope.sim <- function(x, range = "default", ci = .89, ci_method = "HDI", paramete
     HDI_area = HDI_area
   )
 }
-
-

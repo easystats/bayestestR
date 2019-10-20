@@ -11,27 +11,32 @@
 #'
 #' # Simple regressions
 #' model <- stan_glm(Sepal.Length ~ Petal.Length * Species,
-#'                   data = iris, chains = 2, refresh = 0)
+#'   data = iris, chains = 2, refresh = 0
+#' )
 #' bayesian_as_frequentist(model)
 #'
-#' model <- stan_glm(vs ~ mpg, family = "binomial",
-#'                   data = mtcars, chains = 2, refresh = 0)
+#' model <- stan_glm(vs ~ mpg,
+#'   family = "binomial",
+#'   data = mtcars, chains = 2, refresh = 0
+#' )
 #' bayesian_as_frequentist(model)
 #'
 #' # Mixed models
-#' model <- stan_glmer(Sepal.Length ~ Petal.Length + (1|Species),
-#'                     data = iris, chains = 2, refresh = 0)
+#' model <- stan_glmer(Sepal.Length ~ Petal.Length + (1 | Species),
+#'   data = iris, chains = 2, refresh = 0
+#' )
 #' bayesian_as_frequentist(model)
 #'
-#' model <- stan_glmer(vs ~ mpg + (1|cyl), family = "binomial",
-#'                     data = mtcars, chains = 2, refresh = 0)
+#' model <- stan_glmer(vs ~ mpg + (1 | cyl),
+#'   family = "binomial",
+#'   data = mtcars, chains = 2, refresh = 0
+#' )
 #' bayesian_as_frequentist(model)
 #' }
 #'
 #' @importFrom stats lm glm
 #' @export
 convert_bayesian_as_frequentist <- function(model, data = NULL) {
-
   if (is.null(data)) {
     data <- insight::get_data(model)
   }
@@ -51,13 +56,13 @@ convert_bayesian_as_frequentist <- function(model, data = NULL) {
     }
     if (info$is_linear) {
       freq <- lme4::lmer(formula, data = data)
-    } else{
+    } else {
       freq <- lme4::glmer(formula, data = data, family = family)
     }
-  } else{
+  } else {
     if (info$is_linear) {
       freq <- stats::lm(formula, data = data)
-    } else{
+    } else {
       freq <- stats::glm(formula, data = data, family = family)
     }
   }

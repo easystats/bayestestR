@@ -1,7 +1,6 @@
 context("distributions")
 
 test_that("distributions", {
-
   testthat::expect_equal(mean(bayestestR::distribution_normal(10)), 0, tolerance = 0.01)
   testthat::expect_equal(length(bayestestR::distribution_normal(10, random = TRUE)), 10, tolerance = 0.01)
 
@@ -28,5 +27,4 @@ test_that("distributions", {
 
   testthat::expect_equal(mean(bayestestR::distribution_uniform(10)), 0.5, tolerance = 0.01)
   testthat::expect_equal(length(bayestestR::distribution_uniform(10, random = TRUE)), 10, tolerance = 0.01)
-
 })
