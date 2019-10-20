@@ -1,3 +1,9 @@
+# bayestestR 0.4.1
+
+## General
+
+- Added `plot()`-method for `p_significance()`.
+
 # bayestestR 0.4.0
 
 ## New functions / features
