@@ -83,3 +83,11 @@ plot.estimate_density <- function(x, ...) {
   }
   NextMethod()
 }
+
+#' @export
+plot.p_significance <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot practical significance Please install it by running `install.packages('see')`.")
+  }
+  NextMethod()
+}
