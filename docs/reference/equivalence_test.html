@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Test for Practical Equivalence — equivalence_test" />
-
 <meta property="og:description" content="Perform a Test for Practical Equivalence for Bayesian and frequentist models." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -157,7 +159,6 @@
   <a href="../articles/guidelines.html">Guidelines</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/bayestestR">
@@ -184,9 +185,7 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Perform a <strong>Test for Practical Equivalence</strong> for Bayesian and frequentist models.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>equivalence_test</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -217,7 +216,7 @@
 <span class='co'># S3 method for brmsfit</span>
 <span class='fu'>equivalence_test</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
   <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -250,7 +249,7 @@ filtered by default, so only parameters that typically appear in the
 for the output.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with following columns:</p><ul>
@@ -262,7 +261,6 @@ for the output.</p></td>
 <li><p><code>HDI_low</code> , <code>HDI_high</code> The lower and upper HDI limits for the parameters.</p></li>
 </ul>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Documentation is accessible for:</p><ul>
@@ -304,13 +302,11 @@ for the output.</p></td>
   a first step to check the assumptions of this hypothesis testing is to look
   at different pair plots. An even more sophisticated check is the projection
   predictive variable selection (<cite>Piironen and Vehtari 2017</cite>).</p>
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>There is a <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code>-method with a <code>digits</code>-argument to control
   the amount of digits in the output, and there is a <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>-method
   to visualize the results from the equivalence-test (for models only).</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -320,7 +316,6 @@ for the output.</p></td>
 <li><p>Piironen, J., &amp; Vehtari, A. (2017). Comparison of Bayesian predictive methods for model selection. Statistics and Computing, 27(3), 711–735. doi: <a href='https://doi.org/10.1007/s11222-016-9649-y'>10.1007/s11222-016-9649-y</a></p></li>
 </ul>
 
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bayestestR</span>)
@@ -392,15 +387,10 @@ for the output.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#note">Note</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -414,7 +404,7 @@ for the output.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

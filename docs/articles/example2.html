@@ -298,18 +298,18 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <pre><code>&gt; # Indices of model performance
 &gt; 
 &gt;  ELPD ELPD_SE LOOIC LOOIC_SE WAIC    R2 RMSE LOGLOSS SCORE_LOG
-&gt;   -66     3.1   133      6.1  133 0.097 0.48      NA      -106
+&gt;   -66     3.1   133      6.1  133 0.099 0.48      NA      -106
 &gt;  SCORE_SPHERICAL
 &gt;             0.01</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model, <span class="dt">test =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span>))</a></code></pre></div>
 <pre><code>&gt; # Description of Posterior Distributions
 &gt; 
 &gt;    Parameter Median CI CI_low CI_high    pd ROPE_CI ROPE_low ROPE_high
-&gt;  (Intercept)  -6.17 89  -9.52   -3.03 0.999      89   -0.181     0.181
-&gt;  Sepal.Width   2.15 89   1.10    3.34 1.000      89   -0.181     0.181
-&gt;  ROPE_Percentage    BF  Rhat  ESS
-&gt;                0  8.97 0.999 2747
-&gt;                0 16.94 0.999 2770</code></pre>
+&gt;  (Intercept)  -6.12 89 -9.590   -3.02 0.999      89   -0.181     0.181
+&gt;  Sepal.Width   2.13 89  0.986    3.26 0.999      89   -0.181     0.181
+&gt;  ROPE_Percentage   BF  Rhat  ESS
+&gt;                0 8.50 0.999 2689
+&gt;                0 9.13 0.999 2712</code></pre>
 </div>
 <div id="visualise-the-indices" class="section level3">
 <h3 class="hasAnchor">
@@ -326,6 +326,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -346,7 +347,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

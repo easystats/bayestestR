@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Density Estimation — estimate_density" />
-
 <meta property="og:description" content="This function is a wrapper over different methods of density estimation. By default, it uses the base R density with by default uses a different smoothing bandwidth (&quot;SJ&quot;) from the legacy default implemented the base R density function (&quot;nrd0&quot;). However, Deng \&amp;amp; Wickham suggest that method = &quot;KernSmooth&quot; is the fastest and the most accurate." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -157,7 +159,6 @@
   <a href="../articles/guidelines.html">Guidelines</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/bayestestR">
@@ -184,14 +185,12 @@
     </div>
 
     <div class="ref-description">
-    
     <p>This function is a wrapper over different methods of density estimation. By default, it uses the base R <a href='https://rdrr.io/r/stats/density.html'>density</a> with by default uses a different smoothing bandwidth (<code>"SJ"</code>) from the legacy default implemented the base R <a href='https://rdrr.io/r/stats/density.html'>density</a> function (<code>"nrd0"</code>). However, Deng \&amp; Wickham suggest that <code>method = "KernSmooth"</code> is the fastest and the most accurate.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>estimate_density</span>(<span class='no'>x</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>,
   <span class='kw'>extend</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>extend_scale</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>bw</span> <span class='kw'>=</span> <span class='st'>"SJ"</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -235,11 +234,10 @@
       <td><p>Currently not used.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Deng, H., &amp; Wickham, H. (2011). Density estimation in R. Electronic publication.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bayestestR</span>)
@@ -300,9 +298,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -316,7 +312,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Bayesian p-value based on the density at the Maximum A Posteriori (MAP) — p_map" />
-
 <meta property="og:description" content="Compute a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (h0) using Mills' (2014, 2017) Objective Bayesian Hypothesis Testing framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP)." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -157,7 +159,6 @@
   <a href="../articles/guidelines.html">Guidelines</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/bayestestR">
@@ -184,9 +185,7 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Compute a Bayesian equivalent of the <em>p</em>-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (<em>h0</em>) using Mills' (2014, 2017) <em>Objective Bayesian Hypothesis Testing</em> framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP).</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>, <span class='no'>...</span>)
@@ -206,7 +205,7 @@
 <span class='co'># S3 method for BFBayesFactor</span>
 <span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>,
   <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -247,11 +246,10 @@ or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that this method is sensitive to the density estimation <code>method</code> (see the secion in the examples below).</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -259,11 +257,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <li><p>Mills, J. A. (2018). Objective Bayesian Precise Hypothesis Testing. University of Cincinnati.</p></li>
 </ul>
 
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://www.youtube.com/watch?v=Ip8Ci5KUVRc'>Jeff Mill's talk</a></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bayestestR</span>)
@@ -323,13 +319,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -343,7 +335,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

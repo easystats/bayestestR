@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -41,8 +43,8 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Savage-Dickey density ratio Bayes Factor (BF) — bayesfactor_parameters" />
 
+<meta property="og:title" content="Savage-Dickey density ratio Bayes Factor (BF) — bayesfactor_parameters" />
 <meta property="og:description" content="This method computes Bayes factors against the null (either a point or an interval),
 bases on prior and posterior samples of a single parameter. This Bayes factor indicates
 the degree by which the mass of the posterior distribution has shifted further away
@@ -58,9 +60,9 @@ against a model in which the tested parameter has been restricted to the point n
 For info on specifying correct priors for factors with more than 2 levels, see the Bayes factors vignette.
  
 For more info, see the Bayes factors vignette." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -171,7 +173,6 @@ For more info, see the Bayes factors vignette." />
   <a href="../articles/guidelines.html">Guidelines</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/bayestestR">
@@ -198,7 +199,6 @@ For more info, see the Bayes factors vignette." />
     </div>
 
     <div class="ref-description">
-    
     <p>This method computes Bayes factors against the null (either a point or an interval),
 bases on prior and posterior samples of a single parameter. This Bayes factor indicates
 the degree by which the mass of the posterior distribution has shifted further away
@@ -214,7 +214,6 @@ against a model in which the tested parameter has been restricted to the point n
 <strong>For info on specifying correct priors for factors with more than 2 levels, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</strong>
 <br /> <br />
 For more info, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -247,7 +246,7 @@ For more info, see <a href='https://easystats.github.io/bayestestR/articles/baye
 <span class='co'># S3 method for data.frame</span>
 <span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -294,11 +293,10 @@ or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame containing the Bayes factor representing evidence <em>against</em> the null.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This method is used to compute Bayes factors based on prior and posterior distributions.
@@ -332,7 +330,6 @@ as "substantial" evidence against the null (and vice versa, a Bayes factor
 smaller than 1/3 indicates substantial evidence in favor of the null-model)
 (<cite>Wetzels et al. 2011</cite>).</p>
 
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -344,7 +341,6 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 <li><p>Morey, R. D., &amp; Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.</p></li>
 </ul>
 
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bayestestR</span>)
@@ -392,13 +388,9 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -414,7 +406,7 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>
