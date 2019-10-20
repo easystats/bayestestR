@@ -3,6 +3,7 @@
 ## General
 
 - Added `plot()`-method for `p_significance()`.
+- `p_significane()` now also works for *brmsfit*-objects.
 
 # bayestestR 0.4.0
 

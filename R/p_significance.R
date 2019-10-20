@@ -137,6 +137,31 @@ p_significance.stanreg <- function(x, threshold = "default", effects = c("fixed"
 
 
 
+#' @rdname p_significance
+#' @export
+p_significance.brmsfit <- function(x, threshold = "default", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
+  effects <- match.arg(effects)
+  component <- match.arg(component)
+  threshold <- .select_threshold_ps(model = x, threshold = threshold)
+
+  data <- p_significance(
+    insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+    threshold = threshold
+  )
+
+  out <- .prepare_output(data, insight::clean_parameters(x))
+
+  attr(out, "threshold") <- threshold
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  class(out) <- class(data)
+
+  out
+}
+
+
+
+
+
 #' @rdname as.numeric.p_direction
 #' @export
 as.numeric.p_significance <- function(x, ...) {

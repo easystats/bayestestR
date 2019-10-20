@@ -7,6 +7,7 @@
 \alias{p_significance.MCMCglmm}
 \alias{p_significance.emmGrid}
 \alias{p_significance.stanreg}
+\alias{p_significance.brmsfit}
 \title{Practical Significance (ps)}
 \usage{
 p_significance(x, ...)
@@ -22,6 +23,11 @@ p_significance(x, ...)
 \method{p_significance}{stanreg}(x, threshold = "default",
   effects = c("fixed", "random", "all"), parameters = NULL,
   verbose = TRUE, ...)
+
+\method{p_significance}{brmsfit}(x, threshold = "default",
+  effects = c("fixed", "random", "all"), component = c("conditional",
+  "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE,
+  ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
@@ -40,6 +46,10 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{component}{Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the model be returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \value{
 Values between 0.5 and 1 corresponding to the probability of practical significance (ps).
