@@ -63,7 +63,7 @@
 
   if (is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior)) {
-      stop("Cannot sample from flat priors (these are the default priors for fixed-effect in a 'brmsfit' model).\n",
+      stop("Cannot sample from flat priors (these are the default priors for fixed-effects in a 'brmsfit' model).\n",
         call. = FALSE
       )
     } else {
