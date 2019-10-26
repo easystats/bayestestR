@@ -7,6 +7,7 @@
 
 #' @keywords internal
 #' @importFrom stats update getCall
+#' @importFrom rstanarm prior_summary
 .update_to_priors.stanreg <- function(model, verbose = TRUE) {
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
@@ -19,6 +20,13 @@
 
   if (verbose) {
     message("Computation of Bayes factors: sampling priors, please wait...")
+  }
+
+  prior_dists <- sapply(rstanarm::prior_summary(model), `[[`, "dist")
+  if (anyNA(prior_dists)) {
+    stop("Cannot sample from flat priors (when the priors are set to 'NULL' in a 'stanreg' model).\n",
+         call. = FALSE
+    )
   }
 
   model_prior <- suppressWarnings(
@@ -55,7 +63,7 @@
 
   if (is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior)) {
-      stop("Cannot compute BF for 'brmsfit' models fit with default priors.\n",
+      stop("Cannot sample from flat priors (these are the default priors for fixed-effect in a 'brmsfit' model).\n",
         call. = FALSE
       )
     } else {

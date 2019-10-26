@@ -86,8 +86,7 @@ This method is used to compute Bayes factors based on prior and posterior distri
 When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
 extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
 
-\strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)}
-priors. See example below.
+\strong{NOTE:} Models must have been fitted with \emph{proper (non-flat)} priors (by default, \code{brms::brm} uses falt priors for fixed-effects). See example below.
 
 \subsection{Setting the correct \code{prior}}{
 It is important to provide the correct \code{prior} for meaningful results.
