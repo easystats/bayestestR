@@ -24,8 +24,11 @@
 
   prior_dists <- sapply(rstanarm::prior_summary(model), `[[`, "dist")
   if (anyNA(prior_dists)) {
-    stop("Cannot sample from flat priors (when the priors are set to 'NULL' in a 'stanreg' model).\n",
-         call. = FALSE
+    stop(
+      "Cannot compute Bayes factors with flat priors (such as when priors are ",
+      "set to 'NULL' in a 'stanreg' model), as Bayes factor inform about the raltive ",
+      "likelihood of two 'hypotheses', and flat priors provide no likelihood.\n"
+      call. = FALSE
     )
   }
 
@@ -63,7 +66,11 @@
 
   if (is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior)) {
-      stop("Cannot sample from flat priors (these are the default priors for fixed-effects in a 'brmsfit' model).\n",
+      stop(
+        "Cannot compute Bayes factors with flat priors (such as the default ",
+        "priors for fixed-effects in a 'brmsfit' model), as Bayes factor inform about ",
+        "the raltive likelihood of two 'hypotheses', and flat priors provide no ",
+        "likelihood.\n",
         call. = FALSE
       )
     } else {
