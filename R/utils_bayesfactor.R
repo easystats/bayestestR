@@ -27,7 +27,7 @@
     stop(
       "Cannot compute Bayes factors with flat priors (such as when priors are ",
       "set to 'NULL' in a 'stanreg' model), as Bayes factor inform about the raltive ",
-      "likelihood of two 'hypotheses', and flat priors provide no likelihood.\n"
+      "likelihood of two 'hypotheses', and flat priors provide no likelihood.\n",
       call. = FALSE
     )
   }
