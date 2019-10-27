@@ -26,8 +26,9 @@
   if (anyNA(prior_dists)) {
     stop(
       "Cannot compute Bayes factors with flat priors (such as when priors are ",
-      "set to 'NULL' in a 'stanreg' model), as Bayes factor inform about the raltive ",
+      "set to 'NULL' in a 'stanreg' model), as Bayes factors inform about the raltive ",
       "likelihood of two 'hypotheses', and flat priors provide no likelihood.\n",
+      "See '?bayesfactor_parameters' for more information.\n",
       call. = FALSE
     )
   }
@@ -68,9 +69,10 @@
     if (grepl("proper priors", model_prior)) {
       stop(
         "Cannot compute Bayes factors with flat priors (such as the default ",
-        "priors for fixed-effects in a 'brmsfit' model), as Bayes factor inform about ",
+        "priors for fixed-effects in a 'brmsfit' model), as Bayes factors inform about ",
         "the raltive likelihood of two 'hypotheses', and flat priors provide no ",
         "likelihood.\n",
+        "See '?bayesfactor_parameters' for more information.\n",
         call. = FALSE
       )
     } else {

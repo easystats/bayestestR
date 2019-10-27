@@ -15,14 +15,17 @@
 #' @details This method is used to compute Bayes factors for order-restricted models vs un-restricted
 #' models by setting an order restriction on the prior and posterior distributions
 #' (\cite{Morey & Wagenmakers, 2013}).
-#'
+#' \cr\cr
 #' (Though it is possible to use \code{bayesfactor_restricted} to test interval restrictions,
-#' it is more suitable for testing order restrictions (see examples)).
-#'
-#' When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
-#' extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
-#'
-#' \strong{NOTE:} Models must have been fitted with \emph{proper (non-flat)} priors (by default, \code{brms::brm} uses falt priors for fixed-effects). See example below.
+#' it is more suitable for testing order restrictions; see examples).
+#' \cr\cr
+#' For the computation of Bayes factors, the model priors must be proper priors (at the very least
+#' they should be \emph{not flat}, and it is preferable that they be \emph{informative}); As the priors for
+#' the alternative get wider, the likelihood of the null value(s) increases, to the extreme that for completely
+#' flat priors the null is infinitely more favorable than the alternative (this is called \emph{the Jeffreys-Lindley-Bartlett
+#' paradox}). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
+#' \cr\cr
+#' (Note that by default, \code{brms::brm} uses falt priors for fixed-effects.)
 #'
 #' \subsection{Setting the correct \code{prior}}{
 #' It is important to provide the correct \code{prior} for meaningful results.
