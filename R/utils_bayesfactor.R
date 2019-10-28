@@ -21,6 +21,17 @@
     message("Computation of Bayes factors: sampling priors, please wait...")
   }
 
+  prior_dists <- sapply(rstanarm::prior_summary(model), `[[`, "dist")
+  if (anyNA(prior_dists)) {
+    stop(
+      "Cannot compute Bayes factors with flat priors (such as when priors are ",
+      "set to 'NULL' in a 'stanreg' model), as Bayes factors inform about the raltive ",
+      "likelihood of two 'hypotheses', and flat priors provide no likelihood.\n",
+      "See '?bayesfactor_parameters' for more information.\n",
+      call. = FALSE
+    )
+  }
+
   model_prior <- suppressWarnings(
     stats::update(model, prior_PD = TRUE, refresh = 0)
   )
@@ -55,7 +66,12 @@
 
   if (is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior)) {
-      stop("Cannot compute BF for 'brmsfit' models fit with default priors.\n",
+      stop(
+        "Cannot compute Bayes factors with flat priors (such as the default ",
+        "priors for fixed-effects in a 'brmsfit' model), as Bayes factors inform about ",
+        "the raltive likelihood of two 'hypotheses', and flat priors provide no ",
+        "likelihood.\n",
+        "See '?bayesfactor_parameters' for more information.\n",
         call. = FALSE
       )
     } else {

@@ -8,7 +8,7 @@
 \alias{bayesfactor_parameters.brmsfit}
 \alias{bayesfactor_parameters.emmGrid}
 \alias{bayesfactor_parameters.data.frame}
-\title{Savage-Dickey density ratio Bayes Factor (BF)}
+\title{Bayes Factors (BF) for a Single Parameter}
 \usage{
 bayesfactor_parameters(posterior, prior = NULL,
   direction = "two-sided", null = 0, verbose = TRUE, ...)
@@ -83,11 +83,14 @@ For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_f
 }
 \details{
 This method is used to compute Bayes factors based on prior and posterior distributions.
-When \code{posterior} is a model (\code{stanreg}, \code{brmsfit}), posterior and prior samples are
-extracted for each parameter, and Savage-Dickey Bayes factors are computed for each parameter.
-
-\strong{NOTE:} For \code{brmsfit} models, the model must have been fitted with \emph{custom (non-default)}
-priors. See example below.
+\cr\cr
+For the computation of Bayes factors, the model priors must be proper priors (at the very least
+they should be \emph{not flat}, and it is preferable that they be \emph{informative}); As the priors for
+the alternative get wider, the likelihood of the null value(s) increases, to the extreme that for completely
+flat priors the null is infinitely more favorable than the alternative (this is called \emph{the Jeffreys-Lindley-Bartlett
+paradox}). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
+\cr\cr
+(Note that by default, \code{brms::brm} uses falt priors for fixed-effects; See example below.)
 
 \subsection{Setting the correct \code{prior}}{
 It is important to provide the correct \code{prior} for meaningful results.
