@@ -44,10 +44,13 @@ round(c(mean(data$V2), sd(data$V2)), 1)
 summary(lm(V2 ~ V1, data = data))
 
 # Generate multiple variables
-cor_matrix <- matrix(c(1.0, 0.2, 0.4,
-                       0.2, 1.0, 0.3,
-                       0.4, 0.3, 1.0),
-                     nrow = 3)
+cor_matrix <- matrix(c(
+  1.0, 0.2, 0.4,
+  0.2, 1.0, 0.3,
+  0.4, 0.3, 1.0
+),
+nrow = 3
+)
 
 data <- simulate_correlation(r = cor_matrix, names = c("y", "x1", "x2"))
 cor(data)
@@ -60,5 +63,4 @@ round(c(mean(data$V1), sd(data$V1)), 1)
 diff(t.test(data$V1 ~ data$V0)$estimate)
 summary(lm(V1 ~ V0, data = data))
 summary(glm(V0 ~ V1, data = data, family = "binomial"))
-
 }

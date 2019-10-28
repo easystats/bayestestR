@@ -35,5 +35,4 @@ y <- distribution_normal(1000, 0, 1)
 
 overlap(x, y)
 plot(overlap(x, y))
-
 }

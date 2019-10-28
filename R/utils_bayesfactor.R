@@ -7,7 +7,6 @@
 
 #' @keywords internal
 #' @importFrom stats update getCall
-#' @importFrom rstanarm prior_summary
 .update_to_priors.stanreg <- function(model, verbose = TRUE) {
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
