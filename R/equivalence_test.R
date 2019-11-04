@@ -201,7 +201,7 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = .89, verbo
 
 #' @importFrom stats sd
 #' @keywords internal
-.equivalence_test_models <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE) {
+.equivalence_test_models <- function(x, range = "default", ci = .89, effects = "fixed", component = "conditional", parameters = NULL, verbose = TRUE) {
   if (all(range == "default")) {
     range <- rope_range(x)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
@@ -209,9 +209,10 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = .89, verbo
   }
 
   if (verbose) .check_multicollinearity(x)
+  params <- insight::get_parameters(x, component = component, effects = effects, parameters = parameters)
 
   l <- sapply(
-    insight::get_parameters(x, component = "conditional", parameters = parameters),
+    params,
     equivalence_test,
     range = range,
     ci = ci,
@@ -233,24 +234,13 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = .89, verbo
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.stanreg <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
-  out <- .equivalence_test_models(x, range, ci, parameters, verbose)
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
-  out
-}
+equivalence_test.stanreg <- function(x, range = "default", ci = .89, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+  effects <- match.arg(effects)
 
+  out <- .equivalence_test_models(x, range, ci, effects, component = "conditional", parameters, verbose)
+  out <- merge(out, insight::clean_parameters(x)[, c("Parameter", "Effects", "Cleaned_Parameter")], by = "Parameter", sort = FALSE)
 
-#' @export
-equivalence_test.sim.merMod <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
-  out <- .equivalence_test_models(x, range, ci, parameters, verbose = FALSE)
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
-  out
-}
-
-
-#' @export
-equivalence_test.sim <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
-  out <- .equivalence_test_models(x, range, ci, parameters, verbose = FALSE)
+  class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
@@ -258,8 +248,30 @@ equivalence_test.sim <- function(x, range = "default", ci = .89, parameters = NU
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.brmsfit <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
-  out <- .equivalence_test_models(x, range, ci, parameters, verbose)
+equivalence_test.brmsfit <- function(x, range = "default", ci = .89, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
+  effects <- match.arg(effects)
+  component <- match.arg(component)
+
+  out <- .equivalence_test_models(x, range, ci, effects, component, parameters, verbose)
+  out <- merge(out, insight::clean_parameters(x)[, c("Parameter", "Effects", "Component", "Cleaned_Parameter")], by = "Parameter", sort = FALSE)
+
+  class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}
+
+
+#' @export
+equivalence_test.sim.merMod <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
+  out <- .equivalence_test_models(x, range, ci, effects = "fixed", component = "conditional", parameters, verbose = FALSE)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  out
+}
+
+
+#' @export
+equivalence_test.sim <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
+  out <- .equivalence_test_models(x, range, ci, effects = "fixed", component = "conditional", parameters, verbose = FALSE)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
