@@ -4,6 +4,7 @@
 
 - Added `plot()`-method for `p_significance()`.
 - `p_significance()` now also works for *brmsfit*-objects.
+- `equivalence_test()` gets `effects` and `component` arguments for *stanreg* and *brmsfit*  models, to print specific model components.
 
 ## Bug fixes
 
