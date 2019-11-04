@@ -5,7 +5,17 @@
 #' @inheritParams rope
 #' @param threshold The threshold value that separates significant from negligible effect. If \code{"default"}, the range is set to \code{0.1} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.
 #'
-#' @return Values between 0.5 and 1 corresponding to the probability of practical significance (ps).
+#' @return Values between 0 and 1 corresponding to the probability of practical significance (ps).
+#'
+#' @details \code{p_significance()} returns the proportion of a probability
+#'   distribution (\code{x}) that is outside a certain range (the negligible
+#'   effect, or ROPE, see argument \code{threshold}). If there are values of the
+#'   distribution both below and above the ROPE, \code{p_significance()} returns
+#'   the higher probability of a value being outside the ROPE. Typically, this
+#'   value should be larger than 0.5 to indicate practical significance. However,
+#'   if the range of the negligible effect is rather large compared to the
+#'   range of the probability distribution \code{x}, \code{p_significance()}
+#'   will be less than 0.5, which indicates no clear practical significance.
 #'
 #' @examples
 #' library(bayestestR)
