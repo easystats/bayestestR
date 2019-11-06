@@ -169,6 +169,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
       }
 
       test_equi <- equivalence_test(x, range = rope_range, ci = rope_ci, verbose = equi_warnings, ...)
+      test_equi$Cleaned_Parameter <- NULL
 
       if (!"Parameter" %in% names(test_equi)) {
         test_equi <- cbind(data.frame("Parameter" = "Posterior"), test_equi)
