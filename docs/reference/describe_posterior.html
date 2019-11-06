@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
       </span>
     </div>
 
@@ -433,11 +433,10 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># emmeans estimates</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt;   Parameter    Median CI    CI_low   CI_high pd ROPE_CI ROPE_low ROPE_high
-#&gt; 1   overall -5.452533 89 -6.712868 -4.433498  1      89     -0.1       0.1
-#&gt;   ROPE_Percentage
-#&gt; 1               0</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to emmeans.</span>
+#&gt; <span class='message'>NOTE -- Important change from versions &lt;= 1.41:</span>
+#&gt; <span class='message'>    Indicator predictors are now treated as 2-level factors by default.</span>
+#&gt; <span class='message'>    To revert to old behavior, use emm_options(cov.keep = character(0))</span></div><div class='input'><span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: restarting interrupted promise evaluation</span></div><div class='output co'>#&gt; Error in as.vector(x) : object 'model' not found</div><div class='output co'>#&gt; <span class='error'>Error in ref_grid(object = model, options = list(just.data = TRUE)): Perhaps a 'data' or 'params' argument is needed</span></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># brms models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)
