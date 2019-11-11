@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
       </span>
     </div>
 
@@ -219,7 +219,7 @@
 <p>In general, <strong>pie charts are an absolute no-go in data visualisation</strong>, as our brain’s perceptive system heavily distorts the information presented in such way. Nevertheless, there is one exeption: pizza charts.</p>
 <p>It is an intuitive way of interpreting the strength of evidence provided by BFs as an amount of surprise.</p>
 <div class="figure" style="text-align: center">
-<img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/LetsPokeAPizza.jpg" alt="Wagenmakers' pizza poking analogy. From the great 'www.bayesianspectacles.org' blog." width="100%"><p class="caption">
+<img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/LetsPokeAPizza.jpg" alt="Wagenmakers' pizza poking analogy. From the great 'www.bayesianspectacles.org' blog." width="80%"><p class="caption">
 Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.org’ blog.
 </p>
 </div>
@@ -228,7 +228,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <a class="sourceLine" id="cb8-2" title="2"></a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="kw"><a href="../reference/bayesfactor.html">bayesfactor</a></span>(result)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="kw">scale_fill_pizza</span>()</a></code></pre></div>
-<p><img src="example2_files/figure-html/unnamed-chunk-8-1.png" width="2187.5"></p>
+<p><img src="example2_files/figure-html/unnamed-chunk-8-1.png" width="1093.75"></p>
 <p>So, after seeing this pizza, how much would you be suprised by the outcome of a blinded poke?</p>
 </div>
 </div>
@@ -254,7 +254,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <a class="sourceLine" id="cb9-12" title="12"><span class="st">  </span><span class="kw">geom_violindot</span>(<span class="dt">fill_dots =</span> <span class="st">"black"</span>, <span class="dt">size_dots =</span> <span class="dv">1</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb9-13" title="13"><span class="st">  </span><span class="kw">scale_fill_material</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb9-14" title="14"><span class="st">  </span><span class="kw">theme_modern</span>()</a></code></pre></div>
-<p><img src="example2_files/figure-html/unnamed-chunk-9-1.png" width="2187.5"></p>
+<p><img src="example2_files/figure-html/unnamed-chunk-9-1.png" width="1093.75"></p>
 <p>It <em>seems</em> (visually) that <em>virgnica</em> flowers have, on average, a slightly higer width of sepals. Let’s assess this difference statistically by using the <code>ttestBF</code> in the <code>BayesFactor</code> package.</p>
 </div>
 <div id="compute-the-bayesian-t-test" class="section level3">
@@ -298,18 +298,18 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <pre><code>&gt; # Indices of model performance
 &gt; 
 &gt;  ELPD ELPD_SE LOOIC LOOIC_SE WAIC    R2 RMSE LOGLOSS SCORE_LOG
-&gt;   -66     3.1   133      6.1  133 0.097 0.48      NA      -106
+&gt;   -66     3.1   133      6.1  133 0.099 0.48      NA      -106
 &gt;  SCORE_SPHERICAL
 &gt;             0.01</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model, <span class="dt">test =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span>))</a></code></pre></div>
 <pre><code>&gt; # Description of Posterior Distributions
 &gt; 
 &gt;    Parameter Median CI CI_low CI_high    pd ROPE_CI ROPE_low ROPE_high
-&gt;  (Intercept)  -6.17 89  -9.52   -3.03 0.999      89   -0.181     0.181
-&gt;  Sepal.Width   2.15 89   1.10    3.34 1.000      89   -0.181     0.181
-&gt;  ROPE_Percentage    BF  Rhat  ESS
-&gt;                0  8.97 0.999 2747
-&gt;                0 16.94 0.999 2770</code></pre>
+&gt;  (Intercept)  -6.12 89 -9.590   -3.02 0.999      89   -0.181     0.181
+&gt;  Sepal.Width   2.13 89  0.986    3.26 0.999      89   -0.181     0.181
+&gt;  ROPE_Percentage   BF  Rhat  ESS
+&gt;                0 8.50 0.999 2689
+&gt;                0 9.13 0.999 2712</code></pre>
 </div>
 <div id="visualise-the-indices" class="section level3">
 <h3 class="hasAnchor">
@@ -326,6 +326,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -346,7 +347,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

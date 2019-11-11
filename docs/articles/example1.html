@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
       </span>
     </div>
 
@@ -337,8 +337,8 @@
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw"><a href="../reference/hdi.html">hdi</a></span>(posteriors<span class="op">$</span>feedsunflower)</a></code></pre></div>
 <pre><code>&gt; # Highest Density Interval
 &gt; 
-&gt;        89% HDI
-&gt;  [7.77, 87.66]</code></pre>
+&gt;         89% HDI
+&gt;  [13.52, 91.37]</code></pre>
 <p>It makes you fat by around <code>51</code> grams (the median). However, the uncertainty is quite high: <strong>there is 89% chance that the difference between the two feed types is between <code>7.77</code> and <code>87.66</code>.</strong></p>
 <blockquote>
 <p><strong>Is this effect different from 0?</strong></p>
@@ -360,7 +360,7 @@
 <pre><code>&gt; # Proportion of samples inside the ROPE [-20.00, 20.00]:
 &gt; 
 &gt;  inside ROPE
-&gt;       7.75 %</code></pre>
+&gt;       5.00 %</code></pre>
 <p><strong>7.75% of the 89% CI can be considered as null</strong>. Is that a lot? Based on our <a href="https://easystats.github.io/bayestestR/articles/guidelines.html"><strong>guidelines</strong></a>, yes, it is too much. <strong>Based on this particular definition of ROPE</strong>, we conclude that this effect is not significant (the probability of being negligible is too high).</p>
 <p>Although, to be honest, I have <strong>some doubts about this Prof. Sanders</strong>. I don’t really trust <strong>his definition of ROPE</strong>. Is there a more <strong>objective</strong> way of defining it?</p>
 <div class="figure" style="text-align: center">
@@ -393,10 +393,10 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <a class="sourceLine" id="cb39-2" title="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(feedsunflower <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># select only positive values</span></a>
 <a class="sourceLine" id="cb39-3" title="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>() <span class="co"># Get length</span></a>
 <a class="sourceLine" id="cb39-4" title="4">n_positive <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(posteriors) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a></code></pre></div>
-<pre><code>&gt; [1] "97.82"</code></pre>
+<pre><code>&gt; [1] "98.15"</code></pre>
 <p>We can conclude that <strong>the effect is positive with a probability of 97.82%</strong>. We call this index the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>Probability of Direction (pd)</strong></a>. It can, in fact, be computed more easily with the following:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(posteriors<span class="op">$</span>feedsunflower)</a></code></pre></div>
-<pre><code>&gt; pd = 97.82%</code></pre>
+<pre><code>&gt; pd = 98.15%</code></pre>
 <p>Interestingly, it so happens that <strong>this index is usually highly correlated with the frequentist <em>p</em>-value</strong>. We could almost roughly infer the corresponding <em>p</em>-value with a simple transformation:</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1">pd &lt;-<span class="st"> </span><span class="fl">97.82</span></a>
 <a class="sourceLine" id="cb43-2" title="2">onesided_p &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">-</span><span class="st"> </span>pd <span class="op">/</span><span class="st"> </span><span class="dv">100</span>  </a>
@@ -444,11 +444,11 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <pre><code>&gt; # Description of Posterior Distributions
 &gt; 
 &gt;      Parameter Median CI CI_low CI_high    pd ROPE_CI ROPE_low ROPE_high
-&gt;    (Intercept)  277.3 89 250.19   307.4 1.000      89    -6.17      6.17
-&gt;  feedsunflower   50.8 89   7.77    87.7 0.978      89    -6.17      6.17
-&gt;  ROPE_Percentage       BF Rhat  ESS
-&gt;                0 8.80e+11    1 3437
-&gt;                0 1.37e+00    1 3316</code></pre>
+&gt;    (Intercept)    277 89  247.8   305.5 1.000      89    -6.17      6.17
+&gt;  feedsunflower     51 89   13.5    91.4 0.982      89    -6.17      6.17
+&gt;  ROPE_Percentage       BF  Rhat  ESS
+&gt;                0 2.44e+11 0.999 3537
+&gt;                0 1.57e+00 1.000 3535</code></pre>
 <p><strong>Tada!</strong> There we have it! The <strong>median</strong>, the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE percentage</strong>!</p>
 <p>Understanding and describing posterior distributions is just one aspect of Bayesian modelling… <strong>Are you ready for more?</strong> <a href="https://easystats.github.io/bayestestR/articles/example2_GLM.html"><strong>Click here</strong></a> to see the next example.</p>
 </div>
@@ -470,6 +470,7 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -492,7 +493,7 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

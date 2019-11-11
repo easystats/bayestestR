@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
       </span>
     </div>
 
@@ -183,7 +183,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 </p>
 </div>
 <p>Let’s use the Students’ (1908) Sleep data set (<code><a href="https://rdrr.io/r/utils/data.html">data("sleep")</a></code>), in which <strong>people took some drug</strong> and where the researchers measured the <strong>extra hours of sleep</strong> that they slept afterwards. We will try answering the following question: <em>given the observed data, how likely it is that the <strong>drug</strong> (the variable <code>group</code>) <strong>has no effect</strong> on the numbers of hours of <strong>extra sleep</strong> (variable <code>extra</code>)?</em></p>
-<p><img src="bayes_factors_files/figure-html/sleep_boxplot-1.png" width="2187.5"></p>
+<p><img src="bayes_factors_files/figure-html/sleep_boxplot-1.png" width="1093.75"></p>
 <p>The <strong>bloxplot</strong> suggests that the 2nd group has a higher number of hours of extra sleep. <em>By how much?</em> Let’s fit a simple <a href="https://easystats.github.io/bayestestR/articles/example1_GLM.html">Bayesian linear model</a>.</p>
 <div id="testing-against-a-null-region" class="section level3">
 <h3 class="hasAnchor">
@@ -196,7 +196,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 {P(b_{drug} \notin [-0.5, 0.5])}
 \]</span></p>
 <p>If we set our prior to have a normal distribution centered at 0 hours with a scale (an SD) of 2.5 hours, our prior would look like this:</p>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-1-1.png" width="2187.5"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-1-1.png" width="1093.75"></p>
 <p>The prior odds would be 5.3.</p>
 <p>We can now fit our model:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
@@ -207,9 +207,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 {P(b_{drug} \in [-0.5,0.5] | Data)}
 {P(b_{drug} \notin [-0.5,0.5] | Data)}
 \]</span></p>
-<p><img src="bayes_factors_files/figure-html/rstanarm_fit-1.png" width="2187.5"></p>
-<p>We can see that the centre of the posterior distribution has shifted away from 0 (to ~1.6). Likewise, the posterior odds are 3.3 - which seems to favour <strong>the effect being non-null</strong>, but… <em>does this mean the data support the alternative more than the null?</em> Hard to say, since even before the data were observed, the priors already favoured the alternative - so we need to take our priors into account here!</p>
-<p>Let’s compute the Bayes factor as the change from the prior odds to the posterior odds: <span class="math inline">\(BF_{10} = Odds_{posterior} / Odds_{prior} = 0.6\)</span>! This BF indicates that the data provide 1/0.6 = 1.6 times more evidence for the effect of the drug being practically nothing than it does for the drug having some clinically significant effect. Alternatively, we can say that the observed data are 1.63 times more probable if effect of the drug was within the null interval than if it was outside of it! Thus, although the center of distribution has shifted away from 0, and the posterior favors the non-null values, it seems that given the observed data, the probability mass has <em>overall</em> shifted closer to the null interval, making the values in the null interval more probable! <span class="citation">(see <em>Non-overlapping Hypotheses</em> in Morey &amp; Rouder, 2011)</span></p>
+<p><img src="bayes_factors_files/figure-html/rstanarm_fit-1.png" width="1093.75"></p>
+<p>We can see that the centre of the posterior distribution has shifted away from 0 (to ~1.6). Likewise, the posterior odds are 3.7 - which seems to favour <strong>the effect being non-null</strong>, but… <em>does this mean the data support the alternative more than the null?</em> Hard to say, since even before the data were observed, the priors already favoured the alternative - so we need to take our priors into account here!</p>
+<p>Let’s compute the Bayes factor as the change from the prior odds to the posterior odds: <span class="math inline">\(BF_{10} = Odds_{posterior} / Odds_{prior} = 0.7\)</span>! This BF indicates that the data provide 1/0.7 = 1.4 times more evidence for the effect of the drug being practically nothing than it does for the drug having some clinically significant effect. Alternatively, we can say that the observed data are 1.44 times more probable if effect of the drug was within the null interval than if it was outside of it! Thus, although the center of distribution has shifted away from 0, and the posterior favors the non-null values, it seems that given the observed data, the probability mass has <em>overall</em> shifted closer to the null interval, making the values in the null interval more probable! <span class="citation">(see <em>Non-overlapping Hypotheses</em> in Morey &amp; Rouder, 2011)</span></p>
 <p>Note that <strong>interpretation guides</strong> for Bayes factors can be found <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf"><strong>here</strong></a>.</p>
 <p>All of this can be achieved with the function <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code>, which gives a Bayes factor for each of the model’s parameters:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">My_first_BF &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span>(model, <span class="dt">null =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span>.<span class="dv">5</span>,.<span class="dv">5</span>))</a>
@@ -217,12 +217,12 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <pre><code>&gt; # Bayes Factor (Null-Interval)
 &gt; 
 &gt;    Parameter Bayes Factor
-&gt;  (Intercept)         0.04
-&gt;       group2         0.61
+&gt;  (Intercept)         0.05
+&gt;       group2         0.69
 &gt; 
 &gt; * Evidence Against The Null: [-0.5, 0.5]</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(My_first_BF)</a></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-5-1.png" width="2187.5"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-5-1.png" width="1093.75"></p>
 </div>
 <div id="testing-against-the-null-as-a-single-point-0" class="section level3">
 <h3 class="hasAnchor">
@@ -237,29 +237,29 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; 
 &gt;    Parameter Bayes Factor
 &gt;  (Intercept)         0.07
-&gt;       group2         0.82
+&gt;       group2         0.78
 &gt; 
 &gt; * Evidence Against The Null: [0]</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(My_second_BF)</a></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-8-1.png" width="2187.5"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-8-1.png" width="1093.75"></p>
 <p>By default, <code>null</code> is set to 0, resulting in the computation of a Savage-Dickey ratio.</p>
 </div>
 <div id="one-sided-tests" class="section level3">
 <h3 class="hasAnchor">
 <a href="#one-sided-tests" class="anchor"></a>One-Sided Tests</h3>
 <p>We can also conduct a directional test (a “one sided” or “one tailed” test) if we have a prior hypotheses about the direction of the effect. This is done by setting an order restriction on the prior and posterior distributions of the alternative <span class="citation">(Morey &amp; Wagenmakers, 2014)</span>. For example, if we have a prior hypothesis that the effect of the drug is positive, the alternative will be restricted to the region to the right of the null (point or interval):</p>
-<p><img src="bayes_factors_files/figure-html/prior_n_post_plot_one_sided-1.png" width="2187.5"></p>
+<p><img src="bayes_factors_files/figure-html/prior_n_post_plot_one_sided-1.png" width="1093.75"></p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">test_group2_right &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span>(model, <span class="dt">direction =</span> <span class="st">"&gt;"</span>)</a>
 <a class="sourceLine" id="cb8-2" title="2">test_group2_right</a></code></pre></div>
 <pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
 &gt; 
 &gt;    Parameter Bayes Factor
-&gt;  (Intercept)         0.12
-&gt;       group2         1.54
+&gt;  (Intercept)         0.11
+&gt;       group2         1.57
 &gt; 
 &gt; * Evidence Against The Null: [0]
 &gt; *                 Direction: Right-Sided test</code></pre>
-<p>As we can see, given that we have an <em>a priori</em> assumption about the direction of the effect (<em>that the effect is positive</em>), <strong>the presence of an effect is 1.5 times more likely than the absence of an effect</strong>, given the observed data (or that the data are 1.5 time more probable under <span class="math inline">\(H_1\)</span> than <span class="math inline">\(H_0\)</span>). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 1.5 is still considered quite <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf">weak evidence</a>).</p>
+<p>As we can see, given that we have an <em>a priori</em> assumption about the direction of the effect (<em>that the effect is positive</em>), <strong>the presence of an effect is 1.6 times more likely than the absence of an effect</strong>, given the observed data (or that the data are 1.6 time more probable under <span class="math inline">\(H_1\)</span> than <span class="math inline">\(H_0\)</span>). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 1.6 is still considered quite <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf">weak evidence</a>).</p>
 </div>
 <div id="testing-contrasts-with-emmeans" class="section level3">
 <h3 class="hasAnchor">
@@ -279,7 +279,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
 &gt; 
 &gt;  Parameter Bayes Factor
-&gt;      1 - 2          0.9
+&gt;      1 - 2         0.81
 &gt; 
 &gt; * Evidence Against The Null: [0]</code></pre>
 <p><strong>NOTE</strong>: See the <em>Specifying Correct Priors for Factors with More Than 2 Levels</em> section below.</p>
@@ -489,11 +489,11 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <div id="order-restricted-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#order-restricted-models" class="anchor"></a>Order Restricted Models</h3>
-<p>Consider the following model, in which we predict the length of an iris’ sepal from the length of its petal, as well as from its species. <img src="bayes_factors_files/figure-html/plot_iris-1.png" width="2187.5"></p>
+<p>Consider the following model, in which we predict the length of an iris’ sepal from the length of its petal, as well as from its species. <img src="bayes_factors_files/figure-html/plot_iris-1.png" width="1093.75"></p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">iris_model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species <span class="op">+</span><span class="st"> </span>Petal.Length,</a>
 <a class="sourceLine" id="cb36-2" title="2">                       <span class="dt">data =</span> iris)</a></code></pre></div>
 <p>What are our priors (here, <code>rstanarm</code>’s default priors) for this model’s parameters? They all take the shape of some normal distribution centered at 0:</p>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-11-1.png" width="2187.5"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-11-1.png" width="1093.75"></p>
 <p>These priors are unrestricted - that is, all of the model’s parameter have some non-zero probability (no matter how small) of being any of the values between <span class="math inline">\(-\infty\)</span> and <span class="math inline">\(\infty\)</span> (this is true for both the prior and posterior distribution). Subsequently, <em>a priori</em> the ordering of the parameters relating to the iris species can have any ordering, such that (a priori) setosa can have larger sepals than virginica, but it is also possible for virginica to have larger sepals than setosa!</p>
 <p>Does it make sense to let our priors cover all of these possibilities? That depends on our <em>prior</em> knowledge or assumptions. For example, even a novice botanist will assume that it is unlikely that petal length will be <em>negatively</em> associated with sepal length - an iris with longer petals is likely larger, and thus will also have a longer sepal. And an expert botanist will perhaps assume that setosas have smaller sepals than both versicolors and virginica. All of these prior assumptions can be formulated as order restrictions <span class="citation">(Morey, 2015; Morey &amp; Rouder, 2011)</span>:</p>
 <ol style="list-style-type: decimal">
@@ -514,10 +514,10 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <pre><code>&gt; # Bayes Factor (Order-Restriction)
 &gt; 
 &gt;                                        Hypothesis P(Prior) P(Posterior)
-&gt;                                  Petal.Length &gt; 0     0.51            1
+&gt;                                  Petal.Length &gt; 0     0.50            1
 &gt;  (Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)     0.25            0
 &gt;  Bayes Factor
-&gt;          1.97
+&gt;          1.99
 &gt;      0.00e+00
 &gt; 
 &gt; * Bayes factors for the restricted movel vs. the un-restricted model.</code></pre>
@@ -555,14 +555,14 @@ BF_{restricted / NULL} = \frac
 <a class="sourceLine" id="cb42-11" title="11">c_sum &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span>(<span class="kw">emmeans</span>(fit_sum, <span class="op">~</span><span class="st"> </span>Species))</a>
 <a class="sourceLine" id="cb42-12" title="12">c_sum</a></code></pre></div>
 <pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
-&gt;  setosa - versicolor       -0.59     -0.76     -0.42
-&gt;  setosa - virginica        -1.23     -1.42     -1.02
+&gt;  setosa - versicolor       -0.59     -0.77     -0.42
+&gt;  setosa - virginica        -1.23     -1.42     -1.03
 &gt;  versicolor - virginica    -0.64     -0.83     -0.44
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
 <p>Let’s plot the priors and posteriors of these differences:</p>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-16-1.png" width="2187.5"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-16-1.png" width="1093.75"></p>
 <p><strong><em>What happened???</em></strong><br>
 It seems that not all pairwise differences have the same prior distribution!! Specifically, the mass of the difference between setosa and versicolor is closer to 0 than for any of the other differences! This is caused by an inherent bias introduced by the <em>effects</em> coding (it’s even worse with the default treatment coding, because the prior for the intercept is usually drastically different from the effect’s parameters).</p>
 <p>The solution is to use <em>orthogonal</em> factor coding, a-la <code>contr.bayes</code>, which can either specify this factor coding per-factor:</p>
@@ -583,7 +583,7 @@ It seems that not all pairwise differences have the same prior distribution!! Sp
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
 <p>Let’s plot the priors and posteriors of these differences:</p>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-21-1.png" width="2187.5"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-21-1.png" width="1093.75"></p>
 <p>When comparing the results from the two factor coding schemes, we find: 1. In both cases, the estimated (posterior) means are similar.<br>
 2. The Bayes factors differ between the two schemes. 3. Only with <code>contr.bayes</code>, the prior distributions of the differences is unbiased.</p>
 </div>
@@ -608,7 +608,7 @@ It seems that not all pairwise differences have the same prior distribution!! Sp
 <a class="sourceLine" id="cb49-2" title="2">em_sum <span class="co"># the posterior marginal means</span></a></code></pre></div>
 <pre><code>&gt;  Species    emmean lower.HPD upper.HPD
 &gt;  setosa        5.2       5.1       5.4
-&gt;  versicolor    5.8       5.7       5.9
+&gt;  versicolor    5.8       5.7       6.0
 &gt;  virginica     6.5       6.3       6.6
 &gt; 
 &gt; Point estimate displayed: median 
@@ -620,17 +620,17 @@ It seems that not all pairwise differences have the same prior distribution!! Sp
 &gt;                                        Hypothesis P(Prior) P(Posterior)
 &gt;                               setosa &gt; versicolor     0.50            0
 &gt;                                setosa &gt; virginica     0.50            0
-&gt;                            versicolor &gt; virginica     0.51            0
-&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.10            0
+&gt;                            versicolor &gt; virginica     0.50            0
+&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.11            0
 &gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor     0.20            0
-&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica     0.20            1
+&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica     0.19            1
 &gt;  Bayes Factor
 &gt;      0.00e+00
 &gt;      0.00e+00
 &gt;      0.00e+00
 &gt;      0.00e+00
 &gt;      0.00e+00
-&gt;          4.94
+&gt;          5.19
 &gt; 
 &gt; * Bayes factors for the restricted movel vs. the un-restricted model.</code></pre>
 <p><strong><em>What happened???</em></strong><br>
@@ -650,10 +650,10 @@ It seems that not all pairwise differences have the same prior distribution!! Sp
 <pre><code>&gt; # Bayes Factor (Order-Restriction)
 &gt; 
 &gt;                                        Hypothesis P(Prior) P(Posterior)
-&gt;                               setosa &gt; versicolor     0.49            0
-&gt;                                setosa &gt; virginica     0.49            0
-&gt;                            versicolor &gt; virginica     0.49            0
-&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.17            0
+&gt;                               setosa &gt; versicolor     0.51            0
+&gt;                                setosa &gt; virginica     0.50            0
+&gt;                            versicolor &gt; virginica     0.50            0
+&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.16            0
 &gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor     0.16            0
 &gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica     0.17            1
 &gt;  Bayes Factor
@@ -662,7 +662,7 @@ It seems that not all pairwise differences have the same prior distribution!! Sp
 &gt;      0.00e+00
 &gt;      0.00e+00
 &gt;      0.00e+00
-&gt;          5.88
+&gt;          5.95
 &gt; 
 &gt; * Bayes factors for the restricted movel vs. the un-restricted model.</code></pre>
 <p>When comparing the results from the two factor coding schemes, we find:<br>
@@ -711,6 +711,7 @@ It seems that not all pairwise differences have the same prior distribution!! Sp
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -736,7 +737,7 @@ It seems that not all pairwise differences have the same prior distribution!! Sp
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

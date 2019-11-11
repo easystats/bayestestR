@@ -32,7 +32,7 @@ data(iris)
 library(knitr)
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">")
-knitr::opts_chunk$set(dpi=300)
+knitr::opts_chunk$set(dpi=150)
 options(digits=2)
 
 set.seed(333)
@@ -114,7 +114,7 @@ In general, **pie charts are an absolute no-go in data visualisation**, as our b
 It is an intuitive way of interpreting the strength of evidence provided by BFs as an amount of surprise. 
 
 
-```{r echo=FALSE, fig.cap="Wagenmakers' pizza poking analogy. From the great 'www.bayesianspectacles.org' blog.", fig.align='center', out.width="100%"}
+```{r echo=FALSE, fig.cap="Wagenmakers' pizza poking analogy. From the great 'www.bayesianspectacles.org' blog.", fig.align='center', out.width="80%"}
 knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/LetsPokeAPizza.jpg")
 ```
 

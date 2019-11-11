@@ -145,7 +145,7 @@ eti.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"),
     insight::clean_parameters(x)
   )
 
-  class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
+  class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
