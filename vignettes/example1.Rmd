@@ -132,7 +132,7 @@ model <- stan_glm(Sepal.Length ~ Petal.Length, data=iris, chains = 2, iter = 100
 nrow(insight::get_parameters(model))  # Size (number of rows)
 ```
 
-In this case, as would be expected, we have **`2 chains * (1000 iterations - 250 warm-up) = 1500`** posterior draws. However, let's keep our first model with the default setup.
+In this case, as would be expected, we have **`2 chains * (1000 iterations - 250 warm-up) = 1500`** posterior draws. But let's keep our first model with the default setup (as it has more draws).
 
 #### Visualizing the posterior distribution
 
@@ -150,7 +150,7 @@ This distribution represents the [probability](https://en.wikipedia.org/wiki/Pro
 
 And this is at the heart of Bayesian analysis. We don't need *p*-values, *t*-values or degrees of freedom: **everything is there**, within this posterior distribution.
 
-Our description above is consistent with the values obtained from the frequentist regression (which resulted in a beta of **0.41**). This is reassuring! Indeed, **in most cases a Bayesian analysis does not drastically change the results** or their interpretation. Rather, it makes the results more interpretable and intuitive, and eaasier to understand and describe.
+Our description above is consistent with the values obtained from the frequentist regression (which resulted in a beta of **0.41**). This is reassuring! Indeed, **in most cases a Bayesian analysis does not drastically change the results** or their interpretation. Rather, it makes the results more interpretable and intuitive, and easier to understand and describe.
 
 We can now go ahead and **precisely characterize** this posterior distribution.
 
