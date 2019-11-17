@@ -37,24 +37,18 @@ describe_prior <- function(model, ...) {
 
 
 
-#' @importFrom tools toTitleCase
 #' @keywords internal
 .describe_prior <- function(model, ...) {
   priors <- insight::get_priors(model, ...)
 
   # Format names
-  names(priors) <- tolower(names(priors))
-  names(priors)[-1] <- paste0("prior_", names(priors)[-1])
+  names(priors)[-1] <- paste0("Prior_", names(priors)[-1])
 
   # If the prior scale has been adjusted, it is the actual scale that was used.
-  if ("prior_adjusted_scale" %in% names(priors)) {
-    priors$prior_scale[!is.na(priors$prior_adjusted_scale)] <- priors$prior_adjusted_scale[!is.na(priors$prior_adjusted_scale)]
-    priors$prior_adjusted_scale <- NULL
+  if ("Prior_Adjusted_Scale" %in% names(priors)) {
+    priors$Prior_Scale[!is.na(priors$Prior_Adjusted_Scale)] <- priors$Prior_Adjusted_Scale[!is.na(priors$Prior_Adjusted_Scale)]
+    priors$Prior_Adjusted_Scale <- NULL
   }
-
-  string <- strsplit(names(priors), "_", fixed = TRUE)
-  string <- lapply(string, tools::toTitleCase)
-  names(priors) <- unlist(lapply(string, paste0, collapse = "_"))
 
   priors
 }
@@ -75,7 +69,6 @@ describe_prior.BFBayesFactor <- function(model, ...) {
   priors <- insight::get_priors(model)
 
   # Format names
-  names(priors) <- tools::toTitleCase(names(priors))
   names(priors)[-1] <- paste0("Prior_", names(priors)[-1])
 
   priors
