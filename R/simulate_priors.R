@@ -61,8 +61,8 @@ simulate_prior.brmsfit <- function(model, n = 1000, effects = c("fixed", "random
   simulated <- data.frame(.bamboozled = 1:n)
 
   # iterate over parameters
-  for (param in priors[[1]]) {
-    prior <- priors[priors[[1]] == param, ]
+  for (param in priors$Parameter) {
+    prior <- priors[priors$Parameter == param, ]
 
     # Get actual scale
     if ("Adjusted_Scale" %in% names(prior)) {
