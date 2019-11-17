@@ -12,6 +12,10 @@
 #' an approximation of a Bayes factor comparing the marginal likelihoods of the model
 #' against a model in which the tested parameter has been restricted to the point null.
 #' \cr \cr
+#' \code{bayesfactor_savagedickey} and \code{bayesfactor_rope} are wrappers around
+#' \code{bayesfactor_parameters} with different defaults for the null to be tested against
+#' (a point and a range, respectively). The \code{bf_*} functions as aliases of the main functions.
+#' \cr \cr
 #' \strong{For info on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 #' \cr \cr
 #' For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
@@ -122,12 +126,14 @@ bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sid
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, hypothesis = NULL, ...) {
-  .Deprecated("bayesfactor_parameters")
-
-  if (!is.null(hypothesis)) {
-    null <- hypothesis
+bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
+  if (!is.null(list(...)[["hypothesis"]])) {
+    null <- list(...)[["hypothesis"]]
     warning("The 'hypothesis' argument is deprecated. Please use 'null' instead.")
+  }
+
+  if (length(null)>1) {
+    message("'null' is a range - computing a ROPE based Bayes factor.")
   }
 
   bayesfactor_parameters(
@@ -139,6 +145,36 @@ bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-s
     ...
   )
 }
+
+#' @rdname bayesfactor_parameters
+#' @export
+bayesfactor_rope <- function(posterior, prior = NULL, direction = "two-sided", null = rope_range(posterior), verbose = TRUE, ...) {
+
+  if (length(null)<2) {
+    message("'null' is a point - computing a Savage-Dickey Bayes factor.")
+  }
+
+  bayesfactor_parameters(
+    posterior = posterior,
+    prior = prior,
+    direction = direction,
+    null = null,
+    verbose = verbose,
+    ...
+  )
+}
+
+#' @rdname bayesfactor_parameters
+#' @export
+bf_parameters <- bayesfactor_parameters
+
+#' @rdname bayesfactor_parameters
+#' @export
+bf_savagedickey <- bayesfactor_savagedickey
+
+#' @rdname bayesfactor_parameters
+#' @export
+bf_rope <- bayesfactor_rope
 
 #' @rdname bayesfactor_parameters
 #' @export

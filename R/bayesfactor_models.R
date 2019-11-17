@@ -1,6 +1,8 @@
 #' Bayes Factors (BF) for model comparison
 #'
 #' @description This function computes or extracts Bayes factors from fitted models.
+#' #' \cr \cr
+#' The \code{bf_*} function is an alias of the main function.
 #'
 #' @author Mattan S. Ben-Shachar
 #'
@@ -123,6 +125,10 @@
 bayesfactor_models <- function(..., denominator = 1, verbose = TRUE) {
   UseMethod("bayesfactor_models")
 }
+
+#' @rdname bayesfactor_models
+#' @export
+bf_models <- bayesfactor_models
 
 #' @importFrom stats BIC
 #' @export

@@ -3,6 +3,8 @@
 #' This method computes Bayes factors for comparing a model with an order restrictions on its parameters
 #' with the fully unrestricted model. \emph{Note that this method should only be used for confirmatory analyses}.
 #' \cr \cr
+#' The \code{bf_*} function is an alias of the main function.
+#' \cr \cr
 #' \strong{For info on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 #' \cr \cr
 #' For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
@@ -117,6 +119,10 @@
 bayesfactor_restricted <- function(posterior, hypothesis, prior = NULL, verbose = TRUE, ...) {
   UseMethod("bayesfactor_restricted")
 }
+
+#' @rdname bayesfactor_restricted
+#' @export
+bf_restricted <- bayesfactor_restricted
 
 #' @importFrom insight get_parameters
 #' @rdname bayesfactor_restricted

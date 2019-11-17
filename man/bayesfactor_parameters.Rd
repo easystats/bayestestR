@@ -3,6 +3,10 @@
 \name{bayesfactor_parameters}
 \alias{bayesfactor_parameters}
 \alias{bayesfactor_savagedickey}
+\alias{bayesfactor_rope}
+\alias{bf_parameters}
+\alias{bf_savagedickey}
+\alias{bf_rope}
 \alias{bayesfactor_parameters.numeric}
 \alias{bayesfactor_parameters.stanreg}
 \alias{bayesfactor_parameters.brmsfit}
@@ -14,8 +18,19 @@ bayesfactor_parameters(posterior, prior = NULL,
   direction = "two-sided", null = 0, verbose = TRUE, ...)
 
 bayesfactor_savagedickey(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE,
-  hypothesis = NULL, ...)
+  direction = "two-sided", null = 0, verbose = TRUE, ...)
+
+bayesfactor_rope(posterior, prior = NULL, direction = "two-sided",
+  null = rope_range(posterior), verbose = TRUE, ...)
+
+bf_parameters(posterior, prior = NULL, direction = "two-sided",
+  null = 0, verbose = TRUE, ...)
+
+bf_savagedickey(posterior, prior = NULL, direction = "two-sided",
+  null = 0, verbose = TRUE, ...)
+
+bf_rope(posterior, prior = NULL, direction = "two-sided",
+  null = rope_range(posterior), verbose = TRUE, ...)
 
 \method{bayesfactor_parameters}{numeric}(posterior, prior = NULL,
   direction = "two-sided", null = 0, verbose = TRUE, ...)
@@ -52,14 +67,14 @@ or a data frame - representing a posterior distribution(s) from (see Details).}
 
 \item{...}{Currently not used.}
 
-\item{hypothesis}{Deprecated in favour of \code{null}.}
-
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
 
 \item{component}{Should results for all parameters, parameters for the conditional model
 or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
+
+\item{hypothesis}{Deprecated in favour of \code{null}.}
 }
 \value{
 A data frame containing the Bayes factor representing evidence \emph{against} the null.
@@ -76,6 +91,10 @@ and posterior odds of the parameter falling within or outside the null;
 When the null is a point, a Savage-Dickey density ratio is computed, which is also
 an approximation of a Bayes factor comparing the marginal likelihoods of the model
 against a model in which the tested parameter has been restricted to the point null.
+\cr \cr
+\code{bayesfactor_savagedickey} and \code{bayesfactor_rope} are wrappers around
+\code{bayesfactor_parameters} with different defaults for the null to be tested against
+(a point and a range, respectively). The \code{bf_*} functions as aliases of the main functions.
 \cr \cr
 \strong{For info on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 \cr \cr

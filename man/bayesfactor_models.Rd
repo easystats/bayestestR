@@ -2,9 +2,12 @@
 % Please edit documentation in R/bayesfactor_models.R
 \name{bayesfactor_models}
 \alias{bayesfactor_models}
+\alias{bf_models}
 \title{Bayes Factors (BF) for model comparison}
 \usage{
 bayesfactor_models(..., denominator = 1, verbose = TRUE)
+
+bf_models(..., denominator = 1, verbose = TRUE)
 }
 \arguments{
 \item{...}{Fitted models (see details), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').}
@@ -19,6 +22,8 @@ A data frame containing the models' formulas (reconstructed fixed and random eff
 }
 \description{
 This function computes or extracts Bayes factors from fitted models.
+#' \cr \cr
+The \code{bf_*} function is an alias of the main function.
 }
 \details{
 If the passed models are supported by \pkg{insight} the DV of all models will be tested for equality

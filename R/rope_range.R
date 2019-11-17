@@ -74,13 +74,9 @@ rope_range.lm <- rope_range.brmsfit
 rope_range.merMod <- rope_range.brmsfit
 
 #' @export
-rope_range.sim.merMod <- function(x, ...) {
+rope_range.default <- function(x, ...) {
   c(-.1, .1)
 }
-
-#' @export
-rope_range.sim <- rope_range.sim.merMod
-
 
 .rope_range <- function(x, information, response) {
   negligible_value <- tryCatch({
