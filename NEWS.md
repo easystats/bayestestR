@@ -9,6 +9,7 @@
 ## Bug fixes
 
 - Fixed mistake in description of `p_significance()`.
+- Fixed error when computing BFs with `emmGrid` based on some non-linear models ( #260 ).
 
 # bayestestR 0.4.0
 

@@ -10,6 +10,8 @@ c_ <- pairs(em_)
 all_ <- rbind(em_, c_)
 all_summ <- summary(all_)
 
+
+
 test_that("emmGrid ci", {
   testthat::skip_on_travis()
   xci <- ci(all_, ci = 0.9)
@@ -109,4 +111,39 @@ test_that("emmGrid describe_posterior", {
   )
   testthat::expect_equal(log(xpost$BF), c(-2.58, 2.00, -0.25), tolerance = 0.1)
   testthat::expect_warning(describe_posterior(all_, test = "bf"))
+})
+
+## For non linear models
+set.seed(333)
+df <- data.frame(G = rep(letters[1:3], each = 2),
+                 Y = rexp(6))
+
+fit_bayes <- stan_glm(Y ~ G, data = df,
+                      family = Gamma(link ="identity"),
+                      refresh = 0)
+fit_bayes_prior <- update(fit_bayes, prior_PD = TRUE)
+
+bayes_sum <- emmeans(fit_bayes, ~ G)
+bayes_sum_prior <- emmeans(fit_bayes_prior, ~ G)
+
+test_that("emmGrid bayesfactor_restricted2", {
+  testthat::skip_on_travis()
+  testthat::skip_on_cran()
+
+  hyps <- c("a < b", "b < c")
+  xrbf1 <- bayesfactor_restricted(bayes_sum, fit_bayes, hypothesis = hyps)
+  xrbf2 <- bayesfactor_restricted(bayes_sum, bayes_sum_prior, hypothesis = hyps)
+
+  testthat::expect_equal(xrbf1,xrbf2, tolerance = 0.1)
+})
+
+
+test_that("emmGrid bayesfactor_parameters", {
+  testthat::skip_on_travis()
+  testthat::skip_on_cran()
+
+  xsdbf1 <- bayesfactor_parameters(bayes_sum, prior = fit_bayes)
+  xsdbf2 <- bayesfactor_parameters(bayes_sum, prior = bayes_sum_prior)
+
+  testthat::expect_equal(log(xsdbf1$BF),log(xsdbf2$BF), tolerance = 0.1)
 })

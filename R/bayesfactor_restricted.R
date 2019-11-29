@@ -154,7 +154,8 @@ bayesfactor_restricted.stanreg <- function(posterior, hypothesis, prior = NULL,
 bayesfactor_restricted.brmsfit <- bayesfactor_restricted.stanreg
 
 #' @importFrom stats update
-#' @importFrom insight get_parameters
+#' @importFrom emmeans ref_grid
+#' @importFrom emmeans as.mcmc.emmGrid
 #' @rdname bayesfactor_restricted
 #' @export
 bayesfactor_restricted.emmGrid <- function(posterior, hypothesis, prior = NULL,
@@ -172,8 +173,9 @@ bayesfactor_restricted.emmGrid <- function(posterior, hypothesis, prior = NULL,
     )
   } else if (!inherits(prior, "emmGrid")) { # then is it a model
     prior <- .update_to_priors(prior, verbose = verbose)
-    prior <- insight::get_parameters(prior, effects = "fixed")
-    prior <- stats::update(posterior, post.beta = as.matrix(prior))
+    prior <- emmeans::ref_grid(prior)
+    prior <- prior@post.beta
+    prior <- stats::update(posterior, post.beta = prior)
   }
 
   prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(prior, names = FALSE)))
