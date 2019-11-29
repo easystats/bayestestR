@@ -14,7 +14,7 @@ print.bayesfactor_restricted <- function(x, digits = 2, log = FALSE, ...) {
 
   print.data.frame(BFE, digits = digits, row.names = FALSE)
 
-  cat("\n* Bayes factors for the restricted movel vs. the un-restricted model.\n")
+  cat("\n* Bayes factors for the restricted model vs. the un-restricted model.\n")
 
   if (log) insight::print_color("\nBayes Factors are on the log-scale.\n", "red")
   invisible(x)

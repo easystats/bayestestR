@@ -103,7 +103,7 @@
 #' # >                          Hypothesis P(Prior) P(Posterior) Bayes Factor
 #' # >  lemon < control & control < sulfur     0.17         0.75         4.49
 #' # > ---
-#' # > Bayes factors for the restricted movel vs. the un-restricted model.
+#' # > Bayes factors for the restricted model vs. the un-restricted model.
 #' }
 #'
 #' @references

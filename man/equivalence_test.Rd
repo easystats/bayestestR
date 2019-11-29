@@ -15,26 +15,34 @@ equivalence_test(x, ...)
 
 \method{equivalence_test}{default}(x, ...)
 
-\method{equivalence_test}{numeric}(x, range = "default", ci = 0.89,
-  verbose = TRUE, ...)
+\method{equivalence_test}{numeric}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
 
-\method{equivalence_test}{data.frame}(x, range = "default", ci = 0.89,
-  verbose = TRUE, ...)
+\method{equivalence_test}{data.frame}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
 
-\method{equivalence_test}{emmGrid}(x, range = "default", ci = 0.89,
-  verbose = TRUE, ...)
+\method{equivalence_test}{emmGrid}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
 
-\method{equivalence_test}{BFBayesFactor}(x, range = "default",
-  ci = 0.89, verbose = TRUE, ...)
+\method{equivalence_test}{BFBayesFactor}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
 
-\method{equivalence_test}{stanreg}(x, range = "default", ci = 0.89,
-  effects = c("fixed", "random", "all"), parameters = NULL,
-  verbose = TRUE, ...)
+\method{equivalence_test}{stanreg}(
+  x,
+  range = "default",
+  ci = 0.89,
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 
-\method{equivalence_test}{brmsfit}(x, range = "default", ci = 0.89,
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE,
-  ...)
+\method{equivalence_test}{brmsfit}(
+  x,
+  range = "default",
+  ci = 0.89,
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}

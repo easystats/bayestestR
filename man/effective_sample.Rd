@@ -9,15 +9,27 @@
 \usage{
 effective_sample(model, ...)
 
-\method{effective_sample}{brmsfit}(model, effects = c("fixed", "random",
-  "all"), component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL, ...)
+\method{effective_sample}{brmsfit}(
+  model,
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
+  ...
+)
 
-\method{effective_sample}{stanreg}(model, effects = c("fixed", "random",
-  "all"), parameters = NULL, ...)
+\method{effective_sample}{stanreg}(
+  model,
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  ...
+)
 
-\method{effective_sample}{MCMCglmm}(model, effects = c("fixed", "random",
-  "all"), parameters = NULL, ...)
+\method{effective_sample}{MCMCglmm}(
+  model,
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{A \code{stanreg}, \code{stanfit}, or \code{brmsfit} object.}

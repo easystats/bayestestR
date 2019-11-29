@@ -4,8 +4,7 @@
 \alias{bayesfactor_inclusion}
 \title{Inclusion Bayes Factors for testing predictors across Bayesian models}
 \usage{
-bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL,
-  ...)
+bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL, ...)
 }
 \arguments{
 \item{models}{An object of class \code{\link{bayesfactor_models}} or \code{BFBayesFactor}.}

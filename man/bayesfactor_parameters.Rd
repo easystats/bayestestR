@@ -10,31 +10,73 @@
 \alias{bayesfactor_parameters.data.frame}
 \title{Bayes Factors (BF) for a Single Parameter}
 \usage{
-bayesfactor_parameters(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE, ...)
+bayesfactor_parameters(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  verbose = TRUE,
+  ...
+)
 
-bayesfactor_savagedickey(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE,
-  hypothesis = NULL, ...)
+bayesfactor_savagedickey(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  verbose = TRUE,
+  hypothesis = NULL,
+  ...
+)
 
-\method{bayesfactor_parameters}{numeric}(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE, ...)
+\method{bayesfactor_parameters}{numeric}(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  verbose = TRUE,
+  ...
+)
 
-\method{bayesfactor_parameters}{stanreg}(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE,
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), ...)
+\method{bayesfactor_parameters}{stanreg}(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  verbose = TRUE,
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  ...
+)
 
-\method{bayesfactor_parameters}{brmsfit}(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE,
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), ...)
+\method{bayesfactor_parameters}{brmsfit}(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  verbose = TRUE,
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  ...
+)
 
-\method{bayesfactor_parameters}{emmGrid}(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE, ...)
+\method{bayesfactor_parameters}{emmGrid}(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  verbose = TRUE,
+  ...
+)
 
-\method{bayesfactor_parameters}{data.frame}(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE, ...)
+\method{bayesfactor_parameters}{data.frame}(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}

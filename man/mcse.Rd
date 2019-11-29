@@ -7,8 +7,7 @@
 \usage{
 mcse(model, ...)
 
-\method{mcse}{stanreg}(model, effects = c("fixed", "random", "all"),
-  parameters = NULL, ...)
+\method{mcse}{stanreg}(model, effects = c("fixed", "random", "all"), parameters = NULL, ...)
 }
 \arguments{
 \item{model}{A \code{stanreg}, \code{stanfit}, or \code{brmsfit} object.}

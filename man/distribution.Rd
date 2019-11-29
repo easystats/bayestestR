@@ -38,8 +38,7 @@ distribution_gamma(n, shape, scale = 1, random = FALSE, ...)
 
 distribution_custom(n, type = "norm", ..., random = FALSE)
 
-distribution_mixture_normal(n, mean = c(-3, 3), sd = 1,
-  random = FALSE, ...)
+distribution_mixture_normal(n, mean = c(-3, 3), sd = 1, random = FALSE, ...)
 
 rnorm_perfect(n, mean = 0, sd = 1)
 }

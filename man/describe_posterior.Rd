@@ -9,39 +9,91 @@
 \alias{describe_posterior.BFBayesFactor}
 \title{Describe Posterior Distributions}
 \usage{
-describe_posterior(posteriors, centrality = "median",
-  dispersion = FALSE, ci = 0.89, ci_method = "hdi",
-  test = c("p_direction", "rope"), rope_range = "default",
-  rope_ci = 0.89, ...)
+describe_posterior(
+  posteriors,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.89,
+  ci_method = "hdi",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.89,
+  ...
+)
 
-\method{describe_posterior}{numeric}(posteriors, centrality = "median",
-  dispersion = FALSE, ci = 0.89, ci_method = "hdi",
-  test = c("p_direction", "rope"), rope_range = "default",
-  rope_ci = 0.89, bf_prior = NULL, ...)
+\method{describe_posterior}{numeric}(
+  posteriors,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.89,
+  ci_method = "hdi",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.89,
+  bf_prior = NULL,
+  ...
+)
 
-\method{describe_posterior}{stanreg}(posteriors, centrality = "median",
-  dispersion = FALSE, ci = 0.89, ci_method = "hdi",
-  test = c("p_direction", "rope"), rope_range = "default",
-  rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"),
-  priors = FALSE, effects = c("fixed", "random", "all"),
-  parameters = NULL, ...)
+\method{describe_posterior}{stanreg}(
+  posteriors,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.89,
+  ci_method = "hdi",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.89,
+  bf_prior = NULL,
+  diagnostic = c("ESS", "Rhat"),
+  priors = FALSE,
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  ...
+)
 
-\method{describe_posterior}{MCMCglmm}(posteriors, centrality = "median",
-  dispersion = FALSE, ci = 0.89, ci_method = "hdi",
-  test = c("p_direction", "rope"), rope_range = "default",
-  rope_ci = 0.89, diagnostic = "ESS", parameters = NULL, ...)
+\method{describe_posterior}{MCMCglmm}(
+  posteriors,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.89,
+  ci_method = "hdi",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.89,
+  diagnostic = "ESS",
+  parameters = NULL,
+  ...
+)
 
-\method{describe_posterior}{brmsfit}(posteriors, centrality = "median",
-  dispersion = FALSE, ci = 0.89, ci_method = "hdi",
-  test = c("p_direction", "rope"), rope_range = "default",
-  rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"),
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), parameters = NULL, ...)
+\method{describe_posterior}{brmsfit}(
+  posteriors,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.89,
+  ci_method = "hdi",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.89,
+  bf_prior = NULL,
+  diagnostic = c("ESS", "Rhat"),
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
+  ...
+)
 
-\method{describe_posterior}{BFBayesFactor}(posteriors,
-  centrality = "median", dispersion = FALSE, ci = 0.89,
-  ci_method = "hdi", test = c("p_direction", "rope", "bf"),
-  rope_range = "default", rope_ci = 0.89, priors = TRUE, ...)
+\method{describe_posterior}{BFBayesFactor}(
+  posteriors,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.89,
+  ci_method = "hdi",
+  test = c("p_direction", "rope", "bf"),
+  rope_range = "default",
+  rope_ci = 0.89,
+  priors = TRUE,
+  ...
+)
 }
 \arguments{
 \item{posteriors}{A vector, dataframe or model of posterior draws.}
