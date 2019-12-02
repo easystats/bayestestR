@@ -27,7 +27,6 @@
 #' \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).
 #' @param null Value of the null, either a scaler (for point-null) or a a range
 #' (for a interval-null).
-#' @param hypothesis Deprecated in favour of \code{null}.
 #' @inheritParams hdi
 #'
 #' @return A data frame containing the Bayes factor representing evidence \emph{against} the null.
@@ -120,17 +119,13 @@
 #' @author Mattan S. Ben-Shachar
 #'
 #' @export
-bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sided", null = 0, hypothesis = null, verbose = TRUE, ...) {
+bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
   UseMethod("bayesfactor_parameters")
 }
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, hypothesis = null, verbose = TRUE, ...) {
-  if (!is.null(list(...)[["hypothesis"]])) {
-    null <- list(...)[["hypothesis"]]
-    warning("The 'hypothesis' argument is deprecated. Please use 'null' instead.")
-  }
+bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
 
   if (length(null) > 1) {
     message("'null' is a range - computing a ROPE based Bayes factor.")
@@ -177,7 +172,7 @@ bf_rope <- bayesfactor_rope
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = "two-sided", null = 0, hypothesis = null, verbose = TRUE, ...) {
+bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
   # nm <- .safe_deparse(substitute(posterior)
 
   if (is.null(prior)) {
@@ -197,7 +192,7 @@ bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = 
   # Get BFs
   sdbf <- bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
-    direction = direction, null = null, hypothesis = null, ...
+    direction = direction, null = null, ...
   )
   sdbf$Parameter <- NULL
   sdbf
@@ -211,7 +206,6 @@ bayesfactor_parameters.stanreg <- function(posterior,
                                            prior = NULL,
                                            direction = "two-sided",
                                            null = 0,
-                                           hypothesis = null,
                                            verbose = TRUE,
                                            effects = c("fixed", "random", "all"),
                                            component = c("conditional", "zi", "zero_inflated", "all"),
@@ -238,7 +232,6 @@ bayesfactor_parameters.stanreg <- function(posterior,
   bf_val <- .prepare_output(temp, cleaned_parameters)
 
   class(bf_val) <- class(temp)
-  attr(bf_val, "hypothesis") <- attr(temp, "hypothesis")
   attr(bf_val, "direction") <- attr(temp, "direction")
   attr(bf_val, "plot_data") <- attr(temp, "plot_data")
 
@@ -260,7 +253,6 @@ bayesfactor_parameters.emmGrid <- function(posterior,
                                            prior = NULL,
                                            direction = "two-sided",
                                            null = 0,
-                                           hypothesis = null,
                                            verbose = TRUE,
                                            ...) {
   if (!requireNamespace("emmeans")) {
@@ -297,7 +289,6 @@ bayesfactor_parameters.data.frame <- function(posterior,
                                               prior = NULL,
                                               direction = "two-sided",
                                               null = 0,
-                                              hypothesis = null,
                                               verbose = TRUE,
                                               ...) {
   # find direction
@@ -334,7 +325,7 @@ bayesfactor_parameters.data.frame <- function(posterior,
     class(bf_val)
   ))
 
-  attr(bf_val, "hypothesis") <- null
+  attr(bf_val, "null") <- null
   attr(bf_val, "direction") <- direction
   attr(bf_val, "plot_data") <- .make_BF_plot_data(posterior, prior, direction, null)
 
@@ -345,7 +336,7 @@ bayesfactor_parameters.data.frame <- function(posterior,
 
 #' @keywords internal
 #' @importFrom insight print_color
-.bayesfactor_parameters <- function(posterior, prior, direction = 0, null = 0, hypothesis = null) {
+.bayesfactor_parameters <- function(posterior, prior, direction = 0, null = 0) {
   if (isTRUE(all.equal(posterior, prior))) {
     return(1)
   }

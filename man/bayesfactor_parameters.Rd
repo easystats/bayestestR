@@ -19,7 +19,6 @@ bayesfactor_parameters(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  hypothesis = null,
   verbose = TRUE,
   ...
 )
@@ -29,7 +28,6 @@ bayesfactor_savagedickey(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  hypothesis = null,
   verbose = TRUE,
   ...
 )
@@ -48,7 +46,6 @@ bf_parameters(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  hypothesis = null,
   verbose = TRUE,
   ...
 )
@@ -58,7 +55,6 @@ bf_savagedickey(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  hypothesis = null,
   verbose = TRUE,
   ...
 )
@@ -77,7 +73,6 @@ bf_rope(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  hypothesis = null,
   verbose = TRUE,
   ...
 )
@@ -87,7 +82,6 @@ bf_rope(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  hypothesis = null,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
@@ -99,7 +93,6 @@ bf_rope(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  hypothesis = null,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
@@ -111,7 +104,6 @@ bf_rope(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  hypothesis = null,
   verbose = TRUE,
   ...
 )
@@ -121,7 +113,6 @@ bf_rope(
   prior = NULL,
   direction = "two-sided",
   null = 0,
-  hypothesis = null,
   verbose = TRUE,
   ...
 )
@@ -137,8 +128,6 @@ or a data frame - representing a posterior distribution(s) from (see Details).}
 
 \item{null}{Value of the null, either a scaler (for point-null) or a a range
 (for a interval-null).}
-
-\item{hypothesis}{Deprecated in favour of \code{null}.}
 
 \item{verbose}{Toggle off warnings.}
 
