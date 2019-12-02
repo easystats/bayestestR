@@ -76,7 +76,7 @@ or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \description{
-Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
+Compute the proportion of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 }
 \details{
 Statistically, the probability of a posterior distribution of being
