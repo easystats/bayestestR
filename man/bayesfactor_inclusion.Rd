@@ -5,8 +5,7 @@
 \alias{bf_inclusion}
 \title{Inclusion Bayes Factors for testing predictors across Bayesian models}
 \usage{
-bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL,
-  ...)
+bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL, ...)
 
 bf_inclusion(models, match_models = FALSE, prior_odds = NULL, ...)
 }

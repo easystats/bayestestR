@@ -8,21 +8,41 @@
 \alias{bayesfactor_restricted.emmGrid}
 \title{Bayes Factors (BF) for Order Restricted Models}
 \usage{
-bayesfactor_restricted(posterior, hypothesis, prior = NULL,
-  verbose = TRUE, ...)
+bayesfactor_restricted(
+  posterior,
+  hypothesis,
+  prior = NULL,
+  verbose = TRUE,
+  ...
+)
 
 bf_restricted(posterior, hypothesis, prior = NULL, verbose = TRUE, ...)
 
-\method{bayesfactor_restricted}{stanreg}(posterior, hypothesis,
-  prior = NULL, verbose = TRUE, effects = c("fixed", "random",
-  "all"), ...)
+\method{bayesfactor_restricted}{stanreg}(
+  posterior,
+  hypothesis,
+  prior = NULL,
+  verbose = TRUE,
+  effects = c("fixed", "random", "all"),
+  ...
+)
 
-\method{bayesfactor_restricted}{brmsfit}(posterior, hypothesis,
-  prior = NULL, verbose = TRUE, effects = c("fixed", "random",
-  "all"), ...)
+\method{bayesfactor_restricted}{brmsfit}(
+  posterior,
+  hypothesis,
+  prior = NULL,
+  verbose = TRUE,
+  effects = c("fixed", "random", "all"),
+  ...
+)
 
-\method{bayesfactor_restricted}{emmGrid}(posterior, hypothesis,
-  prior = NULL, verbose = TRUE, ...)
+\method{bayesfactor_restricted}{emmGrid}(
+  posterior,
+  hypothesis,
+  prior = NULL,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{posterior}{A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).}
@@ -141,7 +161,7 @@ bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
 # >                          Hypothesis P(Prior) P(Posterior) Bayes Factor
 # >  lemon < control & control < sulfur     0.17         0.75         4.49
 # > ---
-# > Bayes factors for the restricted movel vs. the un-restricted model.
+# > Bayes factors for the restricted model vs. the un-restricted model.
 }
 
 }

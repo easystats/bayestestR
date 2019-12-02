@@ -237,10 +237,12 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   if (verbose) {
     message("Computation of Bayes factors: estimating marginal likelihood, please wait...")
   }
-  mML <- lapply(mods, function(x)
-    bridgesampling::bridge_sampler(x, silent = TRUE))
-  mBFs <- sapply(mML, function(x)
-    bridgesampling::bf(x, mML[[denominator]], log = TRUE)[["bf"]])
+  mML <- lapply(mods, function(x) {
+    bridgesampling::bridge_sampler(x, silent = TRUE)
+  })
+  mBFs <- sapply(mML, function(x) {
+    bridgesampling::bf(x, mML[[denominator]], log = TRUE)[["bf"]]
+  })
 
   # Get formula
   mforms <- sapply(mods, .find_full_formula)

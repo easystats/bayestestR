@@ -10,16 +10,20 @@
     if (is.null(names(object))) {
       as.data.frame(t(sapply(object, rbind)))
     } else {
-      tryCatch({
-        rn <- names(object)
-        object <- do.call(rbind, object)
-        object[name] <- rn
-        object[c(name, setdiff(names(object), name))]
-      }, warning = function(w) {
-        object
-      }, error = function(e) {
-        object
-      })
+      tryCatch(
+        {
+          rn <- names(object)
+          object <- do.call(rbind, object)
+          object[name] <- rn
+          object[c(name, setdiff(names(object), name))]
+        },
+        warning = function(w) {
+          object
+        },
+        error = function(e) {
+          object
+        }
+      )
     }
   } else {
     object

@@ -154,8 +154,6 @@ bayesfactor_restricted.stanreg <- function(posterior, hypothesis, prior = NULL,
 bayesfactor_restricted.brmsfit <- bayesfactor_restricted.stanreg
 
 #' @importFrom stats update
-#' @importFrom emmeans ref_grid
-#' @importFrom emmeans as.mcmc.emmGrid
 #' @rdname bayesfactor_restricted
 #' @export
 bayesfactor_restricted.emmGrid <- function(posterior, hypothesis, prior = NULL,

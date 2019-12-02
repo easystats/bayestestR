@@ -14,42 +14,117 @@
 \alias{bayesfactor_parameters.data.frame}
 \title{Bayes Factors (BF) for a Single Parameter}
 \usage{
-bayesfactor_parameters(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE, ...)
+bayesfactor_parameters(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  hypothesis = null,
+  verbose = TRUE,
+  ...
+)
 
-bayesfactor_savagedickey(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE, ...)
+bayesfactor_savagedickey(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  hypothesis = null,
+  verbose = TRUE,
+  ...
+)
 
-bayesfactor_rope(posterior, prior = NULL, direction = "two-sided",
-  null = rope_range(posterior), verbose = TRUE, ...)
+bayesfactor_rope(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = rope_range(posterior),
+  verbose = TRUE,
+  ...
+)
 
-bf_parameters(posterior, prior = NULL, direction = "two-sided",
-  null = 0, verbose = TRUE, ...)
+bf_parameters(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  hypothesis = null,
+  verbose = TRUE,
+  ...
+)
 
-bf_savagedickey(posterior, prior = NULL, direction = "two-sided",
-  null = 0, verbose = TRUE, ...)
+bf_savagedickey(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  hypothesis = null,
+  verbose = TRUE,
+  ...
+)
 
-bf_rope(posterior, prior = NULL, direction = "two-sided",
-  null = rope_range(posterior), verbose = TRUE, ...)
+bf_rope(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = rope_range(posterior),
+  verbose = TRUE,
+  ...
+)
 
-\method{bayesfactor_parameters}{numeric}(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE, ...)
+\method{bayesfactor_parameters}{numeric}(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  hypothesis = null,
+  verbose = TRUE,
+  ...
+)
 
-\method{bayesfactor_parameters}{stanreg}(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE,
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), ...)
+\method{bayesfactor_parameters}{stanreg}(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  hypothesis = null,
+  verbose = TRUE,
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  ...
+)
 
-\method{bayesfactor_parameters}{brmsfit}(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE,
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), ...)
+\method{bayesfactor_parameters}{brmsfit}(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  hypothesis = null,
+  verbose = TRUE,
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  ...
+)
 
-\method{bayesfactor_parameters}{emmGrid}(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE, ...)
+\method{bayesfactor_parameters}{emmGrid}(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  hypothesis = null,
+  verbose = TRUE,
+  ...
+)
 
-\method{bayesfactor_parameters}{data.frame}(posterior, prior = NULL,
-  direction = "two-sided", null = 0, verbose = TRUE, ...)
+\method{bayesfactor_parameters}{data.frame}(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  hypothesis = null,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}
@@ -63,6 +138,8 @@ or a data frame - representing a posterior distribution(s) from (see Details).}
 \item{null}{Value of the null, either a scaler (for point-null) or a a range
 (for a interval-null).}
 
+\item{hypothesis}{Deprecated in favour of \code{null}.}
+
 \item{verbose}{Toggle off warnings.}
 
 \item{...}{Currently not used.}
@@ -73,8 +150,6 @@ Only applies to mixed models. May be abbreviated.}
 \item{component}{Should results for all parameters, parameters for the conditional model
 or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
-
-\item{hypothesis}{Deprecated in favour of \code{null}.}
 }
 \value{
 A data frame containing the Bayes factor representing evidence \emph{against} the null.
