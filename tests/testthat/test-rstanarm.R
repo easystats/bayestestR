@@ -37,7 +37,7 @@ test_that("rstanarm", {
   # testthat::expect_true("equivalence_test" %in% class(equivalence_test(model)))
   testthat::expect_is(map_estimate(model), "data.frame")
   testthat::expect_is(p_map(model), "data.frame")
-  testthat::expect_is(p_rope(model), "data.frame")
+  testthat::expect_is(mhdior(model), "data.frame")
   testthat::expect_is(p_direction(model), "data.frame")
 
   # testthat::expect_error(equivalence_test(model, range = c(.1, .3, .5)))

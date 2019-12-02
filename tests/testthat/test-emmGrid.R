@@ -54,10 +54,10 @@ test_that("emmGrid p_map", {
   testthat::expect_equal(xpmap$p_MAP, c(0.42, 0, 0.26), tolerance = 0.1)
 })
 
-test_that("emmGrid p_rope", {
+test_that("emmGrid mhdior", {
   testthat::skip_on_travis()
-  xprope <- p_rope(all_, range = c(-0.1, 0.1), precision = 0.5)
-  testthat::expect_equal(xprope$p_ROPE, c(0.695, 1, 0.87), tolerance = 0.1)
+  xprope <- mhdior(all_, range = c(-0.1, 0.1), precision = 0.5)
+  testthat::expect_equal(xprope$mhdior, c(0.695, 1, 0.87), tolerance = 0.1)
 })
 
 test_that("emmGrid point_estimate", {

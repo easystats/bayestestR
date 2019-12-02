@@ -1,10 +1,14 @@
-# bayestestR 0.4.1
+# bayestestR 0.4.9
 
 ## General
 
 - Added `plot()`-method for `p_significance()`.
 - `p_significance()` now also works for *brmsfit*-objects.
 - `equivalence_test()` gets `effects` and `component` arguments for *stanreg* and *brmsfit*  models, to print specific model components.
+
+## Breaking changes
+
+- `p_rope()`, previously as exploratory index, was renamed as `mhdior()` (for *Max HDI inside/outside ROPE*), as `p_rope()` will refer to `rope(..., ci = 1)` ( #258 )
 
 ## Bug fixes
 
