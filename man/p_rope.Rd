@@ -4,6 +4,12 @@
 \alias{p_rope}
 \alias{p_rope.default}
 \alias{p_rope.numeric}
+\alias{p_rope.data.frame}
+\alias{p_rope.emmGrid}
+\alias{p_rope.BFBayesFactor}
+\alias{p_rope.MCMCglmm}
+\alias{p_rope.stanreg}
+\alias{p_rope.brmsfit}
 \title{Probability of not being in ROPE}
 \usage{
 p_rope(x, ...)
@@ -11,6 +17,31 @@ p_rope(x, ...)
 \method{p_rope}{default}(x, ...)
 
 \method{p_rope}{numeric}(x, range = "default", ...)
+
+\method{p_rope}{data.frame}(x, range = "default", ...)
+
+\method{p_rope}{emmGrid}(x, range = "default", ...)
+
+\method{p_rope}{BFBayesFactor}(x, range = "default", ...)
+
+\method{p_rope}{MCMCglmm}(x, range = "default", ...)
+
+\method{p_rope}{stanreg}(
+  x,
+  range = "default",
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  ...
+)
+
+\method{p_rope}{brmsfit}(
+  x,
+  range = "default",
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
@@ -18,6 +49,19 @@ p_rope(x, ...)
 \item{...}{Currently not used.}
 
 \item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.}
+
+\item{effects}{Should results for fixed effects, random effects or both be returned?
+Only applies to mixed models. May be abbreviated.}
+
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
+
+\item{component}{Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the model be returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \description{
 Compute the proportion of the posterior distribution that doesn't lie within a region of practical equivalence (ROPE). It is equivalent to running \code{rope(..., ci = 1)}.
@@ -25,5 +69,6 @@ Compute the proportion of the posterior distribution that doesn't lie within a r
 \examples{
 library(bayestestR)
 
-rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
+p_rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
+p_rope(x = mtcars, range = c(-0.1, 0.1))
 }

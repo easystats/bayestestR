@@ -20,11 +20,11 @@ rope(x, ...)
 
 \method{rope}{data.frame}(x, range = "default", ci = 0.89, ci_method = "HDI", verbose = TRUE, ...)
 
-\method{rope}{emmGrid}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
+\method{rope}{emmGrid}(x, range = "default", ci = 0.89, ci_method = "HDI", verbose = TRUE, ...)
 
-\method{rope}{BFBayesFactor}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
+\method{rope}{BFBayesFactor}(x, range = "default", ci = 0.89, ci_method = "HDI", verbose = TRUE, ...)
 
-\method{rope}{MCMCglmm}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
+\method{rope}{MCMCglmm}(x, range = "default", ci = 0.89, ci_method = "HDI", verbose = TRUE, ...)
 
 \method{rope}{stanreg}(
   x,

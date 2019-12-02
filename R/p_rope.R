@@ -7,7 +7,8 @@
 #' @examples
 #' library(bayestestR)
 #'
-#' rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
+#' p_rope(x = rnorm(1000, 0, 0.01), range = c(-0.1, 0.1))
+#' p_rope(x = mtcars, range = c(-0.1, 0.1))
 #' @export
 p_rope <- function(x, ...) {
   UseMethod("p_rope")
@@ -32,5 +33,68 @@ p_rope.default <- function(x, ...) {
 #' @rdname p_rope
 #' @export
 p_rope.numeric <- function(x, range = "default", ...) {
-  rope(x, range = range, ci = 1, ...)$ROPE_Percentage
+  out <- .p_rope(rope(x, range = range, ci = 1, ...))
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+
+#' @rdname p_rope
+#' @export
+p_rope.data.frame <- p_rope.numeric
+
+#' @rdname p_rope
+#' @export
+p_rope.emmGrid <- p_rope.numeric
+
+#' @rdname p_rope
+#' @export
+p_rope.BFBayesFactor <- p_rope.numeric
+
+#' @rdname p_rope
+#' @export
+p_rope.MCMCglmm <- p_rope.numeric
+
+
+#' @rdname p_rope
+#' @export
+p_rope.stanreg <- function(x, range = "default", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  out <- .p_rope(rope(x, range = range, ci = 1, effects = effects, parameters = parameters, ...))
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+
+
+#' @rdname p_rope
+#' @export
+p_rope.brmsfit <- function(x, range = "default", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+  out <- .p_rope(rope(x, range = range, ci = 1, effects = effects, component = component, parameters = parameters, ...))
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+
+#' @export
+p_rope.sim.merMod <- p_rope.stanreg
+
+
+#' @export
+p_rope.sim <- function(x, range = "default", parameters = NULL, ...) {
+  out <- .p_rope(rope(x, range = range, ci = 1, parameters = parameters, ...))
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+# Internal ----------------------------------------------------------------
+
+
+#' @keywords internal
+.p_rope <- function(rope_rez){
+  cols <- c("Parameter", "ROPE_low", "ROPE_high", "ROPE_Percentage")
+  out <- as.data.frame(rope_rez[cols[cols %in% names(rope_rez)]])
+  names(out)[length(names(out))] <- "p_ROPE"
+
+  class(out) <- c("p_rope", "see_p_rope", "data.frame")
+  out
 }
