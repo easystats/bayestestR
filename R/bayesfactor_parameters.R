@@ -12,7 +12,7 @@
 #' an approximation of a Bayes factor comparing the marginal likelihoods of the model
 #' against a model in which the tested parameter has been restricted to the point null.
 #' \cr \cr
-#' \code{bayesfactor_savagedickey} and \code{bayesfactor_rope} are wrappers around
+#' \code{bayesfactor_pointnull} and \code{bayesfactor_rope} are wrappers around
 #' \code{bayesfactor_parameters} with different defaults for the null to be tested against
 #' (a point and a range, respectively). The \code{bf_*} functions as aliases of the main functions.
 #' \cr \cr
@@ -125,7 +125,7 @@ bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sid
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
+bayesfactor_pointull <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
 
   if (length(null) > 1) {
     message("'null' is a range - computing a ROPE based Bayes factor.")
@@ -145,7 +145,7 @@ bayesfactor_savagedickey <- function(posterior, prior = NULL, direction = "two-s
 #' @export
 bayesfactor_rope <- function(posterior, prior = NULL, direction = "two-sided", null = rope_range(posterior), verbose = TRUE, ...) {
   if (length(null) < 2) {
-    message("'null' is a point - computing a Savage-Dickey Bayes factor.")
+    message("'null' is a point - computing a Savage-Dickey (point null) Bayes factor.")
   }
 
   bayesfactor_parameters(
@@ -164,7 +164,7 @@ bf_parameters <- bayesfactor_parameters
 
 #' @rdname bayesfactor_parameters
 #' @export
-bf_savagedickey <- bayesfactor_savagedickey
+bf_pointull <- bayesfactor_pointull
 
 #' @rdname bayesfactor_parameters
 #' @export
