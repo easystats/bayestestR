@@ -15,36 +15,48 @@
 \usage{
 ci(x, ...)
 
-\method{ci}{numeric}(x, ci = 0.89, method = "ETI", verbose = TRUE,
-  ...)
+\method{ci}{numeric}(x, ci = 0.89, method = "ETI", verbose = TRUE, ...)
 
-\method{ci}{data.frame}(x, ci = 0.89, method = "ETI", verbose = TRUE,
-  ...)
+\method{ci}{data.frame}(x, ci = 0.89, method = "ETI", verbose = TRUE, ...)
 
-\method{ci}{emmGrid}(x, ci = 0.89, method = "ETI", verbose = TRUE,
-  ...)
+\method{ci}{emmGrid}(x, ci = 0.89, method = "ETI", verbose = TRUE, ...)
 
-\method{ci}{sim.merMod}(x, ci = 0.89, method = "ETI",
-  effects = c("fixed", "random", "all"), parameters = NULL,
-  verbose = TRUE, ...)
+\method{ci}{sim.merMod}(
+  x,
+  ci = 0.89,
+  method = "ETI",
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 
-\method{ci}{sim}(x, ci = 0.89, method = "ETI", parameters = NULL,
-  verbose = TRUE, ...)
+\method{ci}{sim}(x, ci = 0.89, method = "ETI", parameters = NULL, verbose = TRUE, ...)
 
-\method{ci}{stanreg}(x, ci = 0.89, method = "ETI",
-  effects = c("fixed", "random", "all"), parameters = NULL,
-  verbose = TRUE, ...)
+\method{ci}{stanreg}(
+  x,
+  ci = 0.89,
+  method = "ETI",
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 
-\method{ci}{brmsfit}(x, ci = 0.89, method = "ETI",
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE,
-  ...)
+\method{ci}{brmsfit}(
+  x,
+  ci = 0.89,
+  method = "ETI",
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 
-\method{ci}{BFBayesFactor}(x, ci = 0.89, method = "ETI",
-  verbose = TRUE, ...)
+\method{ci}{BFBayesFactor}(x, ci = 0.89, method = "ETI", verbose = TRUE, ...)
 
-\method{ci}{MCMCglmm}(x, ci = 0.89, method = "ETI", verbose = TRUE,
-  ...)
+\method{ci}{MCMCglmm}(x, ci = 0.89, method = "ETI", verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{A \code{stanreg} or \code{brmsfit} model, or a vector representing a posterior distribution.}

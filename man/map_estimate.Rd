@@ -9,15 +9,26 @@
 \usage{
 map_estimate(x, precision = 2^10, method = "kernel", ...)
 
-\method{map_estimate}{numeric}(x, precision = 2^10, method = "kernel",
-  ...)
+\method{map_estimate}{numeric}(x, precision = 2^10, method = "kernel", ...)
 
-\method{map_estimate}{stanreg}(x, precision = 2^10, method = "kernel",
-  effects = c("fixed", "random", "all"), parameters = NULL, ...)
+\method{map_estimate}{stanreg}(
+  x,
+  precision = 2^10,
+  method = "kernel",
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  ...
+)
 
-\method{map_estimate}{brmsfit}(x, precision = 2^10, method = "kernel",
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), parameters = NULL, ...)
+\method{map_estimate}{brmsfit}(
+  x,
+  precision = 2^10,
+  method = "kernel",
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a

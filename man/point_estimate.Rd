@@ -9,17 +9,26 @@
 \usage{
 point_estimate(x, centrality = "median", dispersion = FALSE, ...)
 
-\method{point_estimate}{stanreg}(x, centrality = "median",
-  dispersion = FALSE, effects = c("fixed", "random", "all"),
-  parameters = NULL, ...)
+\method{point_estimate}{stanreg}(
+  x,
+  centrality = "median",
+  dispersion = FALSE,
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  ...
+)
 
-\method{point_estimate}{brmsfit}(x, centrality = "median",
-  dispersion = FALSE, effects = c("fixed", "random", "all"),
+\method{point_estimate}{brmsfit}(
+  x,
+  centrality = "median",
+  dispersion = FALSE,
+  effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL, ...)
+  parameters = NULL,
+  ...
+)
 
-\method{point_estimate}{BFBayesFactor}(x, centrality = "median",
-  dispersion = FALSE, ...)
+\method{point_estimate}{BFBayesFactor}(x, centrality = "median", dispersion = FALSE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a

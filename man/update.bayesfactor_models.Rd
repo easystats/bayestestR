@@ -4,8 +4,7 @@
 \alias{update.bayesfactor_models}
 \title{Update bayesfactor_models}
 \usage{
-\method{update}{bayesfactor_models}(object, subset = NULL,
-  reference = NULL, ...)
+\method{update}{bayesfactor_models}(object, subset = NULL, reference = NULL, ...)
 }
 \arguments{
 \item{object}{A \code{\link{bayesfactor_models}} object.}

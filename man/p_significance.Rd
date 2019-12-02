@@ -20,14 +20,24 @@ p_significance(x, ...)
 
 \method{p_significance}{emmGrid}(x, threshold = "default", ...)
 
-\method{p_significance}{stanreg}(x, threshold = "default",
-  effects = c("fixed", "random", "all"), parameters = NULL,
-  verbose = TRUE, ...)
+\method{p_significance}{stanreg}(
+  x,
+  threshold = "default",
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 
-\method{p_significance}{brmsfit}(x, threshold = "default",
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE,
-  ...)
+\method{p_significance}{brmsfit}(
+  x,
+  threshold = "default",
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}

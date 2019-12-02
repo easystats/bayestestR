@@ -5,8 +5,7 @@
 \alias{simulate_ttest}
 \title{Data Simulation}
 \usage{
-simulate_correlation(n = 100, r = 0.5, mean = 0, sd = 1,
-  names = NULL, ...)
+simulate_correlation(n = 100, r = 0.5, mean = 0, sd = 1, names = NULL, ...)
 
 simulate_ttest(n = 100, d = 0.5, names = NULL, ...)
 }

@@ -4,10 +4,18 @@
 \alias{bayesfactor}
 \title{Bayes Factors (BF)}
 \usage{
-bayesfactor(..., prior = NULL, direction = "two-sided", null = 0,
-  hypothesis = NULL, effects = c("fixed", "random", "all"),
-  verbose = TRUE, denominator = 1, match_models = FALSE,
-  prior_odds = NULL)
+bayesfactor(
+  ...,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  hypothesis = NULL,
+  effects = c("fixed", "random", "all"),
+  verbose = TRUE,
+  denominator = 1,
+  match_models = FALSE,
+  prior_odds = NULL
+)
 }
 \arguments{
 \item{...}{A numeric vector, model object(s), or the output from \code{bayesfactor_models}.}

@@ -24,12 +24,22 @@ pd(x, ...)
 
 \method{p_direction}{emmGrid}(x, method = "direct", ...)
 
-\method{p_direction}{stanreg}(x, effects = c("fixed", "random", "all"),
-  parameters = NULL, method = "direct", ...)
+\method{p_direction}{stanreg}(
+  x,
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  method = "direct",
+  ...
+)
 
-\method{p_direction}{brmsfit}(x, effects = c("fixed", "random", "all"),
+\method{p_direction}{brmsfit}(
+  x,
+  effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL, method = "direct", ...)
+  parameters = NULL,
+  method = "direct",
+  ...
+)
 
 \method{p_direction}{BFBayesFactor}(x, method = "direct", ...)
 }

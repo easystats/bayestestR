@@ -4,8 +4,16 @@
 \alias{overlap}
 \title{Overlap Coefficient}
 \usage{
-overlap(x, y, method_density = "kernel", method_auc = "trapezoid",
-  precision = 2^10, extend = TRUE, extend_scale = 0.1, ...)
+overlap(
+  x,
+  y,
+  method_density = "kernel",
+  method_auc = "trapezoid",
+  precision = 2^10,
+  extend = TRUE,
+  extend_scale = 0.1,
+  ...
+)
 }
 \arguments{
 \item{x}{Vector of x values.}

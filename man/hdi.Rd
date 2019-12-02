@@ -21,20 +21,37 @@ hdi(x, ...)
 
 \method{hdi}{MCMCglmm}(x, ci = 0.89, verbose = TRUE, ...)
 
-\method{hdi}{sim.merMod}(x, ci = 0.89, effects = c("fixed", "random",
-  "all"), parameters = NULL, verbose = TRUE, ...)
+\method{hdi}{sim.merMod}(
+  x,
+  ci = 0.89,
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 
-\method{hdi}{sim}(x, ci = 0.89, parameters = NULL, verbose = TRUE,
-  ...)
+\method{hdi}{sim}(x, ci = 0.89, parameters = NULL, verbose = TRUE, ...)
 
 \method{hdi}{emmGrid}(x, ci = 0.89, verbose = TRUE, ...)
 
-\method{hdi}{stanreg}(x, ci = 0.89, effects = c("fixed", "random",
-  "all"), parameters = NULL, verbose = TRUE, ...)
+\method{hdi}{stanreg}(
+  x,
+  ci = 0.89,
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 
-\method{hdi}{brmsfit}(x, ci = 0.89, effects = c("fixed", "random",
-  "all"), component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL, verbose = TRUE, ...)
+\method{hdi}{brmsfit}(
+  x,
+  ci = 0.89,
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 
 \method{hdi}{BFBayesFactor}(x, ci = 0.89, verbose = TRUE, ...)
 }

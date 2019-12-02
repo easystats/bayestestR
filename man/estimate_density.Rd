@@ -4,8 +4,15 @@
 \alias{estimate_density}
 \title{Density Estimation}
 \usage{
-estimate_density(x, method = "kernel", precision = 2^10,
-  extend = FALSE, extend_scale = 0.1, bw = "SJ", ...)
+estimate_density(
+  x,
+  method = "kernel",
+  precision = 2^10,
+  extend = FALSE,
+  extend_scale = 0.1,
+  bw = "SJ",
+  ...
+)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a
@@ -24,7 +31,7 @@ estimate_density(x, method = "kernel", precision = 2^10,
     (Note this differs from the reference books cited below, and from S-PLUS.)
 
     \code{bw} can also be a character string giving a rule to choose the
-    bandwidth.  See \code{\link{bw.nrd}}. \cr The default,
+    bandwidth.  See \code{\link[stats]{bw.nrd}}. \cr The default,
     \code{"nrd0"}, has remained the default for historical and
     compatibility reasons, rather than as a general recommendation,
     where e.g., \code{"SJ"} would rather fit, see also Venables and

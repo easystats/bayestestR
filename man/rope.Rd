@@ -16,29 +16,38 @@ rope(x, ...)
 
 \method{rope}{default}(x, ...)
 
-\method{rope}{numeric}(x, range = "default", ci = 0.89,
-  ci_method = "HDI", verbose = TRUE, ...)
+\method{rope}{numeric}(x, range = "default", ci = 0.89, ci_method = "HDI", verbose = TRUE, ...)
 
-\method{rope}{data.frame}(x, range = "default", ci = 0.89,
-  ci_method = "HDI", verbose = TRUE, ...)
+\method{rope}{data.frame}(x, range = "default", ci = 0.89, ci_method = "HDI", verbose = TRUE, ...)
 
-\method{rope}{emmGrid}(x, range = "default", ci = 0.89,
-  verbose = TRUE, ...)
+\method{rope}{emmGrid}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
 
-\method{rope}{BFBayesFactor}(x, range = "default", ci = 0.89,
-  verbose = TRUE, ...)
+\method{rope}{BFBayesFactor}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
 
-\method{rope}{MCMCglmm}(x, range = "default", ci = 0.89,
-  verbose = TRUE, ...)
+\method{rope}{MCMCglmm}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
 
-\method{rope}{stanreg}(x, range = "default", ci = 0.89,
-  ci_method = "HDI", effects = c("fixed", "random", "all"),
-  parameters = NULL, verbose = TRUE, ...)
+\method{rope}{stanreg}(
+  x,
+  range = "default",
+  ci = 0.89,
+  ci_method = "HDI",
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 
-\method{rope}{brmsfit}(x, range = "default", ci = 0.89,
-  ci_method = "HDI", effects = c("fixed", "random", "all"),
+\method{rope}{brmsfit}(
+  x,
+  range = "default",
+  ci = 0.89,
+  ci_method = "HDI",
+  effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL, verbose = TRUE, ...)
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}

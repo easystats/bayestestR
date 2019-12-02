@@ -21,20 +21,37 @@ eti(x, ...)
 
 \method{eti}{MCMCglmm}(x, ci = 0.89, verbose = TRUE, ...)
 
-\method{eti}{sim.merMod}(x, ci = 0.89, effects = c("fixed", "random",
-  "all"), parameters = NULL, verbose = TRUE, ...)
+\method{eti}{sim.merMod}(
+  x,
+  ci = 0.89,
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 
-\method{eti}{sim}(x, ci = 0.89, parameters = NULL, verbose = TRUE,
-  ...)
+\method{eti}{sim}(x, ci = 0.89, parameters = NULL, verbose = TRUE, ...)
 
 \method{eti}{emmGrid}(x, ci = 0.89, verbose = TRUE, ...)
 
-\method{eti}{stanreg}(x, ci = 0.89, effects = c("fixed", "random",
-  "all"), parameters = NULL, verbose = TRUE, ...)
+\method{eti}{stanreg}(
+  x,
+  ci = 0.89,
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 
-\method{eti}{brmsfit}(x, ci = 0.89, effects = c("fixed", "random",
-  "all"), component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL, verbose = TRUE, ...)
+\method{eti}{brmsfit}(
+  x,
+  ci = 0.89,
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
+  verbose = TRUE,
+  ...
+)
 
 \method{eti}{BFBayesFactor}(x, ci = 0.89, verbose = TRUE, ...)
 }

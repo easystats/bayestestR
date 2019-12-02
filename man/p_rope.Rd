@@ -18,15 +18,26 @@ p_rope(x, ...)
 
 \method{p_rope}{emmGrid}(x, range = "default", precision = 0.1, ...)
 
-\method{p_rope}{BFBayesFactor}(x, range = "default", precision = 0.1,
-  ...)
+\method{p_rope}{BFBayesFactor}(x, range = "default", precision = 0.1, ...)
 
-\method{p_rope}{stanreg}(x, range = "default", precision = 0.1,
-  effects = c("fixed", "random", "all"), parameters = NULL, ...)
+\method{p_rope}{stanreg}(
+  x,
+  range = "default",
+  precision = 0.1,
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  ...
+)
 
-\method{p_rope}{brmsfit}(x, range = "default", precision = 0.1,
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), parameters = NULL, ...)
+\method{p_rope}{brmsfit}(
+  x,
+  range = "default",
+  precision = 0.1,
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}

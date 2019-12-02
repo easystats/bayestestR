@@ -12,15 +12,26 @@ p_map(x, precision = 2^10, method = "kernel", ...)
 
 \method{p_map}{numeric}(x, precision = 2^10, method = "kernel", ...)
 
-\method{p_map}{stanreg}(x, precision = 2^10, method = "kernel",
-  effects = c("fixed", "random", "all"), parameters = NULL, ...)
+\method{p_map}{stanreg}(
+  x,
+  precision = 2^10,
+  method = "kernel",
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  ...
+)
 
-\method{p_map}{brmsfit}(x, precision = 2^10, method = "kernel",
-  effects = c("fixed", "random", "all"), component = c("conditional",
-  "zi", "zero_inflated", "all"), parameters = NULL, ...)
+\method{p_map}{brmsfit}(
+  x,
+  precision = 2^10,
+  method = "kernel",
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
+  ...
+)
 
-\method{p_map}{BFBayesFactor}(x, precision = 2^10, method = "kernel",
-  ...)
+\method{p_map}{BFBayesFactor}(x, precision = 2^10, method = "kernel", ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a
