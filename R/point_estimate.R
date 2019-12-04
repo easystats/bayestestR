@@ -120,6 +120,12 @@ point_estimate.data.frame <- function(x, centrality = "median", dispersion = FAL
 
 
 #' @export
+point_estimate.mcmc <- function(x, centrality = "median", dispersion = FALSE, ...) {
+  point_estimate(as.data.frame(x), centrality = centrality, dispersion = dispersion, ...)
+}
+
+
+#' @export
 point_estimate.MCMCglmm <- function(x, centrality = "median", dispersion = FALSE, ...) {
   nF <- x$Fixed$nfl
   point_estimate(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), centrality = centrality, dispersion = dispersion, ...)

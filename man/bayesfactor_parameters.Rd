@@ -2,10 +2,10 @@
 % Please edit documentation in R/bayesfactor_parameters.R
 \name{bayesfactor_parameters}
 \alias{bayesfactor_parameters}
-\alias{bayesfactor_savagedickey}
+\alias{bayesfactor_pointull}
 \alias{bayesfactor_rope}
 \alias{bf_parameters}
-\alias{bf_savagedickey}
+\alias{bf_pointull}
 \alias{bf_rope}
 \alias{bayesfactor_parameters.numeric}
 \alias{bayesfactor_parameters.stanreg}
@@ -23,7 +23,7 @@ bayesfactor_parameters(
   ...
 )
 
-bayesfactor_savagedickey(
+bayesfactor_pointull(
   posterior,
   prior = NULL,
   direction = "two-sided",
@@ -50,7 +50,7 @@ bf_parameters(
   ...
 )
 
-bf_savagedickey(
+bf_pointull(
   posterior,
   prior = NULL,
   direction = "two-sided",
@@ -156,7 +156,7 @@ When the null is a point, a Savage-Dickey density ratio is computed, which is al
 an approximation of a Bayes factor comparing the marginal likelihoods of the model
 against a model in which the tested parameter has been restricted to the point null.
 \cr \cr
-\code{bayesfactor_savagedickey} and \code{bayesfactor_rope} are wrappers around
+\code{bayesfactor_pointnull} and \code{bayesfactor_rope} are wrappers around
 \code{bayesfactor_parameters} with different defaults for the null to be tested against
 (a point and a range, respectively). The \code{bf_*} functions as aliases of the main functions.
 \cr \cr
