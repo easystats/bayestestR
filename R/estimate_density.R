@@ -205,6 +205,17 @@ estimate_density.brmsfit <- function(x, method = "kernel", precision = 2^10, ext
 }
 
 
+#' @importFrom insight get_parameters
+#' @export
+estimate_density.mcmc <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", parameters = NULL, ...) {
+  out <- estimate_density(insight::get_parameters(x, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+
+  out
+}
+
+
+
 #' Coerce to a Data Frame
 #'
 #' @inheritParams base::as.data.frame
