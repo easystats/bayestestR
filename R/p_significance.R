@@ -104,6 +104,12 @@ p_significance.MCMCglmm <- function(x, threshold = "default", ...) {
 }
 
 
+#' @export
+p_significance.mcmc <- function(x, threshold = "default", ...) {
+  p_significance(as.data.frame(x), threshold = threshold, ...)
+}
+
+
 #' @rdname p_significance
 #' @export
 p_significance.emmGrid <- function(x, threshold = "default", ...) {
