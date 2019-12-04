@@ -86,6 +86,16 @@ p_rope.sim <- function(x, range = "default", parameters = NULL, ...) {
   out
 }
 
+#' @export
+p_rope.mcmc <- function(x, range = "default", parameters = NULL, ...) {
+  out <- .p_rope(rope(x, range = range, ci = 1, parameters = parameters, ...))
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+
+
+
 # Internal ----------------------------------------------------------------
 
 

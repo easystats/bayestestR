@@ -203,6 +203,12 @@ rope.MCMCglmm <- function(x, range = "default", ci = .89, ci_method = "HDI", ver
 }
 
 
+#' @export
+rope.mcmc <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
+  out <- rope(as.data.frame(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+  out
+}
+
 
 
 
