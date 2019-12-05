@@ -5,9 +5,7 @@
 #' \cr \cr
 #' The \code{bf_*} function is an alias of the main function.
 #' \cr \cr
-#' \strong{For info on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
-#' \cr \cr
-#' For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
+#' \strong{For more info, in particular on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 #'
 #' @param posterior A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).
 #' @param hypothesis A character vector specifying the restrictions as logical conditions (see examples below).
@@ -18,7 +16,7 @@
 #' models by setting an order restriction on the prior and posterior distributions
 #' (\cite{Morey & Wagenmakers, 2013}).
 #' \cr\cr
-#' (Though it is possible to use \code{bayesfactor_restricted} to test interval restrictions,
+#' (Though it is possible to use \code{bayesfactor_restricted()} to test interval restrictions,
 #' it is more suitable for testing order restrictions; see examples).
 #' \cr\cr
 #' For the computation of Bayes factors, the model priors must be proper priors (at the very least
@@ -27,7 +25,7 @@
 #' flat priors the null is infinitely more favorable than the alternative (this is called \emph{the Jeffreys-Lindley-Bartlett
 #' paradox}). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
 #' \cr\cr
-#' (Note that by default, \code{brms::brm} uses falt priors for fixed-effects.)
+#' (Note that by default, \code{brms::brm()} uses flat priors for fixed-effects.)
 #'
 #' \subsection{Setting the correct \code{prior}}{
 #' It is important to provide the correct \code{prior} for meaningful results.

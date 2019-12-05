@@ -22,7 +22,7 @@ A data frame containing the models' formulas (reconstructed fixed and random eff
 }
 \description{
 This function computes or extracts Bayes factors from fitted models.
-#' \cr \cr
+\cr \cr
 The \code{bf_*} function is an alias of the main function.
 }
 \details{
