@@ -1,6 +1,8 @@
 #' Bayes Factors (BF) for model comparison
 #'
 #' @description This function computes or extracts Bayes factors from fitted models.
+#' #' \cr \cr
+#' The \code{bf_*} function is an alias of the main function.
 #'
 #' @author Mattan S. Ben-Shachar
 #'
@@ -124,6 +126,10 @@ bayesfactor_models <- function(..., denominator = 1, verbose = TRUE) {
   UseMethod("bayesfactor_models")
 }
 
+#' @rdname bayesfactor_models
+#' @export
+bf_models <- bayesfactor_models
+
 #' @importFrom stats BIC
 #' @export
 bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
@@ -231,10 +237,12 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   if (verbose) {
     message("Computation of Bayes factors: estimating marginal likelihood, please wait...")
   }
-  mML <- lapply(mods, function(x)
-    bridgesampling::bridge_sampler(x, silent = TRUE))
-  mBFs <- sapply(mML, function(x)
-    bridgesampling::bf(x, mML[[denominator]], log = TRUE)[["bf"]])
+  mML <- lapply(mods, function(x) {
+    bridgesampling::bridge_sampler(x, silent = TRUE)
+  })
+  mBFs <- sapply(mML, function(x) {
+    bridgesampling::bf(x, mML[[denominator]], log = TRUE)[["bf"]]
+  })
 
   # Get formula
   mforms <- sapply(mods, .find_full_formula)

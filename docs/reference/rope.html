@@ -45,7 +45,7 @@
   
 
 <meta property="og:title" content="Region of Practical Equivalence (ROPE) — rope" />
-<meta property="og:description" content="Compute the proportion (in percentage) of the HDI (default to the 90% HDI) of a posterior distribution that lies within a region of practical equivalence." />
+<meta property="og:description" content="Compute the proportion of the HDI (default to the 90% HDI) of a posterior distribution that lies within a region of practical equivalence." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -185,7 +185,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Compute the proportion (in percentage) of the HDI (default to the 90% HDI) of a posterior distribution that lies within a region of practical equivalence.</p>
+    <p>Compute the proportion of the HDI (default to the 90% HDI) of a posterior distribution that lies within a region of practical equivalence.</p>
     </div>
 
     <pre class="usage"><span class='fu'>rope</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -194,35 +194,44 @@
 <span class='fu'>rope</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for MCMCglmm</span>
-<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>rope</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+<span class='fu'>rope</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -347,7 +356,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
 #&gt; </span><span> inside ROPE
-#&gt;       8.42 %
+#&gt;       7.74 %
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
 #&gt; </span><span> inside ROPE
@@ -357,19 +366,17 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 90% HDI:
 #&gt; 
 #&gt; </span><span> inside ROPE
-#&gt;       5.88 %
+#&gt;       6.33 %
 #&gt; 
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 95% HDI:
 #&gt; 
 #&gt; </span><span> inside ROPE
-#&gt;       5.57 %
+#&gt;       5.99 %
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The largest R-hat is 1.15, indicating chains have not mixed.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#r-hat</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
@@ -378,7 +385,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span>   Parameter inside ROPE
 #&gt;  (Intercept)      0.00 %
 #&gt;           wt      0.00 %
-#&gt;         gear     54.75 %
+#&gt;         gear     50.84 %
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportions of samples inside the ROPE [-0.60, 0.60]:
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 90% HDI:
@@ -386,7 +393,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span>   Parameter inside ROPE
 #&gt;  (Intercept)      0.00 %
 #&gt;           wt      0.00 %
-#&gt;         gear     54.14 %
+#&gt;         gear     50.28 %
 #&gt; 
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 95% HDI:
@@ -394,11 +401,24 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span>   Parameter inside ROPE
 #&gt;  (Intercept)      0.00 %
 #&gt;           wt      0.00 %
-#&gt;         gear     51.31 %
+#&gt;         gear     47.64 %
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='fu'>rope</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: restarting interrupted promise evaluation</span></div><div class='output co'>#&gt; Error in as.vector(x) : object 'model' not found</div><div class='output co'>#&gt; <span class='error'>Error in ref_grid(object = model, options = list(just.data = TRUE)): Perhaps a 'data' or 'params' argument is needed</span></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>rope</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportions of samples inside the ROPE [-0.10, 0.10]:
+#&gt; 
+#&gt; </span><span style='color: #00BBBB;'>ROPE for the 90% HDI:
+#&gt; 
+#&gt; </span><span> Parameter inside ROPE
+#&gt;    overall      0.00 %
+#&gt; 
+#&gt; 
+#&gt; </span><span style='color: #00BBBB;'>ROPE for the 95% HDI:
+#&gt; 
+#&gt; </span><span> Parameter inside ROPE
+#&gt;    overall      0.00 %
+#&gt; 
+#&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>rope</span>(<span class='no'>model</span>)

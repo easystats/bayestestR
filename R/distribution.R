@@ -2,7 +2,7 @@
 #'
 #' Generate a sequence of n-quantiles, i.e., a sample of size \code{n} with a near-perfect distribution.
 #'
-#' @param type Can be \code{"normal"} (default), \code{"cauchy"}, \code{"poisson"}, \code{"gamma"}, \code{"chisquared"}, \code{"uniform"}, \code{"student"} or \code{"beta"}.
+#' @param type Can be any of the names from base R's \link[stats]{Distributions}, like \code{"cauchy"}, \code{"pois"} or \code{"beta"}.
 #' @param random Generate near-perfect or random (simple wrappers for the base R \code{r*} functions) distributions.
 #' @param ... Arguments passed to or from other methods.
 #'
@@ -10,10 +10,18 @@
 #' library(bayestestR)
 #' x <- distribution(n = 10)
 #' plot(density(x))
+#'
+#' x <- distribution(type = "gamma", n = 100, shape = 2)
+#' plot(density(x))
 #' @export
 distribution <- function(type = "normal", ...) {
+  basr_r_distributions <- c(
+    "beta", "binom", "cauchy", "chisq", "chisquared", "exp", "f",
+    "gamma", "geom", "hyper", "lnorm", "multinom", "nbinom", "normal",
+    "pois", "poisson", "student", "t", "unif", "uniform", "weibull"
+  )
   switch(
-    match.arg(arg = type, choices = c("normal", "cauchy", "poisson", "gamma", "student", "chisquared", "uniform", "beta")),
+    match.arg(arg = type, choices = basr_r_distributions),
     "normal" = distribution_normal(...),
     "cauchy" = distribution_cauchy(...),
     "poisson" = distribution_poisson(...),

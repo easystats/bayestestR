@@ -1,5 +1,8 @@
 #' Inclusion Bayes Factors for testing predictors across Bayesian models
 #'
+#' The \code{bf_*} function is an alias of the main function.
+#' \cr \cr
+#' For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 #'
 #' @author Mattan S. Ben-Shachar
 #' @param models An object of class \code{\link{bayesfactor_models}} or \code{BFBayesFactor}.
@@ -13,8 +16,6 @@
 #' probable under models with a particular effect, than they are under models without
 #' that particular effect? In other words, on average - are models with effect \eqn{X}
 #' more likely to have produced the observed data than models without effect \eqn{X}?
-#' \cr \cr
-#' For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 #'
 #' \subsection{Match Models}{
 #' If \code{match_models=FALSE} (default), Inclusion BFs are computed by comparing all models
@@ -65,6 +66,9 @@ bayesfactor_inclusion <- function(models, match_models = FALSE, prior_odds = NUL
   UseMethod("bayesfactor_inclusion")
 }
 
+#' @rdname bayesfactor_inclusion
+#' @export
+bf_inclusion <- bayesfactor_inclusion
 
 #' @export
 bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALSE, prior_odds = NULL, ...) {

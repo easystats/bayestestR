@@ -1,7 +1,7 @@
 Package: bayestestR
 Type: Package
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.4.0.1
+Version: 0.4.9
 Authors@R: c(
     person("Dominique", 
 		"Makowski", 
@@ -81,6 +81,6 @@ Suggests:
 	stringr,
 	testthat,
 	tidyr
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2
 Language: en-GB
 VignetteBuilder: knitr

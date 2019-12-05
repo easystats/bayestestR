@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -191,19 +191,28 @@
     <pre class="usage"><span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>point_estimate</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+<span class='fu'>point_estimate</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -255,32 +264,32 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
 <span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Point Estimates
 #&gt; 
-#&gt; </span><span> Median
-#&gt;  -0.083
+#&gt; </span><span>  Median
+#&gt;  -0.0073
 #&gt; </div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
 #&gt; 
-#&gt; </span><span> Median MAD    Mean SD   MAP
-#&gt;  -0.011   1 0.00098  1 0.017
+#&gt; </span><span> Median  MAD   Mean   SD  MAP
+#&gt;  0.0027 0.95 -0.027 0.97 0.24
 #&gt; </div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
 #&gt; 
 #&gt; </span><span> Median   MAP
-#&gt;   0.093 0.024
+#&gt;  -0.019 -0.07
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>point_estimate</span>(<span class='no'>df</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
 #&gt; 
-#&gt; </span><span> Parameter Median  MAD   Mean   SD    MAP
-#&gt;         X1  0.141 0.85  0.104 0.98 0.4034
-#&gt;         X2  0.065 0.84 -0.028 1.04 0.1219
-#&gt;         X3  0.127 0.97  0.134 0.94 0.1258
-#&gt;         X4 -0.047 1.06 -0.030 1.03 0.0038
+#&gt; </span><span> Parameter Median  MAD    Mean   SD     MAP
+#&gt;         X1  0.026 1.04  0.0300 1.06  0.1336
+#&gt;         X2 -0.170 0.93 -0.1504 0.92 -0.0062
+#&gt;         X3 -0.049 0.91  0.0080 0.98 -0.1657
+#&gt;         X4  0.026 1.02 -0.0063 1.02 -0.3967
 #&gt; </div><div class='input'><span class='fu'>point_estimate</span>(<span class='no'>df</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
 #&gt; 
-#&gt; </span><span> Parameter Median    MAP
-#&gt;         X1  0.141 0.4034
-#&gt;         X2  0.065 0.1219
-#&gt;         X3  0.127 0.1258
-#&gt;         X4 -0.047 0.0038
+#&gt; </span><span> Parameter Median     MAP
+#&gt;         X1  0.026  0.1336
+#&gt;         X2 -0.170 -0.0062
+#&gt;         X3 -0.049 -0.1657
+#&gt;         X4  0.026 -0.3967
 #&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>

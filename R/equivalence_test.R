@@ -268,10 +268,13 @@ equivalence_test.sim.merMod <- function(x, range = "default", ci = .89, paramete
   out
 }
 
+#' @export
+equivalence_test.sim <- equivalence_test.sim.merMod
+
 
 #' @export
-equivalence_test.sim <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
-  out <- .equivalence_test_models(x, range, ci, effects = "fixed", component = "conditional", parameters, verbose = FALSE)
+equivalence_test.mcmc <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
+  out <- .equivalence_test_models(as.data.frame(x), range, ci, effects = "fixed", component = "conditional", parameters, verbose = FALSE)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }

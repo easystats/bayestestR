@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -188,8 +188,16 @@
     <p>A method to calculate the overlap coefficient between two empirical distributions (that can be used as a measure of similarity between two samples).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>overlap</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>method_density</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>, <span class='kw'>method_auc</span> <span class='kw'>=</span> <span class='st'>"trapezoid"</span>,
-  <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>extend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>extend_scale</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>overlap</span>(
+  <span class='no'>x</span>,
+  <span class='no'>y</span>,
+  <span class='kw'>method_density</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>,
+  <span class='kw'>method_auc</span> <span class='kw'>=</span> <span class='st'>"trapezoid"</span>,
+  <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>,
+  <span class='kw'>extend</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>extend_scale</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

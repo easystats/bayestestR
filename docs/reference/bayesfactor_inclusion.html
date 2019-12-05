@@ -45,7 +45,9 @@
   
 
 <meta property="og:title" content="Inclusion Bayes Factors for testing predictors across Bayesian models — bayesfactor_inclusion" />
-<meta property="og:description" content="Inclusion Bayes Factors for testing predictors across Bayesian models" />
+<meta property="og:description" content="The bf_* function is an alias of the main function.
+ 
+For more info, see the Bayes factors vignette." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -89,7 +91,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -185,11 +187,14 @@
     </div>
 
     <div class="ref-description">
-    <p>Inclusion Bayes Factors for testing predictors across Bayesian models</p>
+    <p>The <code>bf_*</code> function is an alias of the main function.
+<br /> <br />
+For more info, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bayesfactor_inclusion</span>(<span class='no'>models</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>bayesfactor_inclusion</span>(<span class='no'>models</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='fu'>bf_inclusion</span>(<span class='no'>models</span>, <span class='kw'>match_models</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -220,9 +225,7 @@
     <p>Inclusion Bayes factors answer the question: Are the observed data more
 probable under models with a particular effect, than they are under models without
 that particular effect? In other words, on average - are models with effect \(X\)
-more likely to have produced the observed data than models without effect \(X\)?
-<br /> <br />
-For more info, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
+more likely to have produced the observed data than models without effect \(X\)?</p>
 <h3>Match Models</h3>
 <p>If <code>match_models=FALSE</code> (default), Inclusion BFs are computed by comparing all models
 with a predictor against all models without that predictor. If <code>TRUE</code>,

@@ -123,7 +123,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
     }
 
     ## TODO no BF for arm::sim
-    if (inherits(x, c("sim", "sim.merMod"))) test <- setdiff(test, "bf")
+    if (inherits(x, c("sim", "sim.merMod", "mcmc"))) test <- setdiff(test, "bf")
 
     # MAP-based p-value
 
@@ -377,6 +377,13 @@ describe_posterior.MCMCglmm <- function(posteriors, centrality = "median", dispe
   }
 
   out
+}
+
+
+
+#' @export
+describe_posterior.mcmc <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, parameters = NULL, ...) {
+  .describe_posterior(as.data.frame(posteriors), centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, effects = "fixed", parameters = parameters, ...)
 }
 
 

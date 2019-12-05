@@ -1,6 +1,6 @@
 #' Region of Practical Equivalence (ROPE)
 #'
-#' Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
+#' Compute the proportion of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 #'
 #' @param x Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
 #' @param range ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.
@@ -173,13 +173,13 @@ rope.data.frame <- function(x, range = "default", ci = .89, ci_method = "HDI", v
 
 #' @rdname rope
 #' @export
-rope.emmGrid <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
+rope.emmGrid <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
   if (!requireNamespace("emmeans")) {
     stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
   }
   xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
 
-  dat <- rope(xdf, range = range, ci = ci, verbose = verbose, ...)
+  dat <- rope(xdf, range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
   attr(dat, "object_name") <- .safe_deparse(substitute(x))
   dat
 }
@@ -188,19 +188,28 @@ rope.emmGrid <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
 
 #' @rdname rope
 #' @export
-rope.BFBayesFactor <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
-  out <- rope(insight::get_parameters(x), range = range, ci = ci, verbose = verbose, ...)
+rope.BFBayesFactor <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
+  out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
   out
 }
 
 
 #' @rdname rope
 #' @export
-rope.MCMCglmm <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
+rope.MCMCglmm <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
-  out <- rope(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), range = range, ci = ci, verbose = verbose, ...)
+  out <- rope(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
   out
 }
+
+
+#' @export
+rope.mcmc <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
+  out <- rope(as.data.frame(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+  out
+}
+
+
 
 
 #' @keywords internal

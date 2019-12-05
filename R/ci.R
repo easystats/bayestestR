@@ -141,3 +141,10 @@ ci.MCMCglmm <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
   ci(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), ci = ci, method = method, verbose = verbose, ...)
 }
+
+
+
+#' @export
+ci.mcmc <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
+  ci(as.data.frame(x), ci = ci, method = method, verbose = verbose, ...)
+}

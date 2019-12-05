@@ -149,6 +149,12 @@ p_direction.MCMCglmm <- function(x, method = "direct", ...) {
 }
 
 
+#' @export
+p_direction.mcmc <- function(x, method = "direct", ...) {
+  p_direction(as.data.frame(x), method = method, ...)
+}
+
+
 #' @rdname p_direction
 #' @export
 p_direction.emmGrid <- function(x, method = "direct", ...) {

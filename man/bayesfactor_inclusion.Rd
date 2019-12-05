@@ -2,9 +2,12 @@
 % Please edit documentation in R/bayesfactor_inclusion.R
 \name{bayesfactor_inclusion}
 \alias{bayesfactor_inclusion}
+\alias{bf_inclusion}
 \title{Inclusion Bayes Factors for testing predictors across Bayesian models}
 \usage{
 bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL, ...)
+
+bf_inclusion(models, match_models = FALSE, prior_odds = NULL, ...)
 }
 \arguments{
 \item{models}{An object of class \code{\link{bayesfactor_models}} or \code{BFBayesFactor}.}
@@ -19,15 +22,15 @@ bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL, ...)
 a data frame containing the prior and posterior probabilities, and BF for each effect.
 }
 \description{
-Inclusion Bayes Factors for testing predictors across Bayesian models
+The \code{bf_*} function is an alias of the main function.
+\cr \cr
+For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
 \details{
 Inclusion Bayes factors answer the question: Are the observed data more
 probable under models with a particular effect, than they are under models without
 that particular effect? In other words, on average - are models with effect \eqn{X}
 more likely to have produced the observed data than models without effect \eqn{X}?
-\cr \cr
-For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 
 \subsection{Match Models}{
 If \code{match_models=FALSE} (default), Inclusion BFs are computed by comparing all models

@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -188,44 +188,96 @@
     <p>Compute indices relevant to describe and characterise the posterior distributions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>describe_posterior</span>(
+  <span class='no'>posteriors</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>),
+  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>describe_posterior</span>(
+  <span class='no'>posteriors</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>),
+  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>),
-  <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>describe_posterior</span>(
+  <span class='no'>posteriors</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>),
+  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>),
+  <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for MCMCglmm</span>
-<span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='st'>"ESS"</span>, <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>describe_posterior</span>(
+  <span class='no'>posteriors</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>),
+  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='st'>"ESS"</span>,
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
-  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
-  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>), <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
-  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>),
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>,
-  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>describe_posterior</span>(
+  <span class='no'>posteriors</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>),
+  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>bf_prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>),
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>describe_posterior</span>(<span class='no'>posteriors</span>,
-  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
-  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>, <span class='st'>"bf"</span>),
-  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>describe_posterior</span>(
+  <span class='no'>posteriors</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>ci_method</span> <span class='kw'>=</span> <span class='st'>"hdi"</span>,
+  <span class='kw'>test</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>, <span class='st'>"bf"</span>),
+  <span class='kw'>rope_range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>rope_ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>,
+  <span class='kw'>priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -436,7 +488,10 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to emmeans.</span>
 #&gt; <span class='message'>NOTE -- Important change from versions &lt;= 1.41:</span>
 #&gt; <span class='message'>    Indicator predictors are now treated as 2-level factors by default.</span>
-#&gt; <span class='message'>    To revert to old behavior, use emm_options(cov.keep = character(0))</span></div><div class='input'><span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: restarting interrupted promise evaluation</span></div><div class='output co'>#&gt; Error in as.vector(x) : object 'model' not found</div><div class='output co'>#&gt; <span class='error'>Error in ref_grid(object = model, options = list(just.data = TRUE)): Perhaps a 'data' or 'params' argument is needed</span></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; <span class='message'>    To revert to old behavior, use emm_options(cov.keep = character(0))</span></div><div class='input'><span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt;   Parameter    Median CI    CI_low   CI_high pd ROPE_CI ROPE_low ROPE_high
+#&gt; 1   overall -5.452533 89 -6.712868 -4.433498  1      89     -0.1       0.1
+#&gt;   ROPE_Percentage
+#&gt; 1               0</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># brms models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)

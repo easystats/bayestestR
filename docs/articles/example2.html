@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -297,10 +297,8 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <pre><code>&gt; Can't calculate log-loss.</code></pre>
 <pre><code>&gt; # Indices of model performance
 &gt; 
-&gt;  ELPD ELPD_SE LOOIC LOOIC_SE WAIC    R2 RMSE LOGLOSS SCORE_LOG
-&gt;   -66     3.1   133      6.1  133 0.099 0.48      NA      -106
-&gt;  SCORE_SPHERICAL
-&gt;             0.01</code></pre>
+&gt;  ELPD ELPD_SE LOOIC LOOIC_SE WAIC    R2 RMSE LOGLOSS SCORE_LOG SCORE_SPHERICAL
+&gt;   -66     3.1   133      6.1  133 0.099 0.48      NA      -106            0.01</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model, <span class="dt">test =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span>))</a></code></pre></div>
 <pre><code>&gt; # Description of Posterior Distributions
 &gt; 

@@ -20,11 +20,11 @@ rope(x, ...)
 
 \method{rope}{data.frame}(x, range = "default", ci = 0.89, ci_method = "HDI", verbose = TRUE, ...)
 
-\method{rope}{emmGrid}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
+\method{rope}{emmGrid}(x, range = "default", ci = 0.89, ci_method = "HDI", verbose = TRUE, ...)
 
-\method{rope}{BFBayesFactor}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
+\method{rope}{BFBayesFactor}(x, range = "default", ci = 0.89, ci_method = "HDI", verbose = TRUE, ...)
 
-\method{rope}{MCMCglmm}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
+\method{rope}{MCMCglmm}(x, range = "default", ci = 0.89, ci_method = "HDI", verbose = TRUE, ...)
 
 \method{rope}{stanreg}(
   x,
@@ -76,7 +76,7 @@ or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \description{
-Compute the proportion (in percentage) of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
+Compute the proportion of the HDI (default to the 90\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 }
 \details{
 Statistically, the probability of a posterior distribution of being

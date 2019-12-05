@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -191,13 +191,23 @@
     <pre class="usage"><span class='fu'>diagnostic_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>diagnostic_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>diagnostic_posterior</span>(
+  <span class='no'>posteriors</span>,
+  <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>diagnostic_posterior</span>(<span class='no'>posteriors</span>, <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>,
-  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>diagnostic_posterior</span>(
+  <span class='no'>posteriors</span>,
+  <span class='kw'>diagnostic</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -227,10 +237,12 @@ should be returned.</p></td>
     <tr>
       <th>component</th>
       <td><p>Should all parameters, parameters for the
-conditional model, the zero-inflated part of the model, the dispersion
-term or the instrumental variables be returned? Applies to models
-with zero-inflated and/or dispersion formula, or to models with instrumental
-variable (so called fixed-effects regressions). May be abbreviated.</p></td>
+ conditional model, the zero-inflated part of the model, the dispersion
+ term or the instrumental variables be returned? Applies to models
+ with zero-inflated and/or dispersion formula, or to models with instrumental
+ variable (so called fixed-effects regressions). May be abbreviated. Note that the
+<em>conditional</em> component is also called <em>count</em> or <em>mean</em>
+component, depending on the model.</p></td>
     </tr>
     </table>
 

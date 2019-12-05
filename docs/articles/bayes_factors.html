@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -520,7 +520,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt;          1.99
 &gt;      0.00e+00
 &gt; 
-&gt; * Bayes factors for the restricted movel vs. the un-restricted model.</code></pre>
+&gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p>We can see that the novice botanist’s hypothesis gets a Bayes factor of ~2, indicating the data provides twice as much evidence for a model in which petal length is restricted to be positively associated with sepal length than for a model with not such restriction.</p>
 <p>What about our expert botanist? He seems to have failed miserably, with a BF favoring the unrestricted model many many times over (<span class="math inline">\(BF\gg1,000\)</span>). How is this possible? It seems that when <em>controlling for petal length</em>, versicolor and virginica actually have shorter sepals!</p>
 <p>Note that these Bayes factors compare the restricted model to the unrestricted model. If we wanted to compare the restricted model to the null model, we could use the transitive property of Bayes factors like so:</p>
@@ -632,7 +632,7 @@ It seems that not all pairwise differences have the same prior distribution!! Sp
 &gt;      0.00e+00
 &gt;          5.19
 &gt; 
-&gt; * Bayes factors for the restricted movel vs. the un-restricted model.</code></pre>
+&gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p><strong><em>What happened???</em></strong><br>
 1. The comparison of 2 levels all have a prior of 0.5, as expected. 2. The comparison of 3 levels has different priors, depending on the order restriction - i.e. <strong>some orders are <em>a priori</em> more likely than others!!!</strong></p>
 <p>Again, this is solved by using the <em>orthogonal</em> factor coding (from above).</p>
@@ -664,7 +664,7 @@ It seems that not all pairwise differences have the same prior distribution!! Sp
 &gt;      0.00e+00
 &gt;          5.95
 &gt; 
-&gt; * Bayes factors for the restricted movel vs. the un-restricted model.</code></pre>
+&gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p>When comparing the results from the two factor coding schemes, we find:<br>
 1. In both cases, the estimated (posterior) means are identical.<br>
 2. In both cases, the comparison of 2 levels the proper prior probability of 0.5.<br>

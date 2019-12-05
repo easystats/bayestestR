@@ -16,7 +16,7 @@ test_that("brms", {
   # testthat::expect_true("equivalence_test" %in% class(equivalence_test(model)))
   testthat::expect_is(map_estimate(model), "data.frame")
   testthat::expect_is(p_map(model), "data.frame")
-  testthat::expect_is(p_rope(model), "data.frame")
+  testthat::expect_is(mhdior(model), "data.frame")
   testthat::expect_is(p_direction(model), "data.frame")
 
   testthat::expect_equal(colnames(hdi(model)), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))

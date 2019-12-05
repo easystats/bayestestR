@@ -128,6 +128,22 @@ p_map.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {
 
 
 #' @export
+p_map.mcmc <- function(x, precision = 2^10, method = "kernel", parameters = NULL, ...) {
+  out <- .p_map_models(
+    x = x,
+    precision = precision,
+    method = method,
+    effects = "fixed",
+    component = "conditional",
+    parameters = parameters,
+    ...
+  )
+
+  attr(out, "data") <- insight::get_parameters(x, parameters = parameters)
+  out
+}
+
+#' @export
 p_map.sim.merMod <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
 

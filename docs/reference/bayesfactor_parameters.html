@@ -46,20 +46,23 @@
 
 <meta property="og:title" content="Bayes Factors (BF) for a Single Parameter — bayesfactor_parameters" />
 <meta property="og:description" content="This method computes Bayes factors against the null (either a point or an interval),
-bases on prior and posterior samples of a single parameter. This Bayes factor indicates
+based on prior and posterior samples of a single parameter. This Bayes factor indicates
 the degree by which the mass of the posterior distribution has shifted further away
 from or closer to the null value(s) (relative to the prior distribution), thus indicating
 if the null value has become less or more likely given the observed data.
  
 When the null is an interval, the Bayes factor is computed by comparing the prior
-and posterior odds of the parameter falling within or outside the null;
+and posterior odds of the parameter falling within or outside the null interval;
 When the null is a point, a Savage-Dickey density ratio is computed, which is also
 an approximation of a Bayes factor comparing the marginal likelihoods of the model
 against a model in which the tested parameter has been restricted to the point null.
  
-For info on specifying correct priors for factors with more than 2 levels, see the Bayes factors vignette.
+bayesfactor_pointnull() and bayesfactor_rope() are wrappers around
+bayesfactor_parameters with different defaults for the null to be tested against
+(a point and a range, respectively). Aliases of the main functions are prefixed
+with bf_*, like bf_parameters() or bf_pointnull()
  
-For more info, see the Bayes factors vignette." />
+For more info, in particular on specifying correct priors for factors with more than 2 levels, see the Bayes factors vignette." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -103,7 +106,7 @@ For more info, see the Bayes factors vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -200,52 +203,105 @@ For more info, see the Bayes factors vignette." />
 
     <div class="ref-description">
     <p>This method computes Bayes factors against the null (either a point or an interval),
-bases on prior and posterior samples of a single parameter. This Bayes factor indicates
+based on prior and posterior samples of a single parameter. This Bayes factor indicates
 the degree by which the mass of the posterior distribution has shifted further away
 from or closer to the null value(s) (relative to the prior distribution), thus indicating
 if the null value has become less or more likely given the observed data.
 <br /> <br />
 When the null is an interval, the Bayes factor is computed by comparing the prior
-and posterior odds of the parameter falling within or outside the null;
+and posterior odds of the parameter falling within or outside the null interval;
 When the null is a point, a Savage-Dickey density ratio is computed, which is also
 an approximation of a Bayes factor comparing the marginal likelihoods of the model
 against a model in which the tested parameter has been restricted to the point null.
 <br /> <br />
-<strong>For info on specifying correct priors for factors with more than 2 levels, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</strong>
+<code>bayesfactor_pointnull()</code> and <code>bayesfactor_rope()</code> are wrappers around
+<code>bayesfactor_parameters</code> with different defaults for the null to be tested against
+(a point and a range, respectively). Aliases of the main functions are prefixed
+with <code>bf_*</code>, like <code>bf_parameters()</code> or <code>bf_pointnull()</code>
 <br /> <br />
-For more info, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
+<strong>For more info, in particular on specifying correct priors for factors with more than 2 levels, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</strong></p>
     </div>
 
-    <pre class="usage"><span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>bayesfactor_parameters</span>(
+  <span class='no'>posterior</span>,
+  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
+  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)
 
-<span class='fu'>bayesfactor_savagedickey</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>hypothesis</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>bayesfactor_pointull</span>(
+  <span class='no'>posterior</span>,
+  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
+  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)
+
+<span class='fu'>bayesfactor_rope</span>(
+  <span class='no'>posterior</span>,
+  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
+  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fu'><a href='rope_range.html'>rope_range</a></span>(<span class='no'>posterior</span>),
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>bayesfactor_parameters</span>(
+  <span class='no'>posterior</span>,
+  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
+  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>,
-  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)
+<span class='fu'>bayesfactor_parameters</span>(
+  <span class='no'>posterior</span>,
+  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
+  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>,
-  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='no'>...</span>)
+<span class='fu'>bayesfactor_parameters</span>(
+  <span class='no'>posterior</span>,
+  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
+  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>bayesfactor_parameters</span>(
+  <span class='no'>posterior</span>,
+  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
+  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>bayesfactor_parameters</span>(
+  <span class='no'>posterior</span>,
+  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
+  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -253,15 +309,15 @@ For more info, see <a href='https://easystats.github.io/bayestestR/articles/baye
     <tr>
       <th>posterior</th>
       <td><p>A numerical vector, <code>stanreg</code> / <code>brmsfit</code> object, <code>emmGrid</code>
-or a data frame - representing a posterior distribution(s) from (see Details).</p></td>
+or a data frame - representing a posterior distribution(s) from (see 'Details').</p></td>
     </tr>
     <tr>
       <th>prior</th>
-      <td><p>An object representing a prior distribution (see Details).</p></td>
+      <td><p>An object representing a prior distribution (see 'Details').</p></td>
     </tr>
     <tr>
       <th>direction</th>
-      <td><p>Test type (see details). One of <code>0</code>, <code>"two-sided"</code> (default, two tailed),
+      <td><p>Test type (see 'Details'). One of <code>0</code>, <code>"two-sided"</code> (default, two tailed),
 <code>-1</code>, <code>"left"</code> (left tailed) or <code>1</code>, <code>"right"</code> (right tailed).</p></td>
     </tr>
     <tr>
@@ -276,10 +332,6 @@ or a data frame - representing a posterior distribution(s) from (see Details).</
     <tr>
       <th>...</th>
       <td><p>Currently not used.</p></td>
-    </tr>
-    <tr>
-      <th>hypothesis</th>
-      <td><p>Deprecated in favour of <code>null</code>.</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -307,7 +359,7 @@ the alternative get wider, the likelihood of the null value(s) increases, to the
 flat priors the null is infinitely more favorable than the alternative (this is called <em>the Jeffreys-Lindley-Bartlett
 paradox</em>). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
 <br /><br />
-(Note that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm</a></code> uses falt priors for fixed-effects; See example below.)</p>
+(Note that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects; See example below.)</p>
 <h3>Setting the correct <code>prior</code></h3>
 <p>It is important to provide the correct <code>prior</code> for meaningful results.</p><ul>
 <li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>

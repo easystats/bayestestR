@@ -20,15 +20,15 @@ bayesfactor(
 \arguments{
 \item{...}{A numeric vector, model object(s), or the output from \code{bayesfactor_models}.}
 
-\item{prior}{An object representing a prior distribution (see Details).}
+\item{prior}{An object representing a prior distribution (see 'Details').}
 
-\item{direction}{Test type (see details). One of \code{0}, \code{"two-sided"} (default, two tailed),
+\item{direction}{Test type (see 'Details'). One of \code{0}, \code{"two-sided"} (default, two tailed),
 \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).}
 
 \item{null}{Value of the null, either a scaler (for point-null) or a a range
 (for a interval-null).}
 
-\item{hypothesis}{Deprecated in favour of \code{null}.}
+\item{hypothesis}{A character vector specifying the restrictions as logical conditions (see examples below).}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
