@@ -89,11 +89,11 @@ bayesfactor_rope(
 }
 \arguments{
 \item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}
-or a data frame - representing a posterior distribution(s) from (see Details).}
+or a data frame - representing a posterior distribution(s) from (see 'Details').}
 
-\item{prior}{An object representing a prior distribution (see Details).}
+\item{prior}{An object representing a prior distribution (see 'Details').}
 
-\item{direction}{Test type (see details). One of \code{0}, \code{"two-sided"} (default, two tailed),
+\item{direction}{Test type (see 'Details'). One of \code{0}, \code{"two-sided"} (default, two tailed),
 \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).}
 
 \item{null}{Value of the null, either a scaler (for point-null) or a a range
@@ -115,25 +115,23 @@ A data frame containing the Bayes factor representing evidence \emph{against} th
 }
 \description{
 This method computes Bayes factors against the null (either a point or an interval),
-bases on prior and posterior samples of a single parameter. This Bayes factor indicates
+based on prior and posterior samples of a single parameter. This Bayes factor indicates
 the degree by which the mass of the posterior distribution has shifted further away
 from or closer to the null value(s) (relative to the prior distribution), thus indicating
 if the null value has become less or more likely given the observed data.
 \cr \cr
 When the null is an interval, the Bayes factor is computed by comparing the prior
-and posterior odds of the parameter falling within or outside the null;
+and posterior odds of the parameter falling within or outside the null interval;
 When the null is a point, a Savage-Dickey density ratio is computed, which is also
 an approximation of a Bayes factor comparing the marginal likelihoods of the model
 against a model in which the tested parameter has been restricted to the point null.
 \cr \cr
-\code{bayesfactor_pointnull} and \code{bayesfactor_rope} are wrappers around
+\code{bayesfactor_pointnull()} and \code{bayesfactor_rope()} are wrappers around
 \code{bayesfactor_parameters} with different defaults for the null to be tested against
 (a point and a range, respectively). Aliases of the main functions are prefixed
 with \code{bf_*}, like \code{bf_parameters()} or \code{bf_pointnull()}
 \cr \cr
-\strong{For info on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
-\cr \cr
-For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
+\strong{For more info, in particular on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 }
 \details{
 This method is used to compute Bayes factors based on prior and posterior distributions.
@@ -144,7 +142,7 @@ the alternative get wider, the likelihood of the null value(s) increases, to the
 flat priors the null is infinitely more favorable than the alternative (this is called \emph{the Jeffreys-Lindley-Bartlett
 paradox}). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
 \cr\cr
-(Note that by default, \code{brms::brm} uses falt priors for fixed-effects; See example below.)
+(Note that by default, \code{brms::brm()} uses flat priors for fixed-effects; See example below.)
 
 \subsection{Setting the correct \code{prior}}{
 It is important to provide the correct \code{prior} for meaningful results.
