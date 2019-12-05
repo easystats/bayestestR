@@ -157,12 +157,15 @@ bayesfactor_rope <- function(posterior, prior = NULL, direction = "two-sided", n
   )
 }
 
+#' @rdname bayesfactor_parameters
 #' @export
 bf_parameters <- bayesfactor_parameters
 
+#' @rdname bayesfactor_parameters
 #' @export
 bf_pointull <- bayesfactor_pointull
 
+#' @rdname bayesfactor_parameters
 #' @export
 bf_rope <- bayesfactor_rope
 

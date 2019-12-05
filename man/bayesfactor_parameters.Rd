@@ -4,6 +4,9 @@
 \alias{bayesfactor_parameters}
 \alias{bayesfactor_pointull}
 \alias{bayesfactor_rope}
+\alias{bf_parameters}
+\alias{bf_pointull}
+\alias{bf_rope}
 \alias{bayesfactor_parameters.numeric}
 \alias{bayesfactor_parameters.stanreg}
 \alias{bayesfactor_parameters.brmsfit}
@@ -30,6 +33,33 @@ bayesfactor_pointull(
 )
 
 bayesfactor_rope(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = rope_range(posterior),
+  verbose = TRUE,
+  ...
+)
+
+bf_parameters(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  verbose = TRUE,
+  ...
+)
+
+bf_pointull(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  verbose = TRUE,
+  ...
+)
+
+bf_rope(
   posterior,
   prior = NULL,
   direction = "two-sided",
