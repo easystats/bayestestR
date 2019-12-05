@@ -80,7 +80,7 @@ test_that("emmGrid bayesfactor_parameters", {
   set.seed(4)
   xsdbf <- bayesfactor_parameters(all_, prior = model)
   testthat::expect_equal(log(xsdbf$BF), c(-2.5756125848835, 1.69713280431204, -0.212277519930343), tolerance = .1)
-  testthat::expect_warning(bayesfactor_savagedickey(all_))
+  testthat::expect_warning(bayesfactor_parameters(all_))
 })
 
 test_that("emmGrid bayesfactor_restricted", {
