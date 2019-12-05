@@ -43,7 +43,7 @@ distribution_mixture_normal(n, mean = c(-3, 3), sd = 1, random = FALSE, ...)
 rnorm_perfect(n, mean = 0, sd = 1)
 }
 \arguments{
-\item{type}{Can be \code{"normal"} (default), \code{"cauchy"}, \code{"poisson"}, \code{"gamma"}, \code{"chisquared"}, \code{"uniform"}, \code{"student"} or \code{"beta"}.}
+\item{type}{Can be any of the names from base R's \link[stats]{Distributions}, like \code{"cauchy"}, \code{"pois"} or \code{"beta"}.}
 
 \item{...}{Arguments passed to or from other methods.}
 
@@ -90,5 +90,8 @@ Generate a sequence of n-quantiles, i.e., a sample of size \code{n} with a near-
 \examples{
 library(bayestestR)
 x <- distribution(n = 10)
+plot(density(x))
+
+x <- distribution(type = "gamma", n = 100, shape = 2)
 plot(density(x))
 }

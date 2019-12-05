@@ -6,6 +6,7 @@
 - `p_significance()` now also works for *brmsfit*-objects.
 - `equivalence_test()` gets `effects` and `component` arguments for *stanreg* and *brmsfit*  models, to print specific model components.
 - Support for *mcmc* objects (package **coda**=)
+- Provide more distributions via `distribution()`.
 
 ## Breaking changes
 
