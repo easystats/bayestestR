@@ -5,7 +5,7 @@
 - Added `plot()`-method for `p_significance()`.
 - `p_significance()` now also works for *brmsfit*-objects.
 - `equivalence_test()` gets `effects` and `component` arguments for *stanreg* and *brmsfit*  models, to print specific model components.
-- Support for *mcmc* objects (package **coda**=)
+- Support for *mcmc* objects (package **coda**)
 - Provide more distributions via `distribution()`.
 
 ## Breaking changes
@@ -21,7 +21,7 @@
 
 ## New functions / features
 
-- `convert_bayesian_to_frequentist` Convert (refit) Bayesian model as frequentist
+- `convert_bayesian_to_frequentist()` Convert (refit) Bayesian model as frequentist
 - `distribution_binomial()` for perfect binomial distributions
 - `simulate_ttest()` Simulate data with a mean difference
 - `simulate_correlation()` Simulate correlated datasets
