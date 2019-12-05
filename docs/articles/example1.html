@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -231,7 +231,7 @@
 <a class="sourceLine" id="cb10-2" title="2"> </a>
 <a class="sourceLine" id="cb10-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(insight<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/insight/man/get_parameters.html">get_parameters</a></span>(model))  <span class="co"># Size (number of rows)</span></a></code></pre></div>
 <pre><code>[1] 1500</code></pre>
-<p>In this case, as would be expected, we have <strong><code>2 chains * (1000 iterations - 250 warm-up) = 1500</code></strong> posterior draws. However, let’s keep our first model with the default setup.</p>
+<p>In this case, as would be expected, we have <strong><code>2 chains * (1000 iterations - 250 warm-up) = 1500</code></strong> posterior draws. But let’s keep our first model with the default setup (as it has more draws).</p>
 </div>
 <div id="visualizing-the-posterior-distribution" class="section level4">
 <h4 class="hasAnchor">
@@ -245,7 +245,7 @@
 <p><strong>Congrats! You’ve just described your posterior distribution.</strong></p>
 </blockquote>
 <p>And this is at the heart of Bayesian analysis. We don’t need <em>p</em>-values, <em>t</em>-values or degrees of freedom: <strong>everything is there</strong>, within this posterior distribution.</p>
-<p>Our description above is consistent with the values obtained from the frequentist regression (which resulted in a beta of <strong>0.41</strong>). This is reassuring! Indeed, <strong>in most cases a Bayesian analysis does not drastically change the results</strong> or their interpretation. Rather, it makes the results more interpretable and intuitive, and eaasier to understand and describe.</p>
+<p>Our description above is consistent with the values obtained from the frequentist regression (which resulted in a beta of <strong>0.41</strong>). This is reassuring! Indeed, <strong>in most cases a Bayesian analysis does not drastically change the results</strong> or their interpretation. Rather, it makes the results more interpretable and intuitive, and easier to understand and describe.</p>
 <p>We can now go ahead and <strong>precisely characterize</strong> this posterior distribution.</p>
 </div>
 </div>

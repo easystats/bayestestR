@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ROPE-based p-value — p_rope • bayestestR</title>
+<title>Probability of not being in ROPE — p_rope • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,8 +44,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="ROPE-based p-value — p_rope" />
-<meta property="og:description" content="The ROPE-based p-value is an exploratory and non-validated index representing the maximum percentage of HDI that does not contain (or is entirely contained, in which case the value is prefixed with a negative sign), in the negligible values space defined by the ROPE. It differs from the ROPE percentage, i.e., from the proportion of a given CI in the ROPE, as it represents the maximum CI values needed to reach a ROPE proportion of 0% or 100%. Whether the index reflects the ROPE reaching 0% or 100% is indicated through the sign: a negative sign is added to indicate that the probability corresponds to the probability of a not significant effect (a percentage in ROPE of 100%). For instance, a ROPE-based p of 97% means that there is a probability of .97 that a parameter (described by its posterior distribution) is outside the ROPE. In other words, the 97% HDI is the maximum HDI level for which the percentage in ROPE is 0%. On the contrary, a ROPE-based p of -97% indicates that there is a probability of .97 that the parameter is inside the ROPE (percentage in ROPE of 100%). A value close to 0% would indicate that the mode of the distribution falls perfectly at the edge of the ROPE, in which case the percentage of HDI needed to be on either side of the ROPE becomes infinitely small. Negative values do not refer to negative values per se, simply indicating that the value corresponds to non-significance rather than significance." />
+<meta property="og:title" content="Probability of not being in ROPE — p_rope" />
+<meta property="og:description" content="Compute the proportion of the posterior distribution that doesn't lie within a region of practical equivalence (ROPE). It is equivalent to running rope(..., ci = 1)." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -179,38 +179,53 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>ROPE-based p-value</h1>
+    <h1>Probability of not being in ROPE</h1>
     <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/p_rope.R'><code>R/p_rope.R</code></a></small>
     <div class="hidden name"><code>p_rope.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The ROPE-based <em>p</em>-value is an exploratory and non-validated index representing the maximum percentage of <a href='hdi.html'>HDI</a> that does not contain (or is entirely contained, in which case the value is prefixed with a negative sign), in the negligible values space defined by the <a href='rope.html'>ROPE</a>. It differs from the ROPE percentage, <em>i.e.</em>, from the proportion of a given CI in the ROPE, as it represents the maximum CI values needed to reach a ROPE proportion of 0% or 100%. Whether the index reflects the ROPE reaching 0% or 100% is indicated through the sign: a negative sign is added to indicate that the probability corresponds to the probability of a not significant effect (a percentage in ROPE of 100%). For instance, a ROPE-based <em>p</em> of 97% means that there is a probability of .97 that a parameter (described by its posterior distribution) is outside the ROPE. In other words, the 97% HDI is the maximum HDI level for which the percentage in ROPE is 0%. On the contrary, a ROPE-based p of -97% indicates that there is a probability of .97 that the parameter is inside the ROPE (percentage in ROPE of 100%). A value close to 0% would indicate that the mode of the distribution falls perfectly at the edge of the ROPE, in which case the percentage of HDI needed to be on either side of the ROPE becomes infinitely small. Negative values do not refer to negative values <em>per se</em>, simply indicating that the value corresponds to non-significance rather than significance.</p>
+    <p>Compute the proportion of the posterior distribution that doesn't lie within a region of practical equivalence (ROPE). It is equivalent to running <code><a href='rope.html'>rope(..., ci = 1)</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>p_rope</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for default</span>
+<span class='fu'>p_rope</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>p_rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='no'>...</span>)
+<span class='fu'>p_rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>p_rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='no'>...</span>)
+<span class='fu'>p_rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'>p_rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='no'>...</span>)
+<span class='fu'>p_rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>p_rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='no'>...</span>)
+<span class='fu'>p_rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for MCMCglmm</span>
+<span class='fu'>p_rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>p_rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>p_rope</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>p_rope</span>(<span class='no'>x</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>), <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>,
-  <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>), <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>p_rope</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>range</span> <span class='kw'>=</span> <span class='st'>"default"</span>,
+  <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -226,10 +241,6 @@
     <tr>
       <th>range</th>
       <td><p>ROPE's lower and higher bounds. Should be a vector of length two (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the range is set to <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code> if input is a vector, and based on <code><a href='rope_range.html'>rope_range()</a></code> if a Bayesian model is provided.</p></td>
-    </tr>
-    <tr>
-      <th>precision</th>
-      <td><p>The precision by which to explore the ROPE space (in percentage). Lower values increase the precision of the returned p value but can be quite computationaly costly.</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -256,44 +267,19 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bayestestR</span>)
 
-<span class='co'># precision = 1 is used to speed up examples...</span>
-
-<span class='fu'>p_rope</span>(
-  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>),
-  <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>),
-  <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>1</span>
-)</div><div class='output co'>#&gt; p (ROPE) = 61.00%</div><div class='input'>
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
-<span class='fu'>p_rope</span>(<span class='no'>df</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># ROPE-based p-value
-#&gt; 
-#&gt; </span><span> Parameter p_ROPE
-#&gt;         X1   0.05
-#&gt;         X2   0.40
-#&gt;         X3   0.05
-#&gt;         X4   0.26
-#&gt; </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>p_rope</span>(<span class='no'>model</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># ROPE-based p-value
-#&gt; 
-#&gt; </span><span>   Parameter p_ROPE
-#&gt;  (Intercept)   1.00
-#&gt;           wt   1.00
-#&gt;         gear  -0.07
-#&gt; </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='fu'>p_rope</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: restarting interrupted promise evaluation</span></div><div class='output co'>#&gt; Error in as.vector(x) : object 'model' not found</div><div class='output co'>#&gt; <span class='error'>Error in ref_grid(object = model, options = list(just.data = TRUE)): Perhaps a 'data' or 'params' argument is needed</span></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'>p_rope</span>(<span class='no'>model</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>BayesFactor</span>)
-<span class='no'>bf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
-<span class='fu'>p_rope</span>(<span class='no'>bf</span>)
-}</div></span></pre>
+<span class='fu'>p_rope</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt;   ROPE_low ROPE_high p_ROPE
+#&gt; 1     -0.1       0.1      1</div><div class='input'><span class='fu'>p_rope</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt;    Parameter ROPE_low ROPE_high p_ROPE
+#&gt; 1        mpg     -0.1       0.1   0.00
+#&gt; 2        cyl     -0.1       0.1   0.00
+#&gt; 3       disp     -0.1       0.1   0.00
+#&gt; 4         hp     -0.1       0.1   0.00
+#&gt; 5       drat     -0.1       0.1   0.00
+#&gt; 6         wt     -0.1       0.1   0.00
+#&gt; 7       qsec     -0.1       0.1   0.00
+#&gt; 8         vs     -0.1       0.1   0.56
+#&gt; 9         am     -0.1       0.1   0.59
+#&gt; 10      gear     -0.1       0.1   0.00
+#&gt; 11      carb     -0.1       0.1   0.00</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

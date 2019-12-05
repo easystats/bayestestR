@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
       </span>
     </div>
 
@@ -182,9 +182,9 @@
       <small>Source: <a href='https://github.com/easystats/bayestestR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="bayestestr-041" class="section level1">
+    <div id="bayestestr-049" class="section level1">
 <h1 class="page-header">
-<a href="#bayestestr-041" class="anchor"></a>bayestestR 0.4.1<small> Unreleased </small>
+<a href="#bayestestr-049" class="anchor"></a>bayestestR 0.4.9<small> Unreleased </small>
 </h1>
 <div id="general" class="section level2">
 <h2 class="hasAnchor">
@@ -195,6 +195,16 @@
 <code><a href="../reference/p_significance.html">p_significance()</a></code> now also works for <em>brmsfit</em>-objects.</li>
 <li>
 <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> gets <code>effects</code> and <code>component</code> arguments for <em>stanreg</em> and <em>brmsfit</em> models, to print specific model components.</li>
+<li>Support for <em>mcmc</em> objects (package <strong>coda</strong>=)</li>
+<li>Provide more distributions via <code><a href="../reference/distribution.html">distribution()</a></code>.</li>
+</ul>
+</div>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>
+<code><a href="../reference/p_rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code><a href="../reference/mhdior.html">mhdior()</a></code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/p_rope.html">p_rope()</a></code> will refer to <code><a href="../reference/rope.html">rope(..., ci = 1)</a></code> ( <a href='https://github.com/easystats/bayestestR/issues/258'>#258</a> )</li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
@@ -202,6 +212,7 @@
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed mistake in description of <code><a href="../reference/p_significance.html">p_significance()</a></code>.</li>
+<li>Fixed error when computing BFs with <code>emmGrid</code> based on some non-linear models ( <a href='https://github.com/easystats/bayestestR/issues/260'>#260</a> ).</li>
 </ul>
 </div>
 </div>
@@ -278,9 +289,9 @@
 <h1 class="page-header">
 <a href="#bayestestr-025" class="anchor"></a>bayestestR 0.2.5<small> 2019-08-06 </small>
 </h1>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
 <code><a href="../reference/rope_range.html">rope_range()</a></code> for binomial model has now a different default (-.18; .18 ; instead of -.055; .055)</li>
@@ -289,7 +300,7 @@
 <li>
 <code><a href="../reference/p_direction.html">p_direction()</a></code>: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 (<a href="https://github.com/easystats/bayestestR/issues/168"><a href='https://github.com/easystats/bayestestR/issues/168'>#168</a></a>)</li>
 <li>
-<code><a href="../reference/bayesfactor_parameters.html">bayesfactor_savagedickey()</a></code>: <code>hypothesis</code> argument replaced by <code>null</code> as part of the new <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> function</li>
+<code>bayesfactor_savagedickey()</code>: <code>hypothesis</code> argument replaced by <code>null</code> as part of the new <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> function</li>
 </ul>
 </div>
 <div id="new-functions--features-2" class="section level2">
@@ -305,7 +316,7 @@
 <li>
 <code><a href="../reference/reshape_ci.html">reshape_ci()</a></code>: Reshape CIs between wide/long</li>
 <li>
-<code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code>: New function, replacing <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_savagedickey()</a></code>, allows for computing Bayes factors against a <em>point-null</em> or an <em>interval-null</em>
+<code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code>: New function, replacing <code>bayesfactor_savagedickey()</code>, allows for computing Bayes factors against a <em>point-null</em> or an <em>interval-null</em>
 </li>
 <li>
 <code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code>: Function for computing Bayes factors for order restricted models</li>
@@ -328,9 +339,9 @@
 <h1 class="page-header">
 <a href="#bayestestr-022" class="anchor"></a>bayestestR 0.2.2<small> 2019-06-20 </small>
 </h1>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
 <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code>: returns capitalized output (e.g., <code>Rejected</code> instead of <code>rejected</code>)</li>
@@ -344,7 +355,7 @@
 <ul>
 <li>
 <code><a href="../reference/pd_to_p.html">pd_to_p()</a></code> and <code><a href="../reference/pd_to_p.html">p_to_pd()</a></code>: Functions to convert between probability of direction (pd) and p-value</li>
-<li>Support of <code>emmGrid</code> objects: <code><a href="../reference/ci.html">ci()</a></code>, <code><a href="../reference/rope.html">rope()</a></code>, <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_savagedickey()</a></code>, <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, …</li>
+<li>Support of <code>emmGrid</code> objects: <code><a href="../reference/ci.html">ci()</a></code>, <code><a href="../reference/rope.html">rope()</a></code>, <code>bayesfactor_savagedickey()</code>, <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, …</li>
 </ul>
 </div>
 <div id="minor-changes-1" class="section level2">
@@ -369,9 +380,9 @@
 <h1 class="page-header">
 <a href="#bayestestr-020" class="anchor"></a>bayestestR 0.2.0<small> 2019-05-29 </small>
 </h1>
-<div id="breaking-changes-2" class="section level2">
+<div id="breaking-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-3" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>plotting functions now require the installation of the <code>see</code> package</li>
 <li>
@@ -403,7 +414,7 @@
 <li>
 <code><a href="../reference/distribution.html">distribution()</a></code> functions have been added</li>
 <li>
-<code><a href="../reference/bayesfactor_parameters.html">bayesfactor_savagedickey()</a></code>, <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> and <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> functions has been added</li>
+<code>bayesfactor_savagedickey()</code>, <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> and <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> functions has been added</li>
 <li>Started adding plotting methods (currently in the <a href="https://github.com/easystats/see"><code>see</code></a> package) for <code><a href="../reference/p_direction.html">p_direction()</a></code> and <code><a href="../reference/hdi.html">hdi()</a></code>
 </li>
 <li>
@@ -456,7 +467,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#bayestestr-041">0.4.1</a></li>
+        <li><a href="#bayestestr-049">0.4.9</a></li>
         <li><a href="#bayestestr-040">0.4.0</a></li>
         <li><a href="#bayestestr-030">0.3.0</a></li>
         <li><a href="#bayestestr-025">0.2.5</a></li>
