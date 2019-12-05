@@ -128,7 +128,8 @@ against a model in which the tested parameter has been restricted to the point n
 \cr \cr
 \code{bayesfactor_pointnull} and \code{bayesfactor_rope} are wrappers around
 \code{bayesfactor_parameters} with different defaults for the null to be tested against
-(a point and a range, respectively). The \code{bf_*} functions as aliases of the main functions.
+(a point and a range, respectively). Aliases of the main functions are prefixed
+with \code{bf_*}, like \code{bf_parameters()} or \code{bf_pointnull()}
 \cr \cr
 \strong{For info on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 \cr \cr
