@@ -91,9 +91,9 @@ cited below at once.
 ``` r
 describe_posterior(rnorm(1000))
 ##   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
-## 1 Posterior -0.085 89   -1.9     1.3 0.53      89     -0.1       0.1
+## 1 Posterior 0.0094 89   -1.6     1.7 0.50      89     -0.1       0.1
 ##   ROPE_Percentage
-## 1           0.081
+## 1             0.1
 ```
 
 ## Point-estimates
@@ -215,7 +215,7 @@ equivalence_test(posterior, range = c(-0.1, 0.1))
 ##   ROPE: [-0.10 0.10]
 ## 
 ##         H0 inside ROPE     89% HDI
-##  Undecided      0.01 % [0.09 0.71]
+##  Undecided      1.11 % [0.09 0.71]
 ```
 
 ### Probability of Direction (*p*d)
@@ -274,7 +274,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## # Bayes Factor (Savage-Dickey density ratio)
 ## 
 ##  Bayes Factor
-##          1.79
+##          1.77
 ## 
 ## * Evidence Against The Null: [0]
 ```
