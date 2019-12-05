@@ -50,9 +50,7 @@ with the fully unrestricted model. Note that this method should only be used for
  
 The bf_* function is an alias of the main function.
  
-For info on specifying correct priors for factors with more than 2 levels, see the Bayes factors vignette.
- 
-For more info, see the Bayes factors vignette." />
+For more info, in particular on specifying correct priors for factors with more than 2 levels, see the Bayes factors vignette." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -197,9 +195,7 @@ with the fully unrestricted model. <em>Note that this method should only be used
 <br /> <br />
 The <code>bf_*</code> function is an alias of the main function.
 <br /> <br />
-<strong>For info on specifying correct priors for factors with more than 2 levels, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</strong>
-<br /> <br />
-For more info, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
+<strong>For more info, in particular on specifying correct priors for factors with more than 2 levels, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</strong></p>
     </div>
 
     <pre class="usage"><span class='fu'>bayesfactor_restricted</span>(
@@ -280,7 +276,7 @@ Only applies to mixed models. May be abbreviated.</p></td>
 models by setting an order restriction on the prior and posterior distributions
 (<cite>Morey &amp; Wagenmakers, 2013</cite>).
 <br /><br />
-(Though it is possible to use <code>bayesfactor_restricted</code> to test interval restrictions,
+(Though it is possible to use <code>bayesfactor_restricted()</code> to test interval restrictions,
 it is more suitable for testing order restrictions; see examples).
 <br /><br />
 For the computation of Bayes factors, the model priors must be proper priors (at the very least
@@ -289,7 +285,7 @@ the alternative get wider, the likelihood of the null value(s) increases, to the
 flat priors the null is infinitely more favorable than the alternative (this is called <em>the Jeffreys-Lindley-Bartlett
 paradox</em>). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
 <br /><br />
-(Note that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm</a></code> uses falt priors for fixed-effects.)</p>
+(Note that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects.)</p>
 <h3>Setting the correct <code>prior</code></h3>
 <p>It is important to provide the correct <code>prior</code> for meaningful results.</p><ul>
 <li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
