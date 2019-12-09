@@ -8,7 +8,7 @@ print.bayesfactor_restricted <- function(x, digits = 2, log = FALSE, ...) {
 
   BFE$BF <- .format_big_small(BFE$BF, digits = digits)
 
-  colnames(BFE) <- c("Hypothesis", "P(Prior)", "P(Posterior)", "Bayes Factor")
+  colnames(BFE) <- c("Hypothesis", "P(Prior)", "P(Posterior)", "BF")
 
   insight::print_color("# Bayes Factor (Order-Restriction)\n\n", "blue")
 
