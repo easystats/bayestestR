@@ -10,7 +10,7 @@ print.bayesfactor_parameters <- function(x, digits = 2, log = FALSE, ...) {
 
   BFE$BF <- .format_big_small(BFE$BF, digits = digits)
 
-  colnames(BFE)[colnames(BFE) == "BF"] <- "Bayes Factor"
+  colnames(BFE)[colnames(BFE) == "BF"] <- "BF"
 
   if (length(null) == 1) {
     insight::print_color("# Bayes Factor (Savage-Dickey density ratio)\n\n", "blue")
