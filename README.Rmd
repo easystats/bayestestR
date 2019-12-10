@@ -42,8 +42,8 @@ Existing R packages allow users to easily fit a large variety of models and extr
 
 You can reference the package and its documentation as follows:
 
-- Makowski, D., Ben-Shachar, M. S., \& Lüdecke, D. (2019). *bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework*. Journal of Open Source Software, 4(40), 1541. https://doi.org/10.21105/joss.01541
-- Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., \& Lüdecke, D. (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*. Retrieved from https://doi.org/10.31234/osf.io/2zexr
+- Makowski, D., Ben-Shachar, M. S., \& Lüdecke, D. (2019). *bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework*. Journal of Open Source Software, 4(40), 1541. [10.21105/joss.01541](https://doi.org/10.21105/joss.01541)
+- Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., \& Lüdecke, D. (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*. Frontiers in Psychology 2019;10:2767. [10.3389/fpsyg.2019.02767](https://doi.org/10.3389/fpsyg.2019.02767)
 
 ## Installation
 

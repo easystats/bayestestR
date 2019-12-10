@@ -23,11 +23,12 @@ You can reference the package and its documentation as follows:
   - Makowski, D., Ben-Shachar, M. S., & Lüdecke, D. (2019). *bayestestR:
     Describing Effects and their Uncertainty, Existence and Significance
     within the Bayesian Framework*. Journal of Open Source Software,
-    4(40), 1541. <https://doi.org/10.21105/joss.01541>
+    4(40), 1541.
+    [10.21105/joss.01541](https://doi.org/10.21105/joss.01541)
   - Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., & Lüdecke, D.
     (2019). *Indices of Effect Existence and Significance in the
-    Bayesian Framework*. Retrieved from
-    <https://doi.org/10.31234/osf.io/2zexr>
+    Bayesian Framework*. Frontiers in Psychology 2019;10:2767.
+    [10.3389/fpsyg.2019.02767](https://doi.org/10.3389/fpsyg.2019.02767)
 
 ## Installation
 
@@ -91,9 +92,9 @@ cited below at once.
 ``` r
 describe_posterior(rnorm(1000))
 ##   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
-## 1 Posterior 0.0094 89   -1.6     1.7 0.50      89     -0.1       0.1
+## 1 Posterior  0.037 89   -1.5     1.7 0.52      89     -0.1       0.1
 ##   ROPE_Percentage
-## 1             0.1
+## 1           0.092
 ```
 
 ## Point-estimates
@@ -273,8 +274,8 @@ posterior <- rnorm(1000, mean = 1, sd = 0.7)
 bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## # Bayes Factor (Savage-Dickey density ratio)
 ## 
-##  Bayes Factor
-##          1.77
+##    BF
+##  2.04
 ## 
 ## * Evidence Against The Null: [0]
 ```
@@ -354,7 +355,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.42
+## [1] 0.35
 ```
 
 # References
