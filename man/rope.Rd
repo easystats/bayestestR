@@ -79,7 +79,8 @@ applies to \pkg{brms}-models.}
 Compute the proportion of the HDI (default to the 89\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 }
 \details{
-Statistically, the probability of a posterior distribution of being
+\subsection{ROPE}{
+  Statistically, the probability of a posterior distribution of being
   different from 0 does not make much sense (the probability of a single value
   null hypothesis in a continuous distribution is 0). Therefore, the idea
   underlining ROPE is to let the user define an area around the null value
@@ -97,9 +98,8 @@ Statistically, the probability of a posterior distribution of being
   (or 89\%, considered more stable) \link[=hdi]{HDI} that falls within the
   ROPE as an index for "null-hypothesis" testing (as understood under the
   Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
-  \cr \cr
-  \strong{ Sensitivity to parameter's scale}
-  \cr \cr
+}
+\subsection{Sensitivity to parameter's scale}{
   It is important to consider the unit (i.e., the scale) of the predictors
   when using an index based on the ROPE, as the correct interpretation of the
   ROPE as representing a region of practical equivalence to zero is dependent
@@ -107,9 +107,8 @@ Statistically, the probability of a posterior distribution of being
   the unit of its parameter. In other words, as the ROPE represents a fixed
   portion of the response's scale, its proximity with a coefficient depends
   on the scale of the coefficient itself.
-  \cr \cr
-  \strong{Multicollinearity: Non-independent covariates}
-  \cr \cr
+}
+\subsection{Multicollinearity: Non-independent covariates}{
   When parameters show strong correlations, i.e. when covariates are not
   independent, the joint parameter distributions may shift towards or
   away from the ROPE. Collinearity invalidates ROPE and hypothesis
@@ -125,6 +124,12 @@ Statistically, the probability of a posterior distribution of being
   a first step to check the assumptions of this hypothesis testing is to look
   at different pair plots. An even more sophisticated check is the projection
   predictive variable selection (\cite{Piironen and Vehtari 2017}).
+}
+\subsection{Strengths and Limitations}{
+  \strong{Strengths:} Provides information related to the practical relevance of the effects.
+  \cr \cr
+  \strong{Limitations:} A ROPE range needs to be arbitrarily defined. Sensitive to the scale (the unit) of the predictors. Not sensitive to highly significant effects.
+}
 }
 \examples{
 library(bayestestR)
@@ -152,7 +157,6 @@ bf <- ttestBF(x = rnorm(100, 1, 1))
 rope(bf)
 rope(bf, ci = c(.90, .95))
 }
-
 }
 \references{
 \itemize{
@@ -161,6 +165,7 @@ rope(bf, ci = c(.90, .95))
 \item Kruschke, J. K. (2011). Bayesian assessment of null values via parameter estimation and model comparison. Perspectives on Psychological Science, 6(3), 299-312. \doi{10.1177/1745691611406925}.
 \item Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press. \doi{10.1177/2515245918771304}.
 \item Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
+\item Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 \item Piironen, J., & Vehtari, A. (2017). Comparison of Bayesian predictive methods for model selection. Statistics and Computing, 27(3), 711–735. \doi{10.1007/s11222-016-9649-y}
 }
 }
