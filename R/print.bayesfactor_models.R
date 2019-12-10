@@ -18,7 +18,7 @@ print.bayesfactor_models <- function(x, digits = 2, log = FALSE, ...) {
   denM <- .trim(BFE$Model[denominator])
   BFE <- BFE[-denominator, ]
   BFE$Model <- format(BFE$Model)
-  colnames(BFE) <- c(format(" Model", width = max(nchar(BFE$Model))), "Bayes Factor")
+  colnames(BFE) <- c(format(" Model", width = max(nchar(BFE$Model))), "BF")
 
   insight::print_color("# Bayes Factors for Model Comparison\n\n", "blue")
 
