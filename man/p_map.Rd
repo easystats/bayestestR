@@ -61,6 +61,11 @@ Compute a Bayesian equivalent of the \emph{p}-value, related to the odds that a 
 }
 \details{
 Note that this method is sensitive to the density estimation \code{method} (see the secion in the examples below).
+\subsection{Strengths and Limitations}{
+\strong{Strengths:} Straightforward computation. Objective property of the posterior distribution.
+\cr \cr
+\strong{Limitations:} Limited information favoring the null hypothesis. Relates on density approximation. Indirect relationship between mathematical definition and interpretation.
+}
 }
 \examples{
 library(bayestestR)
@@ -105,10 +110,10 @@ summary(data$KernSmooth)
 summary(data$logspline)
 boxplot(data[c("KernSmooth", "logspline")])
 }
-
 }
 \references{
 \itemize{
+  \item Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
   \item Mills, J. A. (2018). Objective Bayesian Precise Hypothesis Testing. University of Cincinnati.
 }
 }
