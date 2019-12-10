@@ -260,11 +260,16 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Note that this method is sensitive to the density estimation <code>method</code> (see the secion in the examples below).</p>
+    <p>Note that this method is sensitive to the density estimation <code>method</code> (see the secion in the examples below).</p><h3>Strengths and Limitations</h3>
+<p><strong>Strengths:</strong> Straightforward computation. Objective property of the posterior distribution.
+<br /> <br />
+<strong>Limitations:</strong> Limited information favoring the null hypothesis. Relates on density approximation. Indirect relationship between mathematical definition and interpretation.</p>
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
 <ul>
+<li><p>Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. doi: <a href='https://doi.org/10.3389/fpsyg.2019.02767'>10.3389/fpsyg.2019.02767</a></p></li>
 <li><p>Mills, J. A. (2018). Objective Bayesian Precise Hypothesis Testing. University of Cincinnati.</p></li>
 </ul>
 
@@ -325,7 +330,6 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>data</span>$<span class='no'>KernSmooth</span>)</div><div class='output co'>#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
 #&gt; -0.039649 -0.007867 -0.003854 -0.005315 -0.001114  0.056255 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>data</span>$<span class='no'>logspline</span>)</div><div class='output co'>#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
 #&gt; -0.092188 -0.008938  0.022446  0.027466  0.069449  0.168656 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span>(<span class='no'>data</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"KernSmooth"</span>, <span class='st'>"logspline"</span>)])</div><div class='img'><img src='p_map-1.png' alt='' width='700' height='433' /></div><div class='input'># }
-
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -45,7 +45,7 @@
   
 
 <meta property="og:title" content="Region of Practical Equivalence (ROPE) — rope" />
-<meta property="og:description" content="Compute the proportion of the HDI (default to the 90% HDI) of a posterior distribution that lies within a region of practical equivalence." />
+<meta property="og:description" content="Compute the proportion of the HDI (default to the 89% HDI) of a posterior distribution that lies within a region of practical equivalence." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -185,7 +185,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Compute the proportion of the HDI (default to the 90% HDI) of a posterior distribution that lies within a region of practical equivalence.</p>
+    <p>Compute the proportion of the HDI (default to the 89% HDI) of a posterior distribution that lies within a region of practical equivalence.</p>
     </div>
 
     <pre class="usage"><span class='fu'>rope</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -283,7 +283,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Statistically, the probability of a posterior distribution of being
+    
+<h3>ROPE</h3>
+<p>Statistically, the probability of a posterior distribution of being
   different from 0 does not make much sense (the probability of a single value
   null hypothesis in a continuous distribution is 0). Therefore, the idea
   underlining ROPE is to let the user define an area around the null value
@@ -300,21 +302,17 @@ applies to <span class="pkg">brms</span>-models.</p></td>
   Kruschke (2010, 2011, 2014) suggests using the proportion of  the 95%
   (or 89%, considered more stable) <a href='hdi.html'>HDI</a> that falls within the
   ROPE as an index for "null-hypothesis" testing (as understood under the
-  Bayesian framework, see <code><a href='equivalence_test.html'>equivalence_test()</a></code>).
-  <br /> <br />
-  <strong> Sensitivity to parameter's scale</strong>
-  <br /> <br />
-  It is important to consider the unit (i.e., the scale) of the predictors
+  Bayesian framework, see <code><a href='equivalence_test.html'>equivalence_test()</a></code>).</p>
+<h3>Sensitivity to parameter's scale</h3>
+<p>It is important to consider the unit (i.e., the scale) of the predictors
   when using an index based on the ROPE, as the correct interpretation of the
   ROPE as representing a region of practical equivalence to zero is dependent
   on the scale of the predictors. Indeed, the percentage in ROPE depend on
   the unit of its parameter. In other words, as the ROPE represents a fixed
   portion of the response's scale, its proximity with a coefficient depends
-  on the scale of the coefficient itself.
-  <br /> <br />
-  <strong>Multicollinearity: Non-independent covariates</strong>
-  <br /> <br />
-  When parameters show strong correlations, i.e. when covariates are not
+  on the scale of the coefficient itself.</p>
+<h3>Multicollinearity: Non-independent covariates</h3>
+<p>When parameters show strong correlations, i.e. when covariates are not
   independent, the joint parameter distributions may shift towards or
   away from the ROPE. Collinearity invalidates ROPE and hypothesis
   testing based on univariate marginals, as the probabilities are conditional
@@ -329,6 +327,11 @@ applies to <span class="pkg">brms</span>-models.</p></td>
   a first step to check the assumptions of this hypothesis testing is to look
   at different pair plots. An even more sophisticated check is the projection
   predictive variable selection (<cite>Piironen and Vehtari 2017</cite>).</p>
+<h3>Strengths and Limitations</h3>
+<p><strong>Strengths:</strong> Provides information related to the practical relevance of the effects.
+  <br /> <br />
+  <strong>Limitations:</strong> A ROPE range needs to be arbitrarily defined. Sensitive to the scale (the unit) of the predictors. Not sensitive to highly significant effects.</p>
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -342,6 +345,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 .</p></li>
 <li><p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. doi: <a href='https://doi.org/10.1177/2515245918771304'>10.1177/2515245918771304</a>
 .</p></li>
+<li><p>Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. doi: <a href='https://doi.org/10.3389/fpsyg.2019.02767'>10.3389/fpsyg.2019.02767</a></p></li>
 <li><p>Piironen, J., &amp; Vehtari, A. (2017). Comparison of Bayesian predictive methods for model selection. Statistics and Computing, 27(3), 711–735. doi: <a href='https://doi.org/10.1007/s11222-016-9649-y'>10.1007/s11222-016-9649-y</a></p></li>
 </ul>
 
@@ -356,7 +360,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
 #&gt; </span><span> inside ROPE
-#&gt;       8.64 %
+#&gt;       7.74 %
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportion of samples inside the ROPE [-0.10, 0.10]:
 #&gt; 
 #&gt; </span><span> inside ROPE
@@ -366,19 +370,17 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 90% HDI:
 #&gt; 
 #&gt; </span><span> inside ROPE
-#&gt;       6.10 %
+#&gt;       6.33 %
 #&gt; 
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 95% HDI:
 #&gt; 
 #&gt; </span><span> inside ROPE
-#&gt;       5.78 %
+#&gt;       5.99 %
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The largest R-hat is 1.07, indicating chains have not mixed.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#r-hat</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
@@ -387,7 +389,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span>   Parameter inside ROPE
 #&gt;  (Intercept)      0.00 %
 #&gt;           wt      0.00 %
-#&gt;         gear     53.07 %
+#&gt;         gear     50.84 %
 #&gt; </div><div class='input'><span class='fu'>rope</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Proportions of samples inside the ROPE [-0.60, 0.60]:
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 90% HDI:
@@ -395,7 +397,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span>   Parameter inside ROPE
 #&gt;  (Intercept)      0.00 %
 #&gt;           wt      0.00 %
-#&gt;         gear     52.49 %
+#&gt;         gear     50.28 %
 #&gt; 
 #&gt; 
 #&gt; </span><span style='color: #00BBBB;'>ROPE for the 95% HDI:
@@ -403,7 +405,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; </span><span>   Parameter inside ROPE
 #&gt;  (Intercept)      0.00 %
 #&gt;           wt      0.00 %
-#&gt;         gear     49.74 %
+#&gt;         gear     47.64 %
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
