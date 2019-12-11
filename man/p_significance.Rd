@@ -3,8 +3,6 @@
 \name{p_significance}
 \alias{p_significance}
 \alias{p_significance.numeric}
-\alias{p_significance.data.frame}
-\alias{p_significance.MCMCglmm}
 \alias{p_significance.emmGrid}
 \alias{p_significance.stanreg}
 \alias{p_significance.brmsfit}
@@ -13,10 +11,6 @@
 p_significance(x, ...)
 
 \method{p_significance}{numeric}(x, threshold = "default", ...)
-
-\method{p_significance}{data.frame}(x, threshold = "default", ...)
-
-\method{p_significance}{MCMCglmm}(x, threshold = "default", ...)
 
 \method{p_significance}{emmGrid}(x, threshold = "default", ...)
 

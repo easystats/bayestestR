@@ -67,7 +67,6 @@ p_significance.numeric <- function(x, threshold = "default", ...) {
 }
 
 
-#' @rdname p_significance
 #' @export
 p_significance.data.frame <- function(x, threshold = "default", ...) {
   threshold <- .select_threshold_ps(x = x, threshold = threshold)
@@ -87,7 +86,7 @@ p_significance.data.frame <- function(x, threshold = "default", ...) {
   )
 
   attr(out, "threshold") <- threshold
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   class(out) <- unique(c("p_significance", "see_p_significance", class(out)))
 
   out
@@ -96,11 +95,20 @@ p_significance.data.frame <- function(x, threshold = "default", ...) {
 
 
 
-#' @rdname p_significance
 #' @export
 p_significance.MCMCglmm <- function(x, threshold = "default", ...) {
   nF <- x$Fixed$nfl
-  p_significance(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), threshold = threshold, ...)
+  out <- p_significance(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), threshold = threshold, ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+
+#' @export
+p_significance.BFBayesFactor <- function(x, threshold = "default", ...) {
+  out <- p_significance(insight::get_parameters(x), threshold = threshold, ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
 }
 
 
@@ -119,7 +127,7 @@ p_significance.emmGrid <- function(x, threshold = "default", ...) {
   xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
   out <- p_significance(xdf, threshold = threshold, ...)
 
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
