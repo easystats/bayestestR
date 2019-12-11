@@ -169,7 +169,7 @@ equivalence_test.data.frame <- function(x, range = "default", ci = .89, verbose 
   )
   row.names(out) <- NULL
 
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
 
   out
@@ -184,7 +184,7 @@ equivalence_test.emmGrid <- function(x, range = "default", ci = .89, verbose = T
   xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
 
   out <- equivalence_test(xdf, range = range, ci = ci, verbose = verbose, ...)
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
@@ -193,6 +193,7 @@ equivalence_test.emmGrid <- function(x, range = "default", ci = .89, verbose = T
 #' @export
 equivalence_test.BFBayesFactor <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
   out <- equivalence_test(insight::get_parameters(x), range = range, ci = ci, verbose = verbose, ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
@@ -241,7 +242,7 @@ equivalence_test.stanreg <- function(x, range = "default", ci = .89, effects = c
   out <- merge(out, insight::clean_parameters(x)[, c("Parameter", "Effects", "Cleaned_Parameter")], by = "Parameter", sort = FALSE)
 
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
@@ -256,7 +257,7 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .89, effects = c
   out <- merge(out, insight::clean_parameters(x)[, c("Parameter", "Effects", "Component", "Cleaned_Parameter")], by = "Parameter", sort = FALSE)
 
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
@@ -264,7 +265,7 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .89, effects = c
 #' @export
 equivalence_test.sim.merMod <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
   out <- .equivalence_test_models(x, range, ci, effects = "fixed", component = "conditional", parameters, verbose = FALSE)
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
@@ -275,6 +276,6 @@ equivalence_test.sim <- equivalence_test.sim.merMod
 #' @export
 equivalence_test.mcmc <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
   out <- .equivalence_test_models(as.data.frame(x), range, ci, effects = "fixed", component = "conditional", parameters, verbose = FALSE)
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
