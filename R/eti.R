@@ -60,7 +60,7 @@ eti.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
 #' @export
 eti.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "eti")
-  attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(dat, "object_name") <- .safe_deparse(substitute(x))
   dat
 }
 
@@ -72,7 +72,7 @@ eti.MCMCglmm <- function(x, ci = .89, verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
   d <- as.data.frame(x$Sol[, 1:nF, drop = FALSE])
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "eti")
-  attr(dat, "data") <- deparse(substitute(x), width.cutoff = 500)
+  attr(dat, "data") <- .safe_deparse(substitute(x))
   dat
 }
 
@@ -82,7 +82,7 @@ eti.MCMCglmm <- function(x, ci = .89, verbose = TRUE, ...) {
 eti.mcmc <- function(x, ci = .89, verbose = TRUE, ...) {
   d <- as.data.frame(x)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "eti")
-  attr(dat, "data") <- deparse(substitute(x), width.cutoff = 500)
+  attr(dat, "data") <- .safe_deparse(substitute(x))
   dat
 }
 
@@ -120,7 +120,7 @@ eti.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
   xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
 
   dat <- .compute_interval_dataframe(x = xdf, ci = ci, verbose = verbose, fun = "eti")
-  attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(dat, "object_name") <- .safe_deparse(substitute(x))
   dat
 }
 
@@ -137,7 +137,7 @@ eti.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"),
   )
 
   class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
@@ -156,7 +156,7 @@ eti.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"),
   )
 
   class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
@@ -165,7 +165,7 @@ eti.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"),
 #' @export
 eti.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
   out <- eti(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 

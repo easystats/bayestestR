@@ -196,6 +196,7 @@ rope.emmGrid <- function(x, range = "default", ci = .89, ci_method = "HDI", verb
 #' @export
 rope.BFBayesFactor <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
   out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
@@ -205,6 +206,7 @@ rope.BFBayesFactor <- function(x, range = "default", ci = .89, ci_method = "HDI"
 rope.MCMCglmm <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
   out <- rope(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
@@ -212,6 +214,8 @@ rope.MCMCglmm <- function(x, range = "default", ci = .89, ci_method = "HDI", ver
 #' @export
 rope.mcmc <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
   out <- rope(as.data.frame(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+  attr(out, "object_name") <- NULL
+  attr(out, "data") <- .safe_deparse(substitute(x))
   out
 }
 

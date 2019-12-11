@@ -114,7 +114,7 @@ hdi.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
 #' @export
 hdi.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "hdi")
-  attr(dat, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(dat, "object_name") <- .safe_deparse(substitute(x))
   dat
 }
 
@@ -136,7 +136,7 @@ hdi.MCMCglmm <- function(x, ci = .89, verbose = TRUE, ...) {
 hdi.mcmc <- function(x, ci = .89, verbose = TRUE, ...) {
   d <- as.data.frame(x)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
-  attr(dat, "data") <- deparse(substitute(x), width.cutoff = 500)
+  attr(dat, "data") <- .safe_deparse(substitute(x))
   dat
 }
 
@@ -173,7 +173,7 @@ hdi.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
   }
   xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
   out <- hdi(xdf, ci = ci, verbose = verbose, ...)
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
@@ -190,7 +190,7 @@ hdi.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"), para
     insight::clean_parameters(x)
   )
 
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
   out
 }
@@ -208,7 +208,7 @@ hdi.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"), comp
     insight::clean_parameters(x)
   )
 
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
   out
 }
@@ -218,7 +218,7 @@ hdi.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"), comp
 #' @export
 hdi.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
   out <- hdi(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
