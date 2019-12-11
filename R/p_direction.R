@@ -139,7 +139,7 @@ p_direction.data.frame <- function(x, method = "direct", ...) {
     stringsAsFactors = FALSE
   )
 
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
 
   out
@@ -150,7 +150,9 @@ p_direction.data.frame <- function(x, method = "direct", ...) {
 #' @export
 p_direction.MCMCglmm <- function(x, method = "direct", ...) {
   nF <- x$Fixed$nfl
-  p_direction(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), method = method, ...)
+  out <- p_direction(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), method = method, ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
 }
 
 
@@ -175,9 +177,7 @@ p_direction.emmGrid <- function(x, method = "direct", ...) {
 #' @importFrom insight get_parameters
 #' @keywords internal
 .p_direction_models <- function(x, effects, component, parameters, method = "direct", ...) {
-  out <- p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, ...)
-
-  out
+  p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, ...)
 }
 
 
@@ -225,7 +225,7 @@ p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parame
   )
 
   class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
@@ -242,7 +242,7 @@ p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), compon
   )
 
   class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 
@@ -251,7 +251,7 @@ p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), compon
 #' @export
 p_direction.BFBayesFactor <- function(x, method = "direct", ...) {
   out <- p_direction(insight::get_parameters(x), method = method, ...)
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
 

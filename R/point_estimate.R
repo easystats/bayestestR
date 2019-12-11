@@ -140,7 +140,7 @@ point_estimate.emmGrid <- function(x, centrality = "median", dispersion = FALSE,
   xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
 
   out <- point_estimate(xdf, centrality = centrality, dispersion = dispersion, ...)
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 
@@ -169,7 +169,7 @@ point_estimate.stanreg <- function(x, centrality = "median", dispersion = FALSE,
     insight::clean_parameters(x)
   )
 
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 
@@ -187,7 +187,7 @@ point_estimate.brmsfit <- function(x, centrality = "median", dispersion = FALSE,
     insight::clean_parameters(x)
   )
 
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 
@@ -241,7 +241,7 @@ point_estimate.sim <- function(x, centrality = "median", dispersion = FALSE, par
 #' @export
 point_estimate.BFBayesFactor <- function(x, centrality = "median", dispersion = FALSE, ...) {
   out <- point_estimate(insight::get_parameters(x), centrality = centrality, dispersion = dispersion, ...)
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
   attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 
