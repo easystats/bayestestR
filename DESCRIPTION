@@ -80,7 +80,8 @@ Suggests:
 	see,
 	stringr,
 	testthat,
-	tidyr
+	tidyr,
+	tweedie
 RoxygenNote: 7.0.2
 Language: en-GB
 VignetteBuilder: knitr
