@@ -145,6 +145,22 @@ distribution_beta <- function(n, shape1, shape2, ncp = 0, random = FALSE, ...) {
 
 
 #' @rdname distribution
+#' @inheritParams tweedie::rtweedie
+#' @export
+distribution_tweedie <- function(n, xi = NULL, mu, phi, power = NULL, random = FALSE, ...) {
+  if (!requireNamespace("tweedie", quietly = TRUE)) {
+    stop("Package 'tweedi' required for this function to work. Please install it.")
+  }
+
+  if (random) {
+    tweedie::rtweedie(n = n, xi = xi, mu = mu, phi = phi, power = power)
+  } else {
+    tweedie::qtweedie(p = seq(1 / n, 1 - 1 / n, length.out = n), xi = xi, mu = mu, phi = phi, power = power)
+  }
+}
+
+
+#' @rdname distribution
 #' @inheritParams stats::rgamma
 #' @importFrom stats rgamma qgamma
 #' @export
