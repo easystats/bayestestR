@@ -122,27 +122,23 @@ bayesfactor_restricted <- function(posterior, hypothesis, prior = NULL, verbose 
 #' @export
 bf_restricted <- bayesfactor_restricted
 
-#' @importFrom insight get_parameters
 #' @rdname bayesfactor_restricted
 #' @export
 bayesfactor_restricted.stanreg <- function(posterior, hypothesis, prior = NULL,
                                            verbose = TRUE,
                                            effects = c("fixed", "random", "all"),
+                                           component = c("conditional", "zi", "zero_inflated", "all"),
                                            ...) {
   effects <- match.arg(effects)
+  component <- match.arg(component)
 
-  # Get Priors
-  if (is.null(prior)) {
-    prior <- posterior
-  }
-
-  prior <- .update_to_priors(prior, verbose = verbose)
-  prior <- insight::get_parameters(prior, effects = effects)
-  posterior <- insight::get_parameters(posterior, effects = effects)
+  samps <- .clean_priors_and_posteriors(posterior, prior,
+                                        effects, component,
+                                        verbose = verbose)
 
   # Get savage-dickey BFs
   bayesfactor_restricted.data.frame(
-    posterior = posterior, prior = prior,
+    posterior = samps$posterior, prior = samps$prior,
     hypothesis = hypothesis
   )
 }
@@ -151,34 +147,16 @@ bayesfactor_restricted.stanreg <- function(posterior, hypothesis, prior = NULL,
 #' @export
 bayesfactor_restricted.brmsfit <- bayesfactor_restricted.stanreg
 
-#' @importFrom stats update
 #' @rdname bayesfactor_restricted
 #' @export
 bayesfactor_restricted.emmGrid <- function(posterior, hypothesis, prior = NULL,
                                            verbose = TRUE,
                                            ...) {
-  if (!requireNamespace("emmeans")) {
-    stop("Package \"emmeans\" needed for this function to work. Please install it.")
-  }
-
-  if (is.null(prior)) {
-    prior <- posterior
-    warning(
-      "Prior not specified! ",
-      "Please provide the original model to get meaningful results."
-    )
-  } else if (!inherits(prior, "emmGrid")) { # then is it a model
-    prior <- .update_to_priors(prior, verbose = verbose)
-    prior <- emmeans::ref_grid(prior)
-    prior <- prior@post.beta
-    prior <- stats::update(posterior, post.beta = prior)
-  }
-
-  prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(prior, names = FALSE)))
-  posterior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posterior, names = FALSE)))
+  samps <- .clean_priors_and_posteriors(posterior, prior,
+                                        verbose = verbose)
 
   bayesfactor_restricted.data.frame(
-    posterior = posterior, prior = prior,
+    posterior = samps$posterior, prior = samps$prior,
     hypothesis = hypothesis
   )
 }

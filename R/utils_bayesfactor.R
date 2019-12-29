@@ -1,3 +1,6 @@
+
+# .update_to_priors -------------------------------------------------------
+
 #' @keywords internal
 .update_to_priors <- function(model, verbose = TRUE) {
   UseMethod(".update_to_priors")
@@ -94,6 +97,62 @@
 }
 
 
+# clean priors and posteriors ---------------------------------------------
+
+#' @keywords internal
+.clean_priors_and_posteriors <- function(posterior, prior,
+                                         verbose = TRUE, ...) {
+  UseMethod(".clean_priors_and_posteriors")
+}
+
+#' @keywords internal
+#' @importFrom insight get_parameters
+.clean_priors_and_posteriors.stanreg <- function(posterior, prior,
+                                                 verbose = TRUE,
+                                                 effects, component) {
+  # Get Priors
+  if (is.null(prior)) {
+    prior <- posterior
+  }
+
+  prior <- .update_to_priors(prior, verbose = verbose)
+  prior <- insight::get_parameters(prior, effects = effects, component = component)
+  posterior <- insight::get_parameters(posterior, effects = effects, component = component)
+
+  list(posterior = posterior,
+       prior = prior)
+}
+
+#' @keywords internal
+.clean_priors_and_posteriors.brmsfit <- .clean_priors_and_posteriors.stanreg
+
+#' @keywords internal
+#' @importFrom stats update
+.clean_priors_and_posteriors.emmGrid <- function(posterior, prior,
+                                                 verbose = TRUE) {
+  if (!requireNamespace("emmeans")) {
+    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
+  }
+
+  if (is.null(prior)) {
+    prior <- posterior
+    warning(
+      "Prior not specified! ",
+      "Please provide the original model to get meaningful results."
+    )
+  } else if (!inherits(prior, "emmGrid")) { # then is it a model
+    prior <- .update_to_priors(prior, verbose = verbose)
+    prior <- emmeans::ref_grid(prior)
+    prior <- prior@post.beta
+    prior <- stats::update(posterior, post.beta = prior)
+  }
+
+  prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(prior, names = FALSE)))
+  posterior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posterior, names = FALSE)))
+
+  list(posterior = posterior,
+       prior = prior)
+}
 
 # As numeric vector -------------------------------------------------------
 
