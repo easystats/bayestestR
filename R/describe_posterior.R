@@ -365,6 +365,44 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
 }
 
 
+#' @inheritParams insight::get_parameters
+#' @inheritParams diagnostic_posterior
+#' @importFrom insight find_algorithm
+#' @param priors Add the prior used for each parameter.
+#' @rdname describe_posterior
+#' @export
+describe_posterior.stanmvreg <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = "p_direction", rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
+  out$Response <- gsub("^(.*)\\|(.*)", "\\1", out$Parameter)
+
+  if (!is.null(diagnostic)) {
+    model_algorithm <- insight::find_algorithm(posteriors)
+
+    if (model_algorithm$algorithm %in% c("fullrank", "meanfield")) {
+      insight::print_color("Model diagnostic not available for stanreg-models fitted with 'fullrank' or 'meanfield'-algorithm.\n", "red")
+    } else {
+      diagnostic <-
+        diagnostic_posterior(
+          posteriors,
+          diagnostic,
+          effects = effects,
+          parameters = parameters,
+          ...
+        )
+      out <- .merge_and_sort(out, diagnostic, by = c("Parameter", "Response"), all = TRUE)
+    }
+  }
+
+  if (isTRUE(priors)) {
+    priors_data <- describe_prior(posteriors, ...)
+    out <- .merge_and_sort(out, priors_data, by = c("Parameter", "Response"), all = TRUE)
+  }
+
+  class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
+  out
+}
+
+
 #' @inheritParams describe_posterior.stanreg
 #' @rdname describe_posterior
 #' @export

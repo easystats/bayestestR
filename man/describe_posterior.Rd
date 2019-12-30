@@ -4,6 +4,7 @@
 \alias{describe_posterior}
 \alias{describe_posterior.numeric}
 \alias{describe_posterior.stanreg}
+\alias{describe_posterior.stanmvreg}
 \alias{describe_posterior.MCMCglmm}
 \alias{describe_posterior.brmsfit}
 \alias{describe_posterior.BFBayesFactor}
@@ -41,6 +42,23 @@ describe_posterior(
   ci = 0.89,
   ci_method = "hdi",
   test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.89,
+  bf_prior = NULL,
+  diagnostic = c("ESS", "Rhat"),
+  priors = FALSE,
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  ...
+)
+
+\method{describe_posterior}{stanmvreg}(
+  posteriors,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.89,
+  ci_method = "hdi",
+  test = "p_direction",
   rope_range = "default",
   rope_ci = 0.89,
   bf_prior = NULL,

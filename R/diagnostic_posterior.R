@@ -83,6 +83,10 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
     insight::get_parameters(posteriors, effects = effects, parameters = parameters)
   )
 
+  if (inherits(posteriors, "stanmvreg")) {
+    diagnostic_df$Response <- gsub("^(.*)\\|(.*)", "\\1", diagnostic_df$Parameter)
+  }
+
   diagnostic_df[diagnostic_df$Parameter %in% params, ]
 }
 

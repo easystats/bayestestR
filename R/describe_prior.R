@@ -50,6 +50,10 @@ describe_prior <- function(model, ...) {
     priors$Prior_Adjusted_Scale <- NULL
   }
 
+  if ("Prior_Response" %in% names(priors)) {
+    names(priors)[names(priors) == "Prior_Response"] <- "Response"
+  }
+
   priors
 }
 

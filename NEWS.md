@@ -9,6 +9,7 @@
 - Support for *mcmc* objects (package **coda**)
 - Provide more distributions via `distribution()`.
 - Added `distribution_tweedie()`.
+- Better handling of `stanmvreg` models for `describe_posterior()`, `diagnostic_posterior()` and `describe_prior()`.
 
 ## Breaking changes
 
