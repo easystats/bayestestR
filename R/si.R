@@ -11,7 +11,8 @@
 #' @param posterior A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}
 #' or a data frame - representing a posterior distribution(s) from (see 'Details').
 #' @param prior An object representing a prior distribution (see 'Details').
-#' @param BF The amount of support required to be included in the interval.
+#' @param level The amount of support required to be included in the interval.
+#' @param ... Arguments passed to and from other methods.
 #' @inheritParams hdi
 #'
 #' @details This method is used to compute support intervals based on prior and posterior distributions.
@@ -36,17 +37,53 @@
 #'   }
 #' }}
 #'
+#' @examples
+#' library(bayestestR)
+#'
+#' prior <- distribution_normal(1000, mean = 0, sd = 1)
+#' posterior <- distribution_normal(1000, mean = .5, sd = .3)
+#'
+#' si(posterior, prior)
+#' \dontrun{
+#' # rstanarm models
+#' # ---------------
+#' library(rstanarm)
+#' contrasts(sleep$group) <- contr.bayes # see vingette
+#' stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
+#' si(stan_model)
+#' si(stan_model, level = 3)
+#'
+#' # emmGrid objects
+#' # ---------------
+#' library(emmeans)
+#' group_diff <- pairs(emmeans(stan_model, ~group))
+#' si(group_diff, prior = stan_model)
+#'
+#' # brms models
+#' # -----------
+#' library(brms)
+#' contrasts(sleep$group) <- contr.bayes # see vingette
+#' my_custom_priors <-
+#'   set_prior("student_t(3, 0, 1)", class = "b") +
+#'   set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")
+#'
+#' brms_model <- brm(extra ~ group + (1 | ID),
+#'   data = sleep,
+#'   prior = my_custom_priors
+#' )
+#' si(brms_model)
+#' }
 #' @references
 #' Wagenmakers, E., Gronau, Q. F., Dablander, F., & Etz, A. (2018, November 22). The Support Interval. \doi(10.31234/osf.io/zwnxb)
 #'
 #' @export
-si <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
+si <- function(posterior, prior = NULL, level = 1, verbose = TRUE, ...) {
   UseMethod("si")
 }
 
 #' @rdname si
 #' @export
-si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
+si.numeric <- function(posterior, prior = NULL, level = 1, verbose = TRUE, ...) {
 
   if (is.null(prior)) {
     prior <- posterior
@@ -64,7 +101,7 @@ si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
   # Get SIs
   out <- si.data.frame(
     posterior = posterior, prior = prior,
-    BF = BF, verbose = verbose, ...
+    level = level, verbose = verbose, ...
   )
   out$Parameter <- NULL
   out
@@ -74,7 +111,7 @@ si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
 #' @rdname si
 #' @export
 si.stanreg <- function(posterior, prior = NULL,
-                       BF = 1, verbose = TRUE,
+                       level = 1, verbose = TRUE,
                        effects = c("fixed", "random", "all"),
                        component = c("conditional", "zi", "zero_inflated", "all"),
                        ...) {
@@ -89,7 +126,7 @@ si.stanreg <- function(posterior, prior = NULL,
   # Get SIs
   temp <- si.data.frame(
     posterior = samps$posterior, prior = samps$prior,
-    BF = BF, verbose = verbose, ...
+    level = level, verbose = verbose, ...
   )
 
   out <- .prepare_output(temp, cleaned_parameters)
@@ -108,7 +145,7 @@ si.brmsfit <- si.stanreg
 #' @rdname si
 #' @export
 si.emmGrid <- function(posterior, prior = NULL,
-                       BF = 1, verbose = TRUE, ...) {
+                       level = 1, verbose = TRUE, ...) {
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
                                         verbose = verbose)
@@ -116,13 +153,13 @@ si.emmGrid <- function(posterior, prior = NULL,
   # Get SIs
   si.data.frame(
     posterior = samps$posterior, prior = samps$prior,
-    BF = BF, verbose = verbose, ...
+    level = level, verbose = verbose, ...
   )
 }
 
 #' @rdname si
 #' @export
-si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
+si.data.frame <- function(posterior, prior = NULL, level = 1, verbose = TRUE, ...){
 
   if (is.null(prior)) {
     prior <- posterior
@@ -137,22 +174,20 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
   for (par in seq_along(posterior)) {
     sis[par, ] <- .si(posterior[[par]],
                       prior[[par]],
-                      BF = BF)
+                      level = level, ...)
   }
 
-  out <- as.data.frame(cbind(colnames(posterior),BF,sis))
+  out <- as.data.frame(cbind(colnames(posterior),level,sis))
   colnames(out) <- c("Parameter","CI","CI_low","CI_high")
   class(out) <- unique(c("bayestestR_si", "see_si", "bayestestR_ci", "see_ci", class(out)))
 
   out
 }
 
-.si <- function(posterior, prior, BF = 1) {
+.si <- function(posterior, prior, level = 1, extend_scale = 0.05, precision = 2^8) {
   if (!requireNamespace("logspline")) {
     stop("Package \"logspline\" needed for this function to work. Please install it.")
   }
-  extend_scale <- 0.05
-  precision <- 2^8
 
   x <- c(prior, posterior)
   x_range <- range(x)
@@ -175,5 +210,5 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
 
   relative_d <- d_posterior / d_prior
 
-  range(x_axis[relative_d > BF])
+  range(x_axis[relative_d > level])
 }

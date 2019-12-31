@@ -9,14 +9,14 @@
 \alias{si.data.frame}
 \title{Compute Support Intervals}
 \usage{
-si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
+si(posterior, prior = NULL, level = 1, verbose = TRUE, ...)
 
-\method{si}{numeric}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
+\method{si}{numeric}(posterior, prior = NULL, level = 1, verbose = TRUE, ...)
 
 \method{si}{stanreg}(
   posterior,
   prior = NULL,
-  BF = 1,
+  level = 1,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
@@ -26,16 +26,16 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 \method{si}{brmsfit}(
   posterior,
   prior = NULL,
-  BF = 1,
+  level = 1,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
   ...
 )
 
-\method{si}{emmGrid}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
+\method{si}{emmGrid}(posterior, prior = NULL, level = 1, verbose = TRUE, ...)
 
-\method{si}{data.frame}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
+\method{si}{data.frame}(posterior, prior = NULL, level = 1, verbose = TRUE, ...)
 }
 \arguments{
 \item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}
@@ -43,11 +43,11 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
 
 \item{prior}{An object representing a prior distribution (see 'Details').}
 
-\item{BF}{The amount of support required to be included in the interval.}
+\item{level}{The amount of support required to be included in the interval.}
 
 \item{verbose}{Toggle off warnings.}
 
-\item{...}{Currently not used.}
+\item{...}{Arguments passed to and from other methods.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
@@ -87,6 +87,43 @@ It is important to provide the correct \code{prior} for meaningful results.
     \item \code{prior} can also be an \code{emmGrid} object equvilant to \code{posterior} but created with a model of priors samples \emph{only}.
   }
 }}
+}
+\examples{
+library(bayestestR)
+
+prior <- distribution_normal(1000, mean = 0, sd = 1)
+posterior <- distribution_normal(1000, mean = .5, sd = .3)
+
+si(posterior, prior)
+\dontrun{
+# rstanarm models
+# ---------------
+library(rstanarm)
+contrasts(sleep$group) <- contr.bayes # see vingette
+stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
+si(stan_model)
+si(stan_model, level = 3)
+
+# emmGrid objects
+# ---------------
+library(emmeans)
+group_diff <- pairs(emmeans(stan_model, ~group))
+si(group_diff, prior = stan_model)
+
+# brms models
+# -----------
+library(brms)
+contrasts(sleep$group) <- contr.bayes # see vingette
+my_custom_priors <-
+  set_prior("student_t(3, 0, 1)", class = "b") +
+  set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")
+
+brms_model <- brm(extra ~ group + (1 | ID),
+  data = sleep,
+  prior = my_custom_priors
+)
+si(brms_model)
+}
 }
 \references{
 Wagenmakers, E., Gronau, Q. F., Dablander, F., & Etz, A. (2018, November 22). The Support Interval. \doi(10.31234/osf.io/zwnxb)
