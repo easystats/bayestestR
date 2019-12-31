@@ -17,6 +17,10 @@ print.bayestestR_eti <- function(x, digits = 2, ...) {
   }
 }
 
+#' @export
+print.bayestestR_si <- function(x, digits = 2, ...) {
+  .print_hdi(x, digits, title = "Support Interval", ci_string = "SI", ...)
+}
 
 #' @export
 print.bayestestR_ci <- function(x, digits = 2, ...) {
@@ -49,12 +53,14 @@ print.bayestestR_ci <- function(x, digits = 2, ...) {
   if (length(ci) == 1) {
     xsub <- .remove_column(x, c("CI", "CI_low", "CI_high"))
     colnames(xsub)[ncol(xsub)] <- sprintf("%.5g%% %s", ci, ci_string)
+    if (inherits(x,"bayestestR_si")) colnames(xsub)[ncol(xsub)] <- sprintf("BF = %.5g %s", ci, ci_string)
     print_data_frame(xsub, digits = digits)
   } else {
     for (i in ci) {
       xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
       xsub <- .remove_column(xsub, c("CI", "CI_low", "CI_high"))
       colnames(xsub)[ncol(xsub)] <- sprintf("%.5g%% %s", i, ci_string)
+      if (inherits(x,"bayestestR_si")) colnames(xsub)[ncol(xsub)] <- sprintf("BF = %.5g %s", ci, ci_string)
       print_data_frame(xsub, digits = digits)
       cat("\n")
     }

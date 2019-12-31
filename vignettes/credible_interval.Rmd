@@ -121,4 +121,35 @@ This is not the case for skewed distributions. Indeed, it is possible that param
 
 On the other hand, the ETI range does change when transformations are applied to the distribution (for instance, for a log odds scale to probabilities): the lower and higher bounds of the transformed distribution will correspond to the transformed lower and higher bounds of the original distribution. On the contrary, applying transformations to the distribution will change the resulting HDI.
 
+# The Support Interval
+
+Unlike the HDI and the ETI, which look at the posterior distribution, the **Support Interval (SI)** provides information regarding the change in the credability of values from the prior to the posterior - in other words, it indicates which values of a parameter are have gained support by the observed data by some factor ≥ *k* [@wagenmakers2018SI].
+
+```{r warning=FALSE, message=FALSE}
+prior <- distribution_normal(1000, mean = 0, sd = 1)
+posterior <- distribution_normal(1000, mean = .5, sd = .3)
+
+si_1 <- si(posterior, prior, BF = 1)
+si_3 <- si(posterior, prior, BF = 3)
+
+ggplot(mapping = aes(x=x, y=y)) +
+  theme_classic() +
+  # The posterior
+  geom_area(fill = "orange",
+            data = estimate_density(posterior, extend = TRUE)) +
+  # The prior
+  geom_area(color = "black", fill = NA, size = 1, linetype = "dashed",
+            data = estimate_density(prior, extend = TRUE)) +
+  # BF = 1 SI in blue
+  geom_vline(xintercept=si_1$CI_low, color="royalblue", size=1) +
+  geom_vline(xintercept=si_1$CI_high, color="royalblue", size=1) +
+  # BF = 3 SI in red
+  geom_vline(xintercept=si_3$CI_low, color="red", size=1) +
+  geom_vline(xintercept=si_3$CI_high, color="red", size=1)
+```
+
+Between the blue lines are values the recived *some* support by the data (this is a BF = 1 SI), which received at least "moderate" support from the data.
+
+From the presepctive of the Savage-Dickey Bayes factor, testing against a point null hypothesis for any value within the support interval will yeild a Bayes factor smaller than 1/`BF`. 
+
 # References

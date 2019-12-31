@@ -2,6 +2,7 @@
 
 ## General
 
+- Added `si()` function to compute support intervals.
 - Added `plot()`-method for `p_significance()`.
 - `p_significance()` now also works for *brmsfit*-objects.
 - `estimate_density()` now also works for *MCMCglmm*-objects.

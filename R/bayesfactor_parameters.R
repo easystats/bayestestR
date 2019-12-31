@@ -198,7 +198,7 @@ bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = 
 }
 
 
-#' @importFrom insight get_parameters clean_parameters
+#' @importFrom insight clean_parameters
 #' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_parameters.stanreg <- function(posterior,
@@ -209,22 +209,17 @@ bayesfactor_parameters.stanreg <- function(posterior,
                                            effects = c("fixed", "random", "all"),
                                            component = c("conditional", "zi", "zero_inflated", "all"),
                                            ...) {
+  cleaned_parameters <- insight::clean_parameters(posterior)
   effects <- match.arg(effects)
   component <- match.arg(component)
-  cleaned_parameters <- insight::clean_parameters(posterior)
 
-  # Get Priors
-  if (is.null(prior)) {
-    prior <- posterior
-  }
-
-  prior <- .update_to_priors(prior, verbose = verbose)
-  prior <- insight::get_parameters(prior, effects = effects, component = component)
-  posterior <- insight::get_parameters(posterior, effects = effects, component = component)
+  samps <- .clean_priors_and_posteriors(posterior, prior,
+                                        verbose = verbose,
+                                        effects = effects, component = component)
 
   # Get BFs
   temp <- bayesfactor_parameters.data.frame(
-    posterior = posterior, prior = prior,
+    posterior = samps$posterior, prior = samps$prior,
     direction = direction, null = null, ...
   )
 
@@ -246,7 +241,6 @@ bayesfactor_parameters.brmsfit <- bayesfactor_parameters.stanreg
 
 
 
-#' @importFrom stats update
 #' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_parameters.emmGrid <- function(posterior,
@@ -255,29 +249,13 @@ bayesfactor_parameters.emmGrid <- function(posterior,
                                            null = 0,
                                            verbose = TRUE,
                                            ...) {
-  if (!requireNamespace("emmeans")) {
-    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
-  }
 
-  if (is.null(prior)) {
-    prior <- posterior
-    warning(
-      "Prior not specified! ",
-      "Please provide the original model to get meaningful results."
-    )
-  } else if (!inherits(prior, "emmGrid")) { # then is it a model
-    prior <- .update_to_priors(prior, verbose = verbose)
-    prior <- emmeans::ref_grid(prior)
-    prior <- prior@post.beta
-    prior <- stats::update(posterior, post.beta = prior)
-  }
-
-  prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(prior, names = FALSE)))
-  posterior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posterior, names = FALSE)))
+  samps <- .clean_priors_and_posteriors(posterior, prior,
+                                        verbose = verbose)
 
   # Get BFs
   bayesfactor_parameters.data.frame(
-    posterior = posterior, prior = prior,
+    posterior = samps$posterior, prior = samps$prior,
     direction = direction, null = null, ...
   )
 }
