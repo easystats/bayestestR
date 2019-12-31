@@ -212,6 +212,10 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
     stop("Package \"logspline\" needed for this function to work. Please install it.")
   }
 
+  if (isTRUE(all.equal(prior, posterior))) {
+    return(c(NA,NA))
+  }
+
   x <- c(prior, posterior)
   x_range <- range(x)
   x_rangex <- stats::median(x) + 7 * stats::mad(x) * c(-1, 1)
