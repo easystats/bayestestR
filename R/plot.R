@@ -61,7 +61,7 @@ plot.bayestestR_eti <- function(x, ...) {
 }
 
 #' @export
-plot.bayestestR_eti <- function(x, ...) {
+plot.bayestestR_si <- function(x, ...) {
   # if (!requireNamespace("see", quietly = TRUE)) {
   #   stop("Package 'see' needed to plot credible intervals. Please install it by running `install.packages('see')`.")
   # }
