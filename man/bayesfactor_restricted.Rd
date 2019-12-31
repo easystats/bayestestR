@@ -24,6 +24,7 @@ bf_restricted(posterior, hypothesis, prior = NULL, verbose = TRUE, ...)
   prior = NULL,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
   ...
 )
 
@@ -33,6 +34,7 @@ bf_restricted(posterior, hypothesis, prior = NULL, verbose = TRUE, ...)
   prior = NULL,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
   ...
 )
 
@@ -57,6 +59,10 @@ bf_restricted(posterior, hypothesis, prior = NULL, verbose = TRUE, ...)
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
+
+\item{component}{Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the model be returned? May be abbreviated. Only
+applies to \pkg{brms}-models.}
 }
 \value{
 A data frame containing the Bayes factor representing evidence \emph{against} the un-restricted model.
