@@ -9,14 +9,14 @@
 \alias{si.data.frame}
 \title{Compute Support Intervals}
 \usage{
-si(posterior, prior = NULL, level = 1, verbose = TRUE, ...)
+si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 
-\method{si}{numeric}(posterior, prior = NULL, level = 1, verbose = TRUE, ...)
+\method{si}{numeric}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 
 \method{si}{stanreg}(
   posterior,
   prior = NULL,
-  level = 1,
+  BF = 1,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
@@ -26,16 +26,16 @@ si(posterior, prior = NULL, level = 1, verbose = TRUE, ...)
 \method{si}{brmsfit}(
   posterior,
   prior = NULL,
-  level = 1,
+  BF = 1,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
   ...
 )
 
-\method{si}{emmGrid}(posterior, prior = NULL, level = 1, verbose = TRUE, ...)
+\method{si}{emmGrid}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 
-\method{si}{data.frame}(posterior, prior = NULL, level = 1, verbose = TRUE, ...)
+\method{si}{data.frame}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 }
 \arguments{
 \item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}
@@ -43,7 +43,7 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
 
 \item{prior}{An object representing a prior distribution (see 'Details').}
 
-\item{level}{The amount of support required to be included in the interval.}
+\item{BF}{The amount of support required to be included in the interval.}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -56,11 +56,18 @@ Only applies to mixed models. May be abbreviated.}
 or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
+\value{
+A data frame containing the lower and upper bounds of the SI.
+\cr
+Note that if the level of requested support is higher than observed in the data, the
+interval will be \code{[NA,NA]}.
+}
 \description{
-A support interval at contains only the values for the parameter predicts the observed data better
-than average, by some degree \emph{k}. From the presepctive of the Savage-Dickey Bayes factor, testing
-against a point null hypothesis for any value within the support interval will yeild a Bayes factor larger
-than \emph{k}.
+A support interval contains only the values of the parameter that predict the observed data better
+than average, by some degree \emph{k}; these are values of the parameter that are associated with an
+updating factor ≥ \emph{k}. From the presepctive of the Savage-Dickey Bayes factor, testing
+against a point null hypothesis for any value within the support interval will yeild a Bayes factor smaller
+than \emph{1/k}.
 \cr \cr
 \strong{For more info, in particular on specifying correct priors for factors with more than 2 levels,
 see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
@@ -87,6 +94,17 @@ It is important to provide the correct \code{prior} for meaningful results.
     \item \code{prior} can also be an \code{emmGrid} object equvilant to \code{posterior} but created with a model of priors samples \emph{only}.
   }
 }}
+
+\subsection{Choosing a value of \code{BF}}{
+The choice of \code{BF} (the level of support) depends on what we want our interval to represent:
+\itemize{
+  \item A \code{BF} = 1 contains values whose credibility is not decreased by observing the data.
+  \item A \code{BF} > 1 contains values who recived more impressive support from the data.
+  \item A \code{BF} < 1 contains values whose credibility has not been impressive decreased by observing the data.
+  These are also values who, if tested agaisnt would produce a Bayes factor larger than 1/\code{BF} in support of
+  the alternative. E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null will be larger than 3.
+}
+}
 }
 \examples{
 library(bayestestR)
@@ -102,7 +120,7 @@ library(rstanarm)
 contrasts(sleep$group) <- contr.bayes # see vingette
 stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 si(stan_model)
-si(stan_model, level = 3)
+si(stan_model, BF = 3)
 
 # emmGrid objects
 # ---------------
