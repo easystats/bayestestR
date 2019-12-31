@@ -149,6 +149,7 @@ si.stanreg <- function(posterior, prior = NULL,
 
   out <- .prepare_output(temp, cleaned_parameters)
 
+  attr(out, "object_name") <- .safe_deparse(substitute(posterior))
   class(out) <- class(temp)
 
   out
@@ -169,10 +170,13 @@ si.emmGrid <- function(posterior, prior = NULL,
                                         verbose = verbose)
 
   # Get SIs
-  si.data.frame(
+  out <- si.data.frame(
     posterior = samps$posterior, prior = samps$prior,
     BF = BF, verbose = verbose, ...
   )
+
+  attr(out, "object_name") <- .safe_deparse(substitute(posterior))
+  out
 }
 
 #' @rdname si
@@ -238,7 +242,7 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
   relative_d <- d_posterior / d_prior
 
   x_supported <- x_axis[relative_d >= BF]
-  if (length(x_supported)<2) {
+  if (length(x_supported) < 2) {
     return(c(NA,NA))
   } else {
     range(range(x_supported))
