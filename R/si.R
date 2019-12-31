@@ -150,6 +150,7 @@ si.stanreg <- function(posterior, prior = NULL,
   out <- .prepare_output(temp, cleaned_parameters)
 
   class(out) <- class(temp)
+  attr(out, "plot_data") <- attr(temp, "plot_data")
 
   out
 }
@@ -203,6 +204,7 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
     stringsAsFactors = FALSE
   )
   class(out) <- unique(c("bayestestR_si", "see_si", "bayestestR_ci", "see_ci", class(out)))
+  attr(out, "plot_data") <- .make_BF_plot_data(posterior,prior,0,0)$plot_data
 
   out
 }
