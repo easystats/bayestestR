@@ -21,6 +21,8 @@ test_that("si.numeric", {
 
 test_that("si.rstanarm", {
   testthat::skip_on_cran()
+  testthat::skip_on_travis()
+
   set.seed(333)
   library(rstanarm)
   contrasts(sleep$group) <- contr.bayes # see vingette
