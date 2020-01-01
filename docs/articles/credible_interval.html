@@ -228,6 +228,34 @@
 <p>This is not the case for skewed distributions. Indeed, it is possible that parameter values in the ETI have lower credibility (are less probable) than parameter values outside the ETI. This property seems undesirable as a summary of the credible values in a distribution.</p>
 <p>On the other hand, the ETI range does change when transformations are applied to the distribution (for instance, for a log odds scale to probabilities): the lower and higher bounds of the transformed distribution will correspond to the transformed lower and higher bounds of the original distribution. On the contrary, applying transformations to the distribution will change the resulting HDI.</p>
 </div>
+<div id="the-support-interval" class="section level1">
+<h1 class="hasAnchor">
+<a href="#the-support-interval" class="anchor"></a>The Support Interval</h1>
+<p>Unlike the HDI and the ETI, which look at the posterior distribution, the <strong>Support Interval (SI)</strong> provides information regarding the change in the credability of values from the prior to the posterior - in other words, it indicates which values of a parameter are have gained support by the observed data by some factor ≥ <em>k</em> <span class="citation">(Wagenmakers, Gronau, Dablander, &amp; Etz, 2018)</span>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">prior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_normal</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2">posterior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_normal</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="fl">.5</span>, <span class="dt">sd =</span> <span class="fl">.3</span>)</a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4">si_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/si.html">si</a></span>(posterior, prior, <span class="dt">BF =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb3-5" title="5">si_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/si.html">si</a></span>(posterior, prior, <span class="dt">BF =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb3-6" title="6"></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="st">  </span><span class="co"># The posterior</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">fill =</span> <span class="st">"orange"</span>,</a>
+<a class="sourceLine" id="cb3-11" title="11">            <span class="dt">data =</span> <span class="kw"><a href="../reference/estimate_density.html">estimate_density</a></span>(posterior, <span class="dt">extend =</span> <span class="ot">TRUE</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="st">  </span><span class="co"># The prior</span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">color =</span> <span class="st">"black"</span>, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>,</a>
+<a class="sourceLine" id="cb3-14" title="14">            <span class="dt">data =</span> <span class="kw"><a href="../reference/estimate_density.html">estimate_density</a></span>(prior, <span class="dt">extend =</span> <span class="ot">TRUE</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="st">  </span><span class="co"># BF = 1 SI in blue</span></a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>si_<span class="dv">1</span><span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>si_<span class="dv">1</span><span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="st">  </span><span class="co"># BF = 3 SI in red</span></a>
+<a class="sourceLine" id="cb3-19" title="19"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>si_<span class="dv">3</span><span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>si_<span class="dv">3</span><span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>)</a></code></pre></div>
+<p><img src="credible_interval_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p>Between the blue lines are values the recived <em>some</em> support by the data (this is a BF = 1 SI), which received at least “moderate” support from the data.</p>
+<p>From the presepctive of the Savage-Dickey Bayes factor, testing against a point null hypothesis for any value within the support interval will yeild a Bayes factor smaller than 1/<code>BF</code>.</p>
+</div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
@@ -237,6 +265,9 @@
 </div>
 <div id="ref-mcelreath2018statistical">
 <p>McElreath, R. (2018). <em>Statistical rethinking: A bayesian course with examples in r and stan</em>. Chapman; Hall/CRC.</p>
+</div>
+<div id="ref-wagenmakers2018SI">
+<p>Wagenmakers, E.-J., Gronau, Q. F., Dablander, F., &amp; Etz, A. (2018). <em>The support interval</em>. <a href="https://doi.org/10.31234/osf.io/zwnxb">https://doi.org/10.31234/osf.io/zwnxb</a></p>
 </div>
 </div>
 </div>
@@ -251,6 +282,7 @@
 <li><a href="#what-is-a-credible-interval">What is a <em>Credible</em> Interval?</a></li>
       <li><a href="#why-is-the-default-89">Why is the default 89%?</a></li>
       <li><a href="#different-types-of-cis">Different types of CIs</a></li>
+      <li><a href="#the-support-interval">The Support Interval</a></li>
       <li><a href="#references">References</a></li>
       </ul>
 </div>
