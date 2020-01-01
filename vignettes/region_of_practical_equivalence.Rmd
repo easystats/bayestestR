@@ -54,7 +54,7 @@ The ROPE, being a region corresponding to a "null" hypothesis, is used for the *
 
 Using the ROPE and the HDI as Credible Interval, Kruschke (2018) suggests using the percentage of the 95\% HDI that falls within the ROPE as a decision rule. However, as the 89\% HDI [is considered a better choice](https://easystats.github.io/bayestestR/articles/credible_interval.html) [@kruschke2014doing; @mcelreath2014rethinking; @mcelreath2018statistical], `bayestestR` provides by default the percentage of the 89\% HDI that falls within the ROPE.
 
-However, [*preliminary data*](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html) tend to suggest that using the percentage of the full posterior distribution, instead of a CI, might be more sensitive (especially do delineate highly significant effects). Thus, we recommend that the user considers using the ***full* ROPE** percentage (by setting `ci = 1`), which will return the portion of the entire posterior distribution in the ROPE.
+However, [*simulation studies data*](https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full) suggest that using the percentage of the full posterior distribution, instead of a CI, might be more sensitive (especially do delineate highly significant effects). Thus, we recommend that the user considers using the ***full* ROPE** percentage (by setting `ci = 1`), which will return the portion of the entire posterior distribution in the ROPE.
 
 # What percentage in ROPE to accept or to reject?
 

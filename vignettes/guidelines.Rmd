@@ -41,7 +41,7 @@ This vignette can be referred to by citing the package:
 
 A Bayesian analysis returns a posterior distribution for each parameter (or *effect*). To minimally describe these distributions, we recommend reporting a point-estimate of [centrality](https://en.wikipedia.org/wiki/Central_tendency) as well as information characterizing the estimation uncertainty (the [dispersion](https://en.wikipedia.org/wiki/Statistical_dispersion)). Additionally, one can also report indices of effect existence and/or significance.
 
-Based on the previous [**comparison of point-estimates**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html) and [**indices of effect existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html), we can draw the following recommendations.
+Based on the previous [**comparison of point-estimates**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html) and [**indices of effect existence**](https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full), we can draw the following recommendations.
 
 #### **Centrality**
 
@@ -69,7 +69,7 @@ Moreover, it is strongly correlated with the frequentist ***p*-value**, and can 
 
 #### **Significance** 
 
-The percentage in **ROPE** is a index of **significance** (in its primary meaning), informing us whether a parameter is related - or not - to a non-negligible change (in terms of magnitude) in the outcome. We suggest reporting the **percentage of the full posterior distribution** (the *full* ROPE) instead of a given proportion of CI, in the ROPE, which appears as more sensitive (especially to delineate highly significant effects). Rather than using it as a binary, all-or-nothing decision criterion, such as suggested by the original [equivalence test](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html#equivalence-test), we recommend using the percentage as a continuous index of significance. However, based on [simulation data](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html), we suggest the following reference values as an interpretation helpers:
+The percentage in **ROPE** is a index of **significance** (in its primary meaning), informing us whether a parameter is related - or not - to a non-negligible change (in terms of magnitude) in the outcome. We suggest reporting the **percentage of the full posterior distribution** (the *full* ROPE) instead of a given proportion of CI, in the ROPE, which appears as more sensitive (especially to delineate highly significant effects). Rather than using it as a binary, all-or-nothing decision criterion, such as suggested by the original [equivalence test](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html#equivalence-test), we recommend using the percentage as a continuous index of significance. However, based on [simulation data](https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full), we suggest the following reference values as an interpretation helpers:
 
 
   - **\> 99\%** in ROPE: negligible (we can accept the null hypothesis)

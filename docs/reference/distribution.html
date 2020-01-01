@@ -151,7 +151,7 @@
       <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
     </li>
     <li>
-      <a href="../articles/indicesExistenceComparison.html">Comparison of Indices of Effect Existence</a>
+      <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full">Comparison of Indices of Effect Existence</a>
     </li>
   </ul>
 </li>
@@ -205,6 +205,8 @@
 <span class='fu'>distribution_uniform</span>(<span class='no'>n</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>distribution_beta</span>(<span class='no'>n</span>, <span class='no'>shape1</span>, <span class='no'>shape2</span>, <span class='kw'>ncp</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='fu'>distribution_tweedie</span>(<span class='no'>n</span>, <span class='kw'>xi</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>mu</span>, <span class='no'>phi</span>, <span class='kw'>power</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>distribution_gamma</span>(<span class='no'>n</span>, <span class='no'>shape</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>random</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
@@ -288,6 +290,23 @@
     <tr>
       <th>shape2</th>
       <td><p>non-negative parameters of the Beta distribution.</p></td>
+    </tr>
+    <tr>
+      <th>xi</th>
+      <td><p>the value of \(\xi\) such that the variance is 
+	\(\mbox{var}[Y]=\phi\mu^{\xi}\)</p></td>
+    </tr>
+    <tr>
+      <th>mu</th>
+      <td><p>the mean</p></td>
+    </tr>
+    <tr>
+      <th>phi</th>
+      <td><p>the dispersion</p></td>
+    </tr>
+    <tr>
+      <th>power</th>
+      <td><p>a synonym for \(\xi\)</p></td>
     </tr>
     <tr>
       <th>shape</th>
