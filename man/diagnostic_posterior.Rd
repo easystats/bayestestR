@@ -39,10 +39,12 @@ or both be returned? Only applies to mixed models. May be abbreviated.}
 should be returned.}
 
 \item{component}{Should all parameters, parameters for the
-conditional model, the zero-inflated part of the model, the dispersion
-term or the instrumental variables be returned? Applies to models
-with zero-inflated and/or dispersion formula, or to models with instrumental
-variable (so called fixed-effects regressions). May be abbreviated.}
+ conditional model, the zero-inflated part of the model, the dispersion
+ term or the instrumental variables be returned? Applies to models
+ with zero-inflated and/or dispersion formula, or to models with instrumental
+ variable (so called fixed-effects regressions). May be abbreviated. Note that the
+\emph{conditional} component is also called \emph{count} or \emph{mean}
+component, depending on the model.}
 }
 \description{
 Extract diagnostic metrics (Effective Sample Size (\code{ESS}), \code{Rhat} and Monte Carlo Standard Error \code{MCSE}).
