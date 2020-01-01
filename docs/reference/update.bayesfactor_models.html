@@ -223,17 +223,17 @@
 <span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bayesfactor_models.html'>bayesfactor_models</a></span>(<span class='no'>lmer1</span>, <span class='no'>lmer2</span>, <span class='no'>lmer3</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>m</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
-#&gt; </span><span>  Model                                                           Bayes Factor
-#&gt;   [2] Petal.Length + (Petal.Length | Species)                             0.06
-#&gt;   [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)     4.72e-03
+#&gt; </span><span>  Model                                                                 BF
+#&gt;   [2] Petal.Length + (Petal.Length | Species)                         0.06
+#&gt;   [3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width) 4.72e-03
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] Petal.Length + (1 | Species)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='no'>m</span>, <span class='kw'>reference</span> <span class='kw'>=</span> <span class='st'>"bottom"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
-#&gt; </span><span>  Model                                       Bayes Factor
-#&gt;   [1] Petal.Length + (1 | Species)                   211.7
-#&gt;   [2] Petal.Length + (Petal.Length | Species)        12.25
+#&gt; </span><span>  Model                                          BF
+#&gt;   [1] Petal.Length + (1 | Species)            211.7
+#&gt;   [2] Petal.Length + (Petal.Length | Species) 12.25
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[3] Petal.Length + (Petal.Length | Species) + (1 | Petal.Width)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div></span></pre>

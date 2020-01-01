@@ -275,8 +275,8 @@ or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.<
 
 <span class='fu'>bayesfactor</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: logspline</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
 #&gt; 
-#&gt; </span><span> Bayes Factor
-#&gt;          1.23
+#&gt; </span><span>   BF
+#&gt;  1.23
 #&gt; 
 #&gt; * Evidence Against The Null: </span><span style='color: #00BBBB;'>[0]
 #&gt; </span><span></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -296,9 +296,9 @@ or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.<
 <span class='no'>comparison</span> <span class='kw'>&lt;-</span> <span class='fu'>bayesfactor</span>(<span class='no'>m0</span>, <span class='no'>m1</span>, <span class='no'>m2</span>)
 <span class='no'>comparison</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
-#&gt; </span><span>  Model          Bayes Factor
-#&gt;   [2] group               1.3
-#&gt;   [3] group + ID     1.12e+04
+#&gt; </span><span>  Model                BF
+#&gt;   [2] group           1.3
+#&gt;   [3] group + ID 1.12e+04
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bayes Factors (BF) for a Single Parameter — bayesfactor_parameters • bayestestR</title>
+<title>Compute Support Intervals — si • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,25 +44,15 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Bayes Factors (BF) for a Single Parameter — bayesfactor_parameters" />
-<meta property="og:description" content="This method computes Bayes factors against the null (either a point or an interval),
-based on prior and posterior samples of a single parameter. This Bayes factor indicates
-the degree by which the mass of the posterior distribution has shifted further away
-from or closer to the null value(s) (relative to the prior distribution), thus indicating
-if the null value has become less or more likely given the observed data.
+<meta property="og:title" content="Compute Support Intervals — si" />
+<meta property="og:description" content="A support interval contains only the values of the parameter that predict the observed data better
+than average, by some degree k; these are values of the parameter that are associated with an
+updating factor ≥ k. From the presepctive of the Savage-Dickey Bayes factor, testing
+against a point null hypothesis for any value within the support interval will yeild a Bayes factor smaller
+than 1/k.
  
-When the null is an interval, the Bayes factor is computed by comparing the prior
-and posterior odds of the parameter falling within or outside the null interval;
-When the null is a point, a Savage-Dickey density ratio is computed, which is also
-an approximation of a Bayes factor comparing the marginal likelihoods of the model
-against a model in which the tested parameter has been restricted to the point null.
- 
-bayesfactor_pointnull() and bayesfactor_rope() are wrappers around
-bayesfactor_parameters with different defaults for the null to be tested against
-(a point and a range, respectively). Aliases of the main functions are prefixed
-with bf_*, like bf_parameters() or bf_pointnull()
- 
-For more info, in particular on specifying correct priors for factors with more than 2 levels, see the Bayes factors vignette." />
+For more info, in particular on specifying correct priors for factors with more than 2 levels,
+see the Bayes factors vignette." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -196,102 +186,32 @@ For more info, in particular on specifying correct priors for factors with more 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Bayes Factors (BF) for a Single Parameter</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/bayesfactor_parameters.R'><code>R/bayesfactor_parameters.R</code></a></small>
-    <div class="hidden name"><code>bayesfactor_parameters.Rd</code></div>
+    <h1>Compute Support Intervals</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/si.R'><code>R/si.R</code></a></small>
+    <div class="hidden name"><code>si.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This method computes Bayes factors against the null (either a point or an interval),
-based on prior and posterior samples of a single parameter. This Bayes factor indicates
-the degree by which the mass of the posterior distribution has shifted further away
-from or closer to the null value(s) (relative to the prior distribution), thus indicating
-if the null value has become less or more likely given the observed data.
+    <p>A support interval contains only the values of the parameter that predict the observed data better
+than average, by some degree <em>k</em>; these are values of the parameter that are associated with an
+updating factor ≥ <em>k</em>. From the presepctive of the Savage-Dickey Bayes factor, testing
+against a point null hypothesis for any value within the support interval will yeild a Bayes factor smaller
+than <em>1/k</em>.
 <br /> <br />
-When the null is an interval, the Bayes factor is computed by comparing the prior
-and posterior odds of the parameter falling within or outside the null interval;
-When the null is a point, a Savage-Dickey density ratio is computed, which is also
-an approximation of a Bayes factor comparing the marginal likelihoods of the model
-against a model in which the tested parameter has been restricted to the point null.
-<br /> <br />
-<code>bayesfactor_pointnull()</code> and <code>bayesfactor_rope()</code> are wrappers around
-<code>bayesfactor_parameters</code> with different defaults for the null to be tested against
-(a point and a range, respectively). Aliases of the main functions are prefixed
-with <code>bf_*</code>, like <code>bf_parameters()</code> or <code>bf_pointnull()</code>
-<br /> <br />
-<strong>For more info, in particular on specifying correct priors for factors with more than 2 levels, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</strong></p>
+<strong>For more info, in particular on specifying correct priors for factors with more than 2 levels,
+see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</strong></p>
     </div>
 
-    <pre class="usage"><span class='fu'>bayesfactor_parameters</span>(
-  <span class='no'>posterior</span>,
-  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
-  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)
-
-<span class='fu'>bayesfactor_pointull</span>(
-  <span class='no'>posterior</span>,
-  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
-  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)
-
-<span class='fu'>bayesfactor_rope</span>(
-  <span class='no'>posterior</span>,
-  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
-  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fu'><a href='rope_range.html'>rope_range</a></span>(<span class='no'>posterior</span>),
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)
-
-<span class='fu'>bf_parameters</span>(
-  <span class='no'>posterior</span>,
-  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
-  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)
-
-<span class='fu'>bf_pointull</span>(
-  <span class='no'>posterior</span>,
-  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
-  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)
-
-<span class='fu'>bf_rope</span>(
-  <span class='no'>posterior</span>,
-  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
-  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fu'><a href='rope_range.html'>rope_range</a></span>(<span class='no'>posterior</span>),
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)
+    <pre class="usage"><span class='fu'>si</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>bayesfactor_parameters</span>(
-  <span class='no'>posterior</span>,
-  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
-  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'>si</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>bayesfactor_parameters</span>(
+<span class='fu'>si</span>(
   <span class='no'>posterior</span>,
   <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
-  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
@@ -299,11 +219,10 @@ with <code>bf_*</code>, like <code>bf_parameters()</code> or <code>bf_pointnull(
 )
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>bayesfactor_parameters</span>(
+<span class='fu'>si</span>(
   <span class='no'>posterior</span>,
   <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
-  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
@@ -311,24 +230,10 @@ with <code>bf_*</code>, like <code>bf_parameters()</code> or <code>bf_pointnull(
 )
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'>bayesfactor_parameters</span>(
-  <span class='no'>posterior</span>,
-  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
-  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'>si</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>bayesfactor_parameters</span>(
-  <span class='no'>posterior</span>,
-  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>,
-  <span class='kw'>null</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'>si</span>(<span class='no'>posterior</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -343,14 +248,8 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
       <td><p>An object representing a prior distribution (see 'Details').</p></td>
     </tr>
     <tr>
-      <th>direction</th>
-      <td><p>Test type (see 'Details'). One of <code>0</code>, <code>"two-sided"</code> (default, two tailed),
-<code>-1</code>, <code>"left"</code> (left tailed) or <code>1</code>, <code>"right"</code> (right tailed).</p></td>
-    </tr>
-    <tr>
-      <th>null</th>
-      <td><p>Value of the null, either a scaler (for point-null) or a a range
-(for a interval-null).</p></td>
+      <th>BF</th>
+      <td><p>The amount of support required to be included in the interval.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -358,7 +257,7 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Currently not used.</p></td>
+      <td><p>Arguments passed to and from other methods.</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -375,16 +274,16 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame containing the Bayes factor representing evidence <em>against</em> the null.</p>
+    <p>A data frame containing the lower and upper bounds of the SI.
+<br />
+Note that if the level of requested support is higher than observed in the data, the
+interval will be <code>[NA,NA]</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This method is used to compute Bayes factors based on prior and posterior distributions.
+    <p>This method is used to compute support intervals based on prior and posterior distributions.
 <br /><br />
-For the computation of Bayes factors, the model priors must be proper priors (at the very least
-they should be <em>not flat</em>, and it is preferable that they be <em>informative</em>); As the priors for
-the alternative get wider, the likelihood of the null value(s) increases, to the extreme that for completely
-flat priors the null is infinitely more favorable than the alternative (this is called <em>the Jeffreys-Lindley-Bartlett
-paradox</em>). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
+For the computation of support intervals, the model priors must be proper priors (at the very least
+they should be <em>not flat</em>, and it is preferable that they be <em>informative</em>).
 <br /><br />
 (Note that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects; See example below.)</p>
 <h3>Setting the correct <code>prior</code></h3>
@@ -400,30 +299,20 @@ paradox</em>). Thus, you should only ever try (or want) to compute a Bayes facto
 <li><p><code>prior</code> can also be an <code>emmGrid</code> object equvilant to <code>posterior</code> but created with a model of priors samples <em>only</em>.</p></li>
 </ul></li>
 </ul>
-<h3>One-sided Tests (setting an order restriction)</h3>
-<p>One sided tests (controlled by <code>direction</code>) are conducted by restricting the prior and
-posterior of the non-null values (the "alternative") to one side of the null only
-(<cite>Morey &amp; Wagenmakers, 2013</cite>). For example, if we have a prior hypothesis that the
-parameter should be positive, the alternative will be restricted to the region to the right
-of the null (point or interval).</p>
-<h3>Interpreting Bayes Factors</h3>
-<p>A Bayes factor greater than 1 can be interpereted as evidence against the null,
-at which one convention is that a Bayes factor greater than 3 can be considered
-as "substantial" evidence against the null (and vice versa, a Bayes factor
-smaller than 1/3 indicates substantial evidence in favor of the null-model)
-(<cite>Wetzels et al. 2011</cite>).</p>
+
+<h3>Choosing a value of <code>BF</code></h3>
+<p>The choice of <code>BF</code> (the level of support) depends on what we want our interval to represent:</p><ul>
+<li><p>A <code>BF</code> = 1 contains values whose credibility is not decreased by observing the data.</p></li>
+<li><p>A <code>BF</code> &gt; 1 contains values who recived more impressive support from the data.</p></li>
+<li><p>A <code>BF</code> &lt; 1 contains values whose credibility has not been impressive decreased by observing the data.
+  These are also values who, if tested agaisnt would produce a Bayes factor larger than 1/<code>BF</code> in support of
+  the alternative. E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null will be larger than 3.</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    
-<ul>
-<li><p>Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.</p></li>
-<li><p>Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. doi: <a href='https://doi.org/10.1177/1745691611406923'>10.1177/1745691611406923</a></p></li>
-<li><p>Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The case of computing Bayes factors for regression parameters. British Journal of Mathematical and Statistical Psychology, 72(2), 316-333.</p></li>
-<li><p>Morey, R. D., &amp; Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics &amp; Probability Letters, 92, 121-124.</p></li>
-<li><p>Morey, R. D., &amp; Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.</p></li>
-</ul>
-
+    <p>Wagenmakers, E., Gronau, Q. F., Dablander, F., &amp; Etz, A. (2018, November 22). The Support Interval. doi: <a href='https://doi.org/10.31234/osf.io/zwnxb'>10.31234/osf.io/zwnxb</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bayestestR</span>)
@@ -431,26 +320,24 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 <span class='no'>prior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.3</span>)
 
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
+<span class='fu'>si</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Support Interval
 #&gt; 
-#&gt; </span><span>   BF
-#&gt;  1.23
-#&gt; 
-#&gt; * Evidence Against The Null: </span><span style='color: #00BBBB;'>[0]
-#&gt; </span><span></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; </span><span>    BF = 1 SI
+#&gt;  [0.04, 1.05]
+#&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/contrasts.html'>contrasts</a></span>(<span class='no'>sleep</span>$<span class='no'>group</span>) <span class='kw'>&lt;-</span> <span class='no'>contr.bayes</span> <span class='co'># see vingette</span>
 <span class='no'>stan_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_lmer</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>stan_model</span>)
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>stan_model</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fu'><a href='rope_range.html'>rope_range</a></span>(<span class='no'>stan_model</span>))
+<span class='fu'>si</span>(<span class='no'>stan_model</span>)
+<span class='fu'>si</span>(<span class='no'>stan_model</span>, <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 
 <span class='co'># emmGrid objects</span>
 <span class='co'># ---------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
 <span class='no'>group_diff</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emmeans.html'>emmeans</a></span>(<span class='no'>stan_model</span>, ~<span class='no'>group</span>))
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>group_diff</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>stan_model</span>)
+<span class='fu'>si</span>(<span class='no'>group_diff</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>stan_model</span>)
 
 <span class='co'># brms models</span>
 <span class='co'># -----------</span>
@@ -464,7 +351,7 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
   <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>my_custom_priors</span>
 )
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>brms_model</span>)
+<span class='fu'>si</span>(<span class='no'>brms_model</span>)
 }</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -477,8 +364,6 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
       <li><a href="#examples">Examples</a></li>
     </ul>
 
-    <h2>Author</h2>
-    <p>Mattan S. Ben-Shachar</p>
   </div>
 </div>
 
