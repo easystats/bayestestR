@@ -109,15 +109,15 @@
 #' @importFrom insight get_parameters
 .clean_priors_and_posteriors.stanreg <- function(posterior, prior,
                                                  verbose = TRUE,
-                                                 effects, component) {
+                                                 effects, component, ...) {
   # Get Priors
   if (is.null(prior)) {
     prior <- posterior
   }
 
   prior <- .update_to_priors(prior, verbose = verbose)
-  prior <- insight::get_parameters(prior, effects = effects, component = component)
-  posterior <- insight::get_parameters(posterior, effects = effects, component = component)
+  prior <- insight::get_parameters(prior, effects = effects, component = component, ...)
+  posterior <- insight::get_parameters(posterior, effects = effects, component = component, ...)
 
   list(posterior = posterior,
        prior = prior)

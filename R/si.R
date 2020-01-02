@@ -132,6 +132,7 @@ si.stanreg <- function(posterior, prior = NULL,
                        BF = 1, verbose = TRUE,
                        effects = c("fixed", "random", "all"),
                        component = c("conditional", "zi", "zero_inflated", "all"),
+                       parameters = NULL,
                        ...) {
   cleaned_parameters <- insight::clean_parameters(posterior)
   effects <- match.arg(effects)
@@ -139,7 +140,8 @@ si.stanreg <- function(posterior, prior = NULL,
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
                                         verbose = verbose,
-                                        effects = effects, component = component)
+                                        effects = effects, component = component,
+                                        parameters = parameters)
 
   # Get SIs
   temp <- si.data.frame(
