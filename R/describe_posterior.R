@@ -303,18 +303,9 @@ describe_posterior.emmGrid <- function(posteriors, centrality = "median", disper
   }
 
   if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test))) {
-    if (is.null(bf_prior)) {
-      bf_prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posteriors, names = FALSE)))
-      warning(
-        "Prior not specified! ",
-        "Please provide the original model to get meaningful results."
-      )
-    } else {
-      bf_prior <- .update_to_priors(bf_prior)
-      bf_prior <- insight::get_parameters(bf_prior, effects = "fixed")
-      bf_prior <- update(posteriors, post.beta = as.matrix(bf_prior))
-      bf_prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(bf_prior, names = FALSE)))
-    }
+    samps <- .clean_priors_and_posteriors(posterior, prior,
+                                          verbose = verbose)
+    samps <- samps$prior
   }
 
   posteriors <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posteriors, names = FALSE)))
