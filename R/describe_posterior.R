@@ -257,6 +257,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   if (all(is.na(out$Effects)) || length(unique(out$Effects)) < 2) remove_columns <- c(remove_columns, "Effects")
   if (all(is.na(out$Component)) || length(unique(out$Component)) < 2) remove_columns <- c(remove_columns, "Component")
 
+  attr(out, "ci_method") <- ci_method
   # Restore columns order
   .remove_column(out[order(out$.rowid), ], remove_columns)
 }
@@ -302,14 +303,14 @@ describe_posterior.emmGrid <- function(posteriors, centrality = "median", disper
     stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
   }
 
-  if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) |"si" %in% tolower(ci_method)) {
+  if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) | "si" %in% tolower(ci_method)) {
     samps <- .clean_priors_and_posteriors(posteriors, bf_prior)
     bf_prior <- samps$prior
   }
 
   posteriors <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posteriors, names = FALSE)))
 
-  .describe_posterior(
+  out <- .describe_posterior(
     posteriors,
     centrality = centrality,
     dispersion = dispersion,
@@ -322,6 +323,11 @@ describe_posterior.emmGrid <- function(posteriors, centrality = "median", disper
     BF = BF,
     ...
   )
+
+  class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
+  attr(out, "ci_method") <- ci_method
+
+  out
 }
 
 
@@ -358,6 +364,7 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
     out <- .merge_and_sort(out, priors_data, by = "Parameter", all = TRUE)
   }
 
+  attr(out, "ci_method") <- ci_method
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
@@ -396,6 +403,7 @@ describe_posterior.stanmvreg <- function(posteriors, centrality = "median", disp
     out <- .merge_and_sort(out, priors_data, by = c("Parameter", "Response"), all = TRUE)
   }
 
+  attr(out, "ci_method") <- ci_method
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
@@ -443,6 +451,7 @@ describe_posterior.brmsfit <- function(posteriors, centrality = "median", disper
     out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
   }
 
+  attr(out, "ci_method") <- ci_method
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
