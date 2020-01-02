@@ -211,7 +211,7 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
   out
 }
 
-.si <- function(posterior, prior, BF = 1, extend_scale = 0.05, precision = 2^8) {
+.si <- function(posterior, prior, BF = 1, extend_scale = 0.05, precision = 2^8, ...) {
   if (!requireNamespace("logspline")) {
     stop("Package \"logspline\" needed for this function to work. Please install it.")
   }
