@@ -73,8 +73,8 @@ interval will be \code{[NA,NA]}.
 \description{
 A support interval contains only the values of the parameter that predict the observed data better
 than average, by some degree \emph{k}; these are values of the parameter that are associated with an
-updating factor ≥ \emph{k}. From the presepctive of the Savage-Dickey Bayes factor, testing
-against a point null hypothesis for any value within the support interval will yeild a Bayes factor smaller
+updating factor ≥ \emph{k}. From the perspective of the Savage-Dickey Bayes factor, testing
+against a point null hypothesis for any value within the support interval will yield a Bayes factor smaller
 than \emph{1/k}.
 \cr \cr
 \strong{For more info, in particular on specifying correct priors for factors with more than 2 levels,
@@ -82,11 +82,9 @@ see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{th
 }
 \details{
 This method is used to compute support intervals based on prior and posterior distributions.
-\cr\cr
 For the computation of support intervals, the model priors must be proper priors (at the very least
-they should be \emph{not flat}, and it is preferable that they be \emph{informative}).
-\cr\cr
-(Note that by default, \code{brms::brm()} uses flat priors for fixed-effects; See example below.)
+they should be \emph{not flat}, and it is preferable that they be \emph{informative} - note
+that by default, \code{brms::brm()} uses flat priors for fixed-effects; see example below).
 
 \subsection{Setting the correct \code{prior}}{
 It is important to provide the correct \code{prior} for meaningful results.
@@ -108,8 +106,8 @@ The choice of \code{BF} (the level of support) depends on what we want our inter
 \itemize{
   \item A \code{BF} = 1 contains values whose credibility is not decreased by observing the data.
   \item A \code{BF} > 1 contains values who recived more impressive support from the data.
-  \item A \code{BF} < 1 contains values whose credibility has not been impressive decreased by observing the data.
-  These are also values who, if tested agaisnt would produce a Bayes factor larger than 1/\code{BF} in support of
+  \item A \code{BF} < 1 contains values whose credibility has not been impressively decreased by observing the data.
+  These are also values who, if tested against would produce a Bayes factor larger than 1/\code{BF} in support of
   the alternative. E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null will be larger than 3.
 }
 }
