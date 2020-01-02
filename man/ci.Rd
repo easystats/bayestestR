@@ -15,11 +15,11 @@
 \usage{
 ci(x, ...)
 
-\method{ci}{numeric}(x, ci = 0.89, method = "ETI", verbose = TRUE, ...)
+\method{ci}{numeric}(x, ci = 0.89, method = "ETI", verbose = TRUE, BF = 1, ...)
 
-\method{ci}{data.frame}(x, ci = 0.89, method = "ETI", verbose = TRUE, ...)
+\method{ci}{data.frame}(x, ci = 0.89, method = "ETI", verbose = TRUE, BF = 1, ...)
 
-\method{ci}{emmGrid}(x, ci = 0.89, method = "ETI", verbose = TRUE, ...)
+\method{ci}{emmGrid}(x, ci = 0.89, method = "ETI", verbose = TRUE, BF = 1, ...)
 
 \method{ci}{sim.merMod}(
   x,
@@ -40,6 +40,7 @@ ci(x, ...)
   effects = c("fixed", "random", "all"),
   parameters = NULL,
   verbose = TRUE,
+  BF = 1,
   ...
 )
 
@@ -51,10 +52,11 @@ ci(x, ...)
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL,
   verbose = TRUE,
+  BF = 1,
   ...
 )
 
-\method{ci}{BFBayesFactor}(x, ci = 0.89, method = "ETI", verbose = TRUE, ...)
+\method{ci}{BFBayesFactor}(x, ci = 0.89, method = "ETI", verbose = TRUE, BF = 1, ...)
 
 \method{ci}{MCMCglmm}(x, ci = 0.89, method = "ETI", verbose = TRUE, ...)
 }
@@ -66,9 +68,11 @@ ci(x, ...)
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
 to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95} (95\%) for frequentist models.}
 
-\item{method}{Can be \link[=eti]{'ETI'} (default) or \link[=hdi]{'HDI'}.}
+\item{method}{Can be \link[=eti]{'ETI'} (default), \link[=hdi]{'HDI'} or \link[=si]{'SI'}.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{BF}{The amount of support required to be included in the support interval.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
@@ -92,7 +96,7 @@ A data frame with following columns:
   }
 }
 \description{
-Compute Confidence/Credible/Compatibility Intervals (CI) for Bayesian and frequentist models. The Documentation is accessible for:
+Compute Confidence/Credible/Compatibility Intervals (CI) or Support Intervals (SI) for Bayesian and frequentist models. The Documentation is accessible for:
 }
 \details{
 \itemize{
@@ -121,11 +125,14 @@ library(rstanarm)
 model <- stan_glm(mpg ~ wt, data = mtcars, chains = 2, iter = 200, refresh = 0)
 ci(model, method = "ETI", ci = c(.80, .89))
 ci(model, method = "HDI", ci = c(.80, .89))
+ci(model, method = "SI")
+
 \dontrun{
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 ci(model, method = "ETI")
 ci(model, method = "HDI")
+ci(model, method = "SI")
 
 library(BayesFactor)
 bf <- ttestBF(x = rnorm(100, 1, 1))
@@ -136,6 +143,7 @@ library(emmeans)
 model <- emtrends(model, ~1, "wt")
 ci(model, method = "ETI")
 ci(model, method = "HDI")
+ci(model, method = "SI")
 }
 
 }

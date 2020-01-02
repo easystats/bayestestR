@@ -208,6 +208,7 @@ bayesfactor_parameters.stanreg <- function(posterior,
                                            verbose = TRUE,
                                            effects = c("fixed", "random", "all"),
                                            component = c("conditional", "zi", "zero_inflated", "all"),
+                                           parameters = NULL,
                                            ...) {
   cleaned_parameters <- insight::clean_parameters(posterior)
   effects <- match.arg(effects)
@@ -215,7 +216,8 @@ bayesfactor_parameters.stanreg <- function(posterior,
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
                                         verbose = verbose,
-                                        effects = effects, component = component)
+                                        effects = effects, component = component,
+                                        parameters = parameters)
 
   # Get BFs
   temp <- bayesfactor_parameters.data.frame(

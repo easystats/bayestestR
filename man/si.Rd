@@ -20,6 +20,7 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
   ...
 )
 
@@ -30,6 +31,7 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
   ...
 )
 
@@ -43,7 +45,7 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
 
 \item{prior}{An object representing a prior distribution (see 'Details').}
 
-\item{BF}{The amount of support required to be included in the interval.}
+\item{BF}{The amount of support required to be included in the support interval.}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -55,6 +57,12 @@ Only applies to mixed models. May be abbreviated.}
 \item{component}{Should results for all parameters, parameters for the conditional model
 or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
+
+\item{parameters}{Regular expression pattern that describes the parameters that
+should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+filtered by default, so only parameters that typically appear in the
+\code{summary()} are returned. Use \code{parameters} to select specific parameters
+for the output.}
 }
 \value{
 A data frame containing the lower and upper bounds of the SI.

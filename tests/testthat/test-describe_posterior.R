@@ -79,3 +79,25 @@ if (require("insight")) {
     )
   })
 }
+
+
+test_that("describe_posterior w/ BF+SI", {
+  testthat::skip_on_cran()
+  testthat::skip_on_travis()
+
+  x <- insight::download_model("stanreg_lm_1")
+  set.seed(555)
+  rez <- describe_posterior(x, ci_method = "SI", test = "bf")
+
+
+  # test si
+  set.seed(555)
+  rez_si <- si(x)
+  testthat::expect_equal(rez$CI_low, rez_si$CI_low, tolerance = 0.1)
+  testthat::expect_equal(rez$CI_high, rez_si$CI_high, tolerance = 0.1)
+
+  # test BF
+  set.seed(555)
+  rez_bf <- bayesfactor_parameters(x)
+  testthat::expect_equal(rez$BF, rez_bf$BF, tolerance = 0.1)
+})

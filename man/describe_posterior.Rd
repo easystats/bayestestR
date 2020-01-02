@@ -32,6 +32,7 @@ describe_posterior(
   rope_range = "default",
   rope_ci = 0.89,
   bf_prior = NULL,
+  BF = 1,
   ...
 )
 
@@ -49,6 +50,7 @@ describe_posterior(
   priors = FALSE,
   effects = c("fixed", "random", "all"),
   parameters = NULL,
+  BF = 1,
   ...
 )
 
@@ -97,6 +99,7 @@ describe_posterior(
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL,
+  BF = 1,
   ...
 )
 
@@ -124,8 +127,9 @@ describe_posterior(
 to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95} (95\%) for frequentist models.}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}) or \code{"ETI"}
-(see \code{\link[bayestestR:eti]{eti}}).}
+\code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}), \code{"ETI"}
+(see \code{\link[bayestestR:eti]{eti}}) or \code{"SI"}
+(see \code{\link[bayestestR:si]{si}}).}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
@@ -144,7 +148,9 @@ proportion of HDI, to use for the percentage in ROPE.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 
-\item{bf_prior}{Distribution representing a prior for the computation of Bayes factors. Used if the input is a posterior, otherwise (in the case of models) ignored.}
+\item{bf_prior}{Distribution representing a prior for the computation of Bayes factors / SI. Used if the input is a posterior, otherwise (in the case of models) ignored.}
+
+\item{BF}{The amount of support required to be included in the support interval.}
 
 \item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}
 

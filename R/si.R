@@ -12,7 +12,7 @@
 #' @param posterior A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}
 #' or a data frame - representing a posterior distribution(s) from (see 'Details').
 #' @param prior An object representing a prior distribution (see 'Details').
-#' @param BF The amount of support required to be included in the interval.
+#' @param BF The amount of support required to be included in the support interval.
 #' @param ... Arguments passed to and from other methods.
 #' @inheritParams hdi
 #'
@@ -132,6 +132,7 @@ si.stanreg <- function(posterior, prior = NULL,
                        BF = 1, verbose = TRUE,
                        effects = c("fixed", "random", "all"),
                        component = c("conditional", "zi", "zero_inflated", "all"),
+                       parameters = NULL,
                        ...) {
   cleaned_parameters <- insight::clean_parameters(posterior)
   effects <- match.arg(effects)
@@ -139,7 +140,8 @@ si.stanreg <- function(posterior, prior = NULL,
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
                                         verbose = verbose,
-                                        effects = effects, component = component)
+                                        effects = effects, component = component,
+                                        parameters = parameters)
 
   # Get SIs
   temp <- si.data.frame(
@@ -213,7 +215,7 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
   out
 }
 
-.si <- function(posterior, prior, BF = 1, extend_scale = 0.05, precision = 2^8) {
+.si <- function(posterior, prior, BF = 1, extend_scale = 0.05, precision = 2^8, ...) {
   if (!requireNamespace("logspline")) {
     stop("Package \"logspline\" needed for this function to work. Please install it.")
   }
