@@ -302,10 +302,9 @@ describe_posterior.emmGrid <- function(posteriors, centrality = "median", disper
     stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
   }
 
-  if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test))) {
-    samps <- .clean_priors_and_posteriors(posterior, prior,
-                                          verbose = verbose)
-    samps <- samps$prior
+  if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) |"si" %in% tolower(ci_method)) {
+    samps <- .clean_priors_and_posteriors(posteriors, bf_prior)
+    bf_prior <- samps$prior
   }
 
   posteriors <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posteriors, names = FALSE)))
