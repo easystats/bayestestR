@@ -95,7 +95,14 @@ test_that("emmGrid bayesfactor_restricted", {
   testthat::expect_warning(bayesfactor_restricted(em_, hypothesis = hyps))
 })
 
-
+test_that("emmGrid si", {
+  testthat::skip_on_travis()
+  testthat::skip_on_cran()
+  set.seed(4)
+  xrsi <- si(em_, prior = model)
+  testthat::expect_equal(xrsi$CI_low, c(-0.8479125,  0.5738828), tolerance = .1)
+  testthat::expect_equal(xrsi$CI_high, c(2.387275, 4.004303), tolerance = .1)
+})
 
 test_that("emmGrid describe_posterior", {
   testthat::skip_on_travis()
