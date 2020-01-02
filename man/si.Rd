@@ -45,7 +45,7 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
 
 \item{prior}{An object representing a prior distribution (see 'Details').}
 
-\item{BF}{The amount of support required to be included in the interval.}
+\item{BF}{The amount of support required to be included in the support interval.}
 
 \item{verbose}{Toggle off warnings.}
 

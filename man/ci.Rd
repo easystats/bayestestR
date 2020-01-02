@@ -72,7 +72,7 @@ to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95}
 
 \item{verbose}{Toggle off warnings.}
 
-\item{BF}{The amount of support required to be included in the interval.}
+\item{BF}{The amount of support required to be included in the support interval.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}

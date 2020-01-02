@@ -12,7 +12,7 @@
 #' @param posterior A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}
 #' or a data frame - representing a posterior distribution(s) from (see 'Details').
 #' @param prior An object representing a prior distribution (see 'Details').
-#' @param BF The amount of support required to be included in the interval.
+#' @param BF The amount of support required to be included in the support interval.
 #' @param ... Arguments passed to and from other methods.
 #' @inheritParams hdi
 #'
