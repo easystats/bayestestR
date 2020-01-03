@@ -69,7 +69,8 @@ p_map <- function(x, precision = 2^10, method = "kernel", ...) {
 }
 
 
-
+#' @export
+p_pointnull <- p_map
 
 
 
