@@ -339,6 +339,11 @@ describe_posterior.emmGrid <- function(posteriors, centrality = "median", disper
 #' @rdname describe_posterior
 #' @export
 describe_posterior.stanreg <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, BF = 1, ...) {
+
+  if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) | "si" %in% tolower(ci_method)) & is.null(bf_prior)) {
+    bf_prior <- .update_to_priors(posteriors)
+  }
+
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, BF = BF, effects = effects, parameters = parameters, ...)
 
   if (!is.null(diagnostic)) {
@@ -436,6 +441,11 @@ describe_posterior.mcmc <- function(posteriors, centrality = "median", dispersio
 #' @rdname describe_posterior
 #' @export
 describe_posterior.brmsfit <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, BF = 1, ...) {
+
+  if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) | "si" %in% tolower(ci_method)) & is.null(bf_prior)) {
+    bf_prior <- .update_to_priors(posteriors)
+  }
+
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, BF = BF, effects = effects, component = component, parameters = parameters, ...)
 
   if (!is.null(diagnostic)) {
