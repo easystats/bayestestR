@@ -12,7 +12,20 @@
 #' model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
 #' check_prior(model, method = "gelman")
 #' check_prior(model, method = "lakeland")
+#'
+#' \dontrun{
+#' # An extreme example where both methods diverge:
+#' model <- stan_glm(mpg ~ wt, data = mtcars[1:3,],
+#'                   prior = normal(-3.3, 1, FALSE),
+#'                   prior_intercept = normal(0, 1000, FALSE),
+#'                   refresh = 0)
+#' check_prior(model, method = "gelman")
+#' check_prior(model, method = "lakeland")
+#' plot(si(model)) # can provide visual confirmation to the Lakeland method
+#' }
+#'
 #' @references https://statmodeling.stat.columbia.edu/2019/08/10/
+#'
 #' @export
 check_prior <- function(model, method = "gelman", simulate_priors = TRUE, ...) {
   UseMethod("check_prior")
@@ -94,7 +107,7 @@ check_prior.stanreg <- check_prior.brmsfit
 
   data.frame(
     Parameter = names(posteriors),
-    Prior_Quality = result,
+    Prior_Quality = unname(result),
     stringsAsFactors = FALSE
   )
 }
