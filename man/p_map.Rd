@@ -2,11 +2,14 @@
 % Please edit documentation in R/p_map.R
 \name{p_map}
 \alias{p_map}
+\alias{p_pointnull}
 \alias{p_map.stanreg}
 \alias{p_map.brmsfit}
 \title{Bayesian p-value based on the density at the Maximum A Posteriori (MAP)}
 \usage{
 p_map(x, precision = 2^10, method = "kernel", ...)
+
+p_pointnull(x, precision = 2^10, method = "kernel", ...)
 
 \method{p_map}{stanreg}(
   x,

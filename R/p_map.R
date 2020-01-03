@@ -68,7 +68,7 @@ p_map <- function(x, precision = 2^10, method = "kernel", ...) {
   UseMethod("p_map")
 }
 
-
+#' @rdname p_map
 #' @export
 p_pointnull <- p_map
 
