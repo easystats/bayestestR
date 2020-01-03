@@ -29,7 +29,7 @@ test_that("si.rstanarm", {
   stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep, refresh = 0)
 
   res <- si(stan_model, verbose = FALSE)
-  testthat::expect_equal(res$CI_low, c(-0.057,0.417), tolerance = 0.02)
+  testthat::expect_equal(res$CI_low, c(0.011, 0.417), tolerance = 0.02)
   testthat::expect_equal(res$CI_high, c(3.086,1.819), tolerance = 0.02)
   testthat::expect_is(res,c("bayestestR_si"))
 })
