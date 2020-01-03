@@ -85,15 +85,35 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 # Features
 
-The following figures are meant to illustrate the (statistical) concepts behind the functions. However, for most functions, `plot()`-methods are available from the [see-package](http://easystats.github.io/see).
+In the Bayesian framework, parameters are estimated in a probabilistic fashion as *distributions*. These distributions can be summarised and described by reporting 4 types of indices:
 
-## Describing the Posterior Distribution
+- [**Centrality**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
+  - `mean()`, `median()` or [**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html) for an approximation of the mode.
+  - [`point_estimate()`](https://easystats.github.io/bayestestR/reference/point_estimate.html) can be used to get them at once and can be run on models.
+  
+- [**Uncertainty**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+  - [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.html) for *Highest Density Interval (HDI)* or [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html) for *Equal-Tailed Intervals (ETI)*.
+  - [`ci()`](https://easystats.github.io/bayestestR/reference/ci.html) for a more general method for Confidence and Credible Intervals (CI).
+  
+- [**Effect Existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html)
+  - [`p_direction()`](https://easystats.github.io/bayestestR/reference/p_direction.html) for a Bayesian equivalent of the frequentist *p*-value (see [Makowski et al. 2019](https://doi.org/10.3389/fpsyg.2019.02767))
+  - `p_pointnull()` **TODO**
+  - [`bf_pointnull()`](https://easystats.github.io/bayestestR/reference/bf_pointnull.html) for a classic *Bayes Factor (BF)* assessing the likelihood of effect presence against its absence (*h0 = 0*)
+
+- [**Effect Significance**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html)
+  - [`p_rope()`](https://easystats.github.io/bayestestR/reference/p_rope.html) is the probability of the effect falling inside a [*Region of Practical Equivalence (ROPE)*](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html) ()
+  - `bf_rope()` **TODO**
+  - `p_significance()` that combines a region of equivalence and the probability of direction **TODO**
 
 [**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html) is the master function with which you can compute all of the indices cited below at once.
 
 ```{r message=FALSE, warning=FALSE}
 describe_posterior(rnorm(1000))
 ```
+
+However, the *bayestestR* includes [**many other features**](https://easystats.github.io/bayestestR/reference/index.html) useful for your Bayesian analsyes. Here are some more examples.
+
+
 
 
 ## Point-estimates
@@ -300,7 +320,7 @@ For more info, see [the Bayes factors vignette](https://easystats.github.io/baye
 
 ### MAP-based *p*-value
 
-[**`p_map()`**](https://easystats.github.io/bayestestR/reference/p_map.html) computes a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (*h0*) using Mills' (2014, 2017) *Objective Bayesian Hypothesis Testing* framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP).
+[**`p_map()`**](https://easystats.github.io/bayestestR/reference/p_map.html) represents the odds that a parameter (described by its posterior distribution) has against the null hypothesis (*h0*) using Mills' (2014, 2017) *Objective Bayesian Hypothesis Testing* framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP).
 
 ```{r message=FALSE, warning=FALSE}
 posterior <- distribution_normal(100, 0.4, 0.2)
