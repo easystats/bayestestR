@@ -85,25 +85,25 @@ Click on the buttons above to access the package [**documentation**](https://eas
 
 # Features
 
-In the Bayesian framework, parameters are estimated in a probabilistic fashion as *distributions*. These distributions can be summarised and described by reporting 4 types of indices:
+In the Bayesian framework, parameters are estimated in a probabilistic fashion as *distributions*. These distributions can be summarised and described by **reporting 4 types of indices**:
 
 - [**Centrality**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
   - `mean()`, `median()` or [**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html) for an approximation of the mode.
-  - [`point_estimate()`](https://easystats.github.io/bayestestR/reference/point_estimate.html) can be used to get them at once and can be run on models.
+  - [**`point_estimate()`**](https://easystats.github.io/bayestestR/reference/point_estimate.html) can be used to get them at once and can be run on models.
   
 - [**Uncertainty**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-  - [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.html) for *Highest Density Interval (HDI)* or [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html) for *Equal-Tailed Intervals (ETI)*.
-  - [`ci()`](https://easystats.github.io/bayestestR/reference/ci.html) for a more general method for Confidence and Credible Intervals (CI).
+  - [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html) for *Highest Density Interval (HDI)* or [**`eti()`**](https://easystats.github.io/bayestestR/reference/eti.html) for *Equal-Tailed Intervals (ETI)*.
+  - [**`ci()`**](https://easystats.github.io/bayestestR/reference/ci.html) for a more general method for Confidence and Credible Intervals (CI).
   
 - [**Effect Existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html)
-  - [`p_direction()`](https://easystats.github.io/bayestestR/reference/p_direction.html) for a Bayesian equivalent of the frequentist *p*-value (see [Makowski et al. 2019](https://doi.org/10.3389/fpsyg.2019.02767))
-  - `p_pointnull()` **TODO**
-  - [`bf_pointnull()`](https://easystats.github.io/bayestestR/reference/bf_pointnull.html) for a classic *Bayes Factor (BF)* assessing the likelihood of effect presence against its absence (*h0 = 0*)
+  - [**`p_direction()`**](https://easystats.github.io/bayestestR/reference/p_direction.html) for a Bayesian equivalent of the frequentist *p*-value (see [Makowski et al., 2019](https://doi.org/10.3389/fpsyg.2019.02767))
+  - [**`p_pointnull()`**](https://easystats.github.io/bayestestR/reference/p_map.html) represents the odds of null hypothesis (*h0 = 0*) compared to the most likely hypothesis (the MAP). 
+  - [**`bf_pointnull()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html) for a classic *Bayes Factor (BF)* assessing the likelihood of effect presence against its absence (*h0 = 0*).
 
 - [**Effect Significance**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html)
-  - [`p_rope()`](https://easystats.github.io/bayestestR/reference/p_rope.html) is the probability of the effect falling inside a [*Region of Practical Equivalence (ROPE)*](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html) ()
-  - `bf_rope()` **TODO**
-  - `p_significance()` that combines a region of equivalence and the probability of direction **TODO**
+  - [**`p_rope()`**](https://easystats.github.io/bayestestR/reference/p_rope.html) is the probability of the effect falling inside a [*Region of Practical Equivalence (ROPE)*](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html).
+  - [**`bf_rope()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html) computes a Bayes factor against the null as defined by a region (the ROPE).
+  - [**`p_significance()`**](https://easystats.github.io/bayestestR/reference/p_significance.html) that combines a region of equivalence and the probability of direction.
 
 [**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html) is the master function with which you can compute all of the indices cited below at once.
 
@@ -111,12 +111,39 @@ In the Bayesian framework, parameters are estimated in a probabilistic fashion a
 describe_posterior(rnorm(1000))
 ```
 
-However, the *bayestestR* includes [**many other features**](https://easystats.github.io/bayestestR/reference/index.html) useful for your Bayesian analsyes. Here are some more examples.
+*bayestestR* also includes [**many other features**](https://easystats.github.io/bayestestR/reference/index.html) useful for your Bayesian analsyes. Here are some more examples.
 
 
 
 
 ## Point-estimates
+
+```{r message=FALSE, warning=FALSE}
+library(bayestestR)
+library(see)
+
+posterior <- distribution_beta(100, 0.4, 0.2)
+# plot(point_estimate(posterior))
+```
+
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+# posterior <- distribution_normal(100, 0.4, 0.2)
+# map_result <- map_estimate(posterior, bw="nrd0")
+# 
+# posterior %>% 
+#   density() %>%
+#   as.data.frame() %>%  
+#   ggplot(aes(x=x, y=y)) +
+#   geom_ribbon(aes(ymin=0, ymax=y), fill="#FFC107") +
+#   geom_segment(x=0.4, xend=0.4, y=0, yend=attributes(map_result)$MAP_density, color="#E91E63", size=1) +
+#   geom_point(x=map_result, y=attributes(map_result)$MAP_density, color="#E91E63", size=5) +
+#   geom_vline(xintercept=0, linetype="dotted") +
+#   theme_classic(base_size = 12) +
+#   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
+#   xlab("\nParameter Value") +
+#   ylab("Probability Density\n")
+```
+
 
 ### MAP Estimate
 
