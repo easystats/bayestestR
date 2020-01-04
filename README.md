@@ -79,11 +79,50 @@ check-out these vignettes:
 
 # Features
 
-The following figures are meant to illustrate the (statistical) concepts
-behind the functions. However, for most functions, `plot()`-methods are
-available from the [see-package](http://easystats.github.io/see).
+In the Bayesian framework, parameters are estimated in a probabilistic
+fashion as *distributions*. These distributions can be summarised and
+described by **reporting 4 types of indices**:
 
-## Describing the Posterior Distribution
+  - [**Centrality**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
+      - `mean()`, `median()` or
+        [**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html)
+        for an approximation of the mode.
+      - [**`point_estimate()`**](https://easystats.github.io/bayestestR/reference/point_estimate.html)
+        can be used to get them at once and can be run on models.
+  - [**Uncertainty**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+      - [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html)
+        for *Highest Density Interval (HDI)* or
+        [**`eti()`**](https://easystats.github.io/bayestestR/reference/eti.html)
+        for *Equal-Tailed Intervals (ETI)*.
+      - [**`ci()`**](https://easystats.github.io/bayestestR/reference/ci.html)
+        for a more general method for Confidence and Credible Intervals
+        (CI).
+  - [**Effect
+    Existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html):
+    whether an effect is not different from 0.
+      - [**`p_direction()`**](https://easystats.github.io/bayestestR/reference/p_direction.html)
+        for a Bayesian equivalent of the frequentist *p*-value (see
+        [Makowski et
+        al., 2019](https://doi.org/10.3389/fpsyg.2019.02767))
+      - [**`p_pointnull()`**](https://easystats.github.io/bayestestR/reference/p_map.html)
+        represents the odds of null hypothesis (*h0 = 0*) compared to
+        the most likely hypothesis (the MAP).
+      - [**`bf_pointnull()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html)
+        for a classic *Bayes Factor (BF)* assessing the likelihood of
+        effect presence against its absence (*h0 = 0*).
+  - [**Effect
+    Significance**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html):
+    whether the effect can be considered as non-negligible.
+      - [**`p_rope()`**](https://easystats.github.io/bayestestR/reference/p_rope.html)
+        is the probability of the effect falling inside a [*Region of
+        Practical Equivalence
+        (ROPE)*](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html).
+      - [**`bf_rope()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html)
+        computes a Bayes factor against the null as defined by a region
+        (the ROPE).
+      - [**`p_significance()`**](https://easystats.github.io/bayestestR/reference/p_significance.html)
+        that combines a region of equivalence and the probability of
+        direction.
 
 [**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html)
 is the master function with which you can compute all of the indices
@@ -92,32 +131,45 @@ cited below at once.
 ``` r
 describe_posterior(rnorm(1000))
 ##   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
-## 1 Posterior  0.037 89   -1.5     1.7 0.52      89     -0.1       0.1
+## 1 Posterior -0.021 89   -1.6     1.5 0.50      89     -0.1       0.1
 ##   ROPE_Percentage
-## 1           0.092
+## 1            0.11
 ```
+
+*bayestestR* also includes [**many other
+features**](https://easystats.github.io/bayestestR/reference/index.html)
+useful for your Bayesian analsyes. Here are some more examples:
 
 ## Point-estimates
 
-### MAP Estimate
-
-[**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html)
-find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior,
-*i.e.*, the value associated with the highest probability density (the
-“peak” of the posterior distribution). In other words, it is an
-estimation of the *mode* for continuous parameters.
-
 ``` r
-posterior <- distribution_normal(100, 0.4, 0.2)
-map_estimate(posterior)
-## MAP = 0.40
+library(bayestestR)
+
+posterior <- distribution_gamma(10000, 1.5)  # Generate a skewed distribution
+centrality <- point_estimate(posterior)  # Get indices of centrality
+centrality
+## # Point Estimates
+## 
+##  Median Mean  MAP
+##     1.2  1.5 0.51
 ```
 
-![](man/figures/unnamed-chunk-5-1.png)<!-- -->
+As for other [**easystats**](https://github.com/easystats) packages,
+`plot()` methods are available from the
+[**see**](http://easystats.github.io/see) package for many functions:
 
-## Uncertainty
+![](man/figures/unnamed-chunk-6-1.png)<!-- -->
 
-### Highest Density Interval (HDI) and Equal-Tailed Interval (ETI)
+While the **median** and the **mean** are available through base R
+functions,
+[**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html)
+in *bayestestR* can be used to directly find the **Highest Maximum A
+Posteriori (MAP)** estimate of a posterior, *i.e.*, the value associated
+with the highest probability density (the “peak” of the posterior
+distribution). In other words, it is an estimation of the *mode* for
+continuous parameters.
+
+## Uncertainty (CI)
 
 [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html)
 computes the **Highest Density Interval (HDI)** of a posterior
@@ -156,9 +208,39 @@ eti(posterior, ci = .89)
 ##  [0.42, 7.27]
 ```
 
-![](man/figures/unnamed-chunk-7-1.png)<!-- -->
+![](man/figures/unnamed-chunk-8-1.png)<!-- -->
 
-## Null-Hypothesis Significance Testing (NHST)
+## Existence and Significance Testing
+
+### Probability of Direction (*p*d)
+
+[**`p_direction()`**](https://easystats.github.io/bayestestR/reference/p_direction.html)
+computes the **Probability of Direction** (***p*d**, also known as the
+Maximum Probability of Effect - *MPE*). It varies between 50% and 100%
+(*i.e.*, `0.5` and `1`) and can be interpreted as the probability
+(expressed in percentage) that a parameter (described by its posterior
+distribution) is strictly positive or negative (whichever is the most
+probable). It is mathematically defined as the proportion of the
+posterior distribution that is of the median’s sign. Although
+differently expressed, this index is fairly similar (*i.e.*, is strongly
+correlated) to the frequentist ***p*-value**.
+
+**Relationship with the p-value**: In most cases, it seems that the *pd*
+corresponds to the frequentist one-sided *p*-value through the formula
+`p-value = (1-pd/100)` and to the two-sided *p*-value (the most commonly
+reported) through the formula `p-value = 2*(1-pd/100)`. Thus, a `pd` of
+`95%`, `97.5%` `99.5%` and `99.95%` corresponds approximately to a
+two-sided *p*-value of respectively `.1`, `.05`, `.01` and `.001`. See
+the [*reporting
+guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
+
+``` r
+posterior <- distribution_normal(100, 0.4, 0.2)
+p_direction(posterior)
+## pd = 98.00%
+```
+
+![](man/figures/unnamed-chunk-10-1.png)<!-- -->
 
 ### ROPE
 
@@ -197,56 +279,6 @@ rope(posterior, range = c(-0.1, 0.1))
 ##       1.11 %
 ```
 
-![](man/figures/unnamed-chunk-9-1.png)<!-- -->
-
-### Equivalence test
-
-[**`equivalence_test()`**](https://easystats.github.io/bayestestR/reference/equivalence_test.html)
-is a **Test for Practical Equivalence** based on the *“HDI+ROPE decision
-rule”* (Kruschke, 2018) to check whether parameter values should be
-accepted or rejected against an explicitly formulated “null hypothesis”
-(*i.e.*, a
-[ROPE](https://easystats.github.io/bayestestR/reference/rope.html)).
-
-``` r
-posterior <- distribution_normal(100, 0.4, 0.2)
-equivalence_test(posterior, range = c(-0.1, 0.1))
-## # Test for Practical Equivalence
-## 
-##   ROPE: [-0.10 0.10]
-## 
-##         H0 inside ROPE     89% HDI
-##  Undecided      1.11 % [0.09 0.71]
-```
-
-### Probability of Direction (*p*d)
-
-[**`p_direction()`**](https://easystats.github.io/bayestestR/reference/p_direction.html)
-computes the **Probability of Direction** (***p*d**, also known as the
-Maximum Probability of Effect - *MPE*). It varies between 50% and 100%
-(*i.e.*, `0.5` and `1`) and can be interpreted as the probability
-(expressed in percentage) that a parameter (described by its posterior
-distribution) is strictly positive or negative (whichever is the most
-probable). It is mathematically defined as the proportion of the
-posterior distribution that is of the median’s sign. Although
-differently expressed, this index is fairly similar (*i.e.*, is strongly
-correlated) to the frequentist ***p*-value**.
-
-**Relationship with the p-value**: In most cases, it seems that the *pd*
-corresponds to the frequentist one-sided *p*-value through the formula
-`p-value = (1-pd/100)` and to the two-sided *p*-value (the most commonly
-reported) through the formula `p-value = 2*(1-pd/100)`. Thus, a `pd` of
-`95%`, `97.5%` `99.5%` and `99.95%` corresponds approximately to a
-two-sided *p*-value of respectively `.1`, `.05`, `.01` and `.001`. See
-the [*reporting
-guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
-
-``` r
-posterior <- distribution_normal(100, 0.4, 0.2)
-p_direction(posterior)
-## pd = 98.00%
-```
-
 ![](man/figures/unnamed-chunk-12-1.png)<!-- -->
 
 ### Bayes Factor
@@ -275,7 +307,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## # Bayes Factor (Savage-Dickey density ratio)
 ## 
 ##    BF
-##  2.04
+##  1.48
 ## 
 ## * Evidence Against The Null: [0]
 ```
@@ -291,23 +323,6 @@ from or closer to the null.*</sup>
 
 For more info, see [the Bayes factors
 vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
-
-### MAP-based *p*-value
-
-[**`p_map()`**](https://easystats.github.io/bayestestR/reference/p_map.html)
-computes a Bayesian equivalent of the p-value, related to the odds that
-a parameter (described by its posterior distribution) has against the
-null hypothesis (*h0*) using Mills’ (2014, 2017) *Objective Bayesian
-Hypothesis Testing* framework. It corresponds to the density value at 0
-divided by the density at the Maximum A Posteriori (MAP).
-
-``` r
-posterior <- distribution_normal(100, 0.4, 0.2)
-p_map(posterior)
-## p (MAP) = 0.193
-```
-
-![](man/figures/unnamed-chunk-16-1.png)<!-- -->
 
 ## Utilities
 
