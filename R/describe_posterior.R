@@ -164,7 +164,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
 
     if (any(c("ps", "p_sig", "p_significance") %in% test)) {
       test_psig <- p_significance(x, threshold  = rope_range, ...)
-      if (!is.data.frame(test_psig)) test_prope <- data.frame("Parameter" = "Posterior", "ps" = test_psig)
+      if (!is.data.frame(test_psig)) test_psig <- data.frame("Parameter" = "Posterior", "ps" = test_psig)
     } else {
       test_psig <- data.frame("Parameter" = NA)
     }
@@ -218,6 +218,8 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
     }
   } else {
     test_pd <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
+    test_prope <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
+    test_psig <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
     test_rope <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
     test_bf <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
     test_pmap <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
@@ -233,6 +235,8 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   uncertainty <- .add_effects_component_column(uncertainty)
   test_pmap <- .add_effects_component_column(test_pmap)
   test_pd <- .add_effects_component_column(test_pd)
+  test_prope <- .add_effects_component_column(test_prope)
+  test_psig <- .add_effects_component_column(test_psig)
   test_rope <- .add_effects_component_column(test_rope)
   test_bf <- .add_effects_component_column(test_bf)
 
@@ -248,6 +252,10 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
     test_pmap$.rowid <- 1:nrow(test_pmap)
   } else if (!all(is.na(test_pd$Parameter))) {
     test_pd$.rowid <- 1:nrow(test_pd)
+  } else if (!all(is.na(test_prope$Parameter))) {
+    test_prope$.rowid <- 1:nrow(test_prope)
+  } else if (!all(is.na(test_psig$Parameter))) {
+    test_psig$.rowid <- 1:nrow(test_psig)
   } else if (!all(is.na(test_rope$Parameter))) {
     test_rope$.rowid <- 1:nrow(test_rope)
   } else if (!all(is.na(test_bf$Parameter))) {
@@ -262,6 +270,8 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   out <- merge(estimates, uncertainty, by = merge_by, all = TRUE)
   out <- merge(out, test_pmap, by = merge_by, all = TRUE)
   out <- merge(out, test_pd, by = merge_by, all = TRUE)
+  out <- merge(out, test_prope, by = merge_by, all = TRUE)
+  out <- merge(out, test_psig, by = merge_by, all = TRUE)
   out <- merge(out, test_rope, by = merge_by, all = TRUE)
   out <- merge(out, test_bf, by = merge_by, all = TRUE)
   out <- out[!is.na(out$Parameter), ]
@@ -494,7 +504,7 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
   if (!is.null(test)) {
     test <- .check_test_values(test)
     if ("all" %in% test) {
-      test <- c("pd", "rope", "equivalence", "bf")
+      test <- c("pd", "p_map", "p_rope", "p_significance", "rope", "equivalence", "bf")
     }
   }
 
@@ -545,8 +555,8 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
 
 .check_test_values <- function(test) {
   match.arg(tolower(test), c(
-    "pd", "p_direction", "pdir", "mpe",
-    "rope", "equivalence", "equivalence_test", "equitest",
+    "pd", "p_direction", "pdir", "mpe", "ps", "psig", "p_significance",
+    "p_rope", "rope", "equivalence", "equivalence_test", "equitest",
     "bf", "bayesfactor", "bayes_factor", "p_map", "all"
   ), several.ok = TRUE)
 }
