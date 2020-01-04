@@ -126,7 +126,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   if (!is.null(test)) {
     test <- .check_test_values(test)
     if ("all" %in% test) {
-      test <- c("p_map", "pd", "rope", "equivalence", "bf")
+      test <- c("pd", "p_map", "p_rope", "p_significance", "rope", "equivalence", "bf")
     }
 
     ## TODO no BF for arm::sim
@@ -134,7 +134,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
 
     # MAP-based p-value
 
-    if ("p_map" %in% test) {
+    if (any(c("p_map", "p_pointnull") %in% test)) {
       test_pmap <- p_map(x, ...)
       if (!is.data.frame(test_pmap)) test_pmap <- data.frame("Parameter" = "Posterior", "p_map" = test_pmap)
     } else {
@@ -149,6 +149,24 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
       if (!is.data.frame(test_pd)) test_pd <- data.frame("Parameter" = "Posterior", "pd" = test_pd)
     } else {
       test_pd <- data.frame("Parameter" = NA)
+    }
+
+    # Probability of rope
+
+    if (any(c("p_rope") %in% test)) {
+      test_prope <- p_rope(x, range = rope_range, ...)
+      if (!is.data.frame(test_prope)) test_prope <- data.frame("Parameter" = "Posterior", "p_ROPE" = test_prope)
+    } else {
+      test_prope <- data.frame("Parameter" = NA)
+    }
+
+    # Probability of significance
+
+    if (any(c("ps", "p_sig", "p_significance") %in% test)) {
+      test_psig <- p_significance(x, threshold  = rope_range, ...)
+      if (!is.data.frame(test_psig)) test_prope <- data.frame("Parameter" = "Posterior", "ps" = test_psig)
+    } else {
+      test_psig <- data.frame("Parameter" = NA)
     }
 
 
