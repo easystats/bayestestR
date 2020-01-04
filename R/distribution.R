@@ -18,7 +18,7 @@ distribution <- function(type = "normal", ...) {
   basr_r_distributions <- c(
     "beta", "binom", "cauchy", "chisq", "chisquared", "exp", "f",
     "gamma", "geom", "hyper", "lnorm", "multinom", "nbinom", "normal",
-    "pois", "poisson", "student", "t", "unif", "uniform", "weibull"
+    "pois", "poisson", "student", "t", "student_t", "unif", "uniform", "weibull"
   )
   switch(
     match.arg(arg = type, choices = basr_r_distributions),
@@ -26,7 +26,9 @@ distribution <- function(type = "normal", ...) {
     "cauchy" = distribution_cauchy(...),
     "poisson" = distribution_poisson(...),
     "gamma" = distribution_gamma(...),
-    "student" = distribution_student(...),
+    "t" = ,
+    "student" = ,
+    "student_t" = distribution_student(...),
     "chisquared" = distribution_chisquared(...),
     "uniform" = distribution_uniform(...),
     "beta" = distribution_beta(...),
