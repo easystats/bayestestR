@@ -155,7 +155,9 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
 
     if (any(c("p_rope") %in% test)) {
       test_prope <- p_rope(x, range = rope_range, ...)
-      if (!is.data.frame(test_prope)) test_prope <- data.frame("Parameter" = "Posterior", "p_ROPE" = test_prope)
+      if (!"Parameter" %in% names(test_prope)) {
+        test_prope <- cbind(data.frame("Parameter" = "Posterior"), test_prope)
+      }
     } else {
       test_prope <- data.frame("Parameter" = NA)
     }
