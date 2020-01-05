@@ -94,10 +94,10 @@ In the Bayesian framework, parameters are estimated in a probabilistic fashion a
 
 - [**Centrality**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
   - `mean()`, `median()` or [**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html) for an estimation of the mode.
-  - [**`point_estimate()`**](https://easystats.github.io/bayestestR/reference/point_estimate.html) can be used to get them at once and can be run on models.
+  - [**`point_estimate()`**](https://easystats.github.io/bayestestR/reference/point_estimate.html) can be used to get them at once and can be run directly on models.
   
 - [**Uncertainty**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-  - [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html) for *Highest Density Interval (HDI)* or [**`eti()`**](https://easystats.github.io/bayestestR/reference/eti.html) for *Equal-Tailed Interval (ETI)*.
+  - [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html) for *Highest Density Intervals (HDI)* or [**`eti()`**](https://easystats.github.io/bayestestR/reference/eti.html) for *Equal-Tailed Intervals (ETI)*.
   - [**`ci()`**](https://easystats.github.io/bayestestR/reference/ci.html) can be used as a general method for Confidence and Credible Intervals (CI).
   
 - [**Effect Existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html): whether an effect is different from 0.
@@ -210,7 +210,7 @@ p <- see::plots(p1, p2, tags = TRUE)
 ## Existence and Significance Testing
 
 
-### Probability of Direction (*p*d)
+### Probability of Direction (*pd*)
 
 [**`p_direction()`**](https://easystats.github.io/bayestestR/reference/p_direction.html) computes the **Probability of Direction** (***p*d**, also known as the Maximum Probability of Effect - *MPE*). It varies between 50\% and 100\% (*i.e.*, `0.5` and `1`) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Although differently expressed, this index is fairly similar (*i.e.*, is strongly correlated) to the frequentist ***p*-value**.
 

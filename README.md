@@ -86,20 +86,21 @@ described by **reporting 4 types of indices**:
   - [**Centrality**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
       - `mean()`, `median()` or
         [**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html)
-        for an approximation of the mode.
+        for an estimation of the mode.
       - [**`point_estimate()`**](https://easystats.github.io/bayestestR/reference/point_estimate.html)
-        can be used to get them at once and can be run on models.
+        can be used to get them at once and can be run directly on
+        models.
   - [**Uncertainty**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
       - [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html)
-        for *Highest Density Interval (HDI)* or
+        for *Highest Density Intervals (HDI)* or
         [**`eti()`**](https://easystats.github.io/bayestestR/reference/eti.html)
         for *Equal-Tailed Intervals (ETI)*.
       - [**`ci()`**](https://easystats.github.io/bayestestR/reference/ci.html)
-        for a more general method for Confidence and Credible Intervals
-        (CI).
+        can be used as a general method for Confidence and Credible
+        Intervals (CI).
   - [**Effect
     Existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html):
-    whether an effect is not different from 0.
+    whether an effect is different from 0.
       - [**`p_direction()`**](https://easystats.github.io/bayestestR/reference/p_direction.html)
         for a Bayesian equivalent of the frequentist *p*-value (see
         [Makowski et
@@ -112,7 +113,7 @@ described by **reporting 4 types of indices**:
         effect presence against its absence (*h0 = 0*).
   - [**Effect
     Significance**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html):
-    whether the effect can be considered as non-negligible.
+    whether the effect size can be considered as non-negligible.
       - [**`p_rope()`**](https://easystats.github.io/bayestestR/reference/p_rope.html)
         is the probability of the effect falling inside a [*Region of
         Practical Equivalence
@@ -121,7 +122,7 @@ described by **reporting 4 types of indices**:
         computes a Bayes factor against the null as defined by a region
         (the ROPE).
       - [**`p_significance()`**](https://easystats.github.io/bayestestR/reference/p_significance.html)
-        that combines a region of equivalence and the probability of
+        that combines a region of equivalence with the probability of
         direction.
 
 [**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html)
@@ -129,11 +130,9 @@ is the master function with which you can compute all of the indices
 cited below at once.
 
 ``` r
-describe_posterior(rnorm(1000))
-##   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
-## 1 Posterior -0.021 89   -1.6     1.5 0.50      89     -0.1       0.1
-##   ROPE_Percentage
-## 1            0.11
+describe_posterior(rnorm(1000), centrality="median", test=c("p_direction", "p_significance"))
+##   Parameter Median CI CI_low CI_high   pd   ps
+## 1 Posterior -0.028 89   -1.4     1.8 0.51 0.47
 ```
 
 *bayestestR* also includes [**many other
@@ -212,7 +211,7 @@ eti(posterior, ci = .89)
 
 ## Existence and Significance Testing
 
-### Probability of Direction (*p*d)
+### Probability of Direction (*pd*)
 
 [**`p_direction()`**](https://easystats.github.io/bayestestR/reference/p_direction.html)
 computes the **Probability of Direction** (***p*d**, also known as the
@@ -307,7 +306,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## # Bayes Factor (Savage-Dickey density ratio)
 ## 
 ##    BF
-##  1.48
+##  2.04
 ## 
 ## * Evidence Against The Null: [0]
 ```
@@ -370,7 +369,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.35
+## [1] 0.39
 ```
 
 # References
