@@ -1,7 +1,8 @@
 context("average_posterior")
 
 test_that("average_posterior vs posterior_average", {
-  testthat::skip()
+  testthat::skip_on_cran()
+  testthat::skip_on_travis()
 
   library(brms)
   fit1 <- brm(rating ~ treat + period + carry,
@@ -19,11 +20,14 @@ test_that("average_posterior vs posterior_average", {
   res_brms <- brms::posterior_average(fit1, fit2, weights = "marglik", missing = 0)
   res_brms <- res_brms[, 1:4]
 
-  res_BT <- eti(res_BT)
-  res_brms <- eti(res_brms)
+  res_BT1 <- eti(res_BT)
+  res_brms1 <- eti(res_brms)
 
-  testthat::expect_equal(res_BT$Parameter, res_brms$Parameter)
-  testthat::expect_equal(res_BT$CI, res_brms$CI)
-  testthat::expect_equal(res_BT$CI_low, res_brms$CI_low)
-  testthat::expect_equal(res_BT$CI_high, res_brms$CI_high)
+  testthat::expect_equal(res_BT1$Parameter, res_brms1$Parameter)
+  testthat::expect_equal(res_BT1$CI, res_brms1$CI)
+  testthat::expect_equal(res_BT1$CI_low, res_brms1$CI_low)
+  testthat::expect_equal(res_BT1$CI_high, res_brms1$CI_high)
+
+  # plot(res_brms1)
+  # plot(res_BT1)
 })
