@@ -57,6 +57,11 @@ Note that a CI based on the quantile (equal-tailed interval) might be more appro
 
 #### **Existence** 
 
+```{r echo=FALSE, fig.cap="Reviewer 2 (circa a long time ago in a galaxy far away).", fig.align='center', out.width="60%"}
+knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/watto.jpg")
+```
+
+
 The Bayesian framework can neatly delineate and quantify different aspects of hypothesis testing, such as effect *existence* and *significance*. The most straightforward index to describe effect existence is the [**Probability of Direction (pd)**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html), representing the certainty associated with the most probable direction (positive or negative) of the effect. This index is easy to understand, simple to interpret, straightforward to compute, robust to model characteristics and independent from the scale of the data. 
 
 Moreover, it is strongly correlated with the frequentist ***p*-value**, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics. A **two-sided *p*-value** of respectively `.1`, `.05`, `.01` and `.001` would correspond approximately to a ***pd*** of 95\%, 97.5\%, 99.5\% and 99.95\%. Thus, for convenience, we suggest the following reference values as an interpretation helpers:

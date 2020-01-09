@@ -188,12 +188,12 @@
     <p>Compute various point-estimates, such as the mean, the median or the MAP, to describe posterior distributions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>point_estimate</span>(
   <span class='no'>x</span>,
-  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
   <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
   <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -203,7 +203,7 @@
 <span class='co'># S3 method for brmsfit</span>
 <span class='fu'>point_estimate</span>(
   <span class='no'>x</span>,
-  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
   <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
@@ -212,7 +212,7 @@
 )
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>point_estimate</span>(<span class='no'>x</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -264,8 +264,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
 <span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Point Estimates
 #&gt; 
-#&gt; </span><span>  Median
-#&gt;  -0.0073
+#&gt; </span><span>  Median   Mean     MAP
+#&gt;  -0.0073 -0.012 -0.0015
 #&gt; </div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
 #&gt; 
 #&gt; </span><span> Median  MAD   Mean   SD  MAP

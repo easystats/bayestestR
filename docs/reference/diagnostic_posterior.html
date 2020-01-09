@@ -237,12 +237,10 @@ should be returned.</p></td>
     <tr>
       <th>component</th>
       <td><p>Should all parameters, parameters for the
- conditional model, the zero-inflated part of the model, the dispersion
- term or the instrumental variables be returned? Applies to models
- with zero-inflated and/or dispersion formula, or to models with instrumental
- variable (so called fixed-effects regressions). May be abbreviated. Note that the
-<em>conditional</em> component is also called <em>count</em> or <em>mean</em>
-component, depending on the model.</p></td>
+conditional model, the zero-inflated part of the model, the dispersion
+term or the instrumental variables be returned? Applies to models
+with zero-inflated and/or dispersion formula, or to models with instrumental
+variable (so called fixed-effects regressions). May be abbreviated.</p></td>
     </tr>
     </table>
 
@@ -272,9 +270,9 @@ component, depending on the model.</p></td>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>diagnostic_posterior</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt;     Parameter      Rhat ESS       MCSE
-#&gt; 1 (Intercept) 1.0010139 190 0.37639114
-#&gt; 2        gear 0.9961371 178 0.06974364
-#&gt; 3          wt 0.9955156 246 0.04661674</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; 1 (Intercept) 1.0139875 201 0.40927748
+#&gt; 2        gear 0.9975603 228 0.07035050
+#&gt; 3          wt 1.0192900 178 0.05880522</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># brms models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)
