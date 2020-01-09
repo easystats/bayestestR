@@ -69,6 +69,7 @@ reference:
 
 - title: "Utilities"
   contents:
+  - average_posterior
   - simulate_correlation
   - convert_bayesian_as_frequentist
   - contr.bayes
