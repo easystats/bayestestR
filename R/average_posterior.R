@@ -108,7 +108,6 @@ average_posterior.brmsfit <- average_posterior.stanreg
 
 #' @export
 #' @rdname average_posterior
-#' @importFrom BayesFactor posterior
 average_posterior.BFBayesFactor <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE){
   Mods <- c(...)
 
