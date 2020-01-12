@@ -535,7 +535,13 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)</div><div class='output co'>#&gt; <span class='message'>Welcome to emmeans.</span>
 #&gt; <span class='message'>NOTE -- Important change from versions &lt;= 1.41:</span>
 #&gt; <span class='message'>    Indicator predictors are now treated as 2-level factors by default.</span>
-#&gt; <span class='message'>    To revert to old behavior, use emm_options(cov.keep = character(0))</span></div><div class='input'><span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: restarting interrupted promise evaluation</span></div><div class='output co'>#&gt; Error in as.vector(x) : object 'model' not found</div><div class='output co'>#&gt; <span class='error'>Error in ref_grid(object = model, options = list(just.data = TRUE)): Perhaps a 'data' or 'params' argument is needed</span></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; <span class='message'>    To revert to old behavior, use emm_options(cov.keep = character(0))</span></div><div class='input'><span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Description of Posterior Distributions
+#&gt; 
+#&gt; </span><span> Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
+#&gt;    overall  -5.56 89  -6.76   -4.44  1      89     -0.1       0.1
+#&gt;  ROPE_Percentage
+#&gt;                0
+#&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># brms models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)
