@@ -568,7 +568,7 @@ knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/f
 
 ### Averaging posteriors
 
-Similar to how we can average evidence for a predictor across models, we can also average the posterior estimate across models. One situation in which this is useful is **situations where Bayes factors seem to support a null effect, yet the *HDI* of the alternative excludes the null value** (also see `si()` described above). For example, looking at Motor *Trend Car Road Tests* (the `mtcars` dataset), we would naturally predict miles/gallon (`mpg`) from transition type (`am`) and weight (`wt`), but what about number of carburetors (`carb`)? Is this a good predictor?
+Similar to how we can average evidence for a predictor across models, we can also average the posterior estimate across models. One situation in which this is useful in **situations where Bayes factors seem to support a null effect, yet the *HDI* of the alternative excludes the null value** (also see `si()` described above). For example, looking at Motor *Trend Car Road Tests* (`data(mtcars)`), we would naturally predict miles/gallon (`mpg`) from transition type (`am`) and weight (`wt`), but what about number of carburetors (`carb`)? Is this a good predictor?
 
 We can determine this by comparing the following models:
 
@@ -603,8 +603,6 @@ BF_carb <- bayesfactor_models(mod_carb, denominator = mod, verbose = FALSE)
 BF <- BF_carb$BF[1]
 print(BF_carb)
 
-
-
 ```
 
 It seems that the model without `carb` as a predictor is $1/BF=`r scales::number(1/BF, accuracy = 0.1)`$ times more likely than the model *with* `carb` as a predictor. We might then assume that in the latter model, the HDI will include the point-null value of 0 effect, to also indicate the credibility of the null in the posterior. However, this is not the case:
@@ -615,7 +613,7 @@ hdi(mod_carb, ci = .95)
 
 How can this be? By estimating the HDI of the effect for `carb` in the full model, we are acting under the assumption that that model is correct. However, as we've just seen, both models are practically tied, and in fact it was the no-`carb` model, in which the effect for `carb` is fixed at 0, that was slightly more supported by the data. If this is the case **why limit our estimation of the effect just to one model?** [@van2019cautionary].
 
-Using Bayesian model averaging, we can combine the posteriors samples from several models, weighted by the models' marginal likelihood (via the `bayesfactor_models()` function). If some parameter is part of some of the models but is missing from others, it is assumed to be fixed a 0. This results in a posterior distribution across several models, which we can now treat like any posterior distribution, and estimate the HDI.
+Using Bayesian model averaging, we can combine the posteriors samples from several models, weighted by the models' marginal likelihood (via the `bayesfactor_models()` function). If some parameter is part of some of the models but is missing from others, it is assumed to be fixed a 0 (which can also be seen as a method of applying shrinkage to our estimates). This results in a posterior distribution across several models, which we can now treat like any posterior distribution, and estimate the HDI.
 
 ```{r}
 BMA_draws <- average_posterior(mod, mod_carb)
