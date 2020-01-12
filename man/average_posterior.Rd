@@ -58,6 +58,13 @@ Extract posterior samples of parameters, weighted across models.
 Weighting is done by comparing posterior model probabilities, via \code{\link{bayesfactor_models}}.
 }
 \details{
+Note that across models some parameters might play different roles. For example,
+the parameter \code{A} plays a different role in the model \code{Y ~ A + B} (where it is a main effect)
+than it does in the model \code{Y ~ A + B + A:B} (where it is a simple effect). In many cases centering
+of predictors (mean subtracting for continuous variables, and effects coding via \code{contr.sum} or
+orthonormal coding via {\code{\link{contr.bayes}}} for factors) can reduce this issue. In any case
+you should be mindful of this issue.
+\cr\cr
 See \code{\link{bayesfactor_models}} details for more info on passed models.
 \cr\cr
 Note that for \code{BayesFactor} models, posterior samples cannot be generated from intercept only models.
@@ -106,9 +113,10 @@ plot(eti(res_brms))
 }
 \references{
 \itemize{
+  \item Clyde, M., Desimone, H., & Parmigiani, G. (1996). Prediction via orthogonalized model mixing. Journal of the American Statistical Association, 91(435), 1197-1208.
   \item Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E. (2019, March 25). A conceptual introduction to Bayesian Model Averaging. \doi{10.31234/osf.io/wgb64}
-  \item Clyde, M. A., Ghosh, J., & Littman, M. L. (2011). Bayesian adaptive sampling for variable selection and model averaging. Journal of Computational and Graphical Statistics, 20(1), 80-101.
   \item Rouder, J. N., Haaf, J. M., & Vandekerckhove, J. (2018). Bayesian inference for psychology, part IV: Parameter estimation and Bayes factors. Psychonomic bulletin & review, 25(1), 102-113.
+  \item van den Bergh, D., Haaf, J. M., Ly, A., Rouder, J. N., & Wagenmakers, E. J. (2019). A cautionary note on estimating effect size.
 }
 }
 \seealso{
