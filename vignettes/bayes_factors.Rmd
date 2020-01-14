@@ -60,7 +60,7 @@ Having said that, here's an introduction to Bayes factors :)
 
 **Bayes factors (BFs) are indices of *relative* evidence of one "model" over another**, which can be used in the Bayesian framework as alternatives to classical (frequentist) hypothesis testing indices (such as $p-values$).
 
-According to Bayes' theorem, we can update prior probabilities of some model $M$ ($P(M)$) to posterior probabilities ($P(M|D)$) after observing some datum $D$ by accounting for the likelihood of observing that datum given the model ($P(D|M)$):
+According to Bayes' theorem, we can update prior probabilities of some model $M$ ($P(M)$) to posterior probabilities ($P(M|D)$) after observing some datum $D$ by accounting for the probability of observing that datum given the model ($P(D|M)$, also known as the *likelihood*):
 
 $$
 P(M|D) = \frac{P(D|M)\times P(M)}{P(D)}
@@ -77,7 +77,7 @@ $$
 BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 $$
 
-Thus, Bayes factors can be seen either as a ratio quantifying ***the relative likelihood of some observed data by two models*** as they can be computed by comparing marginal likelihoods, or as ***the degree by which some prior beliefs about the relative credibility of two models are to be updated*** as they can be computed by dividing posterior odds by prior odds, as we will soon demonstrate.
+Thus, Bayes factors can be seen either as a ratio quantifying ***the relative probability of some observed data by two models*** as they can be computed by comparing the marginal likelihoods of the two models, or as ***the degree by which some prior beliefs about the relative credibility of two models are to be updated*** as they can be computed by dividing posterior odds by prior odds, as we will soon demonstrate.
 
 Here we provide functions for computing Bayes factors in two different applications: **testing single parameters (coefficients) within a model** and **comparing statistical models themselves**.
 

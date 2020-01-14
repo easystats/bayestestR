@@ -160,7 +160,7 @@
 <h1 class="hasAnchor">
 <a href="#the-bayes-factor" class="anchor"></a>The Bayes Factor</h1>
 <p><strong>Bayes factors (BFs) are indices of <em>relative</em> evidence of one “model” over another</strong>, which can be used in the Bayesian framework as alternatives to classical (frequentist) hypothesis testing indices (such as <span class="math inline">\(p-values\)</span>).</p>
-<p>According to Bayes’ theorem, we can update prior probabilities of some model <span class="math inline">\(M\)</span> (<span class="math inline">\(P(M)\)</span>) to posterior probabilities (<span class="math inline">\(P(M|D)\)</span>) after observing some datum <span class="math inline">\(D\)</span> by accounting for the likelihood of observing that datum given the model (<span class="math inline">\(P(D|M)\)</span>):</p>
+<p>According to Bayes’ theorem, we can update prior probabilities of some model <span class="math inline">\(M\)</span> (<span class="math inline">\(P(M)\)</span>) to posterior probabilities (<span class="math inline">\(P(M|D)\)</span>) after observing some datum <span class="math inline">\(D\)</span> by accounting for the probability of observing that datum given the model (<span class="math inline">\(P(D|M)\)</span>, also known as the <em>likelihood</em>):</p>
 <p><span class="math display">\[
 P(M|D) = \frac{P(D|M)\times P(M)}{P(D)}
 \]</span></p>
@@ -171,7 +171,7 @@ P(M|D) = \frac{P(D|M)\times P(M)}{P(D)}
 <p><span class="math display">\[
 BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 \]</span></p>
-<p>Thus, Bayes factors can be seen either as a ratio quantifying <strong><em>the relative likelihood of some observed data by two models</em></strong> as they can be computed by comparing marginal likelihoods, or as <strong><em>the degree by which some prior beliefs about the relative credibility of two models are to be updated</em></strong> as they can be computed by dividing posterior odds by prior odds, as we will soon demonstrate.</p>
+<p>Thus, Bayes factors can be seen either as a ratio quantifying <strong><em>the relative probability of some observed data by two models</em></strong> as they can be computed by comparing the marginal likelihoods of the two models, or as <strong><em>the degree by which some prior beliefs about the relative credibility of two models are to be updated</em></strong> as they can be computed by dividing posterior odds by prior odds, as we will soon demonstrate.</p>
 <p>Here we provide functions for computing Bayes factors in two different applications: <strong>testing single parameters (coefficients) within a model</strong> and <strong>comparing statistical models themselves</strong>.</p>
 <div id="bayesfactor_parameters" class="section level2">
 <h2 class="hasAnchor">
