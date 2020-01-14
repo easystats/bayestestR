@@ -81,7 +81,7 @@ Thus, Bayes factors can be seen either as a ratio quantifying ***the relative li
 
 Here we provide functions for computing Bayes factors in two different applications: **testing single parameters (coefficients) within a model** and **comparing statistical models themselves**.
 
-## Testing Models' Parameters with Bayes Factors
+## Testing Models' Parameters with Bayes Factors {#bayesfactor_parameters}
 
 A ***Bayes factor for a single parameter*** can be used to answer the question:
 
@@ -263,7 +263,7 @@ As we can see, given that we have an *a priori* assumption about the direction o
 
 **NOTE**: See the *Testing Contrasts* appendix below.
 
-### Support intervals
+### Support intervals {#si}
 
 So far we've seen that Bayes factors quantify relative support between competing hypotheses. However, we can also ask:
 
@@ -302,7 +302,7 @@ Thus, the choice of BF (the level of support the interval should indicate) depen
 - A $BF > 1$ contains values who received more impressive support from the data.  
 - A $BF < 1$ contains values whose credibility has *not* been impressively decreased by observing the data. As stated above, these are also values who, if tested against would produce a Bayes factor larger than $1/BF$ in support of the alternative.
 
-## Comparing Models using Bayes Factors
+## Comparing Models using Bayes Factors {#bayesfactor_models}
 
 Bayes factors can also be used to compare statistical models, for which they answer the question:
 
@@ -417,7 +417,7 @@ structure(list(Model = c(
   BF_method = "BIC approximation", unsupported_models = FALSE)
 ```
 
-### Order restricted models
+### Order restricted models {#bayesfactor_restricted}
 
 As stated above when discussing one-sided hypothesis tests, we can create new models by imposing order restrictions on a given model. For example, consider the following model, in which we predict the length of an iris' sepal from the length of its petal, as well as from its species, with a prior of $b_{petal} \sim N(0,2)$ $b_{versicolors}\ \&\  b_{virginica} \sim N(0,1.2)$:
 
@@ -492,7 +492,7 @@ $$
 
 In the previous section we discussed the direct comparison of two models to determine if an effect is supported by the data. However, in many cases there are too many models to consider or perhaps it is not straightforward which models we should compare to determine if an effect is supported by the data. For such cases we can use Bayesian model averaging (BMA) to determine the support provided by the data for a parameter or term across many models.
 
-### Inclusion Bayes factors
+### Inclusion Bayes factors {#bayesfactor_inclusion}
 
 Inclusion Bayes factors answer the question:
 
@@ -566,7 +566,7 @@ bayesfactor_inclusion(BF_ToothGrowth_against_dose)
 knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP3.PNG")
 ```
 
-### Averaging posteriors
+### Averaging posteriors {#average_posterior}
 
 Similar to how we can average evidence for a predictor across models, we can also average the posterior estimate across models. One situation in which this is useful in **situations where Bayes factors seem to support a null effect, yet the *HDI* of the alternative excludes the null value** (also see `si()` described above). For example, looking at Motor *Trend Car Road Tests* (`data(mtcars)`), we would naturally predict miles/gallon (`mpg`) from transition type (`am`) and weight (`wt`), but what about number of carburetors (`carb`)? Is this a good predictor?
 
@@ -668,7 +668,7 @@ estimate_contrasts(model, test = "bf")
 
 **NOTE**: See the *Specifying Correct Priors for Factors with More Than 2 Levels* section below.
 
-### Specifying correct priors for factors
+### Specifying correct priors for factors {#contr_bayes}
 
 This section introduces the biased priors obtained when using the common *effects* factor coding (`contr.sum`) or dummy factor coding (`contr.treatment`), and the solution of using orthonormal factor coding (`contr.bayes`) [as outlined in @rouder2012default, section 7.2]. Specifically, ***special care should be taken when working with factors which have 3 or more levels***.
 

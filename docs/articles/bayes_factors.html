@@ -173,9 +173,9 @@ BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 \]</span></p>
 <p>Thus, Bayes factors can be seen either as a ratio quantifying <strong><em>the relative likelihood of some observed data by two models</em></strong> as they can be computed by comparing marginal likelihoods, or as <strong><em>the degree by which some prior beliefs about the relative credibility of two models are to be updated</em></strong> as they can be computed by dividing posterior odds by prior odds, as we will soon demonstrate.</p>
 <p>Here we provide functions for computing Bayes factors in two different applications: <strong>testing single parameters (coefficients) within a model</strong> and <strong>comparing statistical models themselves</strong>.</p>
-<div id="testing-models-parameters-with-bayes-factors" class="section level2">
+<div id="bayesfactor_parameters" class="section level2">
 <h2 class="hasAnchor">
-<a href="#testing-models-parameters-with-bayes-factors" class="anchor"></a>Testing Models’ Parameters with Bayes Factors</h2>
+<a href="#bayesfactor_parameters" class="anchor"></a>Testing Models’ Parameters with Bayes Factors</h2>
 <p>A <strong><em>Bayes factor for a single parameter</em></strong> can be used to answer the question:</p>
 <blockquote>
 <p><strong>Given the observed data, has the null hypothesis of an absence of an effect become more, or less credible?</strong></p>
@@ -266,9 +266,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <p>As we can see, given that we have an <em>a priori</em> assumption about the direction of the effect (<em>that the effect is positive</em>), <strong>the presence of an effect is 2.8 times more likely than the absence of an effect</strong>, given the observed data (or that the data are 2.8 time more probable under <span class="math inline">\(H_1\)</span> than <span class="math inline">\(H_0\)</span>). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 2.8 is still considered quite <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf">weak evidence</a>).</p>
 <p><strong>NOTE</strong>: See the <em>Testing Contrasts</em> appendix below.</p>
 </div>
-<div id="support-intervals" class="section level3">
+<div id="si" class="section level3">
 <h3 class="hasAnchor">
-<a href="#support-intervals" class="anchor"></a>Support intervals</h3>
+<a href="#si" class="anchor"></a>Support intervals</h3>
 <p>So far we’ve seen that Bayes factors quantify relative support between competing hypotheses. However, we can also ask:</p>
 <blockquote>
 <p><strong>Which of the possible values of a parameter have increased or decreased credibility upon observing the data?</strong></p>
@@ -298,9 +298,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 </ul>
 </div>
 </div>
-<div id="comparing-models-using-bayes-factors" class="section level2">
+<div id="bayesfactor_models" class="section level2">
 <h2 class="hasAnchor">
-<a href="#comparing-models-using-bayes-factors" class="anchor"></a>Comparing Models using Bayes Factors</h2>
+<a href="#bayesfactor_models" class="anchor"></a>Comparing Models using Bayes Factors</h2>
 <p>Bayes factors can also be used to compare statistical models, for which they answer the question:</p>
 <blockquote>
 <p><strong>Under which model are the the observed data more probable?</strong></p>
@@ -398,9 +398,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; * Against Denominator: [5] 1 + (1 | Species)
 &gt; *   Bayes Factor Type: BIC approximation</code></pre>
 </div>
-<div id="order-restricted-models" class="section level3">
+<div id="bayesfactor_restricted" class="section level3">
 <h3 class="hasAnchor">
-<a href="#order-restricted-models" class="anchor"></a>Order restricted models</h3>
+<a href="#bayesfactor_restricted" class="anchor"></a>Order restricted models</h3>
 <p>As stated above when discussing one-sided hypothesis tests, we can create new models by imposing order restrictions on a given model. For example, consider the following model, in which we predict the length of an iris’ sepal from the length of its petal, as well as from its species, with a prior of <span class="math inline">\(b_{petal} \sim N(0,2)\)</span> <span class="math inline">\(b_{versicolors}\ \&amp;\  b_{virginica} \sim N(0,1.2)\)</span>:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">iris_model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Species <span class="op">+</span><span class="st"> </span>Petal.Length,</a>
 <a class="sourceLine" id="cb23-2" title="2">                       <span class="dt">data =</span> iris,</a>
@@ -448,9 +448,9 @@ BF_{restricted / NULL} = \frac
 <h2 class="hasAnchor">
 <a href="#bayesian-model-averaging" class="anchor"></a>Bayesian Model Averaging</h2>
 <p>In the previous section we discussed the direct comparison of two models to determine if an effect is supported by the data. However, in many cases there are too many models to consider or perhaps it is not straightforward which models we should compare to determine if an effect is supported by the data. For such cases we can use Bayesian model averaging (BMA) to determine the support provided by the data for a parameter or term across many models.</p>
-<div id="inclusion-bayes-factors" class="section level3">
+<div id="bayesfactor_inclusion" class="section level3">
 <h3 class="hasAnchor">
-<a href="#inclusion-bayes-factors" class="anchor"></a>Inclusion Bayes factors</h3>
+<a href="#bayesfactor_inclusion" class="anchor"></a>Inclusion Bayes factors</h3>
 <p>Inclusion Bayes factors answer the question:</p>
 <blockquote>
 <p><strong>Are the observed data more probable under models with a particular predictor, than they are under models without that particular predictor?</strong></p>
@@ -549,9 +549,9 @@ BF_{restricted / NULL} = \frac
 <p><img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP3.PNG"><!-- --></p>
 </div>
 </div>
-<div id="averaging-posteriors" class="section level3">
+<div id="average_posterior" class="section level3">
 <h3 class="hasAnchor">
-<a href="#averaging-posteriors" class="anchor"></a>Averaging posteriors</h3>
+<a href="#average_posterior" class="anchor"></a>Averaging posteriors</h3>
 <p>Similar to how we can average evidence for a predictor across models, we can also average the posterior estimate across models. One situation in which this is useful in <strong>situations where Bayes factors seem to support a null effect, yet the <em>HDI</em> of the alternative excludes the null value</strong> (also see <code><a href="../reference/si.html">si()</a></code> described above). For example, looking at Motor <em>Trend Car Road Tests</em> (<code><a href="https://rdrr.io/r/utils/data.html">data(mtcars)</a></code>), we would naturally predict miles/gallon (<code>mpg</code>) from transition type (<code>am</code>) and weight (<code>wt</code>), but what about number of carburetors (<code>carb</code>)? Is this a good predictor?</p>
 <p>We can determine this by comparing the following models:</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">mod &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>am,            </a>
@@ -641,9 +641,9 @@ BF_{restricted / NULL} = \frac
 &gt; 1      |      2 |  -1.46 | [-2.86, -0.13] | 1.36 |         -0.72</code></pre>
 <p><strong>NOTE</strong>: See the <em>Specifying Correct Priors for Factors with More Than 2 Levels</em> section below.</p>
 </div>
-<div id="specifying-correct-priors-for-factors" class="section level3">
+<div id="contr_bayes" class="section level3">
 <h3 class="hasAnchor">
-<a href="#specifying-correct-priors-for-factors" class="anchor"></a>Specifying correct priors for factors</h3>
+<a href="#contr_bayes" class="anchor"></a>Specifying correct priors for factors</h3>
 <p>This section introduces the biased priors obtained when using the common <em>effects</em> factor coding (<code>contr.sum</code>) or dummy factor coding (<code>contr.treatment</code>), and the solution of using orthonormal factor coding (<code>contr.bayes</code>) <span class="citation">(as outlined in Rouder, Morey, Speckman, &amp; Province, 2012, sec. 7.2)</span>. Specifically, <strong><em>special care should be taken when working with factors which have 3 or more levels</em></strong>.</p>
 <div id="contrasts-and-marginal-means" class="section level4">
 <h4 class="hasAnchor">
@@ -838,8 +838,8 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
       <ul class="nav nav-pills nav-stacked">
 <li>
 <a href="#the-bayes-factor">The Bayes Factor</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#testing-models-parameters-with-bayes-factors">Testing Models’ Parameters with Bayes Factors</a></li>
-      <li><a href="#comparing-models-using-bayes-factors">Comparing Models using Bayes Factors</a></li>
+<li><a href="#bayesfactor_parameters">Testing Models’ Parameters with Bayes Factors</a></li>
+      <li><a href="#bayesfactor_models">Comparing Models using Bayes Factors</a></li>
       <li><a href="#bayesian-model-averaging">Bayesian Model Averaging</a></li>
       <li><a href="#appendices">Appendices</a></li>
       </ul>
