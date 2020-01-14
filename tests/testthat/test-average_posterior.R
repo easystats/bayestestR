@@ -19,7 +19,7 @@ test_that("average_posterior vs posterior_average", {
   res_BT <- average_posterior(fit1, fit2)
 
   set.seed(444)
-  res_brms <- brms::posterior_average(fit1, fit2, weights = "marglik", missing = 0)
+  res_brms <- brms::posterior_average(fit1, fit2, weights = "bma", missing = 0)
   res_brms <- res_brms[, 1:4]
 
   res_BT1 <- eti(res_BT)
