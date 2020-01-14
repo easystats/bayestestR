@@ -414,10 +414,10 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt;   ROPE_Percentage
 #&gt; 1      0.08754209</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>x</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)') to get meaningful results.</span></div><div class='output co'>#&gt;   Parameter      Median      MAD        Mean        SD        MAP CI    CI_low
 #&gt; 1 Posterior -0.07114759 1.022044 -0.03122015 0.9749539 -0.2118201 89 -1.585473
-#&gt;    CI_high     p_map   pd ROPE_low.x ROPE_high.x p_ROPE    ps ROPE_CI
-#&gt; 1 1.460772 0.9623947 0.53       -0.1         0.1  0.078 0.492      89
-#&gt;   ROPE_low.y ROPE_high.y ROPE_Percentage ROPE_Equivalence BF
-#&gt; 1       -0.1         0.1      0.08754209        Undecided  1</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))</div><div class='output co'>#&gt;   Parameter      Median CI    CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high
+#&gt;    CI_high     p_map   pd p_ROPE    ps ROPE_CI ROPE_low ROPE_high
+#&gt; 1 1.460772 0.9623947 0.53  0.078 0.492      89     -0.1       0.1
+#&gt;   ROPE_Percentage ROPE_Equivalence BF
+#&gt; 1      0.08754209        Undecided  1</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))</div><div class='output co'>#&gt;   Parameter      Median CI    CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high
 #&gt; 1 Posterior -0.07114759 80 -1.238857 1.189950 0.53      89     -0.1       0.1
 #&gt; 2 Posterior -0.07114759 90 -1.665585 1.449041 0.53      89     -0.1       0.1
 #&gt;   ROPE_Percentage
@@ -438,16 +438,16 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 2        X2  0.16014275 1.2363190  0.004776539 1.147462  0.2809465 89 -1.723535
 #&gt; 3        X3 -0.04019892 1.0889390 -0.142847925 1.089237  0.1507107 89 -2.116266
 #&gt; 4        X4  0.20234268 0.9078906  0.216717183 1.050562  0.1233038 89 -2.062503
-#&gt;    CI_high     p_MAP   pd ROPE_low.x ROPE_high.x p_ROPE   ps ROPE_CI ROPE_low.y
-#&gt; 1 1.614477 0.9286150 0.53       -0.1         0.1   0.05 0.51      89       -0.1
-#&gt; 2 1.682682 0.9798509 0.52       -0.1         0.1   0.03 0.51      89       -0.1
-#&gt; 3 1.241637 0.9926612 0.52       -0.1         0.1   0.12 0.46      89       -0.1
-#&gt; 4 1.417986 0.9878487 0.56       -0.1         0.1   0.09 0.54      89       -0.1
-#&gt;   ROPE_high.y ROPE_Percentage ROPE_Equivalence BF
-#&gt; 1         0.1      0.05555556        Undecided  1
-#&gt; 2         0.1      0.03333333        Undecided  1
-#&gt; 3         0.1      0.13333333        Undecided  1
-#&gt; 4         0.1      0.10000000        Undecided  1</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))</div><div class='output co'>#&gt;   Parameter      Median CI    CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high
+#&gt;    CI_high     p_MAP   pd p_ROPE   ps ROPE_CI ROPE_low ROPE_high
+#&gt; 1 1.614477 0.9286150 0.53   0.05 0.51      89     -0.1       0.1
+#&gt; 2 1.682682 0.9798509 0.52   0.03 0.51      89     -0.1       0.1
+#&gt; 3 1.241637 0.9926612 0.52   0.12 0.46      89     -0.1       0.1
+#&gt; 4 1.417986 0.9878487 0.56   0.09 0.54      89     -0.1       0.1
+#&gt;   ROPE_Percentage ROPE_Equivalence BF
+#&gt; 1      0.05555556        Undecided  1
+#&gt; 2      0.03333333        Undecided  1
+#&gt; 3      0.13333333        Undecided  1
+#&gt; 4      0.10000000        Undecided  1</div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))</div><div class='output co'>#&gt;   Parameter      Median CI    CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high
 #&gt; 1        X1 -0.14501191 80 -1.330716 1.298955 0.53      89     -0.1       0.1
 #&gt; 2        X1 -0.14501191 90 -1.687645 1.770111 0.53      89     -0.1       0.1
 #&gt; 3        X2  0.16014275 80 -1.363448 1.446004 0.52      89     -0.1       0.1
@@ -484,35 +484,18 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt;            0.503 0.993 215
 #&gt; </div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Computation of Bayes factors: sampling priors, please wait...</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Description of Posterior Distributions
 #&gt; 
-#&gt; </span><span style='color: #BB0000;'> Fixed Effects (Conditional Model)</span><span>
-#&gt; 
-#&gt;    Parameter Median   MAD   Mean    SD    MAP CI CI_low CI_high p_MAP   pd
+#&gt; </span><span>   Parameter Median   MAD   Mean    SD    MAP CI CI_low CI_high p_MAP   pd
 #&gt;  (Intercept) 39.673 5.228 39.441 5.290 41.407 89  30.85  47.424 0.000 1.00
 #&gt;           wt -5.559 0.684 -5.562 0.708 -5.627 89  -6.76  -4.442 0.000 1.00
 #&gt;         gear -0.448 1.018 -0.441 0.954 -0.202 89  -1.98   0.891 0.958 0.69
-#&gt;  ROPE_low.x ROPE_high.x p_ROPE    ps ROPE_CI ROPE_low.y ROPE_high.y
-#&gt;          NA          NA     NA 1.000      89     -0.603       0.603
-#&gt;          NA          NA     NA 1.000      89     -0.603       0.603
-#&gt;          NA          NA     NA 0.425      89     -0.603       0.603
-#&gt;  ROPE_Percentage ROPE_Equivalence       BF  Rhat ESS
-#&gt;            0.000         Rejected 3.82e+03 0.996 220
-#&gt;            0.000         Rejected 1.77e+04 0.996 200
-#&gt;            0.503        Undecided 4.03e-02 0.993 215
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt;    Parameter Median MAD Mean SD MAP CI CI_low CI_high p_MAP pd ROPE_low.x
-#&gt;  (Intercept)     NA  NA   NA NA  NA NA     NA      NA    NA NA     -0.603
-#&gt;         gear     NA  NA   NA NA  NA NA     NA      NA    NA NA     -0.603
-#&gt;           wt     NA  NA   NA NA  NA NA     NA      NA    NA NA     -0.603
-#&gt;  ROPE_high.x p_ROPE ps ROPE_CI ROPE_low.y ROPE_high.y ROPE_Percentage
-#&gt;        0.603   0.00 NA      NA         NA          NA              NA
-#&gt;        0.603   0.45 NA      NA         NA          NA              NA
-#&gt;        0.603   0.00 NA      NA         NA          NA              NA
-#&gt;  ROPE_Equivalence BF  Rhat ESS
-#&gt;              &lt;NA&gt; NA 0.996 220
-#&gt;              &lt;NA&gt; NA 0.993 215
-#&gt;              &lt;NA&gt; NA 0.996 200
+#&gt;  p_ROPE    ps ROPE_CI ROPE_low ROPE_high ROPE_Percentage ROPE_Equivalence
+#&gt;    0.00 1.000      89   -0.603     0.603           0.000         Rejected
+#&gt;    0.00 1.000      89   -0.603     0.603           0.000         Rejected
+#&gt;    0.45 0.425      89   -0.603     0.603           0.503        Undecided
+#&gt;        BF  Rhat ESS
+#&gt;  3.82e+03 0.996 220
+#&gt;  1.77e+04 0.996 200
+#&gt;  4.03e-02 0.993 215
 #&gt; </div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Description of Posterior Distributions
 #&gt; 
 #&gt; </span><span>   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high

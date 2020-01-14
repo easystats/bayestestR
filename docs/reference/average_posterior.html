@@ -270,7 +270,7 @@ See <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code> detail
 <br /><br />
 Note that for <code>BayesFactor</code> models, posterior samples cannot be generated from intercept only models.
 <br /><br />
-This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg/brms/man/posterior_average.html'>posterior_average</a></code>.</p>
+This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>posterior_average</a></code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -318,7 +318,7 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
             <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='no'>res_BT</span> <span class='kw'>&lt;-</span> <span class='fu'>average_posterior</span>(<span class='no'>fit1</span>, <span class='no'>fit2</span>)
-<span class='no'>res_brms</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/posterior_average.html'>posterior_average</a></span>(<span class='no'>fit1</span>, <span class='no'>fit2</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='st'>"marglik"</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>)[, <span class='fl'>1</span>:<span class='fl'>4</span>]
+<span class='no'>res_brms</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>posterior_average</a></span>(<span class='no'>fit1</span>, <span class='no'>fit2</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='st'>"marglik"</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>)[, <span class='fl'>1</span>:<span class='fl'>4</span>]
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res_BT</span>))
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res_brms</span>))
