@@ -71,6 +71,7 @@ Suggests:
 	knitr,
 	MASS,
 	mclust,
+	modelbased,
 	lme4,
 	logspline,
 	performance,

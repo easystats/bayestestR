@@ -36,7 +36,7 @@ check_prior <- function(model, method = "gelman", simulate_priors = TRUE, ...) {
 
 
 #' @export
-check_prior.brmsfit <- function(model, method = "gelman", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, simulate_priors = TRUE, ...) {
+check_prior.brmsfit <- function(model, method = "gelman", simulate_priors = TRUE, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   # check arguments
   effects <- match.arg(effects)
   component <- match.arg(component)
