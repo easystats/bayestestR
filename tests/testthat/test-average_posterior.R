@@ -7,9 +7,11 @@ test_that("average_posterior vs posterior_average", {
   library(brms)
   fit1 <- brm(rating ~ treat + period + carry,
               data = inhaler,
+              refresh = 0,
               save_all_pars = TRUE)
   fit2 <- brm(rating ~ period + carry,
               data = inhaler,
+              refresh = 0,
               save_all_pars = TRUE)
 
 
