@@ -267,6 +267,12 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   }
 
 
+  # remove duplicated columns
+  if (all(c("rope", "p_rope") %in% test)) {
+    test_prope$ROPE_low <- NULL
+    test_prope$ROPE_high <- NULL
+  }
+
   # merge all data frames
 
   out <- merge(estimates, uncertainty, by = merge_by, all = TRUE)
