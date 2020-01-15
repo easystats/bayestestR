@@ -1,6 +1,6 @@
-context("average_posterior")
+context("weighted_posteriors")
 
-test_that("average_posterior vs posterior_average", {
+test_that("weighted_posteriors vs posterior_average", {
   testthat::skip_on_cran()
   testthat::skip_on_travis()
 
@@ -16,7 +16,7 @@ test_that("average_posterior vs posterior_average", {
 
 
   set.seed(444)
-  res_BT <- average_posterior(fit1, fit2)
+  res_BT <- weighted_posteriors(fit1, fit2)
 
   set.seed(444)
   res_brms <- brms::posterior_average(fit1, fit2, weights = "bma", missing = 0)

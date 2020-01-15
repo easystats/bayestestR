@@ -45,7 +45,7 @@ reference:
   - bayesfactor_inclusion
   - bayesfactor_restricted
   - si
-  - average_posterior
+  - weighted_posteriors
 
 - title: "Model Diagnostics"
   contents:

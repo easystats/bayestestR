@@ -29,7 +29,7 @@
 #' @note Random effects in the \code{lme} style will be displayed as interactions:
 #' i.e., \code{(X|G)} will become \code{1:G} and \code{X:G}.
 #'
-#' @seealso \code{\link{average_posterior}} for Bayesian parameter averaging.
+#' @seealso \code{\link{weighted_posteriors}} for Bayesian parameter averaging.
 #'
 #' @examples
 #' library(bayestestR)
