@@ -4,7 +4,7 @@
 
 - Added `p_pointnull()` as an alias to `p_MAP()`.
 - Added `si()` function to compute support intervals.
-- Added `average_posterior()` for generating posterior samples averaged across models.
+- Added `weighted_posteriors()` for generating posterior samples averaged across models.
 - Added `plot()`-method for `p_significance()`.
 - `p_significance()` now also works for *brmsfit*-objects.
 - `estimate_density()` now also works for *MCMCglmm*-objects.
