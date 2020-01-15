@@ -3,8 +3,8 @@ context("rope")
 test_that("rope", {
   testthat::expect_equal(as.numeric(rope(distribution_normal(1000, 0, 1))), 0.0898, tolerance = 0.01)
   testthat::expect_equal(equivalence_test(distribution_normal(1000, 0, 1))$ROPE_Equivalence, "Undecided")
-  testthat::expect_equal(length(capture.output(print(equivalence_test(distribution_normal(1000))))), 8)
-  testthat::expect_equal(length(capture.output(print(equivalence_test(distribution_normal(1000), ci = c(0.8, 0.9))))), 12)
+  testthat::expect_equal(length(capture.output(print(equivalence_test(distribution_normal(1000))))), 9)
+  testthat::expect_equal(length(capture.output(print(equivalence_test(distribution_normal(1000), ci = c(0.8, 0.9))))), 14)
 
   testthat::expect_equal(as.numeric(rope(distribution_normal(1000, 2, 0.01))), 0, tolerance = 0.01)
   testthat::expect_equal(equivalence_test(distribution_normal(1000, 2, 0.01))$ROPE_Equivalence, "Rejected")
