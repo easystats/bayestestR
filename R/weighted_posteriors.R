@@ -1,4 +1,4 @@
-#' Generate posterior samples averaged across models
+#' Generate posterior distributions weighted across models
 #'
 #' Extract posterior samples of parameters, weighted across models.
 #' Weighting is done by comparing posterior model probabilities, via \code{\link{bayesfactor_models}}.
@@ -37,7 +37,7 @@
 #'                     diagnostic_file = file.path(tempdir(), "df1.csv"))
 #'
 #'
-#' res <- average_posterior(stan_m0, stan_m1)
+#' res <- weighted_posteriors(stan_m0, stan_m1)
 #'
 #' plot(eti(res))
 #'
@@ -45,7 +45,7 @@
 #' library(BayesFactor)
 #' BFmods <- anovaBF(extra ~ group + ID, sleep, whichRandom = "ID")
 #'
-#' res <- average_posterior(BFmods)[1:3]
+#' res <- weighted_posteriors(BFmods)[1:3]
 #' plot(eti(res))
 #'
 #' # Compare to brms::posterior_average
@@ -56,7 +56,7 @@
 #'             data = inhaler,
 #'             save_all_pars = TRUE)
 #'
-#' res_BT <- average_posterior(fit1, fit2)
+#' res_BT <- weighted_posteriors(fit1, fit2)
 #' res_brms <- brms::posterior_average(fit1, fit2, weights = "marglik", missing = 0)[, 1:4]
 #'
 #' plot(eti(res_BT))
@@ -73,14 +73,14 @@
 #'
 #'
 #' @export
-average_posterior <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE) {
-  UseMethod("average_posterior")
+weighted_posteriors <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE) {
+  UseMethod("weighted_posteriors")
 }
 
 #' @export
-#' @rdname average_posterior
+#' @rdname weighted_posteriors
 #' @importFrom insight get_parameters
-average_posterior.stanreg <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE,
+weighted_posteriors.stanreg <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE,
                               effects = c("fixed", "random", "all"),
                               component = c("conditional", "zi", "zero_inflated", "all"),
                               parameters = NULL){
@@ -107,16 +107,16 @@ average_posterior.stanreg <- function(..., prior_odds = NULL, missing = 0, verbo
                    component = component,
                    parameters = parameters)
 
-  .average_posterior(params, weighted_samps, missing)
+  .weighted_posteriors(params, weighted_samps, missing)
 }
 
 #' @export
-#' @rdname average_posterior
-average_posterior.brmsfit <- average_posterior.stanreg
+#' @rdname weighted_posteriors
+weighted_posteriors.brmsfit <- weighted_posteriors.stanreg
 
 #' @export
-#' @rdname average_posterior
-average_posterior.BFBayesFactor <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE){
+#' @rdname weighted_posteriors
+weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE){
   Mods <- c(...)
 
   # Get Bayes factors
@@ -153,10 +153,10 @@ average_posterior.BFBayesFactor <- function(..., prior_odds = NULL, missing = 0,
 
   params <- lapply(params, as.data.frame)
 
-  .average_posterior(params, weighted_samps, missing)
+  .weighted_posteriors(params, weighted_samps, missing)
 }
 
-.average_posterior <- function(params, weighted_samps, missing) {
+.weighted_posteriors <- function(params, weighted_samps, missing) {
   par_names <- unique(unlist(sapply(params, colnames), recursive = TRUE))
 
   for (m in seq_along(weighted_samps)) {

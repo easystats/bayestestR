@@ -78,7 +78,7 @@ bayesfactor_inclusion(BF, match_models = TRUE)
 }
 }
 \seealso{
-\code{\link{average_posterior}} for Bayesian parameter averaging.
+\code{\link{weighted_posteriors}} for Bayesian parameter averaging.
 }
 \author{
 Mattan S. Ben-Shachar

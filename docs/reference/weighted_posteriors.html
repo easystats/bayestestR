@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate posterior samples averaged across models — average_posterior • bayestestR</title>
+<title>Generate posterior distributions weighted across models — weighted_posteriors • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -44,7 +44,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Generate posterior samples averaged across models — average_posterior" />
+<meta property="og:title" content="Generate posterior distributions weighted across models — weighted_posteriors" />
 <meta property="og:description" content="Extract posterior samples of parameters, weighted across models.
 Weighting is done by comparing posterior model probabilities, via bayesfactor_models." />
 <meta property="og:image" content="/logo.png" />
@@ -180,9 +180,9 @@ Weighting is done by comparing posterior model probabilities, via bayesfactor_mo
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate posterior samples averaged across models</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/average_posterior.R'><code>R/average_posterior.R</code></a></small>
-    <div class="hidden name"><code>average_posterior.Rd</code></div>
+    <h1>Generate posterior distributions weighted across models</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/weighted_posteriors.R'><code>R/weighted_posteriors.R</code></a></small>
+    <div class="hidden name"><code>weighted_posteriors.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -190,10 +190,10 @@ Weighting is done by comparing posterior model probabilities, via bayesfactor_mo
 Weighting is done by comparing posterior model probabilities, via <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>average_posterior</span>(<span class='no'>...</span>, <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>weighted_posteriors</span>(<span class='no'>...</span>, <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>average_posterior</span>(
+<span class='fu'>weighted_posteriors</span>(
   <span class='no'>...</span>,
   <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>,
@@ -204,7 +204,7 @@ Weighting is done by comparing posterior model probabilities, via <code><a href=
 )
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>average_posterior</span>(
+<span class='fu'>weighted_posteriors</span>(
   <span class='no'>...</span>,
   <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>,
@@ -215,7 +215,7 @@ Weighting is done by comparing posterior model probabilities, via <code><a href=
 )
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>average_posterior</span>(<span class='no'>...</span>, <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>weighted_posteriors</span>(<span class='no'>...</span>, <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -289,16 +289,16 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
 
-<span class='no'>stan_m0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>extra</span> ~ <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
+<span class='no'>stan_m0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glm.html'>stan_glm</a></span>(<span class='no'>extra</span> ~ <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
                     <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
                     <span class='kw'>diagnostic_file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df0.csv"</span>))
 
-<span class='no'>stan_m1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
+<span class='no'>stan_m1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glm.html'>stan_glm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
                     <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
                     <span class='kw'>diagnostic_file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df1.csv"</span>))
 
 
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>average_posterior</span>(<span class='no'>stan_m0</span>, <span class='no'>stan_m1</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='no'>stan_m0</span>, <span class='no'>stan_m1</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res</span>))
 
@@ -306,7 +306,7 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>BayesFactor</span>)
 <span class='no'>BFmods</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/anovaBF.html'>anovaBF</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + <span class='no'>ID</span>, <span class='no'>sleep</span>, <span class='kw'>whichRandom</span> <span class='kw'>=</span> <span class='st'>"ID"</span>)
 
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>average_posterior</span>(<span class='no'>BFmods</span>)[<span class='fl'>1</span>:<span class='fl'>3</span>]
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='no'>BFmods</span>)[<span class='fl'>1</span>:<span class='fl'>3</span>]
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res</span>))
 
 <span class='co'># Compare to brms::posterior_average</span>
@@ -317,7 +317,7 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
             <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>inhaler</span>,
             <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='no'>res_BT</span> <span class='kw'>&lt;-</span> <span class='fu'>average_posterior</span>(<span class='no'>fit1</span>, <span class='no'>fit2</span>)
+<span class='no'>res_BT</span> <span class='kw'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='no'>fit1</span>, <span class='no'>fit2</span>)
 <span class='no'>res_brms</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>posterior_average</a></span>(<span class='no'>fit1</span>, <span class='no'>fit2</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='st'>"marglik"</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>)[, <span class='fl'>1</span>:<span class='fl'>4</span>]
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res_BT</span>))
