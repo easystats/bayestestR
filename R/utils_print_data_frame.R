@@ -21,17 +21,17 @@ print_data_frame <- function(x, digits) {
       i,
       "conditional" = ,
       "fixed_conditional" = ,
-      "fixed" = " Fixed Effects (Conditional Model)",
+      "fixed" = "# Fixed Effects (Conditional Model)",
       "zi" = ,
       "zero_inflated" = ,
       "fixed_zero_inflated" = ,
-      "fixed_zi" = " Fixed Effects (Zero-Inflated Model)",
+      "fixed_zi" = "# Fixed Effects (Zero-Inflated Model)",
       "random" = ,
-      "random_conditional" = " Random Effects (Conditional Model)",
+      "random_conditional" = "# Random Effects (Conditional Model)",
       "random_zero_inflated" = ,
-      "random_zi" = " Random Effects (Zero-Inflated Model)",
+      "random_zi" = "# Random Effects (Zero-Inflated Model)",
       "smooth_sd" = ,
-      "fixed_smooth_sd" = " Smooth Terms"
+      "fixed_smooth_sd" = "# Smooth Terms"
     )
 
     if ("Parameter" %in% colnames(out[[i]])) {
@@ -52,11 +52,11 @@ print_data_frame <- function(x, digits) {
     }
 
     if (length(out) > 1) {
-      insight::print_color(header, "red")
+      insight::print_color(header, "blue")
       cat("\n\n")
     }
 
-    print.data.frame(out[[i]], row.names = FALSE, digits = digits)
+    cat(insight::format_table(out[[i]], digits = digits))
     cat("\n")
   }
 }
