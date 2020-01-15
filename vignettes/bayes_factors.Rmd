@@ -130,7 +130,7 @@ $$
 Given our prior has a normal distribution centered at 0 hours with a scale (an SD) of 2.5 hours, our priors would look like this:
 
 ```{r, echo=FALSE}
-null <- c(-.5,.5)
+null <- c(-1,1)
 xrange <- c(-10,10)
 
 x_vals <- seq(xrange[1], xrange[2], length.out = 400)
@@ -815,9 +815,10 @@ em_sum <- emmeans(fit_sum, ~ Species) # the posterior marginal means
 bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
 ```
 
-***What happened???***  
-1. The comparison of 2 levels all have a prior of ~0.5, as expected.
-2. The comparison of 3 levels has different priors, depending on the order restriction - i.e. **some orders are *a priori* more likely than others!!!**
+***What happened???***   
+
+1. The comparison of 2 levels all have a prior of ~0.5, as expected.  
+2. The comparison of 3 levels has different priors, depending on the order restriction - i.e. **some orders are *a priori* more likely than others!!!**  
 
 Again, this is solved by using the *orthonormal* factor coding (from above).
 
