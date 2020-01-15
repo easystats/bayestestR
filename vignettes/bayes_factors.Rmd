@@ -190,7 +190,8 @@ We can see that the center of the posterior distribution has shifted away from 0
 
 Let's compute the Bayes factor as the change from the prior odds to the posterior odds: $BF_{10} = Odds_{posterior} / Odds_{prior} = `r scales::number(BF, accuracy = 0.01)`$! This BF indicates that the data provide 1/`r scales::number(BF, accuracy = 0.01)` = `r scales::number(1/BF, accuracy = 0.01)` times more evidence for the effect of the drug being practically nothing than it does for the drug having some clinically significant effect. Thus, although the center of distribution has shifted away from 0, and the posterior distribution seems to favor a non-null effect of the drug, it seems that given the observed data, the probability mass has *overall* shifted closer to the null interval, making the values in the null interval more probable! [see *Non-overlapping Hypotheses* in @morey2011bayesinterval]
 
-Note that **interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf). 
+Note that **interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf).  
+  
 All of this can be achieved with the function `bayesfactor_parameters()`, which computes a Bayes factor for each of the model's parameters:
 
 ```{r, eval=FALSE}
