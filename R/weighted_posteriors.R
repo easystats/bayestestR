@@ -22,6 +22,8 @@
 #' \cr\cr
 #' This function is similar in function to \code{brms::\link[brms]{posterior_average}}.
 #'
+#' @return A data frame with posterior distributions (weighted accross models) .
+#'
 #' @seealso \code{\link{bayesfactor_inclusion}} for Bayesian model averaging.
 #'
 #' @examples
@@ -70,7 +72,6 @@
 #'   \item Rouder, J. N., Haaf, J. M., & Vandekerckhove, J. (2018). Bayesian inference for psychology, part IV: Parameter estimation and Bayes factors. Psychonomic bulletin & review, 25(1), 102-113.
 #'   \item van den Bergh, D., Haaf, J. M., Ly, A., Rouder, J. N., & Wagenmakers, E. J. (2019). A cautionary note on estimating effect size.
 #' }
-#'
 #'
 #' @export
 weighted_posteriors <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE) {

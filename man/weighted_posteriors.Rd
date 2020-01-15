@@ -53,6 +53,9 @@ filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
 }
+\value{
+A data frame with posterior distributions (weighted accross models) .
+}
 \description{
 Extract posterior samples of parameters, weighted across models.
 Weighting is done by comparing posterior model probabilities, via \code{\link{bayesfactor_models}}.
