@@ -313,7 +313,7 @@ that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm
 <li><p>A <code>BF</code> = 1 contains values whose credibility is not decreased by observing the data.</p></li>
 <li><p>A <code>BF</code> &gt; 1 contains values who recived more impressive support from the data.</p></li>
 <li><p>A <code>BF</code> &lt; 1 contains values whose credibility has <em>not</em> been impressively decreased by observing the data.
-  These are also values who, if tested against would produce a Bayes factor larger than 1/<code>BF</code> in support of
+  Testing against values outside this interval will produce a Bayes factor larger than 1/<code>BF</code> in support of
   the alternative. E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null will be larger than 3.</p></li>
 </ul>
 
@@ -328,7 +328,7 @@ that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm
 <span class='no'>prior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.3</span>)
 
-<span class='fu'>si</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Support Interval
+<span class='fu'>si</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: logspline</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Support Interval
 #&gt; 
 #&gt; </span><span>BF = 1 SI   
 #&gt; ------------
