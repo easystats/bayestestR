@@ -22,7 +22,6 @@ reference:
   - map_estimate
   - eti
   - hdi
-  - si
   - ci
   - reshape_ci
 
@@ -42,9 +41,11 @@ reference:
   contents:
   - bayesfactor
   - bayesfactor_parameters
-  - bayesfactor_restricted
   - bayesfactor_models
   - bayesfactor_inclusion
+  - bayesfactor_restricted
+  - si
+  - average_posterior
 
 - title: "Model Diagnostics"
   contents:

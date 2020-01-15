@@ -2,7 +2,9 @@
 
 ## General
 
+- Added `p_pointnull()` as an alias to `p_MAP()`.
 - Added `si()` function to compute support intervals.
+- Added `average_posterior()` for generating posterior samples averaged across models.
 - Added `plot()`-method for `p_significance()`.
 - `p_significance()` now also works for *brmsfit*-objects.
 - `estimate_density()` now also works for *MCMCglmm*-objects.
@@ -14,6 +16,7 @@
 
 ## Breaking changes
 
+- `point_estimate()`: argument `centrality` default value changed from 'median' to 'all'.
 - `p_rope()`, previously as exploratory index, was renamed as `mhdior()` (for *Max HDI inside/outside ROPE*), as `p_rope()` will refer to `rope(..., ci = 1)` ( #258 )
 
 ## Bug fixes

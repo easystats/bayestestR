@@ -188,7 +188,7 @@
     <p>Performs a simple test to check whether the prior is informative to the posterior. This idea, and the accompanying heuristics, were discussed in <a href='https://statmodeling.stat.columbia.edu/2019/08/10/'>this blogpost</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>check_prior</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"gelman"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>check_prior</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"gelman"</span>, <span class='kw'>simulate_priors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -200,6 +200,10 @@
     <tr>
       <th>method</th>
       <td><p>Can be "gelman" or "lakeland". For the "gelman" method, if the SD of the posterior is more than 0.1 times the SD of the prior, then the prior is considered as informative. For the "lakeland" method, the prior is considered as informative if the posterior falls within the 95% HDI of the prior.</p></td>
+    </tr>
+    <tr>
+      <th>simulate_priors</th>
+      <td><p>Should prior distributions be simulated using <code>simulate_prior</code> (default; faster) or sampled (slower, more accurate).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -223,7 +227,17 @@
 #&gt; 3          am   informative</div><div class='input'><span class='fu'>check_prior</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"lakeland"</span>)</div><div class='output co'>#&gt;     Parameter Prior_Quality
 #&gt; 1 (Intercept)   informative
 #&gt; 2          wt   informative
-#&gt; 3          am   informative</div></pre>
+#&gt; 3          am   informative</div><div class='input'>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># An extreme example where both methods diverge:</span>
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>[<span class='fl'>1</span>:<span class='fl'>3</span>,],
+                  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span>(-<span class='fl'>3.3</span>, <span class='fl'>1</span>, <span class='fl'>FALSE</span>),
+                  <span class='kw'>prior_intercept</span> <span class='kw'>=</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span>(<span class='fl'>0</span>, <span class='fl'>1000</span>, <span class='fl'>FALSE</span>),
+                  <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+<span class='fu'>check_prior</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"gelman"</span>)
+<span class='fu'>check_prior</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"lakeland"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='si.html'>si</a></span>(<span class='no'>model</span>)) <span class='co'># can provide visual confirmation to the Lakeland method</span>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -77,6 +77,9 @@ bayesfactor_inclusion(BF, match_models = TRUE)
   \item Mathot. S. (2017). Bayes like a Baws: Interpreting Bayesian Repeated Measures in JASP [Blog post]. Retrieved from https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp
 }
 }
+\seealso{
+\code{\link{average_posterior}} for Bayesian parameter averaging.
+}
 \author{
 Mattan S. Ben-Shachar
 }

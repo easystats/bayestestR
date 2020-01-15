@@ -100,10 +100,10 @@ p_rope.mcmc <- function(x, range = "default", parameters = NULL, ...) {
 
 
 #' @keywords internal
-.p_rope <- function(rope_rez){
-  cols <- c("Parameter", "ROPE_low", "ROPE_high", "ROPE_Percentage")
+.p_rope <- function(rope_rez) {
+  cols <- c("Parameter", "ROPE_low", "ROPE_high", "ROPE_Percentage", "Effects", "Component")
   out <- as.data.frame(rope_rez[cols[cols %in% names(rope_rez)]])
-  names(out)[length(names(out))] <- "p_ROPE"
+  names(out)[names(out) == "ROPE_Percentage"] <- "p_ROPE"
 
   class(out) <- c("p_rope", "see_p_rope", "data.frame")
   out

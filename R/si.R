@@ -2,7 +2,7 @@
 #'
 #' A support interval contains only the values of the parameter that predict the observed data better
 #' than average, by some degree \emph{k}; these are values of the parameter that are associated with an
-#' updating factor ≥ \emph{k}. From the perspective of the Savage-Dickey Bayes factor, testing
+#' updating factor greater or equal than \emph{k}. From the perspective of the Savage-Dickey Bayes factor, testing
 #' against a point null hypothesis for any value within the support interval will yield a Bayes factor smaller
 #' than \emph{1/k}.
 #' \cr \cr
@@ -41,7 +41,7 @@
 #' \itemize{
 #'   \item A \code{BF} = 1 contains values whose credibility is not decreased by observing the data.
 #'   \item A \code{BF} > 1 contains values who recived more impressive support from the data.
-#'   \item A \code{BF} < 1 contains values whose credibility has not been impressively decreased by observing the data.
+#'   \item A \code{BF} < 1 contains values whose credibility has \emph{not} been impressively decreased by observing the data.
 #'   These are also values who, if tested against would produce a Bayes factor larger than 1/\code{BF} in support of
 #'   the alternative. E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null will be larger than 3.
 #' }

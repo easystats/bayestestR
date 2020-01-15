@@ -45,7 +45,7 @@
   
 
 <meta property="og:title" content="Confidence/Credible/Compatibility Interval (CI) — ci" />
-<meta property="og:description" content="Compute Confidence/Credible/Compatibility Intervals (CI) for Bayesian and frequentist models. The Documentation is accessible for:" />
+<meta property="og:description" content="Compute Confidence/Credible/Compatibility Intervals (CI) or Support Intervals (SI) for Bayesian and frequentist models. The Documentation is accessible for:" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -185,19 +185,19 @@
     </div>
 
     <div class="ref-description">
-    <p>Compute Confidence/Credible/Compatibility Intervals (CI) for Bayesian and frequentist models. The Documentation is accessible for:</p>
+    <p>Compute Confidence/Credible/Compatibility Intervals (CI) or Support Intervals (SI) for Bayesian and frequentist models. The Documentation is accessible for:</p>
     </div>
 
     <pre class="usage"><span class='fu'>ci</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for sim.merMod</span>
 <span class='fu'>ci</span>(
@@ -221,6 +221,7 @@
   <span class='kw'>effects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
   <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='no'>...</span>
 )
 
@@ -233,11 +234,12 @@
   <span class='kw'>component</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
   <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='no'>...</span>
 )
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for MCMCglmm</span>
 <span class='fu'>ci</span>(<span class='no'>x</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.89</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
@@ -260,11 +262,15 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
     </tr>
     <tr>
       <th>method</th>
-      <td><p>Can be <a href='eti.html'>'ETI'</a> (default) or <a href='hdi.html'>'HDI'</a>.</p></td>
+      <td><p>Can be <a href='eti.html'>'ETI'</a> (default), <a href='hdi.html'>'HDI'</a> or <a href='si.html'>'SI'</a>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
       <td><p>Toggle off warnings.</p></td>
+    </tr>
+    <tr>
+      <th>BF</th>
+      <td><p>The amount of support required to be included in the support interval.</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -401,11 +407,18 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt;  (Intercept) [34.24, 40.02]
 #&gt;           wt [-6.15, -4.45]
 #&gt; 
-#&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"SI"</span>)</div><div class='output co'>#&gt; <span class='message'>Computation of Bayes factors: sampling priors, please wait...</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Support Interval
+#&gt; 
+#&gt; </span><span>   Parameter      BF = 1 SI
+#&gt;  (Intercept) [32.89, 44.33]
+#&gt;           wt [-6.86, -3.96]
+#&gt; </div><div class='input'>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>)
 <span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>)
+<span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"SI"</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>BayesFactor</span>)
 <span class='no'>bf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
@@ -416,6 +429,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>)
 <span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>)
 <span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>)
+<span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"SI"</span>)
 }</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

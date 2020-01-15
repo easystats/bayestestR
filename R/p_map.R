@@ -6,7 +6,7 @@
 #' \subsection{Strengths and Limitations}{
 #' \strong{Strengths:} Straightforward computation. Objective property of the posterior distribution.
 #' \cr \cr
-#' \strong{Limitations:} Limited information favoring the null hypothesis. Relates on density approximation. Indirect relationship between mathematical definition and interpretation.
+#' \strong{Limitations:} Limited information favoring the null hypothesis. Relates on density approximation. Indirect relationship between mathematical definition and interpretation. Only suitable for weak / very diffused priors.
 #' }
 #'
 #' @inheritParams hdi
@@ -68,8 +68,9 @@ p_map <- function(x, precision = 2^10, method = "kernel", ...) {
   UseMethod("p_map")
 }
 
-
-
+#' @rdname p_map
+#' @export
+p_pointnull <- p_map
 
 
 

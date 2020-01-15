@@ -188,36 +188,73 @@
 <div id="features" class="section level1">
 <h1 class="hasAnchor">
 <a href="#features" class="anchor"></a>Features</h1>
-<p>The following figures are meant to illustrate the (statistical) concepts behind the functions. However, for most functions, <code><a href="https://rdrr.io/r/graphics/plot.html">plot()</a></code>-methods are available from the <a href="http://easystats.github.io/see">see-package</a>.</p>
-<div id="describing-the-posterior-distribution" class="section level2">
-<h2 class="hasAnchor">
-<a href="#describing-the-posterior-distribution" class="anchor"></a>Describing the Posterior Distribution</h2>
+<p>In the Bayesian framework, parameters are estimated in a probabilistic fashion as <em>distributions</em>. These distributions can be summarised and described by <strong>reporting 4 types of indices</strong>:</p>
+<ul>
+<li>
+<a href="https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html"><strong>Centrality</strong></a>
+<ul>
+<li>
+<code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html">median()</a></code> or <a href="https://easystats.github.io/bayestestR/reference/map_estimate.html"><strong><code><a href="reference/map_estimate.html">map_estimate()</a></code></strong></a> for an estimation of the mode.</li>
+<li>
+<a href="https://easystats.github.io/bayestestR/reference/point_estimate.html"><strong><code><a href="reference/point_estimate.html">point_estimate()</a></code></strong></a> can be used to get them at once and can be run directly on models.</li>
+</ul>
+</li>
+<li>
+<a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>Uncertainty</strong></a>
+<ul>
+<li>
+<a href="https://easystats.github.io/bayestestR/reference/hdi.html"><strong><code><a href="reference/hdi.html">hdi()</a></code></strong></a> for <em>Highest Density Intervals (HDI)</em> or <a href="https://easystats.github.io/bayestestR/reference/eti.html"><strong><code><a href="reference/eti.html">eti()</a></code></strong></a> for <em>Equal-Tailed Intervals (ETI)</em>.</li>
+<li>
+<a href="https://easystats.github.io/bayestestR/reference/ci.html"><strong><code><a href="reference/ci.html">ci()</a></code></strong></a> can be used as a general method for Confidence and Credible Intervals (CI).</li>
+</ul>
+</li>
+<li>
+<a href="https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html"><strong>Effect Existence</strong></a>: whether an effect is different from 0.
+<ul>
+<li>
+<a href="https://easystats.github.io/bayestestR/reference/p_direction.html"><strong><code><a href="reference/p_direction.html">p_direction()</a></code></strong></a> for a Bayesian equivalent of the frequentist <em>p</em>-value (see <a href="https://doi.org/10.3389/fpsyg.2019.02767">Makowski et al., 2019</a>)</li>
+<li>
+<a href="https://easystats.github.io/bayestestR/reference/p_map.html"><strong><code><a href="reference/p_map.html">p_pointnull()</a></code></strong></a> represents the odds of null hypothesis (<em>h0 = 0</em>) compared to the most likely hypothesis (the MAP).</li>
+<li>
+<a href="https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html"><strong><code>bf_pointnull()</code></strong></a> for a classic <em>Bayes Factor (BF)</em> assessing the likelihood of effect presence against its absence (<em>h0 = 0</em>).</li>
+</ul>
+</li>
+<li>
+<a href="https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html"><strong>Effect Significance</strong></a>: whether the effect size can be considered as non-negligible.
+<ul>
+<li>
+<a href="https://easystats.github.io/bayestestR/reference/p_rope.html"><strong><code><a href="reference/p_rope.html">p_rope()</a></code></strong></a> is the probability of the effect falling inside a <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html"><em>Region of Practical Equivalence (ROPE)</em></a>.</li>
+<li>
+<a href="https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html"><strong><code><a href="reference/bayesfactor_parameters.html">bf_rope()</a></code></strong></a> computes a Bayes factor against the null as defined by a region (the ROPE).</li>
+<li>
+<a href="https://easystats.github.io/bayestestR/reference/p_significance.html"><strong><code><a href="reference/p_significance.html">p_significance()</a></code></strong></a> that combines a region of equivalence with the probability of direction.</li>
+</ul>
+</li>
+</ul>
 <p><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html"><strong><code><a href="reference/describe_posterior.html">describe_posterior()</a></code></strong></a> is the master function with which you can compute all of the indices cited below at once.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="reference/describe_posterior.html">describe_posterior</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1000</span>))</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="co">##   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="co">## 1 Posterior  0.037 89   -1.5     1.7 0.52      89     -0.1       0.1</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="co">##   ROPE_Percentage</span></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="co">## 1           0.092</span></a></code></pre></div>
-</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="reference/describe_posterior.html">describe_posterior</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1000</span>), <span class="dt">centrality=</span><span class="st">"median"</span>, <span class="dt">test=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"p_direction"</span>, <span class="st">"p_significance"</span>))</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co">##   Parameter Median CI CI_low CI_high   pd   ps</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="co">## 1 Posterior -0.028 89   -1.4     1.8 0.51 0.47</span></a></code></pre></div>
+<p><em>bayestestR</em> also includes <a href="https://easystats.github.io/bayestestR/reference/index.html"><strong>many other features</strong></a> useful for your Bayesian analsyes. Here are some more examples:</p>
 <div id="point-estimates" class="section level2">
 <h2 class="hasAnchor">
 <a href="#point-estimates" class="anchor"></a>Point-estimates</h2>
-<div id="map-estimate" class="section level3">
-<h3 class="hasAnchor">
-<a href="#map-estimate" class="anchor"></a>MAP Estimate</h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/map_estimate.html"><strong><code><a href="reference/map_estimate.html">map_estimate()</a></code></strong></a> find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.</em>, the value associated with the highest probability density (the “peak” of the posterior distribution). In other words, it is an estimation of the <em>mode</em> for continuous parameters.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">posterior &lt;-<span class="st"> </span><span class="kw"><a href="reference/distribution.html">distribution_normal</a></span>(<span class="dv">100</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="reference/map_estimate.html">map_estimate</a></span>(posterior)</a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co">## MAP = 0.40</span></a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-5-1.png"><!-- --></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bayestestR)</a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3">posterior &lt;-<span class="st"> </span><span class="kw"><a href="reference/distribution.html">distribution_gamma</a></span>(<span class="dv">10000</span>, <span class="fl">1.5</span>)  <span class="co"># Generate a skewed distribution</span></a>
+<a class="sourceLine" id="cb3-4" title="4">centrality &lt;-<span class="st"> </span><span class="kw"><a href="reference/point_estimate.html">point_estimate</a></span>(posterior)  <span class="co"># Get indices of centrality</span></a>
+<a class="sourceLine" id="cb3-5" title="5">centrality</a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co">## # Point Estimates</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co">## </span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co">##  Median Mean  MAP</span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="co">##     1.2  1.5 0.51</span></a></code></pre></div>
+<p>As for other <a href="https://github.com/easystats"><strong>easystats</strong></a> packages, <code><a href="https://rdrr.io/r/graphics/plot.html">plot()</a></code> methods are available from the <a href="http://easystats.github.io/see"><strong>see</strong></a> package for many functions:</p>
+<p><img src="reference/figures/unnamed-chunk-6-1.png"><!-- --></p>
+<p>While the <strong>median</strong> and the <strong>mean</strong> are available through base R functions, <a href="https://easystats.github.io/bayestestR/reference/map_estimate.html"><strong><code><a href="reference/map_estimate.html">map_estimate()</a></code></strong></a> in <em>bayestestR</em> can be used to directly find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.</em>, the value associated with the highest probability density (the “peak” of the posterior distribution). In other words, it is an estimation of the <em>mode</em> for continuous parameters.</p>
 </div>
-</div>
-<div id="uncertainty" class="section level2">
+<div id="uncertainty-ci" class="section level2">
 <h2 class="hasAnchor">
-<a href="#uncertainty" class="anchor"></a>Uncertainty</h2>
-<div id="highest-density-interval-hdi-and-equal-tailed-interval-eti" class="section level3">
-<h3 class="hasAnchor">
-<a href="#highest-density-interval-hdi-and-equal-tailed-interval-eti" class="anchor"></a>Highest Density Interval (HDI) and Equal-Tailed Interval (ETI)</h3>
+<a href="#uncertainty-ci" class="anchor"></a>Uncertainty (CI)</h2>
 <p><a href="https://easystats.github.io/bayestestR/reference/hdi.html"><strong><code><a href="reference/hdi.html">hdi()</a></code></strong></a> computes the <strong>Highest Density Interval (HDI)</strong> of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterisation as <strong>Credible Interval (CI)</strong>.</p>
 <p>Unlike equal-tailed intervals (see <a href="https://easystats.github.io/bayestestR/reference/eti.html"><code><a href="reference/eti.html">eti()</a></code></a>) that typically exclude 2.5% from each tail of the distribution, the HDI is <em>not</em> equal-tailed and therefore always includes the mode(s) of posterior distributions.</p>
 <p>By default, <code><a href="reference/hdi.html">hdi()</a></code> returns the 89% intervals (<code>ci = 0.89</code>), deemed to be more stable than, for instance, 95% intervals. An effective sample size of at least 10.000 is recommended if 95% intervals should be computed (Kruschke, 2015). Moreover, 89 indicates the arbitrariness of interval limits - its only remarkable property is being the highest prime number that does not exceed the already unstable 95% threshold (McElreath, 2018).</p>
@@ -234,12 +271,21 @@
 <a class="sourceLine" id="cb4-11" title="11"><span class="co">## </span></a>
 <a class="sourceLine" id="cb4-12" title="12"><span class="co">##       89% ETI</span></a>
 <a class="sourceLine" id="cb4-13" title="13"><span class="co">##  [0.42, 7.27]</span></a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-7-1.png"><!-- --></p>
+<p><img src="reference/figures/unnamed-chunk-8-1.png"><!-- --></p>
 </div>
-</div>
-<div id="null-hypothesis-significance-testing-nhst" class="section level2">
+<div id="existence-and-significance-testing" class="section level2">
 <h2 class="hasAnchor">
-<a href="#null-hypothesis-significance-testing-nhst" class="anchor"></a>Null-Hypothesis Significance Testing (NHST)</h2>
+<a href="#existence-and-significance-testing" class="anchor"></a>Existence and Significance Testing</h2>
+<div id="probability-of-direction-pd" class="section level3">
+<h3 class="hasAnchor">
+<a href="#probability-of-direction-pd" class="anchor"></a>Probability of Direction (<em>pd</em>)</h3>
+<p><a href="https://easystats.github.io/bayestestR/reference/p_direction.html"><strong><code><a href="reference/p_direction.html">p_direction()</a></code></strong></a> computes the <strong>Probability of Direction</strong> (<strong><em>p</em>d</strong>, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% (<em>i.e.</em>, <code>0.5</code> and <code>1</code>) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median’s sign. Although differently expressed, this index is fairly similar (<em>i.e.</em>, is strongly correlated) to the frequentist <strong><em>p</em>-value</strong>.</p>
+<p><strong>Relationship with the p-value</strong>: In most cases, it seems that the <em>pd</em> corresponds to the frequentist one-sided <em>p</em>-value through the formula <code>p-value = (1-pd/100)</code> and to the two-sided <em>p</em>-value (the most commonly reported) through the formula <code>p-value = 2*(1-pd/100)</code>. Thus, a <code>pd</code> of <code>95%</code>, <code>97.5%</code> <code>99.5%</code> and <code>99.95%</code> corresponds approximately to a two-sided <em>p</em>-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code>. See the <a href="https://easystats.github.io/bayestestR/articles/guidelines.html"><em>reporting guidelines</em></a>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">posterior &lt;-<span class="st"> </span><span class="kw"><a href="reference/distribution.html">distribution_normal</a></span>(<span class="dv">100</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="reference/p_direction.html">p_direction</a></span>(posterior)</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">## pd = 98.00%</span></a></code></pre></div>
+<p><img src="reference/figures/unnamed-chunk-10-1.png"><!-- --></p>
+</div>
 <div id="rope" class="section level3">
 <h3 class="hasAnchor">
 <a href="#rope" class="anchor"></a>ROPE</h3>
@@ -247,35 +293,12 @@
 <p>Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are <em>equivalent to the null</em> value for practical purposes (Kruschke &amp; Liddell, 2018, p. @kruschke2018rejecting).</p>
 <p>Kruschke suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as <code>0 +/- .1 * sd(y)</code>. This ROPE range can be automatically computed for models using the <a href="https://easystats.github.io/bayestestR/reference/rope_range.html">rope_range</a> function.</p>
 <p>Kruschke suggests using the proportion of the 95% (or 90%, considered more stable) HDI that falls within the ROPE as an index for “null-hypothesis” testing (as understood under the Bayesian framework, see <a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html">equivalence_test</a>).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">posterior &lt;-<span class="st"> </span><span class="kw"><a href="reference/distribution.html">distribution_normal</a></span>(<span class="dv">100</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>)</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="reference/rope.html">rope</a></span>(posterior, <span class="dt">range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="co">## # Proportion of samples inside the ROPE [-0.10, 0.10]:</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="co">## </span></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="co">##  inside ROPE</span></a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="co">##       1.11 %</span></a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-9-1.png"><!-- --></p>
-</div>
-<div id="equivalence-test" class="section level3">
-<h3 class="hasAnchor">
-<a href="#equivalence-test" class="anchor"></a>Equivalence test</h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html"><strong><code><a href="reference/equivalence_test.html">equivalence_test()</a></code></strong></a> is a <strong>Test for Practical Equivalence</strong> based on the <em>“HDI+ROPE decision rule”</em> (Kruschke, 2018) to check whether parameter values should be accepted or rejected against an explicitly formulated “null hypothesis” (<em>i.e.</em>, a <a href="https://easystats.github.io/bayestestR/reference/rope.html">ROPE</a>).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">posterior &lt;-<span class="st"> </span><span class="kw"><a href="reference/distribution.html">distribution_normal</a></span>(<span class="dv">100</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>)</a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="reference/equivalence_test.html">equivalence_test</a></span>(posterior, <span class="dt">range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="co">## # Test for Practical Equivalence</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="reference/rope.html">rope</a></span>(posterior, <span class="dt">range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span>))</a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="co">## # Proportion of samples inside the ROPE [-0.10, 0.10]:</span></a>
 <a class="sourceLine" id="cb6-4" title="4"><span class="co">## </span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="co">##   ROPE: [-0.10 0.10]</span></a>
-<a class="sourceLine" id="cb6-6" title="6"><span class="co">## </span></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="co">##         H0 inside ROPE     89% HDI</span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="co">##  Undecided      1.11 % [0.09 0.71]</span></a></code></pre></div>
-</div>
-<div id="probability-of-direction-pd" class="section level3">
-<h3 class="hasAnchor">
-<a href="#probability-of-direction-pd" class="anchor"></a>Probability of Direction (<em>p</em>d)</h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/p_direction.html"><strong><code><a href="reference/p_direction.html">p_direction()</a></code></strong></a> computes the <strong>Probability of Direction</strong> (<strong><em>p</em>d</strong>, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% (<em>i.e.</em>, <code>0.5</code> and <code>1</code>) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median’s sign. Although differently expressed, this index is fairly similar (<em>i.e.</em>, is strongly correlated) to the frequentist <strong><em>p</em>-value</strong>.</p>
-<p><strong>Relationship with the p-value</strong>: In most cases, it seems that the <em>pd</em> corresponds to the frequentist one-sided <em>p</em>-value through the formula <code>p-value = (1-pd/100)</code> and to the two-sided <em>p</em>-value (the most commonly reported) through the formula <code>p-value = 2*(1-pd/100)</code>. Thus, a <code>pd</code> of <code>95%</code>, <code>97.5%</code> <code>99.5%</code> and <code>99.95%</code> corresponds approximately to a two-sided <em>p</em>-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code>. See the <a href="https://easystats.github.io/bayestestR/articles/guidelines.html"><em>reporting guidelines</em></a>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">posterior &lt;-<span class="st"> </span><span class="kw"><a href="reference/distribution.html">distribution_normal</a></span>(<span class="dv">100</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>)</a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="kw"><a href="reference/p_direction.html">p_direction</a></span>(posterior)</a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="co">## pd = 98.00%</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-5" title="5"><span class="co">##  inside ROPE</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="co">##       1.11 %</span></a></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-12-1.png"><!-- --></p>
 </div>
 <div id="bayes-factor" class="section level3">
@@ -283,28 +306,19 @@
 <a href="#bayes-factor" class="anchor"></a>Bayes Factor</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html"><strong><code><a href="reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code></strong></a> computes Bayes factors against the null (either a point or an interval), bases on prior and posterior samples of a single parameter. This Bayes factor indicates the degree by which the mass of the posterior distribution has shifted further away from or closer to the null value(s) (relative to the prior distribution), thus indicating if the null value has become less or more likely given the observed data.</p>
 <p>When the null is an interval, the Bayes factor is computed by comparing the prior and posterior odds of the parameter falling within or outside the null; When the null is a point, a Savage-Dickey density ratio is computed, which is also an approximation of a Bayes factor comparing the marginal likelihoods of the model against a model in which the tested parameter has been restricted to the point null (Wagenmakers, Lodewyckx, Kuriyal, &amp; Grasman, 2010).</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">prior &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb8-2" title="2">posterior &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="fl">0.7</span>)</a>
-<a class="sourceLine" id="cb8-3" title="3"></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="kw"><a href="reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span>(posterior, prior, <span class="dt">direction =</span> <span class="st">"two-sided"</span>, <span class="dt">null =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="co">## # Bayes Factor (Savage-Dickey density ratio)</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co">## </span></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="co">##    BF</span></a>
-<a class="sourceLine" id="cb8-8" title="8"><span class="co">##  2.04</span></a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co">## </span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co">## * Evidence Against The Null: [0]</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">prior &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb7-2" title="2">posterior &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="fl">0.7</span>)</a>
+<a class="sourceLine" id="cb7-3" title="3"></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="kw"><a href="reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span>(posterior, prior, <span class="dt">direction =</span> <span class="st">"two-sided"</span>, <span class="dt">null =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co">## # Bayes Factor (Savage-Dickey density ratio)</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">## </span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">##    BF</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="co">##  2.04</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co">## </span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="co">## * Evidence Against The Null: [0]</span></a></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-14-1.png"><!-- --></p>
 <p><sup><em>The lollipops represent the density of a point-null on the prior distribution (the blue lollipop on the dotted distribution) and on the posterior distribution (the red lollipop on the yellow distribution). The ratio between the two - the Savage-Dickey ratio - indicates the degree by which the mass of the parameter distribution has shifted away from or closer to the null.</em></sup></p>
 <p>For more info, see <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html">the Bayes factors vignette</a>.</p>
-</div>
-<div id="map-based-p-value" class="section level3">
-<h3 class="hasAnchor">
-<a href="#map-based-p-value" class="anchor"></a>MAP-based <em>p</em>-value</h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/p_map.html"><strong><code><a href="reference/p_map.html">p_map()</a></code></strong></a> computes a Bayesian equivalent of the p-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (<em>h0</em>) using Mills’ (2014, 2017) <em>Objective Bayesian Hypothesis Testing</em> framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP).</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">posterior &lt;-<span class="st"> </span><span class="kw"><a href="reference/distribution.html">distribution_normal</a></span>(<span class="dv">100</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>)</a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="kw"><a href="reference/p_map.html">p_map</a></span>(posterior)</a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="co">## p (MAP) = 0.193</span></a></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-16-1.png"><!-- --></p>
 </div>
 </div>
 <div id="utilities" class="section level2">
@@ -314,7 +328,7 @@
 <h3 class="hasAnchor">
 <a href="#find-ropes-appropriate-range" class="anchor"></a>Find ROPE’s appropriate range</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/rope_range.html"><strong><code><a href="reference/rope_range.html">rope_range()</a></code></strong></a>: This function attempts at automatically finding suitable “default” values for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests that such null value could be set, by default, to a range from <code>-0.1</code> to <code>0.1</code> of a standardized parameter (negligible effect size according to Cohen, 1988), which can be generalised for linear models to <code>-0.1 * sd(y), 0.1 * sd(y)</code>. For logistic models, the parameters expressed in log odds ratio can be converted to standardized difference through the formula <code>sqrt(3)/pi</code>, resulting in a range of <code>-0.05</code> to <code>0.05</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="reference/rope_range.html">rope_range</a></span>(model)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="reference/rope_range.html">rope_range</a></span>(model)</a></code></pre></div>
 </div>
 <div id="density-estimation" class="section level3">
 <h3 class="hasAnchor">
@@ -325,15 +339,15 @@
 <h3 class="hasAnchor">
 <a href="#perfect-distributions" class="anchor"></a>Perfect Distributions</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/distribution.html"><strong><code><a href="reference/distribution.html">distribution()</a></code></strong></a>: Generate a sample of size n with near-perfect distributions.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="reference/distribution.html">distribution</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="co">##  [1] -1.28 -0.88 -0.59 -0.34 -0.11  0.11  0.34  0.59  0.88  1.28</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="reference/distribution.html">distribution</a></span>(<span class="dt">n =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="co">##  [1] -1.28 -0.88 -0.59 -0.34 -0.11  0.11  0.34  0.59  0.88  1.28</span></a></code></pre></div>
 </div>
 <div id="probability-of-a-value" class="section level3">
 <h3 class="hasAnchor">
 <a href="#probability-of-a-value" class="anchor"></a>Probability of a Value</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/density_at.html"><strong><code><a href="reference/density_at.html">density_at()</a></code></strong></a>: Compute the density of a given point of a distribution.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="reference/density_at.html">density_at</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb12-2" title="2"><span class="co">## [1] 0.35</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="reference/density_at.html">density_at</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">1000</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="co">## [1] 0.39</span></a></code></pre></div>
 </div>
 </div>
 </div>

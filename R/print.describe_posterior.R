@@ -5,7 +5,7 @@ print.describe_posterior <- function(x, digits = 3, ...) {
   } else {
     insight::print_color("# Description of Posterior Distributions\n\n", "blue")
     if (!is.null(attributes(x)$ci_method) && tolower(attributes(x)$ci_method) == "si") {
-      cn <- gsub("CI", "BF", gsub("^CI_", "SI_", colnames(x)))
+      cn <- gsub("^CI", "SI", colnames(x))
       colnames(x) <- cn
     }
     print_data_frame(x, digits = digits)

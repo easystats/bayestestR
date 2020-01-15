@@ -123,7 +123,7 @@ On the other hand, the ETI range does change when transformations are applied to
 
 # The Support Interval
 
-Unlike the HDI and the ETI, which look at the posterior distribution, the **Support Interval (SI)** provides information regarding the change in the credability of values from the prior to the posterior - in other words, it indicates which values of a parameter are have gained support by the observed data by some factor ≥ *k* [@wagenmakers2018SI].
+Unlike the HDI and the ETI, which look at the posterior distribution, the **Support Interval (SI)** provides information regarding the change in the credability of values from the prior to the posterior - in other words, it indicates which values of a parameter are have gained support by the observed data by some factor greater or equal to *k* [@wagenmakers2018SI].
 
 ```{r warning=FALSE, message=FALSE}
 prior <- distribution_normal(1000, mean = 0, sd = 1)

@@ -50,14 +50,14 @@
 #'
 #' @importFrom stats mad median sd
 #' @export
-point_estimate <- function(x, centrality = "median", dispersion = FALSE, ...) {
+point_estimate <- function(x, centrality = "all", dispersion = FALSE, ...) {
   UseMethod("point_estimate")
 }
 
 
 
 #' @export
-point_estimate.numeric <- function(x, centrality = "median", dispersion = FALSE, ...) {
+point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, ...) {
   centrality <- match.arg(tolower(centrality), c("median", "mean", "map", "all"), several.ok = TRUE)
   if ("all" %in% centrality) {
     estimate_list <- c("median", "mean", "map")
@@ -99,7 +99,7 @@ point_estimate.numeric <- function(x, centrality = "median", dispersion = FALSE,
 
 
 #' @export
-point_estimate.data.frame <- function(x, centrality = "median", dispersion = FALSE, ...) {
+point_estimate.data.frame <- function(x, centrality = "all", dispersion = FALSE, ...) {
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
@@ -120,20 +120,20 @@ point_estimate.data.frame <- function(x, centrality = "median", dispersion = FAL
 
 
 #' @export
-point_estimate.mcmc <- function(x, centrality = "median", dispersion = FALSE, ...) {
+point_estimate.mcmc <- function(x, centrality = "all", dispersion = FALSE, ...) {
   point_estimate(as.data.frame(x), centrality = centrality, dispersion = dispersion, ...)
 }
 
 
 #' @export
-point_estimate.MCMCglmm <- function(x, centrality = "median", dispersion = FALSE, ...) {
+point_estimate.MCMCglmm <- function(x, centrality = "all", dispersion = FALSE, ...) {
   nF <- x$Fixed$nfl
   point_estimate(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), centrality = centrality, dispersion = dispersion, ...)
 }
 
 
 #' @export
-point_estimate.emmGrid <- function(x, centrality = "median", dispersion = FALSE, ...) {
+point_estimate.emmGrid <- function(x, centrality = "all", dispersion = FALSE, ...) {
   if (!requireNamespace("emmeans")) {
     stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
   }
@@ -151,7 +151,7 @@ point_estimate.emmGrid <- function(x, centrality = "median", dispersion = FALSE,
 
 #' @importFrom insight get_parameters
 #' @keywords internal
-.point_estimate_models <- function(x, effects, component, parameters, centrality = "median", dispersion = FALSE, ...) {
+.point_estimate_models <- function(x, effects, component, parameters, centrality = "all", dispersion = FALSE, ...) {
   out <- point_estimate(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), centrality = centrality, dispersion = dispersion, ...)
   # out$Parameter <- .get_parameter_names(x, effects = effects, component = component, parameters = parameters)
   out
@@ -161,7 +161,7 @@ point_estimate.emmGrid <- function(x, centrality = "median", dispersion = FALSE,
 #' @importFrom insight get_parameters clean_parameters
 #' @rdname point_estimate
 #' @export
-point_estimate.stanreg <- function(x, centrality = "median", dispersion = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+point_estimate.stanreg <- function(x, centrality = "all", dispersion = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
 
   out <- .prepare_output(
@@ -178,7 +178,7 @@ point_estimate.stanreg <- function(x, centrality = "median", dispersion = FALSE,
 
 #' @rdname point_estimate
 #' @export
-point_estimate.brmsfit <- function(x, centrality = "median", dispersion = FALSE, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+point_estimate.brmsfit <- function(x, centrality = "all", dispersion = FALSE, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
@@ -196,7 +196,7 @@ point_estimate.brmsfit <- function(x, centrality = "median", dispersion = FALSE,
 
 
 #' @export
-point_estimate.sim.merMod <- function(x, centrality = "median", dispersion = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+point_estimate.sim.merMod <- function(x, centrality = "all", dispersion = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
 
   out <- .point_estimate_models(
@@ -218,7 +218,7 @@ point_estimate.sim.merMod <- function(x, centrality = "median", dispersion = FAL
 
 
 #' @export
-point_estimate.sim <- function(x, centrality = "median", dispersion = FALSE, parameters = NULL, ...) {
+point_estimate.sim <- function(x, centrality = "all", dispersion = FALSE, parameters = NULL, ...) {
   out <- .point_estimate_models(
     x = x,
     effects = "fixed",
@@ -239,7 +239,7 @@ point_estimate.sim <- function(x, centrality = "median", dispersion = FALSE, par
 
 #' @rdname point_estimate
 #' @export
-point_estimate.BFBayesFactor <- function(x, centrality = "median", dispersion = FALSE, ...) {
+point_estimate.BFBayesFactor <- function(x, centrality = "all", dispersion = FALSE, ...) {
   out <- point_estimate(insight::get_parameters(x), centrality = centrality, dispersion = dispersion, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   attr(out, "centrality") <- centrality

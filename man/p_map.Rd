@@ -2,11 +2,14 @@
 % Please edit documentation in R/p_map.R
 \name{p_map}
 \alias{p_map}
+\alias{p_pointnull}
 \alias{p_map.stanreg}
 \alias{p_map.brmsfit}
 \title{Bayesian p-value based on the density at the Maximum A Posteriori (MAP)}
 \usage{
 p_map(x, precision = 2^10, method = "kernel", ...)
+
+p_pointnull(x, precision = 2^10, method = "kernel", ...)
 
 \method{p_map}{stanreg}(
   x,
@@ -58,7 +61,7 @@ Note that this method is sensitive to the density estimation \code{method} (see 
 \subsection{Strengths and Limitations}{
 \strong{Strengths:} Straightforward computation. Objective property of the posterior distribution.
 \cr \cr
-\strong{Limitations:} Limited information favoring the null hypothesis. Relates on density approximation. Indirect relationship between mathematical definition and interpretation.
+\strong{Limitations:} Limited information favoring the null hypothesis. Relates on density approximation. Indirect relationship between mathematical definition and interpretation. Only suitable for weak / very diffused priors.
 }
 }
 \examples{

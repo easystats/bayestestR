@@ -190,6 +190,8 @@
 
     <pre class="usage"><span class='fu'>p_map</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>, <span class='no'>...</span>)
 
+<span class='fu'>p_pointnull</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>p_map</span>(
   <span class='no'>x</span>,
@@ -257,7 +259,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <p>Note that this method is sensitive to the density estimation <code>method</code> (see the secion in the examples below).</p><h3>Strengths and Limitations</h3>
 <p><strong>Strengths:</strong> Straightforward computation. Objective property of the posterior distribution.
 <br /> <br />
-<strong>Limitations:</strong> Limited information favoring the null hypothesis. Relates on density approximation. Indirect relationship between mathematical definition and interpretation.</p>
+<strong>Limitations:</strong> Limited information favoring the null hypothesis. Relates on density approximation. Indirect relationship between mathematical definition and interpretation. Only suitable for weak / very diffused priors.</p>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
