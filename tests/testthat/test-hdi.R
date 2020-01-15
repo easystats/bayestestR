@@ -4,8 +4,8 @@ test_that("hdi", {
   testthat::expect_equal(hdi(distribution_normal(1000), ci = .90)$CI_low[1], -1.64, tolerance = 0.02)
   testthat::expect_equal(nrow(hdi(distribution_normal(1000), ci = c(.80, .90, .95))), 3, tolerance = 0.01)
   testthat::expect_equal(hdi(distribution_normal(1000), ci = 1)$CI_low[1], -3.09, tolerance = 0.02)
-  testthat::expect_equal(length(capture.output(print(hdi(distribution_normal(1000))))), 5)
-  testthat::expect_equal(length(capture.output(print(hdi(distribution_normal(1000), ci = c(.80, .90))))), 10)
+  testthat::expect_equal(length(capture.output(print(hdi(distribution_normal(1000))))), 6)
+  testthat::expect_equal(length(capture.output(print(hdi(distribution_normal(1000), ci = c(.80, .90))))), 12)
 
 
   testthat::expect_warning(hdi(c(2, 3, NA)))
