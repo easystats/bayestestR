@@ -300,18 +300,20 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>p_direction</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Probability of Direction (pd)
 #&gt; 
-#&gt; </span><span> Parameter     pd
-#&gt;         X1 56.00%
-#&gt;         X2 53.00%
-#&gt;         X3 51.00%
-#&gt;         X4 52.00%
+#&gt; </span><span>Parameter |     pd
+#&gt; ------------------
+#&gt; X1        | 56.00%
+#&gt; X2        | 53.00%
+#&gt; X3        | 51.00%
+#&gt; X4        | 52.00%
 #&gt; </div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
 #&gt; 
-#&gt; </span><span> Parameter     pd
-#&gt;         X1 56.56%
-#&gt;         X2 49.60%
-#&gt;         X3 52.25%
-#&gt;         X4 51.59%
+#&gt; </span><span>Parameter |     pd
+#&gt; ------------------
+#&gt; X1        | 56.56%
+#&gt; X2        | 49.60%
+#&gt; X3        | 52.25%
+#&gt; X4        | 51.59%
 #&gt; </div><div class='input'>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
@@ -322,16 +324,18 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 )
 <span class='fu'>p_direction</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
 #&gt; 
-#&gt; </span><span>   Parameter      pd
-#&gt;  (Intercept) 100.00%
-#&gt;           wt 100.00%
-#&gt;          cyl 100.00%
+#&gt; </span><span>Parameter   |      pd
+#&gt; ---------------------
+#&gt; (Intercept) | 100.00%
+#&gt; wt          | 100.00%
+#&gt; cyl         | 100.00%
 #&gt; </div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
 #&gt; 
-#&gt; </span><span>   Parameter      pd
-#&gt;  (Intercept) 100.00%
-#&gt;           wt 100.00%
-#&gt;          cyl 100.00%
+#&gt; </span><span>Parameter   |      pd
+#&gt; ---------------------
+#&gt; (Intercept) | 100.00%
+#&gt; wt          | 100.00%
+#&gt; cyl         | 100.00%
 #&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># emmeans</span>
 <span class='co'># -----------------------------------------------</span>

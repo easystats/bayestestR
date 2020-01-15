@@ -257,6 +257,9 @@ for the output.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A data frame with posterior distributions (weighted accross models) .</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that across models some parameters might play different roles. For example,
@@ -289,11 +292,11 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
 
-<span class='no'>stan_m0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glm.html'>stan_glm</a></span>(<span class='no'>extra</span> ~ <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
+<span class='no'>stan_m0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>extra</span> ~ <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
                     <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
                     <span class='kw'>diagnostic_file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df0.csv"</span>))
 
-<span class='no'>stan_m1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rstanarm/man/stan_glm.html'>stan_glm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
+<span class='no'>stan_m1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
                     <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
                     <span class='kw'>diagnostic_file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df1.csv"</span>))
 
@@ -328,6 +331,7 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
       <li><a href="#references">References</a></li>
       <li><a href="#see-also">See also</a></li>

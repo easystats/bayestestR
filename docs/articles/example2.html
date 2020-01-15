@@ -302,12 +302,10 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(model, <span class="dt">test =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span>))</a></code></pre></div>
 <pre><code>&gt; # Description of Posterior Distributions
 &gt; 
-&gt;    Parameter Median CI CI_low CI_high    pd ROPE_CI ROPE_low ROPE_high
-&gt;  (Intercept)  -6.12 89 -9.590   -3.02 0.999      89   -0.181     0.181
-&gt;  Sepal.Width   2.13 89  0.986    3.26 0.999      89   -0.181     0.181
-&gt;  ROPE_Percentage   BF  Rhat  ESS
-&gt;                0 8.50 0.999 2689
-&gt;                0 9.13 0.999 2712</code></pre>
+&gt; Parameter   | Median | CI | CI_low | CI_high |    pd | ROPE_CI | ROPE_low | ROPE_high | ROPE_Percentage |    BF |  Rhat |  ESS
+&gt; ------------------------------------------------------------------------------------------------------------------------------
+&gt; (Intercept) | -6.116 | 89 | -9.590 |  -3.020 | 0.999 |      89 |   -0.181 |     0.181 |               0 | 8.498 | 0.999 | 2689
+&gt; Sepal.Width |  2.131 | 89 |  0.986 |   3.262 | 0.999 |      89 |   -0.181 |     0.181 |               0 | 9.132 | 0.999 | 2712</code></pre>
 </div>
 <div id="visualise-the-indices" class="section level3">
 <h3 class="hasAnchor">

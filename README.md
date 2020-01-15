@@ -136,8 +136,71 @@ describe_posterior(
   test = c("p_direction", "p_significance")
 )
 ##   Parameter Median CI CI_low CI_high   pd   ps
-## 1 Posterior  0.023 89   -1.9     1.4 0.51 0.46
+## 1 Posterior -0.047 89   -1.7     1.4 0.52 0.48
 ```
+
+`describe_posterior()` works for many objects, including more complex
+*brmsfit*-models. For better readability, the output is separated by
+model components:
+
+``` r
+zinb <- read.csv("http://stats.idre.ucla.edu/stat/data/fish.csv")
+set.seed(123)
+model <- brm(
+  bf(
+    count ~ child + camper + (1 | persons), 
+    zi ~ child + camper + (1 | persons)
+  ),
+  data = zinb,
+  family = zero_inflated_poisson(),
+  chains = 1,
+  iter = 500
+)
+
+describe_posterior(
+  model,
+  effects = "all",
+  component = "all",
+  test = c("p_direction", "p_significance"),
+  centrality = "all"
+)
+```
+
+    ## # Description of Posterior Distributions
+    ## 
+    ## # Fixed Effects (Conditional Model)
+    ## 
+    ## Parameter | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat
+    ## ------------------------------------------------------------------------------------------
+    ## Intercept |  1.319 |  1.186 |  1.450 | 89 |  0.049 |   2.275 | 0.940 | 0.920 |  78 | 1.005
+    ## child     | -1.162 | -1.162 | -1.175 | 89 | -1.320 |  -0.980 | 1.000 | 1.000 | 172 | 0.996
+    ## camper    |  0.727 |  0.731 |  0.737 | 89 |  0.587 |   0.858 | 1.000 | 1.000 | 233 | 0.996
+    ## 
+    ## # Fixed Effects (Zero-Inflated Model)
+    ## 
+    ## Parameter | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat
+    ## ------------------------------------------------------------------------------------------
+    ## Intercept | -0.778 | -0.731 | -0.890 | 89 | -1.893 |   0.218 | 0.876 | 0.840 |  92 | 1.004
+    ## child     |  1.888 |  1.882 |  1.906 | 89 |  1.302 |   2.304 | 1.000 | 1.000 |  72 | 1.015
+    ## camper    | -0.840 | -0.838 | -0.778 | 89 | -1.337 |  -0.231 | 0.992 | 0.988 | 182 | 0.998
+    ## 
+    ## # Random Effects (Conditional Model)
+    ## 
+    ## Parameter | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat
+    ## ------------------------------------------------------------------------------------------
+    ## persons 1 | -1.315 | -1.233 | -1.397 | 89 | -2.555 |  -0.031 | 0.940 | 0.924 |  80 | 1.004
+    ## persons 2 | -0.380 | -0.264 | -0.542 | 89 | -1.451 |   1.008 | 0.660 | 0.632 |  78 | 1.006
+    ## persons 3 |  0.307 |  0.438 |  0.136 | 89 | -0.728 |   1.588 | 0.708 | 0.644 |  77 | 1.003
+    ## persons 4 |  1.207 |  1.331 |  1.030 | 89 |  0.290 |   2.537 | 0.960 | 0.960 |  78 | 1.004
+    ## 
+    ## # Random Effects (Zero-Inflated Model)
+    ## 
+    ## Parameter | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat
+    ## ------------------------------------------------------------------------------------------
+    ## persons 1 |  1.355 |  1.319 |  1.366 | 89 |  0.368 |   2.659 | 0.956 | 0.952 |  91 | 1.005
+    ## persons 2 |  0.382 |  0.357 |  0.509 | 89 | -0.726 |   1.488 | 0.724 | 0.668 |  99 | 1.000
+    ## persons 3 | -0.117 | -0.142 | -0.103 | 89 | -1.162 |   1.128 | 0.580 | 0.512 |  94 | 0.997
+    ## persons 4 | -1.166 | -1.270 | -1.024 | 89 | -2.462 |  -0.061 | 0.972 | 0.960 | 113 | 0.997
 
 *bayestestR* also includes [**many other
 features**](https://easystats.github.io/bayestestR/reference/index.html)
@@ -162,7 +225,7 @@ As for other [**easystats**](https://github.com/easystats) packages,
 `plot()` methods are available from the
 [**see**](http://easystats.github.io/see) package for many functions:
 
-![](man/figures/unnamed-chunk-6-1.png)<!-- -->
+![](man/figures/unnamed-chunk-8-1.png)<!-- -->
 
 While the **median** and the **mean** are available through base R
 functions,
@@ -214,7 +277,7 @@ eti(posterior, ci = .89)
 ## [0.42, 7.27]
 ```
 
-![](man/figures/unnamed-chunk-8-1.png)<!-- -->
+![](man/figures/unnamed-chunk-10-1.png)<!-- -->
 
 ## Existence and Significance Testing
 
@@ -246,7 +309,7 @@ p_direction(posterior)
 ## pd = 98.00%
 ```
 
-![](man/figures/unnamed-chunk-10-1.png)<!-- -->
+![](man/figures/unnamed-chunk-12-1.png)<!-- -->
 
 ### ROPE
 
@@ -286,7 +349,7 @@ rope(posterior, range = c(-0.1, 0.1))
 ## 1.11 %
 ```
 
-![](man/figures/unnamed-chunk-12-1.png)<!-- -->
+![](man/figures/unnamed-chunk-14-1.png)<!-- -->
 
 ### Bayes Factor
 
@@ -315,12 +378,12 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## 
 ## BF  
 ## ----
-## 2.07
+## 2.03
 ## 
 ## * Evidence Against The Null: [0]
 ```
 
-![](man/figures/unnamed-chunk-14-1.png)<!-- -->
+![](man/figures/unnamed-chunk-16-1.png)<!-- -->
 
 <sup>*The lollipops represent the density of a point-null on the prior
 distribution (the blue lollipop on the dotted distribution) and on the
@@ -378,7 +441,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.35
+## [1] 0.39
 ```
 
 # References

@@ -474,44 +474,28 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Description of Posterior Distributions
 #&gt; 
-#&gt; </span><span>   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
-#&gt;  (Intercept) 39.673 89  30.85  47.424 1.00      89   -0.603     0.603
-#&gt;           wt -5.559 89  -6.76  -4.442 1.00      89   -0.603     0.603
-#&gt;         gear -0.448 89  -1.98   0.891 0.69      89   -0.603     0.603
-#&gt;  ROPE_Percentage  Rhat ESS
-#&gt;            0.000 0.996 220
-#&gt;            0.000 0.996 200
-#&gt;            0.503 0.993 215
+#&gt; </span><span>Parameter   | Median | CI | CI_low | CI_high |    pd | ROPE_CI | ROPE_low | ROPE_high | ROPE_Percentage |  Rhat | ESS
+#&gt; ---------------------------------------------------------------------------------------------------------------------
+#&gt; (Intercept) | 39.673 | 89 | 30.846 |  47.424 | 1.000 |      89 |   -0.603 |     0.603 |           0.000 | 0.996 | 220
+#&gt; wt          | -5.559 | 89 | -6.756 |  -4.442 | 1.000 |      89 |   -0.603 |     0.603 |           0.000 | 0.996 | 200
+#&gt; gear        | -0.448 | 89 | -1.982 |   0.891 | 0.690 |      89 |   -0.603 |     0.603 |           0.503 | 0.993 | 215
 #&gt; </div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>model</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='message'>Computation of Bayes factors: sampling priors, please wait...</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Description of Posterior Distributions
 #&gt; 
-#&gt; </span><span>   Parameter Median   MAD   Mean    SD    MAP CI CI_low CI_high p_MAP   pd
-#&gt;  (Intercept) 39.673 5.228 39.441 5.290 41.407 89  30.85  47.424 0.000 1.00
-#&gt;           wt -5.559 0.684 -5.562 0.708 -5.627 89  -6.76  -4.442 0.000 1.00
-#&gt;         gear -0.448 1.018 -0.441 0.954 -0.202 89  -1.98   0.891 0.958 0.69
-#&gt;  p_ROPE    ps ROPE_CI ROPE_low ROPE_high ROPE_Percentage ROPE_Equivalence
-#&gt;    0.00 1.000      89   -0.603     0.603           0.000         Rejected
-#&gt;    0.00 1.000      89   -0.603     0.603           0.000         Rejected
-#&gt;    0.45 0.425      89   -0.603     0.603           0.503        Undecided
-#&gt;        BF  Rhat ESS
-#&gt;  3.82e+03 0.996 220
-#&gt;  1.77e+04 0.996 200
-#&gt;  4.03e-02 0.993 215
+#&gt; </span><span>Parameter   | Median |   MAD |   Mean |    SD |    MAP | CI | CI_low | CI_high | p_MAP |    pd | p_ROPE |    ps | ROPE_CI | ROPE_low | ROPE_high | ROPE_Percentage | ROPE_Equivalence |        BF |  Rhat | ESS
+#&gt; ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#&gt; (Intercept) | 39.673 | 5.228 | 39.441 | 5.290 | 41.407 | 89 | 30.846 |  47.424 | 0.000 | 1.000 |  0.000 | 1.000 |      89 |   -0.603 |     0.603 |           0.000 |         Rejected |  3822.862 | 0.996 | 220
+#&gt; wt          | -5.559 | 0.684 | -5.562 | 0.708 | -5.627 | 89 | -6.756 |  -4.442 | 0.000 | 1.000 |  0.000 | 1.000 |      89 |   -0.603 |     0.603 |           0.000 |         Rejected | 17695.245 | 0.996 | 200
+#&gt; gear        | -0.448 | 1.018 | -0.441 | 0.954 | -0.202 | 89 | -1.982 |   0.891 | 0.958 | 0.690 |  0.450 | 0.425 |      89 |   -0.603 |     0.603 |           0.503 |        Undecided |     0.040 | 0.993 | 215
 #&gt; </div><div class='input'><span class='fu'>describe_posterior</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Description of Posterior Distributions
 #&gt; 
-#&gt; </span><span>   Parameter Median CI CI_low CI_high   pd ROPE_CI ROPE_low ROPE_high
-#&gt;  (Intercept) 39.673 80  32.40  45.708 1.00      89   -0.603     0.603
-#&gt;  (Intercept) 39.673 90  31.76  48.705 1.00      89   -0.603     0.603
-#&gt;           wt -5.559 80  -6.43  -4.638 1.00      89   -0.603     0.603
-#&gt;           wt -5.559 90  -6.67  -4.281 1.00      89   -0.603     0.603
-#&gt;         gear -0.448 80  -1.78   0.577 0.69      89   -0.603     0.603
-#&gt;         gear -0.448 90  -1.98   1.028 0.69      89   -0.603     0.603
-#&gt;  ROPE_Percentage  Rhat ESS
-#&gt;            0.000 0.996 220
-#&gt;            0.000 0.996 220
-#&gt;            0.000 0.996 200
-#&gt;            0.000 0.996 200
-#&gt;            0.503 0.993 215
-#&gt;            0.503 0.993 215
+#&gt; </span><span>Parameter   | Median | CI | CI_low | CI_high |    pd | ROPE_CI | ROPE_low | ROPE_high | ROPE_Percentage |  Rhat | ESS
+#&gt; ---------------------------------------------------------------------------------------------------------------------
+#&gt; (Intercept) | 39.673 | 80 | 32.404 |  45.708 | 1.000 |      89 |   -0.603 |     0.603 |           0.000 | 0.996 | 220
+#&gt; (Intercept) | 39.673 | 90 | 31.761 |  48.705 | 1.000 |      89 |   -0.603 |     0.603 |           0.000 | 0.996 | 220
+#&gt; wt          | -5.559 | 80 | -6.435 |  -4.638 | 1.000 |      89 |   -0.603 |     0.603 |           0.000 | 0.996 | 200
+#&gt; wt          | -5.559 | 90 | -6.669 |  -4.281 | 1.000 |      89 |   -0.603 |     0.603 |           0.000 | 0.996 | 200
+#&gt; gear        | -0.448 | 80 | -1.779 |   0.577 | 0.690 |      89 |   -0.603 |     0.603 |           0.503 | 0.993 | 215
+#&gt; gear        | -0.448 | 90 | -1.982 |   1.028 | 0.690 |      89 |   -0.603 |     0.603 |           0.503 | 0.993 | 215
 #&gt; </div><div class='input'>
 <span class='co'># emmeans estimates</span>
 <span class='co'># -----------------------------------------------</span>
@@ -520,10 +504,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; <span class='message'>    Indicator predictors are now treated as 2-level factors by default.</span>
 #&gt; <span class='message'>    To revert to old behavior, use emm_options(cov.keep = character(0))</span></div><div class='input'><span class='fu'>describe_posterior</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Description of Posterior Distributions
 #&gt; 
-#&gt; </span><span> Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
-#&gt;    overall  -5.56 89  -6.76   -4.44  1      89     -0.1       0.1
-#&gt;  ROPE_Percentage
-#&gt;                0
+#&gt; </span><span>Parameter | Median | CI | CI_low | CI_high | pd | ROPE_CI | ROPE_low | ROPE_high | ROPE_Percentage
+#&gt; --------------------------------------------------------------------------------------------------
+#&gt; overall   | -5.559 | 89 | -6.756 |  -4.442 |  1 |      89 |   -0.100 |     0.100 |               0
 #&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># brms models</span>
 <span class='co'># -----------------------------------------------</span>

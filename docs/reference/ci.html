@@ -325,57 +325,65 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>)
 <span class='fu'>ci</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Equal-Tailed Interval
 #&gt; 
-#&gt; </span><span>       89% ETI
-#&gt;  [-1.55, 1.57]
+#&gt; </span><span>89% ETI      
+#&gt; -------------
+#&gt; [-1.55, 1.57]
 #&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
-#&gt; </span><span>       89% HDI
-#&gt;  [-1.36, 1.69]
+#&gt; </span><span>89% HDI      
+#&gt; -------------
+#&gt; [-1.36, 1.69]
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Intervals
 #&gt; 
-#&gt; </span><span> Parameter       80% ETI
-#&gt;         X1 [-1.38, 1.14]
-#&gt;         X2 [-1.27, 1.28]
-#&gt;         X3 [-1.27, 1.24]
-#&gt;         X4 [-1.09, 1.43]
+#&gt; </span><span>Parameter |       80% ETI
+#&gt; -------------------------
+#&gt; X1        | [-1.38, 1.14]
+#&gt; X2        | [-1.27, 1.28]
+#&gt; X3        | [-1.27, 1.24]
+#&gt; X4        | [-1.09, 1.43]
 #&gt; 
 #&gt; 
-#&gt;  Parameter       89% ETI
-#&gt;         X1 [-1.66, 1.36]
-#&gt;         X2 [-1.43, 1.64]
-#&gt;         X3 [-1.43, 1.58]
-#&gt;         X4 [-1.56, 1.53]
+#&gt; Parameter |       89% ETI
+#&gt; -------------------------
+#&gt; X1        | [-1.66, 1.36]
+#&gt; X2        | [-1.43, 1.64]
+#&gt; X3        | [-1.43, 1.58]
+#&gt; X4        | [-1.56, 1.53]
 #&gt; 
 #&gt; 
-#&gt;  Parameter       95% ETI
-#&gt;         X1 [-1.79, 1.60]
-#&gt;         X2 [-1.81, 2.04]
-#&gt;         X3 [-1.70, 1.76]
-#&gt;         X4 [-1.75, 2.13]
+#&gt; Parameter |       95% ETI
+#&gt; -------------------------
+#&gt; X1        | [-1.79, 1.60]
+#&gt; X2        | [-1.81, 2.04]
+#&gt; X3        | [-1.70, 1.76]
+#&gt; X4        | [-1.75, 2.13]
 #&gt; 
 #&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
-#&gt; </span><span> Parameter       80% HDI
-#&gt;         X1 [-1.41, 1.07]
-#&gt;         X2 [-1.37, 1.11]
-#&gt;         X3 [-1.31, 1.15]
-#&gt;         X4 [-0.74, 1.53]
+#&gt; </span><span>Parameter |       80% HDI
+#&gt; -------------------------
+#&gt; X1        | [-1.41, 1.07]
+#&gt; X2        | [-1.37, 1.11]
+#&gt; X3        | [-1.31, 1.15]
+#&gt; X4        | [-0.74, 1.53]
 #&gt; 
 #&gt; 
-#&gt;  Parameter       89% HDI
-#&gt;         X1 [-1.41, 1.59]
-#&gt;         X2 [-1.54, 1.51]
-#&gt;         X3 [-1.48, 1.49]
-#&gt;         X4 [-1.46, 1.61]
+#&gt; Parameter |       89% HDI
+#&gt; -------------------------
+#&gt; X1        | [-1.41, 1.59]
+#&gt; X2        | [-1.54, 1.51]
+#&gt; X3        | [-1.48, 1.49]
+#&gt; X4        | [-1.46, 1.61]
 #&gt; 
 #&gt; 
-#&gt;  Parameter       95% HDI
-#&gt;         X1 [-1.74, 1.63]
-#&gt;         X2 [-2.11, 1.86]
-#&gt;         X3 [-1.56, 1.92]
-#&gt;         X4 [-1.98, 1.61]
+#&gt; Parameter |       95% HDI
+#&gt; -------------------------
+#&gt; X1        | [-1.74, 1.63]
+#&gt; X2        | [-2.11, 1.86]
+#&gt; X3        | [-1.56, 1.92]
+#&gt; X4        | [-1.98, 1.61]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
@@ -387,31 +395,36 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ETI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Intervals
 #&gt; 
-#&gt; </span><span>   Parameter        80% ETI
-#&gt;  (Intercept) [34.79, 39.73]
-#&gt;           wt [-6.03, -4.58]
+#&gt; </span><span>Parameter   |        80% ETI
+#&gt; ----------------------------
+#&gt; (Intercept) | [34.79, 39.73]
+#&gt; wt          | [-6.03, -4.58]
 #&gt; 
 #&gt; 
-#&gt;    Parameter        89% ETI
-#&gt;  (Intercept) [34.38, 40.26]
-#&gt;           wt [-6.14, -4.45]
+#&gt; Parameter   |        89% ETI
+#&gt; ----------------------------
+#&gt; (Intercept) | [34.38, 40.26]
+#&gt; wt          | [-6.14, -4.45]
 #&gt; 
 #&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"HDI"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
-#&gt; </span><span>   Parameter        80% HDI
-#&gt;  (Intercept) [34.35, 39.07]
-#&gt;           wt [-6.14, -4.70]
+#&gt; </span><span>Parameter   |        80% HDI
+#&gt; ----------------------------
+#&gt; (Intercept) | [34.35, 39.07]
+#&gt; wt          | [-6.14, -4.70]
 #&gt; 
 #&gt; 
-#&gt;    Parameter        89% HDI
-#&gt;  (Intercept) [34.24, 40.02]
-#&gt;           wt [-6.15, -4.45]
+#&gt; Parameter   |        89% HDI
+#&gt; ----------------------------
+#&gt; (Intercept) | [34.24, 40.02]
+#&gt; wt          | [-6.15, -4.45]
 #&gt; 
 #&gt; </div><div class='input'><span class='fu'>ci</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"SI"</span>)</div><div class='output co'>#&gt; <span class='message'>Computation of Bayes factors: sampling priors, please wait...</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Support Interval
 #&gt; 
-#&gt; </span><span>   Parameter      BF = 1 SI
-#&gt;  (Intercept) [32.89, 44.33]
-#&gt;           wt [-6.86, -3.96]
+#&gt; </span><span>Parameter   |      BF = 1 SI
+#&gt; ----------------------------
+#&gt; (Intercept) | [32.89, 44.33]
+#&gt; wt          | [-6.86, -3.96]
 #&gt; </div><div class='input'>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)

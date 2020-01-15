@@ -284,11 +284,12 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>p_significance</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Probability of Significance (ps [0.10])
 #&gt; 
-#&gt; </span><span> Parameter     ps
-#&gt;         X1 51.00%
-#&gt;         X2 55.00%
-#&gt;         X3 47.00%
-#&gt;         X4 47.00%
+#&gt; </span><span>Parameter |     ps
+#&gt; ------------------
+#&gt; X1        | 51.00%
+#&gt; X2        | 55.00%
+#&gt; X3        | 47.00%
+#&gt; X4        | 47.00%
 #&gt; </div><div class='input'>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
@@ -299,10 +300,11 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 )
 <span class='fu'>p_significance</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Significance (ps [0.60])
 #&gt; 
-#&gt; </span><span>   Parameter      ps
-#&gt;  (Intercept) 100.00%
-#&gt;           wt  99.85%
-#&gt;          cyl  97.80%
+#&gt; </span><span>Parameter   |      ps
+#&gt; ---------------------
+#&gt; (Intercept) | 100.00%
+#&gt; wt          |  99.85%
+#&gt; cyl         |  97.80%
 #&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

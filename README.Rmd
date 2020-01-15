@@ -120,6 +120,42 @@ describe_posterior(
 )
 ```
 
+`describe_posterior()` works for many objects, including more complex *brmsfit*-models. For better readability, the output is separated by model components:
+
+```{r message=FALSE, warning=FALSE, eval=FALSE}
+zinb <- read.csv("http://stats.idre.ucla.edu/stat/data/fish.csv")
+set.seed(123)
+model <- brm(
+  bf(
+    count ~ child + camper + (1 | persons), 
+    zi ~ child + camper + (1 | persons)
+  ),
+  data = zinb,
+  family = zero_inflated_poisson(),
+  chains = 1,
+  iter = 500
+)
+
+describe_posterior(
+  model,
+  effects = "all",
+  component = "all",
+  test = c("p_direction", "p_significance"),
+  centrality = "all"
+)
+```
+```{r message=FALSE, warning=FALSE,echo=FALSE}
+model <- insight::download_model("brms_zi_3")
+describe_posterior(
+  model,
+  effects = "all",
+  component = "all",
+  test = c("p_direction", "p_significance"),
+  centrality = "all"
+)
+```
+
+
 *bayestestR* also includes [**many other features**](https://easystats.github.io/bayestestR/reference/index.html) useful for your Bayesian analsyes. Here are some more examples:
 
 

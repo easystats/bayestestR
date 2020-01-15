@@ -327,51 +327,59 @@ the resulting HDI.</p>
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>)
 <span class='fu'>eti</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Equal-Tailed Interval
 #&gt; 
-#&gt; </span><span>       89% ETI
-#&gt;  [-1.68, 1.64]
+#&gt; </span><span>89% ETI      
+#&gt; -------------
+#&gt; [-1.68, 1.64]
 #&gt; </div><div class='input'><span class='fu'>eti</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Intervals
 #&gt; 
-#&gt; </span><span>       80% ETI
-#&gt;  [-1.41, 1.30]
+#&gt; </span><span>80% ETI      
+#&gt; -------------
+#&gt; [-1.41, 1.30]
 #&gt; 
 #&gt; 
-#&gt;        89% ETI
-#&gt;  [-1.68, 1.64]
+#&gt; 89% ETI      
+#&gt; -------------
+#&gt; [-1.68, 1.64]
 #&gt; 
 #&gt; 
-#&gt;        95% ETI
-#&gt;  [-1.95, 1.94]
+#&gt; 95% ETI      
+#&gt; -------------
+#&gt; [-1.95, 1.94]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>eti</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Interval
 #&gt; 
-#&gt; </span><span> Parameter       89% ETI
-#&gt;         X1 [-1.57, 1.67]
-#&gt;         X2 [-1.94, 1.63]
-#&gt;         X3 [-1.62, 1.74]
-#&gt;         X4 [-1.67, 1.65]
+#&gt; </span><span>Parameter |       89% ETI
+#&gt; -------------------------
+#&gt; X1        | [-1.57, 1.67]
+#&gt; X2        | [-1.94, 1.63]
+#&gt; X3        | [-1.62, 1.74]
+#&gt; X4        | [-1.67, 1.65]
 #&gt; </div><div class='input'><span class='fu'>eti</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Intervals
 #&gt; 
-#&gt; </span><span> Parameter       80% ETI
-#&gt;         X1 [-1.23, 1.43]
-#&gt;         X2 [-1.29, 1.21]
-#&gt;         X3 [-1.30, 1.13]
-#&gt;         X4 [-1.57, 1.25]
+#&gt; </span><span>Parameter |       80% ETI
+#&gt; -------------------------
+#&gt; X1        | [-1.23, 1.43]
+#&gt; X2        | [-1.29, 1.21]
+#&gt; X3        | [-1.30, 1.13]
+#&gt; X4        | [-1.57, 1.25]
 #&gt; 
 #&gt; 
-#&gt;  Parameter       89% ETI
-#&gt;         X1 [-1.57, 1.67]
-#&gt;         X2 [-1.94, 1.63]
-#&gt;         X3 [-1.62, 1.74]
-#&gt;         X4 [-1.67, 1.65]
+#&gt; Parameter |       89% ETI
+#&gt; -------------------------
+#&gt; X1        | [-1.57, 1.67]
+#&gt; X2        | [-1.94, 1.63]
+#&gt; X3        | [-1.62, 1.74]
+#&gt; X4        | [-1.67, 1.65]
 #&gt; 
 #&gt; 
-#&gt;  Parameter       95% ETI
-#&gt;         X1 [-1.77, 1.98]
-#&gt;         X2 [-2.25, 2.18]
-#&gt;         X3 [-2.04, 2.09]
-#&gt;         X4 [-1.79, 1.83]
+#&gt; Parameter |       95% ETI
+#&gt; -------------------------
+#&gt; X1        | [-1.77, 1.98]
+#&gt; X2        | [-2.25, 2.18]
+#&gt; X3        | [-2.04, 2.09]
+#&gt; X4        | [-1.79, 1.83]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
@@ -381,35 +389,40 @@ the resulting HDI.</p>
 #&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
 #&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>eti</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Interval
 #&gt; 
-#&gt; </span><span>   Parameter        89% ETI
-#&gt;  (Intercept) [30.69, 47.56]
-#&gt;           wt [-6.71, -4.54]
-#&gt;         gear [-1.87,  1.18]
+#&gt; </span><span>Parameter   |        89% ETI
+#&gt; ----------------------------
+#&gt; (Intercept) | [30.69, 47.56]
+#&gt; wt          | [-6.71, -4.54]
+#&gt; gear        | [-1.87,  1.18]
 #&gt; </div><div class='input'><span class='fu'>eti</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Intervals
 #&gt; 
-#&gt; </span><span>   Parameter        80% ETI
-#&gt;  (Intercept) [32.82, 45.84]
-#&gt;           wt [-6.37, -4.68]
-#&gt;         gear [-1.60,  0.86]
+#&gt; </span><span>Parameter   |        80% ETI
+#&gt; ----------------------------
+#&gt; (Intercept) | [32.82, 45.84]
+#&gt; wt          | [-6.37, -4.68]
+#&gt; gear        | [-1.60,  0.86]
 #&gt; 
 #&gt; 
-#&gt;    Parameter        89% ETI
-#&gt;  (Intercept) [30.69, 47.56]
-#&gt;           wt [-6.71, -4.54]
-#&gt;         gear [-1.87,  1.18]
+#&gt; Parameter   |        89% ETI
+#&gt; ----------------------------
+#&gt; (Intercept) | [30.69, 47.56]
+#&gt; wt          | [-6.71, -4.54]
+#&gt; gear        | [-1.87,  1.18]
 #&gt; 
 #&gt; 
-#&gt;    Parameter        95% ETI
-#&gt;  (Intercept) [30.08, 48.87]
-#&gt;           wt [-6.98, -4.30]
-#&gt;         gear [-2.03,  1.62]
+#&gt; Parameter   |        95% ETI
+#&gt; ----------------------------
+#&gt; (Intercept) | [30.08, 48.87]
+#&gt; wt          | [-6.98, -4.30]
+#&gt; gear        | [-2.03,  1.62]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
 <span class='fu'>eti</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Interval
 #&gt; 
-#&gt; </span><span> Parameter        89% ETI
-#&gt;    overall [-6.71, -4.54]
+#&gt; </span><span>Parameter |        89% ETI
+#&gt; --------------------------
+#&gt; overall   | [-6.71, -4.54]
 #&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)

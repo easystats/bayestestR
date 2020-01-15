@@ -221,9 +221,10 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <a class="sourceLine" id="cb2-2" title="2">My_first_BF</a></code></pre></div>
 <pre><code>&gt; # Bayes Factor (Null-Interval)
 &gt; 
-&gt;    Parameter   BF
-&gt;  (Intercept) 0.02
-&gt;       group2  0.9
+&gt; Parameter   |   BF
+&gt; ------------------
+&gt; (Intercept) | 0.02
+&gt; group2      |  0.9
 &gt; 
 &gt; * Evidence Against The Null: [-1, 1]</code></pre>
 <p>We can also plot using the <code>see</code> package:</p>
@@ -242,8 +243,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <a class="sourceLine" id="cb5-2" title="2">My_second_BF</a></code></pre></div>
 <pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
 &gt; 
-&gt;  Parameter   BF
-&gt;     group2 1.48
+&gt; Parameter |   BF
+&gt; ----------------
+&gt; group2    | 1.48
 &gt; 
 &gt; * Evidence Against The Null: [0]</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(My_second_BF)</a></code></pre></div>
@@ -257,8 +259,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <a class="sourceLine" id="cb8-2" title="2">test_group2_right</a></code></pre></div>
 <pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
 &gt; 
-&gt;  Parameter   BF
-&gt;     group2 2.82
+&gt; Parameter |   BF
+&gt; ----------------
+&gt; group2    | 2.82
 &gt; 
 &gt; * Evidence Against The Null: [0]
 &gt; *                 Direction: Right-Sided test</code></pre>
@@ -279,8 +282,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <a class="sourceLine" id="cb11-2" title="2">my_first_si</a></code></pre></div>
 <pre><code>&gt; # Support Interval
 &gt; 
-&gt;  Parameter    BF = 1 SI
-&gt;     group2 [0.24, 3.02]</code></pre>
+&gt; Parameter |    BF = 1 SI
+&gt; ------------------------
+&gt; group2    | [0.24, 3.02]</code></pre>
 <p>The argument <code>BF = 1</code> indicates that we want the interval to contain values that have gained support by a factor of at least 1 (that is, any support at all).</p>
 <p>Visually, we can see that the credibility of all the values within this interval has increased (and likewise the credibility of all the values outside this interval has decreased):</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(my_first_si)</a></code></pre></div>
@@ -577,24 +581,26 @@ BF_{restricted / NULL} = \frac
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw"><a href="../reference/hdi.html">hdi</a></span>(mod_carb, <span class="dt">ci =</span> <span class="fl">.95</span>)</a></code></pre></div>
 <pre><code>&gt; # Highest Density Interval
 &gt; 
-&gt;    Parameter        95% HDI
-&gt;  (Intercept) [28.29, 40.52]
-&gt;           wt [-5.46, -1.61]
-&gt;           am [-0.93,  5.84]
-&gt;         carb [-2.01, -0.32]</code></pre>
+&gt; Parameter   |        95% HDI
+&gt; ----------------------------
+&gt; (Intercept) | [28.29, 40.52]
+&gt; wt          | [-5.46, -1.61]
+&gt; am          | [-0.93,  5.84]
+&gt; carb        | [-2.01, -0.32]</code></pre>
 <p>How can this be? By estimating the HDI of the effect for <code>carb</code> in the full model, we are acting under the assumption that that model is correct. However, as we’ve just seen, both models are practically tied, and in fact it was the no-<code>carb</code> model, in which the effect for <code>carb</code> is fixed at 0, that was slightly more supported by the data. If this is the case <strong>why limit our estimation of the effect just to one model?</strong> <span class="citation">(Bergh, Haaf, Ly, Rouder, &amp; Wagenmakers, 2019)</span>.</p>
-<p>Using Bayesian model averaging, we can combine the posteriors samples from several models, weighted by the models’ marginal likelihood (done via the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function). If some parameter is part of some of the models but is missing from others, it is assumed to be fixed a 0 (which can also be seen as a method of applying shrinkage to our estimates). This results in a posterior distribution across several models, which we can now treat like any posterior distribution, and estimate the HDI. We can do this with the <code>weighted_posteriors()</code> function:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1">BMA_draws &lt;-<span class="st"> </span><span class="kw">weighted_posteriors</span>(mod, mod_carb)</a>
+<p>Using Bayesian model averaging, we can combine the posteriors samples from several models, weighted by the models’ marginal likelihood (done via the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function). If some parameter is part of some of the models but is missing from others, it is assumed to be fixed a 0 (which can also be seen as a method of applying shrinkage to our estimates). This results in a posterior distribution across several models, which we can now treat like any posterior distribution, and estimate the HDI. We can do this with the <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> function:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1">BMA_draws &lt;-<span class="st"> </span><span class="kw"><a href="../reference/weighted_posteriors.html">weighted_posteriors</a></span>(mod, mod_carb)</a>
 <a class="sourceLine" id="cb43-2" title="2"></a>
 <a class="sourceLine" id="cb43-3" title="3">BMA_hdi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hdi.html">hdi</a></span>(BMA_draws, <span class="dt">ci =</span> <span class="fl">.95</span>)</a>
 <a class="sourceLine" id="cb43-4" title="4">BMA_hdi</a></code></pre></div>
 <pre><code>&gt; # Highest Density Interval
 &gt; 
-&gt;    Parameter        95% HDI
-&gt;  (Intercept) [28.99, 42.75]
-&gt;           wt [-6.62, -1.93]
-&gt;           am [-2.65,  5.32]
-&gt;         carb [-1.71,  0.00]</code></pre>
+&gt; Parameter   |        95% HDI
+&gt; ----------------------------
+&gt; (Intercept) | [28.99, 42.75]
+&gt; wt          | [-6.62, -1.93]
+&gt; am          | [-2.65,  5.32]
+&gt; carb        | [-1.71,  0.00]</code></pre>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(BMA_hdi)</a></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-22-1.png" width="1093.75"></p>
 <p>We can see that across both models under consideration, the posterior of the <code>carb</code> effect is almost equally weighted between the alternative model and the null model - as represented by about half of the posterior mass concentrated at 0 - which makes sense as both models were almost equally supported by the data. We can also see that across both models, that now <strong>the HDI does contain 0</strong>. Thus we have resolved the conflict between the Bayes factor and the HDI <span class="citation">(Rouder, Haaf, &amp; Vandekerckhove, 2018)</span>!</p>
@@ -626,10 +632,11 @@ BF_{restricted / NULL} = \frac
 <a class="sourceLine" id="cb48-2" title="2"><span class="kw"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span>(groups_all, <span class="dt">prior =</span> model)</a></code></pre></div>
 <pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
 &gt; 
-&gt;  Parameter   BF
-&gt;       1, . 0.07
-&gt;       2, . 8.63
-&gt;   ., 1 - 2 1.36
+&gt; Parameter |   BF
+&gt; ----------------
+&gt; 1, .      | 0.07
+&gt; 2, .      | 8.63
+&gt; ., 1 - 2  | 1.36
 &gt; 
 &gt; * Evidence Against The Null: [0]</code></pre>
 <p>That is strong evidence for the mean of group 1 being 0, and for group 2 for not being 0, but hardly any evidence for the difference between them being not 0. Conflict? Uncertainty? That is the Bayesian way!</p>
