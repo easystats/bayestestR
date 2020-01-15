@@ -1,4 +1,4 @@
-#' Generate posterior samples weighted across models
+#' Generate posterior distributions weighted across models
 #'
 #' Extract posterior samples of parameters, weighted across models.
 #' Weighting is done by comparing posterior model probabilities, via \code{\link{bayesfactor_models}}.

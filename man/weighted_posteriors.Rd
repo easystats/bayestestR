@@ -5,7 +5,7 @@
 \alias{weighted_posteriors.stanreg}
 \alias{weighted_posteriors.brmsfit}
 \alias{weighted_posteriors.BFBayesFactor}
-\title{Generate posterior samples weighted across models}
+\title{Generate posterior distributions weighted across models}
 \usage{
 weighted_posteriors(..., prior_odds = NULL, missing = 0, verbose = TRUE)
 
