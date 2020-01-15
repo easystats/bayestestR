@@ -130,9 +130,13 @@ is the master function with which you can compute all of the indices
 cited below at once.
 
 ``` r
-describe_posterior(rnorm(1000), centrality="median", test=c("p_direction", "p_significance"))
+describe_posterior(
+  rnorm(1000),
+  centrality = "median",
+  test = c("p_direction", "p_significance")
+)
 ##   Parameter Median CI CI_low CI_high   pd   ps
-## 1 Posterior -0.028 89   -1.4     1.8 0.51 0.47
+## 1 Posterior  0.023 89   -1.9     1.4 0.51 0.46
 ```
 
 *bayestestR* also includes [**many other
@@ -149,8 +153,9 @@ centrality <- point_estimate(posterior)  # Get indices of centrality
 centrality
 ## # Point Estimates
 ## 
-##  Median Mean  MAP
-##     1.2  1.5 0.51
+## Median | Mean |  MAP
+## --------------------
+##   1.18 | 1.50 | 0.51
 ```
 
 As for other [**easystats**](https://github.com/easystats) packages,
@@ -197,14 +202,16 @@ posterior <- distribution_chisquared(100, 3)
 hdi(posterior, ci = .89)
 ## # Highest Density Interval
 ## 
-##       89% HDI
-##  [0.11, 6.05]
+## 89% HDI     
+## ------------
+## [0.11, 6.05]
 
 eti(posterior, ci = .89)
 ## # Equal-Tailed Interval
 ## 
-##       89% ETI
-##  [0.42, 7.27]
+## 89% ETI     
+## ------------
+## [0.42, 7.27]
 ```
 
 ![](man/figures/unnamed-chunk-8-1.png)<!-- -->
@@ -274,8 +281,9 @@ posterior <- distribution_normal(100, 0.4, 0.2)
 rope(posterior, range = c(-0.1, 0.1))
 ## # Proportion of samples inside the ROPE [-0.10, 0.10]:
 ## 
-##  inside ROPE
-##       1.11 %
+## inside ROPE
+## -----------
+## 1.11 %
 ```
 
 ![](man/figures/unnamed-chunk-12-1.png)<!-- -->
@@ -305,8 +313,9 @@ posterior <- rnorm(1000, mean = 1, sd = 0.7)
 bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## # Bayes Factor (Savage-Dickey density ratio)
 ## 
-##    BF
-##  2.04
+## BF  
+## ----
+## 2.07
 ## 
 ## * Evidence Against The Null: [0]
 ```
@@ -369,7 +378,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.39
+## [1] 0.35
 ```
 
 # References

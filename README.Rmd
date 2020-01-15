@@ -113,7 +113,11 @@ In the Bayesian framework, parameters are estimated in a probabilistic fashion a
 [**`describe_posterior()`**](https://easystats.github.io/bayestestR/reference/describe_posterior.html) is the master function with which you can compute all of the indices cited below at once.
 
 ```{r message=FALSE, warning=FALSE}
-describe_posterior(rnorm(1000), centrality="median", test=c("p_direction", "p_significance"))
+describe_posterior(
+  rnorm(1000),
+  centrality = "median",
+  test = c("p_direction", "p_significance")
+)
 ```
 
 *bayestestR* also includes [**many other features**](https://easystats.github.io/bayestestR/reference/index.html) useful for your Bayesian analsyes. Here are some more examples:
