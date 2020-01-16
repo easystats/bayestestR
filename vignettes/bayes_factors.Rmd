@@ -301,7 +301,7 @@ Thus, the choice of BF (the level of support the interval should indicate) depen
 
 - A $BF = 1$ contains values whose credibility has merely not decreased by observing the data.  
 - A $BF > 1$ contains values who received more impressive support from the data.  
-- A $BF < 1$ contains values whose credibility has *not* been impressively decreased by observing the data. As stated above, these are also values who, if tested against would produce a Bayes factor larger than $1/BF$ in support of the alternative.
+- A $BF < 1$ contains values whose credibility has *not* been impressively decreased by observing the data. Testing against values outside this interval will produce a Bayes factor larger than $1/BF$ in support of the alternative.
 
 ## Comparing Models using Bayes Factors {#bayesfactor_models}
 
