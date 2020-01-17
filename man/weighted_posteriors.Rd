@@ -75,15 +75,18 @@ Note that for \code{BayesFactor} models, posterior samples cannot be generated f
 This function is similar in function to \code{brms::\link[brms]{posterior_average}}.
 }
 \examples{
-\dontrun{
+\donttest{
 library(rstanarm)
+library(see)
 
 stan_m0 <- stan_glm(extra ~ 1, data = sleep,
                     family = gaussian(),
+                    refresh=0,
                     diagnostic_file = file.path(tempdir(), "df0.csv"))
 
 stan_m1 <- stan_glm(extra ~ group, data = sleep,
                     family = gaussian(),
+                    refresh=0,
                     diagnostic_file = file.path(tempdir(), "df1.csv"))
 
 
@@ -91,8 +94,10 @@ res <- weighted_posteriors(stan_m0, stan_m1)
 
 plot(eti(res))
 
-# With BayesFactor
+# With BayesFactor and brms
 library(BayesFactor)
+library(brms)
+
 BFmods <- anovaBF(extra ~ group + ID, sleep, whichRandom = "ID")
 
 res <- weighted_posteriors(BFmods)[1:3]
