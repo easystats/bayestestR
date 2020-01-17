@@ -96,7 +96,7 @@ see the Bayes factors vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -167,12 +167,7 @@ see the Bayes factors vignette." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/easystats/bayestestR">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -187,7 +182,7 @@ see the Bayes factors vignette." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Compute Support Intervals</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/si.R'><code>R/si.R</code></a></small>
+    
     <div class="hidden name"><code>si.Rd</code></div>
     </div>
 
@@ -328,7 +323,7 @@ that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm
 <span class='no'>prior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.3</span>)
 
-<span class='fu'>si</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: logspline</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Support Interval
+<span class='fu'>si</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Support Interval
 #&gt; 
 #&gt; </span><span>BF = 1 SI   
 #&gt; ------------
