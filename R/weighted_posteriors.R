@@ -27,8 +27,9 @@
 #' @seealso \code{\link{bayesfactor_inclusion}} for Bayesian model averaging.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(rstanarm)
+#' library(see)
 #'
 #' stan_m0 <- stan_glm(extra ~ 1, data = sleep,
 #'                     family = gaussian(),

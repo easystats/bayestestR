@@ -56,6 +56,6 @@ TO BE CONTINUED.
 
 The journey to become a true Bayesian master is not over. It is merely the beginning. It is now time to leave the `bayestestR` universe and apply the Bayesian framework in a variety of other statistical contexts: 
 
-- [**Marginal means**](https://easystats.github.io/estimate/articles/marginal_means.html)
-- [**Contrast analysis**](https://easystats.github.io/estimate/articles/contrast_analysis.html)
+- [**Marginal means**](https://easystats.github.io/modelbased/articles/marginal_means.html)
+- [**Contrast analysis**](https://easystats.github.io/modelbased/articles/contrast_analysis.html)
 - [**Testing Contrasts from Bayesian Models with 'emmeans' and 'bayestestR'**](https://easystats.github.io/blog/posts/bayestestr_emmeans/)
