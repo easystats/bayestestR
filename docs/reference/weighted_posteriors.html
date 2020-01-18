@@ -90,7 +90,7 @@ Weighting is done by comparing posterior model probabilities, via bayesfactor_mo
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -161,12 +161,7 @@ Weighting is done by comparing posterior model probabilities, via bayesfactor_mo
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/easystats/bayestestR">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -181,7 +176,7 @@ Weighting is done by comparing posterior model probabilities, via bayesfactor_mo
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Generate posterior distributions weighted across models</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/weighted_posteriors.R'><code>R/weighted_posteriors.R</code></a></small>
+    
     <div class="hidden name"><code>weighted_posteriors.Rd</code></div>
     </div>
 
@@ -289,43 +284,73 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
     <div class='dont-index'><p><code><a href='bayesfactor_inclusion.html'>bayesfactor_inclusion</a></code> for Bayesian model averaging.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>see</span>)
 
 <span class='no'>stan_m0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>extra</span> ~ <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
                     <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
+                    <span class='kw'>refresh</span><span class='kw'>=</span><span class='fl'>0</span>,
                     <span class='kw'>diagnostic_file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df0.csv"</span>))
 
 <span class='no'>stan_m1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
                     <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
+                    <span class='kw'>refresh</span><span class='kw'>=</span><span class='fl'>0</span>,
                     <span class='kw'>diagnostic_file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df1.csv"</span>))
 
 
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='no'>stan_m0</span>, <span class='no'>stan_m1</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res</span>))
-
-<span class='co'># With BayesFactor</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>BayesFactor</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='no'>stan_m0</span>, <span class='no'>stan_m1</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: bridgesampling</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Bayes factors might not be precise.</span>
+#&gt; <span class='warning'>For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.</span></div><div class='output co'>#&gt; <span class='message'>Computation of Bayes factors: estimating marginal likelihood, please wait...</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res</span>))</div><div class='output co'>#&gt; <span class='error'>Error: Failed at retrieving data :( Please provide original model or data through the `data` argument</span></div><div class='input'>
+<span class='co'># With BayesFactor and brms</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>BayesFactor</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: coda</span></div><div class='output co'>#&gt; <span class='message'>************</span>
+#&gt; <span class='message'>Welcome to BayesFactor 0.9.12-4.2. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>Type BFManual() to open the manual.</span>
+#&gt; <span class='message'>************</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)</div><div class='output co'>#&gt; <span class='message'>Loading 'brms' package (version 2.11.0). Useful instructions</span>
+#&gt; <span class='message'>can be found by typing help('brms'). A more detailed introduction</span>
+#&gt; <span class='message'>to the package is available through vignette('brms_overview').</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'brms'</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:rstanarm':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    dirichlet, exponential, get_y, lasso, loo_R2, ngrps</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:lme4':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    ngrps</span></div><div class='input'>
 <span class='no'>BFmods</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/anovaBF.html'>anovaBF</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + <span class='no'>ID</span>, <span class='no'>sleep</span>, <span class='kw'>whichRandom</span> <span class='kw'>=</span> <span class='st'>"ID"</span>)
 
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='no'>BFmods</span>)[<span class='fl'>1</span>:<span class='fl'>3</span>]
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res</span>))
-
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res</span>))</div><div class='output co'>#&gt; <span class='error'>Error: Failed at retrieving data :( Please provide original model or data through the `data` argument</span></div><div class='input'>
 <span class='co'># Compare to brms::posterior_average</span>
-<span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'>brm</span>(<span class='no'>rating</span> ~ <span class='no'>treat</span> + <span class='no'>period</span> + <span class='no'>carry</span>,
+<span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>rating</span> ~ <span class='no'>treat</span> + <span class='no'>period</span> + <span class='no'>carry</span>,
             <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>inhaler</span>,
-            <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>fit2</span> <span class='kw'>&lt;-</span> <span class='fu'>brm</span>(<span class='no'>rating</span> ~ <span class='no'>period</span> + <span class='no'>carry</span>,
+            <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Compiling the C++ model</span></div><div class='output co'>#&gt; <span class='message'>WARNING: Rtools is required to build R packages, but is not currently installed.</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>Please download and install Rtools custom from http://cran.r-project.org/bin/windows/Rtools/.</span></div><div class='output co'>#&gt; Scanning R CMD config CC...
+#&gt; cc_path:  
+#&gt; '' does not exist
+#&gt; Scanning path...
+#&gt; Scanning registry...</div><div class='output co'>#&gt; <span class='message'>WARNING: Rtools is required to build R packages, but is not currently installed.</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>Please download and install Rtools custom from http://cran.r-project.org/bin/windows/Rtools/.</span></div><div class='output co'>#&gt; <span class='message'>WARNING: Rtools is required to build R packages, but is not currently installed.</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>Please download and install Rtools custom from http://cran.r-project.org/bin/windows/Rtools/.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: running command 'C:/PROGRA~1/R/R-36~1.2/bin/x64/R CMD SHLIB file3d6c28c9440c.cpp 2&gt; file3d6c28c9440c.cpp.err.txt' had status 1</span></div><div class='output co'>#&gt; <span class='error'>Error in compileCode(f, code, language = language, verbose = verbose): Compilation ERROR, function(s)/method(s) not created! Warning message:</span>
+#&gt; <span class='error'>In system(cmd) : 'make' not found</span></div><div class='output co'>#&gt; <span class='error'>Error in sink(type = "output"): invalid connection</span></div><div class='input'><span class='no'>fit2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>rating</span> ~ <span class='no'>period</span> + <span class='no'>carry</span>,
             <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>inhaler</span>,
-            <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+            <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Compiling the C++ model</span></div><div class='output co'>#&gt; <span class='message'>WARNING: Rtools is required to build R packages, but is not currently installed.</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>Please download and install Rtools custom from http://cran.r-project.org/bin/windows/Rtools/.</span></div><div class='output co'>#&gt; Scanning R CMD config CC...
+#&gt; cc_path:  
+#&gt; '' does not exist
+#&gt; Scanning path...
+#&gt; Scanning registry...</div><div class='output co'>#&gt; <span class='message'>WARNING: Rtools is required to build R packages, but is not currently installed.</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>Please download and install Rtools custom from http://cran.r-project.org/bin/windows/Rtools/.</span></div><div class='output co'>#&gt; <span class='message'>WARNING: Rtools is required to build R packages, but is not currently installed.</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>Please download and install Rtools custom from http://cran.r-project.org/bin/windows/Rtools/.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: running command 'C:/PROGRA~1/R/R-36~1.2/bin/x64/R CMD SHLIB file3d6cc646560.cpp 2&gt; file3d6cc646560.cpp.err.txt' had status 1</span></div><div class='output co'>#&gt; <span class='error'>Error in compileCode(f, code, language = language, verbose = verbose): Compilation ERROR, function(s)/method(s) not created! Warning message:</span>
+#&gt; <span class='error'>In system(cmd) : 'make' not found</span></div><div class='output co'>#&gt; <span class='error'>Error in sink(type = "output"): invalid connection</span></div><div class='input'>
+<span class='no'>res_BT</span> <span class='kw'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='no'>fit1</span>, <span class='no'>fit2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in weighted_posteriors(fit1, fit2): object 'fit1' not found</span></div><div class='input'><span class='no'>res_brms</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>posterior_average</a></span>(<span class='no'>fit1</span>, <span class='no'>fit2</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='st'>"marglik"</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>)[, <span class='fl'>1</span>:<span class='fl'>4</span>]</div><div class='output co'>#&gt; <span class='error'>Error in brms::posterior_average(fit1, fit2, weights = "marglik", missing = 0): object 'fit1' not found</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res_BT</span>))</div><div class='output co'>#&gt; <span class='error'>Error in eti(res_BT): object 'res_BT' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res_brms</span>))</div><div class='output co'>#&gt; <span class='error'>Error in eti(res_brms): object 'res_brms' not found</span></div><div class='input'># }
 
-<span class='no'>res_BT</span> <span class='kw'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='no'>fit1</span>, <span class='no'>fit2</span>)
-<span class='no'>res_brms</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>posterior_average</a></span>(<span class='no'>fit1</span>, <span class='no'>fit2</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='st'>"marglik"</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>)[, <span class='fl'>1</span>:<span class='fl'>4</span>]
-
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res_BT</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res_brms</span>))
-}</div></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

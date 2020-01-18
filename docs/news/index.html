@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -159,12 +159,7 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/easystats/bayestestR">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -179,7 +174,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/easystats/bayestestR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      
     </div>
 
     <div id="bayestestr-050" class="section level1">
@@ -213,7 +208,7 @@
 <li>
 <code><a href="../reference/point_estimate.html">point_estimate()</a></code>: argument <code>centrality</code> default value changed from ‘median’ to ‘all’.</li>
 <li>
-<code><a href="../reference/p_rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code><a href="../reference/mhdior.html">mhdior()</a></code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/p_rope.html">p_rope()</a></code> will refer to <code><a href="../reference/rope.html">rope(..., ci = 1)</a></code> ( <a href='https://github.com/easystats/bayestestR/issues/258'>#258</a> )</li>
+<code><a href="../reference/p_rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code><a href="../reference/mhdior.html">mhdior()</a></code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/p_rope.html">p_rope()</a></code> will refer to <code><a href="../reference/rope.html">rope(..., ci = 1)</a></code> ( #258 )</li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
@@ -221,7 +216,7 @@
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed mistake in description of <code><a href="../reference/p_significance.html">p_significance()</a></code>.</li>
-<li>Fixed error when computing BFs with <code>emmGrid</code> based on some non-linear models ( <a href='https://github.com/easystats/bayestestR/issues/260'>#260</a> ).</li>
+<li>Fixed error when computing BFs with <code>emmGrid</code> based on some non-linear models ( #260 ).</li>
 <li>Fixed wrong output for percentage-values in <code>print.equivalence_test()</code>.</li>
 <li>Fixed issue in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> for <code>BFBayesFactor</code>-objects with more than one model.</li>
 </ul>
@@ -291,7 +286,7 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed bug in <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> where the same interaction sometimes appeared more than once (<a href='https://github.com/easystats/bayestestR/issues/223'>#223</a>)</li>
+<li>Fixed bug in <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> where the same interaction sometimes appeared more than once (#223)</li>
 <li>Fixed bug in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> for <em>stanreg</em> models fitted with fullrank-algorithm</li>
 </ul>
 </div>
@@ -309,7 +304,7 @@
 <li>
 <code><a href="../reference/rope.html">rope()</a></code>: returns a proportion (between 0 and 1) instead of a value between 0 and 100</li>
 <li>
-<code><a href="../reference/p_direction.html">p_direction()</a></code>: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 (<a href="https://github.com/easystats/bayestestR/issues/168"><a href='https://github.com/easystats/bayestestR/issues/168'>#168</a></a>)</li>
+<code><a href="../reference/p_direction.html">p_direction()</a></code>: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 (<a href="https://github.com/easystats/bayestestR/issues/168">#168</a>)</li>
 <li>
 <code>bayesfactor_savagedickey()</code>: <code>hypothesis</code> argument replaced by <code>null</code> as part of the new <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> function</li>
 </ul>
@@ -447,7 +442,7 @@
 <code><a href="../reference/p_direction.html">p_direction()</a></code>: improved printing</li>
 <li>
 <code><a href="../reference/rope.html">rope()</a></code> for model-objects now returns the HDI values for all parameters as attribute in a consistent way</li>
-<li>Changes legend-labels in <code>plot.equivalence_test()</code> to align plots with the output of the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>-method (<a href='https://github.com/easystats/bayestestR/issues/78'>#78</a>)</li>
+<li>Changes legend-labels in <code>plot.equivalence_test()</code> to align plots with the output of the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>-method (#78)</li>
 </ul>
 </div>
 <div id="bug-fixes-5" class="section level2">
@@ -455,10 +450,10 @@
 <a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
-<code><a href="../reference/hdi.html">hdi()</a></code> returned multiple class attributes (<a href='https://github.com/easystats/bayestestR/issues/72'>#72</a>)</li>
+<code><a href="../reference/hdi.html">hdi()</a></code> returned multiple class attributes (#72)</li>
 <li>Printing results from <code><a href="../reference/hdi.html">hdi()</a></code> failed when <code>ci</code>-argument had fractional parts for percentage values (e.g. <code>ci = .995</code>).</li>
 <li>
-<code>plot.equivalence_test()</code> did not work properly for <em>brms</em>-models (<a href='https://github.com/easystats/bayestestR/issues/76'>#76</a>).</li>
+<code>plot.equivalence_test()</code> did not work properly for <em>brms</em>-models (#76).</li>
 </ul>
 </div>
 </div>

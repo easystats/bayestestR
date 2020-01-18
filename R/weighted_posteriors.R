@@ -27,15 +27,18 @@
 #' @seealso \code{\link{bayesfactor_inclusion}} for Bayesian model averaging.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(rstanarm)
+#' library(see)
 #'
 #' stan_m0 <- stan_glm(extra ~ 1, data = sleep,
 #'                     family = gaussian(),
+#'                     refresh=0,
 #'                     diagnostic_file = file.path(tempdir(), "df0.csv"))
 #'
 #' stan_m1 <- stan_glm(extra ~ group, data = sleep,
 #'                     family = gaussian(),
+#'                     refresh=0,
 #'                     diagnostic_file = file.path(tempdir(), "df1.csv"))
 #'
 #'
@@ -43,8 +46,10 @@
 #'
 #' plot(eti(res))
 #'
-#' # With BayesFactor
+#' # With BayesFactor and brms
 #' library(BayesFactor)
+#' library(brms)
+#'
 #' BFmods <- anovaBF(extra ~ group + ID, sleep, whichRandom = "ID")
 #'
 #' res <- weighted_posteriors(BFmods)[1:3]
