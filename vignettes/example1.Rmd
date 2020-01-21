@@ -33,6 +33,9 @@ knitr::opts_chunk$set(comment=">")
 options(digits=2)
 
 set.seed(333)
+if (!requireNamespace("rstanarm", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
 ```
 
 Now that you've read the [**Get started**](https://easystats.github.io/bayestestR/articles/bayestestR.html) section, let's dive in the **subtleties of Bayesian modelling using R**.
@@ -57,14 +60,14 @@ We will begin by conducting a simple linear regression to test the relationship 
 
 Let's start by fitting the **frequentist** version of the model, just to have a reference point:
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 model <- lm(Sepal.Length ~ Petal.Length, data=iris)
 summary(model)
 ```
 
 In this model, the linear relationship between `Petal.Length` and `Sepal.Length` is **positive and significant** (beta = 0.41, *t*(148) = 21.6, *p* < .001). This means that for each one-unit increase in `Petal.Length` (the predictor), you can expect `Sepal.Length` (the response) to increase by **0.41**. This effect can be visualized by plotting the predictor values on the `x` axis and the response values as `y` using the `ggplot2` package:
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 library(ggplot2)  # Load the package
 
 # The ggplot function takes the data as argument, and then the variables 
@@ -236,7 +239,7 @@ Imagine for a moment you are interested in how the weight of chickens varies dep
 
 ### Data preparation and model fitting
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 library(dplyr)
 
 # We keep only rows for which feed is meatmeal or sunflower
@@ -257,7 +260,7 @@ model <- stan_glm(weight ~ feed, data=data)
 ### Posterior description
 
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 posteriors <- insight::get_parameters(model)
 
 ggplot(posteriors, aes(x=feedsunflower)) +
@@ -266,7 +269,7 @@ ggplot(posteriors, aes(x=feedsunflower)) +
 
 This represents the **posterior distribution of the difference between `meatmeal` and `sunflowers`**. Seems that the difference is rather **positive** (the values seems concentrated on the right side of 0)... Eating sunflowers makes you more fat (*at least, if you're a chicken*). But, **by how much?** Let us compute the **median** and the **CI**:
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 median(posteriors$feedsunflower)
 hdi(posteriors$feedsunflower)
 ```
@@ -293,7 +296,7 @@ However, one way to assess **significance** could be to define an area around 0,
 
 Well, that's convenient. Now we know that we can define the ROPE as the `[-20, 20]` range. All effects within this range are considered as *null* (negligible). We can now compute the **proportion of the 89\% most probable values (the 89\% CI) which are not null**, *i.e.*, which are outside this range. 
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.89)
 ```
 
@@ -308,7 +311,7 @@ knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/f
 
 **Yes.** One of the practice is for instance to use the **tenth (`1/10 = 0.1`) of the standard deviation (SD)** of the response variable, which can be considered as a "negligible" effect size [@cohen1988statistical].
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 rope_value <- 0.1 * sd(data$weight)
 rope_range <- c(-rope_value, rope_value)
 rope_range
@@ -316,14 +319,14 @@ rope_range
 
 Let's redefine our ROPE as the region within the `[-6.2, 6.2]` range. **Note that this can be directly obtained by the `rope_range` function :)**
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 rope_value <- rope_range(model)
 rope_range
 ```
 
 Let's recompute the **percentage in ROPE**:
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 rope(posteriors$feedsunflower, range = rope_range, ci=0.89)
 ```
 
@@ -350,13 +353,13 @@ format(n_positive / nrow(posteriors) * 100, nsmall = 2)
 
 We can conclude that **the effect is positive with a probability of 97.82\%**. We call this index the [**Probability of Direction (pd)**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html). It can, in fact, be computed more easily with the following:
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 p_direction(posteriors$feedsunflower)
 ```
 
 Interestingly, it so happens that **this index is usually highly correlated with the frequentist *p*-value**. We could almost roughly infer the corresponding *p*-value with a simple transformation:
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 pd <- 97.82
 onesided_p <- 1 - pd / 100  
 twosided_p <- onesided_p * 2
@@ -368,7 +371,7 @@ If we ran our model in the frequentist framework, we should approximately observ
 #### Comparison to frequentist
 
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 lm(weight ~ feed, data=data) %>% 
   summary()
 ```
@@ -386,7 +389,7 @@ And yet, I agree, it was a bit **tedious** to extract and compute all the indice
 > **Behold, `describe_posterior`!**
 
 This function computes all of the adored mentioned indices, and can be run directly on the model:
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 describe_posterior(model, test = c("p_direction","rope","bayesfactor"))
 ```
 

@@ -47,6 +47,10 @@ opts_chunk$set(echo = TRUE,
                dpi = 150)
 theme_set(theme_modern())
 set.seed(4)
+
+if (!requireNamespace("rstanarm", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
 ```
 
 The adoption of the Bayesian framework for applied statistics, especially in the social and psychological sciences, seems to be developing in two distinct directions. One of the key topics marking their separation is their opinion about **the Bayes factor**. In short, some authors (e.g., the "Amsterdam school", led by [Wagenmakers](https://www.bayesianspectacles.org/)) advocate its use and emphasize its qualities as a statistical index, while others point to its limits and prefer, instead, the precise description of posterior distributions (using [CIs](https://easystats.github.io/bayestestR/reference/hdi.html), [ROPEs](https://easystats.github.io/bayestestR/reference/rope.html), etc.). 
@@ -268,7 +272,7 @@ As we can see, given that we have an *a priori* assumption about the direction o
 
 So far we've seen that Bayes factors quantify relative support between competing hypotheses. However, we can also ask:
 
-> **Which of the possible values of a parameter have increased or decreased credibility upon observing the data?**
+> **Upon observing the data, the credibility of which of the parameter’s values has increased (or decreased)?**
 
 For example, we've seen that the point null has become somewhat less credible after observing the data, but we might also ask *which values have gained some credibility given the observed data?*. The resulting range of values is called **the support interval** as it indicates which values are supported by the data [@wagenmakers2018SI]. We can do this by once again comparing the prior and posterior distributions and checking where the posterior densities are higher than the prior densities. This can be achieved with the `si()` function:
 

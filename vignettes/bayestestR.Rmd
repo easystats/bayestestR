@@ -31,6 +31,10 @@ library(knitr)
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">")
 options(digits=2)
+
+if (!requireNamespace("rstanarm", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
 ```
 
 
@@ -73,7 +77,7 @@ knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/f
 
 You can install `bayestestR` along with the whole [**easystats**](https://github.com/easystats/easystats) suite by running the following:
 
-```{r eval=FALSE, message=FALSE, warning=FALSE, eval=FALSE}
+```{r eval=FALSE, message=FALSE, warning=FALSE}
 install.packages("devtools")
 devtools::install_github("easystats/easystats")
 ```

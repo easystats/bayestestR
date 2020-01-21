@@ -33,6 +33,10 @@ knitr::opts_chunk$set(comment=">")
 options(digits=2)
 
 set.seed(333)
+
+if (!requireNamespace("rstanarm", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
 ```
 
 

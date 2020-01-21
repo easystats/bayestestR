@@ -36,6 +36,9 @@ knitr::opts_chunk$set(dpi=150)
 options(digits=2)
 
 set.seed(333)
+if (!requireNamespace("rstanarm", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
 ```
 
 
@@ -51,7 +54,7 @@ Let us start, again, with a **frequentist correlation** between two continuous v
 
 We will compute a Pearson's correlation test, store the results in an object called `result`, then display it:
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 result <- cor.test(iris$Sepal.Width, iris$Sepal.Length)
 result
 ```
@@ -87,7 +90,7 @@ We see again many things here, but the important indices for now are the **media
 
 We said previously that a correlation test actually compares two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect). The [**Bayes factor (BF)**](https://easystats.github.io/bayestestR/articles/bayes_factors.html) allows the same comparison and determines **under which of two models the observed data are more probable**: a model with the effect of interest, and a null model without the effect of interest. We can use `bayesfactor()` to specifically compute the Bayes factor comparing those models:
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 bayesfactor(result)
 ```
 
@@ -121,7 +124,7 @@ knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/f
 
 Such "pizza plots" can be directly created through the [`see`](https://github.com/easystats/see) visualisation companion package for easystats (you can install it by running `install.packages("see")`):
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 library(see)
 
 plot(bayesfactor(result)) +
@@ -139,7 +142,7 @@ So, after seeing this pizza, how much would you be suprised by the outcome of a 
 
 Bayesian *t*-tests can be performed in a very similar way to correlations. As we are particularly interested in two levels of the `Species` factor, *versicolor* and *virginica*. We will start by filtering out from `iris` the non-relevant observations corresponding to the *setosa* specie, and we will then visualise the observations and the distribution of the `Sepal.Width` variable. 
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
+```{r message=FALSE, warning=FALSE}
 library(dplyr)
 library(ggplot2)
 
