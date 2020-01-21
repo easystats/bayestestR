@@ -135,7 +135,7 @@ bf_models <- bayesfactor_models
 bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   # Organize the models and their names
   mods <- list(...)
-  mnames <- sapply(match.call(expand.dots = F)$`...`, .safe_deparse)
+  mnames <- sapply(match.call(expand.dots = FALSE)$`...`, .safe_deparse)
 
   if (!is.numeric(denominator)) {
     model_name <- .safe_deparse(match.call()[["denominator"]])
@@ -216,7 +216,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   if (!is.numeric(denominator)) {
     model_name <- .safe_deparse(match.call()[["denominator"]])
-    arg_names <- sapply(match.call(expand.dots = F)$`...`, .safe_deparse)
+    arg_names <- sapply(match.call(expand.dots = FALSE)$`...`, .safe_deparse)
     denominator_model <- which(arg_names == model_name)
 
     if (length(denominator_model) == 0) {
