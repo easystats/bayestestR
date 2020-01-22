@@ -274,7 +274,13 @@ median(posteriors$feedsunflower)
 hdi(posteriors$feedsunflower)
 ```
 
-It makes you fat by around `51` grams (the median). However, the uncertainty is quite high: **there is 89\% chance that the difference between the two feed types is between `7.77` and `87.66`.**
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+.m <- median(posteriors$feedsunflower)
+.h <- as.numeric(hdi(posteriors$feedsunflower))[-1]
+```
+
+
+It makes you fat by around `scales::number(.m)` grams (the median). However, the uncertainty is quite high: **there is 89\% chance that the difference between the two feed types is between `r scales::number(.h[1])` and `r scales::number(.h[2])`.**
 
 > **Is this effect different from 0?**
 
@@ -300,8 +306,11 @@ Well, that's convenient. Now we know that we can define the ROPE as the `[-20, 2
 rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.89)
 ```
 
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+.r <- as.numeric(rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.89))
+```
 
-**7.75\% of the 89\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
+**`r scales::percent(.r)` of the 89\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
 
 Although, to be honest, I have **some doubts about this Prof. Sanders**. I don't really trust **his definition of ROPE**. Is there a more **objective** way of defining it?
 
@@ -337,21 +346,22 @@ With this reasonable definition of ROPE, we observe that the 89\% of the posteri
 
 Maybe we are not interested in whether the effect is non-negligible. Maybe **we just want to know if this effect is positive or negative**. In this case, we can simply compute the proportion of the posterior that is positive, no matter the "size" of the effect. 
 
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+```{r message=FALSE, warning=FALSE}
 n_positive <- posteriors %>% 
   filter(feedsunflower > 0) %>% # select only positive values
   nrow() # Get length
 n_positive / nrow(posteriors) * 100
 ```
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 n_positive <- posteriors %>% 
   filter(feedsunflower > 0) %>% # select only positive values
   nrow() # Get length
-format(n_positive / nrow(posteriors) * 100, nsmall = 2)
+.pd <- scales::percent(n_positive / nrow(posteriors))
 ```
 
 
-We can conclude that **the effect is positive with a probability of 97.82\%**. We call this index the [**Probability of Direction (pd)**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html). It can, in fact, be computed more easily with the following:
+We can conclude that **the effect is positive with a probability of `r .pd`**. We call this index the [**Probability of Direction (pd)**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html). It can, in fact, be computed more easily with the following:
 
 ```{r message=FALSE, warning=FALSE}
 p_direction(posteriors$feedsunflower)

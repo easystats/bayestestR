@@ -334,7 +334,7 @@
 &gt; 89% HDI       
 &gt; --------------
 &gt; [13.52, 91.37]</code></pre>
-<p>It makes you fat by around <code>51</code> grams (the median). However, the uncertainty is quite high: <strong>there is 89% chance that the difference between the two feed types is between <code>7.77</code> and <code>87.66</code>.</strong></p>
+<p>It makes you fat by around <code><a href="https://scales.r-lib.org//reference/number.html">scales::number(.m)</a></code> grams (the median). However, the uncertainty is quite high: <strong>there is 89% chance that the difference between the two feed types is between 14 and 91.</strong></p>
 <blockquote>
 <p><strong>Is this effect different from 0?</strong></p>
 </blockquote>
@@ -357,7 +357,7 @@
 &gt; inside ROPE
 &gt; -----------
 &gt; 5.00 %</code></pre>
-<p><strong>7.75% of the 89% CI can be considered as null</strong>. Is that a lot? Based on our <a href="https://easystats.github.io/bayestestR/articles/guidelines.html"><strong>guidelines</strong></a>, yes, it is too much. <strong>Based on this particular definition of ROPE</strong>, we conclude that this effect is not significant (the probability of being negligible is too high).</p>
+<p><strong>5% of the 89% CI can be considered as null</strong>. Is that a lot? Based on our <a href="https://easystats.github.io/bayestestR/articles/guidelines.html"><strong>guidelines</strong></a>, yes, it is too much. <strong>Based on this particular definition of ROPE</strong>, we conclude that this effect is not significant (the probability of being negligible is too high).</p>
 <p>Although, to be honest, I have <strong>some doubts about this Prof. Sanders</strong>. I don’t really trust <strong>his definition of ROPE</strong>. Is there a more <strong>objective</strong> way of defining it?</p>
 <div class="figure" style="text-align: center">
 <img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/profsanders.png" alt="Prof. Sanders giving default values to define the Region of Practical Equivalence (ROPE)." width="75%"><p class="caption">
@@ -390,8 +390,8 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <a class="sourceLine" id="cb39-2" title="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(feedsunflower <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># select only positive values</span></a>
 <a class="sourceLine" id="cb39-3" title="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>() <span class="co"># Get length</span></a>
 <a class="sourceLine" id="cb39-4" title="4">n_positive <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(posteriors) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a></code></pre></div>
-<pre><code>&gt; [1] "98.15"</code></pre>
-<p>We can conclude that <strong>the effect is positive with a probability of 97.82%</strong>. We call this index the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>Probability of Direction (pd)</strong></a>. It can, in fact, be computed more easily with the following:</p>
+<pre><code>&gt; [1] 98</code></pre>
+<p>We can conclude that <strong>the effect is positive with a probability of 98%</strong>. We call this index the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>Probability of Direction (pd)</strong></a>. It can, in fact, be computed more easily with the following:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(posteriors<span class="op">$</span>feedsunflower)</a></code></pre></div>
 <pre><code>&gt; pd = 98.15%</code></pre>
 <p>Interestingly, it so happens that <strong>this index is usually highly correlated with the frequentist <em>p</em>-value</strong>. We could almost roughly infer the corresponding <em>p</em>-value with a simple transformation:</p>
