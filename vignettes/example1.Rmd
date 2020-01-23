@@ -28,6 +28,7 @@ This vignette can be referred to by citing the package:
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
+library(insight)
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">")
 options(digits=2)
@@ -35,6 +36,10 @@ options(digits=2)
 set.seed(333)
 if (!requireNamespace("rstanarm", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
+}
+
+format_percent <- function(x, digits = 0, ...) {
+  paste0(format_value(x*100, digits = digits, ...), "%")
 }
 ```
 
@@ -280,7 +285,7 @@ hdi(posteriors$feedsunflower)
 ```
 
 
-It makes you fat by around `scales::number(.m)` grams (the median). However, the uncertainty is quite high: **there is 89\% chance that the difference between the two feed types is between `r scales::number(.h[1])` and `r scales::number(.h[2])`.**
+It makes you fat by around `r format_value(.m)` grams (the median). However, the uncertainty is quite high: **there is 89\% chance that the difference between the two feed types is between `r format_value(.h[1])` and `r format_value(.h[2])`.**
 
 > **Is this effect different from 0?**
 
@@ -310,7 +315,7 @@ rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.89)
 .r <- as.numeric(rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.89))
 ```
 
-**`r scales::percent(.r)` of the 89\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
+**`r format_percent(.r)` of the 89\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
 
 Although, to be honest, I have **some doubts about this Prof. Sanders**. I don't really trust **his definition of ROPE**. Is there a more **objective** way of defining it?
 
@@ -357,7 +362,7 @@ n_positive / nrow(posteriors) * 100
 n_positive <- posteriors %>% 
   filter(feedsunflower > 0) %>% # select only positive values
   nrow() # Get length
-.pd <- scales::percent(n_positive / nrow(posteriors))
+.pd <- format_percent(n_positive / nrow(posteriors))
 ```
 
 
