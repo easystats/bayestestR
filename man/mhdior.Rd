@@ -65,6 +65,7 @@ applies to \pkg{brms}-models.}
 The MHDIOR (pronounced 'em-eich-dior') is an exploratory and non-validated index representing the maximum percentage of \link[=hdi]{HDI} that does not contain (or is entirely contained, in which case the value is prefixed with a negative sign), in the negligible values space defined by the \link[=rope]{ROPE}. It differs from the ROPE percentage, \emph{i.e.}, from the proportion of a given CI in the ROPE, as it represents the maximum CI values needed to reach a ROPE proportion of 0\% or 100\%. Whether the index reflects the ROPE reaching 0\% or 100\% is indicated through the sign: a negative sign is added to indicate that the probability corresponds to the probability of a not significant effect (a percentage in ROPE of 100\%). For instance, a MHDIOR of 97\% means that there is a probability of .97 that a parameter (described by its posterior distribution) is outside the ROPE. In other words, the 97\% HDI is the maximum HDI level for which the percentage in ROPE is 0\%. On the contrary, a ROPE-based p of -97\% indicates that there is a probability of .97 that the parameter is inside the ROPE (percentage in ROPE of 100\%). A value close to 0\% would indicate that the mode of the distribution falls perfectly at the edge of the ROPE, in which case the percentage of HDI needed to be on either side of the ROPE becomes infinitely small. Negative values do not refer to negative values \emph{per se}, simply indicating that the value corresponds to non-significance rather than significance.
 }
 \examples{
+\dontrun{
 library(bayestestR)
 
 # precision = 1 is used to speed up examples...
@@ -84,7 +85,7 @@ mhdior(model, precision = 1)
 
 library(emmeans)
 mhdior(emtrends(model, ~1, "wt"))
-\dontrun{
+
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 mhdior(model)

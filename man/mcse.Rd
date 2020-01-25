@@ -34,11 +34,13 @@ from Kruschke 2015, p. 187). The MCSE \dQuote{provides a quantitative
 suggestion of how big the estimation noise is}.
 }
 \examples{
+\dontrun{
 library(bayestestR)
 library(rstanarm)
 
 model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
 mcse(model)
+}
 }
 \references{
 Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.

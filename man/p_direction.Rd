@@ -105,6 +105,7 @@ df <- data.frame(replicate(4, rnorm(100)))
 p_direction(df)
 p_direction(df, method = "kernel")
 
+\dontrun{
 # rstanarm models
 # -----------------------------------------------
 library(rstanarm)
@@ -114,7 +115,7 @@ model <- rstanarm::stan_glm(mpg ~ wt + cyl,
 )
 p_direction(model)
 p_direction(model, method = "kernel")
-\dontrun{
+
 # emmeans
 # -----------------------------------------------
 library(emmeans)

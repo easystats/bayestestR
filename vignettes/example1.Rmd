@@ -27,6 +27,10 @@ This vignette can be referred to by citing the package:
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
+if (!requireNamespace("rstanarm", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
+
 library(knitr)
 library(insight)
 options(knitr.kable.NA = '')
@@ -34,9 +38,6 @@ knitr::opts_chunk$set(comment=">")
 options(digits=2)
 
 set.seed(333)
-if (!requireNamespace("rstanarm", quietly = TRUE)) {
-  knitr::opts_chunk$set(eval = FALSE)
-}
 
 format_percent <- function(x, digits = 0, ...) {
   paste0(format_value(x*100, digits = digits, ...), "%")
@@ -279,13 +280,7 @@ median(posteriors$feedsunflower)
 hdi(posteriors$feedsunflower)
 ```
 
-```{r message=FALSE, warning=FALSE, echo=FALSE}
-.m <- median(posteriors$feedsunflower)
-.h <- as.numeric(hdi(posteriors$feedsunflower))[-1]
-```
-
-
-It makes you fat by around `r format_value(.m)` grams (the median). However, the uncertainty is quite high: **there is 89\% chance that the difference between the two feed types is between `r format_value(.h[1])` and `r format_value(.h[2])`.**
+It makes you fat by around 51 grams (the median). However, the uncertainty is quite high: **there is 89\% chance that the difference between the two feed types is between 14 and 91.**
 
 > **Is this effect different from 0?**
 
@@ -311,11 +306,7 @@ Well, that's convenient. Now we know that we can define the ROPE as the `[-20, 2
 rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.89)
 ```
 
-```{r message=FALSE, warning=FALSE, echo=FALSE}
-.r <- as.numeric(rope(posteriors$feedsunflower, range = c(-20, 20), ci=0.89))
-```
-
-**`r format_percent(.r)` of the 89\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
+**5\% of the 89\% CI can be considered as null**. Is that a lot? Based on our [**guidelines**](https://easystats.github.io/bayestestR/articles/guidelines.html), yes, it is too much. **Based on this particular definition of ROPE**, we conclude that this effect is not significant (the probability of being negligible is too high).
 
 Although, to be honest, I have **some doubts about this Prof. Sanders**. I don't really trust **his definition of ROPE**. Is there a more **objective** way of defining it?
 
@@ -358,15 +349,7 @@ n_positive <- posteriors %>%
 n_positive / nrow(posteriors) * 100
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-n_positive <- posteriors %>% 
-  filter(feedsunflower > 0) %>% # select only positive values
-  nrow() # Get length
-.pd <- format_percent(n_positive / nrow(posteriors))
-```
-
-
-We can conclude that **the effect is positive with a probability of `r .pd`**. We call this index the [**Probability of Direction (pd)**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html). It can, in fact, be computed more easily with the following:
+We can conclude that **the effect is positive with a probability of 98\%**. We call this index the [**Probability of Direction (pd)**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html). It can, in fact, be computed more easily with the following:
 
 ```{r message=FALSE, warning=FALSE}
 p_direction(posteriors$feedsunflower)

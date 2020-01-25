@@ -31,11 +31,11 @@ This function attempts at automatically finding suitable "default"
   }
 }
 \examples{
+\dontrun{
 library(rstanarm)
 model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 rope_range(model)
-\dontrun{
-library(rstanarm)
+
 model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial")
 rope_range(model)
 

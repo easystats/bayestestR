@@ -62,6 +62,7 @@ bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1)
 bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result
 bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
 
+\dontrun{
 # With lmerMod objects:
 # ---------------------
 library(lme4)
@@ -73,7 +74,7 @@ lmer3 <- lmer(
 )
 bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
 bayesfactor_models(lmer1, lmer2, lmer3, denominator = lmer1)
-\dontrun{
+
 # rstanarm models
 # ---------------------
 # (note that a unique diagnostic_file MUST be specified in order to work)

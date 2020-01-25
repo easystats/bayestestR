@@ -27,18 +27,24 @@ This vignette can be referred to by citing the package:
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-library(bayestestR)
+if (!(requireNamespace("see", quietly = TRUE) &&
+      requireNamespace("dplyr", quietly = TRUE) &&
+      requireNamespace("ggplot2", quietly = TRUE) &&
+      requireNamespace("performance", quietly = TRUE) &&
+      requireNamespace("BayesFactor", quietly = TRUE) &&
+      requireNamespace("rstanarm", quietly = TRUE))) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
+
 data(iris)
 library(knitr)
+library(bayestestR)
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">")
 knitr::opts_chunk$set(dpi=150)
 options(digits=2)
 
 set.seed(333)
-if (!requireNamespace("rstanarm", quietly = TRUE)) {
-  knitr::opts_chunk$set(eval = FALSE)
-}
 ```
 
 

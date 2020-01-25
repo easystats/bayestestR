@@ -65,6 +65,7 @@ is a model-object, returns a data frame with following columns:
 Find the \strong{Highest Maximum A Posteriori probability estimate (MAP)} of a posterior, i.e., the value associated with the highest probability density (the "peak" of the posterior distribution). In other words, it is an estimation of the \emph{mode} for continuous parameters. Note that this function relies on \link{estimate_density}, which by default uses a different smoothing bandwidth (\code{"SJ"}) compared to the legacy default implemented the base R \link{density} function (\code{"nrd0"}).
 }
 \examples{
+\dontrun{
 library(bayestestR)
 
 posterior <- rnorm(10000)
@@ -72,7 +73,7 @@ map_estimate(posterior)
 
 plot(density(posterior))
 abline(v = map_estimate(posterior), col = "red")
-\dontrun{
+
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 map_estimate(model)

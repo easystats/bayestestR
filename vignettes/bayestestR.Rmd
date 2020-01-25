@@ -27,14 +27,14 @@ This vignette can be referred to by citing the package:
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
+if (!requireNamespace("rstanarm", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
+
 library(knitr)
 options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">")
 options(digits=2)
-
-if (!requireNamespace("rstanarm", quietly = TRUE)) {
-  knitr::opts_chunk$set(eval = FALSE)
-}
 ```
 
 
