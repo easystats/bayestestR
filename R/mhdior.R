@@ -9,6 +9,7 @@
 #' @inheritParams hdi
 #'
 #' @examples
+#' \dontrun{
 #' library(bayestestR)
 #'
 #' # precision = 1 is used to speed up examples...
@@ -28,7 +29,7 @@
 #'
 #' library(emmeans)
 #' mhdior(emtrends(model, ~1, "wt"))
-#' \dontrun{
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' mhdior(model)

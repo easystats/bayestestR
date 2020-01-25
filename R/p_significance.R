@@ -30,6 +30,7 @@
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' p_significance(df)
 #'
+#' \dontrun{
 #' # rstanarm models
 #' # -----------------------------------------------
 #' library(rstanarm)
@@ -38,6 +39,7 @@
 #'   chains = 2, refresh = 0
 #' )
 #' p_significance(model)
+#' }
 #' @export
 p_significance <- function(x, ...) {
   UseMethod("p_significance")

@@ -14,11 +14,13 @@
 #' @references Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #'
 #' @examples
+#' \dontrun{
 #' library(bayestestR)
 #' library(rstanarm)
 #'
 #' model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
 #' mcse(model)
+#' }
 #' @importFrom insight get_parameters
 #' @export
 mcse <- function(model, ...) {

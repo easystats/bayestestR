@@ -46,6 +46,7 @@
 #' p_direction(df)
 #' p_direction(df, method = "kernel")
 #'
+#' \dontrun{
 #' # rstanarm models
 #' # -----------------------------------------------
 #' library(rstanarm)
@@ -55,7 +56,7 @@
 #' )
 #' p_direction(model)
 #' p_direction(model, method = "kernel")
-#' \dontrun{
+#'
 #' # emmeans
 #' # -----------------------------------------------
 #' library(emmeans)

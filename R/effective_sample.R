@@ -16,9 +16,11 @@
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' library(rstanarm)
 #' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' effective_sample(model)
+#' }
 #' @export
 effective_sample <- function(model, ...) {
   UseMethod("effective_sample")

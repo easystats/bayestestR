@@ -6,11 +6,13 @@
 #' @param n Size of the simulated prior distributions.
 #'
 #' @examples
+#' \dontrun{
 #' library(bayestestR)
 #' library(rstanarm)
 #'
 #' model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
 #' simulate_prior(model)
+#' }
 #' @export
 simulate_prior <- function(model, n = 1000, ...) {
   UseMethod("simulate_prior")
