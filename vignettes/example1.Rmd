@@ -27,10 +27,6 @@ This vignette can be referred to by citing the package:
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-if (!requireNamespace("rstanarm", quietly = TRUE)) {
-  knitr::opts_chunk$set(eval = FALSE)
-}
-
 library(knitr)
 library(insight)
 options(knitr.kable.NA = '')
@@ -38,6 +34,12 @@ knitr::opts_chunk$set(comment=">")
 options(digits=2)
 
 set.seed(333)
+
+if (!requireNamespace("rstanarm", quietly = TRUE) &&
+    !requireNamespace("dplyr", quietly = TRUE) &&
+    !requireNamespace("ggplot2", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
 
 format_percent <- function(x, digits = 0, ...) {
   paste0(format_value(x*100, digits = digits, ...), "%")

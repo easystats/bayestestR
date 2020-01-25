@@ -1,4 +1,6 @@
-if (requireNamespace("rstanarm", quietly = TRUE)) {
+if (requireNamespace("rstanarm", quietly = TRUE) &&
+    require("BayesFactor") &&
+    require("testthat")) {
   context("bayesfactor_restricted")
 
   test_that("bayesfactor_restricted df", {

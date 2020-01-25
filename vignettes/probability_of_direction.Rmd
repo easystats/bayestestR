@@ -31,7 +31,6 @@ This vignette can be referred to by citing the package:
 if (!(requireNamespace("see", quietly = TRUE) &&
       requireNamespace("dplyr", quietly = TRUE) &&
       requireNamespace("ggplot2", quietly = TRUE) &&
-      
       requireNamespace("tidyr", quietly = TRUE) &&
       requireNamespace("logspline", quietly = TRUE) &&
       requireNamespace("KernSmooth", quietly = TRUE) &&

@@ -1,4 +1,6 @@
 if (requireNamespace("rstanarm", quietly = TRUE) &&
+    require("BayesFactor") &&
+    require("testthat") &&
     requireNamespace("brms", quietly = TRUE)) {
   context("bayesfactor_parameters")
 
