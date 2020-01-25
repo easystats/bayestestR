@@ -108,32 +108,36 @@ p_direction(df, method = "kernel")
 \dontrun{
 # rstanarm models
 # -----------------------------------------------
-library(rstanarm)
-model <- rstanarm::stan_glm(mpg ~ wt + cyl,
-  data = mtcars,
-  chains = 2, refresh = 0
-)
-p_direction(model)
-p_direction(model, method = "kernel")
+if (require("rstanarm")) {
+  model <- rstanarm::stan_glm(mpg ~ wt + cyl,
+    data = mtcars,
+    chains = 2, refresh = 0
+  )
+  p_direction(model)
+  p_direction(model, method = "kernel")
+}
 
 # emmeans
 # -----------------------------------------------
-library(emmeans)
-p_direction(emtrends(model, ~1, "wt"))
+if (require("emmeans")) {
+  p_direction(emtrends(model, ~1, "wt"))
+}
 
 # brms models
 # -----------------------------------------------
-library(brms)
-model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-p_direction(model)
-p_direction(model, method = "kernel")
+if (require("brms")) {
+  model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+  p_direction(model)
+  p_direction(model, method = "kernel")
+}
 
 # BayesFactor objects
 # -----------------------------------------------
-library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
-p_direction(bf)
-p_direction(bf, method = "kernel")
+if (require("BayesFactor")) {
+  bf <- ttestBF(x = rnorm(100, 1, 1))
+  p_direction(bf)
+  p_direction(bf, method = "kernel")
+}
 }
 }
 \references{
