@@ -65,9 +65,10 @@ bayesfactor(posterior, prior = prior)
 \dontrun{
 # rstanarm models
 # ---------------
-library(rstanarm)
-model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
-bayesfactor(model)
+if (require("rstanarm")) {
+  model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
+  bayesfactor(model)
+}
 }
 
 # Frequentist models

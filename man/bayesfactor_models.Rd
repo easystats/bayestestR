@@ -65,65 +65,68 @@ bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
 \dontrun{
 # With lmerMod objects:
 # ---------------------
-library(lme4)
-lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
-lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
-lmer3 <- lmer(
-  Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
-  data = iris
-)
-bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
-bayesfactor_models(lmer1, lmer2, lmer3, denominator = lmer1)
+if (require("lme4")) {
+  lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+  lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
+  lmer3 <- lmer(
+    Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
+    data = iris
+  )
+  bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
+  bayesfactor_models(lmer1, lmer2, lmer3, denominator = lmer1)
+}
 
 # rstanarm models
 # ---------------------
 # (note that a unique diagnostic_file MUST be specified in order to work)
-library(rstanarm)
-stan_m0 <- stan_glm(Sepal.Length ~ 1,
-  data = iris,
-  family = gaussian(),
-  diagnostic_file = file.path(tempdir(), "df0.csv")
-)
-stan_m1 <- stan_glm(Sepal.Length ~ Species,
-  data = iris,
-  family = gaussian(),
-  diagnostic_file = file.path(tempdir(), "df1.csv")
-)
-stan_m2 <- stan_glm(Sepal.Length ~ Species + Petal.Length,
-  data = iris,
-  family = gaussian(),
-  diagnostic_file = file.path(tempdir(), "df2.csv")
-)
-bayesfactor_models(stan_m1, stan_m2, denominator = stan_m0)
+if (require("rstanarm")) {
+  stan_m0 <- stan_glm(Sepal.Length ~ 1,
+    data = iris,
+    family = gaussian(),
+    diagnostic_file = file.path(tempdir(), "df0.csv")
+  )
+  stan_m1 <- stan_glm(Sepal.Length ~ Species,
+    data = iris,
+    family = gaussian(),
+    diagnostic_file = file.path(tempdir(), "df1.csv")
+  )
+  stan_m2 <- stan_glm(Sepal.Length ~ Species + Petal.Length,
+    data = iris,
+    family = gaussian(),
+    diagnostic_file = file.path(tempdir(), "df2.csv")
+  )
+  bayesfactor_models(stan_m1, stan_m2, denominator = stan_m0)
+}
 
 
 # brms models
 # --------------------
 # (note the save_all_pars MUST be set to TRUE in order to work)
-library(brms)
-brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
-brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
-brm3 <- brm(
-  Sepal.Length ~ Species + Petal.Length,
-  data = iris,
-  save_all_pars = TRUE
-)
+if (require("brms")) {
+  brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
+  brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
+  brm3 <- brm(
+    Sepal.Length ~ Species + Petal.Length,
+    data = iris,
+    save_all_pars = TRUE
+  )
 
-bayesfactor_models(brm1, brm2, brm3, denominator = 1)
+  bayesfactor_models(brm1, brm2, brm3, denominator = 1)
+}
 
 
 # BayesFactor
 # ---------------------------
-library(BayesFactor)
-data(puzzles)
-BF <- anovaBF(RT ~ shape * color + ID,
-  data = puzzles,
-  whichRandom = "ID", progress = FALSE
-)
-BF
-bayesfactor_models(BF) # basically the same
+if (require("BayesFactor")) {
+  data(puzzles)
+  BF <- anovaBF(RT ~ shape * color + ID,
+    data = puzzles,
+    whichRandom = "ID", progress = FALSE
+  )
+  BF
+  bayesfactor_models(BF) # basically the same
 }
-
+}
 }
 \references{
 \itemize{

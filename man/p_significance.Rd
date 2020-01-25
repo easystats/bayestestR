@@ -88,11 +88,12 @@ p_significance(df)
 \dontrun{
 # rstanarm models
 # -----------------------------------------------
-library(rstanarm)
-model <- rstanarm::stan_glm(mpg ~ wt + cyl,
-  data = mtcars,
-  chains = 2, refresh = 0
-)
-p_significance(model)
+if (require("rstanarm")) {
+  model <- rstanarm::stan_glm(mpg ~ wt + cyl,
+    data = mtcars,
+    chains = 2, refresh = 0
+  )
+  p_significance(model)
+}
 }
 }
