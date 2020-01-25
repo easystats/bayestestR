@@ -1,4 +1,5 @@
-if (requireNamespace("rstanarm", quietly = TRUE)) {
+if (requireNamespace("rstanarm", quietly = TRUE) &&
+    requireNamespace("brms", quietly = TRUE)) {
   context("bayesfactor_models + bayesfactor_inclusion")
 
   # bayesfactor_models ------------------------------------------------------
