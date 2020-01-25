@@ -24,19 +24,20 @@ library(bayestestR)
 
 # rstanarm models
 # -----------------------------------------------
-library(rstanarm)
-model <- rstanarm::stan_glm(mpg ~ wt, data = mtcars)
-sensitivity_to_prior(model)
+if (require("rstanarm")) {
+  model <- rstanarm::stan_glm(mpg ~ wt, data = mtcars)
+  sensitivity_to_prior(model)
 
-model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
-sensitivity_to_prior(model, index = c("Median", "MAP"))
-
+  model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+  sensitivity_to_prior(model, index = c("Median", "MAP"))
+}
 
 # brms models
 # -----------------------------------------------
-library(brms)
-model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-# sensitivity_to_prior(model)
+if (require("brms")) {
+  model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+  # sensitivity_to_prior(model)
+}
 }
 }
 \seealso{
