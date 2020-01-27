@@ -19,24 +19,23 @@ check_prior(model, method = "gelman", simulate_priors = TRUE, ...)
 Performs a simple test to check whether the prior is informative to the posterior. This idea, and the accompanying heuristics, were discussed in \href{https://statmodeling.stat.columbia.edu/2019/08/10/}{this blogpost}.
 }
 \examples{
-library(bayestestR)
-library(rstanarm)
-
-model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
-check_prior(model, method = "gelman")
-check_prior(model, method = "lakeland")
-
 \dontrun{
-# An extreme example where both methods diverge:
-model <- stan_glm(mpg ~ wt, data = mtcars[1:3,],
-                  prior = normal(-3.3, 1, FALSE),
-                  prior_intercept = normal(0, 1000, FALSE),
-                  refresh = 0)
-check_prior(model, method = "gelman")
-check_prior(model, method = "lakeland")
-plot(si(model)) # can provide visual confirmation to the Lakeland method
-}
+library(bayestestR)
+if (require("rstanarm")) {
+  model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
+  check_prior(model, method = "gelman")
+  check_prior(model, method = "lakeland")
 
+  # An extreme example where both methods diverge:
+  model <- stan_glm(mpg ~ wt, data = mtcars[1:3,],
+                    prior = normal(-3.3, 1, FALSE),
+                    prior_intercept = normal(0, 1000, FALSE),
+                    refresh = 0)
+  check_prior(model, method = "gelman")
+  check_prior(model, method = "lakeland")
+  plot(si(model)) # can provide visual confirmation to the Lakeland method
+}
+}
 }
 \references{
 https://statmodeling.stat.columbia.edu/2019/08/10/

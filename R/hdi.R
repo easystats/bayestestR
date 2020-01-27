@@ -64,6 +64,7 @@
 #' hdi(df)
 #' hdi(df, ci = c(.80, .90, .95))
 #'
+#' \dontrun{
 #' library(rstanarm)
 #' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' hdi(model)
@@ -71,7 +72,7 @@
 #'
 #' library(emmeans)
 #' hdi(emtrends(model, ~1, "wt"))
-#' \dontrun{
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' hdi(model)

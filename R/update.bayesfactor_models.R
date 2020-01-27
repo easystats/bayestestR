@@ -6,6 +6,7 @@
 #' @param ... Currently not used.
 #'
 #' @examples
+#' \dontrun{
 #' library(lme4)
 #' lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
 #' lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
@@ -18,6 +19,7 @@
 #' m
 #'
 #' update(m, reference = "bottom")
+#' }
 #' @export
 update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...) {
   if (!is.null(reference)) {

@@ -74,7 +74,7 @@ lines(density_default$x, density_default$y, col = "black", lwd = 3)
 
 df <- data.frame(replicate(4, rnorm(100)))
 head(estimate_density(df))
-
+\dontrun{
 # rstanarm models
 # -----------------------------------------------
 library(rstanarm)
@@ -83,7 +83,7 @@ head(estimate_density(model))
 
 library(emmeans)
 head(estimate_density(emtrends(model, ~1, "wt")))
-\dontrun{
+
 # brms models
 # -----------------------------------------------
 library(brms)

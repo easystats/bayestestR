@@ -6,24 +6,23 @@
 #' @param method Can be "gelman" or "lakeland". For the "gelman" method, if the SD of the posterior is more than 0.1 times the SD of the prior, then the prior is considered as informative. For the "lakeland" method, the prior is considered as informative if the posterior falls within the 95\% HDI of the prior.
 #' @param simulate_priors Should prior distributions be simulated using \code{simulate_prior} (default; faster) or sampled (slower, more accurate).
 #' @examples
-#' library(bayestestR)
-#' library(rstanarm)
-#'
-#' model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
-#' check_prior(model, method = "gelman")
-#' check_prior(model, method = "lakeland")
-#'
 #' \dontrun{
-#' # An extreme example where both methods diverge:
-#' model <- stan_glm(mpg ~ wt, data = mtcars[1:3,],
-#'                   prior = normal(-3.3, 1, FALSE),
-#'                   prior_intercept = normal(0, 1000, FALSE),
-#'                   refresh = 0)
-#' check_prior(model, method = "gelman")
-#' check_prior(model, method = "lakeland")
-#' plot(si(model)) # can provide visual confirmation to the Lakeland method
-#' }
+#' library(bayestestR)
+#' if (require("rstanarm")) {
+#'   model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
+#'   check_prior(model, method = "gelman")
+#'   check_prior(model, method = "lakeland")
 #'
+#'   # An extreme example where both methods diverge:
+#'   model <- stan_glm(mpg ~ wt, data = mtcars[1:3,],
+#'                     prior = normal(-3.3, 1, FALSE),
+#'                     prior_intercept = normal(0, 1000, FALSE),
+#'                     refresh = 0)
+#'   check_prior(model, method = "gelman")
+#'   check_prior(model, method = "lakeland")
+#'   plot(si(model)) # can provide visual confirmation to the Lakeland method
+#' }
+#' }
 #' @references https://statmodeling.stat.columbia.edu/2019/08/10/
 #'
 #' @export

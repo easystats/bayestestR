@@ -31,23 +31,31 @@ This function attempts at automatically finding suitable "default"
   }
 }
 \examples{
-library(rstanarm)
-model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
-rope_range(model)
 \dontrun{
-library(rstanarm)
-model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial")
-rope_range(model)
+if (require("rstanarm")) {
+  model <- stan_glm(
+    mpg ~ wt + gear,
+    data = mtcars,
+    chains = 2,
+    iter = 200,
+    refresh = 0
+  )
+  rope_range(model)
 
-library(brms)
-model <- brm(mpg ~ wt + cyl, data = mtcars)
-rope_range(model)
-
-library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
-rope_range(bf)
+  model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial")
+  rope_range(model)
 }
 
+if (require("brms")) {
+  model <- brm(mpg ~ wt + cyl, data = mtcars)
+  rope_range(model)
+}
+
+if (require("BayesFactor")) {
+  bf <- ttestBF(x = rnorm(100, 1, 1))
+  rope_range(bf)
+}
+}
 }
 \references{
 Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.

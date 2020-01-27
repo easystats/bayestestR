@@ -57,12 +57,13 @@ Extract diagnostic metrics (Effective Sample Size (\code{ESS}), \code{Rhat} and 
   \strong{Monte Carlo Standard Error (MCSE)} is another measure of accuracy of the chains. It is defined as standard deviation of the chains divided by their effective sample size (the formula for \code{mcse()} is from Kruschke 2015, p. 187). The MCSE \dQuote{provides a quantitative suggestion of how big the estimation noise is}.
 }
 \examples{
+\dontrun{
 # rstanarm models
 # -----------------------------------------------
 library(rstanarm)
 model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 diagnostic_posterior(model)
-\dontrun{
+
 # brms models
 # -----------------------------------------------
 library(brms)

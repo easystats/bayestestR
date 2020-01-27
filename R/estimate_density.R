@@ -37,7 +37,7 @@
 #'
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' head(estimate_density(df))
-#'
+#' \dontrun{
 #' # rstanarm models
 #' # -----------------------------------------------
 #' library(rstanarm)
@@ -46,7 +46,7 @@
 #'
 #' library(emmeans)
 #' head(estimate_density(emtrends(model, ~1, "wt")))
-#' \dontrun{
+#'
 #' # brms models
 #' # -----------------------------------------------
 #' library(brms)

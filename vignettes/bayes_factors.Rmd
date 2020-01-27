@@ -29,24 +29,36 @@ This vignette can be referred to by citing the following:
 ---
 
 ```{r setup, include=FALSE}
-library(knitr)
-library(bayestestR)
-library(rstanarm)
-library(BayesFactor)
-library(emmeans)
-
-library(ggplot2)
-library(see)
-
-options(knitr.kable.NA = '',
-        digits = 2)
-opts_chunk$set(echo = TRUE,
-               comment = ">",
-               message = FALSE,
-               warning = FALSE,
-               dpi = 150)
-theme_set(theme_modern())
-set.seed(4)
+if (!(requireNamespace("rstanarm", quietly = TRUE) &&
+      requireNamespace("BayesFactor", quietly = TRUE) &&
+      requireNamespace("emmeans", quietly = TRUE) &&
+      requireNamespace("logspline", quietly = TRUE) &&
+      requireNamespace("lme4", quietly = TRUE) &&
+      requireNamespace("ggplot2", quietly = TRUE) &&
+      requireNamespace("see", quietly = TRUE)
+      )) {
+  knitr::opts_chunk$set(eval = FALSE)
+} else {
+  library(knitr)
+  library(insight)
+  library(bayestestR)
+  library(rstanarm)
+  library(BayesFactor)
+  library(emmeans)
+  
+  library(ggplot2)
+  library(see)
+  
+  options(knitr.kable.NA = '',
+          digits = 2)
+  opts_chunk$set(echo = TRUE,
+                 comment = ">",
+                 message = FALSE,
+                 warning = FALSE,
+                 dpi = 150)
+  theme_set(theme_modern())
+  set.seed(4)
+}
 ```
 
 The adoption of the Bayesian framework for applied statistics, especially in the social and psychological sciences, seems to be developing in two distinct directions. One of the key topics marking their separation is their opinion about **the Bayes factor**. In short, some authors (e.g., the "Amsterdam school", led by [Wagenmakers](https://www.bayesianspectacles.org/)) advocate its use and emphasize its qualities as a statistical index, while others point to its limits and prefer, instead, the precise description of posterior distributions (using [CIs](https://easystats.github.io/bayestestR/reference/hdi.html), [ROPEs](https://easystats.github.io/bayestestR/reference/rope.html), etc.). 
@@ -151,7 +163,7 @@ pnull <- diff(pnorm(null, sd = 2.5))
 prior_odds <- (1 - pnull) / pnull
 ```
 
-and the prior odds would be `r scales::number(prior_odds, accuracy = 0.1)`.
+and the prior odds would be 2.2.
 
 By looking at the posterior distribution, can now compute the posterior probability of the drug's effect falling *within the null-region*, and the posterior probability of the drug's effect falling *outside the null-region* to get our *posterior odds*:
 
@@ -186,9 +198,9 @@ post_odds <- prior_odds * BF
 med_post <- point_estimate(posterior)$Median
 ```
 
-We can see that the center of the posterior distribution has shifted away from 0 (to ~`r scales::number(med_post, accuracy = 0.1)`). Likewise, the posterior odds are `r scales::number(post_odds, accuracy = 0.1)` - which seems to favor **the effect being non-null**, but... *does this mean the data support the alternative over the null?* Hard to say, since even before the data were observed, the priors already favored the alternative - so we need to take our priors into account here!
+We can see that the center of the posterior distribution has shifted away from 0 (to ~1.5). Likewise, the posterior odds are 2 - which seems to favor **the effect being non-null**, but... *does this mean the data support the alternative over the null?* Hard to say, since even before the data were observed, the priors already favored the alternative - so we need to take our priors into account here!
 
-Let's compute the Bayes factor as the change from the prior odds to the posterior odds: $BF_{10} = Odds_{posterior} / Odds_{prior} = `r scales::number(BF, accuracy = 0.01)`$! This BF indicates that the data provide 1/`r scales::number(BF, accuracy = 0.01)` = `r scales::number(1/BF, accuracy = 0.01)` times more evidence for the effect of the drug being practically nothing than it does for the drug having some clinically significant effect. Thus, although the center of distribution has shifted away from 0, and the posterior distribution seems to favor a non-null effect of the drug, it seems that given the observed data, the probability mass has *overall* shifted closer to the null interval, making the values in the null interval more probable! [see *Non-overlapping Hypotheses* in @morey2011bayesinterval]
+Let's compute the Bayes factor as the change from the prior odds to the posterior odds: $BF_{10} = Odds_{posterior} / Odds_{prior} = 0.9$! This BF indicates that the data provide 1/0.9 = 1.1 times more evidence for the effect of the drug being practically nothing than it does for the drug having some clinically significant effect. Thus, although the center of distribution has shifted away from 0, and the posterior distribution seems to favor a non-null effect of the drug, it seems that given the observed data, the probability mass has *overall* shifted closer to the null interval, making the values in the null interval more probable! [see *Non-overlapping Hypotheses* in @morey2011bayesinterval]
 
 Note that **interpretation guides** for Bayes factors can be found [**here**](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf).  
   
@@ -260,7 +272,7 @@ print(test_group2_right)
 plot(test_group2_right)
 ```
 
-As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), **the presence of an effect is `r scales::number(BF, accuracy = 0.1)` times more likely than the absence of an effect**, given the observed data (or that the data are `r scales::number(BF, accuracy = 0.1)` time more probable under $H_1$ than $H_0$). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of `r scales::number(BF, accuracy = 0.1)` is still considered quite [weak evidence](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf)).
+As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), **the presence of an effect is 2.8 times more likely than the absence of an effect**, given the observed data (or that the data are 2.8 time more probable under $H_1$ than $H_0$). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 2.8 is still considered quite [weak evidence](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf)).
 
 **NOTE**: See the *Testing Contrasts* appendix below.
 
@@ -268,7 +280,7 @@ As we can see, given that we have an *a priori* assumption about the direction o
 
 So far we've seen that Bayes factors quantify relative support between competing hypotheses. However, we can also ask:
 
-> **Which of the possible values of a parameter have increased or decreased credibility upon observing the data?**
+> **Upon observing the data, the credibility of which of the parameter’s values has increased (or decreased)?**
 
 For example, we've seen that the point null has become somewhat less credible after observing the data, but we might also ask *which values have gained some credibility given the observed data?*. The resulting range of values is called **the support interval** as it indicates which values are supported by the data [@wagenmakers2018SI]. We can do this by once again comparing the prior and posterior distributions and checking where the posterior densities are higher than the prior densities. This can be achieved with the `si()` function:
 
@@ -606,7 +618,7 @@ print(BF_carb)
 
 ```
 
-It seems that the model without `carb` as a predictor is $1/BF=`r scales::number(1/BF, accuracy = 0.1)`$ times more likely than the model *with* `carb` as a predictor. We might then assume that in the latter model, the HDI will include the point-null value of 0 effect, to also indicate the credibility of the null in the posterior. However, this is not the case:
+It seems that the model without `carb` as a predictor is $1/BF=1.2$ times more likely than the model *with* `carb` as a predictor. We might then assume that in the latter model, the HDI will include the point-null value of 0 effect, to also indicate the credibility of the null in the posterior. However, this is not the case:
 
 ```{r}
 hdi(mod_carb, ci = .95)

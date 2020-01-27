@@ -19,6 +19,7 @@
 Update bayesfactor_models
 }
 \examples{
+\dontrun{
 library(lme4)
 lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
 lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
@@ -31,4 +32,5 @@ m <- bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
 m
 
 update(m, reference = "bottom")
+}
 }

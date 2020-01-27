@@ -13,6 +13,7 @@
 #'   }
 #'
 #' @examples
+#' \dontrun{
 #' library(bayestestR)
 #'
 #' posterior <- rnorm(10000)
@@ -20,7 +21,7 @@
 #'
 #' plot(density(posterior))
 #' abline(v = map_estimate(posterior), col = "red")
-#' \dontrun{
+#'
 #' library(rstanarm)
 #' model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 #' map_estimate(model)

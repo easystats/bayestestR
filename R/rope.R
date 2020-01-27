@@ -80,6 +80,7 @@
 #' rope(x = rnorm(1000, 1, 0.01), range = c(-0.1, 0.1))
 #' rope(x = rnorm(1000, 1, 1), ci = c(.90, .95))
 #'
+#' \dontrun{
 #' library(rstanarm)
 #' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' rope(model)
@@ -87,7 +88,7 @@
 #'
 #' library(emmeans)
 #' rope(emtrends(model, ~1, "wt"), ci = c(.90, .95))
-#' \dontrun{
+#'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #' rope(model)

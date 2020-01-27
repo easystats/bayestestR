@@ -47,7 +47,7 @@
 #' describe_posterior(df)
 #' describe_posterior(df, centrality = "all", dispersion = TRUE, test = "all")
 #' describe_posterior(df, ci = c(0.80, 0.90))
-#'
+#' \dontrun{
 #' # rstanarm models
 #' # -----------------------------------------------
 #' library(rstanarm)
@@ -60,7 +60,7 @@
 #' # -----------------------------------------------
 #' library(emmeans)
 #' describe_posterior(emtrends(model, ~1, "wt"))
-#' \dontrun{
+#'
 #' # brms models
 #' # -----------------------------------------------
 #' library(brms)

@@ -9,6 +9,7 @@
 #' @inheritParams hdi
 #'
 #' @examples
+#' \dontrun{
 #' library(bayestestR)
 #'
 #' # precision = 1 is used to speed up examples...
@@ -22,22 +23,30 @@
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' mhdior(df, precision = 1)
 #'
-#' library(rstanarm)
-#' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
-#' mhdior(model, precision = 1)
-#'
-#' library(emmeans)
-#' mhdior(emtrends(model, ~1, "wt"))
-#' \dontrun{
-#' library(brms)
-#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' mhdior(model)
-#'
-#' library(BayesFactor)
-#' bf <- ttestBF(x = rnorm(100, 1, 1))
-#' mhdior(bf)
+#' if (require("rstanarm")) {
+#'   model <- stan_glm(
+#'     mpg ~ wt + gear, data = mtcars,
+#'     chains = 2,
+#'     iter = 200,
+#'     refresh = 0
+#'   )
+#'   mhdior(model, precision = 1)
 #' }
 #'
+#' if (require("emmeans")) {
+#'   mhdior(emtrends(model, ~1, "wt"))
+#' }
+#'
+#' if (require("brms")) {
+#'   model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#'   mhdior(model)
+#' }
+#'
+#' if (require("BayesFactor")) {
+#'   bf <- ttestBF(x = rnorm(100, 1, 1))
+#'   mhdior(bf)
+#' }
+#' }
 #' @importFrom stats na.omit
 #' @export
 mhdior <- function(x, ...) {
