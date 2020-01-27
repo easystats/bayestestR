@@ -12,6 +12,9 @@
 #' an approximation of a Bayes factor comparing the marginal likelihoods of the model
 #' against a model in which the tested parameter has been restricted to the point null.
 #' \cr \cr
+#' Note that the \code{logspline} package is used for estimating densities and probabilies,
+#' and must be installed for the function to work.
+#' \cr \cr
 #' \code{bayesfactor_pointnull()} and \code{bayesfactor_rope()} are wrappers around
 #' \code{bayesfactor_parameters} with different defaults for the null to be tested against
 #' (a point and a range, respectively). Aliases of the main functions are prefixed
