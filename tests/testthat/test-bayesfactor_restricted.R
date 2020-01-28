@@ -1,4 +1,4 @@
-if (requireNamespace("rstanarm", quietly = TRUE) &&
+if (require("rstanarm") &&
     require("BayesFactor") &&
     require("testthat")) {
   context("bayesfactor_restricted")

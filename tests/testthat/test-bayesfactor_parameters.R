@@ -1,7 +1,7 @@
-if (requireNamespace("rstanarm", quietly = TRUE) &&
+if (require("rstanarm") &&
     require("BayesFactor") &&
     require("testthat") &&
-    requireNamespace("brms", quietly = TRUE)) {
+    require("brms")) {
   context("bayesfactor_parameters")
 
   test_that("bayesfactor_parameters numeric", {

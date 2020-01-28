@@ -1,5 +1,4 @@
-if (requireNamespace("rstanarm", quietly = TRUE) &&
-    requireNamespace("emmeans", quietly = TRUE)) {
+if (require("rstanarm") && require("emmeans")) {
   context("emmGrid_*")
 
   library(rstanarm)
