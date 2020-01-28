@@ -29,12 +29,12 @@ This vignette can be referred to by citing the following:
 ---
 
 ```{r setup, include=FALSE}
-if (!(requireNamespace("rstanarm", quietly = TRUE) &&
-      requireNamespace("BayesFactor", quietly = TRUE) &&
-      requireNamespace("emmeans", quietly = TRUE) &&
-      requireNamespace("logspline", quietly = TRUE) &&
-      requireNamespace("lme4", quietly = TRUE) &&
-      requireNamespace("ggplot2", quietly = TRUE) &&
+if (!(requireNamespace("rstanarm", quietly = TRUE) ||
+      requireNamespace("BayesFactor", quietly = TRUE) ||
+      requireNamespace("emmeans", quietly = TRUE) ||
+      requireNamespace("logspline", quietly = TRUE) ||
+      requireNamespace("lme4", quietly = TRUE) ||
+      requireNamespace("ggplot2", quietly = TRUE) ||
       requireNamespace("see", quietly = TRUE)
       )) {
   knitr::opts_chunk$set(eval = FALSE)
