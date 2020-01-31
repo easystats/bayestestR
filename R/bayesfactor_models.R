@@ -154,28 +154,32 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     }
   }
 
+  # Get formula / model names
+  mforms <- mnames
+
   # supported models
   supported_models <- all(sapply(mods, insight::is_model_supported))
   if (supported_models) {
     # Test that all is good:
     resps <- lapply(mods, insight::get_response)
-    if (!all(sapply(resps[-denominator], function(x) identical(x, resps[[denominator]])))) {
-      stop("Models were not computed from the same data.")
+
+    if (!all(sapply(resps, is.null))) {
+      if (!all(sapply(resps[-denominator], function(x) identical(x, resps[[denominator]])))) {
+        stop("Models were not computed from the same data.")
+      }
+
+      mforms <- sapply(mods, .find_full_formula)
+    } else {
+      supported_models <- FALSE
     }
+  }
 
-
-    # Get formula
-    mforms <- sapply(mods, .find_full_formula)
-  } else {
-    if (verbose) {
-      object_names <- match.call(expand.dots = FALSE)$`...`
-      warning(sprintf(
-        "Unable to extract terms or validate that all models use the same data - following objects are not (supported) model objects (yet!): \n%s",
-        paste0(mnames[!supported_models], collapse = ", ")
-      ), call. = FALSE)
-    }
-
-    mforms <- mnames
+  if (verbose && !supported_models) {
+    object_names <- match.call(expand.dots = FALSE)$`...`
+    warning(sprintf(
+      "Unable to extract terms / validate that the following models use the same data: \n%s",
+      paste0(mnames[!supported_models], collapse = ", ")
+    ), call. = FALSE)
   }
 
   # Get BF
