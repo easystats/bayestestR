@@ -21,9 +21,9 @@ csl: apa.csl
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-if (!(requireNamespace("see", quietly = TRUE) &&
-      requireNamespace("dplyr", quietly = TRUE) &&
-      requireNamespace("ggplot2", quietly = TRUE) &&
+if (!(requireNamespace("see", quietly = TRUE) ||
+      requireNamespace("dplyr", quietly = TRUE) ||
+      requireNamespace("ggplot2", quietly = TRUE) ||
       requireNamespace("tidyr", quietly = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
 }

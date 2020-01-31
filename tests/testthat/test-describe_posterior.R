@@ -1,5 +1,4 @@
-if (requireNamespace("rstanarm", quietly = TRUE) &&
-    requireNamespace("brms", quietly = TRUE)) {
+if (require("rstanarm") && require("brms")) {
   context("describe_posterior")
 
   test_that("describe_posterior", {
