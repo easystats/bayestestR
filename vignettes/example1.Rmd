@@ -35,8 +35,8 @@ options(digits=2)
 
 set.seed(333)
 
-if (!requireNamespace("rstanarm", quietly = TRUE) &&
-    !requireNamespace("dplyr", quietly = TRUE) &&
+if (!requireNamespace("rstanarm", quietly = TRUE) ||
+    !requireNamespace("dplyr", quietly = TRUE) ||
     !requireNamespace("ggplot2", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }

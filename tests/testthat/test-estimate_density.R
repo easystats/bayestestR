@@ -1,6 +1,4 @@
-if (requireNamespace("logspline", quietly = TRUE) &&
-    requireNamespace("KernSmooth", quietly = TRUE) &&
-    requireNamespace("mclust", quietly = TRUE)) {
+if (require("logspline") && require("KernSmooth") && require("mclust")) {
   context("estimate_density")
 
   test_that("estimate_density", {
