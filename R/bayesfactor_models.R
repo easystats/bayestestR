@@ -163,7 +163,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     # Test that all is good:
     resps <- lapply(mods, insight::get_response)
 
-    if (!all(sapply(resps, is.null))) {
+    if (!any(sapply(resps, is.null))) {
       if (!all(sapply(resps[-denominator], function(x) identical(x, resps[[denominator]])))) {
         stop("Models were not computed from the same data.")
       }
