@@ -193,34 +193,35 @@ describe_posterior(df, ci = c(0.80, 0.90))
 \dontrun{
 # rstanarm models
 # -----------------------------------------------
-library(rstanarm)
-model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
-describe_posterior(model)
-describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
-describe_posterior(model, ci = c(0.80, 0.90))
+if (require("rstanarm") && require("emmeans")) {
+  model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+  describe_posterior(model)
+  describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
+  describe_posterior(model, ci = c(0.80, 0.90))
 
-# emmeans estimates
-# -----------------------------------------------
-library(emmeans)
-describe_posterior(emtrends(model, ~1, "wt"))
+  # emmeans estimates
+  # -----------------------------------------------
+  describe_posterior(emtrends(model, ~1, "wt"))
+}
 
 # brms models
 # -----------------------------------------------
-library(brms)
-model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-describe_posterior(model)
-describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
-describe_posterior(model, ci = c(0.80, 0.90))
+if (require("brms")) {
+  model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+  describe_posterior(model)
+  describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
+  describe_posterior(model, ci = c(0.80, 0.90))
+}
 
 # BayesFactor objects
 # -----------------------------------------------
-library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
-describe_posterior(bf)
-describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
-describe_posterior(bf, ci = c(0.80, 0.90))
+if (require("BayesFactor")) {
+  bf <- ttestBF(x = rnorm(100, 1, 1))
+  describe_posterior(bf)
+  describe_posterior(bf, centrality = "all", dispersion = TRUE, test = "all")
+  describe_posterior(bf, ci = c(0.80, 0.90))
 }
-
+}
 }
 \references{
 \itemize{

@@ -164,6 +164,9 @@ When the null is a point, a Savage-Dickey density ratio is computed, which is al
 an approximation of a Bayes factor comparing the marginal likelihoods of the model
 against a model in which the tested parameter has been restricted to the point null.
 \cr \cr
+Note that the \code{logspline} package is used for estimating densities and probabilies,
+and must be installed for the function to work.
+\cr \cr
 \code{bayesfactor_pointnull()} and \code{bayesfactor_rope()} are wrappers around
 \code{bayesfactor_parameters} with different defaults for the null to be tested against
 (a point and a range, respectively). Aliases of the main functions are prefixed
@@ -221,33 +224,33 @@ bayesfactor_parameters(posterior, prior)
 \dontrun{
 # rstanarm models
 # ---------------
-library(rstanarm)
-contrasts(sleep$group) <- contr.bayes # see vingette
-stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
-bayesfactor_parameters(stan_model)
-bayesfactor_parameters(stan_model, null = rope_range(stan_model))
+if (require("rstanarm") &6 require("emmeans")) {
+  contrasts(sleep$group) <- contr.bayes # see vingette
+  stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
+  bayesfactor_parameters(stan_model)
+  bayesfactor_parameters(stan_model, null = rope_range(stan_model))
 
 # emmGrid objects
 # ---------------
-library(emmeans)
-group_diff <- pairs(emmeans(stan_model, ~group))
-bayesfactor_parameters(group_diff, prior = stan_model)
+  group_diff <- pairs(emmeans(stan_model, ~group))
+  bayesfactor_parameters(group_diff, prior = stan_model)
+}
 
 # brms models
 # -----------
-library(brms)
-contrasts(sleep$group) <- contr.bayes # see vingette
-my_custom_priors <-
-  set_prior("student_t(3, 0, 1)", class = "b") +
-  set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")
+if (require("brms")) {
+  contrasts(sleep$group) <- contr.bayes # see vingette
+  my_custom_priors <-
+    set_prior("student_t(3, 0, 1)", class = "b") +
+    set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")
 
-brms_model <- brm(extra ~ group + (1 | ID),
-  data = sleep,
-  prior = my_custom_priors
-)
-bayesfactor_parameters(brms_model)
+  brms_model <- brm(extra ~ group + (1 | ID),
+    data = sleep,
+    prior = my_custom_priors
+  )
+  bayesfactor_parameters(brms_model)
 }
-
+}
 }
 \references{
 \itemize{

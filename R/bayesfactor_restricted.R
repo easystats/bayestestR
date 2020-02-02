@@ -73,31 +73,29 @@
 #' \dontrun{
 #' # rstanarm models
 #' # ---------------
-#' library(rstanarm)
-#' fit_stan <- stan_glm(mpg ~ wt + cyl + am,
-#'   data = mtcars
-#' )
-#' hyps <- c(
-#'   "am > 0 & cyl < 0",
-#'   "cyl < 0",
-#'   "wt - cyl > 0"
-#' )
-#' bayesfactor_restricted(fit_stan, hypothesis = hyps)
+#' if (require("rstanarm") && require("emmeans")) {
+#'   fit_stan <- stan_glm(mpg ~ wt + cyl + am,
+#'     data = mtcars
+#'   )
+#'   hyps <- c(
+#'     "am > 0 & cyl < 0",
+#'     "cyl < 0",
+#'     "wt - cyl > 0"
+#'   )
+#'   bayesfactor_restricted(fit_stan, hypothesis = hyps)
 #'
 #' # emmGrid objects
 #' # ---------------
-#' library(emmeans)
-#'
 #' # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html
-#' disgust_data <- read.table(url("http://www.learnbayes.org/disgust_example.txt"), header = TRUE)
+#'   disgust_data <- read.table(url("http://www.learnbayes.org/disgust_example.txt"), header = TRUE)
 #'
-#' contrasts(disgust_data$condition) <- contr.bayes # see vignette
-#' fit_model <- stan_glm(score ~ condition, data = disgust_data, family = gaussian())
+#'   contrasts(disgust_data$condition) <- contr.bayes # see vignette
+#'   fit_model <- stan_glm(score ~ condition, data = disgust_data, family = gaussian())
 #'
-#' em_condition <- emmeans(fit_model, ~condition)
-#' hyps <- c("lemon < control & control < sulfur")
+#'   em_condition <- emmeans(fit_model, ~condition)
+#'   hyps <- c("lemon < control & control < sulfur")
 #'
-#' bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
+#'   bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
 #' # > # Bayes Factor (Order-Restriction)
 #' # >
 #' # >                          Hypothesis P(Prior) P(Posterior) Bayes Factor
@@ -105,7 +103,7 @@
 #' # > ---
 #' # > Bayes factors for the restricted model vs. the un-restricted model.
 #' }
-#'
+#' }
 #' @references
 #' \itemize{
 #' \item Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
