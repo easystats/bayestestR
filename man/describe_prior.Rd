@@ -20,21 +20,23 @@ library(bayestestR)
 
 # rstanarm models
 # -----------------------------------------------
-library(rstanarm)
-model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
-describe_prior(model)
+if (require("rstanarm")) {
+  model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
+  describe_prior(model)
+}
 
 # brms models
 # -----------------------------------------------
-library(brms)
-model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-describe_prior(model)
+if (require("brms")) {
+  model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+  describe_prior(model)
+}
 
 # BayesFactor objects
 # -----------------------------------------------
-library(BayesFactor)
-bf <- ttestBF(x = rnorm(100, 1, 1))
-describe_prior(bf)
+if (require("BayesFactor")) {
+  bf <- ttestBF(x = rnorm(100, 1, 1))
+  describe_prior(bf)
 }
-
+}
 }
