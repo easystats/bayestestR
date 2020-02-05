@@ -7,10 +7,11 @@
 #' if the null value has become less or more likely given the observed data.
 #' \cr \cr
 #' When the null is an interval, the Bayes factor is computed by comparing the prior
-#' and posterior odds of the parameter falling within or outside the null interval;
-#' When the null is a point, a Savage-Dickey density ratio is computed, which is also
-#' an approximation of a Bayes factor comparing the marginal likelihoods of the model
-#' against a model in which the tested parameter has been restricted to the point null.
+#' and posterior odds of the parameter falling within or outside the null interval
+#' (Morey & Rouder, 2011; Liao et al., 2020); When the null is a point, a Savage-Dickey
+#' density ratio is computed, which is also an approximation of a Bayes factor comparing
+#' the marginal likelihoods of the model against a model in which the tested parameter
+#' has been restricted to the point null (Wagenmakers et al., 2010; Heck, 2019).
 #' \cr \cr
 #' Note that the \code{logspline} package is used for estimating densities and probabilies,
 #' and must be installed for the function to work.
@@ -60,7 +61,7 @@
 #' \subsection{One-sided Tests (setting an order restriction)}{
 #' One sided tests (controlled by \code{direction}) are conducted by restricting the prior and
 #' posterior of the non-null values (the "alternative") to one side of the null only
-#' (\cite{Morey & Wagenmakers, 2013}). For example, if we have a prior hypothesis that the
+#' (\cite{Morey & Wagenmakers, 2014}). For example, if we have a prior hypothesis that the
 #' parameter should be positive, the alternative will be restricted to the region to the right
 #' of the null (point or interval).
 #' }
@@ -112,10 +113,11 @@
 #' @references
 #' \itemize{
 #' \item Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.
-#' \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 #' \item Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The case of computing Bayes factors for regression parameters. British Journal of Mathematical and Statistical Psychology, 72(2), 316-333.
 #' \item Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
 #' \item Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.
+#' \item Liao, J. G., Midya, V., & Berg, A. (2020). Connecting and contrasting the Bayes factor and a modified ROPE procedure for testing interval null hypotheses. The American Statistician, 1-19.
+#' \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 #' }
 #'
 #' @author Mattan S. Ben-Shachar
