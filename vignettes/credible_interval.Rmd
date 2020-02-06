@@ -32,9 +32,7 @@ options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">")
 options(digits=2)
 
-if (!(requireNamespace("ggplot2", quietly = TRUE) ||
-      requireNamespace("dplyr", quietly = TRUE)
-      )) {
+if (!requireNamespace("ggplot2", quietly = TRUE) || !requireNamespace("dplyr", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
