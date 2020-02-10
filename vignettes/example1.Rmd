@@ -359,7 +359,7 @@ p_direction(posteriors$feedsunflower)
 
 Interestingly, it so happens that **this index is usually highly correlated with the frequentist *p*-value**. We could almost roughly infer the corresponding *p*-value with a simple transformation:
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval=TRUE}
 pd <- 97.82
 onesided_p <- 1 - pd / 100  
 twosided_p <- onesided_p * 2

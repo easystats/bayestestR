@@ -28,15 +28,14 @@ This vignette can be referred to by citing the package:
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-if (!(requireNamespace("see", quietly = TRUE) ||
-      requireNamespace("dplyr", quietly = TRUE) ||
-      requireNamespace("ggplot2", quietly = TRUE) ||
-      requireNamespace("tidyr", quietly = TRUE) ||
-      requireNamespace("logspline", quietly = TRUE) ||
-      requireNamespace("KernSmooth", quietly = TRUE) ||
-      requireNamespace("tidyr", quietly = TRUE) ||
-      requireNamespace("GGally", quietly = TRUE)
-      )) {
+if (!requireNamespace("see", quietly = TRUE) ||
+    !requireNamespace("dplyr", quietly = TRUE) ||
+    !requireNamespace("ggplot2", quietly = TRUE) ||
+    !requireNamespace("tidyr", quietly = TRUE) ||
+    !requireNamespace("logspline", quietly = TRUE) ||
+    !requireNamespace("KernSmooth", quietly = TRUE) ||
+    !requireNamespace("tidyr", quietly = TRUE) ||
+    !requireNamespace("GGally", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
