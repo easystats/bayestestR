@@ -9,27 +9,30 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
   })
 
 
-  if (require("insight")) {
-    m <- insight::download_model("stanreg_merMod_5")
-    p <- insight::get_parameters(m, effects = "all")
+  .runThisTest <- Sys.getenv("RunAllinsightTests") == "yes"
+  if (.runThisTest || Sys.getenv("USER") == "travis") {
+    if (require("insight")) {
+      m <- insight::download_model("stanreg_merMod_5")
+      p <- insight::get_parameters(m, effects = "all")
 
-    test_that("p_map", {
-      testthat::expect_equal(
-        p_map(m, effects = "all")$p_MAP,
-        p_map(p)$p_MAP,
-        tolerance = 1e-3
-      )
-    })
+      test_that("p_map", {
+        testthat::expect_equal(
+          p_map(m, effects = "all")$p_MAP,
+          p_map(p)$p_MAP,
+          tolerance = 1e-3
+        )
+      })
 
-    m <- insight::download_model("brms_zi_3")
-    p <- insight::get_parameters(m, effects = "all", component = "all")
+      m <- insight::download_model("brms_zi_3")
+      p <- insight::get_parameters(m, effects = "all", component = "all")
 
-    test_that("p_map", {
-      testthat::expect_equal(
-        p_map(m, effects = "all", component = "all")$p_MAP,
-        p_map(p)$p_MAP,
-        tolerance = 1e-3
-      )
-    })
+      test_that("p_map", {
+        testthat::expect_equal(
+          p_map(m, effects = "all", component = "all")$p_MAP,
+          p_map(p)$p_MAP,
+          tolerance = 1e-3
+        )
+      })
+    }
   }
 }

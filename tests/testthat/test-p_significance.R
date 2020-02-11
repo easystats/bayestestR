@@ -12,14 +12,17 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
   })
 
 
-  if (require("insight")) {
-    m <- insight::download_model("stanreg_merMod_5")
-    p <- insight::get_parameters(m, effects = "all")
+  .runThisTest <- Sys.getenv("RunAllinsightTests") == "yes"
+  if (.runThisTest || Sys.getenv("USER") == "travis") {
+    if (require("insight")) {
+      m <- insight::download_model("stanreg_merMod_5")
+      p <- insight::get_parameters(m, effects = "all")
 
-    testthat::expect_equal(
-      p_significance(m, effects = "all")$ps[1],
-      0.988,
-      tolerance = 1e-3
-    )
+      testthat::expect_equal(
+        p_significance(m, effects = "all")$ps[1],
+        0.988,
+        tolerance = 1e-3
+      )
+    }
   }
 }

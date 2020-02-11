@@ -1,4 +1,4 @@
-if (requireNamespace("rstanarm", quietly = TRUE)) {
+if (require("rstanarm")) {
   context("rope")
 
   test_that("rope", {
@@ -31,28 +31,31 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
   })
 
 
-  if (require("insight")) {
-    m <- insight::download_model("stanreg_merMod_5")
-    p <- insight::get_parameters(m, effects = "all")
+  .runThisTest <- Sys.getenv("RunAllinsightTests") == "yes"
+  if (.runThisTest || Sys.getenv("USER") == "travis") {
+    if (require("insight")) {
+      m <- insight::download_model("stanreg_merMod_5")
+      p <- insight::get_parameters(m, effects = "all")
 
-    test_that("rope", {
-      testthat::expect_equal(
-        # fix range to -.1/.1, to compare to data frame method
-        rope(m, range = c(-.1, .1), effects = "all")$ROPE_Percentage,
-        rope(p)$ROPE_Percentage,
-        tolerance = 1e-3
-      )
-    })
+      test_that("rope", {
+        testthat::expect_equal(
+          # fix range to -.1/.1, to compare to data frame method
+          rope(m, range = c(-.1, .1), effects = "all")$ROPE_Percentage,
+          rope(p)$ROPE_Percentage,
+          tolerance = 1e-3
+        )
+      })
 
-    m <- insight::download_model("brms_zi_3")
-    p <- insight::get_parameters(m, effects = "all", component = "all")
+      m <- insight::download_model("brms_zi_3")
+      p <- insight::get_parameters(m, effects = "all", component = "all")
 
-    test_that("rope", {
-      testthat::expect_equal(
-        rope(m, effects = "all", component = "all")$ROPE_Percentage,
-        rope(p)$ROPE_Percentage,
-        tolerance = 1e-3
-      )
-    })
+      test_that("rope", {
+        testthat::expect_equal(
+          rope(m, effects = "all", component = "all")$ROPE_Percentage,
+          rope(p)$ROPE_Percentage,
+          tolerance = 1e-3
+        )
+      })
+    }
   }
 }
