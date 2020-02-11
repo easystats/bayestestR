@@ -21,27 +21,30 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
 
 
 
-  if (require("insight")) {
-    m <- insight::download_model("stanreg_merMod_5")
-    p <- insight::get_parameters(m, effects = "all")
+  .runThisTest <- Sys.getenv("RunAllinsightTests") == "yes"
+  if (.runThisTest || Sys.getenv("USER") == "travis") {
+    if (require("insight")) {
+      m <- insight::download_model("stanreg_merMod_5")
+      p <- insight::get_parameters(m, effects = "all")
 
-    test_that("ci", {
-      testthat::expect_equal(
-        ci(m, ci = c(.5, .8), effects = "all")$CI_low,
-        ci(p, ci = c(.5, .8))$CI_low,
-        tolerance = 1e-3
-      )
-    })
+      test_that("ci", {
+        testthat::expect_equal(
+          ci(m, ci = c(.5, .8), effects = "all")$CI_low,
+          ci(p, ci = c(.5, .8))$CI_low,
+          tolerance = 1e-3
+        )
+      })
 
-    m <- insight::download_model("brms_zi_3")
-    p <- insight::get_parameters(m, effects = "all", component = "all")
+      m <- insight::download_model("brms_zi_3")
+      p <- insight::get_parameters(m, effects = "all", component = "all")
 
-    test_that("rope", {
-      testthat::expect_equal(
-        ci(m, ci = c(.5, .8), effects = "all", component = "all")$CI_low,
-        ci(p, ci = c(.5, .8))$CI_low,
-        tolerance = 1e-3
-      )
-    })
+      test_that("rope", {
+        testthat::expect_equal(
+          ci(m, ci = c(.5, .8), effects = "all", component = "all")$CI_low,
+          ci(p, ci = c(.5, .8))$CI_low,
+          tolerance = 1e-3
+        )
+      })
+    }
   }
 }

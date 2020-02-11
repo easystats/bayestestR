@@ -1,6 +1,4 @@
 if (requireNamespace("rstanarm", quietly = TRUE)) {
-  context("p_direction")
-
   test_that("p_direction", {
     set.seed(333)
     x <- bayestestR::distribution_normal(10000, 1, 1)
@@ -13,27 +11,30 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
   })
 
 
-  if (require("insight")) {
-    m <- insight::download_model("stanreg_merMod_5")
-    p <- insight::get_parameters(m, effects = "all")
+  .runThisTest <- Sys.getenv("RunAllinsightTests") == "yes"
+  if (.runThisTest || Sys.getenv("USER") == "travis") {
+    if (require("insight")) {
+      m <- insight::download_model("stanreg_merMod_5")
+      p <- insight::get_parameters(m, effects = "all")
 
-    testthat::test_that("p_direction", {
-      testthat::expect_equal(
-        p_direction(m, effects = "all")$pd,
-        p_direction(p)$pd,
-        tolerance = 1e-3
-      )
-    })
+      testthat::test_that("p_direction", {
+        testthat::expect_equal(
+          p_direction(m, effects = "all")$pd,
+          p_direction(p)$pd,
+          tolerance = 1e-3
+        )
+      })
 
-    m <- insight::download_model("brms_zi_3")
-    p <- insight::get_parameters(m, effects = "all", component = "all")
+      m <- insight::download_model("brms_zi_3")
+      p <- insight::get_parameters(m, effects = "all", component = "all")
 
-    testthat::test_that("p_direction", {
-      testthat::expect_equal(
-        p_direction(m, effects = "all", component = "all")$pd,
-        p_direction(p)$pd,
-        tolerance = 1e-3
-      )
-    })
+      testthat::test_that("p_direction", {
+        testthat::expect_equal(
+          p_direction(m, effects = "all", component = "all")$pd,
+          p_direction(p)$pd,
+          tolerance = 1e-3
+        )
+      })
+    }
   }
 }

@@ -57,22 +57,25 @@ if (require("rstanarm") &&
     testthat::expect_equal(log(stan_models$BF), c(0, 65.19), tolerance = 0.1)
   })
 
-  test_that("bayesfactor_models BRMS", {
-    testthat::skip("Skipping bayesfactor_models BRMS")
-    set.seed(444)
-    brms_4bf_1 <- insight::download_model("brms_4bf_1")
-    brms_4bf_2 <- insight::download_model("brms_4bf_2")
-    brms_4bf_3 <- insight::download_model("brms_4bf_3")
-    brms_4bf_4 <- insight::download_model("brms_4bf_4")
-    brms_4bf_5 <- insight::download_model("brms_4bf_5")
+  .runThisTest <- Sys.getenv("RunAllinsightTests") == "yes"
+  if (.runThisTest || Sys.getenv("USER") == "travis") {
+    test_that("bayesfactor_models BRMS", {
+      testthat::skip("Skipping bayesfactor_models BRMS")
+      set.seed(444)
+      brms_4bf_1 <- insight::download_model("brms_4bf_1")
+      brms_4bf_2 <- insight::download_model("brms_4bf_2")
+      brms_4bf_3 <- insight::download_model("brms_4bf_3")
+      brms_4bf_4 <- insight::download_model("brms_4bf_4")
+      brms_4bf_5 <- insight::download_model("brms_4bf_5")
 
-    library(brms)
-    brms_models <- suppressWarnings(bayestestR::bayesfactor_models(brms_4bf_1, brms_4bf_2, brms_4bf_3, brms_4bf_4, brms_4bf_5))
+      library(brms)
+      brms_models <- suppressWarnings(bayestestR::bayesfactor_models(brms_4bf_1, brms_4bf_2, brms_4bf_3, brms_4bf_4, brms_4bf_5))
 
-    testthat::expect_warning(bayestestR::bayesfactor_models(brms_4bf_1, brms_4bf_2))
-    testthat::expect_is(brms_models, "bayesfactor_models")
-    testthat::expect_equal(log(brms_models$BF), c(0, 68.5, 102.5, 128.6, 128.8), tolerance = 0.1)
-  })
+      testthat::expect_warning(bayestestR::bayesfactor_models(brms_4bf_1, brms_4bf_2))
+      testthat::expect_is(brms_models, "bayesfactor_models")
+      testthat::expect_equal(log(brms_models$BF), c(0, 68.5, 102.5, 128.6, 128.8), tolerance = 0.1)
+    })
+  }
 
   # bayesfactor_inclusion ---------------------------------------------------
 
