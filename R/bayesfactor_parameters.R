@@ -83,7 +83,7 @@
 #' \dontrun{
 #' # rstanarm models
 #' # ---------------
-#' if (require("rstanarm") &6 require("emmeans")) {
+#' if (require("rstanarm") && require("emmeans")) {
 #'   contrasts(sleep$group) <- contr.bayes # see vingette
 #'   stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #'   bayesfactor_parameters(stan_model)
