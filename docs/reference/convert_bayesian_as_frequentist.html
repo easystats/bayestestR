@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -204,59 +204,31 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># Rstanarm ----------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"rstanarm"</span>)) {
+  <span class='co'># Simple regressions</span>
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> * <span class='no'>Species</span>,
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>
+  )
+  <span class='fu'>bayesian_as_frequentist</span>(<span class='no'>model</span>)
 
-<span class='co'># Simple regressions</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> * <span class='no'>Species</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>
-)
-<span class='fu'>bayesian_as_frequentist</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; 
-#&gt; Call:
-#&gt; stats::lm(formula = formula, data = data)
-#&gt; 
-#&gt; Coefficients:
-#&gt;                    (Intercept)                    Petal.Length  
-#&gt;                         4.2132                          0.5423  
-#&gt;              Speciesversicolor                Speciesvirginica  
-#&gt;                        -1.8056                         -3.1535  
-#&gt; Petal.Length:Speciesversicolor   Petal.Length:Speciesvirginica  
-#&gt;                         0.2860                          0.4534  
-#&gt; </div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>vs</span> ~ <span class='no'>mpg</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>
-)
-<span class='fu'>bayesian_as_frequentist</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; 
-#&gt; Call:  stats::glm(formula = formula, family = family, data = data)
-#&gt; 
-#&gt; Coefficients:
-#&gt; (Intercept)          mpg  
-#&gt;     -8.8331       0.4304  
-#&gt; 
-#&gt; Degrees of Freedom: 31 Total (i.e. Null);  30 Residual
-#&gt; Null Deviance:	    43.86 
-#&gt; Residual Deviance: 25.53 	AIC: 29.53</div><div class='input'>
-<span class='co'># Mixed models</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_glmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>),
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>
-)
-<span class='fu'>bayesian_as_frequentist</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Linear mixed model fit by REML ['lmerMod']
-#&gt; Formula: Sepal.Length ~ Petal.Length + (1 | Species)
-#&gt;    Data: data
-#&gt; REML criterion at convergence: 119.793
-#&gt; Random effects:
-#&gt;  Groups   Name        Std.Dev.
-#&gt;  Species  (Intercept) 1.0778  
-#&gt;  Residual             0.3381  
-#&gt; Number of obs: 150, groups:  Species, 3
-#&gt; Fixed Effects:
-#&gt;  (Intercept)  Petal.Length  
-#&gt;       2.5045        0.8885  </div><div class='input'>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_glmer</a></span>(<span class='no'>vs</span> ~ <span class='no'>mpg</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>cyl</span>),
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>
-)
-<span class='fu'>bayesian_as_frequentist</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; Generalized linear mixed model fit by maximum likelihood (Laplace
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>vs</span> ~ <span class='no'>mpg</span>,
+    <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>,
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>
+  )
+  <span class='fu'>bayesian_as_frequentist</span>(<span class='no'>model</span>)
+
+  <span class='co'># Mixed models</span>
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_glmer</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Petal.Length</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>Species</span>),
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>
+  )
+  <span class='fu'>bayesian_as_frequentist</span>(<span class='no'>model</span>)
+
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_glmer</a></span>(<span class='no'>vs</span> ~ <span class='no'>mpg</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>cyl</span>),
+    <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"binomial"</span>,
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>
+  )
+  <span class='fu'>bayesian_as_frequentist</span>(<span class='no'>model</span>)
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: rstanarm</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>rstanarm (Version 2.19.3, packaged: 2020-02-11 05:16:41 UTC)</span></div><div class='output co'>#&gt; <span class='message'>- Do not expect the default priors to remain the same in future rstanarm versions.</span></div><div class='output co'>#&gt; <span class='message'>Thus, R scripts should specify priors explicitly, even if they are just the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; <span class='message'>- bayesplot theme set to bayesplot::theme_default()</span></div><div class='output co'>#&gt; <span class='message'>   * Does _not_ affect other ggplot2 plots</span></div><div class='output co'>#&gt; <span class='message'>   * See ?bayesplot_theme_set for details on theme setting</span></div><div class='output co'>#&gt; Generalized linear mixed model fit by maximum likelihood (Laplace
 #&gt;   Approximation) [glmerMod]
 #&gt;  Family: binomial  ( logit )
 #&gt; Formula: vs ~ mpg + (1 | cyl)
@@ -270,7 +242,6 @@
 #&gt; Fixed Effects:
 #&gt; (Intercept)          mpg  
 #&gt;     -3.9227       0.1723  </div><div class='input'># }
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

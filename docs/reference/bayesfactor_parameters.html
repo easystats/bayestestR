@@ -52,10 +52,14 @@ from or closer to the null value(s) (relative to the prior distribution), thus i
 if the null value has become less or more likely given the observed data.
  
 When the null is an interval, the Bayes factor is computed by comparing the prior
-and posterior odds of the parameter falling within or outside the null interval;
-When the null is a point, a Savage-Dickey density ratio is computed, which is also
-an approximation of a Bayes factor comparing the marginal likelihoods of the model
-against a model in which the tested parameter has been restricted to the point null.
+and posterior odds of the parameter falling within or outside the null interval
+(Morey &amp;amp; Rouder, 2011; Liao et al., 2020); When the null is a point, a Savage-Dickey
+density ratio is computed, which is also an approximation of a Bayes factor comparing
+the marginal likelihoods of the model against a model in which the tested parameter
+has been restricted to the point null (Wagenmakers et al., 2010; Heck, 2019).
+ 
+Note that the logspline package is used for estimating densities and probabilies,
+and must be installed for the function to work.
  
 bayesfactor_pointnull() and bayesfactor_rope() are wrappers around
 bayesfactor_parameters with different defaults for the null to be tested against
@@ -106,7 +110,7 @@ For more info, in particular on specifying correct priors for factors with more 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -204,10 +208,14 @@ from or closer to the null value(s) (relative to the prior distribution), thus i
 if the null value has become less or more likely given the observed data.
 <br /> <br />
 When the null is an interval, the Bayes factor is computed by comparing the prior
-and posterior odds of the parameter falling within or outside the null interval;
-When the null is a point, a Savage-Dickey density ratio is computed, which is also
-an approximation of a Bayes factor comparing the marginal likelihoods of the model
-against a model in which the tested parameter has been restricted to the point null.
+and posterior odds of the parameter falling within or outside the null interval
+(Morey &amp; Rouder, 2011; Liao et al., 2020); When the null is a point, a Savage-Dickey
+density ratio is computed, which is also an approximation of a Bayes factor comparing
+the marginal likelihoods of the model against a model in which the tested parameter
+has been restricted to the point null (Wagenmakers et al., 2010; Heck, 2019).
+<br /> <br />
+Note that the <code>logspline</code> package is used for estimating densities and probabilies,
+and must be installed for the function to work.
 <br /> <br />
 <code>bayesfactor_pointnull()</code> and <code>bayesfactor_rope()</code> are wrappers around
 <code>bayesfactor_parameters</code> with different defaults for the null to be tested against
@@ -408,7 +416,7 @@ paradox</em>). Thus, you should only ever try (or want) to compute a Bayes facto
 <h3>One-sided Tests (setting an order restriction)</h3>
 <p>One sided tests (controlled by <code>direction</code>) are conducted by restricting the prior and
 posterior of the non-null values (the "alternative") to one side of the null only
-(<cite>Morey &amp; Wagenmakers, 2013</cite>). For example, if we have a prior hypothesis that the
+(<cite>Morey &amp; Wagenmakers, 2014</cite>). For example, if we have a prior hypothesis that the
 parameter should be positive, the alternative will be restricted to the region to the right
 of the null (point or interval).</p>
 <h3>Interpreting Bayes Factors</h3>
@@ -423,10 +431,11 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
     
 <ul>
 <li><p>Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.</p></li>
-<li><p>Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. doi: <a href='https://doi.org/10.1177/1745691611406923'>10.1177/1745691611406923</a></p></li>
 <li><p>Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The case of computing Bayes factors for regression parameters. British Journal of Mathematical and Statistical Psychology, 72(2), 316-333.</p></li>
 <li><p>Morey, R. D., &amp; Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics &amp; Probability Letters, 92, 121-124.</p></li>
 <li><p>Morey, R. D., &amp; Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.</p></li>
+<li><p>Liao, J. G., Midya, V., &amp; Berg, A. (2020). Connecting and contrasting the Bayes factor and a modified ROPE procedure for testing interval null hypotheses. The American Statistician, 1-19.</p></li>
+<li><p>Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. doi: <a href='https://doi.org/10.1177/1745691611406923'>10.1177/1745691611406923</a></p></li>
 </ul>
 
 
@@ -436,7 +445,7 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 <span class='no'>prior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.3</span>)
 
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
+<span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: logspline</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
 #&gt; 
 #&gt; </span><span>BF  
 #&gt; ----
@@ -446,31 +455,32 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 #&gt; </span><span></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/contrasts.html'>contrasts</a></span>(<span class='no'>sleep</span>$<span class='no'>group</span>) <span class='kw'>&lt;-</span> <span class='no'>contr.bayes</span> <span class='co'># see vingette</span>
-<span class='no'>stan_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_lmer</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>stan_model</span>)
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>stan_model</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fu'><a href='rope_range.html'>rope_range</a></span>(<span class='no'>stan_model</span>))
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"rstanarm"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"emmeans"</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/stats/contrasts.html'>contrasts</a></span>(<span class='no'>sleep</span>$<span class='no'>group</span>) <span class='kw'>&lt;-</span> <span class='no'>contr.bayes</span> <span class='co'># see vingette</span>
+  <span class='no'>stan_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_lmer</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
+  <span class='fu'>bayesfactor_parameters</span>(<span class='no'>stan_model</span>)
+  <span class='fu'>bayesfactor_parameters</span>(<span class='no'>stan_model</span>, <span class='kw'>null</span> <span class='kw'>=</span> <span class='fu'><a href='rope_range.html'>rope_range</a></span>(<span class='no'>stan_model</span>))
 
 <span class='co'># emmGrid objects</span>
 <span class='co'># ---------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='no'>group_diff</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emmeans.html'>emmeans</a></span>(<span class='no'>stan_model</span>, ~<span class='no'>group</span>))
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>group_diff</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>stan_model</span>)
+  <span class='no'>group_diff</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emmeans.html'>emmeans</a></span>(<span class='no'>stan_model</span>, ~<span class='no'>group</span>))
+  <span class='fu'>bayesfactor_parameters</span>(<span class='no'>group_diff</span>, <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>stan_model</span>)
+}
 
 <span class='co'># brms models</span>
 <span class='co'># -----------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)
-<span class='fu'><a href='https://rdrr.io/r/stats/contrasts.html'>contrasts</a></span>(<span class='no'>sleep</span>$<span class='no'>group</span>) <span class='kw'>&lt;-</span> <span class='no'>contr.bayes</span> <span class='co'># see vingette</span>
-<span class='no'>my_custom_priors</span> <span class='kw'>&lt;-</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>set_prior</a></span>(<span class='st'>"student_t(3, 0, 1)"</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"b"</span>) +
-  <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>set_prior</a></span>(<span class='st'>"student_t(3, 0, 1)"</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"sd"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"brms"</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/stats/contrasts.html'>contrasts</a></span>(<span class='no'>sleep</span>$<span class='no'>group</span>) <span class='kw'>&lt;-</span> <span class='no'>contr.bayes</span> <span class='co'># see vingette</span>
+  <span class='no'>my_custom_priors</span> <span class='kw'>&lt;-</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>set_prior</a></span>(<span class='st'>"student_t(3, 0, 1)"</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"b"</span>) +
+    <span class='fu'><a href='https://rdrr.io/pkg/brms/man/set_prior.html'>set_prior</a></span>(<span class='st'>"student_t(3, 0, 1)"</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"sd"</span>, <span class='kw'>group</span> <span class='kw'>=</span> <span class='st'>"ID"</span>)
 
-<span class='no'>brms_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>),
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
-  <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>my_custom_priors</span>
-)
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>brms_model</span>)
+  <span class='no'>brms_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>),
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>,
+    <span class='kw'>prior</span> <span class='kw'>=</span> <span class='no'>my_custom_priors</span>
+  )
+  <span class='fu'>bayesfactor_parameters</span>(<span class='no'>brms_model</span>)
+}
 }</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -259,37 +259,37 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
 <span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Point Estimates
 #&gt; 
-#&gt; </span><span>Median |  Mean |  MAP
-#&gt; ---------------------
-#&gt;  -0.01 | -0.01 | 0.00
+#&gt; </span><span>Median |  Mean |   MAP
+#&gt; ----------------------
+#&gt;  -0.03 | -0.04 | -0.03
 #&gt; </div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
 #&gt; 
 #&gt; </span><span>Median |  MAD |  Mean |   SD |  MAP
 #&gt; -----------------------------------
-#&gt;   0.00 | 0.95 | -0.03 | 0.97 | 0.24
+#&gt;  -0.03 | 0.99 | -0.02 | 0.97 | 0.03
 #&gt; </div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
 #&gt; 
 #&gt; </span><span>Median |   MAP
 #&gt; --------------
-#&gt;  -0.02 | -0.07
+#&gt;  -0.07 | -0.33
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>point_estimate</span>(<span class='no'>df</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>dispersion</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
 #&gt; 
-#&gt; </span><span>Parameter | Median |  MAD |  Mean |   SD |   MAP
-#&gt; ------------------------------------------------
-#&gt; X1        |   0.03 | 1.04 |  0.03 | 1.06 |  0.13
-#&gt; X2        |  -0.17 | 0.93 | -0.15 | 0.92 | -0.01
-#&gt; X3        |  -0.05 | 0.91 |  0.01 | 0.98 | -0.17
-#&gt; X4        |   0.03 | 1.02 | -0.01 | 1.02 | -0.40
+#&gt; </span><span>Parameter | Median |  MAD |  Mean |   SD |  MAP
+#&gt; -----------------------------------------------
+#&gt; X1        |   0.01 | 1.06 | -0.08 | 1.09 | 0.15
+#&gt; X2        |   0.07 | 0.94 |  0.07 | 0.93 | 0.24
+#&gt; X3        |   0.06 | 1.04 |  0.10 | 0.96 | 0.05
+#&gt; X4        |   0.14 | 0.95 | -0.06 | 1.00 | 0.32
 #&gt; </div><div class='input'><span class='fu'>point_estimate</span>(<span class='no'>df</span>, <span class='kw'>centrality</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
 #&gt; 
-#&gt; </span><span>Parameter | Median |   MAP
-#&gt; --------------------------
-#&gt; X1        |   0.03 |  0.13
-#&gt; X2        |  -0.17 | -0.01
-#&gt; X3        |  -0.05 | -0.17
-#&gt; X4        |   0.03 | -0.40
+#&gt; </span><span>Parameter | Median |  MAP
+#&gt; -------------------------
+#&gt; X1        |   0.01 | 0.15
+#&gt; X2        |   0.07 | 0.24
+#&gt; X3        |   0.06 | 0.05
+#&gt; X4        |   0.14 | 0.32
 #&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>

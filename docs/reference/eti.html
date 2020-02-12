@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -324,22 +324,22 @@ the resulting HDI.</p>
 #&gt; 
 #&gt; </span><span>89% ETI      
 #&gt; -------------
-#&gt; [-1.68, 1.64]
+#&gt; [-1.65, 1.70]
 #&gt; </div><div class='input'><span class='fu'>eti</span>(<span class='no'>posterior</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Intervals
 #&gt; 
 #&gt; </span><span>80% ETI      
 #&gt; -------------
-#&gt; [-1.41, 1.30]
+#&gt; [-1.31, 1.31]
 #&gt; 
 #&gt; 
 #&gt; 89% ETI      
 #&gt; -------------
-#&gt; [-1.68, 1.64]
+#&gt; [-1.65, 1.70]
 #&gt; 
 #&gt; 
 #&gt; 95% ETI      
 #&gt; -------------
-#&gt; [-1.95, 1.94]
+#&gt; [-2.07, 2.04]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
@@ -347,78 +347,44 @@ the resulting HDI.</p>
 #&gt; 
 #&gt; </span><span>Parameter |       89% ETI
 #&gt; -------------------------
-#&gt; X1        | [-1.57, 1.67]
-#&gt; X2        | [-1.94, 1.63]
-#&gt; X3        | [-1.62, 1.74]
-#&gt; X4        | [-1.67, 1.65]
+#&gt; X1        | [-1.83, 1.62]
+#&gt; X2        | [-1.59, 1.53]
+#&gt; X3        | [-1.97, 1.19]
+#&gt; X4        | [-1.80, 1.77]
 #&gt; </div><div class='input'><span class='fu'>eti</span>(<span class='no'>df</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Intervals
 #&gt; 
 #&gt; </span><span>Parameter |       80% ETI
 #&gt; -------------------------
-#&gt; X1        | [-1.23, 1.43]
-#&gt; X2        | [-1.29, 1.21]
-#&gt; X3        | [-1.30, 1.13]
-#&gt; X4        | [-1.57, 1.25]
+#&gt; X1        | [-1.51, 1.40]
+#&gt; X2        | [-1.44, 1.36]
+#&gt; X3        | [-1.46, 1.01]
+#&gt; X4        | [-1.51, 1.49]
 #&gt; 
 #&gt; 
 #&gt; Parameter |       89% ETI
 #&gt; -------------------------
-#&gt; X1        | [-1.57, 1.67]
-#&gt; X2        | [-1.94, 1.63]
-#&gt; X3        | [-1.62, 1.74]
-#&gt; X4        | [-1.67, 1.65]
+#&gt; X1        | [-1.83, 1.62]
+#&gt; X2        | [-1.59, 1.53]
+#&gt; X3        | [-1.97, 1.19]
+#&gt; X4        | [-1.80, 1.77]
 #&gt; 
 #&gt; 
 #&gt; Parameter |       95% ETI
 #&gt; -------------------------
-#&gt; X1        | [-1.77, 1.98]
-#&gt; X2        | [-2.25, 2.18]
-#&gt; X3        | [-2.04, 2.09]
-#&gt; X4        | [-1.79, 1.83]
+#&gt; X1        | [-2.10, 2.02]
+#&gt; X2        | [-2.22, 1.98]
+#&gt; X3        | [-2.32, 2.15]
+#&gt; X4        | [-1.87, 2.00]
 #&gt; 
-#&gt; </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='input'><span class='fu'>eti</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Interval
-#&gt; 
-#&gt; </span><span>Parameter   |        89% ETI
-#&gt; ----------------------------
-#&gt; (Intercept) | [30.69, 47.56]
-#&gt; wt          | [-6.71, -4.54]
-#&gt; gear        | [-1.87,  1.18]
-#&gt; </div><div class='input'><span class='fu'>eti</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Intervals
-#&gt; 
-#&gt; </span><span>Parameter   |        80% ETI
-#&gt; ----------------------------
-#&gt; (Intercept) | [32.82, 45.84]
-#&gt; wt          | [-6.37, -4.68]
-#&gt; gear        | [-1.60,  0.86]
-#&gt; 
-#&gt; 
-#&gt; Parameter   |        89% ETI
-#&gt; ----------------------------
-#&gt; (Intercept) | [30.69, 47.56]
-#&gt; wt          | [-6.71, -4.54]
-#&gt; gear        | [-1.87,  1.18]
-#&gt; 
-#&gt; 
-#&gt; Parameter   |        95% ETI
-#&gt; ----------------------------
-#&gt; (Intercept) | [30.08, 48.87]
-#&gt; wt          | [-6.98, -4.30]
-#&gt; gear        | [-2.03,  1.62]
-#&gt; 
-#&gt; </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='fu'>eti</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Interval
-#&gt; 
-#&gt; </span><span>Parameter |        89% ETI
-#&gt; --------------------------
-#&gt; overall   | [-6.71, -4.54]
 #&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>gear</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>, <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+<span class='fu'>eti</span>(<span class='no'>model</span>)
+<span class='fu'>eti</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span>))
+
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
+<span class='fu'>eti</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))
+
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>eti</span>(<span class='no'>model</span>)

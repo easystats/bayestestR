@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -289,7 +289,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='co'># Simulate a posterior distribution of mean 1 and SD 1</span>
 <span class='co'># ----------------------------------------------------</span>
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='fu'>p_direction</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; pd = 83.20%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; pd = 83.00%</div><div class='input'>
+<span class='fu'>p_direction</span>(<span class='no'>posterior</span>)</div><div class='output co'>#&gt; pd = 83.40%</div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>posterior</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; pd = 82.48%</div><div class='input'>
 <span class='co'># Simulate a dataframe of posterior distributions</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
@@ -297,59 +297,52 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; </span><span>Parameter |     pd
 #&gt; ------------------
-#&gt; X1        | 56.00%
-#&gt; X2        | 53.00%
+#&gt; X1        | 54.00%
+#&gt; X2        | 57.00%
 #&gt; X3        | 51.00%
-#&gt; X4        | 52.00%
+#&gt; X4        | 51.00%
 #&gt; </div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>df</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
 #&gt; 
 #&gt; </span><span>Parameter |     pd
 #&gt; ------------------
-#&gt; X1        | 56.56%
-#&gt; X2        | 49.60%
-#&gt; X3        | 52.25%
-#&gt; X4        | 51.59%
+#&gt; X1        | 50.90%
+#&gt; X2        | 54.25%
+#&gt; X3        | 48.84%
+#&gt; X4        | 50.24%
 #&gt; </div><div class='input'>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>,
-  <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>
-)
-<span class='fu'>p_direction</span>(<span class='no'>model</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
-#&gt; 
-#&gt; </span><span>Parameter   |      pd
-#&gt; ---------------------
-#&gt; (Intercept) | 100.00%
-#&gt; wt          | 100.00%
-#&gt; cyl         | 100.00%
-#&gt; </div><div class='input'><span class='fu'>p_direction</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
-#&gt; 
-#&gt; </span><span>Parameter   |      pd
-#&gt; ---------------------
-#&gt; (Intercept) | 100.00%
-#&gt; wt          | 100.00%
-#&gt; cyl         | 100.00%
-#&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"rstanarm"</span>)) {
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>,
+    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>,
+    <span class='kw'>chains</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>
+  )
+  <span class='fu'>p_direction</span>(<span class='no'>model</span>)
+  <span class='fu'>p_direction</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)
+}
+
 <span class='co'># emmeans</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
-<span class='fu'>p_direction</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"emmeans"</span>)) {
+  <span class='fu'>p_direction</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))
+}
 
 <span class='co'># brms models</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
-<span class='fu'>p_direction</span>(<span class='no'>model</span>)
-<span class='fu'>p_direction</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"brms"</span>)) {
+  <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+  <span class='fu'>p_direction</span>(<span class='no'>model</span>)
+  <span class='fu'>p_direction</span>(<span class='no'>model</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)
+}
 
 <span class='co'># BayesFactor objects</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>BayesFactor</span>)
-<span class='no'>bf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
-<span class='fu'>p_direction</span>(<span class='no'>bf</span>)
-<span class='fu'>p_direction</span>(<span class='no'>bf</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"BayesFactor"</span>)) {
+  <span class='no'>bf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
+  <span class='fu'>p_direction</span>(<span class='no'>bf</span>)
+  <span class='fu'>p_direction</span>(<span class='no'>bf</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>)
+}
 }</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

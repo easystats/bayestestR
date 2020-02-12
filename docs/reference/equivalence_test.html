@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -351,7 +351,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; H0        | inside ROPE |      89% HDI
 #&gt; --------------------------------------
-#&gt; Undecided |      9.43 % | [-1.66 1.56]
+#&gt; Undecided |      8.08 % | [-1.74 1.47]
 #&gt; 
 #&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>0.1</span>, <span class='fl'>0.1</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
@@ -359,7 +359,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; H0       | inside ROPE |     89% HDI
 #&gt; ------------------------------------
-#&gt; Rejected |      0.00 % | [0.98 1.02]
+#&gt; Rejected |      0.00 % | [0.99 1.02]
 #&gt; 
 #&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>.99</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
@@ -367,12 +367,12 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; H0       | inside ROPE |      50% HDI
 #&gt; -------------------------------------
-#&gt; Rejected |      0.00 % | [ 0.32 1.67]
+#&gt; Rejected |      0.00 % | [ 0.30 1.67]
 #&gt; 
 #&gt; 
 #&gt; H0        | inside ROPE |      99% HDI
 #&gt; --------------------------------------
-#&gt; Undecided |      5.15 % | [-1.55 3.37]
+#&gt; Undecided |      4.74 % | [-1.64 3.55]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='co'># print more digits</span>
@@ -383,12 +383,12 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; H0       | inside ROPE |          50% HDI
 #&gt; -----------------------------------------
-#&gt; Rejected |    0.0000 % | [ 0.2848 1.6116]
+#&gt; Rejected |    0.0000 % | [ 0.3038 1.6585]
 #&gt; 
 #&gt; 
 #&gt; H0        | inside ROPE |          99% HDI
 #&gt; ------------------------------------------
-#&gt; Undecided |    6.3572 % | [-1.4735 3.5077]
+#&gt; Undecided |    5.3481 % | [-1.8540 3.3618]
 #&gt; 
 #&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)

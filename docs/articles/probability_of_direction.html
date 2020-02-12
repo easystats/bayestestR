@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -125,7 +125,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="probability_of_direction_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Probability of Direction (pd)</h1>
@@ -188,31 +188,31 @@ Correlation between the frequentist p-value and the probability of direction (pd
 <h2 class="hasAnchor">
 <a href="#correlation" class="anchor"></a>Correlation</h2>
 <p>Let’s start by testing the proximity and similarity of the results obtained by different methods.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bayestestR)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(logspline)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(KernSmooth)</a>
-<a class="sourceLine" id="cb1-4" title="4"></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="co"># Compute the correlations</span></a>
-<a class="sourceLine" id="cb1-6" title="6">data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>()</a>
-<a class="sourceLine" id="cb1-7" title="7"><span class="cf">for</span>(the_mean <span class="cf">in</span> <span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">25</span>, <span class="dv">0</span>, <span class="dv">4</span>)){</a>
-<a class="sourceLine" id="cb1-8" title="8">  <span class="cf">for</span>(the_sd <span class="cf">in</span> <span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">25</span>, <span class="fl">0.5</span>, <span class="dv">4</span>)){</a>
-<a class="sourceLine" id="cb1-9" title="9">    x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">100</span>, the_mean, <span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(the_sd))</a>
-<a class="sourceLine" id="cb1-10" title="10">    data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(data,</a>
-<a class="sourceLine" id="cb1-11" title="11">      <span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="st">"direct"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(x),</a>
-<a class="sourceLine" id="cb1-12" title="12">                 <span class="st">"kernel"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(x, <span class="dt">method=</span><span class="st">"kernel"</span>),</a>
-<a class="sourceLine" id="cb1-13" title="13">                 <span class="st">"logspline"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(x, <span class="dt">method=</span><span class="st">"logspline"</span>),</a>
-<a class="sourceLine" id="cb1-14" title="14">                 <span class="st">"KernSmooth"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(x, <span class="dt">method=</span><span class="st">"KernSmooth"</span>)</a>
-<a class="sourceLine" id="cb1-15" title="15">                 ))</a>
-<a class="sourceLine" id="cb1-16" title="16">  }</a>
-<a class="sourceLine" id="cb1-17" title="17">}</a>
-<a class="sourceLine" id="cb1-18" title="18">data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(data, as.numeric))</a>
-<a class="sourceLine" id="cb1-19" title="19"></a>
-<a class="sourceLine" id="cb1-20" title="20"><span class="co"># Visualize the correlations</span></a>
-<a class="sourceLine" id="cb1-21" title="21"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-22" title="22"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(GGally)</a>
-<a class="sourceLine" id="cb1-23" title="23"></a>
-<a class="sourceLine" id="cb1-24" title="24">GGally<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/GGally/man/ggpairs.html">ggpairs</a></span>(data) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-25" title="25"><span class="st">  </span><span class="kw">theme_classic</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bayestestR)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(logspline)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(KernSmooth)</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># Compute the correlations</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>()</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="cf">for</span>(the_mean <span class="cf">in</span> <span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">25</span>, <span class="dv">0</span>, <span class="dv">4</span>)){</span>
+<span id="cb1-8"><a href="#cb1-8"></a>  <span class="cf">for</span>(the_sd <span class="cf">in</span> <span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">25</span>, <span class="fl">0.5</span>, <span class="dv">4</span>)){</span>
+<span id="cb1-9"><a href="#cb1-9"></a>    x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">100</span>, the_mean, <span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(the_sd))</span>
+<span id="cb1-10"><a href="#cb1-10"></a>    data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(data,</span>
+<span id="cb1-11"><a href="#cb1-11"></a>      <span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="st">"direct"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(x),</span>
+<span id="cb1-12"><a href="#cb1-12"></a>                 <span class="st">"kernel"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(x, <span class="dt">method=</span><span class="st">"kernel"</span>),</span>
+<span id="cb1-13"><a href="#cb1-13"></a>                 <span class="st">"logspline"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(x, <span class="dt">method=</span><span class="st">"logspline"</span>),</span>
+<span id="cb1-14"><a href="#cb1-14"></a>                 <span class="st">"KernSmooth"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(x, <span class="dt">method=</span><span class="st">"KernSmooth"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15"></a>                 ))</span>
+<span id="cb1-16"><a href="#cb1-16"></a>  }</span>
+<span id="cb1-17"><a href="#cb1-17"></a>}</span>
+<span id="cb1-18"><a href="#cb1-18"></a>data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(data, as.numeric))</span>
+<span id="cb1-19"><a href="#cb1-19"></a></span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="co"># Visualize the correlations</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(GGally)</span>
+<span id="cb1-23"><a href="#cb1-23"></a></span>
+<span id="cb1-24"><a href="#cb1-24"></a>GGally<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/GGally/man/ggpairs.html">ggpairs</a></span>(data) <span class="op">+</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
 <p><img src="probability_of_direction_files/figure-html/unnamed-chunk-3-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>All methods give are highly correlated and give very similar results. That means that the method choice is not a drastic game changer and cannot be used to tweak the results too much.</p>
 </div>
@@ -220,38 +220,38 @@ Correlation between the frequentist p-value and the probability of direction (pd
 <h2 class="hasAnchor">
 <a href="#accuracy" class="anchor"></a>Accuracy</h2>
 <p>To test the accuracy of each methods, we will start by computing the <strong>direct <em>pd</em></strong> from a very dense distribution (with a large amount of observations). This will be our baseline, or “true” <em>pd</em>. Then, we will iteratively draw smaller samples from this parent distribution, and we will compute the <em>pd</em> with different methods. The closer this estimate is from the reference one, the better.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>()</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">25</span>){</a>
-<a class="sourceLine" id="cb2-3" title="3">  the_mean &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb2-4" title="4">  the_sd &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>, <span class="fl">0.5</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb2-5" title="5">  parent_distribution &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">100000</span>, the_mean, the_sd)</a>
-<a class="sourceLine" id="cb2-6" title="6">  true_pd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(parent_distribution)</a>
-<a class="sourceLine" id="cb2-7" title="7">  </a>
-<a class="sourceLine" id="cb2-8" title="8">  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">25</span>){</a>
-<a class="sourceLine" id="cb2-9" title="9">    sample_size &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>, <span class="dv">25</span>, <span class="dv">5000</span>))</a>
-<a class="sourceLine" id="cb2-10" title="10">    subsample &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(parent_distribution, sample_size)</a>
-<a class="sourceLine" id="cb2-11" title="11">    data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(data,</a>
-<a class="sourceLine" id="cb2-12" title="12">      <span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="st">"sample_size"</span> =<span class="st"> </span>sample_size, </a>
-<a class="sourceLine" id="cb2-13" title="13">                 <span class="st">"true"</span> =<span class="st"> </span>true_pd,</a>
-<a class="sourceLine" id="cb2-14" title="14">                 <span class="st">"direct"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(subsample) <span class="op">-</span><span class="st"> </span>true_pd,</a>
-<a class="sourceLine" id="cb2-15" title="15">                 <span class="st">"kernel"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(subsample, <span class="dt">method=</span><span class="st">"kernel"</span>)<span class="op">-</span><span class="st"> </span>true_pd,</a>
-<a class="sourceLine" id="cb2-16" title="16">                 <span class="st">"logspline"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(subsample, <span class="dt">method=</span><span class="st">"logspline"</span>) <span class="op">-</span><span class="st"> </span>true_pd,</a>
-<a class="sourceLine" id="cb2-17" title="17">                 <span class="st">"KernSmooth"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(subsample, <span class="dt">method=</span><span class="st">"KernSmooth"</span>) <span class="op">-</span><span class="st"> </span>true_pd</a>
-<a class="sourceLine" id="cb2-18" title="18">                 ))</a>
-<a class="sourceLine" id="cb2-19" title="19">  }</a>
-<a class="sourceLine" id="cb2-20" title="20">}</a>
-<a class="sourceLine" id="cb2-21" title="21">data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(data, as.numeric))</a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyr)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb3-3" title="3"></a>
-<a class="sourceLine" id="cb3-4" title="4">data <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(Method, Distance, <span class="op">-</span>sample_size, <span class="op">-</span>true) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>sample_size, <span class="dt">y =</span> Distance, <span class="dt">color =</span> Method, <span class="dt">fill=</span> Method)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.3</span>, <span class="dt">stroke=</span><span class="dv">0</span>, <span class="dt">shape=</span><span class="dv">16</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept=</span><span class="dv">0</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Distribution Size"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>()</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">25</span>){</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  the_mean &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">4</span>)</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  the_sd &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>, <span class="fl">0.5</span>, <span class="dv">4</span>))</span>
+<span id="cb2-5"><a href="#cb2-5"></a>  parent_distribution &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">100000</span>, the_mean, the_sd)</span>
+<span id="cb2-6"><a href="#cb2-6"></a>  true_pd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(parent_distribution)</span>
+<span id="cb2-7"><a href="#cb2-7"></a>  </span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">25</span>){</span>
+<span id="cb2-9"><a href="#cb2-9"></a>    sample_size &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="dv">1</span>, <span class="dv">25</span>, <span class="dv">5000</span>))</span>
+<span id="cb2-10"><a href="#cb2-10"></a>    subsample &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(parent_distribution, sample_size)</span>
+<span id="cb2-11"><a href="#cb2-11"></a>    data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(data,</span>
+<span id="cb2-12"><a href="#cb2-12"></a>      <span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="st">"sample_size"</span> =<span class="st"> </span>sample_size, </span>
+<span id="cb2-13"><a href="#cb2-13"></a>                 <span class="st">"true"</span> =<span class="st"> </span>true_pd,</span>
+<span id="cb2-14"><a href="#cb2-14"></a>                 <span class="st">"direct"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(subsample) <span class="op">-</span><span class="st"> </span>true_pd,</span>
+<span id="cb2-15"><a href="#cb2-15"></a>                 <span class="st">"kernel"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(subsample, <span class="dt">method=</span><span class="st">"kernel"</span>)<span class="op">-</span><span class="st"> </span>true_pd,</span>
+<span id="cb2-16"><a href="#cb2-16"></a>                 <span class="st">"logspline"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(subsample, <span class="dt">method=</span><span class="st">"logspline"</span>) <span class="op">-</span><span class="st"> </span>true_pd,</span>
+<span id="cb2-17"><a href="#cb2-17"></a>                 <span class="st">"KernSmooth"</span> =<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">pd</a></span>(subsample, <span class="dt">method=</span><span class="st">"KernSmooth"</span>) <span class="op">-</span><span class="st"> </span>true_pd</span>
+<span id="cb2-18"><a href="#cb2-18"></a>                 ))</span>
+<span id="cb2-19"><a href="#cb2-19"></a>  }</span>
+<span id="cb2-20"><a href="#cb2-20"></a>}</span>
+<span id="cb2-21"><a href="#cb2-21"></a>data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(data, as.numeric))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyr)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a>data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(Method, Distance, <span class="op">-</span>sample_size, <span class="op">-</span>true) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>sample_size, <span class="dt">y =</span> Distance, <span class="dt">color =</span> Method, <span class="dt">fill=</span> Method)) <span class="op">+</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.3</span>, <span class="dt">stroke=</span><span class="dv">0</span>, <span class="dt">shape=</span><span class="dv">16</span>) <span class="op">+</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>) <span class="op">+</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept=</span><span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Distribution Size"</span>)</span></code></pre></div>
 <p><img src="probability_of_direction_files/figure-html/unnamed-chunk-5-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>The “Kernel” based density methods seems to consistently underestimate the <em>pd</em>. Interestingly, the “direct” method appears as being the more reliable, even in the case of small number of posterior draws.</p>
 </div>
@@ -260,7 +260,7 @@ Correlation between the frequentist p-value and the probability of direction (pd
 <a href="#can-the-pd-be-100" class="anchor"></a>Can the pd be 100%?</h2>
 <p><code>p = 0.000</code> is coined as one of the term to avoid when reporting results <span class="citation">(Lilienfeld et al., 2015)</span>, even if often displayed by statistical software. The rationale is that for every probability distribution, there is no value with a probability of exactly 0. There is always some infinitesimal probability associated with each data point, and the <code>p = 0.000</code> returned by software is due to approximations related, among other, to finite memory hardware.</p>
 <p>One could apply this rationale for the <em>pd</em>: since all data points have a non-null probability density, then the <em>pd</em> (a particular portion of the probability density) can <em>never</em> be 100%. While this is an entirely valid point, people using the <em>direct</em> method might argue that their <em>pd</em> is based on the posterior draws, rather than on the theoretical, hidden, true posterior distribution (which is only approximated by the posterior draws). These posterior draws represent a finite sample for which <code>pd = 100%</code> is a valid statement.</p>
-<div id="refs" class="references">
+<div id="refs" class="references hanging-indent">
 <div id="ref-lilienfeld2015fifty">
 <p>Lilienfeld, S. O., Sauvigné, K. C., Lynn, S. J., Cautin, R. L., Latzman, R. D., &amp; Waldman, I. D. (2015). Fifty psychological and psychiatric terms to avoid: A list of inaccurate, misleading, misused, ambiguous, and logically confused words and phrases. <em>Frontiers in Psychology</em>, <em>6</em>, 1100. <a href="https://doi.org/10.3389/fpsyg.2015.01100">https://doi.org/10.3389/fpsyg.2015.01100</a></p>
 </div>
@@ -279,7 +279,8 @@ Correlation between the frequentist p-value and the probability of direction (pd
       <li><a href="#relationship-with-the-p-value">Relationship with the <em>p</em>-value</a></li>
       <li><a href="#methods-of-computation">Methods of computation</a></li>
       <li>
-<a href="#methods-comparison">Methods comparison</a><ul class="nav nav-pills nav-stacked">
+<a href="#methods-comparison">Methods comparison</a>
+      <ul class="nav nav-pills nav-stacked">
 <li><a href="#correlation">Correlation</a></li>
       <li><a href="#accuracy">Accuracy</a></li>
       <li><a href="#can-the-pd-be-100">Can the pd be 100%?</a></li>

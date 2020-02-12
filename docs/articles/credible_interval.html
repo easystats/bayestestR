@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -125,7 +125,7 @@
 
       
 
-      </header><div class="row">
+      </header><script src="credible_interval_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Credible Intervals (CI)</h1>
@@ -162,57 +162,57 @@
 <h1 class="hasAnchor">
 <a href="#different-types-of-cis" class="anchor"></a>Different types of CIs</h1>
 <p>The reader might notice that <code>bayestestR</code> provides <strong>two methods</strong> to compute credible intervals, the <strong>Highest Density Interval (HDI)</strong> (<code><a href="../reference/hdi.html">hdi()</a></code>) and the <strong>Equal-tailed Interval (ETI)</strong> (<code><a href="../reference/eti.html">eti()</a></code>). These methods can also be changed via the <code>method</code> argument of the <code><a href="../reference/ci.html">ci()</a></code> function. What is the difference? Let’s see:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bayestestR)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-4" title="4"></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="co"># Generate a normal distribution</span></a>
-<a class="sourceLine" id="cb1-6" title="6">posterior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_normal</a></span>(<span class="dv">1000</span>)</a>
-<a class="sourceLine" id="cb1-7" title="7"></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="co"># Compute HDI and ETI</span></a>
-<a class="sourceLine" id="cb1-9" title="9">ci_hdi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior, <span class="dt">method =</span> <span class="st">"HDI"</span>)</a>
-<a class="sourceLine" id="cb1-10" title="10">ci_eti &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior, <span class="dt">method =</span> <span class="st">"ETI"</span>)</a>
-<a class="sourceLine" id="cb1-11" title="11"></a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="co"># Plot the distribution and add the limits of the two CIs</span></a>
-<a class="sourceLine" id="cb1-13" title="13">posterior <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-14" title="14"><span class="st">  </span><span class="kw"><a href="../reference/estimate_density.html">estimate_density</a></span>(<span class="dt">extend=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-15" title="15"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-16" title="16"><span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">fill=</span><span class="st">"orange"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-17" title="17"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-18" title="18"><span class="st">  </span><span class="co"># HDI in blue</span></a>
-<a class="sourceLine" id="cb1-19" title="19"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_hdi<span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-20" title="20"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_hdi<span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-21" title="21"><span class="st">  </span><span class="co"># Quantile in red</span></a>
-<a class="sourceLine" id="cb1-22" title="22"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_eti<span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb1-23" title="23"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_eti<span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bayestestR)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># Generate a normal distribution</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>posterior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_normal</a></span>(<span class="dv">1000</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># Compute HDI and ETI</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>ci_hdi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior, <span class="dt">method =</span> <span class="st">"HDI"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a>ci_eti &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior, <span class="dt">method =</span> <span class="st">"ETI"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co"># Plot the distribution and add the limits of the two CIs</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>posterior <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="st">  </span><span class="kw"><a href="../reference/estimate_density.html">estimate_density</a></span>(<span class="dt">extend=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">fill=</span><span class="st">"orange"</span>) <span class="op">+</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="st">  </span><span class="co"># HDI in blue</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_hdi<span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_hdi<span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="st">  </span><span class="co"># Quantile in red</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_eti<span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_eti<span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="credible_interval_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <blockquote>
 <p><strong>These are exactly the same…</strong></p>
 </blockquote>
 <p>But is it also the case for other types of distributions?</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bayestestR)</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb2-4" title="4"></a>
-<a class="sourceLine" id="cb2-5" title="5"><span class="co"># Generate a beta distribution</span></a>
-<a class="sourceLine" id="cb2-6" title="6">posterior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_beta</a></span>(<span class="dv">1000</span>, <span class="dv">6</span>, <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb2-7" title="7"></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="co"># Compute HDI and Quantile CI</span></a>
-<a class="sourceLine" id="cb2-9" title="9">ci_hdi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior, <span class="dt">method =</span> <span class="st">"HDI"</span>)</a>
-<a class="sourceLine" id="cb2-10" title="10">ci_eti &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior, <span class="dt">method =</span> <span class="st">"ETI"</span>)</a>
-<a class="sourceLine" id="cb2-11" title="11"></a>
-<a class="sourceLine" id="cb2-12" title="12"><span class="co"># Plot the distribution and add the limits of the two CIs</span></a>
-<a class="sourceLine" id="cb2-13" title="13">posterior <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-14" title="14"><span class="st">  </span><span class="kw"><a href="../reference/estimate_density.html">estimate_density</a></span>(<span class="dt">extend=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-15" title="15"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-16" title="16"><span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">fill=</span><span class="st">"orange"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-17" title="17"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-18" title="18"><span class="st">  </span><span class="co"># HDI in blue</span></a>
-<a class="sourceLine" id="cb2-19" title="19"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_hdi<span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-20" title="20"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_hdi<span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-21" title="21"><span class="st">  </span><span class="co"># Quantile in red</span></a>
-<a class="sourceLine" id="cb2-22" title="22"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_eti<span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-23" title="23"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_eti<span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bayestestR)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># Generate a beta distribution</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>posterior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_beta</a></span>(<span class="dv">1000</span>, <span class="dv">6</span>, <span class="dv">2</span>)</span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># Compute HDI and Quantile CI</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>ci_hdi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior, <span class="dt">method =</span> <span class="st">"HDI"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10"></a>ci_eti &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ci.html">ci</a></span>(posterior, <span class="dt">method =</span> <span class="st">"ETI"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co"># Plot the distribution and add the limits of the two CIs</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a>posterior <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="st">  </span><span class="kw"><a href="../reference/estimate_density.html">estimate_density</a></span>(<span class="dt">extend=</span><span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">fill=</span><span class="st">"orange"</span>) <span class="op">+</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="st">  </span><span class="co"># HDI in blue</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_hdi<span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_hdi<span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="st">  </span><span class="co"># Quantile in red</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_eti<span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>ci_eti<span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="credible_interval_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <blockquote>
 <p><strong>The difference is strong with this one.</strong></p>
@@ -225,26 +225,26 @@
 <h1 class="hasAnchor">
 <a href="#the-support-interval" class="anchor"></a>The Support Interval</h1>
 <p>Unlike the HDI and the ETI, which look at the posterior distribution, the <strong>Support Interval (SI)</strong> provides information regarding the change in the credability of values from the prior to the posterior - in other words, it indicates which values of a parameter are have gained support by the observed data by some factor greater or equal to <em>k</em> <span class="citation">(Wagenmakers, Gronau, Dablander, &amp; Etz, 2018)</span>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">prior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_normal</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-2" title="2">posterior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_normal</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="fl">.5</span>, <span class="dt">sd =</span> <span class="fl">.3</span>)</a>
-<a class="sourceLine" id="cb3-3" title="3"></a>
-<a class="sourceLine" id="cb3-4" title="4">si_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/si.html">si</a></span>(posterior, prior, <span class="dt">BF =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-5" title="5">si_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/si.html">si</a></span>(posterior, prior, <span class="dt">BF =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb3-6" title="6"></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="st">  </span><span class="co"># The posterior</span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">fill =</span> <span class="st">"orange"</span>,</a>
-<a class="sourceLine" id="cb3-11" title="11">            <span class="dt">data =</span> <span class="kw"><a href="../reference/estimate_density.html">estimate_density</a></span>(posterior, <span class="dt">extend =</span> <span class="ot">TRUE</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="st">  </span><span class="co"># The prior</span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">color =</span> <span class="st">"black"</span>, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>,</a>
-<a class="sourceLine" id="cb3-14" title="14">            <span class="dt">data =</span> <span class="kw"><a href="../reference/estimate_density.html">estimate_density</a></span>(prior, <span class="dt">extend =</span> <span class="ot">TRUE</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="st">  </span><span class="co"># BF = 1 SI in blue</span></a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>si_<span class="dv">1</span><span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>si_<span class="dv">1</span><span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-18" title="18"><span class="st">  </span><span class="co"># BF = 3 SI in red</span></a>
-<a class="sourceLine" id="cb3-19" title="19"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>si_<span class="dv">3</span><span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-20" title="20"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>si_<span class="dv">3</span><span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>prior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_normal</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>posterior &lt;-<span class="st"> </span><span class="kw"><a href="../reference/distribution.html">distribution_normal</a></span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="fl">.5</span>, <span class="dt">sd =</span> <span class="fl">.3</span>)</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a>si_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/si.html">si</a></span>(posterior, prior, <span class="dt">BF =</span> <span class="dv">1</span>)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>si_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/si.html">si</a></span>(posterior, prior, <span class="dt">BF =</span> <span class="dv">3</span>)</span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span>x, <span class="dt">y=</span>y)) <span class="op">+</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="st">  </span><span class="co"># The posterior</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">fill =</span> <span class="st">"orange"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11"></a>            <span class="dt">data =</span> <span class="kw"><a href="../reference/estimate_density.html">estimate_density</a></span>(posterior, <span class="dt">extend =</span> <span class="ot">TRUE</span>)) <span class="op">+</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="st">  </span><span class="co"># The prior</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a><span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">color =</span> <span class="st">"black"</span>, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb3-14"><a href="#cb3-14"></a>            <span class="dt">data =</span> <span class="kw"><a href="../reference/estimate_density.html">estimate_density</a></span>(prior, <span class="dt">extend =</span> <span class="ot">TRUE</span>)) <span class="op">+</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="st">  </span><span class="co"># BF = 1 SI in blue</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>si_<span class="dv">1</span><span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>si_<span class="dv">1</span><span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"royalblue"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="st">  </span><span class="co"># BF = 3 SI in red</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>si_<span class="dv">3</span><span class="op">$</span>CI_low, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span>si_<span class="dv">3</span><span class="op">$</span>CI_high, <span class="dt">color=</span><span class="st">"red"</span>, <span class="dt">size=</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="credible_interval_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>Between the blue lines are values the recived <em>some</em> support by the data (this is a BF = 1 SI), which received at least “moderate” support from the data.</p>
 <p>From the presepctive of the Savage-Dickey Bayes factor, testing against a point null hypothesis for any value within the support interval will yeild a Bayes factor smaller than 1/<code>BF</code>.</p>
@@ -252,7 +252,7 @@
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
-<div id="refs" class="references">
+<div id="refs" class="references hanging-indent">
 <div id="ref-kruschke2014doing">
 <p>Kruschke, J. (2014). <em>Doing bayesian data analysis: A tutorial with r, jags, and stan</em>. Academic Press.</p>
 </div>
