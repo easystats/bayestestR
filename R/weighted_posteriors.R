@@ -144,23 +144,20 @@ weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 
   intercept_only <- which(BFMods$Model == "1")
   params <- vector(mode = "list", length = nrow(BFMods))
   for (m in seq_along(params)) {
-    if (m == intercept_only) {
+    if (length(intercept_only) && m == intercept_only) {
       warning(
         "Cannot sample from BFBayesFactor model with intercept only (model prob = ",
-        round(postProbs[m],3)*100, "%).\n",
+        round(postProbs[m], 3) * 100, "%).\n",
         "Ommiting the intercept model.",
         call. = FALSE
       )
       next
     } else if (m == 1) {
       # If the model is the "den" model
-      params[[m]] <- BayesFactor::posterior(
-        1/Mods[1], iterations = nsamples, progress = FALSE
-      )
-
+      params[[m]] <- BayesFactor::posterior(1 / Mods[1], iterations = nsamples, progress = FALSE)
     } else {
       params[[m]] <- BayesFactor::posterior(
-        Mods[m-1], iterations = nsamples, progress = FALSE
+        Mods[m - 1], iterations = nsamples, progress = FALSE
       )
     }
   }
