@@ -100,7 +100,6 @@ weighted_posteriors.stanreg <- function(..., prior_odds = NULL, missing = 0, ver
   # Compute posterior model probabilities
   prior_odds <- c(1, prior_odds)
   posterior_odds <- prior_odds * BFMods$BF
-  priorProbs <- prior_odds / sum(prior_odds)
   postProbs <- posterior_odds / sum(posterior_odds)
 
   # Compute weighted number of samples
@@ -133,7 +132,6 @@ weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 
   # Compute posterior model probabilities
   prior_odds <- c(1, prior_odds)
   posterior_odds <- prior_odds * BFMods$BF
-  priorProbs <- prior_odds / sum(prior_odds)
   postProbs <- posterior_odds / sum(posterior_odds)
 
   # Compute weighted number of samples
