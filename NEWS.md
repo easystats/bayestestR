@@ -1,3 +1,9 @@
+# bayestestR 0.5.x
+
+## Bug fixes
+
+- Fixed bug in `weighted_posteriors` when models have very low posterior probability ( #286 ).
+
 # bayestestR 0.5.0
 
 ## General

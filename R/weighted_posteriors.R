@@ -4,8 +4,8 @@
 #' Weighting is done by comparing posterior model probabilities, via \code{\link{bayesfactor_models}}.
 #'
 #' @param missing An optional numeric value to use if a model does not contain a parameter that appears in other models. Defaults to 0.
+#' @param prior_odds Optional vector of prior odds for the models compared to the first model (or the denominator, for \code{BFBayesFactor} objects).
 #' @inheritParams bayesfactor_models
-#' @inheritParams bayesfactor_inclusion
 #' @inheritParams bayesfactor_parameters
 #'
 #' @details
@@ -113,7 +113,9 @@ weighted_posteriors.stanreg <- function(..., prior_odds = NULL, missing = 0, ver
                    component = component,
                    parameters = parameters)
 
-  .weighted_posteriors(params, weighted_samps, missing)
+  res <- .weighted_posteriors(params, weighted_samps, missing)
+  attr(res, "weights") <- data.frame(Model = BFMods$Model, weights = weighted_samps)
+  return(res)
 }
 
 #' @export
@@ -139,38 +141,52 @@ weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 
   weighted_samps <- round(nsamples * postProbs)
 
   # extract parameters
-  params <- lapply(seq_len(length(Mods@numerator)), function(mi){
-    BayesFactor::posterior(Mods, iterations = nsamples, index = mi, progress = FALSE)
-  })
+  intercept_only <- which(BFMods$Model == "1")
+  params <- vector(mode = "list", length = nrow(BFMods))
+  for (m in seq_along(params)) {
+    if (m == intercept_only) {
+      warning(
+        "Cannot sample from BFBayesFactor model with intercept only (model prob = ",
+        round(postProbs[m],3)*100, "%).\n",
+        "Ommiting the intercept model.",
+        call. = FALSE
+      )
+      next
+    } else if (m == 1) {
+      # If the model is the "den" model
+      params[[m]] <- BayesFactor::posterior(
+        1/Mods[1], iterations = nsamples, progress = FALSE
+      )
 
-  mod_0 <- try(BayesFactor::posterior(1/Mods[1], iterations = nsamples, progress = FALSE),
-               silent = TRUE)
-  if (inherits(mod_0, "try-error")) {
-    if (!grepl("Sampling from intercept-only", mod_0)) stop(mod_0)
-    warning("Cannot sample from BFBayesFactor model with intercept only (model prob = ",
-            round(postProbs[1],2),
-            "). Ommiting the intercept model.")
-    postProbs <- postProbs[-1] / sum(postProbs[-1])
-    weighted_samps <- round(nsamples * postProbs)
-  } else {
-    mod_0 <- list(params[[1]])
-    params <- c(mod_0,params)
+    } else {
+      params[[m]] <- BayesFactor::posterior(
+        Mods[m-1], iterations = nsamples, progress = FALSE
+      )
+    }
   }
 
   params <- lapply(params, as.data.frame)
 
-  .weighted_posteriors(params, weighted_samps, missing)
+  res <- .weighted_posteriors(params, weighted_samps, missing)
+  attr(res, "weights") <- data.frame(Model = BFMods$Model, weights = weighted_samps)
+  return(res)
 }
 
 .weighted_posteriors <- function(params, weighted_samps, missing) {
   par_names <- unique(unlist(sapply(params, colnames), recursive = TRUE))
 
+  # remove empty (0 sample) models
+  params <- params[weighted_samps != 0]
+  weighted_samps <- weighted_samps[weighted_samps != 0]
+
   for (m in seq_along(weighted_samps)) {
     temp_params <- params[[m]]
-    temp_params <- temp_params[sample(nrow(temp_params),size = weighted_samps[m]), ,drop = FALSE]
+    i <- sample(nrow(temp_params),size = weighted_samps[m])
+    temp_params <- temp_params[i, ,drop = FALSE]
 
     # If any parameters not estimated in the model, they are assumed to be 0 (the default value of `missing`)
-    temp_params[, setdiff(par_names, colnames(temp_params))] <- missing
+    missing_pars <- setdiff(par_names, colnames(temp_params))
+    temp_params[, missing_pars] <- missing
 
     params[[m]] <- temp_params
   }
