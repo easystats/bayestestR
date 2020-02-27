@@ -1,5 +1,9 @@
 # bayestestR 0.5.x
 
+## General
+
+- Support for *bcplm* objects (package **cplm**)
+
 ## Bug fixes
 
 - Fixed bug in `weighted_posteriors` when models have very low posterior probability ( #286 ).

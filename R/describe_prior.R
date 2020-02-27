@@ -65,6 +65,9 @@ describe_prior.stanreg <- .describe_prior
 #' @export
 describe_prior.brmsfit <- .describe_prior
 
+#' @export
+describe_prior.bcplm <- .describe_prior
+
 
 
 

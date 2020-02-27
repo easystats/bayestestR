@@ -474,6 +474,13 @@ describe_posterior.mcmc <- function(posteriors, centrality = "median", dispersio
 
 
 
+#' @export
+describe_posterior.bcplm <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, parameters = NULL, ...) {
+  .describe_posterior(insight::get_parameters(posteriors), centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, effects = "fixed", parameters = parameters, ...)
+}
+
+
+
 #' @inheritParams describe_posterior.stanreg
 #' @rdname describe_posterior
 #' @export

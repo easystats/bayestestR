@@ -143,6 +143,16 @@ hdi.mcmc <- function(x, ci = .89, verbose = TRUE, ...) {
 
 
 
+#' @export
+hdi.bcplm <- function(x, ci = .89, verbose = TRUE, ...) {
+  d <- insight::get_parameters(x)
+  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
+  attr(dat, "data") <- .safe_deparse(substitute(x))
+  dat
+}
+
+
+
 #' @rdname hdi
 #' @export
 hdi.sim.merMod <- function(x, ci = .89, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {

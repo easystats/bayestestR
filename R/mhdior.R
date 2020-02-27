@@ -151,6 +151,12 @@ mhdior.BFBayesFactor <- function(x, range = "default", precision = .1, ...) {
 }
 
 
+
+#' @export
+mhdior.bcplm <- mhdior.BFBayesFactor
+
+
+
 #' @importFrom insight get_parameters
 #' @keywords internal
 .mhdior_models <- function(x, range, precision, effects, component, parameters, ...) {

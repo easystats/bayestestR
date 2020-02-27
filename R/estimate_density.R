@@ -231,6 +231,12 @@ estimate_density.mcmc <- function(x, method = "kernel", precision = 2^10, extend
 
 
 
+#' @importFrom insight get_parameters
+#' @export
+estimate_density.bcplm <- estimate_density.mcmc
+
+
+
 #' Coerce to a Data Frame
 #'
 #' @inheritParams base::as.data.frame

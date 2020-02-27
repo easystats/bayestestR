@@ -223,6 +223,17 @@ rope.mcmc <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose
 
 
 
+#' @export
+rope.bcplm <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
+  out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+  attr(out, "object_name") <- NULL
+  attr(out, "data") <- .safe_deparse(substitute(x))
+  out
+}
+
+
+
+
 #' @keywords internal
 .rope <- function(x, range = c(-0.1, 0.1), ci = .89, ci_method = "HDI", verbose = TRUE) {
   ci_bounds <- ci(x, ci = ci, method = ci_method, verbose = verbose)

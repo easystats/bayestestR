@@ -167,6 +167,12 @@ p_direction.mcmc <- function(x, method = "direct", ...) {
 }
 
 
+#' @export
+p_direction.bcplm <- function(x, method = "direct", ...) {
+  p_direction(insight::get_parameters(x), method = method, ...)
+}
+
+
 #' @rdname p_direction
 #' @export
 p_direction.emmGrid <- function(x, method = "direct", ...) {
