@@ -36,6 +36,25 @@ if (require("rstanarm") &&
     testthat::expect_equal(log(update(BFM2, reference = 1)$BF), c(0, -2.8, -6.2, -57.4), tolerance = 0.1)
   })
 
+  test_that("bayesfactor_models BIC (unsupported / diff nobs)", {
+    set.seed(444)
+
+    fit1 <- lm(Sepal.Length ~ Sepal.Width + Petal.Length, iris)
+    fit2a <- lm(Sepal.Length ~ Sepal.Width, iris[-1, ]) # different number of objects
+    fit2b <- lm(Sepal.Length ~ Sepal.Width, iris) # not supported
+    class(fit2b) <- "NOTLM"
+    logLik.NOTLM <- function(...){
+      stats:::logLik.lm(...)
+    }
+
+    # Should fail
+    testthat::expect_error(bayesfactor_models(fit1, fit2a))
+
+    # Should warn, but still work
+    testthat::expect_warning(res <- bayesfactor_models(fit1, fit2b))
+    testthat::expect_equal(log(res$BF), c(0, -133.97), tolerance = 0.1)
+  })
+
   test_that("bayesfactor_models RSTANARM", {
     testthat::skip("Skipping bayesfactor_models RSTANARM")
     library(rstanarm)
@@ -51,8 +70,7 @@ if (require("rstanarm") &&
                           diagnostic_file = file.path(tempdir(), "df1.csv")
     )
 
-    testthat::expect_warning(bayestestR::bayesfactor_models(stan_bf_0, stan_bf_1))
-    stan_models <- suppressWarnings(bayestestR::bayesfactor_models(stan_bf_0, stan_bf_1))
+    testthat::expect_warning(stan_models <- bayestestR::bayesfactor_models(stan_bf_0, stan_bf_1))
     testthat::expect_is(stan_models, "bayesfactor_models")
     testthat::expect_equal(log(stan_models$BF), c(0, 65.19), tolerance = 0.1)
   })

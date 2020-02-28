@@ -134,7 +134,6 @@ bayesfactor_models <- function(..., denominator = 1, verbose = TRUE) {
 #' @export
 bf_models <- bayesfactor_models
 
-#' @importFrom stats BIC
 #' @export
 bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   # Organize the models and their names
@@ -158,43 +157,39 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   mforms <- mnames
 
   # supported models
-  supported_models <- all(sapply(mods, insight::is_model_supported))
-  if (supported_models) {
-    # Test that all is good:
-    resps <- lapply(mods, insight::get_response)
+  supported_models <- sapply(mods, insight::is_model_supported)
+  if (all(supported_models)) {
+    mforms <- sapply(mods, .find_full_formula)
 
-    if (!any(sapply(resps, is.null))) {
-      if (!all(sapply(resps[-denominator], function(x) identical(x, resps[[denominator]])))) {
-        stop("Models were not computed from the same data.")
-      }
+    has_terms <- sapply(mforms, nchar) > 0
 
-      mforms <- sapply(mods, .find_full_formula)
-    } else {
-      supported_models <- FALSE
+    mforms[has_terms] <- mforms[has_terms]
+    supported_models[!has_terms] <- FALSE
+  }
+
+  if (!all(supported_models)) {
+    if (verbose) {
+      warning(sprintf(
+        "Unable to extract terms from the following models: \n%s",
+        paste0(mnames[!supported_models], collapse = ", ")
+      ), call. = FALSE)
     }
   }
 
-  if (verbose && !supported_models) {
-    object_names <- match.call(expand.dots = FALSE)$`...`
-    warning(sprintf(
-      "Unable to extract terms / validate that the following models use the same data: \n%s",
-      paste0(mnames[!supported_models], collapse = ", ")
-    ), call. = FALSE)
-  }
-
   # Get BF
-  mBIC <- sapply(mods, BIC)
-  mBFs <- (mBIC - mBIC[denominator]) / (-2)
+  names(mods) <- mforms
+  mBIC <- .BIC_list(mods)
+  mBFs <- exp((mBIC - mBIC[denominator]) / (-2))
 
   res <- data.frame(
     Model = mforms,
-    BF = exp(mBFs),
+    BF = mBFs,
     stringsAsFactors = FALSE
   )
 
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- "BIC approximation"
-  attr(res, "unsupported_models") <- !supported_models
+  attr(res, "unsupported_models") <- !all(supported_models)
   class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
@@ -237,7 +232,9 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   # Test that all is good:
   resps <- lapply(mods, insight::get_response)
-  if (!all(sapply(resps[-denominator], function(x) identical(x, resps[[denominator]])))) {
+  from_same_data_as_den <- sapply(resps[-denominator],
+                                  identical, y = resps[[denominator]])
+  if (!all(from_same_data_as_den)) {
     stop("Models were not computed from the same data.")
   }
 
@@ -249,7 +246,8 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     bridgesampling::bridge_sampler(x, silent = TRUE)
   })
   mBFs <- sapply(mML, function(x) {
-    bridgesampling::bf(x, mML[[denominator]], log = TRUE)[["bf"]]
+    bf <- bridgesampling::bf(x, mML[[denominator]], log = TRUE)
+    bf[["bf"]]
   })
 
   # Get formula
@@ -335,4 +333,17 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
     })
   }
   paste(c(conditional, random), collapse = " + ")
+}
+
+#' @keywords internal
+#' @importFrom stats BIC
+.BIC_list <- function(x){
+  sapply(x, function(m) {
+    tryCatch({
+      bic <- BIC(m, x[[1]])
+      bic$BIC[1]
+    }, warning = function(w) {
+      stop(conditionMessage(w), call. = FALSE)
+    })
+  })
 }
