@@ -3,7 +3,7 @@
 #' @keywords internal
 .check_multicollinearity <- function(model, method = "equivalence_test", threshold = 0.7, ...) {
   valid_parameters <- insight::find_parameters(model, parameters = "^(?!(r_|sd_|prior_|cor_|b\\[))", flatten = TRUE)
-  dat <- as.data.frame(model)[, valid_parameters]
+  dat <- as.data.frame(model, optional = FALSE)[, valid_parameters]
   dat <- dat[, -1, drop = FALSE]
 
   if (ncol(dat) > 1) {
