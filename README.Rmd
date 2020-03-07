@@ -56,7 +56,7 @@ You can reference the package and its documentation as follows:
 Run the following:
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE}
-install.packages(bayestestR)
+install.packages("bayestestR")
 ```
 
 
