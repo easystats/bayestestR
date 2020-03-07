@@ -1,6 +1,6 @@
 #' Convert between Probability of Direction (pd) and p-value.
 #'
-#' Enables a conversion between sProbability of Direction (pd) and p-value.
+#' Enables a conversion between Probability of Direction (pd) and p-value.
 #'
 #' @param pd A Probability of Direction (pd) value (between 0 and 1).
 #' @param p A p-value.

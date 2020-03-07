@@ -25,7 +25,7 @@ convert_pd_to_p(pd, direction = "two-sided", ...)
 \item{p}{A p-value.}
 }
 \description{
-Enables a conversion between sProbability of Direction (pd) and p-value.
+Enables a conversion between Probability of Direction (pd) and p-value.
 }
 \examples{
 pd_to_p(pd = 0.95)
