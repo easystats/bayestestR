@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.1</span>
       </span>
     </div>
 
@@ -125,7 +125,7 @@
 
       
 
-      </header><script src="region_of_practical_equivalence_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Region of Practical Equivalence (ROPE)</h1>
@@ -185,63 +185,63 @@
 <a href="#sensitivity-to-parameters-scale" class="anchor"></a>Sensitivity to parameter’s scale</h1>
 <p>It is important to consider <strong>the unit (<em>i.e.</em>, the scale) of the predictors</strong> when using an index based on the ROPE, as the correct interpretation of the ROPE as representing a region of practical equivalence to zero is dependent on the scale of the predictors. Indeed, unlike other indices (such as the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><code>pd</code></a>), the percentage in <strong>ROPE</strong> depend on the unit of its parameter. In other words, as the ROPE represents a fixed portion of the response’s scale, its proximity with a coefficient depends on the scale of the coefficient itself.</p>
 <p>For instance, if we consider a simple regression <code>growth ~ time</code>, modelling the development of <strong>Wookies babies</strong>, a negligible change (the ROPE) is less than <strong>54 cm</strong>. If our <code>time</code> variable is <strong>expressed in days</strong>, we will find that the coefficient (representing the growth <strong>by day</strong>) is of about <strong>10 cm</strong> (<em>the median of the posterior of the coefficient is 10</em>). Which we would consider as <strong>negligible</strong>. However, if we decide to express the <code>time</code> variable <strong>in years</strong>, the coefficient will be scaled by this transformation (as it will now represent the growth <strong>by year</strong>). The coefficient will now be around <strong>3550</strong> cm (<code>10 * 355</code>), which we would now consider as <strong>significant</strong>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bayestestR)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(see)</span>
-<span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a>data &lt;-<span class="st"> </span>iris  <span class="co"># Use the iris data</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)  <span class="co"># Fit model</span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Compute indices</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>pd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(model)</span>
-<span id="cb2-3"><a href="#cb2-3"></a>percentage_in_rope &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rope.html">rope</a></span>(model, <span class="dt">ci=</span><span class="dv">1</span>)</span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># Visualise the pd</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(pd)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(rstanarm)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bayestestR)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(see)</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5">data &lt;-<span class="st"> </span>iris  <span class="co"># Use the iris data</span></a>
+<a class="sourceLine" id="cb1-6" title="6">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width, <span class="dt">data=</span>data)  <span class="co"># Fit model</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># Compute indices</span></a>
+<a class="sourceLine" id="cb2-2" title="2">pd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(model)</a>
+<a class="sourceLine" id="cb2-3" title="3">percentage_in_rope &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rope.html">rope</a></span>(model, <span class="dt">ci=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co"># Visualise the pd</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(pd)</a></code></pre></div>
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>pd</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">pd</a></code></pre></div>
 <pre><code>&gt; # Probability of Direction (pd)
 &gt; 
 &gt; Parameter   |      pd
 &gt; ---------------------
 &gt; (Intercept) | 100.00%
-&gt; Sepal.Width |  92.35%</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Visualise the percentage in ROPE</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(percentage_in_rope)</span></code></pre></div>
+&gt; Sepal.Width |  92.95%</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Visualise the percentage in ROPE</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(percentage_in_rope)</a></code></pre></div>
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>percentage_in_rope</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">percentage_in_rope</a></code></pre></div>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-0.08, 0.08]:
 &gt; 
 &gt; Parameter   | inside ROPE
 &gt; -------------------------
 &gt; (Intercept) |      0.00 %
-&gt; Sepal.Width |     14.70 %</code></pre>
+&gt; Sepal.Width |     15.95 %</code></pre>
 <p>We can see that the <em>pd</em> and the percentage in ROPE of the linear relationship between <strong>Sepal.Length</strong> and <strong>Sepal.Width</strong> are respectively of about <code>92.95%</code> and <code>15.95%</code>, corresponding to an <strong>uncertain</strong> and <strong>not significant</strong> effect. What happen if we scale our predictor?</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>data<span class="op">$</span>Sepal.Width_scaled &lt;-<span class="st"> </span>data<span class="op">$</span>Sepal.Width <span class="op">/</span><span class="st"> </span><span class="dv">100</span>  <span class="co"># Divide predictor by 100</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width_scaled, <span class="dt">data=</span>data)  <span class="co"># Fit model</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Compute indices</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>pd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(model)</span>
-<span id="cb9-3"><a href="#cb9-3"></a>percentage_in_rope &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rope.html">rope</a></span>(model, <span class="dt">ci=</span><span class="dv">1</span>)</span>
-<span id="cb9-4"><a href="#cb9-4"></a></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co"># Visualise the pd</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(pd)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">data<span class="op">$</span>Sepal.Width_scaled &lt;-<span class="st"> </span>data<span class="op">$</span>Sepal.Width <span class="op">/</span><span class="st"> </span><span class="dv">100</span>  <span class="co"># Divide predictor by 100</span></a>
+<a class="sourceLine" id="cb8-2" title="2">model &lt;-<span class="st"> </span><span class="kw">stan_glm</span>(Sepal.Length <span class="op">~</span><span class="st"> </span>Sepal.Width_scaled, <span class="dt">data=</span>data)  <span class="co"># Fit model</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Compute indices</span></a>
+<a class="sourceLine" id="cb9-2" title="2">pd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/p_direction.html">p_direction</a></span>(model)</a>
+<a class="sourceLine" id="cb9-3" title="3">percentage_in_rope &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rope.html">rope</a></span>(model, <span class="dt">ci=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb9-4" title="4"></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="co"># Visualise the pd</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(pd)</a></code></pre></div>
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>pd</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">pd</a></code></pre></div>
 <pre><code>&gt; # Probability of Direction (pd)
 &gt; 
 &gt; Parameter          |      pd
 &gt; ----------------------------
 &gt; (Intercept)        | 100.00%
-&gt; Sepal.Width_scaled |  92.35%</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Visualise the percentage in ROPE</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(percentage_in_rope)</span></code></pre></div>
+&gt; Sepal.Width_scaled |  92.95%</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># Visualise the percentage in ROPE</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(percentage_in_rope)</a></code></pre></div>
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>percentage_in_rope</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">percentage_in_rope</a></code></pre></div>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-0.08, 0.08]:
 &gt; 
 &gt; Parameter          | inside ROPE
 &gt; --------------------------------
 &gt; (Intercept)        |      0.00 %
-&gt; Sepal.Width_scaled |      0.22 %</code></pre>
+&gt; Sepal.Width_scaled |      0.15 %</code></pre>
 <p>As you can see, by simply dividing the predictor by 100, we <strong>drastically</strong> changed the conclusion related to the <strong>percentage in ROPE</strong> (which became very close to <code>0</code>): the effect could now be <strong>interpreted as being significant</strong>. Thus, we recommend paying close attention to the unit of the predictors when selecting the ROPE range (<em>e.g.</em>, what coefficient would correspond to a small effect?), and when reporting or reading ROPE results.</p>
 </div>
 <div id="multicollinearity-non-independent-covariates" class="section level1">
@@ -249,7 +249,7 @@
 <a href="#multicollinearity-non-independent-covariates" class="anchor"></a>Multicollinearity: Non-independent covariates</h1>
 <p>When <strong>parameters show strong correlations</strong>, <em>i.e.</em>, when covariates are not independent, the joint parameter distributions may shift towards or away from the ROPE. Collinearity invalidates ROPE and hypothesis testing based on univariate marginals, as the probabilities are conditional on independence. Most problematic are parameters that only have partial overlap with the ROPE region. In case of collinearity, the (joint) distributions of these parameters may either get an increased or decreased ROPE, which means that inferences based on ROPE are inappropriate <span class="citation">(Kruschke, 2014)</span>.</p>
 <p>The <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> and <code><a href="../reference/rope.html">rope()</a></code> functions perform a simple check for pairwise correlations between parameters, but as there can be collinearity between more than two variables, a first step to check the assumptions of this hypothesis testing is to look at different pair plots. An even more sophisticated check is the projection predictive variable selection <span class="citation">(Piironen &amp; Vehtari, 2017)</span>.</p>
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references">
 <div id="ref-kruschke2014doing">
 <p>Kruschke, J. (2014). <em>Doing bayesian data analysis: A tutorial with r, jags, and stan</em>. Academic Press.</p>
 </div>

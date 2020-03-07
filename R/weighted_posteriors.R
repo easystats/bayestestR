@@ -22,54 +22,52 @@
 #' \cr\cr
 #' This function is similar in function to \code{brms::\link[brms]{posterior_average}}.
 #'
-#' @return A data frame with posterior distributions (weighted accross models) .
+#' @return A data frame with posterior distributions (weighted across models) .
 #'
 #' @seealso \code{\link{bayesfactor_inclusion}} for Bayesian model averaging.
 #'
 #' @examples
 #' \donttest{
-#' library(rstanarm)
-#' library(see)
+#' if (require("rstanarm") && require("see")) {
+#'   stan_m0 <- stan_glm(extra ~ 1, data = sleep,
+#'                       family = gaussian(),
+#'                       refresh=0,
+#'                       diagnostic_file = file.path(tempdir(), "df0.csv"))
 #'
-#' stan_m0 <- stan_glm(extra ~ 1, data = sleep,
-#'                     family = gaussian(),
-#'                     refresh=0,
-#'                     diagnostic_file = file.path(tempdir(), "df0.csv"))
-#'
-#' stan_m1 <- stan_glm(extra ~ group, data = sleep,
-#'                     family = gaussian(),
-#'                     refresh=0,
-#'                     diagnostic_file = file.path(tempdir(), "df1.csv"))
+#'   stan_m1 <- stan_glm(extra ~ group, data = sleep,
+#'                       family = gaussian(),
+#'                       refresh=0,
+#'                       diagnostic_file = file.path(tempdir(), "df1.csv"))
 #'
 #'
-#' res <- weighted_posteriors(stan_m0, stan_m1)
+#'   res <- weighted_posteriors(stan_m0, stan_m1)
 #'
-#' plot(eti(res))
-#'
-#' # With BayesFactor and brms
-#' library(BayesFactor)
-#' library(brms)
-#'
-#' BFmods <- anovaBF(extra ~ group + ID, sleep, whichRandom = "ID")
-#'
-#' res <- weighted_posteriors(BFmods)[1:3]
-#' plot(eti(res))
-#'
-#' # Compare to brms::posterior_average
-#' fit1 <- brm(rating ~ treat + period + carry,
-#'             data = inhaler,
-#'             save_all_pars = TRUE)
-#' fit2 <- brm(rating ~ period + carry,
-#'             data = inhaler,
-#'             save_all_pars = TRUE)
-#'
-#' res_BT <- weighted_posteriors(fit1, fit2)
-#' res_brms <- brms::posterior_average(fit1, fit2, weights = "marglik", missing = 0)[, 1:4]
-#'
-#' plot(eti(res_BT))
-#' plot(eti(res_brms))
+#'   plot(eti(res))
 #' }
 #'
+#' # With BayesFactor and brms
+#' if (require("BayesFactor") && require("brms")) {
+#'   BFmods <- anovaBF(extra ~ group + ID, sleep, whichRandom = "ID")
+#'
+#'   res <- weighted_posteriors(BFmods)[1:3]
+#'   plot(eti(res))
+#'
+#'   # Compare to brms::posterior_average
+#'   fit1 <- brm(rating ~ treat + period + carry,
+#'               data = inhaler,
+#'               save_all_pars = TRUE)
+#'   fit2 <- brm(rating ~ period + carry,
+#'               data = inhaler,
+#'               save_all_pars = TRUE)
+#'
+#'   res_BT <- weighted_posteriors(fit1, fit2)
+#'   res_brms <- brms::posterior_average(fit1, fit2,
+#'                                       weights = "marglik", missing = 0)[, 1:4]
+#'
+#'   plot(eti(res_BT))
+#'   plot(eti(res_brms))
+#' }
+#' }
 #' @references
 #' \itemize{
 #'   \item Clyde, M., Desimone, H., & Parmigiani, G. (1996). Prediction via orthogonalized model mixing. Journal of the American Statistical Association, 91(435), 1197-1208.

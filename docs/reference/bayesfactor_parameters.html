@@ -58,7 +58,7 @@ density ratio is computed, which is also an approximation of a Bayes factor comp
 the marginal likelihoods of the model against a model in which the tested parameter
 has been restricted to the point null (Wagenmakers et al., 2010; Heck, 2019).
  
-Note that the logspline package is used for estimating densities and probabilies,
+Note that the logspline package is used for estimating densities and probabilities,
 and must be installed for the function to work.
  
 bayesfactor_pointnull() and bayesfactor_rope() are wrappers around
@@ -110,7 +110,7 @@ For more info, in particular on specifying correct priors for factors with more 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.1</span>
       </span>
     </div>
 
@@ -214,7 +214,7 @@ density ratio is computed, which is also an approximation of a Bayes factor comp
 the marginal likelihoods of the model against a model in which the tested parameter
 has been restricted to the point null (Wagenmakers et al., 2010; Heck, 2019).
 <br /> <br />
-Note that the <code>logspline</code> package is used for estimating densities and probabilies,
+Note that the <code>logspline</code> package is used for estimating densities and probabilities,
 and must be installed for the function to work.
 <br /> <br />
 <code>bayesfactor_pointnull()</code> and <code>bayesfactor_rope()</code> are wrappers around
@@ -445,7 +445,7 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 <span class='no'>prior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>.5</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.3</span>)
 
-<span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: logspline</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
+<span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
 #&gt; 
 #&gt; </span><span>BF  
 #&gt; ----
