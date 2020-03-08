@@ -153,7 +153,7 @@ estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, ext
 #' @export
 estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", group_by = NULL, ...) {
   if (is.null(group_by)) {
-    .estimate_density_df(x = x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
+    out <- .estimate_density_df(x = x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
   } else {
     xlist <- split(x, x[group_by])
     out <- lapply(names(xlist), function(group) {
@@ -161,8 +161,11 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
       dens$Group <- group
       dens
     })
-    do.call(rbind, out)
+    out <- do.call(rbind, out)
   }
+
+  class(out) <- setdiff(unique(c("estimate_density_df", "see_estimate_density_df", class(out))), c("estimate_density", "see_estimate_density"))
+  out
 }
 
 .estimate_density_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
