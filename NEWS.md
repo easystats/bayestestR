@@ -4,6 +4,10 @@
 
 - Support for *bcplm* objects (package **cplm**)
 
+## Changes to functions
+
+- `estimate_density()` now also works on grouped data frames.
+
 ## Bug fixes
 
 - Fixed bug in `weighted_posteriors()` when models have very low posterior probability ( #286 ).
