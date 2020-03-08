@@ -163,6 +163,21 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
 }
 
 #' @export
+estimate_density.grouped_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
+  groups <- .group_vars(x)
+  ungrouped_x <- as.data.frame(x)
+
+  xlist <- split(ungrouped_x, ungrouped_x[groups])
+
+  out <- lapply(names(xlist), function(group) {
+    dens <- estimate_density(xlist[[group]], method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw)
+    dens$group <- group
+    dens
+  })
+  do.call(rbind, out)
+}
+
+#' @export
 estimate_density.emmGrid <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
   if (!requireNamespace("emmeans")) {
     stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
