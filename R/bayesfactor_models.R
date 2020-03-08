@@ -355,52 +355,54 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
 
 #' @keywords internal
 .clean_non_linBF_mods <- function(m_names){
-  m_txt <- character(length = length(m_names))
+  tryCatch({
+    m_txt <- character(length = length(m_names))
 
-  ## Detect types ##
-  is_null <- grepl("^Null", m_names)
-  is_rho <- grepl("rho", m_names)
-  is_mu <- grepl("mu", m_names)
-  is_d <- grepl("d", m_names)
-  is_p <- grepl("p", m_names)
-  is_range <- grepl("<", m_names)
+    ## Detect types ##
+    is_null <- grepl("^Null", m_names)
+    is_rho <- grepl("rho", m_names)
+    is_mu <- grepl("mu", m_names)
+    is_d <- grepl("d", m_names)
+    is_p <- grepl("p", m_names)
+    is_range <- grepl("<", m_names)
 
-  ## Range Alts ##
-  m_txt[!is_null & is_range] <-
-    sub("^[^\\s]*\\s[^\\s]*\\s", "", m_names[!is_null & is_range])
+    ## Range Alts ##
+    m_txt[!is_null & is_range] <-
+      sub("^[^\\s]*\\s[^\\s]*\\s", "", m_names[!is_null & is_range])
 
-  ## Null models + Not nulls ##
-  if (any(is_d & is_p)) {
-    is_null <- !grepl("^Non", m_names)
-    temp <- m_names[is_null][1]
-    mi <- gregexpr("\\(.*\\)", temp)
-    aa <- unlist(regmatches(temp, m = mi))
+    ## Null models + Not nulls ##
+    if (any(is_d & is_p)) {
+      is_null <- !grepl("^Non", m_names)
+      temp <- m_names[is_null][1]
+      mi <- gregexpr("\\(.*\\)", temp)
+      aa <- unlist(regmatches(temp, m = mi))
 
-    m_txt[is_null] <- sub("a=","a = ",aa)
-    m_txt[!is_null & !is_range] <- sub("a=","a != ",aa)
-  } else if (any(is_rho)) {
-    m_txt[is_null] <- "rho = 0"
-    m_txt[!is_null & !is_range] <- "rho != 0"
-    m_txt <- sub("<rho<", " < rho < ", m_txt)
-  } else if (any(is_d | is_mu)){
-    m_txt[is_null] <- "d = 0"
-    m_txt[!is_null & !is_range] <- "d != 0"
-    m_txt <- sub("<d<", " < d < ", m_txt)
-  } else if (any(is_p)){
-    temp <- m_names[is_null][1]
-    mi <- gregexpr("[0-9|\\.]+", temp)
-    pp <- unlist(regmatches(temp, m = mi))
+      m_txt[is_null] <- sub("a=","a = ",aa)
+      m_txt[!is_null & !is_range] <- sub("a=","a != ",aa)
+    } else if (any(is_rho)) {
+      m_txt[is_null] <- "rho = 0"
+      m_txt[!is_null & !is_range] <- "rho != 0"
+      m_txt <- sub("<rho<", " < rho < ", m_txt)
+    } else if (any(is_d | is_mu)){
+      m_txt[is_null] <- "d = 0"
+      m_txt[!is_null & !is_range] <- "d != 0"
+      m_txt <- sub("<d<", " < d < ", m_txt)
+    } else if (any(is_p)){
+      temp <- m_names[is_null][1]
+      mi <- gregexpr("[0-9|\\.]+", temp)
+      pp <- unlist(regmatches(temp, m = mi))
 
-    m_txt[is_null] <- paste0("p = ", pp)
-    m_txt[!is_null & !is_range] <- paste0("p != ", pp)
-    m_txt <- sub("<p<", " < p < ", m_txt)
-  } else {
-    stop("!")
-  }
+      m_txt[is_null] <- paste0("p = ", pp)
+      m_txt[!is_null & !is_range] <- paste0("p != ", pp)
+      m_txt <- sub("<p<", " < p < ", m_txt)
+    } else {
+      stop("!")
+    }
 
-  ## wrap with () for readability ##
-  is_wrapped <- grepl("\\(", m_txt)
-  m_txt[!is_wrapped] <- paste0("(", m_txt[!is_wrapped], ")")
+    ## wrap with () for readability ##
+    is_wrapped <- grepl("\\(", m_txt)
+    m_txt[!is_wrapped] <- paste0("(", m_txt[!is_wrapped], ")")
 
-  return(m_txt)
+    return(m_txt)
+  }, error = function(e) return(m_names))
 }
