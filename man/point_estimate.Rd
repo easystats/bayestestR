@@ -31,8 +31,9 @@ point_estimate(x, centrality = "all", dispersion = FALSE, ...)
 \method{point_estimate}{BFBayesFactor}(x, centrality = "all", dispersion = FALSE, ...)
 }
 \arguments{
-\item{x}{Vector representing a posterior distribution. Can also be a
-\code{stanreg}, \code{brmsfit} or a \code{BayesFactor} model.}
+\item{x}{Vector representing a posterior distribution, or a data frame of such
+vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
+\code{MCMCglmm}, \code{mcmc} or \code{bcplm}) or a \code{BayesFactor} model.}
 
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 

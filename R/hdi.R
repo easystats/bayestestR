@@ -2,8 +2,9 @@
 #'
 #' Compute the \strong{Highest Density Interval (HDI)} of posterior distributions. All points within this interval have a higher probability density than points outside the interval. The HDI can be used in the context of uncertainty characterisation of posterior distributions as \strong{Credible Interval (CI)}.
 #'
-#' @param x Vector representing a posterior distribution. Can also be a
-#'   \code{stanreg}, \code{brmsfit} or a \code{BayesFactor} model.
+#' @param x Vector representing a posterior distribution, or a data frame of such
+#'   vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
+#'   \code{MCMCglmm}, \code{mcmc} or \code{bcplm}) or a \code{BayesFactor} model.
 #' @param ci Value or vector of probability of the (credible) interval - CI (between 0 and 1)
 #'   to be estimated. Default to \code{.89} (89\%).
 #' @param effects Should results for fixed effects, random effects or both be returned?

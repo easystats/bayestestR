@@ -149,7 +149,7 @@ estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, ext
 
 
 
-
+#' @rdname estimate_density
 #' @export
 estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", group_by = NULL, ...) {
   if (is.null(group_by)) {
@@ -265,7 +265,6 @@ estimate_density.mcmc <- function(x, method = "kernel", precision = 2^10, extend
 
 
 
-#' @importFrom insight get_parameters
 #' @export
 estimate_density.bcplm <- estimate_density.mcmc
 

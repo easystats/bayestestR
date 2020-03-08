@@ -2,6 +2,7 @@
 % Please edit documentation in R/estimate_density.R
 \name{estimate_density}
 \alias{estimate_density}
+\alias{estimate_density.data.frame}
 \title{Density Estimation}
 \usage{
 estimate_density(
@@ -13,10 +14,22 @@ estimate_density(
   bw = "SJ",
   ...
 )
+
+\method{estimate_density}{data.frame}(
+  x,
+  method = "kernel",
+  precision = 2^10,
+  extend = FALSE,
+  extend_scale = 0.1,
+  bw = "SJ",
+  group_by = NULL,
+  ...
+)
 }
 \arguments{
-\item{x}{Vector representing a posterior distribution. Can also be a
-\code{stanreg}, \code{brmsfit} or a \code{BayesFactor} model.}
+\item{x}{Vector representing a posterior distribution, or a data frame of such
+vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
+\code{MCMCglmm}, \code{mcmc} or \code{bcplm}) or a \code{BayesFactor} model.}
 
 \item{method}{Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.}
 
