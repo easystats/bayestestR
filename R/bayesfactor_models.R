@@ -202,7 +202,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     stop("Package 'bridgesampling' required for this function to work. Please install it by running `install.packages('bridgesampling')`.")
   }
 
-  # Orgenize the models
+  # Organize the models
   mods <- list(...)
 
   # Warn
@@ -345,7 +345,7 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
 .BIC_list <- function(x){
   sapply(x, function(m) {
     tryCatch({
-      bic <- BIC(m, x[[1]])
+      bic <- stats::BIC(m, x[[1]])
       bic$BIC[1]
     }, warning = function(w) {
       stop(conditionMessage(w), call. = FALSE)
@@ -383,11 +383,11 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
       m_txt[is_null] <- "rho = 0"
       m_txt[!is_null & !is_range] <- "rho != 0"
       m_txt <- sub("<rho<", " < rho < ", m_txt)
-    } else if (any(is_d | is_mu)){
+    } else if (any(is_d | is_mu)) {
       m_txt[is_null] <- "d = 0"
       m_txt[!is_null & !is_range] <- "d != 0"
       m_txt <- sub("<d<", " < d < ", m_txt)
-    } else if (any(is_p)){
+    } else if (any(is_p)) {
       temp <- m_names[is_null][1]
       mi <- gregexpr("[0-9|\\.]+", temp)
       pp <- unlist(regmatches(temp, m = mi))
