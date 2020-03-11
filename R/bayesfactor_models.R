@@ -159,11 +159,11 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   # supported models
   supported_models <- sapply(mods, insight::is_model_supported)
   if (all(supported_models)) {
-    mforms <- sapply(mods, .find_full_formula)
+    temp_forms <- sapply(mods, .find_full_formula)
 
-    has_terms <- sapply(mforms, nchar) > 0
+    has_terms <- sapply(temp_forms, nchar) > 0
 
-    mforms[has_terms] <- mforms[has_terms]
+    mforms[has_terms] <- temp_forms[has_terms]
     supported_models[!has_terms] <- FALSE
   }
 
