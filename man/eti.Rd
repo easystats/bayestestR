@@ -56,8 +56,9 @@ eti(x, ...)
 \method{eti}{BFBayesFactor}(x, ci = 0.89, verbose = TRUE, ...)
 }
 \arguments{
-\item{x}{Vector representing a posterior distribution. Can also be a
-\code{stanreg}, \code{brmsfit} or a \code{BayesFactor} model.}
+\item{x}{Vector representing a posterior distribution, or a data frame of such
+vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
+\code{MCMCglmm}, \code{mcmc} or \code{bcplm}) or a \code{BayesFactor} model.}
 
 \item{...}{Currently not used.}
 

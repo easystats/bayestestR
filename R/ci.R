@@ -158,3 +158,9 @@ ci.MCMCglmm <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
 ci.mcmc <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
   ci(as.data.frame(x), ci = ci, method = method, verbose = verbose, ...)
 }
+
+
+#' @export
+ci.bcplm <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
+  ci(insight::get_parameters(x), ci = ci, method = method, verbose = verbose, ...)
+}

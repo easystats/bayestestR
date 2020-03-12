@@ -2,7 +2,7 @@
 #'
 #' Compute a Bayesian equivalent of the \emph{p}-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (\emph{h0}) using Mills' (2014, 2017) \emph{Objective Bayesian Hypothesis Testing} framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP).
 #'
-#' @details Note that this method is sensitive to the density estimation \code{method} (see the secion in the examples below).
+#' @details Note that this method is sensitive to the density estimation \code{method} (see the section in the examples below).
 #' \subsection{Strengths and Limitations}{
 #' \strong{Strengths:} Straightforward computation. Objective property of the posterior distribution.
 #' \cr \cr
@@ -153,6 +153,10 @@ p_map.mcmc <- function(x, precision = 2^10, method = "kernel", parameters = NULL
   attr(out, "data") <- insight::get_parameters(x, parameters = parameters)
   out
 }
+
+
+#' @export
+p_map.bcplm <- p_map.mcmc
 
 
 

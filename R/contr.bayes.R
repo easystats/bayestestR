@@ -45,7 +45,6 @@
 #' # [3,] -0.3333333 -0.3333333  0.6666667
 #' ## 2/3 on diagonal and -1/3 on off-diagonal elements
 #' }
-#'
 #' @export
 contr.bayes <- function(n, contrasts = TRUE) {
   # validate n

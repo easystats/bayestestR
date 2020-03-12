@@ -8,6 +8,7 @@
 #' @param precision Number of points of density data. See the \code{n} parameter in \link[=density]{density}.
 #' @param extend Extend the range of the x axis by a factor of \code{extend_scale}.
 #' @param extend_scale Ratio of range by which to extend the x axis. A value of \code{0.1} means that the x axis will be extended by \code{1/10} of the range of the data.
+#' @param group_by Optional character vector. If not \code{NULL} and \code{x} is a data frame, density estimation is performed for each group (subset) indicated by \code{group_by}.
 #'
 #' @examples
 #' library(bayestestR)
@@ -148,9 +149,26 @@ estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, ext
 
 
 
-
+#' @rdname estimate_density
 #' @export
-estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
+estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", group_by = NULL, ...) {
+  if (is.null(group_by)) {
+    out <- .estimate_density_df(x = x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
+  } else {
+    xlist <- split(x, x[group_by])
+    out <- lapply(names(xlist), function(group) {
+      dens <- .estimate_density_df(x = xlist[[group]], method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
+      dens$Group <- group
+      dens
+    })
+    out <- do.call(rbind, out)
+  }
+
+  class(out) <- setdiff(unique(c("estimate_density_df", "see_estimate_density_df", class(out))), c("estimate_density", "see_estimate_density"))
+  out
+}
+
+.estimate_density_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
   x <- .select_nums(x)
   out <- sapply(x, estimate_density, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, simplify = FALSE)
   for (i in names(out)) {
@@ -160,6 +178,22 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
 
   row.names(out) <- NULL
   out[, c("Parameter", "x", "y")]
+}
+
+
+#' @export
+estimate_density.grouped_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
+  groups <- .group_vars(x)
+  ungrouped_x <- as.data.frame(x)
+
+  xlist <- split(ungrouped_x, ungrouped_x[groups])
+
+  out <- lapply(names(xlist), function(group) {
+    dens <- estimate_density(xlist[[group]], method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw)
+    dens$Group <- group
+    dens
+  })
+  do.call(rbind, out)
 }
 
 #' @export
@@ -228,6 +262,11 @@ estimate_density.mcmc <- function(x, method = "kernel", precision = 2^10, extend
 
   out
 }
+
+
+
+#' @export
+estimate_density.bcplm <- estimate_density.mcmc
 
 
 

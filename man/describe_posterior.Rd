@@ -117,7 +117,7 @@ describe_posterior(
 )
 }
 \arguments{
-\item{posteriors}{A vector, dataframe or model of posterior draws.}
+\item{posteriors}{A vector, data frame or model of posterior draws.}
 
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
@@ -170,11 +170,11 @@ or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \description{
-Compute indices relevant to describe and characterise the posterior distributions.
+Compute indices relevant to describe and characterize the posterior distributions.
 }
 \details{
 One or more components of point estimates (like posterior mean or median),
-  intervals and tests can be ommitted from the summary output by setting the
+  intervals and tests can be omitted from the summary output by setting the
   related argument to \code{NULL}. For example, \code{test = NULL} and
   \code{centrality = NULL} would only return the HDI (or CI).
 }

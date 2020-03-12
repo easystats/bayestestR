@@ -1,8 +1,8 @@
 #' Describe Posterior Distributions
 #'
-#' Compute indices relevant to describe and characterise the posterior distributions.
+#' Compute indices relevant to describe and characterize the posterior distributions.
 #'
-#' @param posteriors A vector, dataframe or model of posterior draws.
+#' @param posteriors A vector, data frame or model of posterior draws.
 #' @param ci_method The type of index used for Credible Interval. Can be
 #'   \code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}), \code{"ETI"}
 #'   (see \code{\link[bayestestR:eti]{eti}}) or \code{"SI"}
@@ -25,7 +25,7 @@
 #' @inheritParams si
 #'
 #' @details One or more components of point estimates (like posterior mean or median),
-#'   intervals and tests can be ommitted from the summary output by setting the
+#'   intervals and tests can be omitted from the summary output by setting the
 #'   related argument to \code{NULL}. For example, \code{test = NULL} and
 #'   \code{centrality = NULL} would only return the HDI (or CI).
 #'
@@ -470,6 +470,21 @@ describe_posterior.MCMCglmm <- function(posteriors, centrality = "median", dispe
 #' @export
 describe_posterior.mcmc <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, parameters = NULL, ...) {
   .describe_posterior(as.data.frame(posteriors), centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, effects = "fixed", parameters = parameters, ...)
+}
+
+
+
+#' @export
+describe_posterior.bcplm <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, priors = TRUE, parameters = NULL, ...) {
+  out <- .describe_posterior(insight::get_parameters(posteriors), centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, effects = "fixed", parameters = parameters, ...)
+  if (isTRUE(priors)) {
+    priors_data <- describe_prior(posteriors, ...)
+    out <- .merge_and_sort(out, priors_data, by = "Parameter", all = TRUE)
+  }
+
+  attr(out, "ci_method") <- ci_method
+  class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
+  out
 }
 
 

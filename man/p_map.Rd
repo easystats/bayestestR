@@ -31,8 +31,9 @@ p_pointnull(x, precision = 2^10, method = "kernel", ...)
 )
 }
 \arguments{
-\item{x}{Vector representing a posterior distribution. Can also be a
-\code{stanreg}, \code{brmsfit} or a \code{BayesFactor} model.}
+\item{x}{Vector representing a posterior distribution, or a data frame of such
+vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
+\code{MCMCglmm}, \code{mcmc} or \code{bcplm}) or a \code{BayesFactor} model.}
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \link[=density]{density}.}
 
@@ -57,7 +58,7 @@ applies to \pkg{brms}-models.}
 Compute a Bayesian equivalent of the \emph{p}-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (\emph{h0}) using Mills' (2014, 2017) \emph{Objective Bayesian Hypothesis Testing} framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP).
 }
 \details{
-Note that this method is sensitive to the density estimation \code{method} (see the secion in the examples below).
+Note that this method is sensitive to the density estimation \code{method} (see the section in the examples below).
 \subsection{Strengths and Limitations}{
 \strong{Strengths:} Straightforward computation. Objective property of the posterior distribution.
 \cr \cr

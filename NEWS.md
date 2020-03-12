@@ -1,8 +1,18 @@
 # bayestestR 0.5.x
 
+## General
+
+- Support for *bcplm* objects (package **cplm**)
+
+## Changes to functions
+
+- `estimate_density()` now also works on grouped data frames.
+
 ## Bug fixes
 
-- Fixed bug in `weighted_posteriors` when models have very low posterior probability ( #286 ).
+- Fixed bug in `weighted_posteriors()` when models have very low posterior probability ( #286 ).
+- Fixed bug in `describe_posterior()`, `rope()` and `equivalence_test()` for *brmsfit* models with monotonic effect.
+- Fixed issues related to latest changes in `as.data.frame.brmsfit()` from the *brms* package.
 
 # bayestestR 0.5.0
 

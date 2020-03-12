@@ -279,3 +279,11 @@ equivalence_test.mcmc <- function(x, range = "default", ci = .89, parameters = N
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
+
+
+#' @export
+equivalence_test.bcplm <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
+  out <- .equivalence_test_models(insight::get_parameters(x), range, ci, effects = "fixed", component = "conditional", parameters, verbose = FALSE)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}

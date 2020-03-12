@@ -90,7 +90,7 @@ Weighting is done by comparing posterior model probabilities, via bayesfactor_mo
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.1</span>
       </span>
     </div>
 
@@ -221,7 +221,7 @@ Weighting is done by comparing posterior model probabilities, via <code><a href=
     </tr>
     <tr>
       <th>prior_odds</th>
-      <td><p>Optional vector of prior odds for the models. See <code>BayesFactor::priorOdds&lt;-</code>.</p></td>
+      <td><p>Optional vector of prior odds for the models compared to the first model (or the denominator, for <code>BFBayesFactor</code> objects).</p></td>
     </tr>
     <tr>
       <th>missing</th>
@@ -307,12 +307,14 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
 #&gt; <span class='message'>Welcome to BayesFactor 0.9.12-4.2. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>Type BFManual() to open the manual.</span>
-#&gt; <span class='message'>************</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)</div><div class='output co'>#&gt; <span class='message'>Loading 'brms' package (version 2.11.1). Useful instructions</span>
+#&gt; <span class='message'>************</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>brms</span>)</div><div class='output co'>#&gt; <span class='message'>Loading 'brms' package (version 2.12.0). Useful instructions</span>
 #&gt; <span class='message'>can be found by typing help('brms'). A more detailed introduction</span>
 #&gt; <span class='message'>to the package is available through vignette('brms_overview').</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: 'brms'</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:rstanarm':</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    dirichlet, exponential, get_y, lasso, loo_R2, ngrps</span></div><div class='input'>
+#&gt; <span class='message'>    dirichlet, exponential, get_y, lasso, loo_R2, ngrps</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:stats':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    ar</span></div><div class='input'>
 <span class='no'>BFmods</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/anovaBF.html'>anovaBF</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + <span class='no'>ID</span>, <span class='no'>sleep</span>, <span class='kw'>whichRandom</span> <span class='kw'>=</span> <span class='st'>"ID"</span>)
 
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='no'>BFmods</span>)[<span class='fl'>1</span>:<span class='fl'>3</span>]
@@ -321,7 +323,7 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
 <span class='no'>fit1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>rating</span> ~ <span class='no'>treat</span> + <span class='no'>period</span> + <span class='no'>carry</span>,
             <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>inhaler</span>,
             <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Compiling the C++ model</span></div><div class='output co'>#&gt; <span class='message'>Start sampling</span></div><div class='output co'>#&gt; 
-#&gt; SAMPLING FOR MODEL 'b826a9c83d4c4c0a956c153b1b52e939' NOW (CHAIN 1).
+#&gt; SAMPLING FOR MODEL '88742b6d227bae00fc0e3c3ece179bbe' NOW (CHAIN 1).
 #&gt; Chain 1: 
 #&gt; Chain 1: Gradient evaluation took 0 seconds
 #&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
@@ -341,12 +343,12 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.04 seconds (Warm-up)
-#&gt; Chain 1:                0.044 seconds (Sampling)
-#&gt; Chain 1:                0.084 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.069 seconds (Warm-up)
+#&gt; Chain 1:                0.049 seconds (Sampling)
+#&gt; Chain 1:                0.118 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'b826a9c83d4c4c0a956c153b1b52e939' NOW (CHAIN 2).
+#&gt; SAMPLING FOR MODEL '88742b6d227bae00fc0e3c3ece179bbe' NOW (CHAIN 2).
 #&gt; Chain 2: 
 #&gt; Chain 2: Gradient evaluation took 0 seconds
 #&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
@@ -366,12 +368,12 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.041 seconds (Warm-up)
-#&gt; Chain 2:                0.039 seconds (Sampling)
-#&gt; Chain 2:                0.08 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.053 seconds (Warm-up)
+#&gt; Chain 2:                0.073 seconds (Sampling)
+#&gt; Chain 2:                0.126 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'b826a9c83d4c4c0a956c153b1b52e939' NOW (CHAIN 3).
+#&gt; SAMPLING FOR MODEL '88742b6d227bae00fc0e3c3ece179bbe' NOW (CHAIN 3).
 #&gt; Chain 3: 
 #&gt; Chain 3: Gradient evaluation took 0 seconds
 #&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
@@ -391,12 +393,12 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.038 seconds (Warm-up)
-#&gt; Chain 3:                0.039 seconds (Sampling)
-#&gt; Chain 3:                0.077 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.049 seconds (Warm-up)
+#&gt; Chain 3:                0.069 seconds (Sampling)
+#&gt; Chain 3:                0.118 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'b826a9c83d4c4c0a956c153b1b52e939' NOW (CHAIN 4).
+#&gt; SAMPLING FOR MODEL '88742b6d227bae00fc0e3c3ece179bbe' NOW (CHAIN 4).
 #&gt; Chain 4: 
 #&gt; Chain 4: Gradient evaluation took 0 seconds
 #&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
@@ -416,13 +418,13 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.039 seconds (Warm-up)
-#&gt; Chain 4:                0.039 seconds (Sampling)
-#&gt; Chain 4:                0.078 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.061 seconds (Warm-up)
+#&gt; Chain 4:                0.049 seconds (Sampling)
+#&gt; Chain 4:                0.11 seconds (Total)
 #&gt; Chain 4: </div><div class='input'><span class='no'>fit2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>rating</span> ~ <span class='no'>period</span> + <span class='no'>carry</span>,
             <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>inhaler</span>,
             <span class='kw'>save_all_pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Compiling the C++ model</span></div><div class='output co'>#&gt; <span class='message'>recompiling to avoid crashing R session</span></div><div class='output co'>#&gt; <span class='message'>Start sampling</span></div><div class='output co'>#&gt; 
-#&gt; SAMPLING FOR MODEL 'b826a9c83d4c4c0a956c153b1b52e939' NOW (CHAIN 1).
+#&gt; SAMPLING FOR MODEL '88742b6d227bae00fc0e3c3ece179bbe' NOW (CHAIN 1).
 #&gt; Chain 1: 
 #&gt; Chain 1: Gradient evaluation took 0 seconds
 #&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
@@ -442,12 +444,12 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
 #&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 1: 
-#&gt; Chain 1:  Elapsed Time: 0.026 seconds (Warm-up)
-#&gt; Chain 1:                0.027 seconds (Sampling)
-#&gt; Chain 1:                0.053 seconds (Total)
+#&gt; Chain 1:  Elapsed Time: 0.027 seconds (Warm-up)
+#&gt; Chain 1:                0.028 seconds (Sampling)
+#&gt; Chain 1:                0.055 seconds (Total)
 #&gt; Chain 1: 
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'b826a9c83d4c4c0a956c153b1b52e939' NOW (CHAIN 2).
+#&gt; SAMPLING FOR MODEL '88742b6d227bae00fc0e3c3ece179bbe' NOW (CHAIN 2).
 #&gt; Chain 2: 
 #&gt; Chain 2: Gradient evaluation took 0 seconds
 #&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
@@ -467,12 +469,12 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
 #&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 2: 
-#&gt; Chain 2:  Elapsed Time: 0.027 seconds (Warm-up)
-#&gt; Chain 2:                0.026 seconds (Sampling)
-#&gt; Chain 2:                0.053 seconds (Total)
+#&gt; Chain 2:  Elapsed Time: 0.032 seconds (Warm-up)
+#&gt; Chain 2:                0.033 seconds (Sampling)
+#&gt; Chain 2:                0.065 seconds (Total)
 #&gt; Chain 2: 
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'b826a9c83d4c4c0a956c153b1b52e939' NOW (CHAIN 3).
+#&gt; SAMPLING FOR MODEL '88742b6d227bae00fc0e3c3ece179bbe' NOW (CHAIN 3).
 #&gt; Chain 3: 
 #&gt; Chain 3: Gradient evaluation took 0 seconds
 #&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
@@ -492,12 +494,12 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
 #&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 3: 
-#&gt; Chain 3:  Elapsed Time: 0.026 seconds (Warm-up)
-#&gt; Chain 3:                0.025 seconds (Sampling)
-#&gt; Chain 3:                0.051 seconds (Total)
+#&gt; Chain 3:  Elapsed Time: 0.037 seconds (Warm-up)
+#&gt; Chain 3:                0.024 seconds (Sampling)
+#&gt; Chain 3:                0.061 seconds (Total)
 #&gt; Chain 3: 
 #&gt; 
-#&gt; SAMPLING FOR MODEL 'b826a9c83d4c4c0a956c153b1b52e939' NOW (CHAIN 4).
+#&gt; SAMPLING FOR MODEL '88742b6d227bae00fc0e3c3ece179bbe' NOW (CHAIN 4).
 #&gt; Chain 4: 
 #&gt; Chain 4: Gradient evaluation took 0 seconds
 #&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
@@ -517,9 +519,9 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
 #&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #&gt; Chain 4: 
-#&gt; Chain 4:  Elapsed Time: 0.026 seconds (Warm-up)
-#&gt; Chain 4:                0.029 seconds (Sampling)
-#&gt; Chain 4:                0.055 seconds (Total)
+#&gt; Chain 4:  Elapsed Time: 0.027 seconds (Warm-up)
+#&gt; Chain 4:                0.026 seconds (Sampling)
+#&gt; Chain 4:                0.053 seconds (Total)
 #&gt; Chain 4: </div><div class='input'>
 <span class='no'>res_BT</span> <span class='kw'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='no'>fit1</span>, <span class='no'>fit2</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Bayes factors might not be precise.</span>
 #&gt; <span class='warning'>For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.</span></div><div class='output co'>#&gt; <span class='message'>Computation of Bayes factors: estimating marginal likelihood, please wait...</span></div><div class='input'><span class='no'>res_brms</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>brms</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>posterior_average</a></span>(<span class='no'>fit1</span>, <span class='no'>fit2</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='st'>"marglik"</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>)[, <span class='fl'>1</span>:<span class='fl'>4</span>]</div><div class='output co'>#&gt; <span class='warning'>Warning: Weight method 'marglik' is deprecated. Use 'bma' instead.</span></div><div class='output co'>#&gt; Iteration: 1
@@ -530,8 +532,7 @@ This function is similar in function to <code>brms::<a href='https://rdrr.io/pkg
 #&gt; Iteration: 1
 #&gt; Iteration: 2
 #&gt; Iteration: 3
-#&gt; Iteration: 4
-#&gt; Iteration: 5</div><div class='input'>
+#&gt; Iteration: 4</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res_BT</span>))</div><div class='output co'>#&gt; <span class='error'>Error: Failed at retrieving data :( Please provide original model or data through the `data` argument</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='eti.html'>eti</a></span>(<span class='no'>res_brms</span>))</div><div class='output co'>#&gt; <span class='error'>Error: Failed at retrieving data :( Please provide original model or data through the `data` argument</span></div><div class='input'># }
 
 </div></pre>

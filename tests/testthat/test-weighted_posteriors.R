@@ -1,3 +1,20 @@
+if (requireNamespace("BayesFactor", quietly = TRUE)) {
+  test_that("weighted_posteriors for BayesFactor", {
+
+    library(BayesFactor)
+    # compute Bayes Factor for 31 different regression models
+    null_den <- regressionBF(mpg ~ cyl + disp + hp + drat + wt,
+                             data = mtcars, progress = FALSE)
+    no_null <- null_den[-1]/null_den[1]
+    null_not_den <- c(no_null, 1/null_den[1])
+
+    testthat::expect_warning(weighted_posteriors(null_not_den))
+    testthat::expect_warning(weighted_posteriors(null_den))
+    testthat::expect_is(weighted_posteriors(no_null), "data.frame")
+  })
+}
+
+
 if (requireNamespace("brms", quietly = TRUE)) {
   context("weighted_posteriors")
 

@@ -35,7 +35,7 @@ You can reference the package and its documentation as follows:
 Run the following:
 
 ``` r
-install.packages(bayestestR)
+install.packages("bayestestR")
 ```
 
 ## Documentation
@@ -136,7 +136,7 @@ describe_posterior(
   test = c("p_direction", "p_significance")
 )
 ##   Parameter Median CI CI_low CI_high   pd   ps
-## 1 Posterior -0.047 89   -1.7     1.4 0.52 0.48
+## 1 Posterior  0.018 89   -1.5     1.7 0.51 0.46
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -243,7 +243,7 @@ computes the **Highest Density Interval (HDI)** of a posterior
 distribution, i.e., the interval which contains all points within the
 interval have a higher probability density than points outside the
 interval. The HDI can be used in the context of Bayesian posterior
-characterisation as **Credible Interval (CI)**.
+characterization as **Credible Interval (CI)**.
 
 Unlike equal-tailed intervals (see
 [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html))
@@ -378,7 +378,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## 
 ## BF  
 ## ----
-## 2.03
+## 2.16
 ## 
 ## * Evidence Against The Null: [0]
 ```
@@ -441,7 +441,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.39
+## [1] 0.42
 ```
 
 # References

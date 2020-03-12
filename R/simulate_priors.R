@@ -56,6 +56,14 @@ simulate_prior.brmsfit <- function(model, n = 1000, effects = c("fixed", "random
 
 
 
+#' @export
+simulate_prior.bcplm <- function(model, n = 1000, ...) {
+  .simulate_prior(insight::get_priors(model), n = n)
+}
+
+
+
+
 
 
 #' @keywords internal
