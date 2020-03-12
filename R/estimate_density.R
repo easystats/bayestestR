@@ -141,7 +141,7 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 #' @export
 estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
   out <- .estimate_density(x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
-  class(out) <- c("estimate_density", "see_estimate_density", class(out))
+  class(out) <- .set_density_class(out)
   out
 }
 
@@ -164,7 +164,7 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
     out <- do.call(rbind, out)
   }
 
-  class(out) <- setdiff(unique(c("estimate_density_df", "see_estimate_density_df", class(out))), c("estimate_density", "see_estimate_density"))
+  class(out) <- .set_density_df_class(out)
   out
 }
 
@@ -203,11 +203,13 @@ estimate_density.emmGrid <- function(x, method = "kernel", precision = 2^10, ext
   }
   x <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
 
-  estimate_density(x,
+  out <- estimate_density(x,
     method = method, precision = precision,
     extend = extend, extend_scale = extend_scale,
     bw = bw, ...
   )
+  class(out) <- .set_density_class(out)
+  out
 }
 
 
@@ -221,6 +223,7 @@ estimate_density.stanreg <- function(x, method = "kernel", precision = 2^10, ext
   out <- estimate_density(insight::get_parameters(x, effects = effects, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
 
+  class(out) <- .set_density_class(out)
   out
 }
 
@@ -236,6 +239,7 @@ estimate_density.brmsfit <- function(x, method = "kernel", precision = 2^10, ext
   out <- estimate_density(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
 
+  class(out) <- .set_density_class(out)
   out
 }
 
@@ -248,6 +252,7 @@ estimate_density.MCMCglmm <- function(x, method = "kernel", precision = 2^10, ex
   out <- estimate_density(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
 
+  class(out) <- .set_density_class(out)
   out
 }
 
@@ -260,6 +265,7 @@ estimate_density.mcmc <- function(x, method = "kernel", precision = 2^10, extend
   out <- estimate_density(insight::get_parameters(x, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
 
+  class(out) <- .set_density_class(out)
   out
 }
 
@@ -302,4 +308,19 @@ as.data.frame.density <- function(x, ...) {
 density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
   density <- estimate_density(posterior, precision = precision, method = method, ...)
   stats::approx(density$x, density$y, xout = x)$y
+}
+
+
+
+
+
+
+# helper ----------------------------------------------------------
+
+.set_density_df_class <- function(out) {
+  setdiff(unique(c("estimate_density_df", "see_estimate_density_df", class(out))), c("estimate_density", "see_estimate_density"))
+}
+
+.set_density_class <- function(out) {
+  setdiff(unique(c("estimate_density", "see_estimate_density", class(out))), c("estimate_density_df", "see_estimate_density_df"))
 }
