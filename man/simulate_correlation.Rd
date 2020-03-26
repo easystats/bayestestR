@@ -3,11 +3,14 @@
 \name{simulate_correlation}
 \alias{simulate_correlation}
 \alias{simulate_ttest}
+\alias{simulate_difference}
 \title{Data Simulation}
 \usage{
 simulate_correlation(n = 100, r = 0.5, mean = 0, sd = 1, names = NULL, ...)
 
 simulate_ttest(n = 100, d = 0.5, names = NULL, ...)
+
+simulate_difference(n = 100, d = 0.5, names = NULL, ...)
 }
 \arguments{
 \item{n}{The number of observations to be generated.}
@@ -57,6 +60,14 @@ summary(lm(y ~ x1, data = data))
 
 # t-test --------------------------------
 data <- simulate_ttest(n = 30, d = 0.3)
+plot(data$V1, data$V0)
+round(c(mean(data$V1), sd(data$V1)), 1)
+diff(t.test(data$V1 ~ data$V0)$estimate)
+summary(lm(V1 ~ V0, data = data))
+summary(glm(V0 ~ V1, data = data, family = "binomial"))
+
+# Difference --------------------------------
+data <- simulate_difference(n = 30, d = 0.3)
 plot(data$V1, data$V0)
 round(c(mean(data$V1), sd(data$V1)), 1)
 diff(t.test(data$V1 ~ data$V0)$estimate)

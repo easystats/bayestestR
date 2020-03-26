@@ -44,6 +44,14 @@
 #' diff(t.test(data$V1 ~ data$V0)$estimate)
 #' summary(lm(V1 ~ V0, data = data))
 #' summary(glm(V0 ~ V1, data = data, family = "binomial"))
+#'
+#' # Difference --------------------------------
+#' data <- simulate_difference(n = 30, d = 0.3)
+#' plot(data$V1, data$V0)
+#' round(c(mean(data$V1), sd(data$V1)), 1)
+#' diff(t.test(data$V1 ~ data$V0)$estimate)
+#' summary(lm(V1 ~ V0, data = data))
+#' summary(glm(V0 ~ V1, data = data, family = "binomial"))
 #' @export
 simulate_correlation <- function(n = 100, r = 0.5, mean = 0, sd = 1, names = NULL, ...) {
   if (!requireNamespace("MASS", quietly = TRUE)) {
@@ -112,6 +120,25 @@ simulate_ttest <- function(n = 100, d = 0.5, names = NULL, ...) {
   y <- distribution_binomial(n, 1, pr, random = 3) # Bernoulli response variable
 
   data <- data.frame(y = as.factor(y), x = x)
+  names(data) <- paste0("V", 0:(ncol(data) - 1))
+
+  if (!is.null(names)) {
+    if (length(names) == ncol(data)) {
+      names(data) <- names
+    }
+  }
+  data
+}
+
+
+#' @rdname simulate_correlation
+#' @export
+simulate_difference <- function(n = 100, d = 0.5, names = NULL, ...) {
+  x <- distribution_normal(round(n/2), -d/2, 1)
+  y <- distribution_normal(round(n/2), d/2, 1)
+
+  data <- data.frame(y = as.factor(rep(c(0, 1), each=round(n/2))),
+                     x = c(x, y))
   names(data) <- paste0("V", 0:(ncol(data) - 1))
 
   if (!is.null(names)) {

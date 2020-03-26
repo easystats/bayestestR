@@ -97,7 +97,7 @@
 #' equivalence_test(model)
 #' equivalence_test(model, ci = c(.50, .99))
 #'
-#' ibrary(BayesFactor)
+#' library(BayesFactor)
 #' bf <- ttestBF(x = rnorm(100, 1, 1))
 #' equivalence_test(bf)
 #' equivalence_test(bf, ci = c(.50, .99))
