@@ -1,4 +1,4 @@
-# bayestestR 0.5.x
+# bayestestR 0.5.3
 
 ## General
 
