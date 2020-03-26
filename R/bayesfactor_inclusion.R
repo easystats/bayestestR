@@ -186,52 +186,8 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
   )
 
   # add effects table
-  make_terms <- function(formula) {
-    sort_interactions <- function(x) {
-      if (grepl("\\:", x)) {
-        effs <- unlist(strsplit(x, "\\:"))
-        x <- paste0(sort(effs), collapse = ":")
-      }
-      x
-    }
-    formula.f <- stats::as.formula(paste0("~", formula))
-    all.terms <- attr(stats::terms(formula.f), "term.labels")
-
-    # Fixed
-    fix_trms <- all.terms[!grepl("\\|", all.terms)] # no random
-    if (length(fix_trms) > 0) {
-      fix_trms <- sapply(fix_trms, sort_interactions)
-    }
-
-    # Random
-    random_parts <- paste0(all.terms[grepl("\\|", all.terms)]) # only random
-    if (length(random_parts) == 0) {
-      return(fix_trms)
-    }
-    random_units <- sub("^.+\\|\\s+", "", random_parts)
-    tmp_random <- lapply(
-      sub("\\|.+$", "", random_parts),
-      function(x) stats::as.formula(paste0("~", x))
-    )
-
-    rand_trms <- vector("list", length(random_parts))
-
-    for (i in seq_along(random_parts)) {
-      tmp_trms <- attr(stats::terms.formula(tmp_random[[i]]), "term.labels")
-      tmp_trms <- sapply(tmp_trms, sort_interactions)
-
-      if (!any(unlist(strsplit(as.character(tmp_random[[i]])[[2]], " \\+ ")) == "0")) {
-        tmp_trms <- c("1", tmp_trms)
-      }
-
-      rand_trms[[i]] <- paste0(tmp_trms, ":", random_units[[i]])
-    }
-
-    c(fix_trms, unlist(rand_trms))
-  }
-
   for (m in seq_len(nrow(df.model))) {
-    tmp_terms <- make_terms(df.model$Modelnames[m])
+    tmp_terms <- .make_terms(df.model$Modelnames[m])
     if (length(tmp_terms) > 0) {
       missing_terms <- !tmp_terms %in% colnames(df.model) # For R < 3.6.0
       if (any(missing_terms)) df.model[, tmp_terms[missing_terms]] <- NA # For R < 3.6.0
@@ -262,4 +218,49 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
   }
 
   temp
+}
+
+#' @keywords internal
+.make_terms <- function(formula) {
+  sort_interactions <- function(x) {
+    if (grepl("\\:", x)) {
+      effs <- unlist(strsplit(x, "\\:"))
+      x <- paste0(sort(effs), collapse = ":")
+    }
+    x
+  }
+  formula.f <- stats::as.formula(paste0("~", formula))
+  all.terms <- attr(stats::terms(formula.f), "term.labels")
+
+  # Fixed
+  fix_trms <- all.terms[!grepl("\\|", all.terms)] # no random
+  if (length(fix_trms) > 0) {
+    fix_trms <- sapply(fix_trms, sort_interactions)
+  }
+
+  # Random
+  random_parts <- paste0(all.terms[grepl("\\|", all.terms)]) # only random
+  if (length(random_parts) == 0) {
+    return(fix_trms)
+  }
+  random_units <- sub("^.+\\|\\s+", "", random_parts)
+  tmp_random <- lapply(
+    sub("\\|.+$", "", random_parts),
+    function(x) stats::as.formula(paste0("~", x))
+  )
+
+  rand_trms <- vector("list", length(random_parts))
+
+  for (i in seq_along(random_parts)) {
+    tmp_trms <- attr(stats::terms.formula(tmp_random[[i]]), "term.labels")
+    tmp_trms <- sapply(tmp_trms, sort_interactions)
+
+    if (!any(unlist(strsplit(as.character(tmp_random[[i]])[[2]], " \\+ ")) == "0")) {
+      tmp_trms <- c("1", tmp_trms)
+    }
+
+    rand_trms[[i]] <- paste0(tmp_trms, ":", random_units[[i]])
+  }
+
+  c(fix_trms, unlist(rand_trms))
 }
