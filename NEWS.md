@@ -1,3 +1,9 @@
+# bayestestR 0.5.4
+
+## Changes to functions
+
+- `describe_posterior()` now also works on `effectsize::standardize_posteriors()`.
+
 # bayestestR 0.5.3
 
 ## General
