@@ -330,34 +330,50 @@ describe_posterior.effectsize_std_params <- function(posteriors, centrality = "m
 
   class(posteriors) <- "data.frame"
 
-  if ("(Intercept)" %in% colnames(posteriors)) {
-    int_i <- which("(Intercept)" == colnames(posteriors))
-    int <- posteriors[,int_i]
+  no_unique <- sapply(posteriors, function(col) {
+    length(unique(col)) == 1
+  })
 
-    if (length(unique(int))==1) {
-      out <- describe_posterior.data.frame(
-        posteriors[,-int_i],
-        centrality = centrality,
-        dispersion = dispersion,
-        ci = ci,
-        ci_method = ci_method,
-        test = test,
-        rope_range = rope_range,
-        rope_ci = rope_ci,
-        bf_prior = bf_prior,
-        BF = BF,
-        ...
-      )
+  if (any(no_unique)) {
+    no_unique <- which(no_unique)
 
-      out_int <- data.frame(Parameter = "(Intercept)")
-      col_diff <- setdiff(colnames(out), colnames(out_int))
-      out_int[, col_diff] <- NA
-      out <- rbind(out_int, out)
+    out <- describe_posterior.data.frame(
+      posteriors[,-no_unique],
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      rope_range = rope_range,
+      rope_ci = rope_ci,
+      bf_prior = bf_prior,
+      BF = BF,
+      ...
+    )
 
-      return(out)
-    }
+    out_int <- data.frame(Parameter = colnames(posteriors)[no_unique])
+    col_diff <- setdiff(colnames(out), colnames(out_int))
+    out_int[, col_diff] <- NA
+    out <- rbind(out_int, out)
 
+    out <- out[order(match(out$Parameter,colnames(posteriors))),]
+
+    return(out)
   }
+
+  out <- describe_posterior.data.frame(
+    posteriors,
+    centrality = centrality,
+    dispersion = dispersion,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    rope_range = rope_range,
+    rope_ci = rope_ci,
+    bf_prior = bf_prior,
+    BF = BF,
+    ...
+  )
 
 }
 
