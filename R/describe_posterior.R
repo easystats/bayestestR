@@ -325,6 +325,42 @@ describe_posterior.double <- describe_posterior.numeric
 #' @export
 describe_posterior.data.frame <- describe_posterior.numeric
 
+#' @export
+describe_posterior.effectsize_std_params <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, BF = 1, ...){
+
+  class(posteriors) <- "data.frame"
+
+  if ("(Intercept)" %in% colnames(posteriors)) {
+    int_i <- which("(Intercept)" == colnames(posteriors))
+    int <- posteriors[,int_i]
+
+    if (length(unique(int))==1) {
+      out <- describe_posterior.data.frame(
+        posteriors[,-int_i],
+        centrality = centrality,
+        dispersion = dispersion,
+        ci = ci,
+        ci_method = ci_method,
+        test = test,
+        rope_range = rope_range,
+        rope_ci = rope_ci,
+        bf_prior = bf_prior,
+        BF = BF,
+        ...
+      )
+
+      out_int <- data.frame(Parameter = "(Intercept)")
+      col_diff <- setdiff(colnames(out), colnames(out_int))
+      out_int[, col_diff] <- NA
+      out <- rbind(out_int, out)
+
+      return(out)
+    }
+
+  }
+
+}
+
 
 #' @export
 describe_posterior.sim.merMod <- describe_posterior.numeric
