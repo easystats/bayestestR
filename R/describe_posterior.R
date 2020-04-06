@@ -361,7 +361,7 @@ describe_posterior.effectsize_std_params <- function(posteriors, centrality = "m
     return(out)
   }
 
-  out <- describe_posterior.data.frame(
+  describe_posterior.data.frame(
     posteriors,
     centrality = centrality,
     dispersion = dispersion,
