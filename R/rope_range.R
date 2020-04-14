@@ -79,13 +79,54 @@ rope_range.BFBayesFactor <- rope_range.brmsfit
 rope_range.lm <- rope_range.brmsfit
 
 #' @export
+rope_range.glm <- rope_range.brmsfit
+
+#' @export
 rope_range.merMod <- rope_range.brmsfit
+
+#' @export
+rope_range.glmmTMB <- rope_range.brmsfit
+
+#' @export
+rope_range.mixed <- rope_range.brmsfit
+
+#' @export
+rope_range.MixMod <- rope_range.brmsfit
+
+#' @export
+rope_range.wbm <- rope_range.brmsfit
+
+#' @export
+rope_range.feis <- rope_range.brmsfit
+
+#' @export
+rope_range.gee <- rope_range.brmsfit
+
+#' @export
+rope_range.lme <- rope_range.brmsfit
+
+#' @export
+rope_range.felm <- rope_range.brmsfit
+
+#' @export
+rope_range.hurdle <- rope_range.brmsfit
+
+#' @export
+rope_range.zeroinfl <- rope_range.brmsfit
 
 #' @export
 rope_range.default <- function(x, ...) {
   c(-.1, .1)
 }
 
+
+
+
+# helper ------------------
+
+
+#' @importFrom stats deviance
+#' @importFrom insight n_obs find_parameters
 .rope_range <- function(x, information, response) {
   negligible_value <- tryCatch(
     {
@@ -93,9 +134,13 @@ rope_range.default <- function(x, ...) {
       if (information$is_linear) {
         0.1 * stats::sd(response)
 
-        # General Linear Models
+        # Logistic Regression Models
       } else if (information$is_binomial) {
         0.1 * pi / sqrt(3)
+
+        # General Linear Models
+      } else if (information$is_binomial) {
+        0.1 * sqrt(stats::deviance(x) / (insight::n_obs(x) - length(insight::find_parameters(x, flatten = TRUE))))
 
         # T-tests
       } else if (information$is_ttest) {
