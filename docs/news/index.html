@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -46,7 +50,6 @@
 
 <meta property="og:title" content="Changelog" />
 <meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -74,7 +77,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -88,7 +91,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3.1</span>
       </span>
     </div>
 
@@ -159,7 +162,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/easystats/bayestestR/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -173,13 +181,28 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
-      
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/easystats/bayestestR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="bayestestr-05x" class="section level1">
-<h1 class="page-header">
-<a href="#bayestestr-05x" class="anchor"></a>bayestestR 0.5.x<small> Unreleased </small>
+    <div id="bayestestr-054" class="section level1">
+<h1 class="page-header" data-toc-text="0.5.4">
+<a href="#bayestestr-054" class="anchor"></a>bayestestR 0.5.4<small> Unreleased </small>
+</h1>
+<div id="changes-to-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<ul>
+<li>
+<code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> now also works on <code><a href="https://rdrr.io/pkg/effectsize/man/standardize_parameters.html">effectsize::standardize_posteriors()</a></code>.</li>
+<li>
+<code><a href="../reference/rope_range.html">rope_range()</a></code> supports more (frequentis) models.</li>
+</ul>
+</div>
+</div>
+    <div id="bayestestr-053" class="section level1">
+<h1 class="page-header" data-toc-text="0.5.3">
+<a href="#bayestestr-053" class="anchor"></a>bayestestR 0.5.3<small> 2020-03-26 </small>
 </h1>
 <div id="general" class="section level2">
 <h2 class="hasAnchor">
@@ -188,18 +211,26 @@
 <li>Support for <em>bcplm</em> objects (package <strong>cplm</strong>)</li>
 </ul>
 </div>
+<div id="changes-to-functions-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changes-to-functions-1" class="anchor"></a>Changes to functions</h2>
+<ul>
+<li>
+<code><a href="../reference/estimate_density.html">estimate_density()</a></code> now also works on grouped data frames.</li>
+</ul>
+</div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed bug in <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> when models have very low posterior probability ( #286 ).</li>
+<li>Fixed bug in <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> when models have very low posterior probability ( <a href='https://github.com/easystats/bayestestR/issues/286'>#286</a> ).</li>
 <li>Fixed bug in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, <code><a href="../reference/rope.html">rope()</a></code> and <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> for <em>brmsfit</em> models with monotonic effect.</li>
 <li>Fixed issues related to latest changes in <code>as.data.frame.brmsfit()</code> from the <em>brms</em> package.</li>
 </ul>
 </div>
 </div>
     <div id="bayestestr-050" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5.0">
 <a href="#bayestestr-050" class="anchor"></a>bayestestR 0.5.0<small> 2020-01-18 </small>
 </h1>
 <div id="general-1" class="section level2">
@@ -229,7 +260,7 @@
 <li>
 <code><a href="../reference/point_estimate.html">point_estimate()</a></code>: argument <code>centrality</code> default value changed from ‘median’ to ‘all’.</li>
 <li>
-<code><a href="../reference/p_rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code><a href="../reference/mhdior.html">mhdior()</a></code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/p_rope.html">p_rope()</a></code> will refer to <code><a href="../reference/rope.html">rope(..., ci = 1)</a></code> ( #258 )</li>
+<code><a href="../reference/p_rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code><a href="../reference/mhdior.html">mhdior()</a></code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/p_rope.html">p_rope()</a></code> will refer to <code><a href="../reference/rope.html">rope(..., ci = 1)</a></code> ( <a href='https://github.com/easystats/bayestestR/issues/258'>#258</a> )</li>
 </ul>
 </div>
 <div id="bug-fixes-1" class="section level2">
@@ -237,14 +268,14 @@
 <a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed mistake in description of <code><a href="../reference/p_significance.html">p_significance()</a></code>.</li>
-<li>Fixed error when computing BFs with <code>emmGrid</code> based on some non-linear models ( #260 ).</li>
+<li>Fixed error when computing BFs with <code>emmGrid</code> based on some non-linear models ( <a href='https://github.com/easystats/bayestestR/issues/260'>#260</a> ).</li>
 <li>Fixed wrong output for percentage-values in <code>print.equivalence_test()</code>.</li>
 <li>Fixed issue in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> for <code>BFBayesFactor</code>-objects with more than one model.</li>
 </ul>
 </div>
 </div>
     <div id="bayestestr-040" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.4.0">
 <a href="#bayestestr-040" class="anchor"></a>bayestestR 0.4.0<small> 2019-10-20 </small>
 </h1>
 <div id="new-functions--features" class="section level2">
@@ -277,7 +308,7 @@
 </div>
 </div>
     <div id="bayestestr-030" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.3.0">
 <a href="#bayestestr-030" class="anchor"></a>bayestestR 0.3.0<small> 2019-09-22 </small>
 </h1>
 <div id="general-2" class="section level2">
@@ -296,7 +327,7 @@
 <li><p><code><a href="../reference/distribution.html">distribution_gamma()</a></code> to generate a (near-perfect or random) Gamma distribution</p></li>
 <li>
 <p><code>contr.bayes</code> function for orthogonal factor coding (implementation from Singmann &amp; Gronau’s <a href="https://github.com/bayesstuff/bfrms/"><code>bfrms</code></a>, used for proper prior estimation when factor have 3 levels or more. See Bayes factor vignette</p>
-<h2 id="changes-to-functions">Changes to functions</h2>
+<h2 id="changes-to-functions-2">Changes to functions</h2>
 </li>
 <li><p>Added support for <code>sim</code>, <code>sim.merMod</code> (from <code><a href="https://rdrr.io/pkg/arm/man/sim.html">arm::sim()</a></code>) and <code>MCMCglmm</code>-objects to many functions (like <code><a href="../reference/hdi.html">hdi()</a></code>, <code><a href="../reference/ci.html">ci()</a></code>, <code><a href="../reference/eti.html">eti()</a></code>, <code><a href="../reference/rope.html">rope()</a></code>, <code><a href="../reference/p_direction.html">p_direction()</a></code>, <code><a href="../reference/point_estimate.html">point_estimate()</a></code>, …)</p></li>
 <li><p><code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> gets an <code>effects</code> and <code>component</code> argument, to include the description of posterior samples from random effects and/or zero-inflation component.</p></li>
@@ -307,13 +338,13 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed bug in <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> where the same interaction sometimes appeared more than once (#223)</li>
+<li>Fixed bug in <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> where the same interaction sometimes appeared more than once (<a href='https://github.com/easystats/bayestestR/issues/223'>#223</a>)</li>
 <li>Fixed bug in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> for <em>stanreg</em> models fitted with fullrank-algorithm</li>
 </ul>
 </div>
 </div>
     <div id="bayestestr-025" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.2.5">
 <a href="#bayestestr-025" class="anchor"></a>bayestestR 0.2.5<small> 2019-08-06 </small>
 </h1>
 <div id="breaking-changes-1" class="section level2">
@@ -325,7 +356,7 @@
 <li>
 <code><a href="../reference/rope.html">rope()</a></code>: returns a proportion (between 0 and 1) instead of a value between 0 and 100</li>
 <li>
-<code><a href="../reference/p_direction.html">p_direction()</a></code>: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 (<a href="https://github.com/easystats/bayestestR/issues/168">#168</a>)</li>
+<code><a href="../reference/p_direction.html">p_direction()</a></code>: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 (<a href="https://github.com/easystats/bayestestR/issues/168"><a href='https://github.com/easystats/bayestestR/issues/168'>#168</a></a>)</li>
 <li>
 <code>bayesfactor_savagedickey()</code>: <code>hypothesis</code> argument replaced by <code>null</code> as part of the new <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> function</li>
 </ul>
@@ -363,7 +394,7 @@
 </div>
 </div>
     <div id="bayestestr-022" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.2.2">
 <a href="#bayestestr-022" class="anchor"></a>bayestestR 0.2.2<small> 2019-06-20 </small>
 </h1>
 <div id="breaking-changes-2" class="section level2">
@@ -404,7 +435,7 @@
 </div>
 </div>
     <div id="bayestestr-020" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.2.0">
 <a href="#bayestestr-020" class="anchor"></a>bayestestR 0.2.0<small> 2019-05-29 </small>
 </h1>
 <div id="breaking-changes-3" class="section level2">
@@ -463,7 +494,7 @@
 <code><a href="../reference/p_direction.html">p_direction()</a></code>: improved printing</li>
 <li>
 <code><a href="../reference/rope.html">rope()</a></code> for model-objects now returns the HDI values for all parameters as attribute in a consistent way</li>
-<li>Changes legend-labels in <code>plot.equivalence_test()</code> to align plots with the output of the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>-method (#78)</li>
+<li>Changes legend-labels in <code>plot.equivalence_test()</code> to align plots with the output of the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>-method (<a href='https://github.com/easystats/bayestestR/issues/78'>#78</a>)</li>
 </ul>
 </div>
 <div id="bug-fixes-6" class="section level2">
@@ -471,15 +502,15 @@
 <a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
-<code><a href="../reference/hdi.html">hdi()</a></code> returned multiple class attributes (#72)</li>
+<code><a href="../reference/hdi.html">hdi()</a></code> returned multiple class attributes (<a href='https://github.com/easystats/bayestestR/issues/72'>#72</a>)</li>
 <li>Printing results from <code><a href="../reference/hdi.html">hdi()</a></code> failed when <code>ci</code>-argument had fractional parts for percentage values (e.g. <code>ci = .995</code>).</li>
 <li>
-<code>plot.equivalence_test()</code> did not work properly for <em>brms</em>-models (#76).</li>
+<code>plot.equivalence_test()</code> did not work properly for <em>brms</em>-models (<a href='https://github.com/easystats/bayestestR/issues/76'>#76</a>).</li>
 </ul>
 </div>
 </div>
     <div id="bayestestr-010" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1.0">
 <a href="#bayestestr-010" class="anchor"></a>bayestestR 0.1.0<small> 2019-04-08 </small>
 </h1>
 <ul>
@@ -490,20 +521,10 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#bayestestr-05x">0.5</a></li>
-        <li><a href="#bayestestr-050">0.5.0</a></li>
-        <li><a href="#bayestestr-040">0.4.0</a></li>
-        <li><a href="#bayestestr-030">0.3.0</a></li>
-        <li><a href="#bayestestr-025">0.2.5</a></li>
-        <li><a href="#bayestestr-022">0.2.2</a></li>
-        <li><a href="#bayestestr-020">0.2.0</a></li>
-        <li><a href="#bayestestr-010">0.1.0</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -515,7 +536,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
