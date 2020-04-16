@@ -40,18 +40,6 @@ map_estimate <- function(x, precision = 2^10, method = "kernel", ...) {
 
 
 
-#' @export
-print.map_estimate <- function(x, ...) {
-  if (inherits(x, "data.frame")) {
-    print.data.frame(x)
-  } else {
-    cat(sprintf("MAP = %.2f", x))
-  }
-}
-
-
-
-
 
 #' @rdname map_estimate
 #' @export
