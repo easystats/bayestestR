@@ -1,6 +1,7 @@
 #' @importFrom insight format_table
 #' @export
 print.describe_posterior <- function(x, digits = 3, ...) {
+  orig_x <- x
   if ("data_plot" %in% class(x)) {
     cat(insight::format_table(as.data.frame(x), digits = digits))
   } else {
@@ -11,4 +12,5 @@ print.describe_posterior <- function(x, digits = 3, ...) {
     }
     print_data_frame(x, digits = digits)
   }
+  invisible(orig_x)
 }
