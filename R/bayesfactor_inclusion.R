@@ -159,49 +159,6 @@ bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, pr
 
 
 #' @keywords internal
-#' @importFrom stats as.formula terms terms.formula
-.get_model_table <- function(BFGrid, priorOdds = NULL, ...) {
-  denominator <- attr(BFGrid, "denominator")
-  BFGrid <- rbind(BFGrid[denominator, ], BFGrid[-denominator, ])
-  attr(BFGrid, "denominator") <- 1
-
-  # Prior and post odds
-  Modelnames <- BFGrid$Model
-  if (!is.null(priorOdds)) {
-    priorOdds <- c(1, priorOdds)
-  } else {
-    priorOdds <- rep(1, length(Modelnames))
-  }
-
-  posterior_odds <- priorOdds * BFGrid$BF
-
-  priorProbs <- priorOdds / sum(priorOdds)
-  postProbs <- posterior_odds / sum(posterior_odds)
-
-  df.model <- data.frame(
-    Modelnames,
-    priorProbs,
-    postProbs,
-    stringsAsFactors = FALSE
-  )
-
-  # add effects table
-  for (m in seq_len(nrow(df.model))) {
-    tmp_terms <- .make_terms(df.model$Modelnames[m])
-    if (length(tmp_terms) > 0) {
-      missing_terms <- !tmp_terms %in% colnames(df.model) # For R < 3.6.0
-      if (any(missing_terms)) df.model[, tmp_terms[missing_terms]] <- NA # For R < 3.6.0
-      df.model[m, tmp_terms] <- TRUE
-    }
-  }
-
-  df.model[is.na(df.model)] <- FALSE
-
-  df.model
-}
-
-
-#' @keywords internal
 .includes_interaction <- function(eff, effnames) {
   eff_b <- strsplit(eff, "\\:")
   effnames_b <- strsplit(effnames, "\\:")

@@ -29,7 +29,13 @@ weighted_posteriors(..., prior_odds = NULL, missing = 0, verbose = TRUE)
   parameters = NULL
 )
 
-\method{weighted_posteriors}{BFBayesFactor}(..., prior_odds = NULL, missing = 0, verbose = TRUE)
+\method{weighted_posteriors}{BFBayesFactor}(
+  ...,
+  prior_odds = NULL,
+  missing = 0,
+  verbose = TRUE,
+  iterations = 4000
+)
 }
 \arguments{
 \item{...}{Fitted models (see details), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').}
@@ -52,6 +58,8 @@ should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{iterations}{For \code{BayesFactor} models, how many posterior samples to draw.}
 }
 \value{
 A data frame with posterior distributions (weighted across models) .
