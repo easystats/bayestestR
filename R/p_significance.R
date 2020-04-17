@@ -72,6 +72,7 @@ p_significance.numeric <- function(x, threshold = "default", ...) {
 
 #' @export
 p_significance.data.frame <- function(x, threshold = "default", ...) {
+  obj_name <- .safe_deparse(substitute(x))
   threshold <- .select_threshold_ps(x = x, threshold = threshold)
   x <- .select_nums(x)
 
@@ -89,13 +90,38 @@ p_significance.data.frame <- function(x, threshold = "default", ...) {
   )
 
   attr(out, "threshold") <- threshold
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- obj_name
   class(out) <- unique(c("p_significance", "see_p_significance", class(out)))
 
   out
 }
 
 
+#' @export
+p_significance.parameters_simulate_model <- function(x, threshold = "default", ...) {
+  obj_name <- attr(x, "object_name")
+  if (!is.null(obj_name)) {
+    # first try, parent frame
+    model <- tryCatch({
+      get(obj_name, envir = parent.frame())
+    },
+    error = function(e) { NULL }
+    )
+
+    if (is.null(model)) {
+      # second try, global env
+      model <- tryCatch({
+        get(obj_name, envir = globalenv())
+      },
+      error = function(e) { NULL }
+      )
+    }
+  }
+  threshold <- .select_threshold_ps(x = x, threshold = threshold)
+  out <- p_significance.data.frame(x)
+  attr(out, "object_name") <- obj_name
+  out
+}
 
 
 #' @export
