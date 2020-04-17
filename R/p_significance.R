@@ -216,7 +216,7 @@ as.double.p_significance <- as.numeric.p_significance
 .select_threshold_ps <- function(x = NULL, model = NULL, threshold = "default") {
   # If a range is passed
   if (length(threshold) > 1) {
-    if(length(unique(abs(threshold))) == 1) { # If symetric range
+    if (length(unique(abs(threshold))) == 1) { # If symmetric range
       threshold <- abs(threshold[2])
     } else{
       stop("`threshold` should be 'default' or a numeric value (e.g., 0.1).")
