@@ -3,6 +3,7 @@
 ## Changes to functions
 
 - `describe_posterior()` now also works on `effectsize::standardize_posteriors()`.
+- `p_significance()` now also works on `parameters::simulate_model()`.
 - `rope_range()` supports more (frequentis) models.
 
 # bayestestR 0.5.3
