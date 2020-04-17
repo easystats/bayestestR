@@ -1,5 +1,6 @@
 #' @export
 print.p_direction <- function(x, digits = 2, ...) {
+  orig_x <- x
   if ("data_plot" %in% class(x)) {
     print(as.data.frame(x))
   } else if ("data.frame" %in% class(x)) {
@@ -7,6 +8,7 @@ print.p_direction <- function(x, digits = 2, ...) {
   } else {
     cat(sprintf("pd = %s%%", insight::format_value(x * 100, digits = digits)))
   }
+  invisible(orig_x)
 }
 
 #' @keywords internal

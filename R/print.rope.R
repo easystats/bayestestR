@@ -1,6 +1,7 @@
 #' @importFrom insight print_color
 #' @export
 print.rope <- function(x, digits = 2, ...) {
+  orig_x <- x
   insight::print_color(sprintf(
     "# Proportion%s of samples inside the ROPE [%.*f, %.*f]:\n\n",
     ifelse(all(x$CI[1] == x$CI), "", "s"),
@@ -52,4 +53,5 @@ print.rope <- function(x, digits = 2, ...) {
       cat("\n")
     }
   }
+  invisible(orig_x)
 }

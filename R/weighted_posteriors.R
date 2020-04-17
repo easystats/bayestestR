@@ -5,6 +5,7 @@
 #'
 #' @param missing An optional numeric value to use if a model does not contain a parameter that appears in other models. Defaults to 0.
 #' @param prior_odds Optional vector of prior odds for the models compared to the first model (or the denominator, for \code{BFBayesFactor} objects).
+#' @param iterations For \code{BayesFactor} models, how many posterior samples to draw.
 #' @inheritParams bayesfactor_models
 #' @inheritParams bayesfactor_parameters
 #'
@@ -96,13 +97,12 @@ weighted_posteriors.stanreg <- function(..., prior_odds = NULL, missing = 0, ver
   BFMods <- bayesfactor_models(..., denominator = 1, verbose = verbose)
 
   # Compute posterior model probabilities
-  prior_odds <- c(1, prior_odds)
-  posterior_odds <- prior_odds * BFMods$BF
-  postProbs <- posterior_odds / sum(posterior_odds)
+  model_tab <- .get_model_table(BFMods, priorOdds = prior_odds)
+  postProbs <- model_tab$postProbs
 
   # Compute weighted number of samples
-  nsamples <- min(sapply(Mods, .total_samps))
-  weighted_samps <- round(nsamples * postProbs)
+  iterations <- min(sapply(Mods, .total_samps))
+  weighted_samps <- round(iterations * postProbs)
 
   # extract parameters
   params <- lapply(Mods, insight::get_parameters,
@@ -121,20 +121,18 @@ weighted_posteriors.brmsfit <- weighted_posteriors.stanreg
 
 #' @export
 #' @rdname weighted_posteriors
-weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE){
+weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE, iterations = 4000){
   Mods <- c(...)
 
   # Get Bayes factors
   BFMods <- bayesfactor_models(Mods, verbose = verbose)
 
   # Compute posterior model probabilities
-  prior_odds <- c(1, prior_odds)
-  posterior_odds <- prior_odds * BFMods$BF
-  postProbs <- posterior_odds / sum(posterior_odds)
+  model_tab <- .get_model_table(BFMods, priorOdds = prior_odds)
+  postProbs <- model_tab$postProbs
 
   # Compute weighted number of samples
-  nsamples <- 4000
-  weighted_samps <- round(nsamples * postProbs)
+  weighted_samps <- round(iterations * postProbs)
 
   # extract parameters
   intercept_only <- which(BFMods$Model == "1")
@@ -144,16 +142,16 @@ weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 
       warning(
         "Cannot sample from BFBayesFactor model with intercept only (model prob = ",
         round(postProbs[m], 3) * 100, "%).\n",
-        "Ommiting the intercept model.",
+        "Omitting the intercept model.",
         call. = FALSE
       )
       next
     } else if (m == 1) {
       # If the model is the "den" model
-      params[[m]] <- BayesFactor::posterior(1 / Mods[1], iterations = nsamples, progress = FALSE)
+      params[[m]] <- BayesFactor::posterior(1 / Mods[1], iterations = iterations, progress = FALSE)
     } else {
       params[[m]] <- BayesFactor::posterior(
-        Mods[m - 1], iterations = nsamples, progress = FALSE
+        Mods[m - 1], iterations = iterations, progress = FALSE
       )
     }
   }

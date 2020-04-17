@@ -198,6 +198,7 @@ It is important to provide the correct \code{prior} for meaningful results.
   \item When \code{posterior} is an \code{emmGrid} object: \itemize{
     \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
     \item \code{prior} can also be an \code{emmGrid} object equvilant to \code{posterior} but created with a model of priors samples \emph{only}.
+    \item \strong{Note:} When the \code{emmGrid} has undergone any transformations (\code{"log"}, \code{"response"}, etc.), or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stated above.
   }
 }}
 \subsection{One-sided Tests (setting an order restriction)}{

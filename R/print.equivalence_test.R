@@ -1,6 +1,7 @@
 #' @importFrom insight print_color
 #' @export
 print.equivalence_test <- function(x, digits = 2, ...) {
+  orig_x <- x
   insight::print_color("# Test for Practical Equivalence\n\n", "blue")
   cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, x$ROPE_low[1], digits, x$ROPE_high[1]))
 
@@ -89,6 +90,7 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   #   insight::print_color(sprintf(" %s\n\n", component_name), "red")
   #   .print_equivalence_component(x, ci, digits)
   # }
+  invisible(orig_x)
 }
 
 

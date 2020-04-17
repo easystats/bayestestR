@@ -82,6 +82,9 @@ if (require("rstanarm") && require("emmeans")) {
     xsdbf <- bayesfactor_parameters(all_, prior = model)
     testthat::expect_equal(log(xsdbf$BF), c(-2.5756125848835, 1.69713280431204, -0.212277519930343), tolerance = .1)
     testthat::expect_warning(bayesfactor_parameters(all_))
+
+    # error - cannot deal with regrid / transform
+    testthat::expect_error(bayesfactor_parameters(regrid(all_), prior = model))
   })
 
   test_that("emmGrid bayesfactor_restricted", {
