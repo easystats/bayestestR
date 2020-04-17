@@ -126,7 +126,7 @@ rope_range.default <- function(x, ...) {
 # helper ------------------
 
 
-#' @importFrom stats deviance
+#' @importFrom stats sigma
 #' @importFrom insight n_obs find_parameters
 .rope_range <- function(x, information, response) {
   negligible_value <- tryCatch(
@@ -141,7 +141,7 @@ rope_range.default <- function(x, ...) {
 
         # General Linear Models
       } else if (information$is_count) {
-        0.1 * sqrt(stats::deviance(x) / (insight::n_obs(x) - length(insight::find_parameters(x, flatten = TRUE))))
+        0.1 * stats::sigma(x)
 
         # T-tests
       } else if (information$is_ttest) {
