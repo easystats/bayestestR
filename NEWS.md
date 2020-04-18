@@ -6,6 +6,10 @@
 - `p_significance()` now also works on `parameters::simulate_model()`.
 - `rope_range()` supports more (frequentis) models.
 
+## Bug fixes
+
+- Fixed issue with `plot()` `data.frame`-methods of `p_direction()` and `equivalence_test()`.
+
 # bayestestR 0.5.3
 
 ## General

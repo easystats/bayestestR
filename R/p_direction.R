@@ -129,6 +129,7 @@ p_direction.numeric <- function(x, method = "direct", ...) {
 #' @rdname p_direction
 #' @export
 p_direction.data.frame <- function(x, method = "direct", ...) {
+  obj_name <- .safe_deparse(substitute(x))
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
@@ -144,7 +145,7 @@ p_direction.data.frame <- function(x, method = "direct", ...) {
     stringsAsFactors = FALSE
   )
 
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- obj_name
   class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
 
   out
