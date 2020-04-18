@@ -160,7 +160,7 @@ weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 
     }
   }
 
-  params <- lapply(params, as.data.frame)
+  params <- lapply(params, data.frame)
 
   res <- .weighted_posteriors(params, weighted_samps, missing)
   attr(res, "weights") <- data.frame(Model = BFMods$Model, weights = weighted_samps)
