@@ -142,7 +142,7 @@ rope_range.default <- function(x, ...) {
         # Count Models
       } else if (information$is_count) {
         sig <- stats::sigma(x)
-        if (length(sig)) {
+        if (!is.null(sig) && length(sig) > 0 && !is.na(sig)) {
           0.1 * sig
         } else {
           0.1
