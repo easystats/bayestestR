@@ -139,9 +139,14 @@ rope_range.default <- function(x, ...) {
       } else if (information$is_binomial) {
         0.1 * pi / sqrt(3)
 
-        # General Linear Models
+        # Count Models
       } else if (information$is_count) {
-        0.1 * stats::sigma(x)
+        sig <- stats::sigma(x)
+        if (length(sig)) {
+          0.1 * sig
+        } else {
+          0.1
+        }
 
         # T-tests
       } else if (information$is_ttest) {
