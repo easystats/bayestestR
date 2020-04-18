@@ -166,7 +166,7 @@
 
 #' @keywords internal
 #' @importFrom stats as.formula terms terms.formula
-.get_model_table <- function(BFGrid, priorOdds = NULL, ...) {
+.get_model_table <- function(BFGrid, priorOdds = NULL, add_effects_table = TRUE, ...) {
   denominator <- attr(BFGrid, "denominator")
   BFGrid <- rbind(BFGrid[denominator, ], BFGrid[-denominator, ])
   attr(BFGrid, "denominator") <- 1
@@ -192,12 +192,14 @@
   )
 
   # add effects table
-  for (m in seq_len(nrow(df.model))) {
-    tmp_terms <- .make_terms(df.model$Modelnames[m])
-    if (length(tmp_terms) > 0) {
-      missing_terms <- !tmp_terms %in% colnames(df.model) # For R < 3.6.0
-      if (any(missing_terms)) df.model[, tmp_terms[missing_terms]] <- NA # For R < 3.6.0
-      df.model[m, tmp_terms] <- TRUE
+  if (add_effects_table) {
+    for (m in seq_len(nrow(df.model))) {
+      tmp_terms <- .make_terms(df.model$Modelnames[m])
+      if (length(tmp_terms) > 0) {
+        missing_terms <- !tmp_terms %in% colnames(df.model) # For R < 3.6.0
+        if (any(missing_terms)) df.model[, tmp_terms[missing_terms]] <- NA # For R < 3.6.0
+        df.model[m, tmp_terms] <- TRUE
+      }
     }
   }
 
