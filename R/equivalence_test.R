@@ -170,7 +170,7 @@ equivalence_test.data.frame <- function(x, range = "default", ci = .89, verbose 
   row.names(out) <- NULL
 
   attr(out, "object_name") <- .safe_deparse(substitute(x))
-  class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
+  class(out) <- unique(c("equivalence_test", "see_equivalence_test_df", class(out)))
 
   out
 }
