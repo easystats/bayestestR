@@ -12,6 +12,21 @@ if (requireNamespace("BayesFactor", quietly = TRUE)) {
     testthat::expect_warning(weighted_posteriors(null_den))
     testthat::expect_is(weighted_posteriors(no_null), "data.frame")
   })
+
+  test_that("weighted_posteriors for BayesFactor", {
+    library(BayesFactor)
+
+    data(sleep)
+    set.seed(123)
+    BFS <- ttestBF(x = sleep$extra[sleep$group == 1],
+                   y = sleep$extra[sleep$group == 2],
+                   nullInterval = c(-Inf,0),
+                   paired = TRUE)
+
+    res <- weighted_posteriors(BFS)
+
+    testthat::expect_equal(attributes(res)$weights$weights, c(113, 3876, 11))
+  })
 }
 
 

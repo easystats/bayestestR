@@ -128,7 +128,7 @@ weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 
   BFMods <- bayesfactor_models(Mods, verbose = verbose)
 
   # Compute posterior model probabilities
-  model_tab <- .get_model_table(BFMods, priorOdds = prior_odds)
+  model_tab <- .get_model_table(BFMods, priorOdds = prior_odds, add_effects_table = FALSE)
   postProbs <- model_tab$postProbs
 
   # Compute weighted number of samples
