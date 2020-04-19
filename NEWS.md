@@ -9,6 +9,7 @@
 ## Bug fixes
 
 - Fixed issue with `plot()` `data.frame`-methods of `p_direction()` and `equivalence_test()`.
+- Fix check issues for forthcoming insight-update.
 
 # bayestestR 0.5.3
 
