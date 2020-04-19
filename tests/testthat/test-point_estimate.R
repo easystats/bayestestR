@@ -1,6 +1,4 @@
-if (requireNamespace("rstanarm", quietly = TRUE)) {
-  context("point_estimate")
-
+if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
   if (require("insight")) {
     m <- insight::download_model("stanreg_merMod_5")
     p <- insight::get_parameters(m, effects = "all")

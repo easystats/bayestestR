@@ -1,8 +1,6 @@
 if (require("rstanarm") &&
     require("BayesFactor") &&
     require("testthat")) {
-  context("bayesfactor_restricted")
-
   test_that("bayesfactor_restricted df", {
     set.seed(444)
     prior <- data.frame(

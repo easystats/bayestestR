@@ -1,4 +1,4 @@
-if (require("rstanarm")) {
+if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
 
   test_that("hdi", {
     testthat::expect_equal(hdi(distribution_normal(1000), ci = .90)$CI_low[1], -1.64, tolerance = 0.02)

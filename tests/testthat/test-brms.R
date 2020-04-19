@@ -1,14 +1,9 @@
-if (requireNamespace("brms", quietly = TRUE)) {
-  context("brms")
-
+if (require("brms", quietly = TRUE)) {
   test_that("brms", {
     # testthat::skip_on_travis()
     testthat::skip_on_cran()
 
     set.seed(333)
-
-    library(brms)
-
     model <- insight::download_model("brms_mixed_1")
 
     testthat::expect_is(hdi(model), "data.frame")

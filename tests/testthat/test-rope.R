@@ -1,6 +1,4 @@
-if (require("rstanarm")) {
-  context("rope")
-
+if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
   test_that("rope", {
     testthat::expect_equal(as.numeric(rope(distribution_normal(1000, 0, 1))), 0.0898, tolerance = 0.01)
     testthat::expect_equal(equivalence_test(distribution_normal(1000, 0, 1))$ROPE_Equivalence, "Undecided")

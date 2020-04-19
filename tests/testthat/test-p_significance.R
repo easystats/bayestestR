@@ -1,6 +1,4 @@
-if (requireNamespace("rstanarm", quietly = TRUE)) {
-  context("p_significance")
-
+if (require("rstanarm", quietly = TRUE)) {
   test_that("p_significance", {
     set.seed(333)
     x <- bayestestR::distribution_normal(10000, 1, 1)

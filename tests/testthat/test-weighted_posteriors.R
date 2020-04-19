@@ -1,5 +1,4 @@
-if (requireNamespace("BayesFactor", quietly = TRUE)) {
-  library(BayesFactor)
+if (require("BayesFactor", quietly = TRUE)) {
   set.seed(123)
 
   test_that("weighted_posteriors for BayesFactor", {
@@ -44,14 +43,11 @@ if (requireNamespace("BayesFactor", quietly = TRUE)) {
 }
 
 
-if (requireNamespace("brms", quietly = TRUE)) {
-  context("weighted_posteriors")
-
+if (require("brms", quietly = TRUE)) {
   test_that("weighted_posteriors vs posterior_average", {
     testthat::skip_on_cran()
     testthat::skip_on_travis()
 
-    library(brms)
     fit1 <- brm(rating ~ treat + period + carry,
                 data = inhaler,
                 refresh = 0,

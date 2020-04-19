@@ -1,4 +1,4 @@
-if (requireNamespace("rstanarm", quietly = TRUE)) {
+if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
   test_that("p_direction", {
     set.seed(333)
     x <- bayestestR::distribution_normal(10000, 1, 1)

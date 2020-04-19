@@ -1,5 +1,3 @@
-context("simulate_data")
-
 test_that("simulate_correlation", {
   set.seed(333)
   data <- simulate_correlation(r = 0.5, n = 50)

@@ -60,17 +60,18 @@ Extract diagnostic metrics (Effective Sample Size (\code{ESS}), \code{Rhat} and 
 \dontrun{
 # rstanarm models
 # -----------------------------------------------
-library(rstanarm)
-model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
-diagnostic_posterior(model)
+if (require("rstanarm", quietly = TRUE) {
+  model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+  diagnostic_posterior(model)
+}
 
 # brms models
 # -----------------------------------------------
-library(brms)
-model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-diagnostic_posterior(model)
+if (require("brms", quietly = TRUE)) {
+  model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+  diagnostic_posterior(model)
 }
-
+}
 }
 \references{
 \itemize{
