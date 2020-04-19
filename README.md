@@ -136,7 +136,7 @@ describe_posterior(
   test = c("p_direction", "p_significance")
 )
 ##   Parameter Median CI CI_low CI_high   pd   ps
-## 1 Posterior  0.018 89   -1.5     1.7 0.51 0.46
+## 1 Posterior  0.042 89   -1.6     1.6 0.52 0.47
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -186,21 +186,23 @@ describe_posterior(
     ## 
     ## # Random Effects (Conditional Model)
     ## 
-    ## Parameter | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat
-    ## ------------------------------------------------------------------------------------------
-    ## persons 1 | -1.315 | -1.233 | -1.397 | 89 | -2.555 |  -0.031 | 0.940 | 0.924 |  80 | 1.004
-    ## persons 2 | -0.380 | -0.264 | -0.542 | 89 | -1.451 |   1.008 | 0.660 | 0.632 |  78 | 1.006
-    ## persons 3 |  0.307 |  0.438 |  0.136 | 89 | -0.728 |   1.588 | 0.708 | 0.644 |  77 | 1.003
-    ## persons 4 |  1.207 |  1.331 |  1.030 | 89 |  0.290 |   2.537 | 0.960 | 0.960 |  78 | 1.004
+    ## Parameter               | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat
+    ## --------------------------------------------------------------------------------------------------------
+    ## persons 1               | -1.315 | -1.233 | -1.397 | 89 | -2.555 |  -0.031 | 0.940 | 0.924 |  80 | 1.004
+    ## persons 2               | -0.380 | -0.264 | -0.542 | 89 | -1.451 |   1.008 | 0.660 | 0.632 |  78 | 1.006
+    ## persons 3               |  0.307 |  0.438 |  0.136 | 89 | -0.728 |   1.588 | 0.708 | 0.644 |  77 | 1.003
+    ## persons 4               |  1.207 |  1.331 |  1.030 | 89 |  0.290 |   2.537 | 0.960 | 0.960 |  78 | 1.004
+    ## SD persons_ (Intercept) |  1.404 |  1.676 |  1.093 | 89 |  0.613 |   3.104 | 1.000 | 1.000 |  47 | 0.998
     ## 
     ## # Random Effects (Zero-Inflated Model)
     ## 
-    ## Parameter | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat
-    ## ------------------------------------------------------------------------------------------
-    ## persons 1 |  1.355 |  1.319 |  1.366 | 89 |  0.368 |   2.659 | 0.956 | 0.952 |  91 | 1.005
-    ## persons 2 |  0.382 |  0.357 |  0.509 | 89 | -0.726 |   1.488 | 0.724 | 0.668 |  99 | 1.000
-    ## persons 3 | -0.117 | -0.142 | -0.103 | 89 | -1.162 |   1.128 | 0.580 | 0.512 |  94 | 0.997
-    ## persons 4 | -1.166 | -1.270 | -1.024 | 89 | -2.462 |  -0.061 | 0.972 | 0.960 | 113 | 0.997
+    ## Parameter              | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat
+    ## -------------------------------------------------------------------------------------------------------
+    ## persons 1              |  1.355 |  1.319 |  1.366 | 89 |  0.368 |   2.659 | 0.956 | 0.952 |  91 | 1.005
+    ## persons 2              |  0.382 |  0.357 |  0.509 | 89 | -0.726 |   1.488 | 0.724 | 0.668 |  99 | 1.000
+    ## persons 3              | -0.117 | -0.142 | -0.103 | 89 | -1.162 |   1.128 | 0.580 | 0.512 |  94 | 0.997
+    ## persons 4              | -1.166 | -1.270 | -1.024 | 89 | -2.462 |  -0.061 | 0.972 | 0.960 | 113 | 0.997
+    ## SD persons (Intercept) |  1.484 |  1.749 |  1.162 | 89 |  0.463 |   3.094 | 1.000 | 1.000 |  69 | 1.006
 
 *bayestestR* also includes [**many other
 features**](https://easystats.github.io/bayestestR/reference/index.html)
@@ -378,7 +380,7 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## 
 ## BF  
 ## ----
-## 2.16
+## 2.27
 ## 
 ## * Evidence Against The Null: [0]
 ```
@@ -441,12 +443,12 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.42
+## [1] 0.4
 ```
 
 # References
 
-<div id="refs" class="references">
+<div id="refs" class="references hanging-indent">
 
 <div id="ref-kruschke2015doing">
 
