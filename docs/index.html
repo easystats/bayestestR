@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -238,7 +238,7 @@
   <span class="kw">test</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"p_direction"</span>, <span class="st">"p_significance"</span>)
 )
 <span class="co">##   Parameter Median CI CI_low CI_high   pd   ps</span>
-<span class="co">## 1 Posterior  0.018 89   -1.5     1.7 0.51 0.46</span></pre></div>
+<span class="co">## 1 Posterior  0.042 89   -1.6     1.6 0.52 0.47</span></pre></div>
 <p><code><a href="reference/describe_posterior.html">describe_posterior()</a></code> works for many objects, including more complex <em>brmsfit</em>-models. For better readability, the output is separated by model components:</p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="no">zinb</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="st">"http://stats.idre.ucla.edu/stat/data/fish.csv"</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">123</span>)
@@ -280,21 +280,23 @@
 <span id="cb4-18"><a href="#cb4-18"></a><span class="co">## </span></span>
 <span id="cb4-19"><a href="#cb4-19"></a><span class="co">## # Random Effects (Conditional Model)</span></span>
 <span id="cb4-20"><a href="#cb4-20"></a><span class="co">## </span></span>
-<span id="cb4-21"><a href="#cb4-21"></a><span class="co">## Parameter | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat</span></span>
-<span id="cb4-22"><a href="#cb4-22"></a><span class="co">## ------------------------------------------------------------------------------------------</span></span>
-<span id="cb4-23"><a href="#cb4-23"></a><span class="co">## persons 1 | -1.315 | -1.233 | -1.397 | 89 | -2.555 |  -0.031 | 0.940 | 0.924 |  80 | 1.004</span></span>
-<span id="cb4-24"><a href="#cb4-24"></a><span class="co">## persons 2 | -0.380 | -0.264 | -0.542 | 89 | -1.451 |   1.008 | 0.660 | 0.632 |  78 | 1.006</span></span>
-<span id="cb4-25"><a href="#cb4-25"></a><span class="co">## persons 3 |  0.307 |  0.438 |  0.136 | 89 | -0.728 |   1.588 | 0.708 | 0.644 |  77 | 1.003</span></span>
-<span id="cb4-26"><a href="#cb4-26"></a><span class="co">## persons 4 |  1.207 |  1.331 |  1.030 | 89 |  0.290 |   2.537 | 0.960 | 0.960 |  78 | 1.004</span></span>
-<span id="cb4-27"><a href="#cb4-27"></a><span class="co">## </span></span>
-<span id="cb4-28"><a href="#cb4-28"></a><span class="co">## # Random Effects (Zero-Inflated Model)</span></span>
-<span id="cb4-29"><a href="#cb4-29"></a><span class="co">## </span></span>
-<span id="cb4-30"><a href="#cb4-30"></a><span class="co">## Parameter | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat</span></span>
-<span id="cb4-31"><a href="#cb4-31"></a><span class="co">## ------------------------------------------------------------------------------------------</span></span>
-<span id="cb4-32"><a href="#cb4-32"></a><span class="co">## persons 1 |  1.355 |  1.319 |  1.366 | 89 |  0.368 |   2.659 | 0.956 | 0.952 |  91 | 1.005</span></span>
-<span id="cb4-33"><a href="#cb4-33"></a><span class="co">## persons 2 |  0.382 |  0.357 |  0.509 | 89 | -0.726 |   1.488 | 0.724 | 0.668 |  99 | 1.000</span></span>
-<span id="cb4-34"><a href="#cb4-34"></a><span class="co">## persons 3 | -0.117 | -0.142 | -0.103 | 89 | -1.162 |   1.128 | 0.580 | 0.512 |  94 | 0.997</span></span>
-<span id="cb4-35"><a href="#cb4-35"></a><span class="co">## persons 4 | -1.166 | -1.270 | -1.024 | 89 | -2.462 |  -0.061 | 0.972 | 0.960 | 113 | 0.997</span></span></code></pre></div>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">## Parameter               | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co">## --------------------------------------------------------------------------------------------------------</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="co">## persons 1               | -1.315 | -1.233 | -1.397 | 89 | -2.555 |  -0.031 | 0.940 | 0.924 |  80 | 1.004</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="co">## persons 2               | -0.380 | -0.264 | -0.542 | 89 | -1.451 |   1.008 | 0.660 | 0.632 |  78 | 1.006</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="co">## persons 3               |  0.307 |  0.438 |  0.136 | 89 | -0.728 |   1.588 | 0.708 | 0.644 |  77 | 1.003</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a><span class="co">## persons 4               |  1.207 |  1.331 |  1.030 | 89 |  0.290 |   2.537 | 0.960 | 0.960 |  78 | 1.004</span></span>
+<span id="cb4-27"><a href="#cb4-27"></a><span class="co">## SD persons_ (Intercept) |  1.404 |  1.676 |  1.093 | 89 |  0.613 |   3.104 | 1.000 | 1.000 |  47 | 0.998</span></span>
+<span id="cb4-28"><a href="#cb4-28"></a><span class="co">## </span></span>
+<span id="cb4-29"><a href="#cb4-29"></a><span class="co">## # Random Effects (Zero-Inflated Model)</span></span>
+<span id="cb4-30"><a href="#cb4-30"></a><span class="co">## </span></span>
+<span id="cb4-31"><a href="#cb4-31"></a><span class="co">## Parameter              | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat</span></span>
+<span id="cb4-32"><a href="#cb4-32"></a><span class="co">## -------------------------------------------------------------------------------------------------------</span></span>
+<span id="cb4-33"><a href="#cb4-33"></a><span class="co">## persons 1              |  1.355 |  1.319 |  1.366 | 89 |  0.368 |   2.659 | 0.956 | 0.952 |  91 | 1.005</span></span>
+<span id="cb4-34"><a href="#cb4-34"></a><span class="co">## persons 2              |  0.382 |  0.357 |  0.509 | 89 | -0.726 |   1.488 | 0.724 | 0.668 |  99 | 1.000</span></span>
+<span id="cb4-35"><a href="#cb4-35"></a><span class="co">## persons 3              | -0.117 | -0.142 | -0.103 | 89 | -1.162 |   1.128 | 0.580 | 0.512 |  94 | 0.997</span></span>
+<span id="cb4-36"><a href="#cb4-36"></a><span class="co">## persons 4              | -1.166 | -1.270 | -1.024 | 89 | -2.462 |  -0.061 | 0.972 | 0.960 | 113 | 0.997</span></span>
+<span id="cb4-37"><a href="#cb4-37"></a><span class="co">## SD persons (Intercept) |  1.484 |  1.749 |  1.162 | 89 |  0.463 |   3.094 | 1.000 | 1.000 |  69 | 1.006</span></span></code></pre></div>
 <p><em>bayestestR</em> also includes <a href="https://easystats.github.io/bayestestR/reference/index.html"><strong>many other features</strong></a> useful for your Bayesian analsyes. Here are some more examples:</p>
 <div id="point-estimates" class="section level2">
 <h2 class="hasAnchor">
@@ -378,7 +380,7 @@
 <span class="co">## </span>
 <span class="co">## BF  </span>
 <span class="co">## ----</span>
-<span class="co">## 2.16</span>
+<span class="co">## 2.27</span>
 <span class="co">## </span>
 <span class="co">## * Evidence Against The Null: [0]</span></pre></div>
 <p><img src="reference/figures/unnamed-chunk-16-1.png"><!-- --></p>
@@ -412,14 +414,14 @@
 <a href="#probability-of-a-value" class="anchor"></a>Probability of a Value</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/density_at.html"><strong><code><a href="reference/density_at.html">density_at()</a></code></strong></a>: Compute the density of a given point of a distribution.</p>
 <div class="sourceCode" id="cb12"><pre class="r"><span class="fu"><a href="reference/density_at.html">density_at</a></span>(<span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="fl">1000</span>, <span class="fl">1</span>, <span class="fl">1</span>), <span class="fl">1</span>)
-<span class="co">## [1] 0.42</span></pre></div>
+<span class="co">## [1] 0.4</span></pre></div>
 </div>
 </div>
 </div>
 <div id="references" class="section level1">
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
-<div id="refs" class="references">
+<div id="refs" class="references hanging-indent">
 <div id="ref-kruschke2015doing">
 <p>Kruschke, J. K. (2015). <em>Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan</em> (2. ed). Amsterdam: Elsevier, Academic Press.</p>
 </div>

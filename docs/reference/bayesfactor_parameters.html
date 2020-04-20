@@ -113,7 +113,7 @@ For more info, in particular on specifying correct priors for factors with more 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -419,6 +419,7 @@ paradox</em>). Thus, you should only ever try (or want) to compute a Bayes facto
 <li><p>When <code>posterior</code> is an <code>emmGrid</code> object:</p><ul>
 <li><p><code>prior</code> should be the <code>stanreg</code> or <code>brmsfit</code> model used to create the <code>emmGrid</code> objects.</p></li>
 <li><p><code>prior</code> can also be an <code>emmGrid</code> object equvilant to <code>posterior</code> but created with a model of priors samples <em>only</em>.</p></li>
+<li><p><strong>Note:</strong> When the <code>emmGrid</code> has undergone any transformations (<code>"log"</code>, <code>"response"</code>, etc.), or <code>regrid</code>ing, then <code>prior</code> must be an <code>emmGrid</code> object, as stated above.</p></li>
 </ul></li>
 </ul>
 <h3>One-sided Tests (setting an order restriction)</h3>

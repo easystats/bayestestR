@@ -93,7 +93,7 @@ Weighting is done by comparing posterior model probabilities, via bayesfactor_mo
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -218,7 +218,13 @@ Weighting is done by comparing posterior model probabilities, via <code><a href=
 )
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>weighted_posteriors</span>(<span class='no'>...</span>, <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>weighted_posteriors</span>(
+  <span class='no'>...</span>,
+  <span class='kw'>prior_odds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>missing</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>4000</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -257,6 +263,10 @@ should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</cod
 filtered by default, so only parameters that typically appear in the
 <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></td>
+    </tr>
+    <tr>
+      <th>iterations</th>
+      <td><p>For <code>BayesFactor</code> models, how many posterior samples to draw.</p></td>
     </tr>
     </table>
 

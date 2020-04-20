@@ -49,7 +49,7 @@
   
 
 <meta property="og:title" content="Probability of Direction (pd) — p_direction" />
-<meta property="og:description" content="Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% (i.e., 0.5 and 1) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Although differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist p-value." />
+<meta property="og:description" content="Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% (i.e., 0.5 and 1) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Although differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist p-value. In some rare situations, especially when using when using model averaged posteriors (see weighted_posteriors or posterior_average), this value may be lower than 0.5." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -92,7 +92,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
       </span>
     </div>
 
@@ -188,7 +188,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Compute the <strong>Probability of Direction</strong> (<strong><em>pd</em></strong>, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% (<em>i.e.</em>, <code>0.5</code> and <code>1</code>) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Although differently expressed, this index is fairly similar (<em>i.e.</em>, is strongly correlated) to the frequentist <strong>p-value</strong>.</p>
+    <p>Compute the <strong>Probability of Direction</strong> (<strong><em>pd</em></strong>, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% (<em>i.e.</em>, <code>0.5</code> and <code>1</code>) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Although differently expressed, this index is fairly similar (<em>i.e.</em>, is strongly correlated) to the frequentist <strong>p-value</strong>. In some rare situations, especially when using when using model averaged posteriors (see <code><a href='weighted_posteriors.html'>weighted_posteriors</a></code> or <code><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>posterior_average</a></code>), this value may be lower than 0.5.</p>
     </div>
 
     <pre class="usage"><span class='fu'>p_direction</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -267,7 +267,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Values between 0.5 and 1 corresponding to the probability of direction (pd).</p>
+    <p>Values between 0.5 and 1 corresponding to the probability of direction (pd). In some rare situations, especially when using when using model averaged posteriors (see <code><a href='weighted_posteriors.html'>weighted_posteriors</a></code> or <code><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>posterior_average</a></code>), this value may be lower than 0.5.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
@@ -279,7 +279,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 </ul>
 
 <h3>Relationship with the p-value</h3>
-<p>In most cases, it seems that the <em>pd</em> has a direct correspondence with the frequentist one-sided <em>p</em>-value through the formula p<sub>one&nbsp;sided</sub>&nbsp;=&nbsp;1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub> and to the two-sided p-value (the most commonly reported one) through the formula p<sub>two&nbsp;sided</sub>&nbsp;=&nbsp;2&nbsp;*&nbsp;(1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>). Thus, a two-sided p-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code> would correspond approximately to a <em>pd</em> of 95%, 97.5%, 99.5% and 99.95%.</p>
+<p>In most cases, it seems that the <em>pd</em> has a direct correspondence with the frequentist one-sided <em>p</em>-value through the formula p<sub>one&nbsp;sided</sub>&nbsp;=&nbsp;1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub> and to the two-sided p-value (the most commonly reported one) through the formula p<sub>two&nbsp;sided</sub>&nbsp;=&nbsp;2&nbsp;*&nbsp;(1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>). Thus, a two-sided p-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code> would correspond approximately to a <em>pd</em> of 95%, 97.5%, 99.5% and 99.95%. See also <code><a href='pd_to_p.html'>pd_to_p</a></code>.</p>
 <h3>Methods of computation</h3>
 <p>The most simple and direct way to compute the <em>pd</em> is to 1) look at the median's sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This "simple" method is the most straightforward, but its precision is directly tied to the number of posterior draws. The second approach relies on <a href='estimate_density.html'>density estimation</a>. It starts by estimating the density function (for which many methods are available), and then computing the <a href='area_under_curve.html'>area under the curve</a> (AUC) of the density curve on the other side of 0.</p>
 <h3>Strengths and Limitations</h3>
@@ -290,6 +290,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. doi: <a href='https://doi.org/10.3389/fpsyg.2019.02767'>10.3389/fpsyg.2019.02767</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='pd_to_p.html'>pd_to_p</a></code> to convert between Probability of Direction (pd) and p-value.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>bayestestR</span>)

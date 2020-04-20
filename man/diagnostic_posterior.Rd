@@ -60,7 +60,7 @@ Extract diagnostic metrics (Effective Sample Size (\code{ESS}), \code{Rhat} and 
 \dontrun{
 # rstanarm models
 # -----------------------------------------------
-if (require("rstanarm", quietly = TRUE) {
+if (require("rstanarm", quietly = TRUE)) {
   model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
   diagnostic_posterior(model)
 }
