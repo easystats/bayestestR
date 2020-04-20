@@ -1,7 +1,7 @@
 Package: bayestestR
 Type: Package
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.5.3.1
+Version: 0.6.0
 Authors@R: c(
     person("Dominique", 
 		"Makowski", 
