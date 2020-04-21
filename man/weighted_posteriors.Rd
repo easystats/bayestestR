@@ -2,12 +2,15 @@
 % Please edit documentation in R/weighted_posteriors.R
 \name{weighted_posteriors}
 \alias{weighted_posteriors}
+\alias{weighted_posteriors.data.frame}
 \alias{weighted_posteriors.stanreg}
 \alias{weighted_posteriors.brmsfit}
 \alias{weighted_posteriors.BFBayesFactor}
 \title{Generate posterior distributions weighted across models}
 \usage{
 weighted_posteriors(..., prior_odds = NULL, missing = 0, verbose = TRUE)
+
+\method{weighted_posteriors}{data.frame}(..., prior_odds = NULL, missing = 0, verbose = TRUE)
 
 \method{weighted_posteriors}{stanreg}(
   ...,
@@ -40,7 +43,7 @@ weighted_posteriors(..., prior_odds = NULL, missing = 0, verbose = TRUE)
 \arguments{
 \item{...}{Fitted models (see details), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').}
 
-\item{prior_odds}{Optional vector of prior odds for the models compared to the first model (or the denominator, for \code{BFBayesFactor} objects).}
+\item{prior_odds}{Optional vector of prior odds for the models compared to the first model (or the denominator, for \code{BFBayesFactor} objects). For \code{data.frame}s, this will be used as the basis of weighting.}
 
 \item{missing}{An optional numeric value to use if a model does not contain a parameter that appears in other models. Defaults to 0.}
 
@@ -101,27 +104,48 @@ if (require("rstanarm") && require("see")) {
   plot(eti(res))
 }
 
-# With BayesFactor and brms
-if (require("BayesFactor") && require("brms")) {
-  BFmods <- anovaBF(extra ~ group + ID, sleep, whichRandom = "ID")
+## With BayesFactor
+if (require("BayesFactor")) {
+extra_sleep <- ttestBF(formula = extra ~ group, data = sleep)
 
-  res <- weighted_posteriors(BFmods)[1:3]
-  plot(eti(res))
+wp <- weighted_posteriors(extra_sleep)
 
-  # Compare to brms::posterior_average
-  fit1 <- brm(rating ~ treat + period + carry,
-              data = inhaler,
-              save_all_pars = TRUE)
-  fit2 <- brm(rating ~ period + carry,
-              data = inhaler,
-              save_all_pars = TRUE)
+describe_posterior(extra_sleep, test = NULL)
+describe_posterior(wp$delta, test = NULL) # also considers the null
+}
 
-  res_BT <- weighted_posteriors(fit1, fit2)
-  res_brms <- brms::posterior_average(fit1, fit2,
-                                      weights = "marglik", missing = 0)[, 1:4]
 
-  plot(eti(res_BT))
-  plot(eti(res_brms))
+## weighted prediction distributions via data.frames
+if (require("rstanarm")) {
+m0 <- stan_glm(
+  mpg ~ 1,
+  data = mtcars,
+  family = gaussian(),
+  diagnostic_file = file.path(tempdir(), "df0.csv"),
+  refresh = 0
+)
+
+m1 <- stan_glm(
+  mpg ~ carb,
+  data = mtcars,
+  family = gaussian(),
+  diagnostic_file = file.path(tempdir(), "df1.csv"),
+  refresh = 0
+)
+
+# Predictions:
+pred_m0 <- data.frame(posterior_predict(m0))
+pred_m1 <- data.frame(posterior_predict(m1))
+
+BFmods <- bayesfactor_models(m0, m1)
+
+wp <- weighted_posteriors(pred_m0, pred_m1,
+                          prior_odds = BFmods$BF[2])
+
+# look at first 5 prediction intervals
+hdi(pred_m0[1:5])
+hdi(pred_m1[1:5])
+hdi(wp[1:5]) # between, but closer to pred_m1
 }
 }
 }
