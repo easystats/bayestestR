@@ -4,7 +4,7 @@
 #' Weighting is done by comparing posterior model probabilities, via \code{\link{bayesfactor_models}}.
 #'
 #' @param missing An optional numeric value to use if a model does not contain a parameter that appears in other models. Defaults to 0.
-#' @param prior_odds Optional vector of prior odds for the models compared to the first model (or the denominator, for \code{BFBayesFactor} objects).
+#' @param prior_odds Optional vector of prior odds for the models compared to the first model (or the denominator, for \code{BFBayesFactor} objects). For \code{data.frame}s, this will be used as the basis of weighting.
 #' @param iterations For \code{BayesFactor} models, how many posterior samples to draw.
 #' @inheritParams bayesfactor_models
 #' @inheritParams bayesfactor_parameters
@@ -46,27 +46,48 @@
 #'   plot(eti(res))
 #' }
 #'
-#' # With BayesFactor and brms
-#' if (require("BayesFactor") && require("brms")) {
-#'   BFmods <- anovaBF(extra ~ group + ID, sleep, whichRandom = "ID")
+#' ## With BayesFactor
+#' if (require("BayesFactor")) {
+#' extra_sleep <- ttestBF(formula = extra ~ group, data = sleep)
 #'
-#'   res <- weighted_posteriors(BFmods)[1:3]
-#'   plot(eti(res))
+#' wp <- weighted_posteriors(extra_sleep)
 #'
-#'   # Compare to brms::posterior_average
-#'   fit1 <- brm(rating ~ treat + period + carry,
-#'               data = inhaler,
-#'               save_all_pars = TRUE)
-#'   fit2 <- brm(rating ~ period + carry,
-#'               data = inhaler,
-#'               save_all_pars = TRUE)
+#' describe_posterior(extra_sleep, test = NULL)
+#' describe_posterior(wp$delta, test = NULL) # also considers the null
+#' }
 #'
-#'   res_BT <- weighted_posteriors(fit1, fit2)
-#'   res_brms <- brms::posterior_average(fit1, fit2,
-#'                                       weights = "marglik", missing = 0)[, 1:4]
 #'
-#'   plot(eti(res_BT))
-#'   plot(eti(res_brms))
+#' ## weighted prediction distributions via data.frames
+#' if (require("rstanarm")) {
+#' m0 <- stan_glm(
+#'   mpg ~ 1,
+#'   data = mtcars,
+#'   family = gaussian(),
+#'   diagnostic_file = file.path(tempdir(), "df0.csv"),
+#'   refresh = 0
+#' )
+#'
+#' m1 <- stan_glm(
+#'   mpg ~ carb,
+#'   data = mtcars,
+#'   family = gaussian(),
+#'   diagnostic_file = file.path(tempdir(), "df1.csv"),
+#'   refresh = 0
+#' )
+#'
+#' # Predictions:
+#' pred_m0 <- data.frame(posterior_predict(m0))
+#' pred_m1 <- data.frame(posterior_predict(m1))
+#'
+#' BFmods <- bayesfactor_models(m0, m1)
+#'
+#' wp <- weighted_posteriors(pred_m0, pred_m1,
+#'                           prior_odds = BFmods$BF[2])
+#'
+#' # look at first 5 prediction intervals
+#' hdi(pred_m0[1:5])
+#' hdi(pred_m1[1:5])
+#' hdi(wp[1:5]) # between, but closer to pred_m1
 #' }
 #' }
 #' @references
@@ -80,6 +101,36 @@
 #' @export
 weighted_posteriors <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE) {
   UseMethod("weighted_posteriors")
+}
+
+#' @export
+#' @rdname weighted_posteriors
+weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE){
+  Mods <- list(...)
+  mnames <- sapply(match.call(expand.dots = FALSE)$`...`, .safe_deparse)
+
+  # find min nrow
+  iterations <- min(sapply(Mods, nrow))
+
+  # make weights from prior_odds
+  if (!is.null(prior_odds)) {
+    prior_odds <- c(1, prior_odds)
+  } else {
+    warning("'prior_odds = NULL'; Using uniform priors odds.\n",
+            "For weighted data frame, 'prior_odds' should be specified as a numeric vector.",
+            call. = FALSE)
+    prior_odds <- rep(1, length(Mods))
+  }
+
+  Probs <- prior_odds / sum(prior_odds)
+  weighted_samps <- round(iterations * Probs)
+
+  # pass to .weighted_posteriors
+  res <- .weighted_posteriors(Mods, weighted_samps, missing)
+
+  # make weights table
+  attr(res, "weights") <- data.frame(Model = mnames, weights = weighted_samps)
+  return(res)
 }
 
 #' @export

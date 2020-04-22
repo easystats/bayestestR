@@ -1,3 +1,9 @@
+# bayestestR 0.6.0.1
+
+## Changes to functions
+
+- `weighted_posteriors()` can now be used with data frames.
+
 # bayestestR 0.5.4
 
 ## Changes to functions
