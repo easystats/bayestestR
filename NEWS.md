@@ -4,7 +4,12 @@
 
 - `weighted_posteriors()` can now be used with data frames.
 
-# bayestestR 0.5.4
+## Bug fixes
+
+- Minor revisions to some documentations.
+- Fix CRAN check issues for win-old-release
+
+# bayestestR 0.6.0
 
 ## Changes to functions
 
