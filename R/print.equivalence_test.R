@@ -5,6 +5,17 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   insight::print_color("# Test for Practical Equivalence\n\n", "blue")
   cat(sprintf("  ROPE: [%.*f %.*f]\n\n", digits, x$ROPE_low[1], digits, x$ROPE_high[1]))
 
+  # fix "sd" pattern
+  model <- .retrieve_model(x)
+  if (!is.null(model)) {
+    cp <- insight::clean_parameters(model)
+    if (!is.null(cp$Group) && any(grepl("^SD/Cor", cp$Group))) {
+      cp <- cp[grepl("^SD/Cor", cp$Group), ]
+      matches <- match(cp$Parameter, x$Parameter)
+      if (length(matches)) x$Parameter[matches] <- paste0("SD/Cor: ", cp$Cleaned_Parameter[stats::na.omit(match(x$Parameter, cp$Parameter))])
+    }
+  }
+
   # find the longest HDI-value, so we can align the brackets in the ouput
   x$HDI_low <- sprintf("%.*f", digits, x$HDI_low)
   x$HDI_high <- sprintf("%.*f", digits, x$HDI_high)
@@ -101,4 +112,31 @@ print.equivalence_test <- function(x, digits = 2, ...) {
     print_data_frame(xsub, digits = digits)
     cat("\n")
   }
+}
+
+
+.retrieve_model <- function(x) {
+  # retrieve model
+  obj_name <- attr(x, "object_name", exact = TRUE)
+  model <- NULL
+
+  if (!is.null(obj_name)) {
+    # first try, parent frame
+    model <- tryCatch({
+      get(obj_name, envir = parent.frame())
+    },
+    error = function(e) { NULL }
+    )
+
+    if (is.null(model)) {
+      # second try, global env
+      model <- tryCatch({
+        get(obj_name, envir = globalenv())
+      },
+      error = function(e) { NULL }
+      )
+
+    }
+  }
+  model
 }
