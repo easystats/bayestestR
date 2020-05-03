@@ -151,7 +151,7 @@ distribution_beta <- function(n, shape1, shape2, ncp = 0, random = FALSE, ...) {
 #' @export
 distribution_tweedie <- function(n, xi = NULL, mu, phi, power = NULL, random = FALSE, ...) {
   if (!requireNamespace("tweedie", quietly = TRUE)) {
-    stop("Package 'tweedi' required for this function to work. Please install it.")
+    stop("Package 'tweedie' required for this function to work. Please install it.")
   }
 
   if (random) {
