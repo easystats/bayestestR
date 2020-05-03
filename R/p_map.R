@@ -117,10 +117,7 @@ p_map.data.frame <- function(x, precision = 2^10, method = "kernel", ...) {
 
 #' @export
 p_map.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {
-  if (!requireNamespace("emmeans")) {
-    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
-  }
-  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+  xdf <- .clean_emmeans_draws(x)
   out <- p_map(xdf, precision = precision, method = method, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
