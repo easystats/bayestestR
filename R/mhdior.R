@@ -133,10 +133,7 @@ mhdior.data.frame <- function(x, range = "default", precision = .1, ...) {
 #' @rdname mhdior
 #' @export
 mhdior.emmGrid <- function(x, range = "default", precision = .1, ...) {
-  if (!requireNamespace("emmeans")) {
-    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
-  }
-  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+  xdf <- .clean_emmeans_draws(x)
 
   out <- mhdior(xdf, range = range, precision = precision, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)

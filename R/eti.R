@@ -124,10 +124,7 @@ eti.sim <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
 #' @rdname eti
 #' @export
 eti.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
-  if (!requireNamespace("emmeans")) {
-    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
-  }
-  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+  xdf <- .clean_emmeans_draws(x)
 
   dat <- .compute_interval_dataframe(x = xdf, ci = ci, verbose = verbose, fun = "eti")
   attr(dat, "object_name") <- .safe_deparse(substitute(x))

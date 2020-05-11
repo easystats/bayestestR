@@ -156,10 +156,7 @@ p_significance.bcplm <- function(x, threshold = "default", ...) {
 #' @rdname p_significance
 #' @export
 p_significance.emmGrid <- function(x, threshold = "default", ...) {
-  if (!requireNamespace("emmeans")) {
-    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
-  }
-  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+  xdf <- .clean_emmeans_draws(x)
   out <- p_significance(xdf, threshold = threshold, ...)
 
   attr(out, "object_name") <- .safe_deparse(substitute(x))

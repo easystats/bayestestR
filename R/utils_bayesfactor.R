@@ -154,8 +154,8 @@
     prior <- stats::update(posterior, post.beta = prior)
   }
 
-  prior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(prior, names = FALSE)))
-  posterior <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(posterior, names = FALSE)))
+  prior <- .clean_emmeans_draws(prior)
+  posterior <- .clean_emmeans_draws(posterior)
 
   list(posterior = posterior,
        prior = prior)
@@ -321,3 +321,4 @@ as.double.bayesfactor_parameters <- as.numeric.bayesfactor_inclusion
 
 #' @export
 as.double.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion
+

@@ -179,10 +179,7 @@ p_direction.bcplm <- function(x, method = "direct", ...) {
 #' @rdname p_direction
 #' @export
 p_direction.emmGrid <- function(x, method = "direct", ...) {
-  if (!requireNamespace("emmeans")) {
-    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
-  }
-  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+  xdf <- .clean_emmeans_draws(x)
   out <- p_direction(xdf, method = method, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out

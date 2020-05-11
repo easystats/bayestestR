@@ -140,10 +140,7 @@ point_estimate.MCMCglmm <- function(x, centrality = "all", dispersion = FALSE, .
 
 #' @export
 point_estimate.emmGrid <- function(x, centrality = "all", dispersion = FALSE, ...) {
-  if (!requireNamespace("emmeans")) {
-    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
-  }
-  xdf <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+  xdf <- .clean_emmeans_draws(x)
 
   out <- point_estimate(xdf, centrality = centrality, dispersion = dispersion, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
