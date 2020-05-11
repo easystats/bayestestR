@@ -111,6 +111,20 @@ map_estimate.brmsfit <- function(x, precision = 2^10, method = "kernel", effects
 }
 
 
+#' @rdname map_estimate
+#' @export
+map_estimate.data.frame <- function(x, precision = 2^10, method = "kernel", ...) {
+  .map_estimate_models(x, precision = precision, method = method)
+}
+
+
+#' @rdname map_estimate
+#' @export
+map_estimate.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {
+  x <- .clean_emmeans_draws(x)
+  .map_estimate_models(x, precision = precision, method = method)
+}
+
 
 #' @rdname as.numeric.p_direction
 #' @method as.numeric map_estimate
