@@ -48,15 +48,7 @@ print.bayestestR_ci <- function(x, digits = 2, ...) {
   ), "blue")
 
   ci <- unique(x$CI)
-
-  # find the longest HDI-value, so we can align the brackets in the ouput
-  x$CI_low <- sprintf("%.*f", digits, x$CI_low)
-  x$CI_high <- sprintf("%.*f", digits, x$CI_high)
-
-  maxlen_low <- max(nchar(x$CI_low))
-  maxlen_high <- max(nchar(x$CI_high))
-
-  x$HDI <- sprintf("[%*s, %*s]", maxlen_low, x$CI_low, maxlen_high, x$CI_high)
+  x$HDI <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = "auto")
 
   if (length(ci) == 1) {
     xsub <- .remove_column(x, c("CI", "CI_low", "CI_high"))

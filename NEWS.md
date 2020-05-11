@@ -3,6 +3,7 @@
 ## Changes to functions
 
 - `weighted_posteriors()` can now be used with data frames.
+- Revised `print()` for `describe_posterior()`.
 
 ## Bug fixes
 
