@@ -92,7 +92,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.1</span>
       </span>
     </div>
 
@@ -330,14 +330,14 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>There is a <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code>-method with a <code>digits</code>-argument to control
-  the amount of digits in the output, and there is a <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>-method
+  the amount of digits in the output, and there is a <code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code>-method
   to visualize the results from the equivalence-test (for models only).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
 <ul>
 <li><p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. doi: <a href='https://doi.org/10.1177/2515245918771304'>10.1177/2515245918771304</a></p></li>
-<li><p>Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press</p></li>
+<li><p>Kruschke, J. K. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press</p></li>
 <li><p>Piironen, J., &amp; Vehtari, A. (2017). Comparison of Bayesian predictive methods for model selection. Statistics and Computing, 27(3), 711–735. doi: <a href='https://doi.org/10.1007/s11222-016-9649-y'>10.1007/s11222-016-9649-y</a></p></li>
 </ul>
 
@@ -406,7 +406,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
 <span class='co'># plot result</span>
 <span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'>equivalence_test</span>(<span class='no'>model</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>test</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>test</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
 <span class='fu'>equivalence_test</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))

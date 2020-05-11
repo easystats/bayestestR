@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.1</span>
       </span>
     </div>
 
@@ -447,10 +447,10 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <div class="sourceCode" id="cb47"><html><body><pre class="r"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(<span class="no">model</span>, <span class="kw">test</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"p_direction"</span>,<span class="st">"rope"</span>,<span class="st">"bayesfactor"</span>))</pre></body></html></div>
 <pre><code>&gt; # Description of Posterior Distributions
 &gt; 
-&gt; Parameter     |  Median | CI |  CI_low | CI_high |    pd | ROPE_CI | ROPE_low | ROPE_high | ROPE_Percentage |          BF |  Rhat |  ESS
-&gt; ----------------------------------------------------------------------------------------------------------------------------------------
-&gt; (Intercept)   | 276.853 | 89 | 247.820 | 305.534 | 1.000 |      89 |   -6.175 |     6.175 |               0 | 2.43536e+11 | 0.999 | 3537
-&gt; feedsunflower |  50.991 | 89 |  13.516 |  91.371 | 0.982 |      89 |   -6.175 |     6.175 |               0 |       1.575 | 1.000 | 3535</code></pre>
+&gt; Parameter     |  Median |             89% CI |    pd |        89% ROPE | % in ROPE |          BF |  Rhat |  ESS
+&gt; ---------------------------------------------------------------------------------------------------------------
+&gt; (Intercept)   | 276.853 | [247.820, 305.534] | 1.000 | [-6.175, 6.175] |         0 | 2.43536e+11 | 0.999 | 3537
+&gt; feedsunflower |  50.991 | [ 13.516,  91.371] | 0.982 | [-6.175, 6.175] |         0 |       1.575 | 1.000 | 3535</code></pre>
 <p><strong>Tada!</strong> There we have it! The <strong>median</strong>, the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE percentage</strong>!</p>
 <p>Understanding and describing posterior distributions is just one aspect of Bayesian modelling… <strong>Are you ready for more?</strong> <a href="https://easystats.github.io/bayestestR/articles/example2_GLM.html"><strong>Click here</strong></a> to see the next example.</p>
 </div>

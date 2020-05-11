@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.1</span>
       </span>
     </div>
 
@@ -229,7 +229,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; * Evidence Against The Null: [-1, 1]</code></pre>
 <p>We can also plot using the <code>see</code> package:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">see</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">My_first_BF</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">My_first_BF</span>)</pre></body></html></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-5-1.png" width="1093.75"></p>
 </div>
 <div id="testing-against-the-point-null-0" class="section level3">
@@ -248,7 +248,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; group2    | 1.48
 &gt; 
 &gt; * Evidence Against The Null: [0]</code></pre>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">My_second_BF</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">My_second_BF</span>)</pre></body></html></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-8-1.png" width="1093.75"></p>
 </div>
 <div id="one-sided-tests" class="section level3">
@@ -265,7 +265,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; 
 &gt; * Evidence Against The Null: [0]
 &gt; *                 Direction: Right-Sided test</code></pre>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">test_group2_right</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">test_group2_right</span>)</pre></body></html></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-9-1.png" width="1093.75"></p>
 <p>As we can see, given that we have an <em>a priori</em> assumption about the direction of the effect (<em>that the effect is positive</em>), <strong>the presence of an effect is 2.8 times more likely than the absence of an effect</strong>, given the observed data (or that the data are 2.8 time more probable under <span class="math inline">\(H_1\)</span> than <span class="math inline">\(H_0\)</span>). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 2.8 is still considered quite <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf">weak evidence</a>).</p>
 <p><strong>NOTE</strong>: See the <em>Testing Contrasts</em> appendix below.</p>
@@ -287,7 +287,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; group2    | [0.24, 3.02]</code></pre>
 <p>The argument <code>BF = 1</code> indicates that we want the interval to contain values that have gained support by a factor of at least 1 (that is, any support at all).</p>
 <p>Visually, we can see that the credibility of all the values within this interval has increased (and likewise the credibility of all the values outside this interval has decreased):</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">my_first_si</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">my_first_si</span>)</pre></body></html></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-12-1.png" width="1093.75"></p>
 <p>We can also see the this support interval (just barely) excludes the point null (0) - whose credibility we’ve already seen has decreased by the observed data. This emphasizes the relationship between the support interval and the Bayes factor:</p>
 <blockquote>
@@ -601,7 +601,7 @@ BF_{restricted / NULL} = \frac
 &gt; wt          | [-6.64, -2.13]
 &gt; am          | [-2.69,  5.24]
 &gt; carb        | [-1.69,  0.00]</code></pre>
-<div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">BMA_hdi</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">BMA_hdi</span>)</pre></body></html></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-22-1.png" width="1093.75"></p>
 <p>We can see that across both models under consideration, the posterior of the <code>carb</code> effect is almost equally weighted between the alternative model and the null model - as represented by about half of the posterior mass concentrated at 0 - which makes sense as both models were almost equally supported by the data. We can also see that across both models, that now <strong>the HDI does contain 0</strong>. Thus we have resolved the conflict between the Bayes factor and the HDI <span class="citation">(Rouder, Haaf, &amp; Vandekerckhove, 2018)</span>!</p>
 <p><strong>Note</strong> that parameters might play different roles across different models; For example, the parameter <code>A</code> plays a different role in the model <code>Y ~ A + B</code> (where it is a main effect) than it does in the model <code>Y ~ A + B + A:B</code> (where it is a simple effect). In many cases centering of predictors (mean subtracting for continuous variables, and effects coding via <code>contr.sum</code> or orthonormal coding via <a href="https://easystats.github.io/bayestestR/reference/contr.bayes.html"><code>contr.bayes</code></a> for factors) can in some cases reduce this issue.</p>
