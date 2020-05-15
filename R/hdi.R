@@ -20,7 +20,7 @@
 #' @param verbose Toggle off warnings.
 #' @param ... Currently not used.
 #'
-#'
+#' @note There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @details Unlike equal-tailed intervals (see \code{eti()}) that typically exclude 2.5\%
 #' from each tail of the distribution and always include the median, the HDI is
@@ -84,7 +84,6 @@
 #' hdi(bf)
 #' hdi(bf, ci = c(.80, .90, .95))
 #' }
-#'
 #' @author Credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute} and \href{https://github.com/mikemeredith/HDInterval}{HDInterval}.
 #'
 #' @references \itemize{

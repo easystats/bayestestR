@@ -90,6 +90,9 @@ In most cases, it seems that the \emph{pd} has a direct correspondence with the 
 \strong{Limitations:} Limited information favoring the null hypothesis.
 }
 }
+\note{
+There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+}
 \examples{
 library(bayestestR)
 

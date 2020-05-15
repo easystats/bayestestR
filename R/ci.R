@@ -25,6 +25,8 @@
 #'   an "uncertainty" or "compatibility" interval, the latter being defined as
 #'   \dQuote{Given any value in the interval and the background assumptions,
 #'   the data should not seem very surprising} (\cite{Gelman & Greenland 2019}).
+#'   \cr \cr
+#'   There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @references Gelman A, Greenland S. Are confidence intervals better termed "uncertainty intervals"? BMJ 2019;l5381. \doi{10.1136/bmj.l5381}
 #'

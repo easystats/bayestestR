@@ -216,6 +216,9 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 (\cite{Wetzels et al. 2011}).
 }
 }
+\note{
+There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+}
 \examples{
 library(bayestestR)
 

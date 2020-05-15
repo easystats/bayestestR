@@ -57,6 +57,9 @@ applies to \pkg{brms}-models.}
 \description{
 Compute various point-estimates, such as the mean, the median or the MAP, to describe posterior distributions.
 }
+\note{
+There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+}
 \examples{
 library(bayestestR)
 

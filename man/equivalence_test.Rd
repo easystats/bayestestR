@@ -127,7 +127,8 @@ Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, \cite{Kruschke (2018)}
 }
 \note{
 There is a \code{print()}-method with a \code{digits}-argument to control
-  the amount of digits in the output, and there is a \code{plot()}-method
+  the amount of digits in the output, and there is a
+  \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method}
   to visualize the results from the equivalence-test (for models only).
 }
 \examples{

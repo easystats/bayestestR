@@ -122,6 +122,9 @@ to the transformed lower and higher bounds of the original distribution.
 On the contrary, applying transformations to the distribution will change
 the resulting HDI.
 }
+\note{
+There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+}
 \examples{
 library(bayestestR)
 
@@ -152,7 +155,6 @@ bf <- ttestBF(x = rnorm(100, 1, 1))
 hdi(bf)
 hdi(bf, ci = c(.80, .90, .95))
 }
-
 }
 \references{
 \itemize{

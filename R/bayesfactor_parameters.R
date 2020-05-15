@@ -34,6 +34,8 @@
 #'
 #' @return A data frame containing the Bayes factor representing evidence \emph{against} the null.
 #'
+#' @note There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#'
 #' @details This method is used to compute Bayes factors based on prior and posterior distributions.
 #' \cr\cr
 #' For the computation of Bayes factors, the model priors must be proper priors (at the very least
