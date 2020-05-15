@@ -25,7 +25,7 @@ bayesfactor(
 \item{direction}{Test type (see 'Details'). One of \code{0}, \code{"two-sided"} (default, two tailed),
 \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).}
 
-\item{null}{Value of the null, either a scaler (for point-null) or a a range
+\item{null}{Value of the null, either a scalar (for point-null) or a range
 (for a interval-null).}
 
 \item{hypothesis}{A character vector specifying the restrictions as logical conditions (see examples below).}
