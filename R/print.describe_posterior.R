@@ -11,7 +11,9 @@ print.describe_posterior <- function(x, digits = 3, ...) {
       colnames(x) <- cn
     } else {
       ci <- unique(x$CI)
-      if (length(ci) > 1) {
+      if (is.null(ci)) {
+        x$CI <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = "auto")
+      } else  if (length(ci) > 1) {
         x$CI <- insight::format_ci(x$CI_low, x$CI_high, ci = ci / 100, digits = digits, width = "auto")
       } else {
         x$CI <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = "auto")
