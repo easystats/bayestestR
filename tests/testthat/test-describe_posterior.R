@@ -56,6 +56,17 @@ if (require("rstanarm") && require("brms") && require("insight")) {
       rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile", diagnostic = NULL)
       testthat::expect_equal(dim(rez), c(2, 4))
 
+      # With non standard algorithms
+      model <- rstanarm::stan_glm(mpg ~ drat, data=mtcars, algorithm="meanfield")
+      testthat::expect_equal(nrow(describe_posterior(model)), 2)
+      model <- brms::brm(mpg ~ drat, data=mtcars, chains=2, algorithm="meanfield")
+      testthat::expect_equal(nrow(describe_posterior(model)), 2)
+      model <- rstanarm::stan_glm(mpg ~ drat, data=mtcars, algorithm="optimizing")
+      testthat::expect_equal(nrow(describe_posterior(model)), 2)
+      model <- rstanarm::stan_glm(mpg ~ drat, data=mtcars, algorithm="fullrank")
+      testthat::expect_equal(nrow(describe_posterior(model)), 2)
+      model <- brms::brm(mpg ~ drat, data=mtcars, chains=2, algorithm="fullrank")
+      testthat::expect_equal(nrow(describe_posterior(model)), 2)
 
       # BayesFactor
       # library(BayesFactor)

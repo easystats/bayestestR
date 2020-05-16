@@ -61,15 +61,18 @@ diagnostic_posterior.BFBayesFactor <- diagnostic_posterior.numeric
 diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "Rhat", "MCSE")
+    diagnostic <- c("ESS", "Rhat", "MCSE", "khat")
   } else {
     diagnostic <- c(diagnostic)
+    if("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
   }
 
   # Get indices and rename
   diagnostic_df <- as.data.frame(posteriors$stan_summary)
   diagnostic_df$Parameter <- row.names(diagnostic_df)
-  diagnostic_df$ESS <- round(diagnostic_df$n_eff)
+  if("n_eff" %in% names(diagnostic_df)){
+    diagnostic_df$ESS <- diagnostic_df$n_eff
+  }
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
   MCSE <- mcse(posteriors, effects = "all")
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
@@ -77,13 +80,18 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
   # Select columns
   available_columns <- intersect(colnames(diagnostic_df), c("Parameter", diagnostic))
   diagnostic_df <- diagnostic_df[available_columns]
+  names(diagnostic_df)[available_columns == "khat"] <- "Khat"
   row.names(diagnostic_df) <- NULL
+
+  # Remove columns with all Nans
+  diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
 
   # Select rows
   effects <- match.arg(effects)
   params <- colnames(
     insight::get_parameters(posteriors, effects = effects, parameters = parameters)
   )
+
 
   if (inherits(posteriors, "stanmvreg")) {
     diagnostic_df$Response <- gsub("^(.*)\\|(.*)", "\\1", diagnostic_df$Parameter)
@@ -97,11 +105,15 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
 #' @rdname diagnostic_posterior
 #' @export
 diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+
+
+
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
   if ("all" %in% diagnostic) {
-    diagnostic <- c("ESS", "Rhat", "MCSE") # Add MCSE
+    diagnostic <- c("ESS", "Rhat", "MCSE", "khat") # Add MCSE
   } else {
     diagnostic <- c(diagnostic)
+    if("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
   }
 
   if (!requireNamespace("rstan", quietly = TRUE)) {
@@ -111,14 +123,19 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects
   # Get indices and rename
   diagnostic_df <- as.data.frame(rstan::summary(posteriors$fit)$summary)
   diagnostic_df$Parameter <- make.names(row.names(diagnostic_df))
-  diagnostic_df$ESS <- round(diagnostic_df$n_eff)
+  diagnostic_df$ESS <- diagnostic_df$n_eff
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
   MCSE <- mcse(posteriors, effects = "all", component = "all")
   diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
 
   # Select columns
-  diagnostic_df <- diagnostic_df[, c("Parameter", diagnostic)]
+  available_columns <- intersect(colnames(diagnostic_df), c("Parameter", diagnostic))
+  diagnostic_df <- diagnostic_df[available_columns]
+  names(diagnostic_df)[available_columns == "khat"] <- "Khat"
   row.names(diagnostic_df) <- NULL
+
+  # Remove columns with all Nans
+  diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
 
   # Select rows
   effects <- match.arg(effects)

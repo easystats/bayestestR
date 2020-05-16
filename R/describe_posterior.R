@@ -436,23 +436,15 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
 
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, BF = BF, effects = effects, parameters = parameters, ...)
 
-  if (!is.null(diagnostic)) {
-    model_algorithm <- insight::find_algorithm(posteriors)
-
-    if (model_algorithm$algorithm %in% c("fullrank", "meanfield")) {
-      insight::print_color("Model diagnostic not available for stanreg-models fitted with 'fullrank' or 'meanfield'-algorithm.\n", "red")
-    } else {
-      diagnostic <-
-        diagnostic_posterior(
-          posteriors,
-          diagnostic,
-          effects = effects,
-          parameters = parameters,
-          ...
-        )
-      out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
-    }
-  }
+  diagnostic <-
+    diagnostic_posterior(
+      posteriors,
+      diagnostic,
+      effects = effects,
+      parameters = parameters,
+      ...
+    )
+  out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
 
   if (isTRUE(priors)) {
     priors_data <- describe_prior(posteriors, ...)
@@ -475,23 +467,15 @@ describe_posterior.stanmvreg <- function(posteriors, centrality = "median", disp
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
   out$Response <- gsub("^(.*)\\|(.*)", "\\1", out$Parameter)
 
-  if (!is.null(diagnostic)) {
-    model_algorithm <- insight::find_algorithm(posteriors)
-
-    if (model_algorithm$algorithm %in% c("fullrank", "meanfield")) {
-      insight::print_color("Model diagnostic not available for stanreg-models fitted with 'fullrank' or 'meanfield'-algorithm.\n", "red")
-    } else {
-      diagnostic <-
-        diagnostic_posterior(
-          posteriors,
-          diagnostic,
-          effects = effects,
-          parameters = parameters,
-          ...
-        )
-      out <- .merge_and_sort(out, diagnostic, by = c("Parameter", "Response"), all = TRUE)
-    }
-  }
+  diagnostic <-
+    diagnostic_posterior(
+      posteriors,
+      diagnostic,
+      effects = effects,
+      parameters = parameters,
+      ...
+    )
+  out <- .merge_and_sort(out, diagnostic, by = c("Parameter", "Response"), all = TRUE)
 
   if (isTRUE(priors)) {
     priors_data <- describe_prior(posteriors, ...)
@@ -629,7 +613,7 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
 
 
 
-
+#' @keywords internal
 .check_test_values <- function(test) {
   match.arg(tolower(test), c(
     "pd", "p_direction", "pdir", "mpe", "ps", "psig", "p_significance",

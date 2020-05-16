@@ -138,6 +138,8 @@
   direction
 }
 
+
+#' @keywords internal
 .prepare_output <- function(temp, cleaned_parameters) {
   merge_by <- intersect(c("Parameter", "Effects", "Component"), colnames(temp))
   temp$.roworder <- 1:nrow(temp)
@@ -147,7 +149,11 @@
 }
 
 
+#' @keywords internal
 .merge_and_sort <- function(x, y, by, all) {
+  if(is.null(ncol(y))){
+    return(x)
+  }
   x$.rowid <- 1:nrow(x)
   x <- merge(x, y, by = by, all = all)
   .remove_column(x[order(x$.rowid), ], ".rowid")
