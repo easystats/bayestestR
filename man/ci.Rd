@@ -109,6 +109,8 @@ When it comes to interpretation, we recommend thinking of the CI in terms of
   an "uncertainty" or "compatibility" interval, the latter being defined as
   \dQuote{Given any value in the interval and the background assumptions,
   the data should not seem very surprising} (\cite{Gelman & Greenland 2019}).
+  \cr \cr
+  There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
 library(bayestestR)

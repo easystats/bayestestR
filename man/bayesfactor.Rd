@@ -25,7 +25,7 @@ bayesfactor(
 \item{direction}{Test type (see 'Details'). One of \code{0}, \code{"two-sided"} (default, two tailed),
 \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).}
 
-\item{null}{Value of the null, either a scaler (for point-null) or a a range
+\item{null}{Value of the null, either a scalar (for point-null) or a range
 (for a interval-null).}
 
 \item{hypothesis}{A character vector specifying the restrictions as logical conditions (see examples below).}
@@ -53,6 +53,9 @@ For multiple models, it will return the BF corresponding to \code{\link[=bayesfa
 and if a model comparison is passed, it will compute the \code{\link[=bayesfactor_inclusion]{inclusion BF}}.
 \cr\cr
 For a complete overview of these functions, read the \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes factor vignette}.
+}
+\note{
+There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
 library(bayestestR)

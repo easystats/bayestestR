@@ -131,6 +131,9 @@ Compute the proportion of the HDI (default to the 89\% HDI) of a posterior distr
   \strong{Limitations:} A ROPE range needs to be arbitrarily defined. Sensitive to the scale (the unit) of the predictors. Not sensitive to highly significant effects.
 }
 }
+\note{
+There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+}
 \examples{
 library(bayestestR)
 

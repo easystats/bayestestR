@@ -72,6 +72,9 @@ Compute the probability of \strong{Practical Significance} (\strong{\emph{ps}}),
   range of the probability distribution \code{x}, \code{p_significance()}
   will be less than 0.5, which indicates no clear practical significance.
 }
+\note{
+There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+}
 \examples{
 library(bayestestR)
 

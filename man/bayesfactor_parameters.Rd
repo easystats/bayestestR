@@ -128,7 +128,7 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
 \item{direction}{Test type (see 'Details'). One of \code{0}, \code{"two-sided"} (default, two tailed),
 \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).}
 
-\item{null}{Value of the null, either a scaler (for point-null) or a a range
+\item{null}{Value of the null, either a scalar (for point-null) or a range
 (for a interval-null).}
 
 \item{verbose}{Toggle off warnings.}
@@ -193,11 +193,11 @@ It is important to provide the correct \code{prior} for meaningful results.
   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
   \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
     \item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
-    \item \code{prior} can also be a model equvilant to \code{posterior} but with samples from the priors \emph{only}.
+    \item \code{prior} can also be a model equivalent to \code{posterior} but with samples from the priors \emph{only}.
   }
   \item When \code{posterior} is an \code{emmGrid} object: \itemize{
     \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
-    \item \code{prior} can also be an \code{emmGrid} object equvilant to \code{posterior} but created with a model of priors samples \emph{only}.
+    \item \code{prior} can also be an \code{emmGrid} object equivalent to \code{posterior} but created with a model of priors samples \emph{only}.
     \item \strong{Note:} When the \code{emmGrid} has undergone any transformations (\code{"log"}, \code{"response"}, etc.), or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stated above.
   }
 }}
@@ -209,12 +209,15 @@ parameter should be positive, the alternative will be restricted to the region t
 of the null (point or interval).
 }
 \subsection{Interpreting Bayes Factors}{
-A Bayes factor greater than 1 can be interpereted as evidence against the null,
+A Bayes factor greater than 1 can be interpreted as evidence against the null,
 at which one convention is that a Bayes factor greater than 3 can be considered
 as "substantial" evidence against the null (and vice versa, a Bayes factor
 smaller than 1/3 indicates substantial evidence in favor of the null-model)
 (\cite{Wetzels et al. 2011}).
 }
+}
+\note{
+There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
 library(bayestestR)

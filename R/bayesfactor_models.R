@@ -11,6 +11,8 @@
 #' or a model to be used as a denominator. Ignored for \code{BFBayesFactor}.
 #' @inheritParams hdi
 #'
+#' @note There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#'
 #' @details
 #' If the passed models are supported by \pkg{insight} the DV of all models will be tested for equality
 #' (else this is assumed to be true), and the models' terms will be extracted (allowing for follow-up
