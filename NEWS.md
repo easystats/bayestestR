@@ -7,6 +7,7 @@
 
 ## Bug fixes
 
+- `describe_posterior()` now takes into account the link transformation from emmeans objets.
 - Fix `diagnostic_posterior()` when algorithm is not "sampling".
 - Minor revisions to some documentations.
 - Fix CRAN check issues for win-old-release.
