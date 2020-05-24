@@ -141,16 +141,17 @@
       "Please provide the original model to get meaningful results."
     )
   } else if (!inherits(prior, "emmGrid")) { # then is it a model
-    if (!is.null(posterior@misc$orig.tran) ||
-        !is.null(posterior@misc$tran)) {
-      stop("Cannot reconstruct priors for \"transformed\" emmGrid objects.\n",
-           "See function details.\n",
-           call. = FALSE)
-    }
-
     prior <- .update_to_priors(prior, verbose = verbose)
     prior <- emmeans::ref_grid(prior)
     prior <- prior@post.beta
+
+    if (!isTRUE(all.equal(colnames(prior), colnames(posterior@post.beta)))) {
+      stop(
+        "Unable to reconstruct prior estimates.\n",
+        "Perhaps the emmGrid object has been transformed? See function details.\n",
+        call. = FALSE
+      )
+    }
     prior <- stats::update(posterior, post.beta = prior)
   }
 

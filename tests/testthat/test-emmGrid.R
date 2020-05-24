@@ -161,6 +161,34 @@ if (require("rstanarm") && require("emmeans")) {
     xsdbf1 <- bayesfactor_parameters(bayes_sum, prior = fit_bayes)
     xsdbf2 <- bayesfactor_parameters(bayes_sum, prior = bayes_sum_prior)
 
-    # testthat::expect_equal(log(xsdbf1$BF), log(xsdbf2$BF), tolerance = 0.1)
+    testthat::expect_equal(log(xsdbf1$BF), log(xsdbf2$BF), tolerance = 0.1)
+  })
+
+  test_that("emmGrid bayesfactor_parameters / describe w/ nonlinear models", {
+    testthat::skip_on_travis()
+    testthat::skip_on_cran()
+    set.seed(333)
+
+    model <- stan_glm(vs ~ mpg,
+                      data = mtcars,
+                      family = "binomial",
+                      refresh = 0)
+
+    probs <- emmeans(model, "mpg", type = "resp")
+    link <- emmeans(model, "mpg")
+
+    bfp1 <- bayesfactor_parameters(probs, prior = model, null = 0.5)
+    bfp2 <- bayesfactor_parameters(link, prior = model, null = 0)
+
+    testthat::expect_equal(bfp1$BF, 0.083, tolerance = 0.01)
+    testthat::expect_equal(bfp2$BF, 0.049, tolerance = 0.01)
+    testthat::expect_error(bayesfactor_parameters(regrid(link), prior = model))
+
+    hdip1 <- hdi(probs, ci = 0.9)
+    hdip2 <- hdi(link, ci = 0.9)
+    testthat::expect_equal(hdip1$CI_low, 0.265, tolerance = 0.01)
+    testthat::expect_equal(hdip1$CI_high, 0.646, tolerance = 0.01)
+    testthat::expect_equal(hdip2$CI_low, -1.016, tolerance = 0.01)
+    testthat::expect_equal(hdip2$CI_high, 0.607, tolerance = 0.01)
   })
 }
