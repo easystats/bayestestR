@@ -185,6 +185,16 @@ si.emmGrid <- function(posterior, prior = NULL,
 #' @rdname si
 #' @export
 si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
+  if (length(BF) > 1) {
+    SIs <- lapply(BF, function(i) {
+      si(posterior, prior = prior, BF = i, verbose = verbose, ...)
+    })
+    out <- do.call(rbind, SIs)
+
+    attr(out, "plot_data") <- attr(SIs[[1]], "plot_data")
+    class(out) <- unique(c("bayestestR_si", "bayestestR_ci", class(out)))
+    return(out)
+  }
 
   if (is.null(prior)) {
     prior <- posterior
