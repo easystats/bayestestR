@@ -60,7 +60,7 @@ print.bayestestR_ci <- function(x, digits = 2, ...) {
       xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
       xsub <- .remove_column(xsub, c("CI", "CI_low", "CI_high"))
       colnames(xsub)[ncol(xsub)] <- sprintf("%.5g%% %s", i, ci_string)
-      if (inherits(x,"bayestestR_si")) colnames(xsub)[ncol(xsub)] <- sprintf("BF = %.5g %s", ci, ci_string)
+      if (inherits(x,"bayestestR_si")) colnames(xsub)[ncol(xsub)] <- sprintf("BF = %.5g %s", i, ci_string)
       print_data_frame(xsub, digits = digits)
       cat("\n")
     }
