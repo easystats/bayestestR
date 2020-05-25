@@ -114,6 +114,7 @@ if (require("rstanarm") && require("emmeans")) {
   test_that("emmGrid describe_posterior", {
     testthat::skip_on_travis()
     testthat::skip_on_cran()
+    testthat::skip_on_ci()
     set.seed(4)
     xpost <- describe_posterior(
       all_,
