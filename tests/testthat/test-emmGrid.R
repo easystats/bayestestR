@@ -78,6 +78,7 @@ if (require("rstanarm") && require("emmeans")) {
   test_that("emmGrid bayesfactor_parameters", {
     testthat::skip_on_travis()
     testthat::skip_on_cran()
+    testthat::skip_on_ci()
     set.seed(4)
     xsdbf <- bayesfactor_parameters(all_, prior = model)
     testthat::expect_equal(log(xsdbf$BF), c(-2.5756125848835, 1.69713280431204, -0.212277519930343), tolerance = .1)
@@ -90,6 +91,7 @@ if (require("rstanarm") && require("emmeans")) {
   test_that("emmGrid bayesfactor_restricted", {
     testthat::skip_on_travis()
     testthat::skip_on_cran()
+    testthat::skip_on_ci()
     set.seed(4)
     hyps <- c("`1` < `2`", "`1` < 0")
     xrbf <- bayesfactor_restricted(em_, prior = model, hypothesis = hyps)
@@ -102,6 +104,7 @@ if (require("rstanarm") && require("emmeans")) {
   test_that("emmGrid si", {
     testthat::skip_on_travis()
     testthat::skip_on_cran()
+    testthat::skip_on_ci()
     set.seed(4)
     xrsi <- si(em_, prior = model)
     testthat::expect_equal(xrsi$CI_low, c(-0.8479125,  0.5738828), tolerance = .1)
@@ -144,6 +147,7 @@ if (require("rstanarm") && require("emmeans")) {
   test_that("emmGrid bayesfactor_restricted2", {
     testthat::skip_on_travis()
     testthat::skip_on_cran()
+    testthat::skip_on_ci()
 
     hyps <- c("a < b", "b < c")
     xrbf1 <- bayesfactor_restricted(bayes_sum, fit_bayes, hypothesis = hyps)
@@ -157,6 +161,7 @@ if (require("rstanarm") && require("emmeans")) {
     set.seed(333)
     testthat::skip_on_travis()
     testthat::skip_on_cran()
+    testthat::skip_on_ci()
 
     xsdbf1 <- bayesfactor_parameters(bayes_sum, prior = fit_bayes)
     xsdbf2 <- bayesfactor_parameters(bayes_sum, prior = bayes_sum_prior)
@@ -167,6 +172,7 @@ if (require("rstanarm") && require("emmeans")) {
   test_that("emmGrid bayesfactor_parameters / describe w/ nonlinear models", {
     testthat::skip_on_travis()
     testthat::skip_on_cran()
+    testthat::skip_on_ci()
     set.seed(333)
 
     model <- stan_glm(vs ~ mpg,
