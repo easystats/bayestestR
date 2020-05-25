@@ -28,6 +28,7 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
   test_that("si.rstanarm", {
     testthat::skip_on_cran()
     testthat::skip_on_travis()
+    testthat::skip_on_ci()
 
     set.seed(333)
     library(rstanarm)
