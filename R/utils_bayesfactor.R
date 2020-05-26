@@ -214,7 +214,8 @@
 #' @importFrom stats median mad approx
 #' @importFrom utils stack
 #' @keywords internal
-.make_BF_plot_data <- function(posterior, prior, direction, null) {
+.make_BF_plot_data <- function(posterior, prior, direction, null,
+                               extend_scale = 0.05, precision = 2^8, ...) {
   if (!requireNamespace("logspline")) {
     stop("Package \"logspline\" needed for this function to work. Please install it.")
   }
@@ -228,9 +229,6 @@
       # 1. estimate density
       x <- data$values
 
-      extend_scale <- 0.05
-      precision <- 2^8
-
       x_range <- range(x)
       x_rangex <- stats::median(x) + 7 * stats::mad(x) * c(-1, 1)
       x_range <- c(
@@ -243,7 +241,7 @@
       x_range[2] <- x_range[2] + extension_scale
 
       x_axis <- seq(x_range[1], x_range[2], length.out = precision)
-      f_x <- logspline::logspline(x)
+      f_x <- logspline::logspline(x, ...)
       y <- logspline::dlogspline(x_axis, f_x)
       d_points <- data.frame(x = x_axis, y = y)
 
@@ -268,7 +266,7 @@
       list(d_points, d_null)
     })
 
-    # 4a. orgenize
+    # 4a. organize
     point0 <- lapply(samples, function(.) as.data.frame(.[[2]]))
     point0 <- do.call("rbind", point0)
 
