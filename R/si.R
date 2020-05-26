@@ -257,7 +257,7 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
 
   cp <- rle(c(stats::na.omit(crit)))
   if (length(cp$lengths) > 3)
-    warning("More than 1 SI detected. Plot the result to investigate.")
+    warning("More than 1 SI detected. Plot the result to investigate.", call. = FALSE)
 
   x_supported <- stats::na.omit(x_axis[crit])
   if (length(x_supported) < 2) {
