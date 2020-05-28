@@ -128,6 +128,18 @@ point_estimate.mcmc <- function(x, centrality = "all", dispersion = FALSE, ...) 
 
 
 #' @export
+point_estimate.stanfit <- function(x, centrality = "all", dispersion = FALSE, ...) {
+  out <- point_estimate(insight::get_parameters(x), centrality = centrality, dispersion = dispersion, ...)
+
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "centrality") <- centrality
+  class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
+
+  out
+}
+
+
+#' @export
 point_estimate.bcplm <- function(x, centrality = "all", dispersion = FALSE, ...) {
   point_estimate(insight::get_parameters(x), centrality = centrality, dispersion = dispersion, ...)
 }

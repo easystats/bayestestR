@@ -76,6 +76,14 @@ p_rope.brmsfit <- function(x, range = "default", effects = c("fixed", "random", 
 
 
 #' @export
+p_rope.stanfit <- function(x, range = "default", parameters = NULL, ...) {
+  out <- .p_rope(rope(x, range = range, ci = 1, parameters = parameters, ...))
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+
+#' @export
 p_rope.sim.merMod <- p_rope.stanreg
 
 

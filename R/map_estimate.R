@@ -111,6 +111,16 @@ map_estimate.brmsfit <- function(x, precision = 2^10, method = "kernel", effects
 }
 
 
+#' @export
+map_estimate.stanfit <- function(x, precision = 2^10, method = "kernel", parameters = NULL, ...) {
+  .map_estimate_models(
+    x = insight::get_parameters(x, parameters = parameters),
+    precision = precision,
+    method = method
+  )
+}
+
+
 #' @rdname map_estimate
 #' @export
 map_estimate.data.frame <- function(x, precision = 2^10, method = "kernel", ...) {

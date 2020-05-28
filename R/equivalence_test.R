@@ -261,6 +261,17 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .89, effects = c
 
 
 #' @export
+equivalence_test.stanfit <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
+  out <- .equivalence_test_models(x, range, ci, effects = "all", component = "conditional", parameters, verbose)
+  out <- merge(out, insight::clean_parameters(x)[, c("Parameter", "Effects", "Cleaned_Parameter")], by = "Parameter", sort = FALSE)
+
+  class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+
+#' @export
 equivalence_test.sim.merMod <- function(x, range = "default", ci = .89, parameters = NULL, verbose = TRUE, ...) {
   out <- .equivalence_test_models(x, range, ci, effects = "fixed", component = "conditional", parameters, verbose = FALSE)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
