@@ -220,6 +220,28 @@ p_significance.brmsfit <- function(x, threshold = "default", effects = c("fixed"
 
 
 
+#' @export
+p_significance.stanfit <- function(x, threshold = "default", parameters = NULL, verbose = TRUE, ...) {
+  threshold <- .select_threshold_ps(model = x, threshold = threshold)
+
+  data <- p_significance(
+    insight::get_parameters(x, parameters = parameters),
+    threshold = threshold
+  )
+
+  out <- .prepare_output(data, insight::clean_parameters(x))
+
+  attr(out, "threshold") <- threshold
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  class(out) <- class(data)
+
+  out
+}
+
+
+
+
+
 #' @rdname as.numeric.p_direction
 #' @export
 as.numeric.p_significance <- function(x, ...) {

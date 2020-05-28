@@ -260,6 +260,19 @@ p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), compon
 }
 
 
+#' @export
+p_direction.stanfit <- function(x, parameters = NULL, method = "direct", ...) {
+  out <- .prepare_output(
+    p_direction(insight::get_parameters(x, parameters = parameters), method = method, ...),
+    insight::clean_parameters(x)
+  )
+
+  class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+
 #' @rdname p_direction
 #' @export
 p_direction.BFBayesFactor <- function(x, method = "direct", ...) {
