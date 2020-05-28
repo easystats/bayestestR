@@ -85,6 +85,31 @@ effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"
 
 
 
+#' @export
+effective_sample.stanfit <- function(model, parameters = NULL, ...) {
+  pars <-
+    insight::get_parameters(
+      model,
+      parameters = parameters
+    )
+
+  if (!requireNamespace("rstan", quietly = TRUE)) {
+    stop("Package 'rstan' required for this function to work. Please install it.")
+  }
+
+  s <- as.data.frame(rstan::summary(model)$summary)
+  s <- s[rownames(s) %in% colnames(pars), ]
+
+  data.frame(
+    Parameter = rownames(s),
+    ESS = s[["n_eff"]],
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
+}
+
+
+
 #' @rdname effective_sample
 #' @export
 effective_sample.MCMCglmm <- function(model, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
