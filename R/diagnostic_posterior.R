@@ -177,7 +177,8 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", paramet
     diagnostic_df$MCSE <- mcse(posteriors)$MCSE
   }
   if ("Rhat" %in% diagnostic) {
-    diagnostic_df$Rhat <- as.data.frame(rstan::summary(posteriors)$summary)$Rhat
+    s <- as.data.frame(rstan::summary(posteriors)$summary)
+    diagnostic_df$Rhat <- s[rownames(s) != "lp__", ]$Rhat
   }
 
   # Remove columns with all Nans
