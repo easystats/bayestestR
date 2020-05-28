@@ -64,13 +64,13 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
     diagnostic <- c("ESS", "Rhat", "MCSE", "khat")
   } else {
     diagnostic <- c(diagnostic)
-    if("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
+    if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
   }
 
   # Get indices and rename
   diagnostic_df <- as.data.frame(posteriors$stan_summary)
   diagnostic_df$Parameter <- row.names(diagnostic_df)
-  if("n_eff" %in% names(diagnostic_df)){
+  if ("n_eff" %in% names(diagnostic_df)) {
     diagnostic_df$ESS <- diagnostic_df$n_eff
   }
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
