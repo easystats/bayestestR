@@ -19,15 +19,15 @@
 #'
 #' \subsection{Match Models}{
 #' If \code{match_models=FALSE} (default), Inclusion BFs are computed by comparing all models
-#' with a predictor against all models without that predictor. If \code{TRUE},
+#' with a term against all models without that term. If \code{TRUE},
 #' comparison is restricted to models that (1) do not include any interactions
-#' with the predictor of interest; (2) for interaction predictors, averaging is done
-#' only across models that containe the main effect from which the interaction
-#' predictor is comprised.
+#' with the term of interest; (2) for interaction terms, averaging is done
+#' only across models that containe the main effect terms from which the interaction
+#' term is comprised.
 #' }
 #'
-#' @note Random effects in the \code{lme} style will be displayed as interactions:
-#' i.e., \code{(X|G)} will become \code{1:G} and \code{X:G}.
+#' @note Random effects in the \code{lmer} style are converted to interaction terms:
+#' i.e., \code{(X|G)} will become the terms \code{1:G} and \code{X:G}.
 #'
 #' @seealso \code{\link{weighted_posteriors}} for Bayesian parameter averaging.
 #'

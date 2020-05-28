@@ -673,7 +673,7 @@ We can also use the `easystats`' [**`modelbased`**](https://cran.r-project.org/p
 set.seed(1)
 ```
 
-```{r}
+```{r, eval=FALSE}
 library(modelbased)
 
 estimate_contrasts(model, test = "bf")

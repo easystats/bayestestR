@@ -1,7 +1,8 @@
 if (require("BayesFactor", quietly = TRUE)) {
-  set.seed(123)
+
 
   test_that("weighted_posteriors for BayesFactor", {
+    set.seed(123)
     # compute Bayes Factor for 31 different regression models
     null_den <- regressionBF(mpg ~ cyl + disp + hp + drat + wt,
                              data = mtcars, progress = FALSE)
@@ -14,8 +15,10 @@ if (require("BayesFactor", quietly = TRUE)) {
   })
 
   test_that("weighted_posteriors for BayesFactor (intercept)", {
+    set.seed(123)
     # fails for win old-release
     testthat::skip_on_cran()
+    testthat::skip_on_ci()
 
     dat <- data.frame(x1 = rnorm(10),
                       x2 = rnorm(10),
@@ -23,14 +26,15 @@ if (require("BayesFactor", quietly = TRUE)) {
     BFmods <- regressionBF(y ~ x1 + x2, data = dat, progress = FALSE)
 
     res <- weighted_posteriors(BFmods)
-    testthat::expect_equal(attr(res,"weights")$weights,c(1545, 805, 1020, 630))
+    testthat::expect_equal(attr(res,"weights")$weights,c(1032, 805, 1388, 775))
 
-    wHDI <- hdi(res[c("x1","x2")])
-    testthat::expect_equal(wHDI$CI_low, c(-0.425,  -0.172), tol = 1e-3)
-    testthat::expect_equal(wHDI$CI_high, c(0.371, 0.579), tol = 1e-3)
+    wHDI <- hdi(res[c("x1","x2")], ci = 0.9)
+    testthat::expect_equal(wHDI$CI_low, c(-0.519, -0.640), tol = 1e-3)
+    testthat::expect_equal(wHDI$CI_high, c(0.150, 0.059), tol = 1e-3)
   })
 
   test_that("weighted_posteriors for nonlinear BayesFactor", {
+    set.seed(123)
     data(sleep)
 
     BFS <- ttestBF(x = sleep$extra[sleep$group == 1],

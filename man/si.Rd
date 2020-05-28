@@ -49,7 +49,8 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
 
 \item{verbose}{Toggle off warnings.}
 
-\item{...}{Arguments passed to and from other methods.}
+\item{...}{Arguments passed to and from other methods.
+(Can be used to pass arguments to internal \code{\link[logspline]{logspline}}.)}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}

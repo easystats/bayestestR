@@ -9,11 +9,8 @@
 #' \strong{For more info, in particular on specifying correct priors for factors with more than 2 levels,
 #' see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 #'
-#' @param posterior A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}
-#' or a data frame - representing a posterior distribution(s) from (see 'Details').
-#' @param prior An object representing a prior distribution (see 'Details').
 #' @param BF The amount of support required to be included in the support interval.
-#' @param ... Arguments passed to and from other methods.
+#' @inheritParams bayesfactor_parameters
 #' @inheritParams hdi
 #'
 #' @details This method is used to compute support intervals based on prior and posterior distributions.
@@ -185,6 +182,16 @@ si.emmGrid <- function(posterior, prior = NULL,
 #' @rdname si
 #' @export
 si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
+  if (length(BF) > 1) {
+    SIs <- lapply(BF, function(i) {
+      si(posterior, prior = prior, BF = i, verbose = verbose, ...)
+    })
+    out <- do.call(rbind, SIs)
+
+    attr(out, "plot_data") <- attr(SIs[[1]], "plot_data")
+    class(out) <- unique(c("bayestestR_si", "bayestestR_ci", class(out)))
+    return(out)
+  }
 
   if (is.null(prior)) {
     prior <- posterior
@@ -210,11 +217,13 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
     stringsAsFactors = FALSE
   )
   class(out) <- unique(c("bayestestR_si", "see_si", "bayestestR_ci", "see_ci", class(out)))
-  attr(out, "plot_data") <- .make_BF_plot_data(posterior,prior,0,0)$plot_data
+  attr(out, "plot_data") <- .make_BF_plot_data(posterior,prior,0,0, ...)$plot_data
 
   out
 }
 
+#' @importFrom stats median mad na.omit
+#' @keywords internal
 .si <- function(posterior, prior, BF = 1, extend_scale = 0.05, precision = 2^8, ...) {
   if (!requireNamespace("logspline")) {
     stop("Package \"logspline\" needed for this function to work. Please install it.")
@@ -233,23 +242,28 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
   )
 
   extension_scale <- diff(x_range) * extend_scale
-  x_range[1] <- x_range[1] - extension_scale
-  x_range[2] <- x_range[2] + extension_scale
+  x_range <- x_range + c(-1, 1) * extension_scale
 
   x_axis <- seq(x_range[1], x_range[2], length.out = precision)
 
-  f_prior <- logspline::logspline(prior)
-  f_posterior <- logspline::logspline(posterior)
+  f_prior <- logspline::logspline(prior, ...)
+  f_posterior <- logspline::logspline(posterior, ...)
   d_prior <- logspline::dlogspline(x_axis, f_prior)
   d_posterior <- logspline::dlogspline(x_axis, f_posterior)
 
   relative_d <- d_posterior / d_prior
 
-  x_supported <- x_axis[relative_d >= BF]
+  crit <- relative_d >= BF
+
+  cp <- rle(c(stats::na.omit(crit)))
+  if (length(cp$lengths) > 3)
+    warning("More than 1 SI detected. Plot the result to investigate.", call. = FALSE)
+
+  x_supported <- stats::na.omit(x_axis[crit])
   if (length(x_supported) < 2) {
     return(c(NA,NA))
   } else {
-    range(range(x_supported))
+    range(x_supported)
   }
 
 }

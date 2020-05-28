@@ -30,6 +30,8 @@
 #' \code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).
 #' @param null Value of the null, either a scalar (for point-null) or a range
 #' (for a interval-null).
+#' @param ... Arguments passed to and from other methods.
+#'   (Can be used to pass arguments to internal \code{\link[logspline]{logspline}}.)
 #' @inheritParams hdi
 #'
 #' @return A data frame containing the Bayes factor representing evidence \emph{against} the null.
@@ -297,7 +299,8 @@ bayesfactor_parameters.data.frame <- function(posterior,
       posterior[[par]],
       prior[[par]],
       direction = direction,
-      null = null
+      null = null,
+      ...
     )
   }
 
@@ -315,7 +318,7 @@ bayesfactor_parameters.data.frame <- function(posterior,
 
   attr(bf_val, "hypothesis") <- null # don't change the name of this attribute - it is used only internally for "see" and printing
   attr(bf_val, "direction") <- direction
-  attr(bf_val, "plot_data") <- .make_BF_plot_data(posterior, prior, direction, null)
+  attr(bf_val, "plot_data") <- .make_BF_plot_data(posterior, prior, direction, null, ...)
 
   bf_val
 }
@@ -324,7 +327,7 @@ bayesfactor_parameters.data.frame <- function(posterior,
 
 #' @keywords internal
 #' @importFrom insight print_color
-.bayesfactor_parameters <- function(posterior, prior, direction = 0, null = 0) {
+.bayesfactor_parameters <- function(posterior, prior, direction = 0, null = 0, ...) {
   if (isTRUE(all.equal(posterior, prior))) {
     return(1)
   }
@@ -336,7 +339,7 @@ bayesfactor_parameters.data.frame <- function(posterior,
 
   if (length(null) == 1) {
     relative_density <- function(samples) {
-      f_samples <- suppressWarnings(logspline::logspline(samples))
+      f_samples <- suppressWarnings(logspline::logspline(samples, ...))
       d_samples <- logspline::dlogspline(null, f_samples)
 
       if (direction < 0) {
@@ -356,8 +359,8 @@ bayesfactor_parameters.data.frame <- function(posterior,
     null <- sort(null)
     null[is.infinite(null)] <- 1.797693e+308 * sign(null[is.infinite(null)])
 
-    f_prior <- logspline::logspline(prior)
-    f_posterior <- logspline::logspline(posterior)
+    f_prior <- logspline::logspline(prior, ...)
+    f_posterior <- logspline::logspline(posterior, ...)
 
     h0_prior <- diff(logspline::plogspline(null, f_prior))
     h0_post <- diff(logspline::plogspline(null, f_posterior))
