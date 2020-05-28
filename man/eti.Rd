@@ -10,6 +10,7 @@
 \alias{eti.emmGrid}
 \alias{eti.stanreg}
 \alias{eti.brmsfit}
+\alias{eti.stanfit}
 \alias{eti.BFBayesFactor}
 \title{Equal-Tailed Interval (ETI)}
 \usage{
@@ -52,6 +53,8 @@ eti(x, ...)
   verbose = TRUE,
   ...
 )
+
+\method{eti}{stanfit}(x, ci = 0.89, parameters = NULL, verbose = TRUE, ...)
 
 \method{eti}{BFBayesFactor}(x, ci = 0.89, verbose = TRUE, ...)
 }

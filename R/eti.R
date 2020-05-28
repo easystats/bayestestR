@@ -170,6 +170,20 @@ eti.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"),
 
 #' @rdname eti
 #' @export
+eti.stanfit <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
+  out <- .prepare_output(
+    eti(insight::get_parameters(x, parameters = parameters), ci = ci, verbose = verbose, ...),
+    insight::clean_parameters(x)
+  )
+
+  class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+
+#' @rdname eti
+#' @export
 eti.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
   out <- eti(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))

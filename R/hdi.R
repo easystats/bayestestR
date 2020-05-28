@@ -222,6 +222,21 @@ hdi.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"), comp
 }
 
 
+#' @importFrom insight get_parameters
+#' @export
+hdi.stanfit <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
+  out <- .prepare_output(
+    hdi(insight::get_parameters(x, parameters = parameters), ci = ci, verbose = verbose, ...),
+    insight::clean_parameters(x)
+  )
+
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
+  out
+}
+
+
+
 #' @rdname hdi
 #' @export
 hdi.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {

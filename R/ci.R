@@ -126,7 +126,7 @@ ci.sim <- function(x, ci = .89, method = "ETI", parameters = NULL, verbose = TRU
 #' @rdname ci
 #' @export
 ci.stanreg <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random", "all"),
-                       parameters = NULL, verbose = TRUE,  BF = 1,...) {
+                       parameters = NULL, verbose = TRUE,  BF = 1, ...) {
   .ci_bayesian(x, ci = ci, method = method, effects = effects, parameters = parameters, verbose = verbose, BF = BF, ...)
 }
 
@@ -137,6 +137,12 @@ ci.brmsfit <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random
                        component = c("conditional", "zi", "zero_inflated", "all"),
                        parameters = NULL, verbose = TRUE, BF = 1, ...) {
   .ci_bayesian(x, ci = ci, method = method, effects = effects, component = component, parameters = parameters, verbose = verbose, BF = BF, ...)
+}
+
+
+#' @export
+ci.stanfit <- function(x, ci = .89, method = "ETI", parameters = NULL, verbose = TRUE,  BF = 1, ...) {
+  .ci_bayesian(x, ci = ci, method = method, effects = "all", parameters = parameters, verbose = verbose, BF = BF, ...)
 }
 
 
