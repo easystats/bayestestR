@@ -170,20 +170,22 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects
     insight::get_parameters(posteriors, effects = effects, parameters = parameters)
   )
 
+  all_params <- insight::find_parameters(posteriors, effects = effects, flatten = TRUE)
+
   diagnostic_df <- data.frame(
-    Parameter = insight::find_parameters(posteriors, flatten = TRUE),
+    Parameter = all_params,
     stringsAsFactors = FALSE
   )
 
   if ("ESS" %in% diagnostic) {
-    diagnostic_df$ESS <- effective_sample(posteriors)$ESS
+    diagnostic_df$ESS <- effective_sample(posteriors, effects = effects)$ESS
   }
   if ("MCSE" %in% diagnostic) {
-    diagnostic_df$MCSE <- mcse(posteriors)$MCSE
+    diagnostic_df$MCSE <- mcse(posteriors, effects = effects)$MCSE
   }
   if ("Rhat" %in% diagnostic) {
     s <- as.data.frame(rstan::summary(posteriors)$summary)
-    diagnostic_df$Rhat <- s[rownames(s) != "lp__", ]$Rhat
+    diagnostic_df$Rhat <- s[rownames(s) %in% all_params, ]$Rhat
   }
 
   # Remove columns with all Nans

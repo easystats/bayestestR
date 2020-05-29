@@ -301,22 +301,9 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
 
 
 #' @keywords internal
-.add_effects_component_column <- function(x, fill_na = FALSE) {
-  if (fill_na) {
-    if (!"Effects" %in% names(x)) {
-      x <- cbind(x, data.frame("Effects" = NA))
-    } else {
-      x$Effects <- NA
-    }
-    if (!"Component" %in% names(x)) {
-      x <- cbind(x, data.frame("Component" = NA))
-    } else {
-      x$Component <- NA
-    }
-  } else {
-    if (!"Effects" %in% names(x)) x <- cbind(x, data.frame("Effects" = NA))
-    if (!"Component" %in% names(x)) x <- cbind(x, data.frame("Component" = NA))
-  }
+.add_effects_component_column <- function(x) {
+  if (!"Effects" %in% names(x)) x <- cbind(x, data.frame("Effects" = NA))
+  if (!"Component" %in% names(x)) x <- cbind(x, data.frame("Component" = NA))
   x
 }
 
