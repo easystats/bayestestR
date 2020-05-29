@@ -253,8 +253,8 @@ si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects 
 
   x_axis <- seq(x_range[1], x_range[2], length.out = precision)
 
-  f_prior <- logspline::logspline(prior, ...)
-  f_posterior <- logspline::logspline(posterior, ...)
+  f_prior <- .logspline(prior, ...)
+  f_posterior <- .logspline(posterior, ...)
   d_prior <- logspline::dlogspline(x_axis, f_prior)
   d_posterior <- logspline::dlogspline(x_axis, f_posterior)
 

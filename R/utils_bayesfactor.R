@@ -241,7 +241,7 @@
       x_range[2] <- x_range[2] + extension_scale
 
       x_axis <- seq(x_range[1], x_range[2], length.out = precision)
-      f_x <- logspline::logspline(x, ...)
+      f_x <- .logspline(x, ...)
       y <- logspline::dlogspline(x_axis, f_x)
       d_points <- data.frame(x = x_axis, y = y)
 
@@ -321,3 +321,20 @@ as.double.bayesfactor_parameters <- as.numeric.bayesfactor_inclusion
 #' @export
 as.double.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion
 
+
+
+# logspline ---------------------------------------------------------------
+
+#' @keywords internal
+.logspline <- function(x, ...) {
+  if (!requireNamespace("logspline")) {
+    stop("Package \"logspline\" needed for this function to work. Please install it.")
+  }
+
+  arg_names <- names(formals(logspline::logspline, envir = parent.frame()))
+  in_args <- list(...)
+
+  in_args <- in_args[names(in_args) %in% arg_names]
+  in_args <- c(list(x = x), in_args)
+  suppressWarnings(do.call(logspline::logspline, in_args))
+}

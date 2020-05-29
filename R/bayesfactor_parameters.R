@@ -339,7 +339,7 @@ bayesfactor_parameters.data.frame <- function(posterior,
 
   if (length(null) == 1) {
     relative_density <- function(samples) {
-      f_samples <- suppressWarnings(logspline::logspline(samples, ...))
+      f_samples <- .logspline(samples, ...)
       d_samples <- logspline::dlogspline(null, f_samples)
 
       if (direction < 0) {
@@ -359,8 +359,8 @@ bayesfactor_parameters.data.frame <- function(posterior,
     null <- sort(null)
     null[is.infinite(null)] <- 1.797693e+308 * sign(null[is.infinite(null)])
 
-    f_prior <- logspline::logspline(prior, ...)
-    f_posterior <- logspline::logspline(posterior, ...)
+    f_prior <- .logspline(prior, ...)
+    f_posterior <- .logspline(posterior, ...)
 
     h0_prior <- diff(logspline::plogspline(null, f_prior))
     h0_post <- diff(logspline::plogspline(null, f_posterior))
