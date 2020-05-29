@@ -80,21 +80,7 @@ mcse.stanreg <- function(model, effects = c("fixed", "random", "all"), parameter
 
 
 #' @export
-mcse.stanfit <- function(model, parameters = NULL, ...) {
-  params <-
-    insight::get_parameters(
-      model,
-      parameters = parameters
-    )
-
-  ess <-
-    effective_sample(
-      model,
-      parameters = parameters
-    )
-
-  .mcse(params, ess$ESS)
-}
+mcse.stanfit <- mcse.stanreg
 
 
 

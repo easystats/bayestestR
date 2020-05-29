@@ -242,6 +242,9 @@ p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parame
   out
 }
 
+#' @export
+p_direction.stanfit <- p_direction.stanreg
+
 
 #' @rdname p_direction
 #' @export
@@ -251,19 +254,6 @@ p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), compon
 
   out <- .prepare_output(
     p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, ...),
-    insight::clean_parameters(x)
-  )
-
-  class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
-  out
-}
-
-
-#' @export
-p_direction.stanfit <- function(x, parameters = NULL, method = "direct", ...) {
-  out <- .prepare_output(
-    p_direction(insight::get_parameters(x, parameters = parameters), method = method, ...),
     insight::clean_parameters(x)
   )
 

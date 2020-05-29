@@ -213,6 +213,8 @@ p_map.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("f
   out
 }
 
+#' @export
+p_map.stanfit <- p_map.stanreg
 
 
 
@@ -232,20 +234,6 @@ p_map.brmsfit <- function(x, precision = 2^10, method = "kernel", effects = c("f
   out
 }
 
-
-
-
-#' @export
-p_map.stanfit <- function(x, precision = 2^10, method = "kernel", parameters = NULL, ...) {
-  out <- .prepare_output(
-    p_map(insight::get_parameters(x, parameters = parameters), precision = precision, method = method),
-    insight::clean_parameters(x)
-  )
-
-  class(out) <- unique(c("p_map", class(out)))
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
-  out
-}
 
 
 

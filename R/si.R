@@ -224,8 +224,8 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
 
 
 #' @export
-si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
-  si(insight::get_parameters(posterior))
+si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = c("fixed", "random", "all"), ...){
+  si(insight::get_parameters(posterior, effects = effects))
 }
 
 

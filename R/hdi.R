@@ -203,6 +203,9 @@ hdi.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"), para
   out
 }
 
+#' @export
+hdi.stanfit <- hdi.stanreg
+
 
 
 #' @rdname hdi
@@ -213,20 +216,6 @@ hdi.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"), comp
 
   out <- .prepare_output(
     hdi(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose, ...),
-    insight::clean_parameters(x)
-  )
-
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
-  class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
-  out
-}
-
-
-#' @importFrom insight get_parameters
-#' @export
-hdi.stanfit <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
-  out <- .prepare_output(
-    hdi(insight::get_parameters(x, parameters = parameters), ci = ci, verbose = verbose, ...),
     insight::clean_parameters(x)
   )
 

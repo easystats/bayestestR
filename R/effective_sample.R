@@ -86,10 +86,14 @@ effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"
 
 
 #' @export
-effective_sample.stanfit <- function(model, parameters = NULL, ...) {
+effective_sample.stanfit <- function(model, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  # check arguments
+  effects <- match.arg(effects)
+
   pars <-
     insight::get_parameters(
       model,
+      effects = effects,
       parameters = parameters
     )
 

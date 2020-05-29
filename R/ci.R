@@ -141,9 +141,7 @@ ci.brmsfit <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random
 
 
 #' @export
-ci.stanfit <- function(x, ci = .89, method = "ETI", parameters = NULL, verbose = TRUE,  BF = 1, ...) {
-  .ci_bayesian(x, ci = ci, method = method, effects = "all", parameters = parameters, verbose = verbose, BF = BF, ...)
-}
+ci.stanfit <- ci.stanreg
 
 
 #' @rdname ci

@@ -225,17 +225,6 @@ rope.mcmc <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose
 
 
 #' @export
-rope.stanfit <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
-  out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
-  attr(out, "object_name") <- NULL
-  attr(out, "data") <- .safe_deparse(substitute(x))
-  out
-}
-
-
-
-
-#' @export
 rope.bcplm <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
   out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
   attr(out, "object_name") <- NULL
@@ -306,6 +295,8 @@ rope.stanreg <- function(x, range = "default", ci = .89, ci_method = "HDI", effe
   out
 }
 
+#' @export
+rope.stanfit <- rope.stanreg
 
 
 #' @rdname rope

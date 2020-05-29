@@ -234,14 +234,14 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   # To make "merge()" work, we add those columns to all data frames,
   # filled with NA, and remove the columns later if necessary
 
-  estimates <- .add_effects_component_column(estimates, fill_na = inherits(x, "stanfit"))
-  uncertainty <- .add_effects_component_column(uncertainty, fill_na = inherits(x, "stanfit"))
-  test_pmap <- .add_effects_component_column(test_pmap, fill_na = inherits(x, "stanfit"))
-  test_pd <- .add_effects_component_column(test_pd, fill_na = inherits(x, "stanfit"))
-  test_prope <- .add_effects_component_column(test_prope, fill_na = inherits(x, "stanfit"))
-  test_psig <- .add_effects_component_column(test_psig, fill_na = inherits(x, "stanfit"))
-  test_rope <- .add_effects_component_column(test_rope, fill_na = inherits(x, "stanfit"))
-  test_bf <- .add_effects_component_column(test_bf, fill_na = inherits(x, "stanfit"))
+  estimates <- .add_effects_component_column(estimates)
+  uncertainty <- .add_effects_component_column(uncertainty)
+  test_pmap <- .add_effects_component_column(test_pmap)
+  test_pd <- .add_effects_component_column(test_pd)
+  test_prope <- .add_effects_component_column(test_prope)
+  test_psig <- .add_effects_component_column(test_psig)
+  test_rope <- .add_effects_component_column(test_rope)
+  test_bf <- .add_effects_component_column(test_bf)
 
   merge_by <- c("Parameter", "Effects", "Component")
 
@@ -504,15 +504,15 @@ describe_posterior.stanmvreg <- function(posteriors, centrality = "median", disp
 
 #' @inheritParams insight::get_parameters
 #' @inheritParams diagnostic_posterior
-#' @importFrom insight find_algorithm
 #' @export
-describe_posterior.stanfit <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, diagnostic = c("ESS", "Rhat"), parameters = NULL, ...) {
-  out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, parameters = parameters, ...)
+describe_posterior.stanfit <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, effects = effects, parameters = parameters, ...)
 
   diagnostic <-
     diagnostic_posterior(
       posteriors,
       diagnostic,
+      effects = effects,
       parameters = parameters,
       ...
     )

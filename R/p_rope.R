@@ -64,20 +64,14 @@ p_rope.stanreg <- function(x, range = "default", effects = c("fixed", "random", 
   out
 }
 
+#' @export
+p_rope.stanfit <- p_rope.stanreg
 
 
 #' @rdname p_rope
 #' @export
 p_rope.brmsfit <- function(x, range = "default", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   out <- .p_rope(rope(x, range = range, ci = 1, effects = effects, component = component, parameters = parameters, ...))
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
-  out
-}
-
-
-#' @export
-p_rope.stanfit <- function(x, range = "default", parameters = NULL, ...) {
-  out <- .p_rope(rope(x, range = range, ci = 1, parameters = parameters, ...))
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }

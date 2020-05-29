@@ -229,6 +229,8 @@ estimate_density.stanreg <- function(x, method = "kernel", precision = 2^10, ext
   out
 }
 
+#' @export
+estimate_density.stanfit <- estimate_density.stanreg
 
 
 
@@ -239,19 +241,6 @@ estimate_density.brmsfit <- function(x, method = "kernel", precision = 2^10, ext
   component <- match.arg(component)
 
   out <- estimate_density(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
-
-  class(out) <- .set_density_class(out)
-  out
-}
-
-
-
-
-#' @importFrom insight get_parameters
-#' @export
-estimate_density.stanfit <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", parameters = NULL, ...) {
-  out <- estimate_density(insight::get_parameters(x, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
 
   class(out) <- .set_density_class(out)

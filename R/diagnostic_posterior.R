@@ -154,7 +154,7 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects
 
 #' @inheritParams insight::get_parameters
 #' @export
-diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", parameters = NULL, ...) {
+diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE")
@@ -164,11 +164,16 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", paramet
     stop("Package 'rstan' required for this function to work. Please install it.")
   }
 
+  # Select rows
+  effects <- match.arg(effects)
   params <- colnames(
-    insight::get_parameters(posteriors, parameters = parameters)
+    insight::get_parameters(posteriors, effects = effects, parameters = parameters)
   )
 
-  diagnostic_df <- data.frame(Parameter = params, stringsAsFactors = FALSE)
+  diagnostic_df <- data.frame(
+    Parameter = insight::find_parameters(posteriors, flatten = TRUE),
+    stringsAsFactors = FALSE
+  )
 
   if ("ESS" %in% diagnostic) {
     diagnostic_df$ESS <- effective_sample(posteriors)$ESS
@@ -182,5 +187,7 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", paramet
   }
 
   # Remove columns with all Nans
-  diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
+  diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
+
+  diagnostic_df[diagnostic_df$Parameter %in% params, ]
 }
