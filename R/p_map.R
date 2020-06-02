@@ -257,6 +257,15 @@ p_map.MCMCglmm <- function(x, precision = 2^10, method = "kernel", ...) {
 
 
 
+#' @export
+p_map.bayesQR <- function(x, precision = 2^10, method = "kernel", ...) {
+  out <- p_map(insight::get_parameters(x), precision = precision, method = method, ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+
+
 
 #' @rdname as.numeric.p_direction
 #' @method as.numeric p_map

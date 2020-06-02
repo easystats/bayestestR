@@ -5,6 +5,7 @@
 \alias{hdi.numeric}
 \alias{hdi.data.frame}
 \alias{hdi.MCMCglmm}
+\alias{hdi.bayesQR}
 \alias{hdi.sim.merMod}
 \alias{hdi.sim}
 \alias{hdi.emmGrid}
@@ -20,6 +21,8 @@ hdi(x, ...)
 \method{hdi}{data.frame}(x, ci = 0.89, verbose = TRUE, ...)
 
 \method{hdi}{MCMCglmm}(x, ci = 0.89, verbose = TRUE, ...)
+
+\method{hdi}{bayesQR}(x, ci = 0.89, verbose = TRUE, ...)
 
 \method{hdi}{sim.merMod}(
   x,

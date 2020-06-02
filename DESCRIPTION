@@ -58,6 +58,7 @@ Imports:
 	utils
 Suggests:
 	BayesFactor,
+	bayesQR,
 	bridgesampling,
 	brms,
 	broom,

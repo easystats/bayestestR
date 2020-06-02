@@ -121,6 +121,9 @@ hdi.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
 
 
 
+
+
+
 #' @rdname hdi
 #' @export
 hdi.MCMCglmm <- function(x, ci = .89, verbose = TRUE, ...) {
@@ -151,6 +154,10 @@ hdi.bcplm <- function(x, ci = .89, verbose = TRUE, ...) {
   dat
 }
 
+
+#' @rdname hdi
+#' @export
+hdi.bayesQR <- hdi.bcplm
 
 
 #' @rdname hdi

@@ -155,6 +155,12 @@ p_significance.bcplm <- function(x, threshold = "default", ...) {
 }
 
 
+#' @export
+p_significance.bayesQR <- function(x, threshold = "default", ...) {
+  p_significance(insight::get_parameters(x), threshold = threshold, ...)
+}
+
+
 #' @rdname p_significance
 #' @export
 p_significance.emmGrid <- function(x, threshold = "default", ...) {
