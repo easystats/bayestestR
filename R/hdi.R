@@ -203,6 +203,9 @@ hdi.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"), para
   out
 }
 
+#' @export
+hdi.stanfit <- hdi.stanreg
+
 
 
 #' @rdname hdi
@@ -220,6 +223,7 @@ hdi.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"), comp
   class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
   out
 }
+
 
 
 #' @rdname hdi

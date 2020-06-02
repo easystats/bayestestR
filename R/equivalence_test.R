@@ -245,6 +245,10 @@ equivalence_test.stanreg <- function(x, range = "default", ci = .89, effects = c
 }
 
 
+#' @export
+equivalence_test.stanfit <- equivalence_test.stanreg
+
+
 #' @rdname equivalence_test
 #' @export
 equivalence_test.brmsfit <- function(x, range = "default", ci = .89, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
@@ -258,6 +262,7 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .89, effects = c
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
+
 
 
 #' @export

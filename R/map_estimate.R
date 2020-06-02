@@ -98,6 +98,10 @@ map_estimate.stanreg <- function(x, precision = 2^10, method = "kernel", effects
   )
 }
 
+#' @export
+map_estimate.stanfit <- map_estimate.stanreg
+
+
 #' @rdname map_estimate
 #' @export
 map_estimate.brmsfit <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
@@ -109,6 +113,7 @@ map_estimate.brmsfit <- function(x, precision = 2^10, method = "kernel", effects
     precision = precision, method = method
   )
 }
+
 
 
 #' @rdname map_estimate

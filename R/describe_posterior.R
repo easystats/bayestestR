@@ -131,7 +131,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
     }
 
     ## TODO no BF for arm::sim
-    if (inherits(x, c("sim", "sim.merMod", "mcmc"))) test <- setdiff(test, "bf")
+    if (inherits(x, c("sim", "sim.merMod", "mcmc", "stanfit"))) test <- setdiff(test, "bf")
 
     # MAP-based p-value
 
@@ -486,6 +486,30 @@ describe_posterior.stanmvreg <- function(posteriors, centrality = "median", disp
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
+
+
+
+#' @inheritParams insight::get_parameters
+#' @inheritParams diagnostic_posterior
+#' @export
+describe_posterior.stanfit <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, effects = effects, parameters = parameters, ...)
+
+  diagnostic <-
+    diagnostic_posterior(
+      posteriors,
+      diagnostic,
+      effects = effects,
+      parameters = parameters,
+      ...
+    )
+  out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
+
+  attr(out, "ci_method") <- ci_method
+  class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
+  out
+}
+
 
 
 #' @inheritParams describe_posterior.stanreg

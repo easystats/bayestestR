@@ -213,6 +213,8 @@ p_map.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("f
   out
 }
 
+#' @export
+p_map.stanfit <- p_map.stanreg
 
 
 
@@ -231,6 +233,7 @@ p_map.brmsfit <- function(x, precision = 2^10, method = "kernel", effects = c("f
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
+
 
 
 

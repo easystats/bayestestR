@@ -64,13 +64,13 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
     diagnostic <- c("ESS", "Rhat", "MCSE", "khat")
   } else {
     diagnostic <- c(diagnostic)
-    if("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
+    if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
   }
 
   # Get indices and rename
   diagnostic_df <- as.data.frame(posteriors$stan_summary)
   diagnostic_df$Parameter <- row.names(diagnostic_df)
-  if("n_eff" %in% names(diagnostic_df)){
+  if ("n_eff" %in% names(diagnostic_df)) {
     diagnostic_df$ESS <- diagnostic_df$n_eff
   }
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
@@ -105,15 +105,12 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
 #' @rdname diagnostic_posterior
 #' @export
 diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
-
-
-
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE", "khat") # Add MCSE
   } else {
     diagnostic <- c(diagnostic)
-    if("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
+    if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
   }
 
   if (!requireNamespace("rstan", quietly = TRUE)) {
@@ -149,6 +146,50 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects
         parameters = parameters
       )
     )
+
+  diagnostic_df[diagnostic_df$Parameter %in% params, ]
+}
+
+
+
+#' @inheritParams insight::get_parameters
+#' @export
+diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  if ("all" %in% diagnostic) {
+    diagnostic <- c("ESS", "Rhat", "MCSE")
+  }
+
+  if (!requireNamespace("rstan", quietly = TRUE)) {
+    stop("Package 'rstan' required for this function to work. Please install it.")
+  }
+
+  # Select rows
+  effects <- match.arg(effects)
+  params <- colnames(
+    insight::get_parameters(posteriors, effects = effects, parameters = parameters)
+  )
+
+  all_params <- insight::find_parameters(posteriors, effects = effects, flatten = TRUE)
+
+  diagnostic_df <- data.frame(
+    Parameter = all_params,
+    stringsAsFactors = FALSE
+  )
+
+  if ("ESS" %in% diagnostic) {
+    diagnostic_df$ESS <- effective_sample(posteriors, effects = effects)$ESS
+  }
+  if ("MCSE" %in% diagnostic) {
+    diagnostic_df$MCSE <- mcse(posteriors, effects = effects)$MCSE
+  }
+  if ("Rhat" %in% diagnostic) {
+    s <- as.data.frame(rstan::summary(posteriors)$summary)
+    diagnostic_df$Rhat <- s[rownames(s) %in% all_params, ]$Rhat
+  }
+
+  # Remove columns with all Nans
+  diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
 
   diagnostic_df[diagnostic_df$Parameter %in% params, ]
 }

@@ -79,6 +79,11 @@ mcse.stanreg <- function(model, effects = c("fixed", "random", "all"), parameter
 
 
 
+#' @export
+mcse.stanfit <- mcse.stanreg
+
+
+
 #' @importFrom stats sd
 #' @keywords internal
 .mcse <- function(params, ess) {

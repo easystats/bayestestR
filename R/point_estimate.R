@@ -181,6 +181,10 @@ point_estimate.stanreg <- function(x, centrality = "all", dispersion = FALSE, ef
   out
 }
 
+#' @export
+point_estimate.stanfit <- point_estimate.stanreg
+
+
 #' @rdname point_estimate
 #' @export
 point_estimate.brmsfit <- function(x, centrality = "all", dispersion = FALSE, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {

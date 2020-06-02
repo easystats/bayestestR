@@ -1,5 +1,9 @@
 # bayestestR 0.6.0.1
 
+## General
+
+- Preliminary support for *stanfit* objects.
+
 ## Changes to functions
 
 - `weighted_posteriors()` can now be used with data frames.

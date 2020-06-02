@@ -222,6 +222,13 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
   out
 }
 
+
+#' @export
+si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = c("fixed", "random", "all"), ...){
+  si(insight::get_parameters(posterior, effects = effects))
+}
+
+
 #' @importFrom stats median mad na.omit
 #' @keywords internal
 .si <- function(posterior, prior, BF = 1, extend_scale = 0.05, precision = 2^8, ...) {

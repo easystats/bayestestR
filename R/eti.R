@@ -149,6 +149,11 @@ eti.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"),
 }
 
 
+#' @export
+eti.stanfit <- eti.stanreg
+
+
+
 #' @rdname eti
 #' @export
 eti.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"),
@@ -166,6 +171,7 @@ eti.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"),
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
+
 
 
 #' @rdname eti

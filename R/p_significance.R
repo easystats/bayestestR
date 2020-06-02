@@ -191,6 +191,9 @@ p_significance.stanreg <- function(x, threshold = "default", effects = c("fixed"
   out
 }
 
+#' @export
+p_significance.stanfit <- p_significance.stanreg
+
 
 
 

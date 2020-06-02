@@ -229,6 +229,8 @@ estimate_density.stanreg <- function(x, method = "kernel", precision = 2^10, ext
   out
 }
 
+#' @export
+estimate_density.stanfit <- estimate_density.stanreg
 
 
 

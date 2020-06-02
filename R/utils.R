@@ -151,7 +151,7 @@
 
 #' @keywords internal
 .merge_and_sort <- function(x, y, by, all) {
-  if(is.null(ncol(y))){
+  if (is.null(ncol(y))) {
     return(x)
   }
   x$.rowid <- 1:nrow(x)

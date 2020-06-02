@@ -180,6 +180,8 @@ rope.data.frame <- function(x, range = "default", ci = .89, ci_method = "HDI", v
   dat
 }
 
+
+
 #' @rdname rope
 #' @export
 rope.emmGrid <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
@@ -293,6 +295,8 @@ rope.stanreg <- function(x, range = "default", ci = .89, ci_method = "HDI", effe
   out
 }
 
+#' @export
+rope.stanfit <- rope.stanreg
 
 
 #' @rdname rope

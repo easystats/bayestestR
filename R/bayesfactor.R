@@ -58,6 +58,7 @@ bayesfactor <-
            match_models = FALSE,
            prior_odds = NULL) {
     mods <- list(...)
+    effects <- match.arg(effects)
 
     if (length(mods) > 1) {
       bayesfactor_models(..., denominator = denominator)

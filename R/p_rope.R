@@ -64,6 +64,8 @@ p_rope.stanreg <- function(x, range = "default", effects = c("fixed", "random", 
   out
 }
 
+#' @export
+p_rope.stanfit <- p_rope.stanreg
 
 
 #' @rdname p_rope

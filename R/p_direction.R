@@ -242,6 +242,9 @@ p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parame
   out
 }
 
+#' @export
+p_direction.stanfit <- p_direction.stanreg
+
 
 #' @rdname p_direction
 #' @export
