@@ -3,6 +3,7 @@
 ## General
 
 - Preliminary support for *stanfit* objects.
+- Added support for *bayesQR* objects.
 
 ## Changes to functions
 
