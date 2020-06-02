@@ -273,6 +273,8 @@ estimate_density.mcmc <- function(x, method = "kernel", precision = 2^10, extend
   out
 }
 
+#' @export
+estimate_density.bayesQR <- estimate_density.mcmc
 
 
 #' @export

@@ -29,5 +29,8 @@ if (require("bayesQR", quietly = TRUE)) {
 
     rez <- describe_posterior(x)
     testthat::expect_equal(c(nrow(rez), ncol(rez)), c(2, 10))
+
+    rez <- estimate_density(x)
+    testthat::expect_equal(c(nrow(rez), ncol(rez)), c(2048, 3))
   })
 }
