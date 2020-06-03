@@ -1,12 +1,12 @@
 #' @export
-print.bayesfactor_restricted <- function(x, digits = 2, log = FALSE, ...) {
+print.bayesfactor_restricted <- function(x, digits = 3, log = FALSE, ...) {
   BFE <- x
 
   if (log) {
     BFE$BF <- log(BFE$BF)
   }
 
-  BFE$BF <- .format_big_small(BFE$BF, digits = digits)
+  BFE$BF <- insight::format_value(BFE$BF, digits = digits, missing = "NA")
 
   colnames(BFE) <- c("Hypothesis", "P(Prior)", "P(Posterior)", "BF")
 
