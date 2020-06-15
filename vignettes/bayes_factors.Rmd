@@ -693,7 +693,7 @@ For our example, we will be test all ***prior*** pairwise differences between th
 
 ```{r, eval=FALSE}
 df <- iris
-contrasts(df$Species) <- contr.sum(3)
+contrasts(df$Species) <- contr.sum
 
 fit_sum <- stan_glm(Sepal.Length ~ Species, data = df,
                     prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -706,7 +706,7 @@ pairs_sum
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 df <- iris
-contrasts(df$Species)[, ] <- contr.sum(3)
+contrasts(df$Species) <- contr.sum
 
 fit_sum <- stan_glm(Sepal.Length ~ Species, data = df,
                     prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -735,7 +735,7 @@ This is caused by an inherent bias in the priors introduced by the *effects* cod
 The solution is to use *orthonormal* factor coding, a-la `contr.bayes`, which can either specify this factor coding per-factor:
 
 ```{r, eval=FALSE}
-contrasts(iris$Species) <- contr.bayes
+contrasts(df$Species) <- contr.bayes
 ```
 
 Or you can set it globally:
@@ -747,9 +747,6 @@ options(contrasts = c('contr.bayes', 'contr.poly'))
 Let's again estimate the ***prior*** differences:
 
 ```{r, eval=FALSE}
-df <- iris
-contrasts(df$Species)[,] <- contr.bayes(3)
-
 fit_bayes <- stan_glm(Sepal.Length ~ Species, data = df,
                       prior = normal(0, c(1, 1), autoscale = FALSE),
                       prior_PD = TRUE, # sample priors
@@ -760,8 +757,7 @@ pairs_bayes
 ```
 
 ```{r, echo=FALSE}
-df <- iris
-contrasts(df$Species)[,] <- contr.bayes(3)
+contrasts(df$Species) <- contr.bayes
 
 fit_bayes <- stan_glm(Sepal.Length ~ Species, data = df,
                       prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -808,10 +804,9 @@ hyp <- c(
 With the default factor coding, this looks like this:
 
 ```{r, eval=FALSE}
-df <- iris
-contrasts(df$Species)[,] <- contr.sum(3)
+contrasts(df$Species) <- contr.sum
 
-fit_sum <- stan_glm(Sepal.Length ~ Species, data = iris,
+fit_sum <- stan_glm(Sepal.Length ~ Species, data = df,
                     prior = normal(0, c(1, 1), autoscale = FALSE),
                     family = gaussian())
 
@@ -821,8 +816,7 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
 ```
 
 ```{r, echo=FALSE}
-df <- iris
-contrasts(df$Species)[,] <- contr.sum(3)
+contrasts(df$Species) <- contr.sum
 
 fit_sum <- stan_glm(Sepal.Length ~ Species, data = df,
                     prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -842,8 +836,7 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
 Again, this is solved by using the *orthonormal* factor coding (from above).
 
 ```{r, eval=FALSE}
-df <- iris
-contrasts(df$Species)[,] <- contr.bayes(3)
+contrasts(df$Species) <- contr.bayes
 
 fit_bayes <- stan_glm(Sepal.Length ~ Species, data = df,
                       prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -855,8 +848,7 @@ bayesfactor_restricted(em_bayes, fit_sum, hypothesis = hyp)
 ```
 
 ```{r, echo=FALSE}
-df <- iris
-contrasts(df$Species)[,] <- contr.bayes(3)
+contrasts(df$Species) <- contr.bayes
 
 fit_bayes <- stan_glm(Sepal.Length ~ Species, data = df,
                       prior = normal(0, c(1, 1), autoscale = FALSE),
