@@ -692,9 +692,10 @@ The *effects* factor coding commonly used in factorial analysis carries a hidden
 For our example, we will be test all ***prior*** pairwise differences between the 3 species in the `iris` data-set.
 
 ```{r, eval=FALSE}
-contrasts(iris$Species) <- contr.sum
+df <- iris
+contrasts(df$Species) <- contr.sum(3)
 
-fit_sum <- stan_glm(Sepal.Length ~ Species, data = iris,
+fit_sum <- stan_glm(Sepal.Length ~ Species, data = df,
                     prior = normal(0, c(1, 1), autoscale = FALSE),
                     prior_PD = TRUE, # sample priors
                     family = gaussian())
@@ -703,10 +704,11 @@ pairs_sum <- pairs(emmeans(fit_sum, ~ Species))
 pairs_sum
 ```
 
-```{r, echo=FALSE}
-contrasts(iris$Species) <- contr.sum
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+df <- iris
+contrasts(df$Species)[, ] <- contr.sum(3)
 
-fit_sum <- stan_glm(Sepal.Length ~ Species, data = iris,
+fit_sum <- stan_glm(Sepal.Length ~ Species, data = df,
                     prior = normal(0, c(1, 1), autoscale = FALSE),
                     prior_PD = TRUE, # sample priors
                     family = gaussian(),
@@ -732,7 +734,7 @@ This is caused by an inherent bias in the priors introduced by the *effects* cod
 
 The solution is to use *orthonormal* factor coding, a-la `contr.bayes`, which can either specify this factor coding per-factor:
 
-```{r}
+```{r, eval=FALSE}
 contrasts(iris$Species) <- contr.bayes
 ```
 
@@ -745,9 +747,10 @@ options(contrasts = c('contr.bayes', 'contr.poly'))
 Let's again estimate the ***prior*** differences:
 
 ```{r, eval=FALSE}
-contrasts(iris$Species) <- contr.bayes
+df <- iris
+contrasts(df$Species)[,] <- contr.bayes(3)
 
-fit_bayes <- stan_glm(Sepal.Length ~ Species, data = iris,
+fit_bayes <- stan_glm(Sepal.Length ~ Species, data = df,
                       prior = normal(0, c(1, 1), autoscale = FALSE),
                       prior_PD = TRUE, # sample priors
                       family = gaussian())
@@ -757,9 +760,10 @@ pairs_bayes
 ```
 
 ```{r, echo=FALSE}
-contrasts(iris$Species) <- contr.bayes
+df <- iris
+contrasts(df$Species)[,] <- contr.bayes(3)
 
-fit_bayes <- stan_glm(Sepal.Length ~ Species, data = iris,
+fit_bayes <- stan_glm(Sepal.Length ~ Species, data = df,
                       prior = normal(0, c(1, 1), autoscale = FALSE),
                       prior_PD = TRUE, # sample priors
                       family = gaussian(),
@@ -804,7 +808,8 @@ hyp <- c(
 With the default factor coding, this looks like this:
 
 ```{r, eval=FALSE}
-contrasts(iris$Species) <- contr.sum
+df <- iris
+contrasts(df$Species)[,] <- contr.sum(3)
 
 fit_sum <- stan_glm(Sepal.Length ~ Species, data = iris,
                     prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -816,9 +821,10 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
 ```
 
 ```{r, echo=FALSE}
-contrasts(iris$Species) <- contr.sum
+df <- iris
+contrasts(df$Species)[,] <- contr.sum(3)
 
-fit_sum <- stan_glm(Sepal.Length ~ Species, data = iris,
+fit_sum <- stan_glm(Sepal.Length ~ Species, data = df,
                     prior = normal(0, c(1, 1), autoscale = FALSE),
                     family = gaussian(),
                     refresh = 0)
@@ -836,9 +842,10 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
 Again, this is solved by using the *orthonormal* factor coding (from above).
 
 ```{r, eval=FALSE}
-contrasts(iris$Species) <- contr.bayes
+df <- iris
+contrasts(df$Species)[,] <- contr.bayes(3)
 
-fit_bayes <- stan_glm(Sepal.Length ~ Species, data = iris,
+fit_bayes <- stan_glm(Sepal.Length ~ Species, data = df,
                       prior = normal(0, c(1, 1), autoscale = FALSE),
                       family = gaussian())
 
@@ -848,9 +855,10 @@ bayesfactor_restricted(em_bayes, fit_sum, hypothesis = hyp)
 ```
 
 ```{r, echo=FALSE}
-contrasts(iris$Species) <- contr.bayes
+df <- iris
+contrasts(df$Species)[,] <- contr.bayes(3)
 
-fit_bayes <- stan_glm(Sepal.Length ~ Species, data = iris,
+fit_bayes <- stan_glm(Sepal.Length ~ Species, data = df,
                       prior = normal(0, c(1, 1), autoscale = FALSE),
                       family = gaussian(),
                       refresh = 0)
