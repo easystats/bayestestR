@@ -706,7 +706,7 @@ pairs_sum
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 df <- iris
-contrasts(df$Species) <- contr.sum
+contrasts(df$Species)[, ] <- contr.sum(3)
 
 fit_sum <- stan_glm(Sepal.Length ~ Species, data = df,
                     prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -757,7 +757,7 @@ pairs_bayes
 ```
 
 ```{r, echo=FALSE}
-contrasts(df$Species) <- contr.bayes
+contrasts(df$Species)[, ] <- contr.bayes(3)
 
 fit_bayes <- stan_glm(Sepal.Length ~ Species, data = df,
                       prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -816,7 +816,7 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
 ```
 
 ```{r, echo=FALSE}
-contrasts(df$Species) <- contr.sum
+contrasts(df$Species)[, ] <- contr.sum(3)
 
 fit_sum <- stan_glm(Sepal.Length ~ Species, data = df,
                     prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -848,7 +848,7 @@ bayesfactor_restricted(em_bayes, fit_sum, hypothesis = hyp)
 ```
 
 ```{r, echo=FALSE}
-contrasts(df$Species) <- contr.bayes
+contrasts(df$Species)[, ] <- contr.bayes(3)
 
 fit_bayes <- stan_glm(Sepal.Length ~ Species, data = df,
                       prior = normal(0, c(1, 1), autoscale = FALSE),
