@@ -1,4 +1,4 @@
-# bayestestR 0.6.0.1
+# bayestestR 0.7.0
 
 ## General
 
@@ -9,6 +9,7 @@
 
 - `weighted_posteriors()` can now be used with data frames.
 - Revised `print()` for `describe_posterior()`.
+- Improved value formatting for Bayesfactor functions.
 
 ## Bug fixes
 
