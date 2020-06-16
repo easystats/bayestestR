@@ -119,8 +119,8 @@ p_significance.parameters_simulate_model <- function(x, threshold = "default", .
       )
     }
   }
-  threshold <- .select_threshold_ps(x = x, threshold = threshold)
-  out <- p_significance.data.frame(x)
+  threshold <- .select_threshold_ps(model = model, threshold = threshold)
+  out <- p_significance.data.frame(x, threshold = threshold)
   attr(out, "object_name") <- obj_name
   out
 }
