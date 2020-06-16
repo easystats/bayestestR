@@ -27,7 +27,7 @@
 #' \strong{Limitations:} Limited information favoring the null hypothesis.
 #' }
 #'
-#' @return Values between 0.5 and 1 corresponding to the probability of direction (pd). In some rare situations, especially when using when using model averaged posteriors (see \code{\link{weighted_posteriors}} or \code{\link[brms]{posterior_average}}), this value may be lower than 0.5.
+#' @return Values between 0.5 and 1 corresponding to the probability of direction (pd). In some rare situations, especially when using when using model averaged posteriors (see \code{brms::weighted_posteriors} or \code{brms::posterior_average}), this value may be lower than 0.5.
 #'
 #' @seealso \code{\link{pd_to_p}} to convert between Probability of Direction (pd) and p-value.
 #'

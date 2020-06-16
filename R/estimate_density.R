@@ -1,11 +1,11 @@
 #' Density Estimation
 #'
-#' This function is a wrapper over different methods of density estimation. By default, it uses the base R \link{density} with by default uses a different smoothing bandwidth (\code{"SJ"}) from the legacy default implemented the base R \link{density} function (\code{"nrd0"}). However, Deng \& Wickham suggest that \code{method = "KernSmooth"} is the fastest and the most accurate.
+#' This function is a wrapper over different methods of density estimation. By default, it uses the base R \code{density} with by default uses a different smoothing bandwidth (\code{"SJ"}) from the legacy default implemented the base R \code{density} function (\code{"nrd0"}). However, Deng \& Wickham suggest that \code{method = "KernSmooth"} is the fastest and the most accurate.
 #'
 #' @inheritParams hdi
 #' @inheritParams stats::density
 #' @param method Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.
-#' @param precision Number of points of density data. See the \code{n} parameter in \link[=density]{density}.
+#' @param precision Number of points of density data. See the \code{n} parameter in \code{density}.
 #' @param extend Extend the range of the x axis by a factor of \code{extend_scale}.
 #' @param extend_scale Ratio of range by which to extend the x axis. A value of \code{0.1} means that the x axis will be extended by \code{1/10} of the range of the data.
 #' @param group_by Optional character vector. If not \code{NULL} and \code{x} is a data frame, density estimation is performed for each group (subset) indicated by \code{group_by}.
