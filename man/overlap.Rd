@@ -24,7 +24,7 @@ overlap(
 
 \item{method_auc}{Area Under the Curve (AUC) estimation method. See \code{\link{area_under_curve}}.}
 
-\item{precision}{Number of points of density data. See the \code{n} parameter in \link[=density]{density}.}
+\item{precision}{Number of points of density data. See the \code{n} parameter in \code{density}.}
 
 \item{extend}{Extend the range of the x axis by a factor of \code{extend_scale}.}
 
