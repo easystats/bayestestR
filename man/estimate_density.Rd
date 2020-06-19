@@ -39,20 +39,7 @@ vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
 
 \item{extend_scale}{Ratio of range by which to extend the x axis. A value of \code{0.1} means that the x axis will be extended by \code{1/10} of the range of the data.}
 
-\item{bw}{the smoothing bandwidth to be used.  The kernels are scaled
-    such that this is the standard deviation of the smoothing kernel.
-    (Note this differs from the reference books cited below, and from S-PLUS.)
-
-    \code{bw} can also be a character string giving a rule to choose the
-    bandwidth.  See \code{\link[stats]{bw.nrd}}. \cr The default,
-    \code{"nrd0"}, has remained the default for historical and
-    compatibility reasons, rather than as a general recommendation,
-    where e.g., \code{"SJ"} would rather fit, see also Venables and
-    Ripley (2002).
-
-    The specified (or computed) value of \code{bw} is multiplied by
-    \code{adjust}.
-  }
+\item{bw}{See the eponymous argument in \code{density}. Here, the default has been changed for \code{"SJ"}, which is recommended.}
 
 \item{...}{Currently not used.}
 

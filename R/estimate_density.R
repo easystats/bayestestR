@@ -4,6 +4,7 @@
 #'
 #' @inheritParams hdi
 #' @inheritParams stats::density
+#' @param bw See the eponymous argument in \code{density}. Here, the default has been changed for \code{"SJ"}, which is recommended.
 #' @param method Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.
 #' @param precision Number of points of density data. See the \code{n} parameter in \code{density}.
 #' @param extend Extend the range of the x axis by a factor of \code{extend_scale}.
