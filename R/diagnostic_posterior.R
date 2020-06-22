@@ -59,6 +59,16 @@ diagnostic_posterior.BFBayesFactor <- diagnostic_posterior.numeric
 #' @rdname diagnostic_posterior
 #' @export
 diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+
+  # Find parameters
+  effects <- match.arg(effects)
+  params <- insight::find_parameters(posteriors, effects=effects, parameters = parameters, flatten=TRUE)
+
+  # If no diagnostic
+  if (is.null(diagnostic)){
+    return(data.frame("Parameter" = params))
+  }
+
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE", "khat")
@@ -86,17 +96,11 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
   # Remove columns with all Nans
   diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
 
-  # Select rows
-  effects <- match.arg(effects)
-  params <- colnames(
-    insight::get_parameters(posteriors, effects = effects, parameters = parameters)
-  )
-
-
   if (inherits(posteriors, "stanmvreg")) {
     diagnostic_df$Response <- gsub("^(.*)\\|(.*)", "\\1", diagnostic_df$Parameter)
   }
 
+  # Select rows
   diagnostic_df[diagnostic_df$Parameter %in% params, ]
 }
 
@@ -105,6 +109,22 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
 #' @rdname diagnostic_posterior
 #' @export
 diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+
+  # Find parameters
+  effects <- match.arg(effects)
+  component <- match.arg(component)
+  params <- insight::find_parameters(posteriors,
+                                     effects = effects,
+                                     component = component,
+                                     parameters = parameters,
+                                     flatten = TRUE)
+
+  # If no diagnostic
+  if (is.null(diagnostic)){
+    return(data.frame("Parameter" = params))
+  }
+
+  # Get diagnostic
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE", "khat") # Add MCSE
@@ -135,18 +155,6 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects
   diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
 
   # Select rows
-  effects <- match.arg(effects)
-  component <- match.arg(component)
-  params <-
-    colnames(
-      insight::get_parameters(
-        posteriors,
-        effects = effects,
-        component = component,
-        parameters = parameters
-      )
-    )
-
   diagnostic_df[diagnostic_df$Parameter %in% params, ]
 }
 
@@ -155,6 +163,17 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects
 #' @inheritParams insight::get_parameters
 #' @export
 diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+
+  # Find parameters
+  effects <- match.arg(effects)
+  params <- insight::find_parameters(posteriors, effects = effects, parameters = parameters, flatten=TRUE)
+
+  # If no diagnostic
+  if (is.null(diagnostic)){
+    return(data.frame("Parameter" = params))
+  }
+
+  # Get diagnostic
   diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE")
@@ -163,12 +182,6 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects
   if (!requireNamespace("rstan", quietly = TRUE)) {
     stop("Package 'rstan' required for this function to work. Please install it.")
   }
-
-  # Select rows
-  effects <- match.arg(effects)
-  params <- colnames(
-    insight::get_parameters(posteriors, effects = effects, parameters = parameters)
-  )
 
   all_params <- insight::find_parameters(posteriors, effects = effects, flatten = TRUE)
 
@@ -191,5 +204,6 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects
   # Remove columns with all Nans
   diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
 
+  # Select rows
   diagnostic_df[diagnostic_df$Parameter %in% params, ]
 }
