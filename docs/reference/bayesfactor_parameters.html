@@ -113,7 +113,7 @@ For more info, in particular on specifying correct priors for factors with more 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -362,7 +362,7 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
     </tr>
     <tr>
       <th>null</th>
-      <td><p>Value of the null, either a scaler (for point-null) or a a range
+      <td><p>Value of the null, either a scalar (for point-null) or a range
 (for a interval-null).</p></td>
     </tr>
     <tr>
@@ -371,7 +371,8 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Currently not used.</p></td>
+      <td><p>Arguments passed to and from other methods.
+(Can be used to pass arguments to internal <code><a href='https://rdrr.io/pkg/logspline/man/logspline.html'>logspline</a></code>.)</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -414,11 +415,11 @@ paradox</em>). Thus, you should only ever try (or want) to compute a Bayes facto
 <li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
 <li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model:</p><ul>
 <li><p><code>prior</code> can be set to <code>NULL</code>, in which case prior samples are drawn internally.</p></li>
-<li><p><code>prior</code> can also be a model equvilant to <code>posterior</code> but with samples from the priors <em>only</em>.</p></li>
+<li><p><code>prior</code> can also be a model equivalent to <code>posterior</code> but with samples from the priors <em>only</em>.</p></li>
 </ul></li>
 <li><p>When <code>posterior</code> is an <code>emmGrid</code> object:</p><ul>
 <li><p><code>prior</code> should be the <code>stanreg</code> or <code>brmsfit</code> model used to create the <code>emmGrid</code> objects.</p></li>
-<li><p><code>prior</code> can also be an <code>emmGrid</code> object equvilant to <code>posterior</code> but created with a model of priors samples <em>only</em>.</p></li>
+<li><p><code>prior</code> can also be an <code>emmGrid</code> object equivalent to <code>posterior</code> but created with a model of priors samples <em>only</em>.</p></li>
 <li><p><strong>Note:</strong> When the <code>emmGrid</code> has undergone any transformations (<code>"log"</code>, <code>"response"</code>, etc.), or <code>regrid</code>ing, then <code>prior</code> must be an <code>emmGrid</code> object, as stated above.</p></li>
 </ul></li>
 </ul>
@@ -429,12 +430,15 @@ posterior of the non-null values (the "alternative") to one side of the null onl
 parameter should be positive, the alternative will be restricted to the region to the right
 of the null (point or interval).</p>
 <h3>Interpreting Bayes Factors</h3>
-<p>A Bayes factor greater than 1 can be interpereted as evidence against the null,
+<p>A Bayes factor greater than 1 can be interpreted as evidence against the null,
 at which one convention is that a Bayes factor greater than 3 can be considered
 as "substantial" evidence against the null (and vice versa, a Bayes factor
 smaller than 1/3 indicates substantial evidence in favor of the null-model)
 (<cite>Wetzels et al. 2011</cite>).</p>
 
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -456,9 +460,9 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 
 <span class='fu'>bayesfactor_parameters</span>(<span class='no'>posterior</span>, <span class='no'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
 #&gt; 
-#&gt; </span><span>BF  
-#&gt; ----
-#&gt; 1.23
+#&gt; </span><span>BF   
+#&gt; -----
+#&gt; 1.233
 #&gt; 
 #&gt; * Evidence Against The Null: </span><span style='color: #00BBBB;'>[0]
 #&gt; </span><span></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {

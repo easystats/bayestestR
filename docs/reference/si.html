@@ -99,7 +99,7 @@ see the Bayes factors vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -262,7 +262,8 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to and from other methods.</p></td>
+      <td><p>Arguments passed to and from other methods.
+(Can be used to pass arguments to internal <code><a href='https://rdrr.io/pkg/logspline/man/logspline.html'>logspline</a></code>.)</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -297,6 +298,9 @@ interval will be <code>[NA,NA]</code>.</p>
 For the computation of support intervals, the model priors must be proper priors (at the very least
 they should be <em>not flat</em>, and it is preferable that they be <em>informative</em> - note
 that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects; see example below).</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
 <h3>Setting the correct <code>prior</code></h3>
 <p>It is important to provide the correct <code>prior</code> for meaningful results.</p><ul>
 <li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>

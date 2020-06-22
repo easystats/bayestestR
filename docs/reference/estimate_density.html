@@ -92,7 +92,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -188,7 +188,7 @@
     </div>
 
     <div class="ref-description">
-    <p>This function is a wrapper over different methods of density estimation. By default, it uses the base R <a href='https://rdrr.io/r/stats/density.html'>density</a> with by default uses a different smoothing bandwidth (<code>"SJ"</code>) from the legacy default implemented the base R <a href='https://rdrr.io/r/stats/density.html'>density</a> function (<code>"nrd0"</code>). However, Deng \&amp; Wickham suggest that <code>method = "KernSmooth"</code> is the fastest and the most accurate.</p>
+    <p>This function is a wrapper over different methods of density estimation. By default, it uses the base R <code>density</code> with by default uses a different smoothing bandwidth (<code>"SJ"</code>) from the legacy default implemented the base R <code>density</code> function (<code>"nrd0"</code>). However, Deng \&amp; Wickham suggest that <code>method = "KernSmooth"</code> is the fastest and the most accurate.</p>
     </div>
 
     <pre class="usage"><span class='fu'>estimate_density</span>(
@@ -228,7 +228,7 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
     </tr>
     <tr>
       <th>precision</th>
-      <td><p>Number of points of density data. See the <code>n</code> parameter in <a href='https://rdrr.io/r/stats/density.html'>density</a>.</p></td>
+      <td><p>Number of points of density data. See the <code>n</code> parameter in <code>density</code>.</p></td>
     </tr>
     <tr>
       <th>extend</th>
@@ -240,17 +240,7 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
     </tr>
     <tr>
       <th>bw</th>
-      <td><p>the smoothing bandwidth to be used.  The kernels are scaled
-    such that this is the standard deviation of the smoothing kernel.
-    (Note this differs from the reference books cited below, and from S-PLUS.)</p>
-<p><code>bw</code> can also be a character string giving a rule to choose the
-    bandwidth.  See <code><a href='https://rdrr.io/r/stats/bandwidth.html'>bw.nrd</a></code>. <br /> The default,
-    <code>"nrd0"</code>, has remained the default for historical and
-    compatibility reasons, rather than as a general recommendation,
-    where e.g., <code>"SJ"</code> would rather fit, see also Venables and
-    Ripley (2002).</p>
-<p>The specified (or computed) value of <code>bw</code> is multiplied by
-    <code>adjust</code>.</p></td>
+      <td><p>See the eponymous argument in <code>density</code>. Here, the default has been changed for <code>"SJ"</code>, which is recommended.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -262,6 +252,9 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Deng, H., &amp; Wickham, H. (2011). Density estimation in R. Electronic publication.</p>
