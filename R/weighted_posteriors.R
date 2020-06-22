@@ -21,7 +21,7 @@
 #' \cr\cr
 #' Note that for \code{BayesFactor} models, posterior samples cannot be generated from intercept only models.
 #' \cr\cr
-#' This function is similar in function to \code{brms::\link[brms]{posterior_average}}.
+#' This function is similar in function to \code{brms::posterior_average}.
 #'
 #' @return A data frame with posterior distributions (weighted across models) .
 #'

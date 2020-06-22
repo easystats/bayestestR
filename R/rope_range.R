@@ -116,6 +116,9 @@ rope_range.hurdle <- rope_range.brmsfit
 rope_range.zeroinfl <- rope_range.brmsfit
 
 #' @export
+rope_range.bayesQR <- rope_range.brmsfit
+
+#' @export
 rope_range.default <- function(x, ...) {
   c(-.1, .1)
 }

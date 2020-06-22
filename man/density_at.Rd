@@ -11,7 +11,7 @@ density_at(posterior, x, precision = 2^10, method = "kernel", ...)
 
 \item{x}{The value of which to get the approximate probability.}
 
-\item{precision}{Number of points of density data. See the \code{n} parameter in \link[=density]{density}.}
+\item{precision}{Number of points of density data. See the \code{n} parameter in \code{density}.}
 
 \item{method}{Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.}
 

@@ -1,5 +1,5 @@
 #' @export
-print.bayesfactor_inclusion <- function(x, digits = 2, log = FALSE, ...) {
+print.bayesfactor_inclusion <- function(x, digits = 3, log = FALSE, ...) {
   BFE <- x
   priorOdds <- attr(BFE, "priorOdds")
 
@@ -7,7 +7,7 @@ print.bayesfactor_inclusion <- function(x, digits = 2, log = FALSE, ...) {
     BFE$BF <- log(BFE$BF)
   }
 
-  BFE$BF <- .format_big_small(BFE$BF, digits = digits)
+  BFE$BF <- insight::format_value(BFE$BF, digits = digits, missing = "NA")
 
   colnames(BFE) <- c("Pr(prior)", "Pr(posterior)", "Inclusion BF")
 

@@ -1,6 +1,6 @@
 #' @importFrom insight print_color
 #' @export
-print.bayesfactor_models <- function(x, digits = 2, log = FALSE, ...) {
+print.bayesfactor_models <- function(x, digits = 3, log = FALSE, ...) {
   BFE <- x
   denominator <- attr(BFE, "denominator")
   grid.type <- attr(BFE, "BF_method")
@@ -9,7 +9,7 @@ print.bayesfactor_models <- function(x, digits = 2, log = FALSE, ...) {
   if (log) {
     BFE$BF <- log(BFE$BF)
   }
-  BFE$BF <- .format_big_small(BFE$BF, digits = digits)
+  BFE$BF <- insight::format_value(BFE$BF, digits = digits, missing = "NA")
 
   # indicate null-model
   BFE$Model[BFE$Model == "1"] <- "(Intercept only)"

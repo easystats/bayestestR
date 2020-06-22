@@ -61,7 +61,12 @@ map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
 
 
 
-
+#' @rdname map_estimate
+#' @export
+map_estimate.bayesQR <- function(x, precision = 2^10, method = "kernel", ...) {
+  x <- insight::get_parameters(x)
+  map_estimate(x, precision = precision, method = method)
+}
 
 
 
@@ -121,6 +126,8 @@ map_estimate.brmsfit <- function(x, precision = 2^10, method = "kernel", effects
 map_estimate.data.frame <- function(x, precision = 2^10, method = "kernel", ...) {
   .map_estimate_models(x, precision = precision, method = method)
 }
+
+
 
 
 #' @rdname map_estimate

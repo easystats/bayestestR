@@ -132,6 +132,9 @@ point_estimate.bcplm <- function(x, centrality = "all", dispersion = FALSE, ...)
   point_estimate(insight::get_parameters(x), centrality = centrality, dispersion = dispersion, ...)
 }
 
+#' @export
+point_estimate.bayesQR <- point_estimate.bcplm
+
 
 #' @export
 point_estimate.MCMCglmm <- function(x, centrality = "all", dispersion = FALSE, ...) {

@@ -48,7 +48,7 @@ print.bayestestR_ci <- function(x, digits = 2, ...) {
   ), "blue")
 
   ci <- unique(x$CI)
-  x$HDI <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = "auto")
+  x$HDI <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = "auto", missing = "NA")
 
   if (length(ci) == 1) {
     xsub <- .remove_column(x, c("CI", "CI_low", "CI_high"))
