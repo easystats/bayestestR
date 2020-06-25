@@ -5,8 +5,6 @@
 #'   mediation-models.
 #'
 #' @param x A \code{stanreg}, \code{stanfit}, or \code{brmsfit} object.
-#' @param prob Vector of scalars between 0 and 1, indicating the mass within
-#'   the credible interval that is to be estimated.
 #' @param treatment Character, name of the treatment variable (or direct effect)
 #'   in a (multivariate response) mediator-model. If missing, \code{mediation()}
 #'   tries to find the treatment variable automatically, however, this may fail.
@@ -17,6 +15,7 @@
 #'   By default, the posterior median is returned. See \code{\link[sjmisc]{typical_value}}
 #'   for possible values for this argument.
 #' @param ... Not used.
+#' @inheritParams ci
 #'
 #' @return A data frame with direct, indirect, mediator and
 #'   total effect of a multivariate-response mediation-model, as well as the
@@ -34,7 +33,7 @@
 #'       effect). The \emph{proportion mediated} is the indirect effect divided
 #'       by the total effect.
 #'       \cr \cr
-#'       For all values, the 90\% HDIs are calculated by default. Use \code{prob}
+#'       For all values, the 89\% credible intervals are calculated by default. Use \code{ci}
 #'       to calculate a different interval.
 #'       \cr \cr
 #'       The arguments \code{treatment} and \code{mediator} do not necessarily
@@ -55,15 +54,14 @@ mediation <- function(x, ...) {
 #' @importFrom dplyr pull bind_cols
 #' @importFrom sjmisc typical_value
 #' @importFrom insight model_info
-#' @importFrom bayestestR hdi
 #' @export
-mediation.brmsfit <- function(x, treatment, mediator, prob = .9, typical = "median", ...) {
+mediation.brmsfit <- function(x, treatment, mediator, centrality = "median", ci = .89, method = "HDI", ...) {
   # check for pkg availability, else function might fail
   if (!requireNamespace("brms", quietly = TRUE))
     stop("Please install and load package `brms` first.")
 
   # only one HDI interval
-  if (length(prob) > 1) prob <- prob[1]
+  if (length(ci) > 1) ci <- ci[1]
 
   # check for binary response. In this case, user should rescale variables
   fitinfo <- insight::model_info(x)
@@ -124,33 +122,33 @@ mediation.brmsfit <- function(x, treatment, mediator, prob = .9, typical = "medi
   eff.total <- eff.indirect + eff.direct
 
   # proportion mediated: indirect effect / total effect
-  prop.mediated <- sjmisc::typical_value(eff.indirect, fun = typical) / sjmisc::typical_value(eff.total, fun = typical)
-  hdi_eff <- bayestestR::hdi(eff.indirect / eff.total, ci = prob)
+  prop.mediated <- as.numeric(point_estimate(eff.indirect, centrality = centrality)) / as.numeric(point_estimate(eff.total, centrality = centrality))
+  hdi_eff <- ci(eff.indirect / eff.total, ci = ci, method = method)
   prop.se <- (hdi_eff$CI_high - hdi_eff$CI_low) / 2
   prop.hdi <- prop.mediated + c(-1, 1) * prop.se
 
   res <- data_frame(
     effect = c("direct", "indirect", "mediator", "total", "proportion mediated"),
     value = c(
-      sjmisc::typical_value(eff.direct, fun = typical),
-      sjmisc::typical_value(eff.indirect, fun = typical),
-      sjmisc::typical_value(eff.mediator, fun = typical),
-      sjmisc::typical_value(eff.total, fun = typical),
+      as.numeric(point_estimate(eff.direct, centrality = centrality)),
+      as.numeric(point_estimate(eff.indirect, centrality = centrality)),
+      as.numeric(point_estimate(eff.mediator, centrality = centrality)),
+      as.numeric(point_estimate(eff.total, centrality = centrality)),
       prop.mediated
     )
   ) %>% dplyr::bind_cols(
     as.data.frame(rbind(
-      bayestestR::hdi(eff.direct, ci = prob)[, -1],
-      bayestestR::hdi(eff.indirect, ci = prob)[, -1],
-      bayestestR::hdi(eff.mediator, ci = prob)[, -1],
-      bayestestR::hdi(eff.total, ci = prob)[, -1],
+      ci(eff.direct, ci = ci, method = method)[, -1],
+      ci(eff.indirect, ci = ci, method = method)[, -1],
+      ci(eff.mediator, ci = ci, method = method)[, -1],
+      ci(eff.total, ci = ci, method = method)[, -1],
       prop.hdi
     ))
   )
 
   colnames(res) <- c("effect", "value", "hdi.low", "hdi.high")
 
-  attr(res, "prob") <- prob
+  attr(res, "ci") <- ci
   attr(res, "treatment") <- treatment
   attr(res, "mediator") <- mediator
   attr(res, "response") <- dv[treatment.model]
