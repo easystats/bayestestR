@@ -30,14 +30,12 @@ tries to find the treatment variable automatically, however, this may fail.}
 response) mediator-model. If missing, \code{mediation()} tries to find the
 treatment variable automatically, however, this may fail.}
 
+\item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
+
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
 to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95} (95\%) for frequentist models.}
 
 \item{method}{Can be \link[=eti]{'ETI'} (default), \link[=hdi]{'HDI'} or \link[=si]{'SI'}.}
-
-\item{typical}{The typical value that will represent the Bayesian point estimate.
-By default, the posterior median is returned. See \code{\link[sjmisc]{typical_value}}
-for possible values for this argument.}
 }
 \value{
 A data frame with direct, indirect, mediator and

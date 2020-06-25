@@ -11,11 +11,9 @@
 #' @param mediator Character, name of the mediator variable in a (multivariate
 #'   response) mediator-model. If missing, \code{mediation()} tries to find the
 #'   treatment variable automatically, however, this may fail.
-#' @param typical The typical value that will represent the Bayesian point estimate.
-#'   By default, the posterior median is returned. See \code{\link[sjmisc]{typical_value}}
-#'   for possible values for this argument.
 #' @param ... Not used.
 #' @inheritParams ci
+#' @inheritParams describe_posterior
 #'
 #' @return A data frame with direct, indirect, mediator and
 #'   total effect of a multivariate-response mediation-model, as well as the
