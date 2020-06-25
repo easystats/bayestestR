@@ -49,10 +49,8 @@ mediation <- function(x, ...) {
 
 
 #' @rdname mediation
-#' @importFrom purrr map
 #' @importFrom stats formula
 #' @importFrom dplyr pull bind_cols
-#' @importFrom sjmisc typical_value
 #' @importFrom insight model_info
 #' @export
 mediation.brmsfit <- function(x, treatment, mediator, centrality = "median", ci = .89, method = "HDI", ...) {
@@ -80,9 +78,11 @@ mediation.brmsfit <- function(x, treatment, mediator, centrality = "median", ci 
   }
 
   if (missing(treatment)) {
-    pvs <- purrr::map(
+    pvs <- lapply(
       x$formula$forms,
-      ~ stats::formula(.x)[[3L]] %>% all.vars()
+      function(.f) {
+        all.vars(stats::formula(.f)[[3L]])
+      }
     )
 
     treatment <- pvs[[1]][pvs[[1]] %in% pvs[[2]]][1]
@@ -127,7 +127,7 @@ mediation.brmsfit <- function(x, treatment, mediator, centrality = "median", ci 
   prop.se <- (hdi_eff$CI_high - hdi_eff$CI_low) / 2
   prop.hdi <- prop.mediated + c(-1, 1) * prop.se
 
-  res <- data_frame(
+  res <- data.frame(
     effect = c("direct", "indirect", "mediator", "total", "proportion mediated"),
     value = c(
       as.numeric(point_estimate(eff.direct, centrality = centrality)),
@@ -135,7 +135,8 @@ mediation.brmsfit <- function(x, treatment, mediator, centrality = "median", ci 
       as.numeric(point_estimate(eff.mediator, centrality = centrality)),
       as.numeric(point_estimate(eff.total, centrality = centrality)),
       prop.mediated
-    )
+    ),
+    stringsAsFactors = FALSE
   ) %>% dplyr::bind_cols(
     as.data.frame(rbind(
       ci(eff.direct, ci = ci, method = method)[, -1],
@@ -154,7 +155,7 @@ mediation.brmsfit <- function(x, treatment, mediator, centrality = "median", ci 
   attr(res, "response") <- dv[treatment.model]
   attr(res, "formulas") <- lapply(x$formula$forms, function(x) as.character(x[1]))
 
-  class(res) <- c("sj_mediation", class(res))
+  class(res) <- c("bayestestR_mediation", class(res))
   res
 }
 
