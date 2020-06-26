@@ -75,6 +75,7 @@ Suggests:
 	modelbased,
 	lme4,
 	logspline,
+	mediation,
 	performance,
 	rmarkdown,
 	rstan,

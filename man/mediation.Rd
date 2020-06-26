@@ -46,7 +46,8 @@ treatment variable automatically, however, this may fail.}
 \item{response}{A named character vector, indicating the names of the response
 variables to be used for the mediation analysis. Usually can be \code{NULL},
 in which case these variables are retrieved automatically. If not \code{NULL},
-names should match the names of the model formulas (\code{names(model$formula$forms)}).}
+names should match the names of the model formulas
+(\code{names(insight::find_response(model, combine = TRUE))}).}
 
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
@@ -88,6 +89,41 @@ A data frame with direct, indirect, mediator and
       The direct effect is also called \emph{average direct effect} (ADE),
       the indirect effect is also called \emph{average causal mediation effects}
       (ACME).
+}
+\examples{
+\dontrun{
+library(mediation)
+library(brms)
+library(rstanarm)
+
+# load sample data
+data(jobs)
+set.seed(123)
+
+# linear models, for mediation analysis
+b1 <- lm(job_seek ~ treat + econ_hard + sex + age, data = jobs)
+b2 <- lm(depress2 ~ treat + job_seek + econ_hard + sex + age, data = jobs)
+# mediation analysis, for comparison with Stan models
+m1 <- mediate(b1, b2, sims = 1000, treat = "treat", mediator = "job_seek")
+
+# Fit Bayesian mediation model in brms
+f1 <- bf(job_seek ~ treat + econ_hard + sex + age)
+f2 <- bf(depress2 ~ treat + job_seek + econ_hard + sex + age)
+m2 <- brm(f1 + f2 + set_rescor(FALSE), data = jobs, cores = 4, refresh = 0)
+
+# Fit Bayesian mediation model in rstanarm
+m3 <- stan_mvmer(
+  list(job_seek ~ treat + econ_hard + sex + age + (1 | occp),
+       depress2 ~ treat + job_seek + econ_hard + sex + age + (1 | occp)),
+  data = jobs,
+  cores = 4,
+  refresh = 0
+)
+
+summary(m1)
+mediation(m2, centrality = "mean", ci = .95)
+mediation(m3, centrality = "mean", ci = .95)
+}
 }
 \seealso{
 The \pkg{mediation} package for a causal mediation analysis in
