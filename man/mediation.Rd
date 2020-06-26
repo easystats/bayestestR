@@ -88,7 +88,7 @@ A data frame with direct, indirect, mediator and
       \cr \cr
       The direct effect is also called \emph{average direct effect} (ADE),
       the indirect effect is also called \emph{average causal mediation effects}
-      (ACME).
+      (ACME). See also \cite{Tingley et al. 2014} and \cite{Imai et al. 2010}.
 }
 \examples{
 \dontrun{
@@ -123,6 +123,12 @@ m3 <- stan_mvmer(
 summary(m1)
 mediation(m2, centrality = "mean", ci = .95)
 mediation(m3, centrality = "mean", ci = .95)
+}
+}
+\references{
+\itemize{
+\item Imai, K., Keele, L. and Tingley, D. (2010) A General Approach to Causal Mediation Analysis, Psychological Methods, Vol. 15, No. 4 (December), pp. 309-334.
+\item Tingley, D., Yamamoto, T., Hirose, K., Imai, K. and Keele, L. (2014). mediation: R package for Causal Mediation Analysis, Journal of Statistical Software, Vol. 59, No. 5, pp. 1-38.
 }
 }
 \seealso{
