@@ -72,7 +72,8 @@ A data frame with direct, indirect, mediator and
 }
 \description{
 \code{mediation()} is a short summary for multivariate-response
-  mediation-models.
+  mediation-models, i.e. this function computes average direct and average
+  causal mediation effects of multivariate response models.
 }
 \details{
 \code{mediation()} returns a data frame with information on the

@@ -2,7 +2,8 @@
 #' @name mediation
 #'
 #' @description \code{mediation()} is a short summary for multivariate-response
-#'   mediation-models.
+#'   mediation-models, i.e. this function computes average direct and average
+#'   causal mediation effects of multivariate response models.
 #'
 #' @param model A \code{brmsfit} or \code{stanmvreg} object.
 #' @param treatment Character, name of the treatment variable (or direct effect)
