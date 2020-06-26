@@ -146,7 +146,6 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
 # workhorse ---------------------------------
 
 
-#' @importFrom stats formula
 #' @importFrom insight model_info find_response find_predictors get_parameters
 .mediation <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = .89, method = "ETI", pattern = "b_%s_%s", ...) {
   # only one HDI interval
