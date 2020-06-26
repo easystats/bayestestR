@@ -11,14 +11,18 @@
 #' @param mediator Character, name of the mediator variable in a (multivariate
 #'   response) mediator-model. If missing, \code{mediation()} tries to find the
 #'   treatment variable automatically, however, this may fail.
+#' @param response A named character vector, indicating the names of the response
+#'   variables to be used for the mediation analysis. Usually can be \code{NULL},
+#'   in which case these variables are retrieved automatically. If not \code{NULL},
+#'   names should match the names of the model formulas (\code{names(model$formula$forms)}).
 #' @param ... Not used.
 #' @inheritParams ci
 #' @inheritParams describe_posterior
 #'
 #' @return A data frame with direct, indirect, mediator and
 #'   total effect of a multivariate-response mediation-model, as well as the
-#'   proportion mediated. The effect sizes are mean values of the posterior
-#'   samples.
+#'   proportion mediated. The effect sizes are median values of the posterior
+#'   samples (use \code{centrality} for other centrality indices).
 #'
 #' @details \code{mediation()} returns a data frame with information on the
 #'       \emph{direct effect} (mean value of posterior samples from \code{treatment}
@@ -31,13 +35,20 @@
 #'       effect). The \emph{proportion mediated} is the indirect effect divided
 #'       by the total effect.
 #'       \cr \cr
-#'       For all values, the 89\% credible intervals are calculated by default. Use \code{ci}
-#'       to calculate a different interval.
+#'       For all values, the 89\% credible intervals are calculated by default.
+#'       Use \code{ci} to calculate a different interval.
 #'       \cr \cr
 #'       The arguments \code{treatment} and \code{mediator} do not necessarily
 #'       need to be specified. If missing, \code{mediation()} tries to find the
 #'       treatment and mediator variable automatically. If this does not work,
 #'       specify these variables.
+#'       \cr \cr
+#'       The direct effect is also called \emph{average direct effect} (ADE),
+#'       the indirect effect is also called \emph{average causal mediation effects}
+#'       (ACME).
+#'
+#' @seealso The \pkg{mediation} package for a causal mediation analysis in
+#'   the frequentist framework.
 #'
 #'
 #' @export
@@ -50,7 +61,7 @@ mediation <- function(model, ...) {
 #' @importFrom stats formula
 #' @importFrom insight model_info find_response find_predictors
 #' @export
-mediation.brmsfit <- function(model, treatment, mediator, centrality = "median", ci = .89, method = "HDI", ...) {
+mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = .89, method = "HDI", ...) {
   # check for pkg availability, else function might fail
   if (!requireNamespace("brms", quietly = TRUE))
     stop("Please install and load package `brms` first.")
@@ -59,85 +70,86 @@ mediation.brmsfit <- function(model, treatment, mediator, centrality = "median",
   if (length(ci) > 1) ci <- ci[1]
 
   # check for binary response. In this case, user should rescale variables
-  fitinfo <- insight::model_info(model)
-  if (any(sapply(fitinfo, function(i) i$is_binomial, simplify = TRUE))) {
+  modelinfo <- insight::model_info(model)
+  if (any(sapply(modelinfo, function(i) i$is_binomial, simplify = TRUE))) {
     message("One of moderator or outcome is binary, so direct and indirect effects may be on different scales. Consider rescaling model predictors, e.g. with `effectsize::standardize()`.")
   }
 
-
-  dv <- insight::find_response(model, combine = TRUE)
+  if (is.null(response)) {
+    response <- insight::find_response(model, combine = TRUE)
+  }
   fixm <- FALSE
 
   if (missing(mediator)) {
-    pv <- insight::find_predictors(model, flatten = TRUE)
-    mediator <- pv[pv %in% dv]
+    predictors <- insight::find_predictors(model, flatten = TRUE)
+    mediator <- predictors[predictors %in% response]
     fixm <- TRUE
   }
 
   if (missing(treatment)) {
-    pvs <- lapply(
+    predictors <- lapply(
       model$formula$forms,
       function(.f) {
         all.vars(stats::formula(.f)[[3L]])
       }
     )
 
-    treatment <- pvs[[1]][pvs[[1]] %in% pvs[[2]]][1]
+    treatment <- predictors[[1]][predictors[[1]] %in% predictors[[2]]][1]
     treatment <- .fix_factor_name(model, treatment)
   }
 
 
-  mediator.model <- which(dv == mediator)
-  treatment.model <- which(dv != mediator)
+  mediator.model <- which(response == mediator)
+  treatment.model <- which(response != mediator)
 
   if (fixm) mediator <- .fix_factor_name(model, mediator)
 
   # brms removes underscores from variable names when naming estimates
   # so we need to fix variable names here
 
-  dv <- names(dv)
+  response <- names(response)
 
 
   # Direct effect: coef(treatment) from model_y_treatment
-  coef_treatment <- sprintf("b_%s_%s", dv[treatment.model], treatment)
-  eff.direct <- brms::posterior_samples(model, pars = coef_treatment, fixed = TRUE)[[1]]
+  coef_treatment <- sprintf("b_%s_%s", response[treatment.model], treatment)
+  effect_direct <- brms::posterior_samples(model, pars = coef_treatment, fixed = TRUE)[[1]]
 
   # Mediator effect: coef(mediator) from model_y_treatment
-  coef_mediator <- sprintf("b_%s_%s", dv[treatment.model], mediator)
-  eff.mediator <- brms::posterior_samples(model, pars = coef_mediator, fixed = TRUE)[[1]]
+  coef_mediator <- sprintf("b_%s_%s", response[treatment.model], mediator)
+  effect_mediator <- brms::posterior_samples(model, pars = coef_mediator, fixed = TRUE)[[1]]
 
   # Indirect effect: coef(treament) from model_m_mediator * coef(mediator) from model_y_treatment
-  coef_indirect <- sprintf("b_%s_%s", dv[mediator.model], treatment)
+  coef_indirect <- sprintf("b_%s_%s", response[mediator.model], treatment)
   tmp.indirect <- brms::posterior_samples(model, pars = c(coef_indirect, coef_mediator), fixed = TRUE)
-  eff.indirect <- tmp.indirect[[coef_indirect]] * tmp.indirect[[coef_mediator]]
+  effect_indirect <- tmp.indirect[[coef_indirect]] * tmp.indirect[[coef_mediator]]
 
   # Total effect
-  eff.total <- eff.indirect + eff.direct
+  effect_total <- effect_indirect + effect_direct
 
   # proportion mediated: indirect effect / total effect
-  prop.mediated <- as.numeric(point_estimate(eff.indirect, centrality = centrality)) / as.numeric(point_estimate(eff.total, centrality = centrality))
-  hdi_eff <- ci(eff.indirect / eff.total, ci = ci, method = method)
-  prop.se <- (hdi_eff$CI_high - hdi_eff$CI_low) / 2
-  prop.hdi <- prop.mediated + c(-1, 1) * prop.se
+  proportion_mediated <- as.numeric(point_estimate(effect_indirect, centrality = centrality)) / as.numeric(point_estimate(effect_total, centrality = centrality))
+  hdi_eff <- ci(effect_indirect / effect_total, ci = ci, method = method)
+  prop_mediated_se <- (hdi_eff$CI_high - hdi_eff$CI_low) / 2
+  prop_mediated_ci <- proportion_mediated + c(-1, 1) * prop_mediated_se
 
   res <- cbind(
     data.frame(
       Effect = c("Direct Effect (ADE)", "Indirect Effect (ACME)", "Mediator Effect", "Total Effect", "Proportion Mediated"),
       Estimate = c(
-        as.numeric(point_estimate(eff.direct, centrality = centrality)),
-        as.numeric(point_estimate(eff.indirect, centrality = centrality)),
-        as.numeric(point_estimate(eff.mediator, centrality = centrality)),
-        as.numeric(point_estimate(eff.total, centrality = centrality)),
-        prop.mediated
+        as.numeric(point_estimate(effect_direct, centrality = centrality)),
+        as.numeric(point_estimate(effect_indirect, centrality = centrality)),
+        as.numeric(point_estimate(effect_mediator, centrality = centrality)),
+        as.numeric(point_estimate(effect_total, centrality = centrality)),
+        proportion_mediated
       ),
       stringsAsFactors = FALSE
     ),
     as.data.frame(rbind(
-      ci(eff.direct, ci = ci, method = method)[, -1],
-      ci(eff.indirect, ci = ci, method = method)[, -1],
-      ci(eff.mediator, ci = ci, method = method)[, -1],
-      ci(eff.total, ci = ci, method = method)[, -1],
-      prop.hdi
+      ci(effect_direct, ci = ci, method = method)[, -1],
+      ci(effect_indirect, ci = ci, method = method)[, -1],
+      ci(effect_mediator, ci = ci, method = method)[, -1],
+      ci(effect_total, ci = ci, method = method)[, -1],
+      prop_mediated_ci
     ))
   )
 
@@ -147,7 +159,7 @@ mediation.brmsfit <- function(model, treatment, mediator, centrality = "median",
   attr(res, "ci_method") <- method
   attr(res, "treatment") <- treatment
   attr(res, "mediator") <- mediator
-  attr(res, "response") <- dv[treatment.model]
+  attr(res, "response") <- response[treatment.model]
   attr(res, "formulas") <- lapply(model$formula$forms, function(x) as.character(x[1]))
 
   class(res) <- c("bayestestR_mediation", class(res))
@@ -177,7 +189,7 @@ mediation.brmsfit <- function(model, treatment, mediator, centrality = "median",
 
 
 
-#' @importFrom insight format_table format_ci print_color
+#' @importFrom insight format_table format_ci print_color format_value
 #' @export
 print.bayestestR_mediation <- function(x, digits = 3, ...) {
   insight::print_color("# Causal Mediation Analysis for Stan Model\n\n", "blue")

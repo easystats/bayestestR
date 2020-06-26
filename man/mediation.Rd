@@ -11,6 +11,7 @@ mediation(model, ...)
   model,
   treatment,
   mediator,
+  response = NULL,
   centrality = "median",
   ci = 0.89,
   method = "HDI",
@@ -30,6 +31,11 @@ tries to find the treatment variable automatically, however, this may fail.}
 response) mediator-model. If missing, \code{mediation()} tries to find the
 treatment variable automatically, however, this may fail.}
 
+\item{response}{A named character vector, indicating the names of the response
+variables to be used for the mediation analysis. Usually can be \code{NULL},
+in which case these variables are retrieved automatically. If not \code{NULL},
+names should match the names of the model formulas (\code{names(model$formula$forms)}).}
+
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
@@ -40,8 +46,8 @@ to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95}
 \value{
 A data frame with direct, indirect, mediator and
   total effect of a multivariate-response mediation-model, as well as the
-  proportion mediated. The effect sizes are mean values of the posterior
-  samples.
+  proportion mediated. The effect sizes are median values of the posterior
+  samples (use \code{centrality} for other centrality indices).
 }
 \description{
 \code{mediation()} is a short summary for multivariate-response
@@ -59,11 +65,19 @@ A data frame with direct, indirect, mediator and
       effect). The \emph{proportion mediated} is the indirect effect divided
       by the total effect.
       \cr \cr
-      For all values, the 89\% credible intervals are calculated by default. Use \code{ci}
-      to calculate a different interval.
+      For all values, the 89\% credible intervals are calculated by default.
+      Use \code{ci} to calculate a different interval.
       \cr \cr
       The arguments \code{treatment} and \code{mediator} do not necessarily
       need to be specified. If missing, \code{mediation()} tries to find the
       treatment and mediator variable automatically. If this does not work,
       specify these variables.
+      \cr \cr
+      The direct effect is also called \emph{average direct effect} (ADE),
+      the indirect effect is also called \emph{average causal mediation effects}
+      (ACME).
+}
+\seealso{
+The \pkg{mediation} package for a causal mediation analysis in
+  the frequentist framework.
 }
