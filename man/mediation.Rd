@@ -5,10 +5,10 @@
 \alias{mediation.brmsfit}
 \title{Summary of Bayesian multivariate-response mediation-models}
 \usage{
-mediation(x, ...)
+mediation(model, ...)
 
 \method{mediation}{brmsfit}(
-  x,
+  model,
   treatment,
   mediator,
   centrality = "median",
@@ -18,7 +18,7 @@ mediation(x, ...)
 )
 }
 \arguments{
-\item{x}{A \code{stanreg}, \code{stanfit}, or \code{brmsfit} object.}
+\item{model}{A \code{brmsfit} object.}
 
 \item{...}{Not used.}
 
