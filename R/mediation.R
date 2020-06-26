@@ -4,7 +4,7 @@
 #' @description \code{mediation()} is a short summary for multivariate-response
 #'   mediation-models.
 #'
-#' @param model A \code{brmsfit} object.
+#' @param model A \code{brmsfit} or \code{stanmvreg} object.
 #' @param treatment Character, name of the treatment variable (or direct effect)
 #'   in a (multivariate response) mediator-model. If missing, \code{mediation()}
 #'   tries to find the treatment variable automatically, however, this may fail.

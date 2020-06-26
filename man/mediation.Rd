@@ -31,7 +31,7 @@ mediation(model, ...)
 )
 }
 \arguments{
-\item{model}{A \code{brmsfit} object.}
+\item{model}{A \code{brmsfit} or \code{stanmvreg} object.}
 
 \item{...}{Not used.}
 
