@@ -61,7 +61,7 @@ mediation <- function(model, ...) {
 #' @importFrom stats formula
 #' @importFrom insight model_info find_response find_predictors
 #' @export
-mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = .89, method = "HDI", ...) {
+mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = .89, method = "ETI", ...) {
   # check for pkg availability, else function might fail
   if (!requireNamespace("brms", quietly = TRUE))
     stop("Please install and load package `brms` first.")

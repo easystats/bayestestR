@@ -14,7 +14,7 @@ mediation(model, ...)
   response = NULL,
   centrality = "median",
   ci = 0.89,
-  method = "HDI",
+  method = "ETI",
   ...
 )
 }
