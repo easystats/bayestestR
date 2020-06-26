@@ -244,7 +244,6 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
   attr(res, "treatment") <- treatment
   attr(res, "mediator") <- mediator
   attr(res, "response") <- response[treatment.model]
-  attr(res, "formulas") <- lapply(model$formula$forms, function(x) as.character(x[1]))
 
   class(res) <- c("bayestestR_mediation", class(res))
   res
