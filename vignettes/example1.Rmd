@@ -328,7 +328,7 @@ Let's redefine our ROPE as the region within the `[-6.2, 6.2]` range. **Note tha
 
 ```{r message=FALSE, warning=FALSE}
 rope_value <- rope_range(model)
-rope_range
+rope_value
 ```
 
 Let's recompute the **percentage in ROPE**:
