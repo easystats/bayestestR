@@ -59,13 +59,9 @@ mediation <- function(model, ...) {
 
 #' @rdname mediation
 #' @importFrom stats formula
-#' @importFrom insight model_info find_response find_predictors
+#' @importFrom insight model_info find_response find_predictors get_parameters
 #' @export
 mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = .89, method = "ETI", ...) {
-  # check for pkg availability, else function might fail
-  if (!requireNamespace("brms", quietly = TRUE))
-    stop("Please install and load package `brms` first.")
-
   # only one HDI interval
   if (length(ci) > 1) ci <- ci[1]
 
@@ -112,15 +108,15 @@ mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centr
 
   # Direct effect: coef(treatment) from model_y_treatment
   coef_treatment <- sprintf("b_%s_%s", response[treatment.model], treatment)
-  effect_direct <- brms::posterior_samples(model, pars = coef_treatment, fixed = TRUE)[[1]]
+  effect_direct <- insight::get_parameters(model)[[coef_treatment]]
 
   # Mediator effect: coef(mediator) from model_y_treatment
   coef_mediator <- sprintf("b_%s_%s", response[treatment.model], mediator)
-  effect_mediator <- brms::posterior_samples(model, pars = coef_mediator, fixed = TRUE)[[1]]
+  effect_mediator <- insight::get_parameters(model)[[coef_mediator]]
 
   # Indirect effect: coef(treament) from model_m_mediator * coef(mediator) from model_y_treatment
   coef_indirect <- sprintf("b_%s_%s", response[mediator.model], treatment)
-  tmp.indirect <- brms::posterior_samples(model, pars = c(coef_indirect, coef_mediator), fixed = TRUE)
+  tmp.indirect <- insight::get_parameters(model)[c(coef_indirect, coef_mediator)]
   effect_indirect <- tmp.indirect[[coef_indirect]] * tmp.indirect[[coef_mediator]]
 
   # Total effect
