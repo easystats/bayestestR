@@ -47,7 +47,14 @@ treatment variable automatically, however, this may fail.}
 variables to be used for the mediation analysis. Usually can be \code{NULL},
 in which case these variables are retrieved automatically. If not \code{NULL},
 names should match the names of the model formulas
-(\code{names(insight::find_response(model, combine = TRUE))}).}
+(\code{names(insight::find_response(model, combine = TRUE))}). This can be
+useful if, for instance, the mediator variable is transformed in one model,
+but used "as is" as response variable in the other model. Example: The mediator
+\code{m} is used as response variable, but the centered version \code{m_center}
+is used as mediator variable. The second response variable (for the treatment
+model, with the mediator as additional predictor), \code{y}, is not transformed.
+Then we could use \code{response} like this:
+\code{mediation(model, response = c(m = "m_center", y = "y"))}.}
 
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
