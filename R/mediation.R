@@ -58,10 +58,48 @@ mediation <- function(model, ...) {
 
 
 #' @rdname mediation
-#' @importFrom stats formula
-#' @importFrom insight model_info find_response find_predictors get_parameters
 #' @export
 mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = .89, method = "ETI", ...) {
+  .mediation(
+    model = model,
+    treatment = treatment,
+    mediator = mediator,
+    response = response,
+    centrality = centrality,
+    ci = ci,
+    method = method,
+    pattern = "b_%s_%s",
+    ...
+  )
+}
+
+
+#' @rdname mediation
+#' @export
+mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = .89, method = "ETI", ...) {
+  .mediation(
+    model = model,
+    treatment = treatment,
+    mediator = mediator,
+    response = response,
+    centrality = centrality,
+    ci = ci,
+    method = method,
+    pattern = "%s|%s",
+    ...
+  )
+}
+
+
+
+
+
+# workhorse ---------------------------------
+
+
+#' @importFrom stats formula
+#' @importFrom insight model_info find_response find_predictors get_parameters
+.mediation <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = .89, method = "ETI", pattern = "b_%s_%s", ...) {
   # only one HDI interval
   if (length(ci) > 1) ci <- ci[1]
 
@@ -71,23 +109,24 @@ mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centr
     message("One of moderator or outcome is binary, so direct and indirect effects may be on different scales. Consider rescaling model predictors, e.g. with `effectsize::standardize()`.")
   }
 
+  # model responses
   if (is.null(response)) {
     response <- insight::find_response(model, combine = TRUE)
   }
-  fixm <- FALSE
+  fix_mediator <- FALSE
 
+  # find mediator, if not specified
   if (missing(mediator)) {
     predictors <- insight::find_predictors(model, flatten = TRUE)
     mediator <- predictors[predictors %in% response]
-    fixm <- TRUE
+    fix_mediator <- TRUE
   }
 
+  # find treatment, if not specified
   if (missing(treatment)) {
     predictors <- lapply(
-      model$formula$forms,
-      function(.f) {
-        all.vars(stats::formula(.f)[[3L]])
-      }
+      insight::find_predictors(model),
+      function(.f) .f$conditional
     )
 
     treatment <- predictors[[1]][predictors[[1]] %in% predictors[[2]]][1]
@@ -98,7 +137,7 @@ mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centr
   mediator.model <- which(response == mediator)
   treatment.model <- which(response != mediator)
 
-  if (fixm) mediator <- .fix_factor_name(model, mediator)
+  if (fix_mediator) mediator <- .fix_factor_name(model, mediator)
 
   # brms removes underscores from variable names when naming estimates
   # so we need to fix variable names here
@@ -107,15 +146,15 @@ mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centr
 
 
   # Direct effect: coef(treatment) from model_y_treatment
-  coef_treatment <- sprintf("b_%s_%s", response[treatment.model], treatment)
+  coef_treatment <- sprintf(pattern, response[treatment.model], treatment)
   effect_direct <- insight::get_parameters(model)[[coef_treatment]]
 
   # Mediator effect: coef(mediator) from model_y_treatment
-  coef_mediator <- sprintf("b_%s_%s", response[treatment.model], mediator)
+  coef_mediator <- sprintf(pattern, response[treatment.model], mediator)
   effect_mediator <- insight::get_parameters(model)[[coef_mediator]]
 
   # Indirect effect: coef(treament) from model_m_mediator * coef(mediator) from model_y_treatment
-  coef_indirect <- sprintf("b_%s_%s", response[mediator.model], treatment)
+  coef_indirect <- sprintf(pattern, response[mediator.model], treatment)
   tmp.indirect <- insight::get_parameters(model)[c(coef_indirect, coef_mediator)]
   effect_indirect <- tmp.indirect[[coef_indirect]] * tmp.indirect[[coef_mediator]]
 
@@ -163,6 +202,12 @@ mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centr
 }
 
 
+
+
+
+
+# helper ---------------------------------
+
 #' @importFrom insight get_data
 .fix_factor_name <- function(model, variable) {
   # check for categorical. if user has not specified a treatment variable
@@ -184,6 +229,14 @@ mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centr
 }
 
 
+
+
+
+
+
+
+
+# S3 ---------------------------------
 
 #' @importFrom insight format_table format_ci print_color format_value
 #' @export
