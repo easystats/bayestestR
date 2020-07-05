@@ -71,6 +71,7 @@ reference:
 - title: "Utilities"
   contents:
   - simulate_correlation
+  - mediation
   - convert_bayesian_as_frequentist
   - contr.bayes
   - as.numeric.p_direction
