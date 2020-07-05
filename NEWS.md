@@ -1,3 +1,9 @@
+# bayestestR 0.8.0
+
+## New functions
+
+- `mediation()`, to compute average direct and average causal mediation effects of multivariate response models (`brmsfit`, `stanmvreg`).
+
 # bayestestR 0.7.0
 
 ## General

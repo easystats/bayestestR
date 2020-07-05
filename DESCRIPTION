@@ -75,6 +75,7 @@ Suggests:
 	modelbased,
 	lme4,
 	logspline,
+	mediation,
 	performance,
 	rmarkdown,
 	rstan,
@@ -84,6 +85,6 @@ Suggests:
 	testthat,
 	tidyr,
 	tweedie
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.0.9000
 Language: en-GB
 VignetteBuilder: knitr
