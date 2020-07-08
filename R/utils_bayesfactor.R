@@ -320,7 +320,8 @@ as.double.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion
     stop("Package \"logspline\" needed for this function to work. Please install it.")
   }
 
-  arg_names <- names(formals(logspline::logspline, envir = parent.frame()))
+  # arg_names <- names(formals(logspline::logspline, envir = parent.frame()))
+  arg_names <- names(formals(logspline::logspline)) # support R<3.6.0
   in_args <- list(...)
 
   in_args <- in_args[names(in_args) %in% arg_names]

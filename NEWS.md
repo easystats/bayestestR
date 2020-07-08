@@ -1,3 +1,9 @@
+# bayestestR 0.7.1
+
+## Bug fixes
+
+- `bayesfactor_parameters()` works with `R<3.6.0`.
+
 # bayestestR 0.7.0
 
 ## General
