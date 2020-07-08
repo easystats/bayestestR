@@ -187,7 +187,7 @@ Accurate depiction of a regular Bayesian user estimating a credible interval.
 <a href="#bayestestr-installation" class="anchor"></a>BayestestR Installation</h3>
 <p>You can install <code>bayestestR</code> along with the whole <a href="https://github.com/easystats/easystats"><strong>easystats</strong></a> suite by running the following:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"easystats/easystats"</span>)</pre></body></html></div>
+<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"easystats/easystats"</span>)</pre></body></html></div>
 <!-- Now that it's done, we can *load* the packages we need, in this case [`report`](https://github.com/easystats/report), which combines `bayestestR` and other packages together. -->
 <!-- ```{r message=FALSE, warning=FALSE} -->
 <!-- library(report)  # Calling library(...) enables you to use the package's functions -->
@@ -251,7 +251,7 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <!--   report() %>%  -->
 <!--   to_text(width=100) -->
 <!-- ``` -->
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="no">Sepal.Length</span> ~ <span class="no">Petal.Length</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">iris</span>)
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rstanarm/man/stan_glm.html">stan_glm</a></span>(<span class="no">Sepal.Length</span> ~ <span class="no">Petal.Length</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">iris</span>)
 <span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(<span class="no">model</span>)</pre></body></html></div>
 <table class="table">
 <colgroup>
@@ -313,7 +313,7 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 </tr>
 </tbody>
 </table>
-<p><strong>That’s it!</strong> You fitted a Bayesian version of the model by simply using <a href="https://mc-stan.org/rstanarm/reference/stan_glm.html"><code><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm()</a></code></a> instead of <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and described the posterior distributions of the parameters. The conclusion that we can drawn, for this example, are very similar. The effect (<em>the median of the effect’s posterior distribution</em>) is about <code>0.41</code>, and it can be also be considered as <em>significant</em> in the Bayesian sense (more on that later).</p>
+<p><strong>That’s it!</strong> You fitted a Bayesian version of the model by simply using <a href="https://mc-stan.org/rstanarm/reference/stan_glm.html"><code><a href="https://rdrr.io/pkg/rstanarm/man/stan_glm.html">stan_glm()</a></code></a> instead of <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and described the posterior distributions of the parameters. The conclusion that we can drawn, for this example, are very similar. The effect (<em>the median of the effect’s posterior distribution</em>) is about <code>0.41</code>, and it can be also be considered as <em>significant</em> in the Bayesian sense (more on that later).</p>
 <p><strong>So, ready to learn more?</strong> Check out the <a href="https://easystats.github.io/bayestestR/articles/example1.html"><strong>next tutorial</strong></a>!</p>
 </div>
 </div>
