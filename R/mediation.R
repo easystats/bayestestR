@@ -57,6 +57,8 @@
 #'       the indirect effect is also called \emph{average causal mediation effects}
 #'       (ACME). See also \cite{Tingley et al. 2014} and \cite{Imai et al. 2010}.
 #'
+#' @note There is an \code{as.data.frame()} method that returns the posterior samples of the effects, which can be used for further processing in the different \pkg{bayestestR} package.
+#'
 #' @references
 #' \itemize{
 #' \item Imai, K., Keele, L. and Tingley, D. (2010) A General Approach to Causal Mediation Analysis, Psychological Methods, Vol. 15, No. 4 (December), pp. 309-334.

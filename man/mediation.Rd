@@ -99,6 +99,9 @@ A data frame with direct, indirect, mediator and
       the indirect effect is also called \emph{average causal mediation effects}
       (ACME). See also \cite{Tingley et al. 2014} and \cite{Imai et al. 2010}.
 }
+\note{
+There is an \code{as.data.frame()} method that returns the posterior samples of the effects, which can be used for further processing in the different \pkg{bayestestR} package.
+}
 \examples{
 \dontrun{
 library(mediation)
