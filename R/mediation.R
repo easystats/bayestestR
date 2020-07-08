@@ -237,12 +237,20 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
   )
 
   colnames(res) <- c("Effect", "Estimate", "CI_low", "CI_high")
+  samples <- data.frame(
+    effect_direct,
+    effect_indirect,
+    effect_mediator,
+    effect_total,
+    proportion_mediated = effect_indirect / effect_total
+  )
 
   attr(res, "ci") <- ci
   attr(res, "ci_method") <- method
   attr(res, "treatment") <- treatment
   attr(res, "mediator") <- mediator
   attr(res, "response") <- response[treatment.model]
+  attr(res, "data") <- samples
 
   class(res) <- c("bayestestR_mediation", class(res))
   res
@@ -253,7 +261,21 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
 
 
 
+
+# methods ---------------------
+
+
+#' @export
+as.data.frame.bayestestR_mediation <- function(x, ...) {
+  attributes(x)$data
+}
+
+
+
+
+
 # helper ---------------------------------
+
 
 #' @importFrom insight get_data
 .fix_factor_name <- function(model, variable) {
