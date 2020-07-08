@@ -132,7 +132,7 @@
 
       
 
-      </header><script src="bayes_factors_files/header-attrs-2.3/header-attrs.js"></script><script src="bayes_factors_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="bayes_factors_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Bayes Factors</h1>
@@ -229,7 +229,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; * Evidence Against The Null: [-1, 1]</code></pre>
 <p>We can also plot using the <code>see</code> package:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">see</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">My_first_BF</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">My_first_BF</span>)</pre></body></html></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-5-1.png" width="1093.75"></p>
 </div>
 <div id="testing-against-the-point-null-0" class="section level3">
@@ -248,7 +248,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; group2    | 1.479
 &gt; 
 &gt; * Evidence Against The Null: [0]</code></pre>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">My_second_BF</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">My_second_BF</span>)</pre></body></html></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-8-1.png" width="1093.75"></p>
 </div>
 <div id="one-sided-tests" class="section level3">
@@ -265,7 +265,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; 
 &gt; * Evidence Against The Null: [0]
 &gt; *                 Direction: Right-Sided test</code></pre>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">test_group2_right</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">test_group2_right</span>)</pre></body></html></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-9-1.png" width="1093.75"></p>
 <p>As we can see, given that we have an <em>a priori</em> assumption about the direction of the effect (<em>that the effect is positive</em>), <strong>the presence of an effect is 2.8 times more likely than the absence of an effect</strong>, given the observed data (or that the data are 2.8 time more probable under <span class="math inline">\(H_1\)</span> than <span class="math inline">\(H_0\)</span>). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 2.8 is still considered quite <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf">weak evidence</a>).</p>
 <p><strong>NOTE</strong>: See the <em>Testing Contrasts</em> appendix below.</p>
@@ -287,7 +287,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; group2    | [0.24, 3.02]</code></pre>
 <p>The argument <code>BF = 1</code> indicates that we want the interval to contain values that have gained support by a factor of at least 1 (that is, any support at all).</p>
 <p>Visually, we can see that the credibility of all the values within this interval has increased (and likewise the credibility of all the values outside this interval has decreased):</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">my_first_si</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">my_first_si</span>)</pre></body></html></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-12-1.png" width="1093.75"></p>
 <p>We can also see the this support interval (just barely) excludes the point null (0) - whose credibility we’ve already seen has decreased by the observed data. This emphasizes the relationship between the support interval and the Bayes factor:</p>
 <blockquote>
@@ -598,7 +598,7 @@ BF_{restricted / NULL} = \frac
 &gt; wt          | [-6.64, -2.13]
 &gt; am          | [-2.69,  5.24]
 &gt; carb        | [-1.69,  0.00]</code></pre>
-<div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">BMA_hdi</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">BMA_hdi</span>)</pre></body></html></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-22-1.png" width="1093.75"></p>
 <p>We can see that across both models under consideration, the posterior of the <code>carb</code> effect is almost equally weighted between the alternative model and the null model - as represented by about half of the posterior mass concentrated at 0 - which makes sense as both models were almost equally supported by the data. We can also see that across both models, that now <strong>the HDI does contain 0</strong>. Thus we have resolved the conflict between the Bayes factor and the HDI <span class="citation">(Rouder, Haaf, &amp; Vandekerckhove, 2018)</span>!</p>
 <p><strong>Note</strong> that parameters might play different roles across different models; For example, the parameter <code>A</code> plays a different role in the model <code>Y ~ A + B</code> (where it is a main effect) than it does in the model <code>Y ~ A + B + A:B</code> (where it is a simple effect). In many cases centering of predictors (mean subtracting for continuous variables, and effects coding via <code>contr.sum</code> or orthonormal coding via <a href="https://easystats.github.io/bayestestR/reference/contr.bayes.html"><code>contr.bayes</code></a> for factors) can in some cases reduce this issue.</p>
@@ -663,9 +663,9 @@ BF_{restricted / NULL} = \frac
 <span class="no">pairs_sum</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span>(<span class="no">fit_sum</span>, ~ <span class="no">Species</span>))
 <span class="no">pairs_sum</span></pre></body></html></div>
 <pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
-&gt;  setosa - versicolor      -0.020      -2.7       2.7
-&gt;  setosa - virginica       -0.032      -4.5       4.1
-&gt;  versicolor - virginica   -0.093      -4.3       4.5
+&gt;  setosa - versicolor      0.0142     -1.95      1.94
+&gt;  setosa - virginica       0.0314     -2.01      1.88
+&gt;  versicolor - virginica  -0.0200     -2.73      2.73
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
@@ -686,9 +686,9 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
 <span class="no">pairs_bayes</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span>(<span class="no">fit_bayes</span>, ~ <span class="no">Species</span>))
 <span class="no">pairs_bayes</span></pre></body></html></div>
 <pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
-&gt;  setosa - versicolor      0.0168     -2.62      2.79
-&gt;  setosa - virginica      -0.0258     -2.84      2.74
-&gt;  versicolor - virginica  -0.0108     -2.81      2.83
+&gt;  setosa - versicolor     -0.0076     -1.99      2.00
+&gt;  setosa - virginica       0.0019     -1.86      2.00
+&gt;  versicolor - virginica   0.0309     -2.67      2.98
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
@@ -724,12 +724,12 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
 <pre><code>&gt; # Bayes Factor (Order-Restriction)
 &gt; 
 &gt;                                        Hypothesis P(Prior) P(Posterior)    BF
-&gt;                               setosa &lt; versicolor    0.503            1 1.987
-&gt;                                setosa &lt; virginica    0.493            1 2.027
-&gt;                            versicolor &lt; virginica    0.489            1 2.045
-&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor    0.110            0 0.000
-&gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor    0.194            0 0.000
-&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica    0.200            1 5.013
+&gt;                               setosa &lt; versicolor    0.506         0.00 0.000
+&gt;                                setosa &lt; virginica    0.511         0.94 1.840
+&gt;                            versicolor &lt; virginica    0.503         1.00 1.987
+&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor    0.130         0.00 0.000
+&gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor    0.252         0.00 0.000
+&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica    0.123         0.00 0.000
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p><strong><em>What happened???</em></strong></p>
@@ -752,12 +752,12 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
 <pre><code>&gt; # Bayes Factor (Order-Restriction)
 &gt; 
 &gt;                                        Hypothesis P(Prior) P(Posterior)    BF
-&gt;                               setosa &lt; versicolor    0.502            1 1.993
-&gt;                                setosa &lt; virginica    0.496            1 2.014
-&gt;                            versicolor &lt; virginica    0.488            1 2.050
-&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor    0.177            0 0.000
-&gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor    0.166            0 0.000
-&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica    0.158            1 6.309
+&gt;                               setosa &lt; versicolor    0.488            1 2.050
+&gt;                                setosa &lt; virginica    0.495            0 0.000
+&gt;                            versicolor &lt; virginica    0.503            0 0.000
+&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor    0.126            0 0.000
+&gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor    0.240            1 4.171
+&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica    0.122            0 0.000
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 </div>
@@ -775,7 +775,7 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references">
 <div id="ref-van2019cautionary">
 <p>Bergh, D. van den, Haaf, J. M., Ly, A., Rouder, J. N., &amp; Wagenmakers, E.-J. (2019). <em>A cautionary note on estimating effect size</em>.</p>
 </div>

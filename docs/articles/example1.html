@@ -132,7 +132,7 @@
 
       
 
-      </header><script src="example1_files/header-attrs-2.3/header-attrs.js"></script><script src="example1_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="example1_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>1. Initiation to Bayesian models</h1>
@@ -378,7 +378,7 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <pre><code>&gt; [1] -6.2  6.2</code></pre>
 <p>Let’s redefine our ROPE as the region within the <code>[-6.2, 6.2]</code> range. <strong>Note that this can be directly obtained by the <code>rope_range</code> function :)</strong></p>
 <div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="no">rope_value</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/rope_range.html">rope_range</a></span>(<span class="no">model</span>)
-<span class="no">rope_range</span></pre></body></html></div>
+<span class="no">rope_value</span></pre></body></html></div>
 <pre><code>&gt; [1] -6.2  6.2</code></pre>
 <p>Let’s recompute the <strong>percentage in ROPE</strong>:</p>
 <div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="fu"><a href="../reference/rope.html">rope</a></span>(<span class="no">posteriors</span>$<span class="no">feedsunflower</span>, <span class="kw">range</span> <span class="kw">=</span> <span class="no">rope_range</span>, <span class="kw">ci</span><span class="kw">=</span><span class="fl">0.89</span>)</pre></body></html></div>
@@ -457,7 +457,7 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references">
 <div id="ref-cohen1988statistical">
 <p>Cohen, J. (1988). <em>Statistical power analysis for the social sciences</em>.</p>
 </div>
