@@ -4,7 +4,7 @@ if (require("rstanarm") &&
     require("brms")) {
   context("bayesfactor_models + bayesfactor_inclusion")
 
-  # bayesfactor_models ------------------------------------------------------
+  # bayesfactor_models BIC --------------------------------------------------
 
   set.seed(444)
   mo1 <- lme4::lmer(Sepal.Length ~ (1 | Species), data = iris)
@@ -21,6 +21,7 @@ if (require("rstanarm") &&
   BFM4 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, mo5, mo1, denominator = mo1)
 
   test_that("bayesfactor_models BIC", {
+    # these are deterministic
     set.seed(444)
 
     testthat::expect_equal(BFM1, BFM2)
@@ -30,10 +31,11 @@ if (require("rstanarm") &&
     testthat::expect_error(bayestestR::bayesfactor_models(mo1, mo2, mo4_e))
 
     # update models
-    testthat::expect_equal(length(log(update(BFM2, subset = c(1, 2))$BF)), 3)
+    testthat::expect_equal(log(update(BFM2, subset = c(1, 2))$BF), c(0, 57.3, 54.52), tolerance = 0.1)
 
     # update reference
-    testthat::expect_equal(length(log(update(BFM2, reference = 1)$BF)), 4)
+    testthat::expect_equal(log(update(BFM2, reference = 1)$BF),
+                           c(0, -2.8, -6.2, -57.4), tolerance = 0.1)
   })
 
   test_that("bayesfactor_models BIC (unsupported / diff nobs)", {
@@ -53,13 +55,16 @@ if (require("rstanarm") &&
 
     # Should warn, but still work
     testthat::expect_warning(res <- bayesfactor_models(fit1, fit2b))
-    testthat::expect_equal(length(log(res$BF)), 2)
+    testthat::expect_equal(log(res$BF), c(0, -133.97), tolerance = 0.1)
   })
 
-  test_that("bayesfactor_models RSTANARM", {
-    testthat::skip("Skipping bayesfactor_models RSTANARM")
+
+# bayesfactor_models STAN ---------------------------------------------
+
+  test_that("bayesfactor_models STAN", {
+    testthat::skip_on_cran()
     library(rstanarm)
-    set.seed(444)
+    library(bridgesampling)
     stan_bf_0 <- stan_glm(Sepal.Length ~ 1,
                           data = iris,
                           refresh = 0,
@@ -71,32 +76,22 @@ if (require("rstanarm") &&
                           diagnostic_file = file.path(tempdir(), "df1.csv")
     )
 
-    testthat::expect_warning(stan_models <- bayestestR::bayesfactor_models(stan_bf_0, stan_bf_1))
+
+    set.seed(333) # compare against bridgesampling
+    bridge_BF <- bridgesampling::bayes_factor(
+      bridgesampling::bridge_sampler(stan_bf_1),
+      bridgesampling::bridge_sampler(stan_bf_0)
+    )
+
+    set.seed(333)
+    testthat::expect_warning(stan_models <- bayesfactor_models(stan_bf_0, stan_bf_1))
     testthat::expect_is(stan_models, "bayesfactor_models")
     testthat::expect_equal(length(log(stan_models$BF)), 2)
+    testthat::expect_equal(log(stan_models$BF[2]), log(bridge_BF$bf), tol = 0.1)
   })
 
-  .runThisTest <- Sys.getenv("RunAllinsightTests") == "yes"
-  if (.runThisTest || Sys.getenv("USER") == "travis") {
-    test_that("bayesfactor_models BRMS", {
-      testthat::skip("Skipping bayesfactor_models BRMS")
-      set.seed(444)
-      brms_4bf_1 <- insight::download_model("brms_4bf_1")
-      brms_4bf_2 <- insight::download_model("brms_4bf_2")
-      brms_4bf_3 <- insight::download_model("brms_4bf_3")
-      brms_4bf_4 <- insight::download_model("brms_4bf_4")
-      brms_4bf_5 <- insight::download_model("brms_4bf_5")
 
-      library(brms)
-      brms_models <- suppressWarnings(bayestestR::bayesfactor_models(brms_4bf_1, brms_4bf_2, brms_4bf_3, brms_4bf_4, brms_4bf_5))
-
-      testthat::expect_warning(bayestestR::bayesfactor_models(brms_4bf_1, brms_4bf_2))
-      testthat::expect_is(brms_models, "bayesfactor_models")
-      testthat::expect_equal(log(brms_models$BF), c(0, 68.5, 102.5, 128.6, 128.8), tolerance = 0.1)
-    })
-  }
-
-  # bayesfactor_inclusion ---------------------------------------------------
+# bayesfactor_inclusion ---------------------------------------------------
 
   test_that("bayesfactor_inclusion", {
     set.seed(444)
@@ -104,20 +99,20 @@ if (require("rstanarm") &&
     ToothGrowth$dose <- as.factor(ToothGrowth$dose)
     BF_ToothGrowth <- BayesFactor::anovaBF(len ~ dose * supp, ToothGrowth)
     testthat::expect_equal(
-      bayestestR::bayesfactor_inclusion(BF_ToothGrowth),
-      bayestestR::bayesfactor_inclusion(bayestestR::bayesfactor_models(BF_ToothGrowth))
+      bayesfactor_inclusion(BF_ToothGrowth),
+      bayesfactor_inclusion(bayesfactor_models(BF_ToothGrowth))
     )
 
     # with random effects in all models:
-    testthat::expect_true(is.nan(bayestestR::bayesfactor_inclusion(BFM1)[1, "BF"]))
+    testthat::expect_true(is.nan(bayesfactor_inclusion(BFM1)[1, "BF"]))
 
-    bfinc_all <- bayestestR::bayesfactor_inclusion(BFM4, match_models = FALSE)
+    bfinc_all <- bayesfactor_inclusion(BFM4, match_models = FALSE)
     testthat::expect_equal(bfinc_all$p_prior, c(1, 0.8, 0.6, 0.4, 0.2), tolerance = 0.1)
     testthat::expect_equal(bfinc_all$p_posterior, c(1, 1, 0.06, 0.01, 0), tolerance = 0.1)
     testthat::expect_equal(log(bfinc_all$BF), c(NaN, 56.04, -3.22, -5.9, -8.21), tolerance = 0.1)
 
     # + match_models
-    bfinc_matched <- bayestestR::bayesfactor_inclusion(BFM4, match_models = TRUE)
+    bfinc_matched <- bayesfactor_inclusion(BFM4, match_models = TRUE)
     testthat::expect_equal(bfinc_matched$p_prior, c(1, 0.2, 0.6, 0.2, 0.2), tolerance = 0.1)
     testthat::expect_equal(bfinc_matched$p_posterior, c(1, 0.94, 0.06, 0.01, 0), tolerance = 0.1)
     testthat::expect_equal(log(bfinc_matched$BF), c(NaN, 57.37, -3.92, -5.25, -3.25), tolerance = 0.1)
