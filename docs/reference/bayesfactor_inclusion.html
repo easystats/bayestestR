@@ -94,7 +94,7 @@ For more info, see the Bayes factors vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -231,16 +231,16 @@ that particular effect? In other words, on average - are models with effect \(X\
 more likely to have produced the observed data than models without effect \(X\)?</p>
 <h3>Match Models</h3>
 <p>If <code>match_models=FALSE</code> (default), Inclusion BFs are computed by comparing all models
-with a predictor against all models without that predictor. If <code>TRUE</code>,
+with a term against all models without that term. If <code>TRUE</code>,
 comparison is restricted to models that (1) do not include any interactions
-with the predictor of interest; (2) for interaction predictors, averaging is done
-only across models that containe the main effect from which the interaction
-predictor is comprised.</p>
+with the term of interest; (2) for interaction terms, averaging is done
+only across models that containe the main effect terms from which the interaction
+term is comprised.</p>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Random effects in the <code>lme</code> style will be displayed as interactions:
-i.e., <code>(X|G)</code> will become <code>1:G</code> and <code>X:G</code>.</p>
+    <p>Random effects in the <code>lmer</code> style are converted to interaction terms:
+i.e., <code>(X|G)</code> will become the terms <code>1:G</code> and <code>X:G</code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -268,9 +268,9 @@ i.e., <code>(X|G)</code> will become <code>1:G</code> and <code>X:G</code>.</p>
 <span class='fu'>bayesfactor_inclusion</span>(<span class='no'>BFmodels</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)
 #&gt; 
 #&gt; </span><span>                     Pr(prior) Pr(posterior) Inclusion BF
-#&gt; Species                   0.75         1.000     2.02e+55
-#&gt; Petal.Length              0.50         1.000     3.58e+26
-#&gt; Petal.Length:Species      0.25         0.036         0.11
+#&gt; Species                   0.75        1.0000    2.021e+55
+#&gt; Petal.Length              0.50        1.0000    3.575e+26
+#&gt; Petal.Length:Species      0.25        0.0363        0.113
 #&gt; 
 #&gt; * Compared among: </span><span style='color: #00BBBB;'>all models
 #&gt; </span><span>*    Priors odds: </span><span style='color: #00BBBB;'>uniform-equal

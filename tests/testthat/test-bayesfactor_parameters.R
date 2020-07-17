@@ -5,7 +5,7 @@ if (require("rstanarm") &&
 
   context("bayesfactor_parameters")
 
-# bayesfactor_parameters data frame ---------------------------------------
+  # bayesfactor_parameters data frame ---------------------------------------
 
   test_that("bayesfactor_parameters data frame", {
 
@@ -49,7 +49,7 @@ if (require("rstanarm") &&
   })
 
 
-# bayesfactor_parameters RSTANARM -----------------------------------------
+  # bayesfactor_parameters RSTANARM -----------------------------------------
 
   test_that("bayesfactor_parameters RSTANARM", {
     testthat::skip_on_cran()
@@ -62,19 +62,32 @@ if (require("rstanarm") &&
     fit_p <- update(fit, prior_PD = TRUE)
 
     set.seed(333)
+    <<<<<<< HEAD
     BF1 <- bayesfactor_parameters(fit)
 
     BF2 <- bayesfactor_parameters(fit, fit_p)
 
     testthat::expect_equal(log(BF1$BF), log(BF2$BF))
 
+    =======
+      model <- stan_glm(extra ~ group, data = sleep, refresh = 0)
+    bfsd <- bayestestR::bayesfactor_parameters(model)
+    testthat::expect_equal(length(log(bfsd$BF)), 2)
+
+    bfsd <- bayestestR::bayesfactor_parameters(model, null = rope_range(model))
+    testthat::expect_equal(length(log(bfsd$BF)), 2)
+
+    model_p <- update(model, prior_PD = TRUE, refresh = 0)
+    bfsd <- bayestestR::bayesfactor_parameters(model, model_p)
+    testthat::expect_equal(length(log(bfsd$BF)), 2)
+    >>>>>>> 3923961cb9056aadf3b58ec578a4af68e0673275
 
     model_flat <- stan_glm(extra ~ group, data = sleep, prior = NULL, refresh = 0)
     testthat::expect_error(bayesfactor_parameters(model_flat))
   })
 
 
-# bayesfactor_parameters BRMS ---------------------------------------------
+  # bayesfactor_parameters BRMS ---------------------------------------------
 
   if (.runThisTest) {
     test_that("bayesfactor_parameters BRMS", {

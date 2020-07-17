@@ -92,7 +92,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -196,6 +196,9 @@
 <span class='co'># S3 method for numeric</span>
 <span class='fu'>map_estimate</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for bayesQR</span>
+<span class='fu'>map_estimate</span>(<span class='no'>x</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>^<span class='fl'>10</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kernel"</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>map_estimate</span>(
   <span class='no'>x</span>,
@@ -234,7 +237,7 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
     </tr>
     <tr>
       <th>precision</th>
-      <td><p>Number of points of density data. See the <code>n</code> parameter in <a href='https://rdrr.io/r/stats/density.html'>density</a>.</p></td>
+      <td><p>Number of points of density data. See the <code>n</code> parameter in <code>density</code>.</p></td>
     </tr>
     <tr>
       <th>method</th>
@@ -281,7 +284,7 @@ is a model-object, returns a data frame with following columns:</p><ul>
 <span class='no'>posterior</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>10000</span>)
 <span class='fu'>map_estimate</span>(<span class='no'>posterior</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='no'>posterior</span>))
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='no'>posterior</span>))
 <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span>(<span class='kw'>v</span> <span class='kw'>=</span> <span class='fu'>map_estimate</span>(<span class='no'>posterior</span>), <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)

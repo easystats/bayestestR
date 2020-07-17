@@ -104,10 +104,19 @@ rope_range.feis <- rope_range.brmsfit
 rope_range.gee <- rope_range.brmsfit
 
 #' @export
+rope_range.geeglm <- rope_range.brmsfit
+
+#' @export
 rope_range.lme <- rope_range.brmsfit
 
 #' @export
 rope_range.felm <- rope_range.brmsfit
+
+#' @export
+rope_range.fixest <- rope_range.brmsfit
+
+#' @export
+rope_range.gls <- rope_range.brmsfit
 
 #' @export
 rope_range.hurdle <- rope_range.brmsfit

@@ -94,7 +94,7 @@ The bf_* function is an alias of the main function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -243,6 +243,9 @@ smaller than 1/3 indicates substantial evidence in favor of the denominator mode
 (<cite>Wetzels et al. 2011</cite>).
 <br /> <br />
 See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -264,26 +267,26 @@ See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.
 <span class='no'>lm4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>Species</span> * <span class='no'>Petal.Length</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 <span class='fu'>bayesfactor_models</span>(<span class='no'>lm1</span>, <span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
-#&gt; </span><span>  Model                            BF
-#&gt;   [2] Species                1.70e+29
-#&gt;   [3] Species + Petal.Length 5.84e+55
-#&gt;   [4] Species * Petal.Length 2.20e+54
+#&gt; </span><span>  Model                             BF
+#&gt;   [2] Species                1.696e+29
+#&gt;   [3] Species + Petal.Length 5.843e+55
+#&gt;   [4] Species * Petal.Length 2.203e+54
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lm1</span>) <span class='co'># same result</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
-#&gt; </span><span>  Model                            BF
-#&gt;   [1] Species                1.70e+29
-#&gt;   [2] Species + Petal.Length 5.84e+55
-#&gt;   [3] Species * Petal.Length 2.20e+54
+#&gt; </span><span>  Model                             BF
+#&gt;   [1] Species                1.696e+29
+#&gt;   [2] Species + Petal.Length 5.843e+55
+#&gt;   [3] Species * Petal.Length 2.203e+54
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[4] (Intercept only)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='no'>lm1</span>, <span class='no'>lm2</span>, <span class='no'>lm3</span>, <span class='no'>lm4</span>, <span class='kw'>denominator</span> <span class='kw'>=</span> <span class='no'>lm1</span>) <span class='co'># same result</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
-#&gt; </span><span>  Model                            BF
-#&gt;   [2] Species                1.70e+29
-#&gt;   [3] Species + Petal.Length 5.84e+55
-#&gt;   [4] Species * Petal.Length 2.20e+54
+#&gt; </span><span>  Model                             BF
+#&gt;   [2] Species                1.696e+29
+#&gt;   [3] Species + Petal.Length 5.843e+55
+#&gt;   [4] Species * Petal.Length 2.203e+54
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'>
