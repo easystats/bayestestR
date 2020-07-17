@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 # bayestestR 0.7.1
 
 ## Bug fixes
 
 - `bayesfactor_parameters()` works with `R<3.6.0`.
+=======
+# bayestestR 0.8.0
+
+## New functions
+
+- `mediation()`, to compute average direct and average causal mediation effects of multivariate response models (`brmsfit`, `stanmvreg`).
+>>>>>>> master
 
 # bayestestR 0.7.0
 

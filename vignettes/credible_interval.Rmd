@@ -152,7 +152,7 @@ ggplot(mapping = aes(x=x, y=y)) +
   geom_vline(xintercept=si_3$CI_high, color="red", size=1)
 ```
 
-Between the blue lines are values the recived *some* support by the data (this is a BF = 1 SI), which received at least "moderate" support from the data.
+Between the blue lines are values that received *some* support by the data (this is a BF = 1 SI), which received at least "moderate" support from the data.
 
 From the presepctive of the Savage-Dickey Bayes factor, testing against a point null hypothesis for any value within the support interval will yeild a Bayes factor smaller than 1/`BF`. 
 

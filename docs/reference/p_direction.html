@@ -49,7 +49,7 @@
   
 
 <meta property="og:title" content="Probability of Direction (pd) — p_direction" />
-<meta property="og:description" content="Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% (i.e., 0.5 and 1) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Although differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist p-value. In some rare situations, especially when using when using model averaged posteriors (see weighted_posteriors or posterior_average), this value may be lower than 0.5." />
+<meta property="og:description" content="Compute the Probability of Direction (pd, also known as the Maximum Probability of Effect - MPE). It varies between 50% and 100% (i.e., 0.5 and 1) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Although differently expressed, this index is fairly similar (i.e., is strongly correlated) to the frequentist p-value. In some rare situations, especially when using when using model averaged posteriors (see weighted_posteriors or brms::posterior_average), this value may be lower than 0.5." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -92,7 +92,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
       </span>
     </div>
 
@@ -188,7 +188,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Compute the <strong>Probability of Direction</strong> (<strong><em>pd</em></strong>, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% (<em>i.e.</em>, <code>0.5</code> and <code>1</code>) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Although differently expressed, this index is fairly similar (<em>i.e.</em>, is strongly correlated) to the frequentist <strong>p-value</strong>. In some rare situations, especially when using when using model averaged posteriors (see <code><a href='weighted_posteriors.html'>weighted_posteriors</a></code> or <code><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>posterior_average</a></code>), this value may be lower than 0.5.</p>
+    <p>Compute the <strong>Probability of Direction</strong> (<strong><em>pd</em></strong>, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% (<em>i.e.</em>, <code>0.5</code> and <code>1</code>) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Although differently expressed, this index is fairly similar (<em>i.e.</em>, is strongly correlated) to the frequentist <strong>p-value</strong>. In some rare situations, especially when using when using model averaged posteriors (see <code><a href='weighted_posteriors.html'>weighted_posteriors</a></code> or <code><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>brms::posterior_average</a></code>), this value may be lower than 0.5.</p>
     </div>
 
     <pre class="usage"><span class='fu'>p_direction</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -267,7 +267,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Values between 0.5 and 1 corresponding to the probability of direction (pd). In some rare situations, especially when using when using model averaged posteriors (see <code><a href='weighted_posteriors.html'>weighted_posteriors</a></code> or <code><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>posterior_average</a></code>), this value may be lower than 0.5.</p>
+    <p>Values between 0.5 and 1 corresponding to the probability of direction (pd). In some rare situations, especially when using when using model averaged posteriors (see <code>brms::weighted_posteriors</code> or <code><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>brms::posterior_average</a></code>), this value may be lower than 0.5.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
@@ -287,6 +287,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <br /> <br />
 <strong>Limitations:</strong> Limited information favoring the null hypothesis.</p>
 
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. doi: <a href='https://doi.org/10.3389/fpsyg.2019.02767'>10.3389/fpsyg.2019.02767</a></p>
