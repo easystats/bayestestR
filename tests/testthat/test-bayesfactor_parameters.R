@@ -60,27 +60,12 @@ if (require("rstanarm") &&
 
     set.seed(333)
     fit_p <- update(fit, prior_PD = TRUE)
-
-    set.seed(333)
-    <<<<<<< HEAD
-    BF1 <- bayesfactor_parameters(fit)
-
     BF2 <- bayesfactor_parameters(fit, fit_p)
 
-    testthat::expect_equal(log(BF1$BF), log(BF2$BF))
+    set.seed(333)
+    BF1 <- bayesfactor_parameters(fit)
 
-    =======
-      model <- stan_glm(extra ~ group, data = sleep, refresh = 0)
-    bfsd <- bayestestR::bayesfactor_parameters(model)
-    testthat::expect_equal(length(log(bfsd$BF)), 2)
-
-    bfsd <- bayestestR::bayesfactor_parameters(model, null = rope_range(model))
-    testthat::expect_equal(length(log(bfsd$BF)), 2)
-
-    model_p <- update(model, prior_PD = TRUE, refresh = 0)
-    bfsd <- bayestestR::bayesfactor_parameters(model, model_p)
-    testthat::expect_equal(length(log(bfsd$BF)), 2)
-    >>>>>>> 3923961cb9056aadf3b58ec578a4af68e0673275
+    testthat::expect_equal(BF1, BF2)
 
     model_flat <- stan_glm(extra ~ group, data = sleep, prior = NULL, refresh = 0)
     testthat::expect_error(bayesfactor_parameters(model_flat))
