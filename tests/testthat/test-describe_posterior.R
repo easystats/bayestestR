@@ -43,7 +43,7 @@ if (require("rstanarm") && require("brms") && require("insight")) {
       rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
       testthat::expect_equal(dim(rez), c(4, 21))
       rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile", diagnostic = NULL, priors = FALSE)
-      testthat::expect_equal(dim(rez), c(2, 5))
+      testthat::expect_equal(dim(rez), c(2, 4))
 
       # Brms
       library(brms)
