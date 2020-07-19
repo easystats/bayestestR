@@ -124,7 +124,8 @@ effective_sample.MCMCglmm <- function(model, effects = c("fixed", "random", "all
     insight::get_parameters(
       model,
       effects = effects,
-      parameters = parameters
+      parameters = parameters,
+      summary = TRUE
     )
 
   s.fixed <- as.data.frame(summary(model)$solutions)
