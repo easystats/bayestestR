@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -198,7 +198,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(<span class="kw">method</span><span class="kw">=</span><span class="st">"lm"</span>) <span class="co"># This adds a regression line</span></pre></body></html></div>
 <p><img src="example1_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>Now let’s fit a <strong>Bayesian version</strong> of the model by using the <code>stan_glm</code> function in the <code>rstanarm</code> package:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="no">Sepal.Length</span> ~ <span class="no">Petal.Length</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">iris</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu">stan_glm</span>(<span class="no">Sepal.Length</span> ~ <span class="no">Petal.Length</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">iris</span>)</pre></body></html></div>
 <p>You can see the sampling algorithm being run.</p>
 </div>
 <div id="extracting-the-posterior" class="section level3">
@@ -209,12 +209,12 @@
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">posteriors</span>)  <span class="co"># Show the first 6 rows</span></pre></body></html></div>
 <pre><code>&gt;   (Intercept) Petal.Length
-&gt; 1         4.4         0.40
-&gt; 2         4.5         0.37
+&gt; 1         4.4         0.39
+&gt; 2         4.4         0.40
 &gt; 3         4.3         0.41
-&gt; 4         4.4         0.40
-&gt; 5         4.3         0.41
-&gt; 6         4.3         0.42</code></pre>
+&gt; 4         4.3         0.40
+&gt; 5         4.3         0.40
+&gt; 6         4.3         0.41</code></pre>
 <p>As we can see, the parameters take the form of a lengthy dataframe with two columns, corresponding to the <code>intercept</code> and the effect of <code>Petal.Length</code>. These columns contain the <strong>posterior distributions</strong> of these two parameters. In simple terms, the posterior distribution is a set of different plausible values for each parameter.</p>
 <div id="about-posterior-draws" class="section level4">
 <h4 class="hasAnchor">
@@ -227,7 +227,7 @@
 </blockquote>
 <p>First of all, these observations (the rows) are usually referred to as <strong>posterior draws</strong>. The underlying idea is that the Bayesian sampling algorithm (<em>e.g.</em>, <strong>Monte Carlo Markov Chains - MCMC</strong>) will <em>draw</em> from the hidden true posterior distribution. Thus, it is through these posterior draws that we can estimate the underlying true posterior distribution. <strong>Therefore, the more draws you have, the better your estimation of the posterior distribution</strong>. However, increased draws also means longer computation time.</p>
 <p>If we look at the documentation (<code>?sampling</code>) for the rstanarm <code>"sampling"</code> algorithm used by default in the model above, we can see several parameters that influence the number of posterior draws. By default, there are <strong>4</strong> <code>chains</code> (you can see it as distinct sampling runs), that each create <strong>2000</strong> <code>iter</code> (draws). However, only half of these iterations are kept, as half are used for <code>warm-up</code> (the convergence of the algorithm). Thus, the total is <strong><code>4 chains * (2000 iterations - 1000 warm-up) = 4000</code></strong> posterior draws. We can change that, for instance:</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="no">Sepal.Length</span> ~ <span class="no">Petal.Length</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">iris</span>, <span class="kw">chains</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">iter</span> <span class="kw">=</span> <span class="fl">1000</span>, <span class="kw">warmup</span> <span class="kw">=</span> <span class="fl">250</span>)
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu">stan_glm</span>(<span class="no">Sepal.Length</span> ~ <span class="no">Petal.Length</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">iris</span>, <span class="kw">chains</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">iter</span> <span class="kw">=</span> <span class="fl">1000</span>, <span class="kw">warmup</span> <span class="kw">=</span> <span class="fl">250</span>)
 
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw pkg">insight</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/insight/man/get_parameters.html">get_parameters</a></span>(<span class="no">model</span>))  <span class="co"># Size (number of rows)</span></pre></body></html></div>
 <pre><code>[1] 1500</code></pre>
@@ -288,7 +288,7 @@
 <a href="#uncertainty" class="anchor"></a>Uncertainty</h4>
 <p>Now that the have a point-estimate, we have to <strong>describe the uncertainty</strong>. We could compute the range:</p>
 <div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span>(<span class="no">posteriors</span>$<span class="no">Petal.Length</span>)</pre></body></html></div>
-<pre><code>&gt; [1] 0.35 0.48</code></pre>
+<pre><code>&gt; [1] 0.33 0.48</code></pre>
 <p>But does it make sense to include all these extreme values? Probably not. Thus, we will compute a <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>credible interval</strong></a>. Long story short, it’s kind of similar to a frequentist <strong>confidence interval</strong>, but easier to interpret and easier to compute — <em>and it makes more sense</em>.</p>
 <p>We will compute this <strong>credible interval</strong> based on the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis">Highest Density Interval (HDI)</a>. It will give us the range containing the 89% most probable effect values. <strong>Note that we will use 89% CIs instead of 95%</strong> CIs (as in the frequentist framework), as the 89% level gives more <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89">stable results</a> <span class="citation">(Kruschke, 2014)</span> and reminds us about the arbitrarity of such conventions <span class="citation">(McElreath, 2018)</span>.</p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="fu"><a href="../reference/hdi.html">hdi</a></span>(<span class="no">posteriors</span>$<span class="no">Petal.Length</span>, <span class="kw">ci</span><span class="kw">=</span><span class="fl">0.89</span>)</pre></body></html></div>
@@ -322,7 +322,7 @@
 <span class="no">data</span> <span class="kw">&lt;-</span> <span class="no">chickwts</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">feed</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"meatmeal"</span>, <span class="st">"sunflower"</span>))</pre></body></html></div>
 <p>Let’s run another Bayesian regression to predict the <strong>weight</strong> with the <strong>two types of feed type</strong>.</p>
-<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="no">weight</span> ~ <span class="no">feed</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">data</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu">stan_glm</span>(<span class="no">weight</span> ~ <span class="no">feed</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">data</span>)</pre></body></html></div>
 </div>
 <div id="posterior-description" class="section level3">
 <h3 class="hasAnchor">
@@ -334,13 +334,13 @@
 <p><img src="example1_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
 <p>This represents the <strong>posterior distribution of the difference between <code>meatmeal</code> and <code>sunflowers</code></strong>. Seems that the difference is rather <strong>positive</strong> (the values seems concentrated on the right side of 0)… Eating sunflowers makes you more fat (<em>at least, if you’re a chicken</em>). But, <strong>by how much?</strong> Let us compute the <strong>median</strong> and the <strong>CI</strong>:</p>
 <div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span>(<span class="no">posteriors</span>$<span class="no">feedsunflower</span>)</pre></body></html></div>
-<pre><code>&gt; [1] 51</code></pre>
+<pre><code>&gt; [1] 53</code></pre>
 <div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="fu"><a href="../reference/hdi.html">hdi</a></span>(<span class="no">posteriors</span>$<span class="no">feedsunflower</span>)</pre></body></html></div>
 <pre><code>&gt; # Highest Density Interval
 &gt; 
 &gt; 89% HDI       
 &gt; --------------
-&gt; [13.52, 91.37]</code></pre>
+&gt; [11.67, 90.84]</code></pre>
 <p>It makes you fat by around 51 grams (the median). However, the uncertainty is quite high: <strong>there is 89% chance that the difference between the two feed types is between 14 and 91.</strong></p>
 <blockquote>
 <p><strong>Is this effect different from 0?</strong></p>
@@ -363,7 +363,7 @@
 &gt; 
 &gt; inside ROPE
 &gt; -----------
-&gt; 5.00 %</code></pre>
+&gt; 5.28 %</code></pre>
 <p><strong>5% of the 89% CI can be considered as null</strong>. Is that a lot? Based on our <a href="https://easystats.github.io/bayestestR/articles/guidelines.html"><strong>guidelines</strong></a>, yes, it is too much. <strong>Based on this particular definition of ROPE</strong>, we conclude that this effect is not significant (the probability of being negligible is too high).</p>
 <p>Although, to be honest, I have <strong>some doubts about this Prof. Sanders</strong>. I don’t really trust <strong>his definition of ROPE</strong>. Is there a more <strong>objective</strong> way of defining it?</p>
 <div class="figure" style="text-align: center">
@@ -400,7 +400,7 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <pre><code>&gt; [1] 98</code></pre>
 <p>We can conclude that <strong>the effect is positive with a probability of 98%</strong>. We call this index the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>Probability of Direction (pd)</strong></a>. It can, in fact, be computed more easily with the following:</p>
 <div class="sourceCode" id="cb41"><html><body><pre class="r"><span class="fu"><a href="../reference/p_direction.html">p_direction</a></span>(<span class="no">posteriors</span>$<span class="no">feedsunflower</span>)</pre></body></html></div>
-<pre><code>&gt; pd = 98.15%</code></pre>
+<pre><code>&gt; pd = 98.38%</code></pre>
 <p>Interestingly, it so happens that <strong>this index is usually highly correlated with the frequentist <em>p</em>-value</strong>. We could almost roughly infer the corresponding <em>p</em>-value with a simple transformation:</p>
 <div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="no">pd</span> <span class="kw">&lt;-</span> <span class="fl">97.82</span>
 <span class="no">onesided_p</span> <span class="kw">&lt;-</span> <span class="fl">1</span> - <span class="no">pd</span> / <span class="fl">100</span>
@@ -449,8 +449,8 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 &gt; 
 &gt; Parameter     |  Median |             89% CI |    pd |        89% ROPE | % in ROPE |        BF |  Rhat |      ESS
 &gt; -----------------------------------------------------------------------------------------------------------------
-&gt; (Intercept)   | 276.853 | [247.820, 305.534] | 1.000 | [-6.175, 6.175] |         0 | 2.435e+11 | 0.999 | 3536.592
-&gt; feedsunflower |  50.991 | [ 13.516,  91.371] | 0.982 | [-6.175, 6.175] |         0 |     1.575 | 1.000 | 3535.028</code></pre>
+&gt; (Intercept)   | 276.623 | [247.290, 304.532] | 1.000 | [-6.175, 6.175] |         0 | 2.196e+15 | 1.002 | 2793.265
+&gt; feedsunflower |  52.731 | [ 11.675,  90.840] | 0.984 | [-6.175, 6.175] |         0 |     0.806 | 1.000 | 2859.924</code></pre>
 <p><strong>Tada!</strong> There we have it! The <strong>median</strong>, the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE percentage</strong>!</p>
 <p>Understanding and describing posterior distributions is just one aspect of Bayesian modelling… <strong>Are you ready for more?</strong> <a href="https://easystats.github.io/bayestestR/articles/example2_GLM.html"><strong>Click here</strong></a> to see the next example.</p>
 </div>

@@ -99,7 +99,7 @@ see the Bayes factors vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -300,7 +300,7 @@ they should be <em>not flat</em>, and it is preferable that they be <em>informat
 that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects; see example below).</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+    <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
 <h3>Setting the correct <code>prior</code></h3>
 <p>It is important to provide the correct <code>prior</code> for meaningful results.</p><ul>
 <li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>
@@ -345,7 +345,7 @@ that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm
 <span class='co'># ---------------</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
 <span class='fu'><a href='https://rdrr.io/r/stats/contrasts.html'>contrasts</a></span>(<span class='no'>sleep</span>$<span class='no'>group</span>) <span class='kw'>&lt;-</span> <span class='no'>contr.bayes</span> <span class='co'># see vingette</span>
-<span class='no'>stan_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_lmer</a></span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
+<span class='no'>stan_model</span> <span class='kw'>&lt;-</span> <span class='fu'>stan_lmer</span>(<span class='no'>extra</span> ~ <span class='no'>group</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>ID</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>sleep</span>)
 <span class='fu'>si</span>(<span class='no'>stan_model</span>)
 <span class='fu'>si</span>(<span class='no'>stan_model</span>, <span class='kw'>BF</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 

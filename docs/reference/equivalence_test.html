@@ -92,7 +92,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -331,7 +331,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
     <p>There is a <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code>-method with a <code>digits</code>-argument to control
   the amount of digits in the output, and there is a
-  <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>-method</a>
+  <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code>-method</a>
   to visualize the results from the equivalence-test (for models only).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -401,13 +401,13 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; </div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rstanarm</span>)
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rstanarm</span><span class='kw ns'>::</span><span class='fu'>stan_glm</span>(<span class='no'>mpg</span> ~ <span class='no'>wt</span> + <span class='no'>cyl</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mtcars</span>)
 <span class='fu'>equivalence_test</span>(<span class='no'>model</span>)
 <span class='fu'>equivalence_test</span>(<span class='no'>model</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>1</span>))
 
 <span class='co'># plot result</span>
 <span class='no'>test</span> <span class='kw'>&lt;-</span> <span class='fu'>equivalence_test</span>(<span class='no'>model</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>test</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>test</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>emmeans</span>)
 <span class='fu'>equivalence_test</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='no'>model</span>, ~<span class='fl'>1</span>, <span class='st'>"wt"</span>))
