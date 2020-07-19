@@ -27,18 +27,19 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
 
   test_that("si.rstanarm", {
     testthat::skip_on_cran()
-    testthat::skip_on_travis()
-    testthat::skip_on_ci()
 
-    set.seed(333)
     library(rstanarm)
-    contrasts(sleep$group) <- contr.bayes # see vignette
+    contrasts(sleep$group) <- contr.bayes  # See vignette
     stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep, refresh = 0)
 
     set.seed(333)
-    res <- si(stan_model, verbose = FALSE)
-    testthat::expect_equal(res$CI_low, c(-0.013, 0.452), tolerance = 0.02)
-    testthat::expect_equal(res$CI_high, c(3.168,1.818), tolerance = 0.02)
-    testthat::expect_is(res,c("bayestestR_si"))
+    stan_model_p <- update(stan_model, prior_PD = TRUE)
+    res1 <- si(stan_model, stan_model_p, verbose = FALSE)
+
+    set.seed(333)
+    res2 <- si(stan_model, verbose = FALSE)
+
+    testthat::expect_is(res1,c("bayestestR_si"))
+    testthat::expect_equal(res1, res2)
   })
 }

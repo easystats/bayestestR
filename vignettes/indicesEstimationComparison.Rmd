@@ -73,6 +73,7 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(see)
+library(parameters)
 
 df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv")
 ```
@@ -138,19 +139,31 @@ df %>%
 
 We fitted a (frequentist) multiple linear regression to statistically test the the predict the presence or absence of effect with the estimates as well as their interaction with noise and sample size.
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, eval=FALSE}
 df %>%
   select(sample_size, error, true_effect, outcome_type, Coefficient, Median, Mean, MAP) %>%
-  gather(estimate, value, -sample_size, -error, -true_effect, -outcome_type) %>%
+  tidyr::pivot_longer(c(-sample_size, -error, -true_effect, -outcome_type), names_to="estimate") %>%
   glm(true_effect ~ outcome_type / estimate / value, data=., family="binomial") %>%
-  broom::tidy() %>%
-  select(term, estimate, p=p.value) %>%
-  filter(stringr::str_detect(term, 'outcome_type'),
-         stringr::str_detect(term, ':value')) %>%
-  arrange(desc(estimate)) %>% 
+  parameters::parameters(df_method="wald") %>%
+  select(Parameter, Coefficient, p) %>%
+  filter(stringr::str_detect(Parameter, 'outcome_type'),
+         stringr::str_detect(Parameter, ':value')) %>%
+  arrange(desc(Coefficient)) %>% 
   knitr::kable(digits=2) 
 ```
 
+|Parameter                                    | Coefficient|  p|
+|:--------------------------------------------|-----------:|--:|
+|outcome_typelinear:estimateMean:value        |       10.85|  0|
+|outcome_typelinear:estimateMedian:value      |       10.84|  0|
+|outcome_typelinear:estimateMAP:value         |       10.72|  0|
+|outcome_typelinear:estimateCoefficient:value |       10.54|  0|
+|outcome_typebinary:estimateMAP:value         |        4.39|  0|
+|outcome_typebinary:estimateMedian:value      |        4.28|  0|
+|outcome_typebinary:estimateMean:value        |        4.21|  0|
+|outcome_typebinary:estimateCoefficient:value |        3.87|  0|
+
+<!-- REMOVE THIS TABLE ONCE NEW PARAMETERS IS ON CRAN SO IT CAN BE GENERATED ON THE RUN-->
 
 This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist's beta:
 

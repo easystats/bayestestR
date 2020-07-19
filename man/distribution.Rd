@@ -50,8 +50,7 @@ rnorm_perfect(n, mean = 0, sd = 1)
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{n}{number of observations. If \code{length(n) > 1}, the length
-    is taken to be the number required.}
+\item{n}{the number of observations}
 
 \item{mean}{vector of means.}
 

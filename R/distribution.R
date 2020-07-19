@@ -5,6 +5,7 @@
 #' @param type Can be any of the names from base R's \link[stats]{Distributions}, like \code{"cauchy"}, \code{"pois"} or \code{"beta"}.
 #' @param random Generate near-perfect or random (simple wrappers for the base R \code{r*} functions) distributions.
 #' @param ... Arguments passed to or from other methods.
+#' @inheritParams tweedie::rtweedie
 #'
 #' @examples
 #' library(bayestestR)
