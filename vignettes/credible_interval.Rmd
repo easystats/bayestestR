@@ -112,7 +112,7 @@ posterior %>%
   # HDI in blue
   geom_vline(xintercept=ci_hdi$CI_low, color="royalblue", size=3) +
   geom_vline(xintercept=ci_hdi$CI_high, color="royalblue", size=3) +
-  # Quantile in red
+  # ETI in red
   geom_vline(xintercept=ci_eti$CI_low, color="red", size=1) +
   geom_vline(xintercept=ci_eti$CI_high, color="red", size=1)
 ```
