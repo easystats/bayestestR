@@ -76,6 +76,7 @@ Suggests:
 	lme4,
 	logspline,
 	mediation,
+	parameters,
 	performance,
 	rmarkdown,
 	rstan,
