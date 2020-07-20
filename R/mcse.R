@@ -22,6 +22,7 @@
 #' mcse(model)
 #' }
 #' @importFrom insight get_parameters
+#' @importFrom stats setNames
 #' @export
 mcse <- function(model, ...) {
   UseMethod("mcse")
@@ -50,7 +51,7 @@ mcse.brmsfit <- function(model, effects = c("fixed", "random", "all"), component
       parameters = parameters
     )
 
-  .mcse(params, ess$ESS)
+  .mcse(params, stats::setNames(ess$ESS, ess$Parameter))
 }
 
 
@@ -74,7 +75,7 @@ mcse.stanreg <- function(model, effects = c("fixed", "random", "all"), parameter
       parameters = parameters
     )
 
-  .mcse(params, ess$ESS)
+  .mcse(params, stats::setNames(ess$ESS, ess$Parameter))
 }
 
 
@@ -84,11 +85,20 @@ mcse.stanfit <- mcse.stanreg
 
 
 
-#' @importFrom stats sd
+#' @importFrom stats sd na.omit
 #' @keywords internal
 .mcse <- function(params, ess) {
   # get standard deviations from posterior samples
   stddev <- sapply(params, stats::sd)
+
+  # check proper length, and for unequal length, shorten all
+  # objects to common parameters
+  if (length(stddev) != length(ess)) {
+    common <- stats::na.omit(match(names(stddev), names(ess)))
+    stddev <- stddev[common]
+    ess <- ess[common]
+    params <- params[common]
+  }
 
   # compute mcse
   data.frame(
