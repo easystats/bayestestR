@@ -129,7 +129,6 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE", "khat") # Add MCSE
   } else {
-    diagnostic <- c(diagnostic)
     if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
   }
 
