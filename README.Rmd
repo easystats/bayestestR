@@ -114,7 +114,7 @@ In the Bayesian framework, parameters are estimated in a probabilistic fashion a
 
 ```{r message=FALSE, warning=FALSE}
 describe_posterior(
-  rnorm(1000),
+  rnorm(10000),
   centrality = "median",
   test = c("p_direction", "p_significance")
 )
@@ -204,7 +204,7 @@ Unlike equal-tailed intervals (see [`eti()`](https://easystats.github.io/bayeste
 By default, `hdi()` returns the 89\% intervals (`ci = 0.89`), deemed to be more stable than, for instance, 95\% intervals. An effective sample size of at least 10.000 is recommended if 95\% intervals should be computed [@kruschke2015doing]. Moreover, 89 indicates the arbitrariness of interval limits - its only remarkable property is being the highest prime number that does not exceed the already unstable 95\% threshold [@mcelreath2018statistical].
 
 ```{r message=FALSE, warning=FALSE}
-posterior <- distribution_chisquared(100, 3)
+posterior <- distribution_chisquared(10000, 4)
 
 hdi(posterior, ci = .89)
 
@@ -212,7 +212,7 @@ eti(posterior, ci = .89)
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-posterior <- distribution_chisquared(100, 3)
+posterior <- distribution_chisquared(10000, 4)
 
 dat <- as.data.frame(density(posterior))
 
@@ -257,12 +257,12 @@ p <- see::plots(p1, p2, tags = TRUE)
 **Relationship with the p-value**: In most cases, it seems that the *pd* corresponds to the frequentist one-sided *p*-value through the formula `p-value = (1-pd/100)` and to the two-sided *p*-value (the most commonly reported) through the formula `p-value = 2*(1-pd/100)`. Thus, a `pd` of `95%`, `97.5%` `99.5%` and `99.95%` corresponds approximately to a two-sided *p*-value of respectively `.1`, `.05`, `.01` and `.001`. See the [*reporting guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
 
 ```{r message=FALSE, warning=FALSE}
-posterior <- distribution_normal(100, 0.4, 0.2)
+posterior <- distribution_normal(10000, 0.4, 0.2)
 p_direction(posterior)
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-posterior <- distribution_normal(100, 0.4, 0.2)
+posterior <- distribution_normal(10000, 0.4, 0.2)
 posterior %>% 
   density() %>%
   as.data.frame() %>% 
@@ -291,12 +291,12 @@ Kruschke suggests that such null value could be set, by default, to the -0.1 to 
 Kruschke suggests using the proportion of the 95\% (or 90\%, considered more stable) HDI that falls within the ROPE as an index for "null-hypothesis" testing (as understood under the Bayesian framework, see [equivalence_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
 ```{r message=FALSE, warning=FALSE}
-posterior <- distribution_normal(100, 0.4, 0.2)
+posterior <- distribution_normal(10000, 0.4, 0.2)
 rope(posterior, range = c(-0.1, 0.1))
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-posterior <- distribution_normal(100, 0.4, 0.2)
+posterior <- distribution_normal(10000, 0.4, 0.2)
 posterior %>% 
   density() %>%
   as.data.frame() %>% 
@@ -325,17 +325,17 @@ When the null is an interval, the Bayes factor is computed by comparing the prio
 
 
 ```{r message=FALSE, warning=FALSE}
-prior <- rnorm(1000, mean = 0, sd = 1)
-posterior <- rnorm(1000, mean = 1, sd = 0.7)
+prior <- distribution_normal(10000, mean = 0, sd = 1)
+posterior <- distribution_normal(10000, mean = 1, sd = 0.7)
 
 bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
-posterior <- distribution_normal(1000, mean = 1, sd = 0.7) %>% 
+posterior <- distribution_normal(10000, mean = 1, sd = 0.7) %>% 
   density() %>%
   as.data.frame()
-prior <- distribution_normal(1000, mean = 0, sd = 1) %>% 
+prior <- distribution_normal(10000, mean = 0, sd = 1) %>% 
   density() %>%
   as.data.frame()
 
