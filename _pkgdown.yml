@@ -54,6 +54,7 @@ reference:
   - sensitivity_to_prior
   - check_prior
   - simulate_prior
+  - unupdate
   - effective_sample
   - mcse
 

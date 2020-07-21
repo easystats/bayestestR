@@ -1,4 +1,10 @@
-# bayestestR 0.8.0
+# bayestestR 0.7.x
+
+## New functions
+
+- `unupdate()`, a utility function to get Bayesian models un-fitted from the data, representing the priors only.
+
+# bayestestR 0.7.2
 
 ## New functions
 

@@ -50,7 +50,8 @@ rnorm_perfect(n, mean = 0, sd = 1)
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{n}{the number of observations}
+\item{n}{number of observations. If \code{length(n) > 1}, the length
+    is taken to be the number required.}
 
 \item{mean}{vector of means.}
 
@@ -82,15 +83,6 @@ rnorm_perfect(n, mean = 0, sd = 1)
 \item{shape1}{non-negative parameters of the Beta distribution.}
 
 \item{shape2}{non-negative parameters of the Beta distribution.}
-
-\item{xi}{the value of \eqn{\xi}{xi} such that the variance is 
-	\eqn{\mbox{var}[Y]=\phi\mu^{\xi}}{var(Y) = phi * mu^xi}}
-
-\item{mu}{the mean}
-
-\item{phi}{the dispersion}
-
-\item{power}{a synonym for \eqn{\xi}{xi}}
 
 \item{shape}{shape and scale parameters.  Must be positive,
     \code{scale} strictly.}

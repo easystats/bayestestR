@@ -57,7 +57,7 @@ check_prior.brmsfit <- function(model, method = "gelman", simulate_priors = TRUE
         parameters = parameters
       )
   } else {
-    priors <- .update_to_priors(model, verbose = FALSE)
+    priors <- unupdate(model, verbose = FALSE)
     priors <-
       insight::get_parameters(
         priors,

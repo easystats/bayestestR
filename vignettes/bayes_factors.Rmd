@@ -175,7 +175,7 @@ $$
 
 ```{r rstanarm_fit, echo=FALSE}
 
-model_prior <- bayestestR:::.update_to_priors.stanreg(model)
+model_prior <- unupdate(model)
 posterior <- insight::get_parameters(model)$group2
 prior <- insight::get_parameters(model_prior)$group2
 
@@ -471,7 +471,7 @@ botanist_BFs
 
 ```{r, echo=FALSE}
 
-model_prior <- bayestestR:::.update_to_priors.stanreg(iris_model)
+model_prior <- unupdate(iris_model)
 
 botanist_BFs <- bayesfactor_restricted(iris_model, prior = model_prior, 
                                        hypothesis = botanist_hypotheses)

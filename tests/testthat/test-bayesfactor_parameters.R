@@ -59,7 +59,7 @@ if (require("rstanarm") &&
     fit <- stan_glm(mpg ~ ., data = mtcars, refresh = 0)
 
     set.seed(333)
-    fit_p <- update(fit, prior_PD = TRUE)
+    fit_p <- unupdate(fit)
     BF2 <- bayesfactor_parameters(fit, fit_p)
 
     set.seed(333)
@@ -81,7 +81,7 @@ if (require("rstanarm") &&
     brms_mixed_6 <- insight::download_model("brms_mixed_6")
 
     set.seed(222)
-    brms_mixed_6_p <- update(brms_mixed_6, sample_prior = "only", refresh = 0)
+    brms_mixed_6_p <- unupdate(brms_mixed_6)
     bfsd1 <- bayesfactor_parameters(brms_mixed_6, brms_mixed_6_p, effects = "fixed")
 
     set.seed(222)
