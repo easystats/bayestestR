@@ -1,4 +1,10 @@
-# bayestestR 0.8.0
+# bayestestR 0.7.3
+
+## Bug fixes
+
+* Fixed issue in `describe_posterior()` for multiple-response models.
+
+# bayestestR 0.7.2
 
 ## New functions
 
