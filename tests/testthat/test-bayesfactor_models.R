@@ -39,7 +39,7 @@ if (require("rstanarm") &&
   })
 
   test_that("bayesfactor_models BIC (unsupported / diff nobs)", {
-    testthat::skip("Skipping rigor bayesfactor_models BIC testing")
+    testthat::skip_on_cran()
     set.seed(444)
 
     fit1 <- lm(Sepal.Length ~ Sepal.Width + Petal.Length, iris)
