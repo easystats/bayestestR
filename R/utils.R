@@ -145,7 +145,7 @@
   temp$.roworder <- 1:nrow(temp)
   out <- merge(x = temp, y = cleaned_parameters, by = merge_by, all.x = TRUE)
   # this here is required for multiple response models...
-  if (all(is.na(out$Effects)) && all(is.na(out$Component))) {
+  if (all(is.na(out$Effects)) || all(is.na(out$Component))) {
     out <- out[!duplicated(out$.roworder), ]
   } else {
     out <- out[!is.na(out$Effects) & !is.na(out$Component) & !duplicated(out$.roworder), ]
