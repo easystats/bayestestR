@@ -94,7 +94,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -335,7 +335,7 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
 <span class='no'>b1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>job_seek</span> ~ <span class='no'>treat</span> + <span class='no'>econ_hard</span> + <span class='no'>sex</span> + <span class='no'>age</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>jobs</span>)
 <span class='no'>b2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>depress2</span> ~ <span class='no'>treat</span> + <span class='no'>job_seek</span> + <span class='no'>econ_hard</span> + <span class='no'>sex</span> + <span class='no'>age</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>jobs</span>)
 <span class='co'># mediation analysis, for comparison with Stan models</span>
-<span class='no'>m1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mediation/man/mediate.html'>mediate</a></span>(<span class='no'>b1</span>, <span class='no'>b2</span>, <span class='kw'>sims</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>treat</span> <span class='kw'>=</span> <span class='st'>"treat"</span>, <span class='kw'>mediator</span> <span class='kw'>=</span> <span class='st'>"job_seek"</span>)
+<span class='no'>m1</span> <span class='kw'>&lt;-</span> <span class='fu'>mediate</span>(<span class='no'>b1</span>, <span class='no'>b2</span>, <span class='kw'>sims</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>treat</span> <span class='kw'>=</span> <span class='st'>"treat"</span>, <span class='kw'>mediator</span> <span class='kw'>=</span> <span class='st'>"job_seek"</span>)
 
 <span class='co'># Fit Bayesian mediation model in brms</span>
 <span class='no'>f1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span>(<span class='no'>job_seek</span> ~ <span class='no'>treat</span> + <span class='no'>econ_hard</span> + <span class='no'>sex</span> + <span class='no'>age</span>)
@@ -343,7 +343,7 @@ to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code
 <span class='no'>m2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='no'>f1</span> + <span class='no'>f2</span> + <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula-helpers.html'>set_rescor</a></span>(<span class='fl'>FALSE</span>), <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>jobs</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>refresh</span> <span class='kw'>=</span> <span class='fl'>0</span>)
 
 <span class='co'># Fit Bayesian mediation model in rstanarm</span>
-<span class='no'>m3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_mvmer.html'>stan_mvmer</a></span>(
+<span class='no'>m3</span> <span class='kw'>&lt;-</span> <span class='fu'>stan_mvmer</span>(
   <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>job_seek</span> ~ <span class='no'>treat</span> + <span class='no'>econ_hard</span> + <span class='no'>sex</span> + <span class='no'>age</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>occp</span>),
        <span class='no'>depress2</span> ~ <span class='no'>treat</span> + <span class='no'>job_seek</span> + <span class='no'>econ_hard</span> + <span class='no'>sex</span> + <span class='no'>age</span> + (<span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>occp</span>)),
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>jobs</span>,

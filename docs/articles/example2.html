@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -226,7 +226,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <p>Such “pizza plots” can be directly created through the <a href="https://github.com/easystats/see"><code>see</code></a> visualisation companion package for easystats (you can install it by running <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("see")</a></code>):</p>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">see</span>)
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="fu"><a href="../reference/bayesfactor.html">bayesfactor</a></span>(<span class="no">result</span>)) +
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="fu"><a href="../reference/bayesfactor.html">bayesfactor</a></span>(<span class="no">result</span>)) +
   <span class="fu"><a href="https://rdrr.io/pkg/see/man/scale_color_pizza.html">scale_fill_pizza</a></span>()</pre></body></html></div>
 <p><img src="example2_files/figure-html/unnamed-chunk-8-1.png" width="1093.75"></p>
 <p>So, after seeing this pizza, how much would you be suprised by the outcome of a blinded poke?</p>
@@ -280,7 +280,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <a href="#fit-the-model" class="anchor"></a>Fit the model</h3>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">rstanarm</span>)
 
-<span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="no">Species</span> ~ <span class="no">Sepal.Width</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">data</span>, <span class="kw">family</span> <span class="kw">=</span> <span class="st">"binomial"</span>)</pre></body></html></div>
+<span class="no">model</span> <span class="kw">&lt;-</span> <span class="fu">stan_glm</span>(<span class="no">Species</span> ~ <span class="no">Sepal.Width</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">data</span>, <span class="kw">family</span> <span class="kw">=</span> <span class="st">"binomial"</span>)</pre></body></html></div>
 </div>
 <div id="visualise-the-model" class="section level3">
 <h3 class="hasAnchor">
@@ -299,14 +299,14 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 &gt; 
 &gt;   ELPD | ELPD_SE |  LOOIC | LOOIC_SE |   WAIC |   R2 | RMSE | LOGLOSS | SCORE_LOG | SCORE_SPHERICAL
 &gt; ---------------------------------------------------------------------------------------------------
-&gt; -66.32 |    3.06 | 132.64 |     6.13 | 132.63 | 0.10 | 0.48 |         |   -105.79 |            0.01</code></pre>
+&gt; -66.34 |    3.06 | 132.68 |     6.11 | 132.67 | 0.10 | 0.48 |         |   -107.76 |            0.01</code></pre>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(<span class="no">model</span>, <span class="kw">test</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span>))</pre></body></html></div>
 <pre><code>&gt; # Description of Posterior Distributions
 &gt; 
-&gt; Parameter   | Median |           89% CI |    pd |        89% ROPE | % in ROPE |    BF |  Rhat |      ESS
-&gt; --------------------------------------------------------------------------------------------------------
-&gt; (Intercept) | -6.116 | [-9.590, -3.020] | 0.999 | [-0.181, 0.181] |         0 | 8.498 | 0.999 | 2689.455
-&gt; Sepal.Width |  2.131 | [ 0.986,  3.262] | 0.999 | [-0.181, 0.181] |         0 | 9.132 | 0.999 | 2712.428</code></pre>
+&gt; Parameter   | Median |           89% CI |    pd |        89% ROPE | % in ROPE |     BF |  Rhat |      ESS
+&gt; ---------------------------------------------------------------------------------------------------------
+&gt; (Intercept) | -6.120 | [-9.232, -2.702] | 0.999 | [-0.181, 0.181] |         0 | 11.835 | 1.000 | 2936.697
+&gt; Sepal.Width |  2.141 | [ 0.988,  3.239] | 1.000 | [-0.181, 0.181] |         0 | 15.112 | 1.000 | 2982.859</code></pre>
 </div>
 <div id="visualise-the-indices" class="section level3">
 <h3 class="hasAnchor">

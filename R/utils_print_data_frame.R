@@ -22,6 +22,8 @@ print_data_frame <- function(x, digits) {
       "conditional" = ,
       "fixed_conditional" = ,
       "fixed" = "# Fixed Effects (Conditional Model)",
+      "fixed_sigma" = "# Sigma (fixed effects)",
+      "sigma" = "# Sigma (fixed effects)",
       "zi" = ,
       "zero_inflated" = ,
       "fixed_zero_inflated" = ,

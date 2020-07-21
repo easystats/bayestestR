@@ -120,7 +120,7 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects
                                      flatten = TRUE)
 
   # If no diagnostic
-  if (is.null(diagnostic)){
+  if (is.null(diagnostic)) {
     return(data.frame("Parameter" = params))
   }
 
@@ -129,7 +129,6 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE", "khat") # Add MCSE
   } else {
-    diagnostic <- c(diagnostic)
     if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
   }
 
@@ -166,10 +165,10 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects
 
   # Find parameters
   effects <- match.arg(effects)
-  params <- insight::find_parameters(posteriors, effects = effects, parameters = parameters, flatten=TRUE)
+  params <- insight::find_parameters(posteriors, effects = effects, parameters = parameters, flatten = TRUE)
 
   # If no diagnostic
-  if (is.null(diagnostic)){
+  if (is.null(diagnostic)) {
     return(data.frame("Parameter" = params))
   }
 

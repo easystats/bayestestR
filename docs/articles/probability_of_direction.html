@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
 
       
 
-      </header><script src="probability_of_direction_files/header-attrs-2.3/header-attrs.js"></script><script src="probability_of_direction_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="probability_of_direction_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Probability of Direction (pd)</h1>
@@ -267,7 +267,7 @@ Correlation between the frequentist p-value and the probability of direction (pd
 <a href="#can-the-pd-be-100" class="anchor"></a>Can the pd be 100%?</h2>
 <p><code>p = 0.000</code> is coined as one of the term to avoid when reporting results <span class="citation">(Lilienfeld et al., 2015)</span>, even if often displayed by statistical software. The rationale is that for every probability distribution, there is no value with a probability of exactly 0. There is always some infinitesimal probability associated with each data point, and the <code>p = 0.000</code> returned by software is due to approximations related, among other, to finite memory hardware.</p>
 <p>One could apply this rationale for the <em>pd</em>: since all data points have a non-null probability density, then the <em>pd</em> (a particular portion of the probability density) can <em>never</em> be 100%. While this is an entirely valid point, people using the <em>direct</em> method might argue that their <em>pd</em> is based on the posterior draws, rather than on the theoretical, hidden, true posterior distribution (which is only approximated by the posterior draws). These posterior draws represent a finite sample for which <code>pd = 100%</code> is a valid statement.</p>
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references">
 <div id="ref-lilienfeld2015fifty">
 <p>Lilienfeld, S. O., Sauvigné, K. C., Lynn, S. J., Cautin, R. L., Latzman, R. D., &amp; Waldman, I. D. (2015). Fifty psychological and psychiatric terms to avoid: A list of inaccurate, misleading, misused, ambiguous, and logically confused words and phrases. <em>Frontiers in Psychology</em>, <em>6</em>, 1100. <a href="https://doi.org/10.3389/fpsyg.2015.01100">https://doi.org/10.3389/fpsyg.2015.01100</a></p>
 </div>

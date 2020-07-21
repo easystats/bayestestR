@@ -45,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.2</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
 
       
 
-      </header><script src="indicesEstimationComparison_files/header-attrs-2.3/header-attrs.js"></script><script src="indicesEstimationComparison_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="indicesEstimationComparison_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>In-Depth 1: Comparison of Point-Estimates</h1>
@@ -183,6 +183,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyr</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">see</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">parameters</span>)
 
 <span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span>(<span class="st">"https://raw.github.com/easystats/circus/master/data/bayesSim_study1.csv"</span>)</pre></body></html></div>
 </div>
@@ -243,64 +244,64 @@
 <p>We fitted a (frequentist) multiple linear regression to statistically test the the predict the presence or absence of effect with the estimates as well as their interaction with noise and sample size.</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">df</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">sample_size</span>, <span class="no">error</span>, <span class="no">true_effect</span>, <span class="no">outcome_type</span>, <span class="no">Coefficient</span>, <span class="no">Median</span>, <span class="no">Mean</span>, <span class="no">MAP</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span>(<span class="no">estimate</span>, <span class="no">value</span>, -<span class="no">sample_size</span>, -<span class="no">error</span>, -<span class="no">true_effect</span>, -<span class="no">outcome_type</span>) <span class="kw">%&gt;%</span>
+  <span class="kw pkg">tidyr</span><span class="kw ns">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="no">sample_size</span>, -<span class="no">error</span>, -<span class="no">true_effect</span>, -<span class="no">outcome_type</span>), <span class="kw">names_to</span><span class="kw">=</span><span class="st">"estimate"</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="no">true_effect</span> ~ <span class="no">outcome_type</span> / <span class="no">estimate</span> / <span class="no">value</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">.</span>, <span class="kw">family</span><span class="kw">=</span><span class="st">"binomial"</span>) <span class="kw">%&gt;%</span>
-  <span class="kw pkg">broom</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/broom/man/reexports.html">tidy</a></span>() <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">term</span>, <span class="no">estimate</span>, <span class="kw">p</span><span class="kw">=</span><span class="no">p.value</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw pkg">stringr</span><span class="kw ns">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(<span class="no">term</span>, <span class="st">'outcome_type'</span>),
-         <span class="kw pkg">stringr</span><span class="kw ns">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(<span class="no">term</span>, <span class="st">':value'</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="no">estimate</span>)) <span class="kw">%&gt;%</span>
+  <span class="kw pkg">parameters</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/parameters/man/model_parameters.html">parameters</a></span>(<span class="kw">df_method</span><span class="kw">=</span><span class="st">"wald"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">Parameter</span>, <span class="no">Coefficient</span>, <span class="no">p</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw pkg">stringr</span><span class="kw ns">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(<span class="no">Parameter</span>, <span class="st">'outcome_type'</span>),
+         <span class="kw pkg">stringr</span><span class="kw ns">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span>(<span class="no">Parameter</span>, <span class="st">':value'</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span>(<span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span>(<span class="no">Coefficient</span>)) <span class="kw">%&gt;%</span>
   <span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw">digits</span><span class="kw">=</span><span class="fl">2</span>)</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">term</th>
-<th align="right">estimate</th>
+<th align="left">Parameter</th>
+<th align="right">Coefficient</th>
 <th align="right">p</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">outcome_typelinear:estimateMean:value</td>
-<td align="right">10.8</td>
+<td align="right">10.85</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">outcome_typelinear:estimateMedian:value</td>
-<td align="right">10.8</td>
+<td align="right">10.84</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">outcome_typelinear:estimateMAP:value</td>
-<td align="right">10.7</td>
+<td align="right">10.72</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">outcome_typelinear:estimateCoefficient:value</td>
-<td align="right">10.5</td>
+<td align="right">10.54</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">outcome_typebinary:estimateMAP:value</td>
-<td align="right">4.4</td>
+<td align="right">4.39</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">outcome_typebinary:estimateMedian:value</td>
-<td align="right">4.3</td>
+<td align="right">4.28</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">outcome_typebinary:estimateMean:value</td>
-<td align="right">4.2</td>
+<td align="right">4.21</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">outcome_typebinary:estimateCoefficient:value</td>
-<td align="right">3.9</td>
+<td align="right">3.87</td>
 <td align="right">0</td>
 </tr>
 </tbody>
 </table>
-<p>This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist’s beta:</p>
+<!-- REMOVE THIS TABLE ONCE NEW PARAMETERS IS ON CRAN SO IT CAN BE GENERATED ON THE RUN--><p>This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist’s beta:</p>
 <ul>
 <li>For linear models, the <strong>Mean</strong> was the better predictor, closely followed by the <strong>Median</strong>, the <strong>MAP</strong> and the frequentist <strong>Coefficient</strong>.</li>
 <li>For logistic models, the <strong>MAP</strong> was the better predictor, followed by the <strong>Median</strong>, the <strong>Mean</strong> and, behind, the frequentist <strong>Coefficient</strong>.</li>
