@@ -1,5 +1,5 @@
-.runThisTest <- Sys.getenv("RunAllinsightTests") == "yes"
-if (.runThisTest || Sys.getenv("USER") == "travis") {
+.runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
+if (.runThisTest) {
   if (requireNamespace("rstanarm", quietly = TRUE)) {
     test_that("rstanarm", {
       testthat::skip_on_cran()

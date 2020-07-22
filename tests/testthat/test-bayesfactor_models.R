@@ -2,7 +2,6 @@ if (require("rstanarm") &&
     require("BayesFactor") &&
     require("testthat") &&
     require("brms")) {
-  context("bayesfactor_models + bayesfactor_inclusion")
 
   # bayesfactor_models BIC --------------------------------------------------
 

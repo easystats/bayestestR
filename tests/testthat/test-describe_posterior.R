@@ -1,5 +1,4 @@
 if (require("rstanarm") && require("brms") && require("insight")) {
-  context("describe_posterior")
 
   test_that("describe_posterior", {
     set.seed(333)
@@ -27,8 +26,8 @@ if (require("rstanarm") && require("brms") && require("insight")) {
   })
 
 
-  .runThisTest <- Sys.getenv("RunAllinsightTests") == "yes"
-  if (.runThisTest || Sys.getenv("USER") == "travis") {
+  .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
+  if (.runThisTest) {
     test_that("describe_posterior", {
       set.seed(333)
       # Rstanarm
