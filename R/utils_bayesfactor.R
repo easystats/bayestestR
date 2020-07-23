@@ -1,91 +1,4 @@
 
-# update_to_priors -------------------------------------------------------
-
-#' @keywords internal
-.update_to_priors <- function(model, verbose = TRUE) {
-  UseMethod(".update_to_priors")
-}
-
-
-
-#' @keywords internal
-#' @importFrom stats update getCall
-.update_to_priors.stanreg <- function(model, verbose = TRUE) {
-  if (!requireNamespace("rstanarm")) {
-    stop("Package \"rstanarm\" needed for this function to work. Please install it.")
-  }
-
-  prior_PD <- stats::getCall(model)$prior_PD
-  if (!is.null(prior_PD) && isTRUE(eval(parse(text = prior_PD)))) {
-    return(model)
-  }
-
-  if (verbose) {
-    message("Computation of Bayes factors: sampling priors, please wait...")
-  }
-
-  prior_dists <- sapply(rstanarm::prior_summary(model), `[[`, "dist")
-  if (anyNA(prior_dists)) {
-    stop(
-      "Cannot compute Bayes factors with flat priors (such as when priors are ",
-      "set to 'NULL' in a 'stanreg' model), as Bayes factors inform about the raltive ",
-      "likelihood of two 'hypotheses', and flat priors provide no likelihood.\n",
-      "See '?bayesfactor_parameters' for more information.\n",
-      call. = FALSE
-    )
-  }
-
-  model_prior <- suppressWarnings(
-    stats::update(model, prior_PD = TRUE, refresh = 0)
-  )
-
-  model_prior
-}
-
-
-
-#' @keywords internal
-#' @importFrom stats update
-#' @importFrom utils capture.output
-#' @importFrom methods is
-.update_to_priors.brmsfit <- function(model, verbose = TRUE) {
-  if (!requireNamespace("brms")) {
-    stop("Package \"brms\" needed for this function to work. Please install it.")
-  }
-
-  if (isTRUE(attr(model$prior, "sample_prior") == "only")) {
-    return(model)
-  }
-
-  if (verbose) {
-    message("Computation of Bayes factors: sampling priors, please wait...")
-  }
-
-  utils::capture.output(
-    model_prior <- try(suppressMessages(suppressWarnings(
-      stats::update(model, sample_prior = "only", refresh = 0)
-    )), silent = TRUE)
-  )
-
-  if (is(model_prior, "try-error")) {
-    if (grepl("proper priors", model_prior)) {
-      stop(
-        "Cannot compute Bayes factors with flat priors (such as the default ",
-        "priors for fixed-effects in a 'brmsfit' model), as Bayes factors inform about ",
-        "the raltive likelihood of two 'hypotheses', and flat priors provide no ",
-        "likelihood.\n",
-        "See '?bayesfactor_parameters' for more information.\n",
-        call. = FALSE
-      )
-    } else {
-      stop(model_prior)
-    }
-  }
-
-  model_prior
-}
-
-
 # clean priors and posteriors ---------------------------------------------
 
 #' @keywords internal
@@ -104,7 +17,18 @@
     prior <- posterior
   }
 
-  prior <- .update_to_priors(prior, verbose = verbose)
+
+  prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
+  if (is(prior, "try-error")) {
+    if (grepl("flat priors", prior)) {
+      prior <- paste0(prior, "Could not therefore compute Bayes factors, as these inform about ",
+                      "the raltive likelihood of two 'hypotheses', and flat priors provide no ",
+                      "likelihood.\n",
+                      "See '?bayesfactor_parameters' for more information.\n")
+    }
+    stop(prior, call. = FALSE)
+  }
+
   prior <- insight::get_parameters(prior, effects = effects, component = component, ...)
   posterior <- insight::get_parameters(posterior, effects = effects, component = component, ...)
 
@@ -130,7 +54,16 @@
       "Please provide the original model to get meaningful results."
     )
   } else if (!inherits(prior, "emmGrid")) { # then is it a model
-    prior <- .update_to_priors(prior, verbose = verbose)
+    prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
+    if (is(prior, "try-error")) {
+      if (grepl("flat priors", prior)) {
+        prior <- paste0(prior, "Could not therefore compute Bayes factors, as these inform about ",
+                        "the raltive likelihood of two 'hypotheses', and flat priors provide no ",
+                        "likelihood.\n",
+                        "See '?bayesfactor_parameters' for more information.\n")
+      }
+      stop(prior, call. = FALSE)
+    }
     prior <- emmeans::ref_grid(prior)
     prior <- prior@post.beta
 

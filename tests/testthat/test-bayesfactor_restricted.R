@@ -48,7 +48,7 @@ if (require("rstanarm") &&
     )
 
     set.seed(444)
-    fit_p <- update(fit_stan, prior_PD = TRUE)
+    fit_p <- unupdate(fit_stan)
     bfr1 <- bayesfactor_restricted(fit_stan, prior = fit_p, hypothesis = hyps)
 
     set.seed(444)

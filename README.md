@@ -131,12 +131,15 @@ cited below at once.
 
 ``` r
 describe_posterior(
-  rnorm(1000),
+  rnorm(10000),
   centrality = "median",
   test = c("p_direction", "p_significance")
 )
-##   Parameter Median CI CI_low CI_high   pd   ps
-## 1 Posterior  0.042 89   -1.6     1.6 0.52 0.47
+## # Description of Posterior Distributions
+## 
+## Parameter | Median |          89% CI |    pd |    ps
+## ----------------------------------------------------
+## Posterior | -0.009 | [-1.574, 1.608] | 0.502 | 0.467
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -170,39 +173,39 @@ describe_posterior(
     ## 
     ## # Fixed Effects (Conditional Model)
     ## 
-    ## Parameter | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat
-    ## ------------------------------------------------------------------------------------------
-    ## Intercept |  1.319 |  1.186 |  1.450 | 89 |  0.049 |   2.275 | 0.940 | 0.920 |  78 | 1.005
-    ## child     | -1.162 | -1.162 | -1.175 | 89 | -1.320 |  -0.980 | 1.000 | 1.000 | 172 | 0.996
-    ## camper    |  0.727 |  0.731 |  0.737 | 89 |  0.587 |   0.858 | 1.000 | 1.000 | 233 | 0.996
+    ## Parameter | Median |   Mean |    MAP |           89% CI |    pd |    ps |  Rhat |     ESS
+    ## -----------------------------------------------------------------------------------------
+    ## Intercept |  1.319 |  1.186 |  1.450 | [ 0.049,  2.275] | 0.940 | 0.920 | 1.005 |  78.167
+    ## child     | -1.162 | -1.162 | -1.175 | [-1.320, -0.980] | 1.000 | 1.000 | 0.996 | 171.633
+    ## camper    |  0.727 |  0.731 |  0.737 | [ 0.587,  0.858] | 1.000 | 1.000 | 0.996 | 232.866
     ## 
     ## # Fixed Effects (Zero-Inflated Model)
     ## 
-    ## Parameter | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat
-    ## ------------------------------------------------------------------------------------------
-    ## Intercept | -0.778 | -0.731 | -0.890 | 89 | -1.893 |   0.218 | 0.876 | 0.840 |  92 | 1.004
-    ## child     |  1.888 |  1.882 |  1.906 | 89 |  1.302 |   2.304 | 1.000 | 1.000 |  72 | 1.015
-    ## camper    | -0.840 | -0.838 | -0.778 | 89 | -1.337 |  -0.231 | 0.992 | 0.988 | 182 | 0.998
+    ## Parameter | Median |   Mean |    MAP |           89% CI |    pd |    ps |  Rhat |     ESS
+    ## -----------------------------------------------------------------------------------------
+    ## Intercept | -0.778 | -0.731 | -0.890 | [-1.893,  0.218] | 0.876 | 0.840 | 1.004 |  92.075
+    ## child     |  1.888 |  1.882 |  1.906 | [ 1.302,  2.304] | 1.000 | 1.000 | 1.015 |  72.077
+    ## camper    | -0.840 | -0.838 | -0.778 | [-1.337, -0.231] | 0.992 | 0.988 | 0.998 | 182.409
     ## 
     ## # Random Effects (Conditional Model)
     ## 
-    ## Parameter               | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat
-    ## --------------------------------------------------------------------------------------------------------
-    ## persons 1               | -1.315 | -1.233 | -1.397 | 89 | -2.555 |  -0.031 | 0.940 | 0.924 |  80 | 1.004
-    ## persons 2               | -0.380 | -0.264 | -0.542 | 89 | -1.451 |   1.008 | 0.660 | 0.632 |  78 | 1.006
-    ## persons 3               |  0.307 |  0.438 |  0.136 | 89 | -0.728 |   1.588 | 0.708 | 0.644 |  77 | 1.003
-    ## persons 4               |  1.207 |  1.331 |  1.030 | 89 |  0.290 |   2.537 | 0.960 | 0.960 |  78 | 1.004
-    ## SD persons_ (Intercept) |  1.404 |  1.676 |  1.093 | 89 |  0.613 |   3.104 | 1.000 | 1.000 |  47 | 0.998
+    ## Parameter              | Median |   Mean |    MAP |           89% CI |    pd |    ps |  Rhat |    ESS
+    ## -----------------------------------------------------------------------------------------------------
+    ## persons 1              | -1.315 | -1.233 | -1.397 | [-2.555, -0.031] | 0.940 | 0.924 | 1.004 | 80.071
+    ## persons 2              | -0.380 | -0.264 | -0.542 | [-1.451,  1.008] | 0.660 | 0.632 | 1.006 | 78.483
+    ## persons 3              |  0.307 |  0.438 |  0.136 | [-0.728,  1.588] | 0.708 | 0.644 | 1.003 | 76.611
+    ## persons 4              |  1.207 |  1.331 |  1.030 | [ 0.290,  2.537] | 0.960 | 0.960 | 1.004 | 77.942
+    ## SD persons (Intercept) |  1.404 |  1.676 |  1.093 | [ 0.613,  3.104] | 1.000 | 1.000 | 0.998 | 46.823
     ## 
     ## # Random Effects (Zero-Inflated Model)
     ## 
-    ## Parameter              | Median |   Mean |    MAP | CI | CI_low | CI_high |    pd |    ps | ESS |  Rhat
-    ## -------------------------------------------------------------------------------------------------------
-    ## persons 1              |  1.355 |  1.319 |  1.366 | 89 |  0.368 |   2.659 | 0.956 | 0.952 |  91 | 1.005
-    ## persons 2              |  0.382 |  0.357 |  0.509 | 89 | -0.726 |   1.488 | 0.724 | 0.668 |  99 | 1.000
-    ## persons 3              | -0.117 | -0.142 | -0.103 | 89 | -1.162 |   1.128 | 0.580 | 0.512 |  94 | 0.997
-    ## persons 4              | -1.166 | -1.270 | -1.024 | 89 | -2.462 |  -0.061 | 0.972 | 0.960 | 113 | 0.997
-    ## SD persons (Intercept) |  1.484 |  1.749 |  1.162 | 89 |  0.463 |   3.094 | 1.000 | 1.000 |  69 | 1.006
+    ## Parameter              | Median |   Mean |    MAP |           89% CI |    pd |    ps |  Rhat |     ESS
+    ## ------------------------------------------------------------------------------------------------------
+    ## persons 1              |  1.355 |  1.319 |  1.366 | [ 0.368,  2.659] | 0.956 | 0.952 | 1.005 |  90.937
+    ## persons 2              |  0.382 |  0.357 |  0.509 | [-0.726,  1.488] | 0.724 | 0.668 | 1.000 |  98.925
+    ## persons 3              | -0.117 | -0.142 | -0.103 | [-1.162,  1.128] | 0.580 | 0.512 | 0.997 |  93.931
+    ## persons 4              | -1.166 | -1.270 | -1.024 | [-2.462, -0.061] | 0.972 | 0.960 | 0.997 | 113.328
+    ## SD persons (Intercept) |  1.484 |  1.749 |  1.162 | [ 0.463,  3.094] | 1.000 | 1.000 | 1.006 |  68.790
 
 *bayestestR* also includes [**many other
 features**](https://easystats.github.io/bayestestR/reference/index.html)
@@ -262,21 +265,21 @@ prime number that does not exceed the already unstable 95% threshold
 (McElreath, 2018).
 
 ``` r
-posterior <- distribution_chisquared(100, 3)
+posterior <- distribution_chisquared(10000, 4)
 
 hdi(posterior, ci = .89)
 ## # Highest Density Interval
 ## 
 ## 89% HDI     
 ## ------------
-## [0.11, 6.05]
+## [0.18, 7.63]
 
 eti(posterior, ci = .89)
 ## # Equal-Tailed Interval
 ## 
 ## 89% ETI     
 ## ------------
-## [0.42, 7.27]
+## [0.75, 9.25]
 ```
 
 ![](man/figures/unnamed-chunk-10-1.png)<!-- -->
@@ -306,9 +309,9 @@ the [*reporting
 guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
 
 ``` r
-posterior <- distribution_normal(100, 0.4, 0.2)
+posterior <- distribution_normal(10000, 0.4, 0.2)
 p_direction(posterior)
-## pd = 98.00%
+## pd = 97.73%
 ```
 
 ![](man/figures/unnamed-chunk-12-1.png)<!-- -->
@@ -342,13 +345,13 @@ see
 [equivalence\_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
 ``` r
-posterior <- distribution_normal(100, 0.4, 0.2)
+posterior <- distribution_normal(10000, 0.4, 0.2)
 rope(posterior, range = c(-0.1, 0.1))
 ## # Proportion of samples inside the ROPE [-0.10, 0.10]:
 ## 
 ## inside ROPE
 ## -----------
-## 1.11 %
+## 1.33 %
 ```
 
 ![](man/figures/unnamed-chunk-14-1.png)<!-- -->
@@ -372,15 +375,15 @@ parameter has been restricted to the point null (Wagenmakers, Lodewyckx,
 Kuriyal, & Grasman, 2010).
 
 ``` r
-prior <- rnorm(1000, mean = 0, sd = 1)
-posterior <- rnorm(1000, mean = 1, sd = 0.7)
+prior <- distribution_normal(10000, mean = 0, sd = 1)
+posterior <- distribution_normal(10000, mean = 1, sd = 0.7)
 
 bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## # Bayes Factor (Savage-Dickey density ratio)
 ## 
-## BF  
-## ----
-## 2.27
+## BF   
+## -----
+## 1.946
 ## 
 ## * Evidence Against The Null: [0]
 ```
@@ -443,12 +446,12 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.4
+## [1] 0.39
 ```
 
 # References
 
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references">
 
 <div id="ref-kruschke2015doing">
 

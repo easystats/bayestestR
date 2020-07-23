@@ -1,5 +1,9 @@
 # bayestestR 0.7.3
 
+## New functions
+
+- `unupdate()`, a utility function to get Bayesian models un-fitted from the data, representing the priors only.
+
 ## Bug fixes
 
 * Fixed issue in `describe_posterior()` for multiple-response models.
