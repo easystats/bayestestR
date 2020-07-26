@@ -1,12 +1,10 @@
 .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
 if (.runThisTest) {
-  if (requireNamespace("rstanarm", quietly = TRUE)) {
+  if (requireNamespace("rstanarm", quietly = TRUE) && require("bayestestR") && require("insight")) {
     test_that("rstanarm", {
       testthat::skip_on_cran()
 
       set.seed(333)
-
-      library(rstanarm)
       model <- insight::download_model("stanreg_lm_1")
       testthat::expect_equal(rope_range(model)[1], -0.602, tol = 0.1)
 
@@ -44,5 +42,29 @@ if (.runThisTest) {
       # testthat::expect_error(equivalence_test(model, range = c(.1, .3, .5)))
       # print(equivalence_test(model, ci = c(.1, .3, .5)))
     })
+
+    test_that("rstanarm", {
+      testthat::skip_on_cran()
+
+      set.seed(333)
+      model <- insight::download_model("stanreg_glm_3")
+
+      out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean")
+      s <- summary(model)
+      testthat::expect_equal(s[1:4, 1, drop = TRUE], out$Mean, check.attributes = FALSE, tolerance = 1e-3)
+      testthat::expect_equal(s[1:4, 8, drop = TRUE], out$Rhat, check.attributes = FALSE, tolerance = 1e-1)
+    })
+
+    # test_that("rstanarm", {
+    #   testthat::skip_on_cran()
+    #
+    #   set.seed(333)
+    #   model <- insight::download_model("stanmvreg_1")
+    #
+    #   out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean", test = NULL)
+    #   s <- summary(model)
+    #   testthat::expect_equal(s[, 1, drop = TRUE], out$Mean, check.attributes = FALSE, tolerance = 1e-3)
+    #   testthat::expect_equal(s$fixed[, 5, drop = TRUE], out$Rhat[c(1, 11, 2:5, 12:14)], check.attributes = FALSE, tolerance = 1e-1)
+    # })
   }
 }

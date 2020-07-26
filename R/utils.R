@@ -140,10 +140,15 @@
 
 
 #' @keywords internal
-.prepare_output <- function(temp, cleaned_parameters) {
+.prepare_output <- function(temp, cleaned_parameters, is_stan_mv = FALSE) {
   merge_by <- intersect(c("Parameter", "Effects", "Component"), colnames(temp))
   temp$.roworder <- 1:nrow(temp)
   out <- merge(x = temp, y = cleaned_parameters, by = merge_by, all.x = TRUE)
+  # hope this works for stanmvreg...
+  if (isTRUE(is_stan_mv) && all(is.na(out$Effects)) && all(is.na(out$Component))) {
+    out$Effects <- cleaned_parameters$Effects[1:nrow(out)]
+    out$Component <- cleaned_parameters$Component[1:nrow(out)]
+  }
   # this here is required for multiple response models...
   if (all(is.na(out$Effects)) || all(is.na(out$Component))) {
     out <- out[!duplicated(out$.roworder), ]

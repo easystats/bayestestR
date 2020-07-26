@@ -174,7 +174,8 @@ point_estimate.stanreg <- function(x, centrality = "all", dispersion = FALSE, ef
 
   out <- .prepare_output(
     point_estimate(insight::get_parameters(x, effects = effects, parameters = parameters), centrality = centrality, dispersion = dispersion, ...),
-    insight::clean_parameters(x)
+    insight::clean_parameters(x),
+    inherits(x, "stanmvreg")
   )
 
   attr(out, "object_name") <- .safe_deparse(substitute(x))

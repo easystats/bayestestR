@@ -297,7 +297,7 @@ rope.stanreg <- function(x, range = "default", ci = .89, ci_method = "HDI", effe
     ...
   )
 
-  out <- .prepare_output(rope_data, insight::clean_parameters(x))
+  out <- .prepare_output(rope_data, insight::clean_parameters(x), inherits(x, "stanmvreg"))
 
   attr(out, "HDI_area") <- attr(rope_data, "HDI_area")
   attr(out, "object_name") <- .safe_deparse(substitute(x))

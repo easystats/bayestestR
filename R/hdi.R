@@ -202,7 +202,8 @@ hdi.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"), para
 
   out <- .prepare_output(
     hdi(insight::get_parameters(x, effects = effects, parameters = parameters), ci = ci, verbose = verbose, ...),
-    insight::clean_parameters(x)
+    insight::clean_parameters(x),
+    inherits(x, "stanmvreg")
   )
 
   attr(out, "object_name") <- .safe_deparse(substitute(x))

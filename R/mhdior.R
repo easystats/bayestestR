@@ -165,7 +165,8 @@ mhdior.bcplm <- mhdior.BFBayesFactor
 
   out <- .prepare_output(
     mhdior(insight::get_parameters(x, effects = effects, parameters = parameters), range = range, precision = precision, ...),
-    insight::clean_parameters(x)
+    insight::clean_parameters(x),
+    inherits(x, "stanmvreg")
   )
 
   class(out) <- unique(c("mhdior", class(out)))

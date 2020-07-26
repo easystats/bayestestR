@@ -240,7 +240,8 @@ p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parame
 
   out <- .prepare_output(
     p_direction(insight::get_parameters(x, effects = effects, parameters = parameters), method = method, ...),
-    insight::clean_parameters(x)
+    insight::clean_parameters(x),
+    inherits(x, "stanmvreg")
   )
 
   class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
