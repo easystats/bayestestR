@@ -18,8 +18,8 @@ if (require("rstanarm", quietly = TRUE)) {
 
       testthat::expect_equal(
         p_significance(m, effects = "all")$ps[1],
-        0.988,
-        tolerance = 1e-3
+        0.99,
+        tolerance = 1e-2
       )
     }
   }
