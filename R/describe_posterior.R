@@ -293,6 +293,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   remove_columns <- ".rowid"
   if (all(is.na(out$Effects)) || length(unique(out$Effects)) < 2) remove_columns <- c(remove_columns, "Effects")
   if (all(is.na(out$Component)) || length(unique(out$Component)) < 2) remove_columns <- c(remove_columns, "Component")
+  if (all(is.na(out$Response)) || length(unique(out$Response)) < 2) remove_columns <- c(remove_columns, "Response")
 
   attr(out, "ci_method") <- ci_method
   # Restore columns order
