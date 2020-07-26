@@ -51,8 +51,25 @@ if (.runThisTest) {
 
       out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean")
       s <- summary(model)
+      testthat::expect_identical(colnames(out), c("Parameter", "Mean", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
+                                                  "ROPE_low", "ROPE_high", "ROPE_Percentage", "Rhat", "ESS"))
       testthat::expect_equal(s[1:4, 1, drop = TRUE], out$Mean, check.attributes = FALSE, tolerance = 1e-3)
       testthat::expect_equal(s[1:4, 8, drop = TRUE], out$Rhat, check.attributes = FALSE, tolerance = 1e-1)
+    })
+
+    test_that("rstanarm", {
+      testthat::skip_on_cran()
+
+      set.seed(333)
+      model <- insight::download_model("stanreg_merMod_3")
+
+      out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean")
+      s <- summary(model)
+      testthat::expect_identical(colnames(out), c("Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
+                                                  "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
+                                                  "Rhat", "ESS"))
+      testthat::expect_equal(s[1:8, 1, drop = TRUE], out$Mean, check.attributes = FALSE, tolerance = 1e-3)
+      testthat::expect_equal(s[1:8, 8, drop = TRUE], out$Rhat, check.attributes = FALSE, tolerance = 1e-1)
     })
 
     test_that("rstanarm", {
@@ -63,6 +80,8 @@ if (.runThisTest) {
 
       out <- describe_posterior(model, effects = "fixed", components = "all", centrality = "mean", test = NULL)
       s <- summary(model)
+      testthat::expect_identical(colnames(out), c("Parameter", "Response", "Mean", "CI", "CI_low", "CI_high",
+                                                  "Rhat", "ESS"))
       testthat::expect_equal(s[c(1:2, 5:7), 1, drop = TRUE], out$Mean, check.attributes = FALSE, tolerance = 1e-3)
       testthat::expect_equal(s[c(1:2, 5:7), 10, drop = TRUE], out$Rhat, check.attributes = FALSE, tolerance = 1e-1)
     })
