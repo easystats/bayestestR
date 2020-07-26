@@ -85,5 +85,19 @@ if (.runThisTest) {
       testthat::expect_equal(s[c(1:2, 5:7), 1, drop = TRUE], out$Mean, check.attributes = FALSE, tolerance = 1e-3)
       testthat::expect_equal(s[c(1:2, 5:7), 10, drop = TRUE], out$Rhat, check.attributes = FALSE, tolerance = 1e-1)
     })
+
+
+    test_that("rstanarm", {
+      testthat::skip_on_cran()
+
+      set.seed(333)
+      model <- insight::download_model("stanmvreg_1")
+
+      out <- describe_posterior(model, effects = "fixed", components = "all", centrality = "mean", test = NULL, priors = TRUE)
+      testthat::expect_identical(colnames(out), c("Parameter", "Response", "Mean", "CI", "CI_low", "CI_high",
+                                                  "Rhat", "ESS", "Prior_Distribution", "Prior_Location",
+                                                  "Prior_Scale"))
+      testthat::expect_equal(nrow(out), 5)
+    })
   }
 }

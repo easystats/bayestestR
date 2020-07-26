@@ -483,6 +483,7 @@ describe_posterior.stanmvreg <- function(posteriors, centrality = "median", disp
 
   if (isTRUE(priors)) {
     priors_data <- describe_prior(posteriors, ...)
+    priors_data$Parameter <- gsub("^(.*)\\|(.*)", replacement = "\\2", priors_data$Parameter)
     out <- .merge_and_sort(out, priors_data, by = c("Parameter", "Response"), all = TRUE)
   }
 
