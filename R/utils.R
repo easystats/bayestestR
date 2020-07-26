@@ -141,7 +141,18 @@
 
 #' @keywords internal
 .prepare_output <- function(temp, cleaned_parameters, is_stan_mv = FALSE) {
-  merge_by <- intersect(c("Parameter", "Effects", "Component"), colnames(temp))
+  if (isTRUE(is_stan_mv)) {
+    temp$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", temp$Parameter)
+    for (i in unique(temp$Response)) {
+      temp$Parameter <- gsub(sprintf("%s|", i), "", temp$Parameter, fixed = TRUE)
+    }
+    merge_by <- c("Parameter", "Effects", "Component", "Response")
+    remove_cols <- c("Group", "Cleaned_Parameter", "Function", ".roworder")
+  } else {
+    merge_by <- c("Parameter", "Effects", "Component")
+    remove_cols <- c("Group", "Cleaned_Parameter", "Response", "Function", ".roworder")
+  }
+  merge_by <- intersect(merge_by, colnames(temp))
   temp$.roworder <- 1:nrow(temp)
   out <- merge(x = temp, y = cleaned_parameters, by = merge_by, all.x = TRUE)
   # hope this works for stanmvreg...
@@ -156,7 +167,7 @@
     out <- out[!is.na(out$Effects) & !is.na(out$Component) & !duplicated(out$.roworder), ]
   }
   attr(out, "Cleaned_Parameter") <- out$Cleaned_Parameter[order(out$.roworder)]
-  .remove_column(out[order(out$.roworder), ], c("Group", "Cleaned_Parameter", "Response", "Function", ".roworder"))
+  .remove_column(out[order(out$.roworder), ], remove_cols)
 }
 
 

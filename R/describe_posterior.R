@@ -220,12 +220,12 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
       test_bf <- data.frame("Parameter" = NA)
     }
   } else {
-    test_pd <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
-    test_prope <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
-    test_psig <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
-    test_rope <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
-    test_bf <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
-    test_pmap <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA)
+    test_pd <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA, "Response" = NA)
+    test_prope <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA, "Response" = NA)
+    test_psig <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA, "Response" = NA)
+    test_rope <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA, "Response" = NA)
+    test_bf <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA, "Response" = NA)
+    test_pmap <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA, "Response" = NA)
   }
 
 
@@ -242,8 +242,6 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   test_psig <- .add_effects_component_column(test_psig)
   test_rope <- .add_effects_component_column(test_rope)
   test_bf <- .add_effects_component_column(test_bf)
-
-  merge_by <- c("Parameter", "Effects", "Component")
 
 
   # at least one "valid" data frame needs a row id, to restore
@@ -275,6 +273,8 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   }
 
   # merge all data frames
+  merge_by <- c("Parameter", "Effects", "Component", "Response")
+  # merge_by <- intersect(merge_by, colnames(estimates))
 
   out <- merge(estimates, uncertainty, by = merge_by, all = TRUE)
   out <- merge(out, test_pmap, by = merge_by, all = TRUE)
@@ -304,6 +304,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
 .add_effects_component_column <- function(x) {
   if (!"Effects" %in% names(x)) x <- cbind(x, data.frame("Effects" = NA))
   if (!"Component" %in% names(x)) x <- cbind(x, data.frame("Component" = NA))
+  if (!"Response" %in% names(x)) x <- cbind(x, data.frame("Response" = NA))
   x
 }
 
@@ -465,7 +466,9 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
 #' @export
 describe_posterior.stanmvreg <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = "p_direction", rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
-  out$Response <- gsub("^(.*)\\|(.*)", "\\1", out$Parameter)
+  if (is.null(out$Response)) {
+    out$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", out$Parameter)
+  }
 
   diagnostic <-
     diagnostic_posterior(
