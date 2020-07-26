@@ -55,16 +55,16 @@ if (.runThisTest) {
       testthat::expect_equal(s[1:4, 8, drop = TRUE], out$Rhat, check.attributes = FALSE, tolerance = 1e-1)
     })
 
-    # test_that("rstanarm", {
-    #   testthat::skip_on_cran()
-    #
-    #   set.seed(333)
-    #   model <- insight::download_model("stanmvreg_1")
-    #
-    #   out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean", test = NULL)
-    #   s <- summary(model)
-    #   testthat::expect_equal(s[, 1, drop = TRUE], out$Mean, check.attributes = FALSE, tolerance = 1e-3)
-    #   testthat::expect_equal(s$fixed[, 5, drop = TRUE], out$Rhat[c(1, 11, 2:5, 12:14)], check.attributes = FALSE, tolerance = 1e-1)
-    # })
+    test_that("rstanarm", {
+      testthat::skip_on_cran()
+
+      set.seed(333)
+      model <- insight::download_model("stanmvreg_1")
+
+      out <- describe_posterior(model, effects = "fixed", components = "all", centrality = "mean", test = NULL)
+      s <- summary(model)
+      testthat::expect_equal(s[c(1:2, 5:7), 1, drop = TRUE], out$Mean, check.attributes = FALSE, tolerance = 1e-3)
+      testthat::expect_equal(s[c(1:2, 5:7), 10, drop = TRUE], out$Rhat, check.attributes = FALSE, tolerance = 1e-1)
+    })
   }
 }

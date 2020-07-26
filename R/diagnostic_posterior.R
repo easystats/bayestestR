@@ -62,10 +62,10 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
 
   # Find parameters
   effects <- match.arg(effects)
-  params <- insight::find_parameters(posteriors, effects=effects, parameters = parameters, flatten=TRUE)
+  params <- insight::find_parameters(posteriors, effects = effects, parameters = parameters, flatten = TRUE)
 
   # If no diagnostic
-  if (is.null(diagnostic)){
+  if (is.null(diagnostic)) {
     return(data.frame("Parameter" = params))
   }
 
@@ -96,8 +96,60 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
   # Remove columns with all Nans
   diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
 
-  if (inherits(posteriors, "stanmvreg")) {
-    diagnostic_df$Response <- gsub("^(.*)\\|(.*)", "\\1", diagnostic_df$Parameter)
+  # Select rows
+  diagnostic_df[diagnostic_df$Parameter %in% params, ]
+}
+
+
+#' @inheritParams insight::get_parameters
+#' @rdname diagnostic_posterior
+#' @export
+diagnostic_posterior.stanmvreg <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+
+  # Find parameters
+  effects <- match.arg(effects)
+  all_params <- insight::find_parameters(posteriors, effects = effects, parameters = parameters, flatten = FALSE)
+
+  params <- unlist(lapply(names(all_params), function(i) {
+    all_params[[i]]$sigma <- NULL
+    unlist(all_params[[i]])
+  }))
+
+  # If no diagnostic
+  if (is.null(diagnostic)) {
+    return(data.frame("Parameter" = params))
+  }
+
+  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  if ("all" %in% diagnostic) {
+    diagnostic <- c("ESS", "Rhat", "MCSE", "khat")
+  } else {
+    diagnostic <- c(diagnostic)
+    if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
+  }
+
+  # Get indices and rename
+  diagnostic_df <- as.data.frame(posteriors$stan_summary)
+  diagnostic_df$Parameter <- row.names(diagnostic_df)
+  if ("n_eff" %in% names(diagnostic_df)) {
+    diagnostic_df$ESS <- diagnostic_df$n_eff
+  }
+  # special handling for MCSE, due to some parameters (like lp__) missing in rows
+  MCSE <- mcse(posteriors, effects = effects)
+  diagnostic_df <- merge(diagnostic_df, MCSE, by = "Parameter", all = FALSE)
+
+  # Select columns
+  available_columns <- intersect(colnames(diagnostic_df), c("Parameter", diagnostic))
+  diagnostic_df <- diagnostic_df[available_columns]
+  names(diagnostic_df)[available_columns == "khat"] <- "Khat"
+  row.names(diagnostic_df) <- NULL
+
+  # Remove columns with all Nans
+  diagnostic_df <- diagnostic_df[!sapply(diagnostic_df, function(x) all(is.na(x)))]
+
+  diagnostic_df$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", diagnostic_df$Parameter)
+  for (i in unique(diagnostic_df$Response)) {
+    diagnostic_df$Parameter <- gsub(sprintf("%s|", i), "", diagnostic_df$Parameter, fixed = TRUE)
   }
 
   # Select rows

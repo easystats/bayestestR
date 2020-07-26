@@ -3,12 +3,21 @@
 \name{diagnostic_posterior}
 \alias{diagnostic_posterior}
 \alias{diagnostic_posterior.stanreg}
+\alias{diagnostic_posterior.stanmvreg}
 \alias{diagnostic_posterior.brmsfit}
 \title{Posteriors Sampling Diagnostic}
 \usage{
 diagnostic_posterior(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 
 \method{diagnostic_posterior}{stanreg}(
+  posteriors,
+  diagnostic = "all",
+  effects = c("fixed", "random", "all"),
+  parameters = NULL,
+  ...
+)
+
+\method{diagnostic_posterior}{stanmvreg}(
   posteriors,
   diagnostic = "all",
   effects = c("fixed", "random", "all"),
