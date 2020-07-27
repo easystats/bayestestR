@@ -1,0 +1,40 @@
+/* Syntax highlighting ---------------------------------------------------- */ 
+
+
+/* code chunk */
+pre {background-color: #37474F; 
+     color: white;
+     border-radius: 5px;} 
+
+
+
+.fl      {color: #f44336;}  /* numerics */
+.fu      {color: #FF9800;}  /* function */
+.ch,.st  {color: #66BB6A;} /* string */
+.co      {color: #B0BEC5;}  /* comment */
+
+.kw {color: #FF9800;} /* functions */
+.sourceLine {color: #FCE4EC;} /* functions */
+
+
+
+
+/* unvisited link */
+a:link {
+  color: #03A9F4;
+}
+
+/* visited link */
+a:visited {
+  color: #2196F3;
+}
+
+/* mouse over link */
+a:hover {
+  color: #9C27B0;
+}
+
+/* selected link */
+a:active {
+  color: #2196F3;
+}
