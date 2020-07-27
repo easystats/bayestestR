@@ -7,6 +7,7 @@
 ## Bug fixes
 
 * Fixed issue in `describe_posterior()` for multiple-response models.
+* Fixed issue in collinearity-check for `rope()` for models with less than two parameters.
 
 # bayestestR 0.7.2
 
