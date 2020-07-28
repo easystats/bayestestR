@@ -26,6 +26,8 @@ reference:
   - reshape_ci
 
 - title: "Effect Existence and Significance"
+  desc: "Functions for Bayesian Inference""
+- subtitle: "Posterior Based Methods"
   contents:
   - mhdior
   - p_direction
@@ -36,8 +38,7 @@ reference:
   - rope_range
   - equivalence_test
   - convert_pd_to_p
-
-- title: "Effect Existence and Significance - Bayes factors"
+- subtitle: "Bayes factors"
   contents:
   - bayesfactor
   - bayesfactor_parameters
