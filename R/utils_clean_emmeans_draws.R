@@ -5,7 +5,7 @@
          "Please install it by running `install.packages('emmeans')`.")
   }
 
-  if (!is.null(attributes(x)$misc$predict.type)){
+  if (!is.null(attributes(x)$misc$predict.type) && attributes(x)$misc$predict.type != "none"){
     x <- emmeans::regrid(x, transform = attributes(x)$misc$predict.type, ...)
   }
 
