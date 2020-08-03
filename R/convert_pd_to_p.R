@@ -12,7 +12,7 @@
 #' pd_to_p(pd = 0.95, direction = "one-sided")
 #' @export
 pd_to_p <- function(pd, direction = "two-sided", ...) {
-  p <- (1 - pd)
+  p <- 1 - pmax(pd, 1 - pd)
   if (.get_direction(direction) == 0) {
     p <- 2 * p
   }
