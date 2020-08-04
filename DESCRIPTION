@@ -41,6 +41,11 @@ Authors@R: c(
 		"Gronau",
 		role = c("ctb"),
 		comment = c(ORCID = "0000-0001-5510-6943"))
+	person("Sam", 
+	  "Crawley",
+	  role = c("ctb"),
+	  email = "sam@crawley.nz",
+	  comment = c(ORCID = "0000-0002-7847-0411"))
 	)
 Maintainer: Dominique Makowski <dom.makowski@gmail.com>
 URL: https://easystats.github.io/bayestestR/
