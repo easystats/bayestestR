@@ -254,7 +254,7 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
   attr(res, "response") <- response[treatment.model]
   attr(res, "data") <- samples
 
-  class(res) <- c("bayestestR_mediation", class(res))
+  class(res) <- c("bayestestR_mediation", "see_bayestestR_mediation", class(res))
   res
 }
 
@@ -338,4 +338,14 @@ print.bayestestR_mediation <- function(x, digits = 3, ...) {
   if (any(prop_mediated_ori$Estimate < 0) ) {
     message("\nDirect and indirect effects have opposite directions. The proportion mediated is not meaningful.")
   }
+}
+
+
+
+#' @export
+plot.bayestestR_mediation <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot results from mediation analysis. Please install it by running `install.packages('see')`.")
+  }
+  NextMethod()
 }
