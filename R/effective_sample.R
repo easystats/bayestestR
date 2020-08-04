@@ -47,7 +47,7 @@ effective_sample.brmsfit <- function(model, effects = c("fixed", "random", "all"
   }
 
   s <- rstan::summary(model$fit)$summary
-  s <- s[make.names(rownames(s)) %in% colnames(pars), ]
+  s <- subset(s, subset = make.names(rownames(s)) %in% colnames(pars))
 
   data.frame(
     Parameter = make.names(rownames(s)),
