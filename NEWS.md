@@ -8,7 +8,8 @@
 
 * Fixed issue in `describe_posterior()` for multiple-response models.
 * Fixed issue in collinearity-check for `rope()` for models with less than two parameters.
-* Fixed issue in print-method for `mediation()` with `stanmvreg`-models, which displayes the wrong name for the response-value.
+* Fixed issue in print-method for `mediation()` with `stanmvreg`-models, which displays the wrong name for the response-value.
+* Fixed issue in `effective_sample()` for models with only one parameter.
 
 # bayestestR 0.7.2
 
