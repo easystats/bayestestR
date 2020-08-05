@@ -73,6 +73,7 @@ Suggests:
 	GGally,
 	ggplot2,
 	ggridges,
+	httr,
 	KernSmooth,
 	knitr,
 	MASS,

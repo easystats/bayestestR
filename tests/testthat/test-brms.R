@@ -1,4 +1,4 @@
-if (require("brms") && require("testthat") && require("insight")) {
+if (require("brms") && require("testthat") && require("insight") && require("httr")) {
   test_that("brms", {
     # testthat::skip_on_travis()
     testthat::skip_on_cran()
