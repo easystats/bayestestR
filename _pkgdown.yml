@@ -26,7 +26,7 @@ reference:
   - reshape_ci
 
 - title: "Effect Existence and Significance"
-  desc: "Functions for Bayesian Inference""
+  desc: "Functions for Bayesian Inference"
 - subtitle: "Posterior Based Methods"
   contents:
   - mhdior
