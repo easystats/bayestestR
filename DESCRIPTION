@@ -40,7 +40,7 @@ Authors@R: c(
 	person("Quentin F.",
 		"Gronau",
 		role = c("ctb"),
-		comment = c(ORCID = "0000-0001-5510-6943"))
+		comment = c(ORCID = "0000-0001-5510-6943")),
 	person("Sam", 
 	  "Crawley",
 	  role = c("ctb"),
