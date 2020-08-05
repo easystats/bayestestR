@@ -114,6 +114,8 @@ navbar:
         href: articles/indicesEstimationComparison.html
       - text: 'Comparison of Indices of Effect Existence'
         href: https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full
+      - text: 'Mediation Analysis: Direct and Indirect Effects'
+        href: articles/mediation.html
   - text: Guidelines
     href: articles/guidelines.html
 
