@@ -52,6 +52,10 @@ print.describe_posterior <- function(x, digits = 3, ...) {
       colnames(x)[colnames(x) == "ROPE_Percentage"] <- "% in ROPE"
     }
 
+    if ("pd" %in% colnames(x)) {
+      x$pd <- insight::format_value(x$pd, digits = ifelse(digits < 2, digits, 2), as_percent = TRUE)
+    }
+
     print_data_frame(x, digits = digits)
   }
   invisible(orig_x)
