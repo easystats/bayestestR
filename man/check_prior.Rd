@@ -11,7 +11,8 @@ check_prior(model, method = "gelman", simulate_priors = TRUE, ...)
 
 \item{method}{Can be "gelman" or "lakeland". For the "gelman" method, if the SD of the posterior is more than 0.1 times the SD of the prior, then the prior is considered as informative. For the "lakeland" method, the prior is considered as informative if the posterior falls within the 95\% HDI of the prior.}
 
-\item{simulate_priors}{Should prior distributions be simulated using \code{simulate_prior} (default; faster) or sampled (slower, more accurate).}
+\item{simulate_priors}{Should prior distributions be simulated using
+\code{\link{simulate_prior}} (default; faster) or sampled via \code{\link{unupdate}} (slower, more accurate).}
 
 \item{...}{Currently not used.}
 }
