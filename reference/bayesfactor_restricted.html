@@ -298,7 +298,7 @@ flat priors the null is infinitely more favorable than the alternative (this is 
 paradox</em>). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
 <br /><br />
 (Note that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects.)</p>
-<h3>Setting the correct <code>prior</code></h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Setting the correct <code>prior</code></h3>
 <p>It is important to provide the correct <code>prior</code> for meaningful results.</p><ul>
 <li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
 <li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model:</p><ul>
@@ -311,7 +311,7 @@ paradox</em>). Thus, you should only ever try (or want) to compute a Bayes facto
 <li><p><strong>Note:</strong> When the <code>emmGrid</code> has undergone any transformations (<code>"log"</code>, <code>"response"</code>, etc.), or <code>regrid</code>ing, then <code>prior</code> must be an <code>emmGrid</code> object, as stated above.</p></li>
 </ul></li>
 </ul>
-<h3>Interpreting Bayes Factors</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Interpreting Bayes Factors</h3>
 <p>A Bayes factor greater than 1 can be interpereted as evidence against the null,
 at which one convention is that a Bayes factor greater than 3 can be considered
 as "substantial" evidence against the null (and vice versa, a Bayes factor

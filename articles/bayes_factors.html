@@ -727,9 +727,9 @@ BF_{restricted / NULL} = \frac
 <span class="kw">pairs_sum</span>
 </pre></div>
 <pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
-&gt;  setosa - versicolor       0.020     -1.95      1.94
-&gt;  setosa - virginica       -0.041     -1.97      1.84
-&gt;  versicolor - virginica   -0.017     -2.81      2.67
+&gt;  setosa - versicolor      -0.017      -2.8       2.7
+&gt;  setosa - virginica       -0.027      -4.0       4.6
+&gt;  versicolor - virginica    0.001      -4.2       4.5
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
@@ -756,9 +756,9 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
 <span class="kw">pairs_bayes</span>
 </pre></div>
 <pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
-&gt;  setosa - versicolor      0.0021     -2.06      1.89
-&gt;  setosa - virginica      -0.0165     -1.95      1.98
-&gt;  versicolor - virginica  -0.0199     -2.75      2.72
+&gt;  setosa - versicolor       0.000     -2.98      2.67
+&gt;  setosa - virginica        0.032     -2.73      2.81
+&gt;  versicolor - virginica    0.003     -2.91      2.67
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
@@ -798,12 +798,12 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
 <pre><code>&gt; # Bayes Factor (Order-Restriction)
 &gt; 
 &gt;                                        Hypothesis P(Prior) P(Posterior)    BF
-&gt;                               setosa &lt; versicolor    0.503        0.000 0.000
-&gt;                                setosa &lt; virginica    0.508        0.928 1.828
-&gt;                            versicolor &lt; virginica    0.508        1.000 1.969
-&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor    0.125        0.000 0.000
-&gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor    0.249        0.000 0.000
-&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica    0.130        0.000 0.000
+&gt;                               setosa &lt; versicolor    0.508            1 1.969
+&gt;                                setosa &lt; virginica    0.495            1 2.020
+&gt;                            versicolor &lt; virginica    0.491            1 2.035
+&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor    0.107            0 0.000
+&gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor    0.204            0 0.000
+&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica    0.197            1 5.089
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p><strong><em>What happened???</em></strong></p>
@@ -828,12 +828,12 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
 <pre><code>&gt; # Bayes Factor (Order-Restriction)
 &gt; 
 &gt;                                        Hypothesis P(Prior) P(Posterior)    BF
-&gt;                               setosa &lt; versicolor    0.509            1 1.965
-&gt;                                setosa &lt; virginica    0.511            0 0.000
-&gt;                            versicolor &lt; virginica    0.504            0 0.000
-&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor    0.129            0 0.000
-&gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor    0.245            1 4.086
-&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica    0.135            0 0.000
+&gt;                               setosa &lt; versicolor    0.486            1 2.055
+&gt;                                setosa &lt; virginica    0.493            1 2.028
+&gt;                            versicolor &lt; virginica    0.509            1 1.965
+&gt;  setosa    &lt; virginica  &amp; virginica  &lt; versicolor    0.167            0 0.000
+&gt;  virginica &lt; setosa     &amp; setosa     &lt; versicolor    0.156            0 0.000
+&gt;   setosa    &lt; versicolor &amp; versicolor &lt; virginica    0.164            1 6.107
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 </div>

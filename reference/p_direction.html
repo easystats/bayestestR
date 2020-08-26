@@ -304,18 +304,18 @@ reflecting high credibility of <code>0</code>. To detect such cases, the
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3>What is the <em>pd</em>?</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>What is the <em>pd</em>?</h3>
 <p>The Probability of Direction (pd) is an index of effect existence, ranging from 50% to 100%, representing the certainty with which an effect goes in a particular direction (<em>i.e.</em>, is positive or negative). Beyond its simplicity of interpretation, understanding and computation, this index also presents other interesting properties:</p><ul>
 <li><p>It is independent from the model: It is solely based on the posterior distributions and does not require any additional information from the data or the model.</p></li>
 <li><p>It is robust to the scale of both the response variable and the predictors.</p></li>
 <li><p>It is strongly correlated with the frequentist p-value, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.</p></li>
 </ul>
 
-<h3>Relationship with the p-value</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Relationship with the p-value</h3>
 <p>In most cases, it seems that the <em>pd</em> has a direct correspondence with the frequentist one-sided <em>p</em>-value through the formula p<sub>one&nbsp;sided</sub>&nbsp;=&nbsp;1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub> and to the two-sided p-value (the most commonly reported one) through the formula p<sub>two&nbsp;sided</sub>&nbsp;=&nbsp;2&nbsp;*&nbsp;(1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>). Thus, a two-sided p-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code> would correspond approximately to a <em>pd</em> of 95%, 97.5%, 99.5% and 99.95%. See also <code><a href='pd_to_p.html'>pd_to_p</a></code>.</p>
-<h3>Methods of computation</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Methods of computation</h3>
 <p>The most simple and direct way to compute the <em>pd</em> is to 1) look at the median's sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This "simple" method is the most straightforward, but its precision is directly tied to the number of posterior draws. The second approach relies on <a href='estimate_density.html'>density estimation</a>. It starts by estimating the density function (for which many methods are available), and then computing the <a href='area_under_curve.html'>area under the curve</a> (AUC) of the density curve on the other side of 0.</p>
-<h3>Strengths and Limitations</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Strengths and Limitations</h3>
 <p><strong>Strengths:</strong> Straightforward computation and interpretation. Objective property of the posterior distribution. 1:1 correspondence with the frequentist p-value.
 <br /> <br />
 <strong>Limitations:</strong> Limited information favoring the null hypothesis.</p>

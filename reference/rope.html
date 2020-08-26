@@ -288,7 +288,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-<h3>ROPE</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>ROPE</h3>
 <p>Statistically, the probability of a posterior distribution of being
   different from 0 does not make much sense (the probability of a single value
   null hypothesis in a continuous distribution is 0). Therefore, the idea
@@ -307,7 +307,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
   (or 89%, considered more stable) <a href='hdi.html'>HDI</a> that falls within the
   ROPE as an index for "null-hypothesis" testing (as understood under the
   Bayesian framework, see <code><a href='equivalence_test.html'>equivalence_test()</a></code>).</p>
-<h3>Sensitivity to parameter's scale</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Sensitivity to parameter's scale</h3>
 <p>It is important to consider the unit (i.e., the scale) of the predictors
   when using an index based on the ROPE, as the correct interpretation of the
   ROPE as representing a region of practical equivalence to zero is dependent
@@ -315,7 +315,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
   the unit of its parameter. In other words, as the ROPE represents a fixed
   portion of the response's scale, its proximity with a coefficient depends
   on the scale of the coefficient itself.</p>
-<h3>Multicollinearity: Non-independent covariates</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Multicollinearity: Non-independent covariates</h3>
 <p>When parameters show strong correlations, i.e. when covariates are not
   independent, the joint parameter distributions may shift towards or
   away from the ROPE. Collinearity invalidates ROPE and hypothesis
@@ -331,7 +331,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
   a first step to check the assumptions of this hypothesis testing is to look
   at different pair plots. An even more sophisticated check is the projection
   predictive variable selection (<cite>Piironen and Vehtari 2017</cite>).</p>
-<h3>Strengths and Limitations</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Strengths and Limitations</h3>
 <p><strong>Strengths:</strong> Provides information related to the practical relevance of the effects.
   <br /> <br />
   <strong>Limitations:</strong> A ROPE range needs to be arbitrarily defined. Sensitive to the scale (the unit) of the predictors. Not sensitive to highly significant effects.</p>

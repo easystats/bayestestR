@@ -194,29 +194,39 @@
 
     <pre class="usage"><span class='fu'>distribution</span>(type = <span class='st'>"normal"</span>, <span class='kw'>...</span>)
 
-<span class='fu'>distribution_normal</span>(<span class='kw'>n</span>, mean = <span class='fl'>0</span>, sd = <span class='fl'>1</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+<span class='fu'>distribution_custom</span>(<span class='kw'>n</span>, type = <span class='st'>"norm"</span>, <span class='kw'>...</span>, random = <span class='fl'>FALSE</span>)
+
+<span class='fu'>distribution_beta</span>(<span class='kw'>n</span>, <span class='kw'>shape1</span>, <span class='kw'>shape2</span>, ncp = <span class='fl'>0</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
 
 <span class='fu'>distribution_binomial</span>(<span class='kw'>n</span>, size = <span class='fl'>1</span>, prob = <span class='fl'>0.5</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
 
+<span class='fu'>distribution_binom</span>(<span class='kw'>n</span>, size = <span class='fl'>1</span>, prob = <span class='fl'>0.5</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+
 <span class='fu'>distribution_cauchy</span>(<span class='kw'>n</span>, location = <span class='fl'>0</span>, scale = <span class='fl'>1</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+
+<span class='fu'>distribution_chisquared</span>(<span class='kw'>n</span>, <span class='kw'>df</span>, ncp = <span class='fl'>0</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+
+<span class='fu'>distribution_chisq</span>(<span class='kw'>n</span>, <span class='kw'>df</span>, ncp = <span class='fl'>0</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+
+<span class='fu'>distribution_gamma</span>(<span class='kw'>n</span>, <span class='kw'>shape</span>, scale = <span class='fl'>1</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+
+<span class='fu'>distribution_mixture_normal</span>(<span class='kw'>n</span>, mean = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='fl'>3</span>, <span class='fl'>3</span>), sd = <span class='fl'>1</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+
+<span class='fu'>distribution_normal</span>(<span class='kw'>n</span>, mean = <span class='fl'>0</span>, sd = <span class='fl'>1</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+
+<span class='fu'>distribution_gaussian</span>(<span class='kw'>n</span>, mean = <span class='fl'>0</span>, sd = <span class='fl'>1</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
 
 <span class='fu'>distribution_poisson</span>(<span class='kw'>n</span>, lambda = <span class='fl'>1</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
 
 <span class='fu'>distribution_student</span>(<span class='kw'>n</span>, <span class='kw'>df</span>, <span class='kw'>ncp</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
 
-<span class='fu'>distribution_chisquared</span>(<span class='kw'>n</span>, <span class='kw'>df</span>, ncp = <span class='fl'>0</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+<span class='fu'>distribution_t</span>(<span class='kw'>n</span>, <span class='kw'>df</span>, <span class='kw'>ncp</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
 
-<span class='fu'>distribution_uniform</span>(<span class='kw'>n</span>, min = <span class='fl'>0</span>, max = <span class='fl'>1</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
-
-<span class='fu'>distribution_beta</span>(<span class='kw'>n</span>, <span class='kw'>shape1</span>, <span class='kw'>shape2</span>, ncp = <span class='fl'>0</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+<span class='fu'>distribution_student_t</span>(<span class='kw'>n</span>, <span class='kw'>df</span>, <span class='kw'>ncp</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
 
 <span class='fu'>distribution_tweedie</span>(<span class='kw'>n</span>, xi = <span class='kw'>NULL</span>, <span class='kw'>mu</span>, <span class='kw'>phi</span>, power = <span class='kw'>NULL</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
 
-<span class='fu'>distribution_gamma</span>(<span class='kw'>n</span>, <span class='kw'>shape</span>, scale = <span class='fl'>1</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
-
-<span class='fu'>distribution_custom</span>(<span class='kw'>n</span>, type = <span class='st'>"norm"</span>, <span class='kw'>...</span>, random = <span class='fl'>FALSE</span>)
-
-<span class='fu'>distribution_mixture_normal</span>(<span class='kw'>n</span>, mean = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='fl'>3</span>, <span class='fl'>3</span>), sd = <span class='fl'>1</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
+<span class='fu'>distribution_uniform</span>(<span class='kw'>n</span>, min = <span class='fl'>0</span>, max = <span class='fl'>1</span>, random = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)
 
 <span class='fu'>rnorm_perfect</span>(<span class='kw'>n</span>, mean = <span class='fl'>0</span>, sd = <span class='fl'>1</span>)</pre>
 
@@ -233,19 +243,24 @@
     </tr>
     <tr>
       <th>n</th>
-      <td><p>the number of observations</p></td>
-    </tr>
-    <tr>
-      <th>mean</th>
-      <td><p>vector of means.</p></td>
-    </tr>
-    <tr>
-      <th>sd</th>
-      <td><p>vector of standard deviations.</p></td>
+      <td><p>number of observations. If <code>length(n) &gt; 1</code>, the length
+    is taken to be the number required.</p></td>
     </tr>
     <tr>
       <th>random</th>
       <td><p>Generate near-perfect or random (simple wrappers for the base R <code>r*</code> functions) distributions.</p></td>
+    </tr>
+    <tr>
+      <th>shape1</th>
+      <td><p>non-negative parameters of the Beta distribution.</p></td>
+    </tr>
+    <tr>
+      <th>shape2</th>
+      <td><p>non-negative parameters of the Beta distribution.</p></td>
+    </tr>
+    <tr>
+      <th>ncp</th>
+      <td><p>non-centrality parameter.</p></td>
     </tr>
     <tr>
       <th>size</th>
@@ -264,19 +279,25 @@
       <td><p>location and scale parameters.</p></td>
     </tr>
     <tr>
+      <th>df</th>
+      <td><p>degrees of freedom (non-negative, but can be non-integer).</p></td>
+    </tr>
+    <tr>
+      <th>shape</th>
+      <td><p>shape and scale parameters.  Must be positive,
+    <code>scale</code> strictly.</p></td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td><p>vector of means.</p></td>
+    </tr>
+    <tr>
+      <th>sd</th>
+      <td><p>vector of standard deviations.</p></td>
+    </tr>
+    <tr>
       <th>lambda</th>
       <td><p>vector of (non-negative) means.</p></td>
-    </tr>
-    <tr>
-      <th>df</th>
-      <td><p>degrees of freedom (\(&gt; 0\), maybe non-integer).  <code>df
-      = Inf</code> is allowed.</p></td>
-    </tr>
-    <tr>
-      <th>ncp</th>
-      <td><p>non-centrality parameter \(\delta\);
-    currently except for <code><a href='https://rdrr.io/r/stats/TDist.html'>rt()</a></code>, only for <code>abs(ncp) &lt;= 37.62</code>.
-    If omitted, use the central t distribution.</p></td>
     </tr>
     <tr>
       <th>min</th>
@@ -285,36 +306,6 @@
     <tr>
       <th>max</th>
       <td><p>lower and upper limits of the distribution.  Must be finite.</p></td>
-    </tr>
-    <tr>
-      <th>shape1</th>
-      <td><p>non-negative parameters of the Beta distribution.</p></td>
-    </tr>
-    <tr>
-      <th>shape2</th>
-      <td><p>non-negative parameters of the Beta distribution.</p></td>
-    </tr>
-    <tr>
-      <th>xi</th>
-      <td><p>the value of \(\xi\) such that the variance is 
-	\(\mbox{var}[Y]=\phi\mu^{\xi}\)</p></td>
-    </tr>
-    <tr>
-      <th>mu</th>
-      <td><p>the mean</p></td>
-    </tr>
-    <tr>
-      <th>phi</th>
-      <td><p>the dispersion</p></td>
-    </tr>
-    <tr>
-      <th>power</th>
-      <td><p>a synonym for \(\xi\)</p></td>
-    </tr>
-    <tr>
-      <th>shape</th>
-      <td><p>shape and scale parameters.  Must be positive,
-    <code>scale</code> strictly.</p></td>
     </tr>
     </table>
 
