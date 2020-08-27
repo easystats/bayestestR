@@ -269,7 +269,8 @@ i.e., <code>(X|G)</code> will become the terms <code>1:G</code> and <code>X:G</c
 <span class='kw'>mo3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Petal.Length</span>, data = <span class='kw'>iris</span>)
 
 <span class='kw'>BFmodels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bayesfactor_models.html'>bayesfactor_models</a></span>(<span class='kw'>mo1</span>, <span class='kw'>mo2</span>, <span class='kw'>mo3</span>, denominator = <span class='kw'>mo0</span>)
-<span class='fu'>bayesfactor_inclusion</span>(<span class='kw'>BFmodels</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)
+<span class='fu'>bayesfactor_inclusion</span>(<span class='kw'>BFmodels</span>)
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)
 #&gt; 
 #&gt; </span><span>                     Pr(prior) Pr(posterior) Inclusion BF
 #&gt; Species                   0.75        1.0000    2.021e+55
@@ -289,7 +290,8 @@ i.e., <code>(X|G)</code> will become the terms <code>1:G</code> and <code>X:G</c
 
 <span class='co'># compare only matched models:</span>
 <span class='fu'>bayesfactor_inclusion</span>(<span class='kw'>BF</span>, match_models = <span class='fl'>TRUE</span>)
-}</div></span></pre>
+}
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

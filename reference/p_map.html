@@ -281,7 +281,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/bayestestR'>bayestestR</a></span>)
 
-<span class='fu'>p_map</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; p (MAP) = 0.975</div><div class='input'><span class='fu'>p_map</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>10</span>, <span class='fl'>1</span>))</div><div class='output co'>#&gt; p (MAP) = 0.000</div><div class='input'>
+<span class='fu'>p_map</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>))
+</div><div class='output co'>#&gt; p (MAP) = 0.975</div><div class='input'><span class='fu'>p_map</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>10</span>, <span class='fl'>1</span>))
+</div><div class='output co'>#&gt; p (MAP) = 0.000</div><div class='input'>
 <span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://mc-stan.org/rstanarm'>rstanarm</a></span>)
 <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>gear</span>, data = <span class='kw'>mtcars</span>, chains = <span class='fl'>2</span>, iter = <span class='fl'>200</span>, refresh = <span class='fl'>0</span>)
@@ -316,9 +318,13 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='kw'>data</span><span class='op'>$</span><span class='kw'>KernSmooth</span> <span class='op'>&lt;-</span> <span class='kw'>data</span><span class='op'>$</span><span class='kw'>Kernel</span> <span class='op'>-</span> <span class='kw'>data</span><span class='op'>$</span><span class='kw'>KernSmooth</span>
 <span class='kw'>data</span><span class='op'>$</span><span class='kw'>logspline</span> <span class='op'>&lt;-</span> <span class='kw'>data</span><span class='op'>$</span><span class='kw'>Kernel</span> <span class='op'>-</span> <span class='kw'>data</span><span class='op'>$</span><span class='kw'>logspline</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>data</span><span class='op'>$</span><span class='kw'>KernSmooth</span>)</div><div class='output co'>#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#&gt; -0.039649 -0.007867 -0.003854 -0.005315 -0.001114  0.056255 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>data</span><span class='op'>$</span><span class='kw'>logspline</span>)</div><div class='output co'>#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#&gt; -0.097381 -0.008781  0.023988  0.030041  0.068922  0.300639 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span>(<span class='kw'>data</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"KernSmooth"</span>, <span class='st'>"logspline"</span>)])</div><div class='img'><img src='p_map-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>data</span><span class='op'>$</span><span class='kw'>KernSmooth</span>)
+</div><div class='output co'>#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+#&gt; -0.039649 -0.007867 -0.003854 -0.005315 -0.001114  0.056255 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>data</span><span class='op'>$</span><span class='kw'>logspline</span>)
+</div><div class='output co'>#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+#&gt; -0.097381 -0.008781  0.023988  0.030041  0.068922  0.300639 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span>(<span class='kw'>data</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"KernSmooth"</span>, <span class='st'>"logspline"</span>)])
+</div><div class='img'><img src='p_map-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

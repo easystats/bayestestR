@@ -243,8 +243,7 @@
     </tr>
     <tr>
       <th>n</th>
-      <td><p>number of observations. If <code>length(n) &gt; 1</code>, the length
-    is taken to be the number required.</p></td>
+      <td><p>the number of observations</p></td>
     </tr>
     <tr>
       <th>random</th>
@@ -300,6 +299,23 @@
       <td><p>vector of (non-negative) means.</p></td>
     </tr>
     <tr>
+      <th>xi</th>
+      <td><p>the value of \(\xi\) such that the variance is 
+	\(\mbox{var}[Y]=\phi\mu^{\xi}\)</p></td>
+    </tr>
+    <tr>
+      <th>mu</th>
+      <td><p>the mean</p></td>
+    </tr>
+    <tr>
+      <th>phi</th>
+      <td><p>the dispersion</p></td>
+    </tr>
+    <tr>
+      <th>power</th>
+      <td><p>a synonym for \(\xi\)</p></td>
+    </tr>
+    <tr>
       <th>min</th>
       <td><p>lower and upper limits of the distribution.  Must be finite.</p></td>
     </tr>
@@ -313,9 +329,11 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/bayestestR'>bayestestR</a></span>)
 <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>distribution</span>(n = <span class='fl'>10</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='kw'>x</span>))</div><div class='img'><img src='distribution-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='kw'>x</span>))
+</div><div class='img'><img src='distribution-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>distribution</span>(type = <span class='st'>"gamma"</span>, n = <span class='fl'>100</span>, shape = <span class='fl'>2</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='kw'>x</span>))</div><div class='img'><img src='distribution-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span>(<span class='kw'>x</span>))
+</div><div class='img'><img src='distribution-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

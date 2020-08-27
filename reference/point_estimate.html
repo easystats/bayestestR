@@ -270,24 +270,28 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/bayestestR'>bayestestR</a></span>)
 
-<span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Point Estimates
+<span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>))
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Point Estimates
 #&gt; 
 #&gt; </span><span>Median | Mean |   MAP
 #&gt; ---------------------
 #&gt;  -0.01 | 0.00 | -0.03
-#&gt; </div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), centrality = <span class='st'>"all"</span>, dispersion = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
+#&gt; </div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), centrality = <span class='st'>"all"</span>, dispersion = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
 #&gt; 
 #&gt; </span><span>Median |  MAD | Mean |   SD |   MAP
 #&gt; -----------------------------------
 #&gt;  -0.01 | 0.96 | 0.01 | 0.96 | -0.08
-#&gt; </div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), centrality = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
+#&gt; </div><div class='input'><span class='fu'>point_estimate</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), centrality = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
 #&gt; 
 #&gt; </span><span>Median |  MAP
 #&gt; -------------
 #&gt;   0.00 | 0.07
 #&gt; </div><div class='input'>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
-<span class='fu'>point_estimate</span>(<span class='kw'>df</span>, centrality = <span class='st'>"all"</span>, dispersion = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
+<span class='fu'>point_estimate</span>(<span class='kw'>df</span>, centrality = <span class='st'>"all"</span>, dispersion = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
 #&gt; 
 #&gt; </span><span>Parameter | Median |  MAD |  Mean |   SD |   MAP
 #&gt; ------------------------------------------------
@@ -295,7 +299,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; X2        |   0.20 | 0.87 |  0.19 | 0.96 |  0.24
 #&gt; X3        |  -0.07 | 0.89 | -0.01 | 0.94 | -0.25
 #&gt; X4        |  -0.09 | 1.02 |  0.03 | 1.00 | -0.33
-#&gt; </div><div class='input'><span class='fu'>point_estimate</span>(<span class='kw'>df</span>, centrality = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
+#&gt; </div><div class='input'><span class='fu'>point_estimate</span>(<span class='kw'>df</span>, centrality = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Point Estimates
 #&gt; 
 #&gt; </span><span>Parameter | Median |   MAP
 #&gt; --------------------------
@@ -331,6 +336,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 <span class='fu'>point_estimate</span>(<span class='kw'>bf</span>, centrality = <span class='st'>"all"</span>, dispersion = <span class='fl'>TRUE</span>)
 <span class='fu'>point_estimate</span>(<span class='kw'>bf</span>, centrality = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"median"</span>, <span class='st'>"MAP"</span>))
 }
+
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -336,11 +336,14 @@ reflecting high credibility of <code>0</code>. To detect such cases, the
 <span class='co'># Simulate a posterior distribution of mean 1 and SD 1</span>
 <span class='co'># ----------------------------------------------------</span>
 <span class='kw'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, mean = <span class='fl'>1</span>, sd = <span class='fl'>1</span>)
-<span class='fu'>p_direction</span>(<span class='kw'>posterior</span>)</div><div class='output co'>#&gt; pd = 83.60%</div><div class='input'><span class='fu'>p_direction</span>(<span class='kw'>posterior</span>, method = <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; pd = 82.63%</div><div class='input'>
+<span class='fu'>p_direction</span>(<span class='kw'>posterior</span>)
+</div><div class='output co'>#&gt; pd = 83.60%</div><div class='input'><span class='fu'>p_direction</span>(<span class='kw'>posterior</span>, method = <span class='st'>"kernel"</span>)
+</div><div class='output co'>#&gt; pd = 82.63%</div><div class='input'>
 <span class='co'># Simulate a dataframe of posterior distributions</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
-<span class='fu'>p_direction</span>(<span class='kw'>df</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Probability of Direction (pd)
+<span class='fu'>p_direction</span>(<span class='kw'>df</span>)
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Probability of Direction (pd)
 #&gt; 
 #&gt; </span><span>Parameter |     pd
 #&gt; ------------------
@@ -348,7 +351,8 @@ reflecting high credibility of <code>0</code>. To detect such cases, the
 #&gt; X2        | 51.00%
 #&gt; X3        | 59.00%
 #&gt; X4        | 50.00%
-#&gt; </div><div class='input'><span class='fu'>p_direction</span>(<span class='kw'>df</span>, method = <span class='st'>"kernel"</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
+#&gt; </div><div class='input'><span class='fu'>p_direction</span>(<span class='kw'>df</span>, method = <span class='st'>"kernel"</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
 #&gt; 
 #&gt; </span><span>Parameter |     pd
 #&gt; ------------------
@@ -390,7 +394,8 @@ reflecting high credibility of <code>0</code>. To detect such cases, the
   <span class='fu'>p_direction</span>(<span class='kw'>bf</span>)
   <span class='fu'>p_direction</span>(<span class='kw'>bf</span>, method = <span class='st'>"kernel"</span>)
 }
-}</div></span></pre>
+}
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

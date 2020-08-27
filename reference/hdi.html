@@ -347,12 +347,14 @@ the resulting HDI.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/bayestestR'>bayestestR</a></span>)
 
 <span class='kw'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>)
-<span class='fu'>hdi</span>(<span class='kw'>posterior</span>, ci = <span class='fl'>.89</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Highest Density Interval
+<span class='fu'>hdi</span>(<span class='kw'>posterior</span>, ci = <span class='fl'>.89</span>)
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span>89% HDI      
 #&gt; -------------
 #&gt; [-1.58, 1.67]
-#&gt; </div><div class='input'><span class='fu'>hdi</span>(<span class='kw'>posterior</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
+#&gt; </div><div class='input'><span class='fu'>hdi</span>(<span class='kw'>posterior</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
 #&gt; </span><span>80% HDI      
 #&gt; -------------
@@ -370,7 +372,8 @@ the resulting HDI.</p>
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
-<span class='fu'>hdi</span>(<span class='kw'>df</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Interval
+<span class='fu'>hdi</span>(<span class='kw'>df</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span>Parameter |       89% HDI
 #&gt; -------------------------
@@ -378,7 +381,8 @@ the resulting HDI.</p>
 #&gt; X2        | [-1.59, 1.53]
 #&gt; X3        | [-1.50, 1.90]
 #&gt; X4        | [-1.44, 1.39]
-#&gt; </div><div class='input'><span class='fu'>hdi</span>(<span class='kw'>df</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
+#&gt; </div><div class='input'><span class='fu'>hdi</span>(<span class='kw'>df</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Intervals
 #&gt; 
 #&gt; </span><span>Parameter |       80% HDI
 #&gt; -------------------------
@@ -422,7 +426,8 @@ the resulting HDI.</p>
 <span class='kw'>bf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
 <span class='fu'>hdi</span>(<span class='kw'>bf</span>)
 <span class='fu'>hdi</span>(<span class='kw'>bf</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span>))
-}</div></span></pre>
+}
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

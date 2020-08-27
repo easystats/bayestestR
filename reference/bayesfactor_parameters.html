@@ -462,7 +462,8 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 <span class='kw'>prior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, mean = <span class='fl'>0</span>, sd = <span class='fl'>1</span>)
 <span class='kw'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, mean = <span class='fl'>.5</span>, sd = <span class='fl'>.3</span>)
 
-<span class='fu'>bayesfactor_parameters</span>(<span class='kw'>posterior</span>, <span class='kw'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
+<span class='fu'>bayesfactor_parameters</span>(<span class='kw'>posterior</span>, <span class='kw'>prior</span>)
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
 #&gt; 
 #&gt; </span><span>BF   
 #&gt; -----
@@ -498,7 +499,8 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
   )
   <span class='fu'>bayesfactor_parameters</span>(<span class='kw'>brms_model</span>)
 }
-}</div></span></pre>
+}
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

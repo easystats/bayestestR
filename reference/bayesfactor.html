@@ -280,7 +280,8 @@ or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.<
 <span class='kw'>prior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, mean = <span class='fl'>0</span>, sd = <span class='fl'>1</span>)
 <span class='kw'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, mean = <span class='fl'>.5</span>, sd = <span class='fl'>.3</span>)
 
-<span class='fu'>bayesfactor</span>(<span class='kw'>posterior</span>, prior = <span class='kw'>prior</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: logspline</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
+<span class='fu'>bayesfactor</span>(<span class='kw'>posterior</span>, prior = <span class='kw'>prior</span>)
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: logspline</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
 #&gt; 
 #&gt; </span><span>BF   
 #&gt; -----
@@ -303,7 +304,8 @@ or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.<
 <span class='kw'>m2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>extra</span> <span class='op'>~</span> <span class='kw'>group</span> <span class='op'>+</span> <span class='kw'>ID</span>, data = <span class='kw'>sleep</span>)
 
 <span class='kw'>comparison</span> <span class='op'>&lt;-</span> <span class='fu'>bayesfactor</span>(<span class='kw'>m0</span>, <span class='kw'>m1</span>, <span class='kw'>m2</span>)
-<span class='kw'>comparison</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
+<span class='kw'>comparison</span>
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
 #&gt; </span><span>  Model                 BF
 #&gt;   [2] group          1.299
@@ -311,7 +313,8 @@ or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.<
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'>
-<span class='fu'>bayesfactor</span>(<span class='kw'>comparison</span>)</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)
+<span class='fu'>bayesfactor</span>(<span class='kw'>comparison</span>)
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)
 #&gt; 
 #&gt; </span><span>      Pr(prior) Pr(posterior) Inclusion BF
 #&gt; group     0.667             1     5614.208

@@ -209,11 +209,13 @@
 
 <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ci.html'>ci</a></span>(<span class='kw'>x</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.68</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span>))
-<span class='fu'>reshape_ci</span>(<span class='kw'>x</span>)</div><div class='output co'>#&gt;   Parameter  CI_low_68 CI_high_68 CI_low_89 CI_high_89 CI_low_95 CI_high_95
+<span class='fu'>reshape_ci</span>(<span class='kw'>x</span>)
+</div><div class='output co'>#&gt;   Parameter  CI_low_68 CI_high_68 CI_low_89 CI_high_89 CI_low_95 CI_high_95
 #&gt; 1        X1 -1.0147515   1.360947 -1.499165   2.057359 -1.652998   2.170620
 #&gt; 2        X2 -0.8520943   1.134661 -1.504062   1.832399 -1.702927   1.962836
 #&gt; 3        X3 -1.0674302   1.044977 -1.636316   1.748151 -1.973564   2.144929
-#&gt; 4        X4 -0.9424791   1.089103 -1.889010   1.623619 -2.058253   2.099978</div><div class='input'><span class='fu'>reshape_ci</span>(<span class='fu'>reshape_ci</span>(<span class='kw'>x</span>))</div><div class='output co'>#&gt;    Parameter CI     CI_low  CI_high
+#&gt; 4        X4 -0.9424791   1.089103 -1.889010   1.623619 -2.058253   2.099978</div><div class='input'><span class='fu'>reshape_ci</span>(<span class='fu'>reshape_ci</span>(<span class='kw'>x</span>))
+</div><div class='output co'>#&gt;    Parameter CI     CI_low  CI_high
 #&gt; 1         X1 68 -1.0147515 1.360947
 #&gt; 2         X1 89 -1.4991652 2.057359
 #&gt; 3         X1 95 -1.6529980 2.170620
@@ -228,7 +230,8 @@
 #&gt; 12        X4 95 -2.0582530 2.099978</div><div class='input'>
 <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='describe_posterior.html'>describe_posterior</a></span>(<span class='kw'>x</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.68</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span>))
-<span class='fu'>reshape_ci</span>(<span class='kw'>x</span>)</div><div class='output co'>#&gt;   Parameter      Median CI_low_95 CI_high_95  CI_low_68 CI_high_68 CI_low_89
+<span class='fu'>reshape_ci</span>(<span class='kw'>x</span>)
+</div><div class='output co'>#&gt;   Parameter      Median CI_low_95 CI_high_95  CI_low_68 CI_high_68 CI_low_89
 #&gt; 1        X1 -0.02936115 -1.779354   1.802264 -0.8039913  1.0084946 -1.779354
 #&gt; 2        X2 -0.04016018 -1.937312   1.900625 -1.3577419  0.9893288 -1.937312
 #&gt; 3        X3  0.05042967 -2.056262   2.334875 -0.7714339  1.0650680 -2.056262
@@ -237,7 +240,8 @@
 #&gt; 1   1.303599 0.52      89     -0.1       0.1      0.16666667
 #&gt; 2   1.566582 0.51      89     -0.1       0.1      0.06666667
 #&gt; 3   1.289457 0.53      89     -0.1       0.1      0.11111111
-#&gt; 4   1.922422 0.52      89     -0.1       0.1      0.02222222</div><div class='input'><span class='fu'>reshape_ci</span>(<span class='fu'>reshape_ci</span>(<span class='kw'>x</span>))</div><div class='output co'>#&gt;    Parameter      Median CI     CI_low   CI_high   pd ROPE_CI ROPE_low
+#&gt; 4   1.922422 0.52      89     -0.1       0.1      0.02222222</div><div class='input'><span class='fu'>reshape_ci</span>(<span class='fu'>reshape_ci</span>(<span class='kw'>x</span>))
+</div><div class='output co'>#&gt;    Parameter      Median CI     CI_low   CI_high   pd ROPE_CI ROPE_low
 #&gt; 1         X1 -0.02936115 68 -0.8039913 1.0084946 0.52      89     -0.1
 #&gt; 2         X1 -0.02936115 89 -1.7793544 1.3035991 0.52      89     -0.1
 #&gt; 3         X1 -0.02936115 95 -1.7793544 1.8022637 0.52      89     -0.1

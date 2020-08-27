@@ -336,7 +336,8 @@ that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm
 <span class='kw'>prior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, mean = <span class='fl'>0</span>, sd = <span class='fl'>1</span>)
 <span class='kw'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, mean = <span class='fl'>.5</span>, sd = <span class='fl'>.3</span>)
 
-<span class='fu'>si</span>(<span class='kw'>posterior</span>, <span class='kw'>prior</span>)</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Support Interval
+<span class='fu'>si</span>(<span class='kw'>posterior</span>, <span class='kw'>prior</span>)
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Support Interval
 #&gt; 
 #&gt; </span><span>BF = 1 SI   
 #&gt; ------------
@@ -369,7 +370,8 @@ that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm
   prior = <span class='kw'>my_custom_priors</span>
 )
 <span class='fu'>si</span>(<span class='kw'>brms_model</span>)
-}</div></span></pre>
+}
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
