@@ -131,7 +131,16 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
     }
 
     ## TODO no BF for arm::sim
-    if (inherits(x, c("sim", "sim.merMod", "mcmc", "stanfit"))) test <- setdiff(test, "bf")
+    if (inherits(x, c("sim", "sim.merMod", "mcmc", "stanfit"))) {
+      test <- setdiff(test, "bf")
+    }
+
+    ## TODO enable once "rope()" works for multi-response models
+
+    # no ROPE for multi-response models
+    if (insight::is_multivariate(x)) {
+      test <- setdiff(test, c("rope", "p_rope"))
+    }
 
     # MAP-based p-value
 
