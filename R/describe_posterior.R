@@ -80,7 +80,7 @@
 #' }
 #' }
 #' @importFrom stats mad median sd setNames
-#'
+#' @importFrom insight is_multivariate
 #' @export
 describe_posterior <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, ...) {
   UseMethod("describe_posterior")
