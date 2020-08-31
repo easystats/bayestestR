@@ -140,6 +140,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
     # no ROPE for multi-response models
     if (insight::is_multivariate(x)) {
       test <- setdiff(test, c("rope", "p_rope"))
+      warning("Multivariate response models are not yet supported for tests 'rope' and 'p_rope'.", call. = FALSE)
     }
 
     # MAP-based p-value
