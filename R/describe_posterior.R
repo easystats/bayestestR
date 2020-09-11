@@ -627,7 +627,7 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
   # Compute and readd BF a posteriori
   if (compute_bf) {
     tryCatch({
-      out$BF <- as.data.frame(bayesfactor_models(posteriors, ...))[-1, ]$BF
+      out$BF <- as.data.frame(bayesfactor_models(posteriors[1], ...))[-1, ]$BF
     },
     error = function(e) { NULL }
     )
