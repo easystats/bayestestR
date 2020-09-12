@@ -57,3 +57,11 @@ if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
     }
   }
 }
+
+
+if (require("BayesFactor", quietly = TRUE)) {
+  mods <- regressionBF(mpg ~ am + cyl, mtcars, progress = FALSE)
+  rx <- suppressMessages(rope(mods))
+  expect_equal(rx$ROPE_high, -rx$ROPE_low)
+  expect_equal(rx$ROPE_high[1], 0.6026948)
+}

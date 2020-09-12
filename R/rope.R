@@ -197,6 +197,9 @@ rope.emmGrid <- function(x, range = "default", ci = .89, ci_method = "HDI", verb
 #' @rdname rope
 #' @export
 rope.BFBayesFactor <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
+  if (all(range == "default")) {
+    range <- rope_range(x)
+  }
   out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out

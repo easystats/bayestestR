@@ -6,7 +6,8 @@
 
 ## Bug fixes
 
-* Fixed issue in `describe_posterior()` for multiple-response models.
+- Fixed issue in `describe_posterior()` for multiple-response models.
+- Fixed issue with *default* rope range for `BayesFactor` models.
 
 # bayestestR 0.7.2
 
