@@ -16,7 +16,7 @@
 
 # remove NULL elements from lists
 #' @keywords internal
-.compact_list <- function(x) x[!sapply(x, function(i) length(i) == 0 || is.null(i) || any(i == "NULL"))]
+.compact_list <- function(x) x[!sapply(x, function(i) length(i) == 0 || is.null(i) || any(i == "NULL", na.rm = TRUE))]
 
 # is string empty?
 #' @keywords internal
