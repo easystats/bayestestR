@@ -1,3 +1,10 @@
+# bayestestR 0.7.3.001
+
+## New functions
+
+- Added `as.matrix()` function for `bayesfactor_model` arrays.
+
+
 # bayestestR 0.7.3
 
 ## New functions
