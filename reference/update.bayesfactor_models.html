@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Update bayesfactor_models — update.bayesfactor_models • bayestestR</title>
+<title>Methods for bayesfactor_models — update.bayesfactor_models • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Update bayesfactor_models — update.bayesfactor_models" />
-<meta property="og:description" content="Update bayesfactor_models" />
+<meta property="og:title" content="Methods for bayesfactor_models — update.bayesfactor_models" />
+<meta property="og:description" content="Methods for bayesfactor_models" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -183,23 +183,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Update bayesfactor_models</h1>
+    <h1>Methods for <code>bayesfactor_models</code></h1>
     <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/update.bayesfactor_models.R'><code>R/update.bayesfactor_models.R</code></a></small>
     <div class="hidden name"><code>update.bayesfactor_models.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Update bayesfactor_models</p>
+    <p>Methods for <code>bayesfactor_models</code></p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for bayesfactor_models</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='kw'>object</span>, subset = <span class='kw'>NULL</span>, reference = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='kw'>object</span>, subset = <span class='kw'>NULL</span>, reference = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+
+<span class='co'># S3 method for bayesfactor_models</span>
+<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='kw'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
+      <th>object, x</th>
       <td><p>A <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code> object.</p></td>
     </tr>
     <tr>
@@ -213,6 +216,10 @@
     <tr>
       <th>...</th>
       <td><p>Currently not used.</p></td>
+    </tr>
+    <tr>
+      <th>log</th>
+      <td><p>Return logged Bayes factors?</p></td>
     </tr>
     </table>
 
@@ -231,6 +238,7 @@
 <span class='kw'>m</span>
 
 <span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span>(<span class='kw'>m</span>, reference = <span class='st'>"bottom"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='kw'>m</span>)
 }
 </div></pre>
   </div>
