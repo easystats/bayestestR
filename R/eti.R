@@ -146,7 +146,8 @@ eti.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"),
 
   out <- .prepare_output(
     eti(insight::get_parameters(x, effects = effects, parameters = parameters), ci = ci, verbose = verbose, ...),
-    insight::clean_parameters(x)
+    insight::clean_parameters(x),
+    inherits(x, "stanmvreg")
   )
 
   class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))

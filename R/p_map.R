@@ -205,7 +205,8 @@ p_map.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("f
 
   out <- .prepare_output(
     p_map(insight::get_parameters(x, effects = effects, parameters = parameters), precision = precision, method = method),
-    insight::clean_parameters(x)
+    insight::clean_parameters(x),
+    inherits(x, "stanmvreg")
   )
 
   class(out) <- unique(c("p_map", class(out)))

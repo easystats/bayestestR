@@ -34,15 +34,14 @@ if (!requireNamespace("see", quietly = TRUE) ||
     !requireNamespace("tidyr", quietly = TRUE) ||
     !requireNamespace("logspline", quietly = TRUE) ||
     !requireNamespace("KernSmooth", quietly = TRUE) ||
-    !requireNamespace("tidyr", quietly = TRUE) ||
     !requireNamespace("GGally", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
 library(knitr)
 options(knitr.kable.NA = '')
-knitr::opts_chunk$set(comment=">")
-options(digits=2)
+knitr::opts_chunk$set(comment = ">")
+options(digits = 2)
 
 set.seed(333)
 ```

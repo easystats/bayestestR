@@ -188,7 +188,7 @@ p_significance.stanreg <- function(x, threshold = "default", effects = c("fixed"
     threshold = threshold
   )
 
-  out <- .prepare_output(data, insight::clean_parameters(x))
+  out <- .prepare_output(data, insight::clean_parameters(x), inherits(x, "stanmvreg"))
 
   attr(out, "threshold") <- threshold
   attr(out, "object_name") <- .safe_deparse(substitute(x))

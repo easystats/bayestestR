@@ -5,6 +5,9 @@
 #' @inheritParams effective_sample
 #' @param n Size of the simulated prior distributions.
 #'
+#' @seealso \code{\link{unupdate}} for directly sampling from the prior
+#'   distribution (useful for complex priors and designs).
+#'
 #' @examples
 #' \dontrun{
 #' library(bayestestR)

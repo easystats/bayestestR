@@ -2,46 +2,61 @@
 % Please edit documentation in R/distribution.R
 \name{distribution}
 \alias{distribution}
-\alias{distribution_normal}
+\alias{distribution_custom}
+\alias{distribution_beta}
 \alias{distribution_binomial}
+\alias{distribution_binom}
 \alias{distribution_cauchy}
+\alias{distribution_chisquared}
+\alias{distribution_chisq}
+\alias{distribution_gamma}
+\alias{distribution_mixture_normal}
+\alias{distribution_normal}
+\alias{distribution_gaussian}
 \alias{distribution_poisson}
 \alias{distribution_student}
-\alias{distribution_chisquared}
-\alias{distribution_uniform}
-\alias{distribution_beta}
+\alias{distribution_t}
+\alias{distribution_student_t}
 \alias{distribution_tweedie}
-\alias{distribution_gamma}
-\alias{distribution_custom}
-\alias{distribution_mixture_normal}
+\alias{distribution_uniform}
 \alias{rnorm_perfect}
 \title{Empirical Distributions}
 \usage{
 distribution(type = "normal", ...)
 
-distribution_normal(n, mean = 0, sd = 1, random = FALSE, ...)
+distribution_custom(n, type = "norm", ..., random = FALSE)
+
+distribution_beta(n, shape1, shape2, ncp = 0, random = FALSE, ...)
 
 distribution_binomial(n, size = 1, prob = 0.5, random = FALSE, ...)
 
+distribution_binom(n, size = 1, prob = 0.5, random = FALSE, ...)
+
 distribution_cauchy(n, location = 0, scale = 1, random = FALSE, ...)
+
+distribution_chisquared(n, df, ncp = 0, random = FALSE, ...)
+
+distribution_chisq(n, df, ncp = 0, random = FALSE, ...)
+
+distribution_gamma(n, shape, scale = 1, random = FALSE, ...)
+
+distribution_mixture_normal(n, mean = c(-3, 3), sd = 1, random = FALSE, ...)
+
+distribution_normal(n, mean = 0, sd = 1, random = FALSE, ...)
+
+distribution_gaussian(n, mean = 0, sd = 1, random = FALSE, ...)
 
 distribution_poisson(n, lambda = 1, random = FALSE, ...)
 
 distribution_student(n, df, ncp, random = FALSE, ...)
 
-distribution_chisquared(n, df, ncp = 0, random = FALSE, ...)
+distribution_t(n, df, ncp, random = FALSE, ...)
 
-distribution_uniform(n, min = 0, max = 1, random = FALSE, ...)
-
-distribution_beta(n, shape1, shape2, ncp = 0, random = FALSE, ...)
+distribution_student_t(n, df, ncp, random = FALSE, ...)
 
 distribution_tweedie(n, xi = NULL, mu, phi, power = NULL, random = FALSE, ...)
 
-distribution_gamma(n, shape, scale = 1, random = FALSE, ...)
-
-distribution_custom(n, type = "norm", ..., random = FALSE)
-
-distribution_mixture_normal(n, mean = c(-3, 3), sd = 1, random = FALSE, ...)
+distribution_uniform(n, min = 0, max = 1, random = FALSE, ...)
 
 rnorm_perfect(n, mean = 0, sd = 1)
 }
@@ -52,11 +67,13 @@ rnorm_perfect(n, mean = 0, sd = 1)
 
 \item{n}{the number of observations}
 
-\item{mean}{vector of means.}
-
-\item{sd}{vector of standard deviations.}
-
 \item{random}{Generate near-perfect or random (simple wrappers for the base R \code{r*} functions) distributions.}
+
+\item{shape1}{non-negative parameters of the Beta distribution.}
+
+\item{shape2}{non-negative parameters of the Beta distribution.}
+
+\item{ncp}{non-centrality parameter.}
 
 \item{size}{number of trials (zero or more).}
 
@@ -66,22 +83,16 @@ rnorm_perfect(n, mean = 0, sd = 1)
 
 \item{scale}{location and scale parameters.}
 
+\item{df}{degrees of freedom (non-negative, but can be non-integer).}
+
+\item{shape}{shape and scale parameters.  Must be positive,
+    \code{scale} strictly.}
+
+\item{mean}{vector of means.}
+
+\item{sd}{vector of standard deviations.}
+
 \item{lambda}{vector of (non-negative) means.}
-
-\item{df}{degrees of freedom (\eqn{> 0}, maybe non-integer).  \code{df
-      = Inf} is allowed.}
-
-\item{ncp}{non-centrality parameter \eqn{\delta}{delta};
-    currently except for \code{rt()}, only for \code{abs(ncp) <= 37.62}.
-    If omitted, use the central t distribution.}
-
-\item{min}{lower and upper limits of the distribution.  Must be finite.}
-
-\item{max}{lower and upper limits of the distribution.  Must be finite.}
-
-\item{shape1}{non-negative parameters of the Beta distribution.}
-
-\item{shape2}{non-negative parameters of the Beta distribution.}
 
 \item{xi}{the value of \eqn{\xi}{xi} such that the variance is 
 	\eqn{\mbox{var}[Y]=\phi\mu^{\xi}}{var(Y) = phi * mu^xi}}
@@ -92,8 +103,9 @@ rnorm_perfect(n, mean = 0, sd = 1)
 
 \item{power}{a synonym for \eqn{\xi}{xi}}
 
-\item{shape}{shape and scale parameters.  Must be positive,
-    \code{scale} strictly.}
+\item{min}{lower and upper limits of the distribution.  Must be finite.}
+
+\item{max}{lower and upper limits of the distribution.  Must be finite.}
 }
 \description{
 Generate a sequence of n-quantiles, i.e., a sample of size \code{n} with a near-perfect distribution.

@@ -16,7 +16,7 @@
 
 # remove NULL elements from lists
 #' @keywords internal
-.compact_list <- function(x) x[!sapply(x, function(i) length(i) == 0 || is.null(i) || any(i == "NULL"))]
+.compact_list <- function(x) x[!sapply(x, function(i) length(i) == 0 || is.null(i) || any(i == "NULL", na.rm = TRUE))]
 
 # is string empty?
 #' @keywords internal
@@ -140,10 +140,26 @@
 
 
 #' @keywords internal
-.prepare_output <- function(temp, cleaned_parameters) {
-  merge_by <- intersect(c("Parameter", "Effects", "Component"), colnames(temp))
+.prepare_output <- function(temp, cleaned_parameters, is_stan_mv = FALSE) {
+  if (isTRUE(is_stan_mv)) {
+    temp$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", temp$Parameter)
+    for (i in unique(temp$Response)) {
+      temp$Parameter <- gsub(sprintf("%s|", i), "", temp$Parameter, fixed = TRUE)
+    }
+    merge_by <- c("Parameter", "Effects", "Component", "Response")
+    remove_cols <- c("Group", "Cleaned_Parameter", "Function", ".roworder")
+  } else {
+    merge_by <- c("Parameter", "Effects", "Component")
+    remove_cols <- c("Group", "Cleaned_Parameter", "Response", "Function", ".roworder")
+  }
+  merge_by <- intersect(merge_by, colnames(temp))
   temp$.roworder <- 1:nrow(temp)
   out <- merge(x = temp, y = cleaned_parameters, by = merge_by, all.x = TRUE)
+  # hope this works for stanmvreg...
+  if (isTRUE(is_stan_mv) && all(is.na(out$Effects)) && all(is.na(out$Component))) {
+    out$Effects <- cleaned_parameters$Effects[1:nrow(out)]
+    out$Component <- cleaned_parameters$Component[1:nrow(out)]
+  }
   # this here is required for multiple response models...
   if (all(is.na(out$Effects)) || all(is.na(out$Component))) {
     out <- out[!duplicated(out$.roworder), ]
@@ -151,7 +167,7 @@
     out <- out[!is.na(out$Effects) & !is.na(out$Component) & !duplicated(out$.roworder), ]
   }
   attr(out, "Cleaned_Parameter") <- out$Cleaned_Parameter[order(out$.roworder)]
-  .remove_column(out[order(out$.roworder), ], c("Group", "Cleaned_Parameter", "Response", "Function", ".roworder"))
+  .remove_column(out[order(out$.roworder), ], remove_cols)
 }
 
 

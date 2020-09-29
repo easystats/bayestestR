@@ -64,10 +64,29 @@ or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \value{
-Values between 0.5 and 1 corresponding to the probability of direction (pd). In some rare situations, especially when using when using model averaged posteriors (see \code{brms::weighted_posteriors} or \code{brms::posterior_average}), this value may be lower than 0.5.
+Values between 0.5 and 1 corresponding to the probability of direction (pd).
+\cr\cr
+Note that in some (rare) cases, especially when used with model averaged
+posteriors (see \code{\link{weighted_posteriors}} or
+\code{brms::posterior_average}), \code{pd} can be smaller than \code{0.5},
+reflecting high credibility of \code{0}. To detect such cases, the
+\code{method = "direct"} must be used.
 }
 \description{
-Compute the \strong{Probability of Direction} (\strong{\emph{pd}}, also known as the Maximum Probability of Effect - \emph{MPE}). It varies between 50\% and 100\% (\emph{i.e.}, \code{0.5} and \code{1}) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median's sign. Although differently expressed, this index is fairly similar (\emph{i.e.}, is strongly correlated) to the frequentist \strong{p-value}. In some rare situations, especially when using when using model averaged posteriors (see \code{\link{weighted_posteriors}} or \code{brms::posterior_average}), this value may be lower than 0.5.
+Compute the \strong{Probability of Direction} (\strong{\emph{pd}}, also known
+as the Maximum Probability of Effect - \emph{MPE}). It varies between 50\%
+and 100\% (\emph{i.e.}, \code{0.5} and \code{1}) and can be interpreted as
+the probability (expressed in percentage) that a parameter (described by its
+posterior distribution) is strictly positive or negative (whichever is the
+most probable). It is mathematically defined as the proportion of the
+posterior distribution that is of the median's sign. Although differently
+expressed, this index is fairly similar (\emph{i.e.}, is strongly correlated)
+to the frequentist \strong{p-value}.
+\cr\cr
+Note that in some (rare) cases, especially when used with model averaged
+posteriors (see \code{\link{weighted_posteriors}} or
+\code{brms::posterior_average}), \code{pd} can be smaller than \code{0.5},
+reflecting high credibility of \code{0}.
 }
 \details{
 \subsection{What is the \emph{pd}?}{

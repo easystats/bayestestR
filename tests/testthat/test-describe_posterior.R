@@ -1,5 +1,4 @@
 if (require("rstanarm") && require("brms") && require("insight")) {
-  context("describe_posterior")
 
   test_that("describe_posterior", {
     set.seed(333)
@@ -27,13 +26,12 @@ if (require("rstanarm") && require("brms") && require("insight")) {
   })
 
 
-  .runThisTest <- Sys.getenv("RunAllinsightTests") == "yes"
-  if (.runThisTest || Sys.getenv("USER") == "travis") {
+  .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
+  if (.runThisTest) {
     test_that("describe_posterior", {
       set.seed(333)
       # Rstanarm
-      library(rstanarm)
-      x <- rstanarm::stan_glm(mpg ~ wt, data = mtcars, refresh=0)
+      x <- rstanarm::stan_glm(mpg ~ wt, data = mtcars, refresh = 0)
       rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
       testthat::expect_equal(dim(rez), c(2, 21))
       testthat::expect_equal(colnames(rez), c("Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
@@ -46,8 +44,7 @@ if (require("rstanarm") && require("brms") && require("insight")) {
       testthat::expect_equal(dim(rez), c(2, 4))
 
       # Brms
-      library(brms)
-      x <- brms::brm(mpg ~ wt + (1 | cyl) + (1 + wt | gear), data = mtcars, refresh=0)
+      x <- brms::brm(mpg ~ wt + (1 | cyl) + (1 + wt | gear), data = mtcars, refresh = 0)
       rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, ci = c(0.8, 0.9))
       testthat::expect_equal(dim(rez), c(4, 16))
       testthat::expect_equal(colnames(rez), c("Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
@@ -57,15 +54,15 @@ if (require("rstanarm") && require("brms") && require("insight")) {
       testthat::expect_equal(dim(rez), c(2, 4))
 
       # With non standard algorithms
-      model <- rstanarm::stan_glm(mpg ~ drat, data=mtcars, algorithm="meanfield", refresh=0)
+      model <- rstanarm::stan_glm(mpg ~ drat, data = mtcars, algorithm = "meanfield", refresh = 0)
       testthat::expect_equal(nrow(describe_posterior(model)), 2)
-      model <- brms::brm(mpg ~ drat, data=mtcars, chains=2, algorithm="meanfield", refresh=0)
+      model <- brms::brm(mpg ~ drat, data = mtcars, chains = 2, algorithm = "meanfield", refresh = 0)
       testthat::expect_equal(nrow(describe_posterior(model)), 2)
-      model <- rstanarm::stan_glm(mpg ~ drat, data=mtcars, algorithm="optimizing", refresh=0)
+      model <- rstanarm::stan_glm(mpg ~ drat, data = mtcars, algorithm = "optimizing", refresh = 0)
       testthat::expect_equal(nrow(describe_posterior(model)), 2)
-      model <- rstanarm::stan_glm(mpg ~ drat, data=mtcars, algorithm="fullrank", refresh=0)
+      model <- rstanarm::stan_glm(mpg ~ drat, data = mtcars, algorithm = "fullrank", refresh = 0)
       testthat::expect_equal(nrow(describe_posterior(model)), 2)
-      # model <- brms::brm(mpg ~ drat, data=mtcars, chains=2, algorithm="fullrank", refresh=0)
+      # model <- brms::brm(mpg ~ drat, data = mtcars, chains=2, algorithm="fullrank", refresh=0)
       # testthat::expect_equal(nrow(describe_posterior(model)), 2)
 
       # BayesFactor

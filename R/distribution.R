@@ -17,39 +17,58 @@
 #' @export
 distribution <- function(type = "normal", ...) {
   basr_r_distributions <- c(
-    "beta", "binom", "cauchy", "chisq", "chisquared", "exp", "f",
-    "gamma", "geom", "hyper", "lnorm", "multinom", "nbinom", "normal",
+    "beta", "binom", "binomial", "cauchy", "chisq", "chisquared", "exp", "f",
+    "gamma", "geom", "hyper", "lnorm", "multinom", "nbinom", "normal", "gaussian",
     "pois", "poisson", "student", "t", "student_t", "unif", "uniform", "weibull"
   )
   switch(
     match.arg(arg = type, choices = basr_r_distributions),
-    "normal" = distribution_normal(...),
+    "beta" = distribution_beta(...),
+    "binom" = ,
+    "binomial" = distribution_binomial(...),
     "cauchy" = distribution_cauchy(...),
-    "poisson" = distribution_poisson(...),
+    "chisq" = ,
+    "chisquared" = distribution_chisquared(...),
     "gamma" = distribution_gamma(...),
+    "gaussian" = ,
+    "normal" = distribution_normal(...),
+    "poisson" = distribution_poisson(...),
     "t" = ,
     "student" = ,
     "student_t" = distribution_student(...),
-    "chisquared" = distribution_chisquared(...),
     "uniform" = distribution_uniform(...),
-    "beta" = distribution_beta(...),
     distribution_custom(type = type, ...)
   )
+}
+
+
+#' @rdname distribution
+#' @inheritParams distribution
+#' @export
+distribution_custom <- function(n, type = "norm", ..., random = FALSE) {
+  if (random) {
+    f <- match.fun(paste0("r", type))
+    f(n, ...)
+  } else {
+    f <- match.fun(paste0("q", type))
+    f(seq(1 / n, 1 - 1 / n, length.out = n), ...)
+  }
 }
 
 
 
 
 
+
 #' @rdname distribution
-#' @inheritParams stats::rnorm
-#' @importFrom stats qnorm rnorm
+#' @inheritParams stats::rbeta
+#' @importFrom stats rbeta qbeta
 #' @export
-distribution_normal <- function(n, mean = 0, sd = 1, random = FALSE, ...) {
+distribution_beta <- function(n, shape1, shape2, ncp = 0, random = FALSE, ...) {
   if (random) {
-    stats::rnorm(n, mean, sd)
+    stats::rbeta(n, shape1, shape2, ncp = ncp)
   } else {
-    stats::qnorm(seq(1 / n, 1 - 1 / n, length.out = n), mean, sd, ...)
+    stats::qbeta(seq(1 / n, 1 - 1 / n, length.out = n), shape1, shape2, ncp = ncp, ...)
   }
 }
 
@@ -66,6 +85,10 @@ distribution_binomial <- function(n, size = 1, prob = 0.5, random = FALSE, ...) 
 }
 
 
+#' @rdname distribution
+distribution_binom <- distribution_binomial
+
+
 
 #' @rdname distribution
 #' @inheritParams stats::rcauchy
@@ -79,6 +102,69 @@ distribution_cauchy <- function(n, location = 0, scale = 1, random = FALSE, ...)
   }
 }
 
+#' @rdname distribution
+#' @inheritParams stats::rchisq
+#' @importFrom stats rchisq qchisq
+#' @export
+distribution_chisquared <- function(n, df, ncp = 0, random = FALSE, ...) {
+  if (random) {
+    stats::rchisq(n, df, ncp)
+  } else {
+    stats::qchisq(seq(1 / n, 1 - 1 / n, length.out = n), df, ncp, ...)
+  }
+}
+
+#' @rdname distribution
+distribution_chisq <- distribution_chisquared
+
+
+
+#' @rdname distribution
+#' @inheritParams stats::rgamma
+#' @importFrom stats rgamma qgamma
+#' @export
+distribution_gamma <- function(n, shape, scale = 1, random = FALSE, ...) {
+  if (random) {
+    stats::rgamma(n = n, shape = shape, scale = scale)
+  } else {
+    stats::qgamma(p = seq(1 / n, 1 - 1 / n, length.out = n), shape = shape, scale = scale)
+  }
+}
+
+
+#' @rdname distribution
+#' @inheritParams stats::rnorm
+#' @importFrom stats rbeta qbeta
+#' @export
+distribution_mixture_normal <- function(n, mean = c(-3, 3), sd = 1, random = FALSE, ...) {
+  n <- round(n / length(mean))
+  sd <- c(sd)
+  if (length(sd) != length(mean)) {
+    sd <- rep(sd, length.out = length(mean))
+  }
+
+
+  x <- c()
+  for (i in 1:length(mean)) {
+    x <- c(x, distribution_normal(n = n, mean = mean[i], sd = sd[i], random = random))
+  }
+  x
+}
+
+#' @rdname distribution
+#' @inheritParams stats::rnorm
+#' @importFrom stats qnorm rnorm
+#' @export
+distribution_normal <- function(n, mean = 0, sd = 1, random = FALSE, ...) {
+  if (random) {
+    stats::rnorm(n, mean, sd)
+  } else {
+    stats::qnorm(seq(1 / n, 1 - 1 / n, length.out = n), mean, sd, ...)
+  }
+}
+
+#' @rdname distribution
+distribution_gaussian <- distribution_normal
 
 #' @rdname distribution
 #' @inheritParams stats::rpois
@@ -105,47 +191,11 @@ distribution_student <- function(n, df, ncp, random = FALSE, ...) {
   }
 }
 
+#' @rdname distribution
+distribution_t <- distribution_student
 
 #' @rdname distribution
-#' @inheritParams stats::rchisq
-#' @importFrom stats rchisq qchisq
-#' @export
-distribution_chisquared <- function(n, df, ncp = 0, random = FALSE, ...) {
-  if (random) {
-    stats::rchisq(n, df, ncp)
-  } else {
-    stats::qchisq(seq(1 / n, 1 - 1 / n, length.out = n), df, ncp, ...)
-  }
-}
-
-
-#' @rdname distribution
-#' @inheritParams stats::runif
-#' @importFrom stats runif qunif
-#' @export
-distribution_uniform <- function(n, min = 0, max = 1, random = FALSE, ...) {
-  if (random) {
-    stats::runif(n, min, max)
-  } else {
-    stats::qunif(seq(1 / n, 1 - 1 / n, length.out = n), min, max, ...)
-  }
-}
-
-
-
-
-#' @rdname distribution
-#' @inheritParams stats::rbeta
-#' @importFrom stats rbeta qbeta
-#' @export
-distribution_beta <- function(n, shape1, shape2, ncp = 0, random = FALSE, ...) {
-  if (random) {
-    stats::rbeta(n, shape1, shape2, ncp = ncp)
-  } else {
-    stats::qbeta(seq(1 / n, 1 - 1 / n, length.out = n), shape1, shape2, ncp = ncp, ...)
-  }
-}
-
+distribution_student_t <- distribution_student
 
 #' @rdname distribution
 #' @inheritParams tweedie::rtweedie
@@ -162,53 +212,18 @@ distribution_tweedie <- function(n, xi = NULL, mu, phi, power = NULL, random = F
   }
 }
 
-
 #' @rdname distribution
-#' @inheritParams stats::rgamma
-#' @importFrom stats rgamma qgamma
+#' @inheritParams stats::runif
+#' @importFrom stats runif qunif
 #' @export
-distribution_gamma <- function(n, shape, scale = 1, random = FALSE, ...) {
+distribution_uniform <- function(n, min = 0, max = 1, random = FALSE, ...) {
   if (random) {
-    stats::rgamma(n = n, shape = shape, scale = scale)
+    stats::runif(n, min, max)
   } else {
-    stats::qgamma(p = seq(1 / n, 1 - 1 / n, length.out = n), shape = shape, scale = scale)
+    stats::qunif(seq(1 / n, 1 - 1 / n, length.out = n), min, max, ...)
   }
 }
 
-
-#' @rdname distribution
-#' @inheritParams distribution
-#' @export
-distribution_custom <- function(n, type = "norm", ..., random = FALSE) {
-  if (random) {
-    f <- match.fun(paste0("r", type))
-    f(n, ...)
-  } else {
-    f <- match.fun(paste0("q", type))
-    f(seq(1 / n, 1 - 1 / n, length.out = n), ...)
-  }
-}
-
-
-
-#' @rdname distribution
-#' @inheritParams stats::rnorm
-#' @importFrom stats rbeta qbeta
-#' @export
-distribution_mixture_normal <- function(n, mean = c(-3, 3), sd = 1, random = FALSE, ...) {
-  n <- round(n / length(mean))
-  sd <- c(sd)
-  if (length(sd) != length(mean)) {
-    sd <- rep(sd, length.out = length(mean))
-  }
-
-
-  x <- c()
-  for (i in 1:length(mean)) {
-    x <- c(x, distribution_normal(n = n, mean = mean[i], sd = sd[i], random = random))
-  }
-  x
-}
 
 
 

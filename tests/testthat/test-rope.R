@@ -29,8 +29,8 @@ if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
   })
 
 
-  .runThisTest <- Sys.getenv("RunAllinsightTests") == "yes"
-  if (.runThisTest || Sys.getenv("USER") == "travis") {
+  .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
+  if (.runThisTest) {
     if (require("insight")) {
       m <- insight::download_model("stanreg_merMod_5")
       p <- insight::get_parameters(m, effects = "all")

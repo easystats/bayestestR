@@ -189,6 +189,12 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
 
   if (fix_mediator) mediator <- .fix_factor_name(model, mediator)
 
+  if (inherits(model, "brmsfit")) {
+    response_name <- names(response)
+  } else {
+    response_name <- unname(response)
+  }
+
   # brms removes underscores from variable names when naming estimates
   # so we need to fix variable names here
 
@@ -251,10 +257,10 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
   attr(res, "ci_method") <- method
   attr(res, "treatment") <- treatment
   attr(res, "mediator") <- mediator
-  attr(res, "response") <- response[treatment.model]
+  attr(res, "response") <- response_name[treatment.model]
   attr(res, "data") <- samples
 
-  class(res) <- c("bayestestR_mediation", class(res))
+  class(res) <- c("bayestestR_mediation", "see_bayestestR_mediation", class(res))
   res
 }
 
@@ -338,4 +344,14 @@ print.bayestestR_mediation <- function(x, digits = 3, ...) {
   if (any(prop_mediated_ori$Estimate < 0) ) {
     message("\nDirect and indirect effects have opposite directions. The proportion mediated is not meaningful.")
   }
+}
+
+
+
+#' @export
+plot.bayestestR_mediation <- function(x, ...) {
+  if (!requireNamespace("see", quietly = TRUE)) {
+    stop("Package 'see' needed to plot results from mediation analysis. Please install it by running `install.packages('see')`.")
+  }
+  NextMethod()
 }
