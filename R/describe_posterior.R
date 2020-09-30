@@ -408,7 +408,7 @@ describe_posterior.emmGrid <- function(posteriors, centrality = "median", disper
     bf_prior <- samps$prior
     posteriors <- samps$posterior
   } else {
-    posteriors <- .clean_emmeans_draws(posteriors)
+    posteriors <- insight::get_parameters(posteriors)
   }
 
 
@@ -431,6 +431,10 @@ describe_posterior.emmGrid <- function(posteriors, centrality = "median", disper
 
   out
 }
+
+
+#' @export
+describe_posterior.emm_list <- describe_posterior.emmGrid
 
 
 

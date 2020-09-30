@@ -77,8 +77,49 @@
     prior <- stats::update(posterior, post.beta = prior)
   }
 
-  prior <- .clean_emmeans_draws(prior)
-  posterior <- .clean_emmeans_draws(posterior)
+  prior <- insight::get_parameters(prior)
+  posterior <- insight::get_parameters(posterior)
+
+  list(posterior = posterior,
+       prior = prior)
+}
+
+.clean_priors_and_posteriors.emm_list <- function(posterior, prior,
+                                                  verbose = TRUE) {
+  if (is.null(prior)) {
+    prior <- posterior
+    warning(
+      "Prior not specified! ",
+      "Please provide the original model to get meaningful results."
+    )
+  } else if (!inherits(prior, "emm_list")) {
+    prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
+    if (is(prior, "try-error")) {
+      if (grepl("flat priors", prior)) {
+        prior <- paste0(prior, "Could not therefore compute Bayes factors, as these inform about ",
+                        "the raltive likelihood of two 'hypotheses', and flat priors provide no ",
+                        "likelihood.\n",
+                        "See '?bayesfactor_parameters' for more information.\n")
+      }
+      stop(prior, call. = FALSE)
+    }
+  }
+  # prior is now a model, or emm_list
+
+  # is it a model?
+  pass_em <- inherits(prior, "emm_list")
+
+  res <- lapply(seq_along(posterior), function(i) {
+    .clean_priors_and_posteriors.emmGrid(
+      posterior[[i]],
+      prior = if (pass_em) prior[[i]] else prior,
+      verbose = verbose
+    )
+  })
+
+  posterior <- do.call("cbind", lapply(res, "[[", "posterior"))
+  prior <- do.call("cbind", lapply(res, "[[", "prior"))
+
 
   list(posterior = posterior,
        prior = prior)

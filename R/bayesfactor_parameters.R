@@ -272,6 +272,9 @@ bayesfactor_parameters.emmGrid <- function(posterior,
   )
 }
 
+#' @export
+bayesfactor_parameters.emm_list <- bayesfactor_parameters.emmGrid
+
 
 #' @rdname bayesfactor_parameters
 #' @export

@@ -164,12 +164,15 @@ p_significance.bayesQR <- function(x, threshold = "default", ...) {
 #' @rdname p_significance
 #' @export
 p_significance.emmGrid <- function(x, threshold = "default", ...) {
-  xdf <- .clean_emmeans_draws(x)
-  out <- p_significance(xdf, threshold = threshold, ...)
+  xdf <- insight::get_parameters(x)
 
+  out <- p_significance(xdf, threshold = threshold, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
+
+#' @export
+p_significance.emm_list <- p_significance.emmGrid
 
 
 

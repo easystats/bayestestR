@@ -179,6 +179,10 @@ si.emmGrid <- function(posterior, prior = NULL,
   out
 }
 
+#' @export
+si.emm_list <- si.emmGrid
+
+
 #' @rdname si
 #' @export
 si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){

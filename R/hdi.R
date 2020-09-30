@@ -186,11 +186,15 @@ hdi.sim <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
 #' @rdname hdi
 #' @export
 hdi.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
-  xdf <- .clean_emmeans_draws(x)
+  xdf <- insight::get_parameters(x)
+
   out <- hdi(xdf, ci = ci, verbose = verbose, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
+
+#' @export
+hdi.emm_list <- hdi.emmGrid
 
 
 

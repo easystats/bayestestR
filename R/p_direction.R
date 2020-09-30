@@ -207,11 +207,15 @@ p_direction.bayesQR <- function(x, method = "direct", ...) {
 #' @rdname p_direction
 #' @export
 p_direction.emmGrid <- function(x, method = "direct", ...) {
-  xdf <- .clean_emmeans_draws(x)
+  xdf <- insight::get_parameters(x)
+
   out <- p_direction(xdf, method = method, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
+
+#' @export
+p_direction.emm_list <- p_direction.emmGrid
 
 #' @importFrom insight get_parameters
 #' @keywords internal

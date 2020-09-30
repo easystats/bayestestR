@@ -201,10 +201,7 @@ estimate_density.grouped_df <- function(x, method = "kernel", precision = 2^10, 
 
 #' @export
 estimate_density.emmGrid <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
-  if (!requireNamespace("emmeans")) {
-    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
-  }
-  x <- as.data.frame(as.matrix(emmeans::as.mcmc.emmGrid(x, names = FALSE)))
+  x <- insight::get_parameters(x)
 
   out <- estimate_density(x,
     method = method, precision = precision,
@@ -215,6 +212,8 @@ estimate_density.emmGrid <- function(x, method = "kernel", precision = 2^10, ext
   out
 }
 
+#' @export
+estimate_density.emm_list <- estimate_density.emmGrid
 
 
 

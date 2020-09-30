@@ -45,7 +45,16 @@ p_rope.data.frame <- p_rope.numeric
 
 #' @rdname p_rope
 #' @export
-p_rope.emmGrid <- p_rope.numeric
+p_rope.emmGrid <- function(x, range = "default", ...) {
+  xdf <- insight::get_parameters(x)
+
+  out <- p_rope(xdf, range = range)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+#' @export
+p_rope.emm_list <- p_rope.emmGrid
 
 #' @rdname p_rope
 #' @export

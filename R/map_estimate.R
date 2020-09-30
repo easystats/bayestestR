@@ -133,9 +133,13 @@ map_estimate.data.frame <- function(x, precision = 2^10, method = "kernel", ...)
 #' @rdname map_estimate
 #' @export
 map_estimate.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {
-  x <- .clean_emmeans_draws(x)
+  x <- insight::get_parameters(x)
   .map_estimate_models(x, precision = precision, method = method)
 }
+
+#' @export
+map_estimate.emm_list <- map_estimate.emmGrid
+
 
 
 #' @rdname as.numeric.p_direction

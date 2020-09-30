@@ -185,12 +185,15 @@ rope.data.frame <- function(x, range = "default", ci = .89, ci_method = "HDI", v
 #' @rdname rope
 #' @export
 rope.emmGrid <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
-  xdf <- .clean_emmeans_draws(x)
+  xdf <- insight::get_parameters(x)
 
   dat <- rope(xdf, range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
   attr(dat, "object_name") <- .safe_deparse(substitute(x))
   dat
 }
+
+#' @export
+rope.emm_list <- rope.emmGrid
 
 
 

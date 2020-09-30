@@ -133,12 +133,16 @@ mhdior.data.frame <- function(x, range = "default", precision = .1, ...) {
 #' @rdname mhdior
 #' @export
 mhdior.emmGrid <- function(x, range = "default", precision = .1, ...) {
-  xdf <- .clean_emmeans_draws(x)
+  xdf <- insight::get_parameters(x)
 
   out <- mhdior(xdf, range = range, precision = precision, ...)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
+
+#' @export
+mhdior.emm_list <- mhdior.emmGrid
+
 
 #' @rdname mhdior
 #' @export

@@ -179,12 +179,15 @@ equivalence_test.data.frame <- function(x, range = "default", ci = .89, verbose 
 #' @rdname equivalence_test
 #' @export
 equivalence_test.emmGrid <- function(x, range = "default", ci = .89, verbose = TRUE, ...) {
-  xdf <- .clean_emmeans_draws(x)
+  xdf <- insight::get_parameters(x)
 
   out <- equivalence_test(xdf, range = range, ci = ci, verbose = verbose, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
+
+#' @export
+equivalence_test.emm_list <- equivalence_test.emmGrid
 
 
 #' @rdname equivalence_test

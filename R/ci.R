@@ -104,6 +104,9 @@ ci.data.frame <- ci.numeric
 #' @export
 ci.emmGrid <- ci.numeric
 
+#' @export
+ci.emm_list <- ci.emmGrid
+
 
 
 #' @rdname ci
