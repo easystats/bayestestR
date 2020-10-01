@@ -4,6 +4,9 @@
 
 - Added `as.matrix()` function for `bayesfactor_model` arrays.
 
+## Bug fixes
+
+- `ci()` supports `emmeans` - both Bayesian and frequentist ( #312 - cross fix with `parameters`)
 
 # bayestestR 0.7.3
 

@@ -60,8 +60,8 @@ if (require("rstanarm") && require("emmeans")) {
   })
 
   test_that("emmGrid map_estimate", {
-    xmapest <- map_estimate(c_, method = "kernel")
-    testthat::expect_equal(length(xmapest$MAP_Estimate), 5)
+    xmapest <- map_estimate(all_, method = "kernel")
+    testthat::expect_equal(length(xmapest$MAP_Estimate), 3)
   })
 
   test_that("emmGrid mhdior", {
