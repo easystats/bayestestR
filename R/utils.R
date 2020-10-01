@@ -213,3 +213,12 @@
     setdiff(colnames(grps), ".rows")
   }
 }
+
+#' @keywords internal
+.is_baysian_emmeans <- function(x){
+  if (inherits(x, "emm_list")) {
+    x <- x[[1]]
+  }
+  post.beta <- methods::slot(x, "post.beta")
+  !(all(dim(post.beta) == 1) && is.na(post.beta))
+}

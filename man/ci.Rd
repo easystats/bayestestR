@@ -4,7 +4,6 @@
 \alias{ci}
 \alias{ci.numeric}
 \alias{ci.data.frame}
-\alias{ci.emmGrid}
 \alias{ci.sim.merMod}
 \alias{ci.sim}
 \alias{ci.stanreg}
@@ -18,8 +17,6 @@ ci(x, ...)
 \method{ci}{numeric}(x, ci = 0.89, method = "ETI", verbose = TRUE, BF = 1, ...)
 
 \method{ci}{data.frame}(x, ci = 0.89, method = "ETI", verbose = TRUE, BF = 1, ...)
-
-\method{ci}{emmGrid}(x, ci = 0.89, method = "ETI", verbose = TRUE, BF = 1, ...)
 
 \method{ci}{sim.merMod}(
   x,

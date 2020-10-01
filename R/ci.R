@@ -100,9 +100,24 @@ ci.numeric <- function(x, ci = .89, method = "ETI", verbose = TRUE, BF = 1, ...)
 #' @export
 ci.data.frame <- ci.numeric
 
-#' @rdname ci
+
+
 #' @export
-ci.emmGrid <- ci.numeric
+ci.emmGrid <- function(x, ci = NULL, ...) {
+  if (!.is_baysian_emmeans(x)) {
+    if (!requireNamespace("parameters")) {
+      stop("'parameters' required for this function to work.")
+    }
+
+    if (is.null(ci)) ci <- 0.95
+    return(parameters::ci_wald(model = x, ci = ci, dof = parameters::degrees_of_freedom(x), ...))
+  }
+
+  if (is.null(ci)) ci <- 0.89
+  x <- insight::get_parameters(x)
+  ci(x, ci = ci, ...)
+}
+
 
 #' @export
 ci.emm_list <- ci.emmGrid
