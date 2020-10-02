@@ -76,7 +76,7 @@ rope_range.stanreg <- rope_range.brmsfit
 #' @export
 #' @importFrom stats sd
 rope_range.BFBayesFactor <- function(x, ...){
-  if (inherits(x@numerator[[1]], "BFlinearModel")){
+  if (inherits(x@numerator[[1]], "BFlinearModel")) {
 
     if (inherits(x@numerator[[1]], c("BFoneSample", "BFindepSample"))) {
       response <- x@data$y
@@ -144,6 +144,14 @@ rope_range.bayesQR <- rope_range.brmsfit
 #' @export
 rope_range.default <- function(x, ...) {
   c(-.1, .1)
+}
+
+#' @export
+rope_range.mlm <- function(x, ...) {
+  response <- insight::get_response(x)
+  information <- insight::model_info(x)
+
+  lapply(response, function(i) .rope_range(x, information, i))
 }
 
 
