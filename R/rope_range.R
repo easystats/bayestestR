@@ -74,7 +74,21 @@ rope_range.brmsfit <- function(x, ...) {
 rope_range.stanreg <- rope_range.brmsfit
 
 #' @export
-rope_range.BFBayesFactor <- rope_range.brmsfit
+#' @importFrom stats sd
+rope_range.BFBayesFactor <- function(x, ...){
+  if (inherits(x@numerator[[1]], "BFlinearModel")){
+
+    if (inherits(x@numerator[[1]], c("BFoneSample", "BFindepSample"))) {
+      response <- x@data$y
+    } else {
+      response <- insight::get_response(x)
+    }
+
+    return(c(-0.1,0.1) * stats::sd(response))
+  } else {
+    return(c(-0.1, 0.1))
+  }
+}
 
 #' @export
 rope_range.lm <- rope_range.brmsfit
@@ -138,7 +152,7 @@ rope_range.default <- function(x, ...) {
 # helper ------------------
 
 
-#' @importFrom stats sigma
+#' @importFrom stats sigma sd
 #' @importFrom insight n_obs find_parameters
 .rope_range <- function(x, information, response) {
   negligible_value <- tryCatch(
