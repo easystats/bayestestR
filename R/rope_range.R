@@ -78,18 +78,25 @@ rope_range.stanreg <- rope_range.brmsfit
 rope_range.BFBayesFactor <- function(x, ...){
   if (inherits(x@numerator[[1]], "BFlinearModel")) {
 
-    if (inherits(x@numerator[[1]], c("BFoneSample", "BFindepSample"))) {
-      fm <- x@numerator[[1]]@identifier$formula
-      resp_name <- as.character(formula(fm)[2])
-      response <- x@data[[resp_name]]
-    } else {
-      response <- insight::get_response(x)
-    }
+    response <- tryCatch(
+      {
+        insight::get_response(x)
+      },
+      error = function(e) {
+        NULL
+      }
+    )
 
-    return(c(-0.1,0.1) * stats::sd(response, na.rm = TRUE))
+    if (!is.null(response)) {
+      fac <- stats::sd(response, na.rm = TRUE)
+    } else {
+      fac <- 1
+    }
   } else {
-    return(c(-0.1, 0.1))
+    fac <- 1
   }
+
+  fac * c(-0.1, 0.1)
 }
 
 #' @export
