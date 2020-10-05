@@ -79,7 +79,9 @@ rope_range.BFBayesFactor <- function(x, ...){
   if (inherits(x@numerator[[1]], "BFlinearModel")) {
 
     if (inherits(x@numerator[[1]], c("BFoneSample", "BFindepSample"))) {
-      response <- x@data$y
+      fm <- x@numerator[[1]]@identifier$formula
+      resp_name <- as.character(formula(fm)[2])
+      response <- x@data[[resp_name]]
     } else {
       response <- insight::get_response(x)
     }

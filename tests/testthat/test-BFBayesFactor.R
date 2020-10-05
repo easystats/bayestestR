@@ -85,6 +85,9 @@ if (requireNamespace("BayesFactor", quietly = TRUE)) {
                               ToothGrowth$len[ToothGrowth$supp=="VC"])
     testthat::expect_equal(rope_range(x)[2], sd(ToothGrowth$len)/10)
 
+    x <- BayesFactor::ttestBF(formula = len ~ supp, data = ToothGrowth)
+    testthat::expect_equal(rope_range(x)[2], sd(ToothGrowth$len)/10)
+
     # else
     x <- BayesFactor::correlationBF(ToothGrowth$len, ToothGrowth$dose)
     testthat::expect_equal(rope_range(x), c(-0.1, 0.1))
