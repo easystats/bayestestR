@@ -1,18 +1,12 @@
-if (requireNamespace("BayesFactor", quietly = TRUE)) {
-  library(BayesFactor)
-
+if (require("testthat") && require("BayesFactor") && require("bayestestR")) {
   set.seed(333)
-
-  context("BF correlation")
   x <- BayesFactor::correlationBF(y = iris$Sepal.Length, x = iris$Sepal.Width)
   test_that("p_direction", {
-    testthat::skip_on_travis() # Until insight v3 is released
     expect_equal(as.numeric(p_direction(x)), 0.9225, tol = 1)
   })
 
 
-  # ---------------------------
-  context("BF t.test one sample")
+  # BF t.test one sample ---------------------------
   data(sleep)
   diffScores <- sleep$extra[1:10] - sleep$extra[11:20]
   x <- BayesFactor::ttestBF(x = diffScores)
@@ -22,24 +16,20 @@ if (requireNamespace("BayesFactor", quietly = TRUE)) {
   })
 
 
-  # ---------------------------
-  context("BF t.test two samples")
+  # BF t.test two samples ---------------------------
   data(chickwts)
   chickwts <- chickwts[chickwts$feed %in% c("horsebean", "linseed"), ]
   chickwts$feed <- factor(chickwts$feed)
   x <- BayesFactor::ttestBF(formula = weight ~ feed, data = chickwts)
   test_that("p_direction", {
-    testthat::skip_on_travis() # Until insight v3 is released
     expect_equal(as.numeric(p_direction(x)), 1, tol = 1)
   })
 
-  # ---------------------------
-  context("BF t.test meta-analytic")
+  # BF t.test meta-analytic ---------------------------
   t <- c(-.15, 2.39, 2.42, 2.43)
   N <- c(100, 150, 97, 99)
   x <- BayesFactor::meta.ttestBF(t = t, n1 = N, rscale = 1)
   test_that("p_direction", {
-    testthat::skip_on_travis() # Until insight v3 is released
     expect_equal(as.numeric(p_direction(x)), 0.99975, tol = 1)
   })
 
@@ -92,7 +82,5 @@ if (requireNamespace("BayesFactor", quietly = TRUE)) {
     x <- BayesFactor::correlationBF(ToothGrowth$len, ToothGrowth$dose)
     testthat::expect_equal(rope_range(x), c(-0.1, 0.1))
   })
-
-
 
 }
