@@ -84,7 +84,7 @@ rope_range.BFBayesFactor <- function(x, ...){
       response <- insight::get_response(x)
     }
 
-    return(c(-0.1,0.1) * stats::sd(response))
+    return(c(-0.1,0.1) * stats::sd(response, na.rm = TRUE))
   } else {
     return(c(-0.1, 0.1))
   }
@@ -167,7 +167,7 @@ rope_range.mlm <- function(x, ...) {
     {
       # Linear Models
       if (information$is_linear) {
-        0.1 * stats::sd(response)
+        0.1 * stats::sd(response, na.rm = TRUE)
 
         # Logistic Regression Models
       } else if (information$is_binomial) {
