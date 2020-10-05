@@ -76,6 +76,7 @@ rope_range.stanreg <- rope_range.brmsfit
 #' @export
 #' @importFrom stats sd
 rope_range.BFBayesFactor <- function(x, ...){
+  fac <- 1
   if (inherits(x@numerator[[1]], "BFlinearModel")) {
 
     response <- tryCatch(
@@ -89,11 +90,7 @@ rope_range.BFBayesFactor <- function(x, ...){
 
     if (!is.null(response)) {
       fac <- stats::sd(response, na.rm = TRUE)
-    } else {
-      fac <- 1
     }
-  } else {
-    fac <- 1
   }
 
   fac * c(-0.1, 0.1)
