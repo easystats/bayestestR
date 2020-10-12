@@ -1,19 +1,13 @@
-# bayestestR 0.7.3.001
+# bayestestR 0.7.5
 
 ## New functions
 
-- Added `as.matrix()` function for `bayesfactor_model` arrays.
+* Added `as.matrix()` function for `bayesfactor_model` arrays.
+* `unupdate()`, a utility function to get Bayesian models un-fitted from the data, representing the priors only.
 
-## Bug fixes
+## Changes to functions
 
-- `rope_range()` for `BayesFactor` models returns non-`NA` values ( #343 )
-- `ci()` supports `emmeans` - both Bayesian and frequentist ( #312 - cross fix with `parameters`)
-
-# bayestestR 0.7.3
-
-## New functions
-
-- `unupdate()`, a utility function to get Bayesian models un-fitted from the data, representing the priors only.
+* `ci()` supports `emmeans` - both Bayesian and frequentist ( #312 - cross fix with `parameters`)
 
 ## Bug fixes
 
@@ -21,6 +15,7 @@
 * Fixed issue in collinearity-check for `rope()` for models with less than two parameters.
 * Fixed issue in print-method for `mediation()` with `stanmvreg`-models, which displays the wrong name for the response-value.
 * Fixed issue in `effective_sample()` for models with only one parameter.
+* `rope_range()` for `BayesFactor` models returns non-`NA` values ( #343 )
 
 # bayestestR 0.7.2
 
