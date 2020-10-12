@@ -92,6 +92,11 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
 #' @keywords internal
 .describe_posterior <- function(x, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, BF = 1, ...) {
 
+  if (is.null(x)) {
+    warning("Could not extract posterior samples.", call. = FALSE)
+    return(NULL)
+  }
+
   # Point-estimates
 
   if (!is.null(centrality)) {
@@ -647,6 +652,10 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
       ...
     )
 
+
+  if (is.null(out)) {
+    return(NULL)
+  }
 
   # Compute and readd BF a posteriori
   if (compute_bf) {
