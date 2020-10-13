@@ -54,7 +54,7 @@ p_significance <- function(x, ...) {
 #' @rdname p_significance
 #' @export
 p_significance.numeric <- function(x, threshold = "default", ...) {
-  threshold <- .select_threshold_ps(x = x, threshold = threshold)
+  threshold <- .select_threshold_ps(threshold = threshold)
 
   psig <- max(
     c(
@@ -75,7 +75,7 @@ p_significance.numeric <- function(x, threshold = "default", ...) {
 #' @export
 p_significance.data.frame <- function(x, threshold = "default", ...) {
   obj_name <- .safe_deparse(substitute(x))
-  threshold <- .select_threshold_ps(x = x, threshold = threshold)
+  threshold <- .select_threshold_ps(threshold = threshold)
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
@@ -250,7 +250,7 @@ as.double.p_significance <- as.numeric.p_significance
 
 
 #' @keywords internal
-.select_threshold_ps <- function(x = NULL, model = NULL, threshold = "default") {
+.select_threshold_ps <- function(model = NULL, threshold = "default") {
   # If a range is passed
   if (length(threshold) > 1) {
     if (length(unique(abs(threshold))) == 1) { # If symmetric range
