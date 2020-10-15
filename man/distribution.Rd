@@ -13,6 +13,7 @@
 \alias{distribution_mixture_normal}
 \alias{distribution_normal}
 \alias{distribution_gaussian}
+\alias{distribution_nbinom}
 \alias{distribution_poisson}
 \alias{distribution_student}
 \alias{distribution_t}
@@ -46,6 +47,8 @@ distribution_normal(n, mean = 0, sd = 1, random = FALSE, ...)
 
 distribution_gaussian(n, mean = 0, sd = 1, random = FALSE, ...)
 
+distribution_nbinom(n, size, prob, mu, phi, random = FALSE, ...)
+
 distribution_poisson(n, lambda = 1, random = FALSE, ...)
 
 distribution_student(n, df, ncp, random = FALSE, ...)
@@ -65,7 +68,8 @@ rnorm_perfect(n, mean = 0, sd = 1)
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{n}{the number of observations}
+\item{n}{number of observations. If \code{length(n) > 1}, the length
+    is taken to be the number required.}
 
 \item{random}{Generate near-perfect or random (simple wrappers for the base R \code{r*} functions) distributions.}
 
@@ -92,16 +96,12 @@ rnorm_perfect(n, mean = 0, sd = 1)
 
 \item{sd}{vector of standard deviations.}
 
+\item{mu}{alternative parametrization via mean: see \sQuote{Details}.}
+
+\item{phi}{Corresponding to \code{glmmTMB}'s implementation of nbinom
+distribution, where \code{size=mu/phi}.}
+
 \item{lambda}{vector of (non-negative) means.}
-
-\item{xi}{the value of \eqn{\xi}{xi} such that the variance is 
-	\eqn{\mbox{var}[Y]=\phi\mu^{\xi}}{var(Y) = phi * mu^xi}}
-
-\item{mu}{the mean}
-
-\item{phi}{the dispersion}
-
-\item{power}{a synonym for \eqn{\xi}{xi}}
 
 \item{min}{lower and upper limits of the distribution.  Must be finite.}
 

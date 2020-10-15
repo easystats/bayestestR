@@ -32,6 +32,7 @@ distribution <- function(type = "normal", ...) {
     "gamma" = distribution_gamma(...),
     "gaussian" = ,
     "normal" = distribution_normal(...),
+    "nbinom" = distribution_nbinom(...),
     "poisson" = distribution_poisson(...),
     "t" = ,
     "student" = ,
@@ -165,6 +166,26 @@ distribution_normal <- function(n, mean = 0, sd = 1, random = FALSE, ...) {
 
 #' @rdname distribution
 distribution_gaussian <- distribution_normal
+
+
+#' @rdname distribution
+#' @inheritParams stats::rnbinom
+#' @param phi Corresponding to \code{glmmTMB}'s implementation of nbinom
+#'   distribution, where \code{size=mu/phi}.
+#' @importFrom stats qnbinom rnbinom
+#' @export
+distribution_nbinom <- function(n, size, prob, mu, phi, random = FALSE, ...) {
+  if (missing(size)) {
+    size <- mu / phi
+  }
+
+  if (random) {
+    stats::rnbinom(n, size, prob, mu)
+  } else {
+    stats::qnbinom(seq(1 / n, 1 - 1 / n, length.out = n), size, prob, mu, ...)
+  }
+}
+
 
 #' @rdname distribution
 #' @inheritParams stats::rpois
