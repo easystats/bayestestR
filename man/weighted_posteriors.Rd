@@ -85,6 +85,11 @@ Note that for \code{BayesFactor} models, posterior samples cannot be generated f
 \cr\cr
 This function is similar in function to \code{brms::posterior_average}.
 }
+\note{
+For \code{BayesFactor < 0.9.12-4.3}, in some instances there might be
+  some problems of duplicate columns of random effects in the resulting data
+  frame.
+}
 \examples{
 \donttest{
 if (require("rstanarm") && require("see")) {

@@ -23,6 +23,10 @@
 #' \cr\cr
 #' This function is similar in function to \code{brms::posterior_average}.
 #'
+#' @note For \code{BayesFactor < 0.9.12-4.3}, in some instances there might be
+#'   some problems of duplicate columns of random effects in the resulting data
+#'   frame.
+#'
 #' @return A data frame with posterior distributions (weighted across models) .
 #'
 #' @seealso \code{\link{bayesfactor_inclusion}} for Bayesian model averaging.
