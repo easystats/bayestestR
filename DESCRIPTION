@@ -69,6 +69,7 @@ Suggests:
 	broom,
 	covr,
 	dplyr,
+	effectsize,
 	emmeans,
 	GGally,
 	ggplot2,

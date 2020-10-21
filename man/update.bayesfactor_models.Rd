@@ -7,7 +7,7 @@
 \usage{
 \method{update}{bayesfactor_models}(object, subset = NULL, reference = NULL, ...)
 
-\method{as.matrix}{bayesfactor_models}(x)
+\method{as.matrix}{bayesfactor_models}(x, ...)
 }
 \arguments{
 \item{object, x}{A \code{\link{bayesfactor_models}} object.}
@@ -17,8 +17,6 @@
 \item{reference}{Index of model to rereference to, or \code{"top"} to reference to the best model, or \code{"bottom"} to reference to the worst model.}
 
 \item{...}{Currently not used.}
-
-\item{log}{Return logged Bayes factors?}
 }
 \description{
 Methods for \code{bayesfactor_models}

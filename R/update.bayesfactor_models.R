@@ -3,7 +3,6 @@
 #' @param object,x A \code{\link{bayesfactor_models}} object.
 #' @param subset Vector of model indices to keep or remove.
 #' @param reference Index of model to rereference to, or \code{"top"} to reference to the best model, or \code{"bottom"} to reference to the worst model.
-#' @param log Return logged Bayes factors?
 #' @param ... Currently not used.
 #'
 #' @examples
@@ -54,9 +53,9 @@ update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, .
 }
 
 
-#' @export
 #' @rdname update.bayesfactor_models
-as.matrix.bayesfactor_models <- function(x) {
+#' @export
+as.matrix.bayesfactor_models <- function(x, ...) {
   x$BF <- log(x$BF)
   out <- -outer(x$BF, x$BF, FUN = "-")
   rownames(out) <- colnames(out) <- x$Model

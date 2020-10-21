@@ -34,7 +34,7 @@ print.bayesfactor_models <- function(x, digits = 3, log = FALSE, ...) {
 
 #' @importFrom insight print_color format_table
 #' @export
-print.bayesfactor_models_matrix <- function(x, digits = 2, log = FALSE) {
+print.bayesfactor_models_matrix <- function(x, digits = 2, log = FALSE, ...) {
   orig_x <- x
 
   if (log) {
