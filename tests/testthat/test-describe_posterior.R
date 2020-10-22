@@ -1,4 +1,4 @@
-if (require("rstanarm") && require("brms") && require("insight")) {
+if (require("testthat") && require("bayestestR") && require("rstanarm") && require("brms") && require("insight")) {
 
   test_that("describe_posterior", {
     set.seed(333)
