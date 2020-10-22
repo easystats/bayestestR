@@ -354,7 +354,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; H0       | inside ROPE |      89% HDI
 #&gt; -------------------------------------
-#&gt; Accepted |    100.00 % | [-0.02 0.02]
+#&gt; Accepted |    100.00 % | [-0.01 0.02]
 #&gt; 
 #&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), range = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span>))
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
@@ -363,7 +363,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; H0        | inside ROPE |      89% HDI
 #&gt; --------------------------------------
-#&gt; Undecided |      8.08 % | [-1.74 1.47]
+#&gt; Undecided |      8.64 % | [-1.55 1.57]
 #&gt; 
 #&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), range = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span>))
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
@@ -372,7 +372,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; H0       | inside ROPE |     89% HDI
 #&gt; ------------------------------------
-#&gt; Rejected |      0.00 % | [0.99 1.02]
+#&gt; Rejected |      0.00 % | [0.98 1.01]
 #&gt; 
 #&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>.99</span>))
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
@@ -381,12 +381,12 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; H0       | inside ROPE |      50% HDI
 #&gt; -------------------------------------
-#&gt; Rejected |      0.00 % | [ 0.30 1.67]
+#&gt; Rejected |      0.00 % | [ 0.14 1.50]
 #&gt; 
 #&gt; 
 #&gt; H0        | inside ROPE |      99% HDI
 #&gt; --------------------------------------
-#&gt; Undecided |      4.74 % | [-1.64 3.55]
+#&gt; Undecided |      6.05 % | [-1.62 3.50]
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='co'># print more digits</span>
@@ -398,12 +398,12 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; H0       | inside ROPE |          50% HDI
 #&gt; -----------------------------------------
-#&gt; Rejected |    0.0000 % | [ 0.3038 1.6585]
+#&gt; Rejected |    0.0000 % | [ 0.3856 1.7281]
 #&gt; 
 #&gt; 
 #&gt; H0        | inside ROPE |          99% HDI
 #&gt; ------------------------------------------
-#&gt; Undecided |    5.3481 % | [-1.8540 3.3618]
+#&gt; Undecided |    5.1463 % | [-1.4661 3.7442]
 #&gt; 
 #&gt; </div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://mc-stan.org/rstanarm'>rstanarm</a></span>)

@@ -418,20 +418,20 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; </span><span>Parameter | Median |          89% CI |     pd |        89% ROPE | % in ROPE
 #&gt; ---------------------------------------------------------------------------
-#&gt; Posterior |  0.033 | [-1.542, 1.553] | 51.80% | [-0.100, 0.100] |     8.642
+#&gt; Posterior |  0.026 | [-1.592, 1.570] | 51.30% | [-0.100, 0.100] |     8.642
 #&gt; </div><div class='input'><span class='fu'>describe_posterior</span>(<span class='kw'>x</span>, centrality = <span class='st'>"all"</span>, dispersion = <span class='fl'>TRUE</span>, test = <span class='st'>"all"</span>)
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)') to get meaningful results.</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Description of Posterior Distributions
 #&gt; 
 #&gt; </span><span>Parameter | Median |   MAD |  Mean |    SD |    MAP |          89% CI | p_map |     pd | p_ROPE |    ps |        89% ROPE | % in ROPE | ROPE_Equivalence | BF
 #&gt; -------------------------------------------------------------------------------------------------------------------------------------------------------------
-#&gt; Posterior |  0.033 | 1.030 | 0.040 | 0.985 | -0.004 | [-1.542, 1.553] | 1.000 | 51.80% |  0.077 | 0.472 | [-0.100, 0.100] |     8.642 |        Undecided |  1
+#&gt; Posterior |  0.026 | 0.970 | 0.012 | 0.984 | -0.024 | [-1.592, 1.570] | 1.000 | 51.30% |  0.077 | 0.474 | [-0.100, 0.100] |     8.642 |        Undecided |  1
 #&gt; </div><div class='input'><span class='fu'>describe_posterior</span>(<span class='kw'>x</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Description of Posterior Distributions
 #&gt; 
 #&gt; </span><span>Parameter | Median |                     CI |     pd |        89% ROPE | % in ROPE
 #&gt; ----------------------------------------------------------------------------------
-#&gt; Posterior |  0.033 | 80% CI [-1.285, 1.205] | 51.80% | [-0.100, 0.100] |     8.642
-#&gt; Posterior |  0.033 | 90% CI [-1.624, 1.559] | 51.80% | [-0.100, 0.100] |     8.642
+#&gt; Posterior |  0.026 | 80% CI [-1.256, 1.170] | 51.30% | [-0.100, 0.100] |     8.642
+#&gt; Posterior |  0.026 | 90% CI [-1.611, 1.627] | 51.30% | [-0.100, 0.100] |     8.642
 #&gt; </div><div class='input'>
 <span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
 <span class='fu'>describe_posterior</span>(<span class='kw'>df</span>)
@@ -439,32 +439,32 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; </span><span>Parameter | Median |          89% CI |     pd |        89% ROPE | % in ROPE
 #&gt; ---------------------------------------------------------------------------
-#&gt; X1        |  0.066 | [-1.510, 1.272] | 51.00% | [-0.100, 0.100] |     4.444
-#&gt; X2        |  0.128 | [-1.592, 1.321] | 51.00% | [-0.100, 0.100] |     4.444
-#&gt; X3        | -0.072 | [-2.005, 1.201] | 54.00% | [-0.100, 0.100] |    10.000
-#&gt; X4        |  0.118 | [-1.241, 1.491] | 57.00% | [-0.100, 0.100] |     7.778
+#&gt; X1        |  0.085 | [-1.268, 1.996] | 52.00% | [-0.100, 0.100] |     6.667
+#&gt; X2        | -0.009 | [-2.154, 1.161] | 50.00% | [-0.100, 0.100] |    13.333
+#&gt; X3        | -0.014 | [-1.185, 2.008] | 51.00% | [-0.100, 0.100] |     4.444
+#&gt; X4        |  0.082 | [-1.575, 1.621] | 55.00% | [-0.100, 0.100] |    15.556
 #&gt; </div><div class='input'><span class='fu'>describe_posterior</span>(<span class='kw'>df</span>, centrality = <span class='st'>"all"</span>, dispersion = <span class='fl'>TRUE</span>, test = <span class='st'>"all"</span>)
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify priors (with column order matching 'posterior') to get meaningful results.</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Description of Posterior Distributions
 #&gt; 
 #&gt; </span><span>Parameter | Median |   MAD |   Mean |    SD |    MAP |          89% CI | p_MAP |     pd | p_ROPE |    ps |        89% ROPE | % in ROPE | ROPE_Equivalence | BF
 #&gt; --------------------------------------------------------------------------------------------------------------------------------------------------------------
-#&gt; X1        |  0.066 | 0.953 | -0.030 | 0.920 |  0.242 | [-1.510, 1.272] | 0.962 | 51.00% |  0.040 | 0.500 | [-0.100, 0.100] |     4.444 |        Undecided |  1
-#&gt; X2        |  0.128 | 1.094 |  0.101 | 1.024 | -0.062 | [-1.592, 1.321] | 0.999 | 51.00% |  0.040 | 0.510 | [-0.100, 0.100] |     4.444 |        Undecided |  1
-#&gt; X3        | -0.072 | 0.937 | -0.165 | 0.988 |  0.108 | [-2.005, 1.201] | 0.991 | 54.00% |  0.090 | 0.490 | [-0.100, 0.100] |    10.000 |        Undecided |  1
-#&gt; X4        |  0.118 | 1.007 |  0.137 | 0.914 |  0.577 | [-1.241, 1.491] | 0.990 | 57.00% |  0.070 | 0.520 | [-0.100, 0.100] |     7.778 |        Undecided |  1
+#&gt; X1        |  0.085 | 0.946 |  0.033 | 1.007 |  0.514 | [-1.268, 1.996] | 0.868 | 52.00% |  0.060 | 0.500 | [-0.100, 0.100] |     6.667 |        Undecided |  1
+#&gt; X2        | -0.009 | 1.038 | -0.047 | 1.043 | -0.183 | [-2.154, 1.161] | 0.991 | 50.00% |  0.120 | 0.460 | [-0.100, 0.100] |    13.333 |        Undecided |  1
+#&gt; X3        | -0.014 | 1.174 |  0.152 | 1.083 | -0.439 | [-1.185, 2.008] | 0.934 | 51.00% |  0.040 | 0.490 | [-0.100, 0.100] |     4.444 |        Undecided |  1
+#&gt; X4        |  0.082 | 0.730 |  0.022 | 0.960 |  0.162 | [-1.575, 1.621] | 0.959 | 55.00% |  0.140 | 0.490 | [-0.100, 0.100] |    15.556 |        Undecided |  1
 #&gt; </div><div class='input'><span class='fu'>describe_posterior</span>(<span class='kw'>df</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.80</span>, <span class='fl'>0.90</span>))
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Description of Posterior Distributions
 #&gt; 
 #&gt; </span><span>Parameter | Median |                     CI |     pd |        89% ROPE | % in ROPE
 #&gt; ----------------------------------------------------------------------------------
-#&gt; X1        |  0.066 | 80% CI [-1.311, 0.876] | 51.00% | [-0.100, 0.100] |     4.444
-#&gt; X1        |  0.066 | 90% CI [-1.510, 1.385] | 51.00% | [-0.100, 0.100] |     4.444
-#&gt; X2        |  0.128 | 80% CI [-0.922, 1.321] | 51.00% | [-0.100, 0.100] |     4.444
-#&gt; X2        |  0.128 | 90% CI [-1.665, 1.321] | 51.00% | [-0.100, 0.100] |     4.444
-#&gt; X3        | -0.072 | 80% CI [-1.472, 0.992] | 54.00% | [-0.100, 0.100] |    10.000
-#&gt; X3        | -0.072 | 90% CI [-2.159, 1.089] | 54.00% | [-0.100, 0.100] |    10.000
-#&gt; X4        |  0.118 | 80% CI [-1.204, 1.085] | 57.00% | [-0.100, 0.100] |     7.778
-#&gt; X4        |  0.118 | 90% CI [-1.428, 1.473] | 57.00% | [-0.100, 0.100] |     7.778
+#&gt; X1        |  0.085 | 80% CI [-0.934, 1.451] | 52.00% | [-0.100, 0.100] |     6.667
+#&gt; X1        |  0.085 | 90% CI [-1.627, 1.813] | 52.00% | [-0.100, 0.100] |     6.667
+#&gt; X2        | -0.009 | 80% CI [-1.208, 1.161] | 50.00% | [-0.100, 0.100] |    13.333
+#&gt; X2        | -0.009 | 90% CI [-1.703, 1.730] | 50.00% | [-0.100, 0.100] |    13.333
+#&gt; X3        | -0.014 | 80% CI [-1.228, 1.354] | 51.00% | [-0.100, 0.100] |     4.444
+#&gt; X3        | -0.014 | 90% CI [-1.228, 2.008] | 51.00% | [-0.100, 0.100] |     4.444
+#&gt; X4        |  0.082 | 80% CI [-0.771, 1.621] | 55.00% | [-0.100, 0.100] |    15.556
+#&gt; X4        |  0.082 | 90% CI [-1.630, 1.621] | 55.00% | [-0.100, 0.100] |    15.556
 #&gt; </div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>

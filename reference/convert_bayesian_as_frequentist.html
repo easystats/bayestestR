@@ -225,7 +225,19 @@
     data = <span class='kw'>mtcars</span>, chains = <span class='fl'>2</span>, refresh = <span class='fl'>0</span>
   )
   <span class='fu'>bayesian_as_frequentist</span>(<span class='kw'>model</span>)
-
+}<span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: rstanarm</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>This is rstanarm version 2.21.1</span></div><div class='output co'>#&gt; <span class='message'>- See https://mc-stan.org/rstanarm/articles/priors for changes to default priors!</span></div><div class='output co'>#&gt; <span class='message'>- Default priors may change, so it's safest to specify priors, even if equivalent to the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>  options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; 
+#&gt; Call:  stats::glm(formula = formula, family = family, data = data)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)          mpg  
+#&gt;     -8.8331       0.4304  
+#&gt; 
+#&gt; Degrees of Freedom: 31 Total (i.e. Null);  30 Residual
+#&gt; Null Deviance:	    43.86 
+#&gt; Residual Deviance: 25.53 	AIC: 29.53</div><div class='input'>
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://mc-stan.org/rstanarm'>"rstanarm"</a></span>)) {
   <span class='co'># Mixed models</span>
   <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_glmer</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Petal.Length</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>Species</span>),
     data = <span class='kw'>iris</span>, chains = <span class='fl'>2</span>, refresh = <span class='fl'>0</span>
@@ -237,21 +249,7 @@
     data = <span class='kw'>mtcars</span>, chains = <span class='fl'>2</span>, refresh = <span class='fl'>0</span>
   )
   <span class='fu'>bayesian_as_frequentist</span>(<span class='kw'>model</span>)
-}
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: rstanarm</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>This is rstanarm version 2.21.1</span></div><div class='output co'>#&gt; <span class='message'>- See https://mc-stan.org/rstanarm/articles/priors for changes to default priors!</span></div><div class='output co'>#&gt; <span class='message'>- Default priors may change, so it's safest to specify priors, even if equivalent to the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>  options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; Generalized linear mixed model fit by maximum likelihood (Laplace
-#&gt;   Approximation) [glmerMod]
-#&gt;  Family: binomial  ( logit )
-#&gt; Formula: vs ~ mpg + (1 | cyl)
-#&gt;    Data: data
-#&gt;      AIC      BIC   logLik deviance df.resid 
-#&gt;  31.1738  35.5710 -12.5869  25.1738       29 
-#&gt; Random effects:
-#&gt;  Groups Name        Std.Dev.
-#&gt;  cyl    (Intercept) 1.925   
-#&gt; Number of obs: 32, groups:  cyl, 3
-#&gt; Fixed Effects:
-#&gt; (Intercept)          mpg  
-#&gt;     -3.9227       0.1723  </div><div class='input'><span class='co'># }</span>
+}}
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
