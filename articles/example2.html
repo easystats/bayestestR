@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -220,7 +220,7 @@
 </blockquote>
 <p>That’s one of the reason why the Bayesian framework is sometimes considered as superior to the frequentist framework. Remember from your stats lessons, that the <strong><em>p</em>-value can only be used to reject <em>h0</em></strong>, but not <em>accept</em> it. With the <strong>Bayes factor</strong>, you can measure <strong>evidence against - and in favour of - the null</strong>.</p>
 <p>BFs representing evidence for the alternative against the null can be reversed using <span class="math inline">\(BF_{01}=1/BF_{10}\)</span> (the <em>01</em> and <em>10</em> correspond to <em>h0</em> against <em>h1</em> and <em>h1</em> against <em>h0</em>, respectively) to provide evidence of the null againtt the alternative. This improves human readability in cases where the BF of the alternative against the null is smaller than 1 (i.e., in support of the null).</p>
-<p>In our case, <code>BF = 1/0.51 = 2</code>, indicates that the data are <strong>2 times more probable under the null compared to the alternative hypothesis</strong>, which, though favouring the null, is considered only <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf">anecdotal evidence against the null</a>.</p>
+<p>In our case, <code>BF = 1/0.51 = 2</code>, indicates that the data are <strong>2 times more probable under the null compared to the alternative hypothesis</strong>, which, though favouring the null, is considered only <a href="https://easystats.github.io/effectsize/reference/interpret_bf.html">anecdotal evidence against the null</a>.</p>
 <p>We can thus conclude that there is <strong>anecdotal evidence in favour of an absence of correlation between the two variables (r<sub>median</sub> = 0.11, BF = 0.51)</strong>, which is a much more informative statement that what we can do with frequentist statistics.</p>
 <p><strong>And that’s not all!</strong></p>
 </div>

@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
       </span>
     </div>
 
@@ -191,7 +191,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <p>Let’s use the Students’ (1908) Sleep data set (<code><a href="https://rdrr.io/r/utils/data.html">data("sleep")</a></code>), in which <strong>people took some drug</strong> and where the researchers measured the <strong>extra hours of sleep</strong> that they slept afterwards. We will try answering the following question:</p>
 <p><em>given the observed data, has the hypothesis that the drug (the effect of <code>group</code>) <strong>has no effect</strong> on the numbers of hours of <strong>extra sleep</strong> (variable <code>extra</code>) become more of less credible?</em></p>
 <p><img src="bayes_factors_files/figure-html/sleep_boxplot-1.png" width="1093.75"></p>
-<p>The <strong>bloxplot</strong> suggests that the second group has a higher number of hours of extra sleep. <em>By how much?</em> Let’s fit a simple <a href="https://easystats.github.io/bayestestR/articles/example1_GLM.html">Bayesian linear model</a>, with a prior of <span class="math inline">\(b_{group} \sim N(0, 3)\)</span>:</p>
+<p>The <strong>bloxplot</strong> suggests that the second group has a higher number of hours of extra sleep. <em>By how much?</em> Let’s fit a simple <a href="https://easystats.github.io/bayestestR/articles/example1.html">Bayesian linear model</a>, with a prior of <span class="math inline">\(b_{group} \sim N(0, 3)\)</span>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://mc-stan.org/rstanarm">rstanarm</a></span>)
 
@@ -288,7 +288,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">test_group2_right</span>)
 </pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-10-1.png" width="1093.75"></p>
-<p>As we can see, given that we have an <em>a priori</em> assumption about the direction of the effect (<em>that the effect is positive</em>), <strong>the presence of an effect is 2.8 times more likely than the absence of an effect</strong>, given the observed data (or that the data are 2.8 time more probable under <span class="math inline">\(H_1\)</span> than <span class="math inline">\(H_0\)</span>). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 2.8 is still considered quite <a href="https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf">weak evidence</a>).</p>
+<p>As we can see, given that we have an <em>a priori</em> assumption about the direction of the effect (<em>that the effect is positive</em>), <strong>the presence of an effect is 2.8 times more likely than the absence of an effect</strong>, given the observed data (or that the data are 2.8 time more probable under <span class="math inline">\(H_1\)</span> than <span class="math inline">\(H_0\)</span>). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 2.8 is still considered quite <a href="https://easystats.github.io/effectsize/reference/interpret_bf.html">weak evidence</a>).</p>
 <p><strong>NOTE</strong>: See the <em>Testing Contrasts</em> appendix below.</p>
 </div>
 <div id="si" class="section level3">
