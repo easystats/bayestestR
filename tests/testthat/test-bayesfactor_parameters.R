@@ -73,24 +73,26 @@ if (require("rstanarm") &&
 
 
   # bayesfactor_parameters BRMS ---------------------------------------------
-  test_that("bayesfactor_parameters BRMS", {
-    testthat::skip_on_ci()
-    testthat::skip_on_cran()
+  .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
+  if (.runThisTest) {
+    test_that("bayesfactor_parameters BRMS", {
+      testthat::skip_on_cran()
 
-    library(brms)
-    brms_mixed_6 <- insight::download_model("brms_mixed_6")
+      library(brms)
+      brms_mixed_6 <- insight::download_model("brms_mixed_6")
 
-    set.seed(222)
-    brms_mixed_6_p <- unupdate(brms_mixed_6)
-    bfsd1 <- bayesfactor_parameters(brms_mixed_6, brms_mixed_6_p, effects = "fixed")
+      set.seed(222)
+      brms_mixed_6_p <- unupdate(brms_mixed_6)
+      bfsd1 <- bayesfactor_parameters(brms_mixed_6, brms_mixed_6_p, effects = "fixed")
 
-    set.seed(222)
-    bfsd2 <- bayesfactor_parameters(brms_mixed_6, effects = "fixed")
+      set.seed(222)
+      bfsd2 <- bayesfactor_parameters(brms_mixed_6, effects = "fixed")
 
-    testthat::expect_equal(log(bfsd1$BF), log(bfsd2$BF), tolerance = .01)
+      testthat::expect_equal(log(bfsd1$BF), log(bfsd2$BF), tolerance = .01)
 
 
-    brms_mixed_1 <- insight::download_model("brms_mixed_1")
-    testthat::expect_error(bayesfactor_parameters(brms_mixed_1))
-  })
+      brms_mixed_1 <- insight::download_model("brms_mixed_1")
+      testthat::expect_error(bayesfactor_parameters(brms_mixed_1))
+    })
+  }
 }
