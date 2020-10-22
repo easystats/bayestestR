@@ -57,11 +57,11 @@ if (.runThisTest) {
       fit1 <- brm(rating ~ treat + period + carry,
                   data = inhaler,
                   refresh = 0,
-                  save_all_pars = TRUE)
+                  save_pars = save_pars(all = TRUE))
       fit2 <- brm(rating ~ period + carry,
                   data = inhaler,
                   refresh = 0,
-                  save_all_pars = TRUE)
+                  save_pars = save_pars(all = TRUE))
 
 
       set.seed(444)

@@ -21,7 +21,7 @@
 #' \itemize{
 #'   \item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
 #'   \itemize{
-#'     \item \code{brmsfit} models must have been fitted with \code{save_all_pars = TRUE}.
+#'     \item \code{brmsfit} models must have been fitted with \code{save_pars = save_pars(all = TRUE)}.
 #'     \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
 #'   }
 #'   \item For \code{BFBayesFactor}, \code{bayesfactor_models()} is mostly a wraparound \code{BayesFactor::extractBF()}.
@@ -97,14 +97,14 @@
 #'
 #' # brms models
 #' # --------------------
-#' # (note the save_all_pars MUST be set to TRUE in order to work)
+#' # (note the save_pars MUST be set to save_pars(all = TRUE) in order to work)
 #' if (require("brms")) {
 #'   brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
 #'   brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
 #'   brm3 <- brm(
 #'     Sepal.Length ~ Species + Petal.Length,
 #'     data = iris,
-#'     save_all_pars = TRUE
+#'     save_pars = save_pars(all = TRUE)
 #'   )
 #'
 #'   bayesfactor_models(brm1, brm2, brm3, denominator = 1)

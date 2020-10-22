@@ -334,7 +334,7 @@ Let's use Bayes factors for model comparison to find a model that best describes
 
 **Note: In order to compute Bayes factors for Bayesian models, non-default arguments must be added upon fitting:**
   
-  - `brmsfit` models **must** have been fitted with `save_all_pars = TRUE`
+  - `brmsfit` models **must** have been fitted with `save_pars = save_pars(all = TRUE)`
   - `stanreg` models **must** have been fitted with a defined `diagnostic_file`.
   
 Let's first fit 5 Bayesian regressions with `brms` to predict `Sepal.Length`:
@@ -343,15 +343,15 @@ Let's first fit 5 Bayesian regressions with `brms` to predict `Sepal.Length`:
 library(brms)
 
 m0 <- brm(Sepal.Length ~ 1, # intercept only model
-          data = iris, save_all_pars = TRUE)
+          data = iris, save_pars = save_pars(all = TRUE))
 m1 <- brm(Sepal.Length ~ Petal.Length,
-          data = iris, save_all_pars = TRUE)
+          data = iris, save_pars = save_pars(all = TRUE))
 m2 <- brm(Sepal.Length ~ Species,
-          data = iris, save_all_pars = TRUE)
+          data = iris, save_pars = save_pars(all = TRUE))
 m3 <- brm(Sepal.Length ~ Species + Petal.Length,
-          data = iris, save_all_pars = TRUE)
+          data = iris, save_pars = save_pars(all = TRUE))
 m4 <- brm(Sepal.Length ~ Species * Petal.Length,
-          data = iris, save_all_pars = TRUE)
+          data = iris, save_pars = save_pars(all = TRUE))
 ```
 
 We can now compare these models with the `bayesfactor_models()` function, using the `denominator` argument to specify which model all models will be compared against (in this case, the intercept-only model):
