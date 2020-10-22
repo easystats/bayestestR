@@ -135,9 +135,9 @@ describe_posterior(
 )
 ## # Description of Posterior Distributions
 ## 
-## Parameter | Median |          89% CI |     pd |    ps
-## -----------------------------------------------------
-## Posterior | -0.016 | [-1.527, 1.626] | 50.65% | 0.465
+## Parameter |    Median |          89% CI |     pd |    ps
+## --------------------------------------------------------
+## Posterior | 4.510e-05 | [-1.654, 1.529] | 50.00% | 0.463
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -226,7 +226,7 @@ centrality
 
 As for other [**easystats**](https://github.com/easystats) packages,
 `plot()` methods are available from the
-[**see**](http://easystats.github.io/see) package for many functions:
+[**see**](https://easystats.github.io/see/) package for many functions:
 
 ![](man/figures/unnamed-chunk-8-1.png)<!-- -->
 
@@ -449,7 +449,7 @@ density_at(rnorm(1000, 1, 1), 1)
 
 # References
 
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references">
 
 <div id="ref-kruschke2015doing">
 
