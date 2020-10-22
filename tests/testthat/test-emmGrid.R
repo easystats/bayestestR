@@ -1,8 +1,4 @@
-if (require("rstanarm") && require("emmeans")) {
-  context("emmGrid_*")
-
-  library(rstanarm)
-  library(emmeans)
+if (require("rstanarm") && require("testthat") && require("bayestestR") && require("emmeans")) {
   set.seed(300)
   model <- stan_glm(extra ~ group, data = sleep, refresh = 0)
 
