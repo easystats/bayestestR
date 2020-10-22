@@ -291,6 +291,11 @@ See <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code> detail
 Note that for <code>BayesFactor</code> models, posterior samples cannot be generated from intercept only models.
 <br /><br />
 This function is similar in function to <code><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>brms::posterior_average</a></code>.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>For <code>BayesFactor &lt; 0.9.12-4.3</code>, in some instances there might be
+  some problems of duplicate columns of random effects in the resulting data
+  frame.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -382,11 +387,11 @@ This function is similar in function to <code><a href='https://rdrr.io/pkg/brms/
 #&gt; 
 #&gt; </span><span>Parameter         |        89% HDI
 #&gt; ----------------------------------
-#&gt; Mazda.RX4         | [ 8.53, 26.10]
-#&gt; Mazda.RX4.Wag     | [ 8.80, 26.44]
-#&gt; Datsun.710        | [14.53, 32.35]
-#&gt; Hornet.4.Drive    | [13.94, 31.76]
-#&gt; Hornet.Sportabout | [13.06, 30.16]
+#&gt; Mazda.RX4         | [ 8.91, 26.35]
+#&gt; Mazda.RX4.Wag     | [ 9.18, 26.46]
+#&gt; Datsun.710        | [13.91, 32.12]
+#&gt; Hornet.4.Drive    | [14.51, 32.47]
+#&gt; Hornet.Sportabout | [12.59, 29.98]
 #&gt; </div><div class='input'><span class='co'># }</span>
 </div></span></pre>
   </div>

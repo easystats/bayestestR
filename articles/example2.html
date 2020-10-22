@@ -134,7 +134,8 @@
 
       
 
-      </header><script src="example2_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="example2_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="example2_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="example2_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>2. Confirmation of Bayesian skills</h1>
@@ -279,9 +280,9 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(<span class="kw">result</span>)
 </pre></div>
 <pre><code>&gt;    Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
-&gt; 1 Difference  -0.19 89  -0.29  -0.089  1      89     -0.1       0.1
+&gt; 1 Difference   0.19 89   0.09     0.3  1      89   -0.033     0.033
 &gt;   ROPE_Percentage BF Prior_Distribution Prior_Location Prior_Scale
-&gt; 1           0.028 18             cauchy              0        0.71</code></pre>
+&gt; 1               0 18             cauchy              0        0.71</code></pre>
 <p>From the indices, we can say that the difference of <code>Sepal.Width</code> between <em>virginica</em> and <em>versicolor</em> has a probability of <strong>100% of being negative</strong> [<em>from the pd and the sign of the median</em>] (median = -0.19, 89% CI [-0.29, -0.092]). The data provides a <strong>strong evidence against the null hypothesis</strong> (BF = 18).</p>
 <p>Keep that in mind as we will see another way of investigating this question.</p>
 </div>
@@ -319,7 +320,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 &gt; 
 &gt;   ELPD | ELPD_SE |  LOOIC | LOOIC_SE |   WAIC |   R2 | RMSE | LOGLOSS | SCORE_LOG | SCORE_SPHERICAL
 &gt; ---------------------------------------------------------------------------------------------------
-&gt; -66.34 |    3.06 | 132.68 |     6.11 | 132.67 | 0.10 | 0.48 |         |   -107.76 |            0.01</code></pre>
+&gt; -66.36 |    3.09 | 132.72 |     6.17 | 132.71 | 0.10 | 0.48 |         |   -105.92 |            0.01</code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit">
 <span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(<span class="kw">model</span>, test = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span>))
 </pre></div>
@@ -327,8 +328,8 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 &gt; 
 &gt; Parameter   | Median |           89% CI |     pd |        89% ROPE | % in ROPE |     BF |  Rhat |      ESS
 &gt; ----------------------------------------------------------------------------------------------------------
-&gt; (Intercept) | -6.120 | [-9.232, -2.702] | 99.92% | [-0.181, 0.181] |         0 | 12.483 | 1.000 | 2936.697
-&gt; Sepal.Width |  2.141 | [ 0.988,  3.239] | 99.95% | [-0.181, 0.181] |         0 | 18.540 | 1.000 | 2982.859</code></pre>
+&gt; (Intercept) | -6.202 | [-9.804, -3.034] | 99.83% | [-0.181, 0.181] |         0 | 11.628 | 0.999 | 2667.369
+&gt; Sepal.Width |  2.161 | [ 0.981,  3.313] | 99.85% | [-0.181, 0.181] |         0 |  9.161 | 0.999 | 2663.864</code></pre>
 </div>
 <div id="visualise-the-indices" class="section level3">
 <h3 class="hasAnchor">
