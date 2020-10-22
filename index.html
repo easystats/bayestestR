@@ -244,9 +244,9 @@
 )
 <span class="co">## # Description of Posterior Distributions</span>
 <span class="co">## </span>
-<span class="co">## Parameter | Median |          89% CI |     pd |    ps</span>
-<span class="co">## -----------------------------------------------------</span>
-<span class="co">## Posterior | -0.016 | [-1.527, 1.626] | 50.65% | 0.465</span>
+<span class="co">## Parameter |    Median |          89% CI |     pd |    ps</span>
+<span class="co">## --------------------------------------------------------</span>
+<span class="co">## Posterior | 4.510e-05 | [-1.654, 1.529] | 50.00% | 0.463</span>
 </pre></div>
 <p><code><a href="reference/describe_posterior.html">describe_posterior()</a></code> works for many objects, including more complex <em>brmsfit</em>-models. For better readability, the output is separated by model components:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
@@ -324,7 +324,7 @@
 <span class="co">## --------------------</span>
 <span class="co">##   1.18 | 1.50 | 0.51</span>
 </pre></div>
-<p>As for other <a href="https://github.com/easystats"><strong>easystats</strong></a> packages, <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> methods are available from the <a href="http://easystats.github.io/see"><strong>see</strong></a> package for many functions:</p>
+<p>As for other <a href="https://github.com/easystats"><strong>easystats</strong></a> packages, <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> methods are available from the <a href="https://easystats.github.io/see/"><strong>see</strong></a> package for many functions:</p>
 <p><img src="reference/figures/unnamed-chunk-8-1.png"><!-- --></p>
 <p>While the <strong>median</strong> and the <strong>mean</strong> are available through base R functions, <a href="https://easystats.github.io/bayestestR/reference/map_estimate.html"><strong><code>map_estimate()</code></strong></a> in <em>bayestestR</em> can be used to directly find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.</em>, the value associated with the highest probability density (the “peak” of the posterior distribution). In other words, it is an estimation of the <em>mode</em> for continuous parameters.</p>
 </div>
@@ -448,7 +448,7 @@
 <div id="references" class="section level1">
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references">
 <div id="ref-kruschke2015doing">
 <p>Kruschke, J. K. (2015). <em>Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan</em> (2. ed). Amsterdam: Elsevier, Academic Press.</p>
 </div>
