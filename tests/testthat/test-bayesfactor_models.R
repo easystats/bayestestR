@@ -46,7 +46,7 @@ if (require("rstanarm") &&
     fit2a <- lm(Sepal.Length ~ Sepal.Width, iris[-1, ]) # different number of objects
     fit2b <- lm(Sepal.Length ~ Sepal.Width, iris) # not supported
     class(fit2b) <- "NOTLM"
-    logLik.NOTLM <- function(...){
+    logLik.NOTLM <<- function(...){
       stats:::logLik.lm(...)
     }
 
