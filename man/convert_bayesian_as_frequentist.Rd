@@ -32,7 +32,10 @@ if (require("rstanarm")) {
     data = mtcars, chains = 2, refresh = 0
   )
   bayesian_as_frequentist(model)
+}}
 
+\dontrun{
+if (require("rstanarm")) {
   # Mixed models
   model <- stan_glmer(Sepal.Length ~ Petal.Length + (1 | Species),
     data = iris, chains = 2, refresh = 0
@@ -44,6 +47,5 @@ if (require("rstanarm")) {
     data = mtcars, chains = 2, refresh = 0
   )
   bayesian_as_frequentist(model)
-}
-}
+}}
 }
