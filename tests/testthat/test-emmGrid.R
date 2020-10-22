@@ -12,6 +12,9 @@ if (require("rstanarm") && require("emmeans")) {
   all_ <- rbind(em_, c_)
   all_summ <- summary(all_)
 
+  set.seed(4)
+  model_p <- unupdate(model, verbose = FALSE)
+  set.seed(300)
 
 # estimate + hdi ----------------------------------------------------------
 
@@ -98,8 +101,6 @@ if (require("rstanarm") && require("emmeans")) {
 # describe_posterior ------------------------------------------------------
 
   test_that("emmGrid describe_posterior", {
-    model_p <- unupdate(model, verbose = FALSE)
-
     testthat::expect_equal(describe_posterior(all_)$median,
                            describe_posterior(emc_)$median)
 
@@ -113,9 +114,6 @@ if (require("rstanarm") && require("emmeans")) {
 
   test_that("emmGrid bayesfactor_parameters", {
     testthat::skip_on_cran()
-    set.seed(4)
-    model_p <- unupdate(model, verbose = FALSE)
-
     set.seed(4)
     testthat::expect_equal(
       bayesfactor_parameters(all_, prior = model, verbose = FALSE),
