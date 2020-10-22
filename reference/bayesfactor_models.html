@@ -228,7 +228,7 @@ or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.<
 analysis with <code>bayesfactor_inclusion</code>).</p>
 <ul>
 <li><p>For <code>brmsfit</code> or <code>stanreg</code> models, Bayes factors are computed using the <a href='https://CRAN.R-project.org/package=bridgesampling'><span class="pkg">bridgesampling</span></a> package.</p><ul>
-<li><p><code>brmsfit</code> models must have been fitted with <code>save_all_pars = TRUE</code>.</p></li>
+<li><p><code>brmsfit</code> models must have been fitted with <code>save_pars = save_pars(all = TRUE)</code>.</p></li>
 <li><p><code>stanreg</code> models must have been fitted with a defined <code>diagnostic_file</code>.</p></li>
 </ul></li>
 <li><p>For <code>BFBayesFactor</code>, <code>bayesfactor_models()</code> is mostly a wraparound <code><a href='https://rdrr.io/pkg/BayesFactor/man/extractBF-methods.html'>BayesFactor::extractBF()</a></code>.</p></li>
@@ -342,14 +342,14 @@ See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.
 
 <span class='co'># brms models</span>
 <span class='co'># --------------------</span>
-<span class='co'># (note the save_all_pars MUST be set to TRUE in order to work)</span>
+<span class='co'># (note the save_pars MUST be set to save_pars(all = TRUE) in order to work)</span>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/paul-buerkner/brms'>"brms"</a></span>)) {
   <span class='kw'>brm1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='fl'>1</span>, data = <span class='kw'>iris</span>, save_all_pars = <span class='fl'>TRUE</span>)
   <span class='kw'>brm2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span>, data = <span class='kw'>iris</span>, save_all_pars = <span class='fl'>TRUE</span>)
   <span class='kw'>brm3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(
     <span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>+</span> <span class='kw'>Petal.Length</span>,
     data = <span class='kw'>iris</span>,
-    save_all_pars = <span class='fl'>TRUE</span>
+    save_pars = <span class='fu'><a href='https://rdrr.io/pkg/brms/man/save_pars.html'>save_pars</a></span>(all = <span class='fl'>TRUE</span>)
   )
 
   <span class='fu'>bayesfactor_models</span>(<span class='kw'>brm1</span>, <span class='kw'>brm2</span>, <span class='kw'>brm3</span>, denominator = <span class='fl'>1</span>)
