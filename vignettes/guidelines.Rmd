@@ -97,7 +97,7 @@ Based on these suggestions, a template sentence for minimal reporting of a param
 
 Altough it can also be used to assess effect existence and signficance, the **Bayes factor (BF)** is a versatile index that can be used to directly compare different models (or data generation processes). The [Bayes factor](https://easystats.github.io/bayestestR/articles/bayes_factors.html) is a ratio, informing us by how much more (or less) likely the observed data are under two compared models - usually a model with an effect vs. a model *without* the effect. Depending on the specifications of the null model (whether it is a point-estimate (e.g., **0**) or an interval), the Bayes factor could be used both in the context of effect existence and significance.
 
-In general, a Bayes factor greater than 1 giving evidence in favour of one of the models, and a Bayes factor smaller than 1 giving evidence in favour of the other model. Several rules of thumb exist to help the interpretation (see [here](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf)), with **\> 3** being one common treshold to categorize non-anecdotal evidence.
+In general, a Bayes factor greater than 1 giving evidence in favour of one of the models, and a Bayes factor smaller than 1 giving evidence in favour of the other model. Several rules of thumb exist to help the interpretation (see [here](https://easystats.github.io/effectsize/reference/interpret_bf.html)), with **\> 3** being one common treshold to categorize non-anecdotal evidence.
  
 
 #### **Template Sentence** 

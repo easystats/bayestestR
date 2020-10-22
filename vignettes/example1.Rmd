@@ -395,6 +395,6 @@ describe_posterior(model, test = c("p_direction","rope","bayesfactor"))
 
 **Tada!** There we have it! The **median**, the **CI**, the **pd** and the **ROPE percentage**!
 
-Understanding and describing posterior distributions is just one aspect of Bayesian modelling... **Are you ready for more?** [**Click here**](https://easystats.github.io/bayestestR/articles/example2_GLM.html) to see the next example.
+Understanding and describing posterior distributions is just one aspect of Bayesian modelling... **Are you ready for more?** [**Click here**](https://easystats.github.io/bayestestR/articles/example2.html) to see the next example.
 
 ## References

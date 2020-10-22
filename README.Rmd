@@ -171,7 +171,7 @@ centrality
 ```
 
 
-As for other [**easystats**](https://github.com/easystats) packages, `plot()` methods are available from the [**see**](http://easystats.github.io/see) package for many functions:
+As for other [**easystats**](https://github.com/easystats) packages, `plot()` methods are available from the [**see**](https://easystats.github.io/see/) package for many functions:
 
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}

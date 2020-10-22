@@ -114,7 +114,7 @@ ggplot(sleep, aes(x = group, y = extra, fill= group)) +
   theme_classic()
 ```
 
-The **bloxplot** suggests that the second group has a higher number of hours of extra sleep. *By how much?* Let's fit a simple [Bayesian linear model](https://easystats.github.io/bayestestR/articles/example1_GLM.html), with a prior of $b_{group} \sim N(0, 3)$:
+The **bloxplot** suggests that the second group has a higher number of hours of extra sleep. *By how much?* Let's fit a simple [Bayesian linear model](https://easystats.github.io/bayestestR/articles/example1.html), with a prior of $b_{group} \sim N(0, 3)$:
 
 ```{r rstanarm_model, eval = FALSE}
 library(rstanarm)
@@ -277,7 +277,7 @@ print(test_group2_right)
 plot(test_group2_right)
 ```
 
-As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), **the presence of an effect is 2.8 times more likely than the absence of an effect**, given the observed data (or that the data are 2.8 time more probable under $H_1$ than $H_0$). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 2.8 is still considered quite [weak evidence](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf)).
+As we can see, given that we have an *a priori* assumption about the direction of the effect (*that the effect is positive*), **the presence of an effect is 2.8 times more likely than the absence of an effect**, given the observed data (or that the data are 2.8 time more probable under $H_1$ than $H_0$). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 2.8 is still considered quite [weak evidence](https://easystats.github.io/effectsize/reference/interpret_bf.html)).
 
 **NOTE**: See the *Testing Contrasts* appendix below.
 

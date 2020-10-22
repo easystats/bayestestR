@@ -110,7 +110,7 @@ That's one of the reason why the Bayesian framework is sometimes considered as s
 
 BFs representing evidence for the alternative against the null can be reversed using $BF_{01}=1/BF_{10}$ (the *01* and *10* correspond to *h0* against *h1* and *h1* against *h0*, respectively) to provide evidence of the null againtt the alternative. This improves human readability in cases where the BF of the alternative against the null is smaller than 1 (i.e., in support of the null).
 
-In our case, `BF = 1/0.51 = 2`, indicates that the data are **2 times more probable under the null compared to the alternative hypothesis**, which, though favouring the null, is considered only [anecdotal evidence against the null](https://easystats.github.io/report/articles/interpret_metrics.html#bayes-factor-bf).
+In our case, `BF = 1/0.51 = 2`, indicates that the data are **2 times more probable under the null compared to the alternative hypothesis**, which, though favouring the null, is considered only [anecdotal evidence against the null](https://easystats.github.io/effectsize/reference/interpret_bf.html).
 
 We can thus conclude that there is **anecdotal evidence in favour of an absence of correlation between the two variables (r<sub>median</sub> = 0.11, BF = 0.51)**, which is a much more informative statement that what we can do with frequentist statistics.
 
