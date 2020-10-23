@@ -410,13 +410,26 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; * Against Denominator: [2] Species
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>Notice that in the Bayesian framework the compared models <em>do not</em> need to be nested models, as happened here when we compared the <code>Petal.Length</code>-only model to the <code>Species</code>-only model (something that cannot be done in the frequentists framework, where compared models must be nested in one another).</p>
+<p>We can also get a matrix of Bayes factors of all the pair-wise model comparisons:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw">comparison</span>)
+</pre></div>
+<pre><code>&gt; # Bayes Factors for Model Comparison
+&gt; 
+&gt; Denominator \ Numerator    |      [1] |      [2] |      [3] |      [4] |      [5]
+&gt; ---------------------------------------------------------------------------------
+&gt; [1] Petal.Length           |        1 | 1.63e-15 | 2.07e+11 | 2.65e+11 | 2.90e-45
+&gt; [2] Species                | 6.12e+14 |        1 | 1.27e+26 | 1.63e+26 | 1.78e-30
+&gt; [3] Species + Petal.Length | 4.84e-12 | 7.90e-27 |        1 |     1.28 | 1.40e-56
+&gt; [4] Species * Petal.Length | 3.77e-12 | 6.15e-27 |     0.78 |        1 | 1.09e-56
+&gt; [5] (Intercept only)       | 3.45e+44 | 5.63e+29 | 7.12e+55 | 9.15e+55 |        1</code></pre>
 <p><strong>NOTE:</strong> In order to correctly and precisely estimate Bayes Factors, you always need the 4 P’s: <strong>P</strong>roper <strong>P</strong>riors,<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> and a <strong>P</strong>lentiful <strong>P</strong>osterior.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 </div>
 <div id="for-frequentist-models-via-the-bic-approximation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#for-frequentist-models-via-the-bic-approximation" class="anchor"></a>For Frequentist models via the BIC approximation</h3>
 <p>It is also possible to compute Bayes factors for the comparison of frequentist models. This is done by comparing BIC measures, allowing a Bayesian comparison of non-nested frequentist models <span class="citation">(Wagenmakers, 2007)</span>. Let’s try it out on some <strong>linear mixed models</strong>:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit">
+<div class="sourceCode" id="cb25"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/lme4/lme4">lme4</a></span>)
 
 <span class="kw">m0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span>(<span class="kw">Sepal.Length</span> <span class="op">~</span> (<span class="fl">1</span> <span class="op">|</span> <span class="kw">Species</span>), data = <span class="kw">iris</span>)
@@ -442,7 +455,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <h3 class="hasAnchor">
 <a href="#bayesfactor_restricted" class="anchor"></a>Order restricted models</h3>
 <p>As stated above when discussing one-sided hypothesis tests, we can create new models by imposing order restrictions on a given model. For example, consider the following model, in which we predict the length of an iris’ sepal from the length of its petal, as well as from its species, with a prior of <span class="math inline">\(b_{petal} \sim N(0,2)\)</span> <span class="math inline">\(b_{versicolors}\ \&amp;\  b_{virginica} \sim N(0,1.2)\)</span>:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit">
+<div class="sourceCode" id="cb27"><pre class="downlit">
 <span class="kw">iris_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="kw">Sepal.Length</span> <span class="op">~</span> <span class="kw">Species</span> <span class="op">+</span> <span class="kw">Petal.Length</span>,
                        data = <span class="kw">iris</span>,
                        prior = <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span>(<span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">1.2</span>, <span class="fl">1.2</span>), autoscale = <span class="fl">FALSE</span>))
@@ -456,14 +469,14 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 </li>
 </ol>
 <p>By testing these restrictions on prior and posterior samples, we can see how the probabilities of the restricted distributions change after observing the data. This can be achieved with <code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code>, that compute a Bayes factor for these restricted model vs the unrestricted model. Let’s first specify these restrictions as logical conditions:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit">
+<div class="sourceCode" id="cb28"><pre class="downlit">
 <span class="kw">botanist_hypotheses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
   <span class="st">"Petal.Length &gt; 0"</span>,
   <span class="st">"(Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)"</span>
 )
 </pre></div>
 <p>Let’s test these hypotheses:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit">
+<div class="sourceCode" id="cb29"><pre class="downlit">
 <span class="kw">botanist_BFs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span>(<span class="kw">iris_model</span>, hypothesis = <span class="kw">botanist_hypotheses</span>)
 <span class="kw">botanist_BFs</span>
 </pre></div>
@@ -501,7 +514,7 @@ BF_{restricted / NULL} = \frac
 <p>In other words, on average - are models with predictor <span class="math inline">\(X\)</span> more likely to have produced the observed data than models without predictor <span class="math inline">\(X\)</span>?<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 <p>Since each model has a prior probability, it is possible to sum the prior probability of all models that include a predictor of interest (the <em>prior inclusion probability</em>), and of all models that do not include that predictor (the <em>prior exclusion probability</em>). After the data are observed, and each model is assigned a posterior probability, we can similarly consider the sums of the posterior models’ probabilities to obtain the <em>posterior inclusion probability</em> and the <em>posterior exclusion probability</em>. Once again, the change from prior inclusion odds to the posterior inclusion odds is the Inclusion Bayes factor <span class="citation">(“<span class="math inline">\(BF_{Inclusion}\)</span>”; Clyde, Ghosh, &amp; Littman, 2011)</span>.</p>
 <p>Lets use the <code>brms</code> example from above:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit">
+<div class="sourceCode" id="cb31"><pre class="downlit">
 <span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(<span class="kw">comparison</span>)
 </pre></div>
 <pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
@@ -515,7 +528,7 @@ BF_{restricted / NULL} = \frac
 &gt; *    Priors odds: uniform-equal</code></pre>
 <p>If we examine the interaction term’s inclusion Bayes factor, we can see that across all 5 models, a model with the interaction term (<code>Species:Petal.Length</code>) is <em>on average</em> 5 times more likely than a model without the interaction term. <strong>Note</strong> that <code>Species</code>, a factor represented in the model with several parameters, gets a single Bayes factor - inclusion Bayes factors are given per predictor!</p>
 <p>We can also compare only matched models - such that averaging is done only across models that (1) do not include any interactions with the predictor of interest; (2) for interaction predictors, averaging is done only across models that contain the main effect from which the interaction predictor is comprised (see explanation for why you might want to do this <a href="https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp">here</a>).</p>
-<div class="sourceCode" id="cb31"><pre class="downlit">
+<div class="sourceCode" id="cb33"><pre class="downlit">
 <span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(<span class="kw">comparison</span>, match_models = <span class="fl">TRUE</span>)
 </pre></div>
 <pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
@@ -534,7 +547,7 @@ BF_{restricted / NULL} = \frac
 <ol style="list-style-type: decimal">
 <li>Across all models:</li>
 </ol>
-<div class="sourceCode" id="cb33"><pre class="downlit">
+<div class="sourceCode" id="cb35"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://richarddmorey.github.io/BayesFactor">BayesFactor</a></span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">ToothGrowth</span>)
 <span class="kw">ToothGrowth</span><span class="op">$</span><span class="kw">dose</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span>(<span class="kw">ToothGrowth</span><span class="op">$</span><span class="kw">dose</span>)
@@ -556,7 +569,7 @@ BF_{restricted / NULL} = \frac
 <ol start="2" style="list-style-type: decimal">
 <li>Across matched models:</li>
 </ol>
-<div class="sourceCode" id="cb35"><pre class="downlit">
+<div class="sourceCode" id="cb37"><pre class="downlit">
 <span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(<span class="kw">BF_ToothGrowth</span>, match_models = <span class="fl">TRUE</span>)
 </pre></div>
 <pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
@@ -573,7 +586,7 @@ BF_{restricted / NULL} = \frac
 <li>With Nuisance Effects:</li>
 </ol>
 <p>We’ll add <code>dose</code> to the null model in JASP, and do the same in <code>R</code>:</p>
-<div class="sourceCode" id="cb37"><pre class="downlit">
+<div class="sourceCode" id="cb39"><pre class="downlit">
 <span class="kw">BF_ToothGrowth_against_dose</span> <span class="op">&lt;-</span> <span class="kw">BF_ToothGrowth</span>[<span class="fl">3</span><span class="op">:</span><span class="fl">4</span>]<span class="op">/</span><span class="kw">BF_ToothGrowth</span>[<span class="fl">2</span>] <span class="co"># OR: </span>
 <span class="co"># update(bayesfactor_models(BF_ToothGrowth),</span>
 <span class="co">#        subset = c(4, 5),</span>
@@ -589,7 +602,7 @@ BF_{restricted / NULL} = \frac
 &gt;   len ~ dose 
 &gt; ---
 &gt; Bayes factor type: BFlinearModel, JZS</code></pre>
-<div class="sourceCode" id="cb39"><pre class="downlit">
+<div class="sourceCode" id="cb41"><pre class="downlit">
 <span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span>(<span class="kw">BF_ToothGrowth_against_dose</span>)
 </pre></div>
 <pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
@@ -609,7 +622,7 @@ BF_{restricted / NULL} = \frac
 <a href="#weighted_posteriors" class="anchor"></a>Averaging posteriors</h3>
 <p>Similar to how we can average evidence for a predictor across models, we can also average the posterior estimate across models. One situation in which this is useful in <strong>situations where Bayes factors seem to support a null effect, yet the <em>HDI</em> of the alternative excludes the null value</strong> (also see <code><a href="../reference/si.html">si()</a></code> described above). For example, looking at Motor <em>Trend Car Road Tests</em> (<code><a href="https://rdrr.io/r/utils/data.html">data(mtcars)</a></code>), we would naturally predict miles/gallon (<code>mpg</code>) from transition type (<code>am</code>) and weight (<code>wt</code>), but what about number of carburetors (<code>carb</code>)? Is this a good predictor?</p>
 <p>We can determine this by comparing the following models:</p>
-<div class="sourceCode" id="cb41"><pre class="downlit">
+<div class="sourceCode" id="cb43"><pre class="downlit">
 <span class="kw">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="kw">mpg</span> <span class="op">~</span> <span class="kw">wt</span> <span class="op">+</span> <span class="kw">am</span>,            
                 data = <span class="kw">mtcars</span>,
                 prior = <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span>(<span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">10</span>,<span class="fl">10</span>), autoscale = <span class="fl">FALSE</span>),
@@ -630,7 +643,7 @@ BF_{restricted / NULL} = \frac
 &gt; * Against Denominator: [2] wt + am
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>It seems that the model without <code>carb</code> as a predictor is <span class="math inline">\(1/BF=1.2\)</span> times more likely than the model <em>with</em> <code>carb</code> as a predictor. We might then assume that in the latter model, the HDI will include the point-null value of 0 effect, to also indicate the credibility of the null in the posterior. However, this is not the case:</p>
-<div class="sourceCode" id="cb43"><pre class="downlit">
+<div class="sourceCode" id="cb45"><pre class="downlit">
 <span class="fu"><a href="../reference/hdi.html">hdi</a></span>(<span class="kw">mod_carb</span>, ci = <span class="fl">.95</span>)
 </pre></div>
 <pre><code>&gt; # Highest Density Interval
@@ -643,7 +656,7 @@ BF_{restricted / NULL} = \frac
 &gt; carb        | [-2.04, -0.38]</code></pre>
 <p>How can this be? By estimating the HDI of the effect for <code>carb</code> in the full model, we are acting under the assumption that that model is correct. However, as we’ve just seen, both models are practically tied, and in fact it was the no-<code>carb</code> model, in which the effect for <code>carb</code> is fixed at 0, that was slightly more supported by the data. If this is the case <strong>why limit our estimation of the effect just to one model?</strong> <span class="citation">(Bergh, Haaf, Ly, Rouder, &amp; Wagenmakers, 2019)</span>.</p>
 <p>Using Bayesian model averaging, we can combine the posteriors samples from several models, weighted by the models’ marginal likelihood (done via the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function). If some parameter is part of some of the models but is missing from others, it is assumed to be fixed a 0 (which can also be seen as a method of applying shrinkage to our estimates). This results in a posterior distribution across several models, which we can now treat like any posterior distribution, and estimate the HDI. We can do this with the <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> function:</p>
-<div class="sourceCode" id="cb45"><pre class="downlit">
+<div class="sourceCode" id="cb47"><pre class="downlit">
 <span class="kw">BMA_draws</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weighted_posteriors.html">weighted_posteriors</a></span>(<span class="kw">mod</span>, <span class="kw">mod_carb</span>)
 
 <span class="kw">BMA_hdi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hdi.html">hdi</a></span>(<span class="kw">BMA_draws</span>, ci = <span class="fl">.95</span>)
@@ -657,10 +670,10 @@ BF_{restricted / NULL} = \frac
 &gt; wt          | [-6.66, -2.14]
 &gt; am          | [-2.80,  5.04]
 &gt; carb        | [-1.69,  0.00]</code></pre>
-<div class="sourceCode" id="cb47"><pre class="downlit">
+<div class="sourceCode" id="cb49"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">BMA_hdi</span>)
 </pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-23-1.png" width="1093.75"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-24-1.png" width="1093.75"></p>
 <p>We can see that across both models under consideration, the posterior of the <code>carb</code> effect is almost equally weighted between the alternative model and the null model - as represented by about half of the posterior mass concentrated at 0 - which makes sense as both models were almost equally supported by the data. We can also see that across both models, that now <strong>the HDI does contain 0</strong>. Thus we have resolved the conflict between the Bayes factor and the HDI <span class="citation">(Rouder, Haaf, &amp; Vandekerckhove, 2018)</span>!</p>
 <p><strong>Note</strong> that parameters might play different roles across different models; For example, the parameter <code>A</code> plays a different role in the model <code>Y ~ A + B</code> (where it is a main effect) than it does in the model <code>Y ~ A + B + A:B</code> (where it is a simple effect). In many cases centering of predictors (mean subtracting for continuous variables, and effects coding via <code>contr.sum</code> or orthonormal coding via <a href="https://easystats.github.io/bayestestR/reference/contr.bayes.html"><code>contr.bayes</code></a> for factors) can in some cases reduce this issue.</p>
 </div>
@@ -673,7 +686,7 @@ BF_{restricted / NULL} = \frac
 <a href="#testing-contrasts-with-emmeans-modelbased" class="anchor"></a>Testing contrasts (with <code>emmeans</code> / <code>modelbased</code>)</h3>
 <p>Besides testing parameter <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> can be used to test any estimate based on the prior and posterior distribution of the estimate. One way to achieve this is with a mix of <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> + <a href="https://cran.r-project.org/package=emmeans"><strong><code>emmeans</code></strong></a> to <a href="https://easystats.github.io/blog/posts/bayestestr_emmeans/">test Bayesian contrasts</a>.</p>
 <p>For example, in the <code>sleep</code> example from above, we can estimate the group means and the difference between them:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit">
+<div class="sourceCode" id="cb50"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/rvlenth/emmeans">emmeans</a></span>)
 
 <span class="kw">groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span>(<span class="kw">model</span>, <span class="op">~</span> <span class="kw">group</span>)
@@ -688,7 +701,7 @@ BF_{restricted / NULL} = \frac
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
-<div class="sourceCode" id="cb50"><pre class="downlit">
+<div class="sourceCode" id="cb52"><pre class="downlit">
 <span class="co"># pass the original model via prior</span>
 <span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span>(<span class="kw">groups_all</span>, prior = <span class="kw">model</span>)
 </pre></div>
@@ -703,7 +716,7 @@ BF_{restricted / NULL} = \frac
 &gt; * Evidence Against The Null: [0]</code></pre>
 <p>That is strong evidence for the mean of group 1 being 0, and for group 2 for not being 0, but hardly any evidence for the difference between them being not 0. Conflict? Uncertainty? That is the Bayesian way!</p>
 <p>We can also use the <code>easystats</code>’ <a href="https://cran.r-project.org/package=modelbased"><strong><code>modelbased</code></strong></a> package to compute Bayes factors for contrasts:</p>
-<div class="sourceCode" id="cb52"><pre class="downlit">
+<div class="sourceCode" id="cb54"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/easystats/modelbased">modelbased</a></span>)
 
 <span class="fu"><a href="https://rdrr.io/pkg/modelbased/man/estimate_contrasts.html">estimate_contrasts</a></span>(<span class="kw">model</span>, test = <span class="st">"bf"</span>)
@@ -719,7 +732,7 @@ BF_{restricted / NULL} = \frac
 <a href="#contrasts-and-marginal-means" class="anchor"></a>Contrasts (and marginal means)</h4>
 <p>The <em>effects</em> factor coding commonly used in factorial analysis carries a hidden bias when it is applies to Bayesian priors. For example, if we want to test all pairwise differences between 3 levels of the same factor, we would expect all <em>a priori</em> differences to have the same distribution, but…</p>
 <p>For our example, we will be test all <strong><em>prior</em></strong> pairwise differences between the 3 species in the <code>iris</code> data-set.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit">
+<div class="sourceCode" id="cb55"><pre class="downlit">
 <span class="kw">df</span> <span class="op">&lt;-</span> <span class="kw">iris</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span>(<span class="kw">df</span><span class="op">$</span><span class="kw">Species</span>) <span class="op">&lt;-</span> <span class="kw">contr.sum</span>
 
@@ -738,20 +751,20 @@ BF_{restricted / NULL} = \frac
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-29-1.png" width="1093.75"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-30-1.png" width="1093.75"></p>
 <p>We can see that the though the prior estimate for all 3 pairwise contrasts is ~0, the scale / HDI is much more narrow for the prior of the <code>setosa - versicolor</code> contrast!</p>
 <p><strong><em>What happened???</em></strong><br>
 This is caused by an inherent bias in the priors introduced by the <em>effects</em> coding (it’s even worse with the default treatment coding, because the prior for the intercept is usually drastically different from the effect’s parameters). <strong>And since it affects the priors, this bias will also bias the Bayes factors over / understating evidence for some contrasts over others!</strong></p>
 <p>The solution is to use <em>orthonormal</em> factor coding, a-la <code>contr.bayes</code>, which can either specify this factor coding per-factor:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit">
+<div class="sourceCode" id="cb57"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span>(<span class="kw">df</span><span class="op">$</span><span class="kw">Species</span>) <span class="op">&lt;-</span> <span class="kw">contr.bayes</span>
 </pre></div>
 <p>Or you can set it globally:</p>
-<div class="sourceCode" id="cb56"><pre class="downlit">
+<div class="sourceCode" id="cb58"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(contrasts = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'contr.bayes'</span>, <span class="st">'contr.poly'</span>))
 </pre></div>
 <p>Let’s again estimate the <strong><em>prior</em></strong> differences:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit">
+<div class="sourceCode" id="cb59"><pre class="downlit">
 <span class="kw">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="kw">Sepal.Length</span> <span class="op">~</span> <span class="kw">Species</span>, data = <span class="kw">df</span>,
                       prior = <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span>(<span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>), autoscale = <span class="fl">FALSE</span>),
                       prior_PD = <span class="fl">TRUE</span>, <span class="co"># sample priors</span>
@@ -767,7 +780,7 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-33-1.png" width="1093.75"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-34-1.png" width="1093.75"></p>
 <p>We can see that using this coding scheme, we have equal priors on all pairwise contrasts.</p>
 </div>
 <div id="order-restrictions" class="section level4">
@@ -775,7 +788,7 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
 <a href="#order-restrictions" class="anchor"></a>Order restrictions</h4>
 <p>This bias also affect order restrictions involving 3 or more levels. For example, if we want to test an order restriction among A, B, and C, the <em>a priori</em> probability of obtaining the order A &gt; C &gt; B is 1/6 (reach back to <em>intro to stats</em> year 1), but…</p>
 <p>For our example, we will be interested in the following order restrictions in the <code>iris</code> data-set (each line is a separate restriction):</p>
-<div class="sourceCode" id="cb59"><pre class="downlit">
+<div class="sourceCode" id="cb61"><pre class="downlit">
 <span class="kw">hyp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
   <span class="co"># comparing 2 levels</span>
   <span class="st">"setosa &lt; versicolor"</span>,
@@ -789,7 +802,7 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
 )
 </pre></div>
 <p>With the default factor coding, this looks like this:</p>
-<div class="sourceCode" id="cb60"><pre class="downlit">
+<div class="sourceCode" id="cb62"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span>(<span class="kw">df</span><span class="op">$</span><span class="kw">Species</span>) <span class="op">&lt;-</span> <span class="kw">contr.sum</span>
 
 <span class="kw">fit_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="kw">Sepal.Length</span> <span class="op">~</span> <span class="kw">Species</span>, data = <span class="kw">df</span>,
@@ -819,7 +832,7 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
 </li>
 </ol>
 <p>Again, this is solved by using the <em>orthonormal</em> factor coding (from above).</p>
-<div class="sourceCode" id="cb62"><pre class="downlit">
+<div class="sourceCode" id="cb64"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span>(<span class="kw">df</span><span class="op">$</span><span class="kw">Species</span>) <span class="op">&lt;-</span> <span class="kw">contr.bayes</span>
 
 <span class="kw">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="kw">Sepal.Length</span> <span class="op">~</span> <span class="kw">Species</span>, data = <span class="kw">df</span>,
