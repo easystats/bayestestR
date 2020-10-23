@@ -401,6 +401,12 @@ update(comparison, reference = 2)
 
 Notice that in the Bayesian framework the compared models *do not* need to be nested models, as happened here when we compared the `Petal.Length`-only model to the `Species`-only model (something that cannot be done in the frequentists framework, where compared models must be nested in one another).
 
+We can also get a matrix of Bayes factors of all the pair-wise model comparisons:
+
+```{r}
+as.matrix(comparison)
+```
+
 **NOTE:** In order to correctly and precisely estimate Bayes Factors, you always need the 4 P's: **P**roper **P**riors ^[[Robert, 2016](https://doi.org/10.1016/j.jmp.2015.08.002); [Kass & Raftery, 1993](https://doi.org/10.1080/01621459.1995.10476572); [Fernández, Ley, & Steel, 2001](https://doi.org/10.1016/S0304-4076(00)00076-2)], and a **P**lentiful **P**osterior ^[[Gronau, Singmann, & Wagenmakers, 2017](https://arxiv.org/abs/1710.08162)].
 
 ### For Frequentist models via the BIC approximation 
