@@ -156,6 +156,7 @@ ggplot(mapping = aes(x_vals, d_vals, fill = in_null, group = range_groups)) +
   geom_area(color = "black", size = 1) +
   scale_fill_flat(name = "", labels = c("Alternative", "Null")) + 
   labs(x = "Drug effect", y = "Density") + 
+  coord_cartesian(ylim = c(0, 0.45)) +
   theme_modern() + 
   theme(legend.position = c(0.2, 0.8))
 
@@ -187,6 +188,7 @@ ggplot(mapping = aes(x_vals, d_vals_post, fill = in_null, group = range_groups))
   geom_area(color = "black", size = 1) +
   scale_fill_flat(name = "", labels = c("Alternative", "Null")) + 
   labs(x = "Drug effect", y = "Density") + 
+  coord_cartesian(ylim = c(0, 0.45)) +
   theme_modern() + 
   theme(legend.position = c(0.2, 0.8))
 
