@@ -1,5 +1,4 @@
 if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
-
   test_that("hdi", {
     testthat::expect_equal(hdi(distribution_normal(1000), ci = .90)$CI_low[1], -1.64, tolerance = 0.02)
     testthat::expect_equal(nrow(hdi(distribution_normal(1000), ci = c(.80, .90, .95))), 3, tolerance = 0.01)

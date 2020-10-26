@@ -9,7 +9,7 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
     res <- si(posterior, prior)
     testthat::expect_equal(res$CI_low, 0.039, tolerance = 0.02)
     testthat::expect_equal(res$CI_high, 1.053, tolerance = 0.02)
-    testthat::expect_is(res,c("bayestestR_si"))
+    testthat::expect_is(res, c("bayestestR_si"))
 
     res <- si(posterior, prior, BF = 3)
     testthat::expect_equal(res$CI_low, 0.333, tolerance = 0.02)
@@ -19,8 +19,8 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
     testthat::expect_true(all(is.na(res$CI_low)))
     testthat::expect_true(all(is.na(res$CI_high)))
 
-    res <- si(posterior, prior, BF = c(1/3, 1, 3))
-    testthat::expect_equal(res$CI, c(1/3, 1, 3), tolerance = 0.02)
+    res <- si(posterior, prior, BF = c(1 / 3, 1, 3))
+    testthat::expect_equal(res$CI, c(1 / 3, 1, 3), tolerance = 0.02)
     testthat::expect_equal(res$CI_low, c(-0.119, 0.039, 0.333), tolerance = 0.02)
     testthat::expect_equal(res$CI_high, c(1.213, 1.053, 0.759), tolerance = 0.02)
   })
@@ -29,7 +29,7 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
     testthat::skip_on_cran()
 
     library(rstanarm)
-    contrasts(sleep$group) <- contr.bayes  # See vignette
+    contrasts(sleep$group) <- contr.bayes # See vignette
     stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep, refresh = 0)
 
     set.seed(333)
@@ -39,7 +39,7 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
     set.seed(333)
     res2 <- si(stan_model, verbose = FALSE)
 
-    testthat::expect_is(res1,c("bayestestR_si"))
+    testthat::expect_is(res1, c("bayestestR_si"))
     testthat::expect_equal(res1, res2)
   })
 }

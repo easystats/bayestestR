@@ -134,11 +134,13 @@ simulate_ttest <- function(n = 100, d = 0.5, names = NULL, ...) {
 #' @rdname simulate_correlation
 #' @export
 simulate_difference <- function(n = 100, d = 0.5, names = NULL, ...) {
-  x <- distribution_normal(round(n/2), -d/2, 1)
-  y <- distribution_normal(round(n/2), d/2, 1)
+  x <- distribution_normal(round(n / 2), -d / 2, 1)
+  y <- distribution_normal(round(n / 2), d / 2, 1)
 
-  data <- data.frame(y = as.factor(rep(c(0, 1), each=round(n/2))),
-                     x = c(x, y))
+  data <- data.frame(
+    y = as.factor(rep(c(0, 1), each = round(n / 2))),
+    x = c(x, y)
+  )
   names(data) <- paste0("V", 0:(ncol(data) - 1))
 
   if (!is.null(names)) {

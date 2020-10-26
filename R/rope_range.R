@@ -33,7 +33,7 @@
 #'   )
 #'   rope_range(model)
 #'
-#'   model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial", refresh=0)
+#'   model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial", refresh = 0)
 #'   rope_range(model)
 #' }
 #'
@@ -75,10 +75,9 @@ rope_range.stanreg <- rope_range.brmsfit
 
 #' @export
 #' @importFrom stats sd
-rope_range.BFBayesFactor <- function(x, ...){
+rope_range.BFBayesFactor <- function(x, ...) {
   fac <- 1
   if (inherits(x@numerator[[1]], "BFlinearModel")) {
-
     response <- tryCatch(
       {
         insight::get_response(x)

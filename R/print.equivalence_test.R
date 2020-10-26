@@ -122,20 +122,25 @@ print.equivalence_test <- function(x, digits = 2, ...) {
 
   if (!is.null(obj_name)) {
     # first try, parent frame
-    model <- tryCatch({
-      get(obj_name, envir = parent.frame())
-    },
-    error = function(e) { NULL }
+    model <- tryCatch(
+      {
+        get(obj_name, envir = parent.frame())
+      },
+      error = function(e) {
+        NULL
+      }
     )
 
     if (is.null(model)) {
       # second try, global env
-      model <- tryCatch({
-        get(obj_name, envir = globalenv())
-      },
-      error = function(e) { NULL }
+      model <- tryCatch(
+        {
+          get(obj_name, envir = globalenv())
+        },
+        error = function(e) {
+          NULL
+        }
       )
-
     }
   }
   model

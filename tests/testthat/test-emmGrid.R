@@ -4,7 +4,7 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
 
   em_ <- emmeans(model, ~group)
   c_ <- pairs(em_)
-  emc_ <- emmeans(model, pairwise~group)
+  emc_ <- emmeans(model, pairwise ~ group)
   all_ <- rbind(em_, c_)
   all_summ <- summary(all_)
 
@@ -12,7 +12,7 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
   model_p <- unupdate(model, verbose = FALSE)
   set.seed(300)
 
-# estimate + hdi ----------------------------------------------------------
+  # estimate + hdi ----------------------------------------------------------
 
   test_that("emmGrid hdi", {
     xhdi <- hdi(all_, ci = 0.95)
@@ -33,7 +33,7 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
 
 
 
-# Basics ------------------------------------------------------------------
+  # Basics ------------------------------------------------------------------
 
   test_that("emmGrid ci", {
     xci <- ci(all_, ci = 0.9)
@@ -79,12 +79,12 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
   })
 
   test_that("emmGrid p_rope", {
-    xprope <- p_rope(all_, range = c(-0.1,0.1))
+    xprope <- p_rope(all_, range = c(-0.1, 0.1))
     testthat::expect_equal(length(xprope$p_ROPE), 3)
   })
 
   test_that("emmGrid p_significance", {
-    xsig <- p_significance(all_, threshold = c(-0.1,0.1))
+    xsig <- p_significance(all_, threshold = c(-0.1, 0.1))
     testthat::expect_equal(length(xsig$ps), 3)
   })
 
@@ -94,11 +94,13 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
   })
 
 
-# describe_posterior ------------------------------------------------------
+  # describe_posterior ------------------------------------------------------
 
   test_that("emmGrid describe_posterior", {
-    testthat::expect_equal(describe_posterior(all_)$median,
-                           describe_posterior(emc_)$median)
+    testthat::expect_equal(
+      describe_posterior(all_)$median,
+      describe_posterior(emc_)$median
+    )
 
     testthat::expect_equal(
       describe_posterior(all_, bf_prior = model_p, test = "bf")$BF,
@@ -106,7 +108,7 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
     )
   })
 
-# BFs ---------------------------------------------------------------------
+  # BFs ---------------------------------------------------------------------
 
   test_that("emmGrid bayesfactor_parameters", {
     testthat::skip_on_cran()
@@ -160,7 +162,7 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
   })
 
 
-# For non linear models ---------------------------------------------------
+  # For non linear models ---------------------------------------------------
 
 
   set.seed(333)
@@ -169,14 +171,16 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
     Y = rexp(6)
   )
 
-  fit_bayes <- stan_glm(Y ~ G, data = df,
-                        family = Gamma(link = "identity"),
-                        refresh = 0)
+  fit_bayes <- stan_glm(Y ~ G,
+    data = df,
+    family = Gamma(link = "identity"),
+    refresh = 0
+  )
 
   fit_bayes_prior <- unupdate(fit_bayes, verbose = FALSE)
 
-  bayes_sum <- emmeans(fit_bayes, ~ G)
-  bayes_sum_prior <- emmeans(fit_bayes_prior, ~ G)
+  bayes_sum <- emmeans(fit_bayes, ~G)
+  bayes_sum_prior <- emmeans(fit_bayes_prior, ~G)
 
   # test_that("emmGrid bayesfactor_restricted2", {
   #   testthat::skip_on_travis()
@@ -205,9 +209,10 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
     testthat::skip_on_cran()
 
     model <- stan_glm(vs ~ mpg,
-                      data = mtcars,
-                      family = "binomial",
-                      refresh = 0)
+      data = mtcars,
+      family = "binomial",
+      refresh = 0
+    )
 
     probs <- emmeans(model, "mpg", type = "resp")
     link <- emmeans(model, "mpg")
@@ -229,4 +234,3 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
     testthat::expect_equal(xpest$Median, link_summ$emmean, tolerance = 0.1)
   })
 }
-

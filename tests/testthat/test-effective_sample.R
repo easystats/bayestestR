@@ -32,7 +32,5 @@ if (require("rstanarm") && require("brms") && require("insight")) {
         stringsAsFactors = F
       )
     )
-
   })
-
 }

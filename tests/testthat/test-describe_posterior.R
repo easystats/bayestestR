@@ -1,5 +1,4 @@
 if (require("testthat") && require("bayestestR") && require("rstanarm") && require("brms") && require("insight")) {
-
   test_that("describe_posterior", {
     set.seed(333)
 
@@ -7,9 +6,11 @@ if (require("testthat") && require("bayestestR") && require("rstanarm") && requi
     x <- distribution_normal(1000)
     rez <- testthat::expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
     testthat::expect_equal(dim(rez), c(1, 19))
-    testthat::expect_equal(colnames(rez), c("Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
-                                            "CI_high", "p_map", "pd", "p_ROPE", "ps", "ROPE_CI", "ROPE_low",
-                                            "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "BF"))
+    testthat::expect_equal(colnames(rez), c(
+      "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
+      "CI_high", "p_map", "pd", "p_ROPE", "ps", "ROPE_CI", "ROPE_low",
+      "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "BF"
+    ))
     rez <- testthat::expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
     testthat::expect_equal(dim(rez), c(2, 19))
     rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
@@ -34,10 +35,12 @@ if (require("testthat") && require("bayestestR") && require("rstanarm") && requi
       x <- rstanarm::stan_glm(mpg ~ wt, data = mtcars, refresh = 0)
       rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
       testthat::expect_equal(dim(rez), c(2, 21))
-      testthat::expect_equal(colnames(rez), c("Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
-                                              "CI_high", "p_MAP", "pd", "p_ROPE", "ps", "ROPE_CI", "ROPE_low",
-                                              "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "BF", "Rhat",
-                                              "ESS"))
+      testthat::expect_equal(colnames(rez), c(
+        "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
+        "CI_high", "p_MAP", "pd", "p_ROPE", "ps", "ROPE_CI", "ROPE_low",
+        "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "BF", "Rhat",
+        "ESS"
+      ))
       rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))
       testthat::expect_equal(dim(rez), c(4, 21))
       rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile", diagnostic = NULL, priors = FALSE)
@@ -47,9 +50,11 @@ if (require("testthat") && require("bayestestR") && require("rstanarm") && requi
       x <- brms::brm(mpg ~ wt + (1 | cyl) + (1 + wt | gear), data = mtcars, refresh = 0)
       rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, ci = c(0.8, 0.9))
       testthat::expect_equal(dim(rez), c(4, 16))
-      testthat::expect_equal(colnames(rez), c("Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
-                                              "CI_high", "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
-                                              "Rhat", "ESS"))
+      testthat::expect_equal(colnames(rez), c(
+        "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
+        "CI_high", "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
+        "Rhat", "ESS"
+      ))
       rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile", diagnostic = NULL)
       testthat::expect_equal(dim(rez), c(2, 4))
 

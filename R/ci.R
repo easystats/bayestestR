@@ -40,7 +40,6 @@
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' ci(df, method = "ETI", ci = c(.80, .89, .95))
 #' ci(df, method = "HDI", ci = c(.80, .89, .95))
-#'
 #' \dontrun{
 #' if (require("rstanarm")) {
 #'   model <- stan_glm(mpg ~ wt, data = mtcars, chains = 2, iter = 200, refresh = 0)
@@ -144,7 +143,7 @@ ci.sim <- function(x, ci = .89, method = "ETI", parameters = NULL, verbose = TRU
 #' @rdname ci
 #' @export
 ci.stanreg <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random", "all"),
-                       parameters = NULL, verbose = TRUE,  BF = 1, ...) {
+                       parameters = NULL, verbose = TRUE, BF = 1, ...) {
   .ci_bayesian(x, ci = ci, method = method, effects = effects, parameters = parameters, verbose = verbose, BF = BF, ...)
 }
 

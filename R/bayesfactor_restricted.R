@@ -85,9 +85,9 @@
 #'   )
 #'   bayesfactor_restricted(fit_stan, hypothesis = hyps)
 #'
-#' # emmGrid objects
-#' # ---------------
-#' # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html
+#'   # emmGrid objects
+#'   # ---------------
+#'   # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html
 #'   disgust_data <- read.table(url("http://www.learnbayes.org/disgust_example.txt"), header = TRUE)
 #'
 #'   contrasts(disgust_data$condition) <- contr.bayes # see vignette
@@ -97,12 +97,12 @@
 #'   hyps <- c("lemon < control & control < sulfur")
 #'
 #'   bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
-#' # > # Bayes Factor (Order-Restriction)
-#' # >
-#' # >                          Hypothesis P(Prior) P(Posterior) Bayes Factor
-#' # >  lemon < control & control < sulfur     0.17         0.75         4.49
-#' # > ---
-#' # > Bayes factors for the restricted model vs. the un-restricted model.
+#'   # > # Bayes Factor (Order-Restriction)
+#'   # >
+#'   # >                          Hypothesis P(Prior) P(Posterior) Bayes Factor
+#'   # >  lemon < control & control < sulfur     0.17         0.75         4.49
+#'   # > ---
+#'   # > Bayes factors for the restricted model vs. the un-restricted model.
 #' }
 #' }
 #' @references
@@ -132,8 +132,9 @@ bayesfactor_restricted.stanreg <- function(posterior, hypothesis, prior = NULL,
   component <- match.arg(component)
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
-                                        effects, component,
-                                        verbose = verbose)
+    effects, component,
+    verbose = verbose
+  )
 
   # Get savage-dickey BFs
   bayesfactor_restricted.data.frame(
@@ -152,7 +153,8 @@ bayesfactor_restricted.emmGrid <- function(posterior, hypothesis, prior = NULL,
                                            verbose = TRUE,
                                            ...) {
   samps <- .clean_priors_and_posteriors(posterior, prior,
-                                        verbose = verbose)
+    verbose = verbose
+  )
 
   bayesfactor_restricted.data.frame(
     posterior = samps$posterior, prior = samps$prior,

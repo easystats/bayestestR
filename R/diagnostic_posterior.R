@@ -166,10 +166,11 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects
   effects <- match.arg(effects)
   component <- match.arg(component)
   params <- insight::find_parameters(posteriors,
-                                     effects = effects,
-                                     component = component,
-                                     parameters = parameters,
-                                     flatten = TRUE)
+    effects = effects,
+    component = component,
+    parameters = parameters,
+    flatten = TRUE
+  )
 
   # If no diagnostic
   if (is.null(diagnostic)) {

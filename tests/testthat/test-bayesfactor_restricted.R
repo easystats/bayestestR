@@ -1,14 +1,14 @@
 if (require("rstanarm") &&
-    require("BayesFactor") &&
-    require("testthat")) {
+  require("BayesFactor") &&
+  require("testthat")) {
 
-# bayesfactor_restricted data.frame ---------------------------------------
+  # bayesfactor_restricted data.frame ---------------------------------------
 
   test_that("bayesfactor_restricted df", {
     prior <- data.frame(
       X = distribution_normal(100),
-      X1 = c(distribution_normal(50),distribution_normal(50)),
-      X3 = c(distribution_normal(80),distribution_normal(20))
+      X1 = c(distribution_normal(50), distribution_normal(50)),
+      X3 = c(distribution_normal(80), distribution_normal(20))
     )
 
     posterior <- data.frame(
@@ -33,7 +33,7 @@ if (require("rstanarm") &&
   })
 
 
-# bayesfactor_restricted RSTANARM -----------------------------------------
+  # bayesfactor_restricted RSTANARM -----------------------------------------
 
 
   test_that("bayesfactor_restricted RSTANARM", {

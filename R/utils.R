@@ -215,7 +215,7 @@
 }
 
 #' @keywords internal
-.is_baysian_emmeans <- function(x){
+.is_baysian_emmeans <- function(x) {
   if (inherits(x, "emm_list")) {
     x <- x[[1]]
   }

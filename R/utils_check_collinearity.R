@@ -13,7 +13,6 @@
   # need at least three columns, one is removed anyway...
 
   if (ncol(dat) > 2) {
-
     dat <- dat[, -1, drop = FALSE]
 
     if (ncol(dat) > 1) {

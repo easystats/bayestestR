@@ -1,7 +1,6 @@
 if (require("bayesQR", quietly = TRUE)) {
   test_that("bayesQR", {
-
-    x <- bayesQR::bayesQR(Sepal.Length ~ Petal.Width, data=iris, quantile = 0.1, alasso = TRUE, ndraw=500)
+    x <- bayesQR::bayesQR(Sepal.Length ~ Petal.Width, data = iris, quantile = 0.1, alasso = TRUE, ndraw = 500)
 
     rez <- p_direction(x)
     testthat::expect_equal(c(nrow(rez), ncol(rez)), c(2, 2))

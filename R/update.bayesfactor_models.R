@@ -65,5 +65,3 @@ as.matrix.bayesfactor_models <- function(x, ...) {
   class(out) <- c("bayesfactor_models_matrix", class(out))
   out
 }
-
-

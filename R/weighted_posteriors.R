@@ -34,15 +34,19 @@
 #' @examples
 #' \donttest{
 #' if (require("rstanarm") && require("see")) {
-#'   stan_m0 <- stan_glm(extra ~ 1, data = sleep,
-#'                       family = gaussian(),
-#'                       refresh=0,
-#'                       diagnostic_file = file.path(tempdir(), "df0.csv"))
+#'   stan_m0 <- stan_glm(extra ~ 1,
+#'     data = sleep,
+#'     family = gaussian(),
+#'     refresh = 0,
+#'     diagnostic_file = file.path(tempdir(), "df0.csv")
+#'   )
 #'
-#'   stan_m1 <- stan_glm(extra ~ group, data = sleep,
-#'                       family = gaussian(),
-#'                       refresh=0,
-#'                       diagnostic_file = file.path(tempdir(), "df1.csv"))
+#'   stan_m1 <- stan_glm(extra ~ group,
+#'     data = sleep,
+#'     family = gaussian(),
+#'     refresh = 0,
+#'     diagnostic_file = file.path(tempdir(), "df1.csv")
+#'   )
 #'
 #'
 #'   res <- weighted_posteriors(stan_m0, stan_m1)
@@ -52,46 +56,47 @@
 #'
 #' ## With BayesFactor
 #' if (require("BayesFactor")) {
-#' extra_sleep <- ttestBF(formula = extra ~ group, data = sleep)
+#'   extra_sleep <- ttestBF(formula = extra ~ group, data = sleep)
 #'
-#' wp <- weighted_posteriors(extra_sleep)
+#'   wp <- weighted_posteriors(extra_sleep)
 #'
-#' describe_posterior(extra_sleep, test = NULL)
-#' describe_posterior(wp$delta, test = NULL) # also considers the null
+#'   describe_posterior(extra_sleep, test = NULL)
+#'   describe_posterior(wp$delta, test = NULL) # also considers the null
 #' }
 #'
 #'
 #' ## weighted prediction distributions via data.frames
 #' if (require("rstanarm")) {
-#' m0 <- stan_glm(
-#'   mpg ~ 1,
-#'   data = mtcars,
-#'   family = gaussian(),
-#'   diagnostic_file = file.path(tempdir(), "df0.csv"),
-#'   refresh = 0
-#' )
+#'   m0 <- stan_glm(
+#'     mpg ~ 1,
+#'     data = mtcars,
+#'     family = gaussian(),
+#'     diagnostic_file = file.path(tempdir(), "df0.csv"),
+#'     refresh = 0
+#'   )
 #'
-#' m1 <- stan_glm(
-#'   mpg ~ carb,
-#'   data = mtcars,
-#'   family = gaussian(),
-#'   diagnostic_file = file.path(tempdir(), "df1.csv"),
-#'   refresh = 0
-#' )
+#'   m1 <- stan_glm(
+#'     mpg ~ carb,
+#'     data = mtcars,
+#'     family = gaussian(),
+#'     diagnostic_file = file.path(tempdir(), "df1.csv"),
+#'     refresh = 0
+#'   )
 #'
-#' # Predictions:
-#' pred_m0 <- data.frame(posterior_predict(m0))
-#' pred_m1 <- data.frame(posterior_predict(m1))
+#'   # Predictions:
+#'   pred_m0 <- data.frame(posterior_predict(m0))
+#'   pred_m1 <- data.frame(posterior_predict(m1))
 #'
-#' BFmods <- bayesfactor_models(m0, m1)
+#'   BFmods <- bayesfactor_models(m0, m1)
 #'
-#' wp <- weighted_posteriors(pred_m0, pred_m1,
-#'                           prior_odds = BFmods$BF[2])
+#'   wp <- weighted_posteriors(pred_m0, pred_m1,
+#'     prior_odds = BFmods$BF[2]
+#'   )
 #'
-#' # look at first 5 prediction intervals
-#' hdi(pred_m0[1:5])
-#' hdi(pred_m1[1:5])
-#' hdi(wp[1:5]) # between, but closer to pred_m1
+#'   # look at first 5 prediction intervals
+#'   hdi(pred_m0[1:5])
+#'   hdi(pred_m1[1:5])
+#'   hdi(wp[1:5]) # between, but closer to pred_m1
 #' }
 #' }
 #' @references
@@ -109,7 +114,7 @@ weighted_posteriors <- function(..., prior_odds = NULL, missing = 0, verbose = T
 
 #' @export
 #' @rdname weighted_posteriors
-weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE){
+weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE) {
   Mods <- list(...)
   mnames <- sapply(match.call(expand.dots = FALSE)$`...`, .safe_deparse)
 
@@ -121,8 +126,9 @@ weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, 
     prior_odds <- c(1, prior_odds)
   } else {
     warning("'prior_odds = NULL'; Using uniform priors odds.\n",
-            "For weighted data frame, 'prior_odds' should be specified as a numeric vector.",
-            call. = FALSE)
+      "For weighted data frame, 'prior_odds' should be specified as a numeric vector.",
+      call. = FALSE
+    )
     prior_odds <- rep(1, length(Mods))
   }
 
@@ -141,9 +147,9 @@ weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, 
 #' @rdname weighted_posteriors
 #' @importFrom insight get_parameters
 weighted_posteriors.stanreg <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE,
-                              effects = c("fixed", "random", "all"),
-                              component = c("conditional", "zi", "zero_inflated", "all"),
-                              parameters = NULL){
+                                        effects = c("fixed", "random", "all"),
+                                        component = c("conditional", "zi", "zero_inflated", "all"),
+                                        parameters = NULL) {
   Mods <- list(...)
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -161,9 +167,10 @@ weighted_posteriors.stanreg <- function(..., prior_odds = NULL, missing = 0, ver
 
   # extract parameters
   params <- lapply(Mods, insight::get_parameters,
-                   effects = effects,
-                   component = component,
-                   parameters = parameters)
+    effects = effects,
+    component = component,
+    parameters = parameters
+  )
 
   res <- .weighted_posteriors(params, weighted_samps, missing)
   attr(res, "weights") <- data.frame(Model = BFMods$Model, weights = weighted_samps)
@@ -176,7 +183,7 @@ weighted_posteriors.brmsfit <- weighted_posteriors.stanreg
 
 #' @export
 #' @rdname weighted_posteriors
-weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE, iterations = 4000){
+weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE, iterations = 4000) {
   Mods <- c(...)
 
   # Get Bayes factors
@@ -210,7 +217,8 @@ weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 
       params[[m]] <- BayesFactor::posterior(1 / Mods[1], iterations = iterations, progress = FALSE)
     } else {
       params[[m]] <- BayesFactor::posterior(
-        Mods[m - 1], iterations = iterations, progress = FALSE
+        Mods[m - 1],
+        iterations = iterations, progress = FALSE
       )
     }
   }
@@ -231,8 +239,8 @@ weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 
 
   for (m in seq_along(weighted_samps)) {
     temp_params <- params[[m]]
-    i <- sample(nrow(temp_params),size = weighted_samps[m])
-    temp_params <- temp_params[i, ,drop = FALSE]
+    i <- sample(nrow(temp_params), size = weighted_samps[m])
+    temp_params <- temp_params[i, , drop = FALSE]
 
     # If any parameters not estimated in the model, they are assumed to be 0 (the default value of `missing`)
     missing_pars <- setdiff(par_names, colnames(temp_params))
@@ -247,7 +255,7 @@ weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 
 
 #' @keywords internal
 #' @importFrom insight find_algorithm
-.total_samps <- function(mod){
+.total_samps <- function(mod) {
   x <- insight::find_algorithm(mod)
   x$chains * (x$iterations - x$warmup)
 }

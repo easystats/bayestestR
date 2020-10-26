@@ -99,7 +99,6 @@ si <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
 #' @rdname si
 #' @export
 si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
-
   if (is.null(prior)) {
     prior <- posterior
     if (verbose) {
@@ -136,9 +135,10 @@ si.stanreg <- function(posterior, prior = NULL,
   component <- match.arg(component)
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
-                                        verbose = verbose,
-                                        effects = effects, component = component,
-                                        parameters = parameters)
+    verbose = verbose,
+    effects = effects, component = component,
+    parameters = parameters
+  )
 
   # Get SIs
   temp <- si.data.frame(
@@ -165,9 +165,9 @@ si.brmsfit <- si.stanreg
 #' @export
 si.emmGrid <- function(posterior, prior = NULL,
                        BF = 1, verbose = TRUE, ...) {
-
   samps <- .clean_priors_and_posteriors(posterior, prior,
-                                        verbose = verbose)
+    verbose = verbose
+  )
 
   # Get SIs
   out <- si.data.frame(
@@ -185,7 +185,7 @@ si.emm_list <- si.emmGrid
 
 #' @rdname si
 #' @export
-si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
+si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
   if (length(BF) > 1) {
     SIs <- lapply(BF, function(i) {
       si(posterior, prior = prior, BF = i, verbose = verbose, ...)
@@ -209,26 +209,27 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...){
   sis <- matrix(NA, nrow = ncol(posterior), ncol = 2)
   for (par in seq_along(posterior)) {
     sis[par, ] <- .si(posterior[[par]],
-                      prior[[par]],
-                      BF = BF, ...)
+      prior[[par]],
+      BF = BF, ...
+    )
   }
 
   out <- data.frame(
     Parameter = colnames(posterior),
     CI = BF,
-    CI_low = sis[,1],
-    CI_high = sis[,2],
+    CI_low = sis[, 1],
+    CI_high = sis[, 2],
     stringsAsFactors = FALSE
   )
   class(out) <- unique(c("bayestestR_si", "see_si", "bayestestR_ci", "see_ci", class(out)))
-  attr(out, "plot_data") <- .make_BF_plot_data(posterior,prior,0,0, ...)$plot_data
+  attr(out, "plot_data") <- .make_BF_plot_data(posterior, prior, 0, 0, ...)$plot_data
 
   out
 }
 
 
 #' @export
-si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = c("fixed", "random", "all"), ...){
+si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = c("fixed", "random", "all"), ...) {
   si(insight::get_parameters(posterior, effects = effects))
 }
 
@@ -241,7 +242,7 @@ si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects 
   }
 
   if (isTRUE(all.equal(prior, posterior))) {
-    return(c(NA,NA))
+    return(c(NA, NA))
   }
 
   x <- c(prior, posterior)
@@ -267,14 +268,14 @@ si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects 
   crit <- relative_d >= BF
 
   cp <- rle(c(stats::na.omit(crit)))
-  if (length(cp$lengths) > 3)
+  if (length(cp$lengths) > 3) {
     warning("More than 1 SI detected. Plot the result to investigate.", call. = FALSE)
+  }
 
   x_supported <- stats::na.omit(x_axis[crit])
   if (length(x_supported) < 2) {
-    return(c(NA,NA))
+    return(c(NA, NA))
   } else {
     range(x_supported)
   }
-
 }

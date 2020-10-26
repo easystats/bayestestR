@@ -21,9 +21,11 @@ if (require("brms") && require("testthat") && require("insight") && require("htt
 
     out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean")
     s <- summary(model)
-    testthat::expect_identical(colnames(out), c("Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
-                                                "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
-                                                "Rhat", "ESS"))
+    testthat::expect_identical(colnames(out), c(
+      "Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
+      "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
+      "Rhat", "ESS"
+    ))
     testthat::expect_equal(s$fixed[, 1, drop = TRUE], out$Mean[1:2], check.attributes = FALSE, tolerance = 1e-3)
     testthat::expect_equal(s$fixed[, 5, drop = TRUE], out$Rhat[1:2], check.attributes = FALSE, tolerance = 1e-1)
     testthat::expect_equal(s$random$cyl[, 1, drop = TRUE], out$Mean[12], check.attributes = FALSE, tolerance = 1e-3)
@@ -39,8 +41,10 @@ if (require("brms") && require("testthat") && require("insight") && require("htt
 
     out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean")
     s <- summary(model)
-    testthat::expect_identical(colnames(out), c("Parameter", "Mean", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
-                                                "ROPE_low", "ROPE_high", "ROPE_Percentage", "Rhat", "ESS"))
+    testthat::expect_identical(colnames(out), c(
+      "Parameter", "Mean", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
+      "ROPE_low", "ROPE_high", "ROPE_Percentage", "Rhat", "ESS"
+    ))
     testthat::expect_equal(s$fixed[, 1, drop = TRUE], out$Mean[1:3], check.attributes = FALSE, tolerance = 1e-3)
     testthat::expect_equal(s$fixed[, 5, drop = TRUE], out$Rhat[1:3], check.attributes = FALSE, tolerance = 1e-1)
   })
@@ -54,8 +58,10 @@ if (require("brms") && require("testthat") && require("insight") && require("htt
 
     out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean", test = NULL)
     s <- summary(model)
-    testthat::expect_identical(colnames(out), c("Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
-                                                "Rhat", "ESS"))
+    testthat::expect_identical(colnames(out), c(
+      "Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
+      "Rhat", "ESS"
+    ))
     testthat::expect_equal(s$fixed[, 1, drop = TRUE], out$Mean[c(1, 11, 2:5, 12:14)], check.attributes = FALSE, tolerance = 1e-3)
     testthat::expect_equal(s$fixed[, 5, drop = TRUE], out$Rhat[c(1, 11, 2:5, 12:14)], check.attributes = FALSE, tolerance = 1e-1)
   })

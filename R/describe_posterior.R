@@ -91,7 +91,6 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
 
 #' @keywords internal
 .describe_posterior <- function(x, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, BF = 1, ...) {
-
   if (is.null(x)) {
     warning("Could not extract posterior samples.", call. = FALSE)
     return(NULL)
@@ -181,7 +180,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
     # Probability of significance
 
     if (any(c("ps", "p_sig", "p_significance") %in% test)) {
-      test_psig <- p_significance(x, threshold  = rope_range, ...)
+      test_psig <- p_significance(x, threshold = rope_range, ...)
       if (!is.data.frame(test_psig)) test_psig <- data.frame("Parameter" = "Posterior", "ps" = test_psig)
     } else {
       test_psig <- data.frame("Parameter" = NA)
@@ -345,8 +344,7 @@ describe_posterior.double <- describe_posterior.numeric
 describe_posterior.data.frame <- describe_posterior.numeric
 
 #' @export
-describe_posterior.effectsize_std_params <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, BF = 1, ...){
-
+describe_posterior.effectsize_std_params <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, BF = 1, ...) {
   class(posteriors) <- "data.frame"
 
   no_unique <- sapply(posteriors, function(col) {
@@ -357,7 +355,7 @@ describe_posterior.effectsize_std_params <- function(posteriors, centrality = "m
     no_unique <- which(no_unique)
 
     out <- describe_posterior.data.frame(
-      posteriors[,-no_unique],
+      posteriors[, -no_unique],
       centrality = centrality,
       dispersion = dispersion,
       ci = ci,
@@ -375,7 +373,7 @@ describe_posterior.effectsize_std_params <- function(posteriors, centrality = "m
     out_int[, col_diff] <- NA
     out <- rbind(out_int, out)
 
-    out <- out[order(match(out$Parameter,colnames(posteriors))),]
+    out <- out[order(match(out$Parameter, colnames(posteriors))), ]
 
     return(out)
   }
@@ -393,7 +391,6 @@ describe_posterior.effectsize_std_params <- function(posteriors, centrality = "m
     BF = BF,
     ...
   )
-
 }
 
 
@@ -408,7 +405,7 @@ describe_posterior.sim <- describe_posterior.numeric
 #' @export
 describe_posterior.emmGrid <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, BF = 1, ...) {
   if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-      "si" %in% tolower(ci_method)) {
+    "si" %in% tolower(ci_method)) {
     samps <- .clean_priors_and_posteriors(posteriors, bf_prior)
     bf_prior <- samps$prior
     posteriors <- samps$posterior
@@ -450,7 +447,6 @@ describe_posterior.emm_list <- describe_posterior.emmGrid
 #' @rdname describe_posterior
 #' @export
 describe_posterior.stanreg <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, BF = 1, ...) {
-
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) | "si" %in% tolower(ci_method)) & is.null(bf_prior)) {
     bf_prior <- unupdate(posteriors)
   }
@@ -586,7 +582,6 @@ describe_posterior.bayesQR <- function(posteriors, centrality = "median", disper
 #' @rdname describe_posterior
 #' @export
 describe_posterior.brmsfit <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, BF = 1, ...) {
-
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) | "si" %in% tolower(ci_method)) & is.null(bf_prior)) {
     bf_prior <- unupdate(posteriors)
   }
@@ -659,10 +654,13 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
 
   # Compute and readd BF a posteriori
   if (compute_bf) {
-    tryCatch({
-      out$BF <- as.data.frame(bayesfactor_models(posteriors[1], ...))[-1, ]$BF
-    },
-    error = function(e) { NULL }
+    tryCatch(
+      {
+        out$BF <- as.data.frame(bayesfactor_models(posteriors[1], ...))[-1, ]$BF
+      },
+      error = function(e) {
+        NULL
+      }
     )
   }
 

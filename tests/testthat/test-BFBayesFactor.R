@@ -69,18 +69,19 @@ if (require("testthat") && require("BayesFactor") && require("bayestestR")) {
 
   test_that("rope_range", {
     x <- BayesFactor::lmBF(len ~ supp + dose, data = ToothGrowth)
-    testthat::expect_equal(rope_range(x)[2], sd(ToothGrowth$len)/10)
+    testthat::expect_equal(rope_range(x)[2], sd(ToothGrowth$len) / 10)
 
-    x <- BayesFactor::ttestBF(ToothGrowth$len[ToothGrowth$supp=="OJ"],
-                              ToothGrowth$len[ToothGrowth$supp=="VC"])
-    testthat::expect_equal(rope_range(x)[2], sd(ToothGrowth$len)/10)
+    x <- BayesFactor::ttestBF(
+      ToothGrowth$len[ToothGrowth$supp == "OJ"],
+      ToothGrowth$len[ToothGrowth$supp == "VC"]
+    )
+    testthat::expect_equal(rope_range(x)[2], sd(ToothGrowth$len) / 10)
 
     x <- BayesFactor::ttestBF(formula = len ~ supp, data = ToothGrowth)
-    testthat::expect_equal(rope_range(x)[2], sd(ToothGrowth$len)/10)
+    testthat::expect_equal(rope_range(x)[2], sd(ToothGrowth$len) / 10)
 
     # else
     x <- BayesFactor::correlationBF(ToothGrowth$len, ToothGrowth$dose)
     testthat::expect_equal(rope_range(x), c(-0.1, 0.1))
   })
-
 }

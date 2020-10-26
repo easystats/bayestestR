@@ -1,8 +1,8 @@
 if (require("rstanarm") &&
-    require("BayesFactor") &&
-    require("bayestestR") &&
-    require("testthat") &&
-    require("brms")) {
+  require("BayesFactor") &&
+  require("bayestestR") &&
+  require("testthat") &&
+  require("brms")) {
 
   # bayesfactor_models BIC --------------------------------------------------
 
@@ -35,7 +35,9 @@ if (require("rstanarm") &&
 
     # update reference
     testthat::expect_equal(log(update(BFM2, reference = 1)$BF),
-                           c(0, -2.8, -6.2, -57.4), tolerance = 0.1)
+      c(0, -2.8, -6.2, -57.4),
+      tolerance = 0.1
+    )
   })
 
   test_that("bayesfactor_models BIC (unsupported / diff nobs)", {
@@ -46,7 +48,7 @@ if (require("rstanarm") &&
     fit2a <- lm(Sepal.Length ~ Sepal.Width, iris[-1, ]) # different number of objects
     fit2b <- lm(Sepal.Length ~ Sepal.Width, iris) # not supported
     class(fit2b) <- "NOTLM"
-    logLik.NOTLM <<- function(...){
+    logLik.NOTLM <<- function(...) {
       stats:::logLik.lm(...)
     }
 
@@ -59,21 +61,21 @@ if (require("rstanarm") &&
   })
 
 
-# bayesfactor_models STAN ---------------------------------------------
+  # bayesfactor_models STAN ---------------------------------------------
 
   test_that("bayesfactor_models STAN", {
     testthat::skip_on_cran()
     library(rstanarm)
     library(bridgesampling)
     stan_bf_0 <- stan_glm(Sepal.Length ~ 1,
-                          data = iris,
-                          refresh = 0,
-                          diagnostic_file = file.path(tempdir(), "df0.csv")
+      data = iris,
+      refresh = 0,
+      diagnostic_file = file.path(tempdir(), "df0.csv")
     )
     stan_bf_1 <- stan_glm(Sepal.Length ~ Species,
-                          data = iris,
-                          refresh = 0,
-                          diagnostic_file = file.path(tempdir(), "df1.csv")
+      data = iris,
+      refresh = 0,
+      diagnostic_file = file.path(tempdir(), "df1.csv")
     )
 
 
@@ -91,7 +93,7 @@ if (require("rstanarm") &&
   })
 
 
-# bayesfactor_inclusion ---------------------------------------------------
+  # bayesfactor_inclusion ---------------------------------------------------
 
   test_that("bayesfactor_inclusion", {
     set.seed(444)

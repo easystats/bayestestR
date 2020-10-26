@@ -7,7 +7,6 @@
 #'
 #' @examples
 #' sexit_thresholds(rnorm(1000))
-#'
 #' \dontrun{
 #' if (require("rstanarm")) {
 #'   model <- stan_glm(
@@ -19,7 +18,7 @@
 #'   )
 #'   sexit_thresholds(model)
 #'
-#'   model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial", refresh=0)
+#'   model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial", refresh = 0)
 #'   sexit_thresholds(model)
 #' }
 #'
@@ -61,10 +60,9 @@ sexit_thresholds.stanreg <- sexit_thresholds.brmsfit
 
 #' @export
 #' @importFrom stats sd
-sexit_thresholds.BFBayesFactor <- function(x, ...){
+sexit_thresholds.BFBayesFactor <- function(x, ...) {
   fac <- 1
   if (inherits(x@numerator[[1]], "BFlinearModel")) {
-
     response <- tryCatch(
       {
         insight::get_response(x)
@@ -154,10 +152,10 @@ sexit_thresholds.mlm <- function(x, ...) {
 
 #' @importFrom stats sigma sd
 #' @importFrom insight n_obs find_parameters
-.sexit_thresholds <- function(x, information=NULL, response=NULL) {
-  if(is.null(information) && is.null(response)){
+.sexit_thresholds <- function(x, information = NULL, response = NULL) {
+  if (is.null(information) && is.null(response)) {
     norm <- 1
-  } else{
+  } else {
     norm <- tryCatch(
       {
         # Linear Models

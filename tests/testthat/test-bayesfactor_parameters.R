@@ -1,22 +1,24 @@
 if (require("rstanarm") &&
-    require("BayesFactor") &&
-    require("testthat") &&
-    require("brms")) {
-
+  require("BayesFactor") &&
+  require("testthat") &&
+  require("brms")) {
   context("bayesfactor_parameters")
 
   # bayesfactor_parameters data frame ---------------------------------------
 
   test_that("bayesfactor_parameters data frame", {
-
-    Xprior <- data.frame(x = distribution_normal(1e4),
-                         y = distribution_normal(1e4))
-    Xposterior <- data.frame(x = distribution_normal(1e4, mean = 0.5),
-                             x = distribution_normal(1e4, mean = -0.5))
+    Xprior <- data.frame(
+      x = distribution_normal(1e4),
+      y = distribution_normal(1e4)
+    )
+    Xposterior <- data.frame(
+      x = distribution_normal(1e4, mean = 0.5),
+      x = distribution_normal(1e4, mean = -0.5)
+    )
 
     # point
     bfsd <- bayesfactor_parameters(Xposterior, prior = Xprior, null = 0, direction = 0)
-    testthat::expect_equal(log(bfsd$BF), c(0.12,0.12), tolerance = 0.1)
+    testthat::expect_equal(log(bfsd$BF), c(0.12, 0.12), tolerance = 0.1)
 
     bfsd <- bayesfactor_parameters(Xposterior, prior = Xprior, null = 0, direction = 1)
     testthat::expect_equal(log(bfsd$BF), c(0.44, -0.35), tolerance = 0.1)

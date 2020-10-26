@@ -94,8 +94,8 @@
 #'   bayesfactor_parameters(stan_model)
 #'   bayesfactor_parameters(stan_model, null = rope_range(stan_model))
 #'
-#' # emmGrid objects
-#' # ---------------
+#'   # emmGrid objects
+#'   # ---------------
 #'   group_diff <- pairs(emmeans(stan_model, ~group))
 #'   bayesfactor_parameters(group_diff, prior = stan_model)
 #' }
@@ -135,7 +135,6 @@ bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sid
 #' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_pointull <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
-
   if (length(null) > 1) {
     message("'null' is a range - computing a ROPE based Bayes factor.")
   }
@@ -225,9 +224,10 @@ bayesfactor_parameters.stanreg <- function(posterior,
   component <- match.arg(component)
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
-                                        verbose = verbose,
-                                        effects = effects, component = component,
-                                        parameters = parameters)
+    verbose = verbose,
+    effects = effects, component = component,
+    parameters = parameters
+  )
 
   # Get BFs
   temp <- bayesfactor_parameters.data.frame(
@@ -261,9 +261,9 @@ bayesfactor_parameters.emmGrid <- function(posterior,
                                            null = 0,
                                            verbose = TRUE,
                                            ...) {
-
   samps <- .clean_priors_and_posteriors(posterior, prior,
-                                        verbose = verbose)
+    verbose = verbose
+  )
 
   # Get BFs
   bayesfactor_parameters.data.frame(
