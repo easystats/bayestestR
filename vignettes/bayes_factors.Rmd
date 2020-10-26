@@ -29,14 +29,13 @@ This vignette can be referred to by citing the following:
 ---
 
 ```{r setup, include=FALSE}
-
-options(knitr.kable.NA = '',
-        digits = 2)
-opts_chunk$set(echo = TRUE,
-               comment = ">",
-               message = FALSE,
-               warning = FALSE,
-               dpi = 150)
+library(knitr)
+options(knitr.kable.NA = '', digits = 2)
+knitr::opts_chunk$set(echo = TRUE,
+                      comment = ">",
+                      message = FALSE,
+                      warning = FALSE,
+                      dpi = 150)
 
 pkgs <- c("rstanarm", "BayesFactor", "emmeans", "logspline", "lme4", "ggplot2",
           "see", "insight", "emmeans", "knitr", "effectsize")
