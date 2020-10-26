@@ -82,6 +82,7 @@ sexit <- function(x, significant="default", large="default", ci=0.95, ...) {
 
   # Description
   centrality <- point_estimate(x, "median")
+  centrality$Effects <- centrality$Component <- NULL
   centrality_text <- paste0("Median = ", insight::format_value(centrality$Median))
   direction <- ifelse(centrality$Median < 0, "negative", "positive")
   uncertainty <- ci(x, ci=ci, method="HDI", ...)[c("CI", "CI_low", "CI_high")]
@@ -198,9 +199,9 @@ print.sexit <- function(x, summary=FALSE, digits=2, ...) {
 
     df <- data.frame(Median = x$Median, CI = insight::format_ci(x$CI_low, x$CI_high, NULL))
     if("Parameter" %in% names(x)){
-      df <- cbind(data.frame(Parameter = x$Parameter), df, x[ 6:ncol(x)])
+      df <- cbind(data.frame(Parameter = x$Parameter), df, x[c("Existence", "Significance", "Large")])
     } else{
-      df <- cbind(df, x[, 5:ncol(x)])
+      df <- cbind(df, x[c("Existence", "Significance", "Large")])
     }
     names(df) <- attributes(x)$pretty_cols
     print_data_frame(df, digits=digits, ...)
