@@ -87,7 +87,6 @@ p_significance(posterior)
 # -----------------------------------------------
 df <- data.frame(replicate(4, rnorm(100)))
 p_significance(df)
-
 \dontrun{
 # rstanarm models
 # -----------------------------------------------

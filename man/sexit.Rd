@@ -64,11 +64,11 @@ library(bayestestR)
 
 s <- sexit(rnorm(1000, -1, 1))
 s
-print(s, summary=TRUE)
+print(s, summary = TRUE)
 
 s <- sexit(iris)
 s
-print(s, summary=TRUE)
+print(s, summary = TRUE)
 
 if (require("rstanarm")) {
   model <- rstanarm::stan_glm(mpg ~ wt * cyl,
@@ -77,9 +77,8 @@ if (require("rstanarm")) {
   )
   s <- sexit(model)
   s
-  print(s, summary=TRUE)
+  print(s, summary = TRUE)
 }
-
 }
 \references{
 \itemize{

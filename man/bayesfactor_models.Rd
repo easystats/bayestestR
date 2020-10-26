@@ -70,7 +70,6 @@ lm4 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1)
 bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result
 bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
-
 \dontrun{
 # With lmerMod objects:
 # ---------------------

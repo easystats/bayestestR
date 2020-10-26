@@ -125,8 +125,10 @@ m2 <- brm(f1 + f2 + set_rescor(FALSE), data = jobs, cores = 4, refresh = 0)
 
 # Fit Bayesian mediation model in rstanarm
 m3 <- stan_mvmer(
-  list(job_seek ~ treat + econ_hard + sex + age + (1 | occp),
-       depress2 ~ treat + job_seek + econ_hard + sex + age + (1 | occp)),
+  list(
+    job_seek ~ treat + econ_hard + sex + age + (1 | occp),
+    depress2 ~ treat + job_seek + econ_hard + sex + age + (1 | occp)
+  ),
   data = jobs,
   cores = 4,
   refresh = 0

@@ -16,7 +16,6 @@ This function attempts at automatically finding suitable default values for a "s
 }
 \examples{
 sexit_thresholds(rnorm(1000))
-
 \dontrun{
 if (require("rstanarm")) {
   model <- stan_glm(
@@ -28,7 +27,7 @@ if (require("rstanarm")) {
   )
   sexit_thresholds(model)
 
-  model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial", refresh=0)
+  model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial", refresh = 0)
   sexit_thresholds(model)
 }
 

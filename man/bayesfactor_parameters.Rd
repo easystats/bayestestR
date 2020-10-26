@@ -236,8 +236,8 @@ if (require("rstanarm") && require("emmeans")) {
   bayesfactor_parameters(stan_model)
   bayesfactor_parameters(stan_model, null = rope_range(stan_model))
 
-# emmGrid objects
-# ---------------
+  # emmGrid objects
+  # ---------------
   group_diff <- pairs(emmeans(stan_model, ~group))
   bayesfactor_parameters(group_diff, prior = stan_model)
 }

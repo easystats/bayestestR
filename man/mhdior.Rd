@@ -81,7 +81,8 @@ mhdior(df, precision = 1)
 
 if (require("rstanarm")) {
   model <- stan_glm(
-    mpg ~ wt + gear, data = mtcars,
+    mpg ~ wt + gear,
+    data = mtcars,
     chains = 2,
     iter = 200,
     refresh = 0

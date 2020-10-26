@@ -32,7 +32,8 @@ if (require("rstanarm")) {
     data = mtcars, chains = 2, refresh = 0
   )
   bayesian_as_frequentist(model)
-}}
+}
+}
 
 \dontrun{
 if (require("rstanarm")) {
@@ -47,5 +48,7 @@ if (require("rstanarm")) {
     data = mtcars, chains = 2, refresh = 0
   )
   bayesian_as_frequentist(model)
-}}
+}
+}
+
 }
