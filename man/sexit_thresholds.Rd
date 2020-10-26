@@ -12,18 +12,7 @@ sexit_thresholds(x, ...)
 \item{...}{Currently not used.}
 }
 \description{
-This function attempts at automatically finding suitable default values for a "significant" (i.e., non-negligible) and "large" effect. This is to be used with care, and the chosen threshold should always be explicitly reported and justified. It is set, by default, to \code{0.05} and \code{0.3} of the standard deviation of the outcome variable (tiny and large effect sizes for correlations according to Funder \& Ozer, 2019).
-}
-\details{
-\itemize{
-    \item For \strong{linear models (lm)}, this can be generalised to \ifelse{html}{\out{0.05 * SD<sub>y</sub>}}{\eqn{[0.05*SD_{y}]}} and \ifelse{html}{\out{0.3 * SD<sub>y</sub>}}{\eqn{[0.3*SD_{y}]}} for significant and large effects, respectively.
-    \item For \strong{logistic models}, the parameters expressed in log odds ratio can be converted to standardized difference through the formula \ifelse{html}{\out{&pi;/&radic;(3)}}{\eqn{\pi/\sqrt{3}}}, resulting a threshold of \code{0.09} and \code{0.54}.
-    \item For other models with \strong{binary outcome}, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.
-    \item For models from \strong{count data}, the residual variance is used. This is a rather experimental threshold and is probably often similar to \code{0.05} and \code{0.3}, but should be used with care!
-    \item For \strong{t-tests}, the standard deviation of the response is used, similarly to linear models (see above).
-    \item For \strong{correlations},\code{0.05} and \code{0.3} are used.
-    \item For all other models, \code{0.05} and \code{0.3} are used, but it is strongly advised to specify it manually.
-  }
+This function attempts at automatically finding suitable default values for a "significant" (i.e., non-negligible) and "large" effect. This is to be used with care, and the chosen threshold should always be explicitly reported and justified. See the detail section in \code{\link[=sexit]{sexit()}} for more information.
 }
 \examples{
 sexit_thresholds(rnorm(1000))
