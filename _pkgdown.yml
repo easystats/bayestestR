@@ -29,6 +29,7 @@ reference:
   desc: "Functions for Bayesian Inference"
 - subtitle: "Posterior Based Methods"
   contents:
+  - sexit
   - mhdior
   - p_direction
   - p_rope
