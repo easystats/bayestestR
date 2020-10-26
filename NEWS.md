@@ -1,3 +1,17 @@
+# bayestestR 0.7.6
+
+## New functions
+
+* `sexit()`, a function for sequential effect existence and significance testing (SEXIT).
+
+## General
+
+* Added startup-message to warn users that default ci-width might change in a future update.
+
+## Bug fixes
+
+* Fixed issue in Bayes factor vignette (don't evaluate code chunks if packages not available).
+
 # bayestestR 0.7.5
 
 ## New functions
