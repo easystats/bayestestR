@@ -2,12 +2,12 @@
 % Please edit documentation in R/sexit.R
 \name{sexit}
 \alias{sexit}
-\alias{sexit.numeric}
+\alias{sexit.default}
 \title{Sequential Effect eXistence and sIgnificance Testing (SEXIT)}
 \usage{
 sexit(x, ...)
 
-\method{sexit}{numeric}(x, significant = "default", large = "default", ci = 0.95, ...)
+\method{sexit}{default}(x, significant = "default", large = "default", ci = 0.95, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit} or \code{BayesFactor}).}
@@ -15,10 +15,17 @@ sexit(x, ...)
 \item{...}{Currently not used.}
 }
 \value{
-A dataframe.
+A dataframe and text as attribute.
 }
 \description{
-Returns the minimal (and optimal) required information to describe models' parameters under a Bayesian framework.
+Returns the minimal (and optimal) required information to describe models' parameters under a Bayesian framework. It reports:
+\itemize{
+  \item{Centrality: the median of the posterior distribution. In probabilistic terms, there is 50\% of probability that the effect is higher and lower.}
+  \item{Uncertainty: the 95\% Highest Density Interval (HDI). In probabilistic terms, there is 95\% of probability that the effect is within this confidence interval.}
+  \item{Existence:}
+  \item{Significance:}
+  \item{Size:}
+}
 }
 \details{
 The assessment of "significance" (in its broadest meaning) is a pervasive issue in science, and its historical index, the p-value, has been strongly criticized and deemed to have played an important role in the replicability crisis. In reaction, more and more scientists have tuned to Bayesian methods, offering an alternative set of tools to answer their questions. However, the Bayesian framework offers a wide variety of possible indices related to "significance", and the debate has been raging about which index is the best, and which one to report.
@@ -28,14 +35,34 @@ This situation can lead to the mindless reporting of all possible indices (with 
 SEXIT aims at offering a practical framework for Bayesian effects reporting, in which the focus is put on intuitiveness, explicitness and usefulness of the indices' interpretation. To that end, we suggest a system of description of parameters that would be intuitive, easy to learn and apply, mathematically accurate and useful for taking decision.
 
 Once the thresholds for significance (i.e., the ROPE) and the one for a "large" effect are explicitly defined, the SEXIT framework does not make any interpretation, i.e., it does not label the effects, but just sequentially gives 3 probabilities (of direction, of significance and of being large, respectively) as-is on top of the characteristics of the posterior (using the median and HDI for centrality and uncertainty description). Thus, it provides a lot of information about the posterior distribution (through the mass of different 'sections' of the posterior) in a clear and meaningful way.
+
+The three values for existence, significance and size provide a useful description of the posterior distribution of the effects. Some possible scenarios include:
+\itemize{
+  \item{The probability of existence is low, but the probability of being large is high: it suggests that the posterior is very wide (covering large territories on both side of 0), which should warrant any confident conclusion.}
+  \item{The probability of existence and significance is high, but the probability of being large is very small: it suggests that the effect is, with high confidence, not large (the posterior is mostly contained between the significance and the large thresholds).}
+  \item{The 3 indices are very low: this suggests that the effect is null with high confidence (the posterior is closely centred around 0).}
+}
 }
 \examples{
 library(bayestestR)
 
-x <- rnorm(1000, -1, 1)
-s <- sexit(x)
+s <- sexit(rnorm(1000, -1, 1))
 s
 print(s, summary=TRUE)
+
+s <- sexit(iris)
+s
+print(s, summary=TRUE)
+
+if (require("rstanarm")) {
+  model <- rstanarm::stan_glm(mpg ~ wt * cyl,
+    data = mtcars,
+    iter = 800, refresh = 0
+  )
+  s <- sexit(model)
+  s
+  print(s, summary=TRUE)
+}
 
 }
 \references{
