@@ -22,9 +22,9 @@ Returns the minimal (and optimal) required information to describe models' param
 \itemize{
   \item{Centrality: the median of the posterior distribution. In probabilistic terms, there is 50\% of probability that the effect is higher and lower.}
   \item{Uncertainty: the 95\% Highest Density Interval (HDI). In probabilistic terms, there is 95\% of probability that the effect is within this confidence interval.}
-  \item{Existence:}
-  \item{Significance:}
-  \item{Size:}
+  \item{Existence: The probability of direction allows to quantify the certainty by which an effect is positive or negative. It is a critical index to show that an effect of some manipulation is not harmful (for instance in clinical studies) or to assess the direction of a link.}
+  \item{Significance: Once existence is demonstrated with high certainty, we can assess whether the effect is of sufficient size to be considered as significant (i.e., not negligible). This is a useful index to determine which effects are actually important and worthy of discussion in a given process.}
+  \item{Size: Finally, this index gives an idea about the strength of an effect. However, beware, as studies have shown that a big effect size can be also suggestive of low statistical power (see details section).}
 }
 }
 \details{
@@ -38,7 +38,7 @@ Once the thresholds for significance (i.e., the ROPE) and the one for a "large" 
 
 The three values for existence, significance and size provide a useful description of the posterior distribution of the effects. Some possible scenarios include:
 \itemize{
-  \item{The probability of existence is low, but the probability of being large is high: it suggests that the posterior is very wide (covering large territories on both side of 0), which should warrant any confident conclusion.}
+  \item{The probability of existence is low, but the probability of being large is high: it suggests that the posterior is very wide (covering large territories on both side of 0). The statistical power might be too low, which should warrant any confident conclusion.}
   \item{The probability of existence and significance is high, but the probability of being large is very small: it suggests that the effect is, with high confidence, not large (the posterior is mostly contained between the significance and the large thresholds).}
   \item{The 3 indices are very low: this suggests that the effect is null with high confidence (the posterior is closely centred around 0).}
 }
