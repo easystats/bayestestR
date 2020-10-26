@@ -39,7 +39,7 @@ opts_chunk$set(echo = TRUE,
                dpi = 150)
 
 pkgs <- c("rstanarm", "BayesFactor", "emmeans", "logspline", "lme4", "ggplot2",
-          "see", "insight", "emmeans", "knitr")
+          "see", "insight", "emmeans", "knitr", "effectsize")
 if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
 }
@@ -213,7 +213,7 @@ plot(My_first_BF)
 
 Note that **interpretation guides** for Bayes factors can be found in the `effectsize` package:
 
-```{r, eval=require(effectsize)}
+```{r}
 effectsize::interpret_bf(My_first_BF$BF[2], include_value = TRUE)
 ```
 
