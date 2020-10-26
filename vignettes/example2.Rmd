@@ -200,7 +200,7 @@ model <- stan_glm(Species ~ Sepal.Width, data = data, family = "binomial", refre
 
 ### Visualise the model
 
-Using the [`estimate`](https://github.com/easystats/estimate) package. **Wait until estimate is on CRAN**.
+Using the [`modelbased`](https://github.com/easystats/modelbased) package.
 
 
 ### Performance and Parameters

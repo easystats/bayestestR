@@ -33,7 +33,7 @@
 #'   )
 #'   rope_range(model)
 #'
-#'   model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial")
+#'   model <- stan_glm(vs ~ mpg, data = mtcars, family = "binomial", refresh=0)
 #'   rope_range(model)
 #' }
 #'
