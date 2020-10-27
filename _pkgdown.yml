@@ -18,6 +18,11 @@ reference:
 - title: "Posterior Description"
   contents:
   - describe_posterior
+  - describe_prior
+  - sexit
+  
+- title: "Centrality and Uncertainty"
+  contents:
   - point_estimate
   - map_estimate
   - eti
@@ -29,7 +34,6 @@ reference:
   desc: "Functions for Bayesian Inference"
 - subtitle: "Posterior Based Methods"
   contents:
-  - sexit
   - mhdior
   - p_direction
   - p_rope
@@ -52,7 +56,6 @@ reference:
 - title: "Model Diagnostics"
   contents:
   - diagnostic_posterior
-  - describe_prior
   - sensitivity_to_prior
   - check_prior
   - simulate_prior
@@ -80,6 +83,7 @@ reference:
   - as.numeric.p_direction
   - as.data.frame.density
   - update.bayesfactor_models
+  - sexit_thresholds
 
 
 navbar:
