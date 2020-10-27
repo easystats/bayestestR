@@ -97,6 +97,7 @@ Let's use the Students' (1908) Sleep data set (`data("sleep")`), in which **peop
 *given the observed data, has the hypothesis that the drug (the effect of `group`) **has no effect** on the numbers of hours of **extra sleep** (variable `extra`) become more of less credible?*
 
 ```{r sleep_boxplot, echo=FALSE}
+library(ggplot2)
 ggplot(sleep, aes(x = group, y = extra, fill= group)) +
   geom_boxplot() +
   theme_classic()
