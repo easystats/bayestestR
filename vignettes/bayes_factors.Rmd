@@ -38,7 +38,7 @@ knitr::opts_chunk$set(echo = TRUE,
                       dpi = 150)
 
 pkgs <- c("rstanarm", "BayesFactor", "emmeans", "logspline", "lme4", "ggplot2",
-          "see", "insight", "emmeans", "knitr", "effectsize")
+          "see", "insight", "emmeans", "knitr", "effectsize", "bayestestR")
 if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
 }
@@ -163,7 +163,7 @@ $$
 $$
 
 ```{r rstanarm_fit, echo=FALSE}
-
+library(bayestestR)
 model_prior <- unupdate(model)
 posterior <- insight::get_parameters(model)$group2
 prior <- insight::get_parameters(model_prior)$group2
