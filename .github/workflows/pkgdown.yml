@@ -34,7 +34,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages("remotes")
+          # install.packages("remotes")
           # To get links for homepage
           remotes::install_cran("devtools")
           remotes::install_deps(dependencies = TRUE)
