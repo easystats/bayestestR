@@ -28,7 +28,7 @@ if (require("testthat") && require("bayestestR") && require("rstanarm") && requi
 
 
   .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
-  if (.runThisTest) {
+  if (.runThisTest && Sys.info()["sysname"] != "Darwin") {
     test_that("describe_posterior", {
       set.seed(333)
       # Rstanarm

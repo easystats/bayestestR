@@ -90,7 +90,7 @@ if (require("rstanarm") &&
       set.seed(222)
       bfsd2 <- bayesfactor_parameters(brms_mixed_6, effects = "fixed")
 
-      testthat::expect_equal(log(bfsd1$BF), log(bfsd2$BF), tolerance = .01)
+      testthat::expect_equal(log(bfsd1$BF), log(bfsd2$BF), tolerance = .11)
 
 
       brms_mixed_1 <- insight::download_model("brms_mixed_1")
