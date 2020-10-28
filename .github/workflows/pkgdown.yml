@@ -6,7 +6,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: macOS-latest
+    runs-on: windows-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -39,7 +39,7 @@ jobs:
           install.packages("pkgdown")
           # To get links for homepage
           # remotes::install_cran("devtools")
-          # remotes::install_deps(dependencies = TRUE)
+          remotes::install_deps(dependencies = TRUE)
           # remotes::install_dev("pkgdown")
         shell: Rscript {0}
 
