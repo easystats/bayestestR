@@ -34,11 +34,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # install.packages("remotes")
+          install.packages("remotes")
+          install.packages("devtools")
+          install.packages("pkgdown")
           # To get links for homepage
-          remotes::install_cran("devtools")
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_dev("pkgdown")
+          # remotes::install_cran("devtools")
+          # remotes::install_deps(dependencies = TRUE)
+          # remotes::install_dev("pkgdown")
         shell: Rscript {0}
 
       - name: Install package
