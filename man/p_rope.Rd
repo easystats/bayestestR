@@ -10,7 +10,7 @@
 \alias{p_rope.MCMCglmm}
 \alias{p_rope.stanreg}
 \alias{p_rope.brmsfit}
-\title{Probability of not being in ROPE}
+\title{Probability of being in the ROPE}
 \usage{
 p_rope(x, ...)
 
@@ -64,7 +64,7 @@ or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
 }
 \description{
-Compute the proportion of the posterior distribution that doesn't lie within a region of practical equivalence (ROPE). It is equivalent to running \code{rope(..., ci = 1)}.
+Compute the proportion of the whole posterior distribution that doesn't lie within a region of practical equivalence (ROPE). It is equivalent to running \code{rope(..., ci = 1)}.
 }
 \examples{
 library(bayestestR)

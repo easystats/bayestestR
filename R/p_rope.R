@@ -1,6 +1,6 @@
-#' Probability of not being in ROPE
+#' Probability of being in the ROPE
 #'
-#' Compute the proportion of the posterior distribution that doesn't lie within a region of practical equivalence (ROPE). It is equivalent to running \code{rope(..., ci = 1)}.
+#' Compute the proportion of the whole posterior distribution that doesn't lie within a region of practical equivalence (ROPE). It is equivalent to running \code{rope(..., ci = 1)}.
 #'
 #' @inheritParams rope
 #'
