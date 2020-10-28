@@ -33,6 +33,7 @@ knitr::opts_chunk$set(
 options(width = 800)
 if (!requireNamespace("mediation", quietly = TRUE) ||
     !requireNamespace("httr", quietly = TRUE) ||
+    !requireNamespace("lavaan", quietly = TRUE) ||
     !requireNamespace("brms", quietly = TRUE) ||
     !requireNamespace("rstanarm", quietly = TRUE) ||
     !requireNamespace("insight", quietly = TRUE)) {
@@ -40,7 +41,9 @@ if (!requireNamespace("mediation", quietly = TRUE) ||
 }
 ```
 
-This vignettes demonstrates the `mediation()`-function. Before we start, we fit some models, including a mediation-object from the _mediation_-package, which we use for comparison with _brms_ and _rstanarm_.
+This vignettes demonstrates the `mediation()`-function. Before we start, we fit some models, including a mediation-object from the _mediation_-package and a structural equation modelling approach with the _lavaan_-package, both of which we use for comparison with _brms_ and _rstanarm_.
+
+## Mediation Analysis in brms and rstanarm
 
 ```{r}
 library(bayestestR)
@@ -101,6 +104,8 @@ mediation(m3)
 
 Typically, `mediation()` finds the treatment and mediator variables automatically. If this does not work, use the `treatment` and `mediator` arguments to specify the related variable names. For all values, the 89% credible intervals are calculated by default. Use `ci` to calculate a different interval. 
 
+## Comparison to the mediation package
+
 Here is a comparison with the _mediation_ package. Note that the `summary()`-output of the _mediation_ package shows the indirect effect first, followed by the direct effect.
 
 ```{r}
@@ -119,3 +124,44 @@ print(m, digits = 4)
 ```
 
 As you can see, the results are similar to what the _mediation_ package produces for non-Bayesian models.
+
+## Comparison to SEM from the lavaan package
+
+Finally, we also compare the results to a SEM model, using *lavaan*. This example should demonstrate how to "translate" the same model in different packages or modeling approached.
+
+```{r}
+library(lavaan)
+data(jobs)
+set.seed(1234)
+
+model <- ' # direct effects
+             depress2 ~ c1*treat + c2*econ_hard + c3*sex + c4*age + b*job_seek
+             
+           # mediation
+             job_seek ~ a1*treat + a2*econ_hard + a3*sex + a4*age
+             
+           # indirect effects (a*b)
+             indirect_treat := a1*b
+             indirect_econ_hard := a2*b
+             indirect_sex := a3*b
+             indirect_age := a4*b
+             
+           # total effects
+             total_treat := c1 + (a1*b)
+             total_econ_hard := c2 + (a2*b)
+             total_sex := c3 + (a3*b)
+             total_age := c4 + (a4*b)
+         '
+m4 <- sem(model, data = jobs)
+summary(m4)
+
+# just to have the numbers right at hand and you don't need to scroll up
+mediation(m2, ci = .95)
+```
+
+The summary output from *lavaan* is longer, but we can find the related numbers quite easily:
+
+- the _direct effect_ of treatment is `treat (c1)`, which is `-0.040`
+- the _indirect effect_ of treatment is `indirect_treat`, which is `-0.016`
+- the _mediator effect_ of job_seek is `job_seek (b)`, which is `-0.240`
+- the _total effect_ is `total_treat`, which is `-0.056`

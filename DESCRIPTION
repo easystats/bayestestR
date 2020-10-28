@@ -80,6 +80,7 @@ Suggests:
 	MASS,
 	mclust,
 	modelbased,
+	lavaan,
 	lme4,
 	logspline,
 	mediation,
