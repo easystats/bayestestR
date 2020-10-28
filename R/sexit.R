@@ -157,13 +157,13 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
   out <- cbind(
     centrality,
     as.data.frame(uncertainty),
-    data.frame(Existence = existence_rez),
+    data.frame(Direction = existence_rez),
     data.frame(Significance = sig_rez),
     data.frame(Large = large_rez)
   )
 
   # Prepare output
-  attr(out, "sexit_info") <- "Following the SEXIT framework, we report the median of the posterior distribution and its 95% CI (Highest Density Interval), along the probability of direction (pd), the probability of significance and the probability of being large."
+  attr(out, "sexit_info") <- "Following the Sequential Effect eXistence and sIgnificance Testing (SEXIT) framework, we report the median of the posterior distribution and its 95% CI (Highest Density Interval), along the probability of direction (pd), the probability of significance and the probability of being large."
   attr(out, "sexit_ci_method") <- "HDI"
   attr(out, "sexit_significance") <- significant
   attr(out, "sexit_large") <- large
@@ -173,7 +173,7 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
   pretty_cols <- c(
     "Median",
     paste0(insight::format_value(ci * 100, protect_integers = TRUE), "% CI"),
-    paste0("Existence (> |0|)"),
+    "Direction",
     paste0("Significance (> |", insight::format_value(significant), "|)"),
     paste0("Large (> |", insight::format_value(large), "|)")
   )
@@ -228,10 +228,11 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
 
   thresholds <- paste0(
     "The thresholds beyond which the effect is considered ",
-    "as significant (i.e., non-negligible) and large are ",
+    "as significant (i.e., non-negligible) and large are |",
     insight::format_value(significant),
-    " and ",
+    "| and |",
     insight::format_value(large),
+    "|",
     text_sd,
     "."
   )
@@ -247,7 +248,7 @@ print.sexit <- function(x, summary = FALSE, digits = 2, ...) {
 
   # Long
   if (isFALSE(summary)) {
-    insight::print_color(paste0("# ", attributes(x)$sexit_info, attributes(x)$sexit_thresholds, "\n\n"), "blue")
+    insight::print_color(paste0("# ", attributes(x)$sexit_info, " ", attributes(x)$sexit_thresholds, "\n\n"), "blue")
 
     text <- attributes(x)$sexit_textlong
     if (length(text) > 1) text <- paste0(paste0("- ", text), collapse = "\n")
@@ -256,9 +257,9 @@ print.sexit <- function(x, summary = FALSE, digits = 2, ...) {
 
     df <- data.frame(Median = x$Median, CI = insight::format_ci(x$CI_low, x$CI_high, NULL))
     if ("Parameter" %in% names(x)) {
-      df <- cbind(data.frame(Parameter = x$Parameter), df, x[c("Existence", "Significance", "Large")])
+      df <- cbind(data.frame(Parameter = x$Parameter), df, x[c("Direction", "Significance", "Large")])
     } else {
-      df <- cbind(df, x[c("Existence", "Significance", "Large")])
+      df <- cbind(df, x[c("Direction", "Significance", "Large")])
     }
     names(df) <- attributes(x)$pretty_cols
     print_data_frame(df, digits = digits, ...)
