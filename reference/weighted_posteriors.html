@@ -91,7 +91,7 @@ Weighting is done by comparing posterior model probabilities, via bayesfactor_mo
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5.1</span>
       </span>
     </div>
 
@@ -313,15 +313,19 @@ This function is similar in function to <code><a href='https://rdrr.io/pkg/brms/
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://mc-stan.org/rstanarm'>"rstanarm"</a></span>) <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://easystats.github.io/see'>"see"</a></span>)) {
-  <span class='kw'>stan_m0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>extra</span> <span class='op'>~</span> <span class='fl'>1</span>, data = <span class='kw'>sleep</span>,
-                      family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
-                      refresh=<span class='fl'>0</span>,
-                      diagnostic_file = <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df0.csv"</span>))
+  <span class='kw'>stan_m0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>extra</span> <span class='op'>~</span> <span class='fl'>1</span>,
+    data = <span class='kw'>sleep</span>,
+    family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
+    refresh = <span class='fl'>0</span>,
+    diagnostic_file = <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df0.csv"</span>)
+  )
 
-  <span class='kw'>stan_m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>extra</span> <span class='op'>~</span> <span class='kw'>group</span>, data = <span class='kw'>sleep</span>,
-                      family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
-                      refresh=<span class='fl'>0</span>,
-                      diagnostic_file = <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df1.csv"</span>))
+  <span class='kw'>stan_m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>extra</span> <span class='op'>~</span> <span class='kw'>group</span>,
+    data = <span class='kw'>sleep</span>,
+    family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
+    refresh = <span class='fl'>0</span>,
+    diagnostic_file = <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df1.csv"</span>)
+  )
 
 
   <span class='kw'>res</span> <span class='op'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='kw'>stan_m0</span>, <span class='kw'>stan_m1</span>)
@@ -332,12 +336,12 @@ This function is similar in function to <code><a href='https://rdrr.io/pkg/brms/
 #&gt; <span class='warning'>For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.</span></div><div class='output co'>#&gt; <span class='message'>Computation of Bayes factors: estimating marginal likelihood, please wait...</span></div><div class='output co'>#&gt; <span class='error'>Error: Failed at retrieving data :( Please provide original model or data through the `data` argument</span></div><div class='input'>
 <span class='co'>## With BayesFactor</span>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://richarddmorey.github.io/BayesFactor'>"BayesFactor"</a></span>)) {
-<span class='kw'>extra_sleep</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(formula = <span class='kw'>extra</span> <span class='op'>~</span> <span class='kw'>group</span>, data = <span class='kw'>sleep</span>)
+  <span class='kw'>extra_sleep</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(formula = <span class='kw'>extra</span> <span class='op'>~</span> <span class='kw'>group</span>, data = <span class='kw'>sleep</span>)
 
-<span class='kw'>wp</span> <span class='op'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='kw'>extra_sleep</span>)
+  <span class='kw'>wp</span> <span class='op'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='kw'>extra_sleep</span>)
 
-<span class='fu'><a href='describe_posterior.html'>describe_posterior</a></span>(<span class='kw'>extra_sleep</span>, test = <span class='kw'>NULL</span>)
-<span class='fu'><a href='describe_posterior.html'>describe_posterior</a></span>(<span class='kw'>wp</span><span class='op'>$</span><span class='kw'>delta</span>, test = <span class='kw'>NULL</span>) <span class='co'># also considers the null</span>
+  <span class='fu'><a href='describe_posterior.html'>describe_posterior</a></span>(<span class='kw'>extra_sleep</span>, test = <span class='kw'>NULL</span>)
+  <span class='fu'><a href='describe_posterior.html'>describe_posterior</a></span>(<span class='kw'>wp</span><span class='op'>$</span><span class='kw'>delta</span>, test = <span class='kw'>NULL</span>) <span class='co'># also considers the null</span>
 }
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: BayesFactor</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: coda</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Matrix</span></div><div class='output co'>#&gt; <span class='message'>************</span>
 #&gt; <span class='message'>Welcome to BayesFactor 0.9.12-4.2. If you have questions, please contact Richard Morey (richarddmorey@gmail.com).</span>
@@ -347,51 +351,52 @@ This function is similar in function to <code><a href='https://rdrr.io/pkg/brms/
 #&gt; 
 #&gt; </span><span>Parameter | Median |          89% CI
 #&gt; ------------------------------------
-#&gt; Posterior | -0.098 | [-1.087, 0.000]
+#&gt; Posterior | -0.083 | [-1.078, 0.004]
 #&gt; </div><div class='input'>
 
 <span class='co'>## weighted prediction distributions via data.frames</span>
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://mc-stan.org/rstanarm'>"rstanarm"</a></span>)) {
-<span class='kw'>m0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(
-  <span class='kw'>mpg</span> <span class='op'>~</span> <span class='fl'>1</span>,
-  data = <span class='kw'>mtcars</span>,
-  family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
-  diagnostic_file = <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df0.csv"</span>),
-  refresh = <span class='fl'>0</span>
-)
+  <span class='kw'>m0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(
+    <span class='kw'>mpg</span> <span class='op'>~</span> <span class='fl'>1</span>,
+    data = <span class='kw'>mtcars</span>,
+    family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
+    diagnostic_file = <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df0.csv"</span>),
+    refresh = <span class='fl'>0</span>
+  )
 
-<span class='kw'>m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(
-  <span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>carb</span>,
-  data = <span class='kw'>mtcars</span>,
-  family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
-  diagnostic_file = <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df1.csv"</span>),
-  refresh = <span class='fl'>0</span>
-)
+  <span class='kw'>m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(
+    <span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>carb</span>,
+    data = <span class='kw'>mtcars</span>,
+    family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
+    diagnostic_file = <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df1.csv"</span>),
+    refresh = <span class='fl'>0</span>
+  )
 
-<span class='co'># Predictions:</span>
-<span class='kw'>pred_m0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://mc-stan.org/rstanarm/reference/posterior_predict.stanreg.html'>posterior_predict</a></span>(<span class='kw'>m0</span>))
-<span class='kw'>pred_m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://mc-stan.org/rstanarm/reference/posterior_predict.stanreg.html'>posterior_predict</a></span>(<span class='kw'>m1</span>))
+  <span class='co'># Predictions:</span>
+  <span class='kw'>pred_m0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://mc-stan.org/rstanarm/reference/posterior_predict.stanreg.html'>posterior_predict</a></span>(<span class='kw'>m0</span>))
+  <span class='kw'>pred_m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://mc-stan.org/rstanarm/reference/posterior_predict.stanreg.html'>posterior_predict</a></span>(<span class='kw'>m1</span>))
 
-<span class='kw'>BFmods</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bayesfactor_models.html'>bayesfactor_models</a></span>(<span class='kw'>m0</span>, <span class='kw'>m1</span>)
+  <span class='kw'>BFmods</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bayesfactor_models.html'>bayesfactor_models</a></span>(<span class='kw'>m0</span>, <span class='kw'>m1</span>)
 
-<span class='kw'>wp</span> <span class='op'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='kw'>pred_m0</span>, <span class='kw'>pred_m1</span>,
-                          prior_odds = <span class='kw'>BFmods</span><span class='op'>$</span><span class='kw'>BF</span>[<span class='fl'>2</span>])
+  <span class='kw'>wp</span> <span class='op'>&lt;-</span> <span class='fu'>weighted_posteriors</span>(<span class='kw'>pred_m0</span>, <span class='kw'>pred_m1</span>,
+    prior_odds = <span class='kw'>BFmods</span><span class='op'>$</span><span class='kw'>BF</span>[<span class='fl'>2</span>]
+  )
 
-<span class='co'># look at first 5 prediction intervals</span>
-<span class='fu'><a href='hdi.html'>hdi</a></span>(<span class='kw'>pred_m0</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>])
-<span class='fu'><a href='hdi.html'>hdi</a></span>(<span class='kw'>pred_m1</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>])
-<span class='fu'><a href='hdi.html'>hdi</a></span>(<span class='kw'>wp</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>]) <span class='co'># between, but closer to pred_m1</span>
+  <span class='co'># look at first 5 prediction intervals</span>
+  <span class='fu'><a href='hdi.html'>hdi</a></span>(<span class='kw'>pred_m0</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>])
+  <span class='fu'><a href='hdi.html'>hdi</a></span>(<span class='kw'>pred_m1</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>])
+  <span class='fu'><a href='hdi.html'>hdi</a></span>(<span class='kw'>wp</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>]) <span class='co'># between, but closer to pred_m1</span>
 }
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Bayes factors might not be precise.</span>
 #&gt; <span class='warning'>For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.</span></div><div class='output co'>#&gt; <span class='message'>Computation of Bayes factors: estimating marginal likelihood, please wait...</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Highest Density Interval
 #&gt; 
 #&gt; </span><span>Parameter         |        89% HDI
 #&gt; ----------------------------------
-#&gt; Mazda.RX4         | [ 8.91, 26.35]
-#&gt; Mazda.RX4.Wag     | [ 9.18, 26.46]
-#&gt; Datsun.710        | [13.91, 32.12]
-#&gt; Hornet.4.Drive    | [14.51, 32.47]
-#&gt; Hornet.Sportabout | [12.59, 29.98]
+#&gt; Mazda.RX4         | [ 9.27, 26.90]
+#&gt; Mazda.RX4.Wag     | [ 9.24, 26.69]
+#&gt; Datsun.710        | [14.89, 32.12]
+#&gt; Hornet.4.Drive    | [15.01, 33.38]
+#&gt; Hornet.Sportabout | [13.05, 30.49]
 #&gt; </div><div class='input'><span class='co'># }</span>
 </div></span></pre>
   </div>
@@ -409,7 +414,7 @@ This function is similar in function to <code><a href='https://rdrr.io/pkg/brms/
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

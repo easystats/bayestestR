@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5.1</span>
       </span>
     </div>
 
@@ -186,13 +186,40 @@
       <small>Source: <a href='https://github.com/easystats/bayestestR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="bayestestr-075" class="section level1">
-<h1 class="page-header" data-toc-text="0.7.5">
-<a href="#bayestestr-075" class="anchor"></a>bayestestR 0.7.5<small> 2020-10-22 </small>
+    <div id="bayestestr-076" class="section level1">
+<h1 class="page-header" data-toc-text="0.7.6">
+<a href="#bayestestr-076" class="anchor"></a>bayestestR 0.7.6<small> Unreleased </small>
 </h1>
 <div id="new-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New functions</h2>
+<ul>
+<li>
+<code><a href="../reference/sexit.html">sexit()</a></code>, a function for sequential effect existence and significance testing (SEXIT).</li>
+</ul>
+</div>
+<div id="general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#general" class="anchor"></a>General</h2>
+<ul>
+<li>Added startup-message to warn users that default ci-width might change in a future update.</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Fixed issue in Bayes factor vignette (don’t evaluate code chunks if packages not available).</li>
+</ul>
+</div>
+</div>
+    <div id="bayestestr-075" class="section level1">
+<h1 class="page-header" data-toc-text="0.7.5">
+<a href="#bayestestr-075" class="anchor"></a>bayestestR 0.7.5<small> 2020-10-22 </small>
+</h1>
+<div id="new-functions-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions-1" class="anchor"></a>New functions</h2>
 <ul>
 <li>Added <code><a href="https://rdrr.io/r/base/matrix.html">as.matrix()</a></code> function for <code>bayesfactor_model</code> arrays.</li>
 <li>
@@ -207,9 +234,9 @@
 <code><a href="../reference/ci.html">ci()</a></code> supports <code>emmeans</code> - both Bayesian and frequentist ( <a href='https://github.com/easystats/bayestestR/issues/312'>#312</a> - cross fix with <code>parameters</code>)</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue with <em>default</em> rope range for <code>BayesFactor</code> models.</li>
 <li>Fixed issue in collinearity-check for <code><a href="../reference/rope.html">rope()</a></code> for models with less than two parameters.</li>
@@ -224,17 +251,17 @@
 <h1 class="page-header" data-toc-text="0.7.2">
 <a href="#bayestestr-072" class="anchor"></a>bayestestR 0.7.2<small> 2020-07-20 </small>
 </h1>
-<div id="new-functions-1" class="section level2">
+<div id="new-functions-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-1" class="anchor"></a>New functions</h2>
+<a href="#new-functions-2" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/mediation.html">mediation()</a></code>, to compute average direct and average causal mediation effects of multivariate response models (<code>brmsfit</code>, <code>stanmvreg</code>).</li>
 </ul>
 </div>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> works with <code>R&lt;3.6.0</code>.</li>
@@ -245,9 +272,9 @@
 <h1 class="page-header" data-toc-text="0.7.0">
 <a href="#bayestestr-070" class="anchor"></a>bayestestR 0.7.0<small> 2020-06-19 </small>
 </h1>
-<div id="general" class="section level2">
+<div id="general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general" class="anchor"></a>General</h2>
+<a href="#general-1" class="anchor"></a>General</h2>
 <ul>
 <li>Preliminary support for <em>stanfit</em> objects.</li>
 <li>Added support for <em>bayesQR</em> objects.</li>
@@ -263,9 +290,9 @@
 <li>Improved value formatting for Bayesfactor functions.</li>
 </ul>
 </div>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Link transformation are now taken into account for <code>emmeans</code> objets. E.g., in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>.</li>
 <li>Fix <code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code> when algorithm is not “sampling”.</li>
@@ -290,9 +317,9 @@
 <code><a href="../reference/rope_range.html">rope_range()</a></code> supports more (frequentis) models.</li>
 </ul>
 </div>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed issue with <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> <code>data.frame</code>-methods of <code><a href="../reference/p_direction.html">p_direction()</a></code> and <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code>.</li>
 <li>Fix check issues for forthcoming insight-update.</li>
@@ -303,9 +330,9 @@
 <h1 class="page-header" data-toc-text="0.5.3">
 <a href="#bayestestr-053" class="anchor"></a>bayestestR 0.5.3<small> 2020-03-26 </small>
 </h1>
-<div id="general-1" class="section level2">
+<div id="general-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-1" class="anchor"></a>General</h2>
+<a href="#general-2" class="anchor"></a>General</h2>
 <ul>
 <li>Support for <em>bcplm</em> objects (package <strong>cplm</strong>)</li>
 </ul>
@@ -318,9 +345,9 @@
 <code><a href="../reference/estimate_density.html">estimate_density()</a></code> now also works on grouped data frames.</li>
 </ul>
 </div>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed bug in <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> to properly weight Intercept-only <code>BFBayesFactor</code> models.</li>
 <li>Fixed bug in <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> when models have very low posterior probability ( <a href='https://github.com/easystats/bayestestR/issues/286'>#286</a> ).</li>
@@ -333,9 +360,9 @@
 <h1 class="page-header" data-toc-text="0.5.0">
 <a href="#bayestestr-050" class="anchor"></a>bayestestR 0.5.0<small> 2020-01-18 </small>
 </h1>
-<div id="general-2" class="section level2">
+<div id="general-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-2" class="anchor"></a>General</h2>
+<a href="#general-3" class="anchor"></a>General</h2>
 <ul>
 <li>Added <code><a href="../reference/p_map.html">p_pointnull()</a></code> as an alias to <code>p_MAP()</code>.</li>
 <li>Added <code><a href="../reference/si.html">si()</a></code> function to compute support intervals.</li>
@@ -363,9 +390,9 @@
 <code><a href="../reference/p_rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code><a href="../reference/mhdior.html">mhdior()</a></code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/p_rope.html">p_rope()</a></code> will refer to <code><a href="../reference/rope.html">rope(..., ci = 1)</a></code> ( <a href='https://github.com/easystats/bayestestR/issues/258'>#258</a> )</li>
 </ul>
 </div>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed mistake in description of <code><a href="../reference/p_significance.html">p_significance()</a></code>.</li>
 <li>Fixed error when computing BFs with <code>emmGrid</code> based on some non-linear models ( <a href='https://github.com/easystats/bayestestR/issues/260'>#260</a> ).</li>
@@ -398,9 +425,9 @@
 <code><a href="../reference/estimate_density.html">estimate_density()</a></code>: <code>method = "mixture"</code> argument added for mixture density estimation</li>
 </ul>
 </div>
-<div id="bug-fixes-6" class="section level2">
+<div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed bug in <code><a href="../reference/simulate_prior.html">simulate_prior()</a></code> for stanreg-models when <code>autoscale</code> was set to <code>FALSE</code>
 </li>
@@ -411,9 +438,9 @@
 <h1 class="page-header" data-toc-text="0.3.0">
 <a href="#bayestestr-030" class="anchor"></a>bayestestR 0.3.0<small> 2019-09-22 </small>
 </h1>
-<div id="general-3" class="section level2">
+<div id="general-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-3" class="anchor"></a>General</h2>
+<a href="#general-4" class="anchor"></a>General</h2>
 <ul>
 <li>revised <code><a href="https://rdrr.io/pkg/parameters/man/print.html">print()</a></code>-methods for functions like <code><a href="../reference/rope.html">rope()</a></code>, <code><a href="../reference/p_direction.html">p_direction()</a></code>, <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> etc., in particular for model objects with random effects and/or zero-inflation component</li>
 </ul>
@@ -434,9 +461,9 @@
 <li><p>More user-friendly warning for non-supported models in <code><a href="../reference/bayesfactor.html">bayesfactor()</a></code>-methods</p></li>
 </ul>
 </div>
-<div id="bug-fixes-7" class="section level2">
+<div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed bug in <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> where the same interaction sometimes appeared more than once (<a href='https://github.com/easystats/bayestestR/issues/223'>#223</a>)</li>
 <li>Fixed bug in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> for <em>stanreg</em> models fitted with fullrank-algorithm</li>
@@ -484,9 +511,9 @@
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h2>
 </div>
-<div id="bug-fixes-8" class="section level2">
+<div id="bug-fixes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-9" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> now works with <code>R &lt; 3.6</code>.</li>
@@ -523,9 +550,9 @@
 <li>Improved tutorial 2</li>
 </ul>
 </div>
-<div id="bug-fixes-9" class="section level2">
+<div id="bug-fixes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-9" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-10" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>: Fixed column order restoration</li>
@@ -597,9 +624,9 @@
 <li>Changes legend-labels in <code>plot.equivalence_test()</code> to align plots with the output of the <code><a href="https://rdrr.io/pkg/parameters/man/print.html">print()</a></code>-method (<a href='https://github.com/easystats/bayestestR/issues/78'>#78</a>)</li>
 </ul>
 </div>
-<div id="bug-fixes-10" class="section level2">
+<div id="bug-fixes-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-10" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-11" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/hdi.html">hdi()</a></code> returned multiple class attributes (<a href='https://github.com/easystats/bayestestR/issues/72'>#72</a>)</li>
@@ -636,7 +663,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

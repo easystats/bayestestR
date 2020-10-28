@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5.1</span>
       </span>
     </div>
 
@@ -225,7 +225,7 @@
     data = <span class='kw'>mtcars</span>, chains = <span class='fl'>2</span>, refresh = <span class='fl'>0</span>
   )
   <span class='fu'>bayesian_as_frequentist</span>(<span class='kw'>model</span>)
-}<span class='co'># }</span>
+}
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: rstanarm</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>This is rstanarm version 2.21.1</span></div><div class='output co'>#&gt; <span class='message'>- See https://mc-stan.org/rstanarm/articles/priors for changes to default priors!</span></div><div class='output co'>#&gt; <span class='message'>- Default priors may change, so it's safest to specify priors, even if equivalent to the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>  options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; 
 #&gt; Call:  stats::glm(formula = formula, family = family, data = data)
 #&gt; 
@@ -235,7 +235,8 @@
 #&gt; 
 #&gt; Degrees of Freedom: 31 Total (i.e. Null);  30 Residual
 #&gt; Null Deviance:	    43.86 
-#&gt; Residual Deviance: 25.53 	AIC: 29.53</div><div class='input'>
+#&gt; Residual Deviance: 25.53 	AIC: 29.53</div><div class='input'><span class='co'># }</span>
+
 <span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://mc-stan.org/rstanarm'>"rstanarm"</a></span>)) {
   <span class='co'># Mixed models</span>
@@ -249,7 +250,9 @@
     data = <span class='kw'>mtcars</span>, chains = <span class='fl'>2</span>, refresh = <span class='fl'>0</span>
   )
   <span class='fu'>bayesian_as_frequentist</span>(<span class='kw'>model</span>)
-}}
+}
+}
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -266,7 +269,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

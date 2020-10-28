@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.7.5.1</span>
       </span>
     </div>
 
@@ -229,10 +229,12 @@
   <span class='fu'>check_prior</span>(<span class='kw'>model</span>, method = <span class='st'>"lakeland"</span>)
 
   <span class='co'># An extreme example where both methods diverge:</span>
-  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span>, data = <span class='kw'>mtcars</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>,],
-                    prior = <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span>(<span class='op'>-</span><span class='fl'>3.3</span>, <span class='fl'>1</span>, <span class='fl'>FALSE</span>),
-                    prior_intercept = <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span>(<span class='fl'>0</span>, <span class='fl'>1000</span>, <span class='fl'>FALSE</span>),
-                    refresh = <span class='fl'>0</span>)
+  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span>,
+    data = <span class='kw'>mtcars</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, ],
+    prior = <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span>(<span class='op'>-</span><span class='fl'>3.3</span>, <span class='fl'>1</span>, <span class='fl'>FALSE</span>),
+    prior_intercept = <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/priors.html'>normal</a></span>(<span class='fl'>0</span>, <span class='fl'>1000</span>, <span class='fl'>FALSE</span>),
+    refresh = <span class='fl'>0</span>
+  )
   <span class='fu'>check_prior</span>(<span class='kw'>model</span>, method = <span class='st'>"gelman"</span>)
   <span class='fu'>check_prior</span>(<span class='kw'>model</span>, method = <span class='st'>"lakeland"</span>)
   <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'><a href='si.html'>si</a></span>(<span class='kw'>model</span>)) <span class='co'># can provide visual confirmation to the Lakeland method</span>
@@ -254,7 +256,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

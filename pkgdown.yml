@@ -1,6 +1,6 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1.9000
-pkgdown_sha: e1e46f2e13c7efdb17bc4eae40bc3779c2b0b517
+pkgdown: 1.6.1
+pkgdown_sha: ~
 articles:
   bayes_factors: bayes_factors.html
   bayestestR: bayestestR.html
@@ -14,5 +14,5 @@ articles:
   mediation: mediation.html
   probability_of_direction: probability_of_direction.html
   region_of_practical_equivalence: region_of_practical_equivalence.html
-last_built: 2020-10-24T12:37Z
+last_built: 2020-10-28T02:48Z
 
