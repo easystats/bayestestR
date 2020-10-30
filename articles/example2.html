@@ -318,9 +318,9 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <pre><code>&gt; Can't calculate log-loss.</code></pre>
 <pre><code>&gt; # Indices of model performance
 &gt; 
-&gt;   ELPD | ELPD_SE |  LOOIC | LOOIC_SE |   WAIC |   R2 | RMSE | LOGLOSS | SCORE_LOG | SCORE_SPHERICAL
-&gt; ---------------------------------------------------------------------------------------------------
-&gt; -66.36 |    3.09 | 132.72 |     6.17 | 132.71 | 0.10 | 0.48 |         |   -105.92 |            0.01</code></pre>
+&gt;   ELPD | ELPD_SE |  LOOIC | LOOIC_SE |   WAIC |   R2 | RMSE | Sigma | Log_loss | Score_log | Score_spherical
+&gt; ------------------------------------------------------------------------------------------------------------
+&gt; -66.36 |    3.09 | 132.72 |     6.17 | 132.71 | 0.10 | 0.48 |     1 |          |   -105.92 |            0.01</code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit">
 <span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(<span class="kw">model</span>, test = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span>))
 </pre></div>
