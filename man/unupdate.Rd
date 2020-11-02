@@ -4,18 +4,25 @@
 \alias{unupdate}
 \alias{unupdate.stanreg}
 \alias{unupdate.brmsfit}
+\alias{unupdate.brmsfit_multiple}
 \title{Un-update Bayesian models to their prior-to-data state}
 \usage{
-unupdate(model, verbose = TRUE)
+unupdate(model, verbose = TRUE, ...)
 
-\method{unupdate}{stanreg}(model, verbose = TRUE)
+\method{unupdate}{stanreg}(model, verbose = TRUE, ...)
 
-\method{unupdate}{brmsfit}(model, verbose = TRUE)
+\method{unupdate}{brmsfit}(model, verbose = TRUE, ...)
+
+\method{unupdate}{brmsfit_multiple}(model, verbose = TRUE, newdata = NULL, ...)
 }
 \arguments{
 \item{model}{A fitted Bayesian model.}
 
 \item{verbose}{Toggle warnings.}
+
+\item{...}{Not used}
+
+\item{newdata}{List of \code{data.frames} to update the model with new data. Required even if the original data should be used.}
 }
 \value{
 A model un-fitted to the data, representing the prior model.

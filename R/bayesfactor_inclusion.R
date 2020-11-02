@@ -26,6 +26,8 @@
 #' term is comprised.
 #' }
 #'
+#' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
+#'
 #' @note Random effects in the \code{lmer} style are converted to interaction terms:
 #' i.e., \code{(X|G)} will become the terms \code{1:G} and \code{X:G}.
 #'

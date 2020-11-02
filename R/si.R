@@ -18,23 +18,6 @@
 #' they should be \emph{not flat}, and it is preferable that they be \emph{informative} - note
 #' that by default, \code{brms::brm()} uses flat priors for fixed-effects; see example below).
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
-#'
-#' \subsection{Setting the correct \code{prior}}{
-#' It is important to provide the correct \code{prior} for meaningful results.
-#' \itemize{
-#'   \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
-#'   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
-#'   \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
-#'     \item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
-#'     \item \code{prior} can also be a model equvilant to \code{posterior} but with samples from the priors \emph{only}.
-#'   }
-#'   \item When \code{posterior} is an \code{emmGrid} object: \itemize{
-#'     \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
-#'     \item \code{prior} can also be an \code{emmGrid} object equvilant to \code{posterior} but created with a model of priors samples \emph{only}.
-#'   }
-#' }}
-#'
 #' \subsection{Choosing a value of \code{BF}}{
 #' The choice of \code{BF} (the level of support) depends on what we want our interval to represent:
 #' \itemize{
@@ -45,6 +28,10 @@
 #'   the alternative. E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null will be larger than 3.
 #' }
 #' }
+#'
+#' @inheritSection bayesfactor_parameters Setting the correct \code{prior}
+#'
+#' @note There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @return
 #' A data frame containing the lower and upper bounds of the SI.

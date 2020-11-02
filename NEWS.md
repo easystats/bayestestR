@@ -10,6 +10,7 @@
 
 ## Bug fixes
 
+* `unupdate()` gains a `newdata` argument to work with `brmsfit_multiple` models.
 * Fixed issue in Bayes factor vignette (don't evaluate code chunks if packages not available).
 
 # bayestestR 0.7.5

@@ -36,14 +36,9 @@
 #' (\cite{Gronau, Singmann, & Wagenmakers, 2017}). If less than 40,000 samples
 #' are detected, \code{bayesfactor_models()} gives a warning.
 #' \cr \cr
-#' A Bayes factor greater than 1 can be interpreted as evidence against the
-#' compared-to model (the denominator). One convention is that a Bayes factor
-#' greater than 3 can be considered as "substantial" evidence against the
-#' denominator model (and vice versa, a Bayes factor smaller than 1/3 indicates
-#' substantial evidence in favor of the denominator model) (\cite{Wetzels et al.
-#' 2011}).
-#' \cr \cr
 #' See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
+#'
+#' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
 #'
 #' @return A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs, that prints nicely.
 #'

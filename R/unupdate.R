@@ -9,12 +9,14 @@
 #'
 #' @param model A fitted Bayesian model.
 #' @param verbose Toggle warnings.
+#' @param newdata List of \code{data.frames} to update the model with new data. Required even if the original data should be used.
+#' @param ... Not used
 #'
 #' @return A model un-fitted to the data, representing the prior model.
 #'
 #' @keywords internal
 #' @export
-unupdate <- function(model, verbose = TRUE) {
+unupdate <- function(model, verbose = TRUE, ...) {
   UseMethod("unupdate")
 }
 
@@ -23,7 +25,7 @@ unupdate <- function(model, verbose = TRUE) {
 #' @export
 #' @rdname unupdate
 #' @importFrom stats update getCall
-unupdate.stanreg <- function(model, verbose = TRUE) {
+unupdate.stanreg <- function(model, verbose = TRUE, ...) {
   if (!requireNamespace("rstanarm")) {
     stop("Package \"rstanarm\" needed for this function to work. Please install it.")
   }
@@ -60,7 +62,7 @@ unupdate.stanreg <- function(model, verbose = TRUE) {
 #' @importFrom stats update
 #' @importFrom utils capture.output
 #' @importFrom methods is
-unupdate.brmsfit <- function(model, verbose = TRUE) {
+unupdate.brmsfit <- function(model, verbose = TRUE, ...) {
   if (!requireNamespace("brms")) {
     stop("Package \"brms\" needed for this function to work. Please install it.")
   }
@@ -76,6 +78,46 @@ unupdate.brmsfit <- function(model, verbose = TRUE) {
   utils::capture.output(
     model_prior <- try(suppressMessages(suppressWarnings(
       stats::update(model, sample_prior = "only", refresh = 0)
+    )), silent = TRUE)
+  )
+
+  if (is(model_prior, "try-error")) {
+    if (grepl("proper priors", model_prior)) {
+      stop(
+        "Cannot sample from flat priors (such as the default ",
+        "priors for fixed-effects in a 'brmsfit' model).",
+        call. = FALSE
+      )
+    } else {
+      stop(model_prior)
+    }
+  }
+
+  model_prior
+}
+
+
+#' @export
+#' @rdname unupdate
+#' @importFrom stats update
+#' @importFrom utils capture.output
+#' @importFrom methods is
+unupdate.brmsfit_multiple <- function(model, verbose = TRUE, newdata = NULL, ...) {
+  if (!requireNamespace("brms")) {
+    stop("Package \"brms\" needed for this function to work. Please install it.")
+  }
+
+  if (isTRUE(attr(model$prior, "sample_prior") == "only")) {
+    return(model)
+  }
+
+  if (verbose) {
+    message("Sampling priors, please wait...")
+  }
+
+  utils::capture.output(
+    model_prior <- try(suppressMessages(suppressWarnings(
+      stats::update(model, sample_prior = "only", newdata = newdata, refresh = 0)
     )), silent = TRUE)
   )
 

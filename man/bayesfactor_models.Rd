@@ -48,18 +48,20 @@ obtain 10 times more samples than would be required for estimation
 (\cite{Gronau, Singmann, & Wagenmakers, 2017}). If less than 40,000 samples
 are detected, \code{bayesfactor_models()} gives a warning.
 \cr \cr
-A Bayes factor greater than 1 can be interpreted as evidence against the
-compared-to model (the denominator). One convention is that a Bayes factor
-greater than 3 can be considered as "substantial" evidence against the
-denominator model (and vice versa, a Bayes factor smaller than 1/3 indicates
-substantial evidence in favor of the denominator model) (\cite{Wetzels et al.
-2011}).
-\cr \cr
 See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
 \note{
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
+\section{Interpreting Bayes Factors}{
+
+A Bayes factor greater than 1 can be interpreted as evidence against the null,
+at which one convention is that a Bayes factor greater than 3 can be considered
+as "substantial" evidence against the null (and vice versa, a Bayes factor
+smaller than 1/3 indicates substantial evidence in favor of the null-model)
+(\cite{Wetzels et al. 2011}).
+}
+
 \examples{
 # With lm objects:
 # ----------------

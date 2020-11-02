@@ -86,24 +86,6 @@ This method is used to compute support intervals based on prior and posterior di
 For the computation of support intervals, the model priors must be proper priors (at the very least
 they should be \emph{not flat}, and it is preferable that they be \emph{informative} - note
 that by default, \code{brms::brm()} uses flat priors for fixed-effects; see example below).
-}
-\note{
-There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
-
-\subsection{Setting the correct \code{prior}}{
-It is important to provide the correct \code{prior} for meaningful results.
-\itemize{
-  \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
-  \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
-  \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
-    \item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
-    \item \code{prior} can also be a model equvilant to \code{posterior} but with samples from the priors \emph{only}.
-  }
-  \item When \code{posterior} is an \code{emmGrid} object: \itemize{
-    \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
-    \item \code{prior} can also be an \code{emmGrid} object equvilant to \code{posterior} but created with a model of priors samples \emph{only}.
-  }
-}}
 
 \subsection{Choosing a value of \code{BF}}{
 The choice of \code{BF} (the level of support) depends on what we want our interval to represent:
@@ -116,6 +98,36 @@ The choice of \code{BF} (the level of support) depends on what we want our inter
 }
 }
 }
+\note{
+There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+}
+\section{Setting the correct \code{prior}}{
+
+For the computation of Bayes factors, the model priors must be proper priors (at the very least
+they should be \emph{not flat}, and it is preferable that they be \emph{informative}); As the priors for
+the alternative get wider, the likelihood of the null value(s) increases, to the extreme that for completely
+flat priors the null is infinitely more favorable than the alternative (this is called \emph{the Jeffreys-Lindley-Bartlett
+paradox}). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
+\cr\cr
+(Note that by default, \code{brms::brm()} uses flat priors for fixed-effects; See example below.)
+\cr\cr
+It is important to provide the correct \code{prior} for meaningful results.
+\itemize{
+  \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
+  \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
+  \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
+    \item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
+    \item \code{prior} can also be a model equivalent to \code{posterior} but with samples from the priors \emph{only}. See \code{\link{unupdate}}.
+    \item \strong{Note:} When \code{posterior} is a \code{brmsfit_multiple} model, \code{prior} \strong{must} be provided.
+  }
+  \item When \code{posterior} is an \code{emmGrid} object: \itemize{
+    \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
+    \item \code{prior} can also be an \code{emmGrid} object equivalent to \code{posterior} but created with a model of priors samples \emph{only}.
+    \item \strong{Note:} When the \code{emmGrid} has undergone any transformations (\code{"log"}, \code{"response"}, etc.), or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stated above.
+  }
+}
+}
+
 \examples{
 library(bayestestR)
 
