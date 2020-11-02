@@ -299,23 +299,6 @@ interval will be <code>[NA,NA]</code>.</p>
 For the computation of support intervals, the model priors must be proper priors (at the very least
 they should be <em>not flat</em>, and it is preferable that they be <em>informative</em> - note
 that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects; see example below).</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Setting the correct <code>prior</code></h3>
-<p>It is important to provide the correct <code>prior</code> for meaningful results.</p><ul>
-<li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>
-<li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
-<li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model:</p><ul>
-<li><p><code>prior</code> can be set to <code>NULL</code>, in which case prior samples are drawn internally.</p></li>
-<li><p><code>prior</code> can also be a model equvilant to <code>posterior</code> but with samples from the priors <em>only</em>.</p></li>
-</ul></li>
-<li><p>When <code>posterior</code> is an <code>emmGrid</code> object:</p><ul>
-<li><p><code>prior</code> should be the <code>stanreg</code> or <code>brmsfit</code> model used to create the <code>emmGrid</code> objects.</p></li>
-<li><p><code>prior</code> can also be an <code>emmGrid</code> object equvilant to <code>posterior</code> but created with a model of priors samples <em>only</em>.</p></li>
-</ul></li>
-</ul>
-
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Choosing a value of <code>BF</code></h3>
 <p>The choice of <code>BF</code> (the level of support) depends on what we want our interval to represent:</p><ul>
 <li><p>A <code>BF</code> = 1 contains values whose credibility is not decreased by observing the data.</p></li>
@@ -325,6 +308,36 @@ that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm
   the alternative. E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null will be larger than 3.</p></li>
 </ul>
 
+
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+    <h2 class="hasAnchor" id="setting-the-correct-prior"><a class="anchor" href="#setting-the-correct-prior"></a>Setting the correct <code>prior</code></h2>
+
+    
+
+<p>For the computation of Bayes factors, the model priors must be proper priors (at the very least
+they should be <em>not flat</em>, and it is preferable that they be <em>informative</em>); As the priors for
+the alternative get wider, the likelihood of the null value(s) increases, to the extreme that for completely
+flat priors the null is infinitely more favorable than the alternative (this is called <em>the Jeffreys-Lindley-Bartlett
+paradox</em>). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
+<br /><br />
+(Note that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects; See example below.)
+<br /><br />
+It is important to provide the correct <code>prior</code> for meaningful results.</p><ul>
+<li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>
+<li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
+<li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model:</p><ul>
+<li><p><code>prior</code> can be set to <code>NULL</code>, in which case prior samples are drawn internally.</p></li>
+<li><p><code>prior</code> can also be a model equivalent to <code>posterior</code> but with samples from the priors <em>only</em>. See <code><a href='unupdate.html'>unupdate</a></code>.</p></li>
+<li><p><strong>Note:</strong> When <code>posterior</code> is a <code>brmsfit_multiple</code> model, <code>prior</code> <strong>must</strong> be provided.</p></li>
+</ul></li>
+<li><p>When <code>posterior</code> is an <code>emmGrid</code> object:</p><ul>
+<li><p><code>prior</code> should be the <code>stanreg</code> or <code>brmsfit</code> model used to create the <code>emmGrid</code> objects.</p></li>
+<li><p><code>prior</code> can also be an <code>emmGrid</code> object equivalent to <code>posterior</code> but created with a model of priors samples <em>only</em>.</p></li>
+<li><p><strong>Note:</strong> When the <code>emmGrid</code> has undergone any transformations (<code>"log"</code>, <code>"response"</code>, etc.), or <code>regrid</code>ing, then <code>prior</code> must be an <code>emmGrid</code> object, as stated above.</p></li>
+</ul></li>
+</ul>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

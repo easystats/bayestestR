@@ -401,22 +401,36 @@ for the output.</p></td>
     <p>A data frame containing the Bayes factor representing evidence <em>against</em> the null.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This method is used to compute Bayes factors based on prior and posterior distributions.
-<br /><br />
-For the computation of Bayes factors, the model priors must be proper priors (at the very least
+    <p>This method is used to compute Bayes factors based on prior and posterior distributions.</p>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>One-sided Tests (setting an order restriction)</h3>
+<p>One sided tests (controlled by <code>direction</code>) are conducted by restricting the prior and
+posterior of the non-null values (the "alternative") to one side of the null only
+(<cite>Morey &amp; Wagenmakers, 2014</cite>). For example, if we have a prior hypothesis that the
+parameter should be positive, the alternative will be restricted to the region to the right
+of the null (point or interval).</p>
+
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+    <h2 class="hasAnchor" id="setting-the-correct-prior"><a class="anchor" href="#setting-the-correct-prior"></a>Setting the correct <code>prior</code></h2>
+
+    
+
+<p>For the computation of Bayes factors, the model priors must be proper priors (at the very least
 they should be <em>not flat</em>, and it is preferable that they be <em>informative</em>); As the priors for
 the alternative get wider, the likelihood of the null value(s) increases, to the extreme that for completely
 flat priors the null is infinitely more favorable than the alternative (this is called <em>the Jeffreys-Lindley-Bartlett
 paradox</em>). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
 <br /><br />
-(Note that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects; See example below.)</p>
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Setting the correct <code>prior</code></h3>
-<p>It is important to provide the correct <code>prior</code> for meaningful results.</p><ul>
+(Note that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects; See example below.)
+<br /><br />
+It is important to provide the correct <code>prior</code> for meaningful results.</p><ul>
 <li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>
 <li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
 <li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model:</p><ul>
 <li><p><code>prior</code> can be set to <code>NULL</code>, in which case prior samples are drawn internally.</p></li>
-<li><p><code>prior</code> can also be a model equivalent to <code>posterior</code> but with samples from the priors <em>only</em>.</p></li>
+<li><p><code>prior</code> can also be a model equivalent to <code>posterior</code> but with samples from the priors <em>only</em>. See <code><a href='unupdate.html'>unupdate</a></code>.</p></li>
+<li><p><strong>Note:</strong> When <code>posterior</code> is a <code>brmsfit_multiple</code> model, <code>prior</code> <strong>must</strong> be provided.</p></li>
 </ul></li>
 <li><p>When <code>posterior</code> is an <code>emmGrid</code> object:</p><ul>
 <li><p><code>prior</code> should be the <code>stanreg</code> or <code>brmsfit</code> model used to create the <code>emmGrid</code> objects.</p></li>
@@ -424,22 +438,16 @@ paradox</em>). Thus, you should only ever try (or want) to compute a Bayes facto
 <li><p><strong>Note:</strong> When the <code>emmGrid</code> has undergone any transformations (<code>"log"</code>, <code>"response"</code>, etc.), or <code>regrid</code>ing, then <code>prior</code> must be an <code>emmGrid</code> object, as stated above.</p></li>
 </ul></li>
 </ul>
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>One-sided Tests (setting an order restriction)</h3>
-<p>One sided tests (controlled by <code>direction</code>) are conducted by restricting the prior and
-posterior of the non-null values (the "alternative") to one side of the null only
-(<cite>Morey &amp; Wagenmakers, 2014</cite>). For example, if we have a prior hypothesis that the
-parameter should be positive, the alternative will be restricted to the region to the right
-of the null (point or interval).</p>
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Interpreting Bayes Factors</h3>
+
+    <h2 class="hasAnchor" id="interpreting-bayes-factors"><a class="anchor" href="#interpreting-bayes-factors"></a>Interpreting Bayes Factors</h2>
+
+    
+
 <p>A Bayes factor greater than 1 can be interpreted as evidence against the null,
 at which one convention is that a Bayes factor greater than 3 can be considered
 as "substantial" evidence against the null (and vice versa, a Bayes factor
 smaller than 1/3 indicates substantial evidence in favor of the null-model)
 (<cite>Wetzels et al. 2011</cite>).</p>
-
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     

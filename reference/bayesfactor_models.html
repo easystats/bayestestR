@@ -242,17 +242,19 @@ obtain 10 times more samples than would be required for estimation
 (<cite>Gronau, Singmann, &amp; Wagenmakers, 2017</cite>). If less than 40,000 samples
 are detected, <code>bayesfactor_models()</code> gives a warning.
 <br /> <br />
-A Bayes factor greater than 1 can be interpreted as evidence against the
-compared-to model (the denominator). One convention is that a Bayes factor
-greater than 3 can be considered as "substantial" evidence against the
-denominator model (and vice versa, a Bayes factor smaller than 1/3 indicates
-substantial evidence in favor of the denominator model) (<cite>Wetzels et al.
-2011</cite>).
-<br /> <br />
 See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+    <h2 class="hasAnchor" id="interpreting-bayes-factors"><a class="anchor" href="#interpreting-bayes-factors"></a>Interpreting Bayes Factors</h2>
+
+    
+
+<p>A Bayes factor greater than 1 can be interpreted as evidence against the null,
+at which one convention is that a Bayes factor greater than 3 can be considered
+as "substantial" evidence against the null (and vice versa, a Bayes factor
+smaller than 1/3 indicates substantial evidence in favor of the null-model)
+(<cite>Wetzels et al. 2011</cite>).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     

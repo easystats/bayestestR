@@ -202,13 +202,16 @@ predictive distribution, or to compare priors with posteriors.
 This function in used internally to compute Bayes factors.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>unupdate</span>(<span class='kw'>model</span>, verbose = <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>unupdate</span>(<span class='kw'>model</span>, verbose = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>unupdate</span>(<span class='kw'>model</span>, verbose = <span class='fl'>TRUE</span>)
+<span class='fu'>unupdate</span>(<span class='kw'>model</span>, verbose = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>unupdate</span>(<span class='kw'>model</span>, verbose = <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>unupdate</span>(<span class='kw'>model</span>, verbose = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+
+<span class='co'># S3 method for brmsfit_multiple</span>
+<span class='fu'>unupdate</span>(<span class='kw'>model</span>, verbose = <span class='fl'>TRUE</span>, newdata = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -220,6 +223,14 @@ This function in used internally to compute Bayes factors.</p>
     <tr>
       <th>verbose</th>
       <td><p>Toggle warnings.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Not used</p></td>
+    </tr>
+    <tr>
+      <th>newdata</th>
+      <td><p>List of <code>data.frames</code> to update the model with new data. Required even if the original data should be used.</p></td>
     </tr>
     </table>
 
