@@ -46,17 +46,18 @@ print.bayesfactor_models_matrix <- function(x, digits = 2, log = FALSE, ...) {
 
   models <- colnames(x)
   models[models == "1"] <- "(Intercept only)"
-  models <- paste0(" [", seq_along(models), "] ", models)
+  models <- paste0("[", seq_along(models), "] ", models)
 
   df <- as.data.frame(x)
   rownames(df) <- colnames(df) <- NULL
   df <- cbind(Model = models, df)
-  colnames(df) <- c("Numerator / Denominator", paste0(" [", seq_along(models), "] "))
+  # colnames(df) <- c("Numerator / Denominator", paste0(" [", seq_along(models), "] "))
+  colnames(df) <- c("Denominator", paste0(" [", seq_along(models), "] "))
   df <- insight::format_table(df)
-  df <- sub("Numerator / Denominator", "", df)
-
+  k <- nchar(regmatches(df,regexpr("^(.*?)\\|", df)))
+  df <- sub("Denominator", "", df)
   insight::print_color("# Bayes Factors for Model Comparison\n\n", "blue")
-  insight::print_color("Denominator \\ Numerator", "cyan")
+  insight::print_color(paste0(paste(rep(" ", k), collapse = ""), "Numerator\nDenominator"), "cyan")
   cat(df)
   if (log) insight::print_color("\nBayes Factors are on the log-scale.\n", "red")
 
