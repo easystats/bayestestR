@@ -72,7 +72,7 @@ If the **full ROPE** is used (*i.e.*, 100\% of the HDI), then the null hypothesi
 Kruschke (2018) suggests that the ROPE could be set, by default, to a range from `-0.1` to `0.1` of a standardized parameter (negligible effect size according to Cohen, 1988).
 
 - For **linear models (lm)**, this can be generalised to: $$[-0.1*SD_{y}, 0.1*SD_{y}]$$.
-- For **logistic models**, the parameters expressed in log odds ratio can be converted to standardized difference through the formula: $$\sqrt{3}/\pi$$, resulting in a range of `-0.055` to `-0.055`. For other models with binary outcome, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.
+- For **logistic models**, the parameters expressed in log odds ratio can be converted to standardized difference through the formula: $$\pi/\sqrt{3}$$ (see [the **effectsize** package](https://easystats.github.io/effectsize/articles/convert.html#from-odds-ratios), resulting in a range of `-0.18` to `-0.18`. For other models with binary outcome, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.
 - For **t-tests**, the standard deviation of the response is used, similarly to linear models (see above).
 - For **correlations**, `-0.05, 0.05` is used, *i.e.*, half the value of a negligible correlation as suggested by Cohen's (1988) rules of thumb.
 - For all other models, `-0.1, 0.1` is used to determine the ROPE limits, but it is strongly advised to specify it manually.
