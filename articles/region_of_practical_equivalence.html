@@ -184,7 +184,7 @@
 <p>Kruschke (2018) suggests that the ROPE could be set, by default, to a range from <code>-0.1</code> to <code>0.1</code> of a standardized parameter (negligible effect size according to Cohen, 1988).</p>
 <ul>
 <li>For <strong>linear models (lm)</strong>, this can be generalised to: <span class="math display">\[[-0.1*SD_{y}, 0.1*SD_{y}]\]</span>.</li>
-<li>For <strong>logistic models</strong>, the parameters expressed in log odds ratio can be converted to standardized difference through the formula: <span class="math display">\[\sqrt{3}/\pi\]</span>, resulting in a range of <code>-0.055</code> to <code>-0.055</code>. For other models with binary outcome, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.</li>
+<li>For <strong>logistic models</strong>, the parameters expressed in log odds ratio can be converted to standardized difference through the formula: <span class="math display">\[\pi/\sqrt{3}\]</span> (see <a href="https://easystats.github.io/effectsize/articles/convert.html#from-odds-ratios">the <strong>effectsize</strong> package</a>, resulting in a range of <code>-0.18</code> to <code>-0.18</code>. For other models with binary outcome, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.</li>
 <li>For <strong>t-tests</strong>, the standard deviation of the response is used, similarly to linear models (see above).</li>
 <li>For <strong>correlations</strong>, <code>-0.05, 0.05</code> is used, <em>i.e.</em>, half the value of a negligible correlation as suggested by Cohen’s (1988) rules of thumb.</li>
 <li>For all other models, <code>-0.1, 0.1</code> is used to determine the ROPE limits, but it is strongly advised to specify it manually.</li>
@@ -195,40 +195,35 @@
 <a href="#sensitivity-to-parameters-scale" class="anchor"></a>Sensitivity to parameter’s scale</h1>
 <p>It is important to consider <strong>the unit (<em>i.e.</em>, the scale) of the predictors</strong> when using an index based on the ROPE, as the correct interpretation of the ROPE as representing a region of practical equivalence to zero is dependent on the scale of the predictors. Indeed, unlike other indices (such as the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><code>pd</code></a>), the percentage in <strong>ROPE</strong> depend on the unit of its parameter. In other words, as the ROPE represents a fixed portion of the response’s scale, its proximity with a coefficient depends on the scale of the coefficient itself.</p>
 <p>For instance, if we consider a simple regression <code>growth ~ time</code>, modelling the development of <strong>Wookies babies</strong>, a negligible change (the ROPE) is less than <strong>54 cm</strong>. If our <code>time</code> variable is <strong>expressed in days</strong>, we will find that the coefficient (representing the growth <strong>by day</strong>) is of about <strong>10 cm</strong> (<em>the median of the posterior of the coefficient is 10</em>). Which we would consider as <strong>negligible</strong>. However, if we decide to express the <code>time</code> variable <strong>in years</strong>, the coefficient will be scaled by this transformation (as it will now represent the growth <strong>by year</strong>). The coefficient will now be around <strong>3550</strong> cm (<code>10 * 355</code>), which we would now consider as <strong>significant</strong>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://mc-stan.org/rstanarm">rstanarm</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://easystats.github.io/bayestestR">bayestestR</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://easystats.github.io/see">see</a></span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/">rstanarm</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/">bayestestR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/">see</a></span><span class="op">)</span>
 
-<span class="kw">data</span> <span class="op">&lt;-</span> <span class="kw">iris</span>  <span class="co"># Use the iris data</span>
-<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="kw">Sepal.Length</span> <span class="op">~</span> <span class="kw">Sepal.Width</span>, data=<span class="kw">data</span>)  <span class="co"># Fit model</span>
-</pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># Compute indices</span>
-<span class="kw">pd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/p_direction.html">p_direction</a></span>(<span class="kw">model</span>)
-<span class="kw">percentage_in_rope</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rope.html">rope</a></span>(<span class="kw">model</span>, ci=<span class="fl">1</span>)
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span>  <span class="co"># Use the iris data</span>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width</span>, data<span class="op">=</span><span class="va">data</span><span class="op">)</span>  <span class="co"># Fit model</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Compute indices</span>
+<span class="va">pd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/p_direction.html">p_direction</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="va">percentage_in_rope</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rope.html">rope</a></span><span class="op">(</span><span class="va">model</span>, ci<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
 
 <span class="co"># Visualise the pd</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">pd</span>)
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span></code></pre></div>
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">pd</span>
-</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pd</span></code></pre></div>
 <pre><code>&gt; # Probability of Direction (pd)
 &gt; 
 &gt; Parameter   |      pd
 &gt; ---------------------
 &gt; (Intercept) | 100.00%
 &gt; Sepal.Width |  91.65%</code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="co"># Visualise the percentage in ROPE</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">percentage_in_rope</span>)
-</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Visualise the percentage in ROPE</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">percentage_in_rope</span><span class="op">)</span></code></pre></div>
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw">percentage_in_rope</span>
-</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">percentage_in_rope</span></code></pre></div>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-0.08, 0.08]:
 &gt; 
 &gt; Parameter   | inside ROPE
@@ -236,36 +231,31 @@
 &gt; (Intercept) |      0.00 %
 &gt; Sepal.Width |     16.28 %</code></pre>
 <p>We can see that the <em>pd</em> and the percentage in ROPE of the linear relationship between <strong>Sepal.Length</strong> and <strong>Sepal.Width</strong> are respectively of about <code>92.95%</code> and <code>15.95%</code>, corresponding to an <strong>uncertain</strong> and <strong>not significant</strong> effect. What happen if we scale our predictor?</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="kw">data</span><span class="op">$</span><span class="kw">Sepal.Width_scaled</span> <span class="op">&lt;-</span> <span class="kw">data</span><span class="op">$</span><span class="kw">Sepal.Width</span> <span class="op">/</span> <span class="fl">100</span>  <span class="co"># Divide predictor by 100</span>
-<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="kw">Sepal.Length</span> <span class="op">~</span> <span class="kw">Sepal.Width_scaled</span>, data=<span class="kw">data</span>)  <span class="co"># Fit model</span>
-</pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="co"># Compute indices</span>
-<span class="kw">pd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/p_direction.html">p_direction</a></span>(<span class="kw">model</span>)
-<span class="kw">percentage_in_rope</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rope.html">rope</a></span>(<span class="kw">model</span>, ci=<span class="fl">1</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">data</span><span class="op">$</span><span class="va">Sepal.Width_scaled</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">Sepal.Width</span> <span class="op">/</span> <span class="fl">100</span>  <span class="co"># Divide predictor by 100</span>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width_scaled</span>, data<span class="op">=</span><span class="va">data</span><span class="op">)</span>  <span class="co"># Fit model</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Compute indices</span>
+<span class="va">pd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/p_direction.html">p_direction</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="va">percentage_in_rope</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rope.html">rope</a></span><span class="op">(</span><span class="va">model</span>, ci<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
 
 <span class="co"># Visualise the pd</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">pd</span>)
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span></code></pre></div>
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="kw">pd</span>
-</pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pd</span></code></pre></div>
 <pre><code>&gt; # Probability of Direction (pd)
 &gt; 
 &gt; Parameter          |      pd
 &gt; ----------------------------
 &gt; (Intercept)        | 100.00%
 &gt; Sepal.Width_scaled |  91.65%</code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="co"># Visualise the percentage in ROPE</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">percentage_in_rope</span>)
-</pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Visualise the percentage in ROPE</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">percentage_in_rope</span><span class="op">)</span></code></pre></div>
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="kw">percentage_in_rope</span>
-</pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">percentage_in_rope</span></code></pre></div>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-0.08, 0.08]:
 &gt; 
 &gt; Parameter          | inside ROPE

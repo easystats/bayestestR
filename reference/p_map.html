@@ -192,30 +192,30 @@
     <p>Compute a Bayesian equivalent of the <em>p</em>-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (<em>h0</em>) using Mills' (2014, 2017) <em>Objective Bayesian Hypothesis Testing</em> framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>p_map</span>(<span class='kw'>x</span>, precision = <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>, method = <span class='st'>"kernel"</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>p_map</span><span class='op'>(</span><span class='va'>x</span>, precision <span class='op'>=</span> <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>p_pointnull</span>(<span class='kw'>x</span>, precision = <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>, method = <span class='st'>"kernel"</span>, <span class='kw'>...</span>)
+<span class='fu'>p_pointnull</span><span class='op'>(</span><span class='va'>x</span>, precision <span class='op'>=</span> <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>p_map</span>(
-  <span class='kw'>x</span>,
-  precision = <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>,
-  method = <span class='st'>"kernel"</span>,
-  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  parameters = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'>p_map</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  precision <span class='op'>=</span> <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>,
+  method <span class='op'>=</span> <span class='st'>"kernel"</span>,
+  effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>p_map</span>(
-  <span class='kw'>x</span>,
-  precision = <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>,
-  method = <span class='st'>"kernel"</span>,
-  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
-  parameters = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'>p_map</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  precision <span class='op'>=</span> <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>,
+  method <span class='op'>=</span> <span class='st'>"kernel"</span>,
+  effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -279,49 +279,49 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <div class='dont-index'><p><a href='https://www.youtube.com/watch?v=Ip8Ci5KUVRc'>Jeff Mill's talk</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/bayestestR'>bayestestR</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>
 
-<span class='fu'>p_map</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>))
-</div><div class='output co'>#&gt; p (MAP) = 0.975</div><div class='input'><span class='fu'>p_map</span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>10</span>, <span class='fl'>1</span>))
-</div><div class='output co'>#&gt; p (MAP) = 0.000</div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://mc-stan.org/rstanarm'>rstanarm</a></span>)
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>gear</span>, data = <span class='kw'>mtcars</span>, chains = <span class='fl'>2</span>, iter = <span class='fl'>200</span>, refresh = <span class='fl'>0</span>)
-<span class='fu'>p_map</span>(<span class='kw'>model</span>)
+<span class='fu'>p_map</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; p (MAP) = 0.975</div><div class='input'><span class='fu'>p_map</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>10</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; p (MAP) = 0.000</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>gear</span>, data <span class='op'>=</span> <span class='va'>mtcars</span>, chains <span class='op'>=</span> <span class='fl'>2</span>, iter <span class='op'>=</span> <span class='fl'>200</span>, refresh <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+<span class='fu'>p_map</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/rvlenth/emmeans'>emmeans</a></span>)
-<span class='fu'>p_map</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='kw'>model</span>, <span class='op'>~</span><span class='fl'>1</span>, <span class='st'>"wt"</span>))
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/rvlenth/emmeans'>emmeans</a></span><span class='op'>)</span>
+<span class='fu'>p_map</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='op'>~</span><span class='fl'>1</span>, <span class='st'>"wt"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/paul-buerkner/brms'>brms</a></span>)
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>brms</span>::<span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>, data = <span class='kw'>mtcars</span>)
-<span class='fu'>p_map</span>(<span class='kw'>model</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>brms</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
+<span class='fu'>p_map</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://richarddmorey.github.io/BayesFactor'>BayesFactor</a></span>)
-<span class='kw'>bf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
-<span class='fu'>p_map</span>(<span class='kw'>bf</span>)
-}
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://richarddmorey.github.io/BayesFactor/'>BayesFactor</a></span><span class='op'>)</span>
+<span class='va'>bf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>p_map</span><span class='op'>(</span><span class='va'>bf</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'># \donttest{</span>
 <span class='co'># ---------------------------------------</span>
 <span class='co'># Robustness to density estimation method</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>333</span>)
-<span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>()
-<span class='co'>for</span> (<span class='kw'>iteration</span> <span class='co'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>250</span>) {
-  <span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>)
-  <span class='kw'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-    <span class='st'>"Kernel"</span> = <span class='fu'>p_map</span>(<span class='kw'>x</span>, method = <span class='st'>"kernel"</span>),
-    <span class='st'>"KernSmooth"</span> = <span class='fu'>p_map</span>(<span class='kw'>x</span>, method = <span class='st'>"KernSmooth"</span>),
-    <span class='st'>"logspline"</span> = <span class='fu'>p_map</span>(<span class='kw'>x</span>, method = <span class='st'>"logspline"</span>)
-  )
-  <span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(<span class='kw'>data</span>, <span class='kw'>result</span>)
-}
-<span class='kw'>data</span><span class='op'>$</span><span class='kw'>KernSmooth</span> <span class='op'>&lt;-</span> <span class='kw'>data</span><span class='op'>$</span><span class='kw'>Kernel</span> <span class='op'>-</span> <span class='kw'>data</span><span class='op'>$</span><span class='kw'>KernSmooth</span>
-<span class='kw'>data</span><span class='op'>$</span><span class='kw'>logspline</span> <span class='op'>&lt;-</span> <span class='kw'>data</span><span class='op'>$</span><span class='kw'>Kernel</span> <span class='op'>-</span> <span class='kw'>data</span><span class='op'>$</span><span class='kw'>logspline</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>333</span><span class='op'>)</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>iteration</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>250</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
+  <span class='va'>result</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+    <span class='st'>"Kernel"</span> <span class='op'>=</span> <span class='fu'>p_map</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span><span class='op'>)</span>,
+    <span class='st'>"KernSmooth"</span> <span class='op'>=</span> <span class='fu'>p_map</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"KernSmooth"</span><span class='op'>)</span>,
+    <span class='st'>"logspline"</span> <span class='op'>=</span> <span class='fu'>p_map</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"logspline"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+  <span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>result</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='va'>data</span><span class='op'>$</span><span class='va'>KernSmooth</span> <span class='op'>&lt;-</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>Kernel</span> <span class='op'>-</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>KernSmooth</span>
+<span class='va'>data</span><span class='op'>$</span><span class='va'>logspline</span> <span class='op'>&lt;-</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>Kernel</span> <span class='op'>-</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>logspline</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>data</span><span class='op'>$</span><span class='kw'>KernSmooth</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>KernSmooth</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#&gt; -0.039649 -0.007867 -0.003854 -0.005315 -0.001114  0.056255 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>data</span><span class='op'>$</span><span class='kw'>logspline</span>)
+#&gt; -0.039649 -0.007867 -0.003854 -0.005315 -0.001114  0.056255 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>logspline</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-#&gt; -0.097381 -0.008781  0.023988  0.030041  0.068922  0.300639 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span>(<span class='kw'>data</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"KernSmooth"</span>, <span class='st'>"logspline"</span>)])
+#&gt; -0.097381 -0.008781  0.023988  0.030041  0.068922  0.300639 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"KernSmooth"</span>, <span class='st'>"logspline"</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='img'><img src='p_map-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>

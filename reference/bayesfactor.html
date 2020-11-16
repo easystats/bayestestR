@@ -204,18 +204,18 @@ and if a model comparison is passed, it will compute the <code><a href='bayesfac
 For a complete overview of these functions, read the <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>Bayes factor vignette</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bayesfactor</span>(
-  <span class='kw'>...</span>,
-  prior = <span class='kw'>NULL</span>,
-  direction = <span class='st'>"two-sided"</span>,
-  null = <span class='fl'>0</span>,
-  hypothesis = <span class='kw'>NULL</span>,
-  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  verbose = <span class='fl'>TRUE</span>,
-  denominator = <span class='fl'>1</span>,
-  match_models = <span class='fl'>FALSE</span>,
-  prior_odds = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>bayesfactor</span><span class='op'>(</span>
+  <span class='va'>...</span>,
+  prior <span class='op'>=</span> <span class='cn'>NULL</span>,
+  direction <span class='op'>=</span> <span class='st'>"two-sided"</span>,
+  null <span class='op'>=</span> <span class='fl'>0</span>,
+  hypothesis <span class='op'>=</span> <span class='cn'>NULL</span>,
+  effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  denominator <span class='op'>=</span> <span class='fl'>1</span>,
+  match_models <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  prior_odds <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -274,13 +274,13 @@ or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.<
     <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/bayestestR'>bayestestR</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>
 
 <span class='co'># Vectors</span>
-<span class='kw'>prior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, mean = <span class='fl'>0</span>, sd = <span class='fl'>1</span>)
-<span class='kw'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>, mean = <span class='fl'>.5</span>, sd = <span class='fl'>.3</span>)
+<span class='va'>prior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span><span class='op'>(</span><span class='fl'>1000</span>, mean <span class='op'>=</span> <span class='fl'>0</span>, sd <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span><span class='op'>(</span><span class='fl'>1000</span>, mean <span class='op'>=</span> <span class='fl'>.5</span>, sd <span class='op'>=</span> <span class='fl'>.3</span><span class='op'>)</span>
 
-<span class='fu'>bayesfactor</span>(<span class='kw'>posterior</span>, prior = <span class='kw'>prior</span>)
+<span class='fu'>bayesfactor</span><span class='op'>(</span><span class='va'>posterior</span>, prior <span class='op'>=</span> <span class='va'>prior</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required namespace: logspline</span></div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factor (Savage-Dickey density ratio)
 #&gt; 
 #&gt; </span><span>BF   
@@ -288,23 +288,23 @@ or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.<
 #&gt; 1.233
 #&gt; 
 #&gt; * Evidence Against The Null: </span><span style='color: #00BBBB;'>[0]
-#&gt; </span><span></div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; </span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://mc-stan.org/rstanarm'>"rstanarm"</a></span>)) {
-  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_lmer</a></span>(<span class='kw'>extra</span> <span class='op'>~</span> <span class='kw'>group</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>ID</span>), data = <span class='kw'>sleep</span>)
-  <span class='fu'>bayesfactor</span>(<span class='kw'>model</span>)
-}
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_lmer</a></span><span class='op'>(</span><span class='va'>extra</span> <span class='op'>~</span> <span class='va'>group</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>ID</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>sleep</span><span class='op'>)</span>
+  <span class='fu'>bayesfactor</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='op'>}</span>
 
 <span class='co'># Frequentist models</span>
 <span class='co'># ---------------</span>
-<span class='kw'>m0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>extra</span> <span class='op'>~</span> <span class='fl'>1</span>, data = <span class='kw'>sleep</span>)
-<span class='kw'>m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>extra</span> <span class='op'>~</span> <span class='kw'>group</span>, data = <span class='kw'>sleep</span>)
-<span class='kw'>m2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>extra</span> <span class='op'>~</span> <span class='kw'>group</span> <span class='op'>+</span> <span class='kw'>ID</span>, data = <span class='kw'>sleep</span>)
+<span class='va'>m0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>extra</span> <span class='op'>~</span> <span class='fl'>1</span>, data <span class='op'>=</span> <span class='va'>sleep</span><span class='op'>)</span>
+<span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>extra</span> <span class='op'>~</span> <span class='va'>group</span>, data <span class='op'>=</span> <span class='va'>sleep</span><span class='op'>)</span>
+<span class='va'>m2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>extra</span> <span class='op'>~</span> <span class='va'>group</span> <span class='op'>+</span> <span class='va'>ID</span>, data <span class='op'>=</span> <span class='va'>sleep</span><span class='op'>)</span>
 
-<span class='kw'>comparison</span> <span class='op'>&lt;-</span> <span class='fu'>bayesfactor</span>(<span class='kw'>m0</span>, <span class='kw'>m1</span>, <span class='kw'>m2</span>)
-<span class='kw'>comparison</span>
+<span class='va'>comparison</span> <span class='op'>&lt;-</span> <span class='fu'>bayesfactor</span><span class='op'>(</span><span class='va'>m0</span>, <span class='va'>m1</span>, <span class='va'>m2</span><span class='op'>)</span>
+<span class='va'>comparison</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
 #&gt; </span><span>  Model                 BF
@@ -313,7 +313,7 @@ or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.<
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'>
-<span class='fu'>bayesfactor</span>(<span class='kw'>comparison</span>)
+<span class='fu'>bayesfactor</span><span class='op'>(</span><span class='va'>comparison</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)
 #&gt; 
 #&gt; </span><span>      Pr(prior) Pr(posterior) Inclusion BF

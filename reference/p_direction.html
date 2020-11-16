@@ -218,43 +218,43 @@ posteriors (see <code><a href='weighted_posteriors.html'>weighted_posteriors</a>
 reflecting high credibility of <code>0</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>p_direction</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>pd</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+<span class='fu'>pd</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>p_direction</span>(<span class='kw'>x</span>, method = <span class='st'>"direct"</span>, <span class='kw'>...</span>)
+<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>p_direction</span>(<span class='kw'>x</span>, method = <span class='st'>"direct"</span>, <span class='kw'>...</span>)
+<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for MCMCglmm</span>
-<span class='fu'>p_direction</span>(<span class='kw'>x</span>, method = <span class='st'>"direct"</span>, <span class='kw'>...</span>)
+<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'>p_direction</span>(<span class='kw'>x</span>, method = <span class='st'>"direct"</span>, <span class='kw'>...</span>)
+<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>p_direction</span>(
-  <span class='kw'>x</span>,
-  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  parameters = <span class='kw'>NULL</span>,
-  method = <span class='st'>"direct"</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'>p_direction</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  method <span class='op'>=</span> <span class='st'>"direct"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>p_direction</span>(
-  <span class='kw'>x</span>,
-  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
-  parameters = <span class='kw'>NULL</span>,
-  method = <span class='st'>"direct"</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'>p_direction</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  method <span class='op'>=</span> <span class='st'>"direct"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>p_direction</span>(<span class='kw'>x</span>, method = <span class='st'>"direct"</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -331,18 +331,18 @@ reflecting high credibility of <code>0</code>. To detect such cases, the
     <div class='dont-index'><p><code><a href='pd_to_p.html'>pd_to_p</a></code> to convert between Probability of Direction (pd) and p-value.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/bayestestR'>bayestestR</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>
 
 <span class='co'># Simulate a posterior distribution of mean 1 and SD 1</span>
 <span class='co'># ----------------------------------------------------</span>
-<span class='kw'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, mean = <span class='fl'>1</span>, sd = <span class='fl'>1</span>)
-<span class='fu'>p_direction</span>(<span class='kw'>posterior</span>)
-</div><div class='output co'>#&gt; pd = 83.60%</div><div class='input'><span class='fu'>p_direction</span>(<span class='kw'>posterior</span>, method = <span class='st'>"kernel"</span>)
+<span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, mean <span class='op'>=</span> <span class='fl'>1</span>, sd <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; pd = 83.60%</div><div class='input'><span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>posterior</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; pd = 82.63%</div><div class='input'>
 <span class='co'># Simulate a dataframe of posterior distributions</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
-<span class='fu'>p_direction</span>(<span class='kw'>df</span>)
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #0000BB;'># Probability of Direction (pd)
 #&gt; 
 #&gt; </span><span>Parameter |     pd
@@ -351,7 +351,7 @@ reflecting high credibility of <code>0</code>. To detect such cases, the
 #&gt; X2        | 51.00%
 #&gt; X3        | 59.00%
 #&gt; X4        | 50.00%
-#&gt; </div><div class='input'><span class='fu'>p_direction</span>(<span class='kw'>df</span>, method = <span class='st'>"kernel"</span>)
+#&gt; </div><div class='input'><span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>df</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
 #&gt; 
 #&gt; </span><span>Parameter |     pd
@@ -360,40 +360,40 @@ reflecting high credibility of <code>0</code>. To detect such cases, the
 #&gt; X2        | 50.05%
 #&gt; X3        | 56.44%
 #&gt; X4        | 51.21%
-#&gt; </div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://mc-stan.org/rstanarm'>"rstanarm"</a></span>)) {
-  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>rstanarm</span>::<span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>,
-    data = <span class='kw'>mtcars</span>,
-    chains = <span class='fl'>2</span>, refresh = <span class='fl'>0</span>
-  )
-  <span class='fu'>p_direction</span>(<span class='kw'>model</span>)
-  <span class='fu'>p_direction</span>(<span class='kw'>model</span>, method = <span class='st'>"kernel"</span>)
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>rstanarm</span><span class='fu'>::</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>,
+    data <span class='op'>=</span> <span class='va'>mtcars</span>,
+    chains <span class='op'>=</span> <span class='fl'>2</span>, refresh <span class='op'>=</span> <span class='fl'>0</span>
+  <span class='op'>)</span>
+  <span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+  <span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'># emmeans</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/rvlenth/emmeans'>"emmeans"</a></span>)) {
-  <span class='fu'>p_direction</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='kw'>model</span>, <span class='op'>~</span><span class='fl'>1</span>, <span class='st'>"wt"</span>))
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/rvlenth/emmeans'>"emmeans"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'>p_direction</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='op'>~</span><span class='fl'>1</span>, <span class='st'>"wt"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'># brms models</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/paul-buerkner/brms'>"brms"</a></span>)) {
-  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>brms</span>::<span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>, data = <span class='kw'>mtcars</span>)
-  <span class='fu'>p_direction</span>(<span class='kw'>model</span>)
-  <span class='fu'>p_direction</span>(<span class='kw'>model</span>, method = <span class='st'>"kernel"</span>)
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/paul-buerkner/brms'>"brms"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>brms</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
+  <span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+  <span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'># BayesFactor objects</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://richarddmorey.github.io/BayesFactor'>"BayesFactor"</a></span>)) {
-  <span class='kw'>bf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
-  <span class='fu'>p_direction</span>(<span class='kw'>bf</span>)
-  <span class='fu'>p_direction</span>(<span class='kw'>bf</span>, method = <span class='st'>"kernel"</span>)
-}
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://richarddmorey.github.io/BayesFactor/'>"BayesFactor"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>bf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>bf</span><span class='op'>)</span>
+  <span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>bf</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='op'>}</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

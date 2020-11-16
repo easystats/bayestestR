@@ -192,34 +192,34 @@
     <p>Compute the probability of <strong>Practical Significance</strong> (<strong><em>ps</em></strong>), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>p_significance</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>p_significance</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>p_significance</span>(<span class='kw'>x</span>, threshold = <span class='st'>"default"</span>, <span class='kw'>...</span>)
+<span class='fu'>p_significance</span><span class='op'>(</span><span class='va'>x</span>, threshold <span class='op'>=</span> <span class='st'>"default"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'>p_significance</span>(<span class='kw'>x</span>, threshold = <span class='st'>"default"</span>, <span class='kw'>...</span>)
+<span class='fu'>p_significance</span><span class='op'>(</span><span class='va'>x</span>, threshold <span class='op'>=</span> <span class='st'>"default"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>p_significance</span>(
-  <span class='kw'>x</span>,
-  threshold = <span class='st'>"default"</span>,
-  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  parameters = <span class='kw'>NULL</span>,
-  verbose = <span class='fl'>TRUE</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'>p_significance</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  threshold <span class='op'>=</span> <span class='st'>"default"</span>,
+  effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>p_significance</span>(
-  <span class='kw'>x</span>,
-  threshold = <span class='st'>"default"</span>,
-  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
-  parameters = <span class='kw'>NULL</span>,
-  verbose = <span class='fl'>TRUE</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'>p_significance</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  threshold <span class='op'>=</span> <span class='st'>"default"</span>,
+  effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -280,17 +280,17 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/bayestestR'>bayestestR</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>
 
 <span class='co'># Simulate a posterior distribution of mean 1 and SD 1</span>
 <span class='co'># ----------------------------------------------------</span>
-<span class='kw'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, mean = <span class='fl'>1</span>, sd = <span class='fl'>1</span>)
-<span class='fu'>p_significance</span>(<span class='kw'>posterior</span>)
+<span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, mean <span class='op'>=</span> <span class='fl'>1</span>, sd <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='fu'>p_significance</span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ps [0.10] = 80.10%</div><div class='input'>
 <span class='co'># Simulate a dataframe of posterior distributions</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
-<span class='fu'>p_significance</span>(<span class='kw'>df</span>)
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>p_significance</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #0000BB;'># Probability of Significance (ps [0.10])
 #&gt; 
 #&gt; </span><span>Parameter |     ps
@@ -299,17 +299,17 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; X2        | 55.00%
 #&gt; X3        | 47.00%
 #&gt; X4        | 47.00%
-#&gt; </div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://mc-stan.org/rstanarm'>"rstanarm"</a></span>)) {
-  <span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>rstanarm</span>::<span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>,
-    data = <span class='kw'>mtcars</span>,
-    chains = <span class='fl'>2</span>, refresh = <span class='fl'>0</span>
-  )
-  <span class='fu'>p_significance</span>(<span class='kw'>model</span>)
-}
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>rstanarm</span><span class='fu'>::</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>,
+    data <span class='op'>=</span> <span class='va'>mtcars</span>,
+    chains <span class='op'>=</span> <span class='fl'>2</span>, refresh <span class='op'>=</span> <span class='fl'>0</span>
+  <span class='op'>)</span>
+  <span class='fu'>p_significance</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='op'>}</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

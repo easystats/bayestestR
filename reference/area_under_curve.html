@@ -192,9 +192,9 @@
     <p>Based on the DescTools <code>AUC</code> function. It can calculate the area under the curve with a naive algorithm or a more elaborated spline approach. The curve must be given by vectors of xy-coordinates. This function can handle unsorted x values (by sorting x) and ties for the x values (by ignoring duplicates).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>area_under_curve</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"trapezoid"</span>, <span class='st'>"step"</span>, <span class='st'>"spline"</span>), <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>area_under_curve</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"trapezoid"</span>, <span class='st'>"step"</span>, <span class='st'>"spline"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>auc</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, method = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"trapezoid"</span>, <span class='st'>"step"</span>, <span class='st'>"spline"</span>), <span class='kw'>...</span>)</pre>
+<span class='fu'>auc</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"trapezoid"</span>, <span class='st'>"step"</span>, <span class='st'>"spline"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -222,17 +222,17 @@
     <div class='dont-index'><p>DescTools</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/bayestestR'>bayestestR</a></span>)
-<span class='kw'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span>(<span class='fl'>1000</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>
+<span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='distribution.html'>distribution_normal</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>
 
-<span class='kw'>dens</span> <span class='op'>&lt;-</span> <span class='fu'><a href='estimate_density.html'>estimate_density</a></span>(<span class='kw'>posterior</span>)
-<span class='kw'>dens</span> <span class='op'>&lt;-</span> <span class='kw'>dens</span>[<span class='kw'>dens</span><span class='op'>$</span><span class='kw'>x</span> <span class='op'>&gt;</span> <span class='fl'>0</span>, ]
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='kw'>dens</span><span class='op'>$</span><span class='kw'>x</span>
-<span class='kw'>y</span> <span class='op'>&lt;-</span> <span class='kw'>dens</span><span class='op'>$</span><span class='kw'>y</span>
+<span class='va'>dens</span> <span class='op'>&lt;-</span> <span class='fu'><a href='estimate_density.html'>estimate_density</a></span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span>
+<span class='va'>dens</span> <span class='op'>&lt;-</span> <span class='va'>dens</span><span class='op'>[</span><span class='va'>dens</span><span class='op'>$</span><span class='va'>x</span> <span class='op'>&gt;</span> <span class='fl'>0</span>, <span class='op'>]</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>dens</span><span class='op'>$</span><span class='va'>x</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>dens</span><span class='op'>$</span><span class='va'>y</span>
 
-<span class='fu'>area_under_curve</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, method = <span class='st'>"trapezoid"</span>)
-</div><div class='output co'>#&gt; [1] 0.4980976</div><div class='input'><span class='fu'>area_under_curve</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, method = <span class='st'>"step"</span>)
-</div><div class='output co'>#&gt; [1] 0.4992463</div><div class='input'><span class='fu'>area_under_curve</span>(<span class='kw'>x</span>, <span class='kw'>y</span>, method = <span class='st'>"spline"</span>)
+<span class='fu'>area_under_curve</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, method <span class='op'>=</span> <span class='st'>"trapezoid"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.4980976</div><div class='input'><span class='fu'>area_under_curve</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, method <span class='op'>=</span> <span class='st'>"step"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.4992463</div><div class='input'><span class='fu'>area_under_curve</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, method <span class='op'>=</span> <span class='st'>"spline"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.4980982</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -196,9 +196,9 @@ The bf_* function is an alias of the main function." />
 The <code>bf_*</code> function is an alias of the main function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bayesfactor_models</span>(<span class='kw'>...</span>, denominator = <span class='fl'>1</span>, verbose = <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>...</span>, denominator <span class='op'>=</span> <span class='fl'>1</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'>bf_models</span>(<span class='kw'>...</span>, denominator = <span class='fl'>1</span>, verbose = <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>bf_models</span><span class='op'>(</span><span class='va'>...</span>, denominator <span class='op'>=</span> <span class='fl'>1</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -273,11 +273,11 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># With lm objects:</span>
 <span class='co'># ----------------</span>
-<span class='kw'>lm1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='fl'>1</span>, data = <span class='kw'>iris</span>)
-<span class='kw'>lm2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span>, data = <span class='kw'>iris</span>)
-<span class='kw'>lm3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>+</span> <span class='kw'>Petal.Length</span>, data = <span class='kw'>iris</span>)
-<span class='kw'>lm4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Petal.Length</span>, data = <span class='kw'>iris</span>)
-<span class='fu'>bayesfactor_models</span>(<span class='kw'>lm1</span>, <span class='kw'>lm2</span>, <span class='kw'>lm3</span>, <span class='kw'>lm4</span>, denominator = <span class='fl'>1</span>)
+<span class='va'>lm1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='fl'>1</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+<span class='va'>lm2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+<span class='va'>lm3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+<span class='va'>lm4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+<span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
 #&gt; </span><span>  Model                             BF
@@ -286,7 +286,7 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 #&gt;   [4] Species * Petal.Length 2.203e+54
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
-#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='kw'>lm2</span>, <span class='kw'>lm3</span>, <span class='kw'>lm4</span>, denominator = <span class='kw'>lm1</span>) <span class='co'># same result</span>
+#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='va'>lm1</span><span class='op'>)</span> <span class='co'># same result</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
 #&gt; </span><span>  Model                             BF
@@ -295,7 +295,7 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 #&gt;   [3] Species * Petal.Length 2.203e+54
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[4] (Intercept only)</span><span>
-#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span>(<span class='kw'>lm1</span>, <span class='kw'>lm2</span>, <span class='kw'>lm3</span>, <span class='kw'>lm4</span>, denominator = <span class='kw'>lm1</span>) <span class='co'># same result</span>
+#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='va'>lm1</span><span class='op'>)</span> <span class='co'># same result</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
 #&gt; 
 #&gt; </span><span>  Model                             BF
@@ -304,71 +304,71 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 #&gt;   [4] Species * Petal.Length 2.203e+54
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
-#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># With lmerMod objects:</span>
 <span class='co'># ---------------------</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/lme4/lme4'>"lme4"</a></span>)) {
-  <span class='kw'>lmer1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Petal.Length</span> <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>Species</span>), data = <span class='kw'>iris</span>)
-  <span class='kw'>lmer2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Petal.Length</span> <span class='op'>+</span> (<span class='kw'>Petal.Length</span> <span class='op'>|</span> <span class='kw'>Species</span>), data = <span class='kw'>iris</span>)
-  <span class='kw'>lmer3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span>(
-    <span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Petal.Length</span> <span class='op'>+</span> (<span class='kw'>Petal.Length</span> <span class='op'>|</span> <span class='kw'>Species</span>) <span class='op'>+</span> (<span class='fl'>1</span> <span class='op'>|</span> <span class='kw'>Petal.Width</span>),
-    data = <span class='kw'>iris</span>
-  )
-  <span class='fu'>bayesfactor_models</span>(<span class='kw'>lmer1</span>, <span class='kw'>lmer2</span>, <span class='kw'>lmer3</span>, denominator = <span class='fl'>1</span>)
-  <span class='fu'>bayesfactor_models</span>(<span class='kw'>lmer1</span>, <span class='kw'>lmer2</span>, <span class='kw'>lmer3</span>, denominator = <span class='kw'>lmer1</span>)
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lme4/lme4/'>"lme4"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>lmer1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Petal.Length</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>Species</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+  <span class='va'>lmer2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Petal.Length</span> <span class='op'>+</span> <span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>|</span> <span class='va'>Species</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+  <span class='va'>lmer3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/lme4/man/lmer.html'>lmer</a></span><span class='op'>(</span>
+    <span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Petal.Length</span> <span class='op'>+</span> <span class='op'>(</span><span class='va'>Petal.Length</span> <span class='op'>|</span> <span class='va'>Species</span><span class='op'>)</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>Petal.Width</span><span class='op'>)</span>,
+    data <span class='op'>=</span> <span class='va'>iris</span>
+  <span class='op'>)</span>
+  <span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lmer1</span>, <span class='va'>lmer2</span>, <span class='va'>lmer3</span>, denominator <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+  <span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lmer1</span>, <span class='va'>lmer2</span>, <span class='va'>lmer3</span>, denominator <span class='op'>=</span> <span class='va'>lmer1</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------------</span>
 <span class='co'># (note that a unique diagnostic_file MUST be specified in order to work)</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://mc-stan.org/rstanarm'>"rstanarm"</a></span>)) {
-  <span class='kw'>stan_m0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='fl'>1</span>,
-    data = <span class='kw'>iris</span>,
-    family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
-    diagnostic_file = <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df0.csv"</span>)
-  )
-  <span class='kw'>stan_m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span>,
-    data = <span class='kw'>iris</span>,
-    family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
-    diagnostic_file = <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df1.csv"</span>)
-  )
-  <span class='kw'>stan_m2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>+</span> <span class='kw'>Petal.Length</span>,
-    data = <span class='kw'>iris</span>,
-    family = <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span>(),
-    diagnostic_file = <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"df2.csv"</span>)
-  )
-  <span class='fu'>bayesfactor_models</span>(<span class='kw'>stan_m1</span>, <span class='kw'>stan_m2</span>, denominator = <span class='kw'>stan_m0</span>)
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>stan_m0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='fl'>1</span>,
+    data <span class='op'>=</span> <span class='va'>iris</span>,
+    family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span><span class='op'>(</span><span class='op'>)</span>,
+    diagnostic_file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"df0.csv"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+  <span class='va'>stan_m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span>,
+    data <span class='op'>=</span> <span class='va'>iris</span>,
+    family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span><span class='op'>(</span><span class='op'>)</span>,
+    diagnostic_file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"df1.csv"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+  <span class='va'>stan_m2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>,
+    data <span class='op'>=</span> <span class='va'>iris</span>,
+    family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span><span class='op'>(</span><span class='op'>)</span>,
+    diagnostic_file <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"df2.csv"</span><span class='op'>)</span>
+  <span class='op'>)</span>
+  <span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>stan_m1</span>, <span class='va'>stan_m2</span>, denominator <span class='op'>=</span> <span class='va'>stan_m0</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 
 <span class='co'># brms models</span>
 <span class='co'># --------------------</span>
 <span class='co'># (note the save_pars MUST be set to save_pars(all = TRUE) in order to work)</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://github.com/paul-buerkner/brms'>"brms"</a></span>)) {
-  <span class='kw'>brm1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='fl'>1</span>, data = <span class='kw'>iris</span>, save_all_pars = <span class='fl'>TRUE</span>)
-  <span class='kw'>brm2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span>, data = <span class='kw'>iris</span>, save_all_pars = <span class='fl'>TRUE</span>)
-  <span class='kw'>brm3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(
-    <span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>+</span> <span class='kw'>Petal.Length</span>,
-    data = <span class='kw'>iris</span>,
-    save_pars = <span class='fu'><a href='https://rdrr.io/pkg/brms/man/save_pars.html'>save_pars</a></span>(all = <span class='fl'>TRUE</span>)
-  )
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/paul-buerkner/brms'>"brms"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>brm1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='fl'>1</span>, data <span class='op'>=</span> <span class='va'>iris</span>, save_all_pars <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+  <span class='va'>brm2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span>, save_all_pars <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+  <span class='va'>brm3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span>
+    <span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>,
+    data <span class='op'>=</span> <span class='va'>iris</span>,
+    save_pars <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/save_pars.html'>save_pars</a></span><span class='op'>(</span>all <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+  <span class='op'>)</span>
 
-  <span class='fu'>bayesfactor_models</span>(<span class='kw'>brm1</span>, <span class='kw'>brm2</span>, <span class='kw'>brm3</span>, denominator = <span class='fl'>1</span>)
-}
+  <span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>brm1</span>, <span class='va'>brm2</span>, <span class='va'>brm3</span>, denominator <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 
 <span class='co'># BayesFactor</span>
 <span class='co'># ---------------------------</span>
-<span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'><a href='https://richarddmorey.github.io/BayesFactor'>"BayesFactor"</a></span>)) {
-  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>puzzles</span>)
-  <span class='kw'>BF</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/anovaBF.html'>anovaBF</a></span>(<span class='kw'>RT</span> <span class='op'>~</span> <span class='kw'>shape</span> <span class='op'>*</span> <span class='kw'>color</span> <span class='op'>+</span> <span class='kw'>ID</span>,
-    data = <span class='kw'>puzzles</span>,
-    whichRandom = <span class='st'>"ID"</span>, progress = <span class='fl'>FALSE</span>
-  )
-  <span class='kw'>BF</span>
-  <span class='fu'>bayesfactor_models</span>(<span class='kw'>BF</span>) <span class='co'># basically the same</span>
-}
-}
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://richarddmorey.github.io/BayesFactor/'>"BayesFactor"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>puzzles</span><span class='op'>)</span>
+  <span class='va'>BF</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/anovaBF.html'>anovaBF</a></span><span class='op'>(</span><span class='va'>RT</span> <span class='op'>~</span> <span class='va'>shape</span> <span class='op'>*</span> <span class='va'>color</span> <span class='op'>+</span> <span class='va'>ID</span>,
+    data <span class='op'>=</span> <span class='va'>puzzles</span>,
+    whichRandom <span class='op'>=</span> <span class='st'>"ID"</span>, progress <span class='op'>=</span> <span class='cn'>FALSE</span>
+  <span class='op'>)</span>
+  <span class='va'>BF</span>
+  <span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>BF</span><span class='op'>)</span> <span class='co'># basically the same</span>
+<span class='op'>}</span>
+<span class='op'>}</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

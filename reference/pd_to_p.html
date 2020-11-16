@@ -192,13 +192,13 @@
     <p>Enables a conversion between Probability of Direction (pd) and p-value.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pd_to_p</span>(<span class='kw'>pd</span>, direction = <span class='st'>"two-sided"</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>pd_to_p</span><span class='op'>(</span><span class='va'>pd</span>, direction <span class='op'>=</span> <span class='st'>"two-sided"</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>p_to_pd</span>(<span class='kw'>p</span>, direction = <span class='st'>"two-sided"</span>, <span class='kw'>...</span>)
+<span class='fu'>p_to_pd</span><span class='op'>(</span><span class='va'>p</span>, direction <span class='op'>=</span> <span class='st'>"two-sided"</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>convert_p_to_pd</span>(<span class='kw'>p</span>, direction = <span class='st'>"two-sided"</span>, <span class='kw'>...</span>)
+<span class='fu'>convert_p_to_pd</span><span class='op'>(</span><span class='va'>p</span>, direction <span class='op'>=</span> <span class='st'>"two-sided"</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>convert_pd_to_p</span>(<span class='kw'>pd</span>, direction = <span class='st'>"two-sided"</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'>convert_pd_to_p</span><span class='op'>(</span><span class='va'>pd</span>, direction <span class='op'>=</span> <span class='st'>"two-sided"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -223,8 +223,8 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>pd_to_p</span>(pd = <span class='fl'>0.95</span>)
-</div><div class='output co'>#&gt; [1] 0.1</div><div class='input'><span class='fu'>pd_to_p</span>(pd = <span class='fl'>0.95</span>, direction = <span class='st'>"one-sided"</span>)
+    <pre class="examples"><div class='input'><span class='fu'>pd_to_p</span><span class='op'>(</span>pd <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.1</div><div class='input'><span class='fu'>pd_to_p</span><span class='op'>(</span>pd <span class='op'>=</span> <span class='fl'>0.95</span>, direction <span class='op'>=</span> <span class='st'>"one-sided"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.05</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -164,10 +164,9 @@
 <a href="#frequentist-version" class="anchor"></a>Frequentist version</h3>
 <p>Let us start, again, with a <strong>frequentist correlation</strong> between two continuous variables, the <strong>width</strong> and the <strong>length</strong> of the sepals of some flowers. The data is available in R as the <code>iris</code> dataset (the same that was used in the <a href="https://easystats.github.io/bayestestR/articles/example1.html">previous tutorial</a>).</p>
 <p>We will compute a Pearson’s correlation test, store the results in an object called <code>result</code>, then display it:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span>(<span class="kw">iris</span><span class="op">$</span><span class="kw">Sepal.Width</span>, <span class="kw">iris</span><span class="op">$</span><span class="kw">Sepal.Length</span>)
-<span class="kw">result</span>
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span>
+<span class="va">result</span></code></pre></div>
 <pre><code>&gt; 
 &gt;   Pearson's product-moment correlation
 &gt; 
@@ -185,14 +184,12 @@
 <h3 class="hasAnchor">
 <a href="#bayesian-correlation" class="anchor"></a>Bayesian correlation</h3>
 <p>To compute a Bayesian correlation test, we will need the <a href="https://richarddmorey.github.io/BayesFactor/"><code>BayesFactor</code></a> package (you can install it by running <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("BayesFactor")</a></code>). We can then load this package, compute the correlation using the <code><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html">correlationBF()</a></code> function and store the results in a similar fashion.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://richarddmorey.github.io/BayesFactor">BayesFactor</a></span>)
-<span class="kw">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html">correlationBF</a></span>(<span class="kw">iris</span><span class="op">$</span><span class="kw">Sepal.Width</span>, <span class="kw">iris</span><span class="op">$</span><span class="kw">Sepal.Length</span>)
-</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://richarddmorey.github.io/BayesFactor/">BayesFactor</a></span><span class="op">)</span>
+<span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html">correlationBF</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span></code></pre></div>
 <p>Now, let us run our <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> function on that:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(<span class="kw">result</span>)
-</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt;   Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
 &gt; 1       rho  -0.11 89  -0.24  0.0079 92      89     -0.1       0.1
 &gt;   ROPE_Percentage   BF Prior_Distribution Prior_Location Prior_Scale
@@ -203,9 +200,8 @@
 <h3 class="hasAnchor">
 <a href="#bayes-factor-bf" class="anchor"></a>Bayes factor (BF)</h3>
 <p>We said previously that a correlation test actually compares two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect). The <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html"><strong>Bayes factor (BF)</strong></a> allows the same comparison and determines <strong>under which of two models the observed data are more probable</strong>: a model with the effect of interest, and a null model without the effect of interest. We can use <code><a href="../reference/bayesfactor.html">bayesfactor()</a></code> to specifically compute the Bayes factor comparing those models:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../reference/bayesfactor.html">bayesfactor</a></span>(<span class="kw">result</span>)
-</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor.html">bayesfactor</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
 &gt;   Model             BF
@@ -235,12 +231,11 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 </p>
 </div>
 <p>Such “pizza plots” can be directly created through the <a href="https://github.com/easystats/see"><code>see</code></a> visualisation companion package for easystats (you can install it by running <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("see")</a></code>):</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://easystats.github.io/see">see</a></span>)
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/">see</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="fu"><a href="../reference/bayesfactor.html">bayesfactor</a></span>(<span class="kw">result</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/see/man/scale_color_pizza.html">scale_fill_pizza</a></span>()
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/bayesfactor.html">bayesfactor</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://easystats.github.io/see/reference/scale_color_pizza.html">scale_fill_pizza</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="example2_files/figure-html/unnamed-chunk-8-1.png" width="1093.75"></p>
 <p>So, after seeing this pizza, how much would you be suprised by the outcome of a blinded poke?</p>
 </div>
@@ -253,32 +248,30 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <h3 class="hasAnchor">
 <a href="#versicolor-vs--virginica" class="anchor"></a>Versicolor <em>vs.</em> virginica</h3>
 <p>Bayesian <em>t</em>-tests can be performed in a very similar way to correlations. As we are particularly interested in two levels of the <code>Species</code> factor, <em>versicolor</em> and <em>virginica</em>. We will start by filtering out from <code>iris</code> the non-relevant observations corresponding to the <em>setosa</em> specie, and we will then visualise the observations and the distribution of the <code>Sepal.Width</code> variable.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="co"># Select only two relevant species</span>
-<span class="kw">data</span> <span class="op">&lt;-</span> <span class="kw">iris</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">Species</span> != <span class="st">"setosa"</span>) <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html">droplevels</a></span>()
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">!=</span> <span class="st">"setosa"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html">droplevels</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Visualise distributions and observations</span>
-<span class="kw">data</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">Species</span>, y = <span class="kw">Sepal.Width</span>, fill = <span class="kw">Species</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/see/man/geom_violindot.html">geom_violindot</a></span>(fill_dots = <span class="st">"black"</span>, size_dots = <span class="fl">1</span>) <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/see/man/scale_color_material.html">scale_fill_material</a></span>() <span class="op">+</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/see/man/theme_modern.html">theme_modern</a></span>()
-</pre></div>
+<span class="va">data</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Species</span>, y <span class="op">=</span> <span class="va">Sepal.Width</span>, fill <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://easystats.github.io/see/reference/geom_violindot.html">geom_violindot</a></span><span class="op">(</span>fill_dots <span class="op">=</span> <span class="st">"black"</span>, size_dots <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://easystats.github.io/see/reference/scale_color_material.html">scale_fill_material</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html">theme_modern</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="example2_files/figure-html/unnamed-chunk-9-1.png" width="1093.75"></p>
 <p>It <em>seems</em> (visually) that <em>virgnica</em> flowers have, on average, a slightly higer width of sepals. Let’s assess this difference statistically by using the <code>ttestBF</code> in the <code>BayesFactor</code> package.</p>
 </div>
 <div id="compute-the-bayesian-t-test" class="section level3">
 <h3 class="hasAnchor">
 <a href="#compute-the-bayesian-t-test" class="anchor"></a>Compute the Bayesian <em>t</em>-test</h3>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="kw">result</span> <span class="op">&lt;-</span> <span class="kw">BayesFactor</span>::<span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF</a></span>(formula = <span class="kw">Sepal.Width</span> <span class="op">~</span> <span class="kw">Species</span>, data = <span class="kw">data</span>)
-<span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(<span class="kw">result</span>)
-</pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span>
+<span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt;    Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
 &gt; 1 Difference   0.19 89   0.09     0.3  1      89   -0.033     0.033
 &gt;   ROPE_Percentage BF Prior_Distribution Prior_Location Prior_Scale
@@ -295,11 +288,10 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <div id="fit-the-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#fit-the-model" class="anchor"></a>Fit the model</h3>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://mc-stan.org/rstanarm">rstanarm</a></span>)
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/">rstanarm</a></span><span class="op">)</span>
 
-<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="kw">Species</span> <span class="op">~</span> <span class="kw">Sepal.Width</span>, data = <span class="kw">data</span>, family = <span class="st">"binomial"</span>)
-</pre></div>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">data</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="visualise-the-model" class="section level3">
 <h3 class="hasAnchor">
@@ -310,20 +302,18 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <h3 class="hasAnchor">
 <a href="#performance-and-parameters" class="anchor"></a>Performance and Parameters</h3>
 <p>TO DO.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://easystats.github.io/performance">performance</a></span>)
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/">performance</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/pkg/performance/man/model_performance.html">model_performance</a></span>(<span class="kw">model</span>)
-</pre></div>
+<span class="fu"><a href="https://easystats.github.io/performance/reference/model_performance.html">model_performance</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Can't calculate log-loss.</code></pre>
 <pre><code>&gt; # Indices of model performance
 &gt; 
 &gt;   ELPD | ELPD_SE |  LOOIC | LOOIC_SE |   WAIC |   R2 | RMSE | Sigma | Log_loss | Score_log | Score_spherical
 &gt; ------------------------------------------------------------------------------------------------------------
 &gt; -66.36 |    3.09 | 132.72 |     6.17 | 132.71 | 0.10 | 0.48 |     1 |          |   -105.92 |            0.01</code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(<span class="kw">model</span>, test = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span>))
-</pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; # Description of Posterior Distributions
 &gt; 
 &gt; Parameter   | Median |           89% CI |     pd |        89% ROPE | % in ROPE |     BF |  Rhat |      ESS
@@ -335,9 +325,8 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <h3 class="hasAnchor">
 <a href="#visualise-the-indices" class="anchor"></a>Visualise the indices</h3>
 <p>TO DO.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="co"># plot(rope(result))</span>
-</pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># plot(rope(result))</span></code></pre></div>
 </div>
 <div id="diagnostic-indices" class="section level3">
 <h3 class="hasAnchor">

@@ -196,9 +196,9 @@ For more info, see the Bayes factors vignette." />
 For more info, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bayesfactor_inclusion</span>(<span class='kw'>models</span>, match_models = <span class='fl'>FALSE</span>, prior_odds = <span class='kw'>NULL</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>bayesfactor_inclusion</span><span class='op'>(</span><span class='va'>models</span>, match_models <span class='op'>=</span> <span class='cn'>FALSE</span>, prior_odds <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>bf_inclusion</span>(<span class='kw'>models</span>, match_models = <span class='fl'>FALSE</span>, prior_odds = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'>bf_inclusion</span><span class='op'>(</span><span class='va'>models</span>, match_models <span class='op'>=</span> <span class='cn'>FALSE</span>, prior_odds <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -268,17 +268,17 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
     <p>Mattan S. Ben-Shachar</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/bayestestR'>bayestestR</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>
 
 <span class='co'># Using bayesfactor_models:</span>
 <span class='co'># ------------------------------</span>
-<span class='kw'>mo0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='fl'>1</span>, data = <span class='kw'>iris</span>)
-<span class='kw'>mo1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span>, data = <span class='kw'>iris</span>)
-<span class='kw'>mo2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>+</span> <span class='kw'>Petal.Length</span>, data = <span class='kw'>iris</span>)
-<span class='kw'>mo3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='kw'>Sepal.Length</span> <span class='op'>~</span> <span class='kw'>Species</span> <span class='op'>*</span> <span class='kw'>Petal.Length</span>, data = <span class='kw'>iris</span>)
+<span class='va'>mo0</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='fl'>1</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+<span class='va'>mo1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+<span class='va'>mo2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+<span class='va'>mo3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 
-<span class='kw'>BFmodels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bayesfactor_models.html'>bayesfactor_models</a></span>(<span class='kw'>mo1</span>, <span class='kw'>mo2</span>, <span class='kw'>mo3</span>, denominator = <span class='kw'>mo0</span>)
-<span class='fu'>bayesfactor_inclusion</span>(<span class='kw'>BFmodels</span>)
+<span class='va'>BFmodels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bayesfactor_models.html'>bayesfactor_models</a></span><span class='op'>(</span><span class='va'>mo1</span>, <span class='va'>mo2</span>, <span class='va'>mo3</span>, denominator <span class='op'>=</span> <span class='va'>mo0</span><span class='op'>)</span>
+<span class='fu'>bayesfactor_inclusion</span><span class='op'>(</span><span class='va'>BFmodels</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)
 #&gt; 
 #&gt; </span><span>                     Pr(prior) Pr(posterior) Inclusion BF
@@ -288,18 +288,18 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 #&gt; 
 #&gt; * Compared among: </span><span style='color: #00BBBB;'>all models
 #&gt; </span><span>*    Priors odds: </span><span style='color: #00BBBB;'>uniform-equal
-#&gt; </span><span></div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; </span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># BayesFactor</span>
 <span class='co'># -------------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://richarddmorey.github.io/BayesFactor'>BayesFactor</a></span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://richarddmorey.github.io/BayesFactor/'>BayesFactor</a></span><span class='op'>)</span>
 
-<span class='kw'>BF</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/generalTestBF.html'>generalTestBF</a></span>(<span class='kw'>len</span> <span class='op'>~</span> <span class='kw'>supp</span> <span class='op'>*</span> <span class='kw'>dose</span>, <span class='kw'>ToothGrowth</span>, progress = <span class='fl'>FALSE</span>)
+<span class='va'>BF</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/generalTestBF.html'>generalTestBF</a></span><span class='op'>(</span><span class='va'>len</span> <span class='op'>~</span> <span class='va'>supp</span> <span class='op'>*</span> <span class='va'>dose</span>, <span class='va'>ToothGrowth</span>, progress <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>bayesfactor_inclusion</span>(<span class='kw'>BF</span>)
+<span class='fu'>bayesfactor_inclusion</span><span class='op'>(</span><span class='va'>BF</span><span class='op'>)</span>
 
 <span class='co'># compare only matched models:</span>
-<span class='fu'>bayesfactor_inclusion</span>(<span class='kw'>BF</span>, match_models = <span class='fl'>TRUE</span>)
-}
+<span class='fu'>bayesfactor_inclusion</span><span class='op'>(</span><span class='va'>BF</span>, match_models <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

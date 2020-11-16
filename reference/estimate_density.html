@@ -192,27 +192,27 @@
     <p>This function is a wrapper over different methods of density estimation. By default, it uses the base R <code>density</code> with by default uses a different smoothing bandwidth (<code>"SJ"</code>) from the legacy default implemented the base R <code>density</code> function (<code>"nrd0"</code>). However, Deng \&amp; Wickham suggest that <code>method = "KernSmooth"</code> is the fastest and the most accurate.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>estimate_density</span>(
-  <span class='kw'>x</span>,
-  method = <span class='st'>"kernel"</span>,
-  precision = <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>,
-  extend = <span class='fl'>FALSE</span>,
-  extend_scale = <span class='fl'>0.1</span>,
-  bw = <span class='st'>"SJ"</span>,
-  <span class='kw'>...</span>
-)
+    <pre class="usage"><span class='fu'>estimate_density</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  method <span class='op'>=</span> <span class='st'>"kernel"</span>,
+  precision <span class='op'>=</span> <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>,
+  extend <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  extend_scale <span class='op'>=</span> <span class='fl'>0.1</span>,
+  bw <span class='op'>=</span> <span class='st'>"SJ"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>estimate_density</span>(
-  <span class='kw'>x</span>,
-  method = <span class='st'>"kernel"</span>,
-  precision = <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>,
-  extend = <span class='fl'>FALSE</span>,
-  extend_scale = <span class='fl'>0.1</span>,
-  bw = <span class='st'>"SJ"</span>,
-  group_by = <span class='kw'>NULL</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'>estimate_density</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  method <span class='op'>=</span> <span class='st'>"kernel"</span>,
+  precision <span class='op'>=</span> <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>,
+  extend <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  extend_scale <span class='op'>=</span> <span class='fl'>0.1</span>,
+  bw <span class='op'>=</span> <span class='st'>"SJ"</span>,
+  group_by <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -261,55 +261,55 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
     <p>Deng, H., &amp; Wickham, H. (2011). Density estimation in R. Electronic publication.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/bayestestR'>bayestestR</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>250</span>, <span class='fl'>1</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>250</span>, <span class='fl'>1</span><span class='op'>)</span>
 
 <span class='co'># Methods</span>
-<span class='kw'>density_kernel</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span>(<span class='kw'>x</span>, method = <span class='st'>"kernel"</span>)
-<span class='kw'>density_logspline</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span>(<span class='kw'>x</span>, method = <span class='st'>"logspline"</span>)
-<span class='kw'>density_KernSmooth</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span>(<span class='kw'>x</span>, method = <span class='st'>"KernSmooth"</span>)
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: KernSmooth</span></div><div class='input'><span class='kw'>density_mixture</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span>(<span class='kw'>x</span>, method = <span class='st'>"mixture"</span>)
+<span class='va'>density_kernel</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span><span class='op'>)</span>
+<span class='va'>density_logspline</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"logspline"</span><span class='op'>)</span>
+<span class='va'>density_KernSmooth</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"KernSmooth"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: KernSmooth</span></div><div class='input'><span class='va'>density_mixture</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"mixture"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required namespace: mclust</span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='kw'>x</span>, prob = <span class='fl'>TRUE</span>)
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>density_kernel</span><span class='op'>$</span><span class='kw'>x</span>, <span class='kw'>density_kernel</span><span class='op'>$</span><span class='kw'>y</span>, col = <span class='st'>"black"</span>, lwd = <span class='fl'>2</span>)
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>density_logspline</span><span class='op'>$</span><span class='kw'>x</span>, <span class='kw'>density_logspline</span><span class='op'>$</span><span class='kw'>y</span>, col = <span class='st'>"red"</span>, lwd = <span class='fl'>2</span>)
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>density_KernSmooth</span><span class='op'>$</span><span class='kw'>x</span>, <span class='kw'>density_KernSmooth</span><span class='op'>$</span><span class='kw'>y</span>, col = <span class='st'>"blue"</span>, lwd = <span class='fl'>2</span>)
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>density_mixture</span><span class='op'>$</span><span class='kw'>x</span>, <span class='kw'>density_mixture</span><span class='op'>$</span><span class='kw'>y</span>, col = <span class='st'>"green"</span>, lwd = <span class='fl'>2</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>x</span>, prob <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>density_kernel</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>density_kernel</span><span class='op'>$</span><span class='va'>y</span>, col <span class='op'>=</span> <span class='st'>"black"</span>, lwd <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>density_logspline</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>density_logspline</span><span class='op'>$</span><span class='va'>y</span>, col <span class='op'>=</span> <span class='st'>"red"</span>, lwd <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>density_KernSmooth</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>density_KernSmooth</span><span class='op'>$</span><span class='va'>y</span>, col <span class='op'>=</span> <span class='st'>"blue"</span>, lwd <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>density_mixture</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>density_mixture</span><span class='op'>$</span><span class='va'>y</span>, col <span class='op'>=</span> <span class='st'>"green"</span>, lwd <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='img'><img src='estimate_density-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Extension</span>
-<span class='kw'>density_extended</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span>(<span class='kw'>x</span>, extend = <span class='fl'>TRUE</span>)
-<span class='kw'>density_default</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span>(<span class='kw'>x</span>, extend = <span class='fl'>FALSE</span>)
+<span class='va'>density_extended</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>x</span>, extend <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>density_default</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>x</span>, extend <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='kw'>x</span>, prob = <span class='fl'>TRUE</span>)
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>density_extended</span><span class='op'>$</span><span class='kw'>x</span>, <span class='kw'>density_extended</span><span class='op'>$</span><span class='kw'>y</span>, col = <span class='st'>"red"</span>, lwd = <span class='fl'>3</span>)
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span>(<span class='kw'>density_default</span><span class='op'>$</span><span class='kw'>x</span>, <span class='kw'>density_default</span><span class='op'>$</span><span class='kw'>y</span>, col = <span class='st'>"black"</span>, lwd = <span class='fl'>3</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>x</span>, prob <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>density_extended</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>density_extended</span><span class='op'>$</span><span class='va'>y</span>, col <span class='op'>=</span> <span class='st'>"red"</span>, lwd <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>density_default</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>density_default</span><span class='op'>$</span><span class='va'>y</span>, col <span class='op'>=</span> <span class='st'>"black"</span>, lwd <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 </div><div class='img'><img src='estimate_density-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='kw'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(<span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>)))
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>estimate_density</span>(<span class='kw'>df</span>))
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   Parameter         x          y
 #&gt; 1        X1 -2.403096 0.03581143
 #&gt; 2        X1 -2.398158 0.03603563
 #&gt; 3        X1 -2.393219 0.03625900
 #&gt; 4        X1 -2.388280 0.03648072
 #&gt; 5        X1 -2.383342 0.03670092
-#&gt; 6        X1 -2.378403 0.03692027</div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; 6        X1 -2.378403 0.03692027</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://mc-stan.org/rstanarm'>rstanarm</a></span>)
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>gear</span>, data = <span class='kw'>mtcars</span>, chains = <span class='fl'>2</span>, iter = <span class='fl'>200</span>, refresh = <span class='fl'>0</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>estimate_density</span>(<span class='kw'>model</span>))
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>gear</span>, data <span class='op'>=</span> <span class='va'>mtcars</span>, chains <span class='op'>=</span> <span class='fl'>2</span>, iter <span class='op'>=</span> <span class='fl'>200</span>, refresh <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/rvlenth/emmeans'>emmeans</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>estimate_density</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='kw'>model</span>, <span class='op'>~</span><span class='fl'>1</span>, <span class='st'>"wt"</span>)))
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/rvlenth/emmeans'>emmeans</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>estimate_density</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='op'>~</span><span class='fl'>1</span>, <span class='st'>"wt"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># brms models</span>
 <span class='co'># -----------------------------------------------</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/paul-buerkner/brms'>brms</a></span>)
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>brms</span>::<span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>, data = <span class='kw'>mtcars</span>)
-<span class='fu'>estimate_density</span>(<span class='kw'>model</span>)
-}
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>brms</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
+<span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 </div></pre>
   </div>

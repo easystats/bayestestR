@@ -192,45 +192,45 @@
     <p>Perform a <strong>Test for Practical Equivalence</strong> for Bayesian and frequentist models.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>equivalence_test</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>equivalence_test</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>equivalence_test</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+<span class='fu'>equivalence_test</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>equivalence_test</span>(<span class='kw'>x</span>, range = <span class='st'>"default"</span>, ci = <span class='fl'>0.89</span>, verbose = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+<span class='fu'>equivalence_test</span><span class='op'>(</span><span class='va'>x</span>, range <span class='op'>=</span> <span class='st'>"default"</span>, ci <span class='op'>=</span> <span class='fl'>0.89</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>equivalence_test</span>(<span class='kw'>x</span>, range = <span class='st'>"default"</span>, ci = <span class='fl'>0.89</span>, verbose = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+<span class='fu'>equivalence_test</span><span class='op'>(</span><span class='va'>x</span>, range <span class='op'>=</span> <span class='st'>"default"</span>, ci <span class='op'>=</span> <span class='fl'>0.89</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'>equivalence_test</span>(<span class='kw'>x</span>, range = <span class='st'>"default"</span>, ci = <span class='fl'>0.89</span>, verbose = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+<span class='fu'>equivalence_test</span><span class='op'>(</span><span class='va'>x</span>, range <span class='op'>=</span> <span class='st'>"default"</span>, ci <span class='op'>=</span> <span class='fl'>0.89</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>equivalence_test</span>(<span class='kw'>x</span>, range = <span class='st'>"default"</span>, ci = <span class='fl'>0.89</span>, verbose = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+<span class='fu'>equivalence_test</span><span class='op'>(</span><span class='va'>x</span>, range <span class='op'>=</span> <span class='st'>"default"</span>, ci <span class='op'>=</span> <span class='fl'>0.89</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>equivalence_test</span>(
-  <span class='kw'>x</span>,
-  range = <span class='st'>"default"</span>,
-  ci = <span class='fl'>0.89</span>,
-  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  parameters = <span class='kw'>NULL</span>,
-  verbose = <span class='fl'>TRUE</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'>equivalence_test</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  range <span class='op'>=</span> <span class='st'>"default"</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.89</span>,
+  effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>equivalence_test</span>(
-  <span class='kw'>x</span>,
-  range = <span class='st'>"default"</span>,
-  ci = <span class='fl'>0.89</span>,
-  effects = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span>),
-  component = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span>),
-  parameters = <span class='kw'>NULL</span>,
-  verbose = <span class='fl'>TRUE</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'>equivalence_test</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  range <span class='op'>=</span> <span class='st'>"default"</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.89</span>,
+  effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -345,9 +345,9 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://easystats.github.io/bayestestR'>bayestestR</a></span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>
 
-<span class='fu'>equivalence_test</span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>0.01</span>), range = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span>))
+<span class='fu'>equivalence_test</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>0.01</span><span class='op'>)</span>, range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
 #&gt; </span><span>  ROPE: [-0.10 0.10]
@@ -356,7 +356,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; -------------------------------------
 #&gt; Accepted |    100.00 % | [-0.01 0.02]
 #&gt; 
-#&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span>), range = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span>))
+#&gt; </div><div class='input'><span class='fu'>equivalence_test</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>, range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
 #&gt; </span><span>  ROPE: [-0.10 0.10]
@@ -365,7 +365,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; --------------------------------------
 #&gt; Undecided |      8.64 % | [-1.55 1.57]
 #&gt; 
-#&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span>), range = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span>))
+#&gt; </div><div class='input'><span class='fu'>equivalence_test</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>0.01</span><span class='op'>)</span>, range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
 #&gt; </span><span>  ROPE: [-0.10 0.10]
@@ -374,7 +374,7 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; ------------------------------------
 #&gt; Rejected |      0.00 % | [0.98 1.01]
 #&gt; 
-#&gt; </div><div class='input'><span class='fu'>equivalence_test</span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>.99</span>))
+#&gt; </div><div class='input'><span class='fu'>equivalence_test</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.50</span>, <span class='fl'>.99</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
 #&gt; </span><span>  ROPE: [-0.10 0.10]
@@ -390,8 +390,8 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='co'># print more digits</span>
-<span class='kw'>test</span> <span class='op'>&lt;-</span> <span class='fu'>equivalence_test</span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>.99</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>test</span>, digits = <span class='fl'>4</span>)
+<span class='va'>test</span> <span class='op'>&lt;-</span> <span class='fu'>equivalence_test</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.50</span>, <span class='fl'>.99</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>test</span>, digits <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Test for Practical Equivalence
 #&gt; 
 #&gt; </span><span>  ROPE: [-0.1000 0.1000]
@@ -405,29 +405,29 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 #&gt; ------------------------------------------
 #&gt; Undecided |    5.1463 % | [-1.4661 3.7442]
 #&gt; 
-#&gt; </div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://mc-stan.org/rstanarm'>rstanarm</a></span>)
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>rstanarm</span>::<span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>, data = <span class='kw'>mtcars</span>)
-<span class='fu'>equivalence_test</span>(<span class='kw'>model</span>)
-<span class='fu'>equivalence_test</span>(<span class='kw'>model</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>1</span>))
+#&gt; </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>rstanarm</span><span class='fu'>::</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
+<span class='fu'>equivalence_test</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='fu'>equivalence_test</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.50</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># plot result</span>
-<span class='kw'>test</span> <span class='op'>&lt;-</span> <span class='fu'>equivalence_test</span>(<span class='kw'>model</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>test</span>)
+<span class='va'>test</span> <span class='op'>&lt;-</span> <span class='fu'>equivalence_test</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/rvlenth/emmeans'>emmeans</a></span>)
-<span class='fu'>equivalence_test</span>(<span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span>(<span class='kw'>model</span>, <span class='op'>~</span><span class='fl'>1</span>, <span class='st'>"wt"</span>))
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/rvlenth/emmeans'>emmeans</a></span><span class='op'>)</span>
+<span class='fu'>equivalence_test</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emtrends.html'>emtrends</a></span><span class='op'>(</span><span class='va'>model</span>, <span class='op'>~</span><span class='fl'>1</span>, <span class='st'>"wt"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://github.com/paul-buerkner/brms'>brms</a></span>)
-<span class='kw'>model</span> <span class='op'>&lt;-</span> <span class='kw'>brms</span>::<span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span>(<span class='kw'>mpg</span> <span class='op'>~</span> <span class='kw'>wt</span> <span class='op'>+</span> <span class='kw'>cyl</span>, data = <span class='kw'>mtcars</span>)
-<span class='fu'>equivalence_test</span>(<span class='kw'>model</span>)
-<span class='fu'>equivalence_test</span>(<span class='kw'>model</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>.99</span>))
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span>
+<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>brms</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
+<span class='fu'>equivalence_test</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='fu'>equivalence_test</span><span class='op'>(</span><span class='va'>model</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.50</span>, <span class='fl'>.99</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://richarddmorey.github.io/BayesFactor'>BayesFactor</a></span>)
-<span class='kw'>bf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span>(x = <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
-<span class='fu'>equivalence_test</span>(<span class='kw'>bf</span>)
-<span class='fu'>equivalence_test</span>(<span class='kw'>bf</span>, ci = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.50</span>, <span class='fl'>.99</span>))
-}
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://richarddmorey.github.io/BayesFactor/'>BayesFactor</a></span><span class='op'>)</span>
+<span class='va'>bf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/BayesFactor/man/ttestBF.html'>ttestBF</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>equivalence_test</span><span class='op'>(</span><span class='va'>bf</span><span class='op'>)</span>
+<span class='fu'>equivalence_test</span><span class='op'>(</span><span class='va'>bf</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.50</span>, <span class='fl'>.99</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 </div></span></pre>
   </div>

@@ -159,11 +159,10 @@
 <h2 class="hasAnchor">
 <a href="#loading-the-packages" class="anchor"></a>Loading the packages</h2>
 <p>Once you’ve <a href="https://easystats.github.io/bayestestR/articles/bayestestR.html#bayestestr-installation">installed</a> the necessary packages, we can load <code>rstanarm</code> (to fit the models), <code>bayestestR</code> (to compute useful indices) and <code>insight</code> (to access the parameters).</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://mc-stan.org/rstanarm">rstanarm</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://easystats.github.io/bayestestR">bayestestR</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://easystats.github.io/insight">insight</a></span>)
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/">rstanarm</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/">bayestestR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/insight/">insight</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="simple-linear-model-aka-a-regression" class="section level2">
 <h2 class="hasAnchor">
@@ -173,10 +172,9 @@
 <h3 class="hasAnchor">
 <a href="#fitting-the-model" class="anchor"></a>Fitting the model</h3>
 <p>Let’s start by fitting the <strong>frequentist</strong> version of the model, just to have a reference point:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">Sepal.Length</span> <span class="op">~</span> <span class="kw">Petal.Length</span>, data=<span class="kw">iris</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">model</span>)
-</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>, data<span class="op">=</span><span class="va">iris</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; 
 &gt; Call:
 &gt; lm(formula = Sepal.Length ~ Petal.Length, data = iris)
@@ -196,31 +194,28 @@
 &gt; Multiple R-squared:  0.76,    Adjusted R-squared:  0.758 
 &gt; F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <p>In this model, the linear relationship between <code>Petal.Length</code> and <code>Sepal.Length</code> is <strong>positive and significant</strong> (beta = 0.41, <em>t</em>(148) = 21.6, <em>p</em> &lt; .001). This means that for each one-unit increase in <code>Petal.Length</code> (the predictor), you can expect <code>Sepal.Length</code> (the response) to increase by <strong>0.41</strong>. This effect can be visualized by plotting the predictor values on the <code>x</code> axis and the response values as <code>y</code> using the <code>ggplot2</code> package:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)  <span class="co"># Load the package</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>  <span class="co"># Load the package</span>
 
 <span class="co"># The ggplot function takes the data as argument, and then the variables </span>
 <span class="co"># related to aesthetic features such as the x and y axes.</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x=<span class="kw">Petal.Length</span>, y=<span class="kw">Sepal.Length</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() <span class="op">+</span>  <span class="co"># This adds the points</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span>(method=<span class="st">"lm"</span>) <span class="co"># This adds a regression line</span>
-</pre></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Petal.Length</span>, y<span class="op">=</span><span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>  <span class="co"># This adds the points</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method<span class="op">=</span><span class="st">"lm"</span><span class="op">)</span> <span class="co"># This adds a regression line</span></code></pre></div>
 <p><img src="example1_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>Now let’s fit a <strong>Bayesian version</strong> of the model by using the <code>stan_glm</code> function in the <code>rstanarm</code> package:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="kw">Sepal.Length</span> <span class="op">~</span> <span class="kw">Petal.Length</span>, data=<span class="kw">iris</span>)
-</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>, data<span class="op">=</span><span class="va">iris</span><span class="op">)</span></code></pre></div>
 <p>You can see the sampling algorithm being run.</p>
 </div>
 <div id="extracting-the-posterior" class="section level3">
 <h3 class="hasAnchor">
 <a href="#extracting-the-posterior" class="anchor"></a>Extracting the posterior</h3>
 <p>Once it is done, let us extract the parameters (<em>i.e.</em>, coefficients) of the model.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw">posteriors</span> <span class="op">&lt;-</span> <span class="kw">insight</span>::<span class="fu"><a href="https://rdrr.io/pkg/insight/man/get_parameters.html">get_parameters</a></span>(<span class="kw">model</span>)
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html">get_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">posteriors</span>)  <span class="co"># Show the first 6 rows</span>
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">)</span>  <span class="co"># Show the first 6 rows</span></code></pre></div>
 <pre><code>&gt;   (Intercept) Petal.Length
 &gt; 1         4.4         0.39
 &gt; 2         4.4         0.40
@@ -233,20 +228,18 @@
 <h4 class="hasAnchor">
 <a href="#about-posterior-draws" class="anchor"></a>About posterior draws</h4>
 <p>Let’s look at the length of the posteriors.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">posteriors</span>)  <span class="co"># Size (number of rows)</span>
-</pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">)</span>  <span class="co"># Size (number of rows)</span></code></pre></div>
 <pre><code>&gt; [1] 4000</code></pre>
 <blockquote>
 <p><strong>Why is the size 4000, and not more or less?</strong></p>
 </blockquote>
 <p>First of all, these observations (the rows) are usually referred to as <strong>posterior draws</strong>. The underlying idea is that the Bayesian sampling algorithm (<em>e.g.</em>, <strong>Monte Carlo Markov Chains - MCMC</strong>) will <em>draw</em> from the hidden true posterior distribution. Thus, it is through these posterior draws that we can estimate the underlying true posterior distribution. <strong>Therefore, the more draws you have, the better your estimation of the posterior distribution</strong>. However, increased draws also means longer computation time.</p>
 <p>If we look at the documentation (<code>?sampling</code>) for the rstanarm <code>"sampling"</code> algorithm used by default in the model above, we can see several parameters that influence the number of posterior draws. By default, there are <strong>4</strong> <code>chains</code> (you can see it as distinct sampling runs), that each create <strong>2000</strong> <code>iter</code> (draws). However, only half of these iterations are kept, as half are used for <code>warm-up</code> (the convergence of the algorithm). Thus, the total is <strong><code>4 chains * (2000 iterations - 1000 warm-up) = 4000</code></strong> posterior draws. We can change that, for instance:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="kw">Sepal.Length</span> <span class="op">~</span> <span class="kw">Petal.Length</span>, data=<span class="kw">iris</span>, chains = <span class="fl">2</span>, iter = <span class="fl">1000</span>, warmup = <span class="fl">250</span>)
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>, data<span class="op">=</span><span class="va">iris</span>, chains <span class="op">=</span> <span class="fl">2</span>, iter <span class="op">=</span> <span class="fl">1000</span>, warmup <span class="op">=</span> <span class="fl">250</span><span class="op">)</span>
  
-<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">insight</span>::<span class="fu"><a href="https://rdrr.io/pkg/insight/man/get_parameters.html">get_parameters</a></span>(<span class="kw">model</span>))  <span class="co"># Size (number of rows)</span>
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html">get_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span>  <span class="co"># Size (number of rows)</span></code></pre></div>
 <pre><code>[1] 1500</code></pre>
 <p>In this case, as would be expected, we have <strong><code>2 chains * (1000 iterations - 250 warm-up) = 1500</code></strong> posterior draws. But let’s keep our first model with the default setup (as it has more draws).</p>
 </div>
@@ -254,10 +247,9 @@
 <h4 class="hasAnchor">
 <a href="#visualizing-the-posterior-distribution" class="anchor"></a>Visualizing the posterior distribution</h4>
 <p>Now that we’ve understood where these values come from, let’s look at them. We will start by visualizing the posterior distribution of our parameter of interest, the effect of <code>Petal.Length</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">posteriors</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">Petal.Length</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span>(fill = <span class="st">"orange"</span>)
-</pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">posteriors</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Petal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span></code></pre></div>
 <p><img src="example1_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 <p>This distribution represents the <a href="https://en.wikipedia.org/wiki/Probability_density_function">probability</a> (the y axis) of different effects (the x axis). The central values are more probable than the extreme values. As you can see, this distribution ranges from about <strong>0.35 to 0.50</strong>, with the bulk of it being at around <strong>0.41</strong>.</p>
 <blockquote>
@@ -282,31 +274,27 @@
 <a href="#point-estimate" class="anchor"></a>Point-estimate</h4>
 <p><strong>What single value can best represent my posterior distribution?</strong></p>
 <p>Centrality indices, such as the <em>mean</em>, the <em>median</em> or the <em>mode</em> are usually used as point-estimates - but what’s the difference between them? Let’s answer this by first inspecting the <strong>mean</strong>:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="kw">posteriors</span><span class="op">$</span><span class="kw">Petal.Length</span>)
-</pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; [1] 0.41</code></pre>
 <p>This is close to the frequentist beta. But as we know, the mean is quite sensitive to outliers or extremes values. Maybe the <strong>median</strong> could be more robust?</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span>(<span class="kw">posteriors</span><span class="op">$</span><span class="kw">Petal.Length</span>)
-</pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; [1] 0.41</code></pre>
 <p>Well, this is <strong>very close to the mean</strong> (and identical when rounding the values). Maybe we could take the <strong>mode</strong>, that is, the <em>peak</em> of the posterior distribution? In the Bayesian framework, this value is called the <strong>Maximum A Posteriori (MAP)</strong>. Let’s see:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="fu"><a href="../reference/map_estimate.html">map_estimate</a></span>(<span class="kw">posteriors</span><span class="op">$</span><span class="kw">Petal.Length</span>)
-</pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/map_estimate.html">map_estimate</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; MAP = 0.41</code></pre>
 <p><strong>They are all very close!</strong> Let’s visualize these values on the posterior distribution:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">posteriors</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x = <span class="kw">Petal.Length</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span>(fill = <span class="st">"orange"</span>) <span class="op">+</span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">posteriors</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Petal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span> <span class="op">+</span>
   <span class="co"># The mean in blue</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span>(xintercept=<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="kw">posteriors</span><span class="op">$</span><span class="kw">Petal.Length</span>), color=<span class="st">"blue"</span>, size=<span class="fl">1</span>) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span>, color<span class="op">=</span><span class="st">"blue"</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="co"># The median in red</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span>(xintercept=<span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span>(<span class="kw">posteriors</span><span class="op">$</span><span class="kw">Petal.Length</span>), color=<span class="st">"red"</span>, size=<span class="fl">1</span>) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span>, color<span class="op">=</span><span class="st">"red"</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="co"># The MAP in purple</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span>(xintercept=<span class="fu"><a href="../reference/map_estimate.html">map_estimate</a></span>(<span class="kw">posteriors</span><span class="op">$</span><span class="kw">Petal.Length</span>), color=<span class="st">"purple"</span>, size=<span class="fl">1</span>)
-</pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept<span class="op">=</span><span class="fu"><a href="../reference/map_estimate.html">map_estimate</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span>, color<span class="op">=</span><span class="st">"purple"</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="example1_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 <p>Well, all these values give very similar results. Thus, <strong>we will choose the median</strong>, as this value has a direct meaning from a probabilistic perspective: <strong>there is 50% chance that the true effect is higher and 50% chance that the effect is lower</strong> (as it divides the distribution in two equal parts).</p>
 </div>
@@ -314,15 +302,13 @@
 <h4 class="hasAnchor">
 <a href="#uncertainty" class="anchor"></a>Uncertainty</h4>
 <p>Now that the have a point-estimate, we have to <strong>describe the uncertainty</strong>. We could compute the range:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span>(<span class="kw">posteriors</span><span class="op">$</span><span class="kw">Petal.Length</span>)
-</pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; [1] 0.33 0.48</code></pre>
 <p>But does it make sense to include all these extreme values? Probably not. Thus, we will compute a <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>credible interval</strong></a>. Long story short, it’s kind of similar to a frequentist <strong>confidence interval</strong>, but easier to interpret and easier to compute — <em>and it makes more sense</em>.</p>
 <p>We will compute this <strong>credible interval</strong> based on the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis">Highest Density Interval (HDI)</a>. It will give us the range containing the 89% most probable effect values. <strong>Note that we will use 89% CIs instead of 95%</strong> CIs (as in the frequentist framework), as the 89% level gives more <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89">stable results</a> <span class="citation">(Kruschke, 2014)</span> and reminds us about the arbitrarity of such conventions <span class="citation">(McElreath, 2018)</span>.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="fu"><a href="../reference/hdi.html">hdi</a></span>(<span class="kw">posteriors</span><span class="op">$</span><span class="kw">Petal.Length</span>, ci=<span class="fl">0.89</span>)
-</pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span>, ci<span class="op">=</span><span class="fl">0.89</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; # Highest Density Interval
 &gt; 
 &gt; 89% HDI     
@@ -347,36 +333,31 @@
 <div id="data-preparation-and-model-fitting" class="section level3">
 <h3 class="hasAnchor">
 <a href="#data-preparation-and-model-fitting" class="anchor"></a>Data preparation and model fitting</h3>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
 <span class="co"># We keep only rows for which feed is meatmeal or sunflower</span>
-<span class="kw">data</span> <span class="op">&lt;-</span> <span class="kw">chickwts</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">feed</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"meatmeal"</span>, <span class="st">"sunflower"</span>))
-</pre></div>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="va">chickwts</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">feed</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"meatmeal"</span>, <span class="st">"sunflower"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Let’s run another Bayesian regression to predict the <strong>weight</strong> with the <strong>two types of feed type</strong>.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit">
-<span class="kw">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span>(<span class="kw">weight</span> <span class="op">~</span> <span class="kw">feed</span>, data=<span class="kw">data</span>)
-</pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">weight</span> <span class="op">~</span> <span class="va">feed</span>, data<span class="op">=</span><span class="va">data</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="posterior-description" class="section level3">
 <h3 class="hasAnchor">
 <a href="#posterior-description" class="anchor"></a>Posterior description</h3>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="kw">posteriors</span> <span class="op">&lt;-</span> <span class="kw">insight</span>::<span class="fu"><a href="https://rdrr.io/pkg/insight/man/get_parameters.html">get_parameters</a></span>(<span class="kw">model</span>)
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html">get_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw">posteriors</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x=<span class="kw">feedsunflower</span>)) <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span>(fill = <span class="st">"red"</span>)
-</pre></div>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">posteriors</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">feedsunflower</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></code></pre></div>
 <p><img src="example1_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
 <p>This represents the <strong>posterior distribution of the difference between <code>meatmeal</code> and <code>sunflowers</code></strong>. Seems that the difference is rather <strong>positive</strong> (the values seems concentrated on the right side of 0)… Eating sunflowers makes you more fat (<em>at least, if you’re a chicken</em>). But, <strong>by how much?</strong> Let us compute the <strong>median</strong> and the <strong>CI</strong>:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span>(<span class="kw">posteriors</span><span class="op">$</span><span class="kw">feedsunflower</span>)
-</pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">feedsunflower</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; [1] 52</code></pre>
-<div class="sourceCode" id="cb29"><pre class="downlit">
-<span class="fu"><a href="../reference/hdi.html">hdi</a></span>(<span class="kw">posteriors</span><span class="op">$</span><span class="kw">feedsunflower</span>)
-</pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">feedsunflower</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; # Highest Density Interval
 &gt; 
 &gt; 89% HDI       
@@ -399,9 +380,8 @@
 <p>– <strong><em>The easystats team speaking. How can we help?</em></strong></p>
 <p>– <strong><em>I am Prof. Sanders. An expert in chicks… I mean chickens. Just calling to let you know that based on my expert knowledge, an effect between -20 and 20 is negligible. Bye.</em></strong></p>
 <p>Well, that’s convenient. Now we know that we can define the ROPE as the <code>[-20, 20]</code> range. All effects within this range are considered as <em>null</em> (negligible). We can now compute the <strong>proportion of the 89% most probable values (the 89% CI) which are not null</strong>, <em>i.e.</em>, which are outside this range.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit">
-<span class="fu"><a href="../reference/rope.html">rope</a></span>(<span class="kw">posteriors</span><span class="op">$</span><span class="kw">feedsunflower</span>, range = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">20</span>, <span class="fl">20</span>), ci=<span class="fl">0.89</span>)
-</pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/rope.html">rope</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">feedsunflower</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span>, ci<span class="op">=</span><span class="fl">0.89</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-20.00, 20.00]:
 &gt; 
 &gt; inside ROPE
@@ -415,22 +395,19 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 </p>
 </div>
 <p><strong>Yes.</strong> One of the practice is for instance to use the <strong>tenth (<code>1/10 = 0.1</code>) of the standard deviation (SD)</strong> of the response variable, which can be considered as a “negligible” effect size <span class="citation">(Cohen, 1988)</span>.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit">
-<span class="kw">rope_value</span> <span class="op">&lt;-</span> <span class="fl">0.1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span>(<span class="kw">data</span><span class="op">$</span><span class="kw">weight</span>)
-<span class="kw">rope_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="kw">rope_value</span>, <span class="kw">rope_value</span>)
-<span class="kw">rope_range</span>
-</pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rope_value</span> <span class="op">&lt;-</span> <span class="fl">0.1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">weight</span><span class="op">)</span>
+<span class="va">rope_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">rope_value</span>, <span class="va">rope_value</span><span class="op">)</span>
+<span class="va">rope_range</span></code></pre></div>
 <pre><code>&gt; [1] -6.2  6.2</code></pre>
 <p>Let’s redefine our ROPE as the region within the <code>[-6.2, 6.2]</code> range. <strong>Note that this can be directly obtained by the <code>rope_range</code> function :)</strong></p>
-<div class="sourceCode" id="cb35"><pre class="downlit">
-<span class="kw">rope_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rope_range.html">rope_range</a></span>(<span class="kw">model</span>)
-<span class="kw">rope_value</span>
-</pre></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">rope_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rope_range.html">rope_range</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="va">rope_value</span></code></pre></div>
 <pre><code>&gt; [1] -6.2  6.2</code></pre>
 <p>Let’s recompute the <strong>percentage in ROPE</strong>:</p>
-<div class="sourceCode" id="cb37"><pre class="downlit">
-<span class="fu"><a href="../reference/rope.html">rope</a></span>(<span class="kw">posteriors</span><span class="op">$</span><span class="kw">feedsunflower</span>, range = <span class="kw">rope_range</span>, ci=<span class="fl">0.89</span>)
-</pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/rope.html">rope</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">feedsunflower</span>, range <span class="op">=</span> <span class="va">rope_range</span>, ci<span class="op">=</span><span class="fl">0.89</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-6.17, 6.17]:
 &gt; 
 &gt; inside ROPE
@@ -442,34 +419,30 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <h3 class="hasAnchor">
 <a href="#probability-of-direction-pd" class="anchor"></a>Probability of Direction (pd)</h3>
 <p>Maybe we are not interested in whether the effect is non-negligible. Maybe <strong>we just want to know if this effect is positive or negative</strong>. In this case, we can simply compute the proportion of the posterior that is positive, no matter the “size” of the effect.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit">
-<span class="kw">n_positive</span> <span class="op">&lt;-</span> <span class="kw">posteriors</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">feedsunflower</span> <span class="op">&gt;</span> <span class="fl">0</span>) <span class="op">%&gt;%</span> <span class="co"># select only positive values</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>() <span class="co"># Get length</span>
-<span class="kw">n_positive</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">posteriors</span>) <span class="op">*</span> <span class="fl">100</span>
-</pre></div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">n_positive</span> <span class="op">&lt;-</span> <span class="va">posteriors</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">feedsunflower</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># select only positive values</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Get length</span>
+<span class="va">n_positive</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span></code></pre></div>
 <pre><code>&gt; [1] 98</code></pre>
 <p>We can conclude that <strong>the effect is positive with a probability of 98%</strong>. We call this index the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>Probability of Direction (pd)</strong></a>. It can, in fact, be computed more easily with the following:</p>
-<div class="sourceCode" id="cb41"><pre class="downlit">
-<span class="fu"><a href="../reference/p_direction.html">p_direction</a></span>(<span class="kw">posteriors</span><span class="op">$</span><span class="kw">feedsunflower</span>)
-</pre></div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/p_direction.html">p_direction</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">feedsunflower</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; pd = 98.30%</code></pre>
 <p>Interestingly, it so happens that <strong>this index is usually highly correlated with the frequentist <em>p</em>-value</strong>. We could almost roughly infer the corresponding <em>p</em>-value with a simple transformation:</p>
-<div class="sourceCode" id="cb43"><pre class="downlit">
-<span class="kw">pd</span> <span class="op">&lt;-</span> <span class="fl">97.82</span>
-<span class="kw">onesided_p</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="kw">pd</span> <span class="op">/</span> <span class="fl">100</span>  
-<span class="kw">twosided_p</span> <span class="op">&lt;-</span> <span class="kw">onesided_p</span> <span class="op">*</span> <span class="fl">2</span>
-<span class="kw">twosided_p</span>
-</pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pd</span> <span class="op">&lt;-</span> <span class="fl">97.82</span>
+<span class="va">onesided_p</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">pd</span> <span class="op">/</span> <span class="fl">100</span>  
+<span class="va">twosided_p</span> <span class="op">&lt;-</span> <span class="va">onesided_p</span> <span class="op">*</span> <span class="fl">2</span>
+<span class="va">twosided_p</span></code></pre></div>
 <pre><code>&gt; [1] 0.044</code></pre>
 <p>If we ran our model in the frequentist framework, we should approximately observe an effect with a <em>p</em>-value of 0.04. <strong>Is that true?</strong></p>
 <div id="comparison-to-frequentist" class="section level4">
 <h4 class="hasAnchor">
 <a href="#comparison-to-frequentist" class="anchor"></a>Comparison to frequentist</h4>
-<div class="sourceCode" id="cb45"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">weight</span> <span class="op">~</span> <span class="kw">feed</span>, data=<span class="kw">data</span>) <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>()
-</pre></div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">weight</span> <span class="op">~</span> <span class="va">feed</span>, data<span class="op">=</span><span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; 
 &gt; Call:
 &gt; lm(formula = weight ~ feed, data = data)
@@ -501,9 +474,8 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <p><strong>Behold, <code>describe_posterior</code>!</strong></p>
 </blockquote>
 <p>This function computes all of the adored mentioned indices, and can be run directly on the model:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit">
-<span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span>(<span class="kw">model</span>, test = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"p_direction"</span>,<span class="st">"rope"</span>,<span class="st">"bayesfactor"</span>))
-</pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"p_direction"</span>,<span class="st">"rope"</span>,<span class="st">"bayesfactor"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; # Description of Posterior Distributions
 &gt; 
 &gt; Parameter     |  Median |             89% CI |      pd |        89% ROPE | % in ROPE |        BF |  Rhat |      ESS
