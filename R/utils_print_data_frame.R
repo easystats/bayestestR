@@ -60,7 +60,7 @@ print_data_frame <- function(x, digits) {
       cat("\n\n")
     }
 
-    cat(insight::format_table(out[[i]], digits = digits))
+    cat(insight::export_table(out[[i]], digits = digits))
     cat("\n")
   }
 }

@@ -1,9 +1,9 @@
-#' @importFrom insight format_table format_ci
+#' @importFrom insight export_table format_ci
 #' @export
 print.describe_posterior <- function(x, digits = 3, ...) {
   orig_x <- x
   if ("data_plot" %in% class(x)) {
-    cat(insight::format_table(as.data.frame(x), digits = digits))
+    cat(insight::export_table(as.data.frame(x), digits = digits))
   } else {
     insight::print_color("# Description of Posterior Distributions\n\n", "blue")
 

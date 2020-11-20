@@ -32,7 +32,7 @@ print.bayesfactor_models <- function(x, digits = 3, log = FALSE, ...) {
   invisible(x)
 }
 
-#' @importFrom insight print_color format_table
+#' @importFrom insight print_color export_table
 #' @export
 print.bayesfactor_models_matrix <- function(x, digits = 2, log = FALSE, ...) {
   orig_x <- x
@@ -53,7 +53,7 @@ print.bayesfactor_models_matrix <- function(x, digits = 2, log = FALSE, ...) {
   df <- cbind(Model = models, df)
   # colnames(df) <- c("Numerator / Denominator", paste0(" [", seq_along(models), "] "))
   colnames(df) <- c("Denominator", paste0(" [", seq_along(models), "] "))
-  df <- insight::format_table(df)
+  df <- insight::export_table(df)
   k <- nchar(regmatches(df,regexpr("^(.*?)\\|", df)))
   df <- sub("Denominator", "", df)
   insight::print_color("# Bayes Factors for Model Comparison\n\n", "blue")

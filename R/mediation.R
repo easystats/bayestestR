@@ -317,7 +317,7 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 
 # S3 ---------------------------------
 
-#' @importFrom insight format_table format_ci print_color format_value
+#' @importFrom insight export_table format_ci print_color format_value
 #' @export
 print.bayestestR_mediation <- function(x, digits = 3, ...) {
   insight::print_color("# Causal Mediation Analysis for Stan Model\n\n", "blue")
@@ -336,7 +336,7 @@ print.bayestestR_mediation <- function(x, digits = 3, ...) {
   x <- .remove_column(x, c("CI_low", "CI_high"))
   colnames(x)[ncol(x)] <- sprintf("%.5g%% %s", 100 * attributes(x)$ci, attributes(x)$ci_method)
 
-  cat(insight::format_table(x, digits = digits))
+  cat(insight::export_table(x, digits = digits))
   cat("\n")
 
   prop_mediated[] <- lapply(prop_mediated, function(i) insight::format_value(i, as_percent = TRUE))
