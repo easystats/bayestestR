@@ -57,7 +57,7 @@ LazyData: true
 Depends:
   R (>= 3.5)
 Imports:
-	insight (>= 0.9.6.1),
+	insight (>= 0.10.0.1),
 	methods,
 	stats,
 	utils
@@ -96,4 +96,5 @@ Suggests:
 	tweedie
 RoxygenNote: 7.1.1
 Language: en-GB
+Remotes: easystats/insight
 VignetteBuilder: knitr
