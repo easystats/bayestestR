@@ -249,6 +249,9 @@ rope.bayesQR <- function(x, range = "default", ci = .89, ci_method = "HDI", verb
 }
 
 
+#' @export
+rope.mcmc.list <- rope.bayesQR
+
 
 
 #' @keywords internal

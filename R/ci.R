@@ -187,3 +187,9 @@ ci.mcmc <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
 ci.bcplm <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
   ci(insight::get_parameters(x), ci = ci, method = method, verbose = verbose, ...)
 }
+
+
+#' @export
+ci.mcmc.list <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
+  ci(insight::get_parameters(x), ci = ci, method = method, verbose = verbose, ...)
+}

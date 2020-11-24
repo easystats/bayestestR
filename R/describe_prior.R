@@ -68,6 +68,10 @@ describe_prior.brmsfit <- .describe_prior
 #' @export
 describe_prior.bcplm <- .describe_prior
 
+#' @export
+describe_prior.mcmc.list <- function(model, ...) {
+  NULL
+}
 
 
 

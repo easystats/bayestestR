@@ -7,6 +7,7 @@
 ## General
 
 * Added startup-message to warn users that default ci-width might change in a future update.
+* Added support for *mcmc.list* objects.
 
 ## Bug fixes
 

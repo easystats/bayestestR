@@ -159,6 +159,10 @@ p_map.mcmc <- function(x, precision = 2^10, method = "kernel", parameters = NULL
 p_map.bcplm <- p_map.mcmc
 
 
+#' @export
+p_map.mcmc.list <- p_map.mcmc
+
+
 
 
 #' @export

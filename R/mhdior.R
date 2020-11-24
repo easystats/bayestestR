@@ -158,6 +158,10 @@ mhdior.BFBayesFactor <- function(x, range = "default", precision = .1, ...) {
 mhdior.bcplm <- mhdior.BFBayesFactor
 
 
+#' @export
+mhdior.mcmc.list <- mhdior.BFBayesFactor
+
+
 
 #' @importFrom insight get_parameters
 #' @keywords internal

@@ -107,6 +107,8 @@ p_rope.mcmc <- function(x, range = "default", parameters = NULL, ...) {
 #' @export
 p_rope.bcplm <- p_rope.mcmc
 
+#' @export
+p_rope.mcmc.list <- p_rope.mcmc
 
 
 

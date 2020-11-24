@@ -198,6 +198,12 @@ p_direction.bcplm <- function(x, method = "direct", ...) {
 
 
 #' @export
+p_direction.mcmc.list <- function(x, method = "direct", ...) {
+  p_direction(insight::get_parameters(x), method = method, ...)
+}
+
+
+#' @export
 p_direction.bayesQR <- function(x, method = "direct", ...) {
   p_direction(insight::get_parameters(x, method = method), ...)
 }
