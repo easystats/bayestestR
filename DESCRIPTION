@@ -57,7 +57,7 @@ LazyData: true
 Depends:
   R (>= 3.5)
 Imports:
-	insight (>= 0.10.0.1),
+	insight (>= 0.11.0),
 	methods,
 	stats,
 	utils
