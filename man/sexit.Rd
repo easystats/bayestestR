@@ -73,7 +73,7 @@ print(s, summary = TRUE)
 if (require("rstanarm")) {
   model <- rstanarm::stan_glm(mpg ~ wt * cyl,
     data = mtcars,
-    iter = 800, refresh = 0
+    iter = 400, refresh = 0
   )
   s <- sexit(model)
   s
