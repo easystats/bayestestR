@@ -52,6 +52,7 @@
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' library(bayestestR)
 #'
 #' s <- sexit(rnorm(1000, -1, 1))
@@ -70,6 +71,7 @@
 #'   s <- sexit(model)
 #'   s
 #'   print(s, summary = TRUE)
+#' }
 #' }
 #' @export
 sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...) {
