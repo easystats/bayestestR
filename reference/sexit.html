@@ -270,43 +270,17 @@ to be estimated. Default to <code>.89</code> (89%).</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>
 
 <span class='va'>s</span> <span class='op'>&lt;-</span> <span class='fu'>sexit</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>s</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Following the Sequential Effect eXistence and sIgnificance Testing (SEXIT) framework, we report the median of the posterior distribution and its 95% CI (Highest Density Interval), along the probability of direction (pd), the probability of significance and the probability of being large. The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.05| and |0.30|.
-#&gt; 
-#&gt; </span><span style='color: #BBBB00;'>The effect (Median = -0.92, 95% CI [-2.93, 1.18]) has a 82.00% probability of being negative (&lt; 0), 81.00% of being significant (&lt; -0.05), and 74.90% of being large (&lt; -0.30)</span><span>
-#&gt; 
-#&gt; Median |        95% CI | Direction | Significance (&gt; |0.05|) | Large (&gt; |0.30|)
-#&gt; -------------------------------------------------------------------------------
-#&gt;  -0.92 | [-2.93, 1.18] |      0.82 |                    0.81 |             0.75
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>s</span>, summary <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.05| and |0.30|.
-#&gt; 
-#&gt; </span><span>The effect (Median = -0.92, 95% CI [-2.93, 1.18]) has 82.00%, 81.00% and 74.90% probability of being negative (&lt; 0), significant (&lt; -0.05) and large (&lt; -0.30)</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>s</span>, summary <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
 <span class='va'>s</span> <span class='op'>&lt;-</span> <span class='fu'>sexit</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Identical densities found along different segments of the distribution, choosing rightmost.</span></div><div class='input'><span class='va'>s</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Following the Sequential Effect eXistence and sIgnificance Testing (SEXIT) framework, we report the median of the posterior distribution and its 95% CI (Highest Density Interval), along the probability of direction (pd), the probability of significance and the probability of being large. The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.05| and |0.30|.
-#&gt; 
-#&gt; </span><span style='color: #BBBB00;'>- Sepal.Length (Median = 5.80, 95% CI [4.60, 7.70]) has a 100.00% probability of being positive (&gt; 0), 100.00% of being significant (&gt; 0.05), and 100.00% of being large (&gt; 0.30)
-#&gt; - Sepal.Width (Median = 3.00, 95% CI [2.20, 3.90]) has a 100.00% probability of being positive (&gt; 0), 100.00% of being significant (&gt; 0.05), and 100.00% of being large (&gt; 0.30)
-#&gt; - Petal.Length (Median = 4.35, 95% CI [1.00, 6.10]) has a 100.00% probability of being positive (&gt; 0), 100.00% of being significant (&gt; 0.05), and 100.00% of being large (&gt; 0.30)
-#&gt; - Petal.Width (Median = 1.30, 95% CI [0.10, 2.30]) has a 100.00% probability of being positive (&gt; 0), 100.00% of being significant (&gt; 0.05), and 72.67% of being large (&gt; 0.30)</span><span>
-#&gt; 
-#&gt; Parameter    | Median |       95% CI | Direction | Significance (&gt; |0.05|) | Large (&gt; |0.30|)
-#&gt; ---------------------------------------------------------------------------------------------
-#&gt; Sepal.Length |   5.80 | [4.60, 7.70] |         1 |                       1 |             1.00
-#&gt; Sepal.Width  |   3.00 | [2.20, 3.90] |         1 |                       1 |             1.00
-#&gt; Petal.Length |   4.35 | [1.00, 6.10] |         1 |                       1 |             1.00
-#&gt; Petal.Width  |   1.30 | [0.10, 2.30] |         1 |                       1 |             0.73
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>s</span>, summary <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.05| and |0.30|.
-#&gt; 
-#&gt; </span><span>- Sepal.Length (Median = 5.80, 95% CI [4.60, 7.70]) has 100.00%, 100.00% and 100.00% probability of being positive (&gt; 0), significant (&gt; 0.05) and large (&gt; 0.30)
-#&gt; - Sepal.Width (Median = 3.00, 95% CI [2.20, 3.90]) has 100.00%, 100.00% and 100.00% probability of being positive (&gt; 0), significant (&gt; 0.05) and large (&gt; 0.30)
-#&gt; - Petal.Length (Median = 4.35, 95% CI [1.00, 6.10]) has 100.00%, 100.00% and 100.00% probability of being positive (&gt; 0), significant (&gt; 0.05) and large (&gt; 0.30)
-#&gt; - Petal.Width (Median = 1.30, 95% CI [0.10, 2.30]) has 100.00%, 100.00% and 72.67% probability of being positive (&gt; 0), significant (&gt; 0.05) and large (&gt; 0.30)</div><div class='input'>
+<span class='va'>s</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>s</span>, summary <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>rstanarm</span><span class='fu'>::</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>*</span> <span class='va'>cyl</span>,
     data <span class='op'>=</span> <span class='va'>mtcars</span>,
@@ -316,16 +290,8 @@ to be estimated. Default to <code>.89</code> (89%).</p></td>
   <span class='va'>s</span>
   <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>s</span>, summary <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#bulk-ess</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span>
-#&gt; <span class='warning'>Running the chains for more iterations may help. See</span>
-#&gt; <span class='warning'>http://mc-stan.org/misc/warnings.html#tail-ess</span></div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># The thresholds beyond which the effect is considered as significant (i.e., non-negligible) and large are |0.30| and |1.81| (corresponding respectively to 0.05 and 0.30 of the outcome's SD).
-#&gt; 
-#&gt; </span><span>- (Intercept) (Median = 53.00, 95% CI [39.91, 64.65]) has 100.00%, 100.00% and 100.00% probability of being positive (&gt; 0), significant (&gt; 0.30) and large (&gt; 1.81)
-#&gt; - wt (Median = -8.14, 95% CI [-12.84, -3.42]) has 100.00%, 100.00% and 99.75% probability of being negative (&lt; 0), significant (&lt; -0.30) and large (&lt; -1.81)
-#&gt; - cyl (Median = -3.62, 95% CI [-5.66, -1.52]) has 100.00%, 99.88% and 95.38% probability of being negative (&lt; 0), significant (&lt; -0.30) and large (&lt; -1.81)
-#&gt; - wt:cyl (Median = 0.74, 95% CI [0.10, 1.41]) has 98.00%, 89.75% and 0.12% probability of being positive (&gt; 0), significant (&gt; 0.30) and large (&gt; 1.81)</div></span></pre>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
