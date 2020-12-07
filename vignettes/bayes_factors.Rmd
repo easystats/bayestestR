@@ -69,9 +69,12 @@ $$
 Using this equation, We can compare the probability-odds of two models:
 
 $$
-\frac{P(M_1|D)}{P(M_2|D)} = \frac{P(D|M_1)}{P(D|M_2)} \times \frac{P(M_1)}{P(M_2)}
+\underbrace{\frac{P(M_1|D)}{P(M_2|D)}}_{\text{Posterior Odds}} = 
+\underbrace{\frac{P(D|M_1)}{P(D|M_2)}}_{\text{Likelihood Ratio}} 
+\times
+\underbrace{\frac{P(M_1)}{P(M_2)}}_{\text{Prior Odds}}
 $$
-Where the left-most term are the *posterior odds*, the right-most term are the *prior odds*, and the middle term is the *Bayes factor*:
+Where the *likelihood ratio* (the middle term) is the *Bayes factor*:
 
 $$
 BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
@@ -494,9 +497,9 @@ ggplot(iris, aes(Petal.Length, Sepal.Length, color = Species)) +
 Note that these Bayes factors compare the restricted model to the unrestricted model. If we wanted to compare the restricted model to the null model, we could use the transitive property of Bayes factors like so:
 
 $$
-BF_{restricted / NULL} = \frac
-{BF_{restricted / un-restricted}}
-{BF_{un-restricted / NULL}}
+BF_{\text{restricted vs. NULL}} = \frac
+{BF_{\text{restricted vs. un-restricted}}}
+{BF_{\text{un-restricted vs NULL}}}
 $$
 
 **Because these restrictions are on the prior distribution, they are only appropriate for testing pre-planned (*a priori*) hypotheses, and should not be used for any post hoc comparisons [@morey_2015_blog].**
