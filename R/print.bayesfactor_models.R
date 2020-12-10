@@ -10,25 +10,27 @@ print.bayesfactor_models <- function(x, digits = 3, log = FALSE, ...) {
     BFE$BF <- log(BFE$BF)
   }
   BFE$BF <- insight::format_value(BFE$BF, digits = digits, missing = "NA", zap_small = log)
-
-  # indicate null-model
-  BFE$Model[BFE$Model == "1"] <- "(Intercept only)"
-
+  BFE$Model[BFE$Model == "1"] <- "(Intercept only)" # indicate null-model
   BFE$Model <- paste0(" [", seq_len(nrow(BFE)), "] ", BFE$Model)
   denM <- .trim(BFE$Model[denominator])
   BFE <- BFE[-denominator, ]
-  BFE$Model <- format(BFE$Model)
-  colnames(BFE) <- c(format(" Model", width = max(nchar(BFE$Model))), "BF")
 
-  insight::print_color("# Bayes Factors for Model Comparison\n\n", "blue")
+  # footer
+  footer <- list(
+    "\n* Against Denominator: ",
+    c(denM, "cyan"),
+    "\n*   Bayes Factor Type: ",
+    c(grid.type, "cyan"),
+    if (log) c("\n\nBayes Factors are on the log-scale.", "red")
+  )
 
-  print.data.frame(BFE, digits = digits, quote = FALSE, row.names = FALSE)
-  cat("\n* Against Denominator: ")
-  insight::print_color(denM, "cyan")
-  cat("\n*   Bayes Factor Type: ")
-  insight::print_color(grid.type, "cyan")
-  cat("\n")
-  if (log) insight::print_color("\nBayes Factors are on the log-scale.\n", "red")
+  cat(insight::export_table(
+    BFE,
+    sep = " ", header = NULL, align = c("left", "right"),
+    caption = c("# Bayes Factors for Model Comparison", "blue"),
+    footer = footer)
+  )
+
   invisible(x)
 }
 
@@ -37,29 +39,32 @@ print.bayesfactor_models <- function(x, digits = 3, log = FALSE, ...) {
 print.bayesfactor_models_matrix <- function(x, digits = 2, log = FALSE, ...) {
   orig_x <- x
 
+  # Format values
+  df <- as.data.frame(x)
   if (log) {
-    x <- log(x)
+    df <- log(df)
   }
+  df[] <- insight::format_value(df[], digits = digits, zap_small = log)
+  diag(df) <- if (log) "0" else "1"
 
-  x[] <- insight::format_value(x[], digits = digits, zap_small = log)
-  diag(x) <- if (log) "0" else "1"
-
-  models <- colnames(x)
+  # Model names
+  models <- colnames(df)
   models[models == "1"] <- "(Intercept only)"
   models <- paste0("[", seq_along(models), "] ", models)
+  k <- max(sapply(c(models, "Denominator"), nchar)) + 2
 
-  df <- as.data.frame(x)
   rownames(df) <- colnames(df) <- NULL
   df <- cbind(Model = models, df)
-  # colnames(df) <- c("Numerator / Denominator", paste0(" [", seq_along(models), "] "))
-  colnames(df) <- c("Denominator", paste0(" [", seq_along(models), "] "))
-  df <- insight::export_table(df)
-  k <- nchar(regmatches(df,regexpr("^(.*?)\\|", df)))
-  df <- sub("Denominator", "", df)
-  insight::print_color("# Bayes Factors for Model Comparison\n\n", "blue")
-  insight::print_color(paste0(paste(rep(" ", k), collapse = ""), "Numerator\nDenominator"), "cyan")
-  cat(df)
-  if (log) insight::print_color("\nBayes Factors are on the log-scale.\n", "red")
+  colnames(df) <- c("placeholder", paste0(" [", seq_along(models), "] "))
+
+  out <- insight::export_table(
+    df,
+    caption = c("# Bayes Factors for Model Comparison", "blue"),
+    subtitle = c(sprintf("\n\n%sNumerator\nDenominator", paste(rep(" ", k), collapse = "")), "cyan"),
+    footer = if (log) c("\nBayes Factors are on the log-scale.\n", "red")
+  )
+  out <- sub("placeholder", "\b\b", out)
+  cat(out)
 
   invisible(orig_x)
 }

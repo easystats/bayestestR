@@ -1,21 +1,27 @@
 #' @export
 print.bayesfactor_restricted <- function(x, digits = 3, log = FALSE, ...) {
-  BFE <- x
+  BFE <- as.data.frame(x)
 
+  # Format
   if (log) {
     BFE$BF <- log(BFE$BF)
   }
-
   BFE$BF <- insight::format_value(BFE$BF, digits = digits, missing = "NA")
-
   colnames(BFE) <- c("Hypothesis", "P(Prior)", "P(Posterior)", "BF")
 
-  insight::print_color("# Bayes Factor (Order-Restriction)\n\n", "blue")
+  # footer
+  footer <- list(
+    c("\n* Bayes factors for the restricted model vs. the un-restricted model.\n"),
+    if (log) c("\nBayes Factors are on the log-scale.\n", "red")
+  )
 
-  print.data.frame(BFE, digits = digits, row.names = FALSE)
 
-  cat("\n* Bayes factors for the restricted model vs. the un-restricted model.\n")
+  cat(insight::export_table(
+    BFE, digits = digits, sep = " ", header = NULL,
+    caption = c("# Bayes Factor (Order-Restriction)", "blue"),
+    footer = footer
+  ))
 
-  if (log) insight::print_color("\nBayes Factors are on the log-scale.\n", "red")
+
   invisible(x)
 }

@@ -1,34 +1,32 @@
 #' @export
 print.bayesfactor_inclusion <- function(x, digits = 3, log = FALSE, ...) {
-  BFE <- x
-  priorOdds <- attr(BFE, "priorOdds")
+  priorOdds <- attr(x, "priorOdds")
+  matched <- attr(x, "matched")
 
+  # format table
+  BFE <- as.data.frame(x)
   if (log) {
     BFE$BF <- log(BFE$BF)
   }
-
   BFE$BF <- insight::format_value(BFE$BF, digits = digits, missing = "NA")
+  BFE <- cbind(rownames(BFE), BFE)
+  colnames(BFE) <- c("","Pr(prior)", "Pr(posterior)", "Inclusion BF")
 
-  colnames(BFE) <- c("Pr(prior)", "Pr(posterior)", "Inclusion BF")
 
-  insight::print_color("# Inclusion Bayes Factors (Model Averaged)\n\n", "blue")
-  print.data.frame(BFE, digits = digits)
+  # footer
+  footer <- list(
+    c("\n* Compared among: "),
+    c(if (matched) "matched models only" else "all models", "cyan"),
+    c("\n*    Priors odds: "),
+    c(if (!is.null(priorOdds)) "custom" else "uniform-equal", "cyan"),
+    if (log) c("\n\nBayes Factors are on the log-scale.", "red")
+  )
 
-  cat("\n")
-  cat("* Compared among: ")
-  if (attr(BFE, "matched")) {
-    insight::print_color("matched models only\n", "cyan")
-  } else {
-    insight::print_color("all models\n", "cyan")
-  }
+  cat(insight::export_table(
+    BFE, digits = digits, sep = " ", header = NULL,
+    caption = c("# Inclusion Bayes Factors (Model Averaged)", "blue"),
+    footer = footer
+  ))
 
-  cat("*    Priors odds: ")
-  if (!is.null(priorOdds)) {
-    insight::print_color("custom\n", "cyan")
-  } else {
-    insight::print_color("uniform-equal\n", "cyan")
-  }
-
-  if (log) insight::print_color("\nBayes Factors are on the log-scale.\n", "red")
   invisible(x)
 }
