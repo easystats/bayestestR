@@ -638,7 +638,7 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
   }
 
   draws <- insight::get_parameters(posteriors)
-  if (rope_range == "default") {
+  if (all(rope_range == "default")) {
     rope_range <- rope_range(posteriors)
   }
 
