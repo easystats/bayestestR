@@ -273,7 +273,7 @@ plot(test_group2_right)
 
 As we can see, given that we have an *a priori* assumption about the direction of the effect (that the effect is positive), **the presence of an effect is 2.8 times more likely than the absence of an effect**, given the observed data (or that the data are 2.8 time more probable under $H_1$ than $H_0$). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 2.8 is still considered quite [weak evidence](https://easystats.github.io/effectsize/reference/interpret_bf.html)).
 
-Thank to the flexibility of Bayesian statistics, it is also possible to compute a Bayes factor for **dividing** hypotheses - that is, for a null and alternative that are *complementary* [@morey2014simple]. For example, above we compared an alternative of $H_A$: *the drug has a positive effects* to the null $H_0$: *the drug has no effect*, as we did above. But we can also compare instead the same alternative to its *complementary* hypothesis: $H_{-A}$: *the drug has a negative effects*. 
+Thank to the flexibility of Bayesian statistics, it is also possible to compute a Bayes factor for **dividing** hypotheses - that is, for a null and alternative that are *complementary*, opposing one-sided hypotheses [@morey2014simple]. For example, above we compared an alternative of $H_A$: *the drug has a positive effects* to the null $H_0$: *the drug has no effect*, as we did above. But we can also compare instead the same alternative to its *complementary* hypothesis: $H_{-A}$: *the drug has a negative effects*. 
 
 ```{r inteval_div, eval=FALSE}
 test_group2_dividing <- bayesfactor_parameters(model, null = c(-Inf, 0))

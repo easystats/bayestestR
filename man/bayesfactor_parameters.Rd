@@ -160,10 +160,10 @@ to the alternative [>0.1], we would set
 \code{bayesfactor_parameters(null = c(0, 0.1), direction = ">")}.
 \cr\cr
 It is also possible to compute a Bayes factor for \strong{dividing}
-hypotheses - that is, for a null and alternative that are complementary
-(\cite{Morey & Wagenmakers, 2014}). For example, for a Bayes factor comparing
-the "null" of [<0] to the alternative [>0], we would set
-\code{bayesfactor_parameters(null = c(-Inf, 0))}.
+hypotheses - that is, for a null and alternative that are complementary,
+opposing one-sided hypotheses (\cite{Morey & Wagenmakers, 2014}). For
+example, for a Bayes factor comparing the "null" of [<0] to the alternative
+[>0], we would set \code{bayesfactor_parameters(null = c(-Inf, 0))}.
 }
 }
 \note{
