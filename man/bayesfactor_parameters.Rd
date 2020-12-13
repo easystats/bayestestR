@@ -4,13 +4,9 @@
 \alias{bayesfactor_parameters}
 \alias{bayesfactor_pointull}
 \alias{bayesfactor_rope}
-\alias{bf_parameters}
-\alias{bf_pointull}
-\alias{bf_rope}
 \alias{bayesfactor_parameters.numeric}
 \alias{bayesfactor_parameters.stanreg}
 \alias{bayesfactor_parameters.brmsfit}
-\alias{bayesfactor_parameters.emmGrid}
 \alias{bayesfactor_parameters.data.frame}
 \title{Bayes Factors (BF) for a Single Parameter}
 \usage{
@@ -33,33 +29,6 @@ bayesfactor_pointull(
 )
 
 bayesfactor_rope(
-  posterior,
-  prior = NULL,
-  direction = "two-sided",
-  null = rope_range(posterior),
-  verbose = TRUE,
-  ...
-)
-
-bf_parameters(
-  posterior,
-  prior = NULL,
-  direction = "two-sided",
-  null = 0,
-  verbose = TRUE,
-  ...
-)
-
-bf_pointull(
-  posterior,
-  prior = NULL,
-  direction = "two-sided",
-  null = 0,
-  verbose = TRUE,
-  ...
-)
-
-bf_rope(
   posterior,
   prior = NULL,
   direction = "two-sided",
@@ -101,15 +70,6 @@ bf_rope(
   ...
 )
 
-\method{bayesfactor_parameters}{emmGrid}(
-  posterior,
-  prior = NULL,
-  direction = "two-sided",
-  null = 0,
-  verbose = TRUE,
-  ...
-)
-
 \method{bayesfactor_parameters}{data.frame}(
   posterior,
   prior = NULL,
@@ -120,21 +80,23 @@ bf_rope(
 )
 }
 \arguments{
-\item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}
-or a data frame - representing a posterior distribution(s) from (see 'Details').}
+\item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object,
+\code{emmGrid} or a data frame - representing a posterior distribution(s)
+from (see 'Details').}
 
 \item{prior}{An object representing a prior distribution (see 'Details').}
 
-\item{direction}{Test type (see 'Details'). One of \code{0}, \code{"two-sided"} (default, two tailed),
-\code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).}
+\item{direction}{Test type (see 'Details'). One of \code{0},
+\code{"two-sided"} (default, two tailed), \code{-1}, \code{"left"} (left
+tailed) or \code{1}, \code{"right"} (right tailed).}
 
 \item{null}{Value of the null, either a scalar (for point-null) or a range
 (for a interval-null).}
 
 \item{verbose}{Toggle off warnings.}
 
-\item{...}{Arguments passed to and from other methods.
-(Can be used to pass arguments to internal \code{\link[logspline]{logspline}}.)}
+\item{...}{Arguments passed to and from other methods. (Can be used to pass
+arguments to internal \code{\link[logspline]{logspline}}.)}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
@@ -150,55 +112,79 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 }
 \value{
-A data frame containing the Bayes factor representing evidence \emph{against} the null.
+A data frame containing the Bayes factor representing evidence
+  \emph{against} the null.
 }
 \description{
-This method computes Bayes factors against the null (either a point or an interval),
-based on prior and posterior samples of a single parameter. This Bayes factor indicates
-the degree by which the mass of the posterior distribution has shifted further away
-from or closer to the null value(s) (relative to the prior distribution), thus indicating
-if the null value has become less or more likely given the observed data.
+This method computes Bayes factors against the null (either a point or an
+interval), based on prior and posterior samples of a single parameter. This
+Bayes factor indicates the degree by which the mass of the posterior
+distribution has shifted further away from or closer to the null value(s)
+(relative to the prior distribution), thus indicating if the null value has
+become less or more likely given the observed data.
 \cr \cr
-When the null is an interval, the Bayes factor is computed by comparing the prior
-and posterior odds of the parameter falling within or outside the null interval
-(Morey & Rouder, 2011; Liao et al., 2020); When the null is a point, a Savage-Dickey
-density ratio is computed, which is also an approximation of a Bayes factor comparing
-the marginal likelihoods of the model against a model in which the tested parameter
-has been restricted to the point null (Wagenmakers et al., 2010; Heck, 2019).
+When the null is an interval, the Bayes factor is computed by comparing the
+prior and posterior odds of the parameter falling within or outside the null
+interval (Morey & Rouder, 2011; Liao et al., 2020); When the null is a point,
+a Savage-Dickey density ratio is computed, which is also an approximation of
+a Bayes factor comparing the marginal likelihoods of the model against a
+model in which the tested parameter has been restricted to the point null
+(Wagenmakers et al., 2010; Heck, 2019).
 \cr \cr
-Note that the \code{logspline} package is used for estimating densities and probabilities,
-and must be installed for the function to work.
+Note that the \code{logspline} package is used for estimating densities and
+probabilities, and must be installed for the function to work.
 \cr \cr
-\code{bayesfactor_pointnull()} and \code{bayesfactor_rope()} are wrappers around
-\code{bayesfactor_parameters} with different defaults for the null to be tested against
-(a point and a range, respectively). Aliases of the main functions are prefixed
-with \code{bf_*}, like \code{bf_parameters()} or \code{bf_pointnull()}
+\code{bayesfactor_pointnull()} and \code{bayesfactor_rope()} are wrappers
+around \code{bayesfactor_parameters} with different defaults for the null to
+be tested against (a point and a range, respectively). Aliases of the main
+functions are prefixed with \code{bf_*}, like \code{bf_parameters()} or
+\code{bf_pointnull()}
 \cr \cr
-\strong{For more info, in particular on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
+\strong{For more info, in particular on specifying correct priors for factors
+with more than 2 levels, see
+\href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the
+Bayes factors vignette}.}
 }
 \details{
-This method is used to compute Bayes factors based on prior and posterior distributions.
+This method is used to compute Bayes factors based on prior and posterior
+distributions.
 
-\subsection{One-sided Tests (setting an order restriction)}{
-One sided tests (controlled by \code{direction}) are conducted by restricting the prior and
-posterior of the non-null values (the "alternative") to one side of the null only
-(\cite{Morey & Wagenmakers, 2014}). For example, if we have a prior hypothesis that the
-parameter should be positive, the alternative will be restricted to the region to the right
-of the null (point or interval).
+\subsection{One-sided & Dividing Tests (setting an order restriction)}{
+One sided tests (controlled by \code{direction}) are conducted by restricting
+the prior and posterior of the non-null values (the "alternative") to one
+side of the null only (\cite{Morey & Wagenmakers, 2014}). For example, if we
+have a prior hypothesis that the parameter should be positive, the
+alternative will be restricted to the region to the right of the null (point
+or interval). For example, for a Bayes factor comparing the "null" of [0-0.1]
+to the alternative [>0.1], we would set
+\code{bayesfactor_parameters(null = c(0, 0.1), direction = ">")}.
+\cr\cr
+It is also possible to compute a Bayes factor for \strong{dividing}
+hypotheses - that is, for a null and alternative that are complementary
+(\cite{Morey & Wagenmakers, 2014}). For example, for a Bayes factor comparing
+the "null" of [<0] to the alternative [>0], we would set
+\code{bayesfactor_parameters(null = c(-Inf, 0))}.
 }
 }
 \note{
-There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+There is also a
+  \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method}
+  implemented in the
+  \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \section{Setting the correct \code{prior}}{
 
-For the computation of Bayes factors, the model priors must be proper priors (at the very least
-they should be \emph{not flat}, and it is preferable that they be \emph{informative}); As the priors for
-the alternative get wider, the likelihood of the null value(s) increases, to the extreme that for completely
-flat priors the null is infinitely more favorable than the alternative (this is called \emph{the Jeffreys-Lindley-Bartlett
-paradox}). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
+For the computation of Bayes factors, the model priors must be proper priors
+(at the very least they should be \emph{not flat}, and it is preferable that
+they be \emph{informative}); As the priors for the alternative get wider, the
+likelihood of the null value(s) increases, to the extreme that for completely
+flat priors the null is infinitely more favorable than the alternative (this
+is called \emph{the Jeffreys-Lindley-Bartlett paradox}). Thus, you should
+only ever try (or want) to compute a Bayes factor when you have an informed
+prior.
 \cr\cr
-(Note that by default, \code{brms::brm()} uses flat priors for fixed-effects; See example below.)
+(Note that by default, \code{brms::brm()} uses flat priors for fixed-effects;
+See example below.)
 \cr\cr
 It is important to provide the correct \code{prior} for meaningful results.
 \itemize{
@@ -219,11 +205,11 @@ It is important to provide the correct \code{prior} for meaningful results.
 
 \section{Interpreting Bayes Factors}{
 
-A Bayes factor greater than 1 can be interpreted as evidence against the null,
-at which one convention is that a Bayes factor greater than 3 can be considered
-as "substantial" evidence against the null (and vice versa, a Bayes factor
-smaller than 1/3 indicates substantial evidence in favor of the null-model)
-(\cite{Wetzels et al. 2011}).
+A Bayes factor greater than 1 can be interpreted as evidence against the
+null, at which one convention is that a Bayes factor greater than 3 can be
+considered as "substantial" evidence against the null (and vice versa, a
+Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
+null-model) (\cite{Wetzels et al. 2011}).
 }
 
 \examples{

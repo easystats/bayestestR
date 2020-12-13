@@ -210,12 +210,13 @@
         max(c(x_range[1], x_rangex[1])),
         min(c(x_range[2], x_rangex[2]))
       )
+      x_range <- range(c(x_range, null)[!is.infinite(c(x_range, null))])
 
       extension_scale <- diff(x_range) * extend_scale
-      x_range[1] <- x_range[1] - extension_scale
-      x_range[2] <- x_range[2] + extension_scale
+      x_range <- x_range + c(-1, 1) * extension_scale
 
       x_axis <- seq(x_range[1], x_range[2], length.out = precision)
+      # x_axis <- sort(unique(c(x_axis, null)))
       f_x <- .logspline(x, ...)
       y <- logspline::dlogspline(x_axis, f_x)
       d_points <- data.frame(x = x_axis, y = y)
@@ -226,13 +227,21 @@
 
       # 3. direction?
       if (direction > 0) {
-        d_points <- d_points[d_points$x > min(null), , drop = FALSE]
-        norm_factor <- 1 - logspline::plogspline(min(null), f_x)
+        d_points <- d_points[d_points$x >= min(null), , drop = FALSE]
+        if (is.infinite(min(null))){
+          norm_factor <- 1
+        } else {
+          norm_factor <- 1 - logspline::plogspline(min(null), f_x)
+        }
         d_points$y <- d_points$y / norm_factor
         d_null$y <- d_null$y / norm_factor
       } else if (direction < 0) {
-        d_points <- d_points[d_points$x < max(null), , drop = FALSE]
-        norm_factor <- logspline::plogspline(max(null), f_x)
+        d_points <- d_points[d_points$x <= max(null), , drop = FALSE]
+        if (is.infinite(max(null))){
+          norm_factor <- 1
+        } else {
+          norm_factor <- logspline::plogspline(max(null), f_x)
+        }
         d_points$y <- d_points$y / norm_factor
         d_null$y <- d_null$y / norm_factor
       }

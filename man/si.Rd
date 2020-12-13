@@ -40,8 +40,9 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 \method{si}{data.frame}(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 }
 \arguments{
-\item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object, \code{emmGrid}
-or a data frame - representing a posterior distribution(s) from (see 'Details').}
+\item{posterior}{A numerical vector, \code{stanreg} / \code{brmsfit} object,
+\code{emmGrid} or a data frame - representing a posterior distribution(s)
+from (see 'Details').}
 
 \item{prior}{An object representing a prior distribution (see 'Details').}
 
@@ -49,8 +50,8 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
 
 \item{verbose}{Toggle off warnings.}
 
-\item{...}{Arguments passed to and from other methods.
-(Can be used to pass arguments to internal \code{\link[logspline]{logspline}}.)}
+\item{...}{Arguments passed to and from other methods. (Can be used to pass
+arguments to internal \code{\link[logspline]{logspline}}.)}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
@@ -103,13 +104,17 @@ There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{
 }
 \section{Setting the correct \code{prior}}{
 
-For the computation of Bayes factors, the model priors must be proper priors (at the very least
-they should be \emph{not flat}, and it is preferable that they be \emph{informative}); As the priors for
-the alternative get wider, the likelihood of the null value(s) increases, to the extreme that for completely
-flat priors the null is infinitely more favorable than the alternative (this is called \emph{the Jeffreys-Lindley-Bartlett
-paradox}). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
+For the computation of Bayes factors, the model priors must be proper priors
+(at the very least they should be \emph{not flat}, and it is preferable that
+they be \emph{informative}); As the priors for the alternative get wider, the
+likelihood of the null value(s) increases, to the extreme that for completely
+flat priors the null is infinitely more favorable than the alternative (this
+is called \emph{the Jeffreys-Lindley-Bartlett paradox}). Thus, you should
+only ever try (or want) to compute a Bayes factor when you have an informed
+prior.
 \cr\cr
-(Note that by default, \code{brms::brm()} uses flat priors for fixed-effects; See example below.)
+(Note that by default, \code{brms::brm()} uses flat priors for fixed-effects;
+See example below.)
 \cr\cr
 It is important to provide the correct \code{prior} for meaningful results.
 \itemize{

@@ -47,11 +47,11 @@ i.e., \code{(X|G)} will become the terms \code{1:G} and \code{X:G}.
 }
 \section{Interpreting Bayes Factors}{
 
-A Bayes factor greater than 1 can be interpreted as evidence against the null,
-at which one convention is that a Bayes factor greater than 3 can be considered
-as "substantial" evidence against the null (and vice versa, a Bayes factor
-smaller than 1/3 indicates substantial evidence in favor of the null-model)
-(\cite{Wetzels et al. 2011}).
+A Bayes factor greater than 1 can be interpreted as evidence against the
+null, at which one convention is that a Bayes factor greater than 3 can be
+considered as "substantial" evidence against the null (and vice versa, a
+Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
+null-model) (\cite{Wetzels et al. 2011}).
 }
 
 \examples{

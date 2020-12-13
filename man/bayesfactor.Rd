@@ -22,8 +22,9 @@ bayesfactor(
 
 \item{prior}{An object representing a prior distribution (see 'Details').}
 
-\item{direction}{Test type (see 'Details'). One of \code{0}, \code{"two-sided"} (default, two tailed),
-\code{-1}, \code{"left"} (left tailed) or \code{1}, \code{"right"} (right tailed).}
+\item{direction}{Test type (see 'Details'). One of \code{0},
+\code{"two-sided"} (default, two tailed), \code{-1}, \code{"left"} (left
+tailed) or \code{1}, \code{"right"} (right tailed).}
 
 \item{null}{Value of the null, either a scalar (for point-null) or a range
 (for a interval-null).}

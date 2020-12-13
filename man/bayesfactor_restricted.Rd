@@ -85,13 +85,17 @@ it is more suitable for testing order restrictions; see examples).
 }
 \section{Setting the correct \code{prior}}{
 
-For the computation of Bayes factors, the model priors must be proper priors (at the very least
-they should be \emph{not flat}, and it is preferable that they be \emph{informative}); As the priors for
-the alternative get wider, the likelihood of the null value(s) increases, to the extreme that for completely
-flat priors the null is infinitely more favorable than the alternative (this is called \emph{the Jeffreys-Lindley-Bartlett
-paradox}). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
+For the computation of Bayes factors, the model priors must be proper priors
+(at the very least they should be \emph{not flat}, and it is preferable that
+they be \emph{informative}); As the priors for the alternative get wider, the
+likelihood of the null value(s) increases, to the extreme that for completely
+flat priors the null is infinitely more favorable than the alternative (this
+is called \emph{the Jeffreys-Lindley-Bartlett paradox}). Thus, you should
+only ever try (or want) to compute a Bayes factor when you have an informed
+prior.
 \cr\cr
-(Note that by default, \code{brms::brm()} uses flat priors for fixed-effects; See example below.)
+(Note that by default, \code{brms::brm()} uses flat priors for fixed-effects;
+See example below.)
 \cr\cr
 It is important to provide the correct \code{prior} for meaningful results.
 \itemize{
@@ -112,11 +116,11 @@ It is important to provide the correct \code{prior} for meaningful results.
 
 \section{Interpreting Bayes Factors}{
 
-A Bayes factor greater than 1 can be interpreted as evidence against the null,
-at which one convention is that a Bayes factor greater than 3 can be considered
-as "substantial" evidence against the null (and vice versa, a Bayes factor
-smaller than 1/3 indicates substantial evidence in favor of the null-model)
-(\cite{Wetzels et al. 2011}).
+A Bayes factor greater than 1 can be interpreted as evidence against the
+null, at which one convention is that a Bayes factor greater than 3 can be
+considered as "substantial" evidence against the null (and vice versa, a
+Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
+null-model) (\cite{Wetzels et al. 2011}).
 }
 
 \examples{

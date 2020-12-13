@@ -1,3 +1,9 @@
+# bayestestR 0.7.6.1
+
+## Bug fixes
+
+* `bayesfactor_parameters()` no longer errors for no reason when computing extremely un/likely direction hypotheses.
+
 # bayestestR 0.7.6
 
 ## New functions
