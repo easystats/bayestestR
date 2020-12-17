@@ -88,7 +88,7 @@ point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, th
 
   # trimmed mean
   if ("trimmed" %in% estimate_list) {
-    out$Mean <- mean(x, trim = threshold)
+    out$Trimmed_Mean <- mean(x, trim = threshold)
     if (dispersion) {
       out$SD <- stats::sd(x)
     }
