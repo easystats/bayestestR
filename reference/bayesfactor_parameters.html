@@ -47,28 +47,34 @@
 
 
 <meta property="og:title" content="Bayes Factors (BF) for a Single Parameter — bayesfactor_parameters" />
-<meta property="og:description" content="This method computes Bayes factors against the null (either a point or an interval),
-based on prior and posterior samples of a single parameter. This Bayes factor indicates
-the degree by which the mass of the posterior distribution has shifted further away
-from or closer to the null value(s) (relative to the prior distribution), thus indicating
-if the null value has become less or more likely given the observed data.
+<meta property="og:description" content="This method computes Bayes factors against the null (either a point or an
+interval), based on prior and posterior samples of a single parameter. This
+Bayes factor indicates the degree by which the mass of the posterior
+distribution has shifted further away from or closer to the null value(s)
+(relative to the prior distribution), thus indicating if the null value has
+become less or more likely given the observed data.
  
-When the null is an interval, the Bayes factor is computed by comparing the prior
-and posterior odds of the parameter falling within or outside the null interval
-(Morey &amp;amp; Rouder, 2011; Liao et al., 2020); When the null is a point, a Savage-Dickey
-density ratio is computed, which is also an approximation of a Bayes factor comparing
-the marginal likelihoods of the model against a model in which the tested parameter
-has been restricted to the point null (Wagenmakers et al., 2010; Heck, 2019).
+When the null is an interval, the Bayes factor is computed by comparing the
+prior and posterior odds of the parameter falling within or outside the null
+interval (Morey &amp;amp; Rouder, 2011; Liao et al., 2020); When the null is a point,
+a Savage-Dickey density ratio is computed, which is also an approximation of
+a Bayes factor comparing the marginal likelihoods of the model against a
+model in which the tested parameter has been restricted to the point null
+(Wagenmakers et al., 2010; Heck, 2019).
  
-Note that the logspline package is used for estimating densities and probabilities,
-and must be installed for the function to work.
+Note that the logspline package is used for estimating densities and
+probabilities, and must be installed for the function to work.
  
-bayesfactor_pointnull() and bayesfactor_rope() are wrappers around
-bayesfactor_parameters with different defaults for the null to be tested against
-(a point and a range, respectively). Aliases of the main functions are prefixed
-with bf_*, like bf_parameters() or bf_pointnull()
+bayesfactor_pointnull() and bayesfactor_rope() are wrappers
+around bayesfactor_parameters with different defaults for the null to
+be tested against (a point and a range, respectively). Aliases of the main
+functions are prefixed with bf_*, like bf_parameters() or
+bf_pointnull()
  
-For more info, in particular on specifying correct priors for factors with more than 2 levels, see the Bayes factors vignette." />
+For more info, in particular on specifying correct priors for factors
+with more than 2 levels, see
+the
+Bayes factors vignette." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -111,7 +117,7 @@ For more info, in particular on specifying correct priors for factors with more 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.1</span>
       </span>
     </div>
 
@@ -119,7 +125,7 @@ For more info, in particular on specifying correct priors for factors with more 
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -187,7 +193,7 @@ For more info, in particular on specifying correct priors for factors with more 
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/bayestestR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -210,28 +216,34 @@ For more info, in particular on specifying correct priors for factors with more 
     </div>
 
     <div class="ref-description">
-    <p>This method computes Bayes factors against the null (either a point or an interval),
-based on prior and posterior samples of a single parameter. This Bayes factor indicates
-the degree by which the mass of the posterior distribution has shifted further away
-from or closer to the null value(s) (relative to the prior distribution), thus indicating
-if the null value has become less or more likely given the observed data.
+    <p>This method computes Bayes factors against the null (either a point or an
+interval), based on prior and posterior samples of a single parameter. This
+Bayes factor indicates the degree by which the mass of the posterior
+distribution has shifted further away from or closer to the null value(s)
+(relative to the prior distribution), thus indicating if the null value has
+become less or more likely given the observed data.
 <br /> <br />
-When the null is an interval, the Bayes factor is computed by comparing the prior
-and posterior odds of the parameter falling within or outside the null interval
-(Morey &amp; Rouder, 2011; Liao et al., 2020); When the null is a point, a Savage-Dickey
-density ratio is computed, which is also an approximation of a Bayes factor comparing
-the marginal likelihoods of the model against a model in which the tested parameter
-has been restricted to the point null (Wagenmakers et al., 2010; Heck, 2019).
+When the null is an interval, the Bayes factor is computed by comparing the
+prior and posterior odds of the parameter falling within or outside the null
+interval (Morey &amp; Rouder, 2011; Liao et al., 2020); When the null is a point,
+a Savage-Dickey density ratio is computed, which is also an approximation of
+a Bayes factor comparing the marginal likelihoods of the model against a
+model in which the tested parameter has been restricted to the point null
+(Wagenmakers et al., 2010; Heck, 2019).
 <br /> <br />
-Note that the <code>logspline</code> package is used for estimating densities and probabilities,
-and must be installed for the function to work.
+Note that the <code>logspline</code> package is used for estimating densities and
+probabilities, and must be installed for the function to work.
 <br /> <br />
-<code>bayesfactor_pointnull()</code> and <code>bayesfactor_rope()</code> are wrappers around
-<code>bayesfactor_parameters</code> with different defaults for the null to be tested against
-(a point and a range, respectively). Aliases of the main functions are prefixed
-with <code>bf_*</code>, like <code>bf_parameters()</code> or <code>bf_pointnull()</code>
+<code>bayesfactor_pointnull()</code> and <code>bayesfactor_rope()</code> are wrappers
+around <code>bayesfactor_parameters</code> with different defaults for the null to
+be tested against (a point and a range, respectively). Aliases of the main
+functions are prefixed with <code>bf_*</code>, like <code>bf_parameters()</code> or
+<code>bf_pointnull()</code>
 <br /> <br />
-<strong>For more info, in particular on specifying correct priors for factors with more than 2 levels, see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</strong></p>
+<strong>For more info, in particular on specifying correct priors for factors
+with more than 2 levels, see
+<a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the
+Bayes factors vignette</a>.</strong></p>
     </div>
 
     <pre class="usage"><span class='fu'>bayesfactor_parameters</span><span class='op'>(</span>
@@ -253,33 +265,6 @@ with <code>bf_*</code>, like <code>bf_parameters()</code> or <code>bf_pointnull(
 <span class='op'>)</span>
 
 <span class='fu'>bayesfactor_rope</span><span class='op'>(</span>
-  <span class='va'>posterior</span>,
-  prior <span class='op'>=</span> <span class='cn'>NULL</span>,
-  direction <span class='op'>=</span> <span class='st'>"two-sided"</span>,
-  null <span class='op'>=</span> <span class='fu'><a href='rope_range.html'>rope_range</a></span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span>,
-  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>bf_parameters</span><span class='op'>(</span>
-  <span class='va'>posterior</span>,
-  prior <span class='op'>=</span> <span class='cn'>NULL</span>,
-  direction <span class='op'>=</span> <span class='st'>"two-sided"</span>,
-  null <span class='op'>=</span> <span class='fl'>0</span>,
-  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>bf_pointull</span><span class='op'>(</span>
-  <span class='va'>posterior</span>,
-  prior <span class='op'>=</span> <span class='cn'>NULL</span>,
-  direction <span class='op'>=</span> <span class='st'>"two-sided"</span>,
-  null <span class='op'>=</span> <span class='fl'>0</span>,
-  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
-<span class='fu'>bf_rope</span><span class='op'>(</span>
   <span class='va'>posterior</span>,
   prior <span class='op'>=</span> <span class='cn'>NULL</span>,
   direction <span class='op'>=</span> <span class='st'>"two-sided"</span>,
@@ -324,16 +309,6 @@ with <code>bf_*</code>, like <code>bf_parameters()</code> or <code>bf_pointnull(
   <span class='va'>...</span>
 <span class='op'>)</span>
 
-<span class='co'># S3 method for emmGrid</span>
-<span class='fu'>bayesfactor_parameters</span><span class='op'>(</span>
-  <span class='va'>posterior</span>,
-  prior <span class='op'>=</span> <span class='cn'>NULL</span>,
-  direction <span class='op'>=</span> <span class='st'>"two-sided"</span>,
-  null <span class='op'>=</span> <span class='fl'>0</span>,
-  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
 <span class='co'># S3 method for data.frame</span>
 <span class='fu'>bayesfactor_parameters</span><span class='op'>(</span>
   <span class='va'>posterior</span>,
@@ -349,8 +324,9 @@ with <code>bf_*</code>, like <code>bf_parameters()</code> or <code>bf_pointnull(
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>posterior</th>
-      <td><p>A numerical vector, <code>stanreg</code> / <code>brmsfit</code> object, <code>emmGrid</code>
-or a data frame - representing a posterior distribution(s) from (see 'Details').</p></td>
+      <td><p>A numerical vector, <code>stanreg</code> / <code>brmsfit</code> object,
+<code>emmGrid</code> or a data frame - representing a posterior distribution(s)
+from (see 'Details').</p></td>
     </tr>
     <tr>
       <th>prior</th>
@@ -358,8 +334,9 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
     </tr>
     <tr>
       <th>direction</th>
-      <td><p>Test type (see 'Details'). One of <code>0</code>, <code>"two-sided"</code> (default, two tailed),
-<code>-1</code>, <code>"left"</code> (left tailed) or <code>1</code>, <code>"right"</code> (right tailed).</p></td>
+      <td><p>Test type (see 'Details'). One of <code>0</code>,
+<code>"two-sided"</code> (default, two tailed), <code>-1</code>, <code>"left"</code> (left
+tailed) or <code>1</code>, <code>"right"</code> (right tailed).</p></td>
     </tr>
     <tr>
       <th>null</th>
@@ -372,8 +349,8 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to and from other methods.
-(Can be used to pass arguments to internal <code><a href='https://rdrr.io/pkg/logspline/man/logspline.html'>logspline</a></code>.)</p></td>
+      <td><p>Arguments passed to and from other methods. (Can be used to pass
+arguments to internal <code><a href='https://rdrr.io/pkg/logspline/man/logspline.html'>logspline</a></code>.)</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -398,31 +375,49 @@ for the output.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame containing the Bayes factor representing evidence <em>against</em> the null.</p>
+    <p>A data frame containing the Bayes factor representing evidence
+  <em>against</em> the null.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This method is used to compute Bayes factors based on prior and posterior distributions.</p>
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>One-sided Tests (setting an order restriction)</h3>
-<p>One sided tests (controlled by <code>direction</code>) are conducted by restricting the prior and
-posterior of the non-null values (the "alternative") to one side of the null only
-(<cite>Morey &amp; Wagenmakers, 2014</cite>). For example, if we have a prior hypothesis that the
-parameter should be positive, the alternative will be restricted to the region to the right
-of the null (point or interval).</p>
+    <p>This method is used to compute Bayes factors based on prior and posterior
+distributions.</p>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>One-sided &amp; Dividing Tests (setting an order restriction)</h3>
+<p>One sided tests (controlled by <code>direction</code>) are conducted by restricting
+the prior and posterior of the non-null values (the "alternative") to one
+side of the null only (<cite>Morey &amp; Wagenmakers, 2014</cite>). For example, if we
+have a prior hypothesis that the parameter should be positive, the
+alternative will be restricted to the region to the right of the null (point
+or interval). For example, for a Bayes factor comparing the "null" of [0-0.1]
+to the alternative [&gt;0.1], we would set
+<code>bayesfactor_parameters(null = c(0, 0.1), direction = "&gt;")</code>.
+<br /><br />
+It is also possible to compute a Bayes factor for <strong>dividing</strong>
+hypotheses - that is, for a null and alternative that are complementary,
+opposing one-sided hypotheses (<cite>Morey &amp; Wagenmakers, 2014</cite>). For
+example, for a Bayes factor comparing the "null" of [&lt;0] to the alternative
+[&gt;0], we would set <code>bayesfactor_parameters(null = c(-Inf, 0))</code>.</p>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+    <p>There is also a
+  <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a>
+  implemented in the
+  <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="setting-the-correct-prior"><a class="anchor" href="#setting-the-correct-prior"></a>Setting the correct <code>prior</code></h2>
 
     
 
-<p>For the computation of Bayes factors, the model priors must be proper priors (at the very least
-they should be <em>not flat</em>, and it is preferable that they be <em>informative</em>); As the priors for
-the alternative get wider, the likelihood of the null value(s) increases, to the extreme that for completely
-flat priors the null is infinitely more favorable than the alternative (this is called <em>the Jeffreys-Lindley-Bartlett
-paradox</em>). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
+<p>For the computation of Bayes factors, the model priors must be proper priors
+(at the very least they should be <em>not flat</em>, and it is preferable that
+they be <em>informative</em>); As the priors for the alternative get wider, the
+likelihood of the null value(s) increases, to the extreme that for completely
+flat priors the null is infinitely more favorable than the alternative (this
+is called <em>the Jeffreys-Lindley-Bartlett paradox</em>). Thus, you should
+only ever try (or want) to compute a Bayes factor when you have an informed
+prior.
 <br /><br />
-(Note that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects; See example below.)
+(Note that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects;
+See example below.)
 <br /><br />
 It is important to provide the correct <code>prior</code> for meaningful results.</p><ul>
 <li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>
@@ -443,11 +438,11 @@ It is important to provide the correct <code>prior</code> for meaningful results
 
     
 
-<p>A Bayes factor greater than 1 can be interpreted as evidence against the null,
-at which one convention is that a Bayes factor greater than 3 can be considered
-as "substantial" evidence against the null (and vice versa, a Bayes factor
-smaller than 1/3 indicates substantial evidence in favor of the null-model)
-(<cite>Wetzels et al. 2011</cite>).</p>
+<p>A Bayes factor greater than 1 can be interpreted as evidence against the
+null, at which one convention is that a Bayes factor greater than 3 can be
+considered as "substantial" evidence against the null (and vice versa, a
+Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
+null-model) (<cite>Wetzels et al. 2011</cite>).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -477,8 +472,7 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 #&gt; -----
 #&gt; 1.233
 #&gt; 
-#&gt; * Evidence Against The Null: </span><span style='color: #00BBBB;'>[0]
-#&gt; </span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt; * Evidence Against The Null: </span><span style='color: #00BBBB;'>[0]</span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/rvlenth/emmeans'>"emmeans"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>

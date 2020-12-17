@@ -92,7 +92,7 @@ The bf_* function is an alias of the main function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.1</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@ The bf_* function is an alias of the main function." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -168,7 +168,7 @@ The bf_* function is an alias of the main function." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/bayestestR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -250,11 +250,11 @@ See also <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.
 
     
 
-<p>A Bayes factor greater than 1 can be interpreted as evidence against the null,
-at which one convention is that a Bayes factor greater than 3 can be considered
-as "substantial" evidence against the null (and vice versa, a Bayes factor
-smaller than 1/3 indicates substantial evidence in favor of the null-model)
-(<cite>Wetzels et al. 2011</cite>).</p>
+<p>A Bayes factor greater than 1 can be interpreted as evidence against the
+null, at which one convention is that a Bayes factor greater than 3 can be
+considered as "substantial" evidence against the null (and vice versa, a
+Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
+null-model) (<cite>Wetzels et al. 2011</cite>).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -278,30 +278,30 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 <span class='va'>lm3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='va'>lm4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factors for Model Comparison
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factors for Model Comparison</span><span>
 #&gt; 
-#&gt; </span><span>  Model                             BF
-#&gt;   [2] Species                1.696e+29
-#&gt;   [3] Species + Petal.Length 5.843e+55
-#&gt;   [4] Species * Petal.Length 2.203e+54
+#&gt; Model                             BF
+#&gt; [2] Species                1.696e+29
+#&gt; [3] Species + Petal.Length 5.843e+55
+#&gt; [4] Species * Petal.Length 2.203e+54
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='va'>lm1</span><span class='op'>)</span> <span class='co'># same result</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison</span><span>
 #&gt; 
-#&gt; </span><span>  Model                             BF
-#&gt;   [1] Species                1.696e+29
-#&gt;   [2] Species + Petal.Length 5.843e+55
-#&gt;   [3] Species * Petal.Length 2.203e+54
+#&gt; Model                             BF
+#&gt; [1] Species                1.696e+29
+#&gt; [2] Species + Petal.Length 5.843e+55
+#&gt; [3] Species * Petal.Length 2.203e+54
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[4] (Intercept only)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='va'>lm1</span><span class='op'>)</span> <span class='co'># same result</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison</span><span>
 #&gt; 
-#&gt; </span><span>  Model                             BF
-#&gt;   [2] Species                1.696e+29
-#&gt;   [3] Species + Petal.Length 5.843e+55
-#&gt;   [4] Species * Petal.Length 2.203e+54
+#&gt; Model                             BF
+#&gt; [2] Species                1.696e+29
+#&gt; [3] Species + Petal.Length 5.843e+55
+#&gt; [4] Species * Petal.Length 2.203e+54
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>

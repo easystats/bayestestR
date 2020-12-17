@@ -92,7 +92,7 @@ For more info, see the Bayes factors vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.1</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@ For more info, see the Bayes factors vignette." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -168,7 +168,7 @@ For more info, see the Bayes factors vignette." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/bayestestR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -246,11 +246,11 @@ i.e., <code>(X|G)</code> will become the terms <code>1:G</code> and <code>X:G</c
 
     
 
-<p>A Bayes factor greater than 1 can be interpreted as evidence against the null,
-at which one convention is that a Bayes factor greater than 3 can be considered
-as "substantial" evidence against the null (and vice versa, a Bayes factor
-smaller than 1/3 indicates substantial evidence in favor of the null-model)
-(<cite>Wetzels et al. 2011</cite>).</p>
+<p>A Bayes factor greater than 1 can be interpreted as evidence against the
+null, at which one convention is that a Bayes factor greater than 3 can be
+considered as "substantial" evidence against the null (and vice versa, a
+Bayes factor smaller than 1/3 indicates substantial evidence in favor of the
+null-model) (<cite>Wetzels et al. 2011</cite>).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -279,16 +279,15 @@ smaller than 1/3 indicates substantial evidence in favor of the null-model)
 
 <span class='va'>BFmodels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bayesfactor_models.html'>bayesfactor_models</a></span><span class='op'>(</span><span class='va'>mo1</span>, <span class='va'>mo2</span>, <span class='va'>mo3</span>, denominator <span class='op'>=</span> <span class='va'>mo0</span><span class='op'>)</span>
 <span class='fu'>bayesfactor_inclusion</span><span class='op'>(</span><span class='va'>BFmodels</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)</span><span>
 #&gt; 
-#&gt; </span><span>                     Pr(prior) Pr(posterior) Inclusion BF
-#&gt; Species                   0.75        1.0000    2.021e+55
-#&gt; Petal.Length              0.50        1.0000    3.575e+26
-#&gt; Petal.Length:Species      0.25        0.0363        0.113
+#&gt;                      Pr(prior) Pr(posterior) Inclusion BF
+#&gt; Species                  0.750         1.000    2.021e+55
+#&gt; Petal.Length             0.500         1.000    3.575e+26
+#&gt; Petal.Length:Species     0.250         0.036        0.113
 #&gt; 
-#&gt; * Compared among: </span><span style='color: #00BBBB;'>all models
-#&gt; </span><span>*    Priors odds: </span><span style='color: #00BBBB;'>uniform-equal
-#&gt; </span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt; * Compared among: </span><span style='color: #00BBBB;'>all models</span><span>
+#&gt; *    Priors odds: </span><span style='color: #00BBBB;'>uniform-equal</span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># BayesFactor</span>
 <span class='co'># -------------------------------</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://richarddmorey.github.io/BayesFactor/'>BayesFactor</a></span><span class='op'>)</span>

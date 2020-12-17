@@ -97,7 +97,7 @@ see the Bayes factors vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.1</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@ see the Bayes factors vignette." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -173,7 +173,7 @@ see the Bayes factors vignette." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/bayestestR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -246,8 +246,9 @@ see <a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>posterior</th>
-      <td><p>A numerical vector, <code>stanreg</code> / <code>brmsfit</code> object, <code>emmGrid</code>
-or a data frame - representing a posterior distribution(s) from (see 'Details').</p></td>
+      <td><p>A numerical vector, <code>stanreg</code> / <code>brmsfit</code> object,
+<code>emmGrid</code> or a data frame - representing a posterior distribution(s)
+from (see 'Details').</p></td>
     </tr>
     <tr>
       <th>prior</th>
@@ -263,8 +264,8 @@ or a data frame - representing a posterior distribution(s) from (see 'Details').
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Arguments passed to and from other methods.
-(Can be used to pass arguments to internal <code><a href='https://rdrr.io/pkg/logspline/man/logspline.html'>logspline</a></code>.)</p></td>
+      <td><p>Arguments passed to and from other methods. (Can be used to pass
+arguments to internal <code><a href='https://rdrr.io/pkg/logspline/man/logspline.html'>logspline</a></code>.)</p></td>
     </tr>
     <tr>
       <th>effects</th>
@@ -316,13 +317,17 @@ that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm
 
     
 
-<p>For the computation of Bayes factors, the model priors must be proper priors (at the very least
-they should be <em>not flat</em>, and it is preferable that they be <em>informative</em>); As the priors for
-the alternative get wider, the likelihood of the null value(s) increases, to the extreme that for completely
-flat priors the null is infinitely more favorable than the alternative (this is called <em>the Jeffreys-Lindley-Bartlett
-paradox</em>). Thus, you should only ever try (or want) to compute a Bayes factor when you have an informed prior.
+<p>For the computation of Bayes factors, the model priors must be proper priors
+(at the very least they should be <em>not flat</em>, and it is preferable that
+they be <em>informative</em>); As the priors for the alternative get wider, the
+likelihood of the null value(s) increases, to the extreme that for completely
+flat priors the null is infinitely more favorable than the alternative (this
+is called <em>the Jeffreys-Lindley-Bartlett paradox</em>). Thus, you should
+only ever try (or want) to compute a Bayes factor when you have an informed
+prior.
 <br /><br />
-(Note that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects; See example below.)
+(Note that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm()</a></code> uses flat priors for fixed-effects;
+See example below.)
 <br /><br />
 It is important to provide the correct <code>prior</code> for meaningful results.</p><ul>
 <li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>

@@ -96,7 +96,7 @@ For a complete overview of these functions, read the Bayes factor vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0.1</span>
       </span>
     </div>
 
@@ -104,7 +104,7 @@ For a complete overview of these functions, read the Bayes factor vignette." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -172,7 +172,7 @@ For a complete overview of these functions, read the Bayes factor vignette." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/easystats/bayestestR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -230,8 +230,9 @@ For a complete overview of these functions, read the <a href='https://easystats.
     </tr>
     <tr>
       <th>direction</th>
-      <td><p>Test type (see 'Details'). One of <code>0</code>, <code>"two-sided"</code> (default, two tailed),
-<code>-1</code>, <code>"left"</code> (left tailed) or <code>1</code>, <code>"right"</code> (right tailed).</p></td>
+      <td><p>Test type (see 'Details'). One of <code>0</code>,
+<code>"two-sided"</code> (default, two tailed), <code>-1</code>, <code>"left"</code> (left
+tailed) or <code>1</code>, <code>"right"</code> (right tailed).</p></td>
     </tr>
     <tr>
       <th>null</th>
@@ -287,8 +288,7 @@ or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.<
 #&gt; -----
 #&gt; 1.233
 #&gt; 
-#&gt; * Evidence Against The Null: </span><span style='color: #00BBBB;'>[0]
-#&gt; </span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt; * Evidence Against The Null: </span><span style='color: #00BBBB;'>[0]</span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># ---------------</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
@@ -305,24 +305,23 @@ or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.<
 
 <span class='va'>comparison</span> <span class='op'>&lt;-</span> <span class='fu'>bayesfactor</span><span class='op'>(</span><span class='va'>m0</span>, <span class='va'>m1</span>, <span class='va'>m2</span><span class='op'>)</span>
 <span class='va'>comparison</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison</span><span>
 #&gt; 
-#&gt; </span><span>  Model                 BF
-#&gt;   [2] group          1.299
-#&gt;   [3] group + ID 11227.117
+#&gt; Model                 BF
+#&gt; [2] group          1.299
+#&gt; [3] group + ID 11227.117
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'>
 <span class='fu'>bayesfactor</span><span class='op'>(</span><span class='va'>comparison</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)</span><span>
 #&gt; 
-#&gt; </span><span>      Pr(prior) Pr(posterior) Inclusion BF
-#&gt; group     0.667             1     5614.208
-#&gt; ID        0.333             1     9767.217
+#&gt;       Pr(prior) Pr(posterior) Inclusion BF
+#&gt; group     0.667         1.000     5614.208
+#&gt; ID        0.333         1.000     9767.217
 #&gt; 
-#&gt; * Compared among: </span><span style='color: #00BBBB;'>all models
-#&gt; </span><span>*    Priors odds: </span><span style='color: #00BBBB;'>uniform-equal
-#&gt; </span><span></div></span></pre>
+#&gt; * Compared among: </span><span style='color: #00BBBB;'>all models</span><span>
+#&gt; *    Priors odds: </span><span style='color: #00BBBB;'>uniform-equal</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
