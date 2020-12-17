@@ -53,6 +53,8 @@ for the output.}
 \item{component}{Should results for all parameters, parameters for the conditional model
 or the zero-inflated part of the model be returned? May be abbreviated. Only
 applies to \pkg{brms}-models.}
+
+\item{threshold}{For \code{centrality = "trimmed"} (i.e. trimmed mean), indicates the fraction (0 to 0.5) of observations to be trimmed from each end of the vector before the mean is computed.}
 }
 \description{
 Compute various point-estimates, such as the mean, the median or the MAP, to describe posterior distributions.

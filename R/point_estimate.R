@@ -4,6 +4,7 @@
 #'
 #' @param centrality The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.
 #' @param dispersion Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).
+#' @param threshold For \code{centrality = "trimmed"} (i.e. trimmed mean), indicates the fraction (0 to 0.5) of observations to be trimmed from each end of the vector before the mean is computed.
 #' @param ... Additional arguments to be passed to or from methods.
 #' @inheritParams hdi
 #'
@@ -59,8 +60,8 @@ point_estimate <- function(x, centrality = "all", dispersion = FALSE, ...) {
 
 
 #' @export
-point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, ...) {
-  centrality <- match.arg(tolower(centrality), c("median", "mean", "map", "all"), several.ok = TRUE)
+point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, threshold = .1, ...) {
+  centrality <- match.arg(tolower(centrality), c("median", "mean", "map", "trimmed", "all"), several.ok = TRUE)
   if ("all" %in% centrality) {
     estimate_list <- c("median", "mean", "map")
   } else {
@@ -85,6 +86,14 @@ point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, ..
     }
   }
 
+  # trimmed mean
+  if ("trimmed" %in% estimate_list) {
+    out$Mean <- mean(x, trim = threshold)
+    if (dispersion) {
+      out$SD <- stats::sd(x)
+    }
+  }
+
   # MAP
   if ("map" %in% estimate_list) {
     out$MAP <- as.numeric(map_estimate(x))
@@ -101,11 +110,11 @@ point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, ..
 
 
 #' @export
-point_estimate.data.frame <- function(x, centrality = "all", dispersion = FALSE, ...) {
+point_estimate.data.frame <- function(x, centrality = "all", dispersion = FALSE, threshold = .1, ...) {
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
-    estimates <- point_estimate(x[, 1], centrality = centrality, dispersion = dispersion, ...)
+    estimates <- point_estimate(x[, 1], centrality = centrality, dispersion = dispersion, threshold = threshold, ...)
   } else {
     estimates <- sapply(x, point_estimate, centrality = centrality, dispersion = dispersion, simplify = FALSE, ...)
     estimates <- do.call(rbind, estimates)
