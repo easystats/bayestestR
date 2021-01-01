@@ -194,7 +194,7 @@
 &gt; F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <p>In this model, the linear relationship between <code>Petal.Length</code> and <code>Sepal.Length</code> is <strong>positive and significant</strong> (beta = 0.41, <em>t</em>(148) = 21.6, <em>p</em> &lt; .001). This means that for each one-unit increase in <code>Petal.Length</code> (the predictor), you can expect <code>Sepal.Length</code> (the response) to increase by <strong>0.41</strong>. This effect can be visualized by plotting the predictor values on the <code>x</code> axis and the response values as <code>y</code> using the <code>ggplot2</code> package:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>  <span class="co"># Load the package</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>  <span class="co"># Load the package</span>
 
 <span class="co"># The ggplot function takes the data as argument, and then the variables </span>
 <span class="co"># related to aesthetic features such as the x and y axes.</span>

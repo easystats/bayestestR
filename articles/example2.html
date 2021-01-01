@@ -249,7 +249,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <p>Bayesian <em>t</em>-tests can be performed in a very similar way to correlations. As we are particularly interested in two levels of the <code>Species</code> factor, <em>versicolor</em> and <em>virginica</em>. We will start by filtering out from <code>iris</code> the non-relevant observations corresponding to the <em>setosa</em> specie, and we will then visualise the observations and the distribution of the <code>Sepal.Width</code> variable.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="co"># Select only two relevant species</span>
 <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op">%&gt;%</span> 
