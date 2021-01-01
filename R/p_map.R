@@ -164,6 +164,24 @@ p_map.mcmc.list <- p_map.mcmc
 
 
 
+#' @export
+p_map.bamlss <- function(x, precision = 2^10, method = "kernel", component = c("conditional", "location", "all"), parameters = NULL, ...) {
+  component <- match.arg(component)
+  out <- .p_map_models(
+    x = x,
+    precision = precision,
+    method = method,
+    effects = "all",
+    component = component,
+    parameters = parameters,
+    ...
+  )
+
+  attr(out, "data") <- insight::get_parameters(x, parameters = parameters)
+  out
+}
+
+
 
 #' @export
 p_map.sim.merMod <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), parameters = NULL, ...) {

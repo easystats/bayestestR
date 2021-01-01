@@ -98,6 +98,14 @@ p_rope.sim <- function(x, range = "default", parameters = NULL, ...) {
 }
 
 #' @export
+p_rope.bamlss <- function(x, range = "default", component = c("conditional", "location", "all"), parameters = NULL, ...) {
+  component <- match.arg(component)
+  out <- .p_rope(rope(x, range = range, ci = 1, effects = "all", component = component, parameters = parameters, ...))
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+#' @export
 p_rope.mcmc <- function(x, range = "default", parameters = NULL, ...) {
   out <- .p_rope(rope(x, range = range, ci = 1, parameters = parameters, ...))
   attr(out, "object_name") <- .safe_deparse(substitute(x))

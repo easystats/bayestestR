@@ -281,6 +281,17 @@ estimate_density.bayesQR <- estimate_density.mcmc
 estimate_density.bcplm <- estimate_density.mcmc
 
 
+#' @export
+estimate_density.bamlss <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", component = c("conditional", "location", "all"), parameters = NULL, ...) {
+  component <- match.arg(component)
+  out <- estimate_density(insight::get_parameters(x, component = component, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+
+  class(out) <- .set_density_class(out)
+  out
+}
+
+
 
 #' Coerce to a Data Frame
 #'

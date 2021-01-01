@@ -590,7 +590,7 @@ describe_posterior.mcmc.list <- function(posteriors, centrality = "median", disp
 #' @inheritParams describe_posterior.stanreg
 #' @rdname describe_posterior
 #' @export
-describe_posterior.brmsfit <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, BF = 1, ...) {
+describe_posterior.brmsfit <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all", "location", "distributional", "auxiliary"), parameters = NULL, BF = 1, ...) {
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) | "si" %in% tolower(ci_method)) & is.null(bf_prior)) {
     bf_prior <- unupdate(posteriors)
   }
@@ -680,6 +680,16 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
     out <- .merge_and_sort(out, priors_data, by = intersect(names(out), names(priors_data)), all = TRUE)
   }
 
+  out
+}
+
+
+
+#' @export
+describe_posterior.bamlss <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, component = c("conditional", "location", "all"), parameters = NULL, ...) {
+  out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = NULL, BF = NULL, effects = "all", component = component, parameters = parameters, ...)
+  attr(out, "ci_method") <- ci_method
+  class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
 

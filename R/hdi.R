@@ -136,6 +136,17 @@ hdi.MCMCglmm <- function(x, ci = .89, verbose = TRUE, ...) {
 
 
 #' @export
+hdi.bamlss <- function(x, ci = .89, component = c("conditional", "location", "all"), verbose = TRUE, ...) {
+  component <- match.arg(component)
+  d <- insight::get_parameters(x, component = component)
+  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
+  attr(dat, "data") <- .safe_deparse(substitute(x))
+  dat
+}
+
+
+
+#' @export
 hdi.mcmc <- function(x, ci = .89, verbose = TRUE, ...) {
   d <- as.data.frame(x)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")

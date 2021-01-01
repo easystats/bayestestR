@@ -150,6 +150,12 @@ point_estimate.mcmc.list <- point_estimate.bcplm
 
 
 #' @export
+point_estimate.bamlss <- function(x, centrality = "all", dispersion = FALSE,  component = c("conditional", "location", "all"), ...) {
+  point_estimate(insight::get_parameters(x, component = component), centrality = centrality, dispersion = dispersion, ...)
+}
+
+
+#' @export
 point_estimate.MCMCglmm <- function(x, centrality = "all", dispersion = FALSE, ...) {
   nF <- x$Fixed$nfl
   point_estimate(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), centrality = centrality, dispersion = dispersion, ...)

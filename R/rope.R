@@ -208,6 +208,10 @@ rope.BFBayesFactor <- function(x, range = "default", ci = .89, ci_method = "HDI"
 }
 
 
+#' @export
+rope.bamlss <- rope.BFBayesFactor
+
+
 #' @rdname rope
 #' @export
 rope.MCMCglmm <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {

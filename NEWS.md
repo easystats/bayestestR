@@ -1,10 +1,14 @@
-# bayestestR 0.7.6.1
+# bayestestR 0.8.1
+
+## General
+
+* Support for `bamlss` models.
 
 ## Bug fixes
 
 * `bayesfactor_parameters()` no longer errors for no reason when computing extremely un/likely direction hypotheses.
 
-# bayestestR 0.7.6
+# bayestestR 0.8.0
 
 ## New functions
 

@@ -97,7 +97,8 @@ describe_posterior(
   bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"),
   effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all", "location",
+    "distributional", "auxiliary"),
   parameters = NULL,
   BF = 1,
   ...

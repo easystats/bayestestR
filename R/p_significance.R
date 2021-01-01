@@ -155,6 +155,12 @@ p_significance.mcmc <- function(x, threshold = "default", ...) {
 
 
 #' @export
+p_significance.bamlss <- function(x, threshold = "default", component = c("conditional", "location", "all"), ...) {
+  p_significance(insight::get_parameters(x, component = component), threshold = threshold, ...)
+}
+
+
+#' @export
 p_significance.bcplm <- function(x, threshold = "default", ...) {
   p_significance(insight::get_parameters(x), threshold = threshold, ...)
 }

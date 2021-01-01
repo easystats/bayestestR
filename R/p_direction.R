@@ -204,6 +204,13 @@ p_direction.mcmc.list <- function(x, method = "direct", ...) {
 
 
 #' @export
+p_direction.bamlss <- function(x, method = "direct", component = c("conditional", "location", "all"), ...) {
+  component <- match.arg(component)
+  p_direction(insight::get_parameters(x, component = component), method = method, ...)
+}
+
+
+#' @export
 p_direction.bayesQR <- function(x, method = "direct", ...) {
   p_direction(insight::get_parameters(x, method = method), ...)
 }

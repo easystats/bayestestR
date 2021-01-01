@@ -74,6 +74,9 @@ rope_range.brmsfit <- function(x, ...) {
 rope_range.stanreg <- rope_range.brmsfit
 
 #' @export
+rope_range.bamlss <- rope_range.brmsfit
+
+#' @export
 #' @importFrom stats sd
 rope_range.BFBayesFactor <- function(x, ...) {
   fac <- 1
