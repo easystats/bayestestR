@@ -4,6 +4,10 @@
 
 * Support for `bamlss` models.
 
+## Changes to functions
+
+* All `.stanreg` methods gain a `component` argument, to also include auxiliary parameters.
+
 ## Bug fixes
 
 * `bayesfactor_parameters()` no longer errors for no reason when computing extremely un/likely direction hypotheses.

@@ -114,7 +114,7 @@ si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
 si.stanreg <- function(posterior, prior = NULL,
                        BF = 1, verbose = TRUE,
                        effects = c("fixed", "random", "all"),
-                       component = c("conditional", "zi", "zero_inflated", "all"),
+                       component = c("conditional", "location", "zi", "zero_inflated", "all", "smooth_terms", "sigma", "distributional", "auxiliary"),
                        parameters = NULL,
                        ...) {
   cleaned_parameters <- insight::clean_parameters(posterior)

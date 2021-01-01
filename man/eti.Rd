@@ -41,6 +41,8 @@ eti(x, ...)
   x,
   ci = 0.89,
   effects = c("fixed", "random", "all"),
+  component = c("location", "all", "conditional", "smooth_terms", "sigma",
+    "distributional", "auxiliary"),
   parameters = NULL,
   verbose = TRUE,
   ...

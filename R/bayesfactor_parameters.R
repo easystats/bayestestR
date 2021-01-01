@@ -242,7 +242,7 @@ bayesfactor_parameters.stanreg <- function(posterior,
                                            null = 0,
                                            verbose = TRUE,
                                            effects = c("fixed", "random", "all"),
-                                           component = c("conditional", "zi", "zero_inflated", "all"),
+                                           component = c("conditional", "location", "smooth_terms", "sigma", "zi", "zero_inflated", "all"),
                                            parameters = NULL,
                                            ...) {
   cleaned_parameters <- insight::clean_parameters(posterior)

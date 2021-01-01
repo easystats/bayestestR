@@ -24,15 +24,16 @@ simulate_prior <- function(model, n = 1000, ...) {
 
 
 #' @export
-simulate_prior.stanreg <- function(model, n = 1000, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+simulate_prior.stanreg <- function(model, n = 1000, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
   # check arguments
   effects <- match.arg(effects)
-
+  component <- match.arg(component)
 
   priors <-
     insight::get_priors(
       model,
       effects = effects,
+      component = component,
       parameters = parameters
     )
 

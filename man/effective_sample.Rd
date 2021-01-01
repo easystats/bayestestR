@@ -20,6 +20,8 @@ effective_sample(model, ...)
 \method{effective_sample}{stanreg}(
   model,
   effects = c("fixed", "random", "all"),
+  component = c("location", "all", "conditional", "smooth_terms", "sigma",
+    "distributional", "auxiliary"),
   parameters = NULL,
   ...
 )

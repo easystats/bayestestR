@@ -156,11 +156,13 @@ eti.emm_list <- eti.emmGrid
 #' @rdname eti
 #' @export
 eti.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"),
+                        component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
                         parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
+  component <- match.arg(component)
 
   out <- .prepare_output(
-    eti(insight::get_parameters(x, effects = effects, parameters = parameters), ci = ci, verbose = verbose, ...),
+    eti(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose, ...),
     insight::clean_parameters(x),
     inherits(x, "stanmvreg")
   )

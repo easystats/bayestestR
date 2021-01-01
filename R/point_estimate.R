@@ -189,11 +189,12 @@ point_estimate.emm_list <- point_estimate.emmGrid
 #' @importFrom insight get_parameters clean_parameters
 #' @rdname point_estimate
 #' @export
-point_estimate.stanreg <- function(x, centrality = "all", dispersion = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+point_estimate.stanreg <- function(x, centrality = "all", dispersion = FALSE, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
   effects <- match.arg(effects)
+  component <- match.arg(component)
 
   out <- .prepare_output(
-    point_estimate(insight::get_parameters(x, effects = effects, parameters = parameters), centrality = centrality, dispersion = dispersion, ...),
+    point_estimate(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), centrality = centrality, dispersion = dispersion, ...),
     insight::clean_parameters(x),
     inherits(x, "stanmvreg")
   )

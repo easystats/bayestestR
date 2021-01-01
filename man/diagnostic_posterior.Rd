@@ -13,6 +13,8 @@ diagnostic_posterior(posteriors, diagnostic = c("ESS", "Rhat"), ...)
   posteriors,
   diagnostic = "all",
   effects = c("fixed", "random", "all"),
+  component = c("location", "all", "conditional", "smooth_terms", "sigma",
+    "distributional", "auxiliary"),
   parameters = NULL,
   ...
 )
@@ -40,26 +42,6 @@ diagnostic_posterior(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 \item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}
 
 \item{...}{Currently not used.}
-
-\item{effects}{Should parameters for fixed effects, random effects
-or both be returned? Only applies to mixed models. May be abbreviated.}
-
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned.}
-
-\item{component}{Which type of parameters to return, such as parameters for the
- conditional model, the zero-inflated part of the model, the dispersion
- term, the instrumental variables or marginal effects be returned? Applies
- to models with zero-inflated and/or dispersion formula, or to models with
- instrumental variables (so called fixed-effects regressions), or models
- with marginal effects from \pkg{mfx}. May be abbreviated. Note that the
-\emph{conditional} component is also called \emph{count} or \emph{mean}
-component, depending on the model. There are two convenient shortcuts:
-If \code{component = "location"}, location parameters such as \code{conditional},
-\code{zero_inflated}, \code{smooth_terms}, or \code{instruments} are returned.
-For \code{component = "distributional"} (or \code{"auxiliary"}), components
-like \code{sigma}, \code{dispersion}, \code{beta} or \code{precision} (and
-other auxiliary parameters) are returned.}
 }
 \description{
 Extract diagnostic metrics (Effective Sample Size (\code{ESS}), \code{Rhat} and Monte Carlo Standard Error \code{MCSE}).

@@ -61,14 +61,16 @@ effective_sample.brmsfit <- function(model, effects = c("fixed", "random", "all"
 
 #' @rdname effective_sample
 #' @export
-effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
   # check arguments
   effects <- match.arg(effects)
+  component <- match.arg(component)
 
   pars <-
     insight::get_parameters(
       model,
       effects = effects,
+      component = component,
       parameters = parameters
     )
 

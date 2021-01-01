@@ -236,10 +236,11 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = .89, verbo
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.stanreg <- function(x, range = "default", ci = .89, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+equivalence_test.stanreg <- function(x, range = "default", ci = .89, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
+  component <- match.arg(component)
 
-  out <- .equivalence_test_models(x, range, ci, effects, component = "conditional", parameters, verbose)
+  out <- .equivalence_test_models(x, range, ci, effects, component, parameters, verbose)
   out <- merge(out, insight::clean_parameters(x)[, c("Parameter", "Effects", "Cleaned_Parameter")], by = "Parameter", sort = FALSE)
 
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))

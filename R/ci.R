@@ -143,8 +143,9 @@ ci.sim <- function(x, ci = .89, method = "ETI", parameters = NULL, verbose = TRU
 #' @rdname ci
 #' @export
 ci.stanreg <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random", "all"),
+                       component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
                        parameters = NULL, verbose = TRUE, BF = 1, ...) {
-  .ci_bayesian(x, ci = ci, method = method, effects = effects, parameters = parameters, verbose = verbose, BF = BF, ...)
+  .ci_bayesian(x, ci = ci, method = method, effects = effects, component = component, parameters = parameters, verbose = verbose, BF = BF, ...)
 }
 
 

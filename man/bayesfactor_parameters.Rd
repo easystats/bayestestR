@@ -53,7 +53,8 @@ bayesfactor_rope(
   null = 0,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  component = c("conditional", "location", "smooth_terms", "sigma", "zi",
+    "zero_inflated", "all"),
   parameters = NULL,
   ...
 )
@@ -65,7 +66,8 @@ bayesfactor_rope(
   null = 0,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
+  component = c("conditional", "location", "smooth_terms", "sigma", "zi",
+    "zero_inflated", "all"),
   parameters = NULL,
   ...
 )

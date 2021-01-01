@@ -93,11 +93,12 @@ map_estimate.bayesQR <- function(x, precision = 2^10, method = "kernel", ...) {
 
 #' @rdname map_estimate
 #' @export
-map_estimate.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+map_estimate.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
   effects <- match.arg(effects)
+  component <- match.arg(component)
 
   .map_estimate_models(
-    x = insight::get_parameters(x, effects = effects, parameters = parameters),
+    x = insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
     precision = precision,
     method = method
   )

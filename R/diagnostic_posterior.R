@@ -58,11 +58,12 @@ diagnostic_posterior.BFBayesFactor <- diagnostic_posterior.numeric
 #' @inheritParams insight::get_parameters
 #' @rdname diagnostic_posterior
 #' @export
-diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
 
   # Find parameters
   effects <- match.arg(effects)
-  params <- insight::find_parameters(posteriors, effects = effects, parameters = parameters, flatten = TRUE)
+  component <- match.arg(component)
+  params <- insight::find_parameters(posteriors, effects = effects, component = component, parameters = parameters, flatten = TRUE)
 
   # If no diagnostic
   if (is.null(diagnostic)) {

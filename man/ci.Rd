@@ -35,6 +35,8 @@ ci(x, ...)
   ci = 0.89,
   method = "ETI",
   effects = c("fixed", "random", "all"),
+  component = c("location", "all", "conditional", "smooth_terms", "sigma",
+    "distributional", "auxiliary"),
   parameters = NULL,
   verbose = TRUE,
   BF = 1,

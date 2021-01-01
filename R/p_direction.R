@@ -271,11 +271,12 @@ p_direction.sim <- function(x, parameters = NULL, method = "direct", ...) {
 
 #' @rdname p_direction
 #' @export
-p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), parameters = NULL, method = "direct", ...) {
+p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, method = "direct", ...) {
   effects <- match.arg(effects)
+  component <- match.arg(component)
 
   out <- .prepare_output(
-    p_direction(insight::get_parameters(x, effects = effects, parameters = parameters), method = method, ...),
+    p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, ...),
     insight::clean_parameters(x),
     inherits(x, "stanmvreg")
   )

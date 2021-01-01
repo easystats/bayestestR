@@ -225,11 +225,12 @@ p_map.sim <- function(x, precision = 2^10, method = "kernel", parameters = NULL,
 
 #' @rdname p_map
 #' @export
-p_map.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+p_map.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
   effects <- match.arg(effects)
+  component <- match.arg(component)
 
   out <- .prepare_output(
-    p_map(insight::get_parameters(x, effects = effects, parameters = parameters), precision = precision, method = method),
+    p_map(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), precision = precision, method = method),
     insight::clean_parameters(x),
     inherits(x, "stanmvreg")
   )

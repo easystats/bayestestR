@@ -67,8 +67,8 @@ p_rope.MCMCglmm <- p_rope.numeric
 
 #' @rdname p_rope
 #' @export
-p_rope.stanreg <- function(x, range = "default", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
-  out <- .p_rope(rope(x, range = range, ci = 1, effects = effects, parameters = parameters, ...))
+p_rope.stanreg <- function(x, range = "default", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
+  out <- .p_rope(rope(x, range = range, ci = 1, effects = effects, component = component, parameters = parameters, ...))
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }

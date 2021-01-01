@@ -57,14 +57,16 @@ mcse.brmsfit <- function(model, effects = c("fixed", "random", "all"), component
 
 #' @rdname mcse
 #' @export
-mcse.stanreg <- function(model, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+mcse.stanreg <- function(model, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
   # check arguments
   effects <- match.arg(effects)
+  component <- match.arg(component)
 
   params <-
     insight::get_parameters(
       model,
       effects = effects,
+      component = component,
       parameters = parameters
     )
 
@@ -72,6 +74,7 @@ mcse.stanreg <- function(model, effects = c("fixed", "random", "all"), parameter
     effective_sample(
       model,
       effects = effects,
+      component = component,
       parameters = parameters
     )
 

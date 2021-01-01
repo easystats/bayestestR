@@ -195,15 +195,16 @@ mhdior.bamlss <- function(x, range = "default", precision = .1, component = c("a
 
 #' @rdname mhdior
 #' @export
-mhdior.stanreg <- function(x, range = "default", precision = .1, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+mhdior.stanreg <- function(x, range = "default", precision = .1, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
   effects <- match.arg(effects)
+  component <- match.arg(component)
 
   out <- .mhdior_models(
     x = x,
     range = range,
     precision = precision,
     effects = effects,
-    component = "conditional",
+    component = component,
     parameters = parameters,
     ...
   )

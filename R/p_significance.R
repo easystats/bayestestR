@@ -199,12 +199,13 @@ p_significance.emm_list <- p_significance.emmGrid
 
 #' @rdname p_significance
 #' @export
-p_significance.stanreg <- function(x, threshold = "default", effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+p_significance.stanreg <- function(x, threshold = "default", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
+  component <- match.arg(component)
   threshold <- .select_threshold_ps(model = x, threshold = threshold)
 
   data <- p_significance(
-    insight::get_parameters(x, effects = effects, parameters = parameters),
+    insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
     threshold = threshold
   )
 
