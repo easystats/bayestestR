@@ -687,6 +687,7 @@ describe_posterior.BFBayesFactor <- function(posteriors, centrality = "median", 
 
 #' @export
 describe_posterior.bamlss <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, component = c("conditional", "location", "all"), parameters = NULL, ...) {
+  component <- match.arg(component)
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = NULL, BF = NULL, effects = "all", component = component, parameters = parameters, ...)
   attr(out, "ci_method") <- ci_method
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))

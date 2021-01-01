@@ -185,7 +185,7 @@ ci.mcmc <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
 
 
 #' @export
-ci.bamlss <- function(x, ci = .89, component = c("conditional", "location", "all"), verbose = TRUE, ...) {
+ci.bamlss <- function(x, ci = .89, method = "ETI", component = c("conditional", "location", "all"), verbose = TRUE, ...) {
   component <- match.arg(component)
   ci(insight::get_parameters(x, component = component), ci = ci, method = method, verbose = verbose, ...)
 }
