@@ -296,7 +296,7 @@ equivalence_test.bcplm <- function(x, range = "default", ci = .89, parameters = 
 
 
 #' @export
-equivalence_test.bamlss <- function(x, range = "default", ci = .89, component = c("conditional", "location", "all"), parameters = NULL, verbose = TRUE, ...) {
+equivalence_test.bamlss <- function(x, range = "default", ci = .89, component = c("all", "conditional", "location"), parameters = NULL, verbose = TRUE, ...) {
   component <- match.arg(component)
   out <- .equivalence_test_models(insight::get_parameters(x, component = component), range, ci, effects = "fixed", component = "conditional", parameters, verbose = FALSE)
   attr(out, "object_name") <- .safe_deparse(substitute(x))

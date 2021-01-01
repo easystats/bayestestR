@@ -282,7 +282,7 @@ estimate_density.bcplm <- estimate_density.mcmc
 
 
 #' @export
-estimate_density.bamlss <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", component = c("conditional", "location", "all"), parameters = NULL, ...) {
+estimate_density.bamlss <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", component = c("all", "conditional", "location"), parameters = NULL, ...) {
   component <- match.arg(component)
   out <- estimate_density(insight::get_parameters(x, component = component, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))

@@ -165,7 +165,7 @@ p_map.mcmc.list <- p_map.mcmc
 
 
 #' @export
-p_map.bamlss <- function(x, precision = 2^10, method = "kernel", component = c("conditional", "location", "all"), parameters = NULL, ...) {
+p_map.bamlss <- function(x, precision = 2^10, method = "kernel", component = c("all", "conditional", "location"), parameters = NULL, ...) {
   component <- match.arg(component)
   out <- .p_map_models(
     x = x,

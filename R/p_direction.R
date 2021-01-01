@@ -204,7 +204,7 @@ p_direction.mcmc.list <- function(x, method = "direct", ...) {
 
 
 #' @export
-p_direction.bamlss <- function(x, method = "direct", component = c("conditional", "location", "all"), ...) {
+p_direction.bamlss <- function(x, method = "direct", component = c("all", "conditional", "location"), ...) {
   component <- match.arg(component)
   p_direction(insight::get_parameters(x, component = component), method = method, ...)
 }

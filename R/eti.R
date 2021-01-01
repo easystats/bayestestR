@@ -89,7 +89,7 @@ eti.mcmc <- function(x, ci = .89, verbose = TRUE, ...) {
 
 
 #' @export
-eti.bamlss <- function(x, ci = .89, component = c("conditional", "location", "all"), verbose = TRUE, ...) {
+eti.bamlss <- function(x, ci = .89, component = c("all", "conditional", "location"), verbose = TRUE, ...) {
   component <- match.arg(component)
   d <- insight::get_parameters(x, component = component)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "eti")

@@ -162,7 +162,7 @@ mhdior.mcmc.list <- mhdior.BFBayesFactor
 
 
 #' @export
-mhdior.bamlss <- function(x, range = "default", precision = .1, component = c("conditional", "location", "all"), ...) {
+mhdior.bamlss <- function(x, range = "default", precision = .1, component = c("all", "conditional", "location"), ...) {
   component <- match.arg(component)
   out <- mhdior(insight::get_parameters(x, component = component), range = range, precision = precision, ...)
   out
