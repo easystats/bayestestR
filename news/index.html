@@ -197,6 +197,13 @@
 <li>Support for <code>bamlss</code> models.</li>
 </ul>
 </div>
+<div id="changes-to-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<ul>
+<li>All <code>.stanreg</code> methods gain a <code>component</code> argument, to also include auxiliary parameters.</li>
+</ul>
+</div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
@@ -249,9 +256,9 @@
 <code><a href="../reference/unupdate.html">unupdate()</a></code>, a utility function to get Bayesian models un-fitted from the data, representing the priors only.</li>
 </ul>
 </div>
-<div id="changes-to-functions" class="section level2">
+<div id="changes-to-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-1" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
 <code><a href="../reference/ci.html">ci()</a></code> supports <code>emmeans</code> - both Bayesian and frequentist ( <a href='https://github.com/easystats/bayestestR/issues/312'>#312</a> - cross fix with <code>parameters</code>)</li>
@@ -303,9 +310,9 @@
 <li>Added support for <em>bayesQR</em> objects.</li>
 </ul>
 </div>
-<div id="changes-to-functions-1" class="section level2">
+<div id="changes-to-functions-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-1" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-2" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
 <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> can now be used with data frames.</li>
@@ -328,9 +335,9 @@
 <h1 class="page-header" data-toc-text="0.6.0">
 <a href="#bayestestr-060" class="anchor"></a>bayestestR 0.6.0<small> 2020-04-20 </small>
 </h1>
-<div id="changes-to-functions-2" class="section level2">
+<div id="changes-to-functions-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-2" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-3" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
 <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> now also works on <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html">effectsize::standardize_posteriors()</a></code>.</li>
@@ -360,9 +367,9 @@
 <li>Support for <em>bcplm</em> objects (package <strong>cplm</strong>)</li>
 </ul>
 </div>
-<div id="changes-to-functions-3" class="section level2">
+<div id="changes-to-functions-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-3" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-4" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
 <code><a href="../reference/estimate_density.html">estimate_density()</a></code> now also works on grouped data frames.</li>
@@ -477,7 +484,7 @@
 <li><p><code><a href="../reference/distribution.html">distribution_gamma()</a></code> to generate a (near-perfect or random) Gamma distribution</p></li>
 <li>
 <p><code>contr.bayes</code> function for orthogonal factor coding (implementation from Singmann &amp; Gronau’s <a href="https://github.com/bayesstuff/bfrms/"><code>bfrms</code></a>, used for proper prior estimation when factor have 3 levels or more. See Bayes factor vignette</p>
-<h2 id="changes-to-functions-4">Changes to functions</h2>
+<h2 id="changes-to-functions-5">Changes to functions</h2>
 </li>
 <li><p>Added support for <code>sim</code>, <code>sim.merMod</code> (from <code>arm::sim()</code>) and <code>MCMCglmm</code>-objects to many functions (like <code><a href="../reference/hdi.html">hdi()</a></code>, <code><a href="../reference/ci.html">ci()</a></code>, <code><a href="../reference/eti.html">eti()</a></code>, <code><a href="../reference/rope.html">rope()</a></code>, <code><a href="../reference/p_direction.html">p_direction()</a></code>, <code><a href="../reference/point_estimate.html">point_estimate()</a></code>, …)</p></li>
 <li><p><code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> gets an <code>effects</code> and <code>component</code> argument, to include the description of posterior samples from random effects and/or zero-inflation component.</p></li>

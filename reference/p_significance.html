@@ -205,6 +205,8 @@
   <span class='va'>x</span>,
   threshold <span class='op'>=</span> <span class='st'>"default"</span>,
   effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"location"</span>, <span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"smooth_terms"</span>, <span class='st'>"sigma"</span>,
+    <span class='st'>"distributional"</span>, <span class='st'>"auxiliary"</span><span class='op'>)</span>,
   parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
@@ -242,6 +244,12 @@
 Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
+      <th>component</th>
+      <td><p>Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the model be returned? May be abbreviated. Only
+applies to <span class="pkg">brms</span>-models.</p></td>
+    </tr>
+    <tr>
       <th>parameters</th>
       <td><p>Regular expression pattern that describes the parameters that
 should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
@@ -252,12 +260,6 @@ for the output.</p></td>
     <tr>
       <th>verbose</th>
       <td><p>Toggle off warnings.</p></td>
-    </tr>
-    <tr>
-      <th>component</th>
-      <td><p>Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
 
