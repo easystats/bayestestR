@@ -451,6 +451,7 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
     bf_prior <- unupdate(posteriors)
   }
 
+  component <- match.arg(component)
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, BF = BF, effects = effects, component = component, parameters = parameters, ...)
 
   diagnostic <-
@@ -481,7 +482,8 @@ describe_posterior.stanreg <- function(posteriors, centrality = "median", disper
 #' @param priors Add the prior used for each parameter.
 #' @rdname describe_posterior
 #' @export
-describe_posterior.stanmvreg <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = "p_direction", rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = FALSE, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+describe_posterior.stanmvreg <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = "p_direction", rope_range = "default", rope_ci = 0.89, bf_prior = NULL, diagnostic = c("ESS", "Rhat"), priors = FALSE, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
+  component <- match.arg(component)
   out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, bf_prior = bf_prior, effects = effects, parameters = parameters, ...)
   if (is.null(out$Response)) {
     out$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", out$Parameter)
