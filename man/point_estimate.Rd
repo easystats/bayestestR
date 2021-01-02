@@ -2,12 +2,15 @@
 % Please edit documentation in R/point_estimate.R
 \name{point_estimate}
 \alias{point_estimate}
+\alias{point_estimate.numeric}
 \alias{point_estimate.stanreg}
 \alias{point_estimate.brmsfit}
 \alias{point_estimate.BFBayesFactor}
 \title{Point-estimates of posterior distributions}
 \usage{
 point_estimate(x, centrality = "all", dispersion = FALSE, ...)
+
+\method{point_estimate}{numeric}(x, centrality = "all", dispersion = FALSE, threshold = 0.1, ...)
 
 \method{point_estimate}{stanreg}(
   x,
@@ -43,6 +46,8 @@ vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
 
 \item{...}{Additional arguments to be passed to or from methods.}
 
+\item{threshold}{For \code{centrality = "trimmed"} (i.e. trimmed mean), indicates the fraction (0 to 0.5) of observations to be trimmed from each end of the vector before the mean is computed.}
+
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
 
@@ -55,8 +60,6 @@ should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
-
-\item{threshold}{For \code{centrality = "trimmed"} (i.e. trimmed mean), indicates the fraction (0 to 0.5) of observations to be trimmed from each end of the vector before the mean is computed.}
 }
 \description{
 Compute various point-estimates, such as the mean, the median or the MAP, to describe posterior distributions.

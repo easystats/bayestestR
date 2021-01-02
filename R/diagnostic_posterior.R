@@ -55,6 +55,7 @@ diagnostic_posterior.BFBayesFactor <- diagnostic_posterior.numeric
 
 
 
+#' @inheritParams insight::get_parameters.BFBayesFactor
 #' @inheritParams insight::get_parameters
 #' @rdname diagnostic_posterior
 #' @export

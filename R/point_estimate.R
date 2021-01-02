@@ -59,6 +59,7 @@ point_estimate <- function(x, centrality = "all", dispersion = FALSE, ...) {
 
 
 
+#' @rdname point_estimate
 #' @export
 point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, threshold = .1, ...) {
   centrality <- match.arg(tolower(centrality), c("median", "mean", "map", "trimmed", "all"), several.ok = TRUE)
