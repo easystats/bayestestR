@@ -239,6 +239,32 @@
       <th>...</th>
       <td><p>Currently not used.</p></td>
     </tr>
+    <tr>
+      <th>effects</th>
+      <td><p>Should parameters for fixed effects, random effects
+or both be returned? Only applies to mixed models. May be abbreviated.</p></td>
+    </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Which type of parameters to return, such as parameters for the
+ conditional model, the zero-inflated part of the model, the dispersion
+ term, the instrumental variables or marginal effects be returned? Applies
+ to models with zero-inflated and/or dispersion formula, or to models with
+ instrumental variables (so called fixed-effects regressions), or models
+ with marginal effects from <span class="pkg">mfx</span>. May be abbreviated. Note that the
+<em>conditional</em> component is also called <em>count</em> or <em>mean</em>
+component, depending on the model. There are two convenient shortcuts:
+If <code>component = "location"</code>, location parameters such as <code>conditional</code>,
+<code>zero_inflated</code>, <code>smooth_terms</code>, or <code>instruments</code> are returned.
+For <code>component = "distributional"</code> (or <code>"auxiliary"</code>), components
+like <code>sigma</code>, <code>dispersion</code>, <code>beta</code> or <code>precision</code> (and
+other auxiliary parameters) are returned.</p></td>
+    </tr>
+    <tr>
+      <th>parameters</th>
+      <td><p>Regular expression pattern that describes the parameters that
+should be returned.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
