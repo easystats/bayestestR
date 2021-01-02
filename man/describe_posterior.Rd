@@ -69,6 +69,8 @@ describe_posterior(
   diagnostic = c("ESS", "Rhat"),
   priors = FALSE,
   effects = c("fixed", "random", "all"),
+  component = c("location", "all", "conditional", "smooth_terms", "sigma",
+    "distributional", "auxiliary"),
   parameters = NULL,
   ...
 )
