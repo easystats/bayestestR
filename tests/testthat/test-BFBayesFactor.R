@@ -11,7 +11,6 @@ if (require("testthat") && require("BayesFactor") && require("bayestestR")) {
   diffScores <- sleep$extra[1:10] - sleep$extra[11:20]
   x <- BayesFactor::ttestBF(x = diffScores)
   test_that("p_direction", {
-    testthat::skip_on_travis() # Until insight v3 is released
     expect_equal(as.numeric(p_direction(x)), 0.99675, tol = 1)
   })
 
@@ -69,19 +68,19 @@ if (require("testthat") && require("BayesFactor") && require("bayestestR")) {
 
   test_that("rope_range", {
     x <- BayesFactor::lmBF(len ~ supp + dose, data = ToothGrowth)
-    testthat::expect_equal(rope_range(x)[2], sd(ToothGrowth$len) / 10)
+    expect_equal(rope_range(x)[2], sd(ToothGrowth$len) / 10)
 
     x <- BayesFactor::ttestBF(
       ToothGrowth$len[ToothGrowth$supp == "OJ"],
       ToothGrowth$len[ToothGrowth$supp == "VC"]
     )
-    testthat::expect_equal(rope_range(x)[2], sd(ToothGrowth$len) / 10)
+    expect_equal(rope_range(x)[2], sd(ToothGrowth$len) / 10)
 
     x <- BayesFactor::ttestBF(formula = len ~ supp, data = ToothGrowth)
-    testthat::expect_equal(rope_range(x)[2], sd(ToothGrowth$len) / 10)
+    expect_equal(rope_range(x)[2], sd(ToothGrowth$len) / 10)
 
     # else
     x <- BayesFactor::correlationBF(ToothGrowth$len, ToothGrowth$dose)
-    testthat::expect_equal(rope_range(x), c(-0.1, 0.1))
+    expect_equal(rope_range(x), c(-0.1, 0.1))
   })
 }
