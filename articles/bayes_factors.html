@@ -384,7 +384,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <span class="va">comparison</span></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
-&gt; Model                             BF
+&gt; Model                      BF       
 &gt; [1] Petal.Length           3.447e+44
 &gt; [2] Species                5.629e+29
 &gt; [3] Species + Petal.Length 7.121e+55
@@ -398,10 +398,10 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">comparison</span>, reference <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
-&gt; Model                             BF
+&gt; Model                      BF       
 &gt; [1] Petal.Length           4.841e-12
 &gt; [2] Species                7.904e-27
-&gt; [4] Species * Petal.Length     1.285
+&gt; [4] Species * Petal.Length 1.285    
 &gt; [5] (Intercept only)       1.404e-56
 &gt; 
 &gt; * Against Denominator: [3] Species + Petal.Length
@@ -412,7 +412,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">comparison</span>, reference <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
-&gt; Model                             BF
+&gt; Model                      BF       
 &gt; [1] Petal.Length           6.125e+14
 &gt; [3] Species + Petal.Length 1.265e+26
 &gt; [4] Species * Petal.Length 1.626e+26
@@ -454,7 +454,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span>, <span class="va">m3</span>, <span class="va">m4</span>, denominator <span class="op">=</span> <span class="va">m0</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
-&gt; Model                                                            BF
+&gt; Model                                                     BF       
 &gt; [1] Petal.Length + (1 | Species)                          8.240e+24
 &gt; [2] Petal.Length + (Petal.Length | Species)               4.768e+23
 &gt; [3] Petal.Length + Petal.Width + (Petal.Length | Species) 1.525e+22
@@ -639,7 +639,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">mod_carb</span>, denominator <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison
 &gt; 
-&gt; Model                 BF
+&gt; Model              BF   
 &gt; [1] wt + am + carb 0.811
 &gt; 
 &gt; * Against Denominator: [2] wt + am
