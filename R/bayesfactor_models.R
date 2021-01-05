@@ -142,6 +142,12 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   mods <- list(...)
   mnames <- sapply(match.call(expand.dots = FALSE)$`...`, .safe_deparse)
 
+  # In the case of a list as direct input
+  if(length(mods) == 1 && inherits(mods[[1]], "list")){
+    mods <- mods[[1]]
+    mnames <- names(mods)
+  }
+
   if (!is.numeric(denominator)) {
     model_name <- .safe_deparse(match.call()[["denominator"]])
     denominator_model <- which(mnames == model_name)
