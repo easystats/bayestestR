@@ -28,6 +28,7 @@ if (require("rstanarm") &&
 
     expect_equal(BFM1, BFM2)
     expect_equal(BFM1, BFM3)
+    expect_equal(BFM1, bayestestR::bayesfactor_models(list(mo2=mo2, mo3=mo3, mo4=mo4, mo1=mo1), denominator = 4))
 
     # only on same data!
     expect_error(bayestestR::bayesfactor_models(mo1, mo2, mo4_e))
