@@ -213,6 +213,12 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   # Organize the models
   mods <- list(...)
 
+  # In the case of a list as direct input
+  if(length(mods) == 1 && inherits(mods[[1]], "list")){
+    mods <- mods[[1]]
+  }
+
+
   # Warn
   n_samps <- sapply(mods, function(x) {
     alg <- insight::find_algorithm(x)
