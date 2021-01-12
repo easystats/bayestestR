@@ -69,7 +69,7 @@ bayesfactor_pointnull() and bayesfactor_rope() are wrappers
 around bayesfactor_parameters with different defaults for the null to
 be tested against (a point and a range, respectively). Aliases of the main
 functions are prefixed with bf_*, like bf_parameters() or
-bf_pointnull()
+bf_pointnull().
  
 For more info, in particular on specifying correct priors for factors
 with more than 2 levels, see
@@ -238,7 +238,7 @@ probabilities, and must be installed for the function to work.
 around <code>bayesfactor_parameters</code> with different defaults for the null to
 be tested against (a point and a range, respectively). Aliases of the main
 functions are prefixed with <code>bf_*</code>, like <code>bf_parameters()</code> or
-<code>bf_pointnull()</code>
+<code>bf_pointnull()</code>.
 <br /> <br />
 <strong>For more info, in particular on specifying correct priors for factors
 with more than 2 levels, see
@@ -265,6 +265,33 @@ Bayes factors vignette</a>.</strong></p>
 <span class='op'>)</span>
 
 <span class='fu'>bayesfactor_rope</span><span class='op'>(</span>
+  <span class='va'>posterior</span>,
+  prior <span class='op'>=</span> <span class='cn'>NULL</span>,
+  direction <span class='op'>=</span> <span class='st'>"two-sided"</span>,
+  null <span class='op'>=</span> <span class='fu'><a href='rope_range.html'>rope_range</a></span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='fu'>bf_parameters</span><span class='op'>(</span>
+  <span class='va'>posterior</span>,
+  prior <span class='op'>=</span> <span class='cn'>NULL</span>,
+  direction <span class='op'>=</span> <span class='st'>"two-sided"</span>,
+  null <span class='op'>=</span> <span class='fl'>0</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='fu'>bf_pointull</span><span class='op'>(</span>
+  <span class='va'>posterior</span>,
+  prior <span class='op'>=</span> <span class='cn'>NULL</span>,
+  direction <span class='op'>=</span> <span class='st'>"two-sided"</span>,
+  null <span class='op'>=</span> <span class='fl'>0</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='fu'>bf_rope</span><span class='op'>(</span>
   <span class='va'>posterior</span>,
   prior <span class='op'>=</span> <span class='cn'>NULL</span>,
   direction <span class='op'>=</span> <span class='st'>"two-sided"</span>,
