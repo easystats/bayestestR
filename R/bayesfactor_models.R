@@ -195,12 +195,11 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     stringsAsFactors = FALSE
   )
 
-  attr(res, "denominator") <- denominator
-  attr(res, "BF_method") <- "BIC approximation"
-  attr(res, "unsupported_models") <- !all(supported_models)
-  class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
-  res
+  .bf_models_output(res,
+                    denominator = denominator,
+                    bf_method = "BIC approximation",
+                    unsupported_models = !all(supported_models))
 }
 
 
@@ -284,13 +283,14 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     stringsAsFactors = FALSE
   )
 
-  attr(res, "denominator") <- denominator
-  attr(res, "BF_method") <- "marginal likelihoods (bridgesampling)"
-  attr(res, "unsupported_models") <- FALSE
-  class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
-  res
+  .bf_models_output(res,
+                    denominator = denominator,
+                    bf_method = "marginal likelihoods (bridgesampling)")
 }
+
+
+
 
 #' @export
 bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
@@ -333,15 +333,24 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
     stringsAsFactors = FALSE
   )
 
+  .bf_models_output(res,
+                    denominator = 1,
+                    bf_method = "JZS (BayesFactor)",
+                    unsupported_models = !"BFlinearModel" %in% class(models@denominator))
+}
+
+
+
+# Helpers -----------------------------------------------------------------
+#' @keywords internal
+.bf_models_output <- function(res, denominator = 1, bf_method = "method", unsupported_models = FALSE) {
   attr(res, "denominator") <- 1
-  attr(res, "BF_method") <- "JZS (BayesFactor)"
-  attr(res, "unsupported_models") <- !"BFlinearModel" %in% class(models@denominator)
+  attr(res, "BF_method") <- bf_method
+  attr(res, "unsupported_models") <- unsupported_models
   class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
 }
-
-
 
 
 #' @keywords internal

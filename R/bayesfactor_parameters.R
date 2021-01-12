@@ -22,7 +22,7 @@
 #' around \code{bayesfactor_parameters} with different defaults for the null to
 #' be tested against (a point and a range, respectively). Aliases of the main
 #' functions are prefixed with \code{bf_*}, like \code{bf_parameters()} or
-#' \code{bf_pointnull()}
+#' \code{bf_pointnull()}.
 #' \cr \cr
 #' \strong{For more info, in particular on specifying correct priors for factors
 #' with more than 2 levels, see
@@ -195,12 +195,15 @@ bayesfactor_rope <- function(posterior, prior = NULL, direction = "two-sided", n
   )
 }
 
+#' @rdname bayesfactor_parameters
 #' @export
 bf_parameters <- bayesfactor_parameters
 
+#' @rdname bayesfactor_parameters
 #' @export
 bf_pointull <- bayesfactor_pointull
 
+#' @rdname bayesfactor_parameters
 #' @export
 bf_rope <- bayesfactor_rope
 

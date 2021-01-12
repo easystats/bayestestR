@@ -4,6 +4,9 @@
 \alias{bayesfactor_parameters}
 \alias{bayesfactor_pointull}
 \alias{bayesfactor_rope}
+\alias{bf_parameters}
+\alias{bf_pointull}
+\alias{bf_rope}
 \alias{bayesfactor_parameters.numeric}
 \alias{bayesfactor_parameters.stanreg}
 \alias{bayesfactor_parameters.brmsfit}
@@ -29,6 +32,33 @@ bayesfactor_pointull(
 )
 
 bayesfactor_rope(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = rope_range(posterior),
+  verbose = TRUE,
+  ...
+)
+
+bf_parameters(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  verbose = TRUE,
+  ...
+)
+
+bf_pointull(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  verbose = TRUE,
+  ...
+)
+
+bf_rope(
   posterior,
   prior = NULL,
   direction = "two-sided",
@@ -140,7 +170,7 @@ probabilities, and must be installed for the function to work.
 around \code{bayesfactor_parameters} with different defaults for the null to
 be tested against (a point and a range, respectively). Aliases of the main
 functions are prefixed with \code{bf_*}, like \code{bf_parameters()} or
-\code{bf_pointnull()}
+\code{bf_pointnull()}.
 \cr \cr
 \strong{For more info, in particular on specifying correct priors for factors
 with more than 2 levels, see
