@@ -97,4 +97,3 @@ Suggests:
 RoxygenNote: 7.1.1
 Language: en-GB
 VignetteBuilder: knitr
-Remotes: easystats/insight
