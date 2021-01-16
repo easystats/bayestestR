@@ -3,19 +3,36 @@
 \name{bayesfactor_models}
 \alias{bayesfactor_models}
 \alias{bf_models}
+\alias{update.bayesfactor_models}
+\alias{as.matrix.bayesfactor_models}
 \title{Bayes Factors (BF) for model comparison}
 \usage{
 bayesfactor_models(..., denominator = 1, verbose = TRUE)
 
 bf_models(..., denominator = 1, verbose = TRUE)
+
+\method{update}{bayesfactor_models}(object, subset = NULL, reference = NULL, ...)
+
+\method{as.matrix}{bayesfactor_models}(x, ...)
 }
 \arguments{
-\item{...}{Fitted models (see details), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').}
+\item{...}{Fitted models (see details), all fit on the same data, or a single
+\code{BFBayesFactor} object (see 'Details'). Ignored in \code{as.matrix()},
+\code{update()}.}
 
-\item{denominator}{Either an integer indicating which of the models to use as the denominator,
-or a model to be used as a denominator. Ignored for \code{BFBayesFactor}.}
+\item{denominator}{Either an integer indicating which of the models to use as
+the denominator, or a model to be used as a denominator. Ignored for
+\code{BFBayesFactor}.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{object, x}{A \code{\link{bayesfactor_models}} object.}
+
+\item{subset}{Vector of model indices to keep or remove.}
+
+\item{reference}{Index of model to rereference to, or \code{"top"} to
+reference to the best model, or \code{"bottom"} to reference to the worst
+model.}
 }
 \value{
 A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs, that prints nicely.
@@ -71,7 +88,11 @@ lm3 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 lm4 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1)
 bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result
-bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
+BFM <- bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
+
+update(BFM, reference = "bottom")
+as.matrix(BFM)
+
 \dontrun{
 # With lmerMod objects:
 # ---------------------

@@ -20,7 +20,7 @@ reference:
   - describe_posterior
   - describe_prior
   - sexit
-  
+
 - title: "Centrality and Uncertainty"
   contents:
   - point_estimate
@@ -82,7 +82,6 @@ reference:
   - contr.bayes
   - as.numeric.p_direction
   - as.data.frame.density
-  - update.bayesfactor_models
   - sexit_thresholds
 
 

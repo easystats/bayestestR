@@ -3,6 +3,7 @@
 #' Extract posterior samples of parameters, weighted across models.
 #' Weighting is done by comparing posterior model probabilities, via \code{\link{bayesfactor_models}}.
 #'
+#' @param ... Fitted models (see details), all fit on the same data, or a single \code{BFBayesFactor} object.
 #' @param missing An optional numeric value to use if a model does not contain a parameter that appears in other models. Defaults to 0.
 #' @param prior_odds Optional vector of prior odds for the models compared to the first model (or the denominator, for \code{BFBayesFactor} objects). For \code{data.frame}s, this will be used as the basis of weighting.
 #' @param iterations For \code{BayesFactor} models, how many posterior samples to draw.

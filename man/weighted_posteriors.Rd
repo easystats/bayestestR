@@ -41,7 +41,7 @@ weighted_posteriors(..., prior_odds = NULL, missing = 0, verbose = TRUE)
 )
 }
 \arguments{
-\item{...}{Fitted models (see details), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').}
+\item{...}{Fitted models (see details), all fit on the same data, or a single \code{BFBayesFactor} object.}
 
 \item{prior_odds}{Optional vector of prior odds for the models compared to the first model (or the denominator, for \code{BFBayesFactor} objects). For \code{data.frame}s, this will be used as the basis of weighting.}
 

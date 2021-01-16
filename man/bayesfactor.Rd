@@ -36,8 +36,9 @@ Only applies to mixed models. May be abbreviated.}
 
 \item{verbose}{Toggle off warnings.}
 
-\item{denominator}{Either an integer indicating which of the models to use as the denominator,
-or a model to be used as a denominator. Ignored for \code{BFBayesFactor}.}
+\item{denominator}{Either an integer indicating which of the models to use as
+the denominator, or a model to be used as a denominator. Ignored for
+\code{BFBayesFactor}.}
 
 \item{match_models}{See details.}
 

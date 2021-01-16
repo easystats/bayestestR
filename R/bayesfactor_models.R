@@ -6,9 +6,17 @@
 #'
 #' @author Mattan S. Ben-Shachar
 #'
-#' @param ... Fitted models (see details), all fit on the same data, or a single \code{BFBayesFactor} object (see 'Details').
-#' @param denominator Either an integer indicating which of the models to use as the denominator,
-#' or a model to be used as a denominator. Ignored for \code{BFBayesFactor}.
+#' @param ... Fitted models (see details), all fit on the same data, or a single
+#'   \code{BFBayesFactor} object (see 'Details'). Ignored in \code{as.matrix()},
+#'   \code{update()}.
+#' @param denominator Either an integer indicating which of the models to use as
+#'   the denominator, or a model to be used as a denominator. Ignored for
+#'   \code{BFBayesFactor}.
+#' @param object,x A \code{\link{bayesfactor_models}} object.
+#' @param subset Vector of model indices to keep or remove.
+#' @param reference Index of model to rereference to, or \code{"top"} to
+#'   reference to the best model, or \code{"bottom"} to reference to the worst
+#'   model.
 #' @inheritParams hdi
 #'
 #' @note There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
@@ -51,7 +59,11 @@
 #' lm4 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 #' bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1)
 #' bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result
-#' bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
+#' BFM <- bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
+#'
+#' update(BFM, reference = "bottom")
+#' as.matrix(BFM)
+#'
 #' \dontrun{
 #' # With lmerMod objects:
 #' # ---------------------
@@ -340,6 +352,53 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
 }
 
 
+# Methods -----------------------------------------------------------------
+
+#' @rdname bayesfactor_models
+#' @export
+update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...) {
+  if (!is.null(reference)) {
+    if (reference == "top") {
+      reference <- which.max(object$BF)
+    } else if (reference == "bottom") {
+      reference <- which.min(object$BF)
+    }
+    object$BF <- object$BF / object$BF[reference]
+    attr(object, "denominator") <- reference
+  }
+
+  denominator <- attr(object, "denominator")
+
+  if (!is.null(subset)) {
+    if (all(subset < 0)) {
+      subset <- seq_len(nrow(object))[subset]
+    }
+    object_subset <- object[subset, ]
+
+    if (denominator %in% subset) {
+      attr(object_subset, "denominator") <- which(denominator == subset)
+    } else {
+      object_subset <- rbind(object[denominator, ], object_subset)
+      attr(object_subset, "denominator") <- 1
+    }
+    object <- object_subset
+  }
+  object
+}
+
+
+#' @rdname bayesfactor_models
+#' @export
+as.matrix.bayesfactor_models <- function(x, ...) {
+  x$BF <- log(x$BF)
+  out <- -outer(x$BF, x$BF, FUN = "-")
+  rownames(out) <- colnames(out) <- x$Model
+
+  out <- exp(out)
+
+  class(out) <- c("bayesfactor_models_matrix", class(out))
+  out
+}
 
 # Helpers -----------------------------------------------------------------
 #' @keywords internal
