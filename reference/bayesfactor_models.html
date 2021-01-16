@@ -198,23 +198,46 @@ The <code>bf_*</code> function is an alias of the main function.</p>
 
     <pre class="usage"><span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>...</span>, denominator <span class='op'>=</span> <span class='fl'>1</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'>bf_models</span><span class='op'>(</span><span class='va'>...</span>, denominator <span class='op'>=</span> <span class='fl'>1</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+<span class='fu'>bf_models</span><span class='op'>(</span><span class='va'>...</span>, denominator <span class='op'>=</span> <span class='fl'>1</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='co'># S3 method for bayesfactor_models</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>object</span>, subset <span class='op'>=</span> <span class='cn'>NULL</span>, reference <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for bayesfactor_models</span>
+<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...</th>
-      <td><p>Fitted models (see details), all fit on the same data, or a single <code>BFBayesFactor</code> object (see 'Details').</p></td>
+      <td><p>Fitted models (see details), all fit on the same data, or a single
+<code>BFBayesFactor</code> object (see 'Details'). Ignored in <code><a href='https://rdrr.io/r/base/matrix.html'>as.matrix()</a></code>,
+<code><a href='https://rdrr.io/r/stats/update.html'>update()</a></code>.</p></td>
     </tr>
     <tr>
       <th>denominator</th>
-      <td><p>Either an integer indicating which of the models to use as the denominator,
-or a model to be used as a denominator. Ignored for <code>BFBayesFactor</code>.</p></td>
+      <td><p>Either an integer indicating which of the models to use as
+the denominator, or a model to be used as a denominator. Ignored for
+<code>BFBayesFactor</code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
       <td><p>Toggle off warnings.</p></td>
+    </tr>
+    <tr>
+      <th>object, x</th>
+      <td><p>A <code>bayesfactor_models</code> object.</p></td>
+    </tr>
+    <tr>
+      <th>subset</th>
+      <td><p>Vector of model indices to keep or remove.</p></td>
+    </tr>
+    <tr>
+      <th>reference</th>
+      <td><p>Index of model to rereference to, or <code>"top"</code> to
+reference to the best model, or <code>"bottom"</code> to reference to the worst
+model.</p></td>
     </tr>
     </table>
 
@@ -295,7 +318,9 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 #&gt; [4] (Intercept only)           1.000
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] Species</span><span>
-#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='va'>lm1</span><span class='op'>)</span> <span class='co'># same result</span>
+#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='va'>BFM</span> <span class='op'>&lt;-</span> <span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='va'>lm1</span><span class='op'>)</span> <span class='co'># same result</span>
+
+<span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>BFM</span>, reference <span class='op'>=</span> <span class='st'>"bottom"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison</span><span>
 #&gt; 
 #&gt; Model                             BF
@@ -304,7 +329,19 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 #&gt; [4] Species * Petal.Length 2.203e+54
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
-#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>BFM</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison</span><span> </span><span style='color: #00BBBB;'>
+#&gt; 
+#&gt;                             Numerator
+#&gt; Denominator</span><span>
+#&gt; 
+#&gt;                 |      [1] |      [2] |      [3] |      [4]
+#&gt; ----------------------------------------------------------------------
+#&gt; [1] (Intercept only)       |        1 | 1.70e+29 | 5.84e+55 | 2.20e+54
+#&gt; [2] Species                | 5.90e-30 |        1 | 3.45e+26 | 1.30e+25
+#&gt; [3] Species + Petal.Length | 1.71e-56 | 2.90e-27 |        1 |     0.04
+#&gt; [4] Species * Petal.Length | 4.54e-55 | 7.70e-26 |    26.52 |        1</div><div class='input'>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># With lmerMod objects:</span>
 <span class='co'># ---------------------</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/lme4/lme4/'>"lme4"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
