@@ -1,30 +1,21 @@
-if (require("rstanarm") &&
-  require("BayesFactor") &&
-  require("bayestestR") &&
-  require("testthat") &&
-  require("lme4") &&
-  require("bridgesampling") &&
-  require("brms")) {
+if (require("bayestestR") && require("testthat")) {
 
   # bayesfactor_models BIC --------------------------------------------------
-
-  set.seed(444)
-  mo1 <- lme4::lmer(Sepal.Length ~ (1 | Species), data = iris)
-  mo2 <- lme4::lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
-  mo3 <- lme4::lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
-  mo4 <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris)
-  mo5 <- lme4::lmer(Sepal.Length ~ Petal.Length * Petal.Width + (Petal.Length | Species), data = iris)
-  mo4_e <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris[-1, ])
-
-  # both uses of denominator
-  BFM1 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, mo1, denominator = 4)
-  BFM2 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, denominator = mo1)
-  BFM3 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, mo1, denominator = mo1)
-  BFM4 <- bayestestR::bayesfactor_models(mo2, mo3, mo4, mo5, mo1, denominator = mo1)
-
   test_that("bayesfactor_models BIC", {
-    # these are deterministic
+    skip_if_not_installed("lme4")
     set.seed(444)
+    mo1 <- lme4::lmer(Sepal.Length ~ (1 | Species), data = iris)
+    mo2 <- lme4::lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+    mo3 <- lme4::lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
+    mo4 <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris)
+    mo5 <- lme4::lmer(Sepal.Length ~ Petal.Length * Petal.Width + (Petal.Length | Species), data = iris)
+    mo4_e <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris[-1, ])
+
+    # both uses of denominator
+    BFM1 <<- bayesfactor_models(mo2, mo3, mo4, mo1, denominator = 4)
+    BFM2 <- bayesfactor_models(mo2, mo3, mo4, denominator = mo1)
+    BFM3 <- bayesfactor_models(mo2, mo3, mo4, mo1, denominator = mo1)
+    BFM4 <<- bayesfactor_models(mo2, mo3, mo4, mo5, mo1, denominator = mo1)
 
     expect_equal(BFM1, BFM2)
     expect_equal(BFM1, BFM3)
@@ -34,7 +25,7 @@ if (require("rstanarm") &&
     expect_error(bayestestR::bayesfactor_models(mo1, mo2, mo4_e))
 
     # update models
-    expect_equal(log(update(BFM2, subset = c(1, 2))$BF), c(0, 57.3, 54.52), tolerance = 0.1)
+    expect_equal(log(update(BFM2, subset = c(1, 2))$BF), c(57.3, 54.52), tolerance = 0.1)
 
     # update reference
     expect_equal(log(update(BFM2, reference = 1)$BF),
@@ -65,15 +56,19 @@ if (require("rstanarm") &&
 
 
   # bayesfactor_models STAN ---------------------------------------------
-
   test_that("bayesfactor_models STAN", {
     skip_on_cran()
-    stan_bf_0 <- stan_glm(Sepal.Length ~ 1,
+    skip_if_not_installed("rstanarm")
+    skip_if_not_installed("bridgesampling")
+    set.seed(333)
+    stan_bf_0 <- rstanarm::stan_glm(
+      Sepal.Length ~ 1,
       data = iris,
       refresh = 0,
       diagnostic_file = file.path(tempdir(), "df0.csv")
     )
-    stan_bf_1 <- stan_glm(Sepal.Length ~ Species,
+    stan_bf_1 <- rstanarm::stan_glm(
+      Sepal.Length ~ Species,
       data = iris,
       refresh = 0,
       diagnostic_file = file.path(tempdir(), "df1.csv")
@@ -95,9 +90,9 @@ if (require("rstanarm") &&
 
 
   # bayesfactor_inclusion ---------------------------------------------------
-
-  test_that("bayesfactor_inclusion", {
+  test_that("bayesfactor_inclusion | BayesFactor", {
     set.seed(444)
+    skip_if_not_installed("BayesFactor")
     # BayesFactor
     ToothGrowth$dose <- as.factor(ToothGrowth$dose)
     BF_ToothGrowth <- BayesFactor::anovaBF(len ~ dose * supp, ToothGrowth)
@@ -105,19 +100,23 @@ if (require("rstanarm") &&
       bayesfactor_inclusion(BF_ToothGrowth),
       bayesfactor_inclusion(bayesfactor_models(BF_ToothGrowth))
     )
+  })
 
+  test_that("bayesfactor_inclusion | LMM", {
     # with random effects in all models:
-    expect_true(is.nan(bayesfactor_inclusion(BFM1)[1, "BF"]))
+    skip_if_not_installed("lme4")
+
+    expect_true(is.nan(bayesfactor_inclusion(BFM1)["1:Species", "BF"]))
 
     bfinc_all <- bayesfactor_inclusion(BFM4, match_models = FALSE)
-    expect_equal(bfinc_all$p_prior, c(1, 0.8, 0.6, 0.4, 0.2), tolerance = 0.1)
+    expect_equal(bfinc_all$p_prior, c(0.8, 1, 0.6, 0.4, 0.2), tolerance = 0.1)
     expect_equal(bfinc_all$p_posterior, c(1, 1, 0.06, 0.01, 0), tolerance = 0.1)
-    expect_equal(log(bfinc_all$BF), c(NaN, 56.04, -3.22, -5.9, -8.21), tolerance = 0.1)
+    expect_equal(log(bfinc_all$BF), c(56.04, NaN, -3.22, -5.9, -8.21), tolerance = 0.1)
 
     # + match_models
     bfinc_matched <- bayesfactor_inclusion(BFM4, match_models = TRUE)
-    expect_equal(bfinc_matched$p_prior, c(1, 0.2, 0.6, 0.2, 0.2), tolerance = 0.1)
-    expect_equal(bfinc_matched$p_posterior, c(1, 0.94, 0.06, 0.01, 0), tolerance = 0.1)
-    expect_equal(log(bfinc_matched$BF), c(NaN, 57.37, -3.92, -5.25, -3.25), tolerance = 0.1)
+    expect_equal(bfinc_matched$p_prior, c(0.2, 1, 0.6, 0.2, 0.2), tolerance = 0.1)
+    expect_equal(bfinc_matched$p_posterior, c(0.94, 1, 0.06, 0.01, 0), tolerance = 0.1)
+    expect_equal(log(bfinc_matched$BF), c(57.37, NaN, -3.92, -5.25, -3.25), tolerance = 0.1)
   })
 }
