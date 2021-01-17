@@ -32,7 +32,9 @@ options(knitr.kable.NA = '')
 knitr::opts_chunk$set(comment=">")
 options(digits=2)
 
-if (!requireNamespace("ggplot2", quietly = TRUE) || !requireNamespace("dplyr", quietly = TRUE)) {
+if (!requireNamespace("ggplot2", quietly = TRUE) || 
+    !requireNamespace("logspline", quietly = TRUE) ||
+    !requireNamespace("dplyr", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
@@ -42,7 +44,7 @@ set.seed(333)
 
 # What is a *Credible* Interval?
 
-Credible intervals are an important concept in Bayesian statistics. Its core purpose is to describe and summarise **the uncertainty** related to your parameters. In this regards, it could appear as quite similar to the frequentist **Confidence Intervals**. However, while their goal is similar, **their statistical definition annd meaning is very different**. Indeed, while the latter is obtained through a complex algorithm full of rarely-tested assumptions and approximations, the credible intervals are fairly straightforward to compute. 
+Credible intervals are an important concept in Bayesian statistics. Its core purpose is to describe and summarise **the uncertainty** related to your parameters. In this regards, it could appear as quite similar to the frequentist **Confidence Intervals**. However, while their goal is similar, **their statistical definition and meaning is very different**. Indeed, while the latter is obtained through a complex algorithm full of rarely-tested assumptions and approximations, the credible intervals are fairly straightforward to compute. 
 
 As the Bayesian inference returns a distribution of possible effect values (the posterior), the credible interval is just the range containing a particular percentage of probable values. For instance, the 95\% credible interval is simply the central portion of the posterior distribution that contains 95\% of the values. 
 
@@ -51,11 +53,11 @@ Note that this drastically improve the interpretability of the Bayesian interval
 
 # Why is the default 89\%?
 
-Naturally, when it came about choosing the CI level to report by default, **people started using 95\%**, the arbitrary convention used in the **frequentist** world. However, some authors suggested that 95\% might not be the most apppropriate for Bayesian posterior distributions, potentially lacking stability if not enough posterior samples are drawn [@kruschke2014doing]. 
+Naturally, when it came about choosing the CI level to report by default, **people started using 95\%**, the arbitrary convention used in the **frequentist** world. However, some authors suggested that 95\% might not be the most appropriate for Bayesian posterior distributions, potentially lacking stability if not enough posterior samples are drawn [@kruschke2014doing]. 
 
 The proposition was to use 90\% instead of 95\%. However, recently, McElreath (2014, 2018) suggested that if we were to use arbitrary thresholds in the first place, why not use 89\% as this value has the additional argument of being a prime number.
 
-Thus, by default, the CIs are computed with 89\% intervals (`ci = 0.89`), deemed to be more stable than, for instance, 95\% intervals [@kruschke2014doing]. An effective sample size (ESS; see [here](https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html)) of at least 10.000 is recommended if 95\% intervals should be computed (Kruschke, 2014, p. 183ff). Moreover, 89 is the highest **prime number** that does not exceed the already unstable 95\% threshold. What does it have to do with anything? *Nothing*, but it reminds us of the total arbitrarity of any of these conventions [@mcelreath2018statistical].
+Thus, by default, the CIs are computed with 89\% intervals (`ci = 0.89`), deemed to be more stable than, for instance, 95\% intervals [@kruschke2014doing]. An effective sample size (ESS; see [here](https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html)) of at least 10.000 is recommended if 95\% intervals should be computed (Kruschke, 2014, p. 183ff). Moreover, 89 is the highest **prime number** that does not exceed the already unstable 95\% threshold. What does it have to do with anything? *Nothing*, but it reminds us of the total arbitrarily of any of these conventions [@mcelreath2018statistical].
 
 # Different types of CIs
 
@@ -76,15 +78,15 @@ ci_eti <- ci(posterior, method = "ETI")
 # Plot the distribution and add the limits of the two CIs
 posterior %>% 
   estimate_density(extend=TRUE) %>% 
-  ggplot(aes(x=x, y=y)) +
-  geom_area(fill="orange") +
+  ggplot(aes(x = x, y = y)) +
+  geom_area(fill = "orange") +
   theme_classic() +
   # HDI in blue
-  geom_vline(xintercept=ci_hdi$CI_low, color="royalblue", size=3) +
-  geom_vline(xintercept=ci_hdi$CI_high, color="royalblue", size=3) +
+  geom_vline(xintercept = ci_hdi$CI_low, color = "royalblue", size = 3) +
+  geom_vline(xintercept = ci_hdi$CI_high, color = "royalblue", size = 3) +
   # Quantile in red
-  geom_vline(xintercept=ci_eti$CI_low, color="red", size=1) +
-  geom_vline(xintercept=ci_eti$CI_high, color="red", size=1)
+  geom_vline(xintercept = ci_eti$CI_low, color = "red", size = 1) +
+  geom_vline(xintercept = ci_eti$CI_high, color = "red", size = 1)
 ```
 
 > **These are exactly the same...**
@@ -92,10 +94,6 @@ posterior %>%
 But is it also the case for other types of distributions?
 
 ```{r warning=FALSE, message=FALSE}
-library(bayestestR)
-library(dplyr)
-library(ggplot2)
-
 # Generate a beta distribution
 posterior <- distribution_beta(1000, 6, 2)
 
@@ -105,16 +103,16 @@ ci_eti <- ci(posterior, method = "ETI")
 
 # Plot the distribution and add the limits of the two CIs
 posterior %>% 
-  estimate_density(extend=TRUE) %>% 
-  ggplot(aes(x=x, y=y)) +
-  geom_area(fill="orange") +
+  estimate_density(extend = TRUE) %>% 
+  ggplot(aes(x = x, y = y)) +
+  geom_area(fill = "orange") +
   theme_classic() +
   # HDI in blue
-  geom_vline(xintercept=ci_hdi$CI_low, color="royalblue", size=3) +
-  geom_vline(xintercept=ci_hdi$CI_high, color="royalblue", size=3) +
+  geom_vline(xintercept = ci_hdi$CI_low, color = "royalblue", size = 3) +
+  geom_vline(xintercept = ci_hdi$CI_high, color = "royalblue", size = 3) +
   # ETI in red
-  geom_vline(xintercept=ci_eti$CI_low, color="red", size=1) +
-  geom_vline(xintercept=ci_eti$CI_high, color="red", size=1)
+  geom_vline(xintercept = ci_eti$CI_low, color = "red", size = 1) +
+  geom_vline(xintercept = ci_eti$CI_high, color = "red", size = 1)
 ```
 
 > **The difference is strong with this one.**
@@ -136,7 +134,7 @@ posterior <- distribution_normal(1000, mean = .5, sd = .3)
 si_1 <- si(posterior, prior, BF = 1)
 si_3 <- si(posterior, prior, BF = 3)
 
-ggplot(mapping = aes(x=x, y=y)) +
+ggplot(mapping = aes(x = x, y = y)) +
   theme_classic() +
   # The posterior
   geom_area(fill = "orange",
@@ -145,15 +143,15 @@ ggplot(mapping = aes(x=x, y=y)) +
   geom_area(color = "black", fill = NA, size = 1, linetype = "dashed",
             data = estimate_density(prior, extend = TRUE)) +
   # BF = 1 SI in blue
-  geom_vline(xintercept=si_1$CI_low, color="royalblue", size=1) +
-  geom_vline(xintercept=si_1$CI_high, color="royalblue", size=1) +
+  geom_vline(xintercept = si_1$CI_low, color = "royalblue", size = 1) +
+  geom_vline(xintercept = si_1$CI_high, color = "royalblue", size = 1) +
   # BF = 3 SI in red
-  geom_vline(xintercept=si_3$CI_low, color="red", size=1) +
-  geom_vline(xintercept=si_3$CI_high, color="red", size=1)
+  geom_vline(xintercept = si_3$CI_low, color = "red", size = 1) +
+  geom_vline(xintercept = si_3$CI_high, color = "red", size = 1)
 ```
 
 Between the blue lines are values that received *some* support by the data (this is a BF = 1 SI), which received at least "moderate" support from the data.
 
-From the presepctive of the Savage-Dickey Bayes factor, testing against a point null hypothesis for any value within the support interval will yeild a Bayes factor smaller than 1/`BF`. 
+From the perspective of the Savage-Dickey Bayes factor, testing against a point null hypothesis for any value within the support interval will yield a Bayes factor smaller than 1/`BF`. 
 
 # References
