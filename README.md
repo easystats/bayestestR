@@ -1,10 +1,15 @@
 
 # bayestestR <img src='man/figures/logo.png' align="right" height="139" />
 
-[![CRAN](http://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR)
-[![downloads](http://cranlogs.r-pkg.org/badges/bayestestR)](https://cran.r-project.org/package=bayestestR)
-[![codecov](https://codecov.io/gh/easystats/bayestestR/branch/master/graph/badge.svg)](https://codecov.io/gh/easystats/bayestestR)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.01541/status.svg)](https://doi.org/10.21105/joss.01541)
+[![CRAN](http://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR)
+[![Documentation](https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63)](https://easystats.github.io/bayestestR/)
+[![Features](https://img.shields.io/badge/features-bayestestR-orange.svg?colorB=2196F3)](https://easystats.github.io/bayestestR/reference/index.html)
+[![R
+check](https://github.com/easystats/bayestestR/workflows/R-check/badge.svg?branch=master)](https://github.com/easystats/bayestestR/actions)
+[![downloads](http://cranlogs.r-pkg.org/badges/bayestestR)](https://cran.r-project.org/package=bayestestR)
+[![total](https://cranlogs.r-pkg.org/badges/grand-total/bayestestR)](https://cranlogs.r-pkg.org/)
+[![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
 
 ***Become a Bayesian master you will***
 
@@ -37,10 +42,6 @@ install.packages("bayestestR")
 ```
 
 ## Documentation
-
-[![Documentation](https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63)](https://easystats.github.io/bayestestR/)
-[![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
-[![Features](https://img.shields.io/badge/features-bayestestR-orange.svg?colorB=2196F3)](https://easystats.github.io/bayestestR/reference/index.html)
 
 Click on the buttons above to access the package
 [**documentation**](https://easystats.github.io/bayestestR/) and the
@@ -135,9 +136,9 @@ describe_posterior(
 )
 ## # Description of Posterior Distributions
 ## 
-## Parameter |    Median |          89% CI |     pd |    ps
-## --------------------------------------------------------
-## Posterior | 4.510e-05 | [-1.654, 1.529] | 50.00% | 0.463
+## Parameter | Median |          89% CI |     pd |    ps
+## -----------------------------------------------------
+## Posterior |  0.006 | [-1.573, 1.591] | 50.23% | 0.462
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -444,12 +445,12 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.39
+## [1] 0.38
 ```
 
 # References
 
-<div id="refs" class="references">
+<div id="refs" class="references hanging-indent">
 
 <div id="ref-kruschke2015doing">
 
