@@ -55,7 +55,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends:
-  R (>= 3.3)
+  R (>= 3.4)
 Imports:
 	insight (>= 0.11.1),
 	methods,
