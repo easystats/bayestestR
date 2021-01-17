@@ -45,8 +45,9 @@ if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
 
 set.seed(4)
 
-if (require(ggplot2))
+if (require("ggplot2") && require("see")) {
   theme_set(theme_modern())
+}
 ```
 
 The adoption of the Bayesian framework for applied statistics, especially in the social and psychological sciences, seems to be developing in two distinct directions. One of the key topics marking their separation is their opinion about **the Bayes factor**. In short, some authors (e.g., the "Amsterdam school", led by [Wagenmakers](https://www.bayesianspectacles.org/)) advocate its use and emphasize its qualities as a statistical index, while others point to its limits and prefer, instead, the precise description of posterior distributions (using [CIs](https://easystats.github.io/bayestestR/reference/hdi.html), [ROPEs](https://easystats.github.io/bayestestR/reference/rope.html), etc.). 
