@@ -3,7 +3,7 @@
 ## General
 
 * Support for `bamlss` models.
-* Roll-back R dependency to R >= 3.3.
+* Roll-back R dependency to R >= 3.4.
 
 ## Changes to functions
 
