@@ -1,4 +1,5 @@
 #' @importFrom insight print_color
+#' @importFrom tools toTitleCase
 #' @export
 print.bayesfactor_models <- function(x, digits = 3, log = FALSE, ...) {
   BFE <- x
@@ -12,8 +13,15 @@ print.bayesfactor_models <- function(x, digits = 3, log = FALSE, ...) {
   BFE$BF <- insight::format_value(BFE$BF, digits = digits, missing = "NA", zap_small = log)
   BFE$Model[BFE$Model == "1"] <- "(Intercept only)" # indicate null-model
   BFE$Model <- paste0(" [", seq_len(nrow(BFE)), "] ", BFE$Model)
-  denM <- .trim(BFE$Model[denominator])
-  BFE <- BFE[-denominator, ]
+
+  # Denominator
+  if(is.numeric(denominator)) {
+    denM <- .trim(BFE$Model[denominator])
+    BFE <- BFE[-denominator, ]
+  } else{
+    denM <- tools::toTitleCase(denominator)
+  }
+
 
   # footer
   footer <- list(
