@@ -55,7 +55,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends:
-  R (>= 3.4)
+  R (>= 3.6)
 Imports:
 	insight (>= 0.11.1),
 	methods,
@@ -97,4 +97,3 @@ Suggests:
 RoxygenNote: 7.1.1
 Language: en-GB
 VignetteBuilder: knitr
-Remotes: easystats/insight
