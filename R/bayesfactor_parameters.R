@@ -163,7 +163,7 @@ bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sid
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_pointull <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
+bayesfactor_pointnull <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
   if (length(null) > 1) {
     message("'null' is a range - computing a ROPE based Bayes factor.")
   }
@@ -201,7 +201,7 @@ bf_parameters <- bayesfactor_parameters
 
 #' @rdname bayesfactor_parameters
 #' @export
-bf_pointull <- bayesfactor_pointull
+bf_pointnull <- bayesfactor_pointnull
 
 #' @rdname bayesfactor_parameters
 #' @export

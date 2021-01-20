@@ -2,10 +2,10 @@
 % Please edit documentation in R/bayesfactor_parameters.R
 \name{bayesfactor_parameters}
 \alias{bayesfactor_parameters}
-\alias{bayesfactor_pointull}
+\alias{bayesfactor_pointnull}
 \alias{bayesfactor_rope}
 \alias{bf_parameters}
-\alias{bf_pointull}
+\alias{bf_pointnull}
 \alias{bf_rope}
 \alias{bayesfactor_parameters.numeric}
 \alias{bayesfactor_parameters.stanreg}
@@ -22,7 +22,7 @@ bayesfactor_parameters(
   ...
 )
 
-bayesfactor_pointull(
+bayesfactor_pointnull(
   posterior,
   prior = NULL,
   direction = "two-sided",
@@ -49,7 +49,7 @@ bf_parameters(
   ...
 )
 
-bf_pointull(
+bf_pointnull(
   posterior,
   prior = NULL,
   direction = "two-sided",

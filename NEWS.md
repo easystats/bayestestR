@@ -1,3 +1,9 @@
+# bayestestR 0.8.1.1
+
+## Bug fixes
+
+* `bayesfactor_pointull()` / `bf_pointull()` are now `bayesfactor_pointnull()` / `bf_pointnull()` (can *you* spot the difference? #363 ).
+
 # bayestestR 0.8.1
 
 ## General
