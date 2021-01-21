@@ -1,5 +1,6 @@
 if (require("BayesFactor", quietly = TRUE)) {
   test_that("weighted_posteriors for BayesFactor", {
+    testthat::skip_on_cran()
     set.seed(123)
     # compute Bayes Factor for 31 different regression models
     null_den <- regressionBF(mpg ~ cyl + disp + hp + drat + wt,
