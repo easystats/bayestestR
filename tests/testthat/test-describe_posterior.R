@@ -32,7 +32,7 @@ if (require("testthat") && require("bayestestR") && require("rstanarm") && requi
     test_that("describe_posterior", {
       set.seed(333)
       # Rstanarm
-      x <- rstanarm::stan_glm(mpg ~ wt, data = mtcars, refresh = 0)
+      x <- rstanarm::stan_glm(mpg ~ wt, data = mtcars, refresh = 0, iter = 500)
       rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
       expect_equal(dim(rez), c(2, 21))
       expect_equal(colnames(rez), c(

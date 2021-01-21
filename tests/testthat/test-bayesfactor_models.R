@@ -65,12 +65,14 @@ if (require("bayestestR") && require("testthat")) {
       Sepal.Length ~ 1,
       data = iris,
       refresh = 0,
+      iter = 500,
       diagnostic_file = file.path(tempdir(), "df0.csv")
     )
     stan_bf_1 <- rstanarm::stan_glm(
       Sepal.Length ~ Species,
       data = iris,
       refresh = 0,
+      iter = 500,
       diagnostic_file = file.path(tempdir(), "df1.csv")
     )
 
