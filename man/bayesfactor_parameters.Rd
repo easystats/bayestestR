@@ -246,15 +246,16 @@ null-model) (\cite{Wetzels et al. 2011}).
 
 \examples{
 library(bayestestR)
+if (require("logspline")) {
+  prior <- distribution_normal(1000, mean = 0, sd = 1)
+  posterior <- distribution_normal(1000, mean = .5, sd = .3)
+  bayesfactor_parameters(posterior, prior)
+}
 
-prior <- distribution_normal(1000, mean = 0, sd = 1)
-posterior <- distribution_normal(1000, mean = .5, sd = .3)
-
-bayesfactor_parameters(posterior, prior)
 \dontrun{
 # rstanarm models
 # ---------------
-if (require("rstanarm") && require("emmeans")) {
+if (require("rstanarm") && require("emmeans") && require("logspline")) {
   contrasts(sleep$group) <- contr.bayes # see vingette
   stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
   bayesfactor_parameters(stan_model)
