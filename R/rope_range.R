@@ -63,7 +63,7 @@ rope_range.brmsfit <- function(x, ...) {
   information <- insight::model_info(x)
 
   if (insight::is_multivariate(x)) {
-    mapply(function(i, j) .rope_range(i, j), x, information, response)
+    mapply(function(i, j) .rope_range(x, i, j), information, response)
   } else {
     .rope_range(x, information, response)
   }
