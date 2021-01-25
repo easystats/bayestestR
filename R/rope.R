@@ -102,6 +102,11 @@
 #' rope(model)
 #' rope(model, ci = c(.90, .95))
 #'
+#' library(brms)
+#' model <- brms::brm(brms::mvbind(mpg, disp) ~ wt + cyl, data = mtcars)
+#' rope(model)
+#' rope(model, ci = c(.90, .95))
+#'
 #' library(BayesFactor)
 #' bf <- ttestBF(x = rnorm(100, 1, 1))
 #' rope(bf)
@@ -349,6 +354,8 @@ rope.brmsfit <- function(
   # check range argument
   if (all(range == "default")) {
     range <- rope_range(x)
+  # we expect a list with named vectors (length two) in the multivariate case.
+  # Names state the response variable.
   } else if (insight::is_multivariate(x) && 
     (!is.list(range) || length(range) != length(insight::find_response(x) ||
         names(range) != insight::find_response(x)))) {
@@ -360,10 +367,12 @@ rope.brmsfit <- function(
   # check for possible collinearity that might bias ROPE and print a warning
   if (verbose) .check_multicollinearity(x, "rope")
 
-  # calc rope range
+  # calc rope
   if (insight::is_multivariate(x)) {
     dv <- insight::find_response(x)
 
+    # ROPE range / width differs between response varialbe. Thus ROPE is
+    # calculated for every variable on its own.
     rope_data <- lapply(
       dv,
       function(dv) {
@@ -375,6 +384,12 @@ rope.brmsfit <- function(
           verbose = verbose,
           ...
         )
+
+        # It's a waste of performance to calculate ROPE for all parameters
+        # with the ROPE width of a specific response variable and to throw
+        # away the unwanted results. However, performance impact should not be
+        # too high and this way it is much easier to handle the `parameters`
+        # argument.
         ret[grepl(paste0("(.*)", dv), ret$Parameter), ]
       }
     )
