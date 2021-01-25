@@ -325,31 +325,45 @@ rope.stanfit <- rope.stanreg
 
 #' @rdname rope
 #' @export
-rope.brmsfit <- function(x, range = "default", ci = .89, ci_method = "HDI", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
+rope.brmsfit <- function(
+  x, 
+  range = "default", 
+  ci = .89, 
+  ci_method = "HDI", 
+  effects = c("fixed", "random", "all"), 
+  component = c("conditional", "zi", "zero_inflated", "all"), 
+  parameters = NULL, 
+  verbose = TRUE, 
+  ...
+) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
-  if (insight::is_multivariate(x)) {
-    stop("Multivariate response models are not yet supported.")
-  }
-
+  # check range argument
   if (all(range == "default")) {
     range <- rope_range(x)
+    #print(range)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  # check for possible collinearity that might bias ROPE
+  # check for possible collinearity that might bias ROPE and print a warning
   if (verbose) .check_multicollinearity(x, "rope")
 
-  rope_data <- rope(
-    insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
-    range = range,
-    ci = ci,
-    ci_method = ci_method,
-    verbose = verbose,
-    ...
-  )
+  # calc rope range
+  if (insight::is_multivariate(x)) {
+
+  } else {
+    rope_data <- rope(
+      insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+      range = range,
+      ci = ci,
+      ci_method = ci_method,
+      verbose = verbose,
+      ...
+    )
+  }
+
 
   out <- .prepare_output(rope_data, insight::clean_parameters(x))
 
