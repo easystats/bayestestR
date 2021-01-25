@@ -3,7 +3,14 @@
 #' Compute the proportion of the HDI (default to the 89\% HDI) of a posterior distribution that lies within a region of practical equivalence.
 #'
 #' @param x Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
-#' @param range ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.
+#' @param range ROPE's lower and higher bounds. Should be \code{"default"} or
+#' depending on the number of outcome variables a vector or a list. In models with one response,
+#' `range` should be a vector of length two (e.g., \code{c(-0.1, 0.1)}). In
+#' multivariate models, `range` should be a list with a numeric vectors for
+#' each response variable. Vector names should correspond to the name of the response
+#' variables. If \code{"default"} and input is a vector, the range is set to \code{c(-0.1,
+#' 0.1)}. If \code{"default"} and input is a Bayesian model,
+#' \code{\link[=rope_range]{rope_range()}} is used.
 #' @param ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.
 #' @param ci_method The type of interval to use to quantify the percentage in ROPE. Can be 'HDI' (default) or 'ETI'. See \code{\link{ci}}.
 #'
@@ -342,7 +349,10 @@ rope.brmsfit <- function(
   # check range argument
   if (all(range == "default")) {
     range <- rope_range(x)
-    #print(range)
+  } else if (insight::is_multivariate(x) && 
+    (!is.list(range) || length(range) != length(insight::find_response(x) ||
+        names(range) != insight::find_response(x)))) {
+    stop("With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2.")
   } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
@@ -352,7 +362,25 @@ rope.brmsfit <- function(
 
   # calc rope range
   if (insight::is_multivariate(x)) {
+    dv <- insight::find_response(x)
 
+    rope_data <- lapply(
+      dv,
+      function(dv) {
+        ret <- rope(
+          insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+          range = range[[dv]],
+          ci = ci,
+          ci_method = ci_method,
+          verbose = verbose,
+          ...
+        )
+        ret[grepl(paste0("(.*)", dv), ret$Parameter), ]
+      }
+    )
+    rope_data <- do.call(rbind, rope_data)
+
+    out <- .prepare_output(rope_data, insight::clean_parameters(x), is_brms_mv = TRUE)
   } else {
     rope_data <- rope(
       insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
@@ -362,10 +390,9 @@ rope.brmsfit <- function(
       verbose = verbose,
       ...
     )
+
+    out <- .prepare_output(rope_data, insight::clean_parameters(x))
   }
-
-
-  out <- .prepare_output(rope_data, insight::clean_parameters(x))
 
   attr(out, "HDI_area") <- attr(rope_data, "HDI_area")
   attr(out, "object_name") <- .safe_deparse(substitute(x))

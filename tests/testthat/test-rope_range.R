@@ -16,7 +16,7 @@ if (require("brms", quietly = TRUE)) {
       rope_range(model),
       list(
         mpg = c(-0.602694, 0.602694),
-        disp = c(-12.393869, 12.393869),
+        disp = c(-12.393869, 12.393869)
       ),
       tolerance = 0.01
     )
