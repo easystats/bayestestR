@@ -215,30 +215,28 @@
 <span class='co'># Rstanarm ----------------------</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='co'># Simple regressions</span>
-  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Petal.Length</span> <span class='op'>*</span> <span class='va'>Species</span>,
+  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span>,
     data <span class='op'>=</span> <span class='va'>iris</span>, chains <span class='op'>=</span> <span class='fl'>2</span>, refresh <span class='op'>=</span> <span class='fl'>0</span>
   <span class='op'>)</span>
   <span class='fu'>bayesian_as_frequentist</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: rstanarm</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>This is rstanarm version 2.21.1</span></div><div class='output co'>#&gt; <span class='message'>- See https://mc-stan.org/rstanarm/articles/priors for changes to default priors!</span></div><div class='output co'>#&gt; <span class='message'>- Default priors may change, so it's safest to specify priors, even if equivalent to the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>  options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; 
+#&gt; Call:
+#&gt; stats::lm(formula = formula, data = data)
+#&gt; 
+#&gt; Coefficients:
+#&gt;       (Intercept)  Speciesversicolor   Speciesvirginica  
+#&gt;             5.006              0.930              1.582  
+#&gt; </div><div class='input'><span class='co'># }</span>
 
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>vs</span> <span class='op'>~</span> <span class='va'>mpg</span>,
     family <span class='op'>=</span> <span class='st'>"binomial"</span>,
     data <span class='op'>=</span> <span class='va'>mtcars</span>, chains <span class='op'>=</span> <span class='fl'>2</span>, refresh <span class='op'>=</span> <span class='fl'>0</span>
   <span class='op'>)</span>
   <span class='fu'>bayesian_as_frequentist</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: rstanarm</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: Rcpp</span></div><div class='output co'>#&gt; <span class='message'>This is rstanarm version 2.21.1</span></div><div class='output co'>#&gt; <span class='message'>- See https://mc-stan.org/rstanarm/articles/priors for changes to default priors!</span></div><div class='output co'>#&gt; <span class='message'>- Default priors may change, so it's safest to specify priors, even if equivalent to the defaults.</span></div><div class='output co'>#&gt; <span class='message'>- For execution on a local, multicore CPU with excess RAM we recommend calling</span></div><div class='output co'>#&gt; <span class='message'>  options(mc.cores = parallel::detectCores())</span></div><div class='output co'>#&gt; 
-#&gt; Call:  stats::glm(formula = formula, family = family, data = data)
-#&gt; 
-#&gt; Coefficients:
-#&gt; (Intercept)          mpg  
-#&gt;     -8.8331       0.4304  
-#&gt; 
-#&gt; Degrees of Freedom: 31 Total (i.e. Null);  30 Residual
-#&gt; Null Deviance:	    43.86 
-#&gt; Residual Deviance: 25.53 	AIC: 29.53</div><div class='input'><span class='co'># }</span>
 
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='co'># Mixed models</span>
   <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glmer.html'>stan_glmer</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Petal.Length</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>Species</span><span class='op'>)</span>,
     data <span class='op'>=</span> <span class='va'>iris</span>, chains <span class='op'>=</span> <span class='fl'>2</span>, refresh <span class='op'>=</span> <span class='fl'>0</span>

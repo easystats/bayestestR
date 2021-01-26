@@ -211,62 +211,62 @@
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.68</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>reshape_ci</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   Parameter  CI_low_68 CI_high_68 CI_low_89 CI_high_89 CI_low_95 CI_high_95
-#&gt; 1        X1 -1.0147515   1.360947 -1.499165   2.057359 -1.652998   2.170620
-#&gt; 2        X2 -0.8520943   1.134661 -1.504062   1.832399 -1.702927   1.962836
-#&gt; 3        X3 -1.0674302   1.044977 -1.636316   1.748151 -1.973564   2.144929
-#&gt; 4        X4 -0.9424791   1.089103 -1.889010   1.623619 -2.058253   2.099978</div><div class='input'><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    Parameter CI     CI_low  CI_high
-#&gt; 1         X1 68 -1.0147515 1.360947
-#&gt; 2         X1 89 -1.4991652 2.057359
-#&gt; 3         X1 95 -1.6529980 2.170620
-#&gt; 4         X2 68 -0.8520943 1.134661
-#&gt; 5         X2 89 -1.5040622 1.832399
-#&gt; 6         X2 95 -1.7029267 1.962836
-#&gt; 7         X3 68 -1.0674302 1.044977
-#&gt; 8         X3 89 -1.6363164 1.748151
-#&gt; 9         X3 95 -1.9735643 2.144929
-#&gt; 10        X4 68 -0.9424791 1.089103
-#&gt; 11        X4 89 -1.8890100 1.623619
-#&gt; 12        X4 95 -2.0582530 2.099978</div><div class='input'>
+#&gt; 1        X1 -1.0283674  1.1361413 -1.268945   1.736463 -1.772931   2.004190
+#&gt; 2        X2 -1.0058543  0.7886629 -1.425960   1.506810 -2.003771   1.626684
+#&gt; 3        X3 -0.8606764  1.2167014 -1.368918   1.784742 -1.581339   1.877980
+#&gt; 4        X4 -0.9785388  1.1577853 -1.572820   1.540995 -2.011927   1.936843</div><div class='input'><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    Parameter CI     CI_low   CI_high
+#&gt; 1         X1 68 -1.0283674 1.1361413
+#&gt; 2         X1 89 -1.2689445 1.7364630
+#&gt; 3         X1 95 -1.7729310 2.0041899
+#&gt; 4         X2 68 -1.0058543 0.7886629
+#&gt; 5         X2 89 -1.4259597 1.5068098
+#&gt; 6         X2 95 -2.0037710 1.6266838
+#&gt; 7         X3 68 -0.8606764 1.2167014
+#&gt; 8         X3 89 -1.3689182 1.7847418
+#&gt; 9         X3 95 -1.5813393 1.8779802
+#&gt; 10        X4 68 -0.9785388 1.1577853
+#&gt; 11        X4 89 -1.5728196 1.5409946
+#&gt; 12        X4 95 -2.0119268 1.9368427</div><div class='input'>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='describe_posterior.html'>describe_posterior</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.68</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>reshape_ci</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   Parameter      Median CI_low_95 CI_high_95  CI_low_68 CI_high_68 CI_low_89
-#&gt; 1        X1 -0.02936115 -1.779354   1.802264 -0.8039913  1.0084946 -1.779354
-#&gt; 2        X2 -0.04016018 -1.937312   1.900625 -1.3577419  0.9893288 -1.937312
-#&gt; 3        X3  0.05042967 -2.056262   2.334875 -0.7714339  1.0650680 -2.056262
-#&gt; 4        X4  0.10265400 -1.919542   1.922422 -1.0427264  0.8949964 -1.234465
+</div><div class='output co'>#&gt;   Parameter       Median CI_low_95 CI_high_95  CI_low_68 CI_high_68 CI_low_89
+#&gt; 1        X1 -0.035621578 -1.556132   1.758079 -0.8216807  0.9444641 -1.433428
+#&gt; 2        X2  0.195626928 -1.599301   2.010413 -0.8473286  1.0477185 -1.488663
+#&gt; 3        X3 -0.020946056 -2.023973   1.689505 -1.1146402  0.7927846 -1.642995
+#&gt; 4        X4  0.002044898 -1.718488   1.944616 -1.1947553  0.5969643 -1.194755
 #&gt;   CI_high_89   pd ROPE_CI ROPE_low ROPE_high ROPE_Percentage
-#&gt; 1   1.303599 0.52      89     -0.1       0.1      0.16666667
-#&gt; 2   1.566582 0.51      89     -0.1       0.1      0.06666667
-#&gt; 3   1.289457 0.53      89     -0.1       0.1      0.11111111
-#&gt; 4   1.922422 0.52      89     -0.1       0.1      0.02222222</div><div class='input'><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    Parameter      Median CI     CI_low   CI_high   pd ROPE_CI ROPE_low
-#&gt; 1         X1 -0.02936115 68 -0.8039913 1.0084946 0.52      89     -0.1
-#&gt; 2         X1 -0.02936115 89 -1.7793544 1.3035991 0.52      89     -0.1
-#&gt; 3         X1 -0.02936115 95 -1.7793544 1.8022637 0.52      89     -0.1
-#&gt; 4         X2 -0.04016018 68 -1.3577419 0.9893288 0.51      89     -0.1
-#&gt; 5         X2 -0.04016018 89 -1.9373119 1.5665817 0.51      89     -0.1
-#&gt; 6         X2 -0.04016018 95 -1.9373119 1.9006253 0.51      89     -0.1
-#&gt; 7         X3  0.05042967 68 -0.7714339 1.0650680 0.53      89     -0.1
-#&gt; 8         X3  0.05042967 89 -2.0562619 1.2894566 0.53      89     -0.1
-#&gt; 9         X3  0.05042967 95 -2.0562619 2.3348746 0.53      89     -0.1
-#&gt; 10        X4  0.10265400 68 -1.0427264 0.8949964 0.52      89     -0.1
-#&gt; 11        X4  0.10265400 89 -1.2344646 1.9224221 0.52      89     -0.1
-#&gt; 12        X4  0.10265400 95 -1.9195425 1.9224221 0.52      89     -0.1
+#&gt; 1   1.359016 0.52      89     -0.1       0.1      0.12222222
+#&gt; 2   1.582404 0.56      89     -0.1       0.1      0.07777778
+#&gt; 3   1.423688 0.51      89     -0.1       0.1      0.10000000
+#&gt; 4   1.944616 0.52      89     -0.1       0.1      0.11111111</div><div class='input'><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    Parameter       Median CI     CI_low   CI_high   pd ROPE_CI ROPE_low
+#&gt; 1         X1 -0.035621578 68 -0.8216807 0.9444641 0.52      89     -0.1
+#&gt; 2         X1 -0.035621578 89 -1.4334276 1.3590163 0.52      89     -0.1
+#&gt; 3         X1 -0.035621578 95 -1.5561321 1.7580788 0.52      89     -0.1
+#&gt; 4         X2  0.195626928 68 -0.8473286 1.0477185 0.56      89     -0.1
+#&gt; 5         X2  0.195626928 89 -1.4886635 1.5824044 0.56      89     -0.1
+#&gt; 6         X2  0.195626928 95 -1.5993005 2.0104126 0.56      89     -0.1
+#&gt; 7         X3 -0.020946056 68 -1.1146402 0.7927846 0.51      89     -0.1
+#&gt; 8         X3 -0.020946056 89 -1.6429951 1.4236881 0.51      89     -0.1
+#&gt; 9         X3 -0.020946056 95 -2.0239728 1.6895050 0.51      89     -0.1
+#&gt; 10        X4  0.002044898 68 -1.1947553 0.5969643 0.52      89     -0.1
+#&gt; 11        X4  0.002044898 89 -1.1947553 1.9446157 0.52      89     -0.1
+#&gt; 12        X4  0.002044898 95 -1.7184875 1.9446157 0.52      89     -0.1
 #&gt;    ROPE_high ROPE_Percentage
-#&gt; 1        0.1      0.16666667
-#&gt; 2        0.1      0.16666667
-#&gt; 3        0.1      0.16666667
-#&gt; 4        0.1      0.06666667
-#&gt; 5        0.1      0.06666667
-#&gt; 6        0.1      0.06666667
-#&gt; 7        0.1      0.11111111
-#&gt; 8        0.1      0.11111111
-#&gt; 9        0.1      0.11111111
-#&gt; 10       0.1      0.02222222
-#&gt; 11       0.1      0.02222222
-#&gt; 12       0.1      0.02222222</div></pre>
+#&gt; 1        0.1      0.12222222
+#&gt; 2        0.1      0.12222222
+#&gt; 3        0.1      0.12222222
+#&gt; 4        0.1      0.07777778
+#&gt; 5        0.1      0.07777778
+#&gt; 6        0.1      0.07777778
+#&gt; 7        0.1      0.10000000
+#&gt; 8        0.1      0.10000000
+#&gt; 9        0.1      0.10000000
+#&gt; 10       0.1      0.11111111
+#&gt; 11       0.1      0.11111111
+#&gt; 12       0.1      0.11111111</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
