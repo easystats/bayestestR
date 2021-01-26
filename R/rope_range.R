@@ -91,6 +91,8 @@ rope_range.BFBayesFactor <- function(x, ...) {
     )
 
     if (!is.null(response)) {
+      # TODO if https://github.com/easystats/bayestestR/issues/364
+      # use SIGMA param instead
       fac <- stats::sd(response, na.rm = TRUE)
     }
   }
@@ -183,6 +185,7 @@ rope_range.mlm <- function(x, ...) {
         # T-tests
         # if https://github.com/easystats/bayestestR/issues/364, change to just be 0.1
         if ("BFBayesFactor" %in% class(x)) {
+          # TODO this actually never happens because there is a BFBayesFactor method!
           0.1 * stats::sd(x@data[, 1])
         } else {
           warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.", call. = FALSE)
