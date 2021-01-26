@@ -5,7 +5,7 @@
       warning("`ci` should be less than 1, returning NAs.")
     }
     return(data.frame(
-      "CI" = ci * 100,
+      "CI" = ci,
       "CI_low" = NA,
       "CI_high" = NA
     ))
@@ -13,7 +13,7 @@
 
   if (ci == 1) {
     return(data.frame(
-      "CI" = ci * 100,
+      "CI" = ci,
       "CI_low" = min(x, na.rm = TRUE),
       "CI_high" = max(x, na.rm = TRUE)
     ))
@@ -24,7 +24,7 @@
       warning("The posterior contains NAs, returning NAs.")
     }
     return(data.frame(
-      "CI" = ci * 100,
+      "CI" = ci,
       "CI_low" = NA,
       "CI_high" = NA
     ))
@@ -35,7 +35,7 @@
       warning("The posterior is too short, returning NAs.")
     }
     return(data.frame(
-      "CI" = ci * 100,
+      "CI" = ci,
       "CI_low" = NA,
       "CI_high" = NA
     ))

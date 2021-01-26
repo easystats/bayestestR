@@ -222,7 +222,7 @@ eti.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
   ))
 
   data.frame(
-    "CI" = ci * 100,
+    "CI" = ci,
     "CI_low" = results[1],
     "CI_high" = results[2]
   )

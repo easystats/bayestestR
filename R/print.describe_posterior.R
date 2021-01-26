@@ -12,7 +12,7 @@ print.describe_posterior <- function(x, digits = 3, ...) {
 
       ci <- unique(x$CI)
       if (length(ci) > 1) {
-        x$CI <- insight::format_ci(x$CI_low, x$CI_high, ci = round(x$CI, 3) / 100, digits = digits, width = "auto")
+        x$CI <- insight::format_ci(x$CI_low, x$CI_high, ci = x$CI, digits = digits, width = "auto")
 
         if (is_SI) {
           x$CI <- paste0("BF = ", gsub("% CI", " SI", x$CI))
