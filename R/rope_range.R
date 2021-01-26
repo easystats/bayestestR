@@ -175,13 +175,13 @@ rope_range.mlm <- function(x, ...) {
     {
       # Linear Models
       if (information$is_linear) {
+        warning("Note that the default rope range for binomial models might change in future versions (see https://github.com/easystats/bayestestR/issues/364).",
+                "Please set it explicitly to preserve current results.")
         0.1 * stats::sd(response, na.rm = TRUE)
 
         # Logistic Regression Models
       } else if (information$is_binomial) {
-        warning("Note that the default rope range for binomial models might change in future versions (see https://github.com/easystats/bayestestR/issues/364). Please set it explicitly (`range = 0.1 * pi / sqrt(3)`) to preserve current results.")
         0.1 * pi / sqrt(3)
-
         # Count Models
       } else if (information$is_count) {
         sig <- stats::sigma(x)
