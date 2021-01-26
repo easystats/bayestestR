@@ -173,40 +173,41 @@ rope_range.mlm <- function(x, ...) {
 .rope_range <- function(x, information, response) {
   negligible_value <- tryCatch(
     {
-      # Linear Models
-      if (information$is_linear) {
+      if (information$link == "identity") {
+        # Linear Models
         warning("Note that the default rope range for binomial models might change in future versions (see https://github.com/easystats/bayestestR/issues/364).",
                 "Please set it explicitly to preserve current results.")
+        # 0.1 * stats::sigma(x) # https://github.com/easystats/bayestestR/issues/364
         0.1 * stats::sd(response, na.rm = TRUE)
-
-        # Logistic Regression Models
-      } else if (information$is_binomial) {
-        0.1 * pi / sqrt(3)
-        # Count Models
-      } else if (information$is_count) {
-        sig <- stats::sigma(x)
-        if (!is.null(sig) && length(sig) > 0 && !is.na(sig)) {
-          0.1 * sig
-        } else {
-          0.1
-        }
-
-        # T-tests
       } else if (information$is_ttest) {
+        # T-tests
+        # if https://github.com/easystats/bayestestR/issues/364, change to just be 0.1
         if ("BFBayesFactor" %in% class(x)) {
           0.1 * stats::sd(x@data[, 1])
         } else {
           warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.", call. = FALSE)
           0.1
         }
-
-        # Correlations
+      } else if (information$link == "logit") {
+        # Logistic Models (any)
+        0.1 * pi / sqrt(3)
+      } else if (information$link == "probit") {
+        # Probit models
+        0.1
       } else if (information$is_correlation) {
+        # Correlations
         # https://github.com/easystats/bayestestR/issues/121
         0.05
-
-        # Default
+      } else if (information$is_count) {
+        # Not sure about this
+        sig <- stats::sigma(x)
+        if (!is.null(sig) && length(sig) > 0 && !is.na(sig)) {
+          0.1 * sig
+        } else {
+          0.1
+        }
       } else {
+        # Default
         0.1
       }
     },
