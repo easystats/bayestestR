@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.2.1</span>
       </span>
     </div>
 
@@ -210,50 +210,55 @@
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ci.html'>ci</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.68</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>reshape_ci</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   Parameter  CI_low_68 CI_high_68 CI_low_89 CI_high_89 CI_low_95 CI_high_95
-#&gt; 1        X1 -1.0283674  1.1361413 -1.268945   1.736463 -1.772931   2.004190
-#&gt; 2        X2 -1.0058543  0.7886629 -1.425960   1.506810 -2.003771   1.626684
-#&gt; 3        X3 -0.8606764  1.2167014 -1.368918   1.784742 -1.581339   1.877980
-#&gt; 4        X4 -0.9785388  1.1577853 -1.572820   1.540995 -2.011927   1.936843</div><div class='input'><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    Parameter CI     CI_low   CI_high
-#&gt; 1         X1 68 -1.0283674 1.1361413
-#&gt; 2         X1 89 -1.2689445 1.7364630
-#&gt; 3         X1 95 -1.7729310 2.0041899
-#&gt; 4         X2 68 -1.0058543 0.7886629
-#&gt; 5         X2 89 -1.4259597 1.5068098
-#&gt; 6         X2 95 -2.0037710 1.6266838
-#&gt; 7         X3 68 -0.8606764 1.2167014
-#&gt; 8         X3 89 -1.3689182 1.7847418
-#&gt; 9         X3 95 -1.5813393 1.8779802
-#&gt; 10        X4 68 -0.9785388 1.1577853
-#&gt; 11        X4 89 -1.5728196 1.5409946
-#&gt; 12        X4 95 -2.0119268 1.9368427</div><div class='input'>
+</div><div class='output co'>#&gt;   Parameter CI_low_0.68 CI_high_0.68 CI_low_0.89 CI_high_0.89 CI_low_0.95
+#&gt; 1        X1  -1.0283674    1.1361413   -1.268945     1.736463   -1.772931
+#&gt; 2        X2  -1.0058543    0.7886629   -1.425960     1.506810   -2.003771
+#&gt; 3        X3  -0.8606764    1.2167014   -1.368918     1.784742   -1.581339
+#&gt; 4        X4  -0.9785388    1.1577853   -1.572820     1.540995   -2.011927
+#&gt;   CI_high_0.95
+#&gt; 1     2.004190
+#&gt; 2     1.626684
+#&gt; 3     1.877980
+#&gt; 4     1.936843</div><div class='input'><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    Parameter   CI     CI_low   CI_high
+#&gt; 1         X1 0.68 -1.0283674 1.1361413
+#&gt; 2         X1 0.89 -1.2689445 1.7364630
+#&gt; 3         X1 0.95 -1.7729310 2.0041899
+#&gt; 4         X2 0.68 -1.0058543 0.7886629
+#&gt; 5         X2 0.89 -1.4259597 1.5068098
+#&gt; 6         X2 0.95 -2.0037710 1.6266838
+#&gt; 7         X3 0.68 -0.8606764 1.2167014
+#&gt; 8         X3 0.89 -1.3689182 1.7847418
+#&gt; 9         X3 0.95 -1.5813393 1.8779802
+#&gt; 10        X4 0.68 -0.9785388 1.1577853
+#&gt; 11        X4 0.89 -1.5728196 1.5409946
+#&gt; 12        X4 0.95 -2.0119268 1.9368427</div><div class='input'>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='describe_posterior.html'>describe_posterior</a></span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.68</span>, <span class='fl'>0.89</span>, <span class='fl'>0.95</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>reshape_ci</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   Parameter       Median CI_low_95 CI_high_95  CI_low_68 CI_high_68 CI_low_89
-#&gt; 1        X1 -0.035621578 -1.556132   1.758079 -0.8216807  0.9444641 -1.433428
-#&gt; 2        X2  0.195626928 -1.599301   2.010413 -0.8473286  1.0477185 -1.488663
-#&gt; 3        X3 -0.020946056 -2.023973   1.689505 -1.1146402  0.7927846 -1.642995
-#&gt; 4        X4  0.002044898 -1.718488   1.944616 -1.1947553  0.5969643 -1.194755
-#&gt;   CI_high_89   pd ROPE_CI ROPE_low ROPE_high ROPE_Percentage
-#&gt; 1   1.359016 0.52      89     -0.1       0.1      0.12222222
-#&gt; 2   1.582404 0.56      89     -0.1       0.1      0.07777778
-#&gt; 3   1.423688 0.51      89     -0.1       0.1      0.10000000
-#&gt; 4   1.944616 0.52      89     -0.1       0.1      0.11111111</div><div class='input'><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    Parameter       Median CI     CI_low   CI_high   pd ROPE_CI ROPE_low
-#&gt; 1         X1 -0.035621578 68 -0.8216807 0.9444641 0.52      89     -0.1
-#&gt; 2         X1 -0.035621578 89 -1.4334276 1.3590163 0.52      89     -0.1
-#&gt; 3         X1 -0.035621578 95 -1.5561321 1.7580788 0.52      89     -0.1
-#&gt; 4         X2  0.195626928 68 -0.8473286 1.0477185 0.56      89     -0.1
-#&gt; 5         X2  0.195626928 89 -1.4886635 1.5824044 0.56      89     -0.1
-#&gt; 6         X2  0.195626928 95 -1.5993005 2.0104126 0.56      89     -0.1
-#&gt; 7         X3 -0.020946056 68 -1.1146402 0.7927846 0.51      89     -0.1
-#&gt; 8         X3 -0.020946056 89 -1.6429951 1.4236881 0.51      89     -0.1
-#&gt; 9         X3 -0.020946056 95 -2.0239728 1.6895050 0.51      89     -0.1
-#&gt; 10        X4  0.002044898 68 -1.1947553 0.5969643 0.52      89     -0.1
-#&gt; 11        X4  0.002044898 89 -1.1947553 1.9446157 0.52      89     -0.1
-#&gt; 12        X4  0.002044898 95 -1.7184875 1.9446157 0.52      89     -0.1
+</div><div class='output co'>#&gt;   Parameter       Median CI_low_0.95 CI_high_0.95 CI_low_0.68 CI_high_0.68
+#&gt; 1        X1 -0.035621578   -1.556132     1.758079  -0.8216807    0.9444641
+#&gt; 2        X2  0.195626928   -1.599301     2.010413  -0.8473286    1.0477185
+#&gt; 3        X3 -0.020946056   -2.023973     1.689505  -1.1146402    0.7927846
+#&gt; 4        X4  0.002044898   -1.718488     1.944616  -1.1947553    0.5969643
+#&gt;   CI_low_0.89 CI_high_0.89   pd ROPE_CI ROPE_low ROPE_high ROPE_Percentage
+#&gt; 1   -1.433428     1.359016 0.52      89     -0.1       0.1      0.12222222
+#&gt; 2   -1.488663     1.582404 0.56      89     -0.1       0.1      0.07777778
+#&gt; 3   -1.642995     1.423688 0.51      89     -0.1       0.1      0.10000000
+#&gt; 4   -1.194755     1.944616 0.52      89     -0.1       0.1      0.11111111</div><div class='input'><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='fu'>reshape_ci</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    Parameter       Median   CI     CI_low   CI_high   pd ROPE_CI ROPE_low
+#&gt; 1         X1 -0.035621578 0.68 -0.8216807 0.9444641 0.52      89     -0.1
+#&gt; 2         X1 -0.035621578 0.89 -1.4334276 1.3590163 0.52      89     -0.1
+#&gt; 3         X1 -0.035621578 0.95 -1.5561321 1.7580788 0.52      89     -0.1
+#&gt; 4         X2  0.195626928 0.68 -0.8473286 1.0477185 0.56      89     -0.1
+#&gt; 5         X2  0.195626928 0.89 -1.4886635 1.5824044 0.56      89     -0.1
+#&gt; 6         X2  0.195626928 0.95 -1.5993005 2.0104126 0.56      89     -0.1
+#&gt; 7         X3 -0.020946056 0.68 -1.1146402 0.7927846 0.51      89     -0.1
+#&gt; 8         X3 -0.020946056 0.89 -1.6429951 1.4236881 0.51      89     -0.1
+#&gt; 9         X3 -0.020946056 0.95 -2.0239728 1.6895050 0.51      89     -0.1
+#&gt; 10        X4  0.002044898 0.68 -1.1947553 0.5969643 0.52      89     -0.1
+#&gt; 11        X4  0.002044898 0.89 -1.1947553 1.9446157 0.52      89     -0.1
+#&gt; 12        X4  0.002044898 0.95 -1.7184875 1.9446157 0.52      89     -0.1
 #&gt;    ROPE_high ROPE_Percentage
 #&gt; 1        0.1      0.12222222
 #&gt; 2        0.1      0.12222222
