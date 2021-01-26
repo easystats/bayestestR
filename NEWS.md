@@ -1,10 +1,10 @@
-# bayestestR 0.8.1.1
+# bayestestR 0.8.2.1
 
 ## Bug fixes
 
-* `bayesfactor_pointull()` / `bf_pointull()` are now `bayesfactor_pointnull()` / `bf_pointnull()` (can *you* spot the difference? #363 ).
+* Fixed bug in `print()` method for the `mediation()` function.
 
-# bayestestR 0.8.1
+# bayestestR 0.8.2
 
 ## General
 
@@ -18,6 +18,8 @@
 ## Bug fixes
 
 * `bayesfactor_parameters()` no longer errors for no reason when computing extremely un/likely direction hypotheses.
+
+* `bayesfactor_pointull()` / `bf_pointull()` are now `bayesfactor_pointnull()` / `bf_pointnull()` (can *you* spot the difference? #363 ).
 
 # bayestestR 0.8.0
 
