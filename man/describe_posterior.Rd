@@ -186,15 +186,17 @@ One or more components of point estimates (like posterior mean or median),
 \examples{
 library(bayestestR)
 
-x <- rnorm(1000)
-describe_posterior(x)
-describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
-describe_posterior(x, ci = c(0.80, 0.90))
+if (require("logspline")) {
+  x <- rnorm(1000)
+  describe_posterior(x)
+  describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
+  describe_posterior(x, ci = c(0.80, 0.90))
 
-df <- data.frame(replicate(4, rnorm(100)))
-describe_posterior(df)
-describe_posterior(df, centrality = "all", dispersion = TRUE, test = "all")
-describe_posterior(df, ci = c(0.80, 0.90))
+  df <- data.frame(replicate(4, rnorm(100)))
+  describe_posterior(df)
+  describe_posterior(df, centrality = "all", dispersion = TRUE, test = "all")
+  describe_posterior(df, ci = c(0.80, 0.90))
+}
 \dontrun{
 # rstanarm models
 # -----------------------------------------------
