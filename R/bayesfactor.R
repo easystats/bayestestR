@@ -21,11 +21,12 @@
 #' @examples
 #' library(bayestestR)
 #'
-#' # Vectors
-#' prior <- distribution_normal(1000, mean = 0, sd = 1)
-#' posterior <- distribution_normal(1000, mean = .5, sd = .3)
+#' if (require("logspline")) {
+#'   prior <- distribution_normal(1000, mean = 0, sd = 1)
+#'   posterior <- distribution_normal(1000, mean = .5, sd = .3)
 #'
-#' bayesfactor(posterior, prior = prior)
+#'   bayesfactor(posterior, prior = prior)
+#' }
 #' \dontrun{
 #' # rstanarm models
 #' # ---------------
@@ -35,16 +36,18 @@
 #' }
 #' }
 #'
-#' # Frequentist models
-#' # ---------------
-#' m0 <- lm(extra ~ 1, data = sleep)
-#' m1 <- lm(extra ~ group, data = sleep)
-#' m2 <- lm(extra ~ group + ID, data = sleep)
+#' if (require("logspline")) {
+#'   # Frequentist models
+#'   # ---------------
+#'   m0 <- lm(extra ~ 1, data = sleep)
+#'   m1 <- lm(extra ~ group, data = sleep)
+#'   m2 <- lm(extra ~ group + ID, data = sleep)
 #'
-#' comparison <- bayesfactor(m0, m1, m2)
-#' comparison
+#'   comparison <- bayesfactor(m0, m1, m2)
+#'   comparison
 #'
-#' bayesfactor(comparison)
+#'   bayesfactor(comparison)
+#' }
 #' @export
 bayesfactor <-
   function(...,
