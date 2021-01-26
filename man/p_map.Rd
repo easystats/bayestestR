@@ -87,9 +87,7 @@ p_map(model)
 library(BayesFactor)
 bf <- ttestBF(x = rnorm(100, 1, 1))
 p_map(bf)
-}
 
-\donttest{
 # ---------------------------------------
 # Robustness to density estimation method
 set.seed(333)

@@ -22,14 +22,8 @@ Refit Bayesian model as frequentist. Can be useful for comparisons.
 # Rstanarm ----------------------
 if (require("rstanarm")) {
   # Simple regressions
-  model <- stan_glm(Sepal.Length ~ Petal.Length * Species,
+  model <- stan_glm(Sepal.Length ~ Species,
     data = iris, chains = 2, refresh = 0
-  )
-  bayesian_as_frequentist(model)
-
-  model <- stan_glm(vs ~ mpg,
-    family = "binomial",
-    data = mtcars, chains = 2, refresh = 0
   )
   bayesian_as_frequentist(model)
 }
@@ -37,6 +31,12 @@ if (require("rstanarm")) {
 
 \dontrun{
 if (require("rstanarm")) {
+  model <- stan_glm(vs ~ mpg,
+    family = "binomial",
+    data = mtcars, chains = 2, refresh = 0
+  )
+  bayesian_as_frequentist(model)
+
   # Mixed models
   model <- stan_glmer(Sepal.Length ~ Petal.Length + (1 | Species),
     data = iris, chains = 2, refresh = 0
