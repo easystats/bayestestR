@@ -277,7 +277,7 @@ hdi.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
       warning("`ci` is too small or x does not contain enough data points, returning NAs.")
     }
     return(data.frame(
-      "CI" = ci * 100,
+      "CI" = ci,
       "CI_low" = NA,
       "CI_high" = NA
     ))
@@ -290,7 +290,7 @@ hdi.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
       warning("`ci` is too large or x does not contain enough data points, returning NAs.")
     }
     return(data.frame(
-      "CI" = ci * 100,
+      "CI" = ci,
       "CI_low" = NA,
       "CI_high" = NA
     ))
@@ -314,7 +314,7 @@ hdi.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
   }
 
   data.frame(
-    "CI" = ci * 100,
+    "CI" = ci,
     "CI_low" = x_sorted[min_i],
     "CI_high" = x_sorted[min_i + window_size]
   )
