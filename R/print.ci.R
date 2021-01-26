@@ -52,14 +52,14 @@ print.bayestestR_ci <- function(x, digits = 2, ...) {
 
   if (length(ci) == 1) {
     xsub <- .remove_column(x, c("CI", "CI_low", "CI_high"))
-    colnames(xsub)[ncol(xsub)] <- sprintf("%.5g%% %s", ci, ci_string)
+    colnames(xsub)[ncol(xsub)] <- sprintf("%.5g%% %s", 100 * ci, ci_string)
     if (inherits(x, "bayestestR_si")) colnames(xsub)[ncol(xsub)] <- sprintf("BF = %.5g %s", ci, ci_string)
     print_data_frame(xsub, digits = digits)
   } else {
     for (i in ci) {
       xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
       xsub <- .remove_column(xsub, c("CI", "CI_low", "CI_high"))
-      colnames(xsub)[ncol(xsub)] <- sprintf("%.5g%% %s", i, ci_string)
+      colnames(xsub)[ncol(xsub)] <- sprintf("%.5g%% %s", 100 * i, ci_string)
       if (inherits(x, "bayestestR_si")) colnames(xsub)[ncol(xsub)] <- sprintf("BF = %.5g %s", i, ci_string)
       print_data_frame(xsub, digits = digits)
       cat("\n")
@@ -74,12 +74,12 @@ print.bayestestR_ci <- function(x, digits = 2, ...) {
 #' @export
 as.list.bayestestR_hdi <- function(x, ...) {
 
-  if(nrow(x) == 1){
-    out <- list(CI=x$CI, CI_low=x$CI_low, CI_high=x$CI_high)
+  if (nrow(x) == 1) {
+    out <- list(CI = x$CI, CI_low = x$CI_low, CI_high = x$CI_high)
     out$Parameter <- x$Parameter
-  } else{
+  } else {
     out <- list()
-    for(param in x$Parameter){
+    for (param in x$Parameter) {
       out[[param]] <- list()
       out[[param]][["CI"]] <- x[x$Parameter == param, "CI"]
       out[[param]][["CI_low"]] <- x[x$Parameter == param, "CI_low"]
