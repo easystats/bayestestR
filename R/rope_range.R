@@ -19,6 +19,7 @@
 #'   }
 #'
 #' @param x A \code{stanreg}, \code{brmsfit} or \code{BFBayesFactor} object.
+#' @param verbose Toggle warnings.
 #' @inheritParams rope
 #'
 #' @examples
@@ -57,15 +58,16 @@ rope_range <- function(x, ...) {
 }
 
 
+#' @rdname rope_range
 #' @export
-rope_range.brmsfit <- function(x, ...) {
+rope_range.brmsfit <- function(x, verbose = TRUE, ...) {
   response <- insight::get_response(x)
   information <- insight::model_info(x)
 
   if (insight::is_multivariate(x)) {
     mapply(function(i, j) .rope_range(i, j), x, information, response)
   } else {
-    .rope_range(x, information, response)
+    .rope_range(x, information, response, verbose)
   }
 }
 
@@ -157,11 +159,11 @@ rope_range.default <- function(x, ...) {
 }
 
 #' @export
-rope_range.mlm <- function(x, ...) {
+rope_range.mlm <- function(x, verbose = TRUE, ...) {
   response <- insight::get_response(x)
   information <- insight::model_info(x)
 
-  lapply(response, function(i) .rope_range(x, information, i))
+  lapply(response, function(i) .rope_range(x, information, i, verbose))
 }
 
 
@@ -172,13 +174,15 @@ rope_range.mlm <- function(x, ...) {
 
 #' @importFrom stats sigma sd
 #' @importFrom insight n_obs find_parameters
-.rope_range <- function(x, information, response) {
+.rope_range <- function(x, information, response, verbose = TRUE) {
   negligible_value <- tryCatch(
     {
       if (information$link == "identity") {
         # Linear Models
-        warning("Note that the default rope range for binomial models might change in future versions (see https://github.com/easystats/bayestestR/issues/364).",
-                "Please set it explicitly to preserve current results.")
+        if (isTRUE(verbose)) {
+          warning("Note that the default rope range for binomial models might change in future versions (see https://github.com/easystats/bayestestR/issues/364).",
+                  "Please set it explicitly to preserve current results.", call. = FALSE)
+        }
         # 0.1 * stats::sigma(x) # https://github.com/easystats/bayestestR/issues/364
         0.1 * stats::sd(response, na.rm = TRUE)
       } else if (information$is_ttest) {
@@ -188,7 +192,9 @@ rope_range.mlm <- function(x, ...) {
           # TODO this actually never happens because there is a BFBayesFactor method!
           0.1 * stats::sd(x@data[, 1])
         } else {
-          warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.", call. = FALSE)
+          if (isTRUE(verbose)) {
+            warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.", call. = FALSE)
+          }
           0.1
         }
       } else if (information$link == "logit") {
@@ -215,7 +221,9 @@ rope_range.mlm <- function(x, ...) {
       }
     },
     error = function(e) {
-      warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.", call. = FALSE)
+      if (isTRUE(verbose)) {
+        warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.", call. = FALSE)
+      }
       0.1
     }
   )
