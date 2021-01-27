@@ -9,7 +9,7 @@ print.rope <- function(x, digits = 2, ...) {
 
   if (isTRUE(is_multivariate)) {
     insight::print_color(sprintf(
-      "# Proportion%s of samples inside the ROPE depend on outcome variable.\n\n",
+      "# Proportion%s of samples inside the ROPE.\nROPE with depends on outcome variable.\n\n",
       ifelse(all(x$CI[1] == x$CI), "", "s")
     ), "blue")
   } else {
