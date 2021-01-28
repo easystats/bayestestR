@@ -9,8 +9,8 @@ if (require("logspline") && require("KernSmooth") && require("mclust")) {
     density_KernSmooth <- estimate_density(x, method = "KernSmooth")
     density_mixture <- estimate_density(x, method = "mixture")
 
-    testthat::expect_equal(mean(density_kernel$y - density_logspline$y), 0, tol = 0.1)
-    testthat::expect_equal(mean(density_kernel$y - density_KernSmooth$y), 0, tol = 0.1)
-    testthat::expect_equal(mean(density_kernel$y - density_mixture$y), 0, tol = 0.1)
+    expect_equal(mean(density_kernel$y - density_logspline$y), 0, tolerance = 0.1)
+    expect_equal(mean(density_kernel$y - density_KernSmooth$y), 0, tolerance = 0.1)
+    expect_equal(mean(density_kernel$y - density_mixture$y), 0, tolerance = 0.1)
   })
 }

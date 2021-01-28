@@ -85,9 +85,9 @@ if (require("bayestestR") && require("testthat")) {
 
     set.seed(333)
     expect_warning(stan_models <- bayesfactor_models(stan_bf_0, stan_bf_1))
-    expect_is(stan_models, "bayesfactor_models")
+    expect_s3_class(stan_models, "bayesfactor_models")
     expect_equal(length(log(stan_models$BF)), 2)
-    expect_equal(log(stan_models$BF[2]), log(bridge_BF$bf), tol = 0.1)
+    expect_equal(log(stan_models$BF[2]), log(bridge_BF$bf), tolerance = 0.1)
   })
 
 
