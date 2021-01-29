@@ -55,8 +55,8 @@ if (.runThisTest) {
         "Parameter", "Mean", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
         "ROPE_low", "ROPE_high", "ROPE_Percentage", "Rhat", "ESS"
       ))
-      expect_equal(s[1:4, 1, drop = TRUE], out$Mean, ignore.attr = TRUE, tolerance = 1e-3)
-      expect_equal(s[1:4, 8, drop = TRUE], out$Rhat, ignore.attr = TRUE, tolerance = 1e-1)
+      expect_equal(as.vector(s[1:4, 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
+      expect_equal(as.vector(s[1:4, 8, drop = TRUE]), out$Rhat, tolerance = 1e-1)
     })
 
     test_that("rstanarm", {
@@ -72,8 +72,8 @@ if (.runThisTest) {
         "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
         "Rhat", "ESS"
       ))
-      expect_equal(s[1:8, 1, drop = TRUE], out$Mean, ignore.attr = TRUE, tolerance = 1e-3)
-      expect_equal(s[1:8, 8, drop = TRUE], out$Rhat, ignore.attr = TRUE, tolerance = 1e-1)
+      expect_equal(as.vector(s[1:8, 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
+      expect_equal(as.vector(s[1:8, 8, drop = TRUE]), out$Rhat, tolerance = 1e-1)
     })
 
     test_that("rstanarm", {
@@ -88,8 +88,8 @@ if (.runThisTest) {
         "Parameter", "Response", "Mean", "CI", "CI_low", "CI_high",
         "Rhat", "ESS"
       ))
-      expect_equal(s[c(1:2, 5:7), 1, drop = TRUE], out$Mean, ignore.attr = TRUE, tolerance = 1e-3)
-      expect_equal(s[c(1:2, 5:7), 10, drop = TRUE], out$Rhat, ignore.attr = TRUE, tolerance = 1e-1)
+      expect_equal(as.vector(s[c(1:2, 5:7), 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
+      expect_equal(as.vector(s[c(1:2, 5:7), 10, drop = TRUE]), out$Rhat, tolerance = 1e-1)
     })
 
 

@@ -85,9 +85,9 @@ if (.runThisTest) {
       res_brms1 <- eti(res_brms)
 
       expect_equal(res_BT1$Parameter, res_brms1$Parameter)
-      testthat::expect_equal(res_BT1$CI, res_brms1$CI)
-      testthat::expect_equal(res_BT1$CI_low, res_brms1$CI_low)
-      testthat::expect_equal(res_BT1$CI_high, res_brms1$CI_high)
+      expect_equal(res_BT1$CI, res_brms1$CI)
+      expect_equal(res_BT1$CI_low, res_brms1$CI_low)
+      expect_equal(res_BT1$CI_high, res_brms1$CI_high)
 
       # plot(res_brms1)
       # plot(res_BT1)
