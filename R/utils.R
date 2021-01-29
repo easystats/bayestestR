@@ -161,7 +161,7 @@
   temp$.roworder <- 1:nrow(temp)
   out <- merge(x = temp, y = cleaned_parameters, by = merge_by, all.x = TRUE)
   # hope this works for stanmvreg...
-  if (isTRUE(is_stan_mv) || isTRUE(is_brms_mv) && all(is.na(out$Effects)) && all(is.na(out$Component))) {
+  if ((isTRUE(is_stan_mv) || isTRUE(is_brms_mv)) && all(is.na(out$Effects)) && all(is.na(out$Component))) {
     out$Effects <- cleaned_parameters$Effects[1:nrow(out)]
     out$Component <- cleaned_parameters$Component[1:nrow(out)]
   }

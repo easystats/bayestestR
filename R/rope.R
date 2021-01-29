@@ -357,8 +357,8 @@ rope.brmsfit <- function(
   # we expect a list with named vectors (length two) in the multivariate case.
   # Names state the response variable.
   } else if (insight::is_multivariate(x) && 
-    (!is.list(range) || length(range) != length(insight::find_response(x) ||
-        names(range) != insight::find_response(x)))) {
+    (!is.list(range) || length(range) != length(insight::find_response(x)) ||
+        names(range) != insight::find_response(x))) {
     stop("With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2.")
   } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
@@ -375,10 +375,10 @@ rope.brmsfit <- function(
     # calculated for every variable on its own.
     rope_data <- lapply(
       dv,
-      function(dv) {
+      function(dv_item) {
         ret <- rope(
           insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
-          range = range[[dv]],
+          range = range[[dv_item]],
           ci = ci,
           ci_method = ci_method,
           verbose = verbose,
@@ -390,7 +390,7 @@ rope.brmsfit <- function(
         # away the unwanted results. However, performance impact should not be
         # too high and this way it is much easier to handle the `parameters`
         # argument.
-        ret[grepl(paste0("(.*)", dv), ret$Parameter), ]
+        ret[grepl(paste0("(.*)", dv_item), ret$Parameter), ]
       }
     )
     rope_data <- do.call(rbind, rope_data)

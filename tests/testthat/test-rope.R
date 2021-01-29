@@ -78,7 +78,7 @@ if (require("brms", quietly = TRUE)) {
     testthat::expect_equal(
       rope$ROPE_Percentage,
       c(0, 0, 0.493457, 0.072897, 0, 0.508411),
-      tolerance = 0.01
+      tolerance = 0.1
     )
   })
 }

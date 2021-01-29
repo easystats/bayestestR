@@ -164,6 +164,11 @@ model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 rope(model)
 rope(model, ci = c(.90, .95))
 
+library(brms)
+model <- brms::brm(brms::mvbind(mpg, disp) ~ wt + cyl, data = mtcars)
+rope(model)
+rope(model, ci = c(.90, .95))
+
 library(BayesFactor)
 bf <- ttestBF(x = rnorm(100, 1, 1))
 rope(bf)
