@@ -1,9 +1,9 @@
 if (requireNamespace("rstanarm", quietly = TRUE)) {
   test_that("p_map", {
-    expect_equal(as.numeric(p_map(distribution_normal(1000))), 1, tolerance = 0.01)
-    expect_equal(as.numeric(p_map(distribution_normal(1000, 1, 1))), 0.62, tolerance = 0.01)
-    expect_equal(as.numeric(p_map(distribution_normal(1000, 2, 1))), 0.15, tolerance = 0.01)
-    expect_equal(as.numeric(p_map(distribution_normal(1000, 3, 0.01))), 0, tolerance = 0.01)
+    expect_equal(as.numeric(p_map(distribution_normal(1000))), 1, tolerance = 0.1)
+    expect_equal(as.numeric(p_map(distribution_normal(1000, 1, 1))), 0.62, tolerance = 0.1)
+    expect_equal(as.numeric(p_map(distribution_normal(1000, 2, 1))), 0.15, tolerance = 0.1)
+    expect_equal(as.numeric(p_map(distribution_normal(1000, 3, 0.01))), 0, tolerance = 0.1)
   })
 
 
@@ -17,7 +17,7 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
         expect_equal(
           p_map(m, effects = "all")$p_MAP,
           p_map(p)$p_MAP,
-          tolerance = 0.01
+          tolerance = 0.1
         )
       })
 
@@ -28,7 +28,7 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
         expect_equal(
           p_map(m, effects = "all", component = "all")$p_MAP,
           p_map(p)$p_MAP,
-          tolerance = 0.01
+          tolerance = 0.1
         )
       })
     }

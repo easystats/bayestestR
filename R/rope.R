@@ -399,8 +399,7 @@ rope.sim.merMod <- function(x, range = "default", ci = .89, ci_method = "HDI", e
 
   dat <- do.call(rbind, args = c(.compact_list(list), make.row.names = FALSE))
 
-  dat <- switch(
-    effects,
+  dat <- switch(effects,
     fixed = .select_rows(dat, "Group", "fixed"),
     random = .select_rows(dat, "Group", "random"),
     dat

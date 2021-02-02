@@ -17,8 +17,7 @@ print_data_frame <- function(x, digits) {
   }
 
   for (i in names(out)) {
-    header <- switch(
-      i,
+    header <- switch(i,
       "conditional" = ,
       "fixed_conditional" = ,
       "fixed" = "# Fixed Effects (Conditional Model)",

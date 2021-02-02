@@ -17,7 +17,8 @@ print.bayesfactor_restricted <- function(x, digits = 3, log = FALSE, ...) {
 
 
   cat(insight::export_table(
-    BFE, digits = digits, sep = " ", header = NULL,
+    BFE,
+    digits = digits, sep = " ", header = NULL,
     caption = c("# Bayes Factor (Order-Restriction)", "blue"),
     footer = footer
   ))

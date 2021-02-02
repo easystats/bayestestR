@@ -25,10 +25,10 @@ if (require("brms") && require("testthat") && require("insight") && require("htt
       "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
       "Rhat", "ESS"
     ))
-    expect_equal(as.vector(s$fixed[, 1, drop = TRUE]), out$Mean[1:2],tolerance = 1e-3)
-    expect_equal(as.vector(s$fixed[, 5, drop = TRUE]), out$Rhat[1:2],tolerance = 1e-1)
-    expect_equal(as.vector(s$random$cyl[, 1, drop = TRUE]), out$Mean[12],tolerance = 1e-3)
-    expect_equal(as.vector(s$random$gear[, 1, drop = TRUE]), out$Mean[13:15],tolerance = 1e-3)
+    expect_equal(as.vector(s$fixed[, 1, drop = TRUE]), out$Mean[1:2], tolerance = 1e-3)
+    expect_equal(as.vector(s$fixed[, 5, drop = TRUE]), out$Rhat[1:2], tolerance = 1e-1)
+    expect_equal(as.vector(s$random$cyl[, 1, drop = TRUE]), out$Mean[12], tolerance = 1e-3)
+    expect_equal(as.vector(s$random$gear[, 1, drop = TRUE]), out$Mean[13:15], tolerance = 1e-3)
   })
 
   test_that("brms", {
@@ -44,8 +44,8 @@ if (require("brms") && require("testthat") && require("insight") && require("htt
       "Parameter", "Mean", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
       "ROPE_low", "ROPE_high", "ROPE_Percentage", "Rhat", "ESS"
     ))
-    expect_equal(as.vector(s$fixed[, 1, drop = TRUE]), out$Mean[1:3],tolerance = 1e-3)
-    expect_equal(as.vector(s$fixed[, 5, drop = TRUE]), out$Rhat[1:3],tolerance = 1e-1)
+    expect_equal(as.vector(s$fixed[, 1, drop = TRUE]), out$Mean[1:3], tolerance = 1e-3)
+    expect_equal(as.vector(s$fixed[, 5, drop = TRUE]), out$Rhat[1:3], tolerance = 1e-1)
   })
 
   test_that("brms", {
@@ -61,8 +61,8 @@ if (require("brms") && require("testthat") && require("insight") && require("htt
       "Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
       "Rhat", "ESS"
     ))
-    expect_equal(as.vector(s$fixed[, 1, drop = TRUE]), out$Mean[c(1, 11, 2:5, 12:14)],tolerance = 1e-3)
-    expect_equal(as.vector(s$fixed[, 5, drop = TRUE]), out$Rhat[c(1, 11, 2:5, 12:14)],tolerance = 1e-1)
+    expect_equal(as.vector(s$fixed[, 1, drop = TRUE]), out$Mean[c(1, 11, 2:5, 12:14)], tolerance = 1e-3)
+    expect_equal(as.vector(s$fixed[, 5, drop = TRUE]), out$Rhat[c(1, 11, 2:5, 12:14)], tolerance = 1e-1)
   })
 
   test_that("brms", {
@@ -74,7 +74,7 @@ if (require("brms") && require("testthat") && require("insight") && require("htt
 
     out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean", test = NULL)
     s <- summary(model)
-    expect_equal(as.vector(s$fixed[, 1, drop = TRUE]), out$Mean,tolerance = 1e-3)
-    expect_equal(as.vector(s$fixed[, 5, drop = TRUE]), out$Rhat,tolerance = 1e-1)
+    expect_equal(as.vector(s$fixed[, 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
+    expect_equal(as.vector(s$fixed[, 5, drop = TRUE]), out$Rhat, tolerance = 1e-1)
   })
 }

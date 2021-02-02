@@ -35,8 +35,8 @@ if (require("BayesFactor", quietly = TRUE)) {
     expect_equal(attr(res, "weights")$weights, c(1032, 805, 1388, 775))
 
     wHDI <- hdi(res[c("x1", "x2")], ci = 0.9)
-    expect_equal(wHDI$CI_low, c(-0.519, -0.640), tolerance = 1e-3)
-    expect_equal(wHDI$CI_high, c(0.150, 0.059), tolerance = 1e-3)
+    expect_equal(wHDI$CI_low, c(-0.519, -0.640), tolerance = 0.01)
+    expect_equal(wHDI$CI_high, c(0.150, 0.059), tolerance = 0.01)
   })
 
   test_that("weighted_posteriors for nonlinear BayesFactor", {

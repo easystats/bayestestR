@@ -181,7 +181,9 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
         # Linear Models
         if (isTRUE(verbose)) {
           warning("Note that the default rope range for linear models might change in future versions (see https://github.com/easystats/bayestestR/issues/364).",
-                  "Please set it explicitly to preserve current results.", call. = FALSE)
+            "Please set it explicitly to preserve current results.",
+            call. = FALSE
+          )
         }
         # 0.1 * stats::sigma(x) # https://github.com/easystats/bayestestR/issues/364
         0.1 * stats::sd(response, na.rm = TRUE)
