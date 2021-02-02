@@ -1,6 +1,6 @@
 if (require("BayesFactor", quietly = TRUE)) {
   test_that("weighted_posteriors for BayesFactor", {
-    testthat::skip_on_cran()
+    skip_on_cran()
     set.seed(123)
     # compute Bayes Factor for 31 different regression models
     null_den <- regressionBF(mpg ~ cyl + disp + hp + drat + wt,
@@ -8,8 +8,8 @@ if (require("BayesFactor", quietly = TRUE)) {
     )
     wBF <- weighted_posteriors(null_den)
 
-    testthat::expect_is(wBF, "data.frame")
-    testthat::expect_equal(
+    expect_s3_class(wBF, "data.frame")
+    expect_equal(
       attr(wBF, "weights")$weights,
       c(
         0, 13, 9, 0, 0, 55, 11, 4, 4, 1246, 6, 2, 38, 4, 946, 12, 3,
@@ -21,8 +21,8 @@ if (require("BayesFactor", quietly = TRUE)) {
   test_that("weighted_posteriors for BayesFactor (intercept)", {
     set.seed(123)
     # fails for win old-release
-    testthat::skip_on_cran()
-    testthat::skip_on_ci()
+    skip_on_cran()
+    skip_on_ci()
 
     dat <- data.frame(
       x1 = rnorm(10),
@@ -32,11 +32,11 @@ if (require("BayesFactor", quietly = TRUE)) {
     BFmods <- regressionBF(y ~ x1 + x2, data = dat, progress = FALSE)
 
     res <- weighted_posteriors(BFmods)
-    testthat::expect_equal(attr(res, "weights")$weights, c(1032, 805, 1388, 775))
+    expect_equal(attr(res, "weights")$weights, c(1032, 805, 1388, 775))
 
     wHDI <- hdi(res[c("x1", "x2")], ci = 0.9)
-    testthat::expect_equal(wHDI$CI_low, c(-0.519, -0.640), tol = 1e-3)
-    testthat::expect_equal(wHDI$CI_high, c(0.150, 0.059), tol = 1e-3)
+    expect_equal(wHDI$CI_low, c(-0.519, -0.640), tolerance = 0.01)
+    expect_equal(wHDI$CI_high, c(0.150, 0.059), tolerance = 0.01)
   })
 
   test_that("weighted_posteriors for nonlinear BayesFactor", {
@@ -52,7 +52,7 @@ if (require("BayesFactor", quietly = TRUE)) {
 
     res <- weighted_posteriors(BFS)
 
-    testthat::expect_equal(attributes(res)$weights$weights, c(113, 3876, 11))
+    expect_equal(attributes(res)$weights$weights, c(113, 3876, 11))
   })
 }
 
@@ -60,7 +60,7 @@ if (require("BayesFactor", quietly = TRUE)) {
 if (.runThisTest) {
   if (require("brms", quietly = TRUE)) {
     test_that("weighted_posteriors vs posterior_average", {
-      testthat::skip_on_cran()
+      skip_on_cran()
 
       fit1 <- brm(rating ~ treat + period + carry,
         data = inhaler,
@@ -84,10 +84,10 @@ if (.runThisTest) {
       res_BT1 <- eti(res_BT)
       res_brms1 <- eti(res_brms)
 
-      testthat::expect_equal(res_BT1$Parameter, res_brms1$Parameter)
-      testthat::expect_equal(res_BT1$CI, res_brms1$CI)
-      testthat::expect_equal(res_BT1$CI_low, res_brms1$CI_low)
-      testthat::expect_equal(res_BT1$CI_high, res_brms1$CI_high)
+      expect_equal(res_BT1$Parameter, res_brms1$Parameter)
+      expect_equal(res_BT1$CI, res_brms1$CI)
+      expect_equal(res_BT1$CI_low, res_brms1$CI_low)
+      expect_equal(res_BT1$CI_high, res_brms1$CI_high)
 
       # plot(res_brms1)
       # plot(res_BT1)

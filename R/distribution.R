@@ -21,8 +21,7 @@ distribution <- function(type = "normal", ...) {
     "gamma", "geom", "hyper", "lnorm", "multinom", "nbinom", "normal", "gaussian",
     "pois", "poisson", "student", "t", "student_t", "unif", "uniform", "weibull"
   )
-  switch(
-    match.arg(arg = type, choices = basr_r_distributions),
+  switch(match.arg(arg = type, choices = basr_r_distributions),
     "beta" = distribution_beta(...),
     "binom" = ,
     "binomial" = distribution_binomial(...),

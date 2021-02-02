@@ -19,7 +19,7 @@ if (require("bayestestR") && require("testthat")) {
 
     expect_equal(BFM1, BFM2)
     expect_equal(BFM1, BFM3)
-    expect_equal(BFM1, bayestestR::bayesfactor_models(list(mo2=mo2, mo3=mo3, mo4=mo4, mo1=mo1), denominator = 4))
+    expect_equal(BFM1, bayestestR::bayesfactor_models(list(mo2 = mo2, mo3 = mo3, mo4 = mo4, mo1 = mo1), denominator = 4))
 
     # only on same data!
     expect_error(bayestestR::bayesfactor_models(mo1, mo2, mo4_e))
@@ -85,9 +85,9 @@ if (require("bayestestR") && require("testthat")) {
 
     set.seed(333)
     expect_warning(stan_models <- bayesfactor_models(stan_bf_0, stan_bf_1))
-    expect_is(stan_models, "bayesfactor_models")
+    expect_s3_class(stan_models, "bayesfactor_models")
     expect_equal(length(log(stan_models$BF)), 2)
-    expect_equal(log(stan_models$BF[2]), log(bridge_BF$bf), tol = 0.1)
+    expect_equal(log(stan_models$BF[2]), log(bridge_BF$bf), tolerance = 0.1)
   })
 
 

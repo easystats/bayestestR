@@ -28,10 +28,11 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
     insight::print_color(caption[1], caption[2])
     print_data_frame(BFE, digits = digits)
     lapply(footer, function(txt) {
-      if (length(txt) == 2)
+      if (length(txt) == 2) {
         insight::print_color(txt[1], txt[2])
-      else
+      } else {
         cat(txt)
+      }
       NULL
     })
   }

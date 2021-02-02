@@ -1,6 +1,6 @@
 if (require("testthat") && requireNamespace("rstanarm", quietly = TRUE)) {
   test_that("map_estimate", {
-    testthat::expect_equal(
+    expect_equal(
       as.numeric(map_estimate(distribution_normal(1000))),
       0,
       tolerance = 0.01
@@ -14,7 +14,7 @@ if (require("testthat") && requireNamespace("rstanarm", quietly = TRUE)) {
     m <- insight::download_model("stanreg_merMod_5")
 
     test_that("map_estimate", {
-      testthat::expect_equal(
+      expect_equal(
         map_estimate(m, effects = "all")$Parameter,
         colnames(as.data.frame(m))[1:21]
       )
@@ -23,7 +23,7 @@ if (require("testthat") && requireNamespace("rstanarm", quietly = TRUE)) {
     m <- insight::download_model("brms_zi_3")
 
     test_that("map_estimate", {
-      testthat::expect_equal(
+      expect_equal(
         map_estimate(m, effects = "all", component = "all")$Parameter,
         c(
           "b_Intercept", "b_child", "b_camper", "r_persons.1.Intercept.",

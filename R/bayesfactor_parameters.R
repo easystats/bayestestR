@@ -114,7 +114,6 @@
 #'   posterior <- distribution_normal(1000, mean = .5, sd = .3)
 #'   bayesfactor_parameters(posterior, prior)
 #' }
-#'
 #' \dontrun{
 #' # rstanarm models
 #' # ---------------

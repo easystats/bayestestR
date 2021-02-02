@@ -73,7 +73,6 @@ print.bayestestR_ci <- function(x, digits = 2, ...) {
 
 #' @export
 as.list.bayestestR_hdi <- function(x, ...) {
-
   if (nrow(x) == 1) {
     out <- list(CI = x$CI, CI_low = x$CI_low, CI_high = x$CI_high)
     out$Parameter <- x$Parameter

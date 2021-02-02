@@ -2,7 +2,7 @@ if (require("testthat") && require("BayesFactor") && require("bayestestR")) {
   set.seed(333)
   x <- BayesFactor::correlationBF(y = iris$Sepal.Length, x = iris$Sepal.Width)
   test_that("p_direction", {
-    expect_equal(as.numeric(p_direction(x)), 0.9225, tol = 1)
+    expect_equal(as.numeric(p_direction(x)), 0.9225, tolerance = 1)
   })
 
 
@@ -11,7 +11,7 @@ if (require("testthat") && require("BayesFactor") && require("bayestestR")) {
   diffScores <- sleep$extra[1:10] - sleep$extra[11:20]
   x <- BayesFactor::ttestBF(x = diffScores)
   test_that("p_direction", {
-    expect_equal(as.numeric(p_direction(x)), 0.99675, tol = 1)
+    expect_equal(as.numeric(p_direction(x)), 0.99675, tolerance = 1)
   })
 
 
@@ -21,7 +21,7 @@ if (require("testthat") && require("BayesFactor") && require("bayestestR")) {
   chickwts$feed <- factor(chickwts$feed)
   x <- BayesFactor::ttestBF(formula = weight ~ feed, data = chickwts)
   test_that("p_direction", {
-    expect_equal(as.numeric(p_direction(x)), 1, tol = 1)
+    expect_equal(as.numeric(p_direction(x)), 1, tolerance = 1)
   })
 
   # BF t.test meta-analytic ---------------------------
@@ -29,11 +29,11 @@ if (require("testthat") && require("BayesFactor") && require("bayestestR")) {
   N <- c(100, 150, 97, 99)
   x <- BayesFactor::meta.ttestBF(t = t, n1 = N, rscale = 1)
   test_that("p_direction", {
-    expect_equal(as.numeric(p_direction(x)), 0.99975, tol = 1)
+    expect_equal(as.numeric(p_direction(x)), 0.99975, tolerance = 1)
   })
 
   # # ---------------------------
-  # context("BF ANOVA")
+  # # "BF ANOVA"
   # data(ToothGrowth)
   # ToothGrowth$dose <- factor(ToothGrowth$dose)
   # levels(ToothGrowth$dose) <- c("Low", "Medium", "High")
@@ -43,7 +43,7 @@ if (require("testthat") && require("BayesFactor") && require("bayestestR")) {
   # })
   #
   # # ---------------------------
-  # context("BF ANOVA Random")
+  # # "BF ANOVA Random"
   # data(puzzles)
   # x <- BayesFactor::anovaBF(RT ~ shape*color + ID, data = puzzles, whichRandom="ID")
   # test_that("p_direction", {
@@ -52,7 +52,7 @@ if (require("testthat") && require("BayesFactor") && require("bayestestR")) {
   #
   #
   # # ---------------------------
-  # context("BF lm")
+  # # "BF lm"
   # x <- BayesFactor::lmBF(len ~ supp + dose, data = ToothGrowth)
   # test_that("p_direction", {
   #   expect_equal(as.numeric(p_direction(x)), 91.9, tol=0.1)
