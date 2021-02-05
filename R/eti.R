@@ -207,6 +207,16 @@ eti.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
 }
 
 
+#' @export
+eti.get_predicted <- function(x, ...) {
+  out <- eti(as.data.frame(t(x)), ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+# Helper ------------------------------------------------------------------
+
+
 #' @importFrom stats quantile
 .eti <- function(x, ci, verbose = TRUE) {
   check_ci <- .check_ci_argument(x, ci, verbose)

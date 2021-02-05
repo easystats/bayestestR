@@ -5,11 +5,14 @@ if (require("rstanarm", quietly = TRUE)) {
     rez <- point_estimate(x)
     expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
 
-    # rez <- hdi(x)
-    # expect_equal(c(nrow(rez), ncol(rez)), c(2, 4))
-    #
-    # rez <- eti(x)
-    # expect_equal(c(nrow(rez), ncol(rez)), c(2, 4))
+    rez <- hdi(x)
+    expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
+
+    rez <- eti(x)
+    expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
+
+    rez <- ci(x)
+    expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
   })
 }
 

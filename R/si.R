@@ -220,6 +220,16 @@ si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects 
   si(insight::get_parameters(posterior, effects = effects))
 }
 
+#' @export
+si.get_predicted <- function(posterior, ...) {
+  out <- si(as.data.frame(t(posterior)), ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(posterior))
+  out
+}
+
+# Helper ------------------------------------------------------------------
+
+
 
 #' @importFrom stats median mad na.omit
 #' @keywords internal

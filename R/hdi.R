@@ -260,6 +260,18 @@ hdi.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
   out
 }
 
+#' @export
+hdi.get_predicted <- function(x, ...) {
+  out <- hdi(as.data.frame(t(x)), ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
+
+
+# Helper ------------------------------------------------------------------
+
+
 
 #' @keywords internal
 .hdi <- function(x, ci = .89, verbose = TRUE) {
