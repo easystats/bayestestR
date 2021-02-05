@@ -282,3 +282,15 @@ point_estimate.BFBayesFactor <- function(x, centrality = "all", dispersion = FAL
 
   out
 }
+
+
+#' @export
+point_estimate.matrix <- function(x, ...) {
+  point_estimate(as.data.frame(x), ...)
+}
+
+
+#' @export
+point_estimate.get_predicted <- function(x, ...) {
+  point_estimate(as.data.frame(t(x)), ...)
+}

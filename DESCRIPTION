@@ -101,6 +101,8 @@ Suggests:
     testthat,
     tidyr,
     tweedie
+Remotes: 
+    easystats/insight
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

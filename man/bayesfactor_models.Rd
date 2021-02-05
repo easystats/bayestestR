@@ -92,7 +92,6 @@ BFM <- bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
 
 update(BFM, reference = "bottom")
 as.matrix(BFM)
-
 \dontrun{
 # With lmerMod objects:
 # ---------------------

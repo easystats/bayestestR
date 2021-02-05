@@ -150,3 +150,6 @@ simulate_difference <- function(n = 100, d = 0.5, names = NULL, ...) {
   }
   data
 }
+
+
+# Simulate regression: see https://stats.stackexchange.com/questions/363623/simulate-regression-with-specified-standardized-coefficients/508107#508107
