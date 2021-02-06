@@ -4,7 +4,11 @@ if (require("testthat") && require("bayestestR") && require("rstanarm") && requi
 
     # Numeric
     x <- distribution_normal(1000)
-    rez <- expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
+    rez <- expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = 0.89))
+
+    printed <- format(rez)
+    expect_true("89% CI" %in% names(printed))
+
     expect_equal(dim(rez), c(1, 19))
     expect_equal(colnames(rez), c(
       "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
