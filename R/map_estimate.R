@@ -142,6 +142,14 @@ map_estimate.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {
 map_estimate.emm_list <- map_estimate.emmGrid
 
 
+#' @export
+map_estimate.get_predicted <- function(x, ...){
+  map_estimate(as.data.frame(t(x)), ...)
+}
+
+# Methods -----------------------------------------------------------------
+
+
 
 #' @rdname as.numeric.p_direction
 #' @method as.numeric map_estimate

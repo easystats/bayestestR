@@ -315,6 +315,14 @@ p_direction.BFBayesFactor <- function(x, method = "direct", ...) {
   out
 }
 
+#' @export
+p_direction.get_predicted <- function(x, ...) {
+  out <- p_direction(as.data.frame(t(x)), ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+# Methods -----------------------------------------------------------------
+
 
 #' Convert to Numeric
 #'

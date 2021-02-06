@@ -13,6 +13,27 @@ if (require("rstanarm", quietly = TRUE)) {
 
     rez <- ci(x)
     expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
+
+    rez <- map_estimate(x)
+    expect_equal(c(nrow(rez), ncol(rez)), c(32, 2))
+
+    rez <- p_direction(x)
+    expect_equal(c(nrow(rez), ncol(rez)), c(32, 2))
+
+    # rez <- p_map(x)
+    # expect_equal(c(nrow(rez), ncol(rez)), c(2, 2))
+    #
+    # rez <- p_significance(x)
+    # expect_equal(c(nrow(rez), ncol(rez)), c(2, 2))
+    #
+    # rez <- rope(x)
+    # expect_equal(c(nrow(rez), ncol(rez)), c(2, 5))
+
+    rez <- describe_posterior(x)
+    expect_equal(c(nrow(rez), ncol(rez)), c(32, 5))
+
+    # rez <- estimate_density(x)
+    # expect_equal(c(nrow(rez), ncol(rez)), c(2048, 3))
   })
 }
 

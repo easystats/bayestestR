@@ -177,6 +177,9 @@ point_estimate.emmGrid <- function(x, centrality = "all", dispersion = FALSE, ..
 point_estimate.emm_list <- point_estimate.emmGrid
 
 
+# Helper ------------------------------------------------------------------
+
+
 
 #' @importFrom insight get_parameters
 #' @keywords internal

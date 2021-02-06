@@ -707,6 +707,13 @@ describe_posterior.bamlss <- function(posteriors, centrality = "median", dispers
 }
 
 
+#' @export
+describe_posterior.get_predicted <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.95, ci_method = "hdi", test = NULL, ...) {
+  describe_posterior(as.data.frame(t(posteriors)), centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, ...)
+}
+# Helpers -----------------------------------------------------------------
+
+
 
 #' @keywords internal
 .check_test_values <- function(test) {
