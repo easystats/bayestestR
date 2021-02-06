@@ -301,18 +301,14 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 <span class='va'>lm3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='va'>lm4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factors for Model Comparison</span><span>
-#&gt; 
-#&gt; Model                             BF
+</div><div class='output co'>#&gt; Model                             BF
 #&gt; [2] Species                1.696e+29
 #&gt; [3] Species + Petal.Length 5.843e+55
 #&gt; [4] Species * Petal.Length 2.203e+54
 #&gt; 
-#&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
+#&gt; * Against Denominator: <span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='va'>lm1</span><span class='op'>)</span> <span class='co'># same result</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison</span><span>
-#&gt; 
-#&gt; Model                             BF
+</div><div class='output co'>#&gt; Model                             BF
 #&gt; [1] Species                1.696e+29
 #&gt; [2] Species + Petal.Length 5.843e+55
 #&gt; [3] Species * Petal.Length 2.203e+54
@@ -321,21 +317,14 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='va'>BFM</span> <span class='op'>&lt;-</span> <span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='va'>lm1</span><span class='op'>)</span> <span class='co'># same result</span>
 
 <span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>BFM</span>, reference <span class='op'>=</span> <span class='st'>"bottom"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison</span><span>
-#&gt; 
-#&gt; Model                             BF
+</div><div class='output co'>#&gt; Model                             BF
 #&gt; [2] Species                1.696e+29
 #&gt; [3] Species + Petal.Length 5.843e+55
 #&gt; [4] Species * Petal.Length 2.203e+54
 #&gt; 
 #&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[1] (Intercept only)</span><span>
 #&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>BFM</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison</span><span> </span><span style='color: #00BBBB;'>
-#&gt; 
-#&gt;                             Numerator
-#&gt; Denominator</span><span>
-#&gt; 
-#&gt;                 |      [1] |      [2] |      [3] |      [4]
+</div><div class='output co'>#&gt;                 |      [1] |      [2] |      [3] |      [4]
 #&gt; ----------------------------------------------------------------------
 #&gt; [1] (Intercept only)       |        1 | 1.70e+29 | 5.84e+55 | 2.20e+54
 #&gt; [2] Species                | 5.90e-30 |        1 | 3.45e+26 | 1.30e+25
