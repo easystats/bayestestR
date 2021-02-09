@@ -10,6 +10,7 @@
 \alias{bayesfactor_parameters.numeric}
 \alias{bayesfactor_parameters.stanreg}
 \alias{bayesfactor_parameters.brmsfit}
+\alias{bayesfactor_parameters.blavaan}
 \alias{bayesfactor_parameters.data.frame}
 \title{Bayes Factors (BF) for a Single Parameter}
 \usage{
@@ -99,6 +100,15 @@ bf_rope(
   component = c("conditional", "location", "smooth_terms", "sigma", "zi",
     "zero_inflated", "all"),
   parameters = NULL,
+  ...
+)
+
+\method{bayesfactor_parameters}{blavaan}(
+  posterior,
+  prior = NULL,
+  direction = "two-sided",
+  null = 0,
+  verbose = TRUE,
   ...
 )
 

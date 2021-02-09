@@ -5,6 +5,7 @@
 \alias{unupdate.stanreg}
 \alias{unupdate.brmsfit}
 \alias{unupdate.brmsfit_multiple}
+\alias{unupdate.blavaan}
 \title{Un-update Bayesian models to their prior-to-data state}
 \usage{
 unupdate(model, verbose = TRUE, ...)
@@ -14,6 +15,8 @@ unupdate(model, verbose = TRUE, ...)
 \method{unupdate}{brmsfit}(model, verbose = TRUE, ...)
 
 \method{unupdate}{brmsfit_multiple}(model, verbose = TRUE, newdata = NULL, ...)
+
+\method{unupdate}{blavaan}(model, verbose = TRUE, ...)
 }
 \arguments{
 \item{model}{A fitted Bayesian model.}

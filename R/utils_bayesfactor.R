@@ -43,6 +43,28 @@
 #' @keywords internal
 .clean_priors_and_posteriors.brmsfit <- .clean_priors_and_posteriors.stanreg
 
+
+#' @keywords internal
+#' @importFrom insight get_parameters
+.clean_priors_and_posteriors.blavaan <- function(posterior, prior,
+                                                 verbose = TRUE, ...) {
+  # Get Priors
+  if (is.null(prior)) {
+    prior <- posterior
+  }
+
+  prior <- unupdate(prior, verbose = verbose)
+
+  prior <- insight::get_parameters(prior)
+  posterior <- insight::get_parameters(posterior)
+
+  list(
+    posterior = posterior,
+    prior = prior
+  )
+}
+
+
 #' @keywords internal
 #' @importFrom stats update
 .clean_priors_and_posteriors.emmGrid <- function(posterior, prior,
