@@ -382,7 +382,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/">bayestestR</a></span><span class="op">)</span>
 <span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span>, <span class="va">m3</span>, <span class="va">m4</span>, denominator <span class="op">=</span> <span class="va">m0</span><span class="op">)</span>
 <span class="va">comparison</span></code></pre></div>
-<pre><code>&gt; Model                             BF
+<pre><code>&gt; # Bayes Factors for Model Comparison
+&gt; 
+&gt; Model                             BF
 &gt; [1] Petal.Length           3.447e+44
 &gt; [2] Species                5.629e+29
 &gt; [3] Species + Petal.Length 7.121e+55
@@ -394,7 +396,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <p>Due to the transitive property of Bayes factors, we can easily change the reference model to the main effects model:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">comparison</span>, reference <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; Model                             BF
+<pre><code>&gt; # Bayes Factors for Model Comparison
+&gt; 
+&gt; Model                             BF
 &gt; [1] Petal.Length           4.841e-12
 &gt; [2] Species                7.904e-27
 &gt; [4] Species * Petal.Length     1.285
@@ -406,7 +410,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <p>We can also change the reference model to the <code>Species</code> model:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">comparison</span>, reference <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; Model                             BF
+<pre><code>&gt; # Bayes Factors for Model Comparison
+&gt; 
+&gt; Model                             BF
 &gt; [1] Petal.Length           6.125e+14
 &gt; [3] Species + Petal.Length 1.265e+26
 &gt; [4] Species * Petal.Length 1.626e+26
@@ -418,7 +424,12 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <p>We can also get a matrix of Bayes factors of all the pair-wise model comparisons:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">comparison</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt;                 |      [1] |      [2] |      [3] |      [4] |      [5]
+<pre><code>&gt; # Bayes Factors for Model Comparison 
+&gt; 
+&gt;                             Numerator
+&gt; Denominator
+&gt; 
+&gt;                 |      [1] |      [2] |      [3] |      [4] |      [5]
 &gt; ---------------------------------------------------------------------------------
 &gt; [1] Petal.Length           |        1 | 1.63e-15 | 2.07e+11 | 2.65e+11 | 2.90e-45
 &gt; [2] Species                | 6.12e+14 |        1 | 1.27e+26 | 1.63e+26 | 1.78e-30
@@ -441,7 +452,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html">lmer</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">*</span> <span class="va">Petal.Width</span> <span class="op">+</span> <span class="op">(</span><span class="va">Petal.Length</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span>, <span class="va">m3</span>, <span class="va">m4</span>, denominator <span class="op">=</span> <span class="va">m0</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; Model                                                            BF
+<pre><code>&gt; # Bayes Factors for Model Comparison
+&gt; 
+&gt; Model                                                            BF
 &gt; [1] Petal.Length + (1 | Species)                          8.240e+24
 &gt; [2] Petal.Length + (Petal.Length | Species)               4.768e+23
 &gt; [3] Petal.Length + Petal.Width + (Petal.Length | Species) 1.525e+22
@@ -476,7 +489,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">botanist_BFs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span><span class="va">iris_model</span>, hypothesis <span class="op">=</span> <span class="va">botanist_hypotheses</span><span class="op">)</span>
 <span class="va">botanist_BFs</span></code></pre></div>
-<pre><code>&gt; Hypothesis                                       P(Prior) P(Posterior)    BF
+<pre><code>&gt; # Bayes Factor (Order-Restriction)
+&gt; 
+&gt; Hypothesis                                       P(Prior) P(Posterior)    BF
 &gt; Petal.Length &gt; 0                                    0.495            1 2.018
 &gt; (Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)    0.244            0 0.000
 &gt; 
@@ -510,7 +525,9 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>Lets use the <code>brms</code> example from above:</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">comparison</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt;                      Pr(prior) Pr(posterior) Inclusion BF
+<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+&gt; 
+&gt;                      Pr(prior) Pr(posterior) Inclusion BF
 &gt; Petal.Length             0.600         1.000    1.927e+26
 &gt; Species                  0.600         1.000    3.147e+11
 &gt; Petal.Length:Species     0.200         0.562        5.139
@@ -521,7 +538,9 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>We can also compare only matched models - such that averaging is done only across models that (1) do not include any interactions with the predictor of interest; (2) for interaction predictors, averaging is done only across models that contain the main effect from which the interaction predictor is comprised (see explanation for why you might want to do this <a href="https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp">here</a>).</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">comparison</span>, match_models <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt;                      Pr(prior) Pr(posterior) Inclusion BF
+<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+&gt; 
+&gt;                      Pr(prior) Pr(posterior) Inclusion BF
 &gt; Petal.Length             0.400         0.438    1.265e+26
 &gt; Species                  0.400         0.438    2.066e+11
 &gt; Petal.Length:Species     0.200         0.562        1.285
@@ -543,7 +562,9 @@ BF_{\text{restricted vs. NULL}} = \frac
 <span class="va">BF_ToothGrowth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/anovaBF.html">anovaBF</a></span><span class="op">(</span><span class="va">len</span> <span class="op">~</span> <span class="va">dose</span><span class="op">*</span><span class="va">supp</span>, <span class="va">ToothGrowth</span>, progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">BF_ToothGrowth</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt;           Pr(prior) Pr(posterior) Inclusion BF
+<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+&gt; 
+&gt;           Pr(prior) Pr(posterior) Inclusion BF
 &gt; supp          0.600         0.995      140.992
 &gt; dose          0.600         1.000    3.211e+14
 &gt; dose:supp     0.200         0.717       10.121
@@ -556,7 +577,9 @@ BF_{\text{restricted vs. NULL}} = \frac
 </ol>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">BF_ToothGrowth</span>, match_models <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt;           Pr(prior) Pr(posterior) Inclusion BF
+<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+&gt; 
+&gt;           Pr(prior) Pr(posterior) Inclusion BF
 &gt; supp          0.400         0.279       59.191
 &gt; dose          0.400         0.283    1.364e+14
 &gt; dose:supp     0.200         0.717        2.573
@@ -585,7 +608,9 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Bayes factor type: BFlinearModel, JZS</code></pre>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">BF_ToothGrowth_against_dose</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt;           Pr(prior) Pr(posterior) Inclusion BF
+<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+&gt; 
+&gt;           Pr(prior) Pr(posterior) Inclusion BF
 &gt; dose          1.000         1.000           NA
 &gt; supp          0.667         0.995      105.744
 &gt; dose:supp     0.333         0.717        5.060
@@ -612,7 +637,9 @@ BF_{\text{restricted vs. NULL}} = \frac
                      diagnostic_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"df0.csv"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">mod_carb</span>, denominator <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; Model                 BF
+<pre><code>&gt; # Bayes Factors for Model Comparison
+&gt; 
+&gt; Model                 BF
 &gt; [1] wt + am + carb 0.811
 &gt; 
 &gt; * Against Denominator: [2] wt + am
@@ -776,7 +803,9 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
 <span class="va">em_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_sum</span>, <span class="op">~</span> <span class="va">Species</span><span class="op">)</span> <span class="co"># the posterior marginal means</span>
   
 <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span><span class="va">em_sum</span>, <span class="va">fit_sum</span>, hypothesis <span class="op">=</span> <span class="va">hyp</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; Hypothesis                                       P(Prior) P(Posterior)    BF
+<pre><code>&gt; # Bayes Factor (Order-Restriction)
+&gt; 
+&gt; Hypothesis                                       P(Prior) P(Posterior)    BF
 &gt; setosa &lt; versicolor                                 0.508            1 1.969
 &gt; setosa &lt; virginica                                  0.495            1 2.020
 &gt; versicolor &lt; virginica                              0.491            1 2.035
@@ -803,7 +832,9 @@ This is caused by an inherent bias in the priors introduced by the <em>effects</
 <span class="va">em_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_sum</span>, <span class="op">~</span> <span class="va">Species</span><span class="op">)</span> <span class="co"># the posterior marginal means</span>
 
 <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span><span class="va">em_bayes</span>, <span class="va">fit_sum</span>, hypothesis <span class="op">=</span> <span class="va">hyp</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; Hypothesis                                       P(Prior) P(Posterior)    BF
+<pre><code>&gt; # Bayes Factor (Order-Restriction)
+&gt; 
+&gt; Hypothesis                                       P(Prior) P(Posterior)    BF
 &gt; setosa &lt; versicolor                                 0.486            1 2.055
 &gt; setosa &lt; virginica                                  0.493            1 2.028
 &gt; versicolor &lt; virginica                              0.509            1 1.965

@@ -201,7 +201,9 @@
 <p>We said previously that a correlation test actually compares two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect). The <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html"><strong>Bayes factor (BF)</strong></a> allows the same comparison and determines <strong>under which of two models the observed data are more probable</strong>: a model with the effect of interest, and a null model without the effect of interest. We can use <code><a href="../reference/bayesfactor.html">bayesfactor()</a></code> to specifically compute the Bayes factor comparing those models:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor.html">bayesfactor</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; Model             BF
+<pre><code>&gt; # Bayes Factors for Model Comparison
+&gt; 
+&gt; Model             BF
 &gt; [2] (rho != 0) 0.509
 &gt; 
 &gt; * Against Denominator: [1] (rho = 0)
@@ -304,7 +306,9 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 
 <span class="fu"><a href="https://easystats.github.io/performance/reference/model_performance.html">model_performance</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Can't calculate log-loss.</code></pre>
-<pre><code>&gt; ELPD    | ELPD_SE |   LOOIC | LOOIC_SE |    WAIC |    R2 |  RMSE | Sigma | Score_log | Score_spherical
+<pre><code>&gt; # Indices of model performance
+&gt; 
+&gt; ELPD    | ELPD_SE |   LOOIC | LOOIC_SE |    WAIC |    R2 |  RMSE | Sigma | Score_log | Score_spherical
 &gt; ------------------------------------------------------------------------------------------------------
 &gt; -66.359 |   3.086 | 132.717 |    6.171 | 132.706 | 0.101 | 0.477 | 1.000 |  -105.918 |           0.010</code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">

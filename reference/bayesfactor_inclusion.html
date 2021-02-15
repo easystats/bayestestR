@@ -279,12 +279,14 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 
 <span class='va'>BFmodels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='bayesfactor_models.html'>bayesfactor_models</a></span><span class='op'>(</span><span class='va'>mo1</span>, <span class='va'>mo2</span>, <span class='va'>mo3</span>, denominator <span class='op'>=</span> <span class='va'>mo0</span><span class='op'>)</span>
 <span class='fu'>bayesfactor_inclusion</span><span class='op'>(</span><span class='va'>BFmodels</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                      Pr(prior) Pr(posterior) Inclusion BF
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Inclusion Bayes Factors (Model Averaged)</span><span>
+#&gt; 
+#&gt;                      Pr(prior) Pr(posterior) Inclusion BF
 #&gt; Species                  0.750         1.000    2.021e+55
 #&gt; Petal.Length             0.500         1.000    3.575e+26
 #&gt; Petal.Length:Species     0.250         0.036        0.113
 #&gt; 
-#&gt; * Compared among: <span style='color: #00BBBB;'>all models</span><span>
+#&gt; * Compared among: </span><span style='color: #00BBBB;'>all models</span><span>
 #&gt; *    Priors odds: </span><span style='color: #00BBBB;'>uniform-equal</span><span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># BayesFactor</span>
 <span class='co'># -------------------------------</span>
