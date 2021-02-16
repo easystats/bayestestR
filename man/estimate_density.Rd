@@ -89,8 +89,12 @@ hist(x, prob = TRUE)
 lines(density_extended$x, density_extended$y, col = "red", lwd = 3)
 lines(density_default$x, density_default$y, col = "black", lwd = 3)
 
+# Multiple columns
 df <- data.frame(replicate(4, rnorm(100)))
 head(estimate_density(df))
+
+# Grouped data
+estimate_density(iris, group_by="Species")
 \dontrun{
 # rstanarm models
 # -----------------------------------------------

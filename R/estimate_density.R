@@ -49,8 +49,13 @@
 #' lines(density_extended$x, density_extended$y, col = "red", lwd = 3)
 #' lines(density_default$x, density_default$y, col = "black", lwd = 3)
 #'
+#' # Multiple columns
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' head(estimate_density(df))
+#'
+#' # Grouped data
+#' estimate_density(iris, group_by="Species")
+#' estimate_density(iris$Petal.Width, group_by=iris$Species)
 #' \dontrun{
 #' # rstanarm models
 #' # -----------------------------------------------
@@ -123,8 +128,16 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 
 
 #' @export
-estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
-  out <- .estimate_density(x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
+estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = 0.95, group_by = NULL, ...) {
+  if(!is.null(group_by)) {
+    if(length(group_by) == 1) {
+      stop("`group_by` must be either the name of a group column if a data.frame is entered as input, or in this case (where a single vector was passed) a vector of same length.")
+    }
+    out <- estimate_density(data.frame(V1 = x, Group = group_by), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, group_by = "Group", ...)
+    out$Parameter <- NULL
+    return(out)
+  }
+  out <- .estimate_density(x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, ...)
   class(out) <- .set_density_class(out)
   out
 }
