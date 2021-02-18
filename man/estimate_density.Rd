@@ -22,7 +22,7 @@ estimate_density(
   extend = FALSE,
   extend_scale = 0.1,
   bw = "SJ",
-  ci = 0.95,
+  ci = NULL,
   group_by = NULL,
   ...
 )
@@ -95,6 +95,7 @@ head(estimate_density(df))
 
 # Grouped data
 estimate_density(iris, group_by="Species")
+estimate_density(iris$Petal.Width, group_by=iris$Species)
 \dontrun{
 # rstanarm models
 # -----------------------------------------------

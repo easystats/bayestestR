@@ -85,7 +85,7 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 
 #' @importFrom stats predict
 #' @keywords internal
-.estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = 0.95, ...) {
+.estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, ...) {
   method <- match.arg(tolower(method), c("kernel", "logspline", "kernsmooth", "smooth", "mixture", "mclust"))
 
   # Remove NA
@@ -128,7 +128,7 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 
 
 #' @export
-estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = 0.95, group_by = NULL, ...) {
+estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, group_by = NULL, ...) {
   if(!is.null(group_by)) {
     if(length(group_by) == 1) {
       stop("`group_by` must be either the name of a group column if a data.frame is entered as input, or in this case (where a single vector was passed) a vector of same length.")
@@ -148,7 +148,7 @@ estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, ext
 
 #' @rdname estimate_density
 #' @export
-estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = 0.95, group_by = NULL, ...) {
+estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, group_by = NULL, ...) {
   if (is.null(group_by)) {
     out <- .estimate_density_df(x = x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, ...)
   } else {
@@ -165,7 +165,7 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
   out
 }
 
-.estimate_density_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = 0.95, ...) {
+.estimate_density_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, ...) {
   x <- .select_nums(x)
   out <- sapply(x, estimate_density, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, simplify = FALSE)
   for (i in names(out)) {
@@ -179,7 +179,7 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
 
 
 #' @export
-estimate_density.grouped_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = 0.95, ...) {
+estimate_density.grouped_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, ...) {
   groups <- .group_vars(x)
   ungrouped_x <- as.data.frame(x)
 
