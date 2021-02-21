@@ -1,5 +1,4 @@
 if (require("rstanarm") && require("bayestestR") && require("testthat")) {
-
   test_that("si.numeric", {
     set.seed(333)
     prior <- distribution_normal(1000, mean = 0, sd = 1)

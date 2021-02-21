@@ -15,10 +15,10 @@ print.bayesfactor_models <- function(x, digits = 3, log = FALSE, ...) {
   BFE$Model <- paste0(" [", seq_len(nrow(BFE)), "] ", BFE$Model)
 
   # Denominator
-  if(is.numeric(denominator)) {
+  if (is.numeric(denominator)) {
     denM <- .trim(BFE$Model[denominator])
     BFE <- BFE[-denominator, ]
-  } else{
+  } else {
     denM <- tools::toTitleCase(denominator)
   }
 
@@ -36,8 +36,8 @@ print.bayesfactor_models <- function(x, digits = 3, log = FALSE, ...) {
     BFE,
     sep = " ", header = NULL, align = c("left", "right"),
     caption = c("# Bayes Factors for Model Comparison", "blue"),
-    footer = footer)
-  )
+    footer = footer
+  ))
 
   invisible(x)
 }

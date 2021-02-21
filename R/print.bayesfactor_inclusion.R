@@ -10,7 +10,7 @@ print.bayesfactor_inclusion <- function(x, digits = 3, log = FALSE, ...) {
   }
   BFE$BF <- insight::format_value(BFE$BF, digits = digits, missing = "NA")
   BFE <- cbind(rownames(BFE), BFE)
-  colnames(BFE) <- c("","Pr(prior)", "Pr(posterior)", "Inclusion BF")
+  colnames(BFE) <- c("", "Pr(prior)", "Pr(posterior)", "Inclusion BF")
 
 
   # footer
@@ -23,7 +23,8 @@ print.bayesfactor_inclusion <- function(x, digits = 3, log = FALSE, ...) {
   )
 
   cat(insight::export_table(
-    BFE, digits = digits, sep = " ", header = NULL,
+    BFE,
+    digits = digits, sep = " ", header = NULL,
     caption = c("# Inclusion Bayes Factors (Model Averaged)", "blue"),
     footer = footer
   ))

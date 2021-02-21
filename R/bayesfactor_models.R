@@ -63,7 +63,6 @@
 #'
 #' update(BFM, reference = "bottom")
 #' as.matrix(BFM)
-#'
 #' \dontrun{
 #' # With lmerMod objects:
 #' # ---------------------
@@ -155,7 +154,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   mnames <- sapply(match.call(expand.dots = FALSE)$`...`, .safe_deparse)
 
   # In the case of a list as direct input
-  if(length(mods) == 1 && inherits(mods[[1]], "list")){
+  if (length(mods) == 1 && inherits(mods[[1]], "list")) {
     mods <- mods[[1]]
     mnames <- names(mods)
   }
@@ -209,9 +208,10 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
 
   .bf_models_output(res,
-                    denominator = denominator,
-                    bf_method = "BIC approximation",
-                    unsupported_models = !all(supported_models))
+    denominator = denominator,
+    bf_method = "BIC approximation",
+    unsupported_models = !all(supported_models)
+  )
 }
 
 
@@ -225,7 +225,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   mods <- list(...)
 
   # In the case of a list as direct input
-  if(length(mods) == 1 && inherits(mods[[1]], "list")){
+  if (length(mods) == 1 && inherits(mods[[1]], "list")) {
     mods <- mods[[1]]
     was_list <- TRUE
   } else {
@@ -297,8 +297,9 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
 
   .bf_models_output(res,
-                    denominator = denominator,
-                    bf_method = "marginal likelihoods (bridgesampling)")
+    denominator = denominator,
+    bf_method = "marginal likelihoods (bridgesampling)"
+  )
 }
 
 
@@ -346,9 +347,10 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
   )
 
   .bf_models_output(res,
-                    denominator = 1,
-                    bf_method = "JZS (BayesFactor)",
-                    unsupported_models = !"BFlinearModel" %in% class(models@denominator))
+    denominator = 1,
+    bf_method = "JZS (BayesFactor)",
+    unsupported_models = !"BFlinearModel" %in% class(models@denominator)
+  )
 }
 
 
