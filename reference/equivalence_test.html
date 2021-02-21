@@ -247,7 +247,14 @@
     </tr>
     <tr>
       <th>range</th>
-      <td><p>ROPE's lower and higher bounds. Should be a vector of length two (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code>) or <code>"default"</code>. If <code>"default"</code>, the range is set to <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code> if input is a vector, and based on <code><a href='rope_range.html'>rope_range()</a></code> if a Bayesian model is provided.</p></td>
+      <td><p>ROPE's lower and higher bounds. Should be <code>"default"</code> or
+depending on the number of outcome variables a vector or a list. In models with one response,
+`range` should be a vector of length two (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code>). In
+multivariate models, `range` should be a list with a numeric vectors for
+each response variable. Vector names should correspond to the name of the response
+variables. If <code>"default"</code> and input is a vector, the range is set to <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1,
+0.1)</a></code>. If <code>"default"</code> and input is a Bayesian model,
+<code><a href='rope_range.html'>rope_range()</a></code> is used.</p></td>
     </tr>
     <tr>
       <th>ci</th>
