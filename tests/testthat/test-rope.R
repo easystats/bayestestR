@@ -58,6 +58,30 @@ if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
   }
 }
 
+if (require("brms", quietly = TRUE)) {
+  model <- brm(mpg ~ wt + gear, data = mtcars, iter = 500)
+  rope <- rope(model)
+
+  test_that("rope (brms)", {
+    testthat::expect_equal(rope$ROPE_high, -rope$ROPE_low)
+    testthat::expect_equal(rope$ROPE_high[1], 0.6026948)
+    testthat::expect_equal(rope$ROPE_Percentage, c(0, 0, 0.489719), tolerance = 0.01)
+  })
+
+  model <- brm(mvbind(mpg, disp) ~ wt + gear, data = mtcars, iter = 500)
+  rope <- rope(model)
+
+  test_that("rope (brms, multivariate)", {
+    testthat::expect_equal(rope$ROPE_high, -rope$ROPE_low)
+    testthat::expect_equal(rope$ROPE_high[1], 0.6026948)
+    testthat::expect_equal(rope$ROPE_high[4], 12.3938694)
+    testthat::expect_equal(
+      rope$ROPE_Percentage,
+      c(0, 0, 0.493457, 0.072897, 0, 0.508411),
+      tolerance = 0.1
+    )
+  })
+}
 
 if (require("BayesFactor", quietly = TRUE)) {
   mods <- regressionBF(mpg ~ am + cyl, mtcars, progress = FALSE)

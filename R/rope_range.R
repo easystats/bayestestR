@@ -65,7 +65,12 @@ rope_range.brmsfit <- function(x, verbose = TRUE, ...) {
   information <- insight::model_info(x)
 
   if (insight::is_multivariate(x)) {
-    mapply(function(i, j) .rope_range(i, j), x, information, response)
+    ret <- mapply(function(i, j) .rope_range(x, i, j), information, response)
+
+    # return matrix as named list
+    # see https://stackoverflow.com/questions/6819804/how-to-convert-a-matrix-to-a-list-of-column-vectors-in-r
+    # this is not the fastest solution bot keeps columns names
+    as.list(as.data.frame(ret))
   } else {
     .rope_range(x, information, response, verbose)
   }
