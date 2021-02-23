@@ -2,9 +2,9 @@
 % Please edit documentation in R/reshape_draws.R
 \name{reshape_draws}
 \alias{reshape_draws}
-\title{Reshape estimations with Bayesian posterior draws to long format}
+\title{Reshape estimations with multiple iterations (draws) to long format}
 \usage{
-reshape_draws(draws, prefix = c("draw", "iter", "iteration"))
+reshape_draws(draws, prefix = c("draw", "iter", "iteration", "sim"))
 }
 \arguments{
 \item{draws}{data.frame containing posterior draws obtained from \code{estimate_response} or \code{estimate_link}.}
@@ -15,13 +15,13 @@ reshape_draws(draws, prefix = c("draw", "iter", "iteration"))
 Data frame of reshaped draws in long format.
 }
 \description{
-Reshape a wide data.frame of posterior draws (or iterations) as columns to long format. Instead of having all iterations as columns (e.g., \code{iter_1, iter_2, ...}), will return 3 columns with the \code{\*_index} (the previous index of the row), the \code{\*_group} (the iteration number) and the \code{\*_value} (the value of said iteration).
+Reshape a wide data.frame of iterations (such as posterior draws or bootsrapped samples) as columns to long format. Instead of having all iterations as columns (e.g., \code{iter_1, iter_2, ...}), will return 3 columns with the \code{\*_index} (the previous index of the row), the \code{\*_group} (the iteration number) and the \code{\*_value} (the value of said iteration).
 }
 \examples{
 \donttest{
 if (require("rstanarm")) {
   model <- stan_glm(mpg ~ am, data = mtcars, refresh = 0)
-  draws <- as.data.frame(insight::get_predicted(model))
+  draws <- insight::get_predicted(model)
   long_format <- reshape_draws(draws)
   head(long_format)
 }
