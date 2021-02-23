@@ -256,11 +256,11 @@
 #&gt; 
 #&gt; Residuals:
 #&gt;      Min       1Q   Median       3Q      Max 
-#&gt; -2.75366 -0.60645 -0.05023  0.47185  2.24200 
+#&gt; -2.39237 -0.49231 -0.04822  0.51229  2.90372 
 #&gt; 
 #&gt; Coefficients:
 #&gt;              Estimate Std. Error t value Pr(&gt;|t|)    
-#&gt; (Intercept) 1.943e-17  8.704e-02   0.000        1    
+#&gt; (Intercept) 5.829e-17  8.704e-02   0.000        1    
 #&gt; V1          5.000e-01  8.748e-02   5.715 1.18e-07 ***
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
@@ -292,7 +292,7 @@
 #&gt; 
 #&gt; Residuals:
 #&gt;     Min      1Q  Median      3Q     Max 
-#&gt; -4.1756 -0.9674  0.3706  0.8921  3.0525 
+#&gt; -2.4316 -1.2903  0.0366  0.9619  3.2946 
 #&gt; 
 #&gt; Coefficients:
 #&gt;             Estimate Std. Error t value Pr(&gt;|t|)    
@@ -301,7 +301,7 @@
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; 
-#&gt; Residual standard error: 1.488 on 48 degrees of freedom
+#&gt; Residual standard error: 1.487 on 48 degrees of freedom
 #&gt; Multiple R-squared:   0.25,	Adjusted R-squared:  0.2344 
 #&gt; F-statistic:    16 on 1 and 48 DF,  p-value: 0.000218
 #&gt; </div><div class='input'>
@@ -326,12 +326,12 @@ nrow <span class='op'>=</span> <span class='fl'>3</span>
 #&gt; 
 #&gt; Residuals:
 #&gt;      Min       1Q   Median       3Q      Max 
-#&gt; -2.48319 -0.60577 -0.08202  0.61630  2.65586 
+#&gt; -2.56303 -0.63968 -0.00872  0.72084  2.11843 
 #&gt; 
 #&gt; Coefficients:
-#&gt;               Estimate Std. Error t value Pr(&gt;|t|)  
-#&gt; (Intercept) -3.442e-17  9.848e-02   0.000    1.000  
-#&gt; x1           2.000e-01  9.897e-02   2.021    0.046 *
+#&gt;              Estimate Std. Error t value Pr(&gt;|t|)  
+#&gt; (Intercept) 4.663e-17  9.848e-02   0.000    1.000  
+#&gt; x1          2.000e-01  9.897e-02   2.021    0.046 *
 #&gt; ---
 #&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #&gt; 
@@ -345,46 +345,42 @@ nrow <span class='op'>=</span> <span class='fl'>3</span>
 </div><div class='img'><img src='simulate_correlation-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>V1</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>V1</span><span class='op'>)</span><span class='op'>)</span>, <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.0 0.9</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>V1</span> <span class='op'>~</span> <span class='va'>data</span><span class='op'>$</span><span class='va'>V0</span><span class='op'>)</span><span class='op'>$</span><span class='va'>estimate</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; mean in group 1 
-#&gt;       0.6435717 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>V1</span> <span class='op'>~</span> <span class='va'>V0</span>, data <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span><span class='op'>)</span>
+#&gt;       0.2689352 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>V1</span> <span class='op'>~</span> <span class='va'>V0</span>, data <span class='op'>=</span> <span class='va'>data</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Call:
 #&gt; lm(formula = V1 ~ V0, data = data)
 #&gt; 
 #&gt; Residuals:
 #&gt;      Min       1Q   Median       3Q      Max 
-#&gt; -1.49068 -0.73046  0.02847  0.46098  1.85327 
+#&gt; -1.69945 -0.66817 -0.08136  0.64241  1.69945 
 #&gt; 
 #&gt; Coefficients:
-#&gt;             Estimate Std. Error t value Pr(&gt;|t|)  
-#&gt; (Intercept)  -0.3432     0.2318  -1.481   0.1499  
-#&gt; V01           0.6436     0.3174   2.027   0.0522 .
-#&gt; ---
-#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt;             Estimate Std. Error t value Pr(&gt;|t|)
+#&gt; (Intercept)  -0.1345     0.2371  -0.567    0.575
+#&gt; V01           0.2689     0.3354   0.802    0.429
 #&gt; 
-#&gt; Residual standard error: 0.8674 on 28 degrees of freedom
-#&gt; Multiple R-squared:  0.128,	Adjusted R-squared:  0.09686 
-#&gt; F-statistic:  4.11 on 1 and 28 DF,  p-value: 0.05224
+#&gt; Residual standard error: 0.9184 on 28 degrees of freedom
+#&gt; Multiple R-squared:  0.02245,	Adjusted R-squared:  -0.01246 
+#&gt; F-statistic: 0.6431 on 1 and 28 DF,  p-value: 0.4294
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>V0</span> <span class='op'>~</span> <span class='va'>V1</span>, data <span class='op'>=</span> <span class='va'>data</span>, family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Call:
 #&gt; glm(formula = V0 ~ V1, family = "binomial", data = data)
 #&gt; 
 #&gt; Deviance Residuals: 
-#&gt;     Min       1Q   Median       3Q      Max  
-#&gt; -1.8462  -1.0776   0.6229   1.0018   1.4484  
+#&gt;    Min      1Q  Median      3Q     Max  
+#&gt; -1.402  -1.139   0.000   1.166   1.402  
 #&gt; 
 #&gt; Coefficients:
-#&gt;             Estimate Std. Error z value Pr(&gt;|z|)  
-#&gt; (Intercept)   0.1533     0.3925   0.391   0.6962  
-#&gt; V1            0.8941     0.4821   1.854   0.0637 .
-#&gt; ---
-#&gt; Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#&gt;              Estimate Std. Error z value Pr(&gt;|z|)
+#&gt; (Intercept) 5.577e-17  3.693e-01   0.000    1.000
+#&gt; V1          3.400e-01  4.180e-01   0.813    0.416
 #&gt; 
 #&gt; (Dispersion parameter for binomial family taken to be 1)
 #&gt; 
-#&gt;     Null deviance: 41.455  on 29  degrees of freedom
-#&gt; Residual deviance: 37.399  on 28  degrees of freedom
-#&gt; AIC: 41.399
+#&gt;     Null deviance: 41.589  on 29  degrees of freedom
+#&gt; Residual deviance: 40.909  on 28  degrees of freedom
+#&gt; AIC: 44.909
 #&gt; 
 #&gt; Number of Fisher Scoring iterations: 4
 #&gt; </div><div class='input'>
