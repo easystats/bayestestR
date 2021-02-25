@@ -19,7 +19,7 @@
 reshape_iterations <- function(x, prefix = c("draw", "iter", "iteration", "sim")) {
 
   # Find columns' name
-  prefix <- prefix[min(which(sapply(tolower(prefix), function(x) sum(grepl(x, tolower(names(draws)))) > 1)))]
+  prefix <- prefix[min(which(sapply(tolower(prefix), function(prefix) sum(grepl(prefix, tolower(names(x)))) > 1)))]
 
   if (is.na(prefix) || is.null(prefix)) {
     stop("Couldn't find columns corresponding to iterations in your dataframe, please specify the correct prefix.")
