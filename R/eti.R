@@ -108,9 +108,11 @@ eti.bcplm <- function(x, ci = .89, verbose = TRUE, ...) {
 }
 
 
-#' @rdname eti
 #' @export
 eti.bayesQR <- eti.bcplm
+
+#' @export
+eti.blrm <- eti.bcplm
 
 #' @export
 eti.mcmc.list <- eti.bcplm

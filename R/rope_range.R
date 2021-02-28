@@ -108,6 +108,9 @@ rope_range.BFBayesFactor <- function(x, ...) {
 }
 
 #' @export
+rope_range.blrm <- rope_range.brmsfit
+
+#' @export
 rope_range.lm <- rope_range.brmsfit
 
 #' @export

@@ -295,6 +295,16 @@ equivalence_test.bcplm <- function(x, range = "default", ci = .89, parameters = 
   out
 }
 
+#' @export
+equivalence_test.blrm <- equivalence_test.bcplm
+
+#' @export
+equivalence_test.mcmc.list <- equivalence_test.bcplm
+
+#' @export
+equivalence_test.bayesQR <- equivalence_test.bcplm
+
+
 
 #' @export
 equivalence_test.bamlss <- function(x, range = "default", ci = .89, component = c("all", "conditional", "location"), parameters = NULL, verbose = TRUE, ...) {

@@ -165,9 +165,11 @@ hdi.bcplm <- function(x, ci = .89, verbose = TRUE, ...) {
 }
 
 
-#' @rdname hdi
 #' @export
 hdi.bayesQR <- hdi.bcplm
+
+#' @export
+hdi.blrm <- hdi.bcplm
 
 #' @export
 hdi.mcmc.list <- hdi.bcplm

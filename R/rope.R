@@ -253,20 +253,14 @@ rope.bcplm <- function(x, range = "default", ci = .89, ci_method = "HDI", verbos
   out
 }
 
-
-
+#' @export
+rope.bayesQR <- rope.bcplm
 
 #' @export
-rope.bayesQR <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
-  out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
-  attr(out, "object_name") <- NULL
-  attr(out, "data") <- .safe_deparse(substitute(x))
-  out
-}
-
+rope.blrm <- rope.bcplm
 
 #' @export
-rope.mcmc.list <- rope.bayesQR
+rope.mcmc.list <- rope.bcplm
 
 
 
@@ -338,14 +332,14 @@ rope.stanfit <- rope.stanreg
 #' @rdname rope
 #' @export
 rope.brmsfit <- function(
-  x, 
-  range = "default", 
-  ci = .89, 
-  ci_method = "HDI", 
-  effects = c("fixed", "random", "all"), 
-  component = c("conditional", "zi", "zero_inflated", "all"), 
-  parameters = NULL, 
-  verbose = TRUE, 
+  x,
+  range = "default",
+  ci = .89,
+  ci_method = "HDI",
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all"),
+  parameters = NULL,
+  verbose = TRUE,
   ...
 ) {
   effects <- match.arg(effects)
@@ -356,7 +350,7 @@ rope.brmsfit <- function(
     range <- rope_range(x)
   # we expect a list with named vectors (length two) in the multivariate case.
   # Names state the response variable.
-  } else if (insight::is_multivariate(x) && 
+  } else if (insight::is_multivariate(x) &&
     (!is.list(range) || length(range) != length(insight::find_response(x)) ||
         names(range) != insight::find_response(x))) {
     stop("With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2.")
