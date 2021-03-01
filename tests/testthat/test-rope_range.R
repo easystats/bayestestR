@@ -2,7 +2,7 @@ if (require("brms", quietly = TRUE)) {
   test_that("rope_range", {
     model <- brm(mpg ~ wt + gear, data = mtcars, iter = 300)
 
-    testthat::expect_equal(
+    expect_equal(
       rope_range(model),
       c(-0.6026948, 0.6026948),
       tolerance = 0.01
@@ -12,7 +12,7 @@ if (require("brms", quietly = TRUE)) {
   test_that("rope_range (multivariate)", {
     model <- brm(mvbind(mpg, disp) ~ wt + gear, data = mtcars, iter = 300)
 
-    testthat::expect_equal(
+    expect_equal(
       rope_range(model),
       list(
         mpg = c(-0.602694, 0.602694),
