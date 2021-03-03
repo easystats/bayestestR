@@ -198,7 +198,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   # Get BF
   names(mods) <- mforms
   mBIC <- .BIC_list(mods)
-  mBFs <- exp((mBIC - mBIC[denominator]) / (-2))
+  mBFs <- bic_to_bf(mBIC, denominator = mBIC[denominator])
 
   res <- data.frame(
     Model = mforms,
