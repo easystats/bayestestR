@@ -186,15 +186,6 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     supported_models[!has_terms] <- FALSE
   }
 
-  if (!all(supported_models)) {
-    if (verbose) {
-      warning(sprintf(
-        "Unable to extract terms from the following models: \n%s",
-        paste0(mnames[!supported_models], collapse = ", ")
-      ), call. = FALSE)
-    }
-  }
-
   # Get BF
   names(mods) <- mforms
   mBIC <- .BIC_list(mods)
