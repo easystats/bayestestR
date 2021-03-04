@@ -335,23 +335,63 @@ the resulting HDI.</p>
 <span class='fu'>eti</span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span style='color: #0000BB;'># Equal-Tailed Interval
 #&gt; 
-#&gt; </span><span></div><div class='output co'>#&gt; <span class='message'>Can't export table to text, data frame is empty.</span></div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>eti</span><span class='op'>(</span><span class='va'>posterior</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span>
+#&gt; </span><span>89% ETI      
+#&gt; -------------
+#&gt; [-1.65, 1.70]
+#&gt; </div><div class='input'><span class='fu'>eti</span><span class='op'>(</span><span class='va'>posterior</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Intervals
 #&gt; 
-#&gt; </span><span></div><div class='output co'>#&gt; <span class='message'>Can't export table to text, data frame is empty.</span></div><div class='output co'>#&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>Can't export table to text, data frame is empty.</span></div><div class='output co'>#&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>Can't export table to text, data frame is empty.</span></div><div class='output co'>#&gt; 
+#&gt; </span><span>80% ETI      
+#&gt; -------------
+#&gt; [-1.31, 1.31]
+#&gt; 
+#&gt; 
+#&gt; 89% ETI      
+#&gt; -------------
+#&gt; [-1.65, 1.70]
+#&gt; 
+#&gt; 
+#&gt; 95% ETI      
+#&gt; -------------
+#&gt; [-2.07, 2.04]
+#&gt; 
 #&gt; </div><div class='input'>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>eti</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Interval
 #&gt; 
-#&gt; </span><span></div><div class='output co'>#&gt; <span class='message'>Can't export table to text, data frame is empty.</span></div><div class='output co'>#&gt; </div><div class='input'><span class='fu'>eti</span><span class='op'>(</span><span class='va'>df</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span>
+#&gt; </span><span>Parameter |       89% ETI
+#&gt; -------------------------
+#&gt; X1        | [-1.83, 1.62]
+#&gt; X2        | [-1.59, 1.53]
+#&gt; X3        | [-1.97, 1.19]
+#&gt; X4        | [-1.80, 1.77]
+#&gt; </div><div class='input'><span class='fu'>eti</span><span class='op'>(</span><span class='va'>df</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Equal-Tailed Intervals
 #&gt; 
-#&gt; </span><span></div><div class='output co'>#&gt; <span class='message'>Can't export table to text, data frame is empty.</span></div><div class='output co'>#&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>Can't export table to text, data frame is empty.</span></div><div class='output co'>#&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>Can't export table to text, data frame is empty.</span></div><div class='output co'>#&gt; 
+#&gt; </span><span>Parameter |       80% ETI
+#&gt; -------------------------
+#&gt; X1        | [-1.51, 1.40]
+#&gt; X2        | [-1.44, 1.36]
+#&gt; X3        | [-1.46, 1.01]
+#&gt; X4        | [-1.51, 1.49]
+#&gt; 
+#&gt; 
+#&gt; Parameter |       89% ETI
+#&gt; -------------------------
+#&gt; X1        | [-1.83, 1.62]
+#&gt; X2        | [-1.59, 1.53]
+#&gt; X3        | [-1.97, 1.19]
+#&gt; X4        | [-1.80, 1.77]
+#&gt; 
+#&gt; 
+#&gt; Parameter |       95% ETI
+#&gt; -------------------------
+#&gt; X1        | [-2.10, 2.02]
+#&gt; X2        | [-2.22, 1.98]
+#&gt; X3        | [-2.32, 2.15]
+#&gt; X4        | [-1.87, 2.00]
+#&gt; 
 #&gt; </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>gear</span>, data <span class='op'>=</span> <span class='va'>mtcars</span>, chains <span class='op'>=</span> <span class='fl'>2</span>, iter <span class='op'>=</span> <span class='fl'>200</span>, refresh <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>

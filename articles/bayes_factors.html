@@ -647,7 +647,14 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>It seems that the model without <code>carb</code> as a predictor is <span class="math inline">\(1/BF=1.2\)</span> times more likely than the model <em>with</em> <code>carb</code> as a predictor. We might then assume that in the latter model, the HDI will include the point-null value of 0 effect, to also indicate the credibility of the null in the posterior. However, this is not the case:</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">mod_carb</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Highest Density Interval</code></pre>
+<pre><code>&gt; # Highest Density Interval
+&gt; 
+&gt; Parameter   |        95% HDI
+&gt; ----------------------------
+&gt; (Intercept) | [28.10, 40.09]
+&gt; wt          | [-5.48, -1.72]
+&gt; am          | [-0.81,  5.86]
+&gt; carb        | [-2.04, -0.38]</code></pre>
 <p>How can this be? By estimating the HDI of the effect for <code>carb</code> in the full model, we are acting under the assumption that that model is correct. However, as we’ve just seen, both models are practically tied, and in fact it was the no-<code>carb</code> model, in which the effect for <code>carb</code> is fixed at 0, that was slightly more supported by the data. If this is the case <strong>why limit our estimation of the effect just to one model?</strong> <span class="citation">(Bergh, Haaf, Ly, Rouder, &amp; Wagenmakers, 2019)</span>.</p>
 <p>Using Bayesian model averaging, we can combine the posteriors samples from several models, weighted by the models’ marginal likelihood (done via the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function). If some parameter is part of some of the models but is missing from others, it is assumed to be fixed a 0 (which can also be seen as a method of applying shrinkage to our estimates). This results in a posterior distribution across several models, which we can now treat like any posterior distribution, and estimate the HDI. We can do this with the <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> function:</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
@@ -655,7 +662,14 @@ BF_{\text{restricted vs. NULL}} = \frac
 
 <span class="va">BMA_hdi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">BMA_draws</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span>
 <span class="va">BMA_hdi</span></code></pre></div>
-<pre><code>&gt; # Highest Density Interval</code></pre>
+<pre><code>&gt; # Highest Density Interval
+&gt; 
+&gt; Parameter   |        95% HDI
+&gt; ----------------------------
+&gt; (Intercept) | [29.03, 42.43]
+&gt; wt          | [-6.66, -2.14]
+&gt; am          | [-2.80,  5.04]
+&gt; carb        | [-1.69,  0.00]</code></pre>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">BMA_hdi</span><span class="op">)</span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-25-1.png" width="1093.75"></p>

@@ -308,7 +308,11 @@
 <p>We will compute this <strong>credible interval</strong> based on the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis">Highest Density Interval (HDI)</a>. It will give us the range containing the 89% most probable effect values. <strong>Note that we will use 89% CIs instead of 95%</strong> CIs (as in the frequentist framework), as the 89% level gives more <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89">stable results</a> <span class="citation">(Kruschke, 2014)</span> and reminds us about the arbitrarity of such conventions <span class="citation">(McElreath, 2018)</span>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span>, ci<span class="op">=</span><span class="fl">0.89</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Highest Density Interval</code></pre>
+<pre><code>&gt; # Highest Density Interval
+&gt; 
+&gt; 89% HDI     
+&gt; ------------
+&gt; [0.38, 0.44]</code></pre>
 <p>Nice, so we can conclude that <strong>the effect has 89% chance of falling within the <code>[0.38, 0.44]</code> range</strong>. We have just computed the two most important pieces of information for describing our effects.</p>
 </div>
 <div id="effect-significance" class="section level4">
@@ -353,7 +357,11 @@
 <pre><code>&gt; [1] 52</code></pre>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">feedsunflower</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Highest Density Interval</code></pre>
+<pre><code>&gt; # Highest Density Interval
+&gt; 
+&gt; 89% HDI       
+&gt; --------------
+&gt; [13.07, 89.57]</code></pre>
 <p>It makes you fat by around 51 grams (the median). However, the uncertainty is quite high: <strong>there is 89% chance that the difference between the two feed types is between 14 and 91.</strong></p>
 <blockquote>
 <p><strong>Is this effect different from 0?</strong></p>
