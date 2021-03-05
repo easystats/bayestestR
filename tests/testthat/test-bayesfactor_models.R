@@ -50,7 +50,7 @@ if (require("bayestestR") && require("testthat")) {
     expect_error(bayesfactor_models(fit1, fit2a))
 
     # Should warn, but still work
-    expect_warning(res <- bayesfactor_models(fit1, fit2b))
+    res <- bayesfactor_models(fit1, fit2b)
     expect_equal(log(res$BF), c(0, -133.97), tolerance = 0.1)
   })
 

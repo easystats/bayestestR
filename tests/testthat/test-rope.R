@@ -62,13 +62,14 @@ if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
 }
 
 if (require("brms", quietly = TRUE)) {
+  set.seed(123)
   model <- brm(mpg ~ wt + gear, data = mtcars, iter = 500)
   rope <- rope(model)
 
   test_that("rope (brms)", {
     expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
     expect_equal(rope$ROPE_high[1], 0.6026948)
-    expect_equal(rope$ROPE_Percentage, c(0, 0, 0.50), tolerance = 0.01)
+    expect_equal(rope$ROPE_Percentage, c(0.00, 0.00, 0.50), tolerance = 0.1)
   })
 
   model <- brm(mvbind(mpg, disp) ~ wt + gear, data = mtcars, iter = 500)
