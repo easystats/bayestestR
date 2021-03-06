@@ -1,10 +1,6 @@
 ---
 title: "2. Confirmation of Bayesian skills"
 output: 
-  github_document:
-    toc: true
-    fig_width: 10.08
-    fig_height: 6
   rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08

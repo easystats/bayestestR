@@ -5,10 +5,6 @@ output:
     toc: true
     fig_width: 10.08
     fig_height: 6
-  rmarkdown::html_vignette:
-    toc: true
-    fig_width: 10.08
-    fig_height: 6
 tags: [r, bayesian, posterior, test]
 vignette: >
   \usepackage[utf8]{inputenc}
