@@ -14,7 +14,7 @@
 #'   \code{BFBayesFactor}.
 #' @param object,x A \code{\link{bayesfactor_models}} object.
 #' @param subset Vector of model indices to keep or remove.
-#' @param reference Index of model to rereference to, or \code{"top"} to
+#' @param reference Index of model to reference to, or \code{"top"} to
 #'   reference to the best model, or \code{"bottom"} to reference to the worst
 #'   model.
 #' @inheritParams hdi

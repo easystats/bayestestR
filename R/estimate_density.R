@@ -21,14 +21,16 @@
 #' x <- rnorm(250, mean = 1)
 #'
 #' # Basic usage
-#' density_kernel <- estimate_density(x)  # default method is "kernel"
+#' density_kernel <- estimate_density(x) # default method is "kernel"
 #'
 #' hist(x, prob = TRUE)
 #' lines(density_kernel$x, density_kernel$y, col = "black", lwd = 2)
 #' lines(density_kernel$x, density_kernel$CI_low, col = "gray", lty = 2)
 #' lines(density_kernel$x, density_kernel$CI_high, col = "gray", lty = 2)
-#' legend("topright", legend = c("Estimate", "95% CI"),
-#'        col = c("black", "gray"), lwd = 2, lty = c(1, 2))
+#' legend("topright",
+#'   legend = c("Estimate", "95% CI"),
+#'   col = c("black", "gray"), lwd = 2, lty = c(1, 2)
+#' )
 #'
 #' # Other Methods
 #' density_logspline <- estimate_density(x, method = "logspline")
@@ -54,8 +56,8 @@
 #' head(estimate_density(df))
 #'
 #' # Grouped data
-#' estimate_density(iris, group_by="Species")
-#' estimate_density(iris$Petal.Width, group_by=iris$Species)
+#' estimate_density(iris, group_by = "Species")
+#' estimate_density(iris$Petal.Width, group_by = iris$Species)
 #' \dontrun{
 #' # rstanarm models
 #' # -----------------------------------------------
@@ -129,8 +131,8 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 
 #' @export
 estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, group_by = NULL, ...) {
-  if(!is.null(group_by)) {
-    if(length(group_by) == 1) {
+  if (!is.null(group_by)) {
+    if (length(group_by) == 1) {
       stop("`group_by` must be either the name of a group column if a data.frame is entered as input, or in this case (where a single vector was passed) a vector of same length.")
     }
     out <- estimate_density(data.frame(V1 = x, Group = group_by), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, group_by = "Group", ...)
@@ -329,13 +331,13 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 
 # Different functions -----------------------------------------------------
 
-.estimate_density_kernel <- function(x, x_range, precision, bw, ci = 0.95, ...){
+.estimate_density_kernel <- function(x, x_range, precision, bw, ci = 0.95, ...) {
   # Get the kernel density estimation (KDE)
   kde <- stats::density(x, n = precision, bw = bw, from = x_range[1], to = x_range[2], ...)
   df <- as.data.frame(kde)
 
   # Get CI (https://bookdown.org/egarpor/NP-UC3M/app-kde-ci.html)
-  if(!is.null(ci)) {
+  if (!is.null(ci)) {
     h <- kde$bw # Selected bandwidth
     # R(K) for a normal
     Rk <- 1 / (2 * sqrt(pi))
@@ -352,7 +354,7 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 
 
 
-.estimate_density_logspline <- function(x, x_range, precision, ...){
+.estimate_density_logspline <- function(x, x_range, precision, ...) {
   if (!requireNamespace("logspline")) {
     if (interactive()) {
       readline("Package \"logspline\" needed for this function. Press ENTER to install or ESCAPE to abort.")
@@ -368,7 +370,7 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 }
 
 
-.estimate_density_KernSmooth <- function(x, x_range, precision, ...){
+.estimate_density_KernSmooth <- function(x, x_range, precision, ...) {
   if (!requireNamespace("KernSmooth")) {
     if (interactive()) {
       readline("Package \"KernSmooth\" needed for this function. Press ENTER to install or ESCAPE to abort.")
@@ -381,7 +383,7 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 }
 
 
-.estimate_density_mixture <- function(x, x_range, precision, ...){
+.estimate_density_mixture <- function(x, x_range, precision, ...) {
   if (!requireNamespace("mclust")) {
     if (interactive()) {
       readline("Package \"mclust\" needed for this function. Press ENTER to install or ESCAPE to abort.")
@@ -406,6 +408,3 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 .set_density_class <- function(out) {
   setdiff(unique(c("estimate_density", "see_estimate_density", class(out))), c("estimate_density_df", "see_estimate_density_df"))
 }
-
-
-

@@ -4,7 +4,8 @@ if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
     expect_equal(equivalence_test(distribution_normal(1000, 0, 1))$ROPE_Equivalence, "Undecided")
     expect_equal(length(capture.output(print(equivalence_test(distribution_normal(1000))))), 9)
     expect_equal(length(capture.output(print(equivalence_test(distribution_normal(1000),
-                                                              ci = c(0.8, 0.9))))), 14)
+      ci = c(0.8, 0.9)
+    )))), 14)
 
     expect_equal(as.numeric(rope(distribution_normal(1000, 2, 0.01))), 0, tolerance = 0.01)
     expect_equal(equivalence_test(distribution_normal(1000, 2, 0.01))$ROPE_Equivalence, "Rejected")
@@ -27,8 +28,10 @@ if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
     expect_s3_class(rope(distribution_normal(1000, 0, 1)), "rope")
     expect_error(rope(distribution_normal(1000, 0, 1), range = c("A", 0.1)))
     expect_equal(as.numeric(rope(distribution_normal(1000, 0, 1),
-                                 range = c(-0.1, 0.1))), 0.0898,
-                 tolerance = 0.01)
+      range = c(-0.1, 0.1)
+    )), 0.0898,
+    tolerance = 0.01
+    )
   })
 
 

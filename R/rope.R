@@ -331,28 +331,26 @@ rope.stanfit <- rope.stanreg
 
 #' @rdname rope
 #' @export
-rope.brmsfit <- function(
-  x,
-  range = "default",
-  ci = .89,
-  ci_method = "HDI",
-  effects = c("fixed", "random", "all"),
-  component = c("conditional", "zi", "zero_inflated", "all"),
-  parameters = NULL,
-  verbose = TRUE,
-  ...
-) {
+rope.brmsfit <- function(x,
+                         range = "default",
+                         ci = .89,
+                         ci_method = "HDI",
+                         effects = c("fixed", "random", "all"),
+                         component = c("conditional", "zi", "zero_inflated", "all"),
+                         parameters = NULL,
+                         verbose = TRUE,
+                         ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
   # check range argument
   if (all(range == "default")) {
     range <- rope_range(x)
-  # we expect a list with named vectors (length two) in the multivariate case.
-  # Names state the response variable.
+    # we expect a list with named vectors (length two) in the multivariate case.
+    # Names state the response variable.
   } else if (insight::is_multivariate(x) &&
     (!is.list(range) || length(range) != length(insight::find_response(x)) ||
-        names(range) != insight::find_response(x))) {
+      names(range) != insight::find_response(x))) {
     stop("With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2.")
   } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
