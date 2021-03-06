@@ -66,7 +66,7 @@ The simulation aimed at modulating the following characteristics:
 - **Sample size**: From 20 to 100 by steps of 10.
 - **Error**: Gaussian noise applied to the predictor with SD uniformly spread between 0.33 and 6.66 (with 1000 different values).
 
-We generated a dataset for each combination of these characteristics, resulting in a total of `2 * 2 * 9 * 1000 = 36000` Bayesian and frequentist models. The code used for generation is avaible [here](https://easystats.github.io/circus/articles/bayesian_indices.html) (please note that it takes usually several days/weeks to complete).
+We generated a dataset for each combination of these characteristics, resulting in a total of `2 * 2 * 9 * 1000 = 36000` Bayesian and frequentist models. The code used for generation is available [here](https://easystats.github.io/circus/articles/bayesian_indices.html) (please note that it takes usually several days/weeks to complete).
 
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2)
@@ -170,7 +170,7 @@ This suggests that, in order to delineate between the presence and the absence o
 - For linear models, the **Mean** was the better predictor, closely followed by the **Median**, the **MAP** and the frequentist **Coefficient**.
 - For logistic models, the **MAP** was the better predictor, followed by the **Median**, the **Mean** and, behind, the frequentist **Coefficient**.
 
-Overall, the **median** seems to be appears as a safe and approriate choice, maintaining a a high performance accross different types of models.
+Overall, the **median** seems to be appears as a safe and approriate choice, maintaining a a high performance across different types of models.
 
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>% -->

@@ -143,7 +143,7 @@ map_estimate.emm_list <- map_estimate.emmGrid
 
 
 #' @export
-map_estimate.get_predicted <- function(x, ...){
+map_estimate.get_predicted <- function(x, ...) {
   map_estimate(as.data.frame(t(x)), ...)
 }
 

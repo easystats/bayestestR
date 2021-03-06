@@ -28,21 +28,21 @@ This vignette can be referred to by citing the package:
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 if (!requireNamespace("see", quietly = TRUE) ||
-      !requireNamespace("dplyr", quietly = TRUE) ||
-      !requireNamespace("ggplot2", quietly = TRUE) ||
-      !requireNamespace("performance", quietly = TRUE) ||
-      !requireNamespace("BayesFactor", quietly = TRUE) ||
-      !requireNamespace("rstanarm", quietly = TRUE)) {
+  !requireNamespace("dplyr", quietly = TRUE) ||
+  !requireNamespace("ggplot2", quietly = TRUE) ||
+  !requireNamespace("performance", quietly = TRUE) ||
+  !requireNamespace("BayesFactor", quietly = TRUE) ||
+  !requireNamespace("rstanarm", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
 data(iris)
 library(knitr)
 library(bayestestR)
-options(knitr.kable.NA = '')
-knitr::opts_chunk$set(comment=">")
-knitr::opts_chunk$set(dpi=150)
-options(digits=2)
+options(knitr.kable.NA = "")
+knitr::opts_chunk$set(comment = ">")
+knitr::opts_chunk$set(dpi = 150)
+options(digits = 2)
 
 set.seed(333)
 ```
@@ -50,7 +50,7 @@ set.seed(333)
 
 Now that [**describing and understanding posterior distributions**](https://easystats.github.io/bayestestR/articles/example1.html) of linear regressions has no secrets for you, we will take one step back and study some simpler models: **correlations** and ***t*-tests**.
 
-But before we do that, let us take a moment to remind ourselves and appreciate the fact that **all basic statistical pocedures** such as correlations, *t*-tests, ANOVAs or Chisquare tests ***are* linear regressions** (we strongly recommend  [this excellent demonstration](https://lindeloev.github.io/tests-as-linear/)). Nevertheless, these simple models will be the occasion to introduce a more complex index, such as the **Bayes factor**.
+But before we do that, let us take a moment to remind ourselves and appreciate the fact that **all basic statistical procedures** such as correlations, *t*-tests, ANOVAs or chi-square tests **are** linear regressions (we strongly recommend  [this excellent demonstration](https://lindeloev.github.io/tests-as-linear/)). Nevertheless, these simple models will be the occasion to introduce a more complex index, such as the **Bayes factor**.
 
 ## Correlations
 
@@ -82,11 +82,26 @@ Now, let us run our `describe_posterior()` function on that:
 describe_posterior(result)
 ```
 ```{r echo=FALSE}
-structure(list(Parameter = "rho", Median = -0.114149129692488, 
-    CI = 89, CI_low = -0.240766308855643, CI_high = 0.00794997655649642, 
-    pd = 91.6, ROPE_CI = 89, ROPE_low = -0.1, ROPE_high = 0.1, 
-    ROPE_Percentage = 42.0949171581017, BF = 0.509017511647702, 
-    Prior_Distribution = "cauchy", Prior_Location = 0, Prior_Scale = 0.333333333333333), row.names = 1L, class = "data.frame")
+structure(
+  list(
+    Parameter = "rho",
+    Median = -0.114149129692488,
+    CI = 89,
+    CI_low = -0.240766308855643,
+    CI_high = 0.00794997655649642,
+    pd = 91.6,
+    ROPE_CI = 89,
+    ROPE_low = -0.1,
+    ROPE_high = 0.1,
+    ROPE_Percentage = 42.0949171581017,
+    BF = 0.509017511647702,
+    Prior_Distribution = "cauchy",
+    Prior_Location = 0,
+    Prior_Scale = 0.333333333333333
+  ),
+  row.names = 1L,
+  class = "data.frame"
+)
 ```
 
 
@@ -108,7 +123,7 @@ Bayes factors are **continuous measures of relative evidence**, with a Bayes fac
 
 That's one of the reason why the Bayesian framework is sometimes considered as superior to the frequentist framework. Remember from your stats lessons, that the ***p*-value can only be used to reject *h0***, but not *accept* it. With the **Bayes factor**, you can measure **evidence against - and in favour of - the null**. 
 
-BFs representing evidence for the alternative against the null can be reversed using $BF_{01}=1/BF_{10}$ (the *01* and *10* correspond to *h0* against *h1* and *h1* against *h0*, respectively) to provide evidence of the null againtt the alternative. This improves human readability in cases where the BF of the alternative against the null is smaller than 1 (i.e., in support of the null).
+BFs representing evidence for the alternative against the null can be reversed using $BF_{01}=1/BF_{10}$ (the *01* and *10* correspond to *h0* against *h1* and *h1* against *h0*, respectively) to provide evidence of the null against the alternative. This improves human readability in cases where the BF of the alternative against the null is smaller than 1 (i.e., in support of the null).
 
 In our case, `BF = 1/0.51 = 2`, indicates that the data are **2 times more probable under the null compared to the alternative hypothesis**, which, though favouring the null, is considered only [anecdotal evidence against the null](https://easystats.github.io/effectsize/reference/interpret_bf.html).
 
@@ -118,7 +133,7 @@ We can thus conclude that there is **anecdotal evidence in favour of an absence 
 
 ### Visualise the Bayes factor
 
-In general, **pie charts are an absolute no-go in data visualisation**, as our brain's perceptive system heavily distorts the information presented in such way. Nevertheless, there is one exeption: pizza charts.
+In general, **pie charts are an absolute no-go in data visualisation**, as our brain's perceptive system heavily distorts the information presented in such way. Nevertheless, there is one exception: pizza charts.
 
 It is an intuitive way of interpreting the strength of evidence provided by BFs as an amount of surprise. 
 
@@ -137,7 +152,7 @@ plot(bayesfactor(result)) +
   scale_fill_pizza()
 ```
 
-So, after seeing this pizza, how much would you be suprised by the outcome of a blinded poke? 
+So, after seeing this pizza, how much would you be surprised by the outcome of a blinded poke? 
 
 
 ## *t*-tests
@@ -153,12 +168,12 @@ library(dplyr)
 library(ggplot2)
 
 # Select only two relevant species
-data <- iris %>% 
-  filter(Species != "setosa") %>% 
+data <- iris %>%
+  filter(Species != "setosa") %>%
   droplevels()
 
 # Visualise distributions and observations
-data %>% 
+data %>%
   ggplot(aes(x = Species, y = Sepal.Width, fill = Species)) +
   geom_violindot(fill_dots = "black", size_dots = 1) +
   scale_fill_material() +
@@ -231,5 +246,3 @@ TO DO.
 ### Diagnostic Indices
 
 About diagnostic indices such as Rhat and ESS.
-
-

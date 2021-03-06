@@ -150,7 +150,7 @@
     remove_cols <- c("Group", "Cleaned_Parameter", "Function", ".roworder")
   } else if (isTRUE(is_brms_mv)) {
     temp$Response <- gsub("(.*)_(.*)_(.*)", "\\2", temp$Parameter)
-    #temp$Parameter <- gsub("(.*)_(.*)_(.*)", "\\1_\\3", temp$Parameter)
+    # temp$Parameter <- gsub("(.*)_(.*)_(.*)", "\\1_\\3", temp$Parameter)
     merge_by <- c("Parameter", "Effects", "Component", "Response")
     remove_cols <- c("Group", "Cleaned_Parameter", "Function", ".roworder")
   } else {
