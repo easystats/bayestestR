@@ -154,7 +154,7 @@
 </ul>
 <hr>
 <p>Now that <a href="https://easystats.github.io/bayestestR/articles/example1.html"><strong>describing and understanding posterior distributions</strong></a> of linear regressions has no secrets for you, we will take one step back and study some simpler models: <strong>correlations</strong> and <strong><em>t</em>-tests</strong>.</p>
-<p>But before we do that, let us take a moment to remind ourselves and appreciate the fact that <strong>all basic statistical pocedures</strong> such as correlations, <em>t</em>-tests, ANOVAs or Chisquare tests <strong><em>are</em> linear regressions</strong> (we strongly recommend <a href="https://lindeloev.github.io/tests-as-linear/">this excellent demonstration</a>). Nevertheless, these simple models will be the occasion to introduce a more complex index, such as the <strong>Bayes factor</strong>.</p>
+<p>But before we do that, let us take a moment to remind ourselves and appreciate the fact that <strong>all basic statistical procedures</strong> such as correlations, <em>t</em>-tests, ANOVAs or chi-square tests <strong>are</strong> linear regressions (we strongly recommend <a href="https://lindeloev.github.io/tests-as-linear/">this excellent demonstration</a>). Nevertheless, these simple models will be the occasion to introduce a more complex index, such as the <strong>Bayes factor</strong>.</p>
 <div id="correlations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#correlations" class="anchor"></a>Correlations</h2>
@@ -214,7 +214,7 @@
 <p><strong>Yes, you heard things right, evidence in favour of the null!</strong></p>
 </blockquote>
 <p>That’s one of the reason why the Bayesian framework is sometimes considered as superior to the frequentist framework. Remember from your stats lessons, that the <strong><em>p</em>-value can only be used to reject <em>h0</em></strong>, but not <em>accept</em> it. With the <strong>Bayes factor</strong>, you can measure <strong>evidence against - and in favour of - the null</strong>.</p>
-<p>BFs representing evidence for the alternative against the null can be reversed using <span class="math inline">\(BF_{01}=1/BF_{10}\)</span> (the <em>01</em> and <em>10</em> correspond to <em>h0</em> against <em>h1</em> and <em>h1</em> against <em>h0</em>, respectively) to provide evidence of the null againtt the alternative. This improves human readability in cases where the BF of the alternative against the null is smaller than 1 (i.e., in support of the null).</p>
+<p>BFs representing evidence for the alternative against the null can be reversed using <span class="math inline">\(BF_{01}=1/BF_{10}\)</span> (the <em>01</em> and <em>10</em> correspond to <em>h0</em> against <em>h1</em> and <em>h1</em> against <em>h0</em>, respectively) to provide evidence of the null against the alternative. This improves human readability in cases where the BF of the alternative against the null is smaller than 1 (i.e., in support of the null).</p>
 <p>In our case, <code>BF = 1/0.51 = 2</code>, indicates that the data are <strong>2 times more probable under the null compared to the alternative hypothesis</strong>, which, though favouring the null, is considered only <a href="https://easystats.github.io/effectsize/reference/interpret_bf.html">anecdotal evidence against the null</a>.</p>
 <p>We can thus conclude that there is <strong>anecdotal evidence in favour of an absence of correlation between the two variables (r<sub>median</sub> = 0.11, BF = 0.51)</strong>, which is a much more informative statement that what we can do with frequentist statistics.</p>
 <p><strong>And that’s not all!</strong></p>
@@ -222,7 +222,7 @@
 <div id="visualise-the-bayes-factor" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visualise-the-bayes-factor" class="anchor"></a>Visualise the Bayes factor</h3>
-<p>In general, <strong>pie charts are an absolute no-go in data visualisation</strong>, as our brain’s perceptive system heavily distorts the information presented in such way. Nevertheless, there is one exeption: pizza charts.</p>
+<p>In general, <strong>pie charts are an absolute no-go in data visualisation</strong>, as our brain’s perceptive system heavily distorts the information presented in such way. Nevertheless, there is one exception: pizza charts.</p>
 <p>It is an intuitive way of interpreting the strength of evidence provided by BFs as an amount of surprise.</p>
 <div class="figure" style="text-align: center">
 <img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/LetsPokeAPizza.jpg" alt="Wagenmakers' pizza poking analogy. From the great 'www.bayesianspectacles.org' blog." width="80%"><p class="caption">
@@ -236,7 +236,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/bayesfactor.html">bayesfactor</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://easystats.github.io/see/reference/scale_color_pizza.html">scale_fill_pizza</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="example2_files/figure-html/unnamed-chunk-8-1.png" width="1093.75"></p>
-<p>So, after seeing this pizza, how much would you be suprised by the outcome of a blinded poke?</p>
+<p>So, after seeing this pizza, how much would you be surprised by the outcome of a blinded poke?</p>
 </div>
 </div>
 <div id="t-tests" class="section level2">
@@ -252,12 +252,12 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="co"># Select only two relevant species</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">!=</span> <span class="st">"setosa"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">!=</span> <span class="st">"setosa"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html">droplevels</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Visualise distributions and observations</span>
-<span class="va">data</span> <span class="op">%&gt;%</span> 
+<span class="va">data</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Species</span>, y <span class="op">=</span> <span class="va">Sepal.Width</span>, fill <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://easystats.github.io/see/reference/geom_violindot.html">geom_violindot</a></span><span class="op">(</span>fill_dots <span class="op">=</span> <span class="st">"black"</span>, size_dots <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://easystats.github.io/see/reference/scale_color_material.html">scale_fill_material</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
