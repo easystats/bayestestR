@@ -223,7 +223,7 @@ if (require("testthat") && require("bayestestR") && require("rstanarm") && requi
         row.names = 1L,
         class = "data.frame"
       ),
-      tolerance = 0.001
+      tolerance = 0.1
     )
 
     set.seed(123)
@@ -249,9 +249,10 @@ if (require("testthat") && require("bayestestR") && require("rstanarm") && requi
         row.names = 1L,
         class = "data.frame"
       ),
-      tolerance = 0.001
+      tolerance = 0.1
     )
 
+    set.seed(123)
     expect_equal(
       describe_posterior(contingencyTableBF(
         x = table(mtcars$am, mtcars$cyl),
@@ -335,7 +336,7 @@ if (require("testthat") && require("bayestestR") && require("rstanarm") && requi
         ),
         class = "data.frame"
       ),
-      tolerance = 0.001
+      tolerance = 0.1
     )
 
     set.seed(123)
@@ -424,7 +425,7 @@ if (require("testthat") && require("bayestestR") && require("rstanarm") && requi
         row.names = c(1L, 4L, 2L, 5L, 3L, 6L, 7L),
         class = "data.frame"
       ),
-      tolerance = 0.001
+      tolerance = 0.1
     )
 
     set.seed(123)
@@ -510,7 +511,7 @@ if (require("testthat") && require("bayestestR") && require("rstanarm") && requi
         ),
         class = "data.frame"
       ),
-      tolerance = 0.001
+      tolerance = 0.1
     )
   }
 }
