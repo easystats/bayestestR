@@ -118,14 +118,23 @@ pd <- p_direction
 #' @importFrom stats density
 #' @rdname p_direction
 #' @export
-p_direction.numeric <- function(x, method = "direct", ...) {
+p_direction.numeric <- function(x, method = "direct", null = 0, ...) {
   if (method == "direct") {
-    pdir <- max(
-      c(
-        length(x[x > 0]) / length(x), # pd positive
-        length(x[x < 0]) / length(x) # pd negative
+    if(null == 0) {
+      pdir <- max(
+        c(
+          length(x[x > 0]) / length(x), # pd positive
+          length(x[x < 0]) / length(x) # pd negative
+        )
       )
-    )
+    } else if (null == 1) {
+      pdir <- max(
+        c(
+          length(x[x > 1]) / length(x), # pd positive
+          length(x[x < 1]) / length(x) # pd negative
+        )
+      )
+    } else {print('Value for the null argument must be 0 or 1')}
   } else {
     dens <- estimate_density(x, method = method, precision = 2^10, extend = TRUE, ...)
     if (length(x[x > 0]) > length(x[x < 0])) {
@@ -136,12 +145,12 @@ p_direction.numeric <- function(x, method = "direct", ...) {
     pdir <- area_under_curve(dens$x, dens$y, method = "spline")
     if (pdir >= 1) pdir <- 1 # Enforce bounds
   }
-
+  
   attr(pdir, "method") <- method
   attr(pdir, "data") <- x
-
+  
   class(pdir) <- unique(c("p_direction", "see_p_direction", class(pdir)))
-
+  
   pdir
 }
 
