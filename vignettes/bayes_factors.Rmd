@@ -88,7 +88,7 @@ $$
 P(M|D) = \frac{P(D|M)\times P(M)}{P(D)}
 $$
 
-Using this equation, We can compare the probability-odds of two models:
+Using this equation, we can compare the probability-odds of two models:
 
 $$
 \underbrace{\frac{P(M_1|D)}{P(M_2|D)}}_{\text{Posterior Odds}} = 
@@ -97,21 +97,23 @@ $$
 \underbrace{\frac{P(M_1)}{P(M_2)}}_{\text{Prior Odds}}
 $$
 
-Where the *likelihood ratio* (the middle term) is the *Bayes factor*:
+Where the *likelihood ratio* (the middle term) is the *Bayes factor* - it is the ***factor*** by which some **prior odds** have been updated after observing the data to **posterior odds**.
+
+Thus, Bayes factors can be calculated in two ways:
+
+- As a ratio quantifying **the relative probability of the observed data under each of the two models**. (In some contexts, these probabilities are also called *marginal likelihoods*.)
 
 $$
-BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}=\frac{Posterior~Odds}{Prior~Odds}
+BF_{12}=\frac{P(D|M_1)}{P(D|M_2)}
 $$
 
-Thus, Bayes factors can be defined in two ways:
-
-- as a ratio quantifying **the relative probability of observed data** by two
-models (since they can be computed by comparing the marginal likelihoods of the two
-models),
-
-- as **the degree of shift in prior beliefs** about the relative credibility of
+- As **the degree of shift in prior beliefs** about the relative credibility of
 two models (since they can be computed by dividing posterior odds by prior
 odds).
+
+$$
+BF_{12}=\frac{Posterior~Odds_{12}}{Prior~Odds_{12}}
+$$
 
 Here we provide functions for computing Bayes factors in two different contexts: 
 
@@ -151,7 +153,7 @@ extra sleep. *By how much?*
 
 Let's fit a simple [Bayesian linear model](https://easystats.github.io/bayestestR/articles/example1.html), with a
 prior of $b_{group} \sim N(0, 3)$ (i.e. the prior follows a Gaussian/normal
-distribution with hyperparameters of $mean = 0$ and $SD = 3$), using
+distribution with $mean = 0$ and $SD = 3$), using
 `rstanarm` package:
 
 ```{r rstanarm_model, eval = FALSE}
@@ -520,8 +522,7 @@ m4 <- brm(Sepal.Length ~ Species * Petal.Length,
 
 We can now compare these models with the `bayesfactor_models()` function, using
 the `denominator` argument to specify the model against which the rest of the
-models will be compared (in this case, the intercept-only model, which can be
-considered as the *null* model):
+models will be compared (in this case, the intercept-only model):
 
 ```{r brms_models_disp, eval=FALSE}
 library(bayestestR)
@@ -775,7 +776,7 @@ gets a *single* Bayes factor - inclusion Bayes factors are given **per predictor
 We can also compare only matched models - such that averaging is done only
 across models that (1) do not include any interactions with the predictor of
 interest; (2) for interaction predictors, averaging is done only across models
-that contain the main effect from which the interaction predictor is comprised
+that contain the main effects from which the interaction predictor is comprised
 (see explanation for why you might want to do this
 [here](https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp)).
 
