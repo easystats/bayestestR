@@ -1,11 +1,11 @@
 ---
 title: "In-Depth 2: Comparison of Indices of Effect Existence and Significance"
 output:
-  github_document:
+  rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
     fig_width: 10.08
-    fig_height: 6
+    fig_height: 6  
   word_document:
     toc: true
     toc_depth: 3
@@ -14,11 +14,6 @@ output:
     df_print: "kable"
     highlight: "pygments"
     reference_docx: templates/Template_Frontiers.docx
-  rmarkdown::html_vignette:
-    toc: true
-    toc_depth: 3
-    fig_width: 10.08
-    fig_height: 6
 tags: [r, bayesian, posterior, test]
 vignette: >
   \usepackage[utf8]{inputenc}
