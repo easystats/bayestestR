@@ -16,13 +16,13 @@ p_direction(x, ...)
 
 pd(x, ...)
 
-\method{p_direction}{numeric}(x, method = "direct", ...)
+\method{p_direction}{numeric}(x, method = "direct", null = 0, ...)
 
-\method{p_direction}{data.frame}(x, method = "direct", ...)
+\method{p_direction}{data.frame}(x, method = "direct", null = 0, ...)
 
-\method{p_direction}{MCMCglmm}(x, method = "direct", ...)
+\method{p_direction}{MCMCglmm}(x, method = "direct", null = 0, ...)
 
-\method{p_direction}{emmGrid}(x, method = "direct", ...)
+\method{p_direction}{emmGrid}(x, method = "direct", null = 0, ...)
 
 \method{p_direction}{stanreg}(
   x,
@@ -31,6 +31,7 @@ pd(x, ...)
     "distributional", "auxiliary"),
   parameters = NULL,
   method = "direct",
+  null = 0,
   ...
 )
 
@@ -40,10 +41,11 @@ pd(x, ...)
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL,
   method = "direct",
+  null = null,
   ...
 )
 
-\method{p_direction}{BFBayesFactor}(x, method = "direct", ...)
+\method{p_direction}{BFBayesFactor}(x, method = "direct", null = 0, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit} or \code{BayesFactor}).}
@@ -51,6 +53,8 @@ pd(x, ...)
 \item{...}{Currently not used.}
 
 \item{method}{Can be \code{"direct"} or one of methods of \link[=estimate_density]{density estimation}, such as \code{"kernel"}, \code{"logspline"} or \code{"KernSmooth"}. If \code{"direct"} (default), the computation is based on the raw ratio of samples superior and inferior to 0. Else, the result is based on the \link[=auc]{Area under the Curve (AUC)} of the estimated \link[=estimate_density]{density} function.}
+
+\item{null}{The value considered as a "null" effect. Traditionally 0, but could also be 1 in the case of ratios.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}
