@@ -321,6 +321,15 @@ p_direction.get_predicted <- function(x, ...) {
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
+
+#' @export
+p_direction.blavaan <- function(x, method = "direct", ...) {
+  x <- insight::get_parameters(x)
+  out <- p_direction(x, method = method, ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  out
+}
+
 # Methods -----------------------------------------------------------------
 
 
