@@ -321,9 +321,13 @@ p_direction.get_predicted <- function(x, ...) {
 
 #' @export
 p_direction.blavaan <- function(x, method = "direct", ...) {
+  cleaned_parameters <- insight::clean_parameters(x)
   x <- insight::get_parameters(x)
-  out <- p_direction(x, method = method, ...)
+  temp <- p_direction(x, method = method, ...)
+
+  out <- .prepare_output(temp, cleaned_parameters)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
+  class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
   out
 }
 
