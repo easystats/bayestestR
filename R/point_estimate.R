@@ -147,6 +147,10 @@ point_estimate.bayesQR <- point_estimate.bcplm
 
 
 #' @export
+point_estimate.blrm <- point_estimate.bcplm
+
+
+#' @export
 point_estimate.mcmc.list <- point_estimate.bcplm
 
 

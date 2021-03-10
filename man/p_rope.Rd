@@ -50,7 +50,14 @@ p_rope(x, ...)
 
 \item{...}{Currently not used.}
 
-\item{range}{ROPE's lower and higher bounds. Should be a vector of length two (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"}, the range is set to \code{c(-0.1, 0.1)} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.}
+\item{range}{ROPE's lower and higher bounds. Should be \code{"default"} or
+depending on the number of outcome variables a vector or a list. In models with one response,
+`range` should be a vector of length two (e.g., \code{c(-0.1, 0.1)}). In
+multivariate models, `range` should be a list with a numeric vectors for
+each response variable. Vector names should correspond to the name of the response
+variables. If \code{"default"} and input is a vector, the range is set to \code{c(-0.1,
+0.1)}. If \code{"default"} and input is a Bayesian model,
+\code{\link[=rope_range]{rope_range()}} is used.}
 
 \item{effects}{Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.}

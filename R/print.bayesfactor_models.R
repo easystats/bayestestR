@@ -1,10 +1,11 @@
 #' @importFrom insight print_color
 #' @importFrom tools toTitleCase
 #' @export
-print.bayesfactor_models <- function(x, digits = 3, log = FALSE, ...) {
+print.bayesfactor_models <- function(x, digits = 3, log = FALSE, show_names = TRUE, ...) {
   BFE <- x
   denominator <- attr(BFE, "denominator")
   grid.type <- attr(BFE, "BF_method")
+  model_names <- attr(BFE, "model_names")
 
   BFE <- as.data.frame(BFE)
   if (log) {
@@ -12,7 +13,12 @@ print.bayesfactor_models <- function(x, digits = 3, log = FALSE, ...) {
   }
   BFE$BF <- insight::format_value(BFE$BF, digits = digits, missing = "NA", zap_small = log)
   BFE$Model[BFE$Model == "1"] <- "(Intercept only)" # indicate null-model
-  BFE$Model <- paste0(" [", seq_len(nrow(BFE)), "] ", BFE$Model)
+
+  if (is.null(model_names) || length(model_names) != nrow(BFE) || isFALSE(show_names)) {
+    BFE$Model <- paste0(" [", seq_len(nrow(BFE)), "] ", BFE$Model)
+  } else {
+    BFE$Model <- paste0(" [", model_names, "] ", BFE$Model)
+  }
 
   # Denominator
   if (is.numeric(denominator)) {

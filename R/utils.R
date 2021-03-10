@@ -140,12 +140,17 @@
 
 
 #' @keywords internal
-.prepare_output <- function(temp, cleaned_parameters, is_stan_mv = FALSE) {
+.prepare_output <- function(temp, cleaned_parameters, is_stan_mv = FALSE, is_brms_mv = FALSE) {
   if (isTRUE(is_stan_mv)) {
     temp$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", temp$Parameter)
     for (i in unique(temp$Response)) {
       temp$Parameter <- gsub(sprintf("%s|", i), "", temp$Parameter, fixed = TRUE)
     }
+    merge_by <- c("Parameter", "Effects", "Component", "Response")
+    remove_cols <- c("Group", "Cleaned_Parameter", "Function", ".roworder")
+  } else if (isTRUE(is_brms_mv)) {
+    temp$Response <- gsub("(.*)_(.*)_(.*)", "\\2", temp$Parameter)
+    # temp$Parameter <- gsub("(.*)_(.*)_(.*)", "\\1_\\3", temp$Parameter)
     merge_by <- c("Parameter", "Effects", "Component", "Response")
     remove_cols <- c("Group", "Cleaned_Parameter", "Function", ".roworder")
   } else {
@@ -156,7 +161,7 @@
   temp$.roworder <- 1:nrow(temp)
   out <- merge(x = temp, y = cleaned_parameters, by = merge_by, all.x = TRUE)
   # hope this works for stanmvreg...
-  if (isTRUE(is_stan_mv) && all(is.na(out$Effects)) && all(is.na(out$Component))) {
+  if ((isTRUE(is_stan_mv) || isTRUE(is_brms_mv)) && all(is.na(out$Effects)) && all(is.na(out$Component))) {
     out$Effects <- cleaned_parameters$Effects[1:nrow(out)]
     out$Component <- cleaned_parameters$Component[1:nrow(out)]
   }

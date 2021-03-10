@@ -13,6 +13,8 @@ template:
     ganalytics: UA-97457476-7
     bootswatch: cosmo
 
+toc:
+  depth: 3
 
 reference:
 - title: "Posterior Description"

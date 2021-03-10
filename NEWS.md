@@ -1,5 +1,11 @@
 # bayestestR 0.8.2.1
 
+* There's nothing new in this update, really! We just increase the version number repeatedly...
+
+## General
+
+* Support for `blrm` models (*rmsb*).
+
 ## Bug fixes
 
 * Fixed bug in `print()` method for the `mediation()` function.

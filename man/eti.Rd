@@ -5,7 +5,6 @@
 \alias{eti.numeric}
 \alias{eti.data.frame}
 \alias{eti.MCMCglmm}
-\alias{eti.bayesQR}
 \alias{eti.sim.merMod}
 \alias{eti.sim}
 \alias{eti.emmGrid}
@@ -21,8 +20,6 @@ eti(x, ...)
 \method{eti}{data.frame}(x, ci = 0.89, verbose = TRUE, ...)
 
 \method{eti}{MCMCglmm}(x, ci = 0.89, verbose = TRUE, ...)
-
-\method{eti}{bayesQR}(x, ci = 0.89, verbose = TRUE, ...)
 
 \method{eti}{sim.merMod}(
   x,
