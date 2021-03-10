@@ -66,7 +66,6 @@ if (require("brms") && require("testthat") && require("insight") && require("htt
   })
 
   test_that("brms", {
-    # skip_on_travis()
     skip_on_cran()
 
     set.seed(333)

@@ -30,7 +30,7 @@ the denominator, or a model to be used as a denominator. Ignored for
 
 \item{subset}{Vector of model indices to keep or remove.}
 
-\item{reference}{Index of model to rereference to, or \code{"top"} to
+\item{reference}{Index of model to reference to, or \code{"top"} to
 reference to the best model, or \code{"bottom"} to reference to the worst
 model.}
 }

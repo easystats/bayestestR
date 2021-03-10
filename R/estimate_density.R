@@ -5,6 +5,7 @@
 #' @inheritParams hdi
 #' @inheritParams stats::density
 #' @param bw See the eponymous argument in \code{density}. Here, the default has been changed for \code{"SJ"}, which is recommended.
+#' @param ci The confidence interval threshold. Only used when \code{method = "kernel"}.
 #' @param method Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.
 #' @param precision Number of points of density data. See the \code{n} parameter in \code{density}.
 #' @param extend Extend the range of the x axis by a factor of \code{extend_scale}.
@@ -17,10 +18,21 @@
 #' library(bayestestR)
 #'
 #' set.seed(1)
-#' x <- rnorm(250, 1)
+#' x <- rnorm(250, mean = 1)
 #'
-#' # Methods
-#' density_kernel <- estimate_density(x, method = "kernel")
+#' # Basic usage
+#' density_kernel <- estimate_density(x) # default method is "kernel"
+#'
+#' hist(x, prob = TRUE)
+#' lines(density_kernel$x, density_kernel$y, col = "black", lwd = 2)
+#' lines(density_kernel$x, density_kernel$CI_low, col = "gray", lty = 2)
+#' lines(density_kernel$x, density_kernel$CI_high, col = "gray", lty = 2)
+#' legend("topright",
+#'   legend = c("Estimate", "95% CI"),
+#'   col = c("black", "gray"), lwd = 2, lty = c(1, 2)
+#' )
+#'
+#' # Other Methods
 #' density_logspline <- estimate_density(x, method = "logspline")
 #' density_KernSmooth <- estimate_density(x, method = "KernSmooth")
 #' density_mixture <- estimate_density(x, method = "mixture")
@@ -39,8 +51,13 @@
 #' lines(density_extended$x, density_extended$y, col = "red", lwd = 3)
 #' lines(density_default$x, density_default$y, col = "black", lwd = 3)
 #'
+#' # Multiple columns
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' head(estimate_density(df))
+#'
+#' # Grouped data
+#' estimate_density(iris, group_by = "Species")
+#' estimate_density(iris$Petal.Width, group_by = iris$Species)
 #' \dontrun{
 #' # rstanarm models
 #' # -----------------------------------------------
@@ -70,7 +87,7 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 
 #' @importFrom stats predict
 #' @keywords internal
-.estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
+.estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, ...) {
   method <- match.arg(tolower(method), c("kernel", "logspline", "kernsmooth", "smooth", "mixture", "mclust"))
 
   # Remove NA
@@ -89,61 +106,40 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 
   # Kernel
   if (method == "kernel") {
-    return(as.data.frame(density(x, n = precision, bw = bw, from = x_range[1], to = x_range[2], ...)))
-
+    kde <- .estimate_density_kernel(x, x_range, precision, bw, ci, ...)
     # Logspline
   } else if (method == "logspline") {
-    if (!requireNamespace("logspline")) {
-      if (interactive()) {
-        readline("Package \"logspline\" needed for this function. Press ENTER to install or ESCAPE to abort.")
-        install.packages("logspline")
-      } else {
-        stop("Package \"logspline\" needed for this function. Press run 'install.packages(\"logspline\")'.")
-      }
-    }
-
-    x_axis <- seq(x_range[1], x_range[2], length.out = precision)
-    y <- logspline::dlogspline(x_axis, logspline::logspline(x, ...), ...)
-    return(data.frame(x = x_axis, y = y))
-
+    kde <- .estimate_density_logspline(x, x_range, precision, ...)
     # KernSmooth
   } else if (method %in% c("kernsmooth", "smooth")) {
-    if (!requireNamespace("KernSmooth")) {
-      if (interactive()) {
-        readline("Package \"KernSmooth\" needed for this function. Press ENTER to install or ESCAPE to abort.")
-        install.packages("KernSmooth")
-      } else {
-        stop("Package \"KernSmooth\" needed for this function. Press run 'install.packages(\"KernSmooth\")'.")
-      }
-    }
-    return(as.data.frame(KernSmooth::bkde(x, range.x = x_range, gridsize = precision, truncate = TRUE, ...)))
-
-    # Mixturre
+    kde <- .estimate_density_KernSmooth(x, x_range, precision, ...)
+    # Mixture
   } else if (method %in% c("mixture", "mclust")) {
-    if (!requireNamespace("mclust")) {
-      if (interactive()) {
-        readline("Package \"mclust\" needed for this function. Press ENTER to install or ESCAPE to abort.")
-        install.packages("KernSmooth")
-      } else {
-        stop("Package \"mclust\" needed for this function. Press run 'install.packages(\"mclust\")'.")
-      }
-    }
-
-    x_axis <- seq(x_range[1], x_range[2], length.out = precision)
-    y <- predict(mclust::densityMclust(x, verbose = FALSE), newdata = x_axis)
-    return(data.frame(x = x_axis, y = y))
+    kde <- .estimate_density_mixture(x, x_range, precision, ...)
   } else {
     stop("method should be one of 'kernel', 'logspline', 'KernSmooth' or 'mixture'.")
   }
+  kde
 }
 
+
+
+# Methods -----------------------------------------------------------------
 
 
 
 
 #' @export
-estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
-  out <- .estimate_density(x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
+estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, group_by = NULL, ...) {
+  if (!is.null(group_by)) {
+    if (length(group_by) == 1) {
+      stop("`group_by` must be either the name of a group column if a data.frame is entered as input, or in this case (where a single vector was passed) a vector of same length.")
+    }
+    out <- estimate_density(data.frame(V1 = x, Group = group_by), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, group_by = "Group", ...)
+    out$Parameter <- NULL
+    return(out)
+  }
+  out <- .estimate_density(x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, ...)
   class(out) <- .set_density_class(out)
   out
 }
@@ -154,13 +150,13 @@ estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, ext
 
 #' @rdname estimate_density
 #' @export
-estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", group_by = NULL, ...) {
+estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, group_by = NULL, ...) {
   if (is.null(group_by)) {
-    out <- .estimate_density_df(x = x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
+    out <- .estimate_density_df(x = x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, ...)
   } else {
     xlist <- split(x, x[group_by])
     out <- lapply(names(xlist), function(group) {
-      dens <- .estimate_density_df(x = xlist[[group]], method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
+      dens <- .estimate_density_df(x = xlist[[group]], method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, ...)
       dens$Group <- group
       dens
     })
@@ -171,9 +167,9 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
   out
 }
 
-.estimate_density_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
+.estimate_density_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, ...) {
   x <- .select_nums(x)
-  out <- sapply(x, estimate_density, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, simplify = FALSE)
+  out <- sapply(x, estimate_density, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, simplify = FALSE)
   for (i in names(out)) {
     out[[i]]$Parameter <- i
   }
@@ -185,14 +181,14 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
 
 
 #' @export
-estimate_density.grouped_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
+estimate_density.grouped_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, ...) {
   groups <- .group_vars(x)
   ungrouped_x <- as.data.frame(x)
 
   xlist <- split(ungrouped_x, ungrouped_x[groups])
 
   out <- lapply(names(xlist), function(group) {
-    dens <- estimate_density(xlist[[group]], method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw)
+    dens <- estimate_density(xlist[[group]], method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci)
     dens$Group <- group
     dens
   })
@@ -331,6 +327,76 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 
 
 
+
+
+# Different functions -----------------------------------------------------
+
+.estimate_density_kernel <- function(x, x_range, precision, bw, ci = 0.95, ...) {
+  # Get the kernel density estimation (KDE)
+  kde <- stats::density(x, n = precision, bw = bw, from = x_range[1], to = x_range[2], ...)
+  df <- as.data.frame(kde)
+
+  # Get CI (https://bookdown.org/egarpor/NP-UC3M/app-kde-ci.html)
+  if (!is.null(ci)) {
+    h <- kde$bw # Selected bandwidth
+    # R(K) for a normal
+    Rk <- 1 / (2 * sqrt(pi))
+    # Estimate the SD
+    sd_kde <- sqrt(df$y * Rk / (length(x) * h))
+    # CI with estimated variance
+    z_alpha <- qnorm(ci)
+    df$CI_low <- df$y - z_alpha * sd_kde
+    df$CI_high <- df$y + z_alpha * sd_kde
+  }
+  df
+}
+
+
+
+
+.estimate_density_logspline <- function(x, x_range, precision, ...) {
+  if (!requireNamespace("logspline")) {
+    if (interactive()) {
+      readline("Package \"logspline\" needed for this function. Press ENTER to install or ESCAPE to abort.")
+      install.packages("logspline")
+    } else {
+      stop("Package \"logspline\" needed for this function. Press run 'install.packages(\"logspline\")'.")
+    }
+  }
+
+  x_axis <- seq(x_range[1], x_range[2], length.out = precision)
+  y <- logspline::dlogspline(x_axis, logspline::logspline(x, ...), ...)
+  data.frame(x = x_axis, y = y)
+}
+
+
+.estimate_density_KernSmooth <- function(x, x_range, precision, ...) {
+  if (!requireNamespace("KernSmooth")) {
+    if (interactive()) {
+      readline("Package \"KernSmooth\" needed for this function. Press ENTER to install or ESCAPE to abort.")
+      install.packages("KernSmooth")
+    } else {
+      stop("Package \"KernSmooth\" needed for this function. Press run 'install.packages(\"KernSmooth\")'.")
+    }
+  }
+  as.data.frame(KernSmooth::bkde(x, range.x = x_range, gridsize = precision, truncate = TRUE, ...))
+}
+
+
+.estimate_density_mixture <- function(x, x_range, precision, ...) {
+  if (!requireNamespace("mclust")) {
+    if (interactive()) {
+      readline("Package \"mclust\" needed for this function. Press ENTER to install or ESCAPE to abort.")
+      install.packages("KernSmooth")
+    } else {
+      stop("Package \"mclust\" needed for this function. Press run 'install.packages(\"mclust\")'.")
+    }
+  }
+
+  x_axis <- seq(x_range[1], x_range[2], length.out = precision)
+  y <- predict(mclust::densityMclust(x, verbose = FALSE, ...), newdata = x_axis, ...)
+  data.frame(x = x_axis, y = y)
+}
 
 
 # helper ----------------------------------------------------------

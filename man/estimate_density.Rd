@@ -22,6 +22,7 @@ estimate_density(
   extend = FALSE,
   extend_scale = 0.1,
   bw = "SJ",
+  ci = NULL,
   group_by = NULL,
   ...
 )
@@ -43,6 +44,8 @@ vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
 
 \item{...}{Currently not used.}
 
+\item{ci}{The confidence interval threshold. Only used when \code{method = "kernel"}.}
+
 \item{group_by}{Optional character vector. If not \code{NULL} and \code{x} is a data frame, density estimation is performed for each group (subset) indicated by \code{group_by}.}
 }
 \description{
@@ -55,10 +58,19 @@ There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{
 library(bayestestR)
 
 set.seed(1)
-x <- rnorm(250, 1)
+x <- rnorm(250, mean = 1)
 
-# Methods
-density_kernel <- estimate_density(x, method = "kernel")
+# Basic usage
+density_kernel <- estimate_density(x)  # default method is "kernel"
+
+hist(x, prob = TRUE)
+lines(density_kernel$x, density_kernel$y, col = "black", lwd = 2)
+lines(density_kernel$x, density_kernel$CI_low, col = "gray", lty = 2)
+lines(density_kernel$x, density_kernel$CI_high, col = "gray", lty = 2)
+legend("topright", legend = c("Estimate", "95\% CI"),
+       col = c("black", "gray"), lwd = 2, lty = c(1, 2))
+
+# Other Methods
 density_logspline <- estimate_density(x, method = "logspline")
 density_KernSmooth <- estimate_density(x, method = "KernSmooth")
 density_mixture <- estimate_density(x, method = "mixture")
@@ -77,8 +89,13 @@ hist(x, prob = TRUE)
 lines(density_extended$x, density_extended$y, col = "red", lwd = 3)
 lines(density_default$x, density_default$y, col = "black", lwd = 3)
 
+# Multiple columns
 df <- data.frame(replicate(4, rnorm(100)))
 head(estimate_density(df))
+
+# Grouped data
+estimate_density(iris, group_by="Species")
+estimate_density(iris$Petal.Width, group_by=iris$Species)
 \dontrun{
 # rstanarm models
 # -----------------------------------------------

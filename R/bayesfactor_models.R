@@ -14,7 +14,7 @@
 #'   \code{BFBayesFactor}.
 #' @param object,x A \code{\link{bayesfactor_models}} object.
 #' @param subset Vector of model indices to keep or remove.
-#' @param reference Index of model to rereference to, or \code{"top"} to
+#' @param reference Index of model to reference to, or \code{"top"} to
 #'   reference to the best model, or \code{"bottom"} to reference to the worst
 #'   model.
 #' @inheritParams hdi
@@ -175,7 +175,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   # Get BF
   mBIC <- .BIC_list(mods)
-  mBFs <- exp((mBIC - mBIC[denominator]) / (-2))
+  mBFs <- bic_to_bf(mBIC, denominator = mBIC[denominator])
 
   res <- data.frame(
     Model = mforms,
@@ -186,7 +186,8 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   .bf_models_output(res,
     denominator = denominator,
     bf_method = "BIC approximation",
-    unsupported_models = !all(supported_models)
+    unsupported_models = !all(supported_models),
+    model_names = mnames
   )
 }
 
@@ -449,10 +450,11 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 
 
 #' @keywords internal
-.bf_models_output <- function(res, denominator = 1, bf_method = "method", unsupported_models = FALSE) {
+.bf_models_output <- function(res, denominator = 1, bf_method = "method", unsupported_models = FALSE, model_names = NULL) {
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- bf_method
   attr(res, "unsupported_models") <- unsupported_models
+  attr(res, "model_names") <- model_names
   class(res) <- c("bayesfactor_models", "see_bayesfactor_models", class(res))
 
   res
