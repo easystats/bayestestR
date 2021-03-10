@@ -5,6 +5,7 @@
 \alias{si.numeric}
 \alias{si.stanreg}
 \alias{si.brmsfit}
+\alias{si.blavaan}
 \alias{si.emmGrid}
 \alias{si.data.frame}
 \title{Compute Support Intervals}
@@ -26,6 +27,18 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
 )
 
 \method{si}{brmsfit}(
+  posterior,
+  prior = NULL,
+  BF = 1,
+  verbose = TRUE,
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "location", "zi", "zero_inflated", "all",
+    "smooth_terms", "sigma", "distributional", "auxiliary"),
+  parameters = NULL,
+  ...
+)
+
+\method{si}{blavaan}(
   posterior,
   prior = NULL,
   BF = 1,
