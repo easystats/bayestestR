@@ -212,14 +212,17 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   if (inherits(mods[[1]], "blavaan")) {
     res <- .bayesfactor_models_stan_SEM(mods, denominator, verbose)
     bf_method <- "marginal likelihoods (Laplace approximation)"
+    unsupported_models <- TRUE
   } else {
     res <- .bayesfactor_models_stan_REG(mods, denominator, verbose)
     bf_method <- "marginal likelihoods (bridgesampling)"
+    unsupported_models <- FALSE
   }
 
   .bf_models_output(res,
     denominator = denominator,
-    bf_method = bf_method
+    bf_method = bf_method,
+    unsupported_models = unsupported_models
   )
 }
 
