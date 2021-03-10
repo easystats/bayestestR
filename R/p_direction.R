@@ -286,6 +286,9 @@ p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), compon
 #' @export
 p_direction.stanfit <- p_direction.stanreg
 
+#' @export
+p_direction.blavaan <- p_direction.stanreg
+
 
 #' @rdname p_direction
 #' @export
@@ -316,18 +319,6 @@ p_direction.BFBayesFactor <- function(x, method = "direct", ...) {
 p_direction.get_predicted <- function(x, ...) {
   out <- p_direction(as.data.frame(t(x)), ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
-  out
-}
-
-#' @export
-p_direction.blavaan <- function(x, method = "direct", ...) {
-  cleaned_parameters <- insight::clean_parameters(x)
-  x <- insight::get_parameters(x)
-  temp <- p_direction(x, method = method, ...)
-
-  out <- .prepare_output(temp, cleaned_parameters)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
-  class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
   out
 }
 
