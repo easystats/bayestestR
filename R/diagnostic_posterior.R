@@ -261,3 +261,56 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects
   # Select rows
   diagnostic_df[diagnostic_df$Parameter %in% params, ]
 }
+
+
+#' @export
+diagnostic_posterior.blavaan <- function(posteriors, diagnostic = "all", ...) {
+
+  # Find parameters
+  params <- suppressWarnings(insight::find_parameters(posteriors, flatten = TRUE))
+
+  out <- data.frame("Parameter" = params)
+
+  # If no diagnostic
+  if (is.null(diagnostic)) {
+    return(out)
+  }
+
+  diagnostic <- match.arg(diagnostic, c("ESS", "Rhat", "MCSE", "all"), several.ok = TRUE)
+  if ("all" %in% diagnostic) {
+    diagnostic <- c("ESS", "Rhat", "MCSE")
+  } else {
+    diagnostic <- c(diagnostic)
+    if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
+  }
+
+  # Get indices
+  if ("Rhat" %in% diagnostic) {
+    if (!requireNamespace("blavaan", quietly = TRUE)) {
+      stop("Package 'blavaan' required for this function to work. Please install it.")
+    }
+
+    Rhat <- blavaan::blavInspect(posteriors, what = "psrf")
+    Rhat <- data.frame(
+      Parameter = names(Rhat),
+      Rhat = Rhat
+    )
+    out <- merge(out, Rhat, by = "Parameter", all = TRUE)
+  }
+
+  if ("ESS" %in% diagnostic) {
+    ESS <- effective_sample(posteriors)
+    out <- merge(out, ESS, by = "Parameter", all = TRUE)
+  }
+
+
+  if ("MCSE" %in% diagnostic) {
+    MCSE <- mcse(posteriors)
+    out <- merge(out, MCSE, by = "Parameter", all = TRUE)
+  }
+
+  unique(out)
+}
+
+
+
