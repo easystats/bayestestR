@@ -210,7 +210,7 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = .89, verbo
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
-  if (verbose) .check_multicollinearity(x)
+  if (verbose && !inherits(x, "blavaan")) .check_multicollinearity(x)
   params <- insight::get_parameters(x, component = component, effects = effects, parameters = parameters)
 
   l <- sapply(
@@ -241,7 +241,12 @@ equivalence_test.stanreg <- function(x, range = "default", ci = .89, effects = c
   component <- match.arg(component)
 
   out <- .equivalence_test_models(x, range, ci, effects, component, parameters, verbose)
-  out <- merge(out, insight::clean_parameters(x)[, c("Parameter", "Effects", "Cleaned_Parameter")], by = "Parameter", sort = FALSE)
+
+  out <- .prepare_output(
+    out,
+    insight::clean_parameters(x),
+    inherits(x, "stanmvreg")
+  )
 
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
   attr(out, "object_name") <- .safe_deparse(substitute(x))
@@ -252,6 +257,9 @@ equivalence_test.stanreg <- function(x, range = "default", ci = .89, effects = c
 #' @export
 equivalence_test.stanfit <- equivalence_test.stanreg
 
+#' @export
+equivalence_test.blavaan <- equivalence_test.stanreg
+
 
 #' @rdname equivalence_test
 #' @export
@@ -260,7 +268,12 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = .89, effects = c
   component <- match.arg(component)
 
   out <- .equivalence_test_models(x, range, ci, effects, component, parameters, verbose)
-  out <- merge(out, insight::clean_parameters(x)[, c("Parameter", "Effects", "Component", "Cleaned_Parameter")], by = "Parameter", sort = FALSE)
+
+  out <- .prepare_output(
+    out,
+    insight::clean_parameters(x),
+    inherits(x, "stanmvreg")
+  )
 
   class(out) <- unique(c("equivalence_test", "see_equivalence_test", class(out)))
   attr(out, "object_name") <- .safe_deparse(substitute(x))
