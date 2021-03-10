@@ -305,7 +305,7 @@ rope.stanreg <- function(x, range = "default", ci = .89, ci_method = "HDI", effe
   }
 
   # check for possible collinearity that might bias ROPE
-  if (verbose) .check_multicollinearity(x, "rope")
+  if (verbose && !inherits(x, "blavaan")) .check_multicollinearity(x, "rope")
 
   rope_data <- rope(
     insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
@@ -327,6 +327,9 @@ rope.stanreg <- function(x, range = "default", ci = .89, ci_method = "HDI", effe
 
 #' @export
 rope.stanfit <- rope.stanreg
+
+#' @export
+rope.blavaan <- rope.stanreg
 
 
 #' @rdname rope
