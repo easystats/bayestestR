@@ -229,6 +229,9 @@ estimate_density.stanreg <- function(x, method = "kernel", precision = 2^10, ext
 #' @export
 estimate_density.stanfit <- estimate_density.stanreg
 
+#' @export
+estimate_density.blavaan <- estimate_density.stanreg
+
 
 
 #' @importFrom insight get_parameters
