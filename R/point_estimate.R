@@ -217,6 +217,9 @@ point_estimate.stanreg <- function(x, centrality = "all", dispersion = FALSE, ef
 #' @export
 point_estimate.stanfit <- point_estimate.stanreg
 
+#' @export
+point_estimate.blavaan <- point_estimate.stanreg
+
 
 #' @rdname point_estimate
 #' @export
