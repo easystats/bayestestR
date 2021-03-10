@@ -178,6 +178,9 @@ eti.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"),
 #' @export
 eti.stanfit <- eti.stanreg
 
+#' @export
+eti.blavaan <- eti.stanreg
+
 
 
 #' @rdname eti

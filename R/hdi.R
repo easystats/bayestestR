@@ -235,6 +235,9 @@ hdi.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"), comp
 hdi.stanfit <- hdi.stanreg
 
 
+#' @export
+hdi.blavaan <- hdi.stanreg
+
 
 #' @rdname hdi
 #' @export
