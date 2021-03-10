@@ -151,30 +151,17 @@ bf_models <- bayesfactor_models
 bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   # Organize the models and their names
   mods <- list(...)
-  mnames <- sapply(match.call(expand.dots = FALSE)$`...`, .safe_deparse)
+  denominator <- list(denominator)
 
-  # In the case of a list as direct input
-  if (length(mods) == 1 && inherits(mods[[1]], "list")) {
-    mods <- mods[[1]]
-    mnames <- names(mods)
-  }
+  cl <- match.call(expand.dots = FALSE)
+  names(mods) <- sapply(cl$`...`, .safe_deparse)
+  names(denominator) <- .safe_deparse(cl$denominator)
 
-  if (!is.numeric(denominator)) {
-    model_name <- .safe_deparse(match.call()[["denominator"]])
-    denominator_model <- which(mnames == model_name)
-
-    if (length(denominator_model) == 0) {
-      mods <- c(mods, list(denominator))
-      mnames <- c(mnames, model_name)
-      denominator <- length(mods)
-    } else {
-      denominator <- denominator_model
-    }
-  }
+  mods <- .cleanup_BF_models(mods, denominator, cl)
+  mforms <- names(mods)
+  denominator <- attr(mods, "denominator", exact = TRUE)
 
   # Get formula / model names
-  mforms <- mnames
-
   # supported models
   supported_models <- sapply(mods, insight::is_model_supported)
   if (all(supported_models)) {
@@ -186,17 +173,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     supported_models[!has_terms] <- FALSE
   }
 
-  if (!all(supported_models)) {
-    if (verbose) {
-      warning(sprintf(
-        "Unable to extract terms from the following models: \n%s",
-        paste0(mnames[!supported_models], collapse = ", ")
-      ), call. = FALSE)
-    }
-  }
-
   # Get BF
-  names(mods) <- mforms
   mBIC <- .BIC_list(mods)
   mBFs <- exp((mBIC - mBIC[denominator]) / (-2))
 
@@ -205,7 +182,6 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     BF = mBFs,
     stringsAsFactors = FALSE
   )
-
 
   .bf_models_output(res,
     denominator = denominator,
@@ -216,59 +192,47 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
 
 #' @importFrom insight get_response find_algorithm
-.bayesfactor_models_stan <- function(..., denominator = 1, verbose = TRUE) {
-  if (!requireNamespace("bridgesampling")) {
-    stop("Package 'bridgesampling' required for this function to work. Please install it by running `install.packages('bridgesampling')`.")
-  }
-
-  # Organize the models
-  mods <- list(...)
-
-  # In the case of a list as direct input
-  if (length(mods) == 1 && inherits(mods[[1]], "list")) {
-    mods <- mods[[1]]
-    was_list <- TRUE
-  } else {
-    was_list <- FALSE
-  }
-
+.bayesfactor_models_stan <- function(mods, denominator = 1, verbose = TRUE) {
 
   # Warn
   n_samps <- sapply(mods, function(x) {
     alg <- insight::find_algorithm(x)
+    if (is.null(alg$iterations)) alg$iterations <- alg$sample
     (alg$iterations - alg$warmup) * alg$chains
   })
   if (any(n_samps < 4e4)) {
     warning(
       "Bayes factors might not be precise.\n",
       "For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.",
-      call. = FALSE
+      call. = FALSE, immediate. = TRUE
     )
   }
 
-  if (!is.numeric(denominator)) {
-    model_name <- .safe_deparse(match.call()[["denominator"]])
-    if (was_list) {
-      arg_names <- names(mods)
-    } else {
-      arg_names <- sapply(match.call(expand.dots = FALSE)$`...`, .safe_deparse)
-    }
+  if (inherits(mods[[1]], "blavaan")) {
+    res <- .bayesfactor_models_stan_SEM(mods, denominator, verbose)
+    bf_method <- "marginal likelihoods (Laplace approximation)"
+  } else {
+    res <- .bayesfactor_models_stan_REG(mods, denominator, verbose)
+    bf_method <- "marginal likelihoods (bridgesampling)"
+  }
 
-    denominator_model <- which(arg_names == model_name)
+  .bf_models_output(res,
+    denominator = denominator,
+    bf_method = bf_method
+  )
+}
 
-    if (length(denominator_model) == 0) {
-      mods <- c(mods, list(denominator))
-      denominator <- length(mods)
-    } else {
-      denominator <- denominator_model
-    }
+#' @keywords internal
+.bayesfactor_models_stan_REG <- function(mods, denominator, verbose = TRUE) {
+  if (!requireNamespace("bridgesampling")) {
+    stop("Package 'bridgesampling' required for this function to work. Please install it by running `install.packages('bridgesampling')`.")
   }
 
   # Test that all is good:
   resps <- lapply(mods, insight::get_response)
   from_same_data_as_den <- sapply(resps[-denominator],
-    identical,
-    y = resps[[denominator]]
+                                  identical,
+                                  y = resps[[denominator]]
   )
   if (!all(from_same_data_as_den)) {
     stop("Models were not computed from the same data.")
@@ -294,15 +258,24 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     BF = exp(mBFs),
     stringsAsFactors = FALSE
   )
-
-
-  .bf_models_output(res,
-    denominator = denominator,
-    bf_method = "marginal likelihoods (bridgesampling)"
-  )
 }
 
+.bayesfactor_models_stan_SEM <- function(mods, denominator, verbose = TRUE) {
 
+  capture.output(
+    suppressWarnings(
+      mBFs <- sapply(mods, function(m) {
+        blavaan::blavCompare(m, mods[[denominator]])[["bf"]][1]
+      })
+    )
+  )
+
+  res <- data.frame(
+    Model = names(mods),
+    BF = exp(unname(mBFs)),
+    stringsAsFactors = FALSE
+  )
+}
 
 
 #' @export
@@ -310,7 +283,19 @@ bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
   if (!requireNamespace("rstanarm")) {
     stop("Package 'rstanarm' required for this function to work. Please install it by running `install.packages('rstanarm')`.")
   }
-  .bayesfactor_models_stan(..., denominator = denominator)
+
+  # Organize the models and their names
+  mods <- list(...)
+  denominator <- list(denominator)
+
+  cl <- match.call(expand.dots = FALSE)
+  names(mods) <- sapply(cl$`...`, .safe_deparse)
+  names(denominator) <- .safe_deparse(cl$denominator)
+
+  mods <- .cleanup_BF_models(mods, denominator, cl)
+  denominator <- attr(mods, "denominator", exact = TRUE)
+
+  .bayesfactor_models_stan(mods, denominator = denominator, verbose = verbose)
 }
 
 #' @export
@@ -321,8 +306,42 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1, verbose = TRUE) {
   if (!("brms" %in% .packages())) {
     stop("This function requires package 'brms' to be loaded. Please run `library(brms)`.")
   }
-  .bayesfactor_models_stan(..., denominator = denominator)
+
+  # Organize the models and their names
+  mods <- list(...)
+  denominator <- list(denominator)
+
+  cl <- match.call(expand.dots = FALSE)
+  names(mods) <- sapply(cl$`...`, .safe_deparse)
+  names(denominator) <- .safe_deparse(cl$denominator)
+
+  mods <- .cleanup_BF_models(mods, denominator, cl)
+  denominator <- attr(mods, "denominator", exact = TRUE)
+
+  .bayesfactor_models_stan(mods, denominator = denominator, verbose = verbose)
 }
+
+
+#' @export
+bayesfactor_models.blavaan <- function(..., denominator = 1, verbose = TRUE) {
+  if (!requireNamespace("blavaan")) {
+    stop("Package 'blavaan' required for this function to work. Please install it by running `install.packages('blavaan')`.")
+  }
+
+  # Organize the models and their names
+  mods <- list(...)
+  denominator <- list(denominator)
+
+  cl <- match.call(expand.dots = FALSE)
+  names(mods) <- sapply(cl$`...`, .safe_deparse)
+  names(denominator) <- .safe_deparse(cl$denominator)
+
+  mods <- .cleanup_BF_models(mods, denominator, cl)
+  denominator <- attr(mods, "denominator", exact = TRUE)
+
+  .bayesfactor_models_stan(mods, denominator = denominator, verbose = verbose)
+}
+
 
 
 #' @export
@@ -403,6 +422,32 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 }
 
 # Helpers -----------------------------------------------------------------
+
+#' @keywords internal
+.cleanup_BF_models <- function(mods, denominator, cl) {
+  if (length(mods) == 1 && inherits(mods[[1]], "list")) {
+    mods <- mods[[1]]
+    names(mods) <- sapply(cl$`...`[[1]][-1], .safe_deparse)
+  }
+
+  if (!is.numeric(denominator[[1]])) {
+    denominator_model <- which(names(mods) == names(denominator))
+
+    if (length(denominator_model) == 0) {
+      mods <- c(mods, denominator)
+      denominator <- length(mods)
+    } else {
+      denominator <- denominator_model
+    }
+  } else {
+    denominator <- denominator[[1]]
+  }
+
+  attr(mods, "denominator") <- denominator
+  mods
+}
+
+
 #' @keywords internal
 .bf_models_output <- function(res, denominator = 1, bf_method = "method", unsupported_models = FALSE) {
   attr(res, "denominator") <- denominator
