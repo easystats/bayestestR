@@ -213,6 +213,9 @@ mhdior.stanreg <- function(x, range = "default", precision = .1, effects = c("fi
   out
 }
 
+#' @export
+mhdior.blavaan <- mhdior.stanreg
+
 #' @rdname mhdior
 #' @export
 mhdior.brmsfit <- function(x, range = "default", precision = .1, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
