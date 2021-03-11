@@ -32,7 +32,10 @@ print_data_frame <- function(x, digits) {
       "random_zero_inflated" = ,
       "random_zi" = "# Random Effects (Zero-Inflated Model)",
       "smooth_sd" = ,
-      "fixed_smooth_sd" = "# Smooth Terms"
+      "fixed_smooth_sd" = "# Smooth Terms",
+
+      # Default
+      paste0("# ", i)
     )
 
     if ("Parameter" %in% colnames(out[[i]])) {
