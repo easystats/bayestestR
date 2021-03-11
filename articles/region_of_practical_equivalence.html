@@ -169,7 +169,7 @@
 <h1 class="hasAnchor">
 <a href="#credible-interval-in-rope-vs-full-posterior-in-rope" class="anchor"></a>Credible interval in ROPE <em>vs</em> full posterior in ROPE</h1>
 <p>Using the ROPE and the HDI as Credible Interval, Kruschke (2018) suggests using the percentage of the 95% HDI that falls within the ROPE as a decision rule. However, as the 89% HDI <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">is considered a better choice</a> <span class="citation">(Kruschke, 2014; McElreath, 2014, 2018)</span>, <code>bayestestR</code> provides by default the percentage of the 89% HDI that falls within the ROPE.</p>
-<p>However, <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full"><em>simulation studies data</em></a> suggest that using the percentage of the full posterior distribution, instead of a CI, might be more sensitive (especially do delineate highly significant effects). Thus, we recommend that the user considers using the <strong><em>full</em> ROPE</strong> percentage (by setting <code>ci = 1</code>), which will return the portion of the entire posterior distribution in the ROPE.</p>
+<p>However, <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full"><em>simulation studies data</em></a> suggest that using the percentage of the full posterior distribution, instead of a CI, might be more sensitive (especially do delineate highly significant effects). Thus, we recommend that the user considers using the <strong>full ROPE</strong> percentage (by setting <code>ci = 1</code>), which will return the portion of the entire posterior distribution in the ROPE.</p>
 </div>
 <div id="what-percentage-in-rope-to-accept-or-to-reject" class="section level1">
 <h1 class="hasAnchor">
