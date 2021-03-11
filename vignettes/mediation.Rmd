@@ -37,7 +37,10 @@ if (!requireNamespace("mediation", quietly = TRUE) ||
 }
 ```
 
-This vignettes demonstrates the `mediation()`-function. Before we start, we fit some models, including a mediation-object from the _mediation_-package and a structural equation modelling approach with the _lavaan_-package, both of which we use for comparison with _brms_ and _rstanarm_.
+This vignettes demonstrates the `mediation()`-function. Before we start, we fit
+some models, including a mediation-object from the _mediation_-package and a
+structural equation modelling approach with the _lavaan_-package, both of which
+we use for comparison with _brms_ and _rstanarm_.
 
 ## Mediation Analysis in brms and rstanarm
 
@@ -82,11 +85,22 @@ m3 <- stan_mvmer(
 m3 <- insight::download_model("stanmvreg_2")
 ```
 
-`mediation()` is a summary function, especially for mediation analysis, i.e. for multivariate response models with casual mediation effects.
+`mediation()` is a summary function, especially for mediation analysis, i.e. for
+multivariate response models with casual mediation effects.
 
-In the models `m2` and `m3`, `treat` is the treatment effect and `job_seek` is the mediator effect. For the *brms* model (`m2`), `f1` describes the mediator model and `f2` describes the outcome model. This is similar for the *rstanarm* model.
+In the models `m2` and `m3`, `treat` is the treatment effect and `job_seek` is
+the mediator effect. For the *brms* model (`m2`), `f1` describes the mediator
+model and `f2` describes the outcome model. This is similar for the *rstanarm*
+model.
 
-`mediation()` returns a data frame with information on the _direct effect_ (median value of posterior samples from treatment of the outcome model), _mediator effect_ (median value of posterior samples from mediator of the outcome model), _indirect effect_ (median value of the multiplication of the posterior samples from mediator of the outcome model and the posterior samples from treatment of the mediation model) and the _total effect_ (median value of sums of posterior samples used for the direct and indirect effect). The _proportion mediated_ is the indirect effect divided by the total effect. 
+`mediation()` returns a data frame with information on the _direct effect_
+(median value of posterior samples from treatment of the outcome model),
+_mediator effect_ (median value of posterior samples from mediator of the
+outcome model), _indirect effect_ (median value of the multiplication of the
+posterior samples from mediator of the outcome model and the posterior samples
+from treatment of the mediation model) and the _total effect_ (median value of
+sums of posterior samples used for the direct and indirect effect). The
+_proportion mediated_ is the indirect effect divided by the total effect.
 
 The simplest call just needs the model-object.
 
@@ -98,11 +112,17 @@ mediation(m2)
 mediation(m3)
 ```
 
-Typically, `mediation()` finds the treatment and mediator variables automatically. If this does not work, use the `treatment` and `mediator` arguments to specify the related variable names. For all values, the 89% credible intervals are calculated by default. Use `ci` to calculate a different interval. 
+Typically, `mediation()` finds the treatment and mediator variables
+automatically. If this does not work, use the `treatment` and `mediator`
+arguments to specify the related variable names. For all values, the 89%
+credible intervals are calculated by default. Use `ci` to calculate a different
+interval.
 
 ## Comparison to the mediation package
 
-Here is a comparison with the _mediation_ package. Note that the `summary()`-output of the _mediation_ package shows the indirect effect first, followed by the direct effect.
+Here is a comparison with the _mediation_ package. Note that the
+`summary()`-output of the _mediation_ package shows the indirect effect first,
+followed by the direct effect.
 
 ```{r}
 summary(m1)
@@ -112,18 +132,23 @@ mediation(m2, ci = .95)
 mediation(m3, ci = .95)
 ```
 
-If you want to calculate mean instead of median values from the posterior samples, use the `centrality`-argument. Furthermore, there is a `print()`-method, which allows to print more digits.
+If you want to calculate mean instead of median values from the posterior
+samples, use the `centrality`-argument. Furthermore, there is a
+`print()`-method, which allows to print more digits.
 
 ```{r, message=TRUE}
 m <- mediation(m2, centrality = "mean", ci = .95)
 print(m, digits = 4)
 ```
 
-As you can see, the results are similar to what the _mediation_ package produces for non-Bayesian models.
+As you can see, the results are similar to what the _mediation_ package produces
+for non-Bayesian models.
 
 ## Comparison to SEM from the lavaan package
 
-Finally, we also compare the results to a SEM model, using *lavaan*. This example should demonstrate how to "translate" the same model in different packages or modeling approached.
+Finally, we also compare the results to a SEM model, using *lavaan*. This
+example should demonstrate how to "translate" the same model in different
+packages or modeling approached.
 
 ```{r}
 library(lavaan)
@@ -155,7 +180,8 @@ summary(m4)
 mediation(m2, ci = .95)
 ```
 
-The summary output from *lavaan* is longer, but we can find the related numbers quite easily:
+The summary output from *lavaan* is longer, but we can find the related numbers
+quite easily:
 
 - the _direct effect_ of treatment is `treat (c1)`, which is `-0.040`
 - the _indirect effect_ of treatment is `indirect_treat`, which is `-0.016`
