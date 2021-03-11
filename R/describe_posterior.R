@@ -539,6 +539,8 @@ describe_posterior.stanfit <- function(posteriors, centrality = "median", disper
   out
 }
 
+#' @export
+describe_posterior.blavaan <- describe_posterior.stanfit
 
 
 #' @inheritParams describe_posterior.stanreg
