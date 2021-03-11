@@ -42,11 +42,24 @@ This vignette can be referred to by citing the package:
 
 ## Introduction 
 
-One of the main difference between the Bayesian and the frequentist frameworks is that the former returns a probability distribution of each effect (*i.e.*, parameter of interest of a model, such as a regression slope) instead of a single value. However, there is still a need and demand, for reporting or use in further analysis, for a single value (**point-estimate**) that best characterise the underlying posterior distribution.
+One of the main difference between the Bayesian and the frequentist frameworks
+is that the former returns a probability distribution of each effect (*i.e.*,
+parameter of interest of a model, such as a regression slope) instead of a
+single value. However, there is still a need and demand, for reporting or use in
+further analysis, for a single value (**point-estimate**) that best characterise
+the underlying posterior distribution.
 
-There are three main indices used in the literature for effect estimation: the **mean**, the **median** or the **MAP** (Maximum A Posteriori) estimate (roughly corresponding to the mode (the "peak") of the distribution). Unfortunately, there is no consensus about which one to use, as no systematic comparison has ever been done.
+There are three main indices used in the literature for effect estimation: the
+**mean**, the **median** or the **MAP** (Maximum A Posteriori) estimate (roughly
+corresponding to the mode (the "peak") of the distribution). Unfortunately,
+there is no consensus about which one to use, as no systematic comparison has
+ever been done.
 
-In the present work, we will compare these three point-estimates of effect between themselves, as well as with the widely known **beta**, extracted from a comparable frequentist model. With this comparison, we expect to draw bridges and relationships between the two frameworks, helping and easing the transition for the public.
+In the present work, we will compare these three point-estimates of effect
+between themselves, as well as with the widely known **beta**, extracted from a
+comparable frequentist model. With this comparison, we expect to draw bridges
+and relationships between the two frameworks, helping and easing the transition
+for the public.
 
 
 ## Experiment 1: Relationship with Error (Noise) and Sample Size
@@ -58,11 +71,17 @@ In the present work, we will compare these three point-estimates of effect betwe
 The simulation aimed at modulating the following characteristics:
 
 - **Model type**: linear or logistic.
-- **"True" effect** (original regression coefficient from which data is drawn): Can be 1 or 0 (no effect).
+- **"True" effect** (original regression coefficient from which data is drawn):
+Can be 1 or 0 (no effect).
 - **Sample size**: From 20 to 100 by steps of 10.
-- **Error**: Gaussian noise applied to the predictor with SD uniformly spread between 0.33 and 6.66 (with 1000 different values).
+- **Error**: Gaussian noise applied to the predictor with SD uniformly spread
+between 0.33 and 6.66 (with 1000 different values).
 
-We generated a dataset for each combination of these characteristics, resulting in a total of `2 * 2 * 9 * 1000 = 36000` Bayesian and frequentist models. The code used for generation is available [here](https://easystats.github.io/circus/articles/bayesian_indices.html) (please note that it takes usually several days/weeks to complete).
+We generated a dataset for each combination of these characteristics, resulting
+in a total of `2 * 2 * 9 * 1000 = 36000` Bayesian and frequentist models. The
+code used for generation is available
+[here](https://easystats.github.io/circus/articles/bayesian_indices.html)
+(please note that it takes usually several days/weeks to complete).
 
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2)
@@ -130,10 +149,11 @@ df %>%
 ```
 
 
-
 #### Statistical Modelling
 
-We fitted a (frequentist) multiple linear regression to statistically test the the predict the presence or absence of effect with the estimates as well as their interaction with noise and sample size.
+We fitted a (frequentist) multiple linear regression to statistically test the
+the predict the presence or absence of effect with the estimates as well as
+their interaction with noise and sample size.
 
 ```{r, message=FALSE, warning=FALSE, eval=FALSE}
 df %>%
@@ -161,12 +181,16 @@ df %>%
 
 <!-- REMOVE THIS TABLE ONCE NEW PARAMETERS IS ON CRAN SO IT CAN BE GENERATED ON THE RUN-->
 
-This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist's beta:
+This suggests that, in order to delineate between the presence and the absence
+of an effect, compared to the frequentist's beta:
 
-- For linear models, the **Mean** was the better predictor, closely followed by the **Median**, the **MAP** and the frequentist **Coefficient**.
-- For logistic models, the **MAP** was the better predictor, followed by the **Median**, the **Mean** and, behind, the frequentist **Coefficient**.
+- For linear models, the **Mean** was the better predictor, closely followed by
+the **Median**, the **MAP** and the frequentist **Coefficient**.
+- For logistic models, the **MAP** was the better predictor, followed by the
+**Median**, the **Mean** and, behind, the frequentist **Coefficient**.
 
-Overall, the **median** seems to be appears as a safe and approriate choice, maintaining a a high performance across different types of models.
+Overall, the **median** seems to be appears as a safe and appropriate choice,
+maintaining a a high performance across different types of models.
 
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>% -->
@@ -213,11 +237,17 @@ Overall, the **median** seems to be appears as a safe and approriate choice, mai
 The simulation aimed at modulating the following characteristics:
 
 - **Model type**: linear or logistic.
-- **"True" effect** (original regression coefficient from which data is drawn): Can be 1 or 0 (no effect).
+- **"True" effect** (original regression coefficient from which data is drawn):
+Can be 1 or 0 (no effect).
 - **draws**: from 10 to 5000 by step of 5 (1000 iterations).
-- **warmup**: Ratio of warmup iterations. from 1/10 to 9/10 by step of 0.1 (9 iterations).
+- **warmup**: Ratio of warmup iterations. from 1/10 to 9/10 by step of 0.1 (9
+iterations).
 
-We generated 3 datasets for each combination of these characteristics, resulting in a total of `2 * 2 * 8 * 40 * 9 * 3 = 34560` Bayesian and frequentist models. The code used for generation is avaible [here](https://easystats.github.io/circus/articles/bayesian_indices.html) (please note that it takes usually several days/weeks to complete).
+We generated 3 datasets for each combination of these characteristics, resulting
+in a total of `2 * 2 * 8 * 40 * 9 * 3 = 34560` Bayesian and frequentist models.
+The code used for generation is avaible
+[here](https://easystats.github.io/circus/articles/bayesian_indices.html)
+(please note that it takes usually several days/weeks to complete).
 
 ```{r message=FALSE, warning=FALSE}
 df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_study2.csv")
