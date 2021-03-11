@@ -37,6 +37,12 @@ print_data_frame <- function(x, digits) {
       "smooth_sd" = ,
       "fixed_smooth_sd" = "# Smooth Terms",
 
+      # blavaan
+      "latent" = "# Latent Loading",
+      "residual" = "# Residual Variance",
+      "intercept" = "# Intercept",
+      "regression" = "# Regression",
+
       # Default
       paste0("# ", i)
     )

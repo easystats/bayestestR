@@ -2,6 +2,7 @@ if (require("bayestestR") && require("testthat")) {
   test_that("blavaan, all", {
     skip_if_not_installed("blavaan")
     skip_if_not_installed("lavaan")
+    require(blavaan)
 
     data("PoliticalDemocracy", package = "lavaan")
 
@@ -85,21 +86,22 @@ if (require("bayestestR") && require("testthat")) {
     expect_equal(ncol(x), 14)
 
     ## Prior/posterior checks ----
-    x <- check_prior(bfit, simulate_priors = FALSE)
+    suppressWarnings(x <- check_prior(bfit))
     expect_equal(nrow(x), 14)
 
-    skip("waiting for insight#320")
-    x <- check_prior(bfit)
+    x <- check_prior(bfit, simulate_priors = FALSE)
     expect_equal(nrow(x), 14)
 
     x <- diagnostic_posterior(bfit)
     expect_equal(nrow(x), 14)
 
     x <- simulate_prior(bfit)
-    expect_equal(nrow(x), 14)
+    expect_equal(ncol(x), 13)
+    # YES this is 13! We have two parameters with the same prior.
 
     x <- describe_prior(bfit)
-    expect_equal(nrow(x), 14)
+    expect_equal(nrow(x), 13)
+    # YES this is 13! We have two parameters with the same prior.
 
     x <- describe_posterior(bfit, test = "all")
     expect_equal(nrow(x), 14)

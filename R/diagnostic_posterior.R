@@ -292,7 +292,7 @@ diagnostic_posterior.blavaan <- function(posteriors, diagnostic = "all", ...) {
 
     Rhat <- blavaan::blavInspect(posteriors, what = "psrf")
     Rhat <- data.frame(
-      Parameter = names(Rhat),
+      Parameter = colnames(get_parameters(posteriors)),
       Rhat = Rhat
     )
     out <- merge(out, Rhat, by = "Parameter", all = TRUE)

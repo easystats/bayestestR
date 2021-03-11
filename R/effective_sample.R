@@ -125,7 +125,7 @@ effective_sample.blavaan <- function(model, parameters = NULL, ...) {
   ESS <- blavaan::blavInspect(model, what = "neff")
 
   data.frame(
-    Parameter = names(ESS),
+    Parameter = colnames(get_parameters(model)),
     ESS = ESS,
     stringsAsFactors = FALSE,
     row.names = NULL
