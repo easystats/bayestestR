@@ -151,7 +151,6 @@ sexit_thresholds.mlm <- function(x, ...) {
 
 
 #' @importFrom stats sigma sd
-#' @importFrom insight n_obs find_parameters
 .sexit_thresholds <- function(x, information = NULL, response = NULL) {
   if (is.null(information) && is.null(response)) {
     norm <- 1
