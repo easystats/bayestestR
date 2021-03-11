@@ -40,6 +40,8 @@ simulate_prior.stanreg <- function(model, n = 1000, effects = c("fixed", "random
   .simulate_prior(priors, n = n)
 }
 
+#' @export
+simulate_prior.blavaan <- simulate_prior.stanreg
 
 #' @export
 simulate_prior.brmsfit <- function(model, n = 1000, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {

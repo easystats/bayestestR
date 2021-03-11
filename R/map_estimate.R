@@ -107,6 +107,9 @@ map_estimate.stanreg <- function(x, precision = 2^10, method = "kernel", effects
 #' @export
 map_estimate.stanfit <- map_estimate.stanreg
 
+#' @export
+map_estimate.blavaan <- map_estimate.stanreg
+
 
 #' @rdname map_estimate
 #' @export

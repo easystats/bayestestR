@@ -286,6 +286,9 @@ p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), compon
 #' @export
 p_direction.stanfit <- p_direction.stanreg
 
+#' @export
+p_direction.blavaan <- p_direction.stanreg
+
 
 #' @rdname p_direction
 #' @export
@@ -318,6 +321,7 @@ p_direction.get_predicted <- function(x, ...) {
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
+
 # Methods -----------------------------------------------------------------
 
 

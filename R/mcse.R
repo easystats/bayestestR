@@ -87,6 +87,9 @@ mcse.stanreg <- function(model, effects = c("fixed", "random", "all"), component
 mcse.stanfit <- mcse.stanreg
 
 
+#' @export
+mcse.blavaan <- mcse.stanreg
+
 
 #' @importFrom stats sd na.omit
 #' @keywords internal

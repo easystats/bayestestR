@@ -61,13 +61,14 @@ Description: Provides utilities to describe posterior
 Depends:
     R (>= 3.4)
 Imports:
-    insight (>= 0.13.0),
+    insight (>= 0.13.1.1),
     methods,
     stats,
     utils
 Suggests:
     BayesFactor,
     bayesQR,
+    blavaan,
     bridgesampling,
     brms,
     broom,

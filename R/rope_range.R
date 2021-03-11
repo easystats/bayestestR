@@ -181,7 +181,6 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
 
 
 #' @importFrom stats sigma sd
-#' @importFrom insight n_obs find_parameters
 .rope_range <- function(x, information, response, verbose = TRUE) {
   negligible_value <- tryCatch(
     {

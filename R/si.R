@@ -147,6 +147,10 @@ si.stanreg <- function(posterior, prior = NULL,
 #' @export
 si.brmsfit <- si.stanreg
 
+#' @rdname si
+#' @export
+si.blavaan <- si.stanreg
+
 
 #' @rdname si
 #' @export

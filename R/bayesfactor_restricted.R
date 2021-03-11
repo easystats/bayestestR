@@ -123,6 +123,21 @@ bayesfactor_restricted.brmsfit <- bayesfactor_restricted.stanreg
 
 #' @rdname bayesfactor_restricted
 #' @export
+bayesfactor_restricted.blavaan <- function(posterior, hypothesis, prior = NULL,
+                                           verbose = TRUE, ...) {
+  samps <- .clean_priors_and_posteriors(posterior, prior,
+                                        verbose = verbose)
+
+  # Get savage-dickey BFs
+  bayesfactor_restricted.data.frame(
+    posterior = samps$posterior, prior = samps$prior,
+    hypothesis = hypothesis
+  )
+}
+
+
+#' @rdname bayesfactor_restricted
+#' @export
 bayesfactor_restricted.emmGrid <- function(posterior, hypothesis, prior = NULL,
                                            verbose = TRUE,
                                            ...) {

@@ -244,6 +244,10 @@ p_map.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("f
 p_map.stanfit <- p_map.stanreg
 
 
+#' @export
+p_map.blavaan <- p_map.stanreg
+
+
 
 #' @rdname p_map
 #' @export

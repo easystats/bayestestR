@@ -5,6 +5,7 @@
 \alias{bf_restricted}
 \alias{bayesfactor_restricted.stanreg}
 \alias{bayesfactor_restricted.brmsfit}
+\alias{bayesfactor_restricted.blavaan}
 \alias{bayesfactor_restricted.emmGrid}
 \title{Bayes Factors (BF) for Order Restricted Models}
 \usage{
@@ -35,6 +36,14 @@ bf_restricted(posterior, hypothesis, prior = NULL, verbose = TRUE, ...)
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
+  ...
+)
+
+\method{bayesfactor_restricted}{blavaan}(
+  posterior,
+  hypothesis,
+  prior = NULL,
+  verbose = TRUE,
   ...
 )
 

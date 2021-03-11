@@ -115,6 +115,23 @@ effective_sample.stanfit <- function(model, effects = c("fixed", "random", "all"
 }
 
 
+#' @rdname effective_sample
+#' @export
+effective_sample.blavaan <- function(model, parameters = NULL, ...) {
+  if (!requireNamespace("blavaan", quietly = TRUE)) {
+    stop("Package 'blavaan' required for this function to work. Please install it.")
+  }
+
+  ESS <- blavaan::blavInspect(model, what = "neff")
+
+  data.frame(
+    Parameter = colnames(get_parameters(model)),
+    ESS = ESS,
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
+}
+
 
 #' @rdname effective_sample
 #' @export

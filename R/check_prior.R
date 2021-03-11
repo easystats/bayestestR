@@ -76,6 +76,9 @@ check_prior.brmsfit <- function(model, method = "gelman", simulate_priors = TRUE
 #' @export
 check_prior.stanreg <- check_prior.brmsfit
 
+#' @export
+check_prior.blavaan <- check_prior.brmsfit
+
 
 #' @importFrom stats sd
 #' @keywords internal

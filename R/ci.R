@@ -162,6 +162,10 @@ ci.brmsfit <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random
 ci.stanfit <- ci.stanreg
 
 
+#' @export
+ci.blavaan <- ci.stanreg
+
+
 #' @rdname ci
 #' @export
 ci.BFBayesFactor <- ci.numeric

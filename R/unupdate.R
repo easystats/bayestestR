@@ -135,3 +135,26 @@ unupdate.brmsfit_multiple <- function(model, verbose = TRUE, newdata = NULL, ...
 
   model_prior
 }
+
+
+#' @export
+#' @rdname unupdate
+unupdate.blavaan <- function(model, verbose = TRUE, ...) {
+  if (!requireNamespace("blavaan")) {
+    stop("Package \"blavaan\" needed for this function to work. Please install it.")
+  }
+
+  cl <- model@call
+  if (isTRUE(eval(cl$prisamp))) return(model)
+
+  if (verbose) {
+    message("Sampling priors, please wait...")
+  }
+
+  cl$prisamp <- TRUE
+  suppressMessages(suppressWarnings(
+    utils::capture.output(model_prior <- eval(cl))
+  ))
+
+  model_prior
+}

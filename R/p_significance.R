@@ -219,6 +219,10 @@ p_significance.stanreg <- function(x, threshold = "default", effects = c("fixed"
 p_significance.stanfit <- p_significance.stanreg
 
 
+#' @export
+p_significance.blavaan <- p_significance.stanreg
+
+
 
 
 

@@ -189,7 +189,6 @@ point_estimate.emm_list <- point_estimate.emmGrid
 #' @keywords internal
 .point_estimate_models <- function(x, effects, component, parameters, centrality = "all", dispersion = FALSE, ...) {
   out <- point_estimate(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), centrality = centrality, dispersion = dispersion, ...)
-  # out$Parameter <- .get_parameter_names(x, effects = effects, component = component, parameters = parameters)
   out
 }
 
@@ -216,6 +215,9 @@ point_estimate.stanreg <- function(x, centrality = "all", dispersion = FALSE, ef
 
 #' @export
 point_estimate.stanfit <- point_estimate.stanreg
+
+#' @export
+point_estimate.blavaan <- point_estimate.stanreg
 
 
 #' @rdname point_estimate
