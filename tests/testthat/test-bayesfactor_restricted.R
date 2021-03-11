@@ -38,7 +38,9 @@ if (require("rstanarm") &&
 
   test_that("bayesfactor_restricted RSTANARM", {
     skip_on_cran()
-    fit_stan <- stan_glm(mpg ~ wt + cyl + am, data = mtcars, refresh = 0, iter = 200)
+    suppressWarnings(
+      fit_stan <- stan_glm(mpg ~ wt + cyl + am, data = mtcars, refresh = 0, iter = 200)
+    )
 
     hyps <- c(
       "am > 0 & cyl < 0",

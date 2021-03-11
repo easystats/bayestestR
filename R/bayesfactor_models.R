@@ -187,7 +187,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     denominator = denominator,
     bf_method = "BIC approximation",
     unsupported_models = !all(supported_models),
-    model_names = mnames
+    model_names = names(mods)
   )
 }
 

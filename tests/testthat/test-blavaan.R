@@ -1,6 +1,9 @@
 if (require("bayestestR") && require("testthat")) {
   test_that("blavaan, all", {
     skip_if_not_installed("blavaan")
+    skip_if_not_installed("lavaan")
+
+    data("PoliticalDemocracy", package = "lavaan")
 
     model <- '
     # latent variable definitions
@@ -26,10 +29,10 @@ if (require("bayestestR") && require("testthat")) {
     y1 ~~ 0*y5
   '
     suppressWarnings(capture.output({
-      bfit <- bsem(model, data = PoliticalDemocracy,
-                   n.chains = 1, burnin = 50, sample = 100)
-      bfit2 <- bsem(model2, data = PoliticalDemocracy,
-                    n.chains = 1, burnin = 50, sample = 100)
+      bfit <- blavaan::bsem(model, data = PoliticalDemocracy,
+                            n.chains = 1, burnin = 50, sample = 100)
+      bfit2 <- blavaan::bsem(model2, data = PoliticalDemocracy,
+                             n.chains = 1, burnin = 50, sample = 100)
     }))
 
     x <- point_estimate(bfit, centrality = "all", dispersion = TRUE)

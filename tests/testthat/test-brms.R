@@ -19,7 +19,9 @@ if (require("brms") && require("testthat") && require("insight") && require("htt
     # expect_equal(nrow(equivalence_test(model)), 2)
 
     out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean")
-    s <- summary(model)
+    suppressWarnings(
+      s <- summary(model)
+    )
     expect_identical(colnames(out), c(
       "Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
       "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
