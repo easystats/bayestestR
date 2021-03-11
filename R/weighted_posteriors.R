@@ -184,6 +184,10 @@ weighted_posteriors.brmsfit <- weighted_posteriors.stanreg
 
 #' @export
 #' @rdname weighted_posteriors
+weighted_posteriors.blavaan <- weighted_posteriors.stanreg
+
+#' @export
+#' @rdname weighted_posteriors
 weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE, iterations = 4000) {
   Mods <- c(...)
 
@@ -258,5 +262,6 @@ weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 
 #' @importFrom insight find_algorithm
 .total_samps <- function(mod) {
   x <- insight::find_algorithm(mod)
+  if (is.null(x$iterations)) x$iterations <- x$sample
   x$chains * (x$iterations - x$warmup)
 }
