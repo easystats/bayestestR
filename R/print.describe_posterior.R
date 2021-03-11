@@ -53,6 +53,5 @@ format.describe_posterior <- function(x, digits = 3, ...) {
   }
 
   x <- insight::format_table(x, digits = digits, ...)
-  attr(x, "table_title") <- c("# Description of Posterior Distributions", "blue")
   x
 }
