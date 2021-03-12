@@ -1,4 +1,5 @@
-if (require("rstanarm") && require("bayestestR") && require("testthat")) {
+if (require("rstanarm") && require("bayestestR") &&
+  require("testthat") && require("emmeans")) {
   test_that("si.numeric", {
     set.seed(333)
     prior <- distribution_normal(1000, mean = 0, sd = 1)
@@ -38,5 +39,13 @@ if (require("rstanarm") && require("bayestestR") && require("testthat")) {
 
     expect_s3_class(res1, c("bayestestR_si"))
     expect_equal(res1, res2)
+
+    set.seed(123)
+    group_diff <- pairs(emmeans(stan_model, ~group))
+    res3 <- si(group_diff, prior = stan_model)
+
+    expect_equal(res3$CI_low, -2.79, tolerance = 0.01)
+    expect_equal(res3$CI_high, -0.45, tolerance = 0.01)
   })
+
 }
