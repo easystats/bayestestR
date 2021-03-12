@@ -1,4 +1,6 @@
 if (require("testthat") && requireNamespace("rstanarm", quietly = TRUE)) {
+
+  # numeric ----------------------
   test_that("map_estimate", {
     expect_equal(
       as.numeric(map_estimate(distribution_normal(1000))),
@@ -10,7 +12,8 @@ if (require("testthat") && requireNamespace("rstanarm", quietly = TRUE)) {
 
 
 
-  if (require("insight") && packageVersion("insight") > "0.8.2") {
+  if (require("insight") && require("BayesFactor")) {
+    # stanreg ----------------------
     m <- insight::download_model("stanreg_merMod_5")
 
     test_that("map_estimate", {
@@ -20,6 +23,7 @@ if (require("testthat") && requireNamespace("rstanarm", quietly = TRUE)) {
       )
     })
 
+    # brms ----------------------
     m <- insight::download_model("brms_zi_3")
 
     test_that("map_estimate", {
@@ -34,5 +38,9 @@ if (require("testthat") && requireNamespace("rstanarm", quietly = TRUE)) {
         )
       )
     })
+
+    # BayesFactor -------------
+    m <- correlationBF(y = iris$Sepal.Length, x = iris$Sepal.Width)
+    expect_error(map_estimate(m))
   }
 }
