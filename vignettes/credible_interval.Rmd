@@ -37,24 +37,29 @@ if (!requireNamespace("ggplot2", quietly = TRUE) ||
 set.seed(333)
 ```
 
-
 # What is a *Credible* Interval?
 
 Credible intervals are an important concept in Bayesian statistics. Its core
-purpose is to describe and summarise **the uncertainty** related to your
-parameters. In this regards, it could appear as quite similar to the frequentist
-**Confidence Intervals**. However, while their goal is similar, **their statistical definition and meaning is very different**. Indeed, while the latter
-is obtained through a complex algorithm full of rarely-tested assumptions and
-approximations, the credible intervals are fairly straightforward to compute.
+purpose is to describe and summarise **the uncertainty** related to the unknown
+parameters you are trying to estimate. In this regard, it could appear as quite
+similar to the frequentist **Confidence Intervals**. However, while their goal
+is similar, **their statistical definition and meaning is very different**.
+Indeed, while the latter is obtained through a complex algorithm full of
+rarely-tested assumptions and approximations, the credible intervals are fairly
+straightforward to compute.
 
-As the Bayesian inference returns a distribution of possible effect values (the
-posterior), the credible interval is just the range containing a particular
+As the Bayesian inference returns a **distribution** of possible effect values
+(the posterior), the credible interval is just the range containing a particular
 percentage of probable values. For instance, the 95\% credible interval is
 simply the central portion of the posterior distribution that contains 95\% of
 the values.
 
-Note that this drastically improve the interpretability of the Bayesian interval compared to the frequentist one. Indeed, the Bayesian framework allows us to say *"given the observed data, the effect has 95% probability of falling within this range"*, while the frequentist less straightforward alternative (the 95\% ***Confidence* Interval**) would be "*there is a 95\% probability that when computing a confidence interval from data of this sort, the effect falls within this range*".
-
+Note how this drastically improve the interpretability of the Bayesian interval
+compared to the frequentist one. Indeed, the Bayesian framework allows us to say
+*"given the observed data, the effect has 95% probability of falling within this range"*, compared to the less straightforward, frequentist alternative (the 95\%
+**Confidence* Interval**) would be "*there is a 95\% probability that when
+computing a confidence interval from data of this sort, the effect falls within
+this range*".
 
 # Why is the default 89\%?
 
@@ -66,18 +71,18 @@ stability if not enough posterior samples are drawn [@kruschke2014doing].
 
 The proposition was to use 90\% instead of 95\%. However, recently, McElreath
 (2014, 2018) suggested that if we were to use arbitrary thresholds in the first
-place, why not use 89\% as this value has the additional argument of being a
-prime number.
+place, why not use 89\%?! This value has the added benefit of being a prime
+number.
 
-Thus, by default, the CIs are computed with 89\% intervals (`ci = 0.89`), deemed
+Thus, by default, the CIs computed with 89\% intervals (`ci = 0.89`), are deemed
 to be more stable than, for instance, 95\% intervals [@kruschke2014doing]. An
 effective sample size (ESS; see
 [here](https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html))
 of at least 10.000 is recommended if 95\% intervals should be computed
 (Kruschke, 2014, p. 183ff). Moreover, 89 is the highest **prime number** that
 does not exceed the already unstable 95\% threshold. What does it have to do
-with anything? *Nothing*, but it reminds us of the total arbitrarily of any of
-these conventions [@mcelreath2018statistical].
+with anything? *Nothing*, but it reminds us of the total arbitrariness of these
+conventions [@mcelreath2018statistical].
 
 # Different types of CIs
 
@@ -153,19 +158,19 @@ parameter values outside the ETI. This property seems undesirable as a summary
 of the credible values in a distribution.
 
 On the other hand, the ETI range does *not* change when transformations are
-applied to the distribution (for instance, for a log odds scale to
-probabilities): the lower and higher bounds of the transformed distribution will
-correspond to the transformed lower and higher bounds of the original
+applied to the distribution (for instance, for log-odds to probabilities
+transformation): the lower and higher bounds of the transformed distribution
+will correspond to the transformed lower and higher bounds of the original
 distribution. On the contrary, applying transformations to the distribution will
-change the resulting HDI. Thus, for instance if exponentiated credible intervals
-are required, it is recommended to calculate the ETI.
+change the resulting HDI. Thus, for instance, if exponentiated credible
+intervals are required, it is recommended to calculate the ETI.
 
 # The Support Interval
 
 Unlike the HDI and the ETI, which look at the posterior distribution, the
 **Support Interval (SI)** provides information regarding the change in the
-credability of values from the prior to the posterior - in other words, it
-indicates which values of a parameter are have gained support by the observed
+credibility of values from the prior to the posterior - in other words, it
+indicates which values of a parameter have gained support by the observed
 data by some factor greater or equal to *k* [@wagenmakers2018SI].
 
 ```{r warning=FALSE, message=FALSE}
@@ -192,10 +197,11 @@ ggplot(mapping = aes(x = x, y = y)) +
 ```
 
 Between the blue lines are values that received *some* support by the data (this
-is a $BF = 1~SI$), which received at least "moderate" support from the data.
+is a $BF = 1~SI$), while between the red lines are values that received at least
+*moderate* support ($BF = 3~SI$) by the data.
 
 From the perspective of the Savage-Dickey Bayes factor, testing against a point
-null hypothesis for any value within the support interval will yield a Bayes
+null hypothesis for any value within the Support Interval will yield a Bayes
 factor smaller than 1/`BF`.
 
 # References
