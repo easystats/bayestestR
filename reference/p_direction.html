@@ -223,16 +223,16 @@ reflecting high credibility of <code>0</code>.</p>
 <span class='fu'>pd</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, null <span class='op'>=</span> <span class='fl'>0</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, null <span class='op'>=</span> <span class='fl'>0</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for MCMCglmm</span>
-<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, null <span class='op'>=</span> <span class='fl'>0</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, null <span class='op'>=</span> <span class='fl'>0</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>p_direction</span><span class='op'>(</span>
@@ -242,6 +242,7 @@ reflecting high credibility of <code>0</code>.</p>
     <span class='st'>"distributional"</span>, <span class='st'>"auxiliary"</span><span class='op'>)</span>,
   parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
   method <span class='op'>=</span> <span class='st'>"direct"</span>,
+  null <span class='op'>=</span> <span class='fl'>0</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -252,11 +253,12 @@ reflecting high credibility of <code>0</code>.</p>
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
   parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
   method <span class='op'>=</span> <span class='st'>"direct"</span>,
+  null <span class='op'>=</span> <span class='fl'>0</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"direct"</span>, null <span class='op'>=</span> <span class='fl'>0</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -272,6 +274,10 @@ reflecting high credibility of <code>0</code>.</p>
     <tr>
       <th>method</th>
       <td><p>Can be <code>"direct"</code> or one of methods of <a href='estimate_density.html'>density estimation</a>, such as <code>"kernel"</code>, <code>"logspline"</code> or <code>"KernSmooth"</code>. If <code>"direct"</code> (default), the computation is based on the raw ratio of samples superior and inferior to 0. Else, the result is based on the <a href='area_under_curve.html'>Area under the Curve (AUC)</a> of the estimated <a href='estimate_density.html'>density</a> function.</p></td>
+    </tr>
+    <tr>
+      <th>null</th>
+      <td><p>The value considered as a "null" effect. Traditionally 0, but could also be 1 in the case of ratios.</p></td>
     </tr>
     <tr>
       <th>effects</th>

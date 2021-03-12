@@ -272,14 +272,16 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>250</span>, mean <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
 <span class='co'># Basic usage</span>
-<span class='va'>density_kernel</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>  <span class='co'># default method is "kernel"</span>
+<span class='va'>density_kernel</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='co'># default method is "kernel"</span>
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>x</span>, prob <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>density_kernel</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>density_kernel</span><span class='op'>$</span><span class='va'>y</span>, col <span class='op'>=</span> <span class='st'>"black"</span>, lwd <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>density_kernel</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>density_kernel</span><span class='op'>$</span><span class='va'>CI_low</span>, col <span class='op'>=</span> <span class='st'>"gray"</span>, lty <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/lines.html'>lines</a></span><span class='op'>(</span><span class='va'>density_kernel</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>density_kernel</span><span class='op'>$</span><span class='va'>CI_high</span>, col <span class='op'>=</span> <span class='st'>"gray"</span>, lty <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></span><span class='op'>(</span><span class='st'>"topright"</span>, legend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Estimate"</span>, <span class='st'>"95% CI"</span><span class='op'>)</span>,
-       col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"black"</span>, <span class='st'>"gray"</span><span class='op'>)</span>, lwd <span class='op'>=</span> <span class='fl'>2</span>, lty <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></span><span class='op'>(</span><span class='st'>"topright"</span>,
+  legend <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Estimate"</span>, <span class='st'>"95% CI"</span><span class='op'>)</span>,
+  col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"black"</span>, <span class='st'>"gray"</span><span class='op'>)</span>, lwd <span class='op'>=</span> <span class='fl'>2</span>, lty <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>
+<span class='op'>)</span>
 </div><div class='img'><img src='estimate_density-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Other Methods</span>
 <span class='va'>density_logspline</span> <span class='op'>&lt;-</span> <span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"logspline"</span><span class='op'>)</span>
@@ -311,7 +313,7 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
 #&gt; 5        X1 -2.383342 0.03670092
 #&gt; 6        X1 -2.378403 0.03692027</div><div class='input'>
 <span class='co'># Grouped data</span>
-<span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>iris</span>, group_by<span class='op'>=</span><span class='st'>"Species"</span><span class='op'>)</span>
+<span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>iris</span>, group_by <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;          Parameter         x            y      Group
 #&gt; 1     Sepal.Length 4.3000000 2.355986e-01     setosa
 #&gt; 2     Sepal.Length 4.3014663 2.375879e-01     setosa
@@ -12600,7 +12602,7 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
 #&gt; 12285  Petal.Width 2.4967742 4.865938e-01  virginica
 #&gt; 12286  Petal.Width 2.4978495 4.831038e-01  virginica
 #&gt; 12287  Petal.Width 2.4989247 4.796211e-01  virginica
-#&gt; 12288  Petal.Width 2.5000000 4.761406e-01  virginica</div><div class='input'><span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Petal.Width</span>, group_by<span class='op'>=</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span><span class='op'>)</span>
+#&gt; 12288  Petal.Width 2.5000000 4.761406e-01  virginica</div><div class='input'><span class='fu'>estimate_density</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Petal.Width</span>, group_by <span class='op'>=</span> <span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;              x            y      Group
 #&gt; 1    0.1000000 9.011872e+00     setosa
 #&gt; 2    0.1004888 8.955399e+00     setosa
