@@ -54,7 +54,7 @@ if (require("rstanarm") && require("brms")
         expect_equal(
           hdi(mod_bf, ci = c(.5, .8), effects = "all", component = "all")$CI_low,
           hdi(p_bf, ci = c(.5, .8))$CI_low,
-          tolerance = 0.01
+          tolerance = 0.1
         )
       })
     }
