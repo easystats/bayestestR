@@ -267,7 +267,11 @@ hdi.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
 
 #' @export
 hdi.get_predicted <- function(x, ...) {
-  out <- hdi(as.data.frame(t(x)), ...)
+  if("iterations" %in% names(attributes(x))) {
+    out <- hdi(as.data.frame(t(attributes(x)$iterations)), ...)
+  } else{
+    stop("No iterations present in the output.")
+  }
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }

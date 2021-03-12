@@ -147,7 +147,11 @@ map_estimate.emm_list <- map_estimate.emmGrid
 
 #' @export
 map_estimate.get_predicted <- function(x, ...) {
-  map_estimate(as.data.frame(t(x)), ...)
+  if("iterations" %in% names(attributes(x))) {
+    map_estimate(as.data.frame(t(attributes(x)$iterations)), ...)
+  } else{
+    stop("No iterations present in the output.")
+  }
 }
 
 # Methods -----------------------------------------------------------------

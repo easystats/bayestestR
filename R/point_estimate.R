@@ -301,5 +301,9 @@ point_estimate.matrix <- function(x, ...) {
 
 #' @export
 point_estimate.get_predicted <- function(x, ...) {
-  point_estimate(as.data.frame(t(x)), ...)
+  if("iterations" %in% names(attributes(x))) {
+    point_estimate(as.data.frame(t(attributes(x)$iterations)), ...)
+  } else{
+    as.numeric(x)
+  }
 }
