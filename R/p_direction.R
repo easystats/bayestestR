@@ -317,7 +317,11 @@ p_direction.BFBayesFactor <- function(x, method = "direct", null = 0, ...) {
 
 #' @export
 p_direction.get_predicted <- function(x, ...) {
-  out <- p_direction(as.data.frame(t(x)), ...)
+  if("iterations" %in% names(attributes(x))) {
+    out <- p_direction(as.data.frame(t(attributes(x)$iterations)), ...)
+  } else{
+    stop("No iterations present in the output.")
+  }
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
