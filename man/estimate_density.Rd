@@ -61,14 +61,16 @@ set.seed(1)
 x <- rnorm(250, mean = 1)
 
 # Basic usage
-density_kernel <- estimate_density(x)  # default method is "kernel"
+density_kernel <- estimate_density(x) # default method is "kernel"
 
 hist(x, prob = TRUE)
 lines(density_kernel$x, density_kernel$y, col = "black", lwd = 2)
 lines(density_kernel$x, density_kernel$CI_low, col = "gray", lty = 2)
 lines(density_kernel$x, density_kernel$CI_high, col = "gray", lty = 2)
-legend("topright", legend = c("Estimate", "95\% CI"),
-       col = c("black", "gray"), lwd = 2, lty = c(1, 2))
+legend("topright",
+  legend = c("Estimate", "95\% CI"),
+  col = c("black", "gray"), lwd = 2, lty = c(1, 2)
+)
 
 # Other Methods
 density_logspline <- estimate_density(x, method = "logspline")
@@ -94,8 +96,8 @@ df <- data.frame(replicate(4, rnorm(100)))
 head(estimate_density(df))
 
 # Grouped data
-estimate_density(iris, group_by="Species")
-estimate_density(iris$Petal.Width, group_by=iris$Species)
+estimate_density(iris, group_by = "Species")
+estimate_density(iris$Petal.Width, group_by = iris$Species)
 \dontrun{
 # rstanarm models
 # -----------------------------------------------

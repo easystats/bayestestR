@@ -41,7 +41,7 @@ pd(x, ...)
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL,
   method = "direct",
-  null = null,
+  null = 0,
   ...
 )
 

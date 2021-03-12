@@ -292,7 +292,7 @@ p_direction.stanfit <- p_direction.stanreg
 
 #' @rdname p_direction
 #' @export
-p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, method = "direct", null = null, ...) {
+p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, method = "direct", null = 0, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
