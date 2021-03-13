@@ -227,3 +227,18 @@
   post.beta <- methods::slot(x, "post.beta")
   !(all(dim(post.beta) == 1) && is.na(post.beta))
 }
+
+
+# safe add cleaned parameter names to a model object
+.add_clean_parameters_attribute <- function(params, model) {
+  cp <- tryCatch(
+    {
+      insight::clean_parameters(model)
+    },
+    error = function(e) {
+      NULL
+    }
+  )
+  attr(params, "clean_parameters") <- cp
+  params
+}
