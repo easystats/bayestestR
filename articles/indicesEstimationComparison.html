@@ -159,9 +159,10 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>One of the main difference between the Bayesian and the frequentist frameworks is that the former returns a probability distribution of each effect (<em>i.e.</em>, parameter of interest of a model, such as a regression slope) instead of a single value. However, there is still a need and demand, for reporting or use in further analysis, for a single value (<strong>point-estimate</strong>) that best characterise the underlying posterior distribution.</p>
-<p>There are three main indices used in the literature for effect estimation: the <strong>mean</strong>, the <strong>median</strong> or the <strong>MAP</strong> (Maximum A Posteriori) estimate (roughly corresponding to the mode (the “peak”) of the distribution). Unfortunately, there is no consensus about which one to use, as no systematic comparison has ever been done.</p>
-<p>In the present work, we will compare these three point-estimates of effect between themselves, as well as with the widely known <strong>beta</strong>, extracted from a comparable frequentist model. With this comparison, we expect to draw bridges and relationships between the two frameworks, helping and easing the transition for the public.</p>
+<p>One of the main difference between the Bayesian and the frequentist frameworks is that the former returns a probability <em>distribution</em> for each effect (<em>i.e.</em>, a model parameter of interest, such as a regression slope) instead of a <em>single value</em>. However, there is still a need and demand - for reporting or use in further analysis - for a single value (<strong>point-estimate</strong>) that best characterises the underlying posterior distribution.</p>
+<p>There are three main indices used in the literature for effect estimation: - the <strong>mean</strong> - the <strong>median</strong> - the <strong>MAP</strong> (Maximum A Posteriori) estimate (roughly corresponding to the mode (the “peak”) of the distribution)</p>
+<p>Unfortunately, there is no consensus about which one to use, as no systematic comparison has ever been done.</p>
+<p>In the present work, we will compare these three point-estimates of effect with each other, as well as with the widely known <strong>beta</strong>, extracted from a comparable frequentist model. These comparisons can help us draw bridges and relationships between these two influential statistical frameworks.</p>
 </div>
 <div id="experiment-1-relationship-with-error-noise-and-sample-size" class="section level2">
 <h2 class="hasAnchor">
@@ -169,12 +170,12 @@
 <div id="methods" class="section level3">
 <h3 class="hasAnchor">
 <a href="#methods" class="anchor"></a>Methods</h3>
-<p>The simulation aimed at modulating the following characteristics:</p>
+<p>We will be carrying out simulation aimed at modulating the following characteristics:</p>
 <ul>
 <li>
 <strong>Model type</strong>: linear or logistic.</li>
 <li>
-<strong>“True” effect</strong> (original regression coefficient from which data is drawn): Can be 1 or 0 (no effect).</li>
+<strong>“True” effect</strong> (<em>known</em> parameters values from which data is drawn): Can be 1 or 0 (no effect).</li>
 <li>
 <strong>Sample size</strong>: From 20 to 100 by steps of 10.</li>
 <li>
@@ -200,22 +201,24 @@
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">error</span>, <span class="va">true_effect</span>, <span class="va">outcome_type</span>, <span class="va">Coefficient</span>, <span class="va">Median</span>, <span class="va">Mean</span>, <span class="va">MAP</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">value</span>, <span class="op">-</span><span class="va">error</span>, <span class="op">-</span><span class="va">true_effect</span>, <span class="op">-</span><span class="va">outcome_type</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">error</span>, <span class="fl">10</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>error_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">error</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&lt;</span> <span class="fl">6</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">error</span>, <span class="fl">10</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>error_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">error</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&lt;</span> <span class="fl">6</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">error_group</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">estimate</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">error_group</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="co"># geom_hline(yintercept = 0) +</span>
   <span class="co"># geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +</span>
   <span class="co"># geom_smooth(method="loess") +</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>outlier.shape<span class="op">=</span><span class="cn">NA</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>outlier.shape <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Coefficient"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>, <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>, <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>, <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span><span class="op">)</span>,
-                    name <span class="op">=</span> <span class="st">"Index"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>
+    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Coefficient"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>, <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>, <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>, <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span><span class="op">)</span>,
+    name <span class="op">=</span> <span class="st">"Index"</span>
+  <span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Point-estimate"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Noise"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">outcome_type</span> <span class="op">*</span> <span class="va">true_effect</span>, scales<span class="op">=</span><span class="st">"free"</span><span class="op">)</span> </code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">outcome_type</span> <span class="op">*</span> <span class="va">true_effect</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></code></pre></div>
 <p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div id="sensitivity-to-sample-size" class="section level4">
@@ -225,22 +228,24 @@
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sample_size</span>, <span class="va">true_effect</span>, <span class="va">outcome_type</span>, <span class="va">Coefficient</span>, <span class="va">Median</span>, <span class="va">Mean</span>, <span class="va">MAP</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">value</span>, <span class="op">-</span><span class="va">sample_size</span>, <span class="op">-</span><span class="va">true_effect</span>, <span class="op">-</span><span class="va">outcome_type</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">sample_size</span>, <span class="fl">10</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>size_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">sample_size</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&lt;</span> <span class="fl">6</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">sample_size</span>, <span class="fl">10</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>size_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">sample_size</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&lt;</span> <span class="fl">6</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">size_group</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">estimate</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">size_group</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="co"># geom_hline(yintercept = 0) +</span>
   <span class="co"># geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +</span>
   <span class="co"># geom_smooth(method="loess") +</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>outlier.shape<span class="op">=</span><span class="cn">NA</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>outlier.shape <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html">theme_modern</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Coefficient"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>, <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>, <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>, <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span><span class="op">)</span>,
-                    name <span class="op">=</span> <span class="st">"Index"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>
+    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Coefficient"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>, <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>, <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>, <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span><span class="op">)</span>,
+    name <span class="op">=</span> <span class="st">"Index"</span>
+  <span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Point-estimate"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Sample size"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">outcome_type</span> <span class="op">*</span> <span class="va">true_effect</span>, scales<span class="op">=</span><span class="st">"free"</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">outcome_type</span> <span class="op">*</span> <span class="va">true_effect</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></code></pre></div>
 <p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 <div id="statistical-modelling" class="section level4">
@@ -250,14 +255,19 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">sample_size</span>, <span class="va">error</span>, <span class="va">true_effect</span>, <span class="va">outcome_type</span>, <span class="va">Coefficient</span>, <span class="va">Median</span>, <span class="va">Mean</span>, <span class="va">MAP</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">sample_size</span>, <span class="op">-</span><span class="va">error</span>, <span class="op">-</span><span class="va">true_effect</span>, <span class="op">-</span><span class="va">outcome_type</span><span class="op">)</span>, names_to<span class="op">=</span><span class="st">"estimate"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">true_effect</span> <span class="op">~</span> <span class="va">outcome_type</span> <span class="op">/</span> <span class="va">estimate</span> <span class="op">/</span> <span class="va">value</span>, data<span class="op">=</span><span class="va">.</span>, family<span class="op">=</span><span class="st">"binomial"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">parameters</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span>df_method<span class="op">=</span><span class="st">"wald"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">sample_size</span>, <span class="op">-</span><span class="va">error</span>, <span class="op">-</span><span class="va">true_effect</span>, <span class="op">-</span><span class="va">outcome_type</span><span class="op">)</span>,
+    names_to <span class="op">=</span> <span class="st">"estimate"</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">true_effect</span> <span class="op">~</span> <span class="va">outcome_type</span> <span class="op">/</span> <span class="va">estimate</span> <span class="op">/</span> <span class="va">value</span>, data <span class="op">=</span> <span class="va">.</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">parameters</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html">parameters</a></span><span class="op">(</span>df_method <span class="op">=</span> <span class="st">"wald"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Parameter</span>, <span class="va">Coefficient</span>, <span class="va">p</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">Parameter</span>, <span class="st">'outcome_type'</span><span class="op">)</span>,
-         <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">Parameter</span>, <span class="st">':value'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">Coefficient</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span> </code></pre></div>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span>
+    <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">Parameter</span>, <span class="st">"outcome_type"</span><span class="op">)</span>,
+    <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">Parameter</span>, <span class="st">":value"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">Coefficient</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Parameter</th>
@@ -267,52 +277,52 @@
 <tbody>
 <tr class="odd">
 <td align="left">outcome_typelinear:estimateMean:value</td>
-<td align="right">10.85</td>
+<td align="right">10.8</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">outcome_typelinear:estimateMedian:value</td>
-<td align="right">10.84</td>
+<td align="right">10.8</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">outcome_typelinear:estimateMAP:value</td>
-<td align="right">10.72</td>
+<td align="right">10.7</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">outcome_typelinear:estimateCoefficient:value</td>
-<td align="right">10.54</td>
+<td align="right">10.5</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">outcome_typebinary:estimateMAP:value</td>
-<td align="right">4.39</td>
+<td align="right">4.4</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">outcome_typebinary:estimateMedian:value</td>
-<td align="right">4.28</td>
+<td align="right">4.3</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">outcome_typebinary:estimateMean:value</td>
-<td align="right">4.21</td>
+<td align="right">4.2</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">outcome_typebinary:estimateCoefficient:value</td>
-<td align="right">3.87</td>
+<td align="right">3.9</td>
 <td align="right">0</td>
 </tr>
 </tbody>
 </table>
-<!-- REMOVE THIS TABLE ONCE NEW PARAMETERS IS ON CRAN SO IT CAN BE GENERATED ON THE RUN--><p>This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist’s beta:</p>
+<p>This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist’s beta coefficient:</p>
 <ul>
 <li>For linear models, the <strong>Mean</strong> was the better predictor, closely followed by the <strong>Median</strong>, the <strong>MAP</strong> and the frequentist <strong>Coefficient</strong>.</li>
 <li>For logistic models, the <strong>MAP</strong> was the better predictor, followed by the <strong>Median</strong>, the <strong>Mean</strong> and, behind, the frequentist <strong>Coefficient</strong>.</li>
 </ul>
-<p>Overall, the <strong>median</strong> seems to be appears as a safe and appropriate choice, maintaining a a high performance across different types of models.</p>
+<p>Overall, the <strong>median</strong> appears to be a safe choice, maintaining a high performance across different types of models.</p>
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>% -->
 <!--   select(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) %>% -->
@@ -350,7 +360,7 @@
 <div id="methods-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#methods-1" class="anchor"></a>Methods</h3>
-<p>The simulation aimed at modulating the following characteristics:</p>
+<p>We will be carrying out another simulation aimed at modulating the following characteristics:</p>
 <ul>
 <li>
 <strong>Model type</strong>: linear or logistic.</li>
@@ -375,19 +385,21 @@
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">iterations</span>, <span class="va">true_effect</span>, <span class="va">outcome_type</span>, <span class="va">beta</span>, <span class="va">Median</span>, <span class="va">Mean</span>, <span class="va">MAP</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">value</span>, <span class="op">-</span><span class="va">iterations</span>, <span class="op">-</span><span class="va">true_effect</span>, <span class="op">-</span><span class="va">outcome_type</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">iterations</span>, <span class="fl">5</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>iterations_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">iterations</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">iterations</span>, <span class="fl">5</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>iterations_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">iterations</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&lt;</span> <span class="fl">6</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">iterations_group</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">estimate</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">iterations_group</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>outlier.shape<span class="op">=</span><span class="cn">NA</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>outlier.shape <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"beta"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>, <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>, <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>, <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span><span class="op">)</span>,
-                    name <span class="op">=</span> <span class="st">"Index"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>
+    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"beta"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>, <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>, <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>, <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span><span class="op">)</span>,
+    name <span class="op">=</span> <span class="st">"Index"</span>
+  <span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Point-estimate of the true value 0\n"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"\nNumber of Iterations"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">outcome_type</span> <span class="op">*</span> <span class="va">true_effect</span>, scales<span class="op">=</span><span class="st">"free"</span><span class="op">)</span> </code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">outcome_type</span> <span class="op">*</span> <span class="va">true_effect</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></code></pre></div>
 <p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 <div id="sensitivity-to-warmup-ratio" class="section level4">
@@ -395,35 +407,39 @@
 <a href="#sensitivity-to-warmup-ratio" class="anchor"></a>Sensitivity to warmup ratio</h4>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>warmup <span class="op">=</span> <span class="va">warmup</span> <span class="op">/</span> <span class="va">iterations</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>warmup <span class="op">=</span> <span class="va">warmup</span> <span class="op">/</span> <span class="va">iterations</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">warmup</span>, <span class="va">true_effect</span>, <span class="va">outcome_type</span>, <span class="va">beta</span>, <span class="va">Median</span>, <span class="va">Mean</span>, <span class="va">MAP</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">value</span>, <span class="op">-</span><span class="va">warmup</span>, <span class="op">-</span><span class="va">true_effect</span>, <span class="op">-</span><span class="va">outcome_type</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">warmup</span>, <span class="fl">3</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>warmup_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">warmup</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&lt;</span> <span class="fl">6</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>temp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">warmup</span>, <span class="fl">3</span>, labels <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>warmup_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">warmup</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&lt;</span> <span class="fl">6</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">warmup_group</span>, y <span class="op">=</span> <span class="va">value</span>, fill <span class="op">=</span> <span class="va">estimate</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html">interaction</a></span><span class="op">(</span><span class="va">estimate</span>, <span class="va">warmup_group</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>outlier.shape<span class="op">=</span><span class="cn">NA</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>outlier.shape <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"beta"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>, <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>, <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>, <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span><span class="op">)</span>,
-                    name <span class="op">=</span> <span class="st">"Index"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>
+    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"beta"</span> <span class="op">=</span> <span class="st">"#607D8B"</span>, <span class="st">"MAP"</span> <span class="op">=</span> <span class="st">"#795548"</span>, <span class="st">"Mean"</span> <span class="op">=</span> <span class="st">"#FF9800"</span>, <span class="st">"Median"</span> <span class="op">=</span> <span class="st">"#FFEB3B"</span><span class="op">)</span>,
+    name <span class="op">=</span> <span class="st">"Index"</span>
+  <span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Point-estimate of the true value 0\n"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"\nNumber of Iterations"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">outcome_type</span> <span class="op">*</span> <span class="va">true_effect</span>, scales<span class="op">=</span><span class="st">"free"</span><span class="op">)</span> </code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">outcome_type</span> <span class="op">*</span> <span class="va">true_effect</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></code></pre></div>
 <p><img src="indicesEstimationComparison_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<!-- ## Experiment 3: Relationship with Priors Specification -->
 </div>
 </div>
-</div>
-<div id="experiment-3-relationship-with-priors-specification" class="section level2">
-<h2 class="hasAnchor">
-<a href="#experiment-3-relationship-with-priors-specification" class="anchor"></a>Experiment 3: Relationship with Priors Specification</h2>
 </div>
 <div id="discussion" class="section level2">
 <h2 class="hasAnchor">
 <a href="#discussion" class="anchor"></a>Discussion</h2>
-<p>Conclusions can be found in the <a href="https://easystats.github.io/bayestestR/articles/guidelines.html">guidelines section</a>.</p>
+<p>Conclusions can be found in the <a href="https://easystats.github.io/bayestestR/articles/guidelines.html">guidelines section</a> article.</p>
 </div>
+</div>
+<div id="suggestions" class="section level1">
+<h1 class="hasAnchor">
+<a href="#suggestions" class="anchor"></a>Suggestions</h1>
+<p>If you have any advice, opinion or such, we encourage you to let us know by opening an <a href="https://github.com/easystats/bayestestR/issues">discussion thread</a> or making a pull request.</p>
 </div>
   </div>
 
@@ -438,7 +454,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, Indrajeet Patil, <a href="http://www.humanfactors.io">Michael D. Wilson</a>.</p>
+  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>, <a href="http://www.humanfactors.io">Michael D. Wilson</a>.</p>
 </div>
 
 <div class="pkgdown">
