@@ -825,6 +825,8 @@ describe_posterior.BFBayesFactor <- function(posteriors,
     out <- .merge_and_sort(out, priors_data, by = intersect(names(out), names(priors_data)), all = TRUE)
   }
 
+  attr(out, "ci_method") <- ci_method
+  class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
 
