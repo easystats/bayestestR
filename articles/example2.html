@@ -313,10 +313,12 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 &gt; -66.359 |   3.086 | 132.717 |    6.171 | 132.706 | 0.101 | 0.477 | 1.000 |  -105.918 |           0.010</code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; Parameter   | Median |           89% CI |     pd |        89% ROPE | % in ROPE |    BF |  Rhat |     ESS
-&gt; --------------------------------------------------------------------------------------------------------
-&gt; (Intercept) | -6.202 | [-9.804, -3.034] | 99.83% | [-0.181, 0.181] |        0% | 11.63 | 0.999 | 2667.37
-&gt; Sepal.Width |  2.161 | [ 0.981,  3.313] | 99.85% | [-0.181, 0.181] |        0% |  9.16 | 0.999 | 2663.86</code></pre>
+<pre><code>&gt; # Fixed effects
+&gt; 
+&gt; Parameter   | Median |         89% CI |     pd |          ROPE | % in ROPE |    BF |  Rhat |     ESS
+&gt; ----------------------------------------------------------------------------------------------------
+&gt; (Intercept) |  -6.20 | [-9.80, -3.03] | 99.83% | [-0.18, 0.18] |        0% | 11.63 | 0.999 | 2667.37
+&gt; Sepal.Width |   2.16 | [ 0.98,  3.31] | 99.85% | [-0.18, 0.18] |        0% |  9.16 | 0.999 | 2663.86</code></pre>
 </div>
 <div id="visualise-the-indices" class="section level3">
 <h3 class="hasAnchor">
