@@ -271,10 +271,9 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span>
 <span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt;    Parameter Median   CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
-&gt; 1 Difference   0.19 0.89   0.09     0.3  1      89   -0.033     0.033
-&gt;   ROPE_Percentage BF Prior_Distribution Prior_Location Prior_Scale
-&gt; 1               0 18             cauchy              0        0.71</code></pre>
+<pre><code>&gt; Parameter  | Median |       89% CI |     pd |          ROPE | % in ROPE |    BF |              Prior
+&gt; ----------------------------------------------------------------------------------------------------
+&gt; Difference |   0.19 | [0.09, 0.30] | 99.83% | [-0.03, 0.03] |        0% | 17.72 | Cauchy (0 +- 0.71)</code></pre>
 <p>From the indices, we can say that the difference of <code>Sepal.Width</code> between <em>virginica</em> and <em>versicolor</em> has a probability of <strong>100% of being negative</strong> [<em>from the pd and the sign of the median</em>] (median = -0.19, 89% CI [-0.29, -0.092]). The data provides a <strong>strong evidence against the null hypothesis</strong> (BF = 18).</p>
 <p>Keep that in mind as we will see another way of investigating this question.</p>
 </div>
