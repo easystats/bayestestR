@@ -1,4 +1,7 @@
-if (require("rstanarm") && require("brms") && require("httr") && require("testthat")) {
+if (require("rstanarm") && require("brms")
+    && require("httr") && require("testthat") && require("BayesFactor")) {
+
+  # numeric -------------------------------
   test_that("hdi", {
     expect_equal(hdi(distribution_normal(1000), ci = .90)$CI_low[1], -1.64, tolerance = 0.02)
     expect_equal(nrow(hdi(distribution_normal(1000), ci = c(.80, .90, .95))), 3, tolerance = 0.01)
@@ -19,6 +22,7 @@ if (require("rstanarm") && require("brms") && require("httr") && require("testth
   .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
   if (.runThisTest) {
     if (require("insight")) {
+      # stanreg ---------------------------
       m <- insight::download_model("stanreg_merMod_5")
       p <- insight::get_parameters(m, effects = "all")
 
@@ -30,6 +34,7 @@ if (require("rstanarm") && require("brms") && require("httr") && require("testth
         )
       })
 
+      # brms ---------------------------
       m <- insight::download_model("brms_zi_3")
       p <- insight::get_parameters(m, effects = "all", component = "all")
 
@@ -38,6 +43,18 @@ if (require("rstanarm") && require("brms") && require("httr") && require("testth
           hdi(m, ci = c(.5, .8), effects = "all", component = "all")$CI_low,
           hdi(p, ci = c(.5, .8))$CI_low,
           tolerance = 1e-3
+        )
+      })
+
+      # BayesFactor ---------------------------
+      mod_bf <- proportionBF(y = 15, N = 25, p = .5)
+      p_bf <- insight::get_parameters(mod_bf)
+
+      test_that("ci - BayesFactor", {
+        expect_equal(
+          hdi(mod_bf, ci = c(.5, .8), effects = "all", component = "all")$CI_low,
+          hdi(p_bf, ci = c(.5, .8))$CI_low,
+          tolerance = 0.1
         )
       })
     }
