@@ -17,17 +17,17 @@ csl: apa.csl
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-if (!requireNamespace("see", quietly = TRUE) || 
-    !requireNamespace("dplyr", quietly = TRUE) ||
-    !requireNamespace("ggplot2", quietly = TRUE) ||
-    !requireNamespace("tidyr", quietly = TRUE)) {
+if (!requireNamespace("see", quietly = TRUE) ||
+  !requireNamespace("dplyr", quietly = TRUE) ||
+  !requireNamespace("ggplot2", quietly = TRUE) ||
+  !requireNamespace("tidyr", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
 library(knitr)
-options(knitr.kable.NA = '')
-knitr::opts_chunk$set(comment=">")
-options(digits=2)
+options(knitr.kable.NA = "")
+knitr::opts_chunk$set(comment = ">")
+options(digits = 2)
 ```
 
 
@@ -43,35 +43,36 @@ This vignette can be referred to by citing the package:
 ## Introduction 
 
 One of the main difference between the Bayesian and the frequentist frameworks
-is that the former returns a probability distribution of each effect (*i.e.*,
-parameter of interest of a model, such as a regression slope) instead of a
-single value. However, there is still a need and demand, for reporting or use in
-further analysis, for a single value (**point-estimate**) that best characterise
-the underlying posterior distribution.
+is that the former returns a probability *distribution* for each effect (*i.e.*,
+a model parameter of interest, such as a regression slope) instead of a *single
+value*. However, there is still a need and demand - for reporting or use in
+further analysis - for a single value (**point-estimate**) that best
+characterises the underlying posterior distribution.
 
-There are three main indices used in the literature for effect estimation: the
-**mean**, the **median** or the **MAP** (Maximum A Posteriori) estimate (roughly
-corresponding to the mode (the "peak") of the distribution). Unfortunately,
-there is no consensus about which one to use, as no systematic comparison has
-ever been done.
+There are three main indices used in the literature for effect estimation: 
+- the **mean** 
+- the **median**
+- the **MAP** (Maximum A Posteriori) estimate (roughly
+corresponding to the mode (the "peak") of the distribution)
 
-In the present work, we will compare these three point-estimates of effect
-between themselves, as well as with the widely known **beta**, extracted from a
-comparable frequentist model. With this comparison, we expect to draw bridges
-and relationships between the two frameworks, helping and easing the transition
-for the public.
+Unfortunately, there is no consensus about which one to use, as no systematic
+comparison has ever been done.
+
+In the present work, we will compare these three point-estimates of effect with
+each other, as well as with the widely known **beta**, extracted from a
+comparable frequentist model. These comparisons can help us draw bridges and
+relationships between these two influential statistical frameworks.
 
 
 ## Experiment 1: Relationship with Error (Noise) and Sample Size
 
-
 ### Methods
 
-
-The simulation aimed at modulating the following characteristics:
+We will be carrying out simulation aimed at modulating the following
+characteristics:
 
 - **Model type**: linear or logistic.
-- **"True" effect** (original regression coefficient from which data is drawn):
+- **"True" effect** (*known* parameters values from which data is drawn):
 Can be 1 or 0 (no effect).
 - **Sample size**: From 20 to 100 by steps of 10.
 - **Error**: Gaussian noise applied to the predictor with SD uniformly spread
@@ -94,8 +95,6 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_stu
 ```
 
 
-
-
 ### Results
 
 
@@ -105,22 +104,24 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_stu
 df %>%
   select(error, true_effect, outcome_type, Coefficient, Median, Mean, MAP) %>%
   gather(estimate, value, -error, -true_effect, -outcome_type) %>%
-  mutate(temp = as.factor(cut(error, 10, labels = FALSE))) %>% 
-  group_by(temp) %>% 
-  mutate(error_group = round(mean(error), 1)) %>% 
-  ungroup() %>% 
-  filter(value < 6) %>% 
+  mutate(temp = as.factor(cut(error, 10, labels = FALSE))) %>%
+  group_by(temp) %>%
+  mutate(error_group = round(mean(error), 1)) %>%
+  ungroup() %>%
+  filter(value < 6) %>%
   ggplot(aes(x = error_group, y = value, fill = estimate, group = interaction(estimate, error_group))) +
   # geom_hline(yintercept = 0) +
   # geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +
   # geom_smooth(method="loess") +
-  geom_boxplot(outlier.shape=NA) +
+  geom_boxplot(outlier.shape = NA) +
   theme_modern() +
-  scale_fill_manual(values = c("Coefficient" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
-                    name = "Index") +
+  scale_fill_manual(
+    values = c("Coefficient" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
+    name = "Index"
+  ) +
   ylab("Point-estimate") +
   xlab("Noise") +
-  facet_wrap(~ outcome_type * true_effect, scales="free") 
+  facet_wrap(~ outcome_type * true_effect, scales = "free")
 ```
 
 
@@ -130,22 +131,24 @@ df %>%
 df %>%
   select(sample_size, true_effect, outcome_type, Coefficient, Median, Mean, MAP) %>%
   gather(estimate, value, -sample_size, -true_effect, -outcome_type) %>%
-  mutate(temp = as.factor(cut(sample_size, 10, labels = FALSE))) %>% 
-  group_by(temp) %>% 
-  mutate(size_group = round(mean(sample_size))) %>% 
-  ungroup() %>% 
-  filter(value < 6) %>% 
+  mutate(temp = as.factor(cut(sample_size, 10, labels = FALSE))) %>%
+  group_by(temp) %>%
+  mutate(size_group = round(mean(sample_size))) %>%
+  ungroup() %>%
+  filter(value < 6) %>%
   ggplot(aes(x = size_group, y = value, fill = estimate, group = interaction(estimate, size_group))) +
   # geom_hline(yintercept = 0) +
   # geom_point(alpha=0.05, size=2, stroke = 0, shape=16) +
   # geom_smooth(method="loess") +
-  geom_boxplot(outlier.shape=NA) +
+  geom_boxplot(outlier.shape = NA) +
   theme_modern() +
-  scale_fill_manual(values = c("Coefficient" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
-                    name = "Index") +
+  scale_fill_manual(
+    values = c("Coefficient" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
+    name = "Index"
+  ) +
   ylab("Point-estimate") +
   xlab("Sample size") +
-  facet_wrap(~ outcome_type * true_effect, scales="free")
+  facet_wrap(~ outcome_type * true_effect, scales = "free")
 ```
 
 
@@ -155,42 +158,34 @@ We fitted a (frequentist) multiple linear regression to statistically test the
 the predict the presence or absence of effect with the estimates as well as
 their interaction with noise and sample size.
 
-```{r, message=FALSE, warning=FALSE, eval=FALSE}
+```{r, message=FALSE, warning=FALSE}
 df %>%
   select(sample_size, error, true_effect, outcome_type, Coefficient, Median, Mean, MAP) %>%
-  tidyr::pivot_longer(c(-sample_size, -error, -true_effect, -outcome_type), names_to="estimate") %>%
-  glm(true_effect ~ outcome_type / estimate / value, data=., family="binomial") %>%
-  parameters::parameters(df_method="wald") %>%
+  tidyr::pivot_longer(
+    c(-sample_size, -error, -true_effect, -outcome_type),
+    names_to = "estimate"
+  ) %>%
+  glm(true_effect ~ outcome_type / estimate / value, data = ., family = "binomial") %>%
+  parameters::parameters(df_method = "wald") %>%
   select(Parameter, Coefficient, p) %>%
-  filter(stringr::str_detect(Parameter, 'outcome_type'),
-         stringr::str_detect(Parameter, ':value')) %>%
-  arrange(desc(Coefficient)) %>% 
-  knitr::kable(digits=2) 
+  filter(
+    stringr::str_detect(Parameter, "outcome_type"),
+    stringr::str_detect(Parameter, ":value")
+  ) %>%
+  arrange(desc(Coefficient)) %>%
+  knitr::kable(digits = 2)
 ```
 
-|Parameter                                    | Coefficient|  p|
-|:--------------------------------------------|-----------:|--:|
-|outcome_typelinear:estimateMean:value        |       10.85|  0|
-|outcome_typelinear:estimateMedian:value      |       10.84|  0|
-|outcome_typelinear:estimateMAP:value         |       10.72|  0|
-|outcome_typelinear:estimateCoefficient:value |       10.54|  0|
-|outcome_typebinary:estimateMAP:value         |        4.39|  0|
-|outcome_typebinary:estimateMedian:value      |        4.28|  0|
-|outcome_typebinary:estimateMean:value        |        4.21|  0|
-|outcome_typebinary:estimateCoefficient:value |        3.87|  0|
-
-<!-- REMOVE THIS TABLE ONCE NEW PARAMETERS IS ON CRAN SO IT CAN BE GENERATED ON THE RUN-->
-
 This suggests that, in order to delineate between the presence and the absence
-of an effect, compared to the frequentist's beta:
+of an effect, compared to the frequentist's beta coefficient:
 
 - For linear models, the **Mean** was the better predictor, closely followed by
 the **Median**, the **MAP** and the frequentist **Coefficient**.
 - For logistic models, the **MAP** was the better predictor, followed by the
 **Median**, the **Mean** and, behind, the frequentist **Coefficient**.
 
-Overall, the **median** seems to be appears as a safe and appropriate choice,
-maintaining a a high performance across different types of models.
+Overall, the **median** appears to be a safe choice, maintaining a high
+performance across different types of models.
 
 <!-- ```{r, message=FALSE, warning=FALSE} -->
 <!-- df %>% -->
@@ -230,11 +225,10 @@ maintaining a a high performance across different types of models.
 
 ## Experiment 2: Relationship with Sampling Characteristics
 
-
-
 ### Methods
 
-The simulation aimed at modulating the following characteristics:
+We will be carrying out another simulation aimed at modulating the following
+characteristics:
 
 - **Model type**: linear or logistic.
 - **"True" effect** (original regression coefficient from which data is drawn):
@@ -255,54 +249,63 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_stu
 
 ### Results
 
-
 #### Sensitivity to number of iterations
 
 ```{r, message=FALSE, warning=FALSE}
 df %>%
   select(iterations, true_effect, outcome_type, beta, Median, Mean, MAP) %>%
   gather(estimate, value, -iterations, -true_effect, -outcome_type) %>%
-  mutate(temp = as.factor(cut(iterations, 5, labels = FALSE))) %>% 
-  group_by(temp) %>% 
-  mutate(iterations_group = round(mean(iterations), 1)) %>% 
-  ungroup() %>% 
+  mutate(temp = as.factor(cut(iterations, 5, labels = FALSE))) %>%
+  group_by(temp) %>%
+  mutate(iterations_group = round(mean(iterations), 1)) %>%
+  ungroup() %>%
   filter(value < 6) %>%
   ggplot(aes(x = iterations_group, y = value, fill = estimate, group = interaction(estimate, iterations_group))) +
-  geom_boxplot(outlier.shape=NA) +
+  geom_boxplot(outlier.shape = NA) +
   theme_classic() +
-  scale_fill_manual(values = c("beta" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
-                    name = "Index") +
+  scale_fill_manual(
+    values = c("beta" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
+    name = "Index"
+  ) +
   ylab("Point-estimate of the true value 0\n") +
   xlab("\nNumber of Iterations") +
-  facet_wrap(~ outcome_type * true_effect, scales="free") 
+  facet_wrap(~ outcome_type * true_effect, scales = "free")
 ```
-
 
 #### Sensitivity to warmup ratio
 
 ```{r, message=FALSE, warning=FALSE}
 df %>%
-  mutate(warmup = warmup / iterations) %>% 
+  mutate(warmup = warmup / iterations) %>%
   select(warmup, true_effect, outcome_type, beta, Median, Mean, MAP) %>%
   gather(estimate, value, -warmup, -true_effect, -outcome_type) %>%
-  mutate(temp = as.factor(cut(warmup, 3, labels = FALSE))) %>% 
-  group_by(temp) %>% 
-  mutate(warmup_group = round(mean(warmup), 1)) %>% 
-  ungroup() %>% 
-  filter(value < 6) %>% 
+  mutate(temp = as.factor(cut(warmup, 3, labels = FALSE))) %>%
+  group_by(temp) %>%
+  mutate(warmup_group = round(mean(warmup), 1)) %>%
+  ungroup() %>%
+  filter(value < 6) %>%
   ggplot(aes(x = warmup_group, y = value, fill = estimate, group = interaction(estimate, warmup_group))) +
-  geom_boxplot(outlier.shape=NA) +
+  geom_boxplot(outlier.shape = NA) +
   theme_classic() +
-  scale_fill_manual(values = c("beta" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
-                    name = "Index") +
+  scale_fill_manual(
+    values = c("beta" = "#607D8B", "MAP" = "#795548", "Mean" = "#FF9800", "Median" = "#FFEB3B"),
+    name = "Index"
+  ) +
   ylab("Point-estimate of the true value 0\n") +
   xlab("\nNumber of Iterations") +
-  facet_wrap(~ outcome_type * true_effect, scales="free") 
+  facet_wrap(~ outcome_type * true_effect, scales = "free")
 ```
 
-## Experiment 3: Relationship with Priors Specification
+
+<!-- ## Experiment 3: Relationship with Priors Specification -->
 
 
 ## Discussion
 
-Conclusions can be found in the [guidelines section](https://easystats.github.io/bayestestR/articles/guidelines.html).
+Conclusions can be found in the [guidelines section](https://easystats.github.io/bayestestR/articles/guidelines.html) article.
+
+# Suggestions
+
+If you have any advice, opinion or such, we encourage you to let us know by
+opening an [discussion thread](https://github.com/easystats/bayestestR/issues)
+or making a pull request.

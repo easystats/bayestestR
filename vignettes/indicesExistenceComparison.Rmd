@@ -2,18 +2,10 @@
 title: "In-Depth 2: Comparison of Indices of Effect Existence and Significance"
 output:
   rmarkdown::html_vignette:
-    toc: true
+    toc: false
     toc_depth: 3
     fig_width: 10.08
     fig_height: 6  
-  word_document:
-    toc: true
-    toc_depth: 3
-    fig_width: 10.08
-    fig_height: 6
-    df_print: "kable"
-    highlight: "pygments"
-    reference_docx: templates/Template_Frontiers.docx
 tags: [r, bayesian, posterior, test]
 vignette: >
   \usepackage[utf8]{inputenc}
@@ -28,7 +20,7 @@ csl: apa.csl
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
 options(knitr.kable.NA = '')
-knitr::opts_chunk$set(comment=">", dpi=75)
+knitr::opts_chunk$set(comment=">", dpi=75, out.width = "100%")
 options(digits=2)
 ```
 
@@ -43,3 +35,16 @@ This vignette can be referred to by citing the following:
 # Indices of Effect *Existence* and *Significance* in the Bayesian Framework
 
 A comparison of different Bayesian indices (*pd*, *BFs*, ROPE etc.) is accessible [**here**](https://doi.org/10.3389/fpsyg.2019.02767).
+
+But, in case you don't wish to read the full article, the following table
+summarizes the key takeaways!
+
+```{r, echo=FALSE}
+knitr::include_graphics("https://www.frontiersin.org/files/Articles/498833/fpsyg-10-02767-HTML/image_m/fpsyg-10-02767-t003.jpg")
+```
+
+# Suggestions
+
+If you have any advice, opinion or such, we encourage you to let us know by
+opening an [discussion thread](https://github.com/easystats/bayestestR/issues)
+or making a pull request.
