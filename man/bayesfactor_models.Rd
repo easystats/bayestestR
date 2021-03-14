@@ -54,7 +54,10 @@ analysis with \code{bayesfactor_inclusion}).
     \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
   }
   \item For \code{BFBayesFactor}, \code{bayesfactor_models()} is mostly a wraparound \code{BayesFactor::extractBF()}.
-  \item For all other model types (supported by \CRANpkg{insight}), BIC approximations are used to compute Bayes factors.
+  \item BIC approximations are used to compute Bayes factors for all other model types (with a BIC method).
+  \itemize{
+    \item \strong{Note} that BICs are extracted from models as-is. So if for example you want to compare mixed-models bases on ML instead of REML, you must supply models fit with ML.
+  }
 }
 In order to correctly and precisely estimate Bayes factors, a rule of thumb
 are the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful
