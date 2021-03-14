@@ -21,18 +21,18 @@ print_md.describe_posterior <- function(x, digits = 2, caption = NULL, ...) {
 #' @export
 print_md.point_estimate <- print_md.describe_posterior
 
+#' @export
+print_md.p_rope <- print_md.describe_posterior
 
 #' @export
 print_md.bayestestR_hdi <- function(x, digits = 2, ...) {
   .print_md_ci(x = x, digits = digits, caption = "Highest Density Interval", ci_string = "HDI", ...)
 }
 
-
 #' @export
 print_md.bayestestR_eti <- function(x, digits = 2, ...) {
   .print_md_ci(x = x, digits = digits, caption = "Equal-Tailed Interval", ci_string = "ETI", ...)
 }
-
 
 #' @export
 print_md.bayestestR_si <- function(x, digits = 2, ...) {

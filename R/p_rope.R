@@ -69,6 +69,7 @@ p_rope.MCMCglmm <- p_rope.numeric
 #' @export
 p_rope.stanreg <- function(x, range = "default", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
   out <- .p_rope(rope(x, range = range, ci = 1, effects = effects, component = component, parameters = parameters, ...))
+  out <- .add_clean_parameters_attribute(out, x)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
@@ -84,6 +85,7 @@ p_rope.blavaan <- p_rope.stanreg
 #' @export
 p_rope.brmsfit <- function(x, range = "default", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   out <- .p_rope(rope(x, range = range, ci = 1, effects = effects, component = component, parameters = parameters, ...))
+  out <- .add_clean_parameters_attribute(out, x)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
@@ -104,6 +106,7 @@ p_rope.sim <- function(x, range = "default", parameters = NULL, ...) {
 p_rope.bamlss <- function(x, range = "default", component = c("all", "conditional", "location"), parameters = NULL, ...) {
   component <- match.arg(component)
   out <- .p_rope(rope(x, range = range, ci = 1, effects = "all", component = component, parameters = parameters, ...))
+  out <- .add_clean_parameters_attribute(out, x)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }

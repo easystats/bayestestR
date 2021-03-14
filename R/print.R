@@ -14,18 +14,18 @@ print.describe_posterior <- function(x, digits = 2, caption = NULL, ...) {
 #' @export
 print.point_estimate <- print.describe_posterior
 
+#' @export
+print.p_rope <- print.describe_posterior
 
 #' @export
 print.bayestestR_hdi <- function(x, digits = 2, ...) {
   .print_ci(x = x, digits = digits, caption = "# Highest Density Interval", ci_string = "HDI", ...)
 }
 
-
 #' @export
 print.bayestestR_eti <- function(x, digits = 2, ...) {
   .print_ci(x = x, digits = digits, caption = "# Equal-Tailed Interval", ci_string = "ETI", ...)
 }
-
 
 #' @export
 print.bayestestR_si <- function(x, digits = 2, ...) {

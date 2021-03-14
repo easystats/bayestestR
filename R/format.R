@@ -28,6 +28,9 @@ format.describe_posterior <- function(x, cp, digits = 2, format = "text", ci_str
 format.point_estimate <- format.describe_posterior
 
 #' @export
+format.p_rope <- format.describe_posterior
+
+#' @export
 format.bayestestR_hdi <- format.describe_posterior
 
 #' @export
