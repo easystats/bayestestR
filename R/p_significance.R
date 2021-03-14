@@ -156,7 +156,9 @@ p_significance.mcmc <- function(x, threshold = "default", ...) {
 
 #' @export
 p_significance.bamlss <- function(x, threshold = "default", component = c("all", "conditional", "location"), ...) {
-  p_significance(insight::get_parameters(x, component = component), threshold = threshold, ...)
+  out <- p_significance(insight::get_parameters(x, component = component), threshold = threshold, ...)
+  out <- .add_clean_parameters_attribute(out, x)
+  out
 }
 
 
@@ -206,8 +208,10 @@ p_significance.stanreg <- function(x, threshold = "default", effects = c("fixed"
     threshold = threshold
   )
 
-  out <- .prepare_output(data, insight::clean_parameters(x), inherits(x, "stanmvreg"))
+  cleaned_parameters <- insight::clean_parameters(x)
+  out <- .prepare_output(data, cleaned_parameters, inherits(x, "stanmvreg"))
 
+  attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "threshold") <- threshold
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   class(out) <- class(data)
@@ -238,8 +242,10 @@ p_significance.brmsfit <- function(x, threshold = "default", effects = c("fixed"
     threshold = threshold
   )
 
-  out <- .prepare_output(data, insight::clean_parameters(x))
+  cleaned_parameters <- insight::clean_parameters(x)
+  out <- .prepare_output(data, cleaned_parameters)
 
+  attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "threshold") <- threshold
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   class(out) <- class(data)

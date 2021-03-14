@@ -39,6 +39,14 @@ print.p_rope <- function(x, digits = 2, ...) {
 
 
 #' @export
+print.p_significance <- function(x, digits = 2, ...) {
+  caption <- sprintf("Practical Significance (threshold: %s)",
+                     insight::format_value(attributes(x)$threshold, digits = digits))
+  .print_default(x = x, digits = digits, caption = caption, ...)
+}
+
+
+#' @export
 print.bayestestR_hdi <- function(x, digits = 2, caption = "Highest Density Interval", ...) {
   .print_default(x = x, digits = digits, caption = caption, ci_string = "HDI", ...)
 }
