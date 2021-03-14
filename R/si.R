@@ -135,6 +135,7 @@ si.stanreg <- function(posterior, prior = NULL,
 
   out <- .prepare_output(temp, cleaned_parameters, inherits(posterior, "stanmvreg"))
 
+  attr(out, "ci_method") <- "SI"
   attr(out, "object_name") <- .safe_deparse(substitute(posterior))
   class(out) <- class(temp)
   attr(out, "plot_data") <- attr(temp, "plot_data")
@@ -166,6 +167,7 @@ si.emmGrid <- function(posterior, prior = NULL,
     BF = BF, verbose = verbose, ...
   )
 
+  attr(out, "ci_method") <- "SI"
   attr(out, "object_name") <- .safe_deparse(substitute(posterior))
   out
 }
@@ -212,8 +214,10 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) 
     CI_high = sis[, 2],
     stringsAsFactors = FALSE
   )
-  class(out) <- unique(c("bayestestR_si", "see_si", "bayestestR_ci", "see_ci", class(out)))
+
+  attr(out, "ci_method") <- "SI"
   attr(out, "plot_data") <- .make_BF_plot_data(posterior, prior, 0, 0, ...)$plot_data
+  class(out) <- unique(c("bayestestR_si", "see_si", "bayestestR_ci", "see_ci", class(out)))
 
   out
 }
