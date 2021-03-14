@@ -165,6 +165,7 @@ mhdior.mcmc.list <- mhdior.BFBayesFactor
 mhdior.bamlss <- function(x, range = "default", precision = .1, component = c("all", "conditional", "location"), ...) {
   component <- match.arg(component)
   out <- mhdior(insight::get_parameters(x, component = component), range = range, precision = precision, ...)
+  out <- .add_clean_parameters_attribute(out, x)
   out
 }
 
@@ -209,6 +210,7 @@ mhdior.stanreg <- function(x, range = "default", precision = .1, effects = c("fi
     ...
   )
 
+  out <- .add_clean_parameters_attribute(out, x)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }
@@ -232,6 +234,7 @@ mhdior.brmsfit <- function(x, range = "default", precision = .1, effects = c("fi
     ...
   )
 
+  out <- .add_clean_parameters_attribute(out, x)
   attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
   out
 }

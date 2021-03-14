@@ -25,6 +25,12 @@ print_md.p_direction <- function(x, digits = 2, caption = "Probability of Direct
 
 
 #' @export
+print_md.mhdior <- function(x, digits = 2, caption = "Max HDI inside/outside ROPE (MHDIOR)", ...) {
+  .print_md_default(x = x, digits = digits, caption = caption, ...)
+}
+
+
+#' @export
 print_md.p_rope <- function(x, digits = 2, ...) {
   caption <- sprintf("Proportion of samples inside the ROPE [%.*f, %.*f]",
                      digits, x$ROPE_low[1], digits, x$ROPE_high[1])
