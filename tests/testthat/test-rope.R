@@ -1,4 +1,4 @@
-if (require("bayestestR", quietly = TRUE) && require("testthat", quietly = TRUE) && require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
+if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("testthat", quietly = TRUE) && require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
   test_that("rope", {
     expect_equal(as.numeric(rope(distribution_normal(1000, 0, 1))), 0.0898, tolerance = 0.01)
     expect_equal(equivalence_test(distribution_normal(1000, 0, 1))$ROPE_Equivalence, "Undecided")

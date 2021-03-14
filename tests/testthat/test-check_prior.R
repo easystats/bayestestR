@@ -1,5 +1,6 @@
 if (require("rstanarm") && require("testthat") &&
-  require("bayestestR") && require("brms")) {
+    suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) &&
+    require("brms")) {
   skip_on_cran()
 
   # stanreg --------------------------

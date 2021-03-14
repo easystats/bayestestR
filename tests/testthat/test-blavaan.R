@@ -1,4 +1,4 @@
-if (require("bayestestR") && require("testthat")) {
+if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("testthat")) {
   test_that("blavaan, all", {
     skip_if_not_installed("blavaan")
     skip_if_not_installed("lavaan")

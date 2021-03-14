@@ -1,4 +1,4 @@
-if (require("testthat") && require("bayestestR") && require("rstanarm") && require("brms") && require("httr") && require("insight") && require("BayesFactor", quietly = TRUE)) {
+if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("rstanarm") && require("brms") && require("httr") && require("insight") && require("BayesFactor", quietly = TRUE)) {
   test_that("describe_posterior", {
     set.seed(333)
 

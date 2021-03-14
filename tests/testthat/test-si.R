@@ -1,4 +1,4 @@
-if (require("rstanarm") && require("bayestestR") &&
+if (require("rstanarm") && suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) &&
   require("testthat") && require("emmeans")) {
   test_that("si.numeric", {
     set.seed(333)

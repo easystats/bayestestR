@@ -1,4 +1,4 @@
-if (require("testthat", quietly = TRUE) && require("bayestestR", quietly = TRUE)) {
+if (require("testthat", quietly = TRUE) && suppressPackageStartupMessages(require("bayestestR", quietly = TRUE))) {
 
   test_that("mhdior", {
     expect_equal(as.numeric(mhdior(x = distribution_normal(1000, mean = 5, sd = 1), range = c(-0.1, 0.1))), 1, tolerance = 0.01)

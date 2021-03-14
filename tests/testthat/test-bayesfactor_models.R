@@ -1,4 +1,4 @@
-if (require("bayestestR") && require("testthat")) {
+if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("testthat")) {
 
   # bayesfactor_models BIC --------------------------------------------------
   test_that("bayesfactor_models BIC", {
