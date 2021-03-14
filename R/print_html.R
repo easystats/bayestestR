@@ -26,7 +26,7 @@ print_html.p_direction <- function(x, digits = 2, caption = "Probability of Dire
 
 #' @export
 print_html.p_rope <- function(x, digits = 2, ...) {
-  caption <- sprintf("# Proportion of samples inside the ROPE [%.*f, %.*f]",
+  caption <- sprintf("Proportion of samples inside the ROPE [%.*f, %.*f]",
                      digits, x$ROPE_low[1], digits, x$ROPE_high[1])
   x$ROPE_low <- x$ROPE_high <- NULL
   .print_html_default(x = x, digits = digits, caption = caption, ci_string = "ROPE", ...)
