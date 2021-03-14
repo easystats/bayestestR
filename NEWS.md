@@ -8,6 +8,7 @@
 ## Bug fixes
 
 * Fixed bug in `print()` method for the `mediation()` function.
+* Fixed remaining inconsistencies with CI values, which were not reported as fraction for `rope()`.
 
 # bayestestR 0.8.2
 
