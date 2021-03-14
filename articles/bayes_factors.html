@@ -347,7 +347,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_first_si</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/si.html">si</a></span><span class="op">(</span><span class="va">model</span>, BF <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="va">my_first_si</span></code></pre></div>
-<pre><code>&gt; # Support Interval
+<pre><code>&gt; Support Interval
 &gt; 
 &gt; Parameter |    BF = 1 SI
 &gt; ------------------------
@@ -698,7 +698,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>It seems that the model without <code>carb</code> as a predictor is <span class="math inline">\(1/BF=1.2\)</span> times more likely than the model <em>with</em> <code>carb</code> as a predictor. We might then assume that in the latter model, the <code>HDI</code> will include the point-null value of 0 effect, to also indicate the credibility of the null in the posterior. However, this is not the case:</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">mod_carb</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Highest Density Interval
+<pre><code>&gt; Highest Density Interval
 &gt; 
 &gt; Parameter   |        95% HDI
 &gt; ----------------------------
@@ -714,7 +714,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 
 <span class="va">BMA_hdi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">BMA_draws</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span>
 <span class="va">BMA_hdi</span></code></pre></div>
-<pre><code>&gt; # Highest Density Interval
+<pre><code>&gt; Highest Density Interval
 &gt; 
 &gt; Parameter   |        95% HDI
 &gt; ----------------------------

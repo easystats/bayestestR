@@ -190,7 +190,9 @@
 <p>Now, let us run our <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> function on that:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; Parameter | Median |        89% CI |     pd |          ROPE | % in ROPE |    BF |         Prior
+<pre><code>&gt; Summary of Posterior Distribution
+&gt; 
+&gt; Parameter | Median |        89% CI |     pd |          ROPE | % in ROPE |    BF |         Prior
 &gt; -----------------------------------------------------------------------------------------------
 &gt; rho       |  -0.11 | [-0.24, 0.01] | 92.25% | [-0.10, 0.10] |    41.76% | 0.509 | Beta (3 +- 3)</code></pre>
 <p>We see again many things here, but the important indices for now are the <strong>median</strong> of the posterior distribution, <code>-.11</code>. This is (again) quite close to the frequentist correlation. We could, as previously, describe the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>credible interval</strong></a>, the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>pd</strong></a> or the <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html"><strong>ROPE percentage</strong></a>, but we will focus here on another index provided by the Bayesian framework, the <strong>Bayes Factor (BF)</strong>.</p>
@@ -275,7 +277,9 @@ Wagenmakers’ pizza poking analogy. From the great &lt;www.bayesianspectacles.o
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu">BayesFactor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">Sepal.Width</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span>
 <span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; Parameter  | Median |       89% CI |     pd |          ROPE | % in ROPE |    BF |              Prior
+<pre><code>&gt; Summary of Posterior Distribution
+&gt; 
+&gt; Parameter  | Median |       89% CI |     pd |          ROPE | % in ROPE |    BF |              Prior
 &gt; ----------------------------------------------------------------------------------------------------
 &gt; Difference |   0.19 | [0.08, 0.28] | 99.75% | [-0.03, 0.03] |        0% | 17.72 | Cauchy (0 +- 0.71)</code></pre>
 <p>From the indices, we can say that the difference of <code>Sepal.Width</code> between <em>virginica</em> and <em>versicolor</em> has a probability of <strong>100% of being negative</strong> [<em>from the pd and the sign of the median</em>] (median = -0.19, 89% CI [-0.29, -0.092]). The data provides a <strong>strong evidence against the null hypothesis</strong> (BF = 18).</p>
@@ -315,7 +319,7 @@ Wagenmakers’ pizza poking analogy. From the great &lt;www.bayesianspectacles.o
 <p>Once again, we can extract all indices of interest for the posterior distribution using our old pal <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Fixed effects
+<pre><code>&gt; Summary of Posterior Distribution
 &gt; 
 &gt; Parameter   | Median |         89% CI |     pd |          ROPE | % in ROPE |    BF |  Rhat |     ESS
 &gt; ----------------------------------------------------------------------------------------------------
