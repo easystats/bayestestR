@@ -1,16 +1,4 @@
 #' @export
-print.bayestestR_hdi <- function(x, digits = 2, ...) {
-  orig_x <- x
-  if ("data_plot" %in% class(x)) {
-    print(as.data.frame(x))
-  } else {
-    .print_hdi(x, digits, title = "Highest Density Interval", ci_string = "HDI", ...)
-  }
-  invisible(orig_x)
-}
-
-
-#' @export
 print.bayestestR_eti <- function(x, digits = 2, ...) {
   orig_x <- x
   if ("data_plot" %in% class(x)) {

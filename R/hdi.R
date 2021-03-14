@@ -219,13 +219,15 @@ hdi.emm_list <- hdi.emmGrid
 hdi.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
+  cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(
     hdi(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose, ...),
-    insight::clean_parameters(x),
+    cleaned_parameters,
     inherits(x, "stanmvreg")
   )
 
+  attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
   out
@@ -244,12 +246,14 @@ hdi.blavaan <- hdi.stanreg
 hdi.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
+  cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(
     hdi(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose, ...),
-    insight::clean_parameters(x)
+    cleaned_parameters
   )
 
+  attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
   out
@@ -267,9 +271,9 @@ hdi.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
 
 #' @export
 hdi.get_predicted <- function(x, ...) {
-  if("iterations" %in% names(attributes(x))) {
+  if ("iterations" %in% names(attributes(x))) {
     out <- hdi(as.data.frame(t(attributes(x)$iterations)), ...)
-  } else{
+  } else {
     stop("No iterations present in the output.")
   }
   attr(out, "object_name") <- .safe_deparse(substitute(x))

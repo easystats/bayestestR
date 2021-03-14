@@ -1,7 +1,15 @@
 #' @importFrom insight format_table print_parameters
 #' @export
-format.describe_posterior <- function(x, cp, digits = 2, format = "text", ...) {
+format.describe_posterior <- function(x, cp, digits = 2, format = "text", ci_string = "CI", ...) {
+  # reshape CI
+
   out <- insight::format_table(x, digits = 2, format = format, ...)
+
+  # different CI-types as column names
+  if (ci_string != "CI" && any(grepl("CI$", colnames(out)))) {
+    colnames(out) <- gsub("(.*)CI$", paste0("\\1", ci_string), colnames(out))
+  }
+
   if (!is.null(cp) && !all(is.na(match(cp$Parameter, out$Parameter)))) {
     out <- insight::print_parameters(cp, out, keep_parameter_column = FALSE, remove_empty_column = TRUE)
   }
@@ -12,6 +20,8 @@ format.describe_posterior <- function(x, cp, digits = 2, format = "text", ...) {
 #' @export
 format.point_estimate <- format.describe_posterior
 
+#' @export
+format.bayestestR_hdi <- format.describe_posterior
 
 
 
