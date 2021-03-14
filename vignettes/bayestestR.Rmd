@@ -23,7 +23,8 @@ This vignette can be referred to by citing the package:
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-if (!requireNamespace("rstanarm", quietly = TRUE)) {
+if (!requireNamespace("rstanarm", quietly = TRUE) &&
+    !requireNamespace("dplyr", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
@@ -185,7 +186,9 @@ that people use it instead of the Bayesian framework... right?
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 model <- stan_glm(Sepal.Length ~ Petal.Length, data = iris)
-describe_posterior(model)
+posteriors <- describe_posterior(model)
+# for a nicer table
+print_md(posteriors, digits = 2)
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
@@ -194,7 +197,8 @@ library(bayestestR)
 set.seed(333)
 
 model <- stan_glm(Sepal.Length ~ Petal.Length, data = iris, refresh = 0)
-knitr::kable(describe_posterior(model), digits = 2)
+describe_posterior(model) %>% 
+  print_md(digits = 2)
 ```
 
 
