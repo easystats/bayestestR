@@ -64,13 +64,16 @@ distribution_uniform(n, min = 0, max = 1, random = FALSE, ...)
 rnorm_perfect(n, mean = 0, sd = 1)
 }
 \arguments{
-\item{type}{Can be any of the names from base R's \link[stats]{Distributions}, like \code{"cauchy"}, \code{"pois"} or \code{"beta"}.}
+\item{type}{Can be any of the names from base R's
+\link[stats]{Distributions}, like \code{"cauchy"}, \code{"pois"} or
+\code{"beta"}.}
 
 \item{...}{Arguments passed to or from other methods.}
 
 \item{n}{the number of observations}
 
-\item{random}{Generate near-perfect or random (simple wrappers for the base R \code{r*} functions) distributions.}
+\item{random}{Generate near-perfect or random (simple wrappers for the base R
+\code{r*} functions) distributions.}
 
 \item{shape1}{non-negative parameters of the Beta distribution.}
 
@@ -112,7 +115,8 @@ distribution, where \code{size=mu/phi}.}
 \item{max}{lower and upper limits of the distribution.  Must be finite.}
 }
 \description{
-Generate a sequence of n-quantiles, i.e., a sample of size \code{n} with a near-perfect distribution.
+Generate a sequence of n-quantiles, i.e., a sample of size \code{n} with a
+near-perfect distribution.
 }
 \examples{
 library(bayestestR)
