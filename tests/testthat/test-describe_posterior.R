@@ -1,14 +1,26 @@
-if (require("testthat") && require("bayestestR") && require("rstanarm") && require("brms") && require("httr") && require("insight") && require("BayesFactor")) {
+if (require("testthat") && require("bayestestR") && require("rstanarm") && require("brms") && require("httr") && require("insight") && require("BayesFactor", quietly = TRUE)) {
   test_that("describe_posterior", {
     set.seed(333)
 
     # numeric -------------------------------------------------
 
     x <- distribution_normal(1000)
-    rez <- expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = 0.89))
 
-    printed <- format(rez)
-    expect_true("89% CI" %in% names(printed))
+    expect_warning(describe_posterior(
+      x,
+      centrality = "all",
+      dispersion = TRUE,
+      test = "all",
+      ci = 0.89
+    ))
+
+    rez <- as.data.frame(suppressWarnings(describe_posterior(
+      x,
+      centrality = "all",
+      dispersion = TRUE,
+      test = "all",
+      ci = 0.89
+    )))
 
     expect_equal(dim(rez), c(1, 19))
     expect_equal(colnames(rez), c(
