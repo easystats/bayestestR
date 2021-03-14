@@ -272,6 +272,41 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 <span class="co"># for a nicer table</span>
 <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">print_md</a></span><span class="op">(</span><span class="va">posteriors</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<caption># Fixed effects</caption>
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">Median</th>
+<th align="left">89% CI</th>
+<th align="left">pd</th>
+<th align="left">ROPE</th>
+<th align="right">% in ROPE</th>
+<th align="left">Rhat</th>
+<th align="left">ESS</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">4.30</td>
+<td align="left">[4.18, 4.42]</td>
+<td align="left">100%</td>
+<td align="left">[-0.08, 0.08]</td>
+<td align="right">0%</td>
+<td align="left">1.000</td>
+<td align="left">4056.86</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Length</td>
+<td align="right">0.41</td>
+<td align="left">[0.38, 0.44]</td>
+<td align="left">100%</td>
+<td align="left">[-0.08, 0.08]</td>
+<td align="right">0%</td>
+<td align="left">1.000</td>
+<td align="left">4115.39</td>
+</tr>
+</tbody>
+</table>
 <p><strong>That’s it!</strong></p>
 <p>You just fitted a Bayesian version of the model by simply using the <a href="https://mc-stan.org/rstanarm/reference/stan_glm.html"><code>stan_glm()</code></a> function instead of <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and described the posterior distributions of the parameters!</p>
 <p>The conclusion we draw, for this example, are very similar. The effect (<em>the median of the effect’s posterior distribution</em>) is about <code>0.41</code>, and it can be also be considered as <em>significant</em> in the Bayesian sense (more on that later).</p>

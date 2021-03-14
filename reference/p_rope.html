@@ -281,20 +281,22 @@ for the output.</p></td>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>
 
 <span class='fu'>p_rope</span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>0.01</span><span class='op'>)</span>, range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   ROPE_low ROPE_high p_ROPE
-#&gt; 1     -0.1       0.1      1</div><div class='input'><span class='fu'>p_rope</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>mtcars</span>, range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    Parameter ROPE_low ROPE_high p_ROPE
-#&gt; 1        mpg     -0.1       0.1   0.00
-#&gt; 2        cyl     -0.1       0.1   0.00
-#&gt; 3       disp     -0.1       0.1   0.00
-#&gt; 4         hp     -0.1       0.1   0.00
-#&gt; 5       drat     -0.1       0.1   0.00
-#&gt; 6         wt     -0.1       0.1   0.00
-#&gt; 7       qsec     -0.1       0.1   0.00
-#&gt; 8         vs     -0.1       0.1   0.56
-#&gt; 9         am     -0.1       0.1   0.59
-#&gt; 10      gear     -0.1       0.1   0.00
-#&gt; 11      carb     -0.1       0.1   0.00</div></pre>
+</div><div class='output co'>#&gt; p (ROPE)
+#&gt; --------
+#&gt; &gt; .999  </div><div class='input'><span class='fu'>p_rope</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>mtcars</span>, range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>0.1</span>, <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Parameter | p (ROPE)
+#&gt; --------------------
+#&gt; mpg       |   &lt; .001
+#&gt; cyl       |   &lt; .001
+#&gt; disp      |   &lt; .001
+#&gt; hp        |   &lt; .001
+#&gt; drat      |   &lt; .001
+#&gt; wt        |   &lt; .001
+#&gt; qsec      |   &lt; .001
+#&gt; vs        |   0.562 
+#&gt; am        |   0.594 
+#&gt; gear      |   &lt; .001
+#&gt; carb      |   &lt; .001</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
