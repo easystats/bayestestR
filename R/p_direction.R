@@ -210,7 +210,9 @@ p_direction.bayesQR <- p_direction.bcplm
 #' @export
 p_direction.bamlss <- function(x, method = "direct", null = 0, component = c("all", "conditional", "location"), ...) {
   component <- match.arg(component)
-  p_direction(insight::get_parameters(x, component = component), method = method, null = null, ...)
+  out <- p_direction(insight::get_parameters(x, component = component), method = method, null = null, ...)
+  out <- .add_clean_parameters_attribute(out, x)
+  out
 }
 
 
@@ -274,13 +276,15 @@ p_direction.sim <- function(x, parameters = NULL, method = "direct", null = 0, .
 p_direction.stanreg <- function(x, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, method = "direct", null = 0, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
+  cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(
     p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, null = null, ...),
-    insight::clean_parameters(x),
+    cleaned_parameters,
     inherits(x, "stanmvreg")
   )
 
+  attr(out, "clean_parameters") <- cleaned_parameters
   class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
@@ -298,12 +302,14 @@ p_direction.blavaan <- p_direction.stanreg
 p_direction.brmsfit <- function(x, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, method = "direct", null = 0, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
+  cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(
     p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, null = null, ...),
-    insight::clean_parameters(x)
+    cleaned_parameters
   )
 
+  attr(out, "clean_parameters") <- cleaned_parameters
   class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
@@ -320,9 +326,9 @@ p_direction.BFBayesFactor <- function(x, method = "direct", null = 0, ...) {
 
 #' @export
 p_direction.get_predicted <- function(x, ...) {
-  if("iterations" %in% names(attributes(x))) {
+  if ("iterations" %in% names(attributes(x))) {
     out <- p_direction(as.data.frame(t(attributes(x)$iterations)), ...)
-  } else{
+  } else {
     stop("No iterations present in the output.")
   }
   attr(out, "object_name") <- .safe_deparse(substitute(x))

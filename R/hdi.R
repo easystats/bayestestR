@@ -140,6 +140,7 @@ hdi.bamlss <- function(x, ci = .89, component = c("all", "conditional", "locatio
   component <- match.arg(component)
   d <- insight::get_parameters(x, component = component)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
+  dat <- .add_clean_parameters_attribute(dat, x)
   attr(dat, "data") <- .safe_deparse(substitute(x))
   dat
 }

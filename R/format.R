@@ -50,6 +50,9 @@ format.point_estimate <- format.describe_posterior
 format.p_rope <- format.describe_posterior
 
 #' @export
+format.p_direction <- format.describe_posterior
+
+#' @export
 format.bayestestR_hdi <- format.describe_posterior
 
 #' @export
