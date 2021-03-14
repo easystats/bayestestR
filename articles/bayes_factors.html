@@ -349,9 +349,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <span class="va">my_first_si</span></code></pre></div>
 <pre><code>&gt; # Support Interval
 &gt; 
-&gt; Parameter |    BF = 1 SI
-&gt; ------------------------
-&gt; group2    | [0.15, 3.04]</code></pre>
+&gt; Parameter | CI | CI_low | CI_high
+&gt; ---------------------------------
+&gt; group2    |  1 |   0.15 |       3</code></pre>
 <p>The argument <code>BF = 1</code> indicates that we want the interval to contain values that have gained support by a factor of at least 1 (that is, any support at all).</p>
 <p>Visually, we can see that the credibility of all the values within this interval has increased (and likewise the credibility of all the values outside this interval has decreased):</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
