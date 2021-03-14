@@ -153,16 +153,16 @@
 </li>
 </ul>
 <hr>
-<p>Now that <a href="https://easystats.github.io/bayestestR/articles/example1.html"><strong>describing and understanding posterior distributions</strong></a> of linear regressions has no secrets for you, we will take one step back and study some simpler models: <strong>correlations</strong> and <strong><em>t</em>-tests</strong>.</p>
-<p>But before we do that, let us take a moment to remind ourselves and appreciate the fact that <strong>all basic statistical procedures</strong> such as correlations, <em>t</em>-tests, ANOVAs or chi-square tests <strong>are</strong> linear regressions (we strongly recommend <a href="https://lindeloev.github.io/tests-as-linear/">this excellent demonstration</a>). Nevertheless, these simple models will be the occasion to introduce a more complex index, such as the <strong>Bayes factor</strong>.</p>
+<p>Now that <a href="https://easystats.github.io/bayestestR/articles/example1.html"><strong>describing and understanding posterior distributions</strong></a> of linear regressions is not that mysterious to you, we will take one step back and study some simpler models: <strong>correlations</strong> and <strong><em>t</em>-tests</strong>.</p>
+<p>But before we do that, let us take a moment to remind ourselves and appreciate the fact that <strong>all basic statistical procedures</strong> such as correlations, <em>t</em>-tests, ANOVAs, or chi-square tests <strong>are</strong> linear regressions (we strongly recommend <a href="https://lindeloev.github.io/tests-as-linear/">this excellent demonstration</a>). Nevertheless, these simple models will provide a good pretext to introduce a few more complex indices, such as the <strong>Bayes factor</strong>.</p>
 <div id="correlations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#correlations" class="anchor"></a>Correlations</h2>
 <div id="frequentist-version" class="section level3">
 <h3 class="hasAnchor">
 <a href="#frequentist-version" class="anchor"></a>Frequentist version</h3>
-<p>Let us start, again, with a <strong>frequentist correlation</strong> between two continuous variables, the <strong>width</strong> and the <strong>length</strong> of the sepals of some flowers. The data is available in R as the <code>iris</code> dataset (the same that was used in the <a href="https://easystats.github.io/bayestestR/articles/example1.html">previous tutorial</a>).</p>
-<p>We will compute a Pearson’s correlation test, store the results in an object called <code>result</code>, then display it:</p>
+<p>Once again, let us begin with a <strong>frequentist correlation</strong> between two continuous variables, the <strong>width</strong> and the <strong>length</strong> of the sepals of some flowers. The data is available in <code>R</code> as the <code>iris</code> dataset (the same that was used in the <a href="https://easystats.github.io/bayestestR/articles/example1.html">previous tutorial</a>).</p>
+<p>We will compute a Pearson’s correlation test, store the results in an object called <code>result</code>, and then display it:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span>
 <span class="va">result</span></code></pre></div>
@@ -177,28 +177,29 @@
 &gt; sample estimates:
 &gt;   cor 
 &gt; -0.12</code></pre>
-<p>As you can see in the output, the test that we did actually compared two hypotheses: the <strong>null hypothesis</strong> (<em>h0</em>; no correlation) with the <strong>alternative hypothesis</strong> (<em>h1</em>; a non-null correlation). Based on the <em>p</em>-value, the null hypothesis cannot be rejected: the correlation between the two variables is <strong>negative but not significant</strong> (r = -.12, p &gt; .05).</p>
+<p>As you can see in the output, the test actually compared <strong>two</strong> hypotheses: - the <strong>null hypothesis</strong> (<em>h0</em>; no correlation), - the <strong>alternative hypothesis</strong> (<em>h1</em>; a non-null correlation).</p>
+<p>Based on the <em>p</em>-value, the null hypothesis cannot be rejected: the correlation between the two variables is <strong>negative but non-significant</strong> (<span class="math inline">\(r = -.12, p &gt; .05\)</span>).</p>
 </div>
 <div id="bayesian-correlation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#bayesian-correlation" class="anchor"></a>Bayesian correlation</h3>
-<p>To compute a Bayesian correlation test, we will need the <a href="https://richarddmorey.github.io/BayesFactor/"><code>BayesFactor</code></a> package (you can install it by running <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("BayesFactor")</a></code>). We can then load this package, compute the correlation using the <code><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html">correlationBF()</a></code> function and store the results in a similar fashion.</p>
+<p>To compute a Bayesian correlation test, we will need the <a href="https://richarddmorey.github.io/BayesFactor/"><code>BayesFactor</code></a> package (you can install it by running <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("BayesFactor")</a></code>). We can then load this package, compute the correlation using the <code><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html">correlationBF()</a></code> function, and store the result.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://richarddmorey.github.io/BayesFactor/">BayesFactor</a></span><span class="op">)</span>
 <span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/correlationBF.html">correlationBF</a></span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Width</span>, <span class="va">iris</span><span class="op">$</span><span class="va">Sepal.Length</span><span class="op">)</span></code></pre></div>
 <p>Now, let us run our <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> function on that:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt;   Parameter Median CI CI_low CI_high pd ROPE_CI ROPE_low ROPE_high
-&gt; 1       rho  -0.11 89  -0.24  0.0079 92      89     -0.1       0.1
-&gt;   ROPE_Percentage   BF Prior_Distribution Prior_Location Prior_Scale
-&gt; 1              42 0.51             cauchy              0        0.33</code></pre>
-<p>We see again many things here, but the important indices for now are the <strong>median</strong> of the posterior distribution, <code>-.11</code>. This is (again) quite close to the frequentist correlation. We could, as previously, describe the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>credible interval</strong></a>, the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>pd</strong></a> or the <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html"><strong>ROPE percentage</strong></a>, but we will focus here on another index provided by the Bayesian framework, the <strong>Bayes factor (BF)</strong>.</p>
+<pre><code>&gt; Parameter | Median |        89% CI |     pd |          ROPE | % in ROPE |    BF |         Prior
+&gt; -----------------------------------------------------------------------------------------------
+&gt; rho       |  -0.11 | [-0.24, 0.01] | 92.25% | [-0.10, 0.10] |    41.76% | 0.509 | Beta (3 +- 3)</code></pre>
+<p>We see again many things here, but the important indices for now are the <strong>median</strong> of the posterior distribution, <code>-.11</code>. This is (again) quite close to the frequentist correlation. We could, as previously, describe the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>credible interval</strong></a>, the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>pd</strong></a> or the <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html"><strong>ROPE percentage</strong></a>, but we will focus here on another index provided by the Bayesian framework, the <strong>Bayes Factor (BF)</strong>.</p>
 </div>
 <div id="bayes-factor-bf" class="section level3">
 <h3 class="hasAnchor">
-<a href="#bayes-factor-bf" class="anchor"></a>Bayes factor (BF)</h3>
-<p>We said previously that a correlation test actually compares two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect). The <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html"><strong>Bayes factor (BF)</strong></a> allows the same comparison and determines <strong>under which of two models the observed data are more probable</strong>: a model with the effect of interest, and a null model without the effect of interest. We can use <code><a href="../reference/bayesfactor.html">bayesfactor()</a></code> to specifically compute the Bayes factor comparing those models:</p>
+<a href="#bayes-factor-bf" class="anchor"></a>Bayes Factor (BF)</h3>
+<p>We said previously that a correlation test actually compares two hypotheses, a null (absence of effect) with an alternative one (presence of an effect). The <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html"><strong>Bayes factor (BF)</strong></a> allows the same comparison and determines <strong>under which of these two models the observed data are more probable</strong>: a model with the effect of interest, and a null model without the effect of interest. So, in the context of our correlation example, the null hypothesis would be no correlation between the two variables (<span class="math inline">\(h0: \rho = 0\)</span>; where <span class="math inline">\(\rho\)</span> stands for Bayesian correlation coefficient), while the alternative hypothesis would be that there is a correlation <strong>different</strong> than 0 - positive or negative (<span class="math inline">\(h1: \rho \neq 0\)</span>).</p>
+<p>We can use <code><a href="../reference/bayesfactor.html">bayesfactor()</a></code> to specifically compute the Bayes factor comparing those models:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor.html">bayesfactor</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison
@@ -209,12 +210,12 @@
 &gt; * Against Denominator: [1] (rho = 0)
 &gt; *   Bayes Factor Type: JZS (BayesFactor)</code></pre>
 <p>We got a <em>BF</em> of <code>0.51</code>. What does it mean?</p>
-<p>Bayes factors are <strong>continuous measures of relative evidence</strong>, with a Bayes factor greater than 1 giving evidence in favour of one of the models (often referred to as <em>the numerator</em>), and a Bayes factor smaller than 1 giving evidence in favour of the other model (<em>the denominator</em>).</p>
+<p>Bayes factors are <strong>continuous measures of <em>relative</em> evidence</strong>, with a Bayes factor greater than 1 giving evidence in favour of one of the models (often referred to as <em>the numerator</em>), and a Bayes factor smaller than 1 giving evidence in favour of the other model (<em>the denominator</em>).</p>
 <blockquote>
-<p><strong>Yes, you heard things right, evidence in favour of the null!</strong></p>
+<p><strong>Yes, you heard that right, evidence in favour of the <em>null</em>!</strong></p>
 </blockquote>
-<p>That’s one of the reason why the Bayesian framework is sometimes considered as superior to the frequentist framework. Remember from your stats lessons, that the <strong><em>p</em>-value can only be used to reject <em>h0</em></strong>, but not <em>accept</em> it. With the <strong>Bayes factor</strong>, you can measure <strong>evidence against - and in favour of - the null</strong>.</p>
-<p>BFs representing evidence for the alternative against the null can be reversed using <span class="math inline">\(BF_{01}=1/BF_{10}\)</span> (the <em>01</em> and <em>10</em> correspond to <em>h0</em> against <em>h1</em> and <em>h1</em> against <em>h0</em>, respectively) to provide evidence of the null against the alternative. This improves human readability in cases where the BF of the alternative against the null is smaller than 1 (i.e., in support of the null).</p>
+<p>That’s one of the reason why the Bayesian framework is sometimes considered as superior to the frequentist framework. Remember from your stats lessons, that the <strong><em>p</em>-value can only be used to reject <em>h0</em></strong>, but not <em>accept</em> it. With the <strong>Bayes factor</strong>, you can measure <strong>evidence against - and in favour of - the null</strong>. In other words, in the frequentist framework, if the <em>p</em>-value is not significant, we can conclude that <strong>evidence for the effect is absent</strong>, but not that there is <strong>evidence for the absence of the effect</strong>. In Bayesian framework, we can do the latter. This is important since sometimes our hypotheses are about no effect.</p>
+<p>BFs representing evidence for the alternative against the null can be reversed using <span class="math inline">\(BF_{01}=1/BF_{10}\)</span> (the <em>01</em> and <em>10</em> correspond to <em>h0</em> against <em>h1</em> and <em>h1</em> against <em>h0</em>, respectively) to provide evidence of the null against the alternative. This improves human readability<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> in cases where the BF of the alternative against the null is smaller than 1 (i.e., in support of the null).</p>
 <p>In our case, <code>BF = 1/0.51 = 2</code>, indicates that the data are <strong>2 times more probable under the null compared to the alternative hypothesis</strong>, which, though favouring the null, is considered only <a href="https://easystats.github.io/effectsize/reference/interpret_bf.html">anecdotal evidence against the null</a>.</p>
 <p>We can thus conclude that there is <strong>anecdotal evidence in favour of an absence of correlation between the two variables (r<sub>median</sub> = 0.11, BF = 0.51)</strong>, which is a much more informative statement that what we can do with frequentist statistics.</p>
 <p><strong>And that’s not all!</strong></p>
@@ -222,27 +223,30 @@
 <div id="visualise-the-bayes-factor" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visualise-the-bayes-factor" class="anchor"></a>Visualise the Bayes factor</h3>
-<p>In general, <strong>pie charts are an absolute no-go in data visualisation</strong>, as our brain’s perceptive system heavily distorts the information presented in such way. Nevertheless, there is one exception: pizza charts.</p>
+<p>In general, <strong>pie charts are an absolute no-go in data visualisation</strong>, as our brain’s perceptive system heavily distorts the information presented in such way<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Nevertheless, there is one exception: pizza charts.</p>
 <p>It is an intuitive way of interpreting the strength of evidence provided by BFs as an amount of surprise.</p>
 <div class="figure" style="text-align: center">
-<img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/LetsPokeAPizza.jpg" alt="Wagenmakers' pizza poking analogy. From the great 'www.bayesianspectacles.org' blog." width="80%"><p class="caption">
-Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.org’ blog.
+<img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/LetsPokeAPizza.jpg" alt="Wagenmakers' pizza poking analogy. From the great &lt;www.bayesianspectacles.org&gt; blog." width="80%"><p class="caption">
+Wagenmakers’ pizza poking analogy. From the great &lt;www.bayesianspectacles.org&gt; blog.
 </p>
 </div>
-<p>Such “pizza plots” can be directly created through the <a href="https://github.com/easystats/see"><code>see</code></a> visualisation companion package for easystats (you can install it by running <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("see")</a></code>):</p>
+<p>Such “pizza plots” can be directly created through the <a href="https://github.com/easystats/see"><code>see</code></a> visualisation companion package for <code>easystats</code> (you can install it by running <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("see")</a></code>):</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/">see</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/bayesfactor.html">bayesfactor</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://easystats.github.io/see/reference/scale_color_pizza.html">scale_fill_pizza</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="example2_files/figure-html/unnamed-chunk-8-1.png" width="1093.75"></p>
+<p><img src="example2_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
 <p>So, after seeing this pizza, how much would you be surprised by the outcome of a blinded poke?</p>
 </div>
 </div>
 <div id="t-tests" class="section level2">
 <h2 class="hasAnchor">
 <a href="#t-tests" class="anchor"></a><em>t</em>-tests</h2>
-<p><strong><em>“I know that I know nothing, and especially not if <em>versicolor</em> and <em>virginica</em> differ in terms of Sepal.Width”</em>, famously said Socrates</strong>. Time to finally answer this answer this crucial question!</p>
+<blockquote>
+<p><strong>“I know that I know nothing, and especially not if <em>versicolor</em> and <em>virginica</em> differ in terms of their Sepal.Width” - Socrates</strong>.</p>
+</blockquote>
+<p>Time to finally answer this crucial question!</p>
 <div id="versicolor-vs--virginica" class="section level3">
 <h3 class="hasAnchor">
 <a href="#versicolor-vs--virginica" class="anchor"></a>Versicolor <em>vs.</em> virginica</h3>
@@ -262,8 +266,8 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
   <span class="fu"><a href="https://easystats.github.io/see/reference/geom_violindot.html">geom_violindot</a></span><span class="op">(</span>fill_dots <span class="op">=</span> <span class="st">"black"</span>, size_dots <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://easystats.github.io/see/reference/scale_color_material.html">scale_fill_material</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://easystats.github.io/see/reference/theme_modern.html">theme_modern</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="example2_files/figure-html/unnamed-chunk-9-1.png" width="1093.75"></p>
-<p>It <em>seems</em> (visually) that <em>virgnica</em> flowers have, on average, a slightly higer width of sepals. Let’s assess this difference statistically by using the <code>ttestBF</code> in the <code>BayesFactor</code> package.</p>
+<p><img src="example2_files/figure-html/unnamed-chunk-8-1.png" width="100%"></p>
+<p>It <em>seems</em> (visually) that <em>virgnica</em> flowers have, on average, a slightly higer width of sepals. Let’s assess this difference statistically by using the <code><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html">ttestBF()</a></code> function in the <code>BayesFactor</code> package.</p>
 </div>
 <div id="compute-the-bayesian-t-test" class="section level3">
 <h3 class="hasAnchor">
@@ -273,7 +277,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Parameter  | Median |       89% CI |     pd |          ROPE | % in ROPE |    BF |              Prior
 &gt; ----------------------------------------------------------------------------------------------------
-&gt; Difference |   0.19 | [0.09, 0.30] | 99.83% | [-0.03, 0.03] |        0% | 17.72 | Cauchy (0 +- 0.71)</code></pre>
+&gt; Difference |   0.19 | [0.08, 0.28] | 99.75% | [-0.03, 0.03] |        0% | 17.72 | Cauchy (0 +- 0.71)</code></pre>
 <p>From the indices, we can say that the difference of <code>Sepal.Width</code> between <em>virginica</em> and <em>versicolor</em> has a probability of <strong>100% of being negative</strong> [<em>from the pd and the sign of the median</em>] (median = -0.19, 89% CI [-0.29, -0.092]). The data provides a <strong>strong evidence against the null hypothesis</strong> (BF = 18).</p>
 <p>Keep that in mind as we will see another way of investigating this question.</p>
 </div>
@@ -281,7 +285,7 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <div id="logistic-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#logistic-model" class="anchor"></a>Logistic Model</h2>
-<p>A hypothesis for which one uses a <em>t</em>-test can also be tested using a binomial model (<em>e.g.</em>, a <strong>logistic model</strong>). Indeed, it is possible to reformulate the following hypothesis, “<em>there is an important difference in this variable between the two groups</em>” by “<em>this variable is able to discriminate between (or classify) the two groups</em>”. However, these models are much more powerful than a regular <em>t</em>-test.</p>
+<p>A hypothesis for which one uses a <em>t</em>-test can also be tested using a binomial model (<em>e.g.</em>, a <strong>logistic model</strong>). Indeed, it is possible to reformulate the following hypothesis, “<em>there is an important difference in this variable between the two groups</em>” with the hypothesis “<em>this variable is able to discriminate between (or classify) the two groups</em>”. However, these models are much more powerful than a <em>t</em>-test.</p>
 <p>In the case of the difference of <code>Sepal.Width</code> between <em>virginica</em> and <em>versicolor</em>, the question becomes, <em>how well can we classify the two species using only</em> <code>Sepal.Width</code>.</p>
 <div id="fit-the-model" class="section level3">
 <h3 class="hasAnchor">
@@ -289,18 +293,35 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/">rstanarm</a></span><span class="op">)</span>
 
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">data</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span></code></pre></div>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">data</span>, family <span class="op">=</span> <span class="st">"binomial"</span>, refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="visualise-the-model" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visualise-the-model" class="anchor"></a>Visualise the model</h3>
 <p>Using the <a href="https://github.com/easystats/modelbased"><code>modelbased</code></a> package.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/modelbased/">modelbased</a></span><span class="op">)</span>
+<span class="va">means</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/modelbased/reference/estimate_means.html">estimate_means</a></span><span class="op">(</span><span class="va">model</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Sepal.Width"</span><span class="op">)</span>, length <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+
+<span class="va">means</span></code></pre></div>
+<pre><code>&gt; Sepal.Width | Probability |       95% CI
+&gt; ----------------------------------------
+&gt; 2.00        |        0.13 | [0.03, 0.31]
+&gt; 3.80        |        0.88 | [0.70, 0.98]</code></pre>
 </div>
 <div id="performance-and-parameters" class="section level3">
 <h3 class="hasAnchor">
 <a href="#performance-and-parameters" class="anchor"></a>Performance and Parameters</h3>
-<p>TO DO.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<p>Once again, we can extract all indices of interest for the posterior distribution using our old pal <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>&gt; # Fixed effects
+&gt; 
+&gt; Parameter   | Median |         89% CI |     pd |          ROPE | % in ROPE |    BF |  Rhat |     ESS
+&gt; ----------------------------------------------------------------------------------------------------
+&gt; (Intercept) |  -6.15 | [-9.49, -2.89] | 99.92% | [-0.18, 0.18] |        0% | 11.76 | 1.001 | 2650.93
+&gt; Sepal.Width |   2.13 | [ 0.94,  3.24] | 99.95% | [-0.18, 0.18] |        0% | 12.71 | 1.001 | 2639.16</code></pre>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/">performance</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://easystats.github.io/performance/reference/model_performance.html">model_performance</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
@@ -309,28 +330,30 @@ Wagenmakers’ pizza poking analogy. From the great ‘www.bayesianspectacles.or
 &gt; 
 &gt; ELPD    | ELPD_SE |   LOOIC | LOOIC_SE |    WAIC |    R2 |  RMSE | Sigma | Score_log | Score_spherical
 &gt; ------------------------------------------------------------------------------------------------------
-&gt; -66.359 |   3.086 | 132.717 |    6.171 | 132.706 | 0.101 | 0.477 | 1.000 |  -105.918 |           0.010</code></pre>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Fixed effects
-&gt; 
-&gt; Parameter   | Median |         89% CI |     pd |          ROPE | % in ROPE |    BF |  Rhat |     ESS
-&gt; ----------------------------------------------------------------------------------------------------
-&gt; (Intercept) |  -6.20 | [-9.80, -3.03] | 99.83% | [-0.18, 0.18] |        0% | 11.63 | 0.999 | 2667.37
-&gt; Sepal.Width |   2.16 | [ 0.98,  3.31] | 99.85% | [-0.18, 0.18] |        0% |  9.16 | 0.999 | 2663.86</code></pre>
+&gt; -66.265 |   3.071 | 132.530 |    6.142 | 132.519 | 0.099 | 0.477 | 1.000 |  -102.916 |           0.010</code></pre>
 </div>
 <div id="visualise-the-indices" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visualise-the-indices" class="anchor"></a>Visualise the indices</h3>
 <p>TO DO.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># plot(rope(result))</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/">see</a></span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/rope.html">rope</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="example2_files/figure-html/unnamed-chunk-14-1.png" width="100%"></p>
 </div>
 <div id="diagnostic-indices" class="section level3">
 <h3 class="hasAnchor">
 <a href="#diagnostic-indices" class="anchor"></a>Diagnostic Indices</h3>
 <p>About diagnostic indices such as Rhat and ESS.</p>
 </div>
+</div>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>If the effect is really strong, the BF values can be extremely high. So don’t be surprised if you see BF values that have been log-transformed to make them more human readable.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>An exception would be when the pie slices are well-labeled so that our brain’s perception system does not have to do the decoding work.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
   </div>
 
