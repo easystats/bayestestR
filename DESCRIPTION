@@ -71,8 +71,6 @@ Suggests:
     blavaan,
     bridgesampling,
     brms,
-    broom,
-    covr,
     dplyr,
     effectsize,
     emmeans,
