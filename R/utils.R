@@ -242,3 +242,13 @@
   attr(params, "clean_parameters") <- cp
   params
 }
+
+
+#' @importFrom stats na.omit
+.n_unique <- function(x, na.rm = TRUE) {
+  if (is.null(x)) {
+    return(0)
+  }
+  if (isTRUE(na.rm)) x <- stats::na.omit(x)
+  length(unique(x))
+}
