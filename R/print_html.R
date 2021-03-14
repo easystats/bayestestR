@@ -9,11 +9,11 @@ insight::print_html
 #' @export
 print_html.describe_posterior <- function(x, digits = 2, caption = NULL, ...) {
   cp <- attr(x, "clean_parameters")
-  cat(insight::export_table(
+  insight::export_table(
     format(x, cp = cp, digits = digits, format = "html", ...),
     caption = caption,
     format = "html"
-  ))
+  )
   invisible(x)
 }
 
@@ -55,10 +55,10 @@ print_html.bayestestR_si <- function(x, digits = 2, ...) {
     attr(formatted_table[[1]], "table_caption") <- c(caption, "blue")
   }
 
-  cat(insight::export_table(
+  insight::export_table(
     formatted_table,
     caption = caption,
-    format = "md"
-  ))
+    format = "html"
+  )
   invisible(x)
 }
