@@ -345,30 +345,28 @@ reflecting high credibility of <code>0</code>. To detect such cases, the
 <span class='co'># ----------------------------------------------------</span>
 <span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, mean <span class='op'>=</span> <span class='fl'>1</span>, sd <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 <span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; pd = 83.60%</div><div class='input'><span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>posterior</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; pd = 82.63%</div><div class='input'>
+<span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>posterior</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span><span class='op'>)</span>
+
 <span class='co'># Simulate a dataframe of posterior distributions</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Probability of Direction (pd)
+</div><div class='output co'>#&gt; Probability of Direction (pd)
 #&gt; 
-#&gt; </span><span>Parameter |     pd
-#&gt; ------------------
-#&gt; X1        | 54.00%
-#&gt; X2        | 51.00%
-#&gt; X3        | 59.00%
-#&gt; X4        | 50.00%
-#&gt; </div><div class='input'><span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>df</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Probability of Direction (pd)
+#&gt; Parameter |   pd
+#&gt; ----------------
+#&gt; X1        | 0.54
+#&gt; X2        | 0.51
+#&gt; X3        | 0.59
+#&gt; X4        | 0.50</div><div class='input'><span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>df</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Probability of Direction (pd)
 #&gt; 
-#&gt; </span><span>Parameter |     pd
-#&gt; ------------------
-#&gt; X1        | 52.92%
-#&gt; X2        | 50.05%
-#&gt; X3        | 56.44%
-#&gt; X4        | 51.21%
-#&gt; </div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt; Parameter |   pd
+#&gt; ----------------
+#&gt; X1        | 0.53
+#&gt; X2        | 0.50
+#&gt; X3        | 0.56
+#&gt; X4        | 0.51</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
@@ -402,7 +400,7 @@ reflecting high credibility of <code>0</code>. To detect such cases, the
   <span class='fu'>p_direction</span><span class='op'>(</span><span class='va'>bf</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='op'>}</span>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

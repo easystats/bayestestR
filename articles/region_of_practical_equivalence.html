@@ -211,12 +211,12 @@
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pd</span></code></pre></div>
-<pre><code>&gt; # Probability of Direction (pd)
+<pre><code>&gt; Probability of Direction (pd)
 &gt; 
-&gt; Parameter   |      pd
-&gt; ---------------------
-&gt; (Intercept) | 100.00%
-&gt; Sepal.Width |  91.65%</code></pre>
+&gt; Parameter   |   pd | Effects |   Component
+&gt; ------------------------------------------
+&gt; (Intercept) | 1.00 |   fixed | conditional
+&gt; Sepal.Width | 0.92 |   fixed | conditional</code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Visualise the percentage in ROPE</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">percentage_in_rope</span><span class="op">)</span></code></pre></div>
@@ -243,12 +243,12 @@
 <p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pd</span></code></pre></div>
-<pre><code>&gt; # Probability of Direction (pd)
+<pre><code>&gt; Probability of Direction (pd)
 &gt; 
-&gt; Parameter          |      pd
-&gt; ----------------------------
-&gt; (Intercept)        | 100.00%
-&gt; Sepal.Width_scaled |  91.65%</code></pre>
+&gt; Parameter          |   pd | Effects |   Component
+&gt; -------------------------------------------------
+&gt; (Intercept)        | 1.00 |   fixed | conditional
+&gt; Sepal.Width_scaled | 0.92 |   fixed | conditional</code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Visualise the percentage in ROPE</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">percentage_in_rope</span><span class="op">)</span></code></pre></div>
