@@ -22,7 +22,7 @@ This vignette can be referred to by citing the package:
 
 ---
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
+```{r , include=FALSE}
 if (!requireNamespace("see", quietly = TRUE) ||
   !requireNamespace("dplyr", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE) ||
@@ -36,90 +36,127 @@ data(iris)
 library(knitr)
 library(bayestestR)
 options(knitr.kable.NA = "")
-knitr::opts_chunk$set(comment = ">")
-knitr::opts_chunk$set(dpi = 150)
+knitr::opts_chunk$set(
+  comment = ">",
+  message = FALSE,
+  warning = FALSE,
+  out.width = "100%"
+)
+
 options(digits = 2)
 
 set.seed(333)
 ```
 
+Now that [**describing and understanding posterior distributions**](https://easystats.github.io/bayestestR/articles/example1.html)
+of linear regressions is not that mysterious to you, we will take one step back
+and study some simpler models: **correlations** and ***t*-tests**.
 
-Now that [**describing and understanding posterior distributions**](https://easystats.github.io/bayestestR/articles/example1.html) of linear regressions has no secrets for you, we will take one step back and study some simpler models: **correlations** and ***t*-tests**.
-
-But before we do that, let us take a moment to remind ourselves and appreciate the fact that **all basic statistical procedures** such as correlations, *t*-tests, ANOVAs or chi-square tests **are** linear regressions (we strongly recommend  [this excellent demonstration](https://lindeloev.github.io/tests-as-linear/)). Nevertheless, these simple models will be the occasion to introduce a more complex index, such as the **Bayes factor**.
+But before we do that, let us take a moment to remind ourselves and appreciate
+the fact that **all basic statistical procedures** such as correlations,
+*t*-tests, ANOVAs, or chi-square tests **are** linear regressions (we strongly
+recommend  [this excellent demonstration](https://lindeloev.github.io/tests-as-linear/)). Nevertheless,
+these simple models will provide a good pretext to introduce a few more complex
+indices, such as the **Bayes factor**.
 
 ## Correlations
 
 ### Frequentist version 
 
-Let us start, again, with a **frequentist correlation** between two continuous variables, the **width** and the **length** of the sepals of some flowers. The data is available in R as the `iris`  dataset (the same that was used in the [previous tutorial](https://easystats.github.io/bayestestR/articles/example1.html)). 
+Once again, let us begin with a **frequentist correlation** between two
+continuous variables, the **width** and the **length** of the sepals of some
+flowers. The data is available in `R` as the `iris`  dataset (the same that was
+used in the [previous tutorial](https://easystats.github.io/bayestestR/articles/example1.html)).
 
-We will compute a Pearson's correlation test, store the results in an object called `result`, then display it:
+We will compute a Pearson's correlation test, store the results in an object
+called `result`, and then display it:
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 result <- cor.test(iris$Sepal.Width, iris$Sepal.Length)
 result
 ```
 
-As you can see in the output, the test that we did actually compared two hypotheses: the **null hypothesis** (*h0*; no correlation) with the **alternative hypothesis** (*h1*; a non-null correlation). Based on the *p*-value, the null hypothesis cannot be rejected: the correlation between the two variables is **negative but not significant** (r = -.12, p > .05).
+As you can see in the output, the test actually compared **two** hypotheses: 
+- the **null hypothesis** (*h0*; no correlation), 
+- the **alternative hypothesis** (*h1*; a non-null correlation).
+
+Based on the *p*-value, the null hypothesis cannot be rejected: the correlation
+between the two variables is **negative but non-significant** ($r = -.12, p > .05$).
 
 ### Bayesian correlation 
 
-To compute a Bayesian correlation test, we will need the [`BayesFactor`](https://richarddmorey.github.io/BayesFactor/) package (you can install it by running `install.packages("BayesFactor")`). We can then load this package, compute the correlation using the `correlationBF()` function and store the results in a similar fashion. 
+To compute a Bayesian correlation test, we will need the
+[`BayesFactor`](https://richarddmorey.github.io/BayesFactor/) package (you can
+install it by running `install.packages("BayesFactor")`). We can then load this
+package, compute the correlation using the `correlationBF()` function, and store
+the result.
  
-```{r message=FALSE, warning=FALSE, results='hide'}
+```{r, results='hide'}
 library(BayesFactor)
 result <- correlationBF(iris$Sepal.Width, iris$Sepal.Length)
 ```
 
 Now, let us run our `describe_posterior()` function on that:
 
-```{r message=FALSE, warning=FALSE, eval=FALSE}
+```{r }
 describe_posterior(result)
 ```
-```{r echo=FALSE}
-structure(
-  list(
-    Parameter = "rho",
-    Median = -0.114149129692488,
-    CI = 89,
-    CI_low = -0.240766308855643,
-    CI_high = 0.00794997655649642,
-    pd = 91.6,
-    ROPE_CI = 89,
-    ROPE_low = -0.1,
-    ROPE_high = 0.1,
-    ROPE_Percentage = 42.0949171581017,
-    BF = 0.509017511647702,
-    Prior_Distribution = "cauchy",
-    Prior_Location = 0,
-    Prior_Scale = 0.333333333333333
-  ),
-  row.names = 1L,
-  class = "data.frame"
-)
-```
 
+We see again many things here, but the important indices for now are the
+**median** of the posterior distribution, `-.11`. This is (again) quite close to
+the frequentist correlation. We could, as previously, describe the [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html),
+the
+[**pd**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
+or the [**ROPE percentage**](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html),
+but we will focus here on another index provided by the Bayesian framework, the
+**Bayes Factor (BF)**.
 
-We see again many things here, but the important indices for now are the **median** of the posterior distribution, `-.11`. This is (again) quite close to the frequentist correlation. We could, as previously, describe the [**credible interval**](https://easystats.github.io/bayestestR/articles/credible_interval.html), the [**pd**](https://easystats.github.io/bayestestR/articles/probability_of_direction.html) or the [**ROPE percentage**](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html), but we will focus here on another index provided by the Bayesian framework, the **Bayes factor (BF)**.
+### Bayes Factor (BF)
 
-### Bayes factor (BF)
+We said previously that a correlation test actually compares two hypotheses, a
+null (absence of effect) with an alternative one (presence of an effect). The
+[**Bayes factor (BF)**](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
+allows the same comparison and determines **under which of these two models the observed data are more probable**: a model with the effect of interest, and a
+null model without the effect of interest. So, in the context of our correlation
+example, the null hypothesis would be no correlation between the two variables
+($h0: \rho = 0$; where $\rho$ stands for Bayesian correlation coefficient),
+while the alternative hypothesis would be that there is a correlation
+**different** than 0 - positive or negative ($h1: \rho \neq 0$).
 
-We said previously that a correlation test actually compares two hypotheses, a null (absence of effect) with an altnernative one (presence of an effect). The [**Bayes factor (BF)**](https://easystats.github.io/bayestestR/articles/bayes_factors.html) allows the same comparison and determines **under which of two models the observed data are more probable**: a model with the effect of interest, and a null model without the effect of interest. We can use `bayesfactor()` to specifically compute the Bayes factor comparing those models:
+We can use `bayesfactor()` to specifically compute the Bayes factor comparing
+those models:
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 bayesfactor(result)
 ```
 
 We got a *BF* of `0.51`. What does it mean?
 
-Bayes factors are **continuous measures of relative evidence**, with a Bayes factor greater than 1 giving evidence in favour of one of the models (often referred to as *the numerator*), and a Bayes factor smaller than 1 giving evidence in favour of the other model (*the denominator*). 
+Bayes factors are **continuous measures of *relative* evidence**, with a Bayes
+factor greater than 1 giving evidence in favour of one of the models (often
+referred to as *the numerator*), and a Bayes factor smaller than 1 giving
+evidence in favour of the other model (*the denominator*).
 
-> **Yes, you heard things right, evidence in favour of the null!**
+> **Yes, you heard that right, evidence in favour of the *null*!**
 
-That's one of the reason why the Bayesian framework is sometimes considered as superior to the frequentist framework. Remember from your stats lessons, that the ***p*-value can only be used to reject *h0***, but not *accept* it. With the **Bayes factor**, you can measure **evidence against - and in favour of - the null**. 
-
-BFs representing evidence for the alternative against the null can be reversed using $BF_{01}=1/BF_{10}$ (the *01* and *10* correspond to *h0* against *h1* and *h1* against *h0*, respectively) to provide evidence of the null against the alternative. This improves human readability in cases where the BF of the alternative against the null is smaller than 1 (i.e., in support of the null).
+That's one of the reason why the Bayesian framework is sometimes considered as
+superior to the frequentist framework. Remember from your stats lessons, that
+the ***p*-value can only be used to reject *h0***, but not *accept* it. With the
+**Bayes factor**, you can measure **evidence against - and in favour of - the null**. 
+In other words, in the frequentist framework, if the *p*-value is not
+significant, we can conclude that **evidence for the effect is absent**, but not
+that there is **evidence for the absence of the effect**. In Bayesian framework,
+we can do the latter. This is important since sometimes our hypotheses are about
+no effect.
+ 
+BFs representing evidence for the alternative against the null can be reversed
+using $BF_{01}=1/BF_{10}$ (the *01* and *10* correspond to *h0* against *h1* and
+*h1* against *h0*, respectively) to provide evidence of the null against the
+alternative. This improves human readability^[If the effect is really strong,
+the BF values can be extremely high. So don't be surprised if you see BF values
+that have been log-transformed to make them more human readable.] in cases where
+the BF of the alternative against the null is smaller than 1 (i.e., in support
+of the null).
 
 In our case, `BF = 1/0.51 = 2`, indicates that the data are **2 times more probable under the null compared to the alternative hypothesis**, which, though favouring the null, is considered only [anecdotal evidence against the null](https://easystats.github.io/effectsize/reference/interpret_bf.html).
 
@@ -129,19 +166,23 @@ We can thus conclude that there is **anecdotal evidence in favour of an absence 
 
 ### Visualise the Bayes factor
 
-In general, **pie charts are an absolute no-go in data visualisation**, as our brain's perceptive system heavily distorts the information presented in such way. Nevertheless, there is one exception: pizza charts.
+In general, **pie charts are an absolute no-go in data visualisation**, as our
+brain's perceptive system heavily distorts the information presented in such
+way^[An exception would be when the pie slices are well-labeled so that our
+brain's perception system does not have to do the decoding work.]. Nevertheless,
+there is one exception: pizza charts.
 
 It is an intuitive way of interpreting the strength of evidence provided by BFs as an amount of surprise. 
 
-
-```{r echo=FALSE, fig.cap="Wagenmakers' pizza poking analogy. From the great 'www.bayesianspectacles.org' blog.", fig.align='center', out.width="80%"}
+```{r echo=FALSE, fig.cap="Wagenmakers' pizza poking analogy. From the great <www.bayesianspectacles.org> blog.", fig.align='center', out.width="80%"}
 knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/LetsPokeAPizza.jpg")
 ```
 
+Such "pizza plots" can be directly created through the
+[`see`](https://github.com/easystats/see) visualisation companion package for
+`easystats` (you can install it by running `install.packages("see")`):
 
-Such "pizza plots" can be directly created through the [`see`](https://github.com/easystats/see) visualisation companion package for easystats (you can install it by running `install.packages("see")`):
-
-```{r message=FALSE, warning=FALSE}
+```{r }
 library(see)
 
 plot(bayesfactor(result)) +
@@ -150,16 +191,21 @@ plot(bayesfactor(result)) +
 
 So, after seeing this pizza, how much would you be surprised by the outcome of a blinded poke? 
 
-
 ## *t*-tests
 
-***"I know that I know nothing, and especially not if *versicolor* and *virginica* differ in terms of Sepal.Width"*, famously said Socrates**. Time to finally answer this answer this crucial question!
+> **"I know that I know nothing, and especially not if *versicolor* and *virginica* differ in terms of their Sepal.Width" - Socrates**. 
+
+Time to finally answer this crucial question!
 
 ### Versicolor *vs.* virginica
 
-Bayesian *t*-tests can be performed in a very similar way to correlations. As we are particularly interested in two levels of the `Species` factor, *versicolor* and *virginica*. We will start by filtering out from `iris` the non-relevant observations corresponding to the *setosa* specie, and we will then visualise the observations and the distribution of the `Sepal.Width` variable. 
+Bayesian *t*-tests can be performed in a very similar way to correlations. As we
+are particularly interested in two levels of the `Species` factor, *versicolor*
+and *virginica*. We will start by filtering out from `iris` the non-relevant
+observations corresponding to the *setosa* specie, and we will then visualise
+the observations and the distribution of the `Sepal.Width` variable.
 
-```{r message=FALSE, warning=FALSE}
+```{r }
 library(dplyr)
 library(ggplot2)
 
@@ -176,11 +222,13 @@ data %>%
   theme_modern()
 ```
 
-It *seems* (visually) that *virgnica* flowers have, on average, a slightly higer width of sepals. Let's assess this difference statistically by using the `ttestBF` in the `BayesFactor` package.
+It *seems* (visually) that *virgnica* flowers have, on average, a slightly higer
+width of sepals. Let's assess this difference statistically by using the
+`ttestBF()` function in the `BayesFactor` package.
 
 ### Compute the Bayesian *t*-test
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 result <- BayesFactor::ttestBF(formula = Sepal.Width ~ Species, data = data)
 describe_posterior(result)
 ```
@@ -189,21 +237,19 @@ From the indices, we can say that the difference of `Sepal.Width` between *virgi
 
 Keep that in mind as we will see another way of investigating this question.
 
-
 ## Logistic Model
 
-A hypothesis for which one uses a *t*-test can also be tested using a binomial model (*e.g.*, a **logistic model**). Indeed, it is possible to reformulate the following hypothesis, "*there is an important difference in this variable between the two groups*" by "*this variable is able to discriminate between (or classify) the two groups*". However, these models are much more powerful than a regular *t*-test.
+A hypothesis for which one uses a *t*-test can also be tested using a binomial
+model (*e.g.*, a **logistic model**). Indeed, it is possible to reformulate the
+following hypothesis, "*there is an important difference in this variable between the two groups*" with the hypothesis "*this variable is able to discriminate between (or classify) the two groups*". However, these models are
+much more powerful than a *t*-test.
 
-In the case of the difference of `Sepal.Width` between *virginica* and *versicolor*, the question becomes, *how well can we classify the two species using only* `Sepal.Width`. 
+In the case of the difference of `Sepal.Width` between *virginica* and
+*versicolor*, the question becomes, *how well can we classify the two species using only* `Sepal.Width`.
 
 ### Fit the model
 
-```{r message=FALSE, warning=FALSE, eval=FALSE}
-library(rstanarm)
-
-model <- stan_glm(Species ~ Sepal.Width, data = data, family = "binomial")
-```
-```{r message=FALSE, warning=FALSE, echo=FALSE}
+```{r}
 library(rstanarm)
 
 model <- stan_glm(Species ~ Sepal.Width, data = data, family = "binomial", refresh = 0)
@@ -213,29 +259,37 @@ model <- stan_glm(Species ~ Sepal.Width, data = data, family = "binomial", refre
 
 Using the [`modelbased`](https://github.com/easystats/modelbased) package.
 
+```{r}
+library(modelbased)
+means <- estimate_means(model, levels = c("Sepal.Width"), length = 2)
+
+means
+```
 
 ### Performance and Parameters
 
-TO DO.
+Once again, we can extract all indices of interest for the posterior
+distribution using our old pal `describe_posterior()`.
 
-```{r message=FALSE, warning=FALSE}
+```{r}
+describe_posterior(model, test = c("pd", "ROPE", "BF"))
+```
+
+
+```{r}
 library(performance)
 
 model_performance(model)
 ```
 
-```{r message=FALSE, warning=FALSE}
-describe_posterior(model, test = c("pd", "ROPE", "BF"))
-```
-
-
-
 ### Visualise the indices
 
 TO DO.
 
-```{r message=FALSE, warning=FALSE}
-# plot(rope(result))
+```{r }
+library(see)
+
+plot(rope(result))
 ```
 
 
