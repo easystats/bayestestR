@@ -255,7 +255,9 @@ analysis with <code>bayesfactor_inclusion</code>).</p>
 <li><p><code>stanreg</code> models must have been fitted with a defined <code>diagnostic_file</code>.</p></li>
 </ul></li>
 <li><p>For <code>BFBayesFactor</code>, <code>bayesfactor_models()</code> is mostly a wraparound <code><a href='https://rdrr.io/pkg/BayesFactor/man/extractBF-methods.html'>BayesFactor::extractBF()</a></code>.</p></li>
-<li><p>For all other model types (supported by <a href='https://CRAN.R-project.org/package=insight'><span class="pkg">insight</span></a>), BIC approximations are used to compute Bayes factors.</p></li>
+<li><p>BIC approximations are used to compute Bayes factors for all other model types (with a BIC method).</p><ul>
+<li><p><strong>Note</strong> that BICs are extracted from models as-is. So if for example you want to compare mixed-models bases on ML instead of REML, you must supply models fit with ML.</p></li>
+</ul></li>
 </ul><p>In order to correctly and precisely estimate Bayes factors, a rule of thumb
 are the 4 P's: <strong>P</strong>roper <strong>P</strong>riors and <strong>P</strong>lentiful
 <strong>P</strong>osteriors. How many? The number of posterior samples needed for
