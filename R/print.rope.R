@@ -70,7 +70,7 @@ print.rope <- function(x, digits = 2, ...) {
   } else {
     for (i in ci) {
       xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
-      insight::print_color(sprintf("ROPE for the %s%% HDI:\n\n", i), "cyan")
+      insight::print_color(sprintf("ROPE for the %s%% HDI:\n\n", 100 * i), "cyan")
       print_data_frame(xsub, digits = digits)
       cat("\n")
     }
