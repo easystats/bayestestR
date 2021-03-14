@@ -28,10 +28,12 @@ print_html.p_rope <- function(x, digits = 2, ...) {
                      digits, x$ROPE_low[1], digits, x$ROPE_high[1])
 
   x$ROPE_low <- x$ROPE_high <- NULL
-
   formatted_table <- format(x, cp = cp, digits = digits, format = "html", ci_string = "ROPE", ...)
-  attr(formatted_table[[1]], "table_caption") <- caption
-  attr(formatted_table[[1]], "table_subtitle") <- NULL
+
+  if (length(formatted_table) == 1) {
+    attr(formatted_table[[1]], "table_caption") <- caption
+    attr(formatted_table[[1]], "table_subtitle") <- NULL
+  }
 
   insight::export_table(formatted_table, format = "html")
 }
