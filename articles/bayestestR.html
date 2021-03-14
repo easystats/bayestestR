@@ -272,66 +272,12 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 <span class="co"># for a nicer table</span>
 <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">print_md</a></span><span class="op">(</span><span class="va">posteriors</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<table class="table">
-<colgroup>
-<col width="13%">
-<col width="7%">
-<col width="5%">
-<col width="7%">
-<col width="8%">
-<col width="3%">
-<col width="8%">
-<col width="9%">
-<col width="10%">
-<col width="16%">
-<col width="5%">
-<col width="8%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">Parameter</th>
-<th align="right">Median</th>
-<th align="left">CI</th>
-<th align="right">CI_low</th>
-<th align="right">CI_high</th>
-<th align="right">pd</th>
-<th align="right">ROPE_CI</th>
-<th align="right">ROPE_low</th>
-<th align="right">ROPE_high</th>
-<th align="right">ROPE_Percentage</th>
-<th align="left">Rhat</th>
-<th align="left">ESS</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">4.30</td>
-<td align="left">0.89</td>
-<td align="right">4.18</td>
-<td align="right">4.42</td>
-<td align="right">1</td>
-<td align="right">0.89</td>
-<td align="right">-0.08</td>
-<td align="right">0.08</td>
-<td align="right">0</td>
-<td align="left">1.00</td>
-<td align="left">4056.86</td>
-</tr>
-<tr class="even">
-<td align="left">Petal.Length</td>
-<td align="right">0.41</td>
-<td align="left">0.89</td>
-<td align="right">0.38</td>
-<td align="right">0.44</td>
-<td align="right">1</td>
-<td align="right">0.89</td>
-<td align="right">-0.08</td>
-<td align="right">0.08</td>
-<td align="right">0</td>
-<td align="left">1.00</td>
-<td align="left">4115.39</td>
-</tr>
-</tbody>
-</table>
+<pre><code># Fixed effects
+
+Parameter    | Median |       89% CI |   pd |          ROPE | % in ROPE |  Rhat |     ESS
+-----------------------------------------------------------------------------------------
+(Intercept)  |   4.30 | [4.18, 4.42] | 100% | [-0.08, 0.08] |        0% | 1.000 | 4056.86
+Petal.Length |   0.41 | [0.38, 0.44] | 100% | [-0.08, 0.08] |        0% | 1.000 | 4115.39</code></pre>
 <p><strong>That’s it!</strong></p>
 <p>You just fitted a Bayesian version of the model by simply using the <a href="https://mc-stan.org/rstanarm/reference/stan_glm.html"><code>stan_glm()</code></a> function instead of <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and described the posterior distributions of the parameters!</p>
 <p>The conclusion we draw, for this example, are very similar. The effect (<em>the median of the effect’s posterior distribution</em>) is about <code>0.41</code>, and it can be also be considered as <em>significant</em> in the Bayesian sense (more on that later).</p>
