@@ -1,4 +1,4 @@
-if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
+if (require("bayestestR", quietly = TRUE) && require("testthat", quietly = TRUE) && require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
   test_that("rope", {
     expect_equal(as.numeric(rope(distribution_normal(1000, 0, 1))), 0.0898, tolerance = 0.01)
     expect_equal(equivalence_test(distribution_normal(1000, 0, 1))$ROPE_Equivalence, "Undecided")
@@ -16,7 +16,7 @@ if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
     expect_equal(equivalence_test(distribution_normal(1000, 0, 0.001), ci = 1)$ROPE_Equivalence, "Accepted")
 
     # print(rope(rnorm(1000, mean = 0, sd = 3), ci = .5))
-    expect_equal(rope(rnorm(1000, mean = 0, sd = 3), ci = c(.1, .5, .9))$CI, c(10, 50, 90))
+    expect_equal(rope(rnorm(1000, mean = 0, sd = 3), ci = c(.1, .5, .9))$CI, c(.1, .5, .9))
 
     x <- equivalence_test(distribution_normal(1000, 1, 1), ci = c(.50, .99))
     expect_equal(x$ROPE_Percentage[2], 0.0494, tolerance = 0.01)
