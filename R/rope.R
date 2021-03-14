@@ -158,7 +158,7 @@ rope.numeric <- function(x, range = "default", ci = .89, ci_method = "HDI", verb
   }
 
   # Attributes
-  hdi_area <- cbind(CI = ci * 100, data.frame(do.call(rbind, lapply(rope_values, attr, "HDI_area"))))
+  hdi_area <- cbind(CI = ci, data.frame(do.call(rbind, lapply(rope_values, attr, "HDI_area"))))
   names(hdi_area) <- c("CI", "CI_low", "CI_high")
 
   attr(out, "HDI_area") <- hdi_area
@@ -278,7 +278,7 @@ rope.mcmc.list <- rope.bcplm
 
 
   rope <- data.frame(
-    "CI" = ci * 100,
+    "CI" = ci,
     "ROPE_low" = range[1],
     "ROPE_high" = range[2],
     "ROPE_Percentage" = rope_percentage
