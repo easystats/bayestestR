@@ -18,6 +18,12 @@ print.p_direction <- function(x, digits = 2, caption = "Probability of Direction
 
 
 #' @export
+print.p_map <- function(x, digits = 2, caption = "MAP-based p-value", ...) {
+  .print_default(x = x, digits = digits, caption = caption, ...)
+}
+
+
+#' @export
 print.mhdior <- function(x, digits = 2, caption = "Max HDI inside/outside ROPE (MHDIOR)", ...) {
   .print_default(x = x, digits = digits, caption = caption, ...)
 }
@@ -57,7 +63,11 @@ print.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", ...
 
 
 .print_default <- function(x, digits = 2, caption = NULL, subtitles = NULL, ci_string = "CI", ...) {
+
+  # retrieve information with cleaned parameter names
   cp <- attr(x, "clean_parameters")
+
+  # format data frame and columns
   formatted_table <- format(
     x,
     cp = cp,
@@ -69,10 +79,14 @@ print.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", ...
     ...
   )
 
+  # check if we have a 1x1 data frame (i.e. a numeric input)
   if (is.data.frame(formatted_table) && nrow(formatted_table) == 1 && ncol(formatted_table) == 1) {
 
     # print for numeric
+
     caption <- attr(formatted_table, "table_caption")
+
+    # if we have no useful column name and a caption, use caption
     if (!is.null(caption) && !grepl(paste0(ci_string, "$"), colnames(formatted_table))) {
       cat(paste0(caption, ": "))
     } else {
@@ -82,6 +96,7 @@ print.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", ...
   } else {
 
     # print for data frame
+
     cat(insight::export_table(
       formatted_table,
       caption = caption

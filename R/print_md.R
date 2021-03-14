@@ -25,6 +25,12 @@ print_md.p_direction <- function(x, digits = 2, caption = "Probability of Direct
 
 
 #' @export
+print_md.p_map <- function(x, digits = 2, caption = "MAP-based p-value", ...) {
+  .print_md_default(x = x, digits = digits, caption = caption, ...)
+}
+
+
+#' @export
 print_md.mhdior <- function(x, digits = 2, caption = "Max HDI inside/outside ROPE (MHDIOR)", ...) {
   .print_md_default(x = x, digits = digits, caption = caption, ...)
 }
@@ -64,7 +70,11 @@ print_md.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", 
 
 
 .print_md_default <- function(x, digits = 2, caption = NULL, subtitles = NULL, ci_string = "CI", ...) {
+
+  # retrieve information with cleaned parameter names
   cp <- attr(x, "clean_parameters")
+
+  # format data frame and columns
   formatted_table <- format(
     x,
     cp = cp,
@@ -76,6 +86,8 @@ print_md.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", 
     ...
   )
 
+  # print for data frame - I don't think we need a special handling for
+  # numeric values to have a markdown-table output
   insight::export_table(
     formatted_table,
     caption = caption,

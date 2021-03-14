@@ -177,6 +177,7 @@ p_map.bamlss <- function(x, precision = 2^10, method = "kernel", component = c("
     ...
   )
 
+  out <- .add_clean_parameters_attribute(out, x)
   attr(out, "data") <- insight::get_parameters(x, parameters = parameters)
   out
 }
@@ -228,13 +229,15 @@ p_map.sim <- function(x, precision = 2^10, method = "kernel", parameters = NULL,
 p_map.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
+  cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(
     p_map(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), precision = precision, method = method),
-    insight::clean_parameters(x),
+    cleaned_parameters,
     inherits(x, "stanmvreg")
   )
 
+  attr(out, "clean_parameters") <- cleaned_parameters
   class(out) <- unique(c("p_map", class(out)))
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
@@ -254,12 +257,14 @@ p_map.blavaan <- p_map.stanreg
 p_map.brmsfit <- function(x, precision = 2^10, method = "kernel", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
+  cleaned_parameters <- insight::clean_parameters(x)
 
   out <- .prepare_output(
     p_map(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), precision = precision, method = method, ...),
-    insight::clean_parameters(x)
+    cleaned_parameters
   )
 
+  attr(out, "clean_parameters") <- cleaned_parameters
   class(out) <- unique(c("p_map", class(out)))
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out

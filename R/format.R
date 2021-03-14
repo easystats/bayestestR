@@ -56,6 +56,9 @@ format.p_direction <- format.describe_posterior
 format.mhdior <- format.describe_posterior
 
 #' @export
+format.p_map <- format.describe_posterior
+
+#' @export
 format.bayestestR_hdi <- format.describe_posterior
 
 #' @export
