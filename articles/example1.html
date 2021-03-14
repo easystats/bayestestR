@@ -315,9 +315,7 @@
 <p>We will compute this <strong>credible interval</strong> based on the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis">Highest Density Interval (HDI)</a>. It will give us the range containing the 89% most probable effect values. <strong>Note that we will use 89% CIs instead of 95%</strong> CIs (as in the frequentist framework), as the 89% level gives more <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#why-is-the-default-89">stable results</a> <span class="citation">(Kruschke, 2014)</span> and reminds us about the arbitrariness of such conventions <span class="citation">(McElreath, 2018)</span>.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span>, ci <span class="op">=</span> <span class="fl">0.89</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; 89% HDI     
-&gt; ------------
-&gt; [0.38, 0.44]</code></pre>
+<pre><code>&gt; 89% HDI: [0.38, 0.44]</code></pre>
 <p>Nice, so we can conclude that <strong>the effect has 89% chance of falling within the <code>[0.38, 0.44]</code> range</strong>. We have just computed the two most important pieces of information for describing our effects.</p>
 </div>
 <div id="effect-significance" class="section level4">
@@ -362,9 +360,7 @@
 <pre><code>&gt; [1] 52</code></pre>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">feedsunflower</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; 89% HDI       
-&gt; --------------
-&gt; [13.07, 89.57]</code></pre>
+<pre><code>&gt; 89% HDI: [13.07, 89.57]</code></pre>
 <p>It makes you fat by around 51 grams (the median). However, the uncertainty is quite high: <strong>there is 89% chance that the difference between the two feed types is between 14 and 91.</strong></p>
 <blockquote>
 <p><strong>Is this effect different from 0?</strong></p>
@@ -431,8 +427,9 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <p>We can conclude that <strong>the effect is positive with a probability of 98%</strong>. We call this index the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>Probability of Direction (pd)</strong></a>. It can, in fact, be computed more easily with the following:</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/p_direction.html">p_direction</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">feedsunflower</span><span class="op">)</span></code></pre></div>
+<pre><code>&gt; Probability of Direction (pd): 0.98</code></pre>
 <p>Interestingly, it so happens that <strong>this index is usually highly correlated with the frequentist <em>p</em>-value</strong>. We could almost roughly infer the corresponding <em>p</em>-value with a simple transformation:</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pd</span> <span class="op">&lt;-</span> <span class="fl">97.82</span>
 <span class="va">onesided_p</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">pd</span> <span class="op">/</span> <span class="fl">100</span>
 <span class="va">twosided_p</span> <span class="op">&lt;-</span> <span class="va">onesided_p</span> <span class="op">*</span> <span class="fl">2</span>
@@ -442,7 +439,7 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <div id="comparison-to-frequentist" class="section level4">
 <h4 class="hasAnchor">
 <a href="#comparison-to-frequentist" class="anchor"></a>Comparison to frequentist</h4>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">weight</span> <span class="op">~</span> <span class="va">feed</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; 
 &gt; Call:
@@ -475,7 +472,7 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <p><strong>Behold, <code>describe_posterior</code>!</strong></p>
 </blockquote>
 <p>This function computes all of the adored mentioned indices, and can be run directly on the model:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"p_direction"</span>, <span class="st">"rope"</span>, <span class="st">"bayesfactor"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Summary of Posterior Distribution
 &gt; 
