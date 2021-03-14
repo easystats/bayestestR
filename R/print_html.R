@@ -34,6 +34,12 @@ print_html.bayestestR_eti <- function(x, digits = 2, ...) {
 }
 
 
+#' @export
+print_html.bayestestR_si <- function(x, digits = 2, ...) {
+  .print_html_ci(x = x, digits = digits, caption = "Support Interval", ci_string = "SI", ...)
+}
+
+
 
 
 

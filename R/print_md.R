@@ -34,6 +34,12 @@ print_md.bayestestR_eti <- function(x, digits = 2, ...) {
 }
 
 
+#' @export
+print_md.bayestestR_si <- function(x, digits = 2, ...) {
+  .print_md_ci(x = x, digits = digits, caption = "Support Interval", ci_string = "SI", ...)
+}
+
+
 
 
 

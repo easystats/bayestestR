@@ -27,6 +27,13 @@ print.bayestestR_eti <- function(x, digits = 2, ...) {
 }
 
 
+#' @export
+print.bayestestR_si <- function(x, digits = 2, ...) {
+  .print_ci(x = x, digits = digits, caption = "# Support Interval", ci_string = "SI", ...)
+}
+
+
+
 
 
 # util ---------------------
@@ -45,43 +52,3 @@ print.bayestestR_eti <- function(x, digits = 2, ...) {
   cat(insight::export_table(formatted_table))
   invisible(x)
 }
-
-
-
-
-
-
-
-
-
-
-# old print methods --------------------
-
-
-# print.describe_posterior <- function(x, digits = 3, ...) {
-#   print_data_frame(format(x, digits = digits, ...), digits = digits, ...)
-#   invisible(x)
-# }
-
-
-# print.bayestestR_hdi <- function(x, digits = 2, ...) {
-#   orig_x <- x
-#   if ("data_plot" %in% class(x)) {
-#     print(as.data.frame(x))
-#   } else {
-#     .print_hdi(x, digits, title = "Highest Density Interval", ci_string = "HDI", ...)
-#   }
-#   invisible(orig_x)
-# }
-
-
-
-# print.bayestestR_eti <- function(x, digits = 2, ...) {
-#   orig_x <- x
-#   if ("data_plot" %in% class(x)) {
-#     print(as.data.frame(x))
-#   } else {
-#     .print_hdi(x, digits, title = "Equal-Tailed Interval", ci_string = "ETI", ...)
-#   }
-#   invisible(orig_x)
-# }
