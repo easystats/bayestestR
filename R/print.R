@@ -15,7 +15,19 @@ print.describe_posterior <- function(x, digits = 2, caption = NULL, ...) {
 print.point_estimate <- print.describe_posterior
 
 #' @export
-print.p_rope <- print.describe_posterior
+print.p_rope <- function(x, digits = 2, ...) {
+  cp <- attr(x, "clean_parameters")
+  caption <- sprintf("# Proportion of samples inside the ROPE [%.*f, %.*f]:",
+                     digits, x$ROPE_low[1], digits, x$ROPE_high[1])
+
+  x$ROPE_low <- x$ROPE_high <- NULL
+
+  formatted_table <- format(x, cp = cp, digits = digits, format = "text", ci_string = "ROPE", ...)
+  attr(formatted_table[[1]], "table_caption") <- c(caption, "blue")
+
+  cat(insight::export_table(formatted_table))
+  invisible(x)
+}
 
 #' @export
 print.bayestestR_hdi <- function(x, digits = 2, ...) {

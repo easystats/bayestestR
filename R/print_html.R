@@ -14,7 +14,6 @@ print_html.describe_posterior <- function(x, digits = 2, caption = NULL, ...) {
     caption = caption,
     format = "html"
   )
-  invisible(x)
 }
 
 
@@ -22,7 +21,18 @@ print_html.describe_posterior <- function(x, digits = 2, caption = NULL, ...) {
 print_html.point_estimate <- print_html.describe_posterior
 
 #' @export
-print_html.p_rope <- print_html.describe_posterior
+print_html.p_rope <- function(x, digits = 2, ...) {
+  cp <- attr(x, "clean_parameters")
+  caption <- sprintf("Proportion of samples inside the ROPE [%.*f, %.*f]:",
+                     digits, x$ROPE_low[1], digits, x$ROPE_high[1])
+
+  x$ROPE_low <- x$ROPE_high <- NULL
+
+  formatted_table <- format(x, cp = cp, digits = digits, format = "html", ci_string = "ROPE", ...)
+  attr(formatted_table[[1]], "table_caption") <- c(caption, "blue")
+
+  insight::export_table(formatted_table, format = "html")
+}
 
 #' @export
 print_html.bayestestR_hdi <- function(x, digits = 2, ...) {
@@ -60,5 +70,4 @@ print_html.bayestestR_si <- function(x, digits = 2, ...) {
     caption = caption,
     format = "html"
   )
-  invisible(x)
 }

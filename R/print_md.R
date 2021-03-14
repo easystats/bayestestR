@@ -14,7 +14,6 @@ print_md.describe_posterior <- function(x, digits = 2, caption = NULL, ...) {
     caption = caption,
     format = "markdown"
   )
-  invisible(x)
 }
 
 
@@ -22,7 +21,18 @@ print_md.describe_posterior <- function(x, digits = 2, caption = NULL, ...) {
 print_md.point_estimate <- print_md.describe_posterior
 
 #' @export
-print_md.p_rope <- print_md.describe_posterior
+print_md.p_rope <- function(x, digits = 2, ...) {
+  cp <- attr(x, "clean_parameters")
+  caption <- sprintf("Proportion of samples inside the ROPE [%.*f, %.*f]:",
+                     digits, x$ROPE_low[1], digits, x$ROPE_high[1])
+
+  x$ROPE_low <- x$ROPE_high <- NULL
+
+  formatted_table <- format(x, cp = cp, digits = digits, format = "markdown", ci_string = "ROPE", ...)
+  attr(formatted_table[[1]], "table_caption") <- c(caption, "blue")
+
+  insight::export_table(formatted_table, format = "markdown")
+}
 
 #' @export
 print_md.bayestestR_hdi <- function(x, digits = 2, ...) {
@@ -60,5 +70,4 @@ print_md.bayestestR_si <- function(x, digits = 2, ...) {
     caption = caption,
     format = "markdown"
   )
-  invisible(x)
 }
