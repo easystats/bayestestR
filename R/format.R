@@ -30,6 +30,8 @@ format.point_estimate <- format.describe_posterior
 #' @export
 format.bayestestR_hdi <- format.describe_posterior
 
+#' @export
+format.bayestestR_eti <- format.describe_posterior
 
 
 

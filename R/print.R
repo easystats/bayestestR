@@ -3,7 +3,10 @@
 print.describe_posterior <- function(x, digits = 2, caption = NULL, ...) {
   cp <- attr(x, "clean_parameters")
   formatted_table <- format(x, cp = cp, digits = digits, format = "text", ...)
-  cat(insight::export_table(formatted_table, caption = caption))
+  cat(insight::export_table(
+    formatted_table,
+    caption = caption
+  ))
   invisible(x)
 }
 
@@ -13,9 +16,24 @@ print.point_estimate <- print.describe_posterior
 
 
 #' @export
-print.bayestestR_hdi <- function(x, digits = 2, caption = "# Highest Density Interval", ...) {
+print.bayestestR_hdi <- function(x, digits = 2, ...) {
+  .print_ci(x = x, digits = digits, caption = "# Highest Density Interval", ci_string = "HDI", ...)
+}
+
+
+#' @export
+print.bayestestR_eti <- function(x, digits = 2, ...) {
+  .print_ci(x = x, digits = digits, caption = "# Equal-Tailed Interval", ci_string = "ETI", ...)
+}
+
+
+
+
+# util ---------------------
+
+.print_ci <- function(x, digits = 2, caption = "# Highest Density Interval", ci_string = "HDI", ...) {
   cp <- attr(x, "clean_parameters")
-  formatted_table <- format(x, cp = cp, digits = digits, format = "text", ci_string = "HDI", ...)
+  formatted_table <- format(x, cp = cp, digits = digits, format = "text", ci_string = ci_string, ...)
 
   # in case we have no multiple components, just use "Highest Density Interval" as caption
   if (length(formatted_table) == 1) {
@@ -30,6 +48,16 @@ print.bayestestR_hdi <- function(x, digits = 2, caption = "# Highest Density Int
 
 
 
+
+
+
+
+
+
+
+# old print methods --------------------
+
+
 # print.describe_posterior <- function(x, digits = 3, ...) {
 #   print_data_frame(format(x, digits = digits, ...), digits = digits, ...)
 #   invisible(x)
@@ -42,6 +70,18 @@ print.bayestestR_hdi <- function(x, digits = 2, caption = "# Highest Density Int
 #     print(as.data.frame(x))
 #   } else {
 #     .print_hdi(x, digits, title = "Highest Density Interval", ci_string = "HDI", ...)
+#   }
+#   invisible(orig_x)
+# }
+
+
+
+# print.bayestestR_eti <- function(x, digits = 2, ...) {
+#   orig_x <- x
+#   if ("data_plot" %in% class(x)) {
+#     print(as.data.frame(x))
+#   } else {
+#     .print_hdi(x, digits, title = "Equal-Tailed Interval", ci_string = "ETI", ...)
 #   }
 #   invisible(orig_x)
 # }

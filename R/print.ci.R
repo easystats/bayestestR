@@ -1,15 +1,4 @@
 #' @export
-print.bayestestR_eti <- function(x, digits = 2, ...) {
-  orig_x <- x
-  if ("data_plot" %in% class(x)) {
-    print(as.data.frame(x))
-  } else {
-    .print_hdi(x, digits, title = "Equal-Tailed Interval", ci_string = "ETI", ...)
-  }
-  invisible(orig_x)
-}
-
-#' @export
 print.bayestestR_si <- function(x, digits = 2, ...) {
   orig_x <- x
   .print_hdi(x, digits, title = "Support Interval", ci_string = "SI", ...)
