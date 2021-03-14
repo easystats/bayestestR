@@ -1,6 +1,14 @@
 #' @importFrom insight format_table print_parameters
 #' @export
-format.describe_posterior <- function(x, cp, digits = 2, format = "text", ci_string = "CI", ...) {
+format.describe_posterior <- function(x,
+                                      cp,
+                                      digits = 2,
+                                      format = "text",
+                                      ci_string = "CI",
+                                      caption = NULL,
+                                      subtitles = NULL,
+                                      ...) {
+
   # reshape CI
   if (.n_unique(x$CI) > 1) {
     att <- attributes(x)
@@ -18,7 +26,18 @@ format.describe_posterior <- function(x, cp, digits = 2, format = "text", ci_str
 
   # match and split at components
   if (!is.null(cp) && !all(is.na(match(cp$Parameter, out$Parameter)))) {
-    out <- insight::print_parameters(cp, out, keep_parameter_column = FALSE, remove_empty_column = TRUE)
+    out <- insight::print_parameters(
+      cp,
+      out,
+      keep_parameter_column = FALSE,
+      remove_empty_column = TRUE,
+      titles = caption,
+      subtitles = subtitles,
+      format = format
+    )
+  } else {
+    attr(out, "table_caption") <- caption
+    attr(out, "table_subtitle") <- subtitles
   }
   out
 }
