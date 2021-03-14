@@ -269,7 +269,9 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <!-- ``` -->
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
-<span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
+<span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<span class="co"># for a nicer table</span>
+<span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">print_md</a></span><span class="op">(</span><span class="va">posteriors</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
 <col width="13%">
@@ -283,12 +285,12 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <col width="10%">
 <col width="16%">
 <col width="5%">
-<col width="5%">
+<col width="8%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Parameter</th>
 <th align="right">Median</th>
-<th align="right">CI</th>
+<th align="left">CI</th>
 <th align="right">CI_low</th>
 <th align="right">CI_high</th>
 <th align="right">pd</th>
@@ -296,14 +298,14 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <th align="right">ROPE_low</th>
 <th align="right">ROPE_high</th>
 <th align="right">ROPE_Percentage</th>
-<th align="right">Rhat</th>
-<th align="right">ESS</th>
+<th align="left">Rhat</th>
+<th align="left">ESS</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
 <td align="right">4.30</td>
-<td align="right">0.89</td>
+<td align="left">0.89</td>
 <td align="right">4.18</td>
 <td align="right">4.42</td>
 <td align="right">1</td>
@@ -311,13 +313,13 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <td align="right">-0.08</td>
 <td align="right">0.08</td>
 <td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4057</td>
+<td align="left">1.00</td>
+<td align="left">4056.86</td>
 </tr>
 <tr class="even">
 <td align="left">Petal.Length</td>
 <td align="right">0.41</td>
-<td align="right">0.89</td>
+<td align="left">0.89</td>
 <td align="right">0.38</td>
 <td align="right">0.44</td>
 <td align="right">1</td>
@@ -325,8 +327,8 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <td align="right">-0.08</td>
 <td align="right">0.08</td>
 <td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4115</td>
+<td align="left">1.00</td>
+<td align="left">4115.39</td>
 </tr>
 </tbody>
 </table>
