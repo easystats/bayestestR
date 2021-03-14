@@ -1,4 +1,4 @@
-if (require("rstanarm", quietly = TRUE)) {
+if (require("bayestestR", quietly = TRUE) && require("rstanarm", quietly = TRUE) && require("testthat", quietly = TRUE)) {
   test_that("p_significance", {
     # numeric
     set.seed(333)
@@ -7,7 +7,7 @@ if (require("rstanarm", quietly = TRUE)) {
     expect_equal(as.numeric(ps), 0.816, tolerance = 0.1)
     expect_equal(nrow(p_significance(data.frame(replicate(4, rnorm(100))))), 4)
     expect_s3_class(ps, "p_significance")
-    expect_equal(tail(capture.output(print(ps)), 1), "ps [0.10] = 81.60%")
+    expect_equal(tail(capture.output(print(ps)), 1), "Practical Significance (threshold: 0.10): 0.82")
   })
 
 

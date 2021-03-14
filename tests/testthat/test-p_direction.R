@@ -1,4 +1,4 @@
-if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
+if (require("testthat", quietly = TRUE) && require("bayestestR", quietly = TRUE) && require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
   test_that("p_direction", {
     set.seed(333)
     x <- bayestestR::distribution_normal(10000, 1, 1)
@@ -7,7 +7,7 @@ if (require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
     expect_equal(as.numeric(p_direction(x, method = "kernel")), 0.842, tolerance = 0.1)
     expect_equal(nrow(p_direction(data.frame(replicate(4, rnorm(100))))), 4)
     expect_s3_class(pd, "p_direction")
-    expect_equal(tail(capture.output(print(pd)), 1), "pd = 84.14%")
+    expect_equal(tail(capture.output(print(pd)), 1), "Probability of Direction: 0.84")
   })
 
 

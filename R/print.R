@@ -12,7 +12,7 @@ print.point_estimate <- function(x, digits = 2, caption = "Point Estimate", ...)
 
 
 #' @export
-print.p_direction <- function(x, digits = 2, caption = "Probability of Direction (pd)", ...) {
+print.p_direction <- function(x, digits = 2, caption = "Probability of Direction", ...) {
   .print_default(x = x, digits = digits, caption = caption, ...)
 }
 
