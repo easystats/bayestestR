@@ -35,19 +35,19 @@ print_md.p_rope <- function(x, digits = 2, ...) {
 
 #' @export
 print_md.bayestestR_hdi <- function(x, digits = 2, caption = "Highest Density Interval", ...) {
-  .print_md_ci(x = x, digits = digits, caption = caption, ci_string = "HDI", ...)
+  .print_md_default(x = x, digits = digits, caption = caption, ci_string = "HDI", ...)
 }
 
 
 #' @export
 print_md.bayestestR_eti <- function(x, digits = 2, caption = "Equal-Tailed Interval", ...) {
-  .print_md_ci(x = x, digits = digits, caption = caption, ci_string = "ETI", ...)
+  .print_md_default(x = x, digits = digits, caption = caption, ci_string = "ETI", ...)
 }
 
 
 #' @export
 print_md.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", ...) {
-  .print_md_ci(x = x, digits = digits, caption = caption, ci_string = "SI", ...)
+  .print_md_default(x = x, digits = digits, caption = caption, ci_string = "SI", ...)
 }
 
 
@@ -69,23 +69,6 @@ print_md.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", 
     subtitles = subtitles,
     ...
   )
-
-  insight::export_table(
-    formatted_table,
-    caption = caption,
-    format = "markdown"
-  )
-}
-
-.print_md_ci <- function(x, digits = 2, caption = "Highest Density Interval", ci_string = "HDI", ...) {
-  cp <- attr(x, "clean_parameters")
-  formatted_table <- format(x, cp = cp, digits = digits, format = "markdown", ci_string = ci_string, ...)
-
-  # in case we have no multiple components, just use "Highest Density Interval" as caption
-  if (length(formatted_table) == 1) {
-    attr(formatted_table[[1]], "table_caption") <- caption
-    attr(formatted_table[[1]], "table_subtitle") <- NULL
-  }
 
   insight::export_table(
     formatted_table,

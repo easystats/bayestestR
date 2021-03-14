@@ -28,19 +28,19 @@ print.p_rope <- function(x, digits = 2, ...) {
 
 #' @export
 print.bayestestR_hdi <- function(x, digits = 2, caption = "Highest Density Interval", ...) {
-  .print_ci(x = x, digits = digits, caption = caption, ci_string = "HDI", ...)
+  .print_default(x = x, digits = digits, caption = caption, ci_string = "HDI", ...)
 }
 
 
 #' @export
 print.bayestestR_eti <- function(x, digits = 2, caption = "Equal-Tailed Interval", ...) {
-  .print_ci(x = x, digits = digits, caption = caption, ci_string = "ETI", ...)
+  .print_default(x = x, digits = digits, caption = caption, ci_string = "ETI", ...)
 }
 
 
 #' @export
 print.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", ...) {
-  .print_ci(x = x, digits = digits, caption = caption, ci_string = "SI", ...)
+  .print_default(x = x, digits = digits, caption = caption, ci_string = "SI", ...)
 }
 
 
@@ -63,33 +63,24 @@ print.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", ...
     ...
   )
 
-  cat(insight::export_table(
-    formatted_table,
-    caption = caption
-  ))
-  invisible(x)
-}
+  if (is.data.frame(formatted_table) && nrow(formatted_table) == 1 && ncol(formatted_table) == 1) {
 
-
-
-.print_ci <- function(x, digits = 2, caption = "Highest Density Interval", ci_string = "HDI", ...) {
-  cp <- attr(x, "clean_parameters")
-  formatted_table <- format(
-    x,
-    cp = cp,
-    digits = digits,
-    format = "text",
-    ci_string = ci_string,
-    ...
-  )
-
-  # in case we have no multiple components, just use "Highest Density Interval" as caption
-  if (length(formatted_table) == 1) {
-    attr(formatted_table[[1]], "table_caption") <- c(caption, "blue")
+    # print for numeric
+    caption <- attr(formatted_table, "table_caption")
+    if (!is.null(caption) && !grepl(paste0(ci_string, "$"), colnames(formatted_table))) {
+      cat(paste0(caption, ": "))
+    } else {
+      cat(paste0(colnames(formatted_table), ": "))
+    }
+    cat(formatted_table[1, 1])
   } else {
-    cat(insight::print_color(paste0(caption, "\n\n"), "blue"))
+
+    # print for data frame
+    cat(insight::export_table(
+      formatted_table,
+      caption = caption
+    ))
   }
 
-  cat(insight::export_table(formatted_table))
   invisible(x)
 }
