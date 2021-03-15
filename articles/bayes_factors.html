@@ -247,14 +247,14 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">My_first_BF</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">model</span>, null <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">My_first_BF</span></code></pre></div>
-<pre><code>&gt; # Bayes Factor (Null-Interval)
+<pre><code>&gt; Bayes Factor (Null-Interval)
 &gt; 
 &gt; Parameter   |    BF
 &gt; -------------------
 &gt; (Intercept) | 0.098
 &gt; group2      | 0.888
 &gt; 
-&gt; * Evidence Against The Null: [-1, 1]</code></pre>
+&gt; * Evidence Against The Null: [-1.000, 1.000]</code></pre>
 <p>We can also plot using the <code>see</code> package:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/">see</a></span><span class="op">)</span>
@@ -279,13 +279,13 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">My_second_BF</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">model</span>, null <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
 <span class="va">My_second_BF</span></code></pre></div>
-<pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
+<pre><code>&gt; Bayes Factor (Savage-Dickey density ratio)
 &gt; 
-&gt; Parameter |    BF
-&gt; -----------------
-&gt; group2    | 1.264
+&gt; Parameter |   BF
+&gt; ----------------
+&gt; group2    | 1.26
 &gt; 
-&gt; * Evidence Against The Null: [0]</code></pre>
+&gt; * Evidence Against The Null: 0</code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">My_second_BF</span><span class="op">)</span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-9-1.png" width="1093.75"></p>
@@ -297,13 +297,13 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">test_group2_right</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">model</span>, direction <span class="op">=</span> <span class="st">"&gt;"</span><span class="op">)</span>
 <span class="va">test_group2_right</span></code></pre></div>
-<pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
+<pre><code>&gt; Bayes Factor (Savage-Dickey density ratio)
 &gt; 
-&gt; Parameter |    BF
-&gt; -----------------
-&gt; group2    | 2.422
+&gt; Parameter |   BF
+&gt; ----------------
+&gt; group2    | 2.42
 &gt; 
-&gt; * Evidence Against The Null: [0]
+&gt; * Evidence Against The Null: 0
 &gt; *                 Direction: Right-Sided test</code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">test_group2_right</span><span class="op">)</span></code></pre></div>
@@ -314,13 +314,13 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">test_group2_dividing</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">model</span>, null <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="va">test_group2_dividing</span></code></pre></div>
-<pre><code>&gt; # Bayes Factor (Null-Interval)
+<pre><code>&gt; Bayes Factor (Null-Interval)
 &gt; 
-&gt; Parameter |     BF
-&gt; ------------------
-&gt; group2    | 20.745
+&gt; Parameter |    BF
+&gt; -----------------
+&gt; group2    | 20.75
 &gt; 
-&gt; * Evidence Against The Null: [-Inf, 0]</code></pre>
+&gt; * Evidence Against The Null: [-Inf, 0.000]</code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">test_group2_dividing</span><span class="op">)</span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-11-1.png" width="1093.75"></p>
@@ -755,15 +755,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># pass the original model via prior</span>
 <span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">groups_all</span>, prior <span class="op">=</span> <span class="va">model</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Bayes Factor (Savage-Dickey density ratio)
+<pre><code>&gt; Bayes Factor (Savage-Dickey density ratio)
 &gt; 
-&gt; Parameter |     BF
-&gt; ------------------
-&gt; 1, .      |  0.287
-&gt; 2, .      | 19.961
-&gt; ., 1 - 2  |  1.256
+&gt; Parameter |    BF
+&gt; -----------------
+&gt; 1, .      | 0.287
+&gt; 2, .      | 19.96
+&gt; ., 1 - 2  |  1.26
 &gt; 
-&gt; * Evidence Against The Null: [0]</code></pre>
+&gt; * Evidence Against The Null: 0</code></pre>
 <p>That is strong evidence for the mean of group 1 being 0, and for group 2 for not being 0, but hardly any evidence for the difference between them being not 0. Conflict? Uncertainty? That is the Bayesian way!</p>
 <p>We can also use the <code>easystats</code>’ <a href="https://cran.r-project.org/package=modelbased"><strong><code>modelbased</code></strong></a> package to compute Bayes factors for contrasts:</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
