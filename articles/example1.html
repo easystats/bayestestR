@@ -289,7 +289,7 @@
 <p>Well, this is <strong>very close to the mean</strong> (and identical when rounding the values). Maybe we could take the <strong>mode</strong>, that is, the <em>peak</em> of the posterior distribution? In the Bayesian framework, this value is called the <strong>Maximum A Posteriori (MAP)</strong>. Let’s see:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/map_estimate.html">map_estimate</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">Petal.Length</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; MAP = 0.41</code></pre>
+<pre><code>&gt; MAP Estimate: 0.41</code></pre>
 <p><strong>They are all very close!</strong></p>
 <p>Let’s visualize these values on the posterior distribution:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
@@ -478,8 +478,8 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 &gt; 
 &gt; Parameter     | Median |           89% CI |     pd |          ROPE | % in ROPE |     BF |  Rhat |     ESS
 &gt; ---------------------------------------------------------------------------------------------------------
-&gt; (Intercept)   | 277.45 | [248.53, 304.42] |   100% | [-6.17, 6.17] |        0% | &gt; 1000 | 1.001 | 3473.32
-&gt; feedsunflower |  51.81 | [ 13.07,  89.57] | 98.30% | [-6.17, 6.17] |        0% |  0.861 | 1.001 | 3206.74</code></pre>
+&gt; (Intercept)   | 277.45 | [248.53, 304.42] |   100% | [-6.17, 6.17] |        0% | &gt; 1000 | 1.001 | 3473.00
+&gt; feedsunflower |  51.81 | [ 13.07,  89.57] | 98.30% | [-6.17, 6.17] |        0% |  0.861 | 1.001 | 3207.00</code></pre>
 <p><strong>Tada!</strong> There we have it! The <strong>median</strong>, the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE percentage</strong>!</p>
 <p>Understanding and describing posterior distributions is just one aspect of Bayesian modelling. <strong>Are you ready for more?!</strong> <a href="https://easystats.github.io/bayestestR/articles/example2.html"><strong>Click here</strong></a> to see the next example.</p>
 </div>
