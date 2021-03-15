@@ -56,6 +56,9 @@ format.p_direction <- format.describe_posterior
 format.p_map <- format.describe_posterior
 
 #' @export
+format.map_estimate <- format.describe_posterior
+
+#' @export
 format.p_significance <- format.describe_posterior
 
 #' @export

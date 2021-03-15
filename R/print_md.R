@@ -19,6 +19,12 @@ print_md.point_estimate <- function(x, digits = 2, caption = "Point Estimate", .
 
 
 #' @export
+print_md.map_estimate <- function(x, digits = 2, caption = "MAP Estimate", ...) {
+  .print_md_default(x = x, digits = digits, caption = caption, ...)
+}
+
+
+#' @export
 print_md.p_direction <- function(x, digits = 2, caption = "Probability of Direction (pd)", ...) {
   .print_md_default(x = x, digits = digits, caption = caption, ...)
 }

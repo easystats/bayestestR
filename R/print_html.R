@@ -19,6 +19,12 @@ print_html.point_estimate <- function(x, digits = 2, caption = "Point Estimate",
 
 
 #' @export
+print_html.map_estimate <- function(x, digits = 2, caption = "MAP Estimate", ...) {
+  .print_html_default(x = x, digits = digits, caption = caption, ...)
+}
+
+
+#' @export
 print_html.p_direction <- function(x, digits = 2, caption = "Probability of Direction (pd)", ...) {
   .print_html_default(x = x, digits = digits, caption = caption, ...)
 }
