@@ -23,15 +23,18 @@ This vignette can be referred to by citing the package:
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-if (!requireNamespace("rstanarm", quietly = TRUE) &&
-    !requireNamespace("dplyr", quietly = TRUE)) {
-  knitr::opts_chunk$set(eval = FALSE)
-}
-
 library(knitr)
-options(knitr.kable.NA = "")
+
 knitr::opts_chunk$set(comment = ">")
+options(knitr.kable.NA = "")
 options(digits = 2)
+
+if (!requireNamespace("rstanarm", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+} else {
+  library(rstanarm)
+  library(bayestestR)
+}
 ```
 
 
@@ -139,10 +142,8 @@ summary(model)
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
-library(dplyr)
-
-lm(Sepal.Length ~ Petal.Length, data = iris) %>%
-  summary()
+model <- lm(Sepal.Length ~ Petal.Length, data = iris)
+summary(model)
 ```
 
 <!-- ```{r message=FALSE, warning=FALSE, eval=FALSE} -->
@@ -192,13 +193,11 @@ print_md(posteriors, digits = 2)
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA}
-library(rstanarm)
-library(bayestestR)
 set.seed(333)
-
 model <- stan_glm(Sepal.Length ~ Petal.Length, data = iris, refresh = 0)
-describe_posterior(model) %>% 
-  print_md(digits = 2)
+posteriors <- describe_posterior(model)
+# for a nicer table
+print_md(posteriors, digits = 2)
 ```
 
 
