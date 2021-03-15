@@ -212,7 +212,7 @@ rope.emm_list <- rope.emmGrid
 #' @export
 rope.BFBayesFactor <- function(x, range = "default", ci = .89, ci_method = "HDI", verbose = TRUE, ...) {
   if (all(range == "default")) {
-    range <- rope_range(x)
+    range <- rope_range(x, verbose = verbose)
   }
   out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
@@ -299,7 +299,7 @@ rope.stanreg <- function(x, range = "default", ci = .89, ci_method = "HDI", effe
   component <- match.arg(component)
 
   if (all(range == "default")) {
-    range <- rope_range(x)
+    range <- rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
@@ -348,7 +348,7 @@ rope.brmsfit <- function(x,
 
   # check range argument
   if (all(range == "default")) {
-    range <- rope_range(x)
+    range <- rope_range(x, verbose = verbose)
     # we expect a list with named vectors (length two) in the multivariate case.
     # Names state the response variable.
   } else if (insight::is_multivariate(x) &&
@@ -418,7 +418,7 @@ rope.sim.merMod <- function(x, range = "default", ci = .89, ci_method = "HDI", e
   effects <- match.arg(effects)
 
   if (all(range == "default")) {
-    range <- rope_range(x)
+    range <- rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
@@ -479,7 +479,7 @@ rope.sim.merMod <- function(x, range = "default", ci = .89, ci_method = "HDI", e
 #' @export
 rope.sim <- function(x, range = "default", ci = .89, ci_method = "HDI", parameters = NULL, verbose = TRUE, ...) {
   if (all(range == "default")) {
-    range <- rope_range(x)
+    range <- rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }

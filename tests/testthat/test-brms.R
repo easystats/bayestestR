@@ -7,7 +7,7 @@ if (require("brms") && require("testthat") && require("insight") && require("htt
 
     expect_s3_class(hdi(model), "data.frame")
     expect_s3_class(ci(model), "data.frame")
-    expect_s3_class(rope(model), "data.frame")
+    expect_s3_class(rope(model, verbose = FALSE), "data.frame")
     # expect_true("equivalence_test" %in% class(equivalence_test(model)))
     expect_s3_class(map_estimate(model), "data.frame")
     expect_s3_class(p_map(model), "data.frame")
