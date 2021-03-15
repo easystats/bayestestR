@@ -95,6 +95,29 @@ print.bayesfactor_models <- function(x, digits = 3, log = FALSE, show_names = TR
 
 
 #' @export
+print.bayesfactor_inclusion <- function(x, digits = 3, log = FALSE, caption = "Inclusion Bayes Factors (Model Averaged)", ...) {
+  # format data frame and columns
+  formatted_table <- format(
+    x,
+    digits = digits,
+    log = log,
+    format = "text",
+    caption = caption,
+    ...
+  )
+
+  cat(insight::export_table(
+    formatted_table,
+    sep = " ",
+    header = NULL,
+    format = "text"
+  ))
+
+  invisible(x)
+}
+
+
+#' @export
 print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
 
   # retrieve information with cleaned parameter names

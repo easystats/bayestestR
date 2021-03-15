@@ -139,6 +139,55 @@ format.bayesfactor_models <- function(x,
 
 
 #' @export
+format.bayesfactor_inclusion <- function(x,
+                                      digits = 3,
+                                      log = FALSE,
+                                      format = "text",
+                                      caption = NULL,
+                                      ...) {
+
+  priorOdds <- attr(x, "priorOdds")
+  matched <- attr(x, "matched")
+
+  # format table
+  BFE <- as.data.frame(x)
+  if (log) {
+    BFE$BF <- log(BFE$BF)
+  }
+  BFE$BF <- insight::format_bf(BFE$BF, name = NULL)
+  BFE <- cbind(rownames(BFE), BFE)
+  colnames(BFE) <- c("", "Pr(prior)", "Pr(posterior)", "Inclusion BF")
+  colnames(BFE)[1] <- ifelse(identical(format, "html"), "Parameter", "")
+
+  # footer
+  if (is.null(format) || format == "text") {
+    footer <- list(
+      c("\n* Compared among: "),
+      c(if (matched) "matched models only" else "all models", "cyan"),
+      c("\n*    Priors odds: "),
+      c(if (!is.null(priorOdds)) "custom" else "uniform-equal", "cyan"),
+      if (log) c("\n\nBayes Factors are on the log-scale.", "red")
+    )
+    # color formatting for caption
+    if (!is.null(caption)) {
+      caption <- c(caption, "blue")
+    }
+  } else {
+    footer <- .compact_list(list(
+      paste0("Compared among: ",if (matched) "matched models only" else "all models"),
+      paste0("Priors odds: ", if (!is.null(priorOdds)) "custom" else "uniform-equal"),
+      if (log) "Bayes Factors are on the log-scale."
+    ))
+  }
+
+  attr(BFE, "table_footer") <- footer
+  attr(BFE, "table_caption") <- caption
+  BFE
+}
+
+
+
+#' @export
 format.bayesfactor_parameters <- function(x,
                                           cp = NULL,
                                           digits = 3,

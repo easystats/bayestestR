@@ -77,13 +77,20 @@ print_md.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", 
 
 
 #' @export
-print_md.bayesfactor_models <- function(x, digits = 3, log = FALSE, show_names = TRUE, ...) {
+print_md.bayesfactor_models <- function(x,
+                                        digits = 3,
+                                        log = FALSE,
+                                        show_names = TRUE,
+                                        caption = "Bayes Factors for Model Comparison",
+                                        ...) {
+
   # format data frame and columns
   formatted_table <- format(
     x,
     digits = digits,
     log = log,
     show_names = show_names,
+    caption = caption,
     format = "markdown",
     ...
   )
@@ -91,8 +98,34 @@ print_md.bayesfactor_models <- function(x, digits = 3, log = FALSE, show_names =
   insight::export_table(
     formatted_table,
     align = c("llr"),
-    caption = "Bayes Factors for Model Comparison",
+    caption = caption,
     format = "markdown"
+  )
+}
+
+
+#' @export
+print_md.bayesfactor_inclusion <- function(x,
+                                           digits = 3,
+                                           log = FALSE,
+                                           caption = "Inclusion Bayes Factors (Model Averaged)",
+                                           ...) {
+
+  # format data frame and columns
+  formatted_table <- format(
+    x,
+    digits = digits,
+    log = log,
+    format = "markdown",
+    caption = caption,
+    ...
+  )
+
+  insight::export_table(
+    formatted_table,
+    format = "markdown",
+    caption = caption,
+    align = c("lrrr")
   )
 }
 
