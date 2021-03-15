@@ -535,9 +535,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <span class="va">botanist_BFs</span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
-&gt; Hypothesis                                       P(Prior) P(Posterior)      BF
-&gt; Petal.Length &gt; 0                                     0.50            1    2.02
-&gt; (Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)     0.24            0 &lt; 0.001
+&gt; Hypothesis                                       Pr(Prior) Pr(Posterior)      BF
+&gt; Petal.Length &gt; 0                                      0.50             1    2.02
+&gt; (Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)      0.24             0 &lt; 0.001
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p>We can see that the novice botanist’s hypothesis gets a Bayes factor of ~2, indicating the data provides twice as much evidence for a model in which petal length is restricted to be positively associated with sepal length than for a model with not such restriction.</p>
@@ -865,13 +865,13 @@ BF_{\text{restricted vs. NULL}} = \frac
 <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span><span class="va">em_sum</span>, <span class="va">fit_sum</span>, hypothesis <span class="op">=</span> <span class="va">hyp</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
-&gt; Hypothesis                                       P(Prior) P(Posterior)      BF
-&gt; setosa &lt; versicolor                                  0.51            1    1.97
-&gt; setosa &lt; virginica                                   0.49            1    2.02
-&gt; versicolor &lt; virginica                               0.49            1    2.03
-&gt; setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.11            0 &lt; 0.001
-&gt; virginica &lt; setosa     &amp; setosa     &lt; versicolor     0.20            0 &lt; 0.001
-&gt; setosa    &lt; versicolor &amp; versicolor &lt; virginica      0.20            1    5.09
+&gt; Hypothesis                                       Pr(Prior) Pr(Posterior)      BF
+&gt; setosa &lt; versicolor                                   0.51             1    1.97
+&gt; setosa &lt; virginica                                    0.49             1    2.02
+&gt; versicolor &lt; virginica                                0.49             1    2.03
+&gt; setosa    &lt; virginica  &amp; virginica  &lt; versicolor      0.11             0 &lt; 0.001
+&gt; virginica &lt; setosa     &amp; setosa     &lt; versicolor      0.20             0 &lt; 0.001
+&gt; setosa    &lt; versicolor &amp; versicolor &lt; virginica       0.20             1    5.09
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p><strong><em>What happened???</em></strong></p>
@@ -896,13 +896,13 @@ BF_{\text{restricted vs. NULL}} = \frac
 <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span><span class="va">em_bayes</span>, <span class="va">fit_sum</span>, hypothesis <span class="op">=</span> <span class="va">hyp</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
-&gt; Hypothesis                                       P(Prior) P(Posterior)      BF
-&gt; setosa &lt; versicolor                                  0.49            1    2.06
-&gt; setosa &lt; virginica                                   0.49            1    2.03
-&gt; versicolor &lt; virginica                               0.51            1    1.96
-&gt; setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.17            0 &lt; 0.001
-&gt; virginica &lt; setosa     &amp; setosa     &lt; versicolor     0.16            0 &lt; 0.001
-&gt; setosa    &lt; versicolor &amp; versicolor &lt; virginica      0.16            1    6.11
+&gt; Hypothesis                                       Pr(Prior) Pr(Posterior)      BF
+&gt; setosa &lt; versicolor                                   0.49             1    2.06
+&gt; setosa &lt; virginica                                    0.49             1    2.03
+&gt; versicolor &lt; virginica                                0.51             1    1.96
+&gt; setosa    &lt; virginica  &amp; virginica  &lt; versicolor      0.17             0 &lt; 0.001
+&gt; virginica &lt; setosa     &amp; setosa     &lt; versicolor      0.16             0 &lt; 0.001
+&gt; setosa    &lt; versicolor &amp; versicolor &lt; virginica       0.16             1    6.11
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 </div>
