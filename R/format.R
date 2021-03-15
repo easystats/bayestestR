@@ -188,6 +188,47 @@ format.bayesfactor_inclusion <- function(x,
 
 
 #' @export
+format.bayesfactor_restricted <- function(x,
+                                          digits = 3,
+                                          log = FALSE,
+                                          format = "text",
+                                          caption = NULL,
+                                          ...) {
+
+  BFE <- as.data.frame(x)
+
+  # Format
+  if (log) {
+    BFE$BF <- log(BFE$BF)
+  }
+  BFE$BF <- insight::format_bf(BFE$BF, name = NULL)
+  colnames(BFE) <- c("Hypothesis", "P(Prior)", "P(Posterior)", "BF")
+
+  # footer
+  if (is.null(format) || format == "text") {
+    footer <- list(
+      c("\n* Bayes factors for the restricted model vs. the un-restricted model.\n"),
+      if (log) c("\nBayes Factors are on the log-scale.\n", "red")
+    )
+    # color formatting for caption
+    if (!is.null(caption)) {
+      caption <- c(caption, "blue")
+    }
+  } else {
+    footer <- .compact_list(list(
+      "Bayes factors for the restricted model vs. the un-restricted model.",
+      if (log) "Bayes Factors are on the log-scale."
+    ))
+  }
+
+  attr(BFE, "table_footer") <- footer
+  attr(BFE, "table_caption") <- caption
+  BFE
+}
+
+
+
+#' @export
 format.bayesfactor_parameters <- function(x,
                                           cp = NULL,
                                           digits = 3,

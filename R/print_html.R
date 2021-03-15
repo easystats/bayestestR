@@ -84,23 +84,14 @@ print_html.bayesfactor_models <- function(x,
                                           show_names = TRUE,
                                           caption = "Bayes Factors for Model Comparison",
                                           ...) {
-
-  # format data frame and columns
-  formatted_table <- format(
-    x,
+  .print_bf_html_default(
+    x = x,
     digits = digits,
     log = log,
     show_names = show_names,
     caption = caption,
-    format = "html",
-    ...
-  )
-
-  insight::export_table(
-    formatted_table,
     align = c("llr"),
-    caption = caption,
-    format = "html"
+    ...
   )
 }
 
@@ -111,23 +102,24 @@ print_html.bayesfactor_inclusion <- function(x,
                                              log = FALSE,
                                              caption = "Inclusion Bayes Factors (Model Averaged)",
                                              ...) {
-
-  # format data frame and columns
-  formatted_table <- format(
-    x,
+  .print_bf_html_default(
+    x = x,
     digits = digits,
     log = log,
-    format = "html",
     caption = caption,
+    align = c("lrrr"),
     ...
   )
+}
 
-  insight::export_table(
-    formatted_table,
-    format = "html",
-    caption = caption,
-    align = c("lrrr")
-  )
+
+#' @export
+print_html.bayesfactor_restricted <- function(x,
+                                             digits = 3,
+                                             log = FALSE,
+                                             caption = "Bayes Factor (Order-Restriction)",
+                                             ...) {
+  .print_bf_html_default(x = x, digits = digits, log = log, caption = caption, ...)
 }
 
 
@@ -178,6 +170,33 @@ print_html.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
   # numeric values to have a markdown-table output
   insight::export_table(
     formatted_table,
+    caption = caption,
+    format = "html"
+  )
+}
+
+
+
+.print_bf_html_default <- function(x,
+                                   digits = 3,
+                                   log = FALSE,
+                                   show_names = NULL,
+                                   caption = NULL,
+                                   align = NULL,
+                                   ...) {
+  formatted_table <- format(
+    x,
+    digits = digits,
+    log = log,
+    show_names = show_names,
+    caption = caption,
+    format = "html",
+    ...
+  )
+
+  insight::export_table(
+    formatted_table,
+    align = align,
     caption = caption,
     format = "html"
   )

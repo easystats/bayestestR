@@ -70,50 +70,33 @@ print.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", ...
 
 
 #' @export
-print.bayesfactor_models <- function(x, digits = 3, log = FALSE, show_names = TRUE, caption = "Bayes Factors for Model Comparison", ...) {
-  # format data frame and columns
-  formatted_table <- format(
-    x,
-    digits = digits,
-    log = log,
-    show_names = show_names,
-    format = "text",
-    caption = caption,
-    ...
-  )
-
-  cat(insight::export_table(
-    formatted_table,
-    sep = " ",
-    header = NULL,
-    align = c("llr"),
-    format = "text"
-  ))
-
-  invisible(x)
+print.bayesfactor_models <- function(x,
+                                     digits = 3,
+                                     log = FALSE,
+                                     show_names = TRUE,
+                                     caption = "Bayes Factors for Model Comparison",
+                                     ...) {
+  .print_bf_default(x = x, digits = digits, log = log, show_names = show_names, caption = caption, align = c("llr"), ...)
 }
 
 
 #' @export
-print.bayesfactor_inclusion <- function(x, digits = 3, log = FALSE, caption = "Inclusion Bayes Factors (Model Averaged)", ...) {
-  # format data frame and columns
-  formatted_table <- format(
-    x,
-    digits = digits,
-    log = log,
-    format = "text",
-    caption = caption,
-    ...
-  )
+print.bayesfactor_inclusion <- function(x,
+                                        digits = 3,
+                                        log = FALSE,
+                                        caption = "Inclusion Bayes Factors (Model Averaged)",
+                                        ...) {
+  .print_bf_default(x = x, digits = digits, log = log, caption = caption, ...)
+}
 
-  cat(insight::export_table(
-    formatted_table,
-    sep = " ",
-    header = NULL,
-    format = "text"
-  ))
 
-  invisible(x)
+#' @export
+print.bayesfactor_restricted <- function(x,
+                                         digits = 3,
+                                         log = FALSE,
+                                         caption = "Bayes Factor (Order-Restriction)",
+                                         ...) {
+  .print_bf_default(x = x, digits = digits, log = log, caption = caption, ...)
 }
 
 
@@ -184,6 +167,38 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
       caption = caption
     ))
   }
+
+  invisible(x)
+}
+
+
+
+.print_bf_default <- function(x,
+                              digits = 3,
+                              log = FALSE,
+                              show_names = NULL,
+                              caption = NULL,
+                              align = NULL,
+                              ...) {
+
+  # format data frame and columns
+  formatted_table <- format(
+    x,
+    digits = digits,
+    log = log,
+    format = "text",
+    caption = caption,
+    show_names = show_names,
+    ...
+  )
+
+  cat(insight::export_table(
+    formatted_table,
+    sep = " ",
+    header = NULL,
+    format = "text",
+    align = align,
+  ))
 
   invisible(x)
 }
