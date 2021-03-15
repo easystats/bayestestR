@@ -6,7 +6,7 @@ if (require("rstanarm") && require("brms") && require("httr") && require("testth
     expect_equal(nrow(hdi(distribution_normal(1000), ci = c(.80, .90, .95))), 3, tolerance = 0.01)
     expect_equal(hdi(distribution_normal(1000), ci = 1)$CI_low[1], -3.09, tolerance = 0.02)
     expect_equal(nchar(capture.output(print(hdi(distribution_normal(1000))))), 22)
-    expect_equal(length(capture.output(print(hdi(distribution_normal(1000), ci = c(.80, .90))))), 6)
+    expect_equal(length(capture.output(print(hdi(distribution_normal(1000), ci = c(.80, .90))))), 5)
 
 
     expect_warning(hdi(c(2, 3, NA)))
