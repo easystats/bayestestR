@@ -421,13 +421,13 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/">bayestestR</a></span><span class="op">)</span>
 <span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span>, <span class="va">m3</span>, <span class="va">m4</span>, denominator <span class="op">=</span> <span class="va">m0</span><span class="op">)</span>
 <span class="va">comparison</span></code></pre></div>
-<pre><code>&gt; # Bayes Factors for Model Comparison
+<pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
-&gt;     Model                         BF
-&gt; [1] Petal.Length           3.447e+44
-&gt; [2] Species                5.629e+29
-&gt; [3] Species + Petal.Length 7.121e+55
-&gt; [4] Species * Petal.Length 9.150e+55
+&gt;     Model                      BF
+&gt; [1] Petal.Length           &gt; 1000
+&gt; [2] Species                &gt; 1000
+&gt; [3] Species + Petal.Length &gt; 1000
+&gt; [4] Species * Petal.Length &gt; 1000
 &gt; 
 &gt; * Against Denominator: [5] (Intercept only)
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
@@ -435,13 +435,13 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <p>Due to the transitive property of Bayes factors, we can easily change the reference model to the main effects model:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">comparison</span>, reference <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Bayes Factors for Model Comparison
+<pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
-&gt;     Model                         BF
-&gt; [1] Petal.Length           4.841e-12
-&gt; [2] Species                7.904e-27
-&gt; [4] Species * Petal.Length     1.285
-&gt; [5] (Intercept only)       1.404e-56
+&gt;     Model                       BF
+&gt; [1] Petal.Length           &lt; 0.001
+&gt; [2] Species                &lt; 0.001
+&gt; [4] Species * Petal.Length    1.28
+&gt; [5] (Intercept only)       &lt; 0.001
 &gt; 
 &gt; * Against Denominator: [3] Species + Petal.Length
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
@@ -449,13 +449,13 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <p>We can also change the reference model to the <code>Species</code> model:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">comparison</span>, reference <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Bayes Factors for Model Comparison
+<pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
-&gt;     Model                         BF
-&gt; [1] Petal.Length           6.125e+14
-&gt; [3] Species + Petal.Length 1.265e+26
-&gt; [4] Species * Petal.Length 1.626e+26
-&gt; [5] (Intercept only)       1.777e-30
+&gt;     Model                       BF
+&gt; [1] Petal.Length            &gt; 1000
+&gt; [3] Species + Petal.Length  &gt; 1000
+&gt; [4] Species * Petal.Length  &gt; 1000
+&gt; [5] (Intercept only)       &lt; 0.001
 &gt; 
 &gt; * Against Denominator: [2] Species
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
@@ -494,13 +494,13 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 
 <span class="co"># model comparison</span>
 <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span>, <span class="va">m3</span>, <span class="va">m4</span>, denominator <span class="op">=</span> <span class="va">m0</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Bayes Factors for Model Comparison
+<pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
-&gt;     Model                                                        BF
-&gt; [1] Petal.Length + (1 | Species)                          8.240e+24
-&gt; [2] Petal.Length + (Petal.Length | Species)               4.768e+23
-&gt; [3] Petal.Length + Petal.Width + (Petal.Length | Species) 1.525e+22
-&gt; [4] Petal.Length * Petal.Width + (Petal.Length | Species) 5.930e+20
+&gt;     Model                                                     BF
+&gt; [1] Petal.Length + (1 | Species)                          &gt; 1000
+&gt; [2] Petal.Length + (Petal.Length | Species)               &gt; 1000
+&gt; [3] Petal.Length + Petal.Width + (Petal.Length | Species) &gt; 1000
+&gt; [4] Petal.Length * Petal.Width + (Petal.Length | Species) &gt; 1000
 &gt; 
 &gt; * Against Denominator: [5] 1 + (1 | Species)
 &gt; *   Bayes Factor Type: BIC approximation</code></pre>
@@ -688,7 +688,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <span class="op">)</span>
 
 <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">mod_carb</span>, denominator <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Bayes Factors for Model Comparison
+<pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
 &gt;            Model             BF
 &gt; [mod_carb] wt + am + carb 0.811
