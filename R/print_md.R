@@ -97,6 +97,27 @@ print_md.bayesfactor_models <- function(x, digits = 3, log = FALSE, show_names =
 }
 
 
+#' @export
+print_md.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
+
+  # retrieve information with cleaned parameter names
+  cp <- attr(x, "clean_parameters")
+
+  # format data frame and columns
+  formatted_table <- format(
+    x,
+    cp = cp,
+    digits = digits,
+    log = log,
+    format = "markdown",
+    ...
+  )
+
+  insight::export_table(formatted_table, format = "markdown")
+}
+
+
+
 
 
 # util ---------------

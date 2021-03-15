@@ -1,4 +1,4 @@
-#' @importFrom insight format_table print_parameters format_value format_bf
+#' @importFrom insight format_table print_parameters format_value format_bf format_ci
 #' @importFrom utils modifyList
 #' @export
 format.describe_posterior <- function(x,
@@ -18,7 +18,7 @@ format.describe_posterior <- function(x,
   }
 
   # format columns and values of data frame
-  out <- insight::format_table(x, digits = 2, format = format, ...)
+  out <- insight::format_table(x, digits = digits, format = format, ...)
 
   # different CI-types as column names?
   if (ci_string != "CI" && any(grepl("CI$", colnames(out)))) {
@@ -134,4 +134,82 @@ format.bayesfactor_models <- function(x,
   attr(BFE, "table_footer") <- footer
   attr(BFE, "table_caption") <- caption
   BFE
+}
+
+
+
+#' @export
+format.bayesfactor_parameters <- function(x,
+                                          cp = NULL,
+                                          digits = 3,
+                                          log = FALSE,
+                                          format = "text",
+                                          ...) {
+  null <- attr(x, "hypothesis")
+  direction <- attr(x, "direction")
+
+  if (log) {
+    x$BF <- log(x$BF)
+  }
+
+  # format columns and values of data frame
+  out <- insight::format_table(x, digits = digits, format = format, ...)
+
+  # table caption
+  caption <- sprintf(
+    "Bayes Factor (%s)",
+    if (length(null) == 1) "Savage-Dickey density ratio" else "Null-Interval"
+  )
+
+  if (is.null(format) || format == "text") {
+    caption <- c(caption, "blue")
+  }
+
+
+  # format null-value
+  if (length(null) == 1) {
+    null <- insight::format_value(null, digits = digits, protect_integers = TRUE)
+  } else {
+    null <- insight::format_ci(null[1], null[2], ci = NULL, digits = digits)
+  }
+
+
+  # footer
+  if (is.null(format) || format == "text") {
+    footer <- list(
+      c("\n* Evidence Against The Null: "),
+      c(null, "cyan"),
+      if (direction) c("\n*                 Direction: "),
+      if (direction < 0) c("Left-Sided test", "cyan"),
+      if (direction > 0) c("Right-Sided test", "cyan"),
+      if (log) c("\n\nBayes Factors are on the log-scale.\n", "red")
+    )
+  } else {
+    footer <- .compact_list(list(
+      paste0("Evidence Against The Null: ", null),
+      if (direction) c("Direction: "),
+      if (direction < 0) "Left-Sided test",
+      if (direction > 0) "Right-Sided test",
+      if (log) "Bayes Factors are on the log-scale."
+    ))
+  }
+
+
+  # match and split at components
+  if (!is.null(cp) && !all(is.na(match(cp$Parameter, out$Parameter)))) {
+    out <- insight::print_parameters(
+      cp,
+      out,
+      keep_parameter_column = FALSE,
+      remove_empty_column = TRUE,
+      format = format
+    )
+    attr(out[[1]], "table_caption") <- caption
+    attr(out[[length(out)]], "table_footer") <- footer
+  } else {
+    attr(out, "table_caption") <- caption
+    attr(out, "table_footer") <- footer
+  }
+
+  out
 }
