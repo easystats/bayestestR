@@ -27,6 +27,7 @@ if (require("rstanarm") && suppressPackageStartupMessages(require("bayestestR", 
   test_that("si.rstanarm", {
     skip_on_cran()
 
+    data(sleep)
     contrasts(sleep$group) <- contr.bayes # See vignette
     stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep, refresh = 0)
 
@@ -44,8 +45,8 @@ if (require("rstanarm") && suppressPackageStartupMessages(require("bayestestR", 
     group_diff <- pairs(emmeans(stan_model, ~group))
     res3 <- si(group_diff, prior = stan_model)
 
-    expect_equal(res3$CI_low, -2.79, tolerance = 0.01)
-    expect_equal(res3$CI_high, -0.45, tolerance = 0.01)
+    expect_equal(res3$CI_low, -2.79, tolerance = 0.1)
+    expect_equal(res3$CI_high, -0.45, tolerance = 0.1)
   })
 
 }

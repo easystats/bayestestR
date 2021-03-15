@@ -216,27 +216,14 @@ if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", 
       set.seed(123)
       expect_equal(
         describe_posterior(correlationBF(mtcars$wt, mtcars$mpg, rscale = 0.5)),
-        structure(
-          list(
-            Parameter = "rho",
-            Median = -0.831943247361451,
-            CI = 0.89,
-            CI_low = -0.905808386185782,
-            CI_high = -0.733075007588833,
-            pd = 1,
-            ROPE_CI = 89,
-            ROPE_low = -0.1,
-            ROPE_high = 0.1,
-            ROPE_Percentage = 0,
-            BF = 33555274.5519413,
-            Prior_Distribution = "beta",
-            Prior_Location = 2,
-            Prior_Scale = 2
-          ),
-          row.names = 1L,
-          class = "data.frame"
-        ),
-        tolerance = 0.1
+        structure(list(Parameter = "rho", Median = -0.832958463649399,
+                       CI = 0.89, CI_low = -0.903528140372971, CI_high = -0.734146316854132,
+                       pd = 1, ROPE_CI = 0.89, ROPE_low = -0.1, ROPE_high = 0.1,
+                       ROPE_Percentage = 0, BF = 33555274.5519413, Prior_Distribution = "beta",
+                       Prior_Location = 2, Prior_Scale = 2), row.names = 1L, class = c("describe_posterior",
+                                                                                       "see_describe_posterior", "data.frame"), ci_method = "hdi"),
+        tolerance = 0.1,
+        ignore_attr = TRUE
       )
 
       set.seed(123)
@@ -245,24 +232,27 @@ if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", 
         structure(
           list(
             Parameter = "Difference",
-            Median = -0.194256864792614,
+            Median = -0.203832944917419,
             CI = 0.89,
-            CI_low = -0.488064417728344,
-            CI_high = 0.0885434267686307,
-            pd = 0.855,
-            ROPE_CI = 89,
+            CI_low = -0.475212995537289,
+            CI_high = 0.0972425949727671,
+            pd = 0.87575,
+            ROPE_CI = 0.89,
             ROPE_low = -0.0978457442989697,
             ROPE_high = 0.0978457442989697,
-            ROPE_Percentage = 0.270148834597023,
+            ROPE_Percentage = 0.243751755124965,
             BF = 0.386851835160946,
             Prior_Distribution = "cauchy",
             Prior_Location = 0,
             Prior_Scale = 0.707106781186548
           ),
           row.names = 1L,
-          class = "data.frame"
+          class = c("describe_posterior",
+                    "see_describe_posterior", "data.frame"),
+          ci_method = "hdi"
         ),
-        tolerance = 0.1
+        tolerance = 0.1,
+        ignore_attr = TRUE
       )
 
       set.seed(123)
@@ -283,50 +273,38 @@ if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", 
               "Ratio"
             ),
             Median = c(
-              3.10002076660402,
-              7.3149408472942,
-              3.95395054865364,
-              3.10529518036243,
-              10.63829836629,
-              2.32888617807367,
+              3.04620767622137,
+              7.32989568199659,
+              3.97000903399153,
+              3.07366183177967,
+              10.6950851081453,
+              2.26260241420764,
               NA
             ),
-            CI = c(
-              0.89, 0.89, 0.89, 0.89, 0.89, 0.89,
-              NA
-            ),
+            CI = c(0.89, 0.89, 0.89, 0.89, 0.89, 0.89, NA),
             CI_low = c(
-              0.831859344044788,
-              3.60813029676568,
-              1.4086833254684,
-              0.808714742291165,
-              6.06392097174864,
-              0.363551360995603,
+              0.752315108749041,
+              3.76209619996333,
+              1.5072105253063,
+              0.767717951722201,
+              6.26621101563977,
+              0.356954226142079,
               NA
             ),
             CI_high = c(
-              5.73940934376484,
-              11.3110978432929,
-              7.06581003479593,
-              5.77323478142797,
-              15.534719072373,
-              4.49962736575365,
+              5.7803113975366,
+              11.3813683854843,
+              7.05717637515788,
+              5.58765747166004,
+              15.4698463090165,
+              4.41250020663008,
               NA
             ),
             pd = c(1, 1, 1, 1, 1, 1, NA),
-            ROPE_CI = c(
-              89, 89, 89, 89,
-              89, 89, NA
-            ),
-            ROPE_low = c(
-              -0.1, -0.1, -0.1, -0.1, -0.1, -0.1,
-              NA
-            ),
+            ROPE_CI = c(0.89, 0.89, 0.89, 0.89, 0.89, 0.89, NA),
+            ROPE_low = c(-0.1, -0.1, -0.1, -0.1, -0.1, -0.1, NA),
             ROPE_high = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, NA),
-            ROPE_Percentage = c(
-              0,
-              0, 0, 0, 0, 0, NA
-            ),
+            ROPE_Percentage = c(0, 0, 0, 0, 0, 0, NA),
             BF = c(
               46.6128745808996,
               46.6128745808996,
@@ -338,18 +316,14 @@ if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", 
             ),
             Prior_Distribution = c(NA, NA, NA, NA, NA, NA, "poisson"),
             Prior_Location = c(NA, NA, NA, NA, NA, NA, 0),
-            Prior_Scale = c(
-              NA,
-              NA, NA, NA, NA, NA, 1
-            )
+            Prior_Scale = c(NA, NA, NA, NA, NA, NA, 1)
           ),
-          row.names = c(
-            1L, 4L, 2L, 5L, 3L,
-            6L, 7L
-          ),
-          class = "data.frame"
+          row.names = c(1L, 4L, 2L, 5L, 3L, 6L, 7L),
+          class = c("describe_posterior", "see_describe_posterior", "data.frame"),
+          ci_method = "hdi"
         ),
-        tolerance = 0.1
+        tolerance = 0.1,
+        ignore_attr = TRUE
       )
 
       set.seed(123)
@@ -372,49 +346,38 @@ if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", 
               "Ratio"
             ),
             Median = c(
-              3.34424390326332,
-              7.25533265329878,
-              4.15418100716339,
-              3.34379401154391,
-              10.3858983218456,
-              2.52387799585576,
+              3.34864716345133,
+              7.2237058088546,
+              4.16212411751866,
+              3.32882909739155,
+              10.3556344952798,
+              2.59014390786925,
               NA
             ),
-            CI = c(
-              0.89, 0.89, 0.89, 0.89, 0.89, 0.89,
-              NA
-            ),
+            CI = c(0.89, 0.89, 0.89, 0.89, 0.89, 0.89, NA),
             CI_low = c(
-              1.16770676374516,
-              3.95575688998107,
-              1.64030740777095,
-              1.15811520892223,
-              6.70620880680777,
-              0.586022836188971,
+              1.16057250089558,
+              4.15782470170975,
+              1.72018584831039,
+              1.25037293586929,
+              6.46786088619769,
+              0.62213974797028,
               NA
             ),
             CI_high = c(
-              5.83434397453877,
-              10.4719589003557,
-              6.8390088651287,
-              5.79426926336237,
-              14.0810357965959,
-              4.64751978579163,
+              5.78171219806325,
+              10.74432390807,
+              6.76891913078361,
+              5.85323883334191,
+              13.8652885466891,
+              4.69936080072413,
               NA
             ),
             pd = c(1, 1, 1, 1, 1, 1, NA),
-            ROPE_CI = c(
-              89,
-              89, 89, 89, 89, 89, NA
-            ),
-            ROPE_low = c(
-              -0.1, -0.1, -0.1, -0.1,
-              -0.1, -0.1, NA
-            ),
-            ROPE_high = c(
-              0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-              NA
-            ),
+            ROPE_CI = c(0.89, 0.89, 0.89, 0.89, 0.89, 0.89, NA),
+            ROPE_low = c(-0.1, -0.1, -0.1,
+                         -0.1, -0.1, -0.1, NA),
+            ROPE_high = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, NA),
             ROPE_Percentage = c(0, 0, 0, 0, 0, 0, NA),
             BF = c(
               12.1022066941064,
@@ -425,20 +388,16 @@ if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", 
               12.1022066941064,
               NA
             ),
-            Prior_Distribution = c(
-              NA, NA, NA, NA,
-              NA, NA, "independent multinomial"
-            ),
-            Prior_Location = c(
-              NA, NA,
-              NA, NA, NA, NA, 0
-            ),
+            Prior_Distribution = c(NA, NA, NA, NA, NA, NA, "independent multinomial"),
+            Prior_Location = c(NA, NA, NA, NA, NA, NA, 0),
             Prior_Scale = c(NA, NA, NA, NA, NA, NA, 1.6)
           ),
           row.names = c(1L, 4L, 2L, 5L, 3L, 6L, 7L),
-          class = "data.frame"
+          class = c("describe_posterior", "see_describe_posterior", "data.frame"),
+          ci_method = "hdi"
         ),
-        tolerance = 0.1
+        tolerance = 0.1,
+        ignore_attr = TRUE
       )
 
       set.seed(123)
@@ -446,40 +405,31 @@ if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", 
         describe_posterior(anovaBF(extra ~ group, data = sleep, progress = FALSE)),
         structure(
           list(
-            Parameter = c(
-              "mu", "group-1", "group-2", "sig2",
-              "g_group"
-            ),
+            Parameter = c("mu", "group-1", "group-2", "sig2", "g_group"),
             Median = c(
-              1.53022432533339,
-              -0.58131970309442,
-              0.58131970309442,
-              3.7097691667823,
-              0.353808192491004
+              1.52927326879743,
+              -0.571283063863296,
+              0.571283063863296,
+              3.744464775706,
+              0.334859267892042
             ),
-            CI = c(
-              0.89, 0.89, 0.89,
-              0.89, 0.89
-            ),
+            CI = c(0.89, 0.89, 0.89, 0.89, 0.89),
             CI_low = c(
-              0.833311821360455,
-              -1.21079773990579,
-              -0.0651043934099907,
-              1.9411352338509,
-              0.0187016247190792
+              0.735571459282669,
+              -1.23832049919791,
+              -0.0841668568133583,
+              1.99555691696385,
+              0.0191509488133218
             ),
             CI_high = c(
-              2.24472681256556,
-              0.0651043934099907,
-              1.21079773990579,
-              5.87552771664977,
-              2.25280269158369
+              2.16331957764619,
+              0.0841668568133583,
+              1.23832049919791,
+              5.93393140134115,
+              2.31176122287214
             ),
-            pd = c(0.99975, 0.9355, 0.9355, 1, 1),
-            ROPE_CI = c(
-              89, 89,
-              89, 89, 89
-            ),
+            pd = c(0.99925, 0.9265, 0.9265, 1, 1),
+            ROPE_CI = c(0.89, 0.89, 0.89, 0.89, 0.89),
             ROPE_low = c(
               -0.201791972090071,
               -0.201791972090071,
@@ -494,13 +444,7 @@ if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", 
               0.201791972090071,
               0.201791972090071
             ),
-            ROPE_Percentage = c(
-              0,
-              0.130862117382758,
-              0.130862117382758,
-              0,
-              0.358326312833474
-            ),
+            ROPE_Percentage = c(0, 0.151923616961528, 0.151923616961528, 0, 0.378545352429093),
             BF = c(
               1.26592514964916,
               1.26592514964916,
@@ -508,23 +452,16 @@ if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", 
               1.26592514964916,
               1.26592514964916
             ),
-            Prior_Distribution = c(
-              NA,
-              "cauchy", "cauchy", NA, NA
-            ),
-            Prior_Location = c(
-              NA, 0, 0,
-              NA, NA
-            ),
+            Prior_Distribution = c(NA, "cauchy", "cauchy", NA, NA),
+            Prior_Location = c(NA, 0, 0, NA, NA),
             Prior_Scale = c(NA, 0.5, 0.5, NA, NA)
           ),
-          row.names = c(
-            4L,
-            2L, 3L, 5L, 1L
-          ),
-          class = "data.frame"
+          row.names = c(4L, 2L, 3L, 5L, 1L),
+          class = c("describe_posterior", "see_describe_posterior", "data.frame"),
+          ci_method = "hdi"
         ),
-        tolerance = 0.1
+        tolerance = 0.1,
+        ignore_attr = TRUE
       )
     }
   }
