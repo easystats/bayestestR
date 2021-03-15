@@ -190,6 +190,13 @@
 <h1 class="page-header" data-toc-text="0.8.2.1">
 <a href="#bayestestr-0821" class="anchor"></a>bayestestR 0.8.2.1<small> Unreleased </small>
 </h1>
+<div id="breaking" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking" class="anchor"></a>Breaking</h2>
+<ul>
+<li>Removed the <code>mhdior</code> experimental function.</li>
+</ul>
+</div>
 <div id="general" class="section level2">
 <h2 class="hasAnchor">
 <a href="#general" class="anchor"></a>General</h2>
@@ -439,7 +446,7 @@
 <li>
 <code><a href="../reference/point_estimate.html">point_estimate()</a></code>: argument <code>centrality</code> default value changed from ‘median’ to ‘all’.</li>
 <li>
-<code><a href="../reference/p_rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code><a href="../reference/mhdior.html">mhdior()</a></code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/p_rope.html">p_rope()</a></code> will refer to <code><a href="../reference/rope.html">rope(..., ci = 1)</a></code> ( <a href='https://github.com/easystats/bayestestR/issues/258'>#258</a> )</li>
+<code><a href="../reference/p_rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code>mhdior()</code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/p_rope.html">p_rope()</a></code> will refer to <code><a href="../reference/rope.html">rope(..., ci = 1)</a></code> ( <a href='https://github.com/easystats/bayestestR/issues/258'>#258</a> )</li>
 </ul>
 </div>
 <div id="bug-fixes-8" class="section level2">
