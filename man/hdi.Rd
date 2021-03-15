@@ -99,16 +99,28 @@ from each tail of the distribution and always include the median, the HDI is
 \emph{not} equal-tailed and therefore always includes the mode(s) of posterior
 distributions.
 \cr \cr
-By default, \code{hdi()} and \code{eti()} return the 89\% intervals (\code{ci = 0.89}),
-deemed to be more stable than, for instance, 95\% intervals (\cite{Kruschke, 2014}).
-An effective sample size of at least 10.000 is recommended if 95\% intervals
-should be computed (\cite{Kruschke, 2014, p. 183ff}). Moreover, 89 indicates
-the arbitrariness of interval limits - its only remarkable property is being
+The \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{95\% or 89\% Credible Intervals (CI)}
+are two reasonable ranges to characterize the uncertainty related to the estimation (see \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{here} for a discussion about the differences between these two values).
+\cr
+The 89\% intervals (\code{ci = 0.89}) are deemed to be more stable than, for
+instance, 95\% intervals (\cite{Kruschke, 2014}).
+An effective sample size of at least 10.000 is recommended if one wants to estimate
+95\% intervals with high precision (\cite{Kruschke, 2014, p. 183ff}). Moreover,
+89 indicates the arbitrariness of interval limits - its only remarkable property is being
 the highest prime number that does not exceed the already unstable 95\%
 threshold (\cite{McElreath, 2015}).
+\cr
+However, 95\% has some \href{https://easystats.github.io/blog/posts/bayestestr_95/}{advantages too}.
+For instance, it shares (in some cases) an intuitive relationship with the
+standard deviation and it conveys a more accurate image of the (artificial)
+bounds of the distribution. Also, because it is wider, it makes analyses more
+conservative (i.e., the probability of covering 0 is larger for the 95\% CI than
+for lower ranges such as 89\%), which is a good thing in the context of the
+reproducibility crisis.
+
 \cr \cr
-A 90\% equal-tailed interval (ETI) has 5\% of the distribution on either
-side of its limits. It indicates the 5th percentile and the 95h percentile.
+A 95\% equal-tailed interval (ETI) has 2.5\% of the distribution on either
+side of its limits. It indicates the 2.5th percentile and the 97.5h percentile.
 In symmetric distributions, the two methods of computing credible intervals,
 the ETI and the \link[=hdi]{HDI}, return similar results.
 \cr \cr

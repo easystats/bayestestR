@@ -84,10 +84,9 @@ Thus, CIs computed with 89\% intervals (`ci = 0.89`), are deemed
 to be more stable than, for instance, 95\% intervals [@kruschke2014doing]. An
 effective sample size (ESS; see
 [here](https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html))
-of at least 10.000 is recommended if 95\% intervals should be computed
-(Kruschke, 2014, p. 183ff).
+of at least 10.000 is recommended if one wants to compute precise 95\% intervals (Kruschke, 2014, p. 183ff).
 
-However, 95\% has some [**advantages too**](https://easystats.github.io/blog/posts/bayestestr_95/). For instance, it shares (in some cases) an intuitive relationship with the standard deviation and it conveys a more accurate image of the (artificial) bounds of the distribution. Also, because it is wider, it makes analyses more conservative (i.e., the probability of covering 0 is larger for 95\% CI than for lower ranges such as 89\%), which is a good thing.
+However, 95\% has some [**advantages too**](https://easystats.github.io/blog/posts/bayestestr_95/). For instance, it shares (in some cases) an intuitive relationship with the standard deviation and it conveys a more accurate image of the (artificial) bounds of the distribution. Also, because it is wider, it makes analyses more conservative (i.e., the probability of covering 0 is larger for the 95\% CI than for lower ranges such as 89\%), which is a good thing in the context of the reproducibility crisis.
 
 Ultimately, **you as the user should decide**, based on your needs and goals, and justify your decision.
 

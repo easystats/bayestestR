@@ -61,8 +61,8 @@ could be a good alternative.
 
 ### **Uncertainty** 
 
-The [**95\% or 89\% Credible Interval (CI)**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-appears as two reasonable ranges to characterize the uncertainty related to the
+The [**95\% or 89\% Credible Intervals (CI)**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+are two reasonable ranges to characterize the uncertainty related to the
 estimation (see [here](https://easystats.github.io/bayestestR/articles/credible_interval.html) for a discussion about the differences between these two values). We also recommend computing the CIs based on the [HDI](https://easystats.github.io/bayestestR/reference/hdi.html) rather than [quantiles](https://easystats.github.io/bayestestR/reference/ci.html), favouring
 probable over central values.
 
