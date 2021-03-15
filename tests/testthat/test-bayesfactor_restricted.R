@@ -1,6 +1,4 @@
-if (require("rstanarm") &&
-  require("BayesFactor") &&
-  require("testthat")) {
+if (require("testthat")) {
 
   # bayesfactor_restricted data.frame ---------------------------------------
 
@@ -24,10 +22,10 @@ if (require("rstanarm") &&
 
     bfr <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior)
 
-    expect_equal(bfr$Prior_prob, c(0.2, 0.5), tolerance = 0.1)
-    expect_equal(bfr$Posterior_prob, c(0.31, 1), tolerance = 0.1)
+    expect_equal(bfr$p_prior, c(0.2, 0.5), tolerance = 0.1)
+    expect_equal(bfr$p_posterior, c(0.31, 1), tolerance = 0.1)
     expect_equal(log(bfr$BF), c(0.43, 0.69), tolerance = 0.1)
-    expect_equal(bfr$BF, bfr$Posterior_prob / bfr$Prior_prob, tolerance = 0.1)
+    expect_equal(bfr$BF, bfr$p_posterior / bfr$p_prior, tolerance = 0.1)
 
     expect_error(bayesfactor_restricted(posterior, prior, hypothesis = "Y < 0"))
   })
@@ -38,8 +36,9 @@ if (require("rstanarm") &&
 
   test_that("bayesfactor_restricted RSTANARM", {
     skip_on_cran()
+    skip_if_not_installed("rstanarm")
     suppressWarnings(
-      fit_stan <- stan_glm(mpg ~ wt + cyl + am, data = mtcars, refresh = 0, iter = 200)
+      fit_stan <- rstanarm::stan_glm(mpg ~ wt + cyl + am, data = mtcars, refresh = 0, iter = 200)
     )
 
     hyps <- c(

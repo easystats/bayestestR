@@ -156,7 +156,7 @@ format.bayesfactor_inclusion <- function(x,
   }
   BFE$BF <- insight::format_bf(BFE$BF, name = NULL)
   BFE <- cbind(rownames(BFE), BFE)
-  colnames(BFE) <- c("", "Pr(prior)", "Pr(posterior)", "Inclusion BF")
+  colnames(BFE) <- c("", "P(prior)", "P(posterior)", "Inclusion BF")
   colnames(BFE)[1] <- ifelse(identical(format, "html"), "Parameter", "")
 
   # footer
@@ -202,7 +202,7 @@ format.bayesfactor_restricted <- function(x,
     BFE$BF <- log(BFE$BF)
   }
   BFE$BF <- insight::format_bf(BFE$BF, name = NULL)
-  colnames(BFE) <- c("Hypothesis", "Pr(Prior)", "Pr(Posterior)", "BF")
+  colnames(BFE) <- c("Hypothesis", "P(Prior)", "P(Posterior)", "BF")
 
   # footer
   if (is.null(format) || format == "text") {

@@ -188,8 +188,8 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
   BF <- posterior_p / prior_p
   res <- data.frame(
     Hypothesis = hypothesis,
-    Prior_prob = prior_p,
-    Posterior_prob = posterior_p,
+    p_prior = prior_p,
+    p_posterior = posterior_p,
     BF = BF
   )
 

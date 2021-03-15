@@ -2,6 +2,8 @@
 
 ## Breaking
 
+* Column names for `bayesfactor_restricted()` are now `p_prior` and `p_posterior` (was `Prior_prob` and `Posterior_prob`), to be consistent with `bayesfactor_inclusion()` output.
+
 * Removed the `mhdior` experimental function.
 
 ## General
