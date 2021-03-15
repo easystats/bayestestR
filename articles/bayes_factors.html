@@ -569,12 +569,12 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>Lets use the <code>brms</code> example from above:</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">comparison</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+<pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;                      Pr(prior) Pr(posterior) Inclusion BF
-&gt; Petal.Length             0.600         1.000    1.927e+26
-&gt; Species                  0.600         1.000    3.147e+11
-&gt; Petal.Length:Species     0.200         0.562        5.139
+&gt; Petal.Length              0.60          1.00       &gt; 1000
+&gt; Species                   0.60          1.00       &gt; 1000
+&gt; Petal.Length:Species      0.20          0.56         5.14
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
@@ -582,12 +582,12 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>We can also compare only matched models - such that averaging is done only across models that (1) do not include any interactions with the predictor of interest; (2) for interaction predictors, averaging is done only across models that contain the main effects from which the interaction predictor is comprised (see explanation for why you might want to do this <a href="https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp">here</a>).</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">comparison</span>, match_models <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+<pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;                      Pr(prior) Pr(posterior) Inclusion BF
-&gt; Petal.Length             0.400         0.438    1.265e+26
-&gt; Species                  0.400         0.438    2.066e+11
-&gt; Petal.Length:Species     0.200         0.562        1.285
+&gt; Petal.Length              0.40          0.44       &gt; 1000
+&gt; Species                   0.40          0.44       &gt; 1000
+&gt; Petal.Length:Species      0.20          0.56         1.28
 &gt; 
 &gt; * Compared among: matched models only
 &gt; *    Priors odds: uniform-equal</code></pre>
@@ -609,12 +609,12 @@ BF_{\text{restricted vs. NULL}} = \frac
 <span class="va">BF_ToothGrowth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/anovaBF.html">anovaBF</a></span><span class="op">(</span><span class="va">len</span> <span class="op">~</span> <span class="va">dose</span> <span class="op">*</span> <span class="va">supp</span>, <span class="va">ToothGrowth</span>, progress <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">BF_ToothGrowth</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+<pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;           Pr(prior) Pr(posterior) Inclusion BF
-&gt; supp          0.600         0.995      140.992
-&gt; dose          0.600         1.000    3.211e+14
-&gt; dose:supp     0.200         0.717       10.121
+&gt; supp           0.60          1.00       140.99
+&gt; dose           0.60          1.00       &gt; 1000
+&gt; dose:supp      0.20          0.72        10.12
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
@@ -625,12 +625,12 @@ BF_{\text{restricted vs. NULL}} = \frac
 </ol>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">BF_ToothGrowth</span>, match_models <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+<pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;           Pr(prior) Pr(posterior) Inclusion BF
-&gt; supp          0.400         0.279       59.191
-&gt; dose          0.400         0.283    1.364e+14
-&gt; dose:supp     0.200         0.717        2.573
+&gt; supp           0.40          0.28        59.19
+&gt; dose           0.40          0.28       &gt; 1000
+&gt; dose:supp      0.20          0.72         2.57
 &gt; 
 &gt; * Compared among: matched models only
 &gt; *    Priors odds: uniform-equal</code></pre>
@@ -657,12 +657,12 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Bayes factor type: BFlinearModel, JZS</code></pre>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">BF_ToothGrowth_against_dose</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; # Inclusion Bayes Factors (Model Averaged)
+<pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;           Pr(prior) Pr(posterior) Inclusion BF
-&gt; dose          1.000         1.000           NA
-&gt; supp          0.667         0.995      105.744
-&gt; dose:supp     0.333         0.717        5.060
+&gt; dose           1.00          1.00             
+&gt; supp           0.67          1.00       105.74
+&gt; dose:supp      0.33          0.72         5.06
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
