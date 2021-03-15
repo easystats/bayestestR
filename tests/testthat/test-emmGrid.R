@@ -63,10 +63,6 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
     expect_equal(length(xmapest$MAP_Estimate), 3)
   })
 
-  test_that("emmGrid mhdior", {
-    xprope <- mhdior(all_, range = c(-0.1, 0.1), precision = 0.5)
-    expect_equal(length(xprope$mhdior), 3)
-  })
 
   test_that("emmGrid p_direction", {
     xpd <- p_direction(all_, method = "direct")

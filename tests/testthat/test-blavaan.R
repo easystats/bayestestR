@@ -49,9 +49,6 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     x <- p_direction(bfit)
     expect_equal(nrow(x), 14)
 
-    x <- mhdior(bfit)
-    expect_equal(nrow(x), 14)
-
     x <- rope(bfit)
     expect_equal(nrow(x), 14)
 

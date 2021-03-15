@@ -1,5 +1,9 @@
 # bayestestR 0.8.2.1
 
+## Breaking
+
+* Removed the `mhdior` experimental function.
+
 ## General
 
 * Support for `blavaan` models.

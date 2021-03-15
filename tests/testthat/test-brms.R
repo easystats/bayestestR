@@ -11,7 +11,6 @@ if (require("brms") && require("testthat") && require("insight") && require("htt
     # expect_true("equivalence_test" %in% class(equivalence_test(model)))
     expect_s3_class(map_estimate(model), "data.frame")
     expect_s3_class(p_map(model), "data.frame")
-    expect_s3_class(mhdior(model), "data.frame")
     expect_s3_class(p_direction(model), "data.frame")
 
     expect_equal(colnames(hdi(model)), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))

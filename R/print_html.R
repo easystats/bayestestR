@@ -30,11 +30,6 @@ print_html.p_map <- function(x, digits = 2, caption = "MAP-based p-value", ...) 
 }
 
 
-#' @export
-print_html.mhdior <- function(x, digits = 2, caption = "Max HDI inside/outside ROPE (MHDIOR)", ...) {
-  .print_html_default(x = x, digits = digits, caption = caption, ...)
-}
-
 
 #' @export
 print_html.p_rope <- function(x, digits = 2, ...) {

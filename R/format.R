@@ -53,9 +53,6 @@ format.p_rope <- format.describe_posterior
 format.p_direction <- format.describe_posterior
 
 #' @export
-format.mhdior <- format.describe_posterior
-
-#' @export
 format.p_map <- format.describe_posterior
 
 #' @export

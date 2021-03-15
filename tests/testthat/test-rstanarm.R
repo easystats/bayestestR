@@ -36,7 +36,6 @@ if (.runThisTest) {
       # expect_true("equivalence_test" %in% class(equivalence_test(model)))
       expect_s3_class(map_estimate(model), "data.frame")
       expect_s3_class(p_map(model), "data.frame")
-      expect_s3_class(mhdior(model), "data.frame")
       expect_s3_class(p_direction(model), "data.frame")
 
       # expect_error(equivalence_test(model, range = c(.1, .3, .5)))
