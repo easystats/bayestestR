@@ -1,4 +1,5 @@
-#' @importFrom insight format_table print_parameters
+#' @importFrom insight format_table print_parameters format_value format_bf
+#' @importFrom utils modifyList
 #' @export
 format.describe_posterior <- function(x,
                                       cp,
@@ -69,3 +70,68 @@ format.bayestestR_eti <- format.describe_posterior
 
 #' @export
 format.bayestestR_si <- format.describe_posterior
+
+
+
+
+# special handling for bayes factors ------------------
+
+
+#' @export
+format.bayesfactor_models <- function(x,
+                                      digits = 3,
+                                      log = FALSE,
+                                      show_names = TRUE,
+                                      format = "text",
+                                      caption = NULL,
+                                      ...) {
+
+  BFE <- x
+  denominator <- attr(BFE, "denominator")
+  grid.type <- attr(BFE, "BF_method")
+  model_names <- rownames(BFE)
+
+  BFE <- as.data.frame(BFE)
+  if (log) {
+    BFE$BF <- log(BFE$BF)
+  }
+  BFE$BF <- insight::format_bf(BFE$BF, name = NULL)
+  BFE$Model[BFE$Model == "1"] <- "(Intercept only)" # indicate null-model
+
+  if ((!show_names) || is.null(model_names) || length(model_names) != nrow(BFE)) {
+    BFE$i <- paste0("[", seq_len(nrow(BFE)), "]")
+  } else {
+    BFE$i <- paste0("[", model_names, "]")
+  }
+
+  # Denominator
+  denM <- .trim(paste0(BFE$i, " ", BFE$Model)[denominator])
+  BFE <- BFE[-denominator, ]
+  BFE <- BFE[c("i", "Model", "BF")]
+  colnames(BFE)[1] <- ifelse(identical(format, "html"), "Name", "")
+
+  # footer
+  if (is.null(format) || format == "text") {
+    footer <- list(
+      "\n* Against Denominator: ",
+      c(denM, "cyan"),
+      "\n*   Bayes Factor Type: ",
+      c(grid.type, "cyan"),
+      if (log) c("\n\nBayes Factors are on the log-scale.", "red")
+    )
+    # color formatting for caption
+    if (!is.null(caption)) {
+      caption <- c(caption, "blue")
+    }
+  } else {
+    footer <- .compact_list(list(
+      paste0("Against Denominator: ", denM),
+      paste0("Bayes Factor Type: ", grid.type),
+      if (log) "Bayes Factors are on the log-scale."
+    ))
+  }
+
+  attr(BFE, "table_footer") <- footer
+  attr(BFE, "table_caption") <- caption
+  BFE
+}

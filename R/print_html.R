@@ -74,6 +74,32 @@ print_html.bayestestR_si <- function(x, digits = 2, caption = "Support Interval"
 
 
 
+# special handling for bayes factors ------------------
+
+
+#' @export
+print_html.bayesfactor_models <- function(x, digits = 3, log = FALSE, show_names = TRUE, ...) {
+  # format data frame and columns
+  formatted_table <- format(
+    x,
+    digits = digits,
+    log = log,
+    show_names = show_names,
+    format = "html",
+    ...
+  )
+
+  insight::export_table(
+    formatted_table,
+    align = c("llr"),
+    caption = "Bayes Factors for Model Comparison",
+    format = "html"
+  )
+}
+
+
+
+
 
 # util ---------------
 

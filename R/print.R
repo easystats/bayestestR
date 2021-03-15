@@ -1,4 +1,4 @@
-#' @importFrom insight export_table
+#' @importFrom insight export_table format_value
 #' @export
 print.describe_posterior <- function(x, digits = 2, caption = "Summary of Posterior Distribution", ...) {
   .print_default(x = x, digits = digits, caption = caption, ...)
@@ -61,6 +61,36 @@ print.bayestestR_eti <- function(x, digits = 2, caption = "Equal-Tailed Interval
 #' @export
 print.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", ...) {
   .print_default(x = x, digits = digits, caption = caption, ci_string = "SI", ...)
+}
+
+
+
+
+# special handling for bayes factors ------------------
+
+
+#' @export
+print.bayesfactor_models <- function(x, digits = 3, log = FALSE, show_names = TRUE, caption = "Bayes Factors for Model Comparison", ...) {
+  # format data frame and columns
+  formatted_table <- format(
+    x,
+    digits = digits,
+    log = log,
+    show_names = show_names,
+    format = "text",
+    caption = caption,
+    ...
+  )
+
+  cat(insight::export_table(
+    formatted_table,
+    sep = " ",
+    header = NULL,
+    align = c("llr"),
+    format = "text"
+  ))
+
+  invisible(x)
 }
 
 
