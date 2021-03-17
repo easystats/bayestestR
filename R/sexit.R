@@ -86,7 +86,7 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
   centrality_text <- paste0("Median = ", insight::format_value(centrality$Median))
   direction <- ifelse(centrality$Median < 0, "negative", "positive")
   uncertainty <- ci(x, ci = ci, method = "HDI", ...)[c("CI", "CI_low", "CI_high")]
-  uncertainty_text <- insight::format_ci(uncertainty$CI_low, uncertainty$CI_high, uncertainty$CI / 100)
+  uncertainty_text <- insight::format_ci(uncertainty$CI_low, uncertainty$CI_high, uncertainty$CI)
 
   # Indices
   existence_rez <- as.numeric(p_direction(x, ...))
