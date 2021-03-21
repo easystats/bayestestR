@@ -433,7 +433,17 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 .cleanup_BF_models <- function(mods, denominator, cl) {
   if (length(mods) == 1 && inherits(mods[[1]], "list")) {
     mods <- mods[[1]]
-    names(mods) <- sapply(cl$`...`[[1]][-1], .safe_deparse)
+    mod_names <- tryCatch(
+      {
+        sapply(cl$`...`[[1]][-1], .safe_deparse)
+      },
+      error = function(e) {
+        NULL
+      }
+    )
+    if (!is.null(mod_names) && length(mod_names) == length(mods)) {
+      names(mods) <- mod_names
+    }
   }
 
   if (!is.numeric(denominator[[1]])) {
