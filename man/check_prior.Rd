@@ -9,12 +9,23 @@ check_prior(model, method = "gelman", simulate_priors = TRUE, ...)
 \arguments{
 \item{model}{A \code{stanreg}, \code{stanfit}, or \code{brmsfit} object.}
 
-\item{method}{Can be "gelman" or "lakeland". For the "gelman" method, if the SD of the posterior is more than 0.1 times the SD of the prior, then the prior is considered as informative. For the "lakeland" method, the prior is considered as informative if the posterior falls within the 95\% HDI of the prior.}
+\item{method}{Can be \code{"gelman"} or \code{"lakeland"}. For the
+\code{"gelman"} method, if the SD of the posterior is more than 0.1 times
+the SD of the prior, then the prior is considered as informative. For the
+\code{"lakeland"} method, the prior is considered as informative if the
+posterior falls within the 95\% HDI of the prior.}
 
 \item{simulate_priors}{Should prior distributions be simulated using
-\code{\link{simulate_prior}} (default; faster) or sampled via \code{\link{unupdate}} (slower, more accurate).}
+\code{\link{simulate_prior}} (default; faster) or sampled via
+\code{\link{unupdate}} (slower, more accurate).}
 
 \item{...}{Currently not used.}
+}
+\value{
+A data frame with two columns: The parameter names and the quality
+  of the prior (which might be \code{"informative"}, \code{"uninformative"})
+  or \code{"not determinable"} if the prior distribution could not be
+  determined).
 }
 \description{
 Performs a simple test to check whether the prior is informative to the posterior. This idea, and the accompanying heuristics, were discussed in \href{https://statmodeling.stat.columbia.edu/2019/08/10/}{this blogpost}.
