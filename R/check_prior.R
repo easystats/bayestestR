@@ -101,6 +101,13 @@ check_prior.blavaan <- check_prior.brmsfit
 #' @keywords internal
 .check_prior <- function(priors, posteriors, method = "gelman", verbose = TRUE) {
 
+  # sanity check for matching parameters. Some weird priors like
+  # rstanarm's R2 prior might cause problems
+
+  matching_colnames <- intersect(colnames(priors), colnames(posteriors))
+  priors <- priors[matching_colnames]
+  posteriors <- posteriors[matching_colnames]
+
   # for priors whose distribution cannot be simulated, prior values are
   # all NA. Catch those, and warn user
   all_missing <- sapply(priors, function(i) {
