@@ -87,7 +87,8 @@ check_prior.brmsfit <- function(model,
     )
   }
 
-  .check_prior(priors, posteriors, method, verbose = verbose)
+  .check_prior(priors, posteriors, method, verbose = verbose,
+               cleaned_parameters = insight::clean_parameters(model))
 }
 
 #' @export
@@ -99,14 +100,29 @@ check_prior.blavaan <- check_prior.brmsfit
 
 #' @importFrom stats sd
 #' @keywords internal
-.check_prior <- function(priors, posteriors, method = "gelman", verbose = TRUE) {
+.check_prior <- function(priors, posteriors, method = "gelman", verbose = TRUE, cleaned_parameters = NULL) {
 
   # sanity check for matching parameters. Some weird priors like
   # rstanarm's R2 prior might cause problems
 
-  matching_colnames <- intersect(colnames(priors), colnames(posteriors))
-  priors <- priors[matching_colnames]
-  posteriors <- posteriors[matching_colnames]
+  if (!is.null(cleaned_parameters)) {
+    cp <- cleaned_parameters$Cleaned_Parameter
+    cp <- gsub("(.*)\\.\\d+\\.", "\\1", cp)
+    matching_colnames <- intersect(colnames(priors), cp)
+    priors <- priors[matching_colnames]
+    posteriors <- posteriors[which(cp %in% matching_colnames)]
+    # in case one parameter appears multiple times, but only has one prior,
+    # like this brms-example:
+    # model <- brm(rating ~ period + carry + cs(treat),
+    #              data = inhaler, family = sratio("logit"),
+    #              prior = set_prior("normal(0,5)"),
+    #              chains = 2, silent = TRUE, refresh = 0
+    # )
+    if (ncol(posteriors) > ncol(priors)) {
+      priors <- priors[cp[which(cp %in% matching_colnames)]]
+      colnames(priors) <- cp[which(cp %in% matching_colnames)]
+    }
+  }
 
   # for priors whose distribution cannot be simulated, prior values are
   # all NA. Catch those, and warn user
