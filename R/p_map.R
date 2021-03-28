@@ -162,6 +162,9 @@ p_map.blrm <- p_map.mcmc
 #' @export
 p_map.mcmc.list <- p_map.mcmc
 
+#' @export
+p_map.BGGM <- p_map.mcmc
+
 
 
 #' @export

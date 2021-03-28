@@ -77,6 +77,11 @@ describe_prior.mcmc.list <- function(model, ...) {
 }
 
 #' @export
+describe_prior.BGGM <- function(model, ...) {
+  NULL
+}
+
+#' @export
 describe_prior.bamlss <- function(model, ...) {
   NULL
 }

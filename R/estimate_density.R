@@ -195,6 +195,7 @@ estimate_density.grouped_df <- function(x, method = "kernel", precision = 2^10, 
   do.call(rbind, out)
 }
 
+
 #' @export
 estimate_density.emmGrid <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
   x <- insight::get_parameters(x)
@@ -276,9 +277,17 @@ estimate_density.mcmc <- function(x, method = "kernel", precision = 2^10, extend
 #' @export
 estimate_density.bayesQR <- estimate_density.mcmc
 
+#' @export
+estimate_density.blrm <- estimate_density.mcmc
 
 #' @export
 estimate_density.bcplm <- estimate_density.mcmc
+
+#' @export
+estimate_density.BGGM <- estimate_density.mcmc
+
+#' @export
+estimate_density.mcmc.list <- estimate_density.mcmc
 
 
 #' @export

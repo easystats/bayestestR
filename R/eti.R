@@ -117,6 +117,9 @@ eti.blrm <- eti.bcplm
 #' @export
 eti.mcmc.list <- eti.bcplm
 
+#' @export
+eti.BGGM <- eti.bcplm
+
 
 
 #' @rdname eti

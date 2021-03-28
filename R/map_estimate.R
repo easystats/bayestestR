@@ -39,8 +39,6 @@ map_estimate <- function(x, precision = 2^10, method = "kernel", ...) {
 
 
 
-
-
 #' @rdname map_estimate
 #' @export
 map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
@@ -60,7 +58,6 @@ map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
 }
 
 
-
 #' @rdname map_estimate
 #' @export
 map_estimate.bayesQR <- function(x, precision = 2^10, method = "kernel", ...) {
@@ -68,6 +65,47 @@ map_estimate.bayesQR <- function(x, precision = 2^10, method = "kernel", ...) {
   map_estimate(x, precision = precision, method = method)
 }
 
+
+#' @export
+map_estimate.BGGM <- function(x, precision = 2^10, method = "kernel", ...) {
+  x <- insight::get_parameters(x)
+  map_estimate(x, precision = precision, method = method)
+}
+
+
+#' @export
+map_estimate.mcmc <- function(x, precision = 2^10, method = "kernel", ...) {
+  x <- insight::get_parameters(x)
+  map_estimate(x, precision = precision, method = method)
+}
+
+
+#' @export
+map_estimate.bamlss <- function(x, precision = 2^10, method = "kernel", ...) {
+  x <- insight::get_parameters(x)
+  map_estimate(x, precision = precision, method = method)
+}
+
+
+#' @export
+map_estimate.bcplm <- function(x, precision = 2^10, method = "kernel", ...) {
+  x <- insight::get_parameters(x)
+  map_estimate(x, precision = precision, method = method)
+}
+
+
+#' @export
+map_estimate.blrm <- function(x, precision = 2^10, method = "kernel", ...) {
+  x <- insight::get_parameters(x)
+  map_estimate(x, precision = precision, method = method)
+}
+
+
+#' @export
+map_estimate.mcmc.list <- function(x, precision = 2^10, method = "kernel", ...) {
+  x <- insight::get_parameters(x)
+  map_estimate(x, precision = precision, method = method)
+}
 
 
 #' @importFrom insight get_parameters
@@ -89,6 +127,7 @@ map_estimate.bayesQR <- function(x, precision = 2^10, method = "kernel", ...) {
   class(out) <- unique(c("map_estimate", "see_point_estimate", class(out)))
   out
 }
+
 
 #' @rdname map_estimate
 #' @export
@@ -123,14 +162,11 @@ map_estimate.brmsfit <- function(x, precision = 2^10, method = "kernel", effects
 }
 
 
-
 #' @rdname map_estimate
 #' @export
 map_estimate.data.frame <- function(x, precision = 2^10, method = "kernel", ...) {
   .map_estimate_models(x, precision = precision, method = method)
 }
-
-
 
 
 #' @rdname map_estimate

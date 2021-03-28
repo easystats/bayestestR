@@ -176,6 +176,9 @@ p_significance.bayesQR <- p_significance.bcplm
 #' @export
 p_significance.blrm <- p_significance.bcplm
 
+#' @export
+p_significance.BGGM <- p_significance.bcplm
+
 
 #' @rdname p_significance
 #' @export

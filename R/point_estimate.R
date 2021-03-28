@@ -155,6 +155,10 @@ point_estimate.mcmc.list <- point_estimate.bcplm
 
 
 #' @export
+point_estimate.BGGM <- point_estimate.bcplm
+
+
+#' @export
 point_estimate.bamlss <- function(x, centrality = "all", dispersion = FALSE, component = c("conditional", "location", "all"), ...) {
   component <- match.arg(component)
   out <- point_estimate(insight::get_parameters(x, component = component), centrality = centrality, dispersion = dispersion, ...)

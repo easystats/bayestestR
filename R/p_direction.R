@@ -193,6 +193,12 @@ p_direction.mcmc <- function(x, method = "direct", null = 0, ...) {
 
 
 #' @export
+p_direction.BGGM <- function(x, method = "direct", null = 0, ...) {
+  p_direction(as.data.frame(x), method = method, null = null, ...)
+}
+
+
+#' @export
 p_direction.bcplm <- function(x, method = "direct", null = 0, ...) {
   p_direction(insight::get_parameters(x), method = method, null = null, ...)
 }

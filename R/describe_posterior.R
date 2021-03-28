@@ -692,6 +692,15 @@ describe_posterior.mcmc.list <- function(posteriors, centrality = "median", disp
 }
 
 
+#' @export
+describe_posterior.BGGM <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.89, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.89, parameters = NULL, ...) {
+  out <- .describe_posterior(insight::get_parameters(posteriors), centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, effects = "fixed", parameters = parameters, ...)
+  attr(out, "ci_method") <- ci_method
+  class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
+  out
+}
+
+
 #' @inheritParams describe_posterior.stanreg
 #' @rdname describe_posterior
 #' @export

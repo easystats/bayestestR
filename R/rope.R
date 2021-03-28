@@ -260,6 +260,9 @@ rope.bayesQR <- rope.bcplm
 rope.blrm <- rope.bcplm
 
 #' @export
+rope.BGGM <- rope.bcplm
+
+#' @export
 rope.mcmc.list <- rope.bcplm
 
 

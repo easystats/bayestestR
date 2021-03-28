@@ -41,7 +41,6 @@ diagnostic_posterior <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 }
 
 
-
 #' @export
 diagnostic_posterior.numeric <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...) {
   stop("`diagnostic_posterior` only works with rstanarm or brms models.")
@@ -52,7 +51,6 @@ diagnostic_posterior.data.frame <- diagnostic_posterior.numeric
 
 #' @export
 diagnostic_posterior.BFBayesFactor <- diagnostic_posterior.numeric
-
 
 
 #' @inheritParams insight::get_parameters.BFBayesFactor
@@ -213,7 +211,6 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects
 }
 
 
-
 #' @inheritParams insight::get_parameters
 #' @export
 diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
@@ -311,6 +308,3 @@ diagnostic_posterior.blavaan <- function(posteriors, diagnostic = "all", ...) {
 
   unique(out)
 }
-
-
-

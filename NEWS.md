@@ -10,6 +10,7 @@
 
 * Support for `blavaan` models.
 * Support for `blrm` models (*rmsb*).
+* Support for `BGGM` models (*BGGM*).
 
 ## Bug fixes
 

@@ -121,7 +121,6 @@ hdi.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
 }
 
 
-
 #' @rdname hdi
 #' @export
 hdi.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
@@ -129,10 +128,6 @@ hdi.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
   attr(dat, "object_name") <- .safe_deparse(substitute(x))
   dat
 }
-
-
-
-
 
 
 #' @rdname hdi
@@ -146,7 +141,6 @@ hdi.MCMCglmm <- function(x, ci = .89, verbose = TRUE, ...) {
 }
 
 
-
 #' @export
 hdi.bamlss <- function(x, ci = .89, component = c("all", "conditional", "location"), verbose = TRUE, ...) {
   component <- match.arg(component)
@@ -158,7 +152,6 @@ hdi.bamlss <- function(x, ci = .89, component = c("all", "conditional", "locatio
 }
 
 
-
 #' @export
 hdi.mcmc <- function(x, ci = .89, verbose = TRUE, ...) {
   d <- as.data.frame(x)
@@ -166,7 +159,6 @@ hdi.mcmc <- function(x, ci = .89, verbose = TRUE, ...) {
   attr(dat, "data") <- .safe_deparse(substitute(x))
   dat
 }
-
 
 
 #' @export
@@ -177,7 +169,6 @@ hdi.bcplm <- function(x, ci = .89, verbose = TRUE, ...) {
   dat
 }
 
-
 #' @export
 hdi.bayesQR <- hdi.bcplm
 
@@ -186,6 +177,9 @@ hdi.blrm <- hdi.bcplm
 
 #' @export
 hdi.mcmc.list <- hdi.bcplm
+
+#' @export
+hdi.BGGM <- hdi.bcplm
 
 
 #' @rdname hdi
@@ -199,7 +193,6 @@ hdi.sim.merMod <- function(x, ci = .89, effects = c("fixed", "random", "all"), p
 }
 
 
-
 #' @rdname hdi
 #' @export
 hdi.sim <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
@@ -208,7 +201,6 @@ hdi.sim <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
   attr(out, "data") <- dat$data
   out
 }
-
 
 
 #' @rdname hdi
@@ -223,7 +215,6 @@ hdi.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
 
 #' @export
 hdi.emm_list <- hdi.emmGrid
-
 
 
 #' @importFrom insight get_parameters
@@ -249,7 +240,6 @@ hdi.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"), comp
 #' @export
 hdi.stanfit <- hdi.stanreg
 
-
 #' @export
 hdi.blavaan <- hdi.stanreg
 
@@ -273,7 +263,6 @@ hdi.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"), comp
 }
 
 
-
 #' @rdname hdi
 #' @export
 hdi.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
@@ -281,6 +270,7 @@ hdi.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
 }
+
 
 #' @export
 hdi.get_predicted <- function(x, ...) {
