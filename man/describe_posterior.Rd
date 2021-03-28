@@ -5,8 +5,8 @@
 \alias{describe_posterior.numeric}
 \alias{describe_posterior.stanreg}
 \alias{describe_posterior.stanmvreg}
-\alias{describe_posterior.MCMCglmm}
 \alias{describe_posterior.brmsfit}
+\alias{describe_posterior.MCMCglmm}
 \alias{describe_posterior.BFBayesFactor}
 \title{Describe Posterior Distributions}
 \usage{
@@ -75,20 +75,6 @@ describe_posterior(
   ...
 )
 
-\method{describe_posterior}{MCMCglmm}(
-  posteriors,
-  centrality = "median",
-  dispersion = FALSE,
-  ci = 0.89,
-  ci_method = "hdi",
-  test = c("p_direction", "rope"),
-  rope_range = "default",
-  rope_ci = 0.89,
-  diagnostic = "ESS",
-  parameters = NULL,
-  ...
-)
-
 \method{describe_posterior}{brmsfit}(
   posteriors,
   centrality = "median",
@@ -105,6 +91,20 @@ describe_posterior(
     "distributional", "auxiliary"),
   parameters = NULL,
   BF = 1,
+  ...
+)
+
+\method{describe_posterior}{MCMCglmm}(
+  posteriors,
+  centrality = "median",
+  dispersion = FALSE,
+  ci = 0.89,
+  ci_method = "hdi",
+  test = c("p_direction", "rope"),
+  rope_range = "default",
+  rope_ci = 0.89,
+  diagnostic = "ESS",
+  parameters = NULL,
   ...
 )
 

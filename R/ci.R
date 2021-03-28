@@ -87,12 +87,12 @@ ci <- function(x, ...) {
   }
 }
 
+
 #' @rdname ci
 #' @export
 ci.numeric <- function(x, ci = .89, method = "ETI", verbose = TRUE, BF = 1, ...) {
   .ci_bayesian(x, ci = ci, method = method, verbose = verbose, BF = BF, ...)
 }
-
 
 
 #' @rdname ci
@@ -181,20 +181,11 @@ ci.MCMCglmm <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
 }
 
 
-
-#' @export
-ci.mcmc <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
-  ci(as.data.frame(x), ci = ci, method = method, verbose = verbose, ...)
-}
-
-
-
 #' @export
 ci.bamlss <- function(x, ci = .89, method = "ETI", component = c("all", "conditional", "location"), verbose = TRUE, ...) {
   component <- match.arg(component)
   ci(insight::get_parameters(x, component = component), ci = ci, method = method, verbose = verbose, ...)
 }
-
 
 
 #' @export
@@ -204,21 +195,19 @@ ci.bcplm <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
 
 
 #' @export
-ci.blrm <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
-  ci(insight::get_parameters(x), ci = ci, method = method, verbose = verbose, ...)
-}
+ci.blrm <- ci.bcplm
 
 
 #' @export
-ci.mcmc.list <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
-  ci(insight::get_parameters(x), ci = ci, method = method, verbose = verbose, ...)
-}
+ci.mcmc <- ci.bcplm
 
 
 #' @export
-ci.BGGM <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
-  ci(insight::get_parameters(x), ci = ci, method = method, verbose = verbose, ...)
-}
+ci.mcmc.list <- ci.bcplm
+
+
+#' @export
+ci.BGGM <- ci.bcplm
 
 
 #' @export
