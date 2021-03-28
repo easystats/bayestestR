@@ -260,21 +260,6 @@
   <span class='va'>...</span>
 <span class='op'>)</span>
 
-<span class='co'># S3 method for MCMCglmm</span>
-<span class='fu'>describe_posterior</span><span class='op'>(</span>
-  <span class='va'>posteriors</span>,
-  centrality <span class='op'>=</span> <span class='st'>"median"</span>,
-  dispersion <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.89</span>,
-  ci_method <span class='op'>=</span> <span class='st'>"hdi"</span>,
-  test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"p_direction"</span>, <span class='st'>"rope"</span><span class='op'>)</span>,
-  rope_range <span class='op'>=</span> <span class='st'>"default"</span>,
-  rope_ci <span class='op'>=</span> <span class='fl'>0.89</span>,
-  diagnostic <span class='op'>=</span> <span class='st'>"ESS"</span>,
-  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
-
 <span class='co'># S3 method for brmsfit</span>
 <span class='fu'>describe_posterior</span><span class='op'>(</span>
   <span class='va'>posteriors</span>,
@@ -292,6 +277,21 @@
     <span class='st'>"distributional"</span>, <span class='st'>"auxiliary"</span><span class='op'>)</span>,
   parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
   BF <span class='op'>=</span> <span class='fl'>1</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for MCMCglmm</span>
+<span class='fu'>describe_posterior</span><span class='op'>(</span>
+  <span class='va'>posteriors</span>,
+  centrality <span class='op'>=</span> <span class='st'>"median"</span>,
+  dispersion <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.89</span>,
+  ci_method <span class='op'>=</span> <span class='st'>"hdi"</span>,
+  test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"p_direction"</span>, <span class='st'>"rope"</span><span class='op'>)</span>,
+  rope_range <span class='op'>=</span> <span class='st'>"default"</span>,
+  rope_ci <span class='op'>=</span> <span class='fl'>0.89</span>,
+  diagnostic <span class='op'>=</span> <span class='st'>"ESS"</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
