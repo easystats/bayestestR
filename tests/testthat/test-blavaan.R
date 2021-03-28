@@ -84,7 +84,7 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 
     ## Prior/posterior checks ----
     suppressWarnings(x <- check_prior(bfit))
-    expect_equal(nrow(x), 14)
+    expect_equal(nrow(x), 13)
 
     x <- check_prior(bfit, simulate_priors = FALSE)
     expect_equal(nrow(x), 14)
