@@ -31,11 +31,13 @@ if (require("rstanarm") && require("testthat") &&
 
   expect_equal(
     check_prior(model2)$Prior_Quality,
-    c("uninformative", "uninformative", "uninformative", "informative", "informative")
+    c("uninformative", "informative", "informative", "uninformative",
+      "uninformative", "uninformative", "informative", "informative")
   )
 
   expect_equal(
     check_prior(model2, method = "lakeland")$Prior_Quality,
-    c("informative", "informative", "informative", "informative", "informative")
+    c("informative", "informative", "misinformative", "informative",
+      "informative", "informative", "informative", "informative")
   )
 }
