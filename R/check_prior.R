@@ -107,7 +107,10 @@ check_prior.blavaan <- check_prior.brmsfit
 
   if (!is.null(cleaned_parameters)) {
     cp <- cleaned_parameters$Cleaned_Parameter
-    cp <- gsub("(.*)\\.\\d+\\.", "\\1", cp)
+    cp <- gsub("(.*)(\\.|\\[)\\d+(\\.|\\])", "\\1", cp)
+    # rename intercept column
+    cp[cp == "Intercept"] <- "(Intercept)"
+    colnames(priors)[colnames(priors) == "Intercept"] <- "(Intercept)"
     matching_colnames <- intersect(colnames(priors), cp)
     priors <- priors[matching_colnames]
     posteriors <- posteriors[which(cp %in% matching_colnames)]

@@ -94,6 +94,11 @@ simulate_prior.bcplm <- function(model, n = 1000, verbose = TRUE, ...) {
   for (param in priors$Parameter) {
     prior <- priors[priors$Parameter == param, ]
 
+    # edge cases
+    if (nrow(prior) > 1) {
+      prior <- prior[1, ]
+    }
+
     # Get actual scale
     if ("Adjusted_Scale" %in% names(prior)) {
       scale <- prior$Adjusted_Scale
