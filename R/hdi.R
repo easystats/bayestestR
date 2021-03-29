@@ -33,7 +33,7 @@
 #' The 89\% intervals (\code{ci = 0.89}) are deemed to be more stable than, for
 #' instance, 95\% intervals (\cite{Kruschke, 2014}).
 #' An effective sample size of at least 10.000 is recommended if one wants to estimate
-#' 95\% intervals with high precision (\cite{Kruschke, 2014, p. 183ff}). Moreover,
+#' 95\% intervals with high precision (\cite{Kruschke, 2014, p. 183ff}). Unfortunately, the default number of posterior samples for most Bayes packages (e.g., `rstanarm` or `brms`) is only 4.000 (thus, you might want to increase it when fitting your model). Moreover,
 #' 89 indicates the arbitrariness of interval limits - its only remarkable property is being
 #' the highest prime number that does not exceed the already unstable 95\%
 #' threshold (\cite{McElreath, 2015}).
