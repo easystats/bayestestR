@@ -112,7 +112,7 @@ ci.emmGrid <- function(x, ci = NULL, ...) {
     return(parameters::ci_wald(model = x, ci = ci, dof = parameters::degrees_of_freedom(x), ...))
   }
 
-  if (is.null(ci)) ci <- 0.89
+  if (is.null(ci)) ci <- 0.95
   x <- insight::get_parameters(x)
   ci(x, ci = ci, ...)
 }
