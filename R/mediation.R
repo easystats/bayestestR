@@ -112,7 +112,7 @@ mediation <- function(model, ...) {
 
 #' @rdname mediation
 #' @export
-mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = .89, method = "ETI", ...) {
+mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = 0.95, method = "ETI", ...) {
   .mediation(
     model = model,
     treatment = treatment,
@@ -129,7 +129,7 @@ mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centr
 
 #' @rdname mediation
 #' @export
-mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = .89, method = "ETI", ...) {
+mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = 0.95, method = "ETI", ...) {
   .mediation(
     model = model,
     treatment = treatment,
@@ -151,7 +151,7 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
 
 
 #' @importFrom insight model_info find_response find_predictors get_parameters
-.mediation <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = .89, method = "ETI", pattern = "b_%s_%s", ...) {
+.mediation <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = 0.95, method = "ETI", pattern = "b_%s_%s", ...) {
   # only one HDI interval
   if (length(ci) > 1) ci <- ci[1]
 

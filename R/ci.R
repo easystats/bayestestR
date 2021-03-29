@@ -75,7 +75,7 @@ ci <- function(x, ...) {
 
 
 #' @keywords internal
-.ci_bayesian <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, BF = 1, ...) {
+.ci_bayesian <- function(x, ci = 0.95, method = "ETI", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, BF = 1, ...) {
   if (tolower(method) %in% c("eti", "equal", "ci", "quantile")) {
     return(eti(x, ci = ci, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))
   } else if (tolower(method) %in% c("hdi")) {
@@ -90,7 +90,7 @@ ci <- function(x, ...) {
 
 #' @rdname ci
 #' @export
-ci.numeric <- function(x, ci = .89, method = "ETI", verbose = TRUE, BF = 1, ...) {
+ci.numeric <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, ...) {
   .ci_bayesian(x, ci = ci, method = method, verbose = verbose, BF = BF, ...)
 }
 
@@ -125,7 +125,7 @@ ci.emm_list <- ci.emmGrid
 
 #' @rdname ci
 #' @export
-ci.sim.merMod <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random", "all"),
+ci.sim.merMod <- function(x, ci = 0.95, method = "ETI", effects = c("fixed", "random", "all"),
                           parameters = NULL, verbose = TRUE, ...) {
   .ci_bayesian(x, ci = ci, method = method, effects = effects, parameters = parameters, verbose = verbose, ...)
 }
@@ -134,7 +134,7 @@ ci.sim.merMod <- function(x, ci = .89, method = "ETI", effects = c("fixed", "ran
 
 #' @rdname ci
 #' @export
-ci.sim <- function(x, ci = .89, method = "ETI", parameters = NULL, verbose = TRUE, ...) {
+ci.sim <- function(x, ci = 0.95, method = "ETI", parameters = NULL, verbose = TRUE, ...) {
   .ci_bayesian(x, ci = ci, method = method, parameters = parameters, verbose = verbose, ...)
 }
 
@@ -142,7 +142,7 @@ ci.sim <- function(x, ci = .89, method = "ETI", parameters = NULL, verbose = TRU
 
 #' @rdname ci
 #' @export
-ci.stanreg <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random", "all"),
+ci.stanreg <- function(x, ci = 0.95, method = "ETI", effects = c("fixed", "random", "all"),
                        component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
                        parameters = NULL, verbose = TRUE, BF = 1, ...) {
   .ci_bayesian(x, ci = ci, method = method, effects = effects, component = component, parameters = parameters, verbose = verbose, BF = BF, ...)
@@ -151,7 +151,7 @@ ci.stanreg <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random
 
 #' @rdname ci
 #' @export
-ci.brmsfit <- function(x, ci = .89, method = "ETI", effects = c("fixed", "random", "all"),
+ci.brmsfit <- function(x, ci = 0.95, method = "ETI", effects = c("fixed", "random", "all"),
                        component = c("conditional", "zi", "zero_inflated", "all"),
                        parameters = NULL, verbose = TRUE, BF = 1, ...) {
   .ci_bayesian(x, ci = ci, method = method, effects = effects, component = component, parameters = parameters, verbose = verbose, BF = BF, ...)
@@ -175,21 +175,21 @@ ci.BFBayesFactor <- ci.numeric
 
 #' @rdname ci
 #' @export
-ci.MCMCglmm <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
+ci.MCMCglmm <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
   ci(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), ci = ci, method = method, verbose = verbose, ...)
 }
 
 
 #' @export
-ci.bamlss <- function(x, ci = .89, method = "ETI", component = c("all", "conditional", "location"), verbose = TRUE, ...) {
+ci.bamlss <- function(x, ci = 0.95, method = "ETI", component = c("all", "conditional", "location"), verbose = TRUE, ...) {
   component <- match.arg(component)
   ci(insight::get_parameters(x, component = component), ci = ci, method = method, verbose = verbose, ...)
 }
 
 
 #' @export
-ci.bcplm <- function(x, ci = .89, method = "ETI", verbose = TRUE, ...) {
+ci.bcplm <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, ...) {
   ci(insight::get_parameters(x), ci = ci, method = method, verbose = verbose, ...)
 }
 
