@@ -14,7 +14,7 @@ mediation(model, ...)
   mediator,
   response = NULL,
   centrality = "median",
-  ci = 0.89,
+  ci = 0.95,
   method = "ETI",
   ...
 )
@@ -25,7 +25,7 @@ mediation(model, ...)
   mediator,
   response = NULL,
   centrality = "median",
-  ci = 0.89,
+  ci = 0.95,
   method = "ETI",
   ...
 )

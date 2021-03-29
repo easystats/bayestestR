@@ -12,7 +12,7 @@ sexit(x, significant = "default", large = "default", ci = 0.95, ...)
 \item{significant, large}{The threshold values to use for significant and large probabilities. If left to 'default', will be selected through \code{\link[=sexit_thresholds]{sexit_thresholds()}}. See the details section below.}
 
 \item{ci}{Value or vector of probability of the (credible) interval - CI (between 0 and 1)
-to be estimated. Default to \code{.89} (89\%).}
+to be estimated. Default to \code{.95} (95\%).}
 
 \item{...}{Currently not used.}
 }
