@@ -108,6 +108,7 @@ check_prior.blavaan <- check_prior.brmsfit
   if (!is.null(cleaned_parameters)) {
     cp <- cleaned_parameters$Cleaned_Parameter
     cp <- gsub("(.*)(\\.|\\[)\\d+(\\.|\\])", "\\1", cp)
+    cp <- cp[!duplicated(cp)]
     # rename intercept column
     cp[cp == "Intercept"] <- "(Intercept)"
     colnames(priors)[colnames(priors) == "Intercept"] <- "(Intercept)"

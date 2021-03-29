@@ -89,6 +89,7 @@ simulate_prior.bcplm <- function(model, n = 1000, verbose = TRUE, ...) {
 #' @keywords internal
 .simulate_prior <- function(priors, n = 1000, verbose = TRUE) {
   simulated <- data.frame(.bamboozled = 1:n)
+  sim_error_msg <- FALSE
 
   # iterate over parameters
   for (param in priors$Parameter) {
@@ -112,17 +113,23 @@ simulate_prior.bcplm <- function(model, n = 1000, verbose = TRUE, ...) {
     # Simulate prior
     prior <- tryCatch(
       {
-        distribution(prior$Distribution, n, prior$Location, scale)
+        if (prior$Distribution %in% c("t", "student_t", "Student's t")) {
+          distribution(prior$Distribution, n, prior$df, prior$Location)
+        } else {
+          distribution(prior$Distribution, n, prior$Location, scale)
+        }
       },
       error = function(e) {
-        if (verbose) {
-          warning(paste0("Can't simulate priors from a ", prior$Distribution, " distribution."), call. = FALSE)
-        }
+        sim_error_msg <- TRUE
         NA
       }
     )
 
     simulated[param] <- prior
+  }
+
+  if (sim_error_msg && verbose) {
+    warning(paste0("Can't simulate priors from a ", prior$Distribution, " distribution."), call. = FALSE)
   }
 
   simulated$.bamboozled <- NULL
