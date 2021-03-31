@@ -39,7 +39,7 @@
 #' threshold (\cite{McElreath, 2015}).
 #' \cr
 #' However, 95\% has some \href{https://easystats.github.io/blog/posts/bayestestr_95/}{advantages too}.
-#' For instance, it shares (in some cases) an intuitive relationship with the
+#' For instance, it shares (in the case of a normal posterior distribution) an intuitive relationship with the
 #' standard deviation and it conveys a more accurate image of the (artificial)
 #' bounds of the distribution. Also, because it is wider, it makes analyses more
 #' conservative (i.e., the probability of covering 0 is larger for the 95\% CI than
