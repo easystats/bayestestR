@@ -39,7 +39,7 @@ describe_prior <- function(model, ...) {
 
 
 #' @keywords internal
-.describe_prior <- function(model, ...) {
+.describe_prior <- function(model, parameters = NULL, ...) {
   priors <- insight::get_priors(model, ...)
 
   # Format names
@@ -53,6 +53,17 @@ describe_prior <- function(model, ...) {
 
   if ("Prior_Response" %in% names(priors)) {
     names(priors)[names(priors) == "Prior_Response"] <- "Response"
+  }
+
+  # make sure parameter names match between prior output and model
+  cp <- insight::clean_parameters(model)
+  if (!is.null(parameters) && !all(priors$Parameter %in% parameters)) {
+    cp$Cleaned_Parameter <- gsub("(.*)(\\.|\\[)\\d+(\\.|\\])", "\\1", cp$Cleaned_Parameter)
+    cp$Cleaned_Parameter[cp$Cleaned_Parameter == "Intercept"] <- "(Intercept)"
+    colnames(priors)[1] <- "Cleaned_Parameter"
+    out <- merge(cp, priors, by = "Cleaned_Parameter", all = TRUE)
+    out <- out[!duplicated(out$Parameter), ]
+    priors <- out[intersect(colnames(out), c("Parameter", "Prior_Distribution", "Prior_df", "Prior_Location", "Prior_Scale", "Response"))]
   }
 
   priors

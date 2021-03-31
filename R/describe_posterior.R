@@ -553,7 +553,7 @@ describe_posterior.stanreg <- function(posteriors,
   out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
 
   if (isTRUE(priors)) {
-    priors_data <- describe_prior(posteriors, ...)
+    priors_data <- describe_prior(posteriors, parameters = out$Parameter, ...)
     out <- .merge_and_sort(out, priors_data, by = "Parameter", all = TRUE)
   }
 
@@ -618,7 +618,7 @@ describe_posterior.stanmvreg <- function(posteriors,
   out <- .merge_and_sort(out, diagnostic, by = c("Parameter", "Response"), all = TRUE)
 
   if (isTRUE(priors)) {
-    priors_data <- describe_prior(posteriors, ...)
+    priors_data <- describe_prior(posteriors, parameters = out$Parameter, ...)
     priors_data$Parameter <- gsub("^(.*)\\|(.*)", replacement = "\\2", priors_data$Parameter)
     out <- .merge_and_sort(out, priors_data, by = c("Parameter", "Response"), all = TRUE)
   }
@@ -693,6 +693,7 @@ describe_posterior.brmsfit <- function(posteriors,
                                        component = c("conditional", "zi", "zero_inflated", "all", "location", "distributional", "auxiliary"),
                                        parameters = NULL,
                                        BF = 1,
+                                       priors = FALSE,
                                        ...) {
 
   effects <- match.arg(effects)
@@ -731,6 +732,11 @@ describe_posterior.brmsfit <- function(posteriors,
     out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
   }
 
+  if (isTRUE(priors)) {
+    priors_data <- describe_prior(posteriors, parameters = out$Parameter, ...)
+    out <- .merge_and_sort(out, priors_data, by = "Parameter", all = TRUE)
+  }
+
   out <- .add_clean_parameters_attribute(out, posteriors)
   attr(out, "ci_method") <- ci_method
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
@@ -766,7 +772,7 @@ describe_posterior.MCMCglmm <- function(posteriors, centrality = "median", dispe
 describe_posterior.bcplm <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.95, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.95, priors = TRUE, parameters = NULL, ...) {
   out <- .describe_posterior(insight::get_parameters(posteriors), centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, effects = "fixed", parameters = parameters, ...)
   if (isTRUE(priors)) {
-    priors_data <- describe_prior(posteriors, ...)
+    priors_data <- describe_prior(posteriors, parameters = out$Parameter, ...)
     out <- .merge_and_sort(out, priors_data, by = "Parameter", all = TRUE)
   }
 

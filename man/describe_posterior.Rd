@@ -91,6 +91,7 @@ describe_posterior(
     "distributional", "auxiliary"),
   parameters = NULL,
   BF = 1,
+  priors = FALSE,
   ...
 )
 
