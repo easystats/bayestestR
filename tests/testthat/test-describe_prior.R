@@ -75,13 +75,13 @@ if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", 
 
     expect_equal(
       describe_prior(mod_brms),
-      structure(list(Parameter = c("cyl", "wt"), Prior_Distribution = c(
-        "uniform",
-        "uniform"
-      ), Prior_Location = c(0, 0), Prior_Scale = c(NA, NA)), row.names = c(
-        NA,
-        -2L
-      ), class = "data.frame")
+      structure(list(Parameter = c("(Intercept)", "cyl", "wt"), Prior_Distribution = c(
+        "student_t",
+        "uniform", "uniform"
+      ), Prior_df = c(3, NA, NA), Prior_Location = c(
+        19.2,
+        0, 0
+      ), Prior_Scale = c(5.4, NA, NA)), row.names = c(NA, -3L), class = "data.frame")
     )
 
     # stanreg ----------------------------------------
