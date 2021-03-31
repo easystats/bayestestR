@@ -7,6 +7,15 @@
 
 ***Become a Bayesian master you will***
 
+------------------------------------------------------------------------
+
+:warning: We changed the default the CI width! Please make an [informed
+decision](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+and set it explicitly (`ci = 0.89`, `ci = 0.95` or anything else that
+you decide) :warning:
+
+------------------------------------------------------------------------
+
 Existing R packages allow users to easily fit a large variety of models
 and extract and visualize the posterior draws. However, most of these
 packages only return a limited set of indices (e.g., point-estimates and
@@ -17,12 +26,12 @@ variety of models objects, including popular modeling packages such as
 
 You can reference the package and its documentation as follows:
 
-  - Makowski, D., Ben-Shachar, M. S., & Lüdecke, D. (2019). *bayestestR:
+-   Makowski, D., Ben-Shachar, M. S., & Lüdecke, D. (2019). *bayestestR:
     Describing Effects and their Uncertainty, Existence and Significance
     within the Bayesian Framework*. Journal of Open Source Software,
     4(40), 1541.
     [10.21105/joss.01541](https://doi.org/10.21105/joss.01541)
-  - Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., & Lüdecke, D.
+-   Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., & Lüdecke, D.
     (2019). *Indices of Effect Existence and Significance in the
     Bayesian Framework*. Frontiers in Psychology 2019;10:2767.
     [10.3389/fpsyg.2019.02767](https://doi.org/10.3389/fpsyg.2019.02767)
@@ -59,30 +68,30 @@ check-out these vignettes:
 
 #### Tutorials
 
-  - [Get Started with Bayesian
+-   [Get Started with Bayesian
     Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
-  - [Example 1: Initiation to Bayesian
+-   [Example 1: Initiation to Bayesian
     models](https://easystats.github.io/bayestestR/articles/example1.html)
-  - [Example 2: Confirmation of Bayesian
+-   [Example 2: Confirmation of Bayesian
     skills](https://easystats.github.io/bayestestR/articles/example2.html)
-  - [Example 3: Become a Bayesian
+-   [Example 3: Become a Bayesian
     master](https://easystats.github.io/bayestestR/articles/example3.html)
 
 #### Articles
 
-  - [Credible Intervals
-    (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-  - [Probability of Direction
+-   [Credible
+    Intervals (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+-   [Probability of Direction
     (pd)](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
-  - [Region of Practical Equivalence
+-   [Region of Practical Equivalence
     (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
-  - [Bayes Factors
+-   [Bayes Factors
     (BF)](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
-  - [Comparison of
+-   [Comparison of
     Point-Estimates](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
-  - [Comparison of Indices of Effect
+-   [Comparison of Indices of Effect
     Existence](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html)
-  - [Reporting
+-   [Reporting
     Guidelines](https://easystats.github.io/bayestestR/articles/guidelines.html)
 
 # Features
@@ -91,45 +100,45 @@ In the Bayesian framework, parameters are estimated in a probabilistic
 fashion as *distributions*. These distributions can be summarised and
 described by **reporting 4 types of indices**:
 
-  - [**Centrality**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
-      - `mean()`, `median()` or
+-   [**Centrality**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
+    -   `mean()`, `median()` or
         [**`map_estimate()`**](https://easystats.github.io/bayestestR/reference/map_estimate.html)
         for an estimation of the mode.
-      - [**`point_estimate()`**](https://easystats.github.io/bayestestR/reference/point_estimate.html)
+    -   [**`point_estimate()`**](https://easystats.github.io/bayestestR/reference/point_estimate.html)
         can be used to get them at once and can be run directly on
         models.
-  - [**Uncertainty**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-      - [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html)
+-   [**Uncertainty**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+    -   [**`hdi()`**](https://easystats.github.io/bayestestR/reference/hdi.html)
         for *Highest Density Intervals (HDI)* or
         [**`eti()`**](https://easystats.github.io/bayestestR/reference/eti.html)
         for *Equal-Tailed Intervals (ETI)*.
-      - [**`ci()`**](https://easystats.github.io/bayestestR/reference/ci.html)
+    -   [**`ci()`**](https://easystats.github.io/bayestestR/reference/ci.html)
         can be used as a general method for Confidence and Credible
         Intervals (CI).
-  - [**Effect
+-   [**Effect
     Existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html):
     whether an effect is different from 0.
-      - [**`p_direction()`**](https://easystats.github.io/bayestestR/reference/p_direction.html)
+    -   [**`p_direction()`**](https://easystats.github.io/bayestestR/reference/p_direction.html)
         for a Bayesian equivalent of the frequentist *p*-value (see
-        [Makowski et
-        al., 2019](https://doi.org/10.3389/fpsyg.2019.02767))
-      - [**`p_pointnull()`**](https://easystats.github.io/bayestestR/reference/p_map.html)
+        [Makowski et al.,
+        2019](https://doi.org/10.3389/fpsyg.2019.02767))
+    -   [**`p_pointnull()`**](https://easystats.github.io/bayestestR/reference/p_map.html)
         represents the odds of null hypothesis (*h0 = 0*) compared to
         the most likely hypothesis (the MAP).
-      - [**`bf_pointnull()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html)
+    -   [**`bf_pointnull()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html)
         for a classic *Bayes Factor (BF)* assessing the likelihood of
         effect presence against its absence (*h0 = 0*).
-  - [**Effect
+-   [**Effect
     Significance**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html):
     whether the effect size can be considered as non-negligible.
-      - [**`p_rope()`**](https://easystats.github.io/bayestestR/reference/p_rope.html)
+    -   [**`p_rope()`**](https://easystats.github.io/bayestestR/reference/p_rope.html)
         is the probability of the effect falling inside a [*Region of
         Practical Equivalence
         (ROPE)*](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html).
-      - [**`bf_rope()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html)
+    -   [**`bf_rope()`**](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html)
         computes a Bayes factor against the null as defined by a region
         (the ROPE).
-      - [**`p_significance()`**](https://easystats.github.io/bayestestR/reference/p_significance.html)
+    -   [**`p_significance()`**](https://easystats.github.io/bayestestR/reference/p_significance.html)
         that combines a region of equivalence with the probability of
         direction.
 
@@ -145,9 +154,9 @@ describe_posterior(
 )
 ## Summary of Posterior Distribution
 ## 
-## Parameter |   Median |        89% CI |     pd |   ps
-## ----------------------------------------------------
-## Posterior | 9.87e-03 | [-1.64, 1.54] | 50.39% | 0.46
+## Parameter | Median |        95% CI |     pd |   ps
+## --------------------------------------------------
+## Posterior |   0.01 | [-1.85, 2.03] | 50.55% | 0.47
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -179,49 +188,49 @@ describe_posterior(
 
     ## Summary of Posterior Distribution
     ## 
-    ## Parameter   | Median |  Mean |   MAP |         89% CI |     pd |   ps |  Rhat |    ESS
+    ## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS
     ## --------------------------------------------------------------------------------------
-    ## (Intercept) |   0.96 |  0.96 |  0.96 | [-0.34,  2.29] | 90.00% | 0.88 | 1.011 | 109.68
-    ## child       |  -1.16 | -1.16 | -1.16 | [-1.32, -1.00] |   100% | 1.00 | 0.996 | 278.16
-    ## camper      |   0.73 |  0.72 |  0.73 | [ 0.57,  0.87] |   100% | 1.00 | 0.996 | 271.17
+    ## (Intercept) |   0.96 |  0.96 |  0.96 | [-0.64,  2.74] | 90.00% | 0.88 | 1.011 | 110.00
+    ## child       |  -1.16 | -1.16 | -1.16 | [-1.39, -0.97] |   100% | 1.00 | 0.996 | 278.00
+    ## camper      |   0.73 |  0.72 |  0.73 | [ 0.51,  0.89] |   100% | 1.00 | 0.996 | 271.00
     ## 
     ## # Fixed effects (zero-inflated)
     ## 
-    ## Parameter   | Median |  Mean |   MAP |         89% CI |     pd |   ps |  Rhat |    ESS
+    ## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS
     ## --------------------------------------------------------------------------------------
-    ## (Intercept) |  -0.48 | -0.51 | -0.22 | [-1.69,  0.43] | 78.00% | 0.73 | 0.997 | 137.70
-    ## child       |   1.85 |  1.86 |  1.81 | [ 1.37,  2.47] |   100% | 1.00 | 0.996 | 302.74
-    ## camper      |  -0.88 | -0.86 | -0.99 | [-1.47, -0.22] | 98.40% | 0.96 | 0.996 | 292.50
+    ## (Intercept) |  -0.48 | -0.51 | -0.22 | [-1.75,  1.16] | 78.00% | 0.73 | 0.997 | 138.00
+    ## child       |   1.85 |  1.86 |  1.81 | [ 1.28,  2.61] |   100% | 1.00 | 0.996 | 303.00
+    ## camper      |  -0.88 | -0.86 | -0.99 | [-1.61, -0.04] | 98.40% | 0.96 | 0.996 | 292.00
     ## 
     ## # Random effects (conditional) Intercept: persons
     ## 
-    ## Parameter |    Median |  Mean |   MAP |         89% CI |     pd |   ps |  Rhat |    ESS
+    ## Parameter |    Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS
     ## ---------------------------------------------------------------------------------------
-    ## persons.1 |     -0.99 | -1.01 | -0.84 | [-2.25,  0.38] | 92.00% | 0.90 | 1.007 | 105.68
-    ## persons.2 | -4.65e-03 | -0.04 |  0.03 | [-1.64,  0.95] | 50.00% | 0.45 | 1.013 | 108.94
-    ## persons.3 |      0.69 |  0.66 |  0.69 | [-0.58,  2.08] | 79.60% | 0.78 | 1.010 | 113.79
-    ## persons.4 |      1.57 |  1.56 |  1.56 | [ 0.09,  2.72] | 96.80% | 0.96 | 1.009 | 113.68
+    ## persons.1 |     -0.99 | -1.01 | -0.84 | [-2.71,  0.78] | 92.00% | 0.90 | 1.007 | 106.00
+    ## persons.2 | -4.65e-03 | -0.04 |  0.03 | [-1.73,  1.54] | 50.00% | 0.45 | 1.013 | 109.00
+    ## persons.3 |      0.69 |  0.66 |  0.69 | [-1.06,  2.28] | 79.60% | 0.78 | 1.010 | 114.00
+    ## persons.4 |      1.57 |  1.56 |  1.56 | [-0.22,  3.12] | 96.80% | 0.96 | 1.009 | 114.00
     ## 
     ## # Random effects (zero-inflated) Intercept: persons
     ## 
-    ## Parameter | Median |  Mean |   MAP |         89% CI |     pd |   ps |  Rhat |    ESS
+    ## Parameter | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS
     ## ------------------------------------------------------------------------------------
-    ## persons.1 |   1.10 |  1.11 |  1.08 | [-0.06,  2.07] | 94.80% | 0.93 | 0.997 | 166.26
-    ## persons.2 |   0.18 |  0.18 |  0.22 | [-0.83,  1.12] | 63.20% | 0.54 | 0.996 | 153.96
-    ## persons.3 |  -0.30 | -0.31 | -0.54 | [-1.44,  0.57] | 64.00% | 0.59 | 0.997 | 153.79
-    ## persons.4 |  -1.45 | -1.46 | -1.44 | [-2.44, -0.09] | 98.00% | 0.97 | 1.000 | 189.30
+    ## persons.1 |   1.10 |  1.11 |  1.08 | [-0.29,  2.73] | 94.80% | 0.93 | 0.997 | 166.00
+    ## persons.2 |   0.18 |  0.18 |  0.22 | [-0.94,  1.60] | 63.20% | 0.54 | 0.996 | 154.00
+    ## persons.3 |  -0.30 | -0.31 | -0.54 | [-1.54,  1.17] | 64.00% | 0.59 | 0.997 | 154.00
+    ## persons.4 |  -1.45 | -1.46 | -1.44 | [-3.03, -0.13] | 98.00% | 0.97 | 1.000 | 189.00
     ## 
     ## # Random effects (conditional) SD/Cor: persons
     ## 
-    ## Parameter   | Median | Mean |  MAP |         89% CI |   pd |   ps |  Rhat |    ESS
+    ## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat |    ESS
     ## ----------------------------------------------------------------------------------
-    ## (Intercept) |   1.42 | 1.58 | 1.07 | [ 0.66,  2.49] | 100% | 1.00 | 1.010 | 126.41
+    ## (Intercept) |   1.42 | 1.58 | 1.07 | [ 0.60,  3.07] | 100% | 1.00 | 1.010 | 126.00
     ## 
     ## # Random effects (zero-inflated) SD/Cor: persons
     ## 
-    ## Parameter   | Median | Mean |  MAP |         89% CI |   pd |   ps |  Rhat |    ESS
+    ## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat |    ESS
     ## ----------------------------------------------------------------------------------
-    ## (Intercept) |   1.30 | 1.49 | 0.99 | [ 0.61,  2.67] | 100% | 1.00 | 0.996 | 129.12
+    ## (Intercept) |   1.30 | 1.49 | 0.99 | [ 0.47,  2.90] | 100% | 1.00 | 0.996 | 129.00
 
 *bayestestR* also includes [**many other
 features**](https://easystats.github.io/bayestestR/reference/index.html)
@@ -319,7 +328,7 @@ guidelines*](https://easystats.github.io/bayestestR/articles/guidelines.html).
 ``` r
 posterior <- distribution_normal(10000, 0.4, 0.2)
 p_direction(posterior)
-## Probability of Direction (pd): 0.98
+## Probability of Direction: 0.98
 ```
 
 ![](man/figures/unnamed-chunk-13-1.png)<!-- -->
@@ -336,7 +345,7 @@ different from 0 does not make much sense (the probability of it being
 different from a single point being infinite). Therefore, the idea
 underlining ROPE is to let the user define an area around the null value
 enclosing values that are *equivalent to the null* value for practical
-purposes (Kruschke & Liddell, 2018, p. @kruschke2018rejecting).
+purposes Kruschke (2018).
 
 Kruschke suggests that such null value could be set, by default, to the
 -0.1 to 0.1 range of a standardized parameter (negligible effect size
@@ -359,7 +368,7 @@ rope(posterior, range = c(-0.1, 0.1))
 ## 
 ## inside ROPE
 ## -----------
-## 1.33 %
+## 4.41 %
 ```
 
 ![](man/figures/unnamed-chunk-15-1.png)<!-- -->
@@ -387,13 +396,13 @@ prior <- distribution_normal(10000, mean = 0, sd = 1)
 posterior <- distribution_normal(10000, mean = 1, sd = 0.7)
 
 bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
-## # Bayes Factor (Savage-Dickey density ratio)
+## Bayes Factor (Savage-Dickey density ratio)
 ## 
-## BF   
-## -----
-## 1.946
+## BF  
+## ----
+## 1.95
 ## 
-## * Evidence Against The Null: [0]
+## * Evidence Against The Null: 0
 ```
 
 ![](man/figures/unnamed-chunk-17-1.png)<!-- -->
@@ -454,21 +463,22 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.38
+## [1] 0.37
 ```
 
 # References
 
-<div id="refs" class="references hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent"
+line-spacing="2">
 
-<div id="ref-kruschke2015doing">
+<div id="ref-kruschke2015doing" class="csl-entry">
 
 Kruschke, J. K. (2015). *Doing Bayesian data analysis: A tutorial with
 R, JAGS, and Stan* (2. ed). Amsterdam: Elsevier, Academic Press.
 
 </div>
 
-<div id="ref-kruschke2018rejecting">
+<div id="ref-kruschke2018rejecting" class="csl-entry">
 
 Kruschke, J. K. (2018). Rejecting or accepting parameter values in
 Bayesian estimation. *Advances in Methods and Practices in Psychological
@@ -476,7 +486,7 @@ Science*, *1*(2), 270–280. <https://doi.org/10.1177/2515245918771304>
 
 </div>
 
-<div id="ref-kruschke2018bayesian">
+<div id="ref-kruschke2018bayesian" class="csl-entry">
 
 Kruschke, J. K., & Liddell, T. M. (2018). The Bayesian new statistics:
 Hypothesis testing, estimation, meta-analysis, and power analysis from a
@@ -485,14 +495,14 @@ Bayesian perspective. *Psychonomic Bulletin & Review*, *25*(1), 178–206.
 
 </div>
 
-<div id="ref-mcelreath2018statistical">
+<div id="ref-mcelreath2018statistical" class="csl-entry">
 
 McElreath, R. (2018). *Statistical rethinking*.
 <https://doi.org/10.1201/9781315372495>
 
 </div>
 
-<div id="ref-wagenmakers2010bayesian">
+<div id="ref-wagenmakers2010bayesian" class="csl-entry">
 
 Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010).
 Bayesian hypothesis testing for psychologists: A tutorial on the

@@ -15,28 +15,28 @@
 \usage{
 hdi(x, ...)
 
-\method{hdi}{numeric}(x, ci = 0.89, verbose = TRUE, ...)
+\method{hdi}{numeric}(x, ci = 0.95, verbose = TRUE, ...)
 
-\method{hdi}{data.frame}(x, ci = 0.89, verbose = TRUE, ...)
+\method{hdi}{data.frame}(x, ci = 0.95, verbose = TRUE, ...)
 
-\method{hdi}{MCMCglmm}(x, ci = 0.89, verbose = TRUE, ...)
+\method{hdi}{MCMCglmm}(x, ci = 0.95, verbose = TRUE, ...)
 
 \method{hdi}{sim.merMod}(
   x,
-  ci = 0.89,
+  ci = 0.95,
   effects = c("fixed", "random", "all"),
   parameters = NULL,
   verbose = TRUE,
   ...
 )
 
-\method{hdi}{sim}(x, ci = 0.89, parameters = NULL, verbose = TRUE, ...)
+\method{hdi}{sim}(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...)
 
-\method{hdi}{emmGrid}(x, ci = 0.89, verbose = TRUE, ...)
+\method{hdi}{emmGrid}(x, ci = 0.95, verbose = TRUE, ...)
 
 \method{hdi}{stanreg}(
   x,
-  ci = 0.89,
+  ci = 0.95,
   effects = c("fixed", "random", "all"),
   component = c("location", "all", "conditional", "smooth_terms", "sigma",
     "distributional", "auxiliary"),
@@ -47,7 +47,7 @@ hdi(x, ...)
 
 \method{hdi}{brmsfit}(
   x,
-  ci = 0.89,
+  ci = 0.95,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL,
@@ -55,7 +55,7 @@ hdi(x, ...)
   ...
 )
 
-\method{hdi}{BFBayesFactor}(x, ci = 0.89, verbose = TRUE, ...)
+\method{hdi}{BFBayesFactor}(x, ci = 0.95, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution, or a data frame of such
@@ -65,7 +65,7 @@ vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
 \item{...}{Currently not used.}
 
 \item{ci}{Value or vector of probability of the (credible) interval - CI (between 0 and 1)
-to be estimated. Default to \code{.89} (89\%).}
+to be estimated. Default to \code{.95} (95\%).}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -105,7 +105,7 @@ are two reasonable ranges to characterize the uncertainty related to the estimat
 The 89\% intervals (\code{ci = 0.89}) are deemed to be more stable than, for
 instance, 95\% intervals (\cite{Kruschke, 2014}).
 An effective sample size of at least 10.000 is recommended if one wants to estimate
-95\% intervals with high precision (\cite{Kruschke, 2014, p. 183ff}). Moreover,
+95\% intervals with high precision (\cite{Kruschke, 2014, p. 183ff}). Unfortunately, the default number of posterior samples for most Bayes packages (e.g., `rstanarm` or `brms`) is only 4.000 (thus, you might want to increase it when fitting your model). Moreover,
 89 indicates the arbitrariness of interval limits - its only remarkable property is being
 the highest prime number that does not exceed the already unstable 95\%
 threshold (\cite{McElreath, 2015}).

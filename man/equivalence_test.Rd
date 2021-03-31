@@ -15,18 +15,18 @@ equivalence_test(x, ...)
 
 \method{equivalence_test}{default}(x, ...)
 
-\method{equivalence_test}{numeric}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
+\method{equivalence_test}{numeric}(x, range = "default", ci = 0.95, verbose = TRUE, ...)
 
-\method{equivalence_test}{data.frame}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
+\method{equivalence_test}{data.frame}(x, range = "default", ci = 0.95, verbose = TRUE, ...)
 
-\method{equivalence_test}{emmGrid}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
+\method{equivalence_test}{emmGrid}(x, range = "default", ci = 0.95, verbose = TRUE, ...)
 
-\method{equivalence_test}{BFBayesFactor}(x, range = "default", ci = 0.89, verbose = TRUE, ...)
+\method{equivalence_test}{BFBayesFactor}(x, range = "default", ci = 0.95, verbose = TRUE, ...)
 
 \method{equivalence_test}{stanreg}(
   x,
   range = "default",
-  ci = 0.89,
+  ci = 0.95,
   effects = c("fixed", "random", "all"),
   component = c("location", "all", "conditional", "smooth_terms", "sigma",
     "distributional", "auxiliary"),
@@ -38,7 +38,7 @@ equivalence_test(x, ...)
 \method{equivalence_test}{brmsfit}(
   x,
   range = "default",
-  ci = 0.89,
+  ci = 0.95,
   effects = c("fixed", "random", "all"),
   component = c("conditional", "zi", "zero_inflated", "all"),
   parameters = NULL,

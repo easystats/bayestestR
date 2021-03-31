@@ -45,7 +45,7 @@ eti <- function(x, ...) {
 
 #' @rdname eti
 #' @export
-eti.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
+eti.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .eti(x = x, ci = i, verbose = verbose)
   }))
@@ -58,7 +58,7 @@ eti.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
 
 #' @rdname eti
 #' @export
-eti.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
+eti.data.frame <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "eti")
   attr(dat, "object_name") <- .safe_deparse(substitute(x))
   dat
@@ -68,7 +68,7 @@ eti.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
 
 #' @rdname eti
 #' @export
-eti.MCMCglmm <- function(x, ci = .89, verbose = TRUE, ...) {
+eti.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
   d <- as.data.frame(x$Sol[, 1:nF, drop = FALSE])
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "eti")
@@ -79,7 +79,7 @@ eti.MCMCglmm <- function(x, ci = .89, verbose = TRUE, ...) {
 
 
 #' @export
-eti.mcmc <- function(x, ci = .89, verbose = TRUE, ...) {
+eti.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
   d <- as.data.frame(x)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "eti")
   attr(dat, "data") <- .safe_deparse(substitute(x))
@@ -89,7 +89,7 @@ eti.mcmc <- function(x, ci = .89, verbose = TRUE, ...) {
 
 
 #' @export
-eti.bamlss <- function(x, ci = .89, component = c("all", "conditional", "location"), verbose = TRUE, ...) {
+eti.bamlss <- function(x, ci = 0.95, component = c("all", "conditional", "location"), verbose = TRUE, ...) {
   component <- match.arg(component)
   d <- insight::get_parameters(x, component = component)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "eti")
@@ -100,7 +100,7 @@ eti.bamlss <- function(x, ci = .89, component = c("all", "conditional", "locatio
 
 
 #' @export
-eti.bcplm <- function(x, ci = .89, verbose = TRUE, ...) {
+eti.bcplm <- function(x, ci = 0.95, verbose = TRUE, ...) {
   d <- insight::get_parameters(x)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "eti")
   attr(dat, "data") <- .safe_deparse(substitute(x))
@@ -124,7 +124,7 @@ eti.BGGM <- eti.bcplm
 
 #' @rdname eti
 #' @export
-eti.sim.merMod <- function(x, ci = .89, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+eti.sim.merMod <- function(x, ci = 0.95, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   dat <- .compute_interval_simMerMod(x = x, ci = ci, effects = effects, parameters = parameters, verbose = verbose, fun = "eti")
   out <- dat$result
@@ -136,7 +136,7 @@ eti.sim.merMod <- function(x, ci = .89, effects = c("fixed", "random", "all"), p
 
 #' @rdname eti
 #' @export
-eti.sim <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
+eti.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
   dat <- .compute_interval_sim(x = x, ci = ci, parameters = parameters, verbose = verbose, fun = "eti")
   out <- dat$result
   attr(out, "data") <- dat$data
@@ -147,7 +147,7 @@ eti.sim <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
 
 #' @rdname eti
 #' @export
-eti.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
+eti.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
 
   dat <- eti(xdf, ci = ci, verbose = verbose, ...)
@@ -160,7 +160,7 @@ eti.emm_list <- eti.emmGrid
 
 #' @rdname eti
 #' @export
-eti.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"),
+eti.stanreg <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
                         component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
                         parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
@@ -188,7 +188,7 @@ eti.blavaan <- eti.stanreg
 
 #' @rdname eti
 #' @export
-eti.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"),
+eti.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
                         component = c("conditional", "zi", "zero_inflated", "all"),
                         parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
@@ -208,7 +208,7 @@ eti.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"),
 
 #' @rdname eti
 #' @export
-eti.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
+eti.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
   out <- eti(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out

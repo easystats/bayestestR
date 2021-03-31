@@ -6,7 +6,7 @@
 #'   vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
 #'   \code{MCMCglmm}, \code{mcmc} or \code{bcplm}) or a \code{BayesFactor} model.
 #' @param ci Value or vector of probability of the (credible) interval - CI (between 0 and 1)
-#'   to be estimated. Default to \code{.89} (89\%).
+#'   to be estimated. Default to \code{.95} (95\%).
 #' @param effects Should results for fixed effects, random effects or both be returned?
 #'   Only applies to mixed models. May be abbreviated.
 #' @param component Should results for all parameters, parameters for the conditional model
@@ -33,7 +33,7 @@
 #' The 89\% intervals (\code{ci = 0.89}) are deemed to be more stable than, for
 #' instance, 95\% intervals (\cite{Kruschke, 2014}).
 #' An effective sample size of at least 10.000 is recommended if one wants to estimate
-#' 95\% intervals with high precision (\cite{Kruschke, 2014, p. 183ff}). Moreover,
+#' 95\% intervals with high precision (\cite{Kruschke, 2014, p. 183ff}). Unfortunately, the default number of posterior samples for most Bayes packages (e.g., `rstanarm` or `brms`) is only 4.000 (thus, you might want to increase it when fitting your model). Moreover,
 #' 89 indicates the arbitrariness of interval limits - its only remarkable property is being
 #' the highest prime number that does not exceed the already unstable 95\%
 #' threshold (\cite{McElreath, 2015}).
@@ -111,7 +111,7 @@ hdi <- function(x, ...) {
 
 #' @rdname hdi
 #' @export
-hdi.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
+hdi.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .hdi(x, ci = i, verbose = verbose)
   }))
@@ -123,7 +123,7 @@ hdi.numeric <- function(x, ci = .89, verbose = TRUE, ...) {
 
 #' @rdname hdi
 #' @export
-hdi.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
+hdi.data.frame <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "hdi")
   attr(dat, "object_name") <- .safe_deparse(substitute(x))
   dat
@@ -132,7 +132,7 @@ hdi.data.frame <- function(x, ci = .89, verbose = TRUE, ...) {
 
 #' @rdname hdi
 #' @export
-hdi.MCMCglmm <- function(x, ci = .89, verbose = TRUE, ...) {
+hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
   d <- as.data.frame(x$Sol[, 1:nF, drop = FALSE])
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
@@ -142,7 +142,7 @@ hdi.MCMCglmm <- function(x, ci = .89, verbose = TRUE, ...) {
 
 
 #' @export
-hdi.bamlss <- function(x, ci = .89, component = c("all", "conditional", "location"), verbose = TRUE, ...) {
+hdi.bamlss <- function(x, ci = 0.95, component = c("all", "conditional", "location"), verbose = TRUE, ...) {
   component <- match.arg(component)
   d <- insight::get_parameters(x, component = component)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
@@ -153,7 +153,7 @@ hdi.bamlss <- function(x, ci = .89, component = c("all", "conditional", "locatio
 
 
 #' @export
-hdi.mcmc <- function(x, ci = .89, verbose = TRUE, ...) {
+hdi.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
   d <- as.data.frame(x)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
   attr(dat, "data") <- .safe_deparse(substitute(x))
@@ -162,7 +162,7 @@ hdi.mcmc <- function(x, ci = .89, verbose = TRUE, ...) {
 
 
 #' @export
-hdi.bcplm <- function(x, ci = .89, verbose = TRUE, ...) {
+hdi.bcplm <- function(x, ci = 0.95, verbose = TRUE, ...) {
   d <- insight::get_parameters(x)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
   attr(dat, "data") <- .safe_deparse(substitute(x))
@@ -184,7 +184,7 @@ hdi.BGGM <- hdi.bcplm
 
 #' @rdname hdi
 #' @export
-hdi.sim.merMod <- function(x, ci = .89, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+hdi.sim.merMod <- function(x, ci = 0.95, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   dat <- .compute_interval_simMerMod(x = x, ci = ci, effects = effects, parameters = parameters, verbose = verbose, fun = "hdi")
   out <- dat$result
@@ -195,7 +195,7 @@ hdi.sim.merMod <- function(x, ci = .89, effects = c("fixed", "random", "all"), p
 
 #' @rdname hdi
 #' @export
-hdi.sim <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
+hdi.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
   dat <- .compute_interval_sim(x = x, ci = ci, parameters = parameters, verbose = verbose, fun = "hdi")
   out <- dat$result
   attr(out, "data") <- dat$data
@@ -205,7 +205,7 @@ hdi.sim <- function(x, ci = .89, parameters = NULL, verbose = TRUE, ...) {
 
 #' @rdname hdi
 #' @export
-hdi.emmGrid <- function(x, ci = .89, verbose = TRUE, ...) {
+hdi.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
 
   out <- hdi(xdf, ci = ci, verbose = verbose, ...)
@@ -220,7 +220,7 @@ hdi.emm_list <- hdi.emmGrid
 #' @importFrom insight get_parameters
 #' @rdname hdi
 #' @export
-hdi.stanreg <- function(x, ci = .89, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, verbose = TRUE, ...) {
+hdi.stanreg <- function(x, ci = 0.95, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
   cleaned_parameters <- insight::clean_parameters(x)
@@ -246,7 +246,7 @@ hdi.blavaan <- hdi.stanreg
 
 #' @rdname hdi
 #' @export
-hdi.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
+hdi.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
   cleaned_parameters <- insight::clean_parameters(x)
@@ -265,7 +265,7 @@ hdi.brmsfit <- function(x, ci = .89, effects = c("fixed", "random", "all"), comp
 
 #' @rdname hdi
 #' @export
-hdi.BFBayesFactor <- function(x, ci = .89, verbose = TRUE, ...) {
+hdi.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
   out <- hdi(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
   attr(out, "object_name") <- .safe_deparse(substitute(x))
   out
@@ -290,7 +290,7 @@ hdi.get_predicted <- function(x, ...) {
 
 
 #' @keywords internal
-.hdi <- function(x, ci = .89, verbose = TRUE) {
+.hdi <- function(x, ci = 0.95, verbose = TRUE) {
   check_ci <- .check_ci_argument(x, ci, verbose)
 
   if (!is.null(check_ci)) {
