@@ -106,6 +106,10 @@ check_prior.blavaan <- check_prior.brmsfit
   # rstanarm's R2 prior might cause problems
 
   if (!is.null(cleaned_parameters) && ncol(priors) != ncol(posteriors)) {
+
+    ## TODO for now only fixed effects
+    cleaned_parameters <- cleaned_parameters$Effects == "fixed"
+
     # rename cleaned parameters, so they match name of prior parameter column
     cp <- cleaned_parameters$Cleaned_Parameter
     cp <- gsub("(.*)(\\.|\\[)\\d+(\\.|\\])", "\\1", cp)

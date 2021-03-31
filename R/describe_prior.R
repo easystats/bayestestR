@@ -57,6 +57,10 @@ describe_prior <- function(model, ...) {
 
   # make sure parameter names match between prior output and model
   cp <- insight::clean_parameters(model)
+
+  ## TODO for now, only fixed effects
+  cp <- cp$Effects == "fixed"
+
   if (!is.null(parameters) && !all(priors$Parameter %in% parameters)) {
     cp$Cleaned_Parameter <- gsub("(.*)(\\.|\\[)\\d+(\\.|\\])", "\\1", cp$Cleaned_Parameter)
     cp$Cleaned_Parameter[cp$Cleaned_Parameter == "Intercept"] <- "(Intercept)"
