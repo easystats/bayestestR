@@ -37,7 +37,7 @@ if (require("rstanarm") && require("testthat") &&
 
   expect_equal(
     check_prior(model2, method = "lakeland")$Prior_Quality,
-    c("informative", "informative", "misinformative", "informative",
+    c("informative", "informative", "informative", "informative",
       "informative", "informative", "informative", "informative")
   )
 }
