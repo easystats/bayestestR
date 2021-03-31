@@ -618,7 +618,7 @@ describe_posterior.stanmvreg <- function(posteriors,
   out <- .merge_and_sort(out, diagnostic, by = c("Parameter", "Response"), all = TRUE)
 
   if (isTRUE(priors)) {
-    priors_data <- describe_prior(posteriors, parameters = out$Parameter, ...)
+    priors_data <- describe_prior(posteriors, parameters = NULL, ...)
     priors_data$Parameter <- gsub("^(.*)\\|(.*)", replacement = "\\2", priors_data$Parameter)
     out <- .merge_and_sort(out, priors_data, by = c("Parameter", "Response"), all = TRUE)
   }
