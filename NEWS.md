@@ -11,11 +11,13 @@
 * Support for `blavaan` models.
 * Support for `blrm` models (*rmsb*).
 * Support for `BGGM` models (*BGGM*).
+* `check_prior()` and `describe_prior()` should now also work for more ways of prior definition in models from *rstanarm* or *brms*.
 
 ## Bug fixes
 
 * Fixed bug in `print()` method for the `mediation()` function.
 * Fixed remaining inconsistencies with CI values, which were not reported as fraction for `rope()`.
+* Fixed issues with special prior definitions in `check_prior()`, `describe_prior()`  and `simulate_prior()`.
 
 # bayestestR 0.8.2
 
