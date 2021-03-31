@@ -46,7 +46,7 @@ if (require("rstanarm") && suppressPackageStartupMessages(require("bayestestR", 
     res3 <- si(group_diff, prior = stan_model)
 
     expect_equal(res3$CI_low, -2.746, tolerance = 0.2)
-    expect_equal(res3$CI_high, -0.357, tolerance = 0.2)
+    expect_equal(res3$CI_high, -0.4, tolerance = 0.2)
   })
 
 }
