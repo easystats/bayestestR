@@ -192,9 +192,9 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Summary of Posterior Distribution
 &gt; 
-&gt; Parameter | Median |        89% CI |     pd |          ROPE | % in ROPE |    BF |         Prior
+&gt; Parameter | Median |        95% CI |     pd |          ROPE | % in ROPE |    BF |         Prior
 &gt; -----------------------------------------------------------------------------------------------
-&gt; rho       |  -0.11 | [-0.24, 0.01] | 92.25% | [-0.10, 0.10] |    41.76% | 0.509 | Beta (3 +- 3)</code></pre>
+&gt; rho       |  -0.11 | [-0.26, 0.05] | 92.25% | [-0.10, 0.10] |    43.20% | 0.509 | Beta (3 +- 3)</code></pre>
 <p>We see again many things here, but the important indices for now are the <strong>median</strong> of the posterior distribution, <code>-.11</code>. This is (again) quite close to the frequentist correlation. We could, as previously, describe the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>credible interval</strong></a>, the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>pd</strong></a> or the <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html"><strong>ROPE percentage</strong></a>, but we will focus here on another index provided by the Bayesian framework, the <strong>Bayes Factor (BF)</strong>.</p>
 </div>
 <div id="bayes-factor-bf" class="section level3">
@@ -279,9 +279,9 @@ Wagenmakers’ pizza poking analogy. From the great &lt;www.bayesianspectacles.o
 <span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Summary of Posterior Distribution
 &gt; 
-&gt; Parameter  | Median |       89% CI |     pd |          ROPE | % in ROPE |    BF |              Prior
+&gt; Parameter  | Median |       95% CI |     pd |          ROPE | % in ROPE |    BF |              Prior
 &gt; ----------------------------------------------------------------------------------------------------
-&gt; Difference |   0.19 | [0.08, 0.28] | 99.75% | [-0.03, 0.03] |        0% | 17.72 | Cauchy (0 +- 0.71)</code></pre>
+&gt; Difference |   0.19 | [0.06, 0.31] | 99.75% | [-0.03, 0.03] |        0% | 17.72 | Cauchy (0 +- 0.71)</code></pre>
 <p>From the indices, we can say that the difference of <code>Sepal.Width</code> between <em>virginica</em> and <em>versicolor</em> has a probability of <strong>100% of being negative</strong> [<em>from the pd and the sign of the median</em>] (median = -0.19, 89% CI [-0.29, -0.092]). The data provides a <strong>strong evidence against the null hypothesis</strong> (BF = 18).</p>
 <p>Keep that in mind as we will see another way of investigating this question.</p>
 </div>
@@ -321,10 +321,10 @@ Wagenmakers’ pizza poking analogy. From the great &lt;www.bayesianspectacles.o
 <code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Summary of Posterior Distribution
 &gt; 
-&gt; Parameter   | Median |         89% CI |     pd |          ROPE | % in ROPE |    BF |  Rhat |     ESS
-&gt; ----------------------------------------------------------------------------------------------------
-&gt; (Intercept) |  -6.15 | [-9.49, -2.89] | 99.92% | [-0.18, 0.18] |        0% | 11.76 | 1.001 | 2651.00
-&gt; Sepal.Width |   2.13 | [ 0.94,  3.24] | 99.95% | [-0.18, 0.18] |        0% | 12.71 | 1.001 | 2639.00</code></pre>
+&gt; Parameter   | Median |          95% CI |     pd |          ROPE | % in ROPE |    BF |  Rhat |     ESS
+&gt; -----------------------------------------------------------------------------------------------------
+&gt; (Intercept) |  -6.15 | [-10.26, -2.13] | 99.92% | [-0.18, 0.18] |        0% | 11.76 | 1.001 | 2651.00
+&gt; Sepal.Width |   2.13 | [  0.77,  3.60] | 99.95% | [-0.18, 0.18] |        0% | 12.71 | 1.001 | 2639.00</code></pre>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/">performance</a></span><span class="op">)</span>
 

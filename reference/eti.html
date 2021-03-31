@@ -195,18 +195,18 @@
     <pre class="usage"><span class='fu'>eti</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>eti</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.89</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>eti</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>eti</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.89</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>eti</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for MCMCglmm</span>
-<span class='fu'>eti</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.89</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>eti</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for sim.merMod</span>
 <span class='fu'>eti</span><span class='op'>(</span>
   <span class='va'>x</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.89</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
   parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
@@ -214,15 +214,15 @@
 <span class='op'>)</span>
 
 <span class='co'># S3 method for sim</span>
-<span class='fu'>eti</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.89</span>, parameters <span class='op'>=</span> <span class='cn'>NULL</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>eti</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, parameters <span class='op'>=</span> <span class='cn'>NULL</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for emmGrid</span>
-<span class='fu'>eti</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.89</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>eti</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for stanreg</span>
 <span class='fu'>eti</span><span class='op'>(</span>
   <span class='va'>x</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.89</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"location"</span>, <span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"smooth_terms"</span>, <span class='st'>"sigma"</span>,
     <span class='st'>"distributional"</span>, <span class='st'>"auxiliary"</span><span class='op'>)</span>,
@@ -234,7 +234,7 @@
 <span class='co'># S3 method for brmsfit</span>
 <span class='fu'>eti</span><span class='op'>(</span>
   <span class='va'>x</span>,
-  ci <span class='op'>=</span> <span class='fl'>0.89</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
   parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -243,7 +243,7 @@
 <span class='op'>)</span>
 
 <span class='co'># S3 method for BFBayesFactor</span>
-<span class='fu'>eti</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.89</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>eti</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -261,7 +261,7 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
     <tr>
       <th>ci</th>
       <td><p>Value or vector of probability of the (credible) interval - CI (between 0 and 1)
-to be estimated. Default to <code>.89</code> (89%).</p></td>
+to be estimated. Default to <code>.95</code> (95%).</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -309,13 +309,13 @@ are two reasonable ranges to characterize the uncertainty related to the estimat
 The 89% intervals (<code>ci = 0.89</code>) are deemed to be more stable than, for
 instance, 95% intervals (<cite>Kruschke, 2014</cite>).
 An effective sample size of at least 10.000 is recommended if one wants to estimate
-95% intervals with high precision (<cite>Kruschke, 2014, p. 183ff</cite>). Moreover,
+95% intervals with high precision (<cite>Kruschke, 2014, p. 183ff</cite>). Unfortunately, the default number of posterior samples for most Bayes packages (e.g., `rstanarm` or `brms`) is only 4.000 (thus, you might want to increase it when fitting your model). Moreover,
 89 indicates the arbitrariness of interval limits - its only remarkable property is being
 the highest prime number that does not exceed the already unstable 95%
 threshold (<cite>McElreath, 2015</cite>).
 <br />
 However, 95% has some <a href='https://easystats.github.io/blog/posts/bayestestr_95/'>advantages too</a>.
-For instance, it shares (in some cases) an intuitive relationship with the
+For instance, it shares (in the case of a normal posterior distribution) an intuitive relationship with the
 standard deviation and it conveys a more accurate image of the (artificial)
 bounds of the distribution. Also, because it is wider, it makes analyses more
 conservative (i.e., the probability of covering 0 is larger for the 95% CI than
@@ -344,7 +344,7 @@ the resulting HDI.</p>
 
 <span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>
 <span class='fu'>eti</span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 89% ETI: [-1.65, 1.70]</div><div class='input'><span class='fu'>eti</span><span class='op'>(</span><span class='va'>posterior</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 95% ETI: [-2.07, 2.04]</div><div class='input'><span class='fu'>eti</span><span class='op'>(</span><span class='va'>posterior</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Equal-Tailed Interval
 #&gt; 
 #&gt; 80% ETI       |       89% ETI |       95% ETI
@@ -354,12 +354,12 @@ the resulting HDI.</p>
 <span class='fu'>eti</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Equal-Tailed Interval
 #&gt; 
-#&gt; Parameter |       89% ETI
+#&gt; Parameter |       95% ETI
 #&gt; -------------------------
-#&gt; X1        | [-1.83, 1.62]
-#&gt; X2        | [-1.59, 1.53]
-#&gt; X3        | [-1.97, 1.19]
-#&gt; X4        | [-1.80, 1.77]</div><div class='input'><span class='fu'>eti</span><span class='op'>(</span><span class='va'>df</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span>
+#&gt; X1        | [-2.10, 2.02]
+#&gt; X2        | [-2.22, 1.98]
+#&gt; X3        | [-2.32, 2.15]
+#&gt; X4        | [-1.87, 2.00]</div><div class='input'><span class='fu'>eti</span><span class='op'>(</span><span class='va'>df</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Equal-Tailed Interval
 #&gt; 
 #&gt; Parameter |       80% ETI |       89% ETI |       95% ETI

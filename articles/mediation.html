@@ -194,14 +194,14 @@
 <span class="co">#&gt;   Mediator : job_seek</span>
 <span class="co">#&gt;   Response : depress2</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Effect                 | Estimate |          89% ETI</span>
+<span class="co">#&gt; Effect                 | Estimate |          95% ETI</span>
 <span class="co">#&gt; ----------------------------------------------------</span>
-<span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.110,  0.031]</span>
-<span class="co">#&gt; Indirect Effect (ACME) |   -0.015 | [-0.036,  0.004]</span>
-<span class="co">#&gt; Mediator Effect        |   -0.240 | [-0.285, -0.195]</span>
-<span class="co">#&gt; Total Effect           |   -0.055 | [-0.129,  0.018]</span>
+<span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.124,  0.046]</span>
+<span class="co">#&gt; Indirect Effect (ACME) |   -0.015 | [-0.041,  0.008]</span>
+<span class="co">#&gt; Mediator Effect        |   -0.240 | [-0.294, -0.185]</span>
+<span class="co">#&gt; Total Effect           |   -0.055 | [-0.145,  0.034]</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Proportion mediated: 28.14% [-71.11%, 127.40%]</span>
+<span class="co">#&gt; Proportion mediated: 28.14% [-181.46%, 237.75%]</span>
 
 <span class="co"># for rstanarm</span>
 <span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span>
@@ -211,14 +211,14 @@
 <span class="co">#&gt;   Mediator : job_seek</span>
 <span class="co">#&gt;   Response : depress2</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Effect                 | Estimate |          89% ETI</span>
+<span class="co">#&gt; Effect                 | Estimate |          95% ETI</span>
 <span class="co">#&gt; ----------------------------------------------------</span>
-<span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.111,  0.031]</span>
-<span class="co">#&gt; Indirect Effect (ACME) |   -0.018 | [-0.037,  0.002]</span>
-<span class="co">#&gt; Mediator Effect        |   -0.241 | [-0.286, -0.197]</span>
-<span class="co">#&gt; Total Effect           |   -0.057 | [-0.130,  0.017]</span>
+<span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.129,  0.048]</span>
+<span class="co">#&gt; Indirect Effect (ACME) |   -0.018 | [-0.042,  0.006]</span>
+<span class="co">#&gt; Mediator Effect        |   -0.241 | [-0.296, -0.187]</span>
+<span class="co">#&gt; Total Effect           |   -0.057 | [-0.151,  0.033]</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Proportion mediated: 30.59% [-75.65%, 136.82%]</span></code></pre></div>
+<span class="co">#&gt; Proportion mediated: 30.59% [-221.09%, 282.26%]</span></code></pre></div>
 <p>Typically, <code><a href="../reference/mediation.html">mediation()</a></code> finds the treatment and mediator variables automatically. If this does not work, use the <code>treatment</code> and <code>mediator</code> arguments to specify the related variable names. For all values, the 89% credible intervals are calculated by default. Use <code>ci</code> to calculate a different interval.</p>
 </div>
 <div id="comparison-to-the-mediation-package" class="section level2">
