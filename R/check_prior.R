@@ -105,27 +105,25 @@ check_prior.blavaan <- check_prior.brmsfit
   # sanity check for matching parameters. Some weird priors like
   # rstanarm's R2 prior might cause problems
 
-  if (!is.null(cleaned_parameters)) {
+  if (!is.null(cleaned_parameters) && ncol(priors) != ncol(posteriors)) {
+    # rename cleaned parameters, so they match name of prior parameter column
     cp <- cleaned_parameters$Cleaned_Parameter
     cp <- gsub("(.*)(\\.|\\[)\\d+(\\.|\\])", "\\1", cp)
-    cp <- cp[!duplicated(cp)]
-    # rename intercept column
     cp[cp == "Intercept"] <- "(Intercept)"
+    cleaned_parameters$Cleaned_Parameter <- cp
     colnames(priors)[colnames(priors) == "Intercept"] <- "(Intercept)"
-    matching_colnames <- intersect(colnames(priors), cp)
-    priors <- priors[matching_colnames]
-    posteriors <- posteriors[which(cp %in% matching_colnames)]
-    # in case one parameter appears multiple times, but only has one prior,
-    # like this brms-example:
-    # model <- brm(rating ~ period + carry + cs(treat),
-    #              data = inhaler, family = sratio("logit"),
-    #              prior = set_prior("normal(0,5)"),
-    #              chains = 2, silent = TRUE, refresh = 0
-    # )
+
+    # at this point, the colnames of "posteriors" should match "cp$Parameter",
+    # while colnames of "priors" should match "cp$Cleaned_Parameter". To ensure
+    # that ncol of priors is the same as ncol of posteriors, we now duplicate
+    # prior columns and match them with the posteriors
+
     if (ncol(posteriors) > ncol(priors)) {
-      priors <- priors[cp[which(cp %in% matching_colnames)]]
-      colnames(priors) <- cp[which(cp %in% matching_colnames)]
+      priors <- priors[match(cleaned_parameters$Cleaned_Parameter, colnames(priors))]
+    } else {
+      priors <- priors[match(colnames(priors), cleaned_parameters$Cleaned_Parameter)]
     }
+    colnames(priors) <- cleaned_parameters$Parameter
   }
 
   # for priors whose distribution cannot be simulated, prior values are
