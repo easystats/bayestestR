@@ -59,7 +59,9 @@ describe_prior <- function(model, ...) {
   cp <- insight::clean_parameters(model)
 
   ## TODO for now, only fixed effects
-  cp <- cp$Effects == "fixed"
+  if ("Effects" %in% colnames(cp)) {
+    cp <- cp[cp$Effects == "fixed", ]
+  }
 
   if (!is.null(parameters) && !all(priors$Parameter %in% parameters)) {
     cp$Cleaned_Parameter <- gsub("(.*)(\\.|\\[)\\d+(\\.|\\])", "\\1", cp$Cleaned_Parameter)

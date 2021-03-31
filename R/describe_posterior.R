@@ -644,6 +644,7 @@ describe_posterior.stanfit <- function(posteriors,
                                        diagnostic = c("ESS", "Rhat"),
                                        effects = c("fixed", "random", "all"),
                                        parameters = NULL,
+                                       priors = FALSE,
                                        ...) {
 
   effects <- match.arg(effects)
@@ -669,6 +670,11 @@ describe_posterior.stanfit <- function(posteriors,
     ...
   )
   out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
+
+  if (isTRUE(priors)) {
+    priors_data <- describe_prior(posteriors, parameters = out$Parameter, ...)
+    out <- .merge_and_sort(out, priors_data, by = "Parameter", all = TRUE)
+  }
 
   attr(out, "ci_method") <- ci_method
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))

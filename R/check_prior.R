@@ -98,7 +98,7 @@ check_prior.stanreg <- check_prior.brmsfit
 check_prior.blavaan <- check_prior.brmsfit
 
 
-#' @importFrom stats sd
+#' @importFrom stats sd na.omit
 #' @keywords internal
 .check_prior <- function(priors, posteriors, method = "gelman", verbose = TRUE, cleaned_parameters = NULL) {
 
@@ -108,7 +108,9 @@ check_prior.blavaan <- check_prior.brmsfit
   if (!is.null(cleaned_parameters) && ncol(priors) != ncol(posteriors)) {
 
     ## TODO for now only fixed effects
-    cleaned_parameters <- cleaned_parameters$Effects == "fixed"
+    if ("Effects" %in% colnames(cleaned_parameters)) {
+      cleaned_parameters <- cleaned_parameters[cleaned_parameters$Effects == "fixed", ]
+    }
 
     # rename cleaned parameters, so they match name of prior parameter column
     cp <- cleaned_parameters$Cleaned_Parameter
@@ -123,12 +125,27 @@ check_prior.blavaan <- check_prior.brmsfit
     # prior columns and match them with the posteriors
 
     if (ncol(posteriors) > ncol(priors)) {
-      priors <- priors[match(cleaned_parameters$Cleaned_Parameter, colnames(priors))]
+      matched_columns <- stats::na.omit(match(cleaned_parameters$Cleaned_Parameter, colnames(priors)))
+      matched_column_names <- stats::na.omit(match(colnames(priors), cleaned_parameters$Cleaned_Parameter))
+      priors <- priors[matched_columns]
     } else {
-      priors <- priors[match(colnames(priors), cleaned_parameters$Cleaned_Parameter)]
+      matched_columns <- stats::na.omit(match(colnames(priors), cleaned_parameters$Cleaned_Parameter))
+      matched_column_names <- stats::na.omit(match(cleaned_parameters$Cleaned_Parameter, colnames(priors)))
+      priors <- priors[matched_columns]
     }
-    colnames(priors) <- cleaned_parameters$Parameter
+    colnames(priors) <- cleaned_parameters$Parameter[matched_column_names]
   }
+
+  # still different ncols?
+  if (ncol(priors) != ncol(posteriors)) {
+    common_columns <- intersect(colnames(priors), colnames(posteriors))
+    priors <- priors[common_columns]
+    posteriors <- posteriors[common_columns]
+    if (verbose) {
+      warning("Parameters and priors could not be fully matched. Only returning results for parameters with matching priors.", call. = FALSE)
+    }
+  }
+
 
   # for priors whose distribution cannot be simulated, prior values are
   # all NA. Catch those, and warn user
