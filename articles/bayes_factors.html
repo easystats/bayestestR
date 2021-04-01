@@ -690,10 +690,10 @@ BF_{\text{restricted vs. NULL}} = \frac
 <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">mod_carb</span>, denominator <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
-&gt;            Model             BF
-&gt; [mod_carb] wt + am + carb 0.811
+&gt;     Model             BF
+&gt; [1] wt + am + carb 0.811
 &gt; 
-&gt; * Against Denominator: [mod] wt + am
+&gt; * Against Denominator: [2] wt + am
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>It seems that the model without <code>carb</code> as a predictor is <span class="math inline">\(1/BF=1.2\)</span> times more likely than the model <em>with</em> <code>carb</code> as a predictor. We might then assume that in the latter model, the <code>HDI</code> will include the point-null value of 0 effect, to also indicate the credibility of the null in the posterior. However, this is not the case:</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
