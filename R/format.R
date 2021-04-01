@@ -89,7 +89,7 @@ format.bayesfactor_models <- function(x,
   BFE <- x
   denominator <- attr(BFE, "denominator")
   grid.type <- attr(BFE, "BF_method")
-  model_names <- rownames(BFE)
+  model_names <- attr(BFE, "model_names")
 
   BFE <- as.data.frame(BFE)
   if (log) {
@@ -98,7 +98,7 @@ format.bayesfactor_models <- function(x,
   BFE$BF <- insight::format_bf(BFE$BF, name = NULL)
   BFE$Model[BFE$Model == "1"] <- "(Intercept only)" # indicate null-model
 
-  if ((!show_names) || is.null(model_names) || length(model_names) != nrow(BFE)) {
+  if (isFALSE(show_names) || is.null(model_names) || length(model_names) != nrow(BFE)) {
     BFE$i <- paste0("[", seq_len(nrow(BFE)), "]")
   } else {
     BFE$i <- paste0("[", model_names, "]")
