@@ -101,7 +101,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
 
   # Arguments fixes
   if(!is.null(centrality) && length(centrality) == 1 && (centrality == "none" || centrality == FALSE)) centrality <- NULL
-  if(!is.null(ci) && length(ci) == 1 && ci == FALSE) ci <- NULL
+  if(!is.null(ci) && length(ci) == 1 && (is.na(ci) || ci == FALSE)) ci <- NULL
   if(!is.null(test) && length(test) == 1 && (test == "none" || test == FALSE)) test <- NULL
 
 
