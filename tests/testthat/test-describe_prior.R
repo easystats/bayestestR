@@ -1,4 +1,13 @@
-if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("rstanarm") && require("brms") && require("httr") && require("insight") && require("BayesFactor")) {
+.runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
+
+if (.runThisTest &&
+    require("testthat") &&
+    require("bayestestR") &&
+    require("rstanarm") &&
+    require("brms") &&
+    require("httr") &&
+    require("insight") &&
+    require("BayesFactor")) {
   test_that("describe_prior", {
 
     # Bayes Factor ----------------------------------------

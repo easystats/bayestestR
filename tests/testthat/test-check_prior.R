@@ -1,6 +1,11 @@
-if (require("rstanarm") && require("testthat") &&
-    suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) &&
-    require("brms")) {
+.runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
+
+if (.runThisTest &&
+    require("rstanarm") &&
+    require("testthat") &&
+    require("bayestestR") &&
+    require("brms") &&
+    packageVersion("insight") > "0.13.2") {
   skip_on_cran()
 
   # stanreg --------------------------

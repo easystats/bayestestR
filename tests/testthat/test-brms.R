@@ -1,4 +1,6 @@
-if (require("brms") && require("testthat") && require("insight") && require("httr")) {
+.runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
+
+if (.runThisTest && require("brms") && require("testthat") && require("insight") && require("httr")) {
   test_that("brms", {
     skip_on_cran()
 
