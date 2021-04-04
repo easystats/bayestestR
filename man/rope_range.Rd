@@ -58,8 +58,11 @@ if (require("brms")) {
 }
 
 if (require("BayesFactor")) {
-  bf <- ttestBF(x = rnorm(100, 1, 1))
-  rope_range(bf)
+  model <- ttestBF(mtcars[mtcars$vs == 1, "mpg"], mtcars[mtcars$vs == 0, "mpg"])
+  rope_range(model)
+
+  model <- lmBF(mpg ~ vs, data = mtcars)
+  rope_range(model)
 }
 }
 }

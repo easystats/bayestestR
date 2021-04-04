@@ -44,8 +44,11 @@
 #' }
 #'
 #' if (require("BayesFactor")) {
-#'   bf <- ttestBF(x = rnorm(100, 1, 1))
-#'   rope_range(bf)
+#'   model <- ttestBF(mtcars[mtcars$vs == 1, "mpg"], mtcars[mtcars$vs == 0, "mpg"])
+#'   rope_range(model)
+#'
+#'   model <- lmBF(mpg ~ vs, data = mtcars)
+#'   rope_range(model)
 #' }
 #' }
 #' @references Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
@@ -86,25 +89,12 @@ rope_range.bamlss <- rope_range.brmsfit
 #' @export
 #' @importFrom stats sd
 rope_range.BFBayesFactor <- function(x, ...) {
-  fac <- 1
   if (inherits(x@numerator[[1]], "BFlinearModel")) {
-    response <- tryCatch(
-      {
-        insight::get_response(x)
-      },
-      error = function(e) {
-        NULL
-      }
-    )
-
-    if (!is.null(response)) {
-      # TODO if https://github.com/easystats/bayestestR/issues/364
-      # use SIGMA param instead
-      fac <- stats::sd(response, na.rm = TRUE)
-    }
+    response <- tryCatch({ insight::get_response(x) }, error = function(e) { NULL })
+  } else {
+    response <- NULL
   }
-
-  fac * c(-0.1, 0.1)
+  .rope_range(x, insight::model_info(x), response, ...)
 }
 
 #' @export
@@ -181,17 +171,17 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
 
 
 #' @importFrom stats sigma sd
-.rope_range <- function(x, information, response, verbose = TRUE) {
+.rope_range <- function(x, information = NULL, response = NULL, verbose = TRUE) {
+
+  # if(method != "legacy") {
+  #   message("Other ROPE range methods than 'legacy' are currently not implemented. See https://github.com/easystats/bayestestR/issues/364", call. = FALSE)
+  # }
+
+
   negligible_value <- tryCatch(
     {
-      if (information$link == "identity") {
+      if (!is.null(response) && information$link == "identity") {
         # Linear Models
-        if (isTRUE(verbose)) {
-          warning("Note that the default rope range for linear models might change in future versions (see https://github.com/easystats/bayestestR/issues/364).",
-            "Please set it explicitly to preserve current results.",
-            call. = FALSE
-          )
-        }
         # 0.1 * stats::sigma(x) # https://github.com/easystats/bayestestR/issues/364
         0.1 * stats::sd(response, na.rm = TRUE)
       } else if (information$is_ttest) {
