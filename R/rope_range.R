@@ -89,11 +89,7 @@ rope_range.bamlss <- rope_range.brmsfit
 #' @export
 #' @importFrom stats sd
 rope_range.BFBayesFactor <- function(x, ...) {
-  if (inherits(x@numerator[[1]], "BFlinearModel")) {
-    response <- tryCatch({ insight::get_response(x) }, error = function(e) { NULL })
-  } else {
-    response <- NULL
-  }
+  response <- insight::get_response(x)
   .rope_range(x, insight::model_info(x), response, ...)
 }
 
@@ -178,54 +174,38 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
   # }
 
 
-  negligible_value <- tryCatch(
-    {
-      if (!is.null(response) && information$link == "identity") {
-        # Linear Models
-        # 0.1 * stats::sigma(x) # https://github.com/easystats/bayestestR/issues/364
-        0.1 * stats::sd(response, na.rm = TRUE)
-      } else if (information$is_ttest) {
-        # T-tests
-        # if https://github.com/easystats/bayestestR/issues/364, change to just be 0.1
-        if ("BFBayesFactor" %in% class(x)) {
-          # TODO this actually never happens because there is a BFBayesFactor method!
-          0.1 * stats::sd(x@data[, 1])
-        } else {
-          if (isTRUE(verbose)) {
-            warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.", call. = FALSE)
-          }
-          0.1
-        }
-      } else if (information$link == "logit") {
-        # Logistic Models (any)
-        0.1 * pi / sqrt(3)
-      } else if (information$link == "probit") {
-        # Probit models
-        0.1
-      } else if (information$is_correlation) {
-        # Correlations
-        # https://github.com/easystats/bayestestR/issues/121
-        0.05
-      } else if (information$is_count) {
-        # Not sure about this
-        sig <- stats::sigma(x)
-        if (!is.null(sig) && length(sig) > 0 && !is.na(sig)) {
-          0.1 * sig
-        } else {
-          0.1
-        }
-      } else {
-        # Default
-        0.1
-      }
-    },
-    error = function(e) {
-      if (isTRUE(verbose)) {
-        warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.", call. = FALSE)
-      }
-      0.1
+  negligible_value <- tryCatch({
+    if (!is.null(response) && information$link == "identity") {
+      # Linear Models
+      0.1 * stats::sd(response, na.rm = TRUE)
+      # 0.1 * stats::sigma(x) # https://github.com/easystats/bayestestR/issues/364
+    } else if (information$link == "logit") {
+      # Logistic Models (any)
+      # Sigma==pi / sqrt(3)
+      0.1 * pi / sqrt(3)
+    } else if (information$link == "probit") {
+      # Probit models
+      # Sigma==1
+      0.1 * 1
+    } else if (information$is_correlation) {
+      # Correlations
+      # https://github.com/easystats/bayestestR/issues/121
+      0.05
+    } else if (information$is_count) {
+      # Not sure about this
+      sig <- stats::sigma(x)
+      if (is.null(sig) || length(sig) == 0 || is.na(sig)) stop()
+      0.1 * sig
+    } else {
+      # Default
+      stop()
     }
-  )
+  }, error = function(e) {
+    if (isTRUE(verbose)) {
+      warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.", call. = FALSE)
+    }
+    0.1
+  })
 
   c(-1, 1) * negligible_value
 }
