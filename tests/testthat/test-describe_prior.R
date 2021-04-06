@@ -9,6 +9,7 @@ if (.runThisTest &&
     require("insight") &&
     require("BayesFactor") &&
     packageVersion("insight") > "0.13.2") {
+
   test_that("describe_prior", {
 
     # Bayes Factor ----------------------------------------
@@ -85,13 +86,14 @@ if (.runThisTest &&
 
     expect_equal(
       describe_prior(mod_brms),
-      structure(list(Parameter = c("(Intercept)", "cyl", "wt"), Prior_Distribution = c(
-        "student_t",
-        "uniform", "uniform"
-      ), Prior_df = c(3, NA, NA), Prior_Location = c(
-        19.2,
-        0, 0
-      ), Prior_Scale = c(5.4, NA, NA)), row.names = c(NA, -3L), class = "data.frame")
+      structure(list(Parameter = c("(Intercept)", "cyl", "wt", "sigma"),
+                     Prior_Distribution = c("student_t", "uniform", "uniform", "student_t"),
+                     Prior_df = c(3, NA, NA, 3),
+                     Prior_Location = c(19.2, N, NA, 0),
+                     Prior_Scale = c(5.4, NA, NA, 5.4)),
+                row.names = c(NA, -3L), class = "data.frame"),
+      ignore_attr = TRUE,
+      tolerance = 1e-2
     )
 
     # stanreg ----------------------------------------
