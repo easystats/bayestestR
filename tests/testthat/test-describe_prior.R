@@ -7,7 +7,8 @@ if (.runThisTest &&
     require("brms") &&
     require("httr") &&
     require("insight") &&
-    require("BayesFactor")) {
+    require("BayesFactor") &&
+    packageVersion("insight") > "0.13.2") {
   test_that("describe_prior", {
 
     # Bayes Factor ----------------------------------------
