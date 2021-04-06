@@ -13,3 +13,4 @@
 ^man/figures/JASP*
 ^vignettes/2019_frontiers/.
 ^WIP$
+*.tex
