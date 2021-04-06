@@ -45,7 +45,6 @@
 #' conservative (i.e., the probability of covering 0 is larger for the 95\% CI than
 #' for lower ranges such as 89\%), which is a good thing in the context of the
 #' reproducibility crisis.
-#'
 #' \cr \cr
 #' A 95\% equal-tailed interval (ETI) has 2.5\% of the distribution on either
 #' side of its limits. It indicates the 2.5th percentile and the 97.5h percentile.
