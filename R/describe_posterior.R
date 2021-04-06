@@ -559,7 +559,7 @@ describe_posterior.stanreg <- function(posteriors,
   )
   out <- .merge_and_sort(out, diagnostic, by = "Parameter", all = TRUE)
 
-  if (priors == TRUE) {
+  if (isTRUE(priors)) {
     priors_data <- describe_prior(posteriors, parameters = out$Parameter, ...)
     out <- .merge_and_sort(out, priors_data, by = "Parameter", all = TRUE)
   }
