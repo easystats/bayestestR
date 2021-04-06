@@ -64,7 +64,8 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
   }
 }
 
-if (require("brms", quietly = TRUE)) {
+.runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
+if (.runThisTest && require("brms", quietly = TRUE)) {
   set.seed(123)
   model <- brm(mpg ~ wt + gear, data = mtcars, iter = 500)
   rope <- rope(model, verbose = FALSE)

@@ -7,8 +7,9 @@ test_that("rope_range", {
   )
 })
 
+.runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
 
-if (require("brms", quietly = TRUE)) {
+if (.runThisTest && require("brms", quietly = TRUE)) {
   test_that("rope_range", {
     model <- brm(mpg ~ wt + gear, data = mtcars, iter = 300)
 
