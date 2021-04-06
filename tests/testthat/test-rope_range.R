@@ -1,3 +1,13 @@
+test_that("rope_range", {
+  x <- cor.test(ToothGrowth$len, ToothGrowth$dose)
+
+  expect_equal(
+    rope_range(x),
+    c(-0.05, 0.05)
+  )
+})
+
+
 if (require("brms", quietly = TRUE)) {
   test_that("rope_range", {
     model <- brm(mpg ~ wt + gear, data = mtcars, iter = 300)

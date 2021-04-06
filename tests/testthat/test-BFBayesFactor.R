@@ -81,6 +81,6 @@ if (require("testthat") && require("BayesFactor") && suppressPackageStartupMessa
 
     # else
     x <- BayesFactor::correlationBF(ToothGrowth$len, ToothGrowth$dose)
-    expect_equal(rope_range(x, verbose = FALSE), c(-0.1, 0.1))
+    expect_equal(rope_range(x, verbose = FALSE), c(-0.05, 0.05))
   })
 }

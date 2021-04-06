@@ -2,12 +2,12 @@
 % Please edit documentation in R/rope_range.R
 \name{rope_range}
 \alias{rope_range}
-\alias{rope_range.brmsfit}
+\alias{rope_range.default}
 \title{Find Default Equivalence (ROPE) Region Bounds}
 \usage{
 rope_range(x, ...)
 
-\method{rope_range}{brmsfit}(x, verbose = TRUE, ...)
+\method{rope_range}{default}(x, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{A \code{stanreg}, \code{brmsfit} or \code{BFBayesFactor} object.}

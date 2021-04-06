@@ -63,7 +63,7 @@ rope_range <- function(x, ...) {
 
 #' @rdname rope_range
 #' @export
-rope_range.brmsfit <- function(x, verbose = TRUE, ...) {
+rope_range.default <- function(x, verbose = TRUE, ...) {
   response <- insight::get_response(x)
   information <- insight::model_info(x)
 
@@ -80,77 +80,7 @@ rope_range.brmsfit <- function(x, verbose = TRUE, ...) {
 }
 
 
-#' @export
-rope_range.stanreg <- rope_range.brmsfit
-
-#' @export
-rope_range.bamlss <- rope_range.brmsfit
-
-#' @export
-#' @importFrom stats sd
-rope_range.BFBayesFactor <- function(x, ...) {
-  response <- insight::get_response(x)
-  .rope_range(x, insight::model_info(x), response, ...)
-}
-
-#' @export
-rope_range.blrm <- rope_range.brmsfit
-
-#' @export
-rope_range.lm <- rope_range.brmsfit
-
-#' @export
-rope_range.glm <- rope_range.brmsfit
-
-#' @export
-rope_range.merMod <- rope_range.brmsfit
-
-#' @export
-rope_range.glmmTMB <- rope_range.brmsfit
-
-#' @export
-rope_range.mixed <- rope_range.brmsfit
-
-#' @export
-rope_range.MixMod <- rope_range.brmsfit
-
-#' @export
-rope_range.wbm <- rope_range.brmsfit
-
-#' @export
-rope_range.feis <- rope_range.brmsfit
-
-#' @export
-rope_range.gee <- rope_range.brmsfit
-
-#' @export
-rope_range.geeglm <- rope_range.brmsfit
-
-#' @export
-rope_range.lme <- rope_range.brmsfit
-
-#' @export
-rope_range.felm <- rope_range.brmsfit
-
-#' @export
-rope_range.fixest <- rope_range.brmsfit
-
-#' @export
-rope_range.gls <- rope_range.brmsfit
-
-#' @export
-rope_range.hurdle <- rope_range.brmsfit
-
-#' @export
-rope_range.zeroinfl <- rope_range.brmsfit
-
-#' @export
-rope_range.bayesQR <- rope_range.brmsfit
-
-#' @export
-rope_range.default <- function(x, ...) {
-  c(-.1, .1)
-}
+# Exceptions --------------------------------------------------------------
 
 #' @export
 rope_range.mlm <- function(x, verbose = TRUE, ...) {
@@ -159,7 +89,6 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
 
   lapply(response, function(i) .rope_range(x, information, i, verbose))
 }
-
 
 
 
