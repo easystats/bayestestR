@@ -38,6 +38,20 @@ describe_prior <- function(model, ...) {
 
 
 
+#' @export
+describe_prior.brmsfit <- function(model,
+                                   effects = c("fixed", "random", "all"),
+                                   component = c("conditional", "zi", "zero_inflated",
+                                                 "all", "location", "distributional", "auxiliary"),
+                                   parameters = NULL, ...) {
+  .describe_prior(model, parameters = parameters)
+}
+
+
+# Internal ----------------------------------------------------------------
+
+
+
 #' @keywords internal
 .describe_prior <- function(model, parameters = NULL, ...) {
   priors <- insight::get_priors(model, ...)
@@ -59,7 +73,7 @@ describe_prior <- function(model, ...) {
   cp <- insight::clean_parameters(model)
 
   ## TODO for now, only fixed effects
-  if ("Effects" %in% colnames(cp)) {
+  if ("Effects" %in% names(cp)) {
     cp <- cp[cp$Effects == "fixed", ]
   }
 
@@ -79,8 +93,7 @@ describe_prior <- function(model, ...) {
 #' @export
 describe_prior.stanreg <- .describe_prior
 
-#' @export
-describe_prior.brmsfit <- .describe_prior
+
 
 #' @export
 describe_prior.bcplm <- .describe_prior
