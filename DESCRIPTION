@@ -61,7 +61,7 @@ Description: Provides utilities to describe posterior
 Depends:
     R (>= 3.4)
 Imports:
-    insight (>= 0.13.1.1),
+    insight (>= 0.13.2),
     methods,
     stats,
     utils
@@ -105,6 +105,5 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-LazyData: true
 RoxygenNote: 7.1.1
 Config/testthat/edition: 3
