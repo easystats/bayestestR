@@ -19,6 +19,8 @@ csl: apa.csl
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 if (!requireNamespace("see", quietly = TRUE) ||
   !requireNamespace("dplyr", quietly = TRUE) ||
+  !requireNamespace("parameters", quietly = TRUE) ||
+  !requireNamespace("stringr", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE) ||
   !requireNamespace("tidyr", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
@@ -88,6 +90,7 @@ code used for generation is available
 library(ggplot2)
 library(dplyr)
 library(tidyr)
+library(stringr)
 library(see)
 library(parameters)
 
@@ -161,16 +164,16 @@ their interaction with noise and sample size.
 ```{r, message=FALSE, warning=FALSE}
 df %>%
   select(sample_size, error, true_effect, outcome_type, Coefficient, Median, Mean, MAP) %>%
-  tidyr::pivot_longer(
+  pivot_longer(
     c(-sample_size, -error, -true_effect, -outcome_type),
     names_to = "estimate"
   ) %>%
   glm(true_effect ~ outcome_type / estimate / value, data = ., family = "binomial") %>%
-  parameters::parameters(df_method = "wald") %>%
+  parameters(df_method = "wald") %>%
   select(Parameter, Coefficient, p) %>%
   filter(
-    stringr::str_detect(Parameter, "outcome_type"),
-    stringr::str_detect(Parameter, ":value")
+    str_detect(Parameter, "outcome_type"),
+    str_detect(Parameter, ":value")
   ) %>%
   arrange(desc(Coefficient)) %>%
   knitr::kable(digits = 2)
