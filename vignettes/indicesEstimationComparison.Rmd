@@ -17,6 +17,8 @@ csl: apa.csl
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
+library(knitr)
+
 if (!requireNamespace("see", quietly = TRUE) ||
   !requireNamespace("dplyr", quietly = TRUE) ||
   !requireNamespace("parameters", quietly = TRUE) ||
@@ -26,7 +28,6 @@ if (!requireNamespace("see", quietly = TRUE) ||
   knitr::opts_chunk$set(eval = FALSE)
 }
 
-library(knitr)
 options(knitr.kable.NA = "")
 knitr::opts_chunk$set(comment = ">")
 options(digits = 2)
@@ -55,7 +56,7 @@ There are three main indices used in the literature for effect estimation:
 - the **mean** 
 - the **median**
 - the **MAP** (Maximum A Posteriori) estimate (roughly
-corresponding to the mode (the "peak") of the distribution)
+corresponding to the mode - the "peak" - of the distribution)
 
 Unfortunately, there is no consensus about which one to use, as no systematic
 comparison has ever been done.
