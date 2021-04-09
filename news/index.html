@@ -186,37 +186,36 @@
       <small>Source: <a href='https://github.com/easystats/bayestestR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="bayestestr-0821" class="section level1">
-<h1 class="page-header" data-toc-text="0.8.2.1">
-<a href="#bayestestr-0821" class="anchor"></a>bayestestR 0.8.2.1<small> Unreleased </small>
+    <div id="bayestestr-090" class="section level1">
+<h1 class="page-header" data-toc-text="0.9.0">
+<a href="#bayestestr-090" class="anchor"></a>bayestestR 0.9.0<small> 2021-04-08 </small>
 </h1>
 <div id="breaking" class="section level2">
 <h2 class="hasAnchor">
 <a href="#breaking" class="anchor"></a>Breaking</h2>
 <ul>
-<li><p>The default <code>ci</code> width has been changed to 0.95 instead of 0.89 (see <a href="https://github.com/easystats/bayestestR/discussions/250">here</a>).</p></li>
+<li><p>The default <code>ci</code> width has been changed to 0.95 instead of 0.89 (see <a href="https://github.com/easystats/bayestestR/discussions/250">here</a>). This should not come as a surprise to the long-time users of <code>bayestestR</code> as we have been warning about this impending change for a while now :)</p></li>
 <li><p>Column names for <code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code> are now <code>p_prior</code> and <code>p_posterior</code> (was <code>Prior_prob</code> and <code>Posterior_prob</code>), to be consistent with <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> output.</p></li>
-<li><p>Removed the <code>mhdior</code> experimental function.</p></li>
+<li><p>Removed the experimental function <code>mhdior</code>.</p></li>
 </ul>
 </div>
 <div id="general" class="section level2">
 <h2 class="hasAnchor">
 <a href="#general" class="anchor"></a>General</h2>
 <ul>
-<li>Support for <code>blavaan</code> models.</li>
-<li>Support for <code>blrm</code> models (<em>rmsb</em>).</li>
-<li>Support for <code>BGGM</code> models (<em>BGGM</em>).</li>
-<li>
-<code><a href="../reference/check_prior.html">check_prior()</a></code> and <code><a href="../reference/describe_prior.html">describe_prior()</a></code> should now also work for more ways of prior definition in models from <em>rstanarm</em> or <em>brms</em>.</li>
+<li><p>Support for <code>blavaan</code> models.</p></li>
+<li><p>Support for <code>blrm</code> models (<em>rmsb</em>).</p></li>
+<li><p>Support for <code>BGGM</code> models (<em>BGGM</em>).</p></li>
+<li><p><code><a href="../reference/check_prior.html">check_prior()</a></code> and <code><a href="../reference/describe_prior.html">describe_prior()</a></code> should now also work for more ways of prior definition in models from <em>rstanarm</em> or <em>brms</em>.</p></li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed bug in <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method for the <code><a href="../reference/mediation.html">mediation()</a></code> function.</li>
-<li>Fixed remaining inconsistencies with CI values, which were not reported as fraction for <code><a href="../reference/rope.html">rope()</a></code>.</li>
-<li>Fixed issues with special prior definitions in <code><a href="../reference/check_prior.html">check_prior()</a></code>, <code><a href="../reference/describe_prior.html">describe_prior()</a></code> and <code><a href="../reference/simulate_prior.html">simulate_prior()</a></code>.</li>
+<li><p>Fixed bug in <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> method for the <code><a href="../reference/mediation.html">mediation()</a></code> function.</p></li>
+<li><p>Fixed remaining inconsistencies with CI values, which were not reported as fraction for <code><a href="../reference/rope.html">rope()</a></code>.</p></li>
+<li><p>Fixed issues with special prior definitions in <code><a href="../reference/check_prior.html">check_prior()</a></code>, <code><a href="../reference/describe_prior.html">describe_prior()</a></code> and <code><a href="../reference/simulate_prior.html">simulate_prior()</a></code>.</p></li>
 </ul>
 </div>
 </div>
@@ -228,8 +227,8 @@
 <h2 class="hasAnchor">
 <a href="#general-1" class="anchor"></a>General</h2>
 <ul>
-<li>Support for <code>bamlss</code> models.</li>
-<li>Roll-back R dependency to R &gt;= 3.4.</li>
+<li><p>Support for <code>bamlss</code> models.</p></li>
+<li><p>Roll-back R dependency to R &gt;= 3.4.</p></li>
 </ul>
 </div>
 <div id="changes-to-functions" class="section level2">
@@ -264,17 +263,16 @@
 <h2 class="hasAnchor">
 <a href="#general-2" class="anchor"></a>General</h2>
 <ul>
-<li>Added startup-message to warn users that default ci-width might change in a future update.</li>
-<li>Added support for <em>mcmc.list</em> objects.</li>
+<li><p>Added startup-message to warn users that default ci-width might change in a future update.</p></li>
+<li><p>Added support for <em>mcmc.list</em> objects.</p></li>
 </ul>
 </div>
 <div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>
-<code><a href="../reference/unupdate.html">unupdate()</a></code> gains a <code>newdata</code> argument to work with <code>brmsfit_multiple</code> models.</li>
-<li>Fixed issue in Bayes factor vignette (don’t evaluate code chunks if packages not available).</li>
+<li><p><code><a href="../reference/unupdate.html">unupdate()</a></code> gains a <code>newdata</code> argument to work with <code>brmsfit_multiple</code> models.</p></li>
+<li><p>Fixed issue in Bayes factor vignette (don’t evaluate code chunks if packages not available).</p></li>
 </ul>
 </div>
 </div>
@@ -286,9 +284,8 @@
 <h2 class="hasAnchor">
 <a href="#new-functions-1" class="anchor"></a>New functions</h2>
 <ul>
-<li>Added <code><a href="https://rdrr.io/r/base/matrix.html">as.matrix()</a></code> function for <code>bayesfactor_model</code> arrays.</li>
-<li>
-<code><a href="../reference/unupdate.html">unupdate()</a></code>, a utility function to get Bayesian models un-fitted from the data, representing the priors only.</li>
+<li><p>Added <code><a href="https://rdrr.io/r/base/matrix.html">as.matrix()</a></code> function for <code>bayesfactor_model</code> arrays.</p></li>
+<li><p><code><a href="../reference/unupdate.html">unupdate()</a></code>, a utility function to get Bayesian models un-fitted from the data, representing the priors only.</p></li>
 </ul>
 </div>
 <div id="changes-to-functions-1" class="section level2">
@@ -303,12 +300,11 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed issue with <em>default</em> rope range for <code>BayesFactor</code> models.</li>
-<li>Fixed issue in collinearity-check for <code><a href="../reference/rope.html">rope()</a></code> for models with less than two parameters.</li>
-<li>Fixed issue in print-method for <code><a href="../reference/mediation.html">mediation()</a></code> with <code>stanmvreg</code>-models, which displays the wrong name for the response-value.</li>
-<li>Fixed issue in <code><a href="../reference/effective_sample.html">effective_sample()</a></code> for models with only one parameter.</li>
-<li>
-<code><a href="../reference/rope_range.html">rope_range()</a></code> for <code>BayesFactor</code> models returns non-<code>NA</code> values ( <a href='https://github.com/easystats/bayestestR/issues/343'>#343</a> )</li>
+<li><p>Fixed issue with <em>default</em> rope range for <code>BayesFactor</code> models.</p></li>
+<li><p>Fixed issue in collinearity-check for <code><a href="../reference/rope.html">rope()</a></code> for models with less than two parameters.</p></li>
+<li><p>Fixed issue in print-method for <code><a href="../reference/mediation.html">mediation()</a></code> with <code>stanmvreg</code>-models, which displays the wrong name for the response-value.</p></li>
+<li><p>Fixed issue in <code><a href="../reference/effective_sample.html">effective_sample()</a></code> for models with only one parameter.</p></li>
+<li><p><code><a href="../reference/rope_range.html">rope_range()</a></code> for <code>BayesFactor</code> models returns non-<code>NA</code> values ( <a href='https://github.com/easystats/bayestestR/issues/343'>#343</a> )</p></li>
 </ul>
 </div>
 </div>
@@ -341,28 +337,27 @@
 <h2 class="hasAnchor">
 <a href="#general-3" class="anchor"></a>General</h2>
 <ul>
-<li>Preliminary support for <em>stanfit</em> objects.</li>
-<li>Added support for <em>bayesQR</em> objects.</li>
+<li><p>Preliminary support for <em>stanfit</em> objects.</p></li>
+<li><p>Added support for <em>bayesQR</em> objects.</p></li>
 </ul>
 </div>
 <div id="changes-to-functions-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes-to-functions-2" class="anchor"></a>Changes to functions</h2>
 <ul>
-<li>
-<code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> can now be used with data frames.</li>
-<li>Revised <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> for <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>.</li>
-<li>Improved value formatting for Bayesfactor functions.</li>
+<li><p><code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> can now be used with data frames.</p></li>
+<li><p>Revised <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> for <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>.</p></li>
+<li><p>Improved value formatting for Bayesfactor functions.</p></li>
 </ul>
 </div>
 <div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Link transformation are now taken into account for <code>emmeans</code> objets. E.g., in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>.</li>
-<li>Fix <code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code> when algorithm is not “sampling”.</li>
-<li>Minor revisions to some documentations.</li>
-<li>Fix CRAN check issues for win-old-release.</li>
+<li><p>Link transformation are now taken into account for <code>emmeans</code> objets. E.g., in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>.</p></li>
+<li><p>Fix <code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code> when algorithm is not “sampling”.</p></li>
+<li><p>Minor revisions to some documentations.</p></li>
+<li><p>Fix CRAN check issues for win-old-release.</p></li>
 </ul>
 </div>
 </div>
@@ -374,20 +369,17 @@
 <h2 class="hasAnchor">
 <a href="#changes-to-functions-3" class="anchor"></a>Changes to functions</h2>
 <ul>
-<li>
-<code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> now also works on <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html">effectsize::standardize_posteriors()</a></code>.</li>
-<li>
-<code><a href="../reference/p_significance.html">p_significance()</a></code> now also works on <code><a href="https://easystats.github.io/parameters/reference/simulate_model.html">parameters::simulate_model()</a></code>.</li>
-<li>
-<code><a href="../reference/rope_range.html">rope_range()</a></code> supports more (frequentis) models.</li>
+<li><p><code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> now also works on <code><a href="https://easystats.github.io/effectsize/reference/standardize_parameters.html">effectsize::standardize_posteriors()</a></code>.</p></li>
+<li><p><code><a href="../reference/p_significance.html">p_significance()</a></code> now also works on <code><a href="https://easystats.github.io/parameters/reference/simulate_model.html">parameters::simulate_model()</a></code>.</p></li>
+<li><p><code><a href="../reference/rope_range.html">rope_range()</a></code> supports more (frequentis) models.</p></li>
 </ul>
 </div>
 <div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed issue with <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> <code>data.frame</code>-methods of <code><a href="../reference/p_direction.html">p_direction()</a></code> and <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code>.</li>
-<li>Fix check issues for forthcoming insight-update.</li>
+<li><p>Fixed issue with <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> <code>data.frame</code>-methods of <code><a href="../reference/p_direction.html">p_direction()</a></code> and <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code>.</p></li>
+<li><p>Fix check issues for forthcoming insight-update.</p></li>
 </ul>
 </div>
 </div>
@@ -414,10 +406,10 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed bug in <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> to properly weight Intercept-only <code>BFBayesFactor</code> models.</li>
-<li>Fixed bug in <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> when models have very low posterior probability ( <a href='https://github.com/easystats/bayestestR/issues/286'>#286</a> ).</li>
-<li>Fixed bug in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, <code><a href="../reference/rope.html">rope()</a></code> and <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> for <em>brmsfit</em> models with monotonic effect.</li>
-<li>Fixed issues related to latest changes in <code><a href="https://rdrr.io/pkg/brms/man/posterior_samples.brmsfit.html">as.data.frame.brmsfit()</a></code> from the <em>brms</em> package.</li>
+<li><p>Fixed bug in <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> to properly weight Intercept-only <code>BFBayesFactor</code> models.</p></li>
+<li><p>Fixed bug in <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> when models have very low posterior probability ( <a href='https://github.com/easystats/bayestestR/issues/286'>#286</a> ).</p></li>
+<li><p>Fixed bug in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, <code><a href="../reference/rope.html">rope()</a></code> and <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> for <em>brmsfit</em> models with monotonic effect.</p></li>
+<li><p>Fixed issues related to latest changes in <code><a href="https://rdrr.io/pkg/brms/man/posterior_samples.brmsfit.html">as.data.frame.brmsfit()</a></code> from the <em>brms</em> package.</p></li>
 </ul>
 </div>
 </div>
@@ -429,40 +421,35 @@
 <h2 class="hasAnchor">
 <a href="#general-5" class="anchor"></a>General</h2>
 <ul>
-<li>Added <code><a href="../reference/p_map.html">p_pointnull()</a></code> as an alias to <code>p_MAP()</code>.</li>
-<li>Added <code><a href="../reference/si.html">si()</a></code> function to compute support intervals.</li>
-<li>Added <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> for generating posterior samples averaged across models.</li>
-<li>Added <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>-method for <code><a href="../reference/p_significance.html">p_significance()</a></code>.</li>
-<li>
-<code><a href="../reference/p_significance.html">p_significance()</a></code> now also works for <em>brmsfit</em>-objects.</li>
-<li>
-<code><a href="../reference/estimate_density.html">estimate_density()</a></code> now also works for <em>MCMCglmm</em>-objects.</li>
-<li>
-<code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> gets <code>effects</code> and <code>component</code> arguments for <em>stanreg</em> and <em>brmsfit</em> models, to print specific model components.</li>
-<li>Support for <em>mcmc</em> objects (package <strong>coda</strong>)</li>
-<li>Provide more distributions via <code><a href="../reference/distribution.html">distribution()</a></code>.</li>
-<li>Added <code><a href="../reference/distribution.html">distribution_tweedie()</a></code>.</li>
-<li>Better handling of <code>stanmvreg</code> models for <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, <code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code> and <code><a href="../reference/describe_prior.html">describe_prior()</a></code>.</li>
+<li><p>Added <code><a href="../reference/p_map.html">p_pointnull()</a></code> as an alias to <code>p_MAP()</code>.</p></li>
+<li><p>Added <code><a href="../reference/si.html">si()</a></code> function to compute support intervals.</p></li>
+<li><p>Added <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> for generating posterior samples averaged across models.</p></li>
+<li><p>Added <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>-method for <code><a href="../reference/p_significance.html">p_significance()</a></code>.</p></li>
+<li><p><code><a href="../reference/p_significance.html">p_significance()</a></code> now also works for <em>brmsfit</em>-objects.</p></li>
+<li><p><code><a href="../reference/estimate_density.html">estimate_density()</a></code> now also works for <em>MCMCglmm</em>-objects.</p></li>
+<li><p><code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> gets <code>effects</code> and <code>component</code> arguments for <em>stanreg</em> and <em>brmsfit</em> models, to print specific model components.</p></li>
+<li><p>Support for <em>mcmc</em> objects (package <strong>coda</strong>)</p></li>
+<li><p>Provide more distributions via <code><a href="../reference/distribution.html">distribution()</a></code>.</p></li>
+<li><p>Added <code><a href="../reference/distribution.html">distribution_tweedie()</a></code>.</p></li>
+<li><p>Better handling of <code>stanmvreg</code> models for <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, <code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code> and <code><a href="../reference/describe_prior.html">describe_prior()</a></code>.</p></li>
 </ul>
 </div>
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
 <ul>
-<li>
-<code><a href="../reference/point_estimate.html">point_estimate()</a></code>: argument <code>centrality</code> default value changed from ‘median’ to ‘all’.</li>
-<li>
-<code><a href="../reference/p_rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code>mhdior()</code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/p_rope.html">p_rope()</a></code> will refer to <code><a href="../reference/rope.html">rope(..., ci = 1)</a></code> ( <a href='https://github.com/easystats/bayestestR/issues/258'>#258</a> )</li>
+<li><p><code><a href="../reference/point_estimate.html">point_estimate()</a></code>: argument <code>centrality</code> default value changed from ‘median’ to ‘all’.</p></li>
+<li><p><code><a href="../reference/p_rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code>mhdior()</code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/p_rope.html">p_rope()</a></code> will refer to <code><a href="../reference/rope.html">rope(..., ci = 1)</a></code> ( <a href='https://github.com/easystats/bayestestR/issues/258'>#258</a> )</p></li>
 </ul>
 </div>
 <div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed mistake in description of <code><a href="../reference/p_significance.html">p_significance()</a></code>.</li>
-<li>Fixed error when computing BFs with <code>emmGrid</code> based on some non-linear models ( <a href='https://github.com/easystats/bayestestR/issues/260'>#260</a> ).</li>
-<li>Fixed wrong output for percentage-values in <code>print.equivalence_test()</code>.</li>
-<li>Fixed issue in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> for <code>BFBayesFactor</code>-objects with more than one model.</li>
+<li><p>Fixed mistake in description of <code><a href="../reference/p_significance.html">p_significance()</a></code>.</p></li>
+<li><p>Fixed error when computing BFs with <code>emmGrid</code> based on some non-linear models ( <a href='https://github.com/easystats/bayestestR/issues/260'>#260</a> ).</p></li>
+<li><p>Fixed wrong output for percentage-values in <code>print.equivalence_test()</code>.</p></li>
+<li><p>Fixed issue in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> for <code>BFBayesFactor</code>-objects with more than one model.</p></li>
 </ul>
 </div>
 </div>
@@ -474,20 +461,13 @@
 <h2 class="hasAnchor">
 <a href="#new-functions--features" class="anchor"></a>New functions / features</h2>
 <ul>
-<li>
-<code>convert_bayesian_to_frequentist()</code> Convert (refit) Bayesian model as frequentist</li>
-<li>
-<code><a href="../reference/distribution.html">distribution_binomial()</a></code> for perfect binomial distributions</li>
-<li>
-<code><a href="../reference/simulate_correlation.html">simulate_ttest()</a></code> Simulate data with a mean difference</li>
-<li>
-<code><a href="../reference/simulate_correlation.html">simulate_correlation()</a></code> Simulate correlated datasets</li>
-<li>
-<code><a href="../reference/p_significance.html">p_significance()</a></code> Compute the probability of Practical Significance (ps)</li>
-<li>
-<code><a href="../reference/overlap.html">overlap()</a></code> Compute overlap between two empirical distributions</li>
-<li>
-<code><a href="../reference/estimate_density.html">estimate_density()</a></code>: <code>method = "mixture"</code> argument added for mixture density estimation</li>
+<li><p><code>convert_bayesian_to_frequentist()</code> Convert (refit) Bayesian model as frequentist</p></li>
+<li><p><code><a href="../reference/distribution.html">distribution_binomial()</a></code> for perfect binomial distributions</p></li>
+<li><p><code><a href="../reference/simulate_correlation.html">simulate_ttest()</a></code> Simulate data with a mean difference</p></li>
+<li><p><code><a href="../reference/simulate_correlation.html">simulate_correlation()</a></code> Simulate correlated datasets</p></li>
+<li><p><code><a href="../reference/p_significance.html">p_significance()</a></code> Compute the probability of Practical Significance (ps)</p></li>
+<li><p><code><a href="../reference/overlap.html">overlap()</a></code> Compute overlap between two empirical distributions</p></li>
+<li><p><code><a href="../reference/estimate_density.html">estimate_density()</a></code>: <code>method = "mixture"</code> argument added for mixture density estimation</p></li>
 </ul>
 </div>
 <div id="bug-fixes-9" class="section level2">
@@ -517,10 +497,7 @@
 <li><p><code><a href="../reference/check_prior.html">check_prior()</a></code> to check if prior is informative</p></li>
 <li><p><code><a href="../reference/simulate_prior.html">simulate_prior()</a></code> to simulate model’s priors as distributions</p></li>
 <li><p><code><a href="../reference/distribution.html">distribution_gamma()</a></code> to generate a (near-perfect or random) Gamma distribution</p></li>
-<li>
-<p><code>contr.bayes</code> function for orthogonal factor coding (implementation from Singmann &amp; Gronau’s <a href="https://github.com/bayesstuff/bfrms/"><code>bfrms</code></a>, used for proper prior estimation when factor have 3 levels or more. See Bayes factor vignette</p>
-<h2 id="changes-to-functions-5">Changes to functions</h2>
-</li>
+<li><p><code>contr.bayes</code> function for orthogonal factor coding (implementation from Singmann &amp; Gronau’s <a href="https://github.com/bayesstuff/bfrms/"><code>bfrms</code></a>, used for proper prior estimation when factor have 3 levels or more. See Bayes factor vignette ## Changes to functions</p></li>
 <li><p>Added support for <code>sim</code>, <code>sim.merMod</code> (from <code>arm::sim()</code>) and <code>MCMCglmm</code>-objects to many functions (like <code><a href="../reference/hdi.html">hdi()</a></code>, <code><a href="../reference/ci.html">ci()</a></code>, <code><a href="../reference/eti.html">eti()</a></code>, <code><a href="../reference/rope.html">rope()</a></code>, <code><a href="../reference/p_direction.html">p_direction()</a></code>, <code><a href="../reference/point_estimate.html">point_estimate()</a></code>, …)</p></li>
 <li><p><code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> gets an <code>effects</code> and <code>component</code> argument, to include the description of posterior samples from random effects and/or zero-inflation component.</p></li>
 <li><p>More user-friendly warning for non-supported models in <code><a href="../reference/bayesfactor.html">bayesfactor()</a></code>-methods</p></li>
@@ -530,8 +507,8 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-10" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed bug in <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> where the same interaction sometimes appeared more than once (<a href='https://github.com/easystats/bayestestR/issues/223'>#223</a>)</li>
-<li>Fixed bug in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> for <em>stanreg</em> models fitted with fullrank-algorithm</li>
+<li><p>Fixed bug in <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> where the same interaction sometimes appeared more than once (<a href='https://github.com/easystats/bayestestR/issues/223'>#223</a>)</p></li>
+<li><p>Fixed bug in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> for <em>stanreg</em> models fitted with fullrank-algorithm</p></li>
 </ul>
 </div>
 </div>
@@ -543,33 +520,22 @@
 <h2 class="hasAnchor">
 <a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
-<li>
-<code><a href="../reference/rope_range.html">rope_range()</a></code> for binomial model has now a different default (-.18; .18 ; instead of -.055; .055)</li>
-<li>
-<code><a href="../reference/rope.html">rope()</a></code>: returns a proportion (between 0 and 1) instead of a value between 0 and 100</li>
-<li>
-<code><a href="../reference/p_direction.html">p_direction()</a></code>: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 (<a href="https://github.com/easystats/bayestestR/issues/168"><a href='https://github.com/easystats/bayestestR/issues/168'>#168</a></a>)</li>
-<li>
-<code>bayesfactor_savagedickey()</code>: <code>hypothesis</code> argument replaced by <code>null</code> as part of the new <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> function</li>
+<li><p><code><a href="../reference/rope_range.html">rope_range()</a></code> for binomial model has now a different default (-.18; .18 ; instead of -.055; .055)</p></li>
+<li><p><code><a href="../reference/rope.html">rope()</a></code>: returns a proportion (between 0 and 1) instead of a value between 0 and 100</p></li>
+<li><p><code><a href="../reference/p_direction.html">p_direction()</a></code>: returns a proportion (between 0.5 and 1) instead of a value between 50 and 100 (<a href="https://github.com/easystats/bayestestR/issues/168"><a href='https://github.com/easystats/bayestestR/issues/168'>#168</a></a>)</p></li>
+<li><p><code>bayesfactor_savagedickey()</code>: <code>hypothesis</code> argument replaced by <code>null</code> as part of the new <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> function</p></li>
 </ul>
 </div>
 <div id="new-functions--features-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions--features-2" class="anchor"></a>New functions / features</h2>
 <ul>
-<li>
-<code><a href="../reference/density_at.html">density_at()</a></code>, <code><a href="../reference/p_map.html">p_map()</a></code> and <code><a href="../reference/map_estimate.html">map_estimate()</a></code>: <code>method</code> argument added</li>
-<li>
-<code><a href="../reference/rope.html">rope()</a></code>: <code>ci_method</code> argument added</li>
-<li>
-<code><a href="../reference/eti.html">eti()</a></code>: Computes equal-tailed intervals</li>
-<li>
-<code><a href="https://easystats.github.io/insight/reference/reshape_ci.html">reshape_ci()</a></code>: Reshape CIs between wide/long</li>
-<li>
-<code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code>: New function, replacing <code>bayesfactor_savagedickey()</code>, allows for computing Bayes factors against a <em>point-null</em> or an <em>interval-null</em>
-</li>
-<li>
-<code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code>: Function for computing Bayes factors for order restricted models</li>
+<li><p><code><a href="../reference/density_at.html">density_at()</a></code>, <code><a href="../reference/p_map.html">p_map()</a></code> and <code><a href="../reference/map_estimate.html">map_estimate()</a></code>: <code>method</code> argument added</p></li>
+<li><p><code><a href="../reference/rope.html">rope()</a></code>: <code>ci_method</code> argument added</p></li>
+<li><p><code><a href="../reference/eti.html">eti()</a></code>: Computes equal-tailed intervals</p></li>
+<li><p><code><a href="https://easystats.github.io/insight/reference/reshape_ci.html">reshape_ci()</a></code>: Reshape CIs between wide/long</p></li>
+<li><p><code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code>: New function, replacing <code>bayesfactor_savagedickey()</code>, allows for computing Bayes factors against a <em>point-null</em> or an <em>interval-null</em></p></li>
+<li><p><code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code>: Function for computing Bayes factors for order restricted models</p></li>
 </ul>
 </div>
 <div id="minor-changes" class="section level2">
@@ -593,19 +559,16 @@
 <h2 class="hasAnchor">
 <a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <ul>
-<li>
-<code><a href="../reference/equivalence_test.html">equivalence_test()</a></code>: returns capitalized output (e.g., <code>Rejected</code> instead of <code>rejected</code>)</li>
-<li>
-<code><a href="../reference/describe_posterior.html">describe_posterior.numeric()</a></code>: <code>dispersion</code> defaults to <code>FALSE</code> for consistency with the other methods</li>
+<li><p><code><a href="../reference/equivalence_test.html">equivalence_test()</a></code>: returns capitalized output (e.g., <code>Rejected</code> instead of <code>rejected</code>)</p></li>
+<li><p><code><a href="../reference/describe_posterior.html">describe_posterior.numeric()</a></code>: <code>dispersion</code> defaults to <code>FALSE</code> for consistency with the other methods</p></li>
 </ul>
 </div>
 <div id="new-functions--features-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions--features-3" class="anchor"></a>New functions / features</h2>
 <ul>
-<li>
-<code><a href="../reference/pd_to_p.html">pd_to_p()</a></code> and <code><a href="../reference/pd_to_p.html">p_to_pd()</a></code>: Functions to convert between probability of direction (pd) and p-value</li>
-<li>Support of <code>emmGrid</code> objects: <code><a href="../reference/ci.html">ci()</a></code>, <code><a href="../reference/rope.html">rope()</a></code>, <code>bayesfactor_savagedickey()</code>, <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, …</li>
+<li><p><code><a href="../reference/pd_to_p.html">pd_to_p()</a></code> and <code><a href="../reference/pd_to_p.html">p_to_pd()</a></code>: Functions to convert between probability of direction (pd) and p-value</p></li>
+<li><p>Support of <code>emmGrid</code> objects: <code><a href="../reference/ci.html">ci()</a></code>, <code><a href="../reference/rope.html">rope()</a></code>, <code>bayesfactor_savagedickey()</code>, <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, …</p></li>
 </ul>
 </div>
 <div id="minor-changes-1" class="section level2">
@@ -619,10 +582,8 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-12" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>
-<code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>: Fixed column order restoration</li>
-<li>
-<code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code>: Inclusion BFs for matched models are more inline with JASP results.</li>
+<li><p><code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>: Fixed column order restoration</p></li>
+<li><p><code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code>: Inclusion BFs for matched models are more inline with JASP results.</p></li>
 </ul>
 </div>
 </div>
@@ -634,70 +595,47 @@
 <h2 class="hasAnchor">
 <a href="#breaking-changes-3" class="anchor"></a>Breaking changes</h2>
 <ul>
-<li>plotting functions now require the installation of the <code>see</code> package</li>
-<li>
-<code>estimate</code> argument name in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> and <code><a href="../reference/point_estimate.html">point_estimate()</a></code> changed to <code>centrality</code>
-</li>
-<li>
-<code><a href="../reference/hdi.html">hdi()</a></code>, <code><a href="../reference/ci.html">ci()</a></code>, <code><a href="../reference/rope.html">rope()</a></code> and <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> default <code>ci</code> to <code>0.89</code>
-</li>
-<li>
-<code><a href="../reference/distribution.html">rnorm_perfect()</a></code> deprecated in favour of <code><a href="../reference/distribution.html">distribution_normal()</a></code>
-</li>
-<li>
-<code><a href="../reference/map_estimate.html">map_estimate()</a></code> now returns a single value instead of a dataframe and the <code>density</code> parameter has been removed. The MAP density value is now accessible via <code>attributes(map_output)$MAP_density</code>
-</li>
+<li><p>plotting functions now require the installation of the <code>see</code> package</p></li>
+<li><p><code>estimate</code> argument name in <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> and <code><a href="../reference/point_estimate.html">point_estimate()</a></code> changed to <code>centrality</code></p></li>
+<li><p><code><a href="../reference/hdi.html">hdi()</a></code>, <code><a href="../reference/ci.html">ci()</a></code>, <code><a href="../reference/rope.html">rope()</a></code> and <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> default <code>ci</code> to <code>0.89</code></p></li>
+<li><p><code><a href="../reference/distribution.html">rnorm_perfect()</a></code> deprecated in favour of <code><a href="../reference/distribution.html">distribution_normal()</a></code></p></li>
+<li><p><code><a href="../reference/map_estimate.html">map_estimate()</a></code> now returns a single value instead of a dataframe and the <code>density</code> parameter has been removed. The MAP density value is now accessible via <code>attributes(map_output)$MAP_density</code></p></li>
 </ul>
 </div>
 <div id="new-functions--features-4" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions--features-4" class="anchor"></a>New functions / features</h2>
 <ul>
-<li>
-<code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, <code><a href="../reference/describe_prior.html">describe_prior()</a></code>, <code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code>: added wrapper function</li>
-<li>
-<code><a href="../reference/point_estimate.html">point_estimate()</a></code> added function to compute point estimates</li>
-<li>
-<code><a href="../reference/p_direction.html">p_direction()</a></code>: new argument <code>method</code> to compute pd based on AUC</li>
-<li>
-<code><a href="../reference/area_under_curve.html">area_under_curve()</a></code>: compute AUC</li>
-<li>
-<code><a href="../reference/distribution.html">distribution()</a></code> functions have been added</li>
-<li>
-<code>bayesfactor_savagedickey()</code>, <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> and <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> functions has been added</li>
-<li>Started adding plotting methods (currently in the <a href="https://github.com/easystats/see"><code>see</code></a> package) for <code><a href="../reference/p_direction.html">p_direction()</a></code> and <code><a href="../reference/hdi.html">hdi()</a></code>
-</li>
-<li>
-<code>probability_at()</code> as alias for <code><a href="../reference/density_at.html">density_at()</a></code>
-</li>
-<li>
-<code><a href="../reference/effective_sample.html">effective_sample()</a></code> to return the effective sample size of Stan-models</li>
-<li>
-<code><a href="../reference/mcse.html">mcse()</a></code> to return the Monte Carlo standard error of Stan-models</li>
+<li><p><code><a href="../reference/describe_posterior.html">describe_posterior()</a></code>, <code><a href="../reference/describe_prior.html">describe_prior()</a></code>, <code><a href="../reference/diagnostic_posterior.html">diagnostic_posterior()</a></code>: added wrapper function</p></li>
+<li><p><code><a href="../reference/point_estimate.html">point_estimate()</a></code> added function to compute point estimates</p></li>
+<li><p><code><a href="../reference/p_direction.html">p_direction()</a></code>: new argument <code>method</code> to compute pd based on AUC</p></li>
+<li><p><code><a href="../reference/area_under_curve.html">area_under_curve()</a></code>: compute AUC</p></li>
+<li><p><code><a href="../reference/distribution.html">distribution()</a></code> functions have been added</p></li>
+<li><p><code>bayesfactor_savagedickey()</code>, <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> and <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> functions has been added</p></li>
+<li><p>Started adding plotting methods (currently in the <a href="https://github.com/easystats/see"><code>see</code></a> package) for <code><a href="../reference/p_direction.html">p_direction()</a></code> and <code><a href="../reference/hdi.html">hdi()</a></code></p></li>
+<li><p><code>probability_at()</code> as alias for <code><a href="../reference/density_at.html">density_at()</a></code></p></li>
+<li><p><code><a href="../reference/effective_sample.html">effective_sample()</a></code> to return the effective sample size of Stan-models</p></li>
+<li><p><code><a href="../reference/mcse.html">mcse()</a></code> to return the Monte Carlo standard error of Stan-models</p></li>
 </ul>
 </div>
 <div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-2" class="anchor"></a>Minor changes</h2>
 <ul>
-<li>Improved documentation</li>
-<li>Improved testing</li>
-<li>
-<code><a href="../reference/p_direction.html">p_direction()</a></code>: improved printing</li>
-<li>
-<code><a href="../reference/rope.html">rope()</a></code> for model-objects now returns the HDI values for all parameters as attribute in a consistent way</li>
-<li>Changes legend-labels in <code>plot.equivalence_test()</code> to align plots with the output of the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>-method (<a href='https://github.com/easystats/bayestestR/issues/78'>#78</a>)</li>
+<li><p>Improved documentation</p></li>
+<li><p>Improved testing</p></li>
+<li><p><code><a href="../reference/p_direction.html">p_direction()</a></code>: improved printing</p></li>
+<li><p><code><a href="../reference/rope.html">rope()</a></code> for model-objects now returns the HDI values for all parameters as attribute in a consistent way</p></li>
+<li><p>Changes legend-labels in <code>plot.equivalence_test()</code> to align plots with the output of the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>-method (<a href='https://github.com/easystats/bayestestR/issues/78'>#78</a>)</p></li>
 </ul>
 </div>
 <div id="bug-fixes-13" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-13" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>
-<code><a href="../reference/hdi.html">hdi()</a></code> returned multiple class attributes (<a href='https://github.com/easystats/bayestestR/issues/72'>#72</a>)</li>
-<li>Printing results from <code><a href="../reference/hdi.html">hdi()</a></code> failed when <code>ci</code>-argument had fractional parts for percentage values (e.g. <code>ci = .995</code>).</li>
-<li>
-<code>plot.equivalence_test()</code> did not work properly for <em>brms</em>-models (<a href='https://github.com/easystats/bayestestR/issues/76'>#76</a>).</li>
+<li><p><code><a href="../reference/hdi.html">hdi()</a></code> returned multiple class attributes (<a href='https://github.com/easystats/bayestestR/issues/72'>#72</a>)</p></li>
+<li><p>Printing results from <code><a href="../reference/hdi.html">hdi()</a></code> failed when <code>ci</code>-argument had fractional parts for percentage values (e.g. <code>ci = .995</code>).</p></li>
+<li><p><code>plot.equivalence_test()</code> did not work properly for <em>brms</em>-models (<a href='https://github.com/easystats/bayestestR/issues/76'>#76</a>).</p></li>
 </ul>
 </div>
 </div>
@@ -706,9 +644,8 @@
 <a href="#bayestestr-010" class="anchor"></a>bayestestR 0.1.0<small> 2019-04-08 </small>
 </h1>
 <ul>
-<li>CRAN initial publication and <a href="https://github.com/easystats/bayestestR/releases/tag/v0.1.0">0.1.0 release</a>
-</li>
-<li>Added a <code>NEWS.md</code> file to track changes to the package</li>
+<li><p>CRAN initial publication and <a href="https://github.com/easystats/bayestestR/releases/tag/v0.1.0">0.1.0 release</a></p></li>
+<li><p>Added a <code>NEWS.md</code> file to track changes to the package</p></li>
 </ul>
 </div>
   </div>

@@ -209,7 +209,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <blockquote>
 <p><strong>Given the observed data, has the hypothesis that the drug (the effect of <code>group</code>) has no effect on the numbers of hours of extra sleep (variable <code>extra</code>) become more of less credible?</strong></p>
 </blockquote>
-<p><img src="bayes_factors_files/figure-html/sleep_boxplot-1.png" width="1093.75"></p>
+<p><img src="bayes_factors_files/figure-html/sleep_boxplot-1.png" width="100%"></p>
 <p>The <strong>boxplot</strong> suggests that the second group has a higher number of hours of extra sleep. <em>By how much?</em></p>
 <p>Let’s fit a simple <a href="https://easystats.github.io/bayestestR/articles/example1.html">Bayesian linear model</a>, with a prior of <span class="math inline">\(b_{group} \sim N(0, 3)\)</span> (i.e. the prior follows a Gaussian/normal distribution with <span class="math inline">\(mean = 0\)</span> and <span class="math inline">\(SD = 3\)</span>), using <code>rstanarm</code> package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -232,7 +232,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 {P(b_{drug} \notin [-1, 1])}
 \]</span></p>
 <p>Given our prior has a normal distribution centered at 0 hours with a scale (an SD) of 3 hours, our priors would look like this:</p>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-2-1.png" width="1093.75"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-2-1.png" width="100%"></p>
 <p>and the prior odds would be 2.2.</p>
 <p>By looking at the posterior distribution, can now compute the posterior probability of the drug’s effect falling <em>within the null-region</em>, and the posterior probability of the drug’s effect falling <em>outside the null-region</em> to get our <em>posterior odds</em>:</p>
 <p><span class="math display">\[
@@ -240,7 +240,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 {P(b_{drug} \in [-1,1] | Data)}
 {P(b_{drug} \notin [-1,1] | Data)}
 \]</span></p>
-<p><img src="bayes_factors_files/figure-html/rstanarm_fit-1.png" width="1093.75"></p>
+<p><img src="bayes_factors_files/figure-html/rstanarm_fit-1.png" width="100%"></p>
 <p>We can see that the center of the posterior distribution has shifted away from 0 (to ~1.5). Likewise, the posterior odds are 2, which seems to favor <strong>the effect being non-null</strong>. <strong>But</strong>, does this mean the data support the alternative over the null? Hard to say, since even before the data were observed, the priors already favored the alternative - so we need to take our priors into account here!</p>
 <p>Let’s compute the Bayes factor as the change from the prior odds to the posterior odds: <span class="math inline">\(BF_{10} = Odds_{posterior} / Odds_{prior} = 0.9\)</span>! This BF indicates that the data provide 1/0.9 = 1.1 times more evidence for the effect of the drug being practically nothing than it does for the drug having some clinically significant effect. Thus, although the center of distribution has shifted away from 0, and the posterior distribution seems to favor a non-null effect of the drug, it seems that given the observed data, the probability mass has <em>overall</em> shifted closer to the null interval, making the values in the null interval more probable! <span class="citation">(see <em>Non-overlapping Hypotheses</em> in Morey &amp; Rouder, 2011)</span></p>
 <p>All of this can be achieved with the function <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code>, which computes a Bayes factor for each of the model’s parameters:</p>
@@ -259,7 +259,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/">see</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">My_first_BF</span><span class="op">)</span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-5-1.png" width="1093.75"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
 <p>Note that <strong>interpretation guides</strong> for Bayes factors can be found in the <code>effectsize</code> package:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/interpret_bf.html">interpret_bf</a></span><span class="op">(</span><span class="va">My_first_BF</span><span class="op">$</span><span class="va">BF</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, include_value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -288,7 +288,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; * Evidence Against The Null: 0</code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">My_second_BF</span><span class="op">)</span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-9-1.png" width="1093.75"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-9-1.png" width="100%"></p>
 </div>
 <div id="directional-hypotheses" class="section level3">
 <h3 class="hasAnchor">
@@ -307,7 +307,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; *                 Direction: Right-Sided test</code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">test_group2_right</span><span class="op">)</span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-10-1.png" width="1093.75"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-10-1.png" width="100%"></p>
 <p>As we can see, given that we have an <em>a priori</em> assumption about the direction of the effect (that the effect is positive), <strong>the presence of an effect is 2.8 times more likely than the absence of an effect</strong>, given the observed data (or that the data are 2.8 time more probable under <span class="math inline">\(H_1\)</span> than <span class="math inline">\(H_0\)</span>). This indicates that, given the observed data, and a priori hypothesis, the posterior mass has shifted away from the null value, giving some evidence against the null (note that a Bayes factor of 2.8 is still considered quite <a href="https://easystats.github.io/effectsize/reference/interpret_bf.html">weak evidence</a>).</p>
 <p>Thanks to the flexibility of Bayesian framework, it is also possible to compute a Bayes factor for <strong>dividing</strong> hypotheses - that is, for a null and alternative that are <em>complementary</em>, opposing one-sided hypotheses <span class="citation">(Morey &amp; Wagenmakers, 2014)</span>.</p>
 <p>For example, above we compared an alternative of <span class="math inline">\(H_A\)</span>: <em>the drug has a positive effects</em> to the null <span class="math inline">\(H_0\)</span>: <em>the drug has no effect</em>. But we can also compare instead the same alternative to its <em>complementary</em> hypothesis: <span class="math inline">\(H_{-A}\)</span>: <em>the drug has a negative effects</em>.</p>
@@ -323,7 +323,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; * Evidence Against The Null: [-Inf, 0.000]</code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">test_group2_dividing</span><span class="op">)</span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-11-1.png" width="1093.75"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-11-1.png" width="100%"></p>
 <p>We can see that this test produces even stronger (more conclusive) evidence than the one-sided vs. point-null test! And indeed, as a rule of thumb, the more specific the two hypotheses are, and the more distinct they are from one another, the more <em>power</em> our Bayes factor has!<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p>Thanks to the transitivity of Bayes factors, we can also use <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> to compare even more types of hypotheses, with some trickery. For example:</p>
 <p><span class="math display">\[
@@ -345,8 +345,13 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <p>For example, we’ve seen that the point null has become somewhat less credible after observing the data, but we might also ask which values have <strong>gained</strong> credibility given the observed data?. The resulting range of values is called <strong>the support interval</strong> as it indicates which values are supported by the data <span class="citation">(Wagenmakers, Gronau, Dablander, &amp; Etz, 2018)</span>. We can do this by once again comparing the prior and posterior distributions and checking where the posterior densities are higher than the prior densities.</p>
 <p>In <code>bayestestR</code>, this can be achieved with the <code><a href="../reference/si.html">si()</a></code> function:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_first_si</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/si.html">si</a></span><span class="op">(</span><span class="va">model</span>, BF <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="va">my_first_si</span></code></pre></div>
+<code class="sourceCode R"><span class="va">my_first_si</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/si.html">si</a></span><span class="op">(</span>
+  posterior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>group2 <span class="op">=</span> <span class="va">posterior</span><span class="op">)</span>,
+  prior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>group2 <span class="op">=</span> <span class="va">prior</span><span class="op">)</span>,
+  BF <span class="op">=</span> <span class="fl">1</span>
+<span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">my_first_si</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Support Interval
 &gt; 
 &gt; Parameter |    BF = 1 SI
@@ -356,7 +361,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <p>Visually, we can see that the credibility of all the values within this interval has increased (and likewise the credibility of all the values outside this interval has decreased):</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">my_first_si</span><span class="op">)</span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-14-1.png" width="1093.75"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-13-1.png" width="100%"></p>
 <p>We can also see the this support interval (just barely) excludes the point null (0) - whose credibility we’ve already seen has decreased by the observed data. This emphasizes the relationship between the support interval and the Bayes factor:</p>
 <blockquote>
 <p>“The interpretation of such intervals would be analogous to how a frequentist confidence interval contains all the parameter values that would not have been rejected if tested at level <span class="math inline">\(\alpha\)</span>. For instance, a BF = 1/3 support interval encloses all values of theta for which the updating factor is not stronger than 3 against.” <span class="citation">(Wagenmakers et al., 2018)</span></p>
@@ -395,26 +400,26 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/paul-buerkner/brms">brms</a></span><span class="op">)</span>
 
 <span class="co"># intercept only model</span>
-<span class="va">m0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="fl">1</span>, 
-  data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">m0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="fl">1</span>,
+  data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span>
 
 <span class="co"># simple effects models</span>
 <span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>,
-  data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+  data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span>
 <span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
-  data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+  data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span>
 
 <span class="co"># main effects model</span>
 <span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>,
-  data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+  data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span>
 
 <span class="co"># full model</span>
 <span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>,
-  data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+  data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span></code></pre></div>
 <p>We can now compare these models with the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function, using the <code>denominator</code> argument to specify the model against which the rest of the models will be compared (in this case, the intercept-only model):</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
@@ -440,7 +445,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt;     Model                       BF
 &gt; [1] Petal.Length           &lt; 0.001
 &gt; [2] Species                &lt; 0.001
-&gt; [4] Species * Petal.Length    1.28
+&gt; [4] Species * Petal.Length    1.29
 &gt; [5] (Intercept only)       &lt; 0.001
 &gt; 
 &gt; * Against Denominator: [3] Species + Petal.Length
@@ -470,11 +475,11 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; 
 &gt;                 |      [1] |      [2] |      [3] |      [4] |      [5]
 &gt; ---------------------------------------------------------------------------------
-&gt; [1] Petal.Length           |        1 | 1.63e-15 | 2.07e+11 | 2.65e+11 | 2.90e-45
-&gt; [2] Species                | 6.12e+14 |        1 | 1.27e+26 | 1.63e+26 | 1.78e-30
-&gt; [3] Species + Petal.Length | 4.84e-12 | 7.90e-27 |        1 |     1.28 | 1.40e-56
-&gt; [4] Species * Petal.Length | 3.77e-12 | 6.15e-27 |     0.78 |        1 | 1.09e-56
-&gt; [5] (Intercept only)       | 3.45e+44 | 5.63e+29 | 7.12e+55 | 9.15e+55 |        1</code></pre>
+&gt; [1] Petal.Length           |        1 | 1.62e-15 | 2.08e+11 | 2.68e+11 | 2.76e-45
+&gt; [2] Species                | 6.18e+14 |        1 | 1.29e+26 | 1.65e+26 | 1.71e-30
+&gt; [3] Species + Petal.Length | 4.80e-12 | 7.77e-27 |        1 |     1.29 | 1.33e-56
+&gt; [4] Species * Petal.Length | 3.74e-12 | 6.05e-27 |     0.78 |        1 | 1.03e-56
+&gt; [5] (Intercept only)       | 3.62e+44 | 5.86e+29 | 7.53e+55 | 9.69e+55 |        1</code></pre>
 <p><strong>NOTE:</strong> In order to correctly and precisely estimate Bayes Factors, you always need the 4 P’s: <strong>P</strong>roper <strong>P</strong>riors,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> and a <strong>P</strong>lentiful <strong>P</strong>osterior.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 </div>
 <div id="for-frequentist-models-via-the-bic-approximation" class="section level3">
@@ -496,13 +501,13 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span>, <span class="va">m3</span>, <span class="va">m4</span>, denominator <span class="op">=</span> <span class="va">m0</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
-&gt;     Model                                                     BF
-&gt; [1] Petal.Length + (1 | Species)                          &gt; 1000
-&gt; [2] Petal.Length + (Petal.Length | Species)               &gt; 1000
-&gt; [3] Petal.Length + Petal.Width + (Petal.Length | Species) &gt; 1000
-&gt; [4] Petal.Length * Petal.Width + (Petal.Length | Species) &gt; 1000
+&gt;      Model                                                     BF
+&gt; [m1] Petal.Length + (1 | Species)                          &gt; 1000
+&gt; [m2] Petal.Length + (Petal.Length | Species)               &gt; 1000
+&gt; [m3] Petal.Length + Petal.Width + (Petal.Length | Species) &gt; 1000
+&gt; [m4] Petal.Length * Petal.Width + (Petal.Length | Species) &gt; 1000
 &gt; 
-&gt; * Against Denominator: [5] 1 + (1 | Species)
+&gt; * Against Denominator: [m0] 1 + (1 | Species)
 &gt; *   Bayes Factor Type: BIC approximation</code></pre>
 </div>
 <div id="bayesfactor_restricted" class="section level3">
@@ -512,7 +517,8 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>,
   data <span class="op">=</span> <span class="va">iris</span>,
-  prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1.2</span>, <span class="fl">1.2</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+  prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1.2</span>, <span class="fl">1.2</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
+  refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span></code></pre></div>
 <p>These priors are <strong>unrestricted</strong> - that is, <strong>all values</strong> between <span class="math inline">\(-\infty\)</span> and <span class="math inline">\(\infty\)</span> of all parameters in the model have some non-zero credibility (no matter how small; this is true for both the prior and posterior distribution). Subsequently, <em>a priori</em> the ordering of the parameters relating to the iris species can have any ordering, such that <em>a priori</em> setosa can have larger sepals than virginica, but it is also possible for virginica to have larger sepals than setosa!</p>
 <p>Does it make sense to let our priors cover all of these possibilities? That depends on our <em>prior</em> knowledge or hypotheses. For example, even a novice botanist will assume that it is unlikely that petal length will be <em>negatively</em> associated with sepal length - an iris with longer petals is likely larger, and thus will also have a longer sepal. And an expert botanist will perhaps assume that setosas have smaller sepals than both versicolors and virginica.</p>
@@ -531,18 +537,25 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <span class="op">)</span></code></pre></div>
 <p>Let’s test these hypotheses:</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">botanist_BFs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span><span class="va">iris_model</span>, hypothesis <span class="op">=</span> <span class="va">botanist_hypotheses</span><span class="op">)</span>
-<span class="va">botanist_BFs</span></code></pre></div>
+<code class="sourceCode R"><span class="va">model_prior</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/unupdate.html">unupdate</a></span><span class="op">(</span><span class="va">iris_model</span><span class="op">)</span>
+
+<span class="va">botanist_BFs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span>
+  posterior <span class="op">=</span> <span class="va">iris_model</span>,
+  prior <span class="op">=</span> <span class="va">model_prior</span>,
+  hypothesis <span class="op">=</span> <span class="va">botanist_hypotheses</span>
+<span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">botanist_BFs</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
 &gt; Hypothesis                                       P(Prior) P(Posterior)      BF
-&gt; Petal.Length &gt; 0                                     0.50            1    2.02
-&gt; (Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)     0.24            0 &lt; 0.001
+&gt; Petal.Length &gt; 0                                     0.50            1    2.01
+&gt; (Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)     0.25            0 &lt; 0.001
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p>We can see that the novice botanist’s hypothesis gets a Bayes factor of ~2, indicating the data provides twice as much evidence for a model in which petal length is restricted to be positively associated with sepal length than for a model with not such restriction.</p>
 <p>What about our expert botanist? He seems to have failed miserably, with a BF favoring the <em>unrestricted</em> model many many times over (<span class="math inline">\(BF\gg1,000\)</span>). How is this possible? It seems that when <em>controlling for petal length</em>, versicolor and virginica actually have shorter sepals!</p>
-<p><img src="bayes_factors_files/figure-html/plot_iris-1.png" width="1093.75"></p>
+<p><img src="bayes_factors_files/figure-html/plot_iris-1.png" width="100%"></p>
 <p>Note that these Bayes factors compare the restricted model to the unrestricted model. If we wanted to compare the restricted model to the null model, we could use the transitive property of Bayes factors like so:</p>
 <p><span class="math display">\[
 BF_{\text{restricted vs. NULL}} = \frac
@@ -587,7 +600,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt;                      P(prior) P(posterior) Inclusion BF
 &gt; Petal.Length             0.40         0.44       &gt; 1000
 &gt; Species                  0.40         0.44       &gt; 1000
-&gt; Petal.Length:Species     0.20         0.56         1.28
+&gt; Petal.Length:Species     0.20         0.56         1.29
 &gt; 
 &gt; * Compared among: matched models only
 &gt; *    Priors odds: uniform-equal</code></pre>
@@ -612,13 +625,13 @@ BF_{\text{restricted vs. NULL}} = \frac
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;           P(prior) P(posterior) Inclusion BF
-&gt; supp          0.60         1.00       140.99
+&gt; supp          0.60         1.00       141.92
 &gt; dose          0.60         1.00       &gt; 1000
-&gt; dose:supp     0.20         0.72        10.12
+&gt; dose:supp     0.20         0.73        10.96
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP1.PNG"><!-- --></p>
+<p><img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP1.PNG" width="100%"></p>
 <ol start="2" style="list-style-type: decimal">
 <li>
 <strong>Across matched models</strong>:</li>
@@ -628,13 +641,13 @@ BF_{\text{restricted vs. NULL}} = \frac
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;           P(prior) P(posterior) Inclusion BF
-&gt; supp          0.40         0.28        59.19
-&gt; dose          0.40         0.28       &gt; 1000
-&gt; dose:supp     0.20         0.72         2.57
+&gt; supp          0.40         0.26        56.19
+&gt; dose          0.40         0.27       &gt; 1000
+&gt; dose:supp     0.20         0.73         2.79
 &gt; 
 &gt; * Compared among: matched models only
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP2.PNG"><!-- --></p>
+<p><img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP2.PNG" width="100%"></p>
 <ol start="3" style="list-style-type: decimal">
 <li>
 <strong>With Nuisance Effects</strong>:</li>
@@ -648,8 +661,8 @@ BF_{\text{restricted vs. NULL}} = \frac
 <span class="va">BF_ToothGrowth_against_dose</span></code></pre></div>
 <pre><code>&gt; Bayes factor analysis
 &gt; --------------
-&gt; [1] supp + dose             : 59  ±4.5%
-&gt; [2] supp + dose + supp:dose : 152 ±1.5%
+&gt; [1] supp + dose             : 56  ±1.3%
+&gt; [2] supp + dose + supp:dose : 157 ±1.8%
 &gt; 
 &gt; Against denominator:
 &gt;   len ~ dose 
@@ -661,12 +674,12 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt;           P(prior) P(posterior) Inclusion BF
 &gt; dose          1.00         1.00             
-&gt; supp          0.67         1.00       105.74
-&gt; dose:supp     0.33         0.72         5.06
+&gt; supp          0.67         1.00       106.44
+&gt; dose:supp     0.33         0.73         5.48
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP3.PNG"><!-- --></p>
+<p><img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP3.PNG" width="100%"></p>
 </div>
 <div id="weighted_posteriors" class="section level2">
 <h2 class="hasAnchor">
@@ -678,20 +691,24 @@ BF_{\text{restricted vs. NULL}} = \frac
 <code class="sourceCode R"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">am</span>,
   data <span class="op">=</span> <span class="va">mtcars</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
-  diagnostic_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"df1.csv"</span><span class="op">)</span>
+  diagnostic_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"df1.csv"</span><span class="op">)</span>,
+  refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span>
 
 <span class="va">mod_carb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">am</span> <span class="op">+</span> <span class="va">carb</span>,
   data <span class="op">=</span> <span class="va">mtcars</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
-  diagnostic_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"df0.csv"</span><span class="op">)</span>
+  diagnostic_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"df0.csv"</span><span class="op">)</span>,
+  refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">mod_carb</span>, denominator <span class="op">=</span> <span class="va">mod</span><span class="op">)</span></code></pre></div>
+<span class="va">BF_carb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">mod_carb</span>, denominator <span class="op">=</span> <span class="va">mod</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">BF</span> <span class="op">&lt;-</span> <span class="va">BF_carb</span><span class="op">$</span><span class="va">BF</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">BF_carb</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
 &gt;     Model             BF
-&gt; [1] wt + am + carb 0.811
+&gt; [1] wt + am + carb 0.822
 &gt; 
 &gt; * Against Denominator: [2] wt + am
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
@@ -702,10 +719,10 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; Parameter   |        95% HDI
 &gt; ----------------------------
-&gt; (Intercept) | [28.10, 40.09]
-&gt; wt          | [-5.48, -1.72]
-&gt; am          | [-0.81,  5.86]
-&gt; carb        | [-2.04, -0.38]</code></pre>
+&gt; (Intercept) | [28.33, 40.27]
+&gt; wt          | [-5.47, -1.72]
+&gt; am          | [-0.87,  5.85]
+&gt; carb        | [-2.06, -0.41]</code></pre>
 <p>How can this be? By estimating the HDI of the effect for <code>carb</code> in the full model, we are acting under the assumption that this model is correct. However, as we’ve just seen, both models are practically tied. If this is the case <strong>why limit our estimation of the effect just to one model?</strong> <span class="citation">(Bergh, Haaf, Ly, Rouder, &amp; Wagenmakers, 2019)</span>.</p>
 <p>Using Bayesian Model Averaging, we can combine the posteriors samples from several models, weighted by the models’ marginal likelihood (done via the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function). If some parameter is part of some of the models but is missing from others, it is assumed to be fixed a 0 (which can also be seen as a method of applying shrinkage to our estimates). This results in a posterior distribution across several models, which we can now treat like any posterior distribution, and estimate the HDI.</p>
 <p>In <code>bayestestR</code>, we can do this with the <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> function:</p>
@@ -718,13 +735,13 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; Parameter   |        95% HDI
 &gt; ----------------------------
-&gt; (Intercept) | [29.03, 42.43]
-&gt; wt          | [-6.66, -2.14]
-&gt; am          | [-2.80,  5.04]
-&gt; carb        | [-1.69,  0.00]</code></pre>
+&gt; (Intercept) | [28.61, 42.13]
+&gt; wt          | [-6.71, -2.09]
+&gt; am          | [-2.68,  5.31]
+&gt; carb        | [-1.67,  0.00]</code></pre>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">BMA_hdi</span><span class="op">)</span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-25-1.png" width="1093.75"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-20-1.png" width="100%"></p>
 <p>We can see that across both models under consideration, the posterior of the <code>carb</code> effect is almost equally weighted between the alternative model and the null model - as represented by about half of the posterior mass concentrated at 0 - which makes sense as both models were almost equally supported by the data. We can also see that across both models, that now <strong>the HDI does contain 0</strong>. Thus we have resolved the conflict between the Bayes factor and the HDI <span class="citation">(Rouder, Haaf, &amp; Vandekerckhove, 2018)</span>!</p>
 <p><strong>Note</strong>: Parameters might play different roles across different models.</p>
 <p>For example, the parameter <code>A</code> plays a different role in the model <code>Y ~ A + B</code> (where it is a <em>main</em> effect) than it does in the model <code>Y ~ A + B + A:B</code> (where it is a <em>simple</em> effect). In many cases centering of predictors (mean subtracting for continuous variables, and effects coding via <code>contr.sum</code> or orthonormal coding via <a href="https://easystats.github.io/bayestestR/reference/contr.bayes.html"><code>contr.bayes</code></a> for factors) can in some cases reduce this issue.</p>
@@ -784,17 +801,21 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>For our example, we will be test all <strong><em>prior</em></strong> pairwise differences between the 3 species in the <code>iris</code> dataset.</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">iris</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.sum</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">[</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/contrast.html">contr.sum</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
 
 <span class="va">fit_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">df</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
   prior_PD <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># sample priors</span>
-  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">gaussian</a></span><span class="op">(</span><span class="op">)</span>
+  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">gaussian</a></span><span class="op">(</span><span class="op">)</span>,
+  refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span>
 
 <span class="va">pairs_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_sum</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span>
-<span class="va">pairs_sum</span></code></pre></div>
+
+<span class="va">em_pairs_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/mcmc-support.html">as.mcmc.emmGrid</a></span><span class="op">(</span><span class="va">pairs_sum</span>, names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pairs_sum</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
 &gt;  setosa - versicolor      -0.017      -2.8       2.7
 &gt;  setosa - virginica       -0.027      -4.0       4.6
@@ -802,27 +823,39 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-31-1.png" width="1093.75"></p>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html">stack</a></span><span class="op">(</span><span class="va">em_pairs_samples</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">values</span>, fill <span class="op">=</span> <span class="va">ind</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_density</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">facet_grid</span><span class="op">(</span><span class="va">ind</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"prior difference values"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-25-1.png" width="100%"></p>
 <p>Notice that, though the prior estimate for all 3 pairwise contrasts is ~0, the scale or the HDI is much narrower for the prior of the <code>setosa - versicolor</code> contrast!</p>
 <p><strong>What happened???</strong></p>
 <p>This is caused by an inherent bias in the priors introduced by the <em>effects</em> coding (it’s even worse with the default treatment coding, because the prior for the intercept is usually drastically different from the effect’s parameters). <strong>And since it affects the priors, this bias will also bias the Bayes factors over / understating evidence for some contrasts over others!</strong></p>
 <p>The solution is to use <em>orthonormal</em> factor coding, a-la <code>contr.bayes</code>, which can either specify this factor coding per-factor:</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.bayes</span></code></pre></div>
 <p>Or you can set it globally:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contr.bayes"</span>, <span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Let’s again estimate the <strong><em>prior</em></strong> differences:</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">[</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/contr.bayes.html">contr.bayes</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
+
+<span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">df</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
   prior_PD <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># sample priors</span>
-  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">gaussian</a></span><span class="op">(</span><span class="op">)</span>
+  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">gaussian</a></span><span class="op">(</span><span class="op">)</span>,
+  refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span>
 
 <span class="va">pairs_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_bayes</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span>
-<span class="va">pairs_bayes</span></code></pre></div>
+
+<span class="va">em_pairs_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/mcmc-support.html">as.mcmc.emmGrid</a></span><span class="op">(</span><span class="va">pairs_bayes</span>, names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pairs_bayes</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
 &gt;  setosa - versicolor       0.000     -2.98      2.67
 &gt;  setosa - virginica        0.032     -2.73      2.81
@@ -830,7 +863,13 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-35-1.png" width="1093.75"></p>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html">stack</a></span><span class="op">(</span><span class="va">em_pairs_samples</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">values</span>, fill <span class="op">=</span> <span class="va">ind</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_density</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">facet_grid</span><span class="op">(</span><span class="va">ind</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"prior difference values"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-28-1.png" width="100%"></p>
 <p>We can see that using this coding scheme, we have equal priors on all pairwise contrasts.</p>
 </div>
 <div id="order-restrictions" class="section level3">
@@ -838,7 +877,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <a href="#order-restrictions" class="anchor"></a>Order restrictions</h3>
 <p>This bias also affect order restrictions involving 3 or more levels. For example, if we want to test an order restriction among A, B, and C, the <em>a priori</em> probability of obtaining the order A &gt; C &gt; B is 1/6 (reach back to <em>intro to stats</em> year 1), but…</p>
 <p>For our example, we will be interested in the following order restrictions in the <code>iris</code> dataset (each line is a separate restriction):</p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hyp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
   <span class="co"># comparing 2 levels</span>
   <span class="st">"setosa &lt; versicolor"</span>,
@@ -851,9 +890,8 @@ BF_{\text{restricted vs. NULL}} = \frac
   <span class="st">"setosa    &lt; versicolor &amp; versicolor &lt; virginica"</span>
 <span class="op">)</span></code></pre></div>
 <p>With the default factor coding, this looks like this:</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.sum</span>
-
 <span class="va">fit_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">df</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
@@ -882,17 +920,14 @@ BF_{\text{restricted vs. NULL}} = \frac
 </li>
 </ol>
 <p>Again, this is solved by using the <em>orthonormal</em> factor coding (from above).</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.bayes</span>
-
 <span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">df</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
   family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">gaussian</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">)</span>
-
 <span class="va">em_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_sum</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span> <span class="co"># the posterior marginal means</span>
-
 <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span><span class="va">em_bayes</span>, <span class="va">fit_sum</span>, hypothesis <span class="op">=</span> <span class="va">hyp</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 

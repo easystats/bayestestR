@@ -9,10 +9,10 @@ articles:
   example2: example2.html
   example3: example3.html
   guidelines: guidelines.html
-  indicesEstimationComparison: indicesEstimationComparison.html
   indicesExistenceComparison: indicesExistenceComparison.html
   mediation: mediation.html
   probability_of_direction: probability_of_direction.html
   region_of_practical_equivalence: region_of_practical_equivalence.html
-last_built: 2021-04-07T00:38Z
+  web_only/indicesEstimationComparison: indicesEstimationComparison.html
+last_built: 2021-04-09T08:27Z
 
