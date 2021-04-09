@@ -1,7 +1,7 @@
 ---
 title: "In-Depth 1: Comparison of Point-Estimates"
 output: 
-  github_document:
+  rmarkdown::html_vignette:
     toc: true
     fig_width: 10.08
     fig_height: 6
@@ -29,7 +29,14 @@ if (!requireNamespace("see", quietly = TRUE) ||
 }
 
 options(knitr.kable.NA = "")
-knitr::opts_chunk$set(comment = ">")
+knitr::opts_chunk$set(
+  echo = TRUE,
+  comment = ">",
+  out.width = "100%",
+  message = FALSE,
+  warning = FALSE,
+  dpi = 150
+)
 options(digits = 2)
 ```
 
