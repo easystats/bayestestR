@@ -424,14 +424,10 @@ than the prior densities.
 
 In `bayestestR`, this can be achieved with the `si()` function:
 
-```{r, eval=FALSE}
-my_first_si <- si(model, BF = 1)
-my_first_si
-```
-
-```{r, echo=FALSE}
-my_first_si <- si(data.frame(group2 = posterior),
-  data.frame(group2 = prior),
+```{r}
+my_first_si <- si(
+  posterior = data.frame(group2 = posterior),
+  prior = data.frame(group2 = prior),
   BF = 1
 )
 
@@ -494,30 +490,30 @@ the length of an iris' sepal using the `iris` data set.
   
 Let's first fit 5 Bayesian regressions with `brms` to predict `Sepal.Length`:
 
-```{r brms_disp, eval=FALSE}
+```{r brms_disp}
 library(brms)
 
 # intercept only model
-m0 <- brm(Sepal.Length ~ 1, 
-  data = iris, save_pars = save_pars(all = TRUE)
+m0 <- brm(Sepal.Length ~ 1,
+  data = iris, save_pars = save_pars(all = TRUE), refresh = 0
 )
 
 # simple effects models
 m1 <- brm(Sepal.Length ~ Petal.Length,
-  data = iris, save_pars = save_pars(all = TRUE)
+  data = iris, save_pars = save_pars(all = TRUE), refresh = 0
 )
 m2 <- brm(Sepal.Length ~ Species,
-  data = iris, save_pars = save_pars(all = TRUE)
+  data = iris, save_pars = save_pars(all = TRUE), refresh = 0
 )
 
 # main effects model
 m3 <- brm(Sepal.Length ~ Species + Petal.Length,
-  data = iris, save_pars = save_pars(all = TRUE)
+  data = iris, save_pars = save_pars(all = TRUE), refresh = 0
 )
 
 # full model
 m4 <- brm(Sepal.Length ~ Species * Petal.Length,
-  data = iris, save_pars = save_pars(all = TRUE)
+  data = iris, save_pars = save_pars(all = TRUE), refresh = 0
 )
 ```
 
@@ -525,31 +521,10 @@ We can now compare these models with the `bayesfactor_models()` function, using
 the `denominator` argument to specify the model against which the rest of the
 models will be compared (in this case, the intercept-only model):
 
-```{r brms_models_disp, eval=FALSE}
+```{r brms_models_disp}
 library(bayestestR)
 comparison <- bayesfactor_models(m1, m2, m3, m4, denominator = m0)
 comparison
-```
-
-```{r brms_models_print, echo=FALSE}
-comparison <- structure(
-  list(
-    Model = c(
-      "Petal.Length",
-      "Species",
-      "Species + Petal.Length",
-      "Species * Petal.Length",
-      "1"
-    ),
-    BF = c(3.44736e+44, 5.628679e+29, 7.121386e+55, 9.149948e+55, 1)
-  ),
-  class = c("bayesfactor_models", "see_bayesfactor_models", "data.frame"),
-  row.names = c(NA, -5L),
-  denominator = 5L,
-  BF_method = "marginal likelihoods (bridgesampling)", unsupported_models = FALSE
-)
-
-print(comparison)
 ```
 
 We can see that the full model is the best model - with $BF_{\text{m0}}=9\times 10^{55}$ compared to the null (intercept only).
@@ -591,7 +566,7 @@ of non-nested frequentist models [@wagenmakers2007practical].
 
 Let's try it out on some **linear mixed-effects models**:
 
-```{r lme4_models, eval=FALSE}
+```{r lme4_models}
 library(lme4)
 
 # define models with increasing complexity
@@ -605,27 +580,6 @@ m4 <- lmer(Sepal.Length ~ Petal.Length * Petal.Width + (Petal.Length | Species),
 bayesfactor_models(m1, m2, m3, m4, denominator = m0)
 ```
 
-```{r, echo=FALSE}
-structure(list(
-  Model = c(
-    "Petal.Length + (1 | Species)",
-    "Petal.Length + (Petal.Length | Species)",
-    "Petal.Length + Petal.Width + (Petal.Length | Species)",
-    "Petal.Length * Petal.Width + (Petal.Length | Species)",
-    "1 + (1 | Species)"
-  ),
-  BF = c(
-    8.24027869011648e+24, 4.7677519818206e+23,
-    1.52492156042604e+22, 5.93045520305254e+20, 1
-  )
-),
-class = c("bayesfactor_models", "see_bayesfactor_models", "data.frame"),
-row.names = c(NA, -5L),
-denominator = 5L,
-BF_method = "BIC approximation", unsupported_models = FALSE
-)
-```
-
 ### Order restricted models {#bayesfactor_restricted}
 
 As stated above when discussing one-sided hypothesis tests, we can create new
@@ -635,14 +589,7 @@ length of its petal, as well as from its species, with priors:
 - $b_{petal} \sim N(0,2)$ 
 - $b_{versicolors}\ \&\  b_{virginica} \sim N(0,1.2)$
 
-```{r, eval=FALSE}
-iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
-  data = iris,
-  prior = normal(0, c(2, 1.2, 1.2), autoscale = FALSE)
-)
-```
-
-```{r, echo=FALSE}
+```{r}
 iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
   data = iris,
   prior = normal(0, c(2, 1.2, 1.2), autoscale = FALSE),
@@ -685,16 +632,12 @@ botanist_hypotheses <- c(
 ```
 
 Let's test these hypotheses:
-```{r, eval=FALSE}
-botanist_BFs <- bayesfactor_restricted(iris_model, hypothesis = botanist_hypotheses)
-botanist_BFs
-```
 
-```{r, echo=FALSE}
-
+```{r}
 model_prior <- unupdate(iris_model)
 
-botanist_BFs <- bayesfactor_restricted(iris_model,
+botanist_BFs <- bayesfactor_restricted(
+  posterior = iris_model,
   prior = model_prior,
   hypothesis = botanist_hypotheses
 )
@@ -851,23 +794,7 @@ naturally predict miles/gallon (`mpg`) from transition type (`am`) and weight
 
 We can determine this by comparing the following models:
 
-```{r, eval=FALSE}
-mod <- stan_glm(mpg ~ wt + am,
-  data = mtcars,
-  prior = normal(0, c(10, 10), autoscale = FALSE),
-  diagnostic_file = file.path(tempdir(), "df1.csv")
-)
-
-mod_carb <- stan_glm(mpg ~ wt + am + carb,
-  data = mtcars,
-  prior = normal(0, c(10, 10, 20), autoscale = FALSE),
-  diagnostic_file = file.path(tempdir(), "df0.csv")
-)
-
-bayesfactor_models(mod_carb, denominator = mod)
-```
-
-```{r, echo=FALSE}
+```{r}
 mod <- stan_glm(mpg ~ wt + am,
   data = mtcars,
   prior = normal(0, c(10, 10), autoscale = FALSE),
@@ -1000,22 +927,7 @@ pairwise differences between 3 levels of the same factor, we would expect all *a
 For our example, we will be test all ***prior*** pairwise differences between
 the 3 species in the `iris` dataset.
 
-```{r, eval=FALSE}
-df <- iris
-contrasts(df$Species) <- contr.sum
-
-fit_sum <- stan_glm(Sepal.Length ~ Species,
-  data = df,
-  prior = normal(0, c(1, 1), autoscale = FALSE),
-  prior_PD = TRUE, # sample priors
-  family = gaussian()
-)
-
-pairs_sum <- pairs(emmeans(fit_sum, ~Species))
-pairs_sum
-```
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
 df <- iris
 contrasts(df$Species)[, ] <- contr.sum(3)
 
@@ -1062,19 +974,7 @@ options(contrasts = c("contr.bayes", "contr.poly"))
 
 Let's again estimate the ***prior*** differences:
 
-```{r, eval=FALSE}
-fit_bayes <- stan_glm(Sepal.Length ~ Species,
-  data = df,
-  prior = normal(0, c(1, 1), autoscale = FALSE),
-  prior_PD = TRUE, # sample priors
-  family = gaussian()
-)
-
-pairs_bayes <- pairs(emmeans(fit_bayes, ~Species))
-pairs_bayes
-```
-
-```{r, echo=FALSE}
+```{r}
 contrasts(df$Species)[, ] <- contr.bayes(3)
 
 fit_bayes <- stan_glm(Sepal.Length ~ Species,
@@ -1130,7 +1030,6 @@ With the default factor coding, this looks like this:
 
 ```{r, eval=FALSE}
 contrasts(df$Species) <- contr.sum
-
 fit_sum <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -1144,7 +1043,6 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
 
 ```{r, echo=FALSE}
 contrasts(df$Species)[, ] <- contr.sum(3)
-
 fit_sum <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -1166,30 +1064,24 @@ Again, this is solved by using the *orthonormal* factor coding (from above).
 
 ```{r, eval=FALSE}
 contrasts(df$Species) <- contr.bayes
-
 fit_bayes <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
   family = gaussian()
 )
-
 em_bayes <- emmeans(fit_sum, ~Species) # the posterior marginal means
-
 bayesfactor_restricted(em_bayes, fit_sum, hypothesis = hyp)
 ```
 
 ```{r, echo=FALSE}
 contrasts(df$Species)[, ] <- contr.bayes(3)
-
 fit_bayes <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
   family = gaussian(),
   refresh = 0
 )
-
 em_bayes <- emmeans(fit_bayes, ~Species) # the posterior marginal means
-
 bayesfactor_restricted(em_bayes, fit_bayes, hypothesis = hyp)
 ```
 
