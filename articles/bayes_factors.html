@@ -744,7 +744,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-20-1.png" width="100%"></p>
 <p>We can see that across both models under consideration, the posterior of the <code>carb</code> effect is almost equally weighted between the alternative model and the null model - as represented by about half of the posterior mass concentrated at 0 - which makes sense as both models were almost equally supported by the data. We can also see that across both models, that now <strong>the HDI does contain 0</strong>. Thus we have resolved the conflict between the Bayes factor and the HDI <span class="citation">(Rouder, Haaf, &amp; Vandekerckhove, 2018)</span>!</p>
 <p><strong>Note</strong>: Parameters might play different roles across different models.</p>
-<p>For example, the parameter <code>A</code> plays a different role in the model <code>Y ~ A + B</code> (where it is a <em>main</em> effect) than it does in the model <code>Y ~ A + B + A:B</code> (where it is a <em>simple</em> effect). In many cases centering of predictors (mean subtracting for continuous variables, and effects coding via <code>contr.sum</code> or orthonormal coding via <a href="https://easystats.github.io/bayestestR/reference/contr.bayes.html"><code>contr.bayes</code></a> for factors) can in some cases reduce this issue.</p>
+<p>For example, the parameter <code>A</code> plays a different role in the model <code>Y ~ A + B</code> (where it is a <em>main</em> effect) than it does in the model <code>Y ~ A + B + A:B</code> (where it is a <em>simple</em> effect). In many cases centering of predictors (mean subtracting for continuous variables, and effects coding via <code>contr.sum</code> or orthonormal coding via <a href="https://easystats.github.io/bayestestR/reference/contr.orthonorm.html"><code>contr.orthonorm</code></a> for factors) can in some cases reduce this issue.</p>
 </div>
 </div>
 <div id="appendices" class="section level1">
@@ -792,7 +792,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <div id="contr_bayes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contr_bayes" class="anchor"></a>Specifying correct priors for factors</h2>
-<p>This section introduces the biased priors obtained when using the common <em>effects</em> factor coding (<code>contr.sum</code>) or dummy factor coding (<code>contr.treatment</code>), and the solution of using orthonormal factor coding (<code>contr.bayes</code>) <span class="citation">(as outlined in Rouder, Morey, Speckman, &amp; Province, 2012, sec. 7.2)</span>.</p>
+<p>This section introduces the biased priors obtained when using the common <em>effects</em> factor coding (<code>contr.sum</code>) or dummy factor coding (<code>contr.treatment</code>), and the solution of using orthonormal factor coding (<code>contr.orthonorm</code>) <span class="citation">(as outlined in Rouder, Morey, Speckman, &amp; Province, 2012, sec. 7.2)</span>.</p>
 <p><strong>Special care should be taken when working with factors with 3 or more levels</strong>.</p>
 <div id="contrasts-and-marginal-means" class="section level3">
 <h3 class="hasAnchor">
@@ -833,15 +833,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>Notice that, though the prior estimate for all 3 pairwise contrasts is ~0, the scale or the HDI is much narrower for the prior of the <code>setosa - versicolor</code> contrast!</p>
 <p><strong>What happened???</strong></p>
 <p>This is caused by an inherent bias in the priors introduced by the <em>effects</em> coding (it’s even worse with the default treatment coding, because the prior for the intercept is usually drastically different from the effect’s parameters). <strong>And since it affects the priors, this bias will also bias the Bayes factors over / understating evidence for some contrasts over others!</strong></p>
-<p>The solution is to use <em>orthonormal</em> factor coding, a-la <code>contr.bayes</code>, which can either specify this factor coding per-factor:</p>
+<p>The solution is to use <em>orthonormal</em> factor coding, a-la <code>contr.orthonorm</code>, which can either specify this factor coding per-factor:</p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.bayes</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.orthonorm</span></code></pre></div>
 <p>Or you can set it globally:</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contr.bayes"</span>, <span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contr.orthonorm"</span>, <span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Let’s again estimate the <strong><em>prior</em></strong> differences:</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">[</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/contr.bayes.html">contr.bayes</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">[</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/contr.orthonorm.html">contr.orthonorm</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
 
 <span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">df</span>,
@@ -921,7 +921,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 </ol>
 <p>Again, this is solved by using the <em>orthonormal</em> factor coding (from above).</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.bayes</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.orthonorm</span>
 <span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">df</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
@@ -947,7 +947,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>When comparing the results from the two factor coding schemes, we find:<br>
 1. In both cases, the estimated (posterior) means are quite similar (if not identical).<br>
 2. The priors and Bayes factors differ between the two schemes.<br>
-3. Only with <code>contr.bayes</code>, the prior distribution of the difference or the order of 3 (or more) means is balanced.</p>
+3. Only with <code>contr.orthonorm</code>, the prior distribution of the difference or the order of 3 (or more) means is balanced.</p>
 </div>
 </div>
 </div>
