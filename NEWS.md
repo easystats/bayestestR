@@ -1,3 +1,9 @@
+# bayestestR 0.9.0.00001
+
+## Changes
+
+* `contr.bayes` has been renamed *`contr.orthonorm`* to be more explicit about its function.
+
 # bayestestR 0.9.0
 
 ## Breaking

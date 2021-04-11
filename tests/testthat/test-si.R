@@ -28,7 +28,7 @@ if (require("rstanarm") && suppressPackageStartupMessages(require("bayestestR", 
     skip_on_cran()
 
     data(sleep)
-    contrasts(sleep$group) <- contr.bayes # See vignette
+    contrasts(sleep$group) <- contr.orthonorm # See vignette
     stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep, refresh = 0)
 
     set.seed(333)

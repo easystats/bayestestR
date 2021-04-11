@@ -50,7 +50,7 @@
 #' # rstanarm models
 #' # ---------------
 #' library(rstanarm)
-#' contrasts(sleep$group) <- contr.bayes # see vingette
+#' contrasts(sleep$group) <- contr.orthonorm # see vingette
 #' stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #' si(stan_model)
 #' si(stan_model, BF = 3)
@@ -64,7 +64,7 @@
 #' # brms models
 #' # -----------
 #' library(brms)
-#' contrasts(sleep$group) <- contr.bayes # see vingette
+#' contrasts(sleep$group) <- contr.orthonorm # see vingette
 #' my_custom_priors <-
 #'   set_prior("student_t(3, 0, 1)", class = "b") +
 #'   set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")

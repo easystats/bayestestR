@@ -83,7 +83,7 @@ reference:
   - simulate_correlation
   - mediation
   - convert_bayesian_as_frequentist
-  - contr.bayes
+  - contr.orthonorm
   - as.numeric.p_direction
   - as.data.frame.density
   - sexit_thresholds

@@ -15,7 +15,7 @@
 #' the parameter \code{A} plays a different role in the model \code{Y ~ A + B} (where it is a main effect)
 #' than it does in the model \code{Y ~ A + B + A:B} (where it is a simple effect). In many cases centering
 #' of predictors (mean subtracting for continuous variables, and effects coding via \code{contr.sum} or
-#' orthonormal coding via {\code{\link{contr.bayes}}} for factors) can reduce this issue. In any case
+#' orthonormal coding via {\code{\link{contr.orthonorm}}} for factors) can reduce this issue. In any case
 #' you should be mindful of this issue.
 #' \cr\cr
 #' See \code{\link{bayesfactor_models}} details for more info on passed models.
