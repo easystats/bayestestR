@@ -38,7 +38,6 @@ reference:
   desc: "Functions for Bayesian Inference"
 - subtitle: "Posterior Based Methods"
   contents:
-  - mhdior
   - p_direction
   - p_rope
   - p_map
