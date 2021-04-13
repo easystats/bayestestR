@@ -428,11 +428,11 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <span class="va">comparison</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
-&gt;     Model                      BF
-&gt; [1] Petal.Length           &gt; 1000
-&gt; [2] Species                &gt; 1000
-&gt; [3] Species + Petal.Length &gt; 1000
-&gt; [4] Species * Petal.Length &gt; 1000
+&gt;     Model                        BF
+&gt; [1] Petal.Length           3.62e+44
+&gt; [2] Species                5.86e+29
+&gt; [3] Species + Petal.Length 7.53e+55
+&gt; [4] Species * Petal.Length 9.69e+55
 &gt; 
 &gt; * Against Denominator: [5] (Intercept only)
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
@@ -442,11 +442,11 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">comparison</span>, reference <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
-&gt;     Model                       BF
-&gt; [1] Petal.Length           &lt; 0.001
-&gt; [2] Species                &lt; 0.001
-&gt; [4] Species * Petal.Length    1.29
-&gt; [5] (Intercept only)       &lt; 0.001
+&gt;     Model                        BF
+&gt; [1] Petal.Length           4.80e-12
+&gt; [2] Species                7.77e-27
+&gt; [4] Species * Petal.Length     1.29
+&gt; [5] (Intercept only)       1.33e-56
 &gt; 
 &gt; * Against Denominator: [3] Species + Petal.Length
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
@@ -456,11 +456,11 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">comparison</span>, reference <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
-&gt;     Model                       BF
-&gt; [1] Petal.Length            &gt; 1000
-&gt; [3] Species + Petal.Length  &gt; 1000
-&gt; [4] Species * Petal.Length  &gt; 1000
-&gt; [5] (Intercept only)       &lt; 0.001
+&gt;     Model                        BF
+&gt; [1] Petal.Length           6.18e+14
+&gt; [3] Species + Petal.Length 1.29e+26
+&gt; [4] Species * Petal.Length 1.65e+26
+&gt; [5] (Intercept only)       1.71e-30
 &gt; 
 &gt; * Against Denominator: [2] Species
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
@@ -501,11 +501,11 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span>, <span class="va">m3</span>, <span class="va">m4</span>, denominator <span class="op">=</span> <span class="va">m0</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
-&gt;      Model                                                     BF
-&gt; [m1] Petal.Length + (1 | Species)                          &gt; 1000
-&gt; [m2] Petal.Length + (Petal.Length | Species)               &gt; 1000
-&gt; [m3] Petal.Length + Petal.Width + (Petal.Length | Species) &gt; 1000
-&gt; [m4] Petal.Length * Petal.Width + (Petal.Length | Species) &gt; 1000
+&gt;      Model                                                       BF
+&gt; [m1] Petal.Length + (1 | Species)                          8.24e+24
+&gt; [m2] Petal.Length + (Petal.Length | Species)               4.77e+23
+&gt; [m3] Petal.Length + Petal.Width + (Petal.Length | Species) 1.52e+22
+&gt; [m4] Petal.Length * Petal.Width + (Petal.Length | Species) 5.93e+20
 &gt; 
 &gt; * Against Denominator: [m0] 1 + (1 | Species)
 &gt; *   Bayes Factor Type: BIC approximation</code></pre>
