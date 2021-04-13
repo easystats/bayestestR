@@ -76,6 +76,7 @@ print.bayesfactor_models <- function(x,
                                      show_names = TRUE,
                                      caption = "Bayes Factors for Model Comparison",
                                      ...) {
+  show_names <- show_names & !attr(x, "unsupported_models")
   .print_bf_default(x = x, digits = digits, log = log, show_names = show_names, caption = caption, align = c("llr"), ...)
 }
 
