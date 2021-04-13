@@ -84,6 +84,7 @@ format.bayesfactor_models <- function(x,
                                       show_names = TRUE,
                                       format = "text",
                                       caption = NULL,
+                                      exact = TRUE,
                                       ...) {
 
   BFE <- x
@@ -95,7 +96,7 @@ format.bayesfactor_models <- function(x,
   if (log) {
     BFE$BF <- log(BFE$BF)
   }
-  BFE$BF <- insight::format_bf(BFE$BF, name = NULL)
+  BFE$BF <- insight::format_bf(BFE$BF, name = NULL, exact  = exact, ...)
   BFE$Model[BFE$Model == "1"] <- "(Intercept only)" # indicate null-model
 
   if (isFALSE(show_names) || is.null(model_names) || length(model_names) != nrow(BFE)) {
