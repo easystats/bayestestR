@@ -25,10 +25,10 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     expect_error(bayestestR::bayesfactor_models(mo1, mo2, mo4_e))
 
     # update models
-    expect_equal(log(update(BFM2, subset = c(1, 2))$BF), c(1, 57.3, 54.52), tolerance = 0.1)
+    expect_equal(update(BFM2, subset = c(1, 2))$log_BF, c(1, 57.3, 54.52), tolerance = 0.1)
 
     # update reference
-    expect_equal(log(update(BFM2, reference = 1)$BF),
+    expect_equal(update(BFM2, reference = 1)$log_BF,
       c(0, -2.8, -6.2, -57.4),
       tolerance = 0.1
     )
@@ -51,7 +51,7 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 
     # Should warn, but still work
     res <- bayesfactor_models(fit1, fit2b)
-    expect_equal(log(res$BF), c(0, -133.97), tolerance = 0.1)
+    expect_equal(res$log_BF, c(0, -133.97), tolerance = 0.1)
   })
 
 
@@ -86,8 +86,8 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     set.seed(333)
     expect_warning(stan_models <- bayesfactor_models(stan_bf_0, stan_bf_1))
     expect_s3_class(stan_models, "bayesfactor_models")
-    expect_equal(length(log(stan_models$BF)), 2)
-    expect_equal(log(stan_models$BF[2]), log(bridge_BF$bf), tolerance = 0.1)
+    expect_equal(length(stan_models$log_BF), 2)
+    expect_equal(stan_models$log_BF[2], log(bridge_BF$bf), tolerance = 0.1)
   })
 
 

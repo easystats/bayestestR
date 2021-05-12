@@ -35,7 +35,8 @@ reference to the best model, or \code{"bottom"} to reference to the worst
 model.}
 }
 \value{
-A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs, that prints nicely.
+A data frame containing the models' formulas (reconstructed fixed and
+  random effects) and their \code{log(BF)}s, that prints nicely.
 }
 \description{
 This function computes or extracts Bayes factors from fitted models.

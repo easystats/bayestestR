@@ -1,5 +1,9 @@
 # bayestestR 0.9.0.00001
 
+## Breaking
+
+- All Bayes factors are now returned as `log(BF)` (column name `log_BF`). Printing is unaffected.
+
 ## Changes
 
 * `contr.bayes` has been renamed *`contr.orthonorm`* to be more explicit about its function.

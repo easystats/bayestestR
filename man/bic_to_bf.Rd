@@ -4,12 +4,14 @@
 \alias{bic_to_bf}
 \title{Convert BIC indices to Bayes Factors via the BIC-approximation method.}
 \usage{
-bic_to_bf(bic, denominator)
+bic_to_bf(bic, denominator, log = FALSE)
 }
 \arguments{
 \item{bic}{A vector of BIC values.}
 
 \item{denominator}{The BIC value to use as a denominator (to test against).}
+
+\item{log}{Return the \code{log(BF)}?}
 }
 \value{
 The Bayes Factors corresponding to the BIC values against the denominator.

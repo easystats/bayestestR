@@ -51,7 +51,8 @@
 #'
 #' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
 #'
-#' @return A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs, that prints nicely.
+#' @return A data frame containing the models' formulas (reconstructed fixed and
+#'   random effects) and their \code{log(BF)}s, that prints nicely.
 #'
 #' @examples
 #' # With lm objects:
@@ -178,11 +179,11 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   # Get BF
   mBIC <- .BIC_list(mods)
-  mBFs <- bic_to_bf(mBIC, denominator = mBIC[denominator])
+  mBFs <- bic_to_bf(mBIC, denominator = mBIC[denominator], log = TRUE)
 
   res <- data.frame(
     Model = mforms,
-    BF = mBFs,
+    log_BF = mBFs,
     stringsAsFactors = FALSE
   )
 
@@ -262,7 +263,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   res <- data.frame(
     Model = mforms,
-    BF = exp(mBFs),
+    log_BF = mBFs,
     stringsAsFactors = FALSE
   )
 }
@@ -279,7 +280,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   res <- data.frame(
     Model = names(mods),
-    BF = exp(unname(mBFs)),
+    log_BF = unname(mBFs),
     stringsAsFactors = FALSE
   )
 }
@@ -368,7 +369,7 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
 
   res <- data.frame(
     Model = unname(mforms),
-    BF = exp(mBFs),
+    log_BF = mBFs,
     stringsAsFactors = FALSE
   )
 
@@ -387,11 +388,11 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
 update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, ...) {
   if (!is.null(reference)) {
     if (reference == "top") {
-      reference <- which.max(object$BF)
+      reference <- which.max(object$log_BF)
     } else if (reference == "bottom") {
-      reference <- which.min(object$BF)
+      reference <- which.min(object$log_BF)
     }
-    object$BF <- object$BF / object$BF[reference]
+    object$log_BF <- object$log_BF - object$log_BF[reference]
     attr(object, "denominator") <- reference
   }
 
@@ -418,11 +419,10 @@ update.bayesfactor_models <- function(object, subset = NULL, reference = NULL, .
 #' @rdname bayesfactor_models
 #' @export
 as.matrix.bayesfactor_models <- function(x, ...) {
-  x$BF <- log(x$BF)
-  out <- -outer(x$BF, x$BF, FUN = "-")
+  out <- -outer(x$log_BF, x$log_BF, FUN = "-")
   rownames(out) <- colnames(out) <- x$Model
 
-  out <- exp(out)
+  # out <- exp(out)
 
   class(out) <- c("bayesfactor_models_matrix", class(out))
   out

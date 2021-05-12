@@ -94,10 +94,16 @@ format.bayesfactor_models <- function(x,
   formula_length <- attr(BFE, "text_length")
 
   BFE <- as.data.frame(BFE)
-  if (log) {
-    BFE$BF <- log(BFE$BF)
+  if (!log) {
+    BFE$log_BF <- exp(BFE$log_BF)
   }
-  BFE$BF <- insight::format_bf(BFE$BF, name = NULL, exact  = exact, ...)
+
+  BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
+
+  if (any(sgn <- sign(BFE$log_BF)<0)) {
+    BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
+  }
+
   BFE$Model[BFE$Model == "1"] <- "(Intercept only)" # indicate null-model
 
   # shorten model formulas?
