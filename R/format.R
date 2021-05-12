@@ -100,7 +100,7 @@ format.bayesfactor_models <- function(x,
 
   BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
 
-  if (any(sgn <- sign(BFE$log_BF)<0)) {
+  if (any((sgn <- sign(BFE$log_BF)<0)[!is.na(BFE$log_BF)])) {
     BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
   }
 
@@ -254,16 +254,25 @@ format.bayesfactor_parameters <- function(x,
                                           digits = 3,
                                           log = FALSE,
                                           format = "text",
+                                          exact = TRUE,
                                           ...) {
   null <- attr(x, "hypothesis")
   direction <- attr(x, "direction")
 
-  if (log) {
-    x$BF <- log(x$BF)
+  if (!log) {
+    x$log_BF <- exp(x$log_BF)
   }
+
+  x$BF_override <- insight::format_bf(abs(x$log_BF), name = NULL, exact = exact, ...)
+
+  if (any((sgn <- sign(x$log_BF)<0)[!is.na(x$log_BF)])) {
+    x$BF_override[sgn] <- paste0("-", x$BF_override[sgn])
+  }
+  x$log_BF <- NULL
 
   # format columns and values of data frame
   out <- insight::format_table(x, digits = digits, format = format, ...)
+  colnames(out)[colnames(out)=="BF_override"] <- "BF"
 
   # table caption
   caption <- sprintf(

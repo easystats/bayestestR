@@ -10,7 +10,7 @@
 #' @param prior_odds Optional vector of prior odds for the models. See \code{BayesFactor::priorOdds<-}.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @return a data frame containing the prior and posterior probabilities, and BF for each effect.
+#' @return a data frame containing the prior and posterior probabilities, and log(BF) for each effect.
 #'
 #' @details Inclusion Bayes factors answer the question: Are the observed data more
 #' probable under models with a particular effect, than they are under models without

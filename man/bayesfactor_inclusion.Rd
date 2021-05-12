@@ -19,7 +19,7 @@ bf_inclusion(models, match_models = FALSE, prior_odds = NULL, ...)
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-a data frame containing the prior and posterior probabilities, and BF for each effect.
+a data frame containing the prior and posterior probabilities, and log(BF) for each effect.
 }
 \description{
 The \code{bf_*} function is an alias of the main function.
