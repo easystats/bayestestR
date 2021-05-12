@@ -169,6 +169,10 @@
   BFGrid <- rbind(BFGrid[denominator, ], BFGrid[-denominator, ])
   attr(BFGrid, "denominator") <- 1
 
+  # This looks like it does nothing, but this is needed to prevent Inf in large BFs.
+  # Small BFs are better than large BFs
+  BFGrid <- update(BFGrid, reference = "top")
+
   # Prior and post odds
   Modelnames <- BFGrid$Model
   if (!is.null(priorOdds)) {
