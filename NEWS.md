@@ -2,7 +2,7 @@
 
 ## Breaking
 
-- All Bayes factors are now returned as `log(BF)` (column name `log_BF`). Printing is unaffected.
+- All Bayes factors are now returned as `log(BF)` (column name `log_BF`). Printing is unaffected. To retrieve the raw BFs, you can run `exp(result$log_BF)`.
 
 ## Changes
 
@@ -452,4 +452,3 @@
   release](https://github.com/easystats/bayestestR/releases/tag/v0.1.0)
 
 - Added a `NEWS.md` file to track changes to the package
-
