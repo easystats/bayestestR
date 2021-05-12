@@ -213,15 +213,21 @@ format.bayesfactor_restricted <- function(x,
                                           log = FALSE,
                                           format = "text",
                                           caption = NULL,
+                                          exact = TRUE,
                                           ...) {
 
   BFE <- as.data.frame(x)
 
   # Format
-  if (log) {
-    BFE$BF <- log(BFE$BF)
+  if (!log) {
+    BFE$log_BF <- exp(BFE$log_BF)
   }
-  BFE$BF <- insight::format_bf(BFE$BF, name = NULL)
+  BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
+
+  if (any((sgn <- sign(BFE$log_BF)<0)[!is.na(BFE$log_BF)])) {
+    BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
+  }
+  BFE$log_BF <- NULL
   colnames(BFE) <- c("Hypothesis", "P(Prior)", "P(Posterior)", "BF")
 
   # footer
