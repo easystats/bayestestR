@@ -153,21 +153,28 @@ format.bayesfactor_models <- function(x,
 
 #' @export
 format.bayesfactor_inclusion <- function(x,
-                                      digits = 3,
-                                      log = FALSE,
-                                      format = "text",
-                                      caption = NULL,
-                                      ...) {
+                                         digits = 3,
+                                         log = FALSE,
+                                         format = "text",
+                                         caption = NULL,
+                                         exact = TRUE,
+                                         ...) {
 
   priorOdds <- attr(x, "priorOdds")
   matched <- attr(x, "matched")
 
   # format table
   BFE <- as.data.frame(x)
-  if (log) {
-    BFE$BF <- log(BFE$BF)
+  if (!log) {
+    BFE$log_BF <- exp(BFE$log_BF)
   }
-  BFE$BF <- insight::format_bf(BFE$BF, name = NULL)
+  BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
+
+  if (any((sgn <- sign(BFE$log_BF)<0)[!is.na(BFE$log_BF)])) {
+    BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
+  }
+
+  BFE <- BFE[c("p_prior", "p_posterior", "BF")]
   BFE <- cbind(rownames(BFE), BFE)
   colnames(BFE) <- c("", "P(prior)", "P(posterior)", "Inclusion BF")
   colnames(BFE)[1] <- ifelse(identical(format, "html"), "Parameter", "")
