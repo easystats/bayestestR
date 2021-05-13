@@ -6,7 +6,7 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 
     data("PoliticalDemocracy", package = "lavaan")
 
-    model <- '
+    model <- "
     # latent variable definitions
     dem60 =~ y1 + a*y2
     dem65 =~ y5 + a*y6
@@ -16,9 +16,9 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 
     # residual correlations
     y1 ~~ y5
-  '
+  "
 
-    model2 <- '
+    model2 <- "
     # latent variable definitions
     dem60 =~ y1 + a*y2
     dem65 =~ y5 + a*y6
@@ -28,12 +28,16 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 
     # residual correlations
     y1 ~~ 0*y5
-  '
+  "
     suppressWarnings(capture.output({
-      bfit <- blavaan::bsem(model, data = PoliticalDemocracy,
-                            n.chains = 1, burnin = 50, sample = 100)
-      bfit2 <- blavaan::bsem(model2, data = PoliticalDemocracy,
-                             n.chains = 1, burnin = 50, sample = 100)
+      bfit <- blavaan::bsem(model,
+        data = PoliticalDemocracy,
+        n.chains = 1, burnin = 50, sample = 100
+      )
+      bfit2 <- blavaan::bsem(model2,
+        data = PoliticalDemocracy,
+        n.chains = 1, burnin = 50, sample = 100
+      )
     }))
 
     x <- point_estimate(bfit, centrality = "all", dispersion = TRUE)

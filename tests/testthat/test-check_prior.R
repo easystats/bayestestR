@@ -1,11 +1,11 @@
 .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
 
 if (.runThisTest &&
-    require("rstanarm") &&
-    require("testthat") &&
-    require("bayestestR") &&
-    require("brms") &&
-    packageVersion("insight") > "0.13.2") {
+  require("rstanarm") &&
+  require("testthat") &&
+  require("bayestestR") &&
+  require("brms") &&
+  packageVersion("insight") > "0.13.2") {
   skip_on_cran()
 
   # stanreg --------------------------
@@ -36,13 +36,17 @@ if (.runThisTest &&
 
   expect_equal(
     check_prior(model2)$Prior_Quality,
-    c("uninformative", "informative", "informative", "uninformative",
-      "uninformative", "uninformative", "informative", "informative")
+    c(
+      "uninformative", "informative", "informative", "uninformative",
+      "uninformative", "uninformative", "informative", "informative"
+    )
   )
 
   expect_equal(
     check_prior(model2, method = "lakeland")$Prior_Quality,
-    c("informative", "informative", "informative", "informative",
-      "informative", "informative", "informative", "informative")
+    c(
+      "informative", "informative", "informative", "informative",
+      "informative", "informative", "informative", "informative"
+    )
   )
 }

@@ -145,7 +145,9 @@ unupdate.blavaan <- function(model, verbose = TRUE, ...) {
   }
 
   cl <- model@call
-  if (isTRUE(eval(cl$prisamp))) return(model)
+  if (isTRUE(eval(cl$prisamp))) {
+    return(model)
+  }
 
   if (verbose) {
     message("Sampling priors, please wait...")

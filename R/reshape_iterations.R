@@ -19,7 +19,7 @@
 reshape_iterations <- function(x, prefix = c("draw", "iter", "iteration", "sim")) {
 
   # Accomodate output from get_predicted
-  if(inherits(x, "get_predicted") && "iterations" %in% names(attributes(x))) {
+  if (inherits(x, "get_predicted") && "iterations" %in% names(attributes(x))) {
     x <- as.data.frame(x)
   }
 

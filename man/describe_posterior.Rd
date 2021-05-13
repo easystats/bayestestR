@@ -119,6 +119,7 @@ describe_posterior(
   rope_range = "default",
   rope_ci = 0.95,
   priors = TRUE,
+  verbose = TRUE,
   ...
 )
 }
@@ -174,6 +175,8 @@ should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{verbose}{Toggle off warnings.}
 }
 \description{
 Compute indices relevant to describe and characterize the posterior distributions.

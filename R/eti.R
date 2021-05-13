@@ -217,9 +217,9 @@ eti.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
 
 #' @export
 eti.get_predicted <- function(x, ...) {
-  if("iterations" %in% names(attributes(x))) {
+  if ("iterations" %in% names(attributes(x))) {
     out <- hdi(as.data.frame(t(attributes(x)$iterations)), ...)
-  } else{
+  } else {
     stop("No iterations present in the output.")
   }
   attr(out, "object_name") <- .safe_deparse(substitute(x))

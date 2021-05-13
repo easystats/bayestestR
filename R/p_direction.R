@@ -121,7 +121,7 @@ pd <- p_direction
 #' @export
 p_direction.numeric <- function(x, method = "direct", null = 0, ...) {
   if (method == "direct") {
-    pdir  <- max(
+    pdir <- max(
       c(
         length(x[x > null]) / length(x), # pd positive
         length(x[x < null]) / length(x) # pd negative

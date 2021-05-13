@@ -39,8 +39,10 @@ print_html.p_map <- function(x, digits = 2, caption = "MAP-based p-value", ...) 
 
 #' @export
 print_html.p_rope <- function(x, digits = 2, ...) {
-  caption <- sprintf("Proportion of samples inside the ROPE [%.*f, %.*f]",
-                     digits, x$ROPE_low[1], digits, x$ROPE_high[1])
+  caption <- sprintf(
+    "Proportion of samples inside the ROPE [%.*f, %.*f]",
+    digits, x$ROPE_low[1], digits, x$ROPE_high[1]
+  )
   x$ROPE_low <- x$ROPE_high <- NULL
   .print_html_default(x = x, digits = digits, caption = caption, ci_string = "ROPE", ...)
 }
@@ -48,8 +50,10 @@ print_html.p_rope <- function(x, digits = 2, ...) {
 
 #' @export
 print_html.p_significance <- function(x, digits = 2, ...) {
-  caption <- sprintf("Practical Significance (threshold: %s)",
-                     insight::format_value(attributes(x)$threshold, digits = digits))
+  caption <- sprintf(
+    "Practical Significance (threshold: %s)",
+    insight::format_value(attributes(x)$threshold, digits = digits)
+  )
   .print_html_default(x = x, digits = digits, caption = caption, ...)
 }
 
@@ -115,10 +119,10 @@ print_html.bayesfactor_inclusion <- function(x,
 
 #' @export
 print_html.bayesfactor_restricted <- function(x,
-                                             digits = 3,
-                                             log = FALSE,
-                                             caption = "Bayes Factor (Order-Restriction)",
-                                             ...) {
+                                              digits = 3,
+                                              log = FALSE,
+                                              caption = "Bayes Factor (Order-Restriction)",
+                                              ...) {
   .print_bf_html_default(x = x, digits = digits, log = log, caption = caption, ...)
 }
 
