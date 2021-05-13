@@ -1,6 +1,8 @@
 ADE
 Altough
 BFs
+BGGM
+BICs
 BMA
 BMJ
 Baws
@@ -48,7 +50,6 @@ Lodewyckx
 Ly
 MCMCglmm
 MCSE
-MHDIOR
 MPE
 Mathot
 Mattan
@@ -111,18 +112,17 @@ cogpsych
 cogsci
 columbia
 compte
-computationaly
 containe
+contr
 cplm
-dior
 doi
 driiiing
 eXistence
 easystats
 edu
 effectsize
-eich
 emmeans
+equivilant
 et
 favour
 favouring
@@ -131,7 +131,6 @@ frac
 frequentis
 frequentist's
 fullrank
-gelman
 generalised
 gg
 ggdistribute
@@ -148,7 +147,6 @@ iteratively
 jasp
 jmp
 joss
-lakeland
 lavaan
 lentiful
 lm
@@ -176,7 +174,6 @@ rmsb
 rstanarm
 sIgnificance
 salis
-se
 setosa
 setosas
 splinefun
@@ -186,6 +183,7 @@ statmodeling
 summarise
 summarised
 th
+treedepth
 un
 underbrace
 versicolor

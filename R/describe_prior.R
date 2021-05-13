@@ -41,8 +41,10 @@ describe_prior <- function(model, ...) {
 #' @export
 describe_prior.brmsfit <- function(model,
                                    effects = c("fixed", "random", "all"),
-                                   component = c("conditional", "zi", "zero_inflated",
-                                                 "all", "location", "distributional", "auxiliary"),
+                                   component = c(
+                                     "conditional", "zi", "zero_inflated",
+                                     "all", "location", "distributional", "auxiliary"
+                                   ),
                                    parameters = NULL, ...) {
   .describe_prior(model, parameters = parameters)
 }

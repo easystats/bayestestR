@@ -48,5 +48,4 @@ if (require("rstanarm") && suppressPackageStartupMessages(require("bayestestR", 
     expect_equal(res3$CI_low, -2.746, tolerance = 0.3)
     expect_equal(res3$CI_high, -0.4, tolerance = 0.3)
   })
-
 }

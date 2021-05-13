@@ -38,8 +38,10 @@ print_md.p_map <- function(x, digits = 2, caption = "MAP-based p-value", ...) {
 
 #' @export
 print_md.p_rope <- function(x, digits = 2, ...) {
-  caption <- sprintf("Proportion of samples inside the ROPE [%.*f, %.*f]",
-                     digits, x$ROPE_low[1], digits, x$ROPE_high[1])
+  caption <- sprintf(
+    "Proportion of samples inside the ROPE [%.*f, %.*f]",
+    digits, x$ROPE_low[1], digits, x$ROPE_high[1]
+  )
   x$ROPE_low <- x$ROPE_high <- NULL
   .print_md_default(x = x, digits = digits, caption = caption, ci_string = "ROPE", ...)
 }
@@ -47,8 +49,10 @@ print_md.p_rope <- function(x, digits = 2, ...) {
 
 #' @export
 print_md.p_significance <- function(x, digits = 2, ...) {
-  caption <- sprintf("Practical Significance (threshold: %s)",
-                     insight::format_value(attributes(x)$threshold, digits = digits))
+  caption <- sprintf(
+    "Practical Significance (threshold: %s)",
+    insight::format_value(attributes(x)$threshold, digits = digits)
+  )
   .print_md_default(x = x, digits = digits, caption = caption, ...)
 }
 

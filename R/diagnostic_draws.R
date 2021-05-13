@@ -23,7 +23,6 @@ diagnostic_draws <- function(posteriors, ...) {
 
 #' @export
 diagnostic_draws.brmsfit <- function(posteriors, ...) {
-
   if (!requireNamespace("brms", quietly = TRUE)) {
     stop("Package 'brms' required for this function to work. Please install it by running `install.packages('brms')`.")
   }

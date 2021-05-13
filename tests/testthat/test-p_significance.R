@@ -31,7 +31,6 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
         c(1.0000, 0.9985, 0.9785),
         tolerance = 0.01
       )
-
     }
   }
 }

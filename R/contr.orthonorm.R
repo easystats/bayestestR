@@ -15,13 +15,14 @@
 #' @inheritParams stats::contr.treatment
 #'
 #' @details
-#' When `contrasts = FALSE`, the returned contrasts are equivilant to
+#' When `contrasts = FALSE`, the returned contrasts are equivalent to
 #' `contr.treatment(, contrasts = FALSE)`, as suggested by McElreath (also known
 #' as one-hot encoding).
 #'
 #' @references
 #' - McElreath, R. (2020). Statistical rethinking: A Bayesian course with
 #'   examples in R and Stan. CRC press.
+#'
 #' - Rouder, J. N., Morey, R. D., Speckman, P. L., & Province, J. M. (2012).
 #'   Default Bayes factors for ANOVA designs. *Journal of Mathematical
 #'   Psychology*, 56(5), 356-374. https://doi.org/10.1016/j.jmp.2012.08.001
@@ -39,12 +40,12 @@
 #' ## check decomposition
 #' Q3 <- contr.orthonorm(3)
 #' Q3 %*% t(Q3) ## 2/3 on diagonal and -1/3 on off-diagonal elements
-#'
 #' @export
 contr.orthonorm <- function(n, contrasts = TRUE, sparse = FALSE) {
-
-  contr <- stats::contr.treatment(n, contrasts = FALSE, base = 1,
-                                  sparse = sparse & !contrasts)
+  contr <- stats::contr.treatment(n,
+    contrasts = FALSE, base = 1,
+    sparse = sparse & !contrasts
+  )
 
   if (contrasts) {
     n <- ncol(contr)
