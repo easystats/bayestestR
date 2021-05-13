@@ -486,6 +486,8 @@ describe_posterior.emmGrid <- function(posteriors, centrality = "median", disper
     ...
   )
 
+  row.names(out) <- NULL  # Reset row names
+
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   attr(out, "ci_method") <- ci_method
 
