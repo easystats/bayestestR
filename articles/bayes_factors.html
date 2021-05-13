@@ -402,27 +402,133 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <span class="co"># intercept only model</span>
 <span class="va">m0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="fl">1</span>,
   data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-
-<span class="co"># simple effects models</span>
+<span class="op">)</span></code></pre></div>
+<pre><code>&gt; Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB foo.c
+&gt; clang -mmacosx-version-min=10.13 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I"/Users/runner/work/_temp/Library/Rcpp/include/"  -I"/Users/runner/work/_temp/Library/RcppEigen/include/"  -I"/Users/runner/work/_temp/Library/RcppEigen/include/unsupported"  -I"/Users/runner/work/_temp/Library/BH/include" -I"/Users/runner/work/_temp/Library/StanHeaders/include/src/"  -I"/Users/runner/work/_temp/Library/StanHeaders/include/"  -I"/Users/runner/work/_temp/Library/RcppParallel/include/"  -I"/Users/runner/work/_temp/Library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include '/Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/include   -fPIC  -Wall -g -O2  -c foo.c -o foo.o
+&gt; In file included from &lt;built-in&gt;:1:
+&gt; In file included from /Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Dense:1:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Core:88:
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name 'namespace'
+&gt; namespace Eigen {
+&gt; ^
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected ';' after top level declarator
+&gt; namespace Eigen {
+&gt;                ^
+&gt;                ;
+&gt; In file included from &lt;built-in&gt;:1:
+&gt; In file included from /Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Dense:1:
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Core:96:10: fatal error: 'complex' file not found
+&gt; #include &lt;complex&gt;
+&gt;          ^~~~~~~~~
+&gt; 3 errors generated.
+&gt; make: *** [foo.o] Error 1</code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># simple effects models</span>
 <span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>,
   data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-<span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
+<span class="op">)</span></code></pre></div>
+<pre><code>&gt; Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB foo.c
+&gt; clang -mmacosx-version-min=10.13 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I"/Users/runner/work/_temp/Library/Rcpp/include/"  -I"/Users/runner/work/_temp/Library/RcppEigen/include/"  -I"/Users/runner/work/_temp/Library/RcppEigen/include/unsupported"  -I"/Users/runner/work/_temp/Library/BH/include" -I"/Users/runner/work/_temp/Library/StanHeaders/include/src/"  -I"/Users/runner/work/_temp/Library/StanHeaders/include/"  -I"/Users/runner/work/_temp/Library/RcppParallel/include/"  -I"/Users/runner/work/_temp/Library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include '/Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/include   -fPIC  -Wall -g -O2  -c foo.c -o foo.o
+&gt; In file included from &lt;built-in&gt;:1:
+&gt; In file included from /Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Dense:1:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Core:88:
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name 'namespace'
+&gt; namespace Eigen {
+&gt; ^
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected ';' after top level declarator
+&gt; namespace Eigen {
+&gt;                ^
+&gt;                ;
+&gt; In file included from &lt;built-in&gt;:1:
+&gt; In file included from /Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Dense:1:
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Core:96:10: fatal error: 'complex' file not found
+&gt; #include &lt;complex&gt;
+&gt;          ^~~~~~~~~
+&gt; 3 errors generated.
+&gt; make: *** [foo.o] Error 1</code></pre>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-
-<span class="co"># main effects model</span>
+<span class="op">)</span></code></pre></div>
+<pre><code>&gt; Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB foo.c
+&gt; clang -mmacosx-version-min=10.13 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I"/Users/runner/work/_temp/Library/Rcpp/include/"  -I"/Users/runner/work/_temp/Library/RcppEigen/include/"  -I"/Users/runner/work/_temp/Library/RcppEigen/include/unsupported"  -I"/Users/runner/work/_temp/Library/BH/include" -I"/Users/runner/work/_temp/Library/StanHeaders/include/src/"  -I"/Users/runner/work/_temp/Library/StanHeaders/include/"  -I"/Users/runner/work/_temp/Library/RcppParallel/include/"  -I"/Users/runner/work/_temp/Library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include '/Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/include   -fPIC  -Wall -g -O2  -c foo.c -o foo.o
+&gt; In file included from &lt;built-in&gt;:1:
+&gt; In file included from /Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Dense:1:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Core:88:
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name 'namespace'
+&gt; namespace Eigen {
+&gt; ^
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected ';' after top level declarator
+&gt; namespace Eigen {
+&gt;                ^
+&gt;                ;
+&gt; In file included from &lt;built-in&gt;:1:
+&gt; In file included from /Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Dense:1:
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Core:96:10: fatal error: 'complex' file not found
+&gt; #include &lt;complex&gt;
+&gt;          ^~~~~~~~~
+&gt; 3 errors generated.
+&gt; make: *** [foo.o] Error 1</code></pre>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># main effects model</span>
 <span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>,
   data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-
-<span class="co"># full model</span>
+<span class="op">)</span></code></pre></div>
+<pre><code>&gt; Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB foo.c
+&gt; clang -mmacosx-version-min=10.13 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I"/Users/runner/work/_temp/Library/Rcpp/include/"  -I"/Users/runner/work/_temp/Library/RcppEigen/include/"  -I"/Users/runner/work/_temp/Library/RcppEigen/include/unsupported"  -I"/Users/runner/work/_temp/Library/BH/include" -I"/Users/runner/work/_temp/Library/StanHeaders/include/src/"  -I"/Users/runner/work/_temp/Library/StanHeaders/include/"  -I"/Users/runner/work/_temp/Library/RcppParallel/include/"  -I"/Users/runner/work/_temp/Library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include '/Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/include   -fPIC  -Wall -g -O2  -c foo.c -o foo.o
+&gt; In file included from &lt;built-in&gt;:1:
+&gt; In file included from /Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Dense:1:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Core:88:
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name 'namespace'
+&gt; namespace Eigen {
+&gt; ^
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected ';' after top level declarator
+&gt; namespace Eigen {
+&gt;                ^
+&gt;                ;
+&gt; In file included from &lt;built-in&gt;:1:
+&gt; In file included from /Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Dense:1:
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Core:96:10: fatal error: 'complex' file not found
+&gt; #include &lt;complex&gt;
+&gt;          ^~~~~~~~~
+&gt; 3 errors generated.
+&gt; make: *** [foo.o] Error 1</code></pre>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># full model</span>
 <span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>,
   data <span class="op">=</span> <span class="va">iris</span>, save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span></code></pre></div>
+<pre><code>&gt; Running /Library/Frameworks/R.framework/Resources/bin/R CMD SHLIB foo.c
+&gt; clang -mmacosx-version-min=10.13 -I"/Library/Frameworks/R.framework/Resources/include" -DNDEBUG   -I"/Users/runner/work/_temp/Library/Rcpp/include/"  -I"/Users/runner/work/_temp/Library/RcppEigen/include/"  -I"/Users/runner/work/_temp/Library/RcppEigen/include/unsupported"  -I"/Users/runner/work/_temp/Library/BH/include" -I"/Users/runner/work/_temp/Library/StanHeaders/include/src/"  -I"/Users/runner/work/_temp/Library/StanHeaders/include/"  -I"/Users/runner/work/_temp/Library/RcppParallel/include/"  -I"/Users/runner/work/_temp/Library/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DBOOST_NO_AUTO_PTR  -include '/Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1   -I/usr/local/include   -fPIC  -Wall -g -O2  -c foo.c -o foo.o
+&gt; In file included from &lt;built-in&gt;:1:
+&gt; In file included from /Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Dense:1:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Core:88:
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:1: error: unknown type name 'namespace'
+&gt; namespace Eigen {
+&gt; ^
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/src/Core/util/Macros.h:628:16: error: expected ';' after top level declarator
+&gt; namespace Eigen {
+&gt;                ^
+&gt;                ;
+&gt; In file included from &lt;built-in&gt;:1:
+&gt; In file included from /Users/runner/work/_temp/Library/StanHeaders/include/stan/math/prim/mat/fun/Eigen.hpp:13:
+&gt; In file included from /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Dense:1:
+&gt; /Users/runner/work/_temp/Library/RcppEigen/include/Eigen/Core:96:10: fatal error: 'complex' file not found
+&gt; #include &lt;complex&gt;
+&gt;          ^~~~~~~~~
+&gt; 3 errors generated.
+&gt; make: *** [foo.o] Error 1</code></pre>
 <p>We can now compare these models with the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function, using the <code>denominator</code> argument to specify the model against which the rest of the models will be compared (in this case, the intercept-only model):</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/">bayestestR</a></span><span class="op">)</span>
 <span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span>, <span class="va">m3</span>, <span class="va">m4</span>, denominator <span class="op">=</span> <span class="va">m0</span><span class="op">)</span>
 <span class="va">comparison</span></code></pre></div>
@@ -430,43 +536,43 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; 
 &gt;     Model                        BF
 &gt; [1] Petal.Length           3.62e+44
-&gt; [2] Species                5.86e+29
-&gt; [3] Species + Petal.Length 7.53e+55
-&gt; [4] Species * Petal.Length 9.69e+55
+&gt; [2] Species                5.90e+29
+&gt; [3] Species + Petal.Length 7.55e+55
+&gt; [4] Species * Petal.Length 9.80e+55
 &gt; 
 &gt; * Against Denominator: [5] (Intercept only)
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>We can see that the full model is the best model - with <span class="math inline">\(BF_{\text{m0}}=9\times 10^{55}\)</span> compared to the null (intercept only).</p>
 <p>Due to the transitive property of Bayes factors, we can easily change the reference model to the main effects model:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">comparison</span>, reference <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
 &gt;     Model                        BF
-&gt; [1] Petal.Length           4.80e-12
-&gt; [2] Species                7.77e-27
-&gt; [4] Species * Petal.Length     1.29
-&gt; [5] (Intercept only)       1.33e-56
+&gt; [1] Petal.Length           4.79e-12
+&gt; [2] Species                7.81e-27
+&gt; [4] Species * Petal.Length     1.30
+&gt; [5] (Intercept only)       1.32e-56
 &gt; 
 &gt; * Against Denominator: [3] Species + Petal.Length
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>As we can see, though the full model is the best, there is hardly any evidence that it is preferable to the main effects model.</p>
 <p>We can also change the reference model to the <code>Species</code> model:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">comparison</span>, reference <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
 &gt;     Model                        BF
-&gt; [1] Petal.Length           6.18e+14
-&gt; [3] Species + Petal.Length 1.29e+26
-&gt; [4] Species * Petal.Length 1.65e+26
-&gt; [5] (Intercept only)       1.71e-30
+&gt; [1] Petal.Length           6.14e+14
+&gt; [3] Species + Petal.Length 1.28e+26
+&gt; [4] Species * Petal.Length 1.66e+26
+&gt; [5] (Intercept only)       1.70e-30
 &gt; 
 &gt; * Against Denominator: [2] Species
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>Notice that, in the Bayesian framework the compared models <em>do not</em> need to be nested models, as happened here when we compared the <code>Petal.Length</code>-only model to the <code>Species</code>-only model (something that cannot be done in the frequentist framework, where compared models must be nested in one another).</p>
 <p>We can also get a matrix of Bayes factors of all the pairwise model comparisons:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">comparison</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; # Bayes Factors for Model Comparison 
 &gt; 
@@ -475,11 +581,11 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; 
 &gt;                 |      [1] |      [2] |      [3] |      [4] |      [5]
 &gt; ---------------------------------------------------------------------------------
-&gt; [1] Petal.Length           |        1 | 1.62e-15 | 2.08e+11 | 2.68e+11 | 2.76e-45
-&gt; [2] Species                | 6.18e+14 |        1 | 1.29e+26 | 1.65e+26 | 1.71e-30
-&gt; [3] Species + Petal.Length | 4.80e-12 | 7.77e-27 |        1 |     1.29 | 1.33e-56
-&gt; [4] Species * Petal.Length | 3.74e-12 | 6.05e-27 |     0.78 |        1 | 1.03e-56
-&gt; [5] (Intercept only)       | 3.62e+44 | 5.86e+29 | 7.53e+55 | 9.69e+55 |        1</code></pre>
+&gt; [1] Petal.Length           |        1 | 1.63e-15 | 2.09e+11 | 2.71e+11 | 2.76e-45
+&gt; [2] Species                | 6.14e+14 |        1 | 1.28e+26 | 1.66e+26 | 1.70e-30
+&gt; [3] Species + Petal.Length | 4.79e-12 | 7.81e-27 |        1 |     1.30 | 1.32e-56
+&gt; [4] Species * Petal.Length | 3.70e-12 | 6.02e-27 |     0.77 |        1 | 1.02e-56
+&gt; [5] (Intercept only)       | 3.62e+44 | 5.90e+29 | 7.55e+55 | 9.80e+55 |        1</code></pre>
 <p><strong>NOTE:</strong> In order to correctly and precisely estimate Bayes Factors, you always need the 4 P’s: <strong>P</strong>roper <strong>P</strong>riors,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> and a <strong>P</strong>lentiful <strong>P</strong>osterior.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 </div>
 <div id="for-frequentist-models-via-the-bic-approximation" class="section level3">
@@ -487,7 +593,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <a href="#for-frequentist-models-via-the-bic-approximation" class="anchor"></a>For Frequentist models via the BIC approximation</h3>
 <p>It is also possible to compute Bayes factors for the comparison of frequentist models. This is done by comparing BIC measures, allowing a Bayesian comparison of non-nested frequentist models <span class="citation">(Wagenmakers, 2007)</span>.</p>
 <p>Let’s try it out on some <strong>linear mixed-effects models</strong>:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/">lme4</a></span><span class="op">)</span>
 
 <span class="co"># define models with increasing complexity</span>
@@ -514,7 +620,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <h3 class="hasAnchor">
 <a href="#bayesfactor_restricted" class="anchor"></a>Order restricted models</h3>
 <p>As stated above when discussing one-sided hypothesis tests, we can create new models by imposing order restrictions on a given model. For example, consider the following model, in which we predict the length of an iris’ sepal from the length of its petal, as well as from its species, with priors: - <span class="math inline">\(b_{petal} \sim N(0,2)\)</span> - <span class="math inline">\(b_{versicolors}\ \&amp;\  b_{virginica} \sim N(0,1.2)\)</span></p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>,
   data <span class="op">=</span> <span class="va">iris</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1.2</span>, <span class="fl">1.2</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
@@ -530,13 +636,13 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 </li>
 </ol>
 <p>By testing these restrictions on prior and posterior samples, we can see how the probabilities of the restricted distributions change after observing the data. This can be achieved with <code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code>, that compute a Bayes factor for these restricted model vs the unrestricted model. Let’s first specify these restrictions as logical conditions:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">botanist_hypotheses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
   <span class="st">"Petal.Length &gt; 0"</span>,
   <span class="st">"(Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)"</span>
 <span class="op">)</span></code></pre></div>
 <p>Let’s test these hypotheses:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model_prior</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/unupdate.html">unupdate</a></span><span class="op">(</span><span class="va">iris_model</span><span class="op">)</span>
 
 <span class="va">botanist_BFs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span>
@@ -580,27 +686,27 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>In other words, on average, are models with predictor <span class="math inline">\(X\)</span> more likely to have produced the observed data than models without predictor <span class="math inline">\(X\)</span>?<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
 <p>Since each model has a prior probability, it is possible to sum the prior probability of all models that include a predictor of interest (the <em>prior inclusion probability</em>), and of all models that do not include that predictor (the <em>prior exclusion probability</em>). After the data are observed, and each model is assigned a posterior probability, we can similarly consider the sums of the posterior models’ probabilities to obtain the <em>posterior inclusion probability</em> and the <em>posterior exclusion probability</em>. Once again, the change from prior inclusion odds to the posterior inclusion odds is the <strong>Inclusion Bayes factor</strong> <span class="citation">(“<span class="math inline">\(BF_{Inclusion}\)</span>”; Clyde, Ghosh, &amp; Littman, 2011)</span>.</p>
 <p>Lets use the <code>brms</code> example from above:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">comparison</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;                      P(prior) P(posterior) Inclusion BF
 &gt; Petal.Length             0.60         1.00       &gt; 1000
 &gt; Species                  0.60         1.00       &gt; 1000
-&gt; Petal.Length:Species     0.20         0.56         5.14
+&gt; Petal.Length:Species     0.20         0.56         5.19
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
 <p>If we examine the interaction term’s inclusion Bayes factor, we can see that across all 5 models, a model with the interaction term (<code>Species:Petal.Length</code>) is <em>on average</em> 5 times more likely than a model without the interaction term. Note that <code>Species</code>, a factor represented in the model with several parameters, gets a <em>single</em> Bayes factor - inclusion Bayes factors are given <strong>per predictor</strong>!</p>
 <p>We can also compare only matched models - such that averaging is done only across models that (1) do not include any interactions with the predictor of interest; (2) for interaction predictors, averaging is done only across models that contain the main effects from which the interaction predictor is comprised (see explanation for why you might want to do this <a href="https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp">here</a>).</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">comparison</span>, match_models <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;                      P(prior) P(posterior) Inclusion BF
 &gt; Petal.Length             0.40         0.44       &gt; 1000
 &gt; Species                  0.40         0.44       &gt; 1000
-&gt; Petal.Length:Species     0.20         0.56         1.29
+&gt; Petal.Length:Species     0.20         0.56         1.30
 &gt; 
 &gt; * Compared among: matched models only
 &gt; *    Priors odds: uniform-equal</code></pre>
@@ -614,7 +720,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <li>
 <strong>Across all models</strong>:</li>
 </ol>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://richarddmorey.github.io/BayesFactor/">BayesFactor</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ToothGrowth</span><span class="op">)</span>
 <span class="va">ToothGrowth</span><span class="op">$</span><span class="va">dose</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">ToothGrowth</span><span class="op">$</span><span class="va">dose</span><span class="op">)</span>
@@ -636,7 +742,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <li>
 <strong>Across matched models</strong>:</li>
 </ol>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">BF_ToothGrowth</span>, match_models <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
@@ -653,7 +759,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <strong>With Nuisance Effects</strong>:</li>
 </ol>
 <p>We’ll add <code>dose</code> to the null model in JASP, and do the same in <code>R</code>:</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">BF_ToothGrowth_against_dose</span> <span class="op">&lt;-</span> <span class="va">BF_ToothGrowth</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span> <span class="op">/</span> <span class="va">BF_ToothGrowth</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="co"># OR:</span>
 <span class="co"># update(bayesfactor_models(BF_ToothGrowth),</span>
 <span class="co">#        subset = c(4, 5),</span>
@@ -668,7 +774,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt;   len ~ dose 
 &gt; ---
 &gt; Bayes factor type: BFlinearModel, JZS</code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">BF_ToothGrowth_against_dose</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
@@ -687,7 +793,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>Similar to how we can average evidence for a predictor across models, we can also average the <strong>posterior estimate</strong> across models. This is useful in situations where Bayes factors seem to support a null effect, yet the <em>HDI</em> for the alternative excludes the null value (also see <code><a href="../reference/si.html">si()</a></code> described above).</p>
 <p>For example, looking at Motor <em>Trend Car Road Tests</em> (<code><a href="https://rdrr.io/r/utils/data.html">data(mtcars)</a></code>), we would naturally predict miles/gallon (<code>mpg</code>) from transition type (<code>am</code>) and weight (<code>wt</code>), but what about number of carburetors (<code>carb</code>)? Is this a good predictor?</p>
 <p>We can determine this by comparing the following models:</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">am</span>,
   data <span class="op">=</span> <span class="va">mtcars</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
@@ -713,7 +819,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; * Against Denominator: [2] wt + am
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
 <p>It seems that the model without <code>carb</code> as a predictor is <span class="math inline">\(1/BF=1.2\)</span> times more likely than the model <em>with</em> <code>carb</code> as a predictor. We might then assume that in the latter model, the <code>HDI</code> will include the point-null value of 0 effect, to also indicate the credibility of the null in the posterior. However, this is not the case:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">mod_carb</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Highest Density Interval
 &gt; 
@@ -726,7 +832,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>How can this be? By estimating the HDI of the effect for <code>carb</code> in the full model, we are acting under the assumption that this model is correct. However, as we’ve just seen, both models are practically tied. If this is the case <strong>why limit our estimation of the effect just to one model?</strong> <span class="citation">(Bergh, Haaf, Ly, Rouder, &amp; Wagenmakers, 2019)</span>.</p>
 <p>Using Bayesian Model Averaging, we can combine the posteriors samples from several models, weighted by the models’ marginal likelihood (done via the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function). If some parameter is part of some of the models but is missing from others, it is assumed to be fixed a 0 (which can also be seen as a method of applying shrinkage to our estimates). This results in a posterior distribution across several models, which we can now treat like any posterior distribution, and estimate the HDI.</p>
 <p>In <code>bayestestR</code>, we can do this with the <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> function:</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">BMA_draws</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/weighted_posteriors.html">weighted_posteriors</a></span><span class="op">(</span><span class="va">mod</span>, <span class="va">mod_carb</span><span class="op">)</span>
 
 <span class="va">BMA_hdi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">BMA_draws</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span>
@@ -739,7 +845,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; wt          | [-6.71, -2.09]
 &gt; am          | [-2.68,  5.31]
 &gt; carb        | [-1.67,  0.00]</code></pre>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">BMA_hdi</span><span class="op">)</span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-20-1.png" width="100%"></p>
 <p>We can see that across both models under consideration, the posterior of the <code>carb</code> effect is almost equally weighted between the alternative model and the null model - as represented by about half of the posterior mass concentrated at 0 - which makes sense as both models were almost equally supported by the data. We can also see that across both models, that now <strong>the HDI does contain 0</strong>. Thus we have resolved the conflict between the Bayes factor and the HDI <span class="citation">(Rouder, Haaf, &amp; Vandekerckhove, 2018)</span>!</p>
@@ -755,7 +861,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <a href="#testing-contrasts-with-emmeans-modelbased" class="anchor"></a>Testing contrasts (with <code>emmeans</code> / <code>modelbased</code>)</h2>
 <p>Besides testing parameter <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> can be used to test any estimate based on the prior and posterior distribution of the estimate. One way to achieve this is with a mix of <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> + <a href="https://cran.r-project.org/package=emmeans"><strong><code>emmeans</code></strong></a> to <a href="https://easystats.github.io/blog/posts/bayestestr_emmeans/">test Bayesian contrasts</a>.</p>
 <p>For example, in the <code>sleep</code> example from above, we can estimate the group means and the difference between them:</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans">emmeans</a></span><span class="op">)</span>
 
 <span class="va">groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">model</span>, <span class="op">~</span><span class="va">group</span><span class="op">)</span>
@@ -769,7 +875,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># pass the original model via prior</span>
 <span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">groups_all</span>, prior <span class="op">=</span> <span class="va">model</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Savage-Dickey density ratio)
@@ -783,7 +889,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; * Evidence Against The Null: 0</code></pre>
 <p>That is strong evidence for the mean of group 1 being 0, and for group 2 for not being 0, but hardly any evidence for the difference between them being not 0. Conflict? Uncertainty? That is the Bayesian way!</p>
 <p>We can also use the <code>easystats</code>’ <a href="https://cran.r-project.org/package=modelbased"><strong><code>modelbased</code></strong></a> package to compute Bayes factors for contrasts:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/modelbased/">modelbased</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://easystats.github.io/modelbased/reference/estimate_contrasts.html">estimate_contrasts</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="st">"bf"</span><span class="op">)</span></code></pre></div>
@@ -799,7 +905,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <a href="#contrasts-and-marginal-means" class="anchor"></a>Contrasts (and marginal means)</h3>
 <p>The <em>effects</em> factor coding commonly used in factorial analysis carries a hidden bias when it is applies to Bayesian priors. For example, if we want to test all pairwise differences between 3 levels of the same factor, we would expect all <em>a priori</em> differences to have the same distribution, but…</p>
 <p>For our example, we will be test all <strong><em>prior</em></strong> pairwise differences between the 3 species in the <code>iris</code> dataset.</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">iris</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">[</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/contrast.html">contr.sum</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
 
@@ -823,7 +929,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html">stack</a></span><span class="op">(</span><span class="va">em_pairs_samples</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">values</span>, fill <span class="op">=</span> <span class="va">ind</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_density</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">facet_grid</span><span class="op">(</span><span class="va">ind</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op">+</span>
@@ -834,13 +940,13 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p><strong>What happened???</strong></p>
 <p>This is caused by an inherent bias in the priors introduced by the <em>effects</em> coding (it’s even worse with the default treatment coding, because the prior for the intercept is usually drastically different from the effect’s parameters). <strong>And since it affects the priors, this bias will also bias the Bayes factors over / understating evidence for some contrasts over others!</strong></p>
 <p>The solution is to use <em>orthonormal</em> factor coding, a-la <code>contr.orthonorm</code>, which can either specify this factor coding per-factor:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.orthonorm</span></code></pre></div>
 <p>Or you can set it globally:</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contr.orthonorm"</span>, <span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Let’s again estimate the <strong><em>prior</em></strong> differences:</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">[</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/contr.orthonorm.html">contr.orthonorm</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
 
 <span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
@@ -863,7 +969,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html">stack</a></span><span class="op">(</span><span class="va">em_pairs_samples</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">values</span>, fill <span class="op">=</span> <span class="va">ind</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_density</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">facet_grid</span><span class="op">(</span><span class="va">ind</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op">+</span>
@@ -877,7 +983,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <a href="#order-restrictions" class="anchor"></a>Order restrictions</h3>
 <p>This bias also affect order restrictions involving 3 or more levels. For example, if we want to test an order restriction among A, B, and C, the <em>a priori</em> probability of obtaining the order A &gt; C &gt; B is 1/6 (reach back to <em>intro to stats</em> year 1), but…</p>
 <p>For our example, we will be interested in the following order restrictions in the <code>iris</code> dataset (each line is a separate restriction):</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hyp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
   <span class="co"># comparing 2 levels</span>
   <span class="st">"setosa &lt; versicolor"</span>,
@@ -890,7 +996,7 @@ BF_{\text{restricted vs. NULL}} = \frac
   <span class="st">"setosa    &lt; versicolor &amp; versicolor &lt; virginica"</span>
 <span class="op">)</span></code></pre></div>
 <p>With the default factor coding, this looks like this:</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.sum</span>
 <span class="va">fit_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">df</span>,
@@ -920,7 +1026,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 </li>
 </ol>
 <p>Again, this is solved by using the <em>orthonormal</em> factor coding (from above).</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.orthonorm</span>
 <span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">df</span>,
