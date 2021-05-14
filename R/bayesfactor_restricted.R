@@ -23,7 +23,7 @@
 #'
 #' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
 #'
-#' @return A data frame containing the Bayes factor representing evidence \emph{against} the un-restricted model.
+#' @return A data frame containing the (log) Bayes factor representing evidence \emph{against} the un-restricted model.
 #'
 #' @examples
 #' library(bayestestR)
@@ -50,7 +50,7 @@
 #' # ---------------
 #' if (require("rstanarm") && require("emmeans")) {
 #'   fit_stan <- stan_glm(mpg ~ wt + cyl + am,
-#'     data = mtcars
+#'     data = mtcars, refresh = 0
 #'   )
 #'   hyps <- c(
 #'     "am > 0 & cyl < 0",
@@ -73,8 +73,8 @@
 #'   bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
 #'   # > # Bayes Factor (Order-Restriction)
 #'   # >
-#'   # >                          Hypothesis P(Prior) P(Posterior) Bayes Factor
-#'   # >  lemon < control & control < sulfur     0.17         0.75         4.49
+#'   # >                          Hypothesis P(Prior) P(Posterior)   BF
+#'   # >  lemon < control & control < sulfur     0.17         0.75 4.49
 #'   # > ---
 #'   # > Bayes factors for the restricted model vs. the un-restricted model.
 #' }
@@ -190,7 +190,7 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
     Hypothesis = hypothesis,
     p_prior = prior_p,
     p_posterior = posterior_p,
-    BF = BF
+    log_BF = log(BF)
   )
 
   class(res) <- unique(c(

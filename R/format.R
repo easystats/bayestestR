@@ -94,10 +94,16 @@ format.bayesfactor_models <- function(x,
   formula_length <- attr(BFE, "text_length")
 
   BFE <- as.data.frame(BFE)
-  if (log) {
-    BFE$BF <- log(BFE$BF)
+  if (!log) {
+    BFE$log_BF <- exp(BFE$log_BF)
   }
-  BFE$BF <- insight::format_bf(BFE$BF, name = NULL, exact  = exact, ...)
+
+  BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
+
+  if (any((sgn <- sign(BFE$log_BF)<0)[!is.na(BFE$log_BF)])) {
+    BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
+  }
+
   BFE$Model[BFE$Model == "1"] <- "(Intercept only)" # indicate null-model
 
   # shorten model formulas?
@@ -147,21 +153,28 @@ format.bayesfactor_models <- function(x,
 
 #' @export
 format.bayesfactor_inclusion <- function(x,
-                                      digits = 3,
-                                      log = FALSE,
-                                      format = "text",
-                                      caption = NULL,
-                                      ...) {
+                                         digits = 3,
+                                         log = FALSE,
+                                         format = "text",
+                                         caption = NULL,
+                                         exact = TRUE,
+                                         ...) {
 
   priorOdds <- attr(x, "priorOdds")
   matched <- attr(x, "matched")
 
   # format table
   BFE <- as.data.frame(x)
-  if (log) {
-    BFE$BF <- log(BFE$BF)
+  if (!log) {
+    BFE$log_BF <- exp(BFE$log_BF)
   }
-  BFE$BF <- insight::format_bf(BFE$BF, name = NULL)
+  BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
+
+  if (any((sgn <- sign(BFE$log_BF)<0)[!is.na(BFE$log_BF)])) {
+    BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
+  }
+
+  BFE <- BFE[c("p_prior", "p_posterior", "BF")]
   BFE <- cbind(rownames(BFE), BFE)
   colnames(BFE) <- c("", "P(prior)", "P(posterior)", "Inclusion BF")
   colnames(BFE)[1] <- ifelse(identical(format, "html"), "Parameter", "")
@@ -200,15 +213,21 @@ format.bayesfactor_restricted <- function(x,
                                           log = FALSE,
                                           format = "text",
                                           caption = NULL,
+                                          exact = TRUE,
                                           ...) {
 
   BFE <- as.data.frame(x)
 
   # Format
-  if (log) {
-    BFE$BF <- log(BFE$BF)
+  if (!log) {
+    BFE$log_BF <- exp(BFE$log_BF)
   }
-  BFE$BF <- insight::format_bf(BFE$BF, name = NULL)
+  BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
+
+  if (any((sgn <- sign(BFE$log_BF)<0)[!is.na(BFE$log_BF)])) {
+    BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
+  }
+  BFE$log_BF <- NULL
   colnames(BFE) <- c("Hypothesis", "P(Prior)", "P(Posterior)", "BF")
 
   # footer
@@ -241,16 +260,25 @@ format.bayesfactor_parameters <- function(x,
                                           digits = 3,
                                           log = FALSE,
                                           format = "text",
+                                          exact = TRUE,
                                           ...) {
   null <- attr(x, "hypothesis")
   direction <- attr(x, "direction")
 
-  if (log) {
-    x$BF <- log(x$BF)
+  if (!log) {
+    x$log_BF <- exp(x$log_BF)
   }
+
+  x$BF_override <- insight::format_bf(abs(x$log_BF), name = NULL, exact = exact, ...)
+
+  if (any((sgn <- sign(x$log_BF)<0)[!is.na(x$log_BF)])) {
+    x$BF_override[sgn] <- paste0("-", x$BF_override[sgn])
+  }
+  x$log_BF <- NULL
 
   # format columns and values of data frame
   out <- insight::format_table(x, digits = digits, format = format, ...)
+  colnames(out)[colnames(out)=="BF_override"] <- "BF"
 
   # table caption
   caption <- sprintf(

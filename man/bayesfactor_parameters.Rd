@@ -154,7 +154,7 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 }
 \value{
-A data frame containing the Bayes factor representing evidence
+A data frame containing the (log) Bayes factor representing evidence
   \emph{against} the null.
 }
 \description{

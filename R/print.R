@@ -177,7 +177,6 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
 .print_bf_default <- function(x,
                               digits = 3,
                               log = FALSE,
-                              show_names = NULL,
                               caption = NULL,
                               align = NULL,
                               ...) {
@@ -189,8 +188,7 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
     log = log,
     format = "text",
     caption = caption,
-    show_names = show_names,
-    ...
+    ... # pass show_names
   )
 
   cat(insight::export_table(

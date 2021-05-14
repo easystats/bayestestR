@@ -169,6 +169,10 @@
   BFGrid <- rbind(BFGrid[denominator, ], BFGrid[-denominator, ])
   attr(BFGrid, "denominator") <- 1
 
+  # This looks like it does nothing, but this is needed to prevent Inf in large BFs.
+  # Small BFs are better than large BFs
+  BFGrid <- update(BFGrid, reference = "top")
+
   # Prior and post odds
   Modelnames <- BFGrid$Model
   if (!is.null(priorOdds)) {
@@ -177,15 +181,17 @@
     priorOdds <- rep(1, length(Modelnames))
   }
 
-  posterior_odds <- priorOdds * BFGrid$BF
+  prior_logodds <- log(priorOdds)
+  posterior_logodds <- prior_logodds + BFGrid$log_BF
 
-  priorProbs <- priorOdds / sum(priorOdds)
-  postProbs <- posterior_odds / sum(posterior_odds)
+  # norm
+  prior_logodds <- prior_logodds - log(sum(exp(prior_logodds)))
+  posterior_logodds <- posterior_logodds - log(sum(exp(posterior_logodds)))
 
   df.model <- data.frame(
     Modelnames,
-    priorProbs,
-    postProbs,
+    priorProbs = exp(prior_logodds),
+    postProbs = exp(posterior_logodds),
     stringsAsFactors = FALSE
   )
 

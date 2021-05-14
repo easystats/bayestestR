@@ -14,41 +14,41 @@ if (require("rstanarm") &&
     )
     Xposterior <- data.frame(
       x = distribution_normal(1e4, mean = 0.5),
-      x = distribution_normal(1e4, mean = -0.5)
+      y = distribution_normal(1e4, mean = -0.5)
     )
 
     # point
     bfsd <- bayesfactor_parameters(Xposterior, prior = Xprior, null = 0, direction = 0)
-    expect_equal(log(bfsd$BF), c(0.12, 0.12), tolerance = 0.1)
+    expect_equal(bfsd$log_BF, c(0.12, 0.12), tolerance = 0.1)
 
     bfsd <- bayesfactor_parameters(Xposterior, prior = Xprior, null = 0, direction = 1)
-    expect_equal(log(bfsd$BF), c(0.44, -0.35), tolerance = 0.1)
+    expect_equal(bfsd$log_BF, c(0.44, -0.35), tolerance = 0.1)
 
     bfsd <- bayesfactor_parameters(Xposterior, prior = Xprior, null = 0, direction = -1)
-    expect_equal(log(bfsd$BF), c(-0.35, 0.44), tolerance = 0.1)
+    expect_equal(bfsd$log_BF, c(-0.35, 0.44), tolerance = 0.1)
 
     bfsd <- bayesfactor_parameters(Xposterior, prior = Xprior, null = 0.5, direction = 0)
-    expect_equal(log(bfsd$BF), c(-0.12, 0.37), tolerance = 0.1)
+    expect_equal(bfsd$log_BF, c(-0.12, 0.37), tolerance = 0.1)
 
     expect_warning(bfsd <- bayestestR::bayesfactor_parameters(Xposterior))
-    expect_equal(log(bfsd$BF), c(0, 0), tolerance = 0.1)
+    expect_equal(bfsd$log_BF, c(0, 0), tolerance = 0.1)
 
     # interval
     bfsd <- bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-.1, .1), direction = 0)
-    expect_equal(log(bfsd$BF), c(0.13, 0.13), tolerance = 0.1)
+    expect_equal(bfsd$log_BF, c(0.13, 0.13), tolerance = 0.1)
 
     bfsd <- bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-.1, .1), direction = 1)
-    expect_equal(log(bfsd$BF), c(0.47, -0.39), tolerance = 0.1)
+    expect_equal(bfsd$log_BF, c(0.47, -0.39), tolerance = 0.1)
 
     bfsd <- bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-.1, .1), direction = -1)
-    expect_equal(log(bfsd$BF), c(-0.39, 0.47), tolerance = 0.1)
+    expect_equal(bfsd$log_BF, c(-0.39, 0.47), tolerance = 0.1)
 
     # interval with inf
     bfsd <- bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-.1, Inf))
-    expect_equal(log(bfsd$BF), c(-0.81, 0.80), tolerance = 0.1)
+    expect_equal(bfsd$log_BF, c(-0.81, 0.80), tolerance = 0.1)
 
     bfsd <- bayesfactor_parameters(Xposterior, prior = Xprior, null = c(-Inf, .1))
-    expect_equal(log(bfsd$BF), c(0.80, -0.81), tolerance = 0.1)
+    expect_equal(bfsd$log_BF, c(0.80, -0.81), tolerance = 0.1)
   })
 
 

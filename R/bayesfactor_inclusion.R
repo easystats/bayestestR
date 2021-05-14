@@ -10,7 +10,7 @@
 #' @param prior_odds Optional vector of prior odds for the models. See \code{BayesFactor::priorOdds<-}.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @return a data frame containing the prior and posterior probabilities, and BF for each effect.
+#' @return a data frame containing the prior and posterior probabilities, and log(BF) for each effect.
 #'
 #' @details Inclusion Bayes factors answer the question: Are the observed data more
 #' probable under models with a particular effect, than they are under models without
@@ -102,7 +102,7 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
     effnames,
     Pinc = rep(NA, length(effnames)),
     PincD = rep(NA, length(effnames)),
-    BF_inclusion = rep(NA, length(effnames)),
+    log_BF = rep(NA, length(effnames)),
     stringsAsFactors = FALSE
   )
 
@@ -136,14 +136,12 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
     # Save results
     df.effect$Pinc[effnames == eff] <- mwithprior
     df.effect$PincD[effnames == eff] <- mwithpost
-    df.effect$BF_inclusion[effnames == eff] <- (mwithpost / mwithoutpost) / (mwithprior / mwithoutprior)
+    df.effect$log_BF[effnames == eff] <- (log(mwithpost) - log(mwithoutpost)) - (log(mwithprior) - log(mwithoutprior))
   }
 
-  df.effect$BF_inclusion <- df.effect$BF_inclusion
   df.effect <- df.effect[, -1, drop = FALSE]
-  colnames(df.effect) <- c("p_prior", "p_posterior", "BF")
+  colnames(df.effect) <- c("p_prior", "p_posterior", "log_BF")
   rownames(df.effect) <- effnames
-
 
   class(df.effect) <- c("bayesfactor_inclusion", class(df.effect))
   attr(df.effect, "matched") <- match_models

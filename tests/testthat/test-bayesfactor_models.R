@@ -25,10 +25,10 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     expect_error(bayestestR::bayesfactor_models(mo1, mo2, mo4_e))
 
     # update models
-    expect_equal(log(update(BFM2, subset = c(1, 2))$BF), c(1, 57.3, 54.52), tolerance = 0.1)
+    expect_equal(update(BFM2, subset = c(1, 2))$log_BF, c(1, 57.3, 54.52), tolerance = 0.1)
 
     # update reference
-    expect_equal(log(update(BFM2, reference = 1)$BF),
+    expect_equal(update(BFM2, reference = 1)$log_BF,
       c(0, -2.8, -6.2, -57.4),
       tolerance = 0.1
     )
@@ -51,7 +51,7 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 
     # Should warn, but still work
     res <- bayesfactor_models(fit1, fit2b)
-    expect_equal(log(res$BF), c(0, -133.97), tolerance = 0.1)
+    expect_equal(res$log_BF, c(0, -133.97), tolerance = 0.1)
   })
 
 
@@ -86,8 +86,8 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     set.seed(333)
     expect_warning(stan_models <- bayesfactor_models(stan_bf_0, stan_bf_1))
     expect_s3_class(stan_models, "bayesfactor_models")
-    expect_equal(length(log(stan_models$BF)), 2)
-    expect_equal(log(stan_models$BF[2]), log(bridge_BF$bf), tolerance = 0.1)
+    expect_equal(length(stan_models$log_BF), 2)
+    expect_equal(stan_models$log_BF[2], log(bridge_BF$bf), tolerance = 0.1)
   })
 
 
@@ -108,17 +108,17 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     # with random effects in all models:
     skip_if_not_installed("lme4")
 
-    expect_true(is.nan(bayesfactor_inclusion(BFM1)["1:Species", "BF"]))
+    expect_true(is.nan(bayesfactor_inclusion(BFM1)["1:Species", "log_BF"]))
 
     bfinc_all <- bayesfactor_inclusion(BFM4, match_models = FALSE)
     expect_equal(bfinc_all$p_prior, c(1, 0.8, 0.6, 0.4, 0.2), tolerance = 0.1)
     expect_equal(bfinc_all$p_posterior, c(1, 1, 0.06, 0.01, 0), tolerance = 0.1)
-    expect_equal(log(bfinc_all$BF), c(NaN, 56.04, -3.22, -5.9, -8.21), tolerance = 0.1)
+    expect_equal(bfinc_all$log_BF, c(NaN, 56.04, -3.22, -5.9, -8.21), tolerance = 0.1)
 
     # + match_models
     bfinc_matched <- bayesfactor_inclusion(BFM4, match_models = TRUE)
     expect_equal(bfinc_matched$p_prior, c(1, 0.2, 0.6, 0.2, 0.2), tolerance = 0.1)
     expect_equal(bfinc_matched$p_posterior, c(1, 0.94, 0.06, 0.01, 0), tolerance = 0.1)
-    expect_equal(log(bfinc_matched$BF), c(NaN, 57.37, -3.92, -5.25, -3.25), tolerance = 0.1)
+    expect_equal(bfinc_matched$log_BF, c(NaN, 57.37, -3.92, -5.25, -3.25), tolerance = 0.1)
   })
 }

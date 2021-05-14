@@ -2,6 +2,7 @@
 #'
 #' @param bic A vector of BIC values.
 #' @param denominator The BIC value to use as a denominator (to test against).
+#' @param log Return the \code{log(BF)}?
 #'
 #' @examples
 #' bic1 <- BIC(lm(Sepal.Length ~ 1, data = iris))
@@ -14,6 +15,12 @@
 #' @return The Bayes Factors corresponding to the BIC values against the denominator.
 #'
 #' @export
-bic_to_bf <- function(bic, denominator) {
-  exp((bic - denominator) / (-2))
+bic_to_bf <- function(bic, denominator, log = FALSE) {
+  delta <- (bic - denominator) / (-2)
+
+  if (log) {
+    return(delta)
+  } else {
+    return(exp(delta))
+  }
 }
