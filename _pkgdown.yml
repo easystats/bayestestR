@@ -46,6 +46,7 @@ reference:
   - rope_range
   - equivalence_test
   - convert_pd_to_p
+
 - subtitle: "Bayes factors"
   contents:
   - bayesfactor
@@ -55,6 +56,7 @@ reference:
   - bayesfactor_restricted
   - si
   - weighted_posteriors
+  - bic_to_bf
 
 - title: "Model Diagnostics"
   contents:
@@ -86,6 +88,8 @@ reference:
   - as.numeric.p_direction
   - as.data.frame.density
   - sexit_thresholds
+  - reshape_iterations
+  - diagnostic_draws
 
 
 navbar:
