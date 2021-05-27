@@ -17,6 +17,10 @@ bci <- function(x, ...) {
   UseMethod("bci")
 }
 
+#' @rdname bci
+#' @export
+bcia <- bci
+
 
 
 #' @rdname bci

@@ -8,9 +8,9 @@
 #' }
 #'
 #' @param x A \code{stanreg} or \code{brmsfit} model, or a vector representing a posterior distribution.
-#' @param method Can be \link[=eti]{'ETI'} (default), \link[=hdi]{'HDI'} or \link[=si]{'SI'}.
+#' @param method Can be \link[=eti]{'ETI'} (default), \link[=hdi]{'HDI'}, \link[=bci]{'BCI'} or \link[=si]{'SI'}.
 #' @param ci Value or vector of probability of the CI (between 0 and 1)
-#'   to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95} (95\%) for frequentist models.
+#'   to be estimated. Default to \code{.95} (95\%).
 #' @inheritParams hdi
 #' @inheritParams si
 #'
@@ -78,7 +78,7 @@ ci <- function(x, ...) {
 .ci_bayesian <- function(x, ci = 0.95, method = "ETI", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, BF = 1, ...) {
   if (tolower(method) %in% c("eti", "equal", "ci", "quantile")) {
     return(eti(x, ci = ci, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))
-  } else if (tolower(method) %in% c("bci", "bca")) {
+  } else if (tolower(method) %in% c("bci", "bca", "bcai")) {
     return(bci(x, ci = ci, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))
   } else if (tolower(method) %in% c("hdi")) {
     return(hdi(x, ci = ci, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))

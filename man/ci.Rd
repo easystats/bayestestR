@@ -65,9 +65,9 @@ ci(x, ...)
 \item{...}{Currently not used.}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to \code{.89} (89\%) for Bayesian models and \code{.95} (95\%) for frequentist models.}
+to be estimated. Default to \code{.95} (95\%).}
 
-\item{method}{Can be \link[=eti]{'ETI'} (default), \link[=hdi]{'HDI'} or \link[=si]{'SI'}.}
+\item{method}{Can be \link[=eti]{'ETI'} (default), \link[=hdi]{'HDI'}, \link[=bci]{'BCI'} or \link[=si]{'SI'}.}
 
 \item{verbose}{Toggle off warnings.}
 

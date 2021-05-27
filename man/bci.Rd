@@ -2,6 +2,7 @@
 % Please edit documentation in R/bci.R
 \name{bci}
 \alias{bci}
+\alias{bcia}
 \alias{bci.numeric}
 \alias{bci.data.frame}
 \alias{bci.MCMCglmm}
@@ -14,6 +15,8 @@
 \title{Bias Corrected and Accelerated Interval (BCa)}
 \usage{
 bci(x, ...)
+
+bcia(x, ...)
 
 \method{bci}{numeric}(x, ci = 0.95, verbose = TRUE, ...)
 

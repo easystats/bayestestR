@@ -5,8 +5,8 @@
 #' @param posteriors A vector, data frame or model of posterior draws.
 #' @param ci_method The type of index used for Credible Interval. Can be
 #'   \code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}), \code{"ETI"}
-#'   (see \code{\link[bayestestR:eti]{eti}}) or \code{"SI"}
-#'   (see \code{\link[bayestestR:si]{si}}).
+#'   (see \code{\link[bayestestR:eti]{eti}}), \code{"BCI"} (see
+#'   \code{\link[bayestestR:bci]{bci}}) or \code{"SI"} (see \code{\link[bayestestR:si]{si}}).
 #' @param test The indices of effect existence to compute. Character (vector) or
 #'   list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
 #'   \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
