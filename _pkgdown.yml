@@ -29,6 +29,7 @@ reference:
   contents:
   - point_estimate
   - map_estimate
+  - bci
   - eti
   - hdi
   - ci
