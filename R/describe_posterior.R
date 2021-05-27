@@ -128,7 +128,7 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   # Uncertainty
 
   if (!is.null(ci)) {
-    ci_method <- match.arg(tolower(ci_method), c("hdi", "quantile", "ci", "eti", "si", "bci"))
+    ci_method <- match.arg(tolower(ci_method), c("hdi", "quantile", "ci", "eti", "si", "bci", "bcai"))
     if (ci_method == "si") {
       uncertainty <- ci(x, BF = BF, method = ci_method, prior = bf_prior, ...)
     } else {
