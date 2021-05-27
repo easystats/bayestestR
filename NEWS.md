@@ -2,7 +2,14 @@
 
 ## Breaking
 
-- All Bayes factors are now returned as `log(BF)` (column name `log_BF`). Printing is unaffected. To retrieve the raw BFs, you can run `exp(result$log_BF)`.
+* All Bayes factors are now returned as `log(BF)` (column name `log_BF`). 
+  Printing is unaffected. To retrieve the raw BFs, you can run `exp(result$log_BF)`.
+
+## New functions
+
+* `bci()` to compute bias-corrected and accelerated bootstrap intervals. Along
+  with this new function, `ci()` and `describe_posterior()` gain a new 
+  `ci_method` type, `"bci"`.
 
 ## Changes
 
