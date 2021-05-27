@@ -7,9 +7,9 @@
 
 ## New functions
 
-* `bci()` to compute bias-corrected and accelerated bootstrap intervals. Along
-  with this new function, `ci()` and `describe_posterior()` gain a new 
-  `ci_method` type, `"bci"`.
+* `bci()` (and its alias `bcai()`) to compute bias-corrected and accelerated
+  bootstrap intervals. Along with this new function, `ci()` and 
+  `describe_posterior()` gain a new `ci_method` type, `"bci"`.
 
 ## Changes
 

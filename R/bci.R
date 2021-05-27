@@ -19,7 +19,7 @@ bci <- function(x, ...) {
 
 #' @rdname bci
 #' @export
-bcia <- bci
+bcai <- bci
 
 
 
