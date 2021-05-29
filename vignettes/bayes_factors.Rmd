@@ -296,7 +296,7 @@ plot(My_first_BF)
 Note that **interpretation guides** for Bayes factors can be found in the `effectsize` package:
 
 ```{r}
-effectsize::interpret_bf(My_first_BF$BF[2], include_value = TRUE)
+effectsize::interpret_bf(exp(My_first_BF$log_BF[2]), include_value = TRUE)
 ```
 
 
