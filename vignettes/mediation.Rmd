@@ -1,5 +1,5 @@
 ---
-title: "Summary of Mediation Analysis using Bayesian Regression Models"
+title: "Mediation Analysis using Bayesian Regression Models"
 output: 
   rmarkdown::html_vignette:
     toc: true

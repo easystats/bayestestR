@@ -9,7 +9,7 @@ output:
 tags: [r, bayesian, posterior, test]
 vignette: >
   \usepackage[utf8]{inputenc}
-  %\VignetteIndexEntry{In-Depth 2: Comparison of Indices of Effect Existence}
+  %\VignetteIndexEntry{In-Depth 2: Comparison of Indices of Effect Existence and Significance}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console

@@ -8,7 +8,7 @@ output:
 tags: [r, bayesian, posterior, test]
 vignette: >
   \usepackage[utf8]{inputenc}
-  %\VignetteIndexEntry{Example 2: Confirmation of Bayesian skills}
+  %\VignetteIndexEntry{2. Confirmation of Bayesian skills}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
@@ -261,9 +261,14 @@ Using the [`modelbased`](https://github.com/easystats/modelbased) package.
 
 ```{r}
 library(modelbased)
-means <- estimate_means(model, levels = c("Sepal.Width"), length = 2)
 
-means
+vizdata <- estimate_relation(model)
+
+ggplot(vizdata, aes(x = Sepal.Width, y = Predicted)) +
+  geom_ribbon(aes(ymin = CI_low, ymax = CI_high), alpha = 0.5) +
+  geom_line() + 
+  ylab("Probability of being virginica") +
+  theme_modern()
 ```
 
 ### Performance and Parameters
