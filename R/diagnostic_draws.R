@@ -8,7 +8,9 @@
 #' set.seed(333)
 #'
 #' if (require("brms", quietly = TRUE)) {
-#'   model <- brms::brm(mpg ~ wt * cyl * vs, data = mtcars, iter = 100, control = list(adapt_delta = 0.80), refresh = 0)
+#'   model <- brm(mpg ~ wt * cyl * vs, data = mtcars,
+#'                iter = 100, control = list(adapt_delta = 0.80),
+#'                refresh = 0)
 #'   diagnostic_draws(model)
 #' }
 #' }
