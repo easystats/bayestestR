@@ -523,6 +523,7 @@ models will be compared (in this case, the intercept-only model):
 
 ```{r brms_models_disp}
 library(bayestestR)
+
 comparison <- bayesfactor_models(m1, m2, m3, m4, denominator = m0)
 comparison
 ```
