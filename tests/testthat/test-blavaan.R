@@ -74,7 +74,7 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 
     ## Bayes factors ----
     x <- expect_warning(bayesfactor_models(bfit, bfit2))
-    expect_true(x$BF[2] < 1)
+    expect_true(x$log_BF[2] < 0)
 
     bfit_prior <- unupdate(bfit)
     capture.output(x <- bayesfactor_parameters(bfit, prior = bfit_prior))

@@ -134,9 +134,9 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
     set.seed(4)
     hyps <- c("`1` < `2`", "`1` < 0")
     xrbf <- bayesfactor_restricted(em_, prior = model_p, hypothesis = hyps)
-    expect_equal(length(log(xrbf$BF)), 2)
-    expect_equal(length(xrbf$Prior_prob), 2)
-    expect_equal(length(xrbf$Posterior_prob), 2)
+    expect_equal(length(xrbf$log_BF), 2)
+    expect_equal(length(xrbf$p_prior), 2)
+    expect_equal(length(xrbf$p_posterior), 2)
     expect_warning(bayesfactor_restricted(em_, hypothesis = hyps))
 
     xrbf2 <- bayesfactor_restricted(emc_, prior = model_p, hypothesis = hyps)
@@ -196,7 +196,7 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
     xsdbf1 <- bayesfactor_parameters(bayes_sum, prior = fit_bayes)
     xsdbf2 <- bayesfactor_parameters(bayes_sum, prior = bayes_sum_prior)
 
-    expect_equal(log(xsdbf1$BF), log(xsdbf2$BF), tolerance = 0.1)
+    expect_equal(xsdbf1$log_BF, xsdbf2$log_BF, tolerance = 0.1)
   })
 
   # link vs response
