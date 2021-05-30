@@ -490,7 +490,7 @@ the length of an iris' sepal using the `iris` data set.
   
 Let's first fit 5 Bayesian regressions with `brms` to predict `Sepal.Length`:
 
-```{r brms_disp}
+```{r brms_disp, eval = FALSE}
 library(brms)
 
 # intercept only model
@@ -517,12 +517,25 @@ We can now compare these models with the `bayesfactor_models()` function, using
 the `denominator` argument to specify the model against which the rest of the
 models will be compared (in this case, the intercept-only model):
 
-```{r brms_models_disp}
+```{r brms_models_disp, eval = FALSE}
 library(bayestestR)
 
 comparison <- bayesfactor_models(m1, m2, m3, m4, denominator = m0)
 comparison
 ```
+
+```{r, echo = FALSE}
+comparison <- structure(
+  list(Model = c("Petal.Length", "Species", "Species + Petal.Length", "Species * Petal.Length", "1"), 
+       log_BF = c(102.600193981361, 68.5488807613052, 128.665504913167, 128.919384882682, 0)),
+  class = c("bayesfactor_models", "see_bayesfactor_models", "data.frame"), 
+  row.names = c("m1", "m2", "m3", "m4", "m0"),
+  denominator = 5L,
+  BF_method = "marginal likelihoods (bridgesampling)",
+  unsupported_models = FALSE)
+print(comparison)
+```
+
 
 We can see that the full model is the best model - with $BF_{\text{m0}}=9\times 10^{55}$ compared to the null (intercept only).
 
