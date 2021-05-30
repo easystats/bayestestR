@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Maximum A Posteriori probability estimate (MAP) — map_estimate • bayestestR</title>
+<title>Bias Corrected and Accelerated Interval (BCa) — bci • bayestestR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Maximum A Posteriori probability estimate (MAP) — map_estimate" />
-<meta property="og:description" content="Find the Highest Maximum A Posteriori probability estimate (MAP) of a posterior, i.e., the value associated with the highest probability density (the &quot;peak&quot; of the posterior distribution). In other words, it is an estimation of the mode for continuous parameters. Note that this function relies on estimate_density, which by default uses a different smoothing bandwidth (&quot;SJ&quot;) compared to the legacy default implemented the base R density function (&quot;nrd0&quot;)." />
+<meta property="og:title" content="Bias Corrected and Accelerated Interval (BCa) — bci" />
+<meta property="og:description" content="Compute the Bias Corrected and Accelerated Interval (BCa) of posterior distributions." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -183,51 +183,69 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Maximum A Posteriori probability estimate (MAP)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/map_estimate.R'><code>R/map_estimate.R</code></a></small>
-    <div class="hidden name"><code>map_estimate.Rd</code></div>
+    <h1>Bias Corrected and Accelerated Interval (BCa)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/easystats/bayestestR/blob/master/R/bci.R'><code>R/bci.R</code></a></small>
+    <div class="hidden name"><code>bci.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Find the <strong>Highest Maximum A Posteriori probability estimate (MAP)</strong> of a posterior, i.e., the value associated with the highest probability density (the "peak" of the posterior distribution). In other words, it is an estimation of the <em>mode</em> for continuous parameters. Note that this function relies on <a href='estimate_density.html'>estimate_density</a>, which by default uses a different smoothing bandwidth (<code>"SJ"</code>) compared to the legacy default implemented the base R <a href='https://rdrr.io/r/stats/density.html'>density</a> function (<code>"nrd0"</code>).</p>
+    <p>Compute the <strong>Bias Corrected and Accelerated Interval (BCa)</strong> of posterior distributions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>map_estimate</span><span class='op'>(</span><span class='va'>x</span>, precision <span class='op'>=</span> <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>bci</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>bcai</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>map_estimate</span><span class='op'>(</span><span class='va'>x</span>, precision <span class='op'>=</span> <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>bci</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for bayesQR</span>
-<span class='fu'>map_estimate</span><span class='op'>(</span><span class='va'>x</span>, precision <span class='op'>=</span> <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>bci</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for MCMCglmm</span>
+<span class='fu'>bci</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for sim.merMod</span>
+<span class='fu'>bci</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for sim</span>
+<span class='fu'>bci</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, parameters <span class='op'>=</span> <span class='cn'>NULL</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for emmGrid</span>
+<span class='fu'>bci</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for stanreg</span>
-<span class='fu'>map_estimate</span><span class='op'>(</span>
+<span class='fu'>bci</span><span class='op'>(</span>
   <span class='va'>x</span>,
-  precision <span class='op'>=</span> <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>,
-  method <span class='op'>=</span> <span class='st'>"kernel"</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"location"</span>, <span class='st'>"all"</span>, <span class='st'>"conditional"</span>, <span class='st'>"smooth_terms"</span>, <span class='st'>"sigma"</span>,
     <span class='st'>"distributional"</span>, <span class='st'>"auxiliary"</span><span class='op'>)</span>,
   parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
 <span class='co'># S3 method for brmsfit</span>
-<span class='fu'>map_estimate</span><span class='op'>(</span>
+<span class='fu'>bci</span><span class='op'>(</span>
   <span class='va'>x</span>,
-  precision <span class='op'>=</span> <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>,
-  method <span class='op'>=</span> <span class='st'>"kernel"</span>,
+  ci <span class='op'>=</span> <span class='fl'>0.95</span>,
   effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
   component <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"conditional"</span>, <span class='st'>"zi"</span>, <span class='st'>"zero_inflated"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
   parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
-<span class='co'># S3 method for data.frame</span>
-<span class='fu'>map_estimate</span><span class='op'>(</span><span class='va'>x</span>, precision <span class='op'>=</span> <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span>, <span class='va'>...</span><span class='op'>)</span>
-
-<span class='co'># S3 method for emmGrid</span>
-<span class='fu'>map_estimate</span><span class='op'>(</span><span class='va'>x</span>, precision <span class='op'>=</span> <span class='fl'>2</span><span class='op'>^</span><span class='fl'>10</span>, method <span class='op'>=</span> <span class='st'>"kernel"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='co'># S3 method for BFBayesFactor</span>
+<span class='fu'>bci</span><span class='op'>(</span><span class='va'>x</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -239,27 +257,22 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
 <code>MCMCglmm</code>, <code>mcmc</code> or <code>bcplm</code>) or a <code>BayesFactor</code> model.</p></td>
     </tr>
     <tr>
-      <th>precision</th>
-      <td><p>Number of points of density data. See the <code>n</code> parameter in <code>density</code>.</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>Density estimation method. Can be <code>"kernel"</code> (default), <code>"logspline"</code> or <code>"KernSmooth"</code>.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>Currently not used.</p></td>
+    </tr>
+    <tr>
+      <th>ci</th>
+      <td><p>Value or vector of probability of the (credible) interval - CI (between 0 and 1)
+to be estimated. Default to <code>.95</code> (95%).</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Toggle off warnings.</p></td>
     </tr>
     <tr>
       <th>effects</th>
       <td><p>Should results for fixed effects, random effects or both be returned?
 Only applies to mixed models. May be abbreviated.</p></td>
-    </tr>
-    <tr>
-      <th>component</th>
-      <td><p>Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     <tr>
       <th>parameters</th>
@@ -269,37 +282,77 @@ filtered by default, so only parameters that typically appear in the
 <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></td>
     </tr>
+    <tr>
+      <th>component</th>
+      <td><p>Should results for all parameters, parameters for the conditional model
+or the zero-inflated part of the model be returned? May be abbreviated. Only
+applies to <span class="pkg">brms</span>-models.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A numeric value if <code>posterior</code> is a vector. If <code>posterior</code>
-is a model-object, returns a data frame with following columns:</p><ul>
+    <p>A data frame with following columns:</p><ul>
 <li><p><code>Parameter</code> The model parameter(s), if <code>x</code> is a model-object. If <code>x</code> is a vector, this column is missing.</p></li>
-<li><p><code>MAP_Estimate</code> The MAP estimate for the posterior or each model parameter.</p></li>
+<li><p><code>CI</code> The probability of the credible interval.</p></li>
+<li><p><code>CI_low</code>, <code>CI_high</code> The lower and upper credible interval limits for the parameters.</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Unlike equal-tailed intervals (see <code><a href='eti.html'>eti()</a></code>) that typically exclude 2.5%
+from each tail of the distribution and always include the median, the HDI is
+<em>not</em> equal-tailed and therefore always includes the mode(s) of posterior
+distributions.
+<br /> <br />
+The <a href='https://easystats.github.io/bayestestR/articles/credible_interval.html'>95% or 89% Credible Intervals (CI)</a>
+are two reasonable ranges to characterize the uncertainty related to the estimation (see <a href='https://easystats.github.io/bayestestR/articles/credible_interval.html'>here</a> for a discussion about the differences between these two values).
+<br />
+The 89% intervals (<code>ci = 0.89</code>) are deemed to be more stable than, for
+instance, 95% intervals (<cite>Kruschke, 2014</cite>).
+An effective sample size of at least 10.000 is recommended if one wants to estimate
+95% intervals with high precision (<cite>Kruschke, 2014, p. 183ff</cite>). Unfortunately, the default number of posterior samples for most Bayes packages (e.g., `rstanarm` or `brms`) is only 4.000 (thus, you might want to increase it when fitting your model). Moreover,
+89 indicates the arbitrariness of interval limits - its only remarkable property is being
+the highest prime number that does not exceed the already unstable 95%
+threshold (<cite>McElreath, 2015</cite>).
+<br />
+However, 95% has some <a href='https://easystats.github.io/blog/posts/bayestestr_95/'>advantages too</a>.
+For instance, it shares (in the case of a normal posterior distribution) an intuitive relationship with the
+standard deviation and it conveys a more accurate image of the (artificial)
+bounds of the distribution. Also, because it is wider, it makes analyses more
+conservative (i.e., the probability of covering 0 is larger for the 95% CI than
+for lower ranges such as 89%), which is a good thing in the context of the
+reproducibility crisis.
+<br /> <br />
+A 95% equal-tailed interval (ETI) has 2.5% of the distribution on either
+side of its limits. It indicates the 2.5th percentile and the 97.5h percentile.
+In symmetric distributions, the two methods of computing credible intervals,
+the ETI and the <a href='hdi.html'>HDI</a>, return similar results.
+<br /> <br />
+This is not the case for skewed distributions. Indeed, it is possible that
+parameter values in the ETI have lower credibility (are less probable) than
+parameter values outside the ETI. This property seems undesirable as a summary
+of the credible values in a distribution.
+<br /> <br />
+On the other hand, the ETI range does change when transformations are applied
+to the distribution (for instance, for a log odds scale to probabilities):
+the lower and higher bounds of the transformed distribution will correspond
+to the transformed lower and higher bounds of the original distribution.
+On the contrary, applying transformations to the distribution will change
+the resulting HDI.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>DiCiccio, T. J. and B. Efron. (1996). Bootstrap Confidence Intervals. Statistical Science. 11(3): 189–212. doi: <a href='https://doi.org/10.1214/ss/1032280214'>10.1214/ss/1032280214</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>
-
-<span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10000</span><span class='op'>)</span>
-<span class='fu'>map_estimate</span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/density.html'>density</a></span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v <span class='op'>=</span> <span class='fu'>map_estimate</span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span>, col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
-
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>rstanarm</span><span class='fu'>::</span><span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
-<span class='fu'>map_estimate</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span>
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'>brms</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span>, data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>)</span>
-<span class='fu'>map_estimate</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>
+<span class='fu'>bci</span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 95% ETI: [-1.86, 1.93]</div><div class='input'><span class='fu'>bci</span><span class='op'>(</span><span class='va'>posterior</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Equal-Tailed Interval
+#&gt; 
+#&gt; 80% ETI       |       89% ETI |       95% ETI
+#&gt; ---------------------------------------------
+#&gt; [-1.28, 1.27] | [-1.53, 1.50] | [-1.86, 1.93]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

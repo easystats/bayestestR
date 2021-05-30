@@ -92,7 +92,7 @@ The bf_* function is an alias of the main function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
       </span>
     </div>
 
@@ -243,7 +243,8 @@ model.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame containing the models' formulas (reconstructed fixed and random effects) and their BFs, that prints nicely.</p>
+    <p>A data frame containing the models' formulas (reconstructed fixed and
+  random effects) and their <code><a href='https://rdrr.io/r/base/Log.html'>log(BF)</a></code>s, that prints nicely.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If the passed models are supported by <span class="pkg">insight</span> the DV of all models will be tested for equality
@@ -303,45 +304,45 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 <span class='va'>lm3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='va'>lm4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'>Bayes Factors for Model Comparison</span><span>
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'>Bayes Factors for Model Comparison</span>
 #&gt; 
 #&gt;       Model                        BF
 #&gt; [lm2] Species                1.70e+29
 #&gt; [lm3] Species + Petal.Length 5.84e+55
 #&gt; [lm4] Species * Petal.Length 2.20e+54
 #&gt; 
-#&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[lm1] (Intercept only)</span><span>
-#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='va'>lm1</span><span class='op'>)</span> <span class='co'># same result</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'>Bayes Factors for Model Comparison</span><span>
+#&gt; * Against Denominator: <span style='color: #00BBBB;'>[lm1] (Intercept only)</span>
+#&gt; *   Bayes Factor Type: <span style='color: #00BBBB;'>BIC approximation</span></div><div class='input'><span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='va'>lm1</span><span class='op'>)</span> <span class='co'># same result</span>
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'>Bayes Factors for Model Comparison</span>
 #&gt; 
 #&gt;       Model                        BF
 #&gt; [lm2] Species                1.70e+29
 #&gt; [lm3] Species + Petal.Length 5.84e+55
 #&gt; [lm4] Species * Petal.Length 2.20e+54
 #&gt; 
-#&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[lm1] (Intercept only)</span><span>
-#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='va'>BFM</span> <span class='op'>&lt;-</span> <span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='va'>lm1</span><span class='op'>)</span> <span class='co'># same result</span>
+#&gt; * Against Denominator: <span style='color: #00BBBB;'>[lm1] (Intercept only)</span>
+#&gt; *   Bayes Factor Type: <span style='color: #00BBBB;'>BIC approximation</span></div><div class='input'><span class='va'>BFM</span> <span class='op'>&lt;-</span> <span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>lm1</span>, <span class='va'>lm2</span>, <span class='va'>lm3</span>, <span class='va'>lm4</span>, denominator <span class='op'>=</span> <span class='va'>lm1</span><span class='op'>)</span> <span class='co'># same result</span>
 
 <span class='fu'><a href='https://rdrr.io/r/stats/update.html'>update</a></span><span class='op'>(</span><span class='va'>BFM</span>, reference <span class='op'>=</span> <span class='st'>"bottom"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'>Bayes Factors for Model Comparison</span><span>
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'>Bayes Factors for Model Comparison</span>
 #&gt; 
 #&gt;       Model                        BF
 #&gt; [lm2] Species                1.70e+29
 #&gt; [lm3] Species + Petal.Length 5.84e+55
 #&gt; [lm4] Species * Petal.Length 2.20e+54
 #&gt; 
-#&gt; * Against Denominator: </span><span style='color: #00BBBB;'>[lm1] (Intercept only)</span><span>
-#&gt; *   Bayes Factor Type: </span><span style='color: #00BBBB;'>BIC approximation</span><span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>BFM</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #0000BB;'># Bayes Factors for Model Comparison</span><span> </span><span style='color: #00BBBB;'>
+#&gt; * Against Denominator: <span style='color: #00BBBB;'>[lm1] (Intercept only)</span>
+#&gt; *   Bayes Factor Type: <span style='color: #00BBBB;'>BIC approximation</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>BFM</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #0000BB;'># Bayes Factors for Model Comparison</span> <span style='color: #00BBBB;'>
 #&gt; 
 #&gt;               Numerator
-#&gt; Denominator</span><span>
+#&gt; Denominator</span>
 #&gt; 
 #&gt;                 |      [1] |      [2] |      [3] |      [4]
 #&gt; ----------------------------------------------------------------------
 #&gt; [1] (Intercept only)       |        1 | 1.70e+29 | 5.84e+55 | 2.20e+54
 #&gt; [2] Species                | 5.90e-30 |        1 | 3.45e+26 | 1.30e+25
-#&gt; [3] Species + Petal.Length | 1.71e-56 | 2.90e-27 |        1 |     0.04
+#&gt; [3] Species + Petal.Length | 1.71e-56 | 2.90e-27 |        1 |    0.038
 #&gt; [4] Species * Petal.Length | 4.54e-55 | 7.70e-26 |    26.52 |        1</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># With lmerMod objects:</span>
 <span class='co'># ---------------------</span>
@@ -407,7 +408,7 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
   <span class='fu'>bayesfactor_models</span><span class='op'>(</span><span class='va'>BF</span><span class='op'>)</span> <span class='co'># basically the same</span>
 <span class='op'>}</span>
 <span class='op'>}</span>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

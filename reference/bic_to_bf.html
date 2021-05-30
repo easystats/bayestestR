@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
       </span>
     </div>
 
@@ -192,7 +192,7 @@
     <p>Convert BIC indices to Bayes Factors via the BIC-approximation method.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bic_to_bf</span><span class='op'>(</span><span class='va'>bic</span>, <span class='va'>denominator</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>bic_to_bf</span><span class='op'>(</span><span class='va'>bic</span>, <span class='va'>denominator</span>, log <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -204,6 +204,10 @@
     <tr>
       <th>denominator</th>
       <td><p>The BIC value to use as a denominator (to test against).</p></td>
+    </tr>
+    <tr>
+      <th>log</th>
+      <td><p>Return the <code><a href='https://rdrr.io/r/base/Log.html'>log(BF)</a></code>?</p></td>
     </tr>
     </table>
 
@@ -218,7 +222,8 @@
 <span class='va'>bic4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/AIC.html'>BIC</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='fu'>bic_to_bf</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>bic1</span>, <span class='va'>bic2</span>, <span class='va'>bic3</span>, <span class='va'>bic4</span><span class='op'>)</span>, denominator <span class='op'>=</span> <span class='va'>bic1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 1.000000e+00 1.695852e+29 5.843105e+55 2.203243e+54</div></pre>
+</div><div class='output co'>#&gt; [1] 1.000000e+00 1.695852e+29 5.843105e+55 2.203243e+54</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

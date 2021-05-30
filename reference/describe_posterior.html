@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
       </span>
     </div>
 
@@ -329,14 +329,14 @@
     <tr>
       <th>ci</th>
       <td><p>Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to <code>.89</code> (89%) for Bayesian models and <code>.95</code> (95%) for frequentist models.</p></td>
+to be estimated. Default to <code>.95</code> (95%).</p></td>
     </tr>
     <tr>
       <th>ci_method</th>
       <td><p>The type of index used for Credible Interval. Can be
 <code>"HDI"</code> (default, see <code><a href='hdi.html'>hdi</a></code>), <code>"ETI"</code>
-(see <code><a href='eti.html'>eti</a></code>) or <code>"SI"</code>
-(see <code><a href='si.html'>si</a></code>).</p></td>
+(see <code><a href='eti.html'>eti</a></code>), <code>"BCI"</code> (see
+<code><a href='bci.html'>bci</a></code>) or <code>"SI"</code> (see <code><a href='si.html'>si</a></code>).</p></td>
     </tr>
     <tr>
       <th>test</th>
@@ -436,12 +436,12 @@ for the output.</p></td>
 <span class='op'>}</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)') to get meaningful results.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify priors (with column order matching 'posterior') to get meaningful results.</span></div><div class='output co'>#&gt; Summary of Posterior Distribution
 #&gt; 
-#&gt; Parameter | Median |        80% CI |        90% CI |     pd |          ROPE | % in ROPE
-#&gt; ---------------------------------------------------------------------------------------
-#&gt; X1        |   0.17 | [-1.04, 1.40] | [-1.77, 1.34] | 54.00% | [-0.10, 0.10] |     6.25%
-#&gt; X2        |   0.12 | [-1.09, 1.15] | [-1.64, 1.69] | 53.00% | [-0.10, 0.10] |     7.29%
-#&gt; X3        |   0.04 | [-1.59, 1.33] | [-1.63, 1.82] | 53.00% | [-0.10, 0.10] |     7.29%
-#&gt; X4        |   0.08 | [-1.22, 1.22] | [-1.50, 1.53] | 53.00% | [-0.10, 0.10] |     8.33%</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt; Parameter |    Median |        80% CI |        90% CI |     pd |          ROPE | % in ROPE
+#&gt; ------------------------------------------------------------------------------------------
+#&gt; X1        |     -0.02 | [-1.05, 1.17] | [-2.09, 1.17] | 51.00% | [-0.10, 0.10] |     9.38%
+#&gt; X2        |     -0.19 | [-1.26, 1.33] | [-1.36, 1.87] | 55.00% | [-0.10, 0.10] |     2.08%
+#&gt; X3        |     -0.21 | [-1.13, 1.33] | [-1.87, 1.23] | 60.00% | [-0.10, 0.10] |    12.50%
+#&gt; X4        | -4.20e-04 | [-1.49, 1.39] | [-1.49, 1.96] | 50.00% | [-0.10, 0.10] |    10.42%</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/rvlenth/emmeans'>"emmeans"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>

@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
       </span>
     </div>
 
@@ -262,7 +262,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
 <p>Note that <strong>interpretation guides</strong> for Bayes factors can be found in the <code>effectsize</code> package:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/interpret_bf.html">interpret_bf</a></span><span class="op">(</span><span class="va">My_first_BF</span><span class="op">$</span><span class="va">BF</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, include_value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">effectsize</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/effectsize/reference/interpret_bf.html">interpret_bf</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">My_first_BF</span><span class="op">$</span><span class="va">log_BF</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>, include_value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; [1] "anecdotal evidence (BF = 1/1.13) against"
 &gt; (Rules: jeffreys1961)</code></pre>
 </div>
@@ -530,6 +530,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <p>We can now compare these models with the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function, using the <code>denominator</code> argument to specify the model against which the rest of the models will be compared (in this case, the intercept-only model):</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/">bayestestR</a></span><span class="op">)</span>
+
 <span class="va">comparison</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">m1</span>, <span class="va">m2</span>, <span class="va">m3</span>, <span class="va">m4</span>, denominator <span class="op">=</span> <span class="va">m0</span><span class="op">)</span>
 <span class="va">comparison</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
@@ -584,7 +585,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; [1] Petal.Length           |        1 | 1.63e-15 | 2.09e+11 | 2.71e+11 | 2.76e-45
 &gt; [2] Species                | 6.14e+14 |        1 | 1.28e+26 | 1.66e+26 | 1.70e-30
 &gt; [3] Species + Petal.Length | 4.79e-12 | 7.81e-27 |        1 |     1.30 | 1.32e-56
-&gt; [4] Species * Petal.Length | 3.70e-12 | 6.02e-27 |     0.77 |        1 | 1.02e-56
+&gt; [4] Species * Petal.Length | 3.70e-12 | 6.02e-27 |    0.771 |        1 | 1.02e-56
 &gt; [5] (Intercept only)       | 3.62e+44 | 5.90e+29 | 7.55e+55 | 9.80e+55 |        1</code></pre>
 <p><strong>NOTE:</strong> In order to correctly and precisely estimate Bayes Factors, you always need the 4 P’s: <strong>P</strong>roper <strong>P</strong>riors,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> and a <strong>P</strong>lentiful <strong>P</strong>osterior.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 </div>
@@ -654,9 +655,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">botanist_BFs</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
-&gt; Hypothesis                                       P(Prior) P(Posterior)      BF
-&gt; Petal.Length &gt; 0                                     0.50            1    2.01
-&gt; (Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)     0.25            0 &lt; 0.001
+&gt; Hypothesis                                       P(Prior) P(Posterior)       BF
+&gt; Petal.Length &gt; 0                                     0.50            1     2.01
+&gt; (Speciesversicolor &gt; 0) &amp; (Speciesvirginica &gt; 0)     0.25            0 0.00e+00
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p>We can see that the novice botanist’s hypothesis gets a Bayes factor of ~2, indicating the data provides twice as much evidence for a model in which petal length is restricted to be positively associated with sepal length than for a model with not such restriction.</p>
@@ -691,8 +692,8 @@ BF_{\text{restricted vs. NULL}} = \frac
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;                      P(prior) P(posterior) Inclusion BF
-&gt; Petal.Length             0.60         1.00       &gt; 1000
-&gt; Species                  0.60         1.00       &gt; 1000
+&gt; Petal.Length             0.60         1.00     1.96e+26
+&gt; Species                  0.60         1.00     3.19e+11
 &gt; Petal.Length:Species     0.20         0.56         5.19
 &gt; 
 &gt; * Compared among: all models
@@ -704,8 +705,8 @@ BF_{\text{restricted vs. NULL}} = \frac
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;                      P(prior) P(posterior) Inclusion BF
-&gt; Petal.Length             0.40         0.44       &gt; 1000
-&gt; Species                  0.40         0.44       &gt; 1000
+&gt; Petal.Length             0.40         0.44     1.28e+26
+&gt; Species                  0.40         0.44     2.09e+11
 &gt; Petal.Length:Species     0.20         0.56         1.30
 &gt; 
 &gt; * Compared among: matched models only
@@ -732,7 +733,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt;           P(prior) P(posterior) Inclusion BF
 &gt; supp          0.60         1.00       141.92
-&gt; dose          0.60         1.00       &gt; 1000
+&gt; dose          0.60         1.00     3.23e+14
 &gt; dose:supp     0.20         0.73        10.96
 &gt; 
 &gt; * Compared among: all models
@@ -748,7 +749,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt;           P(prior) P(posterior) Inclusion BF
 &gt; supp          0.40         0.26        56.19
-&gt; dose          0.40         0.27       &gt; 1000
+&gt; dose          0.40         0.27     1.30e+14
 &gt; dose:supp     0.20         0.73         2.79
 &gt; 
 &gt; * Compared among: matched models only
@@ -1009,13 +1010,13 @@ BF_{\text{restricted vs. NULL}} = \frac
 <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span><span class="va">em_sum</span>, <span class="va">fit_sum</span>, hypothesis <span class="op">=</span> <span class="va">hyp</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
-&gt; Hypothesis                                       P(Prior) P(Posterior)      BF
-&gt; setosa &lt; versicolor                                  0.51            1    1.97
-&gt; setosa &lt; virginica                                   0.49            1    2.02
-&gt; versicolor &lt; virginica                               0.49            1    2.03
-&gt; setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.11            0 &lt; 0.001
-&gt; virginica &lt; setosa     &amp; setosa     &lt; versicolor     0.20            0 &lt; 0.001
-&gt; setosa    &lt; versicolor &amp; versicolor &lt; virginica      0.20            1    5.09
+&gt; Hypothesis                                       P(Prior) P(Posterior)       BF
+&gt; setosa &lt; versicolor                                  0.51            1     1.97
+&gt; setosa &lt; virginica                                   0.49            1     2.02
+&gt; versicolor &lt; virginica                               0.49            1     2.03
+&gt; setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.11            0 0.00e+00
+&gt; virginica &lt; setosa     &amp; setosa     &lt; versicolor     0.20            0 0.00e+00
+&gt; setosa    &lt; versicolor &amp; versicolor &lt; virginica      0.20            1     5.09
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p><strong><em>What happened???</em></strong></p>
@@ -1037,13 +1038,13 @@ BF_{\text{restricted vs. NULL}} = \frac
 <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span><span class="va">em_bayes</span>, <span class="va">fit_sum</span>, hypothesis <span class="op">=</span> <span class="va">hyp</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
-&gt; Hypothesis                                       P(Prior) P(Posterior)      BF
-&gt; setosa &lt; versicolor                                  0.49            1    2.06
-&gt; setosa &lt; virginica                                   0.49            1    2.03
-&gt; versicolor &lt; virginica                               0.51            1    1.96
-&gt; setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.17            0 &lt; 0.001
-&gt; virginica &lt; setosa     &amp; setosa     &lt; versicolor     0.16            0 &lt; 0.001
-&gt; setosa    &lt; versicolor &amp; versicolor &lt; virginica      0.16            1    6.11
+&gt; Hypothesis                                       P(Prior) P(Posterior)       BF
+&gt; setosa &lt; versicolor                                  0.49            1     2.06
+&gt; setosa &lt; virginica                                   0.49            1     2.03
+&gt; versicolor &lt; virginica                               0.51            1     1.96
+&gt; setosa    &lt; virginica  &amp; virginica  &lt; versicolor     0.17            0 0.00e+00
+&gt; virginica &lt; setosa     &amp; setosa     &lt; versicolor     0.16            0 0.00e+00
+&gt; setosa    &lt; versicolor &amp; versicolor &lt; virginica      0.16            1     6.11
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 </div>

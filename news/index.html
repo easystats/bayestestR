@@ -89,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
       </span>
     </div>
 
@@ -190,6 +190,21 @@
 <h1 class="page-header" data-toc-text="0.9.0.00001">
 <a href="#bayestestr-09000001" class="anchor"></a>bayestestR 0.9.0.00001<small> Unreleased </small>
 </h1>
+<div id="breaking" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking" class="anchor"></a>Breaking</h2>
+<ul>
+<li>All Bayes factors are now returned as <code><a href="https://rdrr.io/r/base/Log.html">log(BF)</a></code> (column name <code>log_BF</code>). Printing is unaffected. To retrieve the raw BFs, you can run <code><a href="https://rdrr.io/r/base/Log.html">exp(result$log_BF)</a></code>.</li>
+</ul>
+</div>
+<div id="new-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New functions</h2>
+<ul>
+<li>
+<code><a href="../reference/bci.html">bci()</a></code> (and its alias <code><a href="../reference/bci.html">bcai()</a></code>) to compute bias-corrected and accelerated bootstrap intervals. Along with this new function, <code><a href="../reference/ci.html">ci()</a></code> and <code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> gain a new <code>ci_method</code> type, <code>"bci"</code>.</li>
+</ul>
+</div>
 <div id="changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#changes" class="anchor"></a>Changes</h2>
@@ -203,9 +218,9 @@
 <h1 class="page-header" data-toc-text="0.9.0">
 <a href="#bayestestr-090" class="anchor"></a>bayestestR 0.9.0<small> 2021-04-08 </small>
 </h1>
-<div id="breaking" class="section level2">
+<div id="breaking-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking" class="anchor"></a>Breaking</h2>
+<a href="#breaking-1" class="anchor"></a>Breaking</h2>
 <ul>
 <li><p>The default <code>ci</code> width has been changed to 0.95 instead of 0.89 (see <a href="https://github.com/easystats/bayestestR/discussions/250">here</a>). This should not come as a surprise to the long-time users of <code>bayestestR</code> as we have been warning about this impending change for a while now :)</p></li>
 <li><p>Column names for <code><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted()</a></code> are now <code>p_prior</code> and <code>p_posterior</code> (was <code>Prior_prob</code> and <code>Posterior_prob</code>), to be consistent with <code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> output.</p></li>
@@ -264,9 +279,9 @@
 <h1 class="page-header" data-toc-text="0.8.0">
 <a href="#bayestestr-080" class="anchor"></a>bayestestR 0.8.0<small> 2020-12-05 </small>
 </h1>
-<div id="new-functions" class="section level2">
+<div id="new-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions" class="anchor"></a>New functions</h2>
+<a href="#new-functions-1" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/sexit.html">sexit()</a></code>, a function for sequential effect existence and significance testing (SEXIT).</li>
@@ -293,9 +308,9 @@
 <h1 class="page-header" data-toc-text="0.7.5">
 <a href="#bayestestr-075" class="anchor"></a>bayestestR 0.7.5<small> 2020-10-22 </small>
 </h1>
-<div id="new-functions-1" class="section level2">
+<div id="new-functions-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-1" class="anchor"></a>New functions</h2>
+<a href="#new-functions-2" class="anchor"></a>New functions</h2>
 <ul>
 <li><p>Added <code><a href="https://rdrr.io/r/base/matrix.html">as.matrix()</a></code> function for <code>bayesfactor_model</code> arrays.</p></li>
 <li><p><code><a href="../reference/unupdate.html">unupdate()</a></code>, a utility function to get Bayesian models un-fitted from the data, representing the priors only.</p></li>
@@ -325,9 +340,9 @@
 <h1 class="page-header" data-toc-text="0.7.2">
 <a href="#bayestestr-072" class="anchor"></a>bayestestR 0.7.2<small> 2020-07-20 </small>
 </h1>
-<div id="new-functions-2" class="section level2">
+<div id="new-functions-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-2" class="anchor"></a>New functions</h2>
+<a href="#new-functions-3" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/mediation.html">mediation()</a></code>, to compute average direct and average causal mediation effects of multivariate response models (<code>brmsfit</code>, <code>stanmvreg</code>).</li>

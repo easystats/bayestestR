@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
       </span>
     </div>
 
@@ -476,10 +476,10 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"p_direction"</span>, <span class="st">"rope"</span>, <span class="st">"bayesfactor"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Summary of Posterior Distribution
 &gt; 
-&gt; Parameter     | Median |           95% CI |     pd |          ROPE | % in ROPE |     BF |  Rhat |     ESS
+&gt; Parameter     | Median |           95% CI |     pd |          ROPE | % in ROPE |  Rhat |     ESS |     BF
 &gt; ---------------------------------------------------------------------------------------------------------
-&gt; (Intercept)   | 277.45 | [242.95, 312.25] |   100% | [-6.17, 6.17] |        0% | &gt; 1000 | 1.001 | 3473.00
-&gt; feedsunflower |  51.81 | [  1.80,  97.25] | 98.30% | [-6.17, 6.17] |     1.29% |  0.861 | 1.001 | 3207.00</code></pre>
+&gt; (Intercept)   | 277.45 | [242.95, 312.25] |   100% | [-6.17, 6.17] |        0% | 1.001 | 3473.00 | &gt; 1000
+&gt; feedsunflower |  51.81 | [  1.80,  97.25] | 98.30% | [-6.17, 6.17] |     1.29% | 1.001 | 3207.00 |  0.861</code></pre>
 <p><strong>Tada!</strong> There we have it! The <strong>median</strong>, the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE percentage</strong>!</p>
 <p>Understanding and describing posterior distributions is just one aspect of Bayesian modelling. <strong>Are you ready for more?!</strong> <a href="https://easystats.github.io/bayestestR/articles/example2.html"><strong>Click here</strong></a> to see the next example.</p>
 </div>
