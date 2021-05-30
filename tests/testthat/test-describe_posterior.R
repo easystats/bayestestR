@@ -26,7 +26,7 @@ if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", 
     expect_equal(colnames(rez), c(
       "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
       "CI_high", "p_map", "pd", "p_ROPE", "ps", "ROPE_CI", "ROPE_low",
-      "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "BF"
+      "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "log_BF"
     ))
 
     rez <- expect_warning(describe_posterior(
