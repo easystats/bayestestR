@@ -494,27 +494,23 @@ Let's first fit 5 Bayesian regressions with `brms` to predict `Sepal.Length`:
 library(brms)
 
 # intercept only model
-m0 <- brm(Sepal.Length ~ 1,
-  data = iris, save_pars = save_pars(all = TRUE), refresh = 0
-)
+m0 <- brm(Sepal.Length ~ 1, data = iris, 
+          save_pars = save_pars(all = TRUE),  refresh = 0, backend = "rstan")
 
-# simple effects models
-m1 <- brm(Sepal.Length ~ Petal.Length,
-  data = iris, save_pars = save_pars(all = TRUE), refresh = 0
-)
-m2 <- brm(Sepal.Length ~ Species,
-  data = iris, save_pars = save_pars(all = TRUE), refresh = 0
-)
+# main effects models
+m1 <- brm(Sepal.Length ~ Petal.Length, data = iris, 
+          save_pars = save_pars(all = TRUE), refresh = 0, backend = "rstan")
 
-# main effects model
-m3 <- brm(Sepal.Length ~ Species + Petal.Length,
-  data = iris, save_pars = save_pars(all = TRUE), refresh = 0
-)
+m2 <- brm(Sepal.Length ~ Species, data = iris,
+          save_pars = save_pars(all = TRUE), refresh = 0, backend = "rstan")
+
+# additive main effects model
+m3 <- brm(Sepal.Length ~ Species + Petal.Length, data = iris,
+          save_pars = save_pars(all = TRUE), refresh = 0, backend = "rstan")
 
 # full model
-m4 <- brm(Sepal.Length ~ Species * Petal.Length,
-  data = iris, save_pars = save_pars(all = TRUE), refresh = 0
-)
+m4 <- brm(Sepal.Length ~ Species * Petal.Length, data = iris,
+          save_pars = save_pars(all = TRUE), refresh = 0, backend = "rstan")
 ```
 
 We can now compare these models with the `bayesfactor_models()` function, using
