@@ -185,9 +185,7 @@ diagnostic_posterior.brmsfit <- function(posteriors, diagnostic = "all", effects
     if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
   }
 
-  if (!requireNamespace("rstan", quietly = TRUE)) {
-    stop("Package 'rstan' required for this function to work. Please install it by running `install.packages('rstan')`.")
-  }
+  insight::check_if_installed("rstan")
 
   # Get indices and rename
   diagnostic_df <- as.data.frame(rstan::summary(posteriors$fit)$summary)
@@ -230,11 +228,12 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects
     diagnostic <- c("ESS", "Rhat", "MCSE")
   }
 
-  if (!requireNamespace("rstan", quietly = TRUE)) {
-    stop("Package 'rstan' required for this function to work. Please install it.")
-  }
+  insight::check_if_installed("rstan")
 
-  all_params <- insight::find_parameters(posteriors, effects = effects, flatten = TRUE)
+  all_params <- insight::find_parameters(posteriors,
+    effects = effects,
+    flatten = TRUE
+  )
 
   diagnostic_df <- data.frame(
     Parameter = all_params,
@@ -244,9 +243,11 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects
   if ("ESS" %in% diagnostic) {
     diagnostic_df$ESS <- effective_sample(posteriors, effects = effects)$ESS
   }
+
   if ("MCSE" %in% diagnostic) {
     diagnostic_df$MCSE <- mcse(posteriors, effects = effects)$MCSE
   }
+
   if ("Rhat" %in% diagnostic) {
     s <- as.data.frame(rstan::summary(posteriors)$summary)
     diagnostic_df$Rhat <- s[rownames(s) %in% all_params, ]$Rhat
@@ -283,9 +284,7 @@ diagnostic_posterior.blavaan <- function(posteriors, diagnostic = "all", ...) {
 
   # Get indices
   if ("Rhat" %in% diagnostic) {
-    if (!requireNamespace("blavaan", quietly = TRUE)) {
-      stop("Package 'blavaan' required for this function to work. Please install it.")
-    }
+    insight::check_if_installed("blavaan")
 
     Rhat <- blavaan::blavInspect(posteriors, what = "psrf")
     Rhat <- data.frame(

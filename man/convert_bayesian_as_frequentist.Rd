@@ -12,7 +12,8 @@ bayesian_as_frequentist(model, data = NULL)
 \arguments{
 \item{model}{A Bayesian model.}
 
-\item{data}{Data used by the model. If \code{NULL}, will try to extract it from the model.}
+\item{data}{Data used by the model. If \code{NULL}, will try to extract it
+from the model.}
 }
 \description{
 Refit Bayesian model as frequentist. Can be useful for comparisons.

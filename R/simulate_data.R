@@ -3,8 +3,10 @@
 #' Simulate data with specific characteristics.
 #'
 #' @param n The number of observations to be generated.
-#' @param r A value or vector corresponding to the desired correlation coefficients.
-#' @param d A value or vector corresponding to the desired difference between the groups.
+#' @param r A value or vector corresponding to the desired correlation
+#'   coefficients.
+#' @param d A value or vector corresponding to the desired difference between
+#'   the groups.
 #' @param mean A value or vector corresponding to the mean of the variables.
 #' @param sd A value or vector corresponding to the SD of the variables.
 #' @param names A character vector of desired variable names.
@@ -53,10 +55,13 @@
 #' summary(lm(V1 ~ V0, data = data))
 #' summary(glm(V0 ~ V1, data = data, family = "binomial"))
 #' @export
-simulate_correlation <- function(n = 100, r = 0.5, mean = 0, sd = 1, names = NULL, ...) {
-  if (!requireNamespace("MASS", quietly = TRUE)) {
-    stop("Package 'MASS' required for this function to work. Please install it by running `install.packages('MASS')`.")
-  }
+simulate_correlation <- function(n = 100,
+                                 r = 0.5,
+                                 mean = 0,
+                                 sd = 1,
+                                 names = NULL,
+                                 ...) {
+  insight::check_if_installed("MASS")
 
   # Define matrix
   if (is.matrix(r)) {

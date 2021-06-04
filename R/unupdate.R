@@ -26,9 +26,7 @@ unupdate <- function(model, verbose = TRUE, ...) {
 #' @rdname unupdate
 #' @importFrom stats update getCall
 unupdate.stanreg <- function(model, verbose = TRUE, ...) {
-  if (!requireNamespace("rstanarm")) {
-    stop("Package \"rstanarm\" needed for this function to work. Please install it.")
-  }
+  insight::check_if_installed("rstanarm")
 
   prior_PD <- stats::getCall(model)$prior_PD
   if (!is.null(prior_PD) && isTRUE(eval(parse(text = prior_PD)))) {
@@ -63,9 +61,7 @@ unupdate.stanreg <- function(model, verbose = TRUE, ...) {
 #' @importFrom utils capture.output
 #' @importFrom methods is
 unupdate.brmsfit <- function(model, verbose = TRUE, ...) {
-  if (!requireNamespace("brms")) {
-    stop("Package \"brms\" needed for this function to work. Please install it.")
-  }
+  insight::check_if_installed("brms")
 
   if (isTRUE(attr(model$prior, "sample_prior") == "only")) {
     return(model)
@@ -102,10 +98,11 @@ unupdate.brmsfit <- function(model, verbose = TRUE, ...) {
 #' @importFrom stats update
 #' @importFrom utils capture.output
 #' @importFrom methods is
-unupdate.brmsfit_multiple <- function(model, verbose = TRUE, newdata = NULL, ...) {
-  if (!requireNamespace("brms")) {
-    stop("Package \"brms\" needed for this function to work. Please install it.")
-  }
+unupdate.brmsfit_multiple <- function(model,
+                                      verbose = TRUE,
+                                      newdata = NULL,
+                                      ...) {
+  insight::check_if_installed("brms")
 
   if (isTRUE(attr(model$prior, "sample_prior") == "only")) {
     return(model)
@@ -115,11 +112,15 @@ unupdate.brmsfit_multiple <- function(model, verbose = TRUE, newdata = NULL, ...
     message("Sampling priors, please wait...")
   }
 
-  utils::capture.output(
-    model_prior <- try(suppressMessages(suppressWarnings(
-      stats::update(model, sample_prior = "only", newdata = newdata, refresh = 0)
-    )), silent = TRUE)
-  )
+  utils::capture.output(model_prior <-
+    try(suppressMessages(suppressWarnings(
+      stats::update(
+        model,
+        sample_prior = "only",
+        newdata = newdata,
+        refresh = 0
+      )
+    )), silent = TRUE))
 
   if (is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior)) {
@@ -140,9 +141,7 @@ unupdate.brmsfit_multiple <- function(model, verbose = TRUE, newdata = NULL, ...
 #' @export
 #' @rdname unupdate
 unupdate.blavaan <- function(model, verbose = TRUE, ...) {
-  if (!requireNamespace("blavaan")) {
-    stop("Package \"blavaan\" needed for this function to work. Please install it.")
-  }
+  insight::check_if_installed("blavaan")
 
   cl <- model@call
   if (isTRUE(eval(cl$prisamp))) {

@@ -3,7 +3,8 @@
 #' Refit Bayesian model as frequentist. Can be useful for comparisons.
 #'
 #' @param model A Bayesian model.
-#' @param data Data used by the model. If \code{NULL}, will try to extract it from the model.
+#' @param data Data used by the model. If \code{NULL}, will try to extract it
+#'   from the model.
 #' @examples
 #' \donttest{
 #' # Rstanarm ----------------------
@@ -55,9 +56,8 @@ convert_bayesian_as_frequentist <- function(model, data = NULL) {
   family <- called$family
 
   if (info$is_mixed) {
-    if (!requireNamespace("lme4", quietly = TRUE)) {
-      stop("Package 'lme4' required for this function to work. Please install it by running `install.packages('lme4')`.")
-    }
+    insight::check_if_installed("lme4")
+
     if (info$is_linear) {
       freq <- lme4::lmer(formula, data = data)
     } else {

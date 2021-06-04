@@ -86,7 +86,6 @@ format.bayesfactor_models <- function(x,
                                       caption = NULL,
                                       exact = TRUE,
                                       ...) {
-
   BFE <- x
   denominator <- attr(BFE, "denominator")
   grid.type <- attr(BFE, "BF_method")
@@ -100,7 +99,7 @@ format.bayesfactor_models <- function(x,
 
   BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
 
-  if (any((sgn <- sign(BFE$log_BF)<0)[!is.na(BFE$log_BF)])) {
+  if (any((sgn <- sign(BFE$log_BF) < 0)[!is.na(BFE$log_BF)])) {
     BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
   }
 
@@ -159,7 +158,6 @@ format.bayesfactor_inclusion <- function(x,
                                          caption = NULL,
                                          exact = TRUE,
                                          ...) {
-
   priorOdds <- attr(x, "priorOdds")
   matched <- attr(x, "matched")
 
@@ -170,7 +168,7 @@ format.bayesfactor_inclusion <- function(x,
   }
   BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
 
-  if (any((sgn <- sign(BFE$log_BF)<0)[!is.na(BFE$log_BF)])) {
+  if (any((sgn <- sign(BFE$log_BF) < 0)[!is.na(BFE$log_BF)])) {
     BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
   }
 
@@ -194,7 +192,7 @@ format.bayesfactor_inclusion <- function(x,
     }
   } else {
     footer <- .compact_list(list(
-      paste0("Compared among: ",if (matched) "matched models only" else "all models"),
+      paste0("Compared among: ", if (matched) "matched models only" else "all models"),
       paste0("Priors odds: ", if (!is.null(priorOdds)) "custom" else "uniform-equal"),
       if (log) "Bayes Factors are on the log-scale."
     ))
@@ -215,7 +213,6 @@ format.bayesfactor_restricted <- function(x,
                                           caption = NULL,
                                           exact = TRUE,
                                           ...) {
-
   BFE <- as.data.frame(x)
 
   # Format
@@ -224,7 +221,7 @@ format.bayesfactor_restricted <- function(x,
   }
   BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
 
-  if (any((sgn <- sign(BFE$log_BF)<0)[!is.na(BFE$log_BF)])) {
+  if (any((sgn <- sign(BFE$log_BF) < 0)[!is.na(BFE$log_BF)])) {
     BFE$BF[sgn] <- paste0("-", BFE$BF[sgn])
   }
   BFE$log_BF <- NULL
@@ -271,14 +268,14 @@ format.bayesfactor_parameters <- function(x,
 
   x$BF_override <- insight::format_bf(abs(x$log_BF), name = NULL, exact = exact, ...)
 
-  if (any((sgn <- sign(x$log_BF)<0)[!is.na(x$log_BF)])) {
+  if (any((sgn <- sign(x$log_BF) < 0)[!is.na(x$log_BF)])) {
     x$BF_override[sgn] <- paste0("-", x$BF_override[sgn])
   }
   x$log_BF <- NULL
 
   # format columns and values of data frame
   out <- insight::format_table(x, digits = digits, format = format, ...)
-  colnames(out)[colnames(out)=="BF_override"] <- "BF"
+  colnames(out)[colnames(out) == "BF_override"] <- "BF"
 
   # table caption
   caption <- sprintf(

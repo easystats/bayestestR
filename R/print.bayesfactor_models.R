@@ -53,7 +53,7 @@ print.bayesfactor_models_matrix <- function(x, digits = 2, log = FALSE, exact = 
   # Format values
   x <- unclass(x)
   if (!log) x <- exp(x)
-  sgn <- sign(x)<0
+  sgn <- sign(x) < 0
   x <- insight::format_bf(abs(x), name = NULL, exact = exact, ...)
   diag(x) <- if (log) "0" else "1"
   if (any(sgn)) x[sgn] <- paste0("-", x[sgn])

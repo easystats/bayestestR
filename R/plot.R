@@ -1,109 +1,83 @@
 #' @export
 plot.equivalence_test <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot results from equivalence-test. Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot results from equivalence-test")
   NextMethod()
 }
 
 
 #' @export
 plot.p_direction <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot results from p_direction(). Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot results from p_direction()")
   NextMethod()
 }
 
 
 #' @export
 plot.point_estimate <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot point-estimates. Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot point-estimates")
   NextMethod()
 }
 
 
 #' @export
 plot.map_estimate <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot point-estimates. Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot point-estimates")
   NextMethod()
 }
 
 
 #' @export
 plot.rope <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot ROPE. Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot ROPE")
   NextMethod()
 }
 
 
 #' @export
 plot.bayestestR_hdi <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot HDI. Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot HDI")
   NextMethod()
 }
 
 
 #' @export
 plot.bayestestR_eti <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot credible intervals. Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot credible intervals")
   NextMethod()
 }
 
 #' @export
 plot.bayestestR_si <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot support intervals. Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot support intervals")
   NextMethod()
 }
 
 #' @export
 plot.bayesfactor_parameters <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot Savage-Dickey Bayes factor. Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot Savage-Dickey Bayes factor")
   NextMethod()
 }
 
 #' @export
 plot.bayesfactor_models <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot models' Bayes factors. Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot models' Bayes factors")
   NextMethod()
 }
 
 #' @export
 plot.estimate_density <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot densities. Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot densities")
   NextMethod()
 }
 
 #' @export
 plot.estimate_density_df <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot densities. Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot models' densities")
   NextMethod()
 }
 
 #' @export
 plot.p_significance <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot practical significance Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot practical significance")
   NextMethod()
 }

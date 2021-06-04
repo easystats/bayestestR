@@ -57,12 +57,19 @@
 #'       the indirect effect is also called \emph{average causal mediation effects}
 #'       (ACME). See also \cite{Tingley et al. 2014} and \cite{Imai et al. 2010}.
 #'
-#' @note There is an \code{as.data.frame()} method that returns the posterior samples of the effects, which can be used for further processing in the different \pkg{bayestestR} package.
+#' @note There is an \code{as.data.frame()} method that returns the posterior
+#'   samples of the effects, which can be used for further processing in the
+#'   different \pkg{bayestestR} package.
 #'
 #' @references
 #' \itemize{
-#' \item Imai, K., Keele, L. and Tingley, D. (2010) A General Approach to Causal Mediation Analysis, Psychological Methods, Vol. 15, No. 4 (December), pp. 309-334.
-#' \item Tingley, D., Yamamoto, T., Hirose, K., Imai, K. and Keele, L. (2014). mediation: R package for Causal Mediation Analysis, Journal of Statistical Software, Vol. 59, No. 5, pp. 1-38.
+#' \item Imai, K., Keele, L. and Tingley, D. (2010) A General Approach to Causal
+#' Mediation Analysis, Psychological Methods, Vol. 15, No. 4 (December), pp.
+#' 309-334.
+#'
+#' \item Tingley, D., Yamamoto, T., Hirose, K., Imai, K. and Keele, L. (2014).
+#' mediation: R package for Causal Mediation Analysis, Journal of Statistical
+#' Software, Vol. 59, No. 5, pp. 1-38.
 #' }
 #'
 #' @seealso The \pkg{mediation} package for a causal mediation analysis in
@@ -112,7 +119,14 @@ mediation <- function(model, ...) {
 
 #' @rdname mediation
 #' @export
-mediation.brmsfit <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = 0.95, method = "ETI", ...) {
+mediation.brmsfit <- function(model,
+                              treatment,
+                              mediator,
+                              response = NULL,
+                              centrality = "median",
+                              ci = 0.95,
+                              method = "ETI",
+                              ...) {
   .mediation(
     model = model,
     treatment = treatment,
@@ -151,7 +165,16 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
 
 
 #' @importFrom insight model_info find_response find_predictors get_parameters
-.mediation <- function(model, treatment, mediator, response = NULL, centrality = "median", ci = 0.95, method = "ETI", pattern = "b_%s_%s", ...) {
+.mediation <- function(model,
+                       treatment,
+                       mediator,
+                       response = NULL,
+                       centrality = "median",
+                       ci = 0.95,
+                       method = "ETI",
+                       pattern = "b_%s_%s",
+                       ...) {
+
   # only one HDI interval
   if (length(ci) > 1) ci <- ci[1]
 
@@ -267,13 +290,7 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
 }
 
 
-
-
-
-
-
 # methods ---------------------
-
 
 #' @export
 as.data.frame.bayestestR_mediation <- function(x, ...) {
@@ -281,11 +298,7 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 }
 
 
-
-
-
 # helper ---------------------------------
-
 
 #' @importFrom insight get_data
 .fix_factor_name <- function(model, variable) {
@@ -306,12 +319,6 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 
   variable
 }
-
-
-
-
-
-
 
 
 
@@ -360,8 +367,6 @@ print.bayestestR_mediation <- function(x, digits = 3, ...) {
 
 #' @export
 plot.bayestestR_mediation <- function(x, ...) {
-  if (!requireNamespace("see", quietly = TRUE)) {
-    stop("Package 'see' needed to plot results from mediation analysis. Please install it by running `install.packages('see')`.")
-  }
+  insight::check_if_installed("see", "to plot results from mediation analysis")
   NextMethod()
 }

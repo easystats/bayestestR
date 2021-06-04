@@ -67,11 +67,10 @@
 
 #' @keywords internal
 #' @importFrom stats update
-.clean_priors_and_posteriors.emmGrid <- function(posterior, prior,
+.clean_priors_and_posteriors.emmGrid <- function(posterior,
+                                                 prior,
                                                  verbose = TRUE) {
-  if (!requireNamespace("emmeans")) {
-    stop("Package 'emmeans' required for this function to work. Please install it by running `install.packages('emmeans')`.")
-  }
+  insight::check_if_installed("emmeans")
 
   if (is.null(prior)) {
     prior <- posterior
@@ -262,11 +261,14 @@
 #' @importFrom stats median mad approx
 #' @importFrom utils stack
 #' @keywords internal
-.make_BF_plot_data <- function(posterior, prior, direction, null,
-                               extend_scale = 0.05, precision = 2^8, ...) {
-  if (!requireNamespace("logspline")) {
-    stop("Package \"logspline\" needed for this function to work. Please install it.")
-  }
+.make_BF_plot_data <- function(posterior,
+                               prior,
+                               direction,
+                               null,
+                               extend_scale = 0.05,
+                               precision = 2^8,
+                               ...) {
+  insight::check_if_installed("logspline")
 
   estimate_samples_density <- function(samples) {
     nm <- .safe_deparse(substitute(samples))
@@ -384,9 +386,7 @@ as.double.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion
 
 #' @keywords internal
 .logspline <- function(x, ...) {
-  if (!requireNamespace("logspline")) {
-    stop("Package \"logspline\" needed for this function to work. Please install it.")
-  }
+  insight::check_if_installed("logspline")
 
   # arg_names <- names(formals(logspline::logspline, envir = parent.frame()))
   arg_names <- names(formals(logspline::logspline)) # support R<3.6.0

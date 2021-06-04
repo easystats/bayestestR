@@ -61,7 +61,7 @@ Description: Provides utilities to describe posterior
 Depends:
     R (>= 3.4)
 Imports:
-    insight (>= 0.13.2),
+    insight (>= 0.14.1),
     methods,
     stats,
     utils
