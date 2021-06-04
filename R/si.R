@@ -242,9 +242,7 @@ si.get_predicted <- function(posterior, ...) {
 #' @importFrom stats median mad na.omit
 #' @keywords internal
 .si <- function(posterior, prior, BF = 1, extend_scale = 0.05, precision = 2^8, ...) {
-  if (!requireNamespace("logspline")) {
-    stop("Package \"logspline\" needed for this function to work. Please install it.")
-  }
+  insight::check_if_installed("logspline")
 
   if (isTRUE(all.equal(prior, posterior))) {
     return(c(NA, NA))

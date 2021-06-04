@@ -232,16 +232,15 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
 #' @keywords internal
 .bayesfactor_models_stan_REG <- function(mods, denominator, verbose = TRUE) {
-  if (!requireNamespace("bridgesampling")) {
-    stop("Package 'bridgesampling' required for this function to work. Please install it by running `install.packages('bridgesampling')`.")
-  }
+  insight::check_if_installed("bridgesampling")
 
   # Test that all is good:
   resps <- lapply(mods, insight::get_response)
   from_same_data_as_den <- sapply(resps[-denominator],
-                                  identical,
-                                  y = resps[[denominator]]
+    identical,
+    y = resps[[denominator]]
   )
+
   if (!all(from_same_data_as_den)) {
     stop("Models were not computed from the same data.")
   }
@@ -250,9 +249,11 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   if (verbose) {
     message("Computation of Bayes factors: estimating marginal likelihood, please wait...")
   }
+
   mML <- lapply(mods, function(x) {
     bridgesampling::bridge_sampler(x, silent = TRUE)
   })
+
   mBFs <- sapply(mML, function(x) {
     bf <- bridgesampling::bf(x, mML[[denominator]], log = TRUE)
     bf[["bf"]]
@@ -269,7 +270,6 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 }
 
 .bayesfactor_models_stan_SEM <- function(mods, denominator, verbose = TRUE) {
-
   capture.output(
     suppressWarnings(
       mBFs <- sapply(mods, function(m) {
@@ -288,9 +288,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
 #' @export
 bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
-  if (!requireNamespace("rstanarm")) {
-    stop("Package 'rstanarm' required for this function to work. Please install it by running `install.packages('rstanarm')`.")
-  }
+  insight::check_if_installed("rstanarm")
 
   # Organize the models and their names
   mods <- list(...)
@@ -308,12 +306,7 @@ bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
 
 #' @export
 bayesfactor_models.brmsfit <- function(..., denominator = 1, verbose = TRUE) {
-  if (!requireNamespace("brms")) {
-    stop("Package 'brms' required for this function to work. Please install it by running `install.packages('brms')`.")
-  }
-  if (!("brms" %in% .packages())) {
-    stop("This function requires package 'brms' to be loaded. Please run `library(brms)`.")
-  }
+  insight::check_if_installed("brms")
 
   # Organize the models and their names
   mods <- list(...)
@@ -332,9 +325,7 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1, verbose = TRUE) {
 
 #' @export
 bayesfactor_models.blavaan <- function(..., denominator = 1, verbose = TRUE) {
-  if (!requireNamespace("blavaan")) {
-    stop("Package 'blavaan' required for this function to work. Please install it by running `install.packages('blavaan')`.")
-  }
+  insight::check_if_installed("blavaan")
 
   # Organize the models and their names
   mods <- list(...)
@@ -350,14 +341,12 @@ bayesfactor_models.blavaan <- function(..., denominator = 1, verbose = TRUE) {
   .bayesfactor_models_stan(mods, denominator = denominator, verbose = verbose)
 }
 
-
-
 #' @export
 bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
   models <- c(...)
-  if (!requireNamespace("BayesFactor")) {
-    stop("Package 'BayesFactor' required for this function to work. Please install it by running `install.packages('BayesFactor')`.")
-  }
+
+  insight::check_if_installed("BayesFactor")
+
   mBFs <- c(0, BayesFactor::extractBF(models, TRUE, TRUE))
   mforms <- sapply(c(models@denominator, models@numerator), function(x) x@shortName)
 

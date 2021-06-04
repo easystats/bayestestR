@@ -15,7 +15,8 @@ simulate_difference(n = 100, d = 0.5, names = NULL, ...)
 \arguments{
 \item{n}{The number of observations to be generated.}
 
-\item{r}{A value or vector corresponding to the desired correlation coefficients.}
+\item{r}{A value or vector corresponding to the desired correlation
+coefficients.}
 
 \item{mean}{A value or vector corresponding to the mean of the variables.}
 
@@ -25,7 +26,8 @@ simulate_difference(n = 100, d = 0.5, names = NULL, ...)
 
 \item{...}{Arguments passed to or from other methods.}
 
-\item{d}{A value or vector corresponding to the desired difference between the groups.}
+\item{d}{A value or vector corresponding to the desired difference between
+the groups.}
 }
 \description{
 Simulate data with specific characteristics.

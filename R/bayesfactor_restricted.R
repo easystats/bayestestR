@@ -126,7 +126,8 @@ bayesfactor_restricted.brmsfit <- bayesfactor_restricted.stanreg
 bayesfactor_restricted.blavaan <- function(posterior, hypothesis, prior = NULL,
                                            verbose = TRUE, ...) {
   samps <- .clean_priors_and_posteriors(posterior, prior,
-                                        verbose = verbose)
+    verbose = verbose
+  )
 
   # Get savage-dickey BFs
   bayesfactor_restricted.data.frame(

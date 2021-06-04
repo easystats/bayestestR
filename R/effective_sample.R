@@ -42,9 +42,7 @@ effective_sample.brmsfit <- function(model, effects = c("fixed", "random", "all"
       parameters = parameters
     )
 
-  if (!requireNamespace("rstan", quietly = TRUE)) {
-    stop("Package 'rstan' required for this function to work. Please install it by running `install.packages('stan')`.")
-  }
+  insight::check_if_installed("rstan")
 
   s <- rstan::summary(model$fit)$summary
   s <- subset(s, subset = make.names(rownames(s)) %in% colnames(pars))
@@ -99,9 +97,7 @@ effective_sample.stanfit <- function(model, effects = c("fixed", "random", "all"
       parameters = parameters
     )
 
-  if (!requireNamespace("rstan", quietly = TRUE)) {
-    stop("Package 'rstan' required for this function to work. Please install it.")
-  }
+  insight::check_if_installed("rstan")
 
   s <- as.data.frame(rstan::summary(model)$summary)
   s <- s[rownames(s) %in% colnames(pars), ]
@@ -118,9 +114,7 @@ effective_sample.stanfit <- function(model, effects = c("fixed", "random", "all"
 #' @rdname effective_sample
 #' @export
 effective_sample.blavaan <- function(model, parameters = NULL, ...) {
-  if (!requireNamespace("blavaan", quietly = TRUE)) {
-    stop("Package 'blavaan' required for this function to work. Please install it.")
-  }
+  insight::check_if_installed("blavaan")
 
   ESS <- blavaan::blavInspect(model, what = "neff")
 

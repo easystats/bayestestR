@@ -11,7 +11,6 @@
 #' bic4 <- BIC(lm(Sepal.Length ~ Species * Petal.Length, data = iris))
 #'
 #' bic_to_bf(c(bic1, bic2, bic3, bic4), denominator = bic1)
-#'
 #' @return The Bayes Factors corresponding to the BIC values against the denominator.
 #'
 #' @export

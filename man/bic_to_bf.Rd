@@ -26,5 +26,4 @@ bic3 <- BIC(lm(Sepal.Length ~ Species + Petal.Length, data = iris))
 bic4 <- BIC(lm(Sepal.Length ~ Species * Petal.Length, data = iris))
 
 bic_to_bf(c(bic1, bic2, bic3, bic4), denominator = bic1)
-
 }

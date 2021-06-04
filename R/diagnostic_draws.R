@@ -8,9 +8,11 @@
 #' set.seed(333)
 #'
 #' if (require("brms", quietly = TRUE)) {
-#'   model <- brm(mpg ~ wt * cyl * vs, data = mtcars,
-#'                iter = 100, control = list(adapt_delta = 0.80),
-#'                refresh = 0)
+#'   model <- brm(mpg ~ wt * cyl * vs,
+#'     data = mtcars,
+#'     iter = 100, control = list(adapt_delta = 0.80),
+#'     refresh = 0
+#'   )
 #'   diagnostic_draws(model)
 #' }
 #' }
@@ -25,13 +27,17 @@ diagnostic_draws <- function(posteriors, ...) {
 
 #' @export
 diagnostic_draws.brmsfit <- function(posteriors, ...) {
-  if (!requireNamespace("brms", quietly = TRUE)) {
-    stop("Package 'brms' required for this function to work. Please install it by running `install.packages('brms')`.")
-  }
+  insight::check_if_installed("brms")
 
   data <- brms::nuts_params(posteriors)
   data$idvar <- paste0(data$Chain, "_", data$Iteration)
-  out <- reshape(data, v.names = "Value", idvar = "idvar", timevar = "Parameter", direction = "wide")
+  out <- reshape(
+    data,
+    v.names = "Value",
+    idvar = "idvar",
+    timevar = "Parameter",
+    direction = "wide"
+  )
   out$idvar <- NULL
   out <- merge(out, brms::log_posterior(posteriors), by = c("Chain", "Iteration"), sort = FALSE)
 

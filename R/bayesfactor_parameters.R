@@ -293,7 +293,8 @@ bayesfactor_parameters.blavaan <- function(posterior,
   cleaned_parameters <- insight::clean_parameters(posterior)
 
   samps <- .clean_priors_and_posteriors(posterior, prior,
-                                        verbose = verbose)
+    verbose = verbose
+  )
 
   # Get BFs
   temp <- bayesfactor_parameters.data.frame(
@@ -396,10 +397,7 @@ bayesfactor_parameters.data.frame <- function(posterior,
     return(1)
   }
 
-  if (!requireNamespace("logspline")) {
-    stop("Package \"logspline\" needed for this function to work. Please install it.")
-  }
-
+  insight::check_if_installed("logspline")
 
   if (length(null) == 1) {
     relative_density <- function(samples) {
