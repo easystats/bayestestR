@@ -368,7 +368,10 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
     </tr>
     <tr>
       <th>keep_iterations</th>
-      <td><p>Keep all iterations (posterior draws) as additional columns.</p></td>
+      <td><p>If <code>TRUE</code>, will keep all iterations (draws) of
+bootstrapped or Bayesian models. They will be added as additional columns
+named <code>iter_1, iter_2, ...</code>. You can reshape them to a long format by
+running <code><a href='reshape_iterations.html'>bayestestR::reshape_iterations()</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
