@@ -90,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.5</span>
       </span>
     </div>
 
@@ -201,6 +201,7 @@
   test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"p_direction"</span>, <span class='st'>"rope"</span><span class='op'>)</span>,
   rope_range <span class='op'>=</span> <span class='st'>"default"</span>,
   rope_ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  keep_iterations <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span>
 
@@ -214,6 +215,7 @@
   test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"p_direction"</span>, <span class='st'>"rope"</span><span class='op'>)</span>,
   rope_range <span class='op'>=</span> <span class='st'>"default"</span>,
   rope_ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  keep_iterations <span class='op'>=</span> <span class='cn'>FALSE</span>,
   bf_prior <span class='op'>=</span> <span class='cn'>NULL</span>,
   BF <span class='op'>=</span> <span class='fl'>1</span>,
   <span class='va'>...</span>
@@ -229,6 +231,7 @@
   test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"p_direction"</span>, <span class='st'>"rope"</span><span class='op'>)</span>,
   rope_range <span class='op'>=</span> <span class='st'>"default"</span>,
   rope_ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  keep_iterations <span class='op'>=</span> <span class='cn'>FALSE</span>,
   bf_prior <span class='op'>=</span> <span class='cn'>NULL</span>,
   diagnostic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span><span class='op'>)</span>,
   priors <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -250,6 +253,7 @@
   test <span class='op'>=</span> <span class='st'>"p_direction"</span>,
   rope_range <span class='op'>=</span> <span class='st'>"default"</span>,
   rope_ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  keep_iterations <span class='op'>=</span> <span class='cn'>FALSE</span>,
   bf_prior <span class='op'>=</span> <span class='cn'>NULL</span>,
   diagnostic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span><span class='op'>)</span>,
   priors <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -270,6 +274,7 @@
   test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"p_direction"</span>, <span class='st'>"rope"</span><span class='op'>)</span>,
   rope_range <span class='op'>=</span> <span class='st'>"default"</span>,
   rope_ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  keep_iterations <span class='op'>=</span> <span class='cn'>FALSE</span>,
   bf_prior <span class='op'>=</span> <span class='cn'>NULL</span>,
   diagnostic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span><span class='op'>)</span>,
   effects <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"fixed"</span>, <span class='st'>"random"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
@@ -291,6 +296,7 @@
   test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"p_direction"</span>, <span class='st'>"rope"</span><span class='op'>)</span>,
   rope_range <span class='op'>=</span> <span class='st'>"default"</span>,
   rope_ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  keep_iterations <span class='op'>=</span> <span class='cn'>FALSE</span>,
   diagnostic <span class='op'>=</span> <span class='st'>"ESS"</span>,
   parameters <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
@@ -306,6 +312,7 @@
   test <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"p_direction"</span>, <span class='st'>"rope"</span>, <span class='st'>"bf"</span><span class='op'>)</span>,
   rope_range <span class='op'>=</span> <span class='st'>"default"</span>,
   rope_ci <span class='op'>=</span> <span class='fl'>0.95</span>,
+  keep_iterations <span class='op'>=</span> <span class='cn'>FALSE</span>,
   priors <span class='op'>=</span> <span class='cn'>TRUE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
@@ -358,6 +365,10 @@ the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></td>
       <th>rope_ci</th>
       <td><p>The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.</p></td>
+    </tr>
+    <tr>
+      <th>keep_iterations</th>
+      <td><p>Keep all iterations (posterior draws) as additional columns.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -433,15 +444,24 @@ for the output.</p></td>
   <span class='fu'>describe_posterior</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
   <span class='fu'>describe_posterior</span><span class='op'>(</span><span class='va'>df</span>, centrality <span class='op'>=</span> <span class='st'>"all"</span>, dispersion <span class='op'>=</span> <span class='cn'>TRUE</span>, test <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
   <span class='fu'>describe_posterior</span><span class='op'>(</span><span class='va'>df</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.80</span>, <span class='fl'>0.90</span><span class='op'>)</span><span class='op'>)</span>
+
+  <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='reshape_iterations.html'>reshape_iterations</a></span><span class='op'>(</span><span class='fu'>describe_posterior</span><span class='op'>(</span><span class='va'>df</span>, keep_iterations <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)') to get meaningful results.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify priors (with column order matching 'posterior') to get meaningful results.</span></div><div class='output co'>#&gt; Summary of Posterior Distribution
-#&gt; 
-#&gt; Parameter |    Median |        80% CI |        90% CI |     pd |          ROPE | % in ROPE
-#&gt; ------------------------------------------------------------------------------------------
-#&gt; X1        |     -0.02 | [-1.05, 1.17] | [-2.09, 1.17] | 51.00% | [-0.10, 0.10] |     9.38%
-#&gt; X2        |     -0.19 | [-1.26, 1.33] | [-1.36, 1.87] | 55.00% | [-0.10, 0.10] |     2.08%
-#&gt; X3        |     -0.21 | [-1.13, 1.33] | [-1.87, 1.23] | 60.00% | [-0.10, 0.10] |    12.50%
-#&gt; X4        | -4.20e-04 | [-1.49, 1.39] | [-1.49, 1.96] | 50.00% | [-0.10, 0.10] |    10.42%</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)') to get meaningful results.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify priors (with column order matching 'posterior') to get meaningful results.</span></div><div class='output co'>#&gt;   Parameter      Median   CI    CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high
+#&gt; 1        X1 -0.40662582 0.95 -2.307799 1.680276 0.60    0.95     -0.1       0.1
+#&gt; 2        X2  0.52073304 0.95 -1.656892 1.864191 0.60    0.95     -0.1       0.1
+#&gt; 3        X3  0.34622569 0.95 -1.765082 1.637982 0.60    0.95     -0.1       0.1
+#&gt; 4        X4  0.05189288 0.95 -2.088871 1.718379 0.55    0.95     -0.1       0.1
+#&gt; 5        X1 -0.40662582 0.95 -2.307799 1.680276 0.60    0.95     -0.1       0.1
+#&gt; 6        X2  0.52073304 0.95 -1.656892 1.864191 0.60    0.95     -0.1       0.1
+#&gt;   ROPE_Percentage iter_index iter_group iter_value
+#&gt; 1            0.00          1          1 -0.8741465
+#&gt; 2            0.00          2          1 -0.5754661
+#&gt; 3            0.05          3          1 -0.8122574
+#&gt; 4            0.15          4          1 -0.2614547
+#&gt; 5            0.00          1          2 -1.0438731
+#&gt; 6            0.00          2          2  1.1829591</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/rvlenth/emmeans'>"emmeans"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
