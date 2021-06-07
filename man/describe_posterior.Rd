@@ -160,7 +160,10 @@ the bounds are set to \code{x +- 0.1*SD(response)}.}
 \item{rope_ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
 
-\item{keep_iterations}{Keep all iterations (posterior draws) as additional columns.}
+\item{keep_iterations}{If \code{TRUE}, will keep all iterations (draws) of
+bootstrapped or Bayesian models. They will be added as additional columns
+named \code{iter_1, iter_2, ...}. You can reshape them to a long format by
+running \code{\link[bayestestR:reshape_iterations]{bayestestR::reshape_iterations()}}.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 
