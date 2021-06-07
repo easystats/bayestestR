@@ -19,6 +19,7 @@ describe_posterior(
   test = c("p_direction", "rope"),
   rope_range = "default",
   rope_ci = 0.95,
+  keep_iterations = FALSE,
   ...
 )
 
@@ -31,6 +32,7 @@ describe_posterior(
   test = c("p_direction", "rope"),
   rope_range = "default",
   rope_ci = 0.95,
+  keep_iterations = FALSE,
   bf_prior = NULL,
   BF = 1,
   ...
@@ -45,6 +47,7 @@ describe_posterior(
   test = c("p_direction", "rope"),
   rope_range = "default",
   rope_ci = 0.95,
+  keep_iterations = FALSE,
   bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"),
   priors = FALSE,
@@ -65,6 +68,7 @@ describe_posterior(
   test = "p_direction",
   rope_range = "default",
   rope_ci = 0.95,
+  keep_iterations = FALSE,
   bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"),
   priors = FALSE,
@@ -84,6 +88,7 @@ describe_posterior(
   test = c("p_direction", "rope"),
   rope_range = "default",
   rope_ci = 0.95,
+  keep_iterations = FALSE,
   bf_prior = NULL,
   diagnostic = c("ESS", "Rhat"),
   effects = c("fixed", "random", "all"),
@@ -104,6 +109,7 @@ describe_posterior(
   test = c("p_direction", "rope"),
   rope_range = "default",
   rope_ci = 0.95,
+  keep_iterations = FALSE,
   diagnostic = "ESS",
   parameters = NULL,
   ...
@@ -118,6 +124,7 @@ describe_posterior(
   test = c("p_direction", "rope", "bf"),
   rope_range = "default",
   rope_ci = 0.95,
+  keep_iterations = FALSE,
   priors = TRUE,
   verbose = TRUE,
   ...
@@ -152,6 +159,8 @@ the bounds are set to \code{x +- 0.1*SD(response)}.}
 
 \item{rope_ci}{The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.}
+
+\item{keep_iterations}{Keep all iterations (posterior draws) as additional columns.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 
@@ -200,6 +209,9 @@ if (require("logspline")) {
   describe_posterior(df)
   describe_posterior(df, centrality = "all", dispersion = TRUE, test = "all")
   describe_posterior(df, ci = c(0.80, 0.90))
+
+  df <- data.frame(replicate(4, rnorm(20)))
+  head(reshape_iterations(describe_posterior(df, keep_iterations = TRUE)))
 }
 \dontrun{
 # rstanarm models
