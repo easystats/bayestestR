@@ -338,9 +338,9 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
   out <- .remove_column(out[order(out$.rowid), ], remove_columns)
 
   # Add iterations
-  if(keep_iterations == TRUE) {
+  if (keep_iterations == TRUE) {
     row_order <- out$Parameter
-    if(insight::is_model(x)) {
+    if (insight::is_model(x)) {
       iter <- as.data.frame(t(insight::get_parameters(x, ...)))
     } else {
       iter <- as.data.frame(t(as.data.frame(x, ...)))
