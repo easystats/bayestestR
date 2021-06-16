@@ -83,6 +83,7 @@ reference:
 - title: "Utilities"
   contents:
   - simulate_correlation
+  - simulate_simpson
   - mediation
   - convert_bayesian_as_frequentist
   - contr.orthonorm
