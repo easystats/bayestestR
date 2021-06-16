@@ -99,7 +99,7 @@ Weighting is done by comparing posterior model probabilities, via bayesfactor_mo
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -362,7 +362,7 @@ This function is similar in function to <code><a href='https://rdrr.io/pkg/brms/
 #&gt; 
 #&gt; Parameter | Median |        95% CI
 #&gt; ----------------------------------
-#&gt; Posterior |  -0.10 | [-1.35, 0.10]</div><div class='input'>
+#&gt; Posterior |  -0.12 | [-1.32, 0.07]</div><div class='input'>
 
 <span class='co'>## weighted prediction distributions via data.frames</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
@@ -401,13 +401,13 @@ This function is similar in function to <code><a href='https://rdrr.io/pkg/brms/
 #&gt; <span class='warning'>For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.</span></div><div class='output co'>#&gt; <span class='message'>Computation of Bayes factors: estimating marginal likelihood, please wait...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: 'prior_odds = NULL'; Using uniform priors odds.</span>
 #&gt; <span class='warning'>For weighted data frame, 'prior_odds' should be specified as a numeric vector.</span></div><div class='output co'>#&gt; Highest Density Interval
 #&gt; 
-#&gt; Parameter         |       95% HDI
-#&gt; ---------------------------------
-#&gt; Mazda.RX4         | [6.79, 30.18]
-#&gt; Mazda.RX4.Wag     | [7.46, 31.40]
-#&gt; Datsun.710        | [9.30, 33.40]
-#&gt; Hornet.4.Drive    | [9.46, 34.53]
-#&gt; Hornet.Sportabout | [8.72, 32.33]</div><div class='input'><span class='co'># }</span>
+#&gt; Parameter         |        95% HDI
+#&gt; ----------------------------------
+#&gt; Mazda.RX4         | [ 6.57, 30.14]
+#&gt; Mazda.RX4.Wag     | [ 6.91, 31.09]
+#&gt; Datsun.710        | [10.40, 34.08]
+#&gt; Hornet.4.Drive    | [ 9.77, 35.22]
+#&gt; Hornet.Sportabout | [ 9.11, 32.21]</div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
