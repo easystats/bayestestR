@@ -1,3 +1,3 @@
 #' @export
-#' @importFrom insight reshape_ci
-insight::reshape_ci
+#' @importFrom datawizard reshape_ci
+datawizard::reshape_ci

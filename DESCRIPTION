@@ -62,6 +62,7 @@ Depends:
     R (>= 3.4)
 Imports:
     insight (>= 0.14.1),
+    datawizard,
     methods,
     stats,
     utils
