@@ -986,7 +986,7 @@ describe_posterior.BFBayesFactor <- function(posteriors,
   if (compute_bf) {
     tryCatch(
       {
-        out$BF <- as.data.frame(bayesfactor_models(posteriors[1], ...))[-1, ]$BF
+        out$log_BF <- as.data.frame(bayesfactor_models(posteriors[1], ...))[-1, ]$log_BF
       },
       error = function(e) {
         NULL
