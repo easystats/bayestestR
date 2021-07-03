@@ -1,4 +1,10 @@
-# bayestestR 0.9.0.00001
+# bayestestR 0.10.0.1
+
+## Bug fixes
+
+* Fixed bug in `describe_posterior.BFBayesFactor()` where Bayes factors were missing from out put ( #442 ).
+
+# bayestestR 0.10.0
 
 ## Breaking
 
