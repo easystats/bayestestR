@@ -954,6 +954,7 @@ describe_posterior.BFBayesFactor <- function(posteriors,
   # Remove BF from list
   if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
     test <- test[!test %in% c("bf", "bayesfactor", "bayes_factor")]
+    if (length(test) == 0L) test <- NULL
     compute_bf <- TRUE
   } else {
     compute_bf <- FALSE
