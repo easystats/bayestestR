@@ -10,19 +10,20 @@
 #' @param groups Number of groups (groups can be participants, clusters,
 #'   anything).
 #' @param difference Difference between groups.
-#' @param group_prefix The prefix of the group name (e.g., "G_1", "G_2", "G_3",
-#'   ...).
+#' @param group_prefix The prefix of the group name (e.g., "G_1", "G_2", "G_3", ...).
 #'
 #' @return A dataset.
 #'
 #' @examples
 #' data <- simulate_simpson(n = 10, groups = 5, r = 0.5)
 #'
-#' library(ggplot2)
+#' if(require("ggplot2")) {
 #' ggplot(data, aes(x = V1, y = V2)) +
 #'   geom_point(aes(color = Group)) +
 #'   geom_smooth(aes(color = Group), method = "lm") +
 #'   geom_smooth(method = "lm")
+#' }
+#'
 #' @export
 simulate_simpson <- function(n = 100,
                              r = 0.5,
@@ -35,7 +36,7 @@ simulate_simpson <- function(n = 100,
 
   data <- data.frame()
   for (i in 1:groups) {
-    dat <- bayestestR::simulate_correlation(n = n, r = r)
+    dat <- simulate_correlation(n = n, r = r)
     dat$V1 <- dat$V1 + difference * i # (i * -sign(r))
     dat$V2 <- dat$V2 + difference * (i * -sign(r))
     dat$Group <- sprintf(paste0(group_prefix, "%0", nchar(trunc(abs(groups))), "d"), i)
