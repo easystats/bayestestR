@@ -236,7 +236,6 @@ bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = 
 }
 
 
-#' @importFrom insight clean_parameters
 #' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_parameters.stanreg <- function(posterior,
@@ -389,7 +388,6 @@ bayesfactor_parameters.data.frame <- function(posterior,
 
 
 #' @keywords internal
-#' @importFrom insight print_color
 .bayesfactor_parameters <- function(posterior, prior, direction = 0, null = 0, ...) {
   stopifnot(length(null) %in% c(1, 2))
 

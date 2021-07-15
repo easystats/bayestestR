@@ -100,7 +100,6 @@ check_prior.stanreg <- check_prior.brmsfit
 check_prior.blavaan <- check_prior.brmsfit
 
 
-#' @importFrom stats sd na.omit
 #' @keywords internal
 .check_prior <- function(priors, posteriors, method = "gelman", verbose = TRUE, cleaned_parameters = NULL) {
 

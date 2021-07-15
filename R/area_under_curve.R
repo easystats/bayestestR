@@ -20,7 +20,6 @@
 #' area_under_curve(x, y, method = "trapezoid")
 #' area_under_curve(x, y, method = "step")
 #' area_under_curve(x, y, method = "spline")
-#' @importFrom stats integrate splinefun
 #' @seealso DescTools
 #' @export
 area_under_curve <- function(x, y, method = c("trapezoid", "step", "spline"), ...) {

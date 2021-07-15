@@ -75,8 +75,6 @@
 #'   in Bayesian estimation. Advances in Methods and Practices in Psychological
 #'   Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
 #'
-#' @importFrom insight get_response model_info is_multivariate
-#' @importFrom stats sd
 #' @export
 rope_range <- function(x, ...) {
   UseMethod("rope_range")
@@ -117,7 +115,6 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
 # helper ------------------
 
 
-#' @importFrom stats sigma sd
 .rope_range <- function(x, information = NULL, response = NULL, verbose = TRUE) {
 
   # if(method != "legacy") {

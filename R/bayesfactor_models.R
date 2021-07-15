@@ -140,8 +140,6 @@
 #'   \item Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin & review, 14(5), 779-804.
 #'   \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 #' }
-#'
-#' @importFrom insight get_response is_model_supported
 #' @export
 bayesfactor_models <- function(..., denominator = 1, verbose = TRUE) {
   UseMethod("bayesfactor_models")
@@ -196,7 +194,6 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 }
 
 
-#' @importFrom insight get_response find_algorithm
 .bayesfactor_models_stan <- function(mods, denominator = 1, verbose = TRUE) {
 
   # Warn
@@ -467,7 +464,6 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 
 
 #' @keywords internal
-#' @importFrom insight find_formula
 .find_full_formula <- function(mod) {
   formulas <- insight::find_formula(mod)
 
@@ -488,7 +484,6 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 }
 
 #' @keywords internal
-#' @importFrom stats BIC
 .BIC_list <- function(x) {
   sapply(x, function(m) {
     tryCatch(

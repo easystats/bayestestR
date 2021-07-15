@@ -13,6 +13,8 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{insight}{\code{\link[insight:display]{print_html}}, \code{\link[insight:display]{print_md}}, \code{\link[insight]{reshape_ci}}}
+  \item{datawizard}{\code{\link[datawizard]{reshape_ci}}}
+
+  \item{insight}{\code{\link[insight:display]{print_html}}, \code{\link[insight:display]{print_md}}}
 }}
 

@@ -545,7 +545,6 @@ describe_posterior.emm_list <- describe_posterior.emmGrid
 
 #' @inheritParams insight::get_parameters
 #' @inheritParams diagnostic_posterior
-#' @importFrom insight find_algorithm
 #' @param priors Add the prior used for each parameter.
 #' @rdname describe_posterior
 #' @export
@@ -615,7 +614,6 @@ describe_posterior.stanreg <- function(posteriors,
 
 #' @inheritParams insight::get_parameters
 #' @inheritParams diagnostic_posterior
-#' @importFrom insight find_algorithm
 #' @param priors Add the prior used for each parameter.
 #' @rdname describe_posterior
 #' @export

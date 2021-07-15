@@ -34,8 +34,6 @@
 #' }
 #' @references Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. Advances in Methods and Practices in Psychological Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
 #'
-#' @importFrom insight get_response model_info is_multivariate
-#' @importFrom stats sd
 #' @export
 sexit_thresholds <- function(x, ...) {
   UseMethod("sexit_thresholds")
@@ -59,7 +57,6 @@ sexit_thresholds.brmsfit <- function(x, ...) {
 sexit_thresholds.stanreg <- sexit_thresholds.brmsfit
 
 #' @export
-#' @importFrom stats sd
 sexit_thresholds.BFBayesFactor <- function(x, ...) {
   fac <- 1
   if (inherits(x@numerator[[1]], "BFlinearModel")) {
@@ -150,7 +147,6 @@ sexit_thresholds.mlm <- function(x, ...) {
 # helper ------------------
 
 
-#' @importFrom stats sigma sd
 .sexit_thresholds <- function(x, information = NULL, response = NULL) {
   if (is.null(information) && is.null(response)) {
     norm <- 1

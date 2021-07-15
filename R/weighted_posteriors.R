@@ -146,7 +146,6 @@ weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, 
 
 #' @export
 #' @rdname weighted_posteriors
-#' @importFrom insight get_parameters
 weighted_posteriors.stanreg <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE,
                                         effects = c("fixed", "random", "all"),
                                         component = c("conditional", "zi", "zero_inflated", "all"),
@@ -259,7 +258,6 @@ weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 
 }
 
 #' @keywords internal
-#' @importFrom insight find_algorithm
 .total_samps <- function(mod) {
   x <- insight::find_algorithm(mod)
   if (is.null(x$iterations)) x$iterations <- x$sample

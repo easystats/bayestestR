@@ -24,7 +24,6 @@ unupdate <- function(model, verbose = TRUE, ...) {
 
 #' @export
 #' @rdname unupdate
-#' @importFrom stats update getCall
 unupdate.stanreg <- function(model, verbose = TRUE, ...) {
   insight::check_if_installed("rstanarm")
 
@@ -57,9 +56,6 @@ unupdate.stanreg <- function(model, verbose = TRUE, ...) {
 
 #' @export
 #' @rdname unupdate
-#' @importFrom stats update
-#' @importFrom utils capture.output
-#' @importFrom methods is
 unupdate.brmsfit <- function(model, verbose = TRUE, ...) {
   insight::check_if_installed("brms")
 
@@ -95,9 +91,6 @@ unupdate.brmsfit <- function(model, verbose = TRUE, ...) {
 
 #' @export
 #' @rdname unupdate
-#' @importFrom stats update
-#' @importFrom utils capture.output
-#' @importFrom methods is
 unupdate.brmsfit_multiple <- function(model,
                                       verbose = TRUE,
                                       newdata = NULL,

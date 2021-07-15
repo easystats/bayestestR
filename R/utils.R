@@ -52,7 +52,6 @@
 }
 
 
-#' @importFrom stats reshape
 #' @keywords internal
 .to_long <- function(x, names_to = "key", values_to = "value", columns = colnames(x)) {
   if (is.numeric(columns)) columns <- colnames(x)[columns]
@@ -244,7 +243,6 @@
 }
 
 
-#' @importFrom stats na.omit
 .n_unique <- function(x, na.rm = TRUE) {
   if (is.null(x)) {
     return(0)

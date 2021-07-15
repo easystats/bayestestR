@@ -39,7 +39,6 @@
 #' }
 #' }
 #'
-#' @importFrom stats lm glm
 #' @export
 convert_bayesian_as_frequentist <- function(model, data = NULL) {
   if (is.null(data)) {

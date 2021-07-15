@@ -209,7 +209,6 @@ bci.get_predicted <- function(x, ...) {
 # Helper ------------------------------------------------------------------
 
 
-#' @importFrom stats quantile
 .bci <- function(x, ci, verbose = TRUE) {
   check_ci <- .check_ci_argument(x, ci, verbose)
 

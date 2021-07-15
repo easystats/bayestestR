@@ -30,7 +30,6 @@
 #'   describe_prior(bf)
 #' }
 #' }
-#' @importFrom insight get_priors
 #' @export
 describe_prior <- function(model, ...) {
   UseMethod("describe_prior")

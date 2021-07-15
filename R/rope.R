@@ -112,7 +112,6 @@
 #' rope(bf)
 #' rope(bf, ci = c(.90, .95))
 #' }
-#' @importFrom insight get_parameters is_multivariate
 #' @export
 rope <- function(x, ...) {
   UseMethod("rope")

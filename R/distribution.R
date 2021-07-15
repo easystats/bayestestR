@@ -67,7 +67,6 @@ distribution_custom <- function(n, type = "norm", ..., random = FALSE) {
 
 #' @rdname distribution
 #' @inheritParams stats::rbeta
-#' @importFrom stats rbeta qbeta
 #' @export
 distribution_beta <- function(n, shape1, shape2, ncp = 0, random = FALSE, ...) {
   if (random) {
@@ -79,7 +78,6 @@ distribution_beta <- function(n, shape1, shape2, ncp = 0, random = FALSE, ...) {
 
 #' @rdname distribution
 #' @inheritParams stats::rbinom
-#' @importFrom stats qbinom rbinom
 #' @export
 distribution_binomial <- function(n, size = 1, prob = 0.5, random = FALSE, ...) {
   if (random) {
@@ -98,7 +96,6 @@ distribution_binom <- distribution_binomial
 
 #' @rdname distribution
 #' @inheritParams stats::rcauchy
-#' @importFrom stats rcauchy qcauchy
 #' @export
 distribution_cauchy <- function(n, location = 0, scale = 1, random = FALSE, ...) {
   if (random) {
@@ -110,7 +107,6 @@ distribution_cauchy <- function(n, location = 0, scale = 1, random = FALSE, ...)
 
 #' @rdname distribution
 #' @inheritParams stats::rchisq
-#' @importFrom stats rchisq qchisq
 #' @export
 distribution_chisquared <- function(n, df, ncp = 0, random = FALSE, ...) {
   if (random) {
@@ -128,7 +124,6 @@ distribution_chisq <- distribution_chisquared
 
 #' @rdname distribution
 #' @inheritParams stats::rgamma
-#' @importFrom stats rgamma qgamma
 #' @export
 distribution_gamma <- function(n, shape, scale = 1, random = FALSE, ...) {
   if (random) {
@@ -141,7 +136,6 @@ distribution_gamma <- function(n, shape, scale = 1, random = FALSE, ...) {
 
 #' @rdname distribution
 #' @inheritParams stats::rnorm
-#' @importFrom stats rbeta qbeta
 #' @export
 distribution_mixture_normal <- function(n, mean = c(-3, 3), sd = 1, random = FALSE, ...) {
   n <- round(n / length(mean))
@@ -160,7 +154,6 @@ distribution_mixture_normal <- function(n, mean = c(-3, 3), sd = 1, random = FAL
 
 #' @rdname distribution
 #' @inheritParams stats::rnorm
-#' @importFrom stats qnorm rnorm
 #' @export
 distribution_normal <- function(n, mean = 0, sd = 1, random = FALSE, ...) {
   if (random) {
@@ -179,7 +172,6 @@ distribution_gaussian <- distribution_normal
 #' @inheritParams stats::rnbinom
 #' @param phi Corresponding to \code{glmmTMB}'s implementation of nbinom
 #'   distribution, where \code{size=mu/phi}.
-#' @importFrom stats qnbinom rnbinom
 #' @export
 distribution_nbinom <- function(n, size, prob, mu, phi, random = FALSE, ...) {
   if (missing(size)) {
@@ -196,7 +188,6 @@ distribution_nbinom <- function(n, size, prob, mu, phi, random = FALSE, ...) {
 
 #' @rdname distribution
 #' @inheritParams stats::rpois
-#' @importFrom stats rpois qpois
 #' @export
 distribution_poisson <- function(n, lambda = 1, random = FALSE, ...) {
   if (random) {
@@ -209,7 +200,6 @@ distribution_poisson <- function(n, lambda = 1, random = FALSE, ...) {
 
 #' @rdname distribution
 #' @inheritParams stats::rt
-#' @importFrom stats rt qt
 #' @export
 distribution_student <- function(n, df, ncp, random = FALSE, ...) {
   if (random) {
@@ -260,7 +250,6 @@ distribution_tweedie <- function(n,
 
 #' @rdname distribution
 #' @inheritParams stats::runif
-#' @importFrom stats runif qunif
 #' @export
 distribution_uniform <- function(n, min = 0, max = 1, random = FALSE, ...) {
   if (random) {
@@ -274,7 +263,6 @@ distribution_uniform <- function(n, min = 0, max = 1, random = FALSE, ...) {
 
 #' @rdname distribution
 #' @inheritParams stats::rnorm
-#' @importFrom stats qnorm
 #' @export
 rnorm_perfect <- function(n, mean = 0, sd = 1) {
   .Deprecated("distribution_normal")
