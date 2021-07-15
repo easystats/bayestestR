@@ -31,7 +31,6 @@
 #' map_estimate(model)
 #' }
 #'
-#' @importFrom stats density
 #' @export
 map_estimate <- function(x, precision = 2^10, method = "kernel", ...) {
   UseMethod("map_estimate")
@@ -108,7 +107,6 @@ map_estimate.mcmc.list <- function(x, precision = 2^10, method = "kernel", ...) 
 }
 
 
-#' @importFrom insight get_parameters
 #' @keywords internal
 .map_estimate_models <- function(x, precision, method, ...) {
   l <- sapply(x, map_estimate, precision = precision, method = method, simplify = FALSE, ...)

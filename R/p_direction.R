@@ -116,7 +116,6 @@ pd <- p_direction
 
 
 
-#' @importFrom stats density
 #' @rdname p_direction
 #' @export
 p_direction.numeric <- function(x, method = "direct", null = 0, ...) {
@@ -235,7 +234,6 @@ p_direction.emmGrid <- function(x, method = "direct", null = 0, ...) {
 #' @export
 p_direction.emm_list <- p_direction.emmGrid
 
-#' @importFrom insight get_parameters
 #' @keywords internal
 .p_direction_models <- function(x, effects, component, parameters, method = "direct", null = 0, ...) {
   p_direction(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, null = null, ...)

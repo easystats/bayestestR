@@ -45,7 +45,6 @@
 
 
 
-#' @importFrom insight print_color export_table
 #' @export
 print.bayesfactor_models_matrix <- function(x, digits = 2, log = FALSE, exact = TRUE, ...) {
   orig_x <- x

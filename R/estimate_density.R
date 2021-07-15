@@ -77,15 +77,12 @@
 #'
 #' @references Deng, H., & Wickham, H. (2011). Density estimation in R. Electronic publication.
 #'
-#' @importFrom stats density
-#' @importFrom utils install.packages
 #' @export
 estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
   UseMethod("estimate_density")
 }
 
 
-#' @importFrom stats predict
 #' @keywords internal
 .estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, ...) {
   method <- match.arg(tolower(method), c("kernel", "logspline", "kernsmooth", "smooth", "mixture", "mclust"))
@@ -214,7 +211,6 @@ estimate_density.emm_list <- estimate_density.emmGrid
 
 
 
-#' @importFrom insight get_parameters
 #' @export
 estimate_density.stanreg <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
   effects <- match.arg(effects)
@@ -235,7 +231,6 @@ estimate_density.blavaan <- estimate_density.stanreg
 
 
 
-#' @importFrom insight get_parameters
 #' @export
 estimate_density.brmsfit <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   effects <- match.arg(effects)
@@ -264,7 +259,6 @@ estimate_density.MCMCglmm <- function(x, method = "kernel", precision = 2^10, ex
 
 
 
-#' @importFrom insight get_parameters
 #' @export
 estimate_density.mcmc <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", parameters = NULL, ...) {
   out <- estimate_density(insight::get_parameters(x, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
@@ -329,7 +323,6 @@ as.data.frame.density <- function(x, ...) {
 #' posterior <- distribution_normal(n = 10)
 #' density_at(posterior, 0)
 #' density_at(posterior, c(0, 1))
-#' @importFrom stats approx density
 #' @export
 density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
   density <- estimate_density(posterior, precision = precision, method = method, ...)

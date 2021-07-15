@@ -21,8 +21,6 @@
 #' model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
 #' mcse(model)
 #' }
-#' @importFrom insight get_parameters
-#' @importFrom stats setNames
 #' @export
 mcse <- function(model, ...) {
   UseMethod("mcse")
@@ -91,7 +89,6 @@ mcse.stanfit <- mcse.stanreg
 mcse.blavaan <- mcse.stanreg
 
 
-#' @importFrom stats sd na.omit
 #' @keywords internal
 .mcse <- function(params, ess) {
   # get standard deviations from posterior samples

@@ -5,7 +5,6 @@
 insight::print_html
 
 
-#' @importFrom insight export_table
 #' @export
 print_html.describe_posterior <- function(x, digits = 2, caption = "Summary of Posterior Distribution", ...) {
   .print_html_default(x = x, digits = digits, caption = caption, ...)

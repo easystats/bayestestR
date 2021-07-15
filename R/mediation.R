@@ -164,7 +164,6 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
 # workhorse ---------------------------------
 
 
-#' @importFrom insight model_info find_response find_predictors get_parameters
 .mediation <- function(model,
                        treatment,
                        mediator,
@@ -300,7 +299,6 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 
 # helper ---------------------------------
 
-#' @importFrom insight get_data
 .fix_factor_name <- function(model, variable) {
   # check for categorical. if user has not specified a treatment variable
   # and this variable is categorical, the posterior samples contain the
@@ -324,7 +322,6 @@ as.data.frame.bayestestR_mediation <- function(x, ...) {
 
 # S3 ---------------------------------
 
-#' @importFrom insight export_table format_ci print_color format_value
 #' @export
 print.bayestestR_mediation <- function(x, digits = 3, ...) {
   attr(x, "data") <- NULL

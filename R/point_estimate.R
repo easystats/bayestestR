@@ -51,7 +51,6 @@
 #' point_estimate(bf, centrality = c("median", "MAP"))
 #' }
 #'
-#' @importFrom stats mad median sd
 #' @export
 point_estimate <- function(x, centrality = "all", dispersion = FALSE, ...) {
   UseMethod("point_estimate")
@@ -191,7 +190,6 @@ point_estimate.emm_list <- point_estimate.emmGrid
 
 
 
-#' @importFrom insight get_parameters
 #' @keywords internal
 .point_estimate_models <- function(x, effects, component, parameters, centrality = "all", dispersion = FALSE, ...) {
   out <- point_estimate(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), centrality = centrality, dispersion = dispersion, ...)
@@ -199,7 +197,6 @@ point_estimate.emm_list <- point_estimate.emmGrid
 }
 
 
-#' @importFrom insight get_parameters clean_parameters
 #' @rdname point_estimate
 #' @export
 point_estimate.stanreg <- function(x, centrality = "all", dispersion = FALSE, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {

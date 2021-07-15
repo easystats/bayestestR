@@ -60,7 +60,6 @@
 #'   \item Mills, J. A. (2018). Objective Bayesian Precise Hypothesis Testing. University of Cincinnati.
 #' }
 #'
-#' @importFrom stats density
 #' @export
 p_map <- function(x, precision = 2^10, method = "kernel", ...) {
   UseMethod("p_map")
@@ -127,7 +126,6 @@ p_map.emm_list <- p_map.emmGrid
 
 
 
-#' @importFrom insight get_parameters
 #' @keywords internal
 .p_map_models <- function(x, precision, method, effects, component, parameters, ...) {
   p_map(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), precision = precision, method = method, ...)

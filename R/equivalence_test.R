@@ -103,8 +103,6 @@
 #' equivalence_test(bf)
 #' equivalence_test(bf, ci = c(.50, .99))
 #' }
-#'
-#' @importFrom insight print_color
 #' @export
 equivalence_test <- function(x, ...) {
   UseMethod("equivalence_test")
@@ -201,7 +199,6 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verb
 
 
 
-#' @importFrom stats sd
 #' @keywords internal
 .equivalence_test_models <- function(x, range = "default", ci = 0.95, effects = "fixed", component = "conditional", parameters = NULL, verbose = TRUE) {
   if (all(range == "default")) {

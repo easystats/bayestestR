@@ -28,7 +28,6 @@
 #'   # sensitivity_to_prior(model)
 #' }
 #' }
-#' @importFrom stats update
 #' @seealso DescTools
 #' @export
 sensitivity_to_prior <- function(model, index = "Median", magnitude = 10, ...) {

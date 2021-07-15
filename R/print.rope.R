@@ -1,4 +1,3 @@
-#' @importFrom insight print_color
 #' @export
 print.rope <- function(x, digits = 2, ...) {
   orig_x <- x

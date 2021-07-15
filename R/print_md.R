@@ -5,7 +5,6 @@
 insight::print_md
 
 
-#' @importFrom insight export_table
 #' @export
 print_md.describe_posterior <- function(x, digits = 2, caption = "Summary of Posterior Distribution", ...) {
   .print_md_default(x = x, digits = digits, caption = caption, ...)

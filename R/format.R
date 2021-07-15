@@ -1,5 +1,3 @@
-#' @importFrom insight format_table print_parameters format_value format_bf format_ci
-#' @importFrom utils modifyList
 #' @export
 format.describe_posterior <- function(x,
                                       cp,

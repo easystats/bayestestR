@@ -174,7 +174,6 @@ bf <- ttestBF(x = rnorm(100, 1, 1))
 equivalence_test(bf)
 equivalence_test(bf, ci = c(.50, .99))
 }
-
 }
 \references{
 \itemize{

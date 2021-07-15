@@ -108,7 +108,6 @@ si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
   out
 }
 
-#' @importFrom insight clean_parameters
 #' @rdname si
 #' @export
 si.stanreg <- function(posterior, prior = NULL,
@@ -239,7 +238,6 @@ si.get_predicted <- function(posterior, ...) {
 
 
 
-#' @importFrom stats median mad na.omit
 #' @keywords internal
 .si <- function(posterior, prior, BF = 1, extend_scale = 0.05, precision = 2^8, ...) {
   insight::check_if_installed("logspline")

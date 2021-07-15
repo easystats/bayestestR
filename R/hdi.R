@@ -216,7 +216,6 @@ hdi.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
 hdi.emm_list <- hdi.emmGrid
 
 
-#' @importFrom insight get_parameters
 #' @rdname hdi
 #' @export
 hdi.stanreg <- function(x, ci = 0.95, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, verbose = TRUE, ...) {

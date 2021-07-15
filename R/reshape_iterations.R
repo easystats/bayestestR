@@ -14,7 +14,6 @@
 #' }
 #' }
 #' @return Data frame of reshaped draws in long format.
-#' @importFrom stats reshape
 #' @export
 reshape_iterations <- function(x, prefix = c("draw", "iter", "iteration", "sim")) {
 

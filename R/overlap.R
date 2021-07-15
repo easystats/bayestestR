@@ -16,7 +16,6 @@
 #'
 #' overlap(x, y)
 #' plot(overlap(x, y))
-#' @importFrom stats approxfun
 #' @export
 overlap <- function(x, y, method_density = "kernel", method_auc = "trapezoid", precision = 2^10, extend = TRUE, extend_scale = 0.1, ...) {
 
@@ -58,7 +57,6 @@ print.overlap <- function(x, ...) {
 }
 
 
-#' @importFrom graphics plot polygon
 #' @export
 plot.overlap <- function(x, ...) {
   # Can be improved through see
