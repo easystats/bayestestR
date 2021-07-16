@@ -31,7 +31,7 @@ diagnostic_draws.brmsfit <- function(posteriors, ...) {
 
   data <- brms::nuts_params(posteriors)
   data$idvar <- paste0(data$Chain, "_", data$Iteration)
-  out <- reshape(
+  out <- stats::reshape(
     data,
     v.names = "Value",
     idvar = "idvar",

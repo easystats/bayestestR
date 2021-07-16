@@ -215,8 +215,8 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
   suppressWarnings(resp <- tryCatch(insight::get_response(x), error = function(e) NULL))
   suppressWarnings(info <- tryCatch(insight::model_info(x), error = function(e) NULL))
   if (!is.null(resp) && !is.null(info) && info$is_linear) {
-    sd1 <- significant / sd(resp, na.rm = TRUE)
-    sd2 <- large / sd(resp, na.rm = TRUE)
+    sd1 <- significant / stats::sd(resp, na.rm = TRUE)
+    sd2 <- large / stats::sd(resp, na.rm = TRUE)
     text_sd <- paste0(
       " (corresponding respectively to ",
       insight::format_value(sd1),

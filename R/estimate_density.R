@@ -349,7 +349,7 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
     # Estimate the SD
     sd_kde <- sqrt(df$y * Rk / (length(x) * h))
     # CI with estimated variance
-    z_alpha <- qnorm(ci)
+    z_alpha <- stats::qnorm(ci)
     df$CI_low <- df$y - z_alpha * sd_kde
     df$CI_high <- df$y + z_alpha * sd_kde
   }
@@ -363,7 +363,7 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
   if (!requireNamespace("logspline")) {
     if (interactive()) {
       readline("Package \"logspline\" needed for this function. Press ENTER to install or ESCAPE to abort.")
-      install.packages("logspline")
+      utils::install.packages("logspline")
     } else {
       stop("Package \"logspline\" needed for this function. Press run 'install.packages(\"logspline\")'.")
     }
@@ -379,7 +379,7 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
   if (!requireNamespace("KernSmooth")) {
     if (interactive()) {
       readline("Package \"KernSmooth\" needed for this function. Press ENTER to install or ESCAPE to abort.")
-      install.packages("KernSmooth")
+      utils::install.packages("KernSmooth")
     } else {
       stop("Package \"KernSmooth\" needed for this function. Press run 'install.packages(\"KernSmooth\")'.")
     }
@@ -392,14 +392,14 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
   if (!requireNamespace("mclust")) {
     if (interactive()) {
       readline("Package \"mclust\" needed for this function. Press ENTER to install or ESCAPE to abort.")
-      install.packages("KernSmooth")
+      utils::install.packages("KernSmooth")
     } else {
       stop("Package \"mclust\" needed for this function. Press run 'install.packages(\"mclust\")'.")
     }
   }
 
   x_axis <- seq(x_range[1], x_range[2], length.out = precision)
-  y <- predict(mclust::densityMclust(x, verbose = FALSE, ...), newdata = x_axis, ...)
+  y <- stats::predict(mclust::densityMclust(x, verbose = FALSE, ...), newdata = x_axis, ...)
   data.frame(x = x_axis, y = y)
 }
 
