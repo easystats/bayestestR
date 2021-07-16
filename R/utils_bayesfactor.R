@@ -18,7 +18,7 @@
 
 
   prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
-  if (is(prior, "try-error")) {
+  if (methods::is(prior, "try-error")) {
     if (grepl("flat priors", prior)) {
       prior <- paste0(
         prior, "Could not therefore compute Bayes factors, as these inform about ",
@@ -77,7 +77,7 @@
     )
   } else if (!inherits(prior, "emmGrid")) { # then is it a model
     prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
-    if (is(prior, "try-error")) {
+    if (methods::is(prior, "try-error")) {
       if (grepl("flat priors", prior)) {
         prior <- paste0(
           prior, "Could not therefore compute Bayes factors, as these inform about ",
@@ -120,7 +120,7 @@
     )
   } else if (!inherits(prior, "emm_list")) {
     prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
-    if (is(prior, "try-error")) {
+    if (methods::is(prior, "try-error")) {
       if (grepl("flat priors", prior)) {
         prior <- paste0(
           prior, "Could not therefore compute Bayes factors, as these inform about ",

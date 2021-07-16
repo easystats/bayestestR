@@ -73,7 +73,7 @@ unupdate.brmsfit <- function(model, verbose = TRUE, ...) {
     )), silent = TRUE)
   )
 
-  if (is(model_prior, "try-error")) {
+  if (methods::is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior)) {
       stop(
         "Cannot sample from flat priors (such as the default ",
@@ -115,7 +115,7 @@ unupdate.brmsfit_multiple <- function(model,
       )
     )), silent = TRUE))
 
-  if (is(model_prior, "try-error")) {
+  if (methods::is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior)) {
       stop(
         "Cannot sample from flat priors (such as the default ",

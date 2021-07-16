@@ -267,7 +267,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 }
 
 .bayesfactor_models_stan_SEM <- function(mods, denominator, verbose = TRUE) {
-  capture.output(
+  utils::capture.output(
     suppressWarnings(
       mBFs <- sapply(mods, function(m) {
         blavaan::blavCompare(m, mods[[denominator]])[["bf"]][1]
