@@ -53,19 +53,19 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     x <- p_direction(bfit)
     expect_equal(nrow(x), 14)
 
-    x <- rope(bfit)
+    x <- rope(bfit, range = c(-.1, .1))
     expect_equal(nrow(x), 14)
 
-    x <- p_rope(bfit)
+    x <- p_rope(bfit, range = c(-.1, .1))
     expect_equal(nrow(x), 14)
 
     x <- p_map(bfit)
     expect_equal(nrow(x), 14)
 
-    x <- p_significance(bfit)
+    x <- p_significance(bfit, threshold = c(-.1, .1))
     expect_equal(nrow(x), 14)
 
-    x <- equivalence_test(bfit)
+    x <- equivalence_test(bfit, range = c(-.1, .1))
     expect_equal(nrow(x), 14)
 
     x <- estimate_density(bfit)
@@ -104,7 +104,7 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     expect_equal(nrow(x), 13)
     # YES this is 13! We have two parameters with the same prior.
 
-    x <- describe_posterior(bfit, test = "all")
+    x <- describe_posterior(bfit, test = "all", rope_range = c(-.1, .1))
     expect_equal(nrow(x), 14)
   })
 }
