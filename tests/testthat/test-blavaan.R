@@ -76,23 +76,23 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     ## Bayes factors ----
     x <- expect_warning(bayesfactor_models(bfit, bfit2))
     expect_true(x$log_BF[2] < 0)
-
-    bfit_prior <- unupdate(bfit)
-    capture.output(x <- bayesfactor_parameters(bfit, prior = bfit_prior))
-    expect_equal(nrow(x), 14)
-
-    x <- expect_warning(si(bfit, prior = bfit_prior))
-    expect_equal(nrow(x), 14)
-
+    
     x <- expect_warning(weighted_posteriors(bfit, bfit2))
     expect_equal(ncol(x), 14)
 
-    ## Prior/posterior checks ----
-    suppressWarnings(x <- check_prior(bfit))
-    expect_equal(nrow(x), 13)
-
-    x <- check_prior(bfit, simulate_priors = FALSE)
-    expect_equal(nrow(x), 14)
+    # bfit_prior <- unupdate(bfit)
+    # capture.output(x <- bayesfactor_parameters(bfit, prior = bfit_prior))
+    # expect_equal(nrow(x), 14)
+    #
+    # x <- expect_warning(si(bfit, prior = bfit_prior))
+    # expect_equal(nrow(x), 14)
+    #
+    # ## Prior/posterior checks ----
+    # suppressWarnings(x <- check_prior(bfit))
+    # expect_equal(nrow(x), 13)
+    #
+    # x <- check_prior(bfit, simulate_priors = FALSE)
+    # expect_equal(nrow(x), 14)
 
     x <- diagnostic_posterior(bfit)
     expect_equal(nrow(x), 14)
