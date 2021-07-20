@@ -51,7 +51,33 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Loading the packages
+# Introduction: The why and the what
+
+## *Why* the Bayesian Framework?
+
+The Bayesian statistical framework is quickly gaining in popularity among scientists. A number of reasons have been outlined as to why one should prefer this approach:
+
+- reliability [@etz2016bayesian]
+- accuracy (in noisy data and small samples) [@kruschke2012time]
+- the possibility of introducing *prior* knowledge into the analysis [@andrews2013prior; @kruschke2012time]
+- critically, intuitive nature of results and their straightforward interpretation [@kruschke2010believe; @wagenmakers2018bayesian]
+
+In general, the frequentist approach has been associated with an exclusive focus on the null hypothesis testing (NHST). Additionally, the misuse of *p*-values - a key pillar of NHST - has been shown to critically contribute to the reproducibility crisis in social and psychological sciences [@chambers2014instead; @szucs2016empirical]. There is an emerging consensus that adoption of the Bayesian approach is one way of overcoming these issues [@benjamin2018redefine; @etz2016bayesian].
+
+## *What* is the Bayesian Framework?
+
+Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology. Indeed, all the common statistical procedures (*t*-tests, correlations, ANOVAs, regressions, etc.) can be performed  inthe Bayesian framework. The key difference is that in the frequentist framework (the "classical" approach to statistics), the effects are fixed (but unknown) and data are random. In other words, it assumes that the unknown parameter has a *unique* value that we are trying to estimate using our sample data. On the other hand, in the Bayesian framework, instead of estimating the "true effect", the probability of different effects *given the observed data* is computed, resulting in a *distribution* of possible values for the parameters, called the *posterior distribution*.
+
+The uncertainty in Bayesian inference can be summarized, for instance, by the median of the distribution, as well as a range of values of the posterior distribution that includes the 95\% most probable values (the 95\% credible interval). *Cum grano salis*, these are considered the counterparts to the point-estimate and confidence interval in a frequentist framework. To illustrate the difference of interpretation, the Bayesian framework allows to say "given the observed data, the effect has 95\% probability of falling within this range", while the frequentist (less intuitive) alternative would be "when repeatedly computing confidence intervals from data of this sort, there is a 95\% probability that the effect falls within a given range". In essence, the Bayesian sampling algorithms (such as MCMC sampling) return a probability distribution (*the posterior*) of an effect that is compatible with the observed data. Thus, an effect can be described by characterizing its posterior distribution in relation to its centrality (point-estimates), uncertainty, as well as its existence and significance
+
+In other words, putting the maths behind it aside for a moment, we can say that the frequentist approach tries to estimate the *real* effect. For instance, the "real" value of the correlation between *x* and *y*. Hence, the frequentist models return a point-estimate (i.e., a single value and not a
+distribution) of the "real" correlation (e.g., $r = 0.42$) estimated under a
+number of  assumptions.
+
+The Bayesian framework assumes no such thing. The data are what they are. Based on the observed data (and a **prior** belief about the result), the Bayesian sampling algorithm (MCMC sampling is one example) returns a probability distribution (called "the posterior") of the effect that is compatible with the observed data. For the correlation between *x* and *y*, it will return a *distribution* that says, for example, "the most probable effect is 0.42, but this data is also compatible with correlations of 0.12 and 0.74 with certain probabilities". To characterize statistical significance of our effects, we do not need *p*-values, or any other such indices. We simply *describe* the posterior distribution of the effect.
+
+
+# How to do Bayesian analysis
 
 Once you've
 [installed](https://easystats.github.io/bayestestR/articles/bayestestR.html#bayestestr-installation)
