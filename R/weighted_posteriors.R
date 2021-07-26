@@ -1,36 +1,42 @@
 #' Generate posterior distributions weighted across models
 #'
-#' Extract posterior samples of parameters, weighted across models.
-#' Weighting is done by comparing posterior model probabilities, via \code{\link{bayesfactor_models}}.
+#' Extract posterior samples of parameters, weighted across models. Weighting is
+#' done by comparing posterior model probabilities, via [bayesfactor_models()].
 #'
-#' @param ... Fitted models (see details), all fit on the same data, or a single \code{BFBayesFactor} object.
-#' @param missing An optional numeric value to use if a model does not contain a parameter that appears in other models. Defaults to 0.
-#' @param prior_odds Optional vector of prior odds for the models compared to the first model (or the denominator, for \code{BFBayesFactor} objects). For \code{data.frame}s, this will be used as the basis of weighting.
-#' @param iterations For \code{BayesFactor} models, how many posterior samples to draw.
+#' @param ... Fitted models (see details), all fit on the same data, or a single
+#'   `BFBayesFactor` object.
+#' @param missing An optional numeric value to use if a model does not contain a
+#'   parameter that appears in other models. Defaults to 0.
+#' @param prior_odds Optional vector of prior odds for the models compared to
+#'   the first model (or the denominator, for `BFBayesFactor` objects). For
+#'   `data.frame`s, this will be used as the basis of weighting.
+#' @param iterations For `BayesFactor` models, how many posterior samples to draw.
 #' @inheritParams bayesfactor_models
 #' @inheritParams bayesfactor_parameters
 #'
 #' @details
-#' Note that across models some parameters might play different roles. For example,
-#' the parameter \code{A} plays a different role in the model \code{Y ~ A + B} (where it is a main effect)
-#' than it does in the model \code{Y ~ A + B + A:B} (where it is a simple effect). In many cases centering
-#' of predictors (mean subtracting for continuous variables, and effects coding via \code{contr.sum} or
-#' orthonormal coding via {\code{\link{contr.orthonorm}}} for factors) can reduce this issue. In any case
-#' you should be mindful of this issue.
+#' Note that across models some parameters might play different roles. For
+#' example, the parameter `A` plays a different role in the model `Y ~ A + B`
+#' (where it is a main effect) than it does in the model `Y ~ A + B + A:B`
+#' (where it is a simple effect). In many cases centering of predictors (mean
+#' subtracting for continuous variables, and effects coding via `contr.sum` or
+#' orthonormal coding via {[contr.orthonorm()]} for factors) can reduce this
+#' issue. In any case you should be mindful of this issue.
 #' \cr\cr
-#' See \code{\link{bayesfactor_models}} details for more info on passed models.
+#' See [bayesfactor_models()] details for more info on passed models.
 #' \cr\cr
-#' Note that for \code{BayesFactor} models, posterior samples cannot be generated from intercept only models.
+#' Note that for `BayesFactor` models, posterior samples cannot be generated
+#' from intercept only models.
 #' \cr\cr
-#' This function is similar in function to \code{brms::posterior_average}.
+#' This function is similar in function to `brms::posterior_average`.
 #'
-#' @note For \code{BayesFactor < 0.9.12-4.3}, in some instances there might be
+#' @note For `BayesFactor < 0.9.12-4.3`, in some instances there might be
 #'   some problems of duplicate columns of random effects in the resulting data
 #'   frame.
 #'
 #' @return A data frame with posterior distributions (weighted across models) .
 #'
-#' @seealso \code{\link{bayesfactor_inclusion}} for Bayesian model averaging.
+#' @seealso [bayesfactor_inclusion()] for Bayesian model averaging.
 #'
 #' @examples
 #' \donttest{
@@ -102,10 +108,20 @@
 #' }
 #' @references
 #' \itemize{
-#'   \item Clyde, M., Desimone, H., & Parmigiani, G. (1996). Prediction via orthogonalized model mixing. Journal of the American Statistical Association, 91(435), 1197-1208.
-#'   \item Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E. (2019, March 25). A conceptual introduction to Bayesian Model Averaging. \doi{10.31234/osf.io/wgb64}
-#'   \item Rouder, J. N., Haaf, J. M., & Vandekerckhove, J. (2018). Bayesian inference for psychology, part IV: Parameter estimation and Bayes factors. Psychonomic bulletin & review, 25(1), 102-113.
-#'   \item van den Bergh, D., Haaf, J. M., Ly, A., Rouder, J. N., & Wagenmakers, E. J. (2019). A cautionary note on estimating effect size.
+#'   \item Clyde, M., Desimone, H., & Parmigiani, G. (1996). Prediction via
+#'   orthogonalized model mixing. Journal of the American Statistical
+#'   Association, 91(435), 1197-1208.
+#'
+#'   \item Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E.
+#'   (2019, March 25). A conceptual introduction to Bayesian Model Averaging.
+#'   \doi{10.31234/osf.io/wgb64}
+#'
+#'   \item Rouder, J. N., Haaf, J. M., & Vandekerckhove, J. (2018). Bayesian
+#'   inference for psychology, part IV: Parameter estimation and Bayes factors.
+#'   Psychonomic bulletin & review, 25(1), 102-113.
+#'
+#'   \item van den Bergh, D., Haaf, J. M., Ly, A., Rouder, J. N., & Wagenmakers,
+#'   E. J. (2019). A cautionary note on estimating effect size.
 #' }
 #'
 #' @export
@@ -146,7 +162,10 @@ weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, 
 
 #' @export
 #' @rdname weighted_posteriors
-weighted_posteriors.stanreg <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE,
+weighted_posteriors.stanreg <- function(...,
+                                        prior_odds = NULL,
+                                        missing = 0,
+                                        verbose = TRUE,
                                         effects = c("fixed", "random", "all"),
                                         component = c("conditional", "zi", "zero_inflated", "all"),
                                         parameters = NULL) {
@@ -187,7 +206,11 @@ weighted_posteriors.blavaan <- weighted_posteriors.stanreg
 
 #' @export
 #' @rdname weighted_posteriors
-weighted_posteriors.BFBayesFactor <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE, iterations = 4000) {
+weighted_posteriors.BFBayesFactor <- function(...,
+                                              prior_odds = NULL,
+                                              missing = 0,
+                                              verbose = TRUE,
+                                              iterations = 4000) {
   Mods <- c(...)
 
   # Get Bayes factors

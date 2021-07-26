@@ -9,10 +9,12 @@ sexit(x, significant = "default", large = "default", ci = 0.95, ...)
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit} or \code{BayesFactor}).}
 
-\item{significant, large}{The threshold values to use for significant and large probabilities. If left to 'default', will be selected through \code{\link[=sexit_thresholds]{sexit_thresholds()}}. See the details section below.}
+\item{significant, large}{The threshold values to use for significant and
+large probabilities. If left to 'default', will be selected through
+\code{\link[=sexit_thresholds]{sexit_thresholds()}}. See the details section below.}
 
-\item{ci}{Value or vector of probability of the (credible) interval - CI (between 0 and 1)
-to be estimated. Default to \code{.95} (95\%).}
+\item{ci}{Value or vector of probability of the (credible) interval - CI
+(between 0 and 1) to be estimated. Default to \code{.95} (\verb{95\%}).}
 
 \item{...}{Currently not used.}
 }
@@ -20,44 +22,92 @@ to be estimated. Default to \code{.95} (95\%).}
 A dataframe and text as attribute.
 }
 \description{
-The SEXIT is a new framework to describe Bayesian effects, guiding which indices to use. Accordingly, the \code{sexit()} function returns the minimal (and optimal) required information to describe models' parameters under a Bayesian framework. It includes the following indices:
+The SEXIT is a new framework to describe Bayesian effects, guiding which
+indices to use. Accordingly, the \code{sexit()} function returns the minimal (and
+optimal) required information to describe models' parameters under a Bayesian
+framework. It includes the following indices:
 \itemize{
-  \item{Centrality: the median of the posterior distribution. In probabilistic terms, there is 50\% of probability that the effect is higher and lower. See \code{\link[=point_estimate]{point_estimate()}}.}
-  \item{Uncertainty: the 95\% Highest Density Interval (HDI). In probabilistic terms, there is 95\% of probability that the effect is within this confidence interval. See \code{\link[=ci]{ci()}}.}
-  \item{Existence: The probability of direction allows to quantify the certainty by which an effect is positive or negative. It is a critical index to show that an effect of some manipulation is not harmful (for instance in clinical studies) or to assess the direction of a link. See \code{\link[=p_direction]{p_direction()}}.}
-  \item{Significance: Once existence is demonstrated with high certainty, we can assess whether the effect is of sufficient size to be considered as significant (i.e., not negligible). This is a useful index to determine which effects are actually important and worthy of discussion in a given process. See \code{\link[=p_significance]{p_significance()}}.}
-  \item{Size: Finally, this index gives an idea about the strength of an effect. However, beware, as studies have shown that a big effect size can be also suggestive of low statistical power (see details section).}
+\item{Centrality: the median of the posterior distribution. In
+probabilistic terms, there is \verb{50\%} of probability that the effect is higher
+and lower. See \code{\link[=point_estimate]{point_estimate()}}.}
+\item{Uncertainty: the \verb{95\%} Highest Density Interval (HDI). In
+probabilistic terms, there is \verb{95\%} of probability that the effect is
+within this confidence interval. See \code{\link[=ci]{ci()}}.}
+\item{Existence: The probability of direction allows to quantify the
+certainty by which an effect is positive or negative. It is a critical
+index to show that an effect of some manipulation is not harmful (for
+instance in clinical studies) or to assess the direction of a link. See
+\code{\link[=p_direction]{p_direction()}}.}
+\item{Significance: Once existence is demonstrated with high certainty, we
+can assess whether the effect is of sufficient size to be considered as
+significant (i.e., not negligible). This is a useful index to determine
+which effects are actually important and worthy of discussion in a given
+process. See \code{\link[=p_significance]{p_significance()}}.}
+\item{Size: Finally, this index gives an idea about the strength of an
+effect. However, beware, as studies have shown that a big effect size can
+be also suggestive of low statistical power (see details section).}
 }
 }
 \details{
 \subsection{Rationale}{
-The assessment of "significance" (in its broadest meaning) is a pervasive issue in science, and its historical index, the p-value, has been strongly criticized and deemed to have played an important role in the replicability crisis. In reaction, more and more scientists have tuned to Bayesian methods, offering an alternative set of tools to answer their questions. However, the Bayesian framework offers a wide variety of possible indices related to "significance", and the debate has been raging about which index is the best, and which one to report.
+The assessment of "significance" (in its broadest meaning) is a pervasive
+issue in science, and its historical index, the p-value, has been strongly
+criticized and deemed to have played an important role in the replicability
+crisis. In reaction, more and more scientists have tuned to Bayesian methods,
+offering an alternative set of tools to answer their questions. However, the
+Bayesian framework offers a wide variety of possible indices related to
+"significance", and the debate has been raging about which index is the best,
+and which one to report.
 
-This situation can lead to the mindless reporting of all possible indices (with the hopes that with that the reader will be satisfied), but often without having the writer understanding and interpreting them. It is indeed complicated to juggle between many indices with complicated definitions and subtle differences.
+This situation can lead to the mindless reporting of all possible indices
+(with the hopes that with that the reader will be satisfied), but often
+without having the writer understanding and interpreting them. It is indeed
+complicated to juggle between many indices with complicated definitions and
+subtle differences.
 
-SEXIT aims at offering a practical framework for Bayesian effects reporting, in which the focus is put on intuitiveness, explicitness and usefulness of the indices' interpretation. To that end, we suggest a system of description of parameters that would be intuitive, easy to learn and apply, mathematically accurate and useful for taking decision.
+SEXIT aims at offering a practical framework for Bayesian effects reporting,
+in which the focus is put on intuitiveness, explicitness and usefulness of
+the indices' interpretation. To that end, we suggest a system of description
+of parameters that would be intuitive, easy to learn and apply,
+mathematically accurate and useful for taking decision.
 
-Once the thresholds for significance (i.e., the ROPE) and the one for a "large" effect are explicitly defined, the SEXIT framework does not make any interpretation, i.e., it does not label the effects, but just sequentially gives 3 probabilities (of direction, of significance and of being large, respectively) as-is on top of the characteristics of the posterior (using the median and HDI for centrality and uncertainty description). Thus, it provides a lot of information about the posterior distribution (through the mass of different 'sections' of the posterior) in a clear and meaningful way.
+Once the thresholds for significance (i.e., the ROPE) and the one for a
+"large" effect are explicitly defined, the SEXIT framework does not make any
+interpretation, i.e., it does not label the effects, but just sequentially
+gives 3 probabilities (of direction, of significance and of being large,
+respectively) as-is on top of the characteristics of the posterior (using the
+median and HDI for centrality and uncertainty description). Thus, it provides
+a lot of information about the posterior distribution (through the mass of
+different 'sections' of the posterior) in a clear and meaningful way.
 }
 
 \subsection{Threshold selection}{
- One of the most important thing about the SEXIT framework is that it relies on two "arbitrary" thresholds (i.e., that have no absolute meaning). They are the ones related to effect size (an inherently subjective notion), namely the thresholds for significant and large effects. They are set, by default, to \code{0.05} and \code{0.3} of the standard deviation of the outcome variable (tiny and large effect sizes for correlations according to Funder \& Ozer, 2019). However, these defaults were chosen by lack of a better option, and might not be adapted to your case. Thus, they are to be handled with care, and the chosen thresholds should always be explicitly reported and justified.
-  \itemize{
-    \item For \strong{linear models (lm)}, this can be generalised to \ifelse{html}{\out{0.05 * SD<sub>y</sub>}}{\eqn{[0.05*SD_{y}]}} and \ifelse{html}{\out{0.3 * SD<sub>y</sub>}}{\eqn{[0.3*SD_{y}]}} for significant and large effects, respectively.
-    \item For \strong{logistic models}, the parameters expressed in log odds ratio can be converted to standardized difference through the formula \ifelse{html}{\out{&pi;/&radic;(3)}}{\eqn{\pi/\sqrt{3}}}, resulting a threshold of \code{0.09} and \code{0.54}.
-    \item For other models with \strong{binary outcome}, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.
-    \item For models from \strong{count data}, the residual variance is used. This is a rather experimental threshold and is probably often similar to \code{0.05} and \code{0.3}, but should be used with care!
-    \item For \strong{t-tests}, the standard deviation of the response is used, similarly to linear models (see above).
-    \item For \strong{correlations},\code{0.05} and \code{0.3} are used.
-    \item For all other models, \code{0.05} and \code{0.3} are used, but it is strongly advised to specify it manually.
-  }
+One of the most important thing about the SEXIT framework is that it relies
+on two "arbitrary" thresholds (i.e., that have no absolute meaning). They
+are the ones related to effect size (an inherently subjective notion),
+namely the thresholds for significant and large effects. They are set, by
+default, to \code{0.05} and \code{0.3} of the standard deviation of the outcome
+variable (tiny and large effect sizes for correlations according to Funder
+\& Ozer, 2019). However, these defaults were chosen by lack of a better
+option, and might not be adapted to your case. Thus, they are to be handled
+with care, and the chosen thresholds should always be explicitly reported
+and justified.
+\itemize{
+\item For \strong{linear models (lm)}, this can be generalised to \ifelse{html}{\out{0.05 * SD<sub>y</sub>}}{\eqn{[0.05*SD_{y}]}} and \ifelse{html}{\out{0.3 * SD<sub>y</sub>}}{\eqn{[0.3*SD_{y}]}} for significant and large effects, respectively.
+\item For \strong{logistic models}, the parameters expressed in log odds ratio can be converted to standardized difference through the formula \ifelse{html}{\out{&pi;/&radic;(3)}}{\eqn{\pi/\sqrt{3}}}, resulting a threshold of \code{0.09} and \code{0.54}.
+\item For other models with \strong{binary outcome}, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.
+\item For models from \strong{count data}, the residual variance is used. This is a rather experimental threshold and is probably often similar to \code{0.05} and \code{0.3}, but should be used with care!
+\item For \strong{t-tests}, the standard deviation of the response is used, similarly to linear models (see above).
+\item For \strong{correlations},\code{0.05} and \code{0.3} are used.
+\item For all other models, \code{0.05} and \code{0.3} are used, but it is strongly advised to specify it manually.
+}
 }
 \subsection{Examples}{
 The three values for existence, significance and size provide a useful description of the posterior distribution of the effects. Some possible scenarios include:
 \itemize{
-  \item{The probability of existence is low, but the probability of being large is high: it suggests that the posterior is very wide (covering large territories on both side of 0). The statistical power might be too low, which should warrant any confident conclusion.}
-  \item{The probability of existence and significance is high, but the probability of being large is very small: it suggests that the effect is, with high confidence, not large (the posterior is mostly contained between the significance and the large thresholds).}
-  \item{The 3 indices are very low: this suggests that the effect is null with high confidence (the posterior is closely centred around 0).}}}
+\item{The probability of existence is low, but the probability of being large is high: it suggests that the posterior is very wide (covering large territories on both side of 0). The statistical power might be too low, which should warrant any confident conclusion.}
+\item{The probability of existence and significance is high, but the probability of being large is very small: it suggests that the effect is, with high confidence, not large (the posterior is mostly contained between the significance and the large thresholds).}
+\item{The 3 indices are very low: this suggests that the effect is null with high confidence (the posterior is closely centred around 0).}}}
 }
 \examples{
 \dontrun{
@@ -84,7 +134,7 @@ if (require("rstanarm")) {
 }
 \references{
 \itemize{
-  \item{Makowski, D., Ben-Shachar, M. S., & Lüdecke, D. (2019). bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework. Journal of Open Source Software, 4(40), 1541. \doi{10.21105/joss.01541}}
-  \item{Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}}
+\item{Makowski, D., Ben-Shachar, M. S., & Lüdecke, D. (2019). bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework. Journal of Open Source Software, 4(40), 1541. \doi{10.21105/joss.01541}}
+\item{Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}}
 }
 }

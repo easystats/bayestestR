@@ -3,22 +3,22 @@
 #' Compute Confidence/Credible/Compatibility Intervals (CI) or Support Intervals (SI) for Bayesian and frequentist models. The Documentation is accessible for:
 #'
 #' \itemize{
-#'  \item \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{Bayesian models}
-#'  \item \href{https://easystats.github.io/parameters/reference/ci.merMod.html}{Frequentist models}
+#'  \item [Bayesian models](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+#'  \item [Frequentist models](https://easystats.github.io/parameters/reference/ci.merMod.html)
 #' }
 #'
-#' @param x A \code{stanreg} or \code{brmsfit} model, or a vector representing a posterior distribution.
-#' @param method Can be \link[=eti]{'ETI'} (default), \link[=hdi]{'HDI'}, \link[=bci]{'BCI'} or \link[=si]{'SI'}.
+#' @param x A `stanreg` or `brmsfit` model, or a vector representing a posterior distribution.
+#' @param method Can be ['ETI'][eti] (default), ['HDI'][hdi], ['BCI'][bci] or ['SI'][si].
 #' @param ci Value or vector of probability of the CI (between 0 and 1)
-#'   to be estimated. Default to \code{.95} (95\%).
+#'   to be estimated. Default to `.95` (`95%`).
 #' @inheritParams hdi
 #' @inheritParams si
 #'
 #' @return A data frame with following columns:
 #'   \itemize{
-#'     \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
-#'     \item \code{CI} The probability of the credible interval.
-#'     \item \code{CI_low}, \code{CI_high} The lower and upper credible interval limits for the parameters.
+#'     \item `Parameter` The model parameter(s), if `x` is a model-object. If `x` is a vector, this column is missing.
+#'     \item `CI` The probability of the credible interval.
+#'     \item `CI_low`, `CI_high` The lower and upper credible interval limits for the parameters.
 #'   }
 #'
 #' @note When it comes to interpretation, we recommend thinking of the CI in terms of
@@ -26,7 +26,7 @@
 #'   \dQuote{Given any value in the interval and the background assumptions,
 #'   the data should not seem very surprising} (\cite{Gelman & Greenland 2019}).
 #'   \cr \cr
-#'   There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#'   There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @references Gelman A, Greenland S. Are confidence intervals better termed "uncertainty intervals"? BMJ 2019;l5381. \doi{10.1136/bmj.l5381}
 #'

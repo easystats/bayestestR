@@ -4,25 +4,25 @@
 #'
 #' @param posteriors A vector, data frame or model of posterior draws.
 #' @param ci_method The type of index used for Credible Interval. Can be
-#'   \code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}), \code{"ETI"}
-#'   (see \code{\link[bayestestR:eti]{eti}}), \code{"BCI"} (see
-#'   \code{\link[bayestestR:bci]{bci}}) or \code{"SI"} (see \code{\link[bayestestR:si]{si}}).
+#'   `"HDI"` (default, see [bayestestR::hdi()]), `"ETI"`
+#'   (see [bayestestR::eti()]), `"BCI"` (see
+#'   [bayestestR::bci()]) or `"SI"` (see [bayestestR::si()]).
 #' @param test The indices of effect existence to compute. Character (vector) or
-#'   list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
-#'   \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
-#'   \code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.
+#'   list with one or more of these options: `"p_direction"` (or `"pd"`),
+#'   `"rope"`, `"p_map"`, `"equivalence_test"` (or `"equitest"`),
+#'   `"bayesfactor"` (or `"bf"`) or `"all"` to compute all tests.
 #'   For each "test", the corresponding \pkg{bayestestR} function is called
-#'   (e.g. \code{\link[bayestestR:rope]{rope}} or \code{\link[bayestestR:p_direction]{p_direction}}) and its results
+#'   (e.g. [bayestestR::rope()] or [bayestestR::p_direction()]) and its results
 #'   included in the summary output.
 #' @param rope_range ROPE's lower and higher bounds. Should be a list of two
-#'   values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"},
-#'   the bounds are set to \code{x +- 0.1*SD(response)}.
+#'   values (e.g., `c(-0.1, 0.1)`) or `"default"`. If `"default"`,
+#'   the bounds are set to `x +- 0.1*SD(response)`.
 #' @param rope_ci The Credible Interval (CI) probability, corresponding to the
 #'   proportion of HDI, to use for the percentage in ROPE.
-#' @param keep_iterations If \code{TRUE}, will keep all iterations (draws) of
+#' @param keep_iterations If `TRUE`, will keep all iterations (draws) of
 #'   bootstrapped or Bayesian models. They will be added as additional columns
-#'   named \code{iter_1, iter_2, ...}. You can reshape them to a long format by
-#'   running \code{\link[bayestestR:reshape_iterations]{bayestestR::reshape_iterations()}}.
+#'   named `iter_1, iter_2, ...`. You can reshape them to a long format by
+#'   running [bayestestR::reshape_iterations()].
 #'
 #' @inheritParams point_estimate
 #' @inheritParams ci
@@ -30,13 +30,13 @@
 #'
 #' @details One or more components of point estimates (like posterior mean or median),
 #'   intervals and tests can be omitted from the summary output by setting the
-#'   related argument to \code{NULL}. For example, \code{test = NULL} and
-#'   \code{centrality = NULL} would only return the HDI (or CI).
+#'   related argument to `NULL`. For example, `test = NULL` and
+#'   `centrality = NULL` would only return the HDI (or CI).
 #'
 #' @references \itemize{
-#'   \item \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{Comparison of Point-Estimates}
-#'   \item \href{https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html}{Region of Practical Equivalence (ROPE)}
-#'   \item \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes factors}
+#'   \item [Comparison of Point-Estimates](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
+#'   \item [Region of Practical Equivalence (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
+#'   \item [Bayes factors](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
 #' }
 #'
 #' @examples

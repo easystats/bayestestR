@@ -43,15 +43,15 @@ vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
 
 \item{...}{Currently not used.}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to \pkg{brms}-models.}
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
 
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
@@ -111,8 +111,8 @@ boxplot(data[c("KernSmooth", "logspline")])
 }
 \references{
 \itemize{
-  \item Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
-  \item Mills, J. A. (2018). Objective Bayesian Precise Hypothesis Testing. University of Cincinnati.
+\item Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
+\item Mills, J. A. (2018). Objective Bayesian Precise Hypothesis Testing. University of Cincinnati.
 }
 }
 \seealso{

@@ -20,9 +20,9 @@ overlap(
 
 \item{y}{Vector of x values.}
 
-\item{method_density}{Density estimation method. See \code{\link{estimate_density}}.}
+\item{method_density}{Density estimation method. See \code{\link[=estimate_density]{estimate_density()}}.}
 
-\item{method_auc}{Area Under the Curve (AUC) estimation method. See \code{\link{area_under_curve}}.}
+\item{method_auc}{Area Under the Curve (AUC) estimation method. See \code{\link[=area_under_curve]{area_under_curve()}}.}
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \code{density}.}
 

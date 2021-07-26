@@ -1,13 +1,13 @@
 #' Empirical Distributions
 #'
-#' Generate a sequence of n-quantiles, i.e., a sample of size \code{n} with a
+#' Generate a sequence of n-quantiles, i.e., a sample of size `n` with a
 #' near-perfect distribution.
 #'
 #' @param type Can be any of the names from base R's
-#'   \link[stats]{Distributions}, like \code{"cauchy"}, \code{"pois"} or
-#'   \code{"beta"}.
+#'   [Distributions][stats::Distributions], like `"cauchy"`, `"pois"` or
+#'   `"beta"`.
 #' @param random Generate near-perfect or random (simple wrappers for the base R
-#'   \code{r*} functions) distributions.
+#'   `r*` functions) distributions.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams tweedie::rtweedie
 #'
@@ -170,8 +170,8 @@ distribution_gaussian <- distribution_normal
 
 #' @rdname distribution
 #' @inheritParams stats::rnbinom
-#' @param phi Corresponding to \code{glmmTMB}'s implementation of nbinom
-#'   distribution, where \code{size=mu/phi}.
+#' @param phi Corresponding to `glmmTMB`'s implementation of nbinom
+#'   distribution, where `size=mu/phi`.
 #' @export
 distribution_nbinom <- function(n, size, prob, mu, phi, random = FALSE, ...) {
   if (missing(size)) {

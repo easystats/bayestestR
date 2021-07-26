@@ -64,64 +64,66 @@ vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
 
 \item{...}{Currently not used.}
 
-\item{ci}{Value or vector of probability of the (credible) interval - CI (between 0 and 1)
-to be estimated. Default to \code{.95} (95\%).}
+\item{ci}{Value or vector of probability of the (credible) interval - CI
+(between 0 and 1) to be estimated. Default to \code{.95} (\verb{95\%}).}
 
 \item{verbose}{Toggle off warnings.}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
 
-\item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to \pkg{brms}-models.}
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
 }
 \value{
 A data frame with following columns:
-  \itemize{
-    \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
-    \item \code{CI} The probability of the credible interval.
-    \item \code{CI_low}, \code{CI_high} The lower and upper credible interval limits for the parameters.
-  }
+\itemize{
+\item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
+\item \code{CI} The probability of the credible interval.
+\item \code{CI_low}, \code{CI_high} The lower and upper credible interval limits for the parameters.
+}
 }
 \description{
 Compute the \strong{Equal-Tailed Interval (ETI)} of posterior distributions using the quantiles method. The probability of being below this interval is equal to the probability of being above it. The ETI can be used in the context of uncertainty characterisation of posterior distributions as \strong{Credible Interval (CI)}.
 }
 \details{
-Unlike equal-tailed intervals (see \code{eti()}) that typically exclude 2.5\%
+Unlike equal-tailed intervals (see \code{eti()}) that typically exclude \verb{2.5\%}
 from each tail of the distribution and always include the median, the HDI is
 \emph{not} equal-tailed and therefore always includes the mode(s) of posterior
 distributions.
 \cr \cr
-The \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{95\% or 89\% Credible Intervals (CI)}
+The \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{\verb{95\%} or \verb{89\%} Credible Intervals (CI)}
 are two reasonable ranges to characterize the uncertainty related to the estimation (see \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{here} for a discussion about the differences between these two values).
 \cr
-The 89\% intervals (\code{ci = 0.89}) are deemed to be more stable than, for
-instance, 95\% intervals (\cite{Kruschke, 2014}).
-An effective sample size of at least 10.000 is recommended if one wants to estimate
-95\% intervals with high precision (\cite{Kruschke, 2014, p. 183ff}). Unfortunately, the default number of posterior samples for most Bayes packages (e.g., `rstanarm` or `brms`) is only 4.000 (thus, you might want to increase it when fitting your model). Moreover,
-89 indicates the arbitrariness of interval limits - its only remarkable property is being
-the highest prime number that does not exceed the already unstable 95\%
-threshold (\cite{McElreath, 2015}).
+The \verb{89\%} intervals (\code{ci = 0.89}) are deemed to be more stable than, for
+instance, \verb{95\%} intervals (\cite{Kruschke, 2014}). An effective sample size
+of at least 10.000 is recommended if one wants to estimate \verb{95\%} intervals
+with high precision (\cite{Kruschke, 2014, p. 183ff}). Unfortunately, the
+default number of posterior samples for most Bayes packages (e.g., \code{rstanarm}
+or \code{brms}) is only 4.000 (thus, you might want to increase it when fitting
+your model). Moreover, 89 indicates the arbitrariness of interval limits -
+its only remarkable property is being the highest prime number that does not
+exceed the already unstable \verb{95\%} threshold (\cite{McElreath, 2015}).
 \cr
-However, 95\% has some \href{https://easystats.github.io/blog/posts/bayestestr_95/}{advantages too}.
-For instance, it shares (in the case of a normal posterior distribution) an intuitive relationship with the
-standard deviation and it conveys a more accurate image of the (artificial)
-bounds of the distribution. Also, because it is wider, it makes analyses more
-conservative (i.e., the probability of covering 0 is larger for the 95\% CI than
-for lower ranges such as 89\%), which is a good thing in the context of the
-reproducibility crisis.
+However, \verb{95\%} has some \href{https://easystats.github.io/blog/posts/bayestestr_95/}{advantages too}. For instance, it
+shares (in the case of a normal posterior distribution) an intuitive
+relationship with the standard deviation and it conveys a more accurate image
+of the (artificial) bounds of the distribution. Also, because it is wider, it
+makes analyses more conservative (i.e., the probability of covering 0 is
+larger for the \verb{95\%} CI than for lower ranges such as \verb{89\%}), which is a good
+thing in the context of the reproducibility crisis.
 \cr \cr
-A 95\% equal-tailed interval (ETI) has 2.5\% of the distribution on either
-side of its limits. It indicates the 2.5th percentile and the 97.5h percentile.
-In symmetric distributions, the two methods of computing credible intervals,
-the ETI and the \link[=hdi]{HDI}, return similar results.
+A \verb{95\%} equal-tailed interval (ETI) has \verb{2.5\%} of the distribution on either
+side of its limits. It indicates the 2.5th percentile and the 97.5h
+percentile. In symmetric distributions, the two methods of computing credible
+intervals, the ETI and the \link[=hdi]{HDI}, return similar results.
 \cr \cr
 This is not the case for skewed distributions. Indeed, it is possible that
 parameter values in the ETI have lower credibility (are less probable) than

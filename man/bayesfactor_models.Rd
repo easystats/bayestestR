@@ -26,7 +26,7 @@ the denominator, or a model to be used as a denominator. Ignored for
 
 \item{verbose}{Toggle off warnings.}
 
-\item{object, x}{A \code{\link{bayesfactor_models}} object.}
+\item{object, x}{A \code{\link[=bayesfactor_models]{bayesfactor_models()}} object.}
 
 \item{subset}{Vector of model indices to keep or remove.}
 
@@ -36,12 +36,12 @@ model.}
 }
 \value{
 A data frame containing the models' formulas (reconstructed fixed and
-  random effects) and their \code{log(BF)}s, that prints nicely.
+random effects) and their \code{log(BF)}s, that prints nicely.
 }
 \description{
 This function computes or extracts Bayes factors from fitted models.
 \cr \cr
-The \code{bf_*} function is an alias of the main function.
+The \verb{bf_*} function is an alias of the main function.
 }
 \details{
 If the passed models are supported by \pkg{insight} the DV of all models will be tested for equality
@@ -49,16 +49,16 @@ If the passed models are supported by \pkg{insight} the DV of all models will be
 analysis with \code{bayesfactor_inclusion}).
 
 \itemize{
-  \item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
-  \itemize{
-    \item \code{brmsfit} models must have been fitted with \code{save_pars = save_pars(all = TRUE)}.
-    \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
-  }
-  \item For \code{BFBayesFactor}, \code{bayesfactor_models()} is mostly a wraparound \code{BayesFactor::extractBF()}.
-  \item BIC approximations are used to compute Bayes factors for all other model types (with a BIC method).
-  \itemize{
-    \item \strong{Note} that BICs are extracted from models as-is. So if for example you want to compare mixed-models bases on ML instead of REML, you must supply models fit with ML.
-  }
+\item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
+\itemize{
+\item \code{brmsfit} models must have been fitted with \code{save_pars = save_pars(all = TRUE)}.
+\item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
+}
+\item For \code{BFBayesFactor}, \code{bayesfactor_models()} is mostly a wraparound \code{BayesFactor::extractBF()}.
+\item BIC approximations are used to compute Bayes factors for all other model types (with a BIC method).
+\itemize{
+\item \strong{Note} that BICs are extracted from models as-is. So if for example you want to compare mixed-models bases on ML instead of REML, you must supply models fit with ML.
+}
 }
 In order to correctly and precisely estimate Bayes factors, a rule of thumb
 are the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful
@@ -164,11 +164,11 @@ if (require("BayesFactor")) {
 }
 \references{
 \itemize{
-  \item Gronau, Q. F., Singmann, H., & Wagenmakers, E. J. (2017). Bridgesampling: An R package for estimating normalizing constants. arXiv preprint arXiv:1710.08162.
-  \item Kass, R. E., and Raftery, A. E. (1995). Bayes Factors. Journal of the American Statistical Association, 90(430), 773-795.
-  \item Robert, C. P. (2016). The expected demise of the Bayes factor. Journal of Mathematical Psychology, 72, 33–37.
-  \item Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin & review, 14(5), 779-804.
-  \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
+\item Gronau, Q. F., Singmann, H., & Wagenmakers, E. J. (2017). Bridgesampling: An R package for estimating normalizing constants. arXiv preprint arXiv:1710.08162.
+\item Kass, R. E., and Raftery, A. E. (1995). Bayes Factors. Journal of the American Statistical Association, 90(430), 773-795.
+\item Robert, C. P. (2016). The expected demise of the Bayes factor. Journal of Mathematical Psychology, 72, 33–37.
+\item Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin & review, 14(5), 779-804.
+\item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 }
 }
 \author{

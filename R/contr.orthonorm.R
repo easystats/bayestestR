@@ -2,15 +2,15 @@
 #'
 #' Returns a design or model matrix of orthonormal contrasts such that the
 #' marginal prior on all effects is identical. Implementation from Singmann &
-#' Gronau's \href{https://github.com/bayesstuff/bfrms/}{\code{bfrms}}, following
+#' Gronau's [`bfrms`](https://github.com/bayesstuff/bfrms/), following
 #' the description in Rouder, Morey, Speckman, & Province (2012, p. 363).
 #' \cr\cr
 #' Though using this factor coding scheme might obscure the interpretation of
 #' parameters, it is essential for correct estimation of Bayes factors for
 #' contrasts and order restrictions of multi-level factors (where `k>2`). See
 #' info on specifying correct priors for factors with more than 2 levels in
-#' \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the
-#' Bayes factors vignette}.
+#' [the
+#' Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 #'
 #' @inheritParams stats::contr.treatment
 #'
@@ -27,8 +27,8 @@
 #'   Default Bayes factors for ANOVA designs. *Journal of Mathematical
 #'   Psychology*, 56(5), 356-374. https://doi.org/10.1016/j.jmp.2012.08.001
 #'
-#' @return A \code{matrix} with n rows and k columns, with k=n-1 if contrasts is
-#'   \code{TRUE} and k=n if contrasts is \code{FALSE}.
+#' @return A `matrix` with n rows and k columns, with k=n-1 if contrasts is
+#'   `TRUE` and k=n if contrasts is `FALSE`.
 #'
 #' @aliases contr.bayes
 #'

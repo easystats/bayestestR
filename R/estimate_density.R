@@ -1,18 +1,18 @@
 #' Density Estimation
 #'
-#' This function is a wrapper over different methods of density estimation. By default, it uses the base R \code{density} with by default uses a different smoothing bandwidth (\code{"SJ"}) from the legacy default implemented the base R \code{density} function (\code{"nrd0"}). However, Deng \& Wickham suggest that \code{method = "KernSmooth"} is the fastest and the most accurate.
+#' This function is a wrapper over different methods of density estimation. By default, it uses the base R `density` with by default uses a different smoothing bandwidth (`"SJ"`) from the legacy default implemented the base R `density` function (`"nrd0"`). However, Deng \& Wickham suggest that `method = "KernSmooth"` is the fastest and the most accurate.
 #'
 #' @inheritParams hdi
 #' @inheritParams stats::density
-#' @param bw See the eponymous argument in \code{density}. Here, the default has been changed for \code{"SJ"}, which is recommended.
-#' @param ci The confidence interval threshold. Only used when \code{method = "kernel"}.
-#' @param method Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.
-#' @param precision Number of points of density data. See the \code{n} parameter in \code{density}.
-#' @param extend Extend the range of the x axis by a factor of \code{extend_scale}.
-#' @param extend_scale Ratio of range by which to extend the x axis. A value of \code{0.1} means that the x axis will be extended by \code{1/10} of the range of the data.
-#' @param group_by Optional character vector. If not \code{NULL} and \code{x} is a data frame, density estimation is performed for each group (subset) indicated by \code{group_by}.
+#' @param bw See the eponymous argument in `density`. Here, the default has been changed for `"SJ"`, which is recommended.
+#' @param ci The confidence interval threshold. Only used when `method = "kernel"`.
+#' @param method Density estimation method. Can be `"kernel"` (default), `"logspline"` or `"KernSmooth"`.
+#' @param precision Number of points of density data. See the `n` parameter in `density`.
+#' @param extend Extend the range of the x axis by a factor of `extend_scale`.
+#' @param extend_scale Ratio of range by which to extend the x axis. A value of `0.1` means that the x axis will be extended by `1/10` of the range of the data.
+#' @param group_by Optional character vector. If not `NULL` and `x` is a data frame, density estimation is performed for each group (subset) indicated by `group_by`.
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @examples
 #' library(bayestestR)
@@ -312,7 +312,7 @@ as.data.frame.density <- function(x, ...) {
 
 #' Density Probability at a Given Value
 #'
-#' Compute the density value at a given point of a distribution (i.e., the value of the \code{y} axis of a value \code{x} of a distribution).
+#' Compute the density value at a given point of a distribution (i.e., the value of the `y` axis of a value `x` of a distribution).
 #'
 #' @param posterior Vector representing a posterior distribution.
 #' @param x The value of which to get the approximate probability.

@@ -18,7 +18,8 @@ bayesfactor(
 )
 }
 \arguments{
-\item{...}{A numeric vector, model object(s), or the output from \code{bayesfactor_models}.}
+\item{...}{A numeric vector, model object(s), or the output from
+\code{bayesfactor_models}.}
 
 \item{prior}{An object representing a prior distribution (see 'Details').}
 
@@ -31,8 +32,8 @@ tailed) or \code{1}, \code{"right"} (right tailed).}
 
 \item{hypothesis}{A character vector specifying the restrictions as logical conditions (see examples below).}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
 \item{verbose}{Toggle off warnings.}
 
@@ -42,17 +43,18 @@ the denominator, or a model to be used as a denominator. Ignored for
 
 \item{match_models}{See details.}
 
-\item{prior_odds}{Optional vector of prior odds for the models. See \code{BayesFactor::priorOdds<-}.}
+\item{prior_odds}{Optional vector of prior odds for the models. See
+\verb{BayesFactor::priorOdds<-}.}
 }
 \value{
-Some type of Bayes factor, depending on the input. See \code{\link{bayesfactor_parameters}}, \code{\link{bayesfactor_models}} or \code{\link{bayesfactor_inclusion}}
+Some type of Bayes factor, depending on the input. See \code{\link[=bayesfactor_parameters]{bayesfactor_parameters()}}, \code{\link[=bayesfactor_models]{bayesfactor_models()}} or \code{\link[=bayesfactor_inclusion]{bayesfactor_inclusion()}}
 }
 \description{
-This function compte the Bayes factors (BFs) that are appropriate to the input.
-For vectors or single models, it will compute \code{\link[=bayesfactor_parameters]{BFs for single parameters}},
-or is \code{hypothesis} is specified, \code{\link[=bayesfactor_restricted]{BFs for restricted models}}.
-For multiple models, it will return the BF corresponding to \code{\link[=bayesfactor_models]{comparison between models}}
-and if a model comparison is passed, it will compute the \code{\link[=bayesfactor_inclusion]{inclusion BF}}.
+This function compte the Bayes factors (BFs) that are appropriate to the
+input. For vectors or single models, it will compute \code{\link[=bayesfactor_parameters]{BFs for single parameters()}}, or is \code{hypothesis} is specified,
+\code{\link[=bayesfactor_restricted]{BFs for restricted models()}}. For multiple models,
+it will return the BF corresponding to \code{\link[=bayesfactor_models]{comparison between models()}} and if a model comparison is passed, it will
+compute the \code{\link[=bayesfactor_inclusion]{inclusion BF()}}.
 \cr\cr
 For a complete overview of these functions, read the \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes factor vignette}.
 }

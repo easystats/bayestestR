@@ -42,15 +42,15 @@ p_significance(x, ...)
 
 \item{threshold}{The threshold value that separates significant from negligible effect. If \code{"default"}, the range is set to \code{0.1} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to \pkg{brms}-models.}
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
 
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
@@ -61,18 +61,18 @@ for the output.}
 Values between 0 and 1 corresponding to the probability of practical significance (ps).
 }
 \description{
-Compute the probability of \strong{Practical Significance} (\strong{\emph{ps}}), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.
+Compute the probability of \strong{Practical Significance} (\emph{\strong{ps}}), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.
 }
 \details{
 \code{p_significance()} returns the proportion of a probability
-  distribution (\code{x}) that is outside a certain range (the negligible
-  effect, or ROPE, see argument \code{threshold}). If there are values of the
-  distribution both below and above the ROPE, \code{p_significance()} returns
-  the higher probability of a value being outside the ROPE. Typically, this
-  value should be larger than 0.5 to indicate practical significance. However,
-  if the range of the negligible effect is rather large compared to the
-  range of the probability distribution \code{x}, \code{p_significance()}
-  will be less than 0.5, which indicates no clear practical significance.
+distribution (\code{x}) that is outside a certain range (the negligible
+effect, or ROPE, see argument \code{threshold}). If there are values of the
+distribution both below and above the ROPE, \code{p_significance()} returns
+the higher probability of a value being outside the ROPE. Typically, this
+value should be larger than 0.5 to indicate practical significance. However,
+if the range of the negligible effect is rather large compared to the
+range of the probability distribution \code{x}, \code{p_significance()}
+will be less than 0.5, which indicates no clear practical significance.
 }
 \note{
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.

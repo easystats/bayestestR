@@ -1,13 +1,13 @@
 #' Bayes Factors (BF) for Order Restricted Models
 #'
 #' This method computes Bayes factors for comparing a model with an order restrictions on its parameters
-#' with the fully unrestricted model. \emph{Note that this method should only be used for confirmatory analyses}.
+#' with the fully unrestricted model. *Note that this method should only be used for confirmatory analyses*.
 #' \cr \cr
-#' The \code{bf_*} function is an alias of the main function.
+#' The `bf_*` function is an alias of the main function.
 #' \cr \cr
-#' \strong{For more info, in particular on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
+#' \strong{For more info, in particular on specifying correct priors for factors with more than 2 levels, see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).}
 #'
-#' @param posterior A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).
+#' @param posterior A `stanreg` / `brmsfit` object, `emmGrid` or a data frame - representing a posterior distribution(s) from (see Details).
 #' @param hypothesis A character vector specifying the restrictions as logical conditions (see examples below).
 #' @param prior An object representing a prior distribution (see Details).
 #' @inheritParams hdi
@@ -16,14 +16,14 @@
 #' models by setting an order restriction on the prior and posterior distributions
 #' (\cite{Morey & Wagenmakers, 2013}).
 #' \cr\cr
-#' (Though it is possible to use \code{bayesfactor_restricted()} to test interval restrictions,
+#' (Though it is possible to use `bayesfactor_restricted()` to test interval restrictions,
 #' it is more suitable for testing order restrictions; see examples).
 #'
-#' @inheritSection bayesfactor_parameters Setting the correct \code{prior}
+#' @inheritSection bayesfactor_parameters Setting the correct `prior`
 #'
 #' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
 #'
-#' @return A data frame containing the (log) Bayes factor representing evidence \emph{against} the un-restricted model.
+#' @return A data frame containing the (log) Bayes factor representing evidence *against* the un-restricted model.
 #'
 #' @examples
 #' library(bayestestR)

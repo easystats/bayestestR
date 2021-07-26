@@ -1,12 +1,12 @@
 #' Bayesian p-value based on the density at the Maximum A Posteriori (MAP)
 #'
-#' Compute a Bayesian equivalent of the \emph{p}-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (\emph{h0}) using Mills' (2014, 2017) \emph{Objective Bayesian Hypothesis Testing} framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP).
+#' Compute a Bayesian equivalent of the *p*-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (*h0*) using Mills' (2014, 2017) *Objective Bayesian Hypothesis Testing* framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP).
 #'
-#' @details Note that this method is sensitive to the density estimation \code{method} (see the section in the examples below).
+#' @details Note that this method is sensitive to the density estimation `method` (see the section in the examples below).
 #' \subsection{Strengths and Limitations}{
-#' \strong{Strengths:} Straightforward computation. Objective property of the posterior distribution.
+#' **Strengths:** Straightforward computation. Objective property of the posterior distribution.
 #' \cr \cr
-#' \strong{Limitations:} Limited information favoring the null hypothesis. Relates on density approximation. Indirect relationship between mathematical definition and interpretation. Only suitable for weak / very diffused priors.
+#' **Limitations:** Limited information favoring the null hypothesis. Relates on density approximation. Indirect relationship between mathematical definition and interpretation. Only suitable for weak / very diffused priors.
 #' }
 #'
 #' @inheritParams hdi
@@ -53,7 +53,7 @@
 #' summary(data$logspline)
 #' boxplot(data[c("KernSmooth", "logspline")])
 #' }
-#' @seealso \href{https://www.youtube.com/watch?v=Ip8Ci5KUVRc}{Jeff Mill's talk}
+#' @seealso [Jeff Mill's talk](https://www.youtube.com/watch?v=Ip8Ci5KUVRc)
 #'
 #' @references \itemize{
 #'   \item Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}

@@ -18,42 +18,42 @@ rope_range(x, ...)
 }
 \description{
 This function attempts at automatically finding suitable "default"
-  values for the Region Of Practical Equivalence (ROPE).
+values for the Region Of Practical Equivalence (ROPE).
 }
 \details{
 \cite{Kruschke (2018)} suggests that the region of practical
-  equivalence could be set, by default, to a range from \code{-0.1} to
-  \code{0.1} of a standardized parameter (negligible effect size
-  according to Cohen, 1988).
+equivalence could be set, by default, to a range from \code{-0.1} to
+\code{0.1} of a standardized parameter (negligible effect size
+according to Cohen, 1988).
 
-  \itemize{
-    \item For \strong{linear models (lm)}, this can be generalised to
-    \ifelse{html}{\out{-0.1 * SD<sub>y</sub>, 0.1 *
-    SD<sub>y</sub>}}{\eqn{[-0.1*SD_{y}, 0.1*SD_{y}]}}.
+\itemize{
+\item For \strong{linear models (lm)}, this can be generalised to
+\ifelse{html}{\out{-0.1 * SD<sub>y</sub>, 0.1 *
+    SD<sub>y</sub>}}{\eqn{[-0.1*SD_{y}, 0.1*SD_{y}]}}.\preformatted{\\item For **logistic models**, the parameters expressed in log odds
+ratio can be converted to standardized difference through the formula
+\ifelse{html}{\out{&pi;/&radic;(3)}}{\eqn{\pi/\sqrt{3}}}, resulting in a
+range of `-0.18` to `0.18`.
 
-    \item For \strong{logistic models}, the parameters expressed in log odds
-    ratio can be converted to standardized difference through the formula
-    \ifelse{html}{\out{&pi;/&radic;(3)}}{\eqn{\pi/\sqrt{3}}}, resulting in a
-    range of \code{-0.18} to \code{0.18}.
+\\item For other models with **binary outcome**, it is strongly
+recommended to manually specify the rope argument. Currently, the same
+default is applied that for logistic models.
 
-    \item For other models with \strong{binary outcome}, it is strongly
-    recommended to manually specify the rope argument. Currently, the same
-    default is applied that for logistic models.
+\\item For models from **count data**, the residual variance is used.
+This is a rather experimental threshold and is probably often similar to
+`-0.1, 0.1`, but should be used with care!
 
-    \item For models from \strong{count data}, the residual variance is used.
-    This is a rather experimental threshold and is probably often similar to
-    \code{-0.1, 0.1}, but should be used with care!
+\\item For **t-tests**, the standard deviation of the response is
+used, similarly to linear models (see above).
 
-    \item For \strong{t-tests}, the standard deviation of the response is
-    used, similarly to linear models (see above).
+\\item For **correlations**, `-0.05, 0.05` is used, i.e., half
+the value of a negligible correlation as suggested by Cohen's (1988)
+rules of thumb.
 
-    \item For \strong{correlations}, \code{-0.05, 0.05} is used, i.e., half
-    the value of a negligible correlation as suggested by Cohen's (1988)
-    rules of thumb.
+\\item For all other models, `-0.1, 0.1` is used to determine the
+ROPE limits, but it is strongly advised to specify it manually.
+}
 
-    \item For all other models, \code{-0.1, 0.1} is used to determine the
-    ROPE limits, but it is strongly advised to specify it manually.
-  }
+}
 }
 \examples{
 \dontrun{
@@ -88,6 +88,6 @@ if (require("BayesFactor")) {
 }
 \references{
 Kruschke, J. K. (2018). Rejecting or accepting parameter values
-  in Bayesian estimation. Advances in Methods and Practices in Psychological
-  Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
+in Bayesian estimation. Advances in Methods and Practices in Psychological
+Science, 1(2), 270-280. \doi{10.1177/2515245918771304}.
 }

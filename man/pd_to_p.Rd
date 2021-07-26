@@ -18,7 +18,8 @@ convert_pd_to_p(pd, direction = "two-sided", ...)
 \arguments{
 \item{pd}{A Probability of Direction (pd) value (between 0 and 1).}
 
-\item{direction}{What type of p-value is requested or provided. Can be \code{"two-sided"} (default, two tailed) or \code{"one-sided"} (one tailed).}
+\item{direction}{What type of p-value is requested or provided. Can be
+\code{"two-sided"} (default, two tailed) or \code{"one-sided"} (one tailed).}
 
 \item{...}{Arguments passed to or from other methods.}
 

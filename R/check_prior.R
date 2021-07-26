@@ -1,21 +1,23 @@
 #' Check if Prior is Informative
 #'
-#' Performs a simple test to check whether the prior is informative to the posterior. This idea, and the accompanying heuristics, were discussed in \href{https://statmodeling.stat.columbia.edu/2019/08/10/}{this blogpost}.
+#' Performs a simple test to check whether the prior is informative to the
+#' posterior. This idea, and the accompanying heuristics, were discussed in
+#' [this blogpost](https://statmodeling.stat.columbia.edu/2019/08/10/).
 #'
-#' @param method Can be \code{"gelman"} or \code{"lakeland"}. For the
-#'   \code{"gelman"} method, if the SD of the posterior is more than 0.1 times
+#' @param method Can be `"gelman"` or `"lakeland"`. For the
+#'   `"gelman"` method, if the SD of the posterior is more than 0.1 times
 #'   the SD of the prior, then the prior is considered as informative. For the
-#'   \code{"lakeland"} method, the prior is considered as informative if the
-#'   posterior falls within the 95\% HDI of the prior.
+#'   `"lakeland"` method, the prior is considered as informative if the
+#'   posterior falls within the `95%` HDI of the prior.
 #' @param simulate_priors Should prior distributions be simulated using
-#'   \code{\link{simulate_prior}} (default; faster) or sampled via
-#'   \code{\link{unupdate}} (slower, more accurate).
+#'   [simulate_prior()] (default; faster) or sampled via
+#'   [unupdate()] (slower, more accurate).
 #' @inheritParams effective_sample
 #' @inheritParams hdi
 #'
 #' @return A data frame with two columns: The parameter names and the quality
-#'   of the prior (which might be \code{"informative"}, \code{"uninformative"})
-#'   or \code{"not determinable"} if the prior distribution could not be
+#'   of the prior (which might be `"informative"`, `"uninformative"`)
+#'   or `"not determinable"` if the prior distribution could not be
 #'   determined).
 #'
 #' @examples
@@ -101,7 +103,12 @@ check_prior.blavaan <- check_prior.brmsfit
 
 
 #' @keywords internal
-.check_prior <- function(priors, posteriors, method = "gelman", verbose = TRUE, cleaned_parameters = NULL) {
+.check_prior <- function(priors,
+                         posteriors,
+                         method = "gelman",
+                         verbose = TRUE,
+                         cleaned_parameters = NULL) {
+
 
   # sanity check for matching parameters. Some weird priors like
   # rstanarm's R2 prior might cause problems

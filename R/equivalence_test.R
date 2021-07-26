@@ -1,36 +1,36 @@
 #' Test for Practical Equivalence
 #'
-#' Perform a \strong{Test for Practical Equivalence} for Bayesian and frequentist models.
+#' Perform a **Test for Practical Equivalence** for Bayesian and frequentist models.
 #'
 #' Documentation is accessible for:
 #' \itemize{
-#'   \item \href{https://easystats.github.io/bayestestR/reference/equivalence_test.html}{Bayesian models}
-#'   \item \href{https://easystats.github.io/parameters/reference/equivalence_test.lm.html}{Frequentist models}
+#'   \item [Bayesian models](https://easystats.github.io/bayestestR/reference/equivalence_test.html)
+#'   \item [Frequentist models](https://easystats.github.io/parameters/reference/equivalence_test.lm.html)
 #' }
 #'
-#' For Bayesian models, the \strong{Test for Practical Equivalence} is based on the \emph{"HDI+ROPE decision rule"} (\cite{Kruschke, 2014, 2018}) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the percentage of the 89\% \link[=hdi]{HDI} that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.
+#' For Bayesian models, the **Test for Practical Equivalence** is based on the *"HDI+ROPE decision rule"* (\cite{Kruschke, 2014, 2018}) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the percentage of the `89%` [HDI][hdi] that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.
 #'
 #'
 #' @inheritParams rope
 #'
-#' @details Using the \link[=rope]{ROPE} and the \link[=hdi]{HDI}, \cite{Kruschke (2018)}
-#'   suggests using the percentage of the 95\% (or 89\%, considered more stable)
+#' @details Using the [ROPE][rope] and the [HDI][hdi], \cite{Kruschke (2018)}
+#'   suggests using the percentage of the `95%` (or `89%`, considered more stable)
 #'   HDI that falls within the ROPE as a decision rule. If the HDI
 #'   is completely outside the ROPE, the "null hypothesis" for this parameter is
 #'   "rejected". If the ROPE completely covers the HDI, i.e., all most credible
 #'   values of a parameter are inside the region of practical equivalence, the
 #'   null hypothesis is accepted. Else, it’s undecided whether to accept or
-#'   reject the null hypothesis. If the full ROPE is used (i.e., 100\% of the
+#'   reject the null hypothesis. If the full ROPE is used (i.e., `100%` of the
 #'   HDI), then the null hypothesis is rejected or accepted if the percentage
-#'   of the posterior within the ROPE is smaller than to 2.5\% or greater than
-#'   97.5\%. Desirable results are low proportions inside the ROPE  (the closer
+#'   of the posterior within the ROPE is smaller than to `2.5%` or greater than
+#'   `97.5%`. Desirable results are low proportions inside the ROPE  (the closer
 #'   to zero the better).
 #'   \cr \cr
 #'   Some attention is required for finding suitable values for the ROPE limits
-#'   (argument \code{range}). See 'Details' in \code{\link[=rope_range]{rope_range()}}
+#'   (argument `range`). See 'Details' in [`rope_range()`][rope_range]
 #'   for further information.
 #'   \cr \cr
-#'   \strong{Multicollinearity: Non-independent covariates}
+#'   **Multicollinearity: Non-independent covariates**
 #'   \cr \cr
 #'   When parameters show strong correlations, i.e. when covariates are not
 #'   independent, the joint parameter distributions may shift towards or
@@ -41,7 +41,7 @@
 #'   parameters, which may either move further towards "rejection" or away
 #'   from it (\cite{Kruschke 2014, 340f}).
 #'   \cr \cr
-#'   \code{equivalence_test()} performs a simple check for pairwise correlations
+#'   `equivalence_test()` performs a simple check for pairwise correlations
 #'   between parameters, but as there can be collinearity between more than two variables,
 #'   a first step to check the assumptions of this hypothesis testing is to look
 #'   at different pair plots. An even more sophisticated check is the projection
@@ -56,17 +56,17 @@
 #'
 #' @return A data frame with following columns:
 #'   \itemize{
-#'     \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
-#'     \item \code{CI} The probability of the HDI.
-#'     \item \code{ROPE_low}, \code{ROPE_high} The limits of the ROPE. These values are identical for all parameters.
-#'     \item \code{ROPE_Percentage} The proportion of the HDI that lies inside the ROPE.
-#'     \item \code{ROPE_Equivalence} The "test result", as character. Either "rejected", "accepted" or "undecided".
-#'     \item \code{HDI_low} , \code{HDI_high} The lower and upper HDI limits for the parameters.
+#'     \item `Parameter` The model parameter(s), if `x` is a model-object. If `x` is a vector, this column is missing.
+#'     \item `CI` The probability of the HDI.
+#'     \item `ROPE_low`, `ROPE_high` The limits of the ROPE. These values are identical for all parameters.
+#'     \item `ROPE_Percentage` The proportion of the HDI that lies inside the ROPE.
+#'     \item `ROPE_Equivalence` The "test result", as character. Either "rejected", "accepted" or "undecided".
+#'     \item `HDI_low` , `HDI_high` The lower and upper HDI limits for the parameters.
 #'   }
 #'
-#' @note There is a \code{print()}-method with a \code{digits}-argument to control
+#' @note There is a `print()`-method with a `digits`-argument to control
 #'   the amount of digits in the output, and there is a
-#'   \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method}
+#'   [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html)
 #'   to visualize the results from the equivalence-test (for models only).
 #'
 #' @examples

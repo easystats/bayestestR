@@ -2,57 +2,57 @@
 #'
 #' @description This function computes or extracts Bayes factors from fitted models.
 #' \cr \cr
-#' The \code{bf_*} function is an alias of the main function.
+#' The `bf_*` function is an alias of the main function.
 #'
 #' @author Mattan S. Ben-Shachar
 #'
 #' @param ... Fitted models (see details), all fit on the same data, or a single
-#'   \code{BFBayesFactor} object (see 'Details'). Ignored in \code{as.matrix()},
-#'   \code{update()}.
+#'   `BFBayesFactor` object (see 'Details'). Ignored in `as.matrix()`,
+#'   `update()`.
 #' @param denominator Either an integer indicating which of the models to use as
 #'   the denominator, or a model to be used as a denominator. Ignored for
-#'   \code{BFBayesFactor}.
-#' @param object,x A \code{\link{bayesfactor_models}} object.
+#'   `BFBayesFactor`.
+#' @param object,x A [bayesfactor_models()] object.
 #' @param subset Vector of model indices to keep or remove.
-#' @param reference Index of model to reference to, or \code{"top"} to
-#'   reference to the best model, or \code{"bottom"} to reference to the worst
+#' @param reference Index of model to reference to, or `"top"` to
+#'   reference to the best model, or `"bottom"` to reference to the worst
 #'   model.
 #' @inheritParams hdi
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @details
 #' If the passed models are supported by \pkg{insight} the DV of all models will be tested for equality
 #' (else this is assumed to be true), and the models' terms will be extracted (allowing for follow-up
-#' analysis with \code{bayesfactor_inclusion}).
+#' analysis with `bayesfactor_inclusion`).
 #'
 #' \itemize{
-#'   \item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
+#'   \item For `brmsfit` or `stanreg` models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
 #'   \itemize{
-#'     \item \code{brmsfit} models must have been fitted with \code{save_pars = save_pars(all = TRUE)}.
-#'     \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
+#'     \item `brmsfit` models must have been fitted with `save_pars = save_pars(all = TRUE)`.
+#'     \item `stanreg` models must have been fitted with a defined `diagnostic_file`.
 #'   }
-#'   \item For \code{BFBayesFactor}, \code{bayesfactor_models()} is mostly a wraparound \code{BayesFactor::extractBF()}.
+#'   \item For `BFBayesFactor`, `bayesfactor_models()` is mostly a wraparound `BayesFactor::extractBF()`.
 #'   \item BIC approximations are used to compute Bayes factors for all other model types (with a BIC method).
 #'   \itemize{
-#'     \item \strong{Note} that BICs are extracted from models as-is. So if for example you want to compare mixed-models bases on ML instead of REML, you must supply models fit with ML.
+#'     \item **Note** that BICs are extracted from models as-is. So if for example you want to compare mixed-models bases on ML instead of REML, you must supply models fit with ML.
 #'   }
 #' }
 #' In order to correctly and precisely estimate Bayes factors, a rule of thumb
-#' are the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful
-#' \strong{P}osteriors. How many? The number of posterior samples needed for
+#' are the 4 P's: **P**roper **P**riors and **P**lentiful
+#' **P**osteriors. How many? The number of posterior samples needed for
 #' testing is substantially larger than for estimation (the default of 4000
 #' samples may not be enough in many cases). A conservative rule of thumb is to
 #' obtain 10 times more samples than would be required for estimation
 #' (\cite{Gronau, Singmann, & Wagenmakers, 2017}). If less than 40,000 samples
-#' are detected, \code{bayesfactor_models()} gives a warning.
+#' are detected, `bayesfactor_models()` gives a warning.
 #' \cr \cr
-#' See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
+#' See also [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 #'
 #' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
 #'
 #' @return A data frame containing the models' formulas (reconstructed fixed and
-#'   random effects) and their \code{log(BF)}s, that prints nicely.
+#'   random effects) and their `log(BF)`s, that prints nicely.
 #'
 #' @examples
 #' # With lm objects:

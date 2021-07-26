@@ -1,22 +1,25 @@
 #' Bayes Factors (BF)
 #'
-#' This function compte the Bayes factors (BFs) that are appropriate to the input.
-#' For vectors or single models, it will compute \code{\link[=bayesfactor_parameters]{BFs for single parameters}},
-#' or is \code{hypothesis} is specified, \code{\link[=bayesfactor_restricted]{BFs for restricted models}}.
-#' For multiple models, it will return the BF corresponding to \code{\link[=bayesfactor_models]{comparison between models}}
-#' and if a model comparison is passed, it will compute the \code{\link[=bayesfactor_inclusion]{inclusion BF}}.
+#' This function compte the Bayes factors (BFs) that are appropriate to the
+#' input. For vectors or single models, it will compute [`BFs for single
+#' parameters()`][bayesfactor_parameters], or is `hypothesis` is specified,
+#' [`BFs for restricted models()`][bayesfactor_restricted]. For multiple models,
+#' it will return the BF corresponding to [`comparison between
+#' models()`][bayesfactor_models] and if a model comparison is passed, it will
+#' compute the [`inclusion BF()`][bayesfactor_inclusion].
 #' \cr\cr
-#' For a complete overview of these functions, read the \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes factor vignette}.
+#' For a complete overview of these functions, read the [Bayes factor vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 #'
-#' @param ... A numeric vector, model object(s), or the output from \code{bayesfactor_models}.
+#' @param ... A numeric vector, model object(s), or the output from
+#'   `bayesfactor_models`.
 #' @inheritParams bayesfactor_parameters
 #' @inheritParams bayesfactor_restricted
 #' @inheritParams bayesfactor_models
 #' @inheritParams bayesfactor_inclusion
 #'
-#' @return Some type of Bayes factor, depending on the input. See \code{\link{bayesfactor_parameters}}, \code{\link{bayesfactor_models}} or \code{\link{bayesfactor_inclusion}}
+#' @return Some type of Bayes factor, depending on the input. See [bayesfactor_parameters()], [bayesfactor_models()] or [bayesfactor_inclusion()]
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @examples
 #' library(bayestestR)
@@ -49,44 +52,43 @@
 #'   bayesfactor(comparison)
 #' }
 #' @export
-bayesfactor <-
-  function(...,
-           prior = NULL,
-           direction = "two-sided",
-           null = 0,
-           hypothesis = NULL,
-           effects = c("fixed", "random", "all"),
-           verbose = TRUE,
-           denominator = 1,
-           match_models = FALSE,
-           prior_odds = NULL) {
-    mods <- list(...)
-    effects <- match.arg(effects)
+bayesfactor <- function(...,
+                        prior = NULL,
+                        direction = "two-sided",
+                        null = 0,
+                        hypothesis = NULL,
+                        effects = c("fixed", "random", "all"),
+                        verbose = TRUE,
+                        denominator = 1,
+                        match_models = FALSE,
+                        prior_odds = NULL) {
+  mods <- list(...)
+  effects <- match.arg(effects)
 
-    if (length(mods) > 1) {
-      bayesfactor_models(..., denominator = denominator)
-    } else if (inherits(mods[[1]], "bayesfactor_models")) {
+  if (length(mods) > 1) {
+    bayesfactor_models(..., denominator = denominator)
+  } else if (inherits(mods[[1]], "bayesfactor_models")) {
+    bayesfactor_inclusion(..., match_models = match_models, prior_odds = prior_odds)
+  } else if (inherits(mods[[1]], "BFBayesFactor")) {
+    if (class(mods[[1]]@numerator[[1]]) == "BFlinearModel") {
       bayesfactor_inclusion(..., match_models = match_models, prior_odds = prior_odds)
-    } else if (inherits(mods[[1]], "BFBayesFactor")) {
-      if (class(mods[[1]]@numerator[[1]]) == "BFlinearModel") {
-        bayesfactor_inclusion(..., match_models = match_models, prior_odds = prior_odds)
-      } else {
-        bayesfactor_models(...)
-      }
-    } else if (!is.null(hypothesis)) {
-      bayesfactor_restricted(...,
-        prior = prior,
-        verbose = verbose,
-        effects = effects
-      )
     } else {
-      bayesfactor_parameters(
-        ...,
-        prior = prior,
-        direction = direction,
-        null = null,
-        effects = effects,
-        verbose = verbose
-      )
+      bayesfactor_models(...)
     }
+  } else if (!is.null(hypothesis)) {
+    bayesfactor_restricted(...,
+      prior = prior,
+      verbose = verbose,
+      effects = effects
+    )
+  } else {
+    bayesfactor_parameters(
+      ...,
+      prior = prior,
+      direction = direction,
+      null = null,
+      effects = effects,
+      verbose = verbose
+    )
   }
+}
