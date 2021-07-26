@@ -280,23 +280,23 @@ from (see 'Details').</p></td>
     <tr>
       <th>...</th>
       <td><p>Arguments passed to and from other methods. (Can be used to pass
-arguments to internal <code><a href='https://rdrr.io/pkg/logspline/man/logspline.html'>logspline</a></code>.)</p></td>
+arguments to internal <code><a href='https://rdrr.io/pkg/logspline/man/logspline.html'>logspline::logspline()</a></code>.)</p></td>
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to <span class="pkg">brms</span>-models.</p></td>
+      <td><p>Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     <tr>
       <th>parameters</th>
-      <td><p>Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+      <td><p>Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
 filtered by default, so only parameters that typically appear in the
 <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></td>
@@ -320,8 +320,8 @@ that by default, <code><a href='https://rdrr.io/pkg/brms/man/brm.html'>brms::brm
 <li><p>A <code>BF</code> = 1 contains values whose credibility is not decreased by observing the data.</p></li>
 <li><p>A <code>BF</code> &gt; 1 contains values who received more impressive support from the data.</p></li>
 <li><p>A <code>BF</code> &lt; 1 contains values whose credibility has <em>not</em> been impressively decreased by observing the data.
-  Testing against values outside this interval will produce a Bayes factor larger than 1/<code>BF</code> in support of
-  the alternative. E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null will be larger than 3.</p></li>
+Testing against values outside this interval will produce a Bayes factor larger than 1/<code>BF</code> in support of
+the alternative. E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null will be larger than 3.</p></li>
 </ul>
 
 
@@ -349,7 +349,7 @@ It is important to provide the correct <code>prior</code> for meaningful results
 <li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
 <li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model:</p><ul>
 <li><p><code>prior</code> can be set to <code>NULL</code>, in which case prior samples are drawn internally.</p></li>
-<li><p><code>prior</code> can also be a model equivalent to <code>posterior</code> but with samples from the priors <em>only</em>. See <code><a href='unupdate.html'>unupdate</a></code>.</p></li>
+<li><p><code>prior</code> can also be a model equivalent to <code>posterior</code> but with samples from the priors <em>only</em>. See <code><a href='unupdate.html'>unupdate()</a></code>.</p></li>
 <li><p><strong>Note:</strong> When <code>posterior</code> is a <code>brmsfit_multiple</code> model, <code>prior</code> <strong>must</strong> be provided.</p></li>
 </ul></li>
 <li><p>When <code>posterior</code> is an <code>emmGrid</code> object:</p><ul>

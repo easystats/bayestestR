@@ -47,7 +47,9 @@
 
 
 <meta property="og:title" content="Check if Prior is Informative — check_prior" />
-<meta property="og:description" content="Performs a simple test to check whether the prior is informative to the posterior. This idea, and the accompanying heuristics, were discussed in this blogpost." />
+<meta property="og:description" content="Performs a simple test to check whether the prior is informative to the
+posterior. This idea, and the accompanying heuristics, were discussed in
+this blogpost." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -189,7 +191,9 @@
     </div>
 
     <div class="ref-description">
-    <p>Performs a simple test to check whether the prior is informative to the posterior. This idea, and the accompanying heuristics, were discussed in <a href='https://statmodeling.stat.columbia.edu/2019/08/10/'>this blogpost</a>.</p>
+    <p>Performs a simple test to check whether the prior is informative to the
+posterior. This idea, and the accompanying heuristics, were discussed in
+<a href='https://statmodeling.stat.columbia.edu/2019/08/10/'>this blogpost</a>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>check_prior</span><span class='op'>(</span><span class='va'>model</span>, method <span class='op'>=</span> <span class='st'>"gelman"</span>, simulate_priors <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -207,13 +211,13 @@
 <code>"gelman"</code> method, if the SD of the posterior is more than 0.1 times
 the SD of the prior, then the prior is considered as informative. For the
 <code>"lakeland"</code> method, the prior is considered as informative if the
-posterior falls within the 95% HDI of the prior.</p></td>
+posterior falls within the <code>95%</code> HDI of the prior.</p></td>
     </tr>
     <tr>
       <th>simulate_priors</th>
       <td><p>Should prior distributions be simulated using
-<code><a href='simulate_prior.html'>simulate_prior</a></code> (default; faster) or sampled via
-<code><a href='unupdate.html'>unupdate</a></code> (slower, more accurate).</p></td>
+<code><a href='simulate_prior.html'>simulate_prior()</a></code> (default; faster) or sampled via
+<code><a href='unupdate.html'>unupdate()</a></code> (slower, more accurate).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -224,9 +228,9 @@ posterior falls within the 95% HDI of the prior.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with two columns: The parameter names and the quality
-  of the prior (which might be <code>"informative"</code>, <code>"uninformative"</code>)
-  or <code>"not determinable"</code> if the prior distribution could not be
-  determined).</p>
+of the prior (which might be <code>"informative"</code>, <code>"uninformative"</code>)
+or <code>"not determinable"</code> if the prior distribution could not be
+determined).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>https://statmodeling.stat.columbia.edu/2019/08/10/</p>

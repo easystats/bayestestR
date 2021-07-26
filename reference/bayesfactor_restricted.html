@@ -277,14 +277,14 @@ The <code>bf_*</code> function is an alias of the main function.
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to <span class="pkg">brms</span>-models.</p></td>
+      <td><p>Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
 
@@ -320,7 +320,7 @@ It is important to provide the correct <code>prior</code> for meaningful results
 <li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
 <li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model:</p><ul>
 <li><p><code>prior</code> can be set to <code>NULL</code>, in which case prior samples are drawn internally.</p></li>
-<li><p><code>prior</code> can also be a model equivalent to <code>posterior</code> but with samples from the priors <em>only</em>. See <code><a href='unupdate.html'>unupdate</a></code>.</p></li>
+<li><p><code>prior</code> can also be a model equivalent to <code>posterior</code> but with samples from the priors <em>only</em>. See <code><a href='unupdate.html'>unupdate()</a></code>.</p></li>
 <li><p><strong>Note:</strong> When <code>posterior</code> is a <code>brmsfit_multiple</code> model, <code>prior</code> <strong>must</strong> be provided.</p></li>
 </ul></li>
 <li><p>When <code>posterior</code> is an <code>emmGrid</code> object:</p><ul>

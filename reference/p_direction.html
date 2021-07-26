@@ -58,7 +58,7 @@ expressed, this index is fairly similar (i.e., is strongly correlated)
 to the frequentist p-value.
 
 Note that in some (rare) cases, especially when used with model averaged
-posteriors (see weighted_posteriors or
+posteriors (see weighted_posteriors() or
 brms::posterior_average), pd can be smaller than 0.5,
 reflecting high credibility of 0." />
 <meta property="og:image" content="/logo.png" />
@@ -202,9 +202,9 @@ reflecting high credibility of 0." />
     </div>
 
     <div class="ref-description">
-    <p>Compute the <strong>Probability of Direction</strong> (<strong><em>pd</em></strong>, also known
-as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50%
-and 100% (<em>i.e.</em>, <code>0.5</code> and <code>1</code>) and can be interpreted as
+    <p>Compute the <strong>Probability of Direction</strong> (<em><strong>pd</strong></em>, also known
+as the Maximum Probability of Effect - <em>MPE</em>). It varies between <code>50%</code>
+and <code>100%</code> (<em>i.e.</em>, <code>0.5</code> and <code>1</code>) and can be interpreted as
 the probability (expressed in percentage) that a parameter (described by its
 posterior distribution) is strictly positive or negative (whichever is the
 most probable). It is mathematically defined as the proportion of the
@@ -213,7 +213,7 @@ expressed, this index is fairly similar (<em>i.e.</em>, is strongly correlated)
 to the frequentist <strong>p-value</strong>.
 <br /><br />
 Note that in some (rare) cases, especially when used with model averaged
-posteriors (see <code><a href='weighted_posteriors.html'>weighted_posteriors</a></code> or
+posteriors (see <code><a href='weighted_posteriors.html'>weighted_posteriors()</a></code> or
 <code><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>brms::posterior_average</a></code>), <code>pd</code> can be smaller than <code>0.5</code>,
 reflecting high credibility of <code>0</code>.</p>
     </div>
@@ -281,19 +281,19 @@ reflecting high credibility of <code>0</code>.</p>
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to <span class="pkg">brms</span>-models.</p></td>
+      <td><p>Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     <tr>
       <th>parameters</th>
-      <td><p>Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+      <td><p>Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
 filtered by default, so only parameters that typically appear in the
 <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></td>
@@ -305,7 +305,7 @@ for the output.</p></td>
     <p>Values between 0.5 and 1 corresponding to the probability of direction (pd).
 <br /><br />
 Note that in some (rare) cases, especially when used with model averaged
-posteriors (see <code><a href='weighted_posteriors.html'>weighted_posteriors</a></code> or
+posteriors (see <code><a href='weighted_posteriors.html'>weighted_posteriors()</a></code> or
 <code><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>brms::posterior_average</a></code>), <code>pd</code> can be smaller than <code>0.5</code>,
 reflecting high credibility of <code>0</code>. To detect such cases, the
 <code>method = "direct"</code> must be used.</p>
@@ -313,18 +313,34 @@ reflecting high credibility of <code>0</code>. To detect such cases, the
 
     
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>What is the <em>pd</em>?</h3>
-<p>The Probability of Direction (pd) is an index of effect existence, ranging from 50% to 100%, representing the certainty with which an effect goes in a particular direction (<em>i.e.</em>, is positive or negative). Beyond its simplicity of interpretation, understanding and computation, this index also presents other interesting properties:</p><ul>
-<li><p>It is independent from the model: It is solely based on the posterior distributions and does not require any additional information from the data or the model.</p></li>
+<p>The Probability of Direction (pd) is an index of effect existence, ranging
+from <code>50%</code> to <code>100%</code>, representing the certainty with which an effect goes in
+a particular direction (<em>i.e.</em>, is positive or negative). Beyond its
+simplicity of interpretation, understanding and computation, this index also
+presents other interesting properties:</p><ul>
+<li><p>It is independent from the model: It is solely based on the posterior
+distributions and does not require any additional information from the data
+or the model.</p></li>
 <li><p>It is robust to the scale of both the response variable and the predictors.</p></li>
-<li><p>It is strongly correlated with the frequentist p-value, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.</p></li>
+<li><p>It is strongly correlated with the frequentist p-value, and can thus
+be used to draw parallels and give some reference to readers non-familiar
+with Bayesian statistics.</p></li>
 </ul>
 
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Relationship with the p-value</h3>
-<p>In most cases, it seems that the <em>pd</em> has a direct correspondence with the frequentist one-sided <em>p</em>-value through the formula p<sub>one&nbsp;sided</sub>&nbsp;=&nbsp;1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub> and to the two-sided p-value (the most commonly reported one) through the formula p<sub>two&nbsp;sided</sub>&nbsp;=&nbsp;2&nbsp;*&nbsp;(1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>). Thus, a two-sided p-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code> would correspond approximately to a <em>pd</em> of 95%, 97.5%, 99.5% and 99.95%. See also <code><a href='pd_to_p.html'>pd_to_p</a></code>.</p>
+<p>In most cases, it seems that the <em>pd</em> has a direct correspondence with the frequentist one-sided <em>p</em>-value through the formula p<sub>one&nbsp;sided</sub>&nbsp;=&nbsp;1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub> and to the two-sided p-value (the most commonly reported one) through the formula p<sub>two&nbsp;sided</sub>&nbsp;=&nbsp;2&nbsp;*&nbsp;(1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>). Thus, a two-sided p-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code> would correspond approximately to a <em>pd</em> of <code>95%</code>, <code>97.5%</code>, <code>99.5%</code> and <code>99.95%</code>. See also <code><a href='pd_to_p.html'>pd_to_p()</a></code>.</p>
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Methods of computation</h3>
-<p>The most simple and direct way to compute the <em>pd</em> is to 1) look at the median's sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This "simple" method is the most straightforward, but its precision is directly tied to the number of posterior draws. The second approach relies on <a href='estimate_density.html'>density estimation</a>. It starts by estimating the density function (for which many methods are available), and then computing the <a href='area_under_curve.html'>area under the curve</a> (AUC) of the density curve on the other side of 0.</p>
+<p>The most simple and direct way to compute the <em>pd</em> is to 1) look at the
+median's sign, 2) select the portion of the posterior of the same sign and
+3) compute the percentage that this portion represents. This "simple" method
+is the most straightforward, but its precision is directly tied to the
+number of posterior draws. The second approach relies on <a href='estimate_density.html'>density estimation</a>. It starts by estimating the density function
+(for which many methods are available), and then computing the <a href='area_under_curve.html'>area under the curve</a> (AUC) of the density curve on the other side of
+0.</p>
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Strengths and Limitations</h3>
-<p><strong>Strengths:</strong> Straightforward computation and interpretation. Objective property of the posterior distribution. 1:1 correspondence with the frequentist p-value.
+<p><strong>Strengths:</strong> Straightforward computation and interpretation. Objective
+property of the posterior distribution. 1:1 correspondence with the
+frequentist p-value.
 <br /> <br />
 <strong>Limitations:</strong> Limited information favoring the null hypothesis.</p>
 
@@ -333,10 +349,12 @@ reflecting high credibility of <code>0</code>. To detect such cases, the
     <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. doi: <a href='https://doi.org/10.3389/fpsyg.2019.02767'>10.3389/fpsyg.2019.02767</a></p>
+    <p>Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect
+Existence and Significance in the Bayesian Framework. Frontiers in Psychology
+2019;10:2767. doi: <a href='https://doi.org/10.3389/fpsyg.2019.02767'>10.3389/fpsyg.2019.02767</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='pd_to_p.html'>pd_to_p</a></code> to convert between Probability of Direction (pd) and p-value.</p></div>
+    <div class='dont-index'><p><code><a href='pd_to_p.html'>pd_to_p()</a></code> to convert between Probability of Direction (pd) and p-value.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>

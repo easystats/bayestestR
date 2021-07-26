@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="Bias Corrected and Accelerated Interval (BCa) — bci" />
-<meta property="og:description" content="Compute the Bias Corrected and Accelerated Interval (BCa) of posterior distributions." />
+<meta property="og:description" content="Compute the Bias Corrected and Accelerated Interval (BCa) of posterior
+distributions." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -189,7 +190,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Compute the <strong>Bias Corrected and Accelerated Interval (BCa)</strong> of posterior distributions.</p>
+    <p>Compute the <strong>Bias Corrected and Accelerated Interval (BCa)</strong> of posterior
+distributions.</p>
     </div>
 
     <pre class="usage"><span class='fu'>bci</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -262,8 +264,8 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>Value or vector of probability of the (credible) interval - CI (between 0 and 1)
-to be estimated. Default to <code>.95</code> (95%).</p></td>
+      <td><p>Value or vector of probability of the (credible) interval - CI
+(between 0 and 1) to be estimated. Default to <code>.95</code> (<code>95%</code>).</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -271,22 +273,22 @@ to be estimated. Default to <code>.95</code> (95%).</p></td>
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>parameters</th>
-      <td><p>Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+      <td><p>Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
 filtered by default, so only parameters that typically appear in the
 <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to <span class="pkg">brms</span>-models.</p></td>
+      <td><p>Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
 
@@ -300,34 +302,36 @@ applies to <span class="pkg">brms</span>-models.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Unlike equal-tailed intervals (see <code><a href='eti.html'>eti()</a></code>) that typically exclude 2.5%
+    <p>Unlike equal-tailed intervals (see <code><a href='eti.html'>eti()</a></code>) that typically exclude <code>2.5%</code>
 from each tail of the distribution and always include the median, the HDI is
 <em>not</em> equal-tailed and therefore always includes the mode(s) of posterior
 distributions.
 <br /> <br />
-The <a href='https://easystats.github.io/bayestestR/articles/credible_interval.html'>95% or 89% Credible Intervals (CI)</a>
+The <a href='https://easystats.github.io/bayestestR/articles/credible_interval.html'><code>95%</code> or <code>89%</code> Credible Intervals (CI)</a>
 are two reasonable ranges to characterize the uncertainty related to the estimation (see <a href='https://easystats.github.io/bayestestR/articles/credible_interval.html'>here</a> for a discussion about the differences between these two values).
 <br />
-The 89% intervals (<code>ci = 0.89</code>) are deemed to be more stable than, for
-instance, 95% intervals (<cite>Kruschke, 2014</cite>).
-An effective sample size of at least 10.000 is recommended if one wants to estimate
-95% intervals with high precision (<cite>Kruschke, 2014, p. 183ff</cite>). Unfortunately, the default number of posterior samples for most Bayes packages (e.g., `rstanarm` or `brms`) is only 4.000 (thus, you might want to increase it when fitting your model). Moreover,
-89 indicates the arbitrariness of interval limits - its only remarkable property is being
-the highest prime number that does not exceed the already unstable 95%
-threshold (<cite>McElreath, 2015</cite>).
+The <code>89%</code> intervals (<code>ci = 0.89</code>) are deemed to be more stable than, for
+instance, <code>95%</code> intervals (<cite>Kruschke, 2014</cite>). An effective sample size
+of at least 10.000 is recommended if one wants to estimate <code>95%</code> intervals
+with high precision (<cite>Kruschke, 2014, p. 183ff</cite>). Unfortunately, the
+default number of posterior samples for most Bayes packages (e.g., <code>rstanarm</code>
+or <code>brms</code>) is only 4.000 (thus, you might want to increase it when fitting
+your model). Moreover, 89 indicates the arbitrariness of interval limits -
+its only remarkable property is being the highest prime number that does not
+exceed the already unstable <code>95%</code> threshold (<cite>McElreath, 2015</cite>).
 <br />
-However, 95% has some <a href='https://easystats.github.io/blog/posts/bayestestr_95/'>advantages too</a>.
-For instance, it shares (in the case of a normal posterior distribution) an intuitive relationship with the
-standard deviation and it conveys a more accurate image of the (artificial)
-bounds of the distribution. Also, because it is wider, it makes analyses more
-conservative (i.e., the probability of covering 0 is larger for the 95% CI than
-for lower ranges such as 89%), which is a good thing in the context of the
-reproducibility crisis.
+However, <code>95%</code> has some <a href='https://easystats.github.io/blog/posts/bayestestr_95/'>advantages too</a>. For instance, it
+shares (in the case of a normal posterior distribution) an intuitive
+relationship with the standard deviation and it conveys a more accurate image
+of the (artificial) bounds of the distribution. Also, because it is wider, it
+makes analyses more conservative (i.e., the probability of covering 0 is
+larger for the <code>95%</code> CI than for lower ranges such as <code>89%</code>), which is a good
+thing in the context of the reproducibility crisis.
 <br /> <br />
-A 95% equal-tailed interval (ETI) has 2.5% of the distribution on either
-side of its limits. It indicates the 2.5th percentile and the 97.5h percentile.
-In symmetric distributions, the two methods of computing credible intervals,
-the ETI and the <a href='hdi.html'>HDI</a>, return similar results.
+A <code>95%</code> equal-tailed interval (ETI) has <code>2.5%</code> of the distribution on either
+side of its limits. It indicates the 2.5th percentile and the 97.5h
+percentile. In symmetric distributions, the two methods of computing credible
+intervals, the ETI and the <a href='hdi.html'>HDI</a>, return similar results.
 <br /> <br />
 This is not the case for skewed distributions. Indeed, it is possible that
 parameter values in the ETI have lower credibility (are less probable) than
@@ -342,7 +346,8 @@ On the contrary, applying transformations to the distribution will change
 the resulting HDI.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>DiCiccio, T. J. and B. Efron. (1996). Bootstrap Confidence Intervals. Statistical Science. 11(3): 189–212. doi: <a href='https://doi.org/10.1214/ss/1032280214'>10.1214/ss/1032280214</a></p>
+    <p>DiCiccio, T. J. and B. Efron. (1996). Bootstrap Confidence Intervals.
+Statistical Science. 11(3): 189–212. doi: <a href='https://doi.org/10.1214/ss/1032280214'>10.1214/ss/1032280214</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>

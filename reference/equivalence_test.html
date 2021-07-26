@@ -249,11 +249,10 @@
       <th>range</th>
       <td><p>ROPE's lower and higher bounds. Should be <code>"default"</code> or
 depending on the number of outcome variables a vector or a list. In models with one response,
-`range` should be a vector of length two (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code>). In
-multivariate models, `range` should be a list with a numeric vectors for
+<code>range</code> should be a vector of length two (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code>). In
+multivariate models, <code>range</code> should be a list with a numeric vectors for
 each response variable. Vector names should correspond to the name of the response
-variables. If <code>"default"</code> and input is a vector, the range is set to <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1,
-0.1)</a></code>. If <code>"default"</code> and input is a Bayesian model,
+variables. If <code>"default"</code> and input is a vector, the range is set to <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code>. If <code>"default"</code> and input is a Bayesian model,
 <code><a href='rope_range.html'>rope_range()</a></code> is used.</p></td>
     </tr>
     <tr>
@@ -266,19 +265,19 @@ variables. If <code>"default"</code> and input is a vector, the range is set to 
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to <span class="pkg">brms</span>-models.</p></td>
+      <td><p>Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     <tr>
       <th>parameters</th>
-      <td><p>Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+      <td><p>Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
 filtered by default, so only parameters that typically appear in the
 <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></td>
@@ -303,46 +302,46 @@ for the output.</p></td>
 <li><p><a href='https://easystats.github.io/parameters/reference/equivalence_test.lm.html'>Frequentist models</a></p></li>
 </ul>
 
-<p>For Bayesian models, the <strong>Test for Practical Equivalence</strong> is based on the <em>"HDI+ROPE decision rule"</em> (<cite>Kruschke, 2014, 2018</cite>) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the percentage of the 89% <a href='hdi.html'>HDI</a> that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.</p>
+<p>For Bayesian models, the <strong>Test for Practical Equivalence</strong> is based on the <em>"HDI+ROPE decision rule"</em> (<cite>Kruschke, 2014, 2018</cite>) to check whether parameter values should be accepted or rejected against an explicitly formulated "null hypothesis" (i.e., a ROPE). In other words, it checks the percentage of the <code>89%</code> <a href='hdi.html'>HDI</a> that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.</p>
 <p>Using the <a href='rope.html'>ROPE</a> and the <a href='hdi.html'>HDI</a>, <cite>Kruschke (2018)</cite>
-  suggests using the percentage of the 95% (or 89%, considered more stable)
-  HDI that falls within the ROPE as a decision rule. If the HDI
-  is completely outside the ROPE, the "null hypothesis" for this parameter is
-  "rejected". If the ROPE completely covers the HDI, i.e., all most credible
-  values of a parameter are inside the region of practical equivalence, the
-  null hypothesis is accepted. Else, it’s undecided whether to accept or
-  reject the null hypothesis. If the full ROPE is used (i.e., 100% of the
-  HDI), then the null hypothesis is rejected or accepted if the percentage
-  of the posterior within the ROPE is smaller than to 2.5% or greater than
-  97.5%. Desirable results are low proportions inside the ROPE  (the closer
-  to zero the better).
-  <br /> <br />
-  Some attention is required for finding suitable values for the ROPE limits
-  (argument <code>range</code>). See 'Details' in <code><a href='rope_range.html'>rope_range()</a></code>
-  for further information.
-  <br /> <br />
-  <strong>Multicollinearity: Non-independent covariates</strong>
-  <br /> <br />
-  When parameters show strong correlations, i.e. when covariates are not
-  independent, the joint parameter distributions may shift towards or
-  away from the ROPE. In such cases, the test for practical equivalence may
-  have inappropriate results. Collinearity invalidates ROPE and hypothesis
-  testing based on univariate marginals, as the probabilities are conditional
-  on independence. Most problematic are the results of the "undecided"
-  parameters, which may either move further towards "rejection" or away
-  from it (<cite>Kruschke 2014, 340f</cite>).
-  <br /> <br />
-  <code>equivalence_test()</code> performs a simple check for pairwise correlations
-  between parameters, but as there can be collinearity between more than two variables,
-  a first step to check the assumptions of this hypothesis testing is to look
-  at different pair plots. An even more sophisticated check is the projection
-  predictive variable selection (<cite>Piironen and Vehtari 2017</cite>).</p>
+suggests using the percentage of the <code>95%</code> (or <code>89%</code>, considered more stable)
+HDI that falls within the ROPE as a decision rule. If the HDI
+is completely outside the ROPE, the "null hypothesis" for this parameter is
+"rejected". If the ROPE completely covers the HDI, i.e., all most credible
+values of a parameter are inside the region of practical equivalence, the
+null hypothesis is accepted. Else, it’s undecided whether to accept or
+reject the null hypothesis. If the full ROPE is used (i.e., <code>100%</code> of the
+HDI), then the null hypothesis is rejected or accepted if the percentage
+of the posterior within the ROPE is smaller than to <code>2.5%</code> or greater than
+<code>97.5%</code>. Desirable results are low proportions inside the ROPE  (the closer
+to zero the better).
+<br /> <br />
+Some attention is required for finding suitable values for the ROPE limits
+(argument <code>range</code>). See 'Details' in <code><a href='rope_range.html'>rope_range()</a></code>
+for further information.
+<br /> <br />
+<strong>Multicollinearity: Non-independent covariates</strong>
+<br /> <br />
+When parameters show strong correlations, i.e. when covariates are not
+independent, the joint parameter distributions may shift towards or
+away from the ROPE. In such cases, the test for practical equivalence may
+have inappropriate results. Collinearity invalidates ROPE and hypothesis
+testing based on univariate marginals, as the probabilities are conditional
+on independence. Most problematic are the results of the "undecided"
+parameters, which may either move further towards "rejection" or away
+from it (<cite>Kruschke 2014, 340f</cite>).
+<br /> <br />
+<code>equivalence_test()</code> performs a simple check for pairwise correlations
+between parameters, but as there can be collinearity between more than two variables,
+a first step to check the assumptions of this hypothesis testing is to look
+at different pair plots. An even more sophisticated check is the projection
+predictive variable selection (<cite>Piironen and Vehtari 2017</cite>).</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>There is a <code><a href='https://rdrr.io/r/base/print.html'>print()</a></code>-method with a <code>digits</code>-argument to control
-  the amount of digits in the output, and there is a
-  <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a>
-  to visualize the results from the equivalence-test (for models only).</p>
+the amount of digits in the output, and there is a
+<a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a>
+to visualize the results from the equivalence-test (for models only).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     

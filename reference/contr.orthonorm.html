@@ -54,10 +54,9 @@ the description in Rouder, Morey, Speckman, &amp;amp; Province (2012, p. 363).
 
 Though using this factor coding scheme might obscure the interpretation of
 parameters, it is essential for correct estimation of Bayes factors for
-contrasts and order restrictions of multi-level factors (where `k&amp;gt;2`). See
+contrasts and order restrictions of multi-level factors (where k&amp;gt;2). See
 info on specifying correct priors for factors with more than 2 levels in
-the
-Bayes factors vignette." />
+the Bayes factors vignette." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -206,10 +205,9 @@ the description in Rouder, Morey, Speckman, &amp; Province (2012, p. 363).
 <br /><br />
 Though using this factor coding scheme might obscure the interpretation of
 parameters, it is essential for correct estimation of Bayes factors for
-contrasts and order restrictions of multi-level factors (where `k&gt;2`). See
+contrasts and order restrictions of multi-level factors (where <code>k&gt;2</code>). See
 info on specifying correct priors for factors with more than 2 levels in
-<a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the
-Bayes factors vignette</a>.</p>
+<a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>contr.orthonorm</span><span class='op'>(</span><span class='va'>n</span>, contrasts <span class='op'>=</span> <span class='cn'>TRUE</span>, sparse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
@@ -237,19 +235,23 @@ Bayes factors vignette</a>.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>matrix</code> with n rows and k columns, with k=n-1 if contrasts is
-  <code>TRUE</code> and k=n if contrasts is <code>FALSE</code>.</p>
+<code>TRUE</code> and k=n if contrasts is <code>FALSE</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>When `contrasts = FALSE`, the returned contrasts are equivalent to
-`contr.treatment(, contrasts = FALSE)`, as suggested by McElreath (also known
+    <p>When <code>contrasts = FALSE</code>, the returned contrasts are equivalent to
+<code><a href='https://rdrr.io/r/stats/contrast.html'>contr.treatment(, contrasts = FALSE)</a></code>, as suggested by McElreath (also known
 as one-hot encoding).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>- McElreath, R. (2020). Statistical rethinking: A Bayesian course with
-  examples in R and Stan. CRC press.</p>
-<p>- Rouder, J. N., Morey, R. D., Speckman, P. L., &amp; Province, J. M. (2012).
-  Default Bayes factors for ANOVA designs. *Journal of Mathematical
-  Psychology*, 56(5), 356-374. https://doi.org/10.1016/j.jmp.2012.08.001</p>
+    
+<ul>
+<li><p>McElreath, R. (2020). Statistical rethinking: A Bayesian course with
+examples in R and Stan. CRC press.</p></li>
+<li><p>Rouder, J. N., Morey, R. D., Speckman, P. L., &amp; Province, J. M. (2012).
+Default Bayes factors for ANOVA designs. <em>Journal of Mathematical
+Psychology</em>, 56(5), 356-374. https://doi.org/10.1016/j.jmp.2012.08.001</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>contr.orthonorm</span><span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span> <span class='co'># Q_2 in Rouder et al. (2012, p. 363)</span>

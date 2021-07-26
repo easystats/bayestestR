@@ -48,7 +48,7 @@
 
 <meta property="og:title" content="Find Default Equivalence (ROPE) Region Bounds — rope_range" />
 <meta property="og:description" content="This function attempts at automatically finding suitable &quot;default&quot;
-  values for the Region Of Practical Equivalence (ROPE)." />
+values for the Region Of Practical Equivalence (ROPE)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -191,7 +191,7 @@
 
     <div class="ref-description">
     <p>This function attempts at automatically finding suitable "default"
-  values for the Region Of Practical Equivalence (ROPE).</p>
+values for the Region Of Practical Equivalence (ROPE).</p>
     </div>
 
     <pre class="usage"><span class='fu'>rope_range</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -219,37 +219,42 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><cite>Kruschke (2018)</cite> suggests that the region of practical
-  equivalence could be set, by default, to a range from <code>-0.1</code> to
-  <code>0.1</code> of a standardized parameter (negligible effect size
-  according to Cohen, 1988).</p>
-<p></p><ul>
+equivalence could be set, by default, to a range from <code>-0.1</code> to
+<code>0.1</code> of a standardized parameter (negligible effect size
+according to Cohen, 1988).</p>
+<ul>
 <li><p>For <strong>linear models (lm)</strong>, this can be generalised to
-    -0.1 * SD<sub>y</sub>, 0.1 *
-    SD<sub>y</sub>.</p></li>
-<li><p>For <strong>logistic models</strong>, the parameters expressed in log odds
-    ratio can be converted to standardized difference through the formula
-    &pi;/&radic;(3), resulting in a
-    range of <code>-0.18</code> to <code>0.18</code>.</p></li>
-<li><p>For other models with <strong>binary outcome</strong>, it is strongly
-    recommended to manually specify the rope argument. Currently, the same
-    default is applied that for logistic models.</p></li>
-<li><p>For models from <strong>count data</strong>, the residual variance is used.
-    This is a rather experimental threshold and is probably often similar to
-    <code>-0.1, 0.1</code>, but should be used with care!</p></li>
-<li><p>For <strong>t-tests</strong>, the standard deviation of the response is
-    used, similarly to linear models (see above).</p></li>
-<li><p>For <strong>correlations</strong>, <code>-0.05, 0.05</code> is used, i.e., half
-    the value of a negligible correlation as suggested by Cohen's (1988)
-    rules of thumb.</p></li>
-<li><p>For all other models, <code>-0.1, 0.1</code> is used to determine the
-    ROPE limits, but it is strongly advised to specify it manually.</p></li>
+-0.1 * SD<sub>y</sub>, 0.1 *
+    SD<sub>y</sub>.</p><pre>\item For **logistic models**, the parameters expressed in log odds
+ratio can be converted to standardized difference through the formula
+\ifelse{html}{\out{&amp;pi;/&amp;radic;(3)}}{\eqn{\pi/\sqrt{3}}}, resulting in a
+range of `-0.18` to `0.18`.
+
+\item For other models with **binary outcome**, it is strongly
+recommended to manually specify the rope argument. Currently, the same
+default is applied that for logistic models.
+
+\item For models from **count data**, the residual variance is used.
+This is a rather experimental threshold and is probably often similar to
+`-0.1, 0.1`, but should be used with care!
+
+\item For **t-tests**, the standard deviation of the response is
+used, similarly to linear models (see above).
+
+\item For **correlations**, `-0.05, 0.05` is used, i.e., half
+the value of a negligible correlation as suggested by Cohen's (1988)
+rules of thumb.
+
+\item For all other models, `-0.1, 0.1` is used to determine the
+ROPE limits, but it is strongly advised to specify it manually.
+</pre></li>
 </ul>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Kruschke, J. K. (2018). Rejecting or accepting parameter values
-  in Bayesian estimation. Advances in Methods and Practices in Psychological
-  Science, 1(2), 270-280. doi: <a href='https://doi.org/10.1177/2515245918771304'>10.1177/2515245918771304</a>
+in Bayesian estimation. Advances in Methods and Practices in Psychological
+Science, 1(2), 270-280. doi: <a href='https://doi.org/10.1177/2515245918771304'>10.1177/2515245918771304</a>
 .</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

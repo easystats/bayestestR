@@ -48,8 +48,8 @@
 
 <meta property="og:title" content="Summary of Bayesian multivariate-response mediation-models — mediation" />
 <meta property="og:description" content="mediation() is a short summary for multivariate-response
-  mediation-models, i.e. this function computes average direct and average
-  causal mediation effects of multivariate response models." />
+mediation-models, i.e. this function computes average direct and average
+causal mediation effects of multivariate response models." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -192,8 +192,8 @@
 
     <div class="ref-description">
     <p><code>mediation()</code> is a short summary for multivariate-response
-  mediation-models, i.e. this function computes average direct and average
-  causal mediation effects of multivariate response models.</p>
+mediation-models, i.e. this function computes average direct and average
+causal mediation effects of multivariate response models.</p>
     </div>
 
     <pre class="usage"><span class='fu'>mediation</span><span class='op'>(</span><span class='va'>model</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -268,7 +268,7 @@ additional predictor), <code>y</code>, is not transformed. Then we could use
     <tr>
       <th>ci</th>
       <td><p>Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to <code>.95</code> (95%).</p></td>
+to be estimated. Default to <code>.95</code> (<code>95%</code>).</p></td>
     </tr>
     <tr>
       <th>method</th>
@@ -279,38 +279,38 @@ to be estimated. Default to <code>.95</code> (95%).</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame with direct, indirect, mediator and
-  total effect of a multivariate-response mediation-model, as well as the
-  proportion mediated. The effect sizes are median values of the posterior
-  samples (use <code>centrality</code> for other centrality indices).</p>
+total effect of a multivariate-response mediation-model, as well as the
+proportion mediated. The effect sizes are median values of the posterior
+samples (use <code>centrality</code> for other centrality indices).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>mediation()</code> returns a data frame with information on the
-      <em>direct effect</em> (mean value of posterior samples from <code>treatment</code>
-      of the outcome model), <em>mediator effect</em> (mean value of posterior
-      samples from <code>mediator</code> of the outcome model), <em>indirect effect</em>
-      (mean value of the multiplication of the posterior samples from
-      <code>mediator</code> of the outcome model and the posterior samples from
-      <code>treatment</code> of the mediation model) and the total effect (mean
-      value of sums of posterior samples used for the direct and indirect
-      effect). The <em>proportion mediated</em> is the indirect effect divided
-      by the total effect.
-      <br /> <br />
-      For all values, the 89% credible intervals are calculated by default.
-      Use <code>ci</code> to calculate a different interval.
-      <br /> <br />
-      The arguments <code>treatment</code> and <code>mediator</code> do not necessarily
-      need to be specified. If missing, <code>mediation()</code> tries to find the
-      treatment and mediator variable automatically. If this does not work,
-      specify these variables.
-      <br /> <br />
-      The direct effect is also called <em>average direct effect</em> (ADE),
-      the indirect effect is also called <em>average causal mediation effects</em>
-      (ACME). See also <cite>Tingley et al. 2014</cite> and <cite>Imai et al. 2010</cite>.</p>
+<em>direct effect</em> (mean value of posterior samples from <code>treatment</code>
+of the outcome model), <em>mediator effect</em> (mean value of posterior
+samples from <code>mediator</code> of the outcome model), <em>indirect effect</em>
+(mean value of the multiplication of the posterior samples from
+<code>mediator</code> of the outcome model and the posterior samples from
+<code>treatment</code> of the mediation model) and the total effect (mean
+value of sums of posterior samples used for the direct and indirect
+effect). The <em>proportion mediated</em> is the indirect effect divided
+by the total effect.
+<br /> <br />
+For all values, the <code>89%</code> credible intervals are calculated by default.
+Use <code>ci</code> to calculate a different interval.
+<br /> <br />
+The arguments <code>treatment</code> and <code>mediator</code> do not necessarily
+need to be specified. If missing, <code>mediation()</code> tries to find the
+treatment and mediator variable automatically. If this does not work,
+specify these variables.
+<br /> <br />
+The direct effect is also called <em>average direct effect</em> (ADE),
+the indirect effect is also called <em>average causal mediation effects</em>
+(ACME). See also <cite>Tingley et al. 2014</cite> and <cite>Imai et al. 2010</cite>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>There is an <code><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame()</a></code> method that returns the posterior
-  samples of the effects, which can be used for further processing in the
-  different <span class="pkg">bayestestR</span> package.</p>
+samples of the effects, which can be used for further processing in the
+different <span class="pkg">bayestestR</span> package.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
@@ -326,7 +326,7 @@ Software, Vol. 59, No. 5, pp. 1-38.</p></li>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>The <span class="pkg">mediation</span> package for a causal mediation analysis in
-  the frequentist framework.</p></div>
+the frequentist framework.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>

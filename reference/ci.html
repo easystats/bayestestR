@@ -261,7 +261,7 @@
     <tr>
       <th>ci</th>
       <td><p>Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to <code>.95</code> (95%).</p></td>
+to be estimated. Default to <code>.95</code> (<code>95%</code>).</p></td>
     </tr>
     <tr>
       <th>method</th>
@@ -277,22 +277,22 @@ to be estimated. Default to <code>.95</code> (95%).</p></td>
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>parameters</th>
-      <td><p>Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+      <td><p>Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
 filtered by default, so only parameters that typically appear in the
 <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to <span class="pkg">brms</span>-models.</p></td>
+      <td><p>Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     </table>
 
@@ -315,11 +315,11 @@ applies to <span class="pkg">brms</span>-models.</p></td>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>When it comes to interpretation, we recommend thinking of the CI in terms of
-  an "uncertainty" or "compatibility" interval, the latter being defined as
-  &#8220;Given any value in the interval and the background assumptions,
-  the data should not seem very surprising&#8221; (<cite>Gelman &amp; Greenland 2019</cite>).
-  <br /> <br />
-  There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+an "uncertainty" or "compatibility" interval, the latter being defined as
+&#8220;Given any value in the interval and the background assumptions,
+the data should not seem very surprising&#8221; (<cite>Gelman &amp; Greenland 2019</cite>).
+<br /> <br />
+There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Gelman A, Greenland S. Are confidence intervals better termed "uncertainty intervals"? BMJ 2019;l5381. doi: <a href='https://doi.org/10.1136/bmj.l5381'>10.1136/bmj.l5381</a></p>

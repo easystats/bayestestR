@@ -205,7 +205,7 @@ For more info, see <a href='https://easystats.github.io/bayestestR/articles/baye
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>models</th>
-      <td><p>An object of class <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code> or <code>BFBayesFactor</code>.</p></td>
+      <td><p>An object of class <code><a href='bayesfactor_models.html'>bayesfactor_models()</a></code> or <code>BFBayesFactor</code>.</p></td>
     </tr>
     <tr>
       <th>match_models</th>
@@ -213,7 +213,8 @@ For more info, see <a href='https://easystats.github.io/bayestestR/articles/baye
     </tr>
     <tr>
       <th>prior_odds</th>
-      <td><p>Optional vector of prior odds for the models. See <code>BayesFactor::priorOdds&lt;-</code>.</p></td>
+      <td><p>Optional vector of prior odds for the models. See
+<code>BayesFactor::priorOdds&lt;-</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -223,19 +224,21 @@ For more info, see <a href='https://easystats.github.io/bayestestR/articles/baye
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data frame containing the prior and posterior probabilities, and log(BF) for each effect.</p>
+    <p>a data frame containing the prior and posterior probabilities, and
+log(BF) for each effect.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Inclusion Bayes factors answer the question: Are the observed data more
-probable under models with a particular effect, than they are under models without
-that particular effect? In other words, on average - are models with effect \(X\)
-more likely to have produced the observed data than models without effect \(X\)?</p>
+    <p>Inclusion Bayes factors answer the question: Are the observed data
+more probable under models with a particular effect, than they are under
+models without that particular effect? In other words, on average - are
+models with effect \(X\) more likely to have produced the observed data
+than models without effect \(X\)?</p>
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Match Models</h3>
-<p>If <code>match_models=FALSE</code> (default), Inclusion BFs are computed by comparing all models
-with a term against all models without that term. If <code>TRUE</code>,
+<p>If <code>match_models=FALSE</code> (default), Inclusion BFs are computed by comparing
+all models with a term against all models without that term. If <code>TRUE</code>,
 comparison is restricted to models that (1) do not include any interactions
-with the term of interest; (2) for interaction terms, averaging is done
-only across models that containe the main effect terms from which the interaction
+with the term of interest; (2) for interaction terms, averaging is done only
+across models that containe the main effect terms from which the interaction
 term is comprised.</p>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
@@ -257,12 +260,12 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 <ul>
 <li><p>Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E. (2019, March 25). A conceptual introduction to Bayesian Model Averaging. doi: <a href='https://doi.org/10.31234/osf.io/wgb64'>10.31234/osf.io/wgb64</a></p></li>
 <li><p>Clyde, M. A., Ghosh, J., &amp; Littman, M. L. (2011). Bayesian adaptive sampling for variable selection and model averaging. Journal of Computational and Graphical Statistics, 20(1), 80-101.</p></li>
-<li><p>Mathot, S. (2017). Bayes like a Baws: Interpreting Bayesian Repeated Measures in JASP [Blog post]. Retrieved from https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp</p></li>
+<li><p>Mathot, S. (2017). Bayes like a Baws: Interpreting Bayesian Repeated Measures in JASP <a href='https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp'>Blog post</a>.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='weighted_posteriors.html'>weighted_posteriors</a></code> for Bayesian parameter averaging.</p></div>
+    <div class='dont-index'><p><code><a href='weighted_posteriors.html'>weighted_posteriors()</a></code> for Bayesian parameter averaging.</p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Mattan S. Ben-Shachar</p>

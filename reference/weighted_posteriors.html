@@ -47,8 +47,8 @@
 
 
 <meta property="og:title" content="Generate posterior distributions weighted across models — weighted_posteriors" />
-<meta property="og:description" content="Extract posterior samples of parameters, weighted across models.
-Weighting is done by comparing posterior model probabilities, via bayesfactor_models." />
+<meta property="og:description" content="Extract posterior samples of parameters, weighted across models. Weighting is
+done by comparing posterior model probabilities, via bayesfactor_models()." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -190,8 +190,8 @@ Weighting is done by comparing posterior model probabilities, via bayesfactor_mo
     </div>
 
     <div class="ref-description">
-    <p>Extract posterior samples of parameters, weighted across models.
-Weighting is done by comparing posterior model probabilities, via <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code>.</p>
+    <p>Extract posterior samples of parameters, weighted across models. Weighting is
+done by comparing posterior model probabilities, via <code><a href='bayesfactor_models.html'>bayesfactor_models()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>weighted_posteriors</span><span class='op'>(</span><span class='va'>...</span>, prior_odds <span class='op'>=</span> <span class='cn'>NULL</span>, missing <span class='op'>=</span> <span class='fl'>0</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
@@ -246,15 +246,19 @@ Weighting is done by comparing posterior model probabilities, via <code><a href=
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>...</th>
-      <td><p>Fitted models (see details), all fit on the same data, or a single <code>BFBayesFactor</code> object.</p></td>
+      <td><p>Fitted models (see details), all fit on the same data, or a single
+<code>BFBayesFactor</code> object.</p></td>
     </tr>
     <tr>
       <th>prior_odds</th>
-      <td><p>Optional vector of prior odds for the models compared to the first model (or the denominator, for <code>BFBayesFactor</code> objects). For <code>data.frame</code>s, this will be used as the basis of weighting.</p></td>
+      <td><p>Optional vector of prior odds for the models compared to
+the first model (or the denominator, for <code>BFBayesFactor</code> objects). For
+<code>data.frame</code>s, this will be used as the basis of weighting.</p></td>
     </tr>
     <tr>
       <th>missing</th>
-      <td><p>An optional numeric value to use if a model does not contain a parameter that appears in other models. Defaults to 0.</p></td>
+      <td><p>An optional numeric value to use if a model does not contain a
+parameter that appears in other models. Defaults to 0.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -262,19 +266,19 @@ Weighting is done by comparing posterior model probabilities, via <code><a href=
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to <span class="pkg">brms</span>-models.</p></td>
+      <td><p>Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     <tr>
       <th>parameters</th>
-      <td><p>Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+      <td><p>Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
 filtered by default, so only parameters that typically appear in the
 <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></td>
@@ -290,36 +294,45 @@ for the output.</p></td>
     <p>A data frame with posterior distributions (weighted across models) .</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Note that across models some parameters might play different roles. For example,
-the parameter <code>A</code> plays a different role in the model <code>Y ~ A + B</code> (where it is a main effect)
-than it does in the model <code>Y ~ A + B + A:B</code> (where it is a simple effect). In many cases centering
-of predictors (mean subtracting for continuous variables, and effects coding via <code>contr.sum</code> or
-orthonormal coding via <code><a href='contr.orthonorm.html'>contr.orthonorm</a></code> for factors) can reduce this issue. In any case
-you should be mindful of this issue.
+    <p>Note that across models some parameters might play different roles. For
+example, the parameter <code>A</code> plays a different role in the model <code>Y ~ A + B</code>
+(where it is a main effect) than it does in the model <code>Y ~ A + B + A:B</code>
+(where it is a simple effect). In many cases centering of predictors (mean
+subtracting for continuous variables, and effects coding via <code>contr.sum</code> or
+orthonormal coding via <code><a href='contr.orthonorm.html'>contr.orthonorm()</a></code> for factors) can reduce this
+issue. In any case you should be mindful of this issue.
 <br /><br />
-See <code><a href='bayesfactor_models.html'>bayesfactor_models</a></code> details for more info on passed models.
+See <code><a href='bayesfactor_models.html'>bayesfactor_models()</a></code> details for more info on passed models.
 <br /><br />
-Note that for <code>BayesFactor</code> models, posterior samples cannot be generated from intercept only models.
+Note that for <code>BayesFactor</code> models, posterior samples cannot be generated
+from intercept only models.
 <br /><br />
 This function is similar in function to <code><a href='https://rdrr.io/pkg/brms/man/posterior_average.brmsfit.html'>brms::posterior_average</a></code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>For <code>BayesFactor &lt; 0.9.12-4.3</code>, in some instances there might be
-  some problems of duplicate columns of random effects in the resulting data
-  frame.</p>
+some problems of duplicate columns of random effects in the resulting data
+frame.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
 <ul>
-<li><p>Clyde, M., Desimone, H., &amp; Parmigiani, G. (1996). Prediction via orthogonalized model mixing. Journal of the American Statistical Association, 91(435), 1197-1208.</p></li>
-<li><p>Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E. (2019, March 25). A conceptual introduction to Bayesian Model Averaging. doi: <a href='https://doi.org/10.31234/osf.io/wgb64'>10.31234/osf.io/wgb64</a></p></li>
-<li><p>Rouder, J. N., Haaf, J. M., &amp; Vandekerckhove, J. (2018). Bayesian inference for psychology, part IV: Parameter estimation and Bayes factors. Psychonomic bulletin &amp; review, 25(1), 102-113.</p></li>
-<li><p>van den Bergh, D., Haaf, J. M., Ly, A., Rouder, J. N., &amp; Wagenmakers, E. J. (2019). A cautionary note on estimating effect size.</p></li>
+<li><p>Clyde, M., Desimone, H., &amp; Parmigiani, G. (1996). Prediction via
+orthogonalized model mixing. Journal of the American Statistical
+Association, 91(435), 1197-1208.</p></li>
+<li><p>Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E.
+(2019, March 25). A conceptual introduction to Bayesian Model Averaging.
+doi: <a href='https://doi.org/10.31234/osf.io/wgb64'>10.31234/osf.io/wgb64</a></p></li>
+<li><p>Rouder, J. N., Haaf, J. M., &amp; Vandekerckhove, J. (2018). Bayesian
+inference for psychology, part IV: Parameter estimation and Bayes factors.
+Psychonomic bulletin &amp; review, 25(1), 102-113.</p></li>
+<li><p>van den Bergh, D., Haaf, J. M., Ly, A., Rouder, J. N., &amp; Wagenmakers,
+E. J. (2019). A cautionary note on estimating effect size.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='bayesfactor_inclusion.html'>bayesfactor_inclusion</a></code> for Bayesian model averaging.</p></div>
+    <div class='dont-index'><p><code><a href='bayesfactor_inclusion.html'>bayesfactor_inclusion()</a></code> for Bayesian model averaging.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>

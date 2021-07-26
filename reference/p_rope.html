@@ -248,28 +248,27 @@
       <th>range</th>
       <td><p>ROPE's lower and higher bounds. Should be <code>"default"</code> or
 depending on the number of outcome variables a vector or a list. In models with one response,
-`range` should be a vector of length two (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code>). In
-multivariate models, `range` should be a list with a numeric vectors for
+<code>range</code> should be a vector of length two (e.g., <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code>). In
+multivariate models, <code>range</code> should be a list with a numeric vectors for
 each response variable. Vector names should correspond to the name of the response
-variables. If <code>"default"</code> and input is a vector, the range is set to <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1,
-0.1)</a></code>. If <code>"default"</code> and input is a Bayesian model,
+variables. If <code>"default"</code> and input is a vector, the range is set to <code><a href='https://rdrr.io/r/base/c.html'>c(-0.1, 0.1)</a></code>. If <code>"default"</code> and input is a Bayesian model,
 <code><a href='rope_range.html'>rope_range()</a></code> is used.</p></td>
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to <span class="pkg">brms</span>-models.</p></td>
+      <td><p>Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     <tr>
       <th>parameters</th>
-      <td><p>Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+      <td><p>Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
 filtered by default, so only parameters that typically appear in the
 <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></td>

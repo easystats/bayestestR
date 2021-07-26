@@ -73,8 +73,7 @@ bf_pointnull().
  
 For more info, in particular on specifying correct priors for factors
 with more than 2 levels, see
-the
-Bayes factors vignette." />
+the Bayes factors vignette." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -242,8 +241,7 @@ functions are prefixed with <code>bf_*</code>, like <code>bf_parameters()</code>
 <br /> <br />
 <strong>For more info, in particular on specifying correct priors for factors
 with more than 2 levels, see
-<a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the
-Bayes factors vignette</a>.</strong></p>
+<a href='https://easystats.github.io/bayestestR/articles/bayes_factors.html'>the Bayes factors vignette</a>.</strong></p>
     </div>
 
     <pre class="usage"><span class='fu'>bayesfactor_parameters</span><span class='op'>(</span>
@@ -389,23 +387,23 @@ tailed) or <code>1</code>, <code>"right"</code> (right tailed).</p></td>
     <tr>
       <th>...</th>
       <td><p>Arguments passed to and from other methods. (Can be used to pass
-arguments to internal <code><a href='https://rdrr.io/pkg/logspline/man/logspline.html'>logspline</a></code>.)</p></td>
+arguments to internal <code><a href='https://rdrr.io/pkg/logspline/man/logspline.html'>logspline::logspline()</a></code>.)</p></td>
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to <span class="pkg">brms</span>-models.</p></td>
+      <td><p>Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     <tr>
       <th>parameters</th>
-      <td><p>Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+      <td><p>Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
 filtered by default, so only parameters that typically appear in the
 <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></td>
@@ -415,7 +413,7 @@ for the output.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame containing the (log) Bayes factor representing evidence
-  <em>against</em> the null.</p>
+<em>against</em> the null.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This method is used to compute Bayes factors based on prior and posterior
@@ -426,22 +424,22 @@ the prior and posterior of the non-null values (the "alternative") to one
 side of the null only (<cite>Morey &amp; Wagenmakers, 2014</cite>). For example, if we
 have a prior hypothesis that the parameter should be positive, the
 alternative will be restricted to the region to the right of the null (point
-or interval). For example, for a Bayes factor comparing the "null" of [0-0.1]
-to the alternative [&gt;0.1], we would set
+or interval). For example, for a Bayes factor comparing the "null" of <code>0-0.1</code>
+to the alternative <code>&gt;0.1</code>, we would set
 <code>bayesfactor_parameters(null = c(0, 0.1), direction = "&gt;")</code>.
 <br /><br />
 It is also possible to compute a Bayes factor for <strong>dividing</strong>
 hypotheses - that is, for a null and alternative that are complementary,
 opposing one-sided hypotheses (<cite>Morey &amp; Wagenmakers, 2014</cite>). For
-example, for a Bayes factor comparing the "null" of [&lt;0] to the alternative
-[&gt;0], we would set <code>bayesfactor_parameters(null = c(-Inf, 0))</code>.</p>
+example, for a Bayes factor comparing the "null" of <code>&lt;0</code> to the alternative
+<code>&gt;0</code>, we would set <code>bayesfactor_parameters(null = c(-Inf, 0))</code>.</p>
 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>There is also a
-  <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a>
-  implemented in the
-  <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
+<a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a>
+implemented in the
+<a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>
     <h2 class="hasAnchor" id="setting-the-correct-prior"><a class="anchor" href="#setting-the-correct-prior"></a>Setting the correct <code>prior</code></h2>
 
     
@@ -463,7 +461,7 @@ It is important to provide the correct <code>prior</code> for meaningful results
 <li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
 <li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model:</p><ul>
 <li><p><code>prior</code> can be set to <code>NULL</code>, in which case prior samples are drawn internally.</p></li>
-<li><p><code>prior</code> can also be a model equivalent to <code>posterior</code> but with samples from the priors <em>only</em>. See <code><a href='unupdate.html'>unupdate</a></code>.</p></li>
+<li><p><code>prior</code> can also be a model equivalent to <code>posterior</code> but with samples from the priors <em>only</em>. See <code><a href='unupdate.html'>unupdate()</a></code>.</p></li>
 <li><p><strong>Note:</strong> When <code>posterior</code> is a <code>brmsfit_multiple</code> model, <code>prior</code> <strong>must</strong> be provided.</p></li>
 </ul></li>
 <li><p>When <code>posterior</code> is an <code>emmGrid</code> object:</p><ul>
@@ -486,12 +484,24 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 
     
 <ul>
-<li><p>Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.</p></li>
-<li><p>Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The case of computing Bayes factors for regression parameters. British Journal of Mathematical and Statistical Psychology, 72(2), 316-333.</p></li>
-<li><p>Morey, R. D., &amp; Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics &amp; Probability Letters, 92, 121-124.</p></li>
-<li><p>Morey, R. D., &amp; Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.</p></li>
-<li><p>Liao, J. G., Midya, V., &amp; Berg, A. (2020). Connecting and contrasting the Bayes factor and a modified ROPE procedure for testing interval null hypotheses. The American Statistician, 1-19.</p></li>
-<li><p>Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. doi: <a href='https://doi.org/10.1177/1745691611406923'>10.1177/1745691611406923</a></p></li>
+<li><p>Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010).
+Bayesian hypothesis testing for psychologists: A tutorial on the
+Savage-Dickey method. Cognitive psychology, 60(3), 158-189.</p></li>
+<li><p>Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The
+case of computing Bayes factors for regression parameters. British Journal of
+Mathematical and Statistical Psychology, 72(2), 316-333.</p></li>
+<li><p>Morey, R. D., &amp; Wagenmakers, E. J. (2014). Simple relation between
+Bayesian order-restricted and point-null hypothesis tests. Statistics &amp;
+Probability Letters, 92, 121-124.</p></li>
+<li><p>Morey, R. D., &amp; Rouder, J. N. (2011). Bayes factor approaches for
+testing interval null hypotheses. Psychological methods, 16(4), 406.</p></li>
+<li><p>Liao, J. G., Midya, V., &amp; Berg, A. (2020). Connecting and contrasting
+the Bayes factor and a modified ROPE procedure for testing interval null
+hypotheses. The American Statistician, 1-19.</p></li>
+<li><p>Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and
+Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology:
+An Empirical Comparison Using 855 t Tests. Perspectives on Psychological
+Science, 6(3), 291–298. doi: <a href='https://doi.org/10.1177/1745691611406923'>10.1177/1745691611406923</a></p></li>
 </ul>
 
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>

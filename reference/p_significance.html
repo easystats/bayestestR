@@ -189,7 +189,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Compute the probability of <strong>Practical Significance</strong> (<strong><em>ps</em></strong>), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.</p>
+    <p>Compute the probability of <strong>Practical Significance</strong> (<em><strong>ps</strong></em>), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.</p>
     </div>
 
     <pre class="usage"><span class='fu'>p_significance</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -240,19 +240,19 @@
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to <span class="pkg">brms</span>-models.</p></td>
+      <td><p>Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     <tr>
       <th>parameters</th>
-      <td><p>Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+      <td><p>Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
 filtered by default, so only parameters that typically appear in the
 <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></td>
@@ -269,14 +269,14 @@ for the output.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>p_significance()</code> returns the proportion of a probability
-  distribution (<code>x</code>) that is outside a certain range (the negligible
-  effect, or ROPE, see argument <code>threshold</code>). If there are values of the
-  distribution both below and above the ROPE, <code>p_significance()</code> returns
-  the higher probability of a value being outside the ROPE. Typically, this
-  value should be larger than 0.5 to indicate practical significance. However,
-  if the range of the negligible effect is rather large compared to the
-  range of the probability distribution <code>x</code>, <code>p_significance()</code>
-  will be less than 0.5, which indicates no clear practical significance.</p>
+distribution (<code>x</code>) that is outside a certain range (the negligible
+effect, or ROPE, see argument <code>threshold</code>). If there are values of the
+distribution both below and above the ROPE, <code>p_significance()</code> returns
+the higher probability of a value being outside the ROPE. Typically, this
+value should be larger than 0.5 to indicate practical significance. However,
+if the range of the negligible effect is rather large compared to the
+range of the probability distribution <code>x</code>, <code>p_significance()</code>
+will be less than 0.5, which indicates no clear practical significance.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>There is also a <a href='https://easystats.github.io/see/articles/bayestestR.html'><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>-method</a> implemented in the <a href='https://easystats.github.io/see/'><span class="pkg">see</span>-package</a>.</p>

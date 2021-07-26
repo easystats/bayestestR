@@ -47,7 +47,8 @@
 
 
 <meta property="og:title" content="Posteriors Sampling Diagnostic — diagnostic_posterior" />
-<meta property="og:description" content="Extract diagnostic metrics (Effective Sample Size (ESS), Rhat and Monte Carlo Standard Error MCSE)." />
+<meta property="og:description" content="Extract diagnostic metrics (Effective Sample Size (ESS), Rhat and Monte
+Carlo Standard Error MCSE)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -189,7 +190,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Extract diagnostic metrics (Effective Sample Size (<code>ESS</code>), <code>Rhat</code> and Monte Carlo Standard Error <code>MCSE</code>).</p>
+    <p>Extract diagnostic metrics (Effective Sample Size (<code>ESS</code>), <code>Rhat</code> and Monte
+Carlo Standard Error <code>MCSE</code>).</p>
     </div>
 
     <pre class="usage"><span class='fu'>diagnostic_posterior</span><span class='op'>(</span><span class='va'>posteriors</span>, diagnostic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ESS"</span>, <span class='st'>"Rhat"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -233,7 +235,8 @@
     </tr>
     <tr>
       <th>diagnostic</th>
-      <td><p>Diagnostic metrics to compute.  Character (vector) or list with one or more of these options: <code>"ESS"</code>, <code>"Rhat"</code>, <code>"MCSE"</code> or <code>"all"</code>.</p></td>
+      <td><p>Diagnostic metrics to compute.  Character (vector) or list
+with one or more of these options: <code>"ESS"</code>, <code>"Rhat"</code>, <code>"MCSE"</code> or <code>"all"</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -271,11 +274,23 @@ should be returned.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><strong>Effective Sample (ESS)</strong> should be as large as possible, although for most applications, an effective sample size greater than 1000 is sufficient for stable estimates (Bürkner, 2017). The ESS corresponds to the number of independent samples with the same estimation power as the N autocorrelated samples. It is is a measure of &#8220;how much independent information there is in autocorrelated chains&#8221; (<cite>Kruschke 2015, p182-3</cite>).
-  <br /> <br />
-  <strong>Rhat</strong> should be the closest to 1. It should not be larger than 1.1 (<cite>Gelman and Rubin, 1992</cite>) or 1.01 (<cite>Vehtari et al., 2019</cite>). The split Rhat statistic quantifies the consistency of an ensemble of Markov chains.
-  <br /> <br />
-  <strong>Monte Carlo Standard Error (MCSE)</strong> is another measure of accuracy of the chains. It is defined as standard deviation of the chains divided by their effective sample size (the formula for <code><a href='mcse.html'>mcse()</a></code> is from Kruschke 2015, p. 187). The MCSE &#8220;provides a quantitative suggestion of how big the estimation noise is&#8221;.</p>
+    <p><strong>Effective Sample (ESS)</strong> should be as large as possible, although for
+most applications, an effective sample size greater than 1000 is sufficient
+for stable estimates (Bürkner, 2017). The ESS corresponds to the number of
+independent samples with the same estimation power as the N autocorrelated
+samples. It is is a measure of &#8220;how much independent information
+there is in autocorrelated chains&#8221; (<cite>Kruschke 2015, p182-3</cite>).
+<br /> <br />
+<strong>Rhat</strong> should be the closest to 1. It should not be larger than 1.1
+(<cite>Gelman and Rubin, 1992</cite>) or 1.01 (<cite>Vehtari et al., 2019</cite>). The
+split Rhat statistic quantifies the consistency of an ensemble of Markov
+chains.
+<br /> <br />
+<strong>Monte Carlo Standard Error (MCSE)</strong> is another measure of accuracy of the
+chains. It is defined as standard deviation of the chains divided by their
+effective sample size (the formula for <code><a href='mcse.html'>mcse()</a></code> is from Kruschke 2015, p.
+187). The MCSE &#8220;provides a quantitative suggestion of how big the
+estimation noise is&#8221;.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     

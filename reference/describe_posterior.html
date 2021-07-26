@@ -336,14 +336,14 @@
     <tr>
       <th>ci</th>
       <td><p>Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to <code>.95</code> (95%).</p></td>
+to be estimated. Default to <code>.95</code> (<code>95%</code>).</p></td>
     </tr>
     <tr>
       <th>ci_method</th>
       <td><p>The type of index used for Credible Interval. Can be
-<code>"HDI"</code> (default, see <code><a href='hdi.html'>hdi</a></code>), <code>"ETI"</code>
-(see <code><a href='eti.html'>eti</a></code>), <code>"BCI"</code> (see
-<code><a href='bci.html'>bci</a></code>) or <code>"SI"</code> (see <code><a href='si.html'>si</a></code>).</p></td>
+<code>"HDI"</code> (default, see <code><a href='hdi.html'>hdi()</a></code>), <code>"ETI"</code>
+(see <code><a href='eti.html'>eti()</a></code>), <code>"BCI"</code> (see
+<code><a href='bci.html'>bci()</a></code>) or <code>"SI"</code> (see <code><a href='si.html'>si()</a></code>).</p></td>
     </tr>
     <tr>
       <th>test</th>
@@ -352,7 +352,7 @@ list with one or more of these options: <code>"p_direction"</code> (or <code>"pd
 <code>"rope"</code>, <code>"p_map"</code>, <code>"equivalence_test"</code> (or <code>"equitest"</code>),
 <code>"bayesfactor"</code> (or <code>"bf"</code>) or <code>"all"</code> to compute all tests.
 For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
-(e.g. <code><a href='rope.html'>rope</a></code> or <code><a href='p_direction.html'>p_direction</a></code>) and its results
+(e.g. <code><a href='rope.html'>rope()</a></code> or <code><a href='p_direction.html'>p_direction()</a></code>) and its results
 included in the summary output.</p></td>
     </tr>
     <tr>
@@ -371,7 +371,7 @@ proportion of HDI, to use for the percentage in ROPE.</p></td>
       <td><p>If <code>TRUE</code>, will keep all iterations (draws) of
 bootstrapped or Bayesian models. They will be added as additional columns
 named <code>iter_1, iter_2, ...</code>. You can reshape them to a long format by
-running <code><a href='reshape_iterations.html'>bayestestR::reshape_iterations()</a></code>.</p></td>
+running <code><a href='reshape_iterations.html'>reshape_iterations()</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -387,7 +387,8 @@ running <code><a href='reshape_iterations.html'>bayestestR::reshape_iterations()
     </tr>
     <tr>
       <th>diagnostic</th>
-      <td><p>Diagnostic metrics to compute.  Character (vector) or list with one or more of these options: <code>"ESS"</code>, <code>"Rhat"</code>, <code>"MCSE"</code> or <code>"all"</code>.</p></td>
+      <td><p>Diagnostic metrics to compute.  Character (vector) or list
+with one or more of these options: <code>"ESS"</code>, <code>"Rhat"</code>, <code>"MCSE"</code> or <code>"all"</code>.</p></td>
     </tr>
     <tr>
       <th>priors</th>
@@ -395,19 +396,19 @@ running <code><a href='reshape_iterations.html'>bayestestR::reshape_iterations()
     </tr>
     <tr>
       <th>effects</th>
-      <td><p>Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.</p></td>
+      <td><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></td>
     </tr>
     <tr>
       <th>component</th>
-      <td><p>Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to <span class="pkg">brms</span>-models.</p></td>
+      <td><p>Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></td>
     </tr>
     <tr>
       <th>parameters</th>
-      <td><p>Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+      <td><p>Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
 filtered by default, so only parameters that typically appear in the
 <code><a href='https://rdrr.io/r/base/summary.html'>summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></td>
@@ -421,9 +422,9 @@ for the output.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>One or more components of point estimates (like posterior mean or median),
-  intervals and tests can be omitted from the summary output by setting the
-  related argument to <code>NULL</code>. For example, <code>test = NULL</code> and
-  <code>centrality = NULL</code> would only return the HDI (or CI).</p>
+intervals and tests can be omitted from the summary output by setting the
+related argument to <code>NULL</code>. For example, <code>test = NULL</code> and
+<code>centrality = NULL</code> would only return the HDI (or CI).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
