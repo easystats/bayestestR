@@ -56,15 +56,15 @@ pd(x, ...)
 
 \item{null}{The value considered as a "null" effect. Traditionally 0, but could also be 1 in the case of ratios.}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to \pkg{brms}-models.}
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
 
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
@@ -73,15 +73,15 @@ for the output.}
 Values between 0.5 and 1 corresponding to the probability of direction (pd).
 \cr\cr
 Note that in some (rare) cases, especially when used with model averaged
-posteriors (see \code{\link{weighted_posteriors}} or
+posteriors (see \code{\link[=weighted_posteriors]{weighted_posteriors()}} or
 \code{brms::posterior_average}), \code{pd} can be smaller than \code{0.5},
 reflecting high credibility of \code{0}. To detect such cases, the
 \code{method = "direct"} must be used.
 }
 \description{
-Compute the \strong{Probability of Direction} (\strong{\emph{pd}}, also known
-as the Maximum Probability of Effect - \emph{MPE}). It varies between 50\%
-and 100\% (\emph{i.e.}, \code{0.5} and \code{1}) and can be interpreted as
+Compute the \strong{Probability of Direction} (\emph{\strong{pd}}, also known
+as the Maximum Probability of Effect - \emph{MPE}). It varies between \verb{50\%}
+and \verb{100\%} (\emph{i.e.}, \code{0.5} and \code{1}) and can be interpreted as
 the probability (expressed in percentage) that a parameter (described by its
 posterior distribution) is strictly positive or negative (whichever is the
 most probable). It is mathematically defined as the proportion of the
@@ -90,27 +90,43 @@ expressed, this index is fairly similar (\emph{i.e.}, is strongly correlated)
 to the frequentist \strong{p-value}.
 \cr\cr
 Note that in some (rare) cases, especially when used with model averaged
-posteriors (see \code{\link{weighted_posteriors}} or
+posteriors (see \code{\link[=weighted_posteriors]{weighted_posteriors()}} or
 \code{brms::posterior_average}), \code{pd} can be smaller than \code{0.5},
 reflecting high credibility of \code{0}.
 }
 \details{
 \subsection{What is the \emph{pd}?}{
-The Probability of Direction (pd) is an index of effect existence, ranging from 50\% to 100\%, representing the certainty with which an effect goes in a particular direction (\emph{i.e.}, is positive or negative). Beyond its simplicity of interpretation, understanding and computation, this index also presents other interesting properties:
+The Probability of Direction (pd) is an index of effect existence, ranging
+from \verb{50\%} to \verb{100\%}, representing the certainty with which an effect goes in
+a particular direction (\emph{i.e.}, is positive or negative). Beyond its
+simplicity of interpretation, understanding and computation, this index also
+presents other interesting properties:
 \itemize{
-  \item It is independent from the model: It is solely based on the posterior distributions and does not require any additional information from the data or the model.
-  \item It is robust to the scale of both the response variable and the predictors.
-  \item It is strongly correlated with the frequentist p-value, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.
+\item It is independent from the model: It is solely based on the posterior
+distributions and does not require any additional information from the data
+or the model.
+\item It is robust to the scale of both the response variable and the predictors.
+\item It is strongly correlated with the frequentist p-value, and can thus
+be used to draw parallels and give some reference to readers non-familiar
+with Bayesian statistics.
 }
 }
 \subsection{Relationship with the p-value}{
-In most cases, it seems that the \emph{pd} has a direct correspondence with the frequentist one-sided \emph{p}-value through the formula \ifelse{html}{\out{p<sub>one&nbsp;sided</sub>&nbsp;=&nbsp;1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>}}{\eqn{p_{one sided}=1-\frac{p_{d}}{100}}} and to the two-sided p-value (the most commonly reported one) through the formula \ifelse{html}{\out{p<sub>two&nbsp;sided</sub>&nbsp;=&nbsp;2&nbsp;*&nbsp;(1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>)}}{\eqn{p_{two sided}=2*(1-\frac{p_{d}}{100})}}. Thus, a two-sided p-value of respectively \code{.1}, \code{.05}, \code{.01} and \code{.001} would correspond approximately to a \emph{pd} of 95\%, 97.5\%, 99.5\% and 99.95\%. See also \code{\link{pd_to_p}}.
+In most cases, it seems that the \emph{pd} has a direct correspondence with the frequentist one-sided \emph{p}-value through the formula \ifelse{html}{\out{p<sub>one&nbsp;sided</sub>&nbsp;=&nbsp;1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>}}{\eqn{p_{one sided}=1-\frac{p_{d}}{100}}} and to the two-sided p-value (the most commonly reported one) through the formula \ifelse{html}{\out{p<sub>two&nbsp;sided</sub>&nbsp;=&nbsp;2&nbsp;*&nbsp;(1&nbsp;-&nbsp;<sup>p(<em>d</em>)</sup>/<sub>100</sub>)}}{\eqn{p_{two sided}=2*(1-\frac{p_{d}}{100})}}. Thus, a two-sided p-value of respectively \code{.1}, \code{.05}, \code{.01} and \code{.001} would correspond approximately to a \emph{pd} of \verb{95\%}, \verb{97.5\%}, \verb{99.5\%} and \verb{99.95\%}. See also \code{\link[=pd_to_p]{pd_to_p()}}.
 }
 \subsection{Methods of computation}{
- The most simple and direct way to compute the \emph{pd} is to 1) look at the median's sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This "simple" method is the most straightforward, but its precision is directly tied to the number of posterior draws. The second approach relies on \link[=estimate_density]{density estimation}. It starts by estimating the density function (for which many methods are available), and then computing the \link[=area_under_curve]{area under the curve} (AUC) of the density curve on the other side of 0.
+The most simple and direct way to compute the \emph{pd} is to 1) look at the
+median's sign, 2) select the portion of the posterior of the same sign and
+3) compute the percentage that this portion represents. This "simple" method
+is the most straightforward, but its precision is directly tied to the
+number of posterior draws. The second approach relies on \link[=estimate_density]{density estimation}. It starts by estimating the density function
+(for which many methods are available), and then computing the \link[=area_under_curve]{area under the curve} (AUC) of the density curve on the other side of
+0.
 }
 \subsection{Strengths and Limitations}{
-\strong{Strengths:} Straightforward computation and interpretation. Objective property of the posterior distribution. 1:1 correspondence with the frequentist p-value.
+\strong{Strengths:} Straightforward computation and interpretation. Objective
+property of the posterior distribution. 1:1 correspondence with the
+frequentist p-value.
 \cr \cr
 \strong{Limitations:} Limited information favoring the null hypothesis.
 }
@@ -168,8 +184,10 @@ if (require("BayesFactor")) {
 }
 }
 \references{
-Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect Existence and Significance in the Bayesian Framework. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
+Makowski D, Ben-Shachar MS, Chen SHA, Lüdecke D (2019) Indices of Effect
+Existence and Significance in the Bayesian Framework. Frontiers in Psychology
+2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 }
 \seealso{
-\code{\link{pd_to_p}} to convert between Probability of Direction (pd) and p-value.
+\code{\link[=pd_to_p]{pd_to_p()}} to convert between Probability of Direction (pd) and p-value.
 }

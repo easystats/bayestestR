@@ -37,11 +37,10 @@ but disappears or reverses when these groups are combined.
 \examples{
 data <- simulate_simpson(n = 10, groups = 5, r = 0.5)
 
-if(require("ggplot2")) {
-ggplot(data, aes(x = V1, y = V2)) +
-  geom_point(aes(color = Group)) +
-  geom_smooth(aes(color = Group), method = "lm") +
-  geom_smooth(method = "lm")
+if (require("ggplot2")) {
+  ggplot(data, aes(x = V1, y = V2)) +
+    geom_point(aes(color = Group)) +
+    geom_smooth(aes(color = Group), method = "lm") +
+    geom_smooth(method = "lm")
 }
-
 }

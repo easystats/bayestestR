@@ -138,19 +138,19 @@ describe_posterior(
 \item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to \code{.95} (95\%).}
+to be estimated. Default to \code{.95} (\verb{95\%}).}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}), \code{"ETI"}
-(see \code{\link[bayestestR:eti]{eti}}), \code{"BCI"} (see
-\code{\link[bayestestR:bci]{bci}}) or \code{"SI"} (see \code{\link[bayestestR:si]{si}}).}
+\code{"HDI"} (default, see \code{\link[=hdi]{hdi()}}), \code{"ETI"}
+(see \code{\link[=eti]{eti()}}), \code{"BCI"} (see
+\code{\link[=bci]{bci()}}) or \code{"SI"} (see \code{\link[=si]{si()}}).}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
 \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
 \code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.
 For each "test", the corresponding \pkg{bayestestR} function is called
-(e.g. \code{\link[bayestestR:rope]{rope}} or \code{\link[bayestestR:p_direction]{p_direction}}) and its results
+(e.g. \code{\link[=rope]{rope()}} or \code{\link[=p_direction]{p_direction()}}) and its results
 included in the summary output.}
 
 \item{rope_range}{ROPE's lower and higher bounds. Should be a list of two
@@ -162,8 +162,8 @@ proportion of HDI, to use for the percentage in ROPE.}
 
 \item{keep_iterations}{If \code{TRUE}, will keep all iterations (draws) of
 bootstrapped or Bayesian models. They will be added as additional columns
-named \code{iter_1, iter_2, ...}. You can reshape them to a long format by
-running \code{\link[bayestestR:reshape_iterations]{bayestestR::reshape_iterations()}}.}
+named \verb{iter_1, iter_2, ...}. You can reshape them to a long format by
+running \code{\link[=reshape_iterations]{reshape_iterations()}}.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 
@@ -171,19 +171,20 @@ running \code{\link[bayestestR:reshape_iterations]{bayestestR::reshape_iteration
 
 \item{BF}{The amount of support required to be included in the support interval.}
 
-\item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}
+\item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list
+with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}
 
 \item{priors}{Add the prior used for each parameter.}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to \pkg{brms}-models.}
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
 
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
@@ -195,9 +196,9 @@ Compute indices relevant to describe and characterize the posterior distribution
 }
 \details{
 One or more components of point estimates (like posterior mean or median),
-  intervals and tests can be omitted from the summary output by setting the
-  related argument to \code{NULL}. For example, \code{test = NULL} and
-  \code{centrality = NULL} would only return the HDI (or CI).
+intervals and tests can be omitted from the summary output by setting the
+related argument to \code{NULL}. For example, \code{test = NULL} and
+\code{centrality = NULL} would only return the HDI (or CI).
 }
 \examples{
 library(bayestestR)
@@ -251,8 +252,8 @@ if (require("BayesFactor")) {
 }
 \references{
 \itemize{
-  \item \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{Comparison of Point-Estimates}
-  \item \href{https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html}{Region of Practical Equivalence (ROPE)}
-  \item \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes factors}
+\item \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{Comparison of Point-Estimates}
+\item \href{https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html}{Region of Practical Equivalence (ROPE)}
+\item \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes factors}
 }
 }

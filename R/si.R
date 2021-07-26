@@ -1,13 +1,13 @@
 #' Compute Support Intervals
 #'
 #' A support interval contains only the values of the parameter that predict the observed data better
-#' than average, by some degree \emph{k}; these are values of the parameter that are associated with an
-#' updating factor greater or equal than \emph{k}. From the perspective of the Savage-Dickey Bayes factor, testing
+#' than average, by some degree *k*; these are values of the parameter that are associated with an
+#' updating factor greater or equal than *k*. From the perspective of the Savage-Dickey Bayes factor, testing
 #' against a point null hypothesis for any value within the support interval will yield a Bayes factor smaller
-#' than \emph{1/k}.
+#' than *1/k*.
 #' \cr \cr
 #' \strong{For more info, in particular on specifying correct priors for factors with more than 2 levels,
-#' see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
+#' see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).}
 #'
 #' @param BF The amount of support required to be included in the support interval.
 #' @inheritParams bayesfactor_parameters
@@ -15,29 +15,29 @@
 #'
 #' @details This method is used to compute support intervals based on prior and posterior distributions.
 #' For the computation of support intervals, the model priors must be proper priors (at the very least
-#' they should be \emph{not flat}, and it is preferable that they be \emph{informative} - note
-#' that by default, \code{brms::brm()} uses flat priors for fixed-effects; see example below).
+#' they should be *not flat*, and it is preferable that they be *informative* - note
+#' that by default, `brms::brm()` uses flat priors for fixed-effects; see example below).
 #'
-#' \subsection{Choosing a value of \code{BF}}{
-#' The choice of \code{BF} (the level of support) depends on what we want our interval to represent:
+#' \subsection{Choosing a value of `BF`}{
+#' The choice of `BF` (the level of support) depends on what we want our interval to represent:
 #' \itemize{
-#'   \item A \code{BF} = 1 contains values whose credibility is not decreased by observing the data.
-#'   \item A \code{BF} > 1 contains values who received more impressive support from the data.
-#'   \item A \code{BF} < 1 contains values whose credibility has \emph{not} been impressively decreased by observing the data.
-#'   Testing against values outside this interval will produce a Bayes factor larger than 1/\code{BF} in support of
+#'   \item A `BF` = 1 contains values whose credibility is not decreased by observing the data.
+#'   \item A `BF` > 1 contains values who received more impressive support from the data.
+#'   \item A `BF` < 1 contains values whose credibility has *not* been impressively decreased by observing the data.
+#'   Testing against values outside this interval will produce a Bayes factor larger than 1/`BF` in support of
 #'   the alternative. E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null will be larger than 3.
 #' }
 #' }
 #'
-#' @inheritSection bayesfactor_parameters Setting the correct \code{prior}
+#' @inheritSection bayesfactor_parameters Setting the correct `prior`
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @return
 #' A data frame containing the lower and upper bounds of the SI.
 #' \cr
 #' Note that if the level of requested support is higher than observed in the data, the
-#' interval will be \code{[NA,NA]}.
+#' interval will be `[NA,NA]`.
 #'
 #' @examples
 #' library(bayestestR)

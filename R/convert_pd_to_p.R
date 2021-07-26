@@ -4,7 +4,8 @@
 #'
 #' @param pd A Probability of Direction (pd) value (between 0 and 1).
 #' @param p A p-value.
-#' @param direction What type of p-value is requested or provided. Can be \code{"two-sided"} (default, two tailed) or \code{"one-sided"} (one tailed).
+#' @param direction What type of p-value is requested or provided. Can be
+#'   `"two-sided"` (default, two tailed) or `"one-sided"` (one tailed).
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @examples

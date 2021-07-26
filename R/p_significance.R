@@ -1,23 +1,23 @@
 #' Practical Significance (ps)
 #'
-#' Compute the probability of \strong{Practical Significance} (\strong{\emph{ps}}), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.
+#' Compute the probability of **Practical Significance** (***ps***), which can be conceptualized as a unidirectional equivalence test. It returns the probability that effect is above a given threshold corresponding to a negligible effect in the median's direction. Mathematically, it is defined as the proportion of the posterior distribution of the median sign above the threshold.
 #'
 #' @inheritParams rope
-#' @param threshold The threshold value that separates significant from negligible effect. If \code{"default"}, the range is set to \code{0.1} if input is a vector, and based on \code{\link[=rope_range]{rope_range()}} if a Bayesian model is provided.
+#' @param threshold The threshold value that separates significant from negligible effect. If `"default"`, the range is set to `0.1` if input is a vector, and based on [`rope_range()`][rope_range] if a Bayesian model is provided.
 #'
 #' @return Values between 0 and 1 corresponding to the probability of practical significance (ps).
 #'
-#' @details \code{p_significance()} returns the proportion of a probability
-#'   distribution (\code{x}) that is outside a certain range (the negligible
-#'   effect, or ROPE, see argument \code{threshold}). If there are values of the
-#'   distribution both below and above the ROPE, \code{p_significance()} returns
+#' @details `p_significance()` returns the proportion of a probability
+#'   distribution (`x`) that is outside a certain range (the negligible
+#'   effect, or ROPE, see argument `threshold`). If there are values of the
+#'   distribution both below and above the ROPE, `p_significance()` returns
 #'   the higher probability of a value being outside the ROPE. Typically, this
 #'   value should be larger than 0.5 to indicate practical significance. However,
 #'   if the range of the negligible effect is rather large compared to the
-#'   range of the probability distribution \code{x}, \code{p_significance()}
+#'   range of the probability distribution `x`, `p_significance()`
 #'   will be less than 0.5, which indicates no clear practical significance.
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @examples
 #' library(bayestestR)

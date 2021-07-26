@@ -2,15 +2,15 @@
 #'
 #' Compute various point-estimates, such as the mean, the median or the MAP, to describe posterior distributions.
 #'
-#' @param centrality The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.
-#' @param dispersion Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).
-#' @param threshold For \code{centrality = "trimmed"} (i.e. trimmed mean), indicates the fraction (0 to 0.5) of observations to be trimmed from each end of the vector before the mean is computed.
+#' @param centrality The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: `"median"`, `"mean"`, `"MAP"` or `"all"`.
+#' @param dispersion Logical, if `TRUE`, computes indices of dispersion related to the estimate(s) (`SD` and `MAD` for `mean` and `median`, respectively).
+#' @param threshold For `centrality = "trimmed"` (i.e. trimmed mean), indicates the fraction (0 to 0.5) of observations to be trimmed from each end of the vector before the mean is computed.
 #' @param ... Additional arguments to be passed to or from methods.
 #' @inheritParams hdi
 #'
-#' @references \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{Vignette In-Depth 1: Comparison of Point-Estimates}
+#' @references [Vignette In-Depth 1: Comparison of Point-Estimates](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @examples
 #' library(bayestestR)

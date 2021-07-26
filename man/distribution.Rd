@@ -65,7 +65,7 @@ rnorm_perfect(n, mean = 0, sd = 1)
 }
 \arguments{
 \item{type}{Can be any of the names from base R's
-\link[stats]{Distributions}, like \code{"cauchy"}, \code{"pois"} or
+\link[stats:Distributions]{Distributions}, like \code{"cauchy"}, \code{"pois"} or
 \code{"beta"}.}
 
 \item{...}{Arguments passed to or from other methods.}
@@ -73,7 +73,7 @@ rnorm_perfect(n, mean = 0, sd = 1)
 \item{n}{the number of observations}
 
 \item{random}{Generate near-perfect or random (simple wrappers for the base R
-\code{r*} functions) distributions.}
+\verb{r*} functions) distributions.}
 
 \item{shape1}{non-negative parameters of the Beta distribution.}
 

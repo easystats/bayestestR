@@ -1,6 +1,6 @@
 #' Equal-Tailed Interval (ETI)
 #'
-#' Compute the \strong{Equal-Tailed Interval (ETI)} of posterior distributions using the quantiles method. The probability of being below this interval is equal to the probability of being above it. The ETI can be used in the context of uncertainty characterisation of posterior distributions as \strong{Credible Interval (CI)}.
+#' Compute the **Equal-Tailed Interval (ETI)** of posterior distributions using the quantiles method. The probability of being below this interval is equal to the probability of being above it. The ETI can be used in the context of uncertainty characterisation of posterior distributions as **Credible Interval (CI)**.
 #'
 #' @inheritParams hdi
 #' @inherit ci return

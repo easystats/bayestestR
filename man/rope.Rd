@@ -58,86 +58,85 @@ rope(x, ...)
 
 \item{range}{ROPE's lower and higher bounds. Should be \code{"default"} or
 depending on the number of outcome variables a vector or a list. In models with one response,
-`range` should be a vector of length two (e.g., \code{c(-0.1, 0.1)}). In
-multivariate models, `range` should be a list with a numeric vectors for
+\code{range} should be a vector of length two (e.g., \code{c(-0.1, 0.1)}). In
+multivariate models, \code{range} should be a list with a numeric vectors for
 each response variable. Vector names should correspond to the name of the response
-variables. If \code{"default"} and input is a vector, the range is set to \code{c(-0.1,
-0.1)}. If \code{"default"} and input is a Bayesian model,
+variables. If \code{"default"} and input is a vector, the range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian model,
 \code{\link[=rope_range]{rope_range()}} is used.}
 
 \item{ci}{The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.}
 
-\item{ci_method}{The type of interval to use to quantify the percentage in ROPE. Can be 'HDI' (default) or 'ETI'. See \code{\link{ci}}.}
+\item{ci_method}{The type of interval to use to quantify the percentage in ROPE. Can be 'HDI' (default) or 'ETI'. See \code{\link[=ci]{ci()}}.}
 
 \item{verbose}{Toggle off warnings.}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to \pkg{brms}-models.}
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
 
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
 }
 \description{
-Compute the proportion of the HDI (default to the 89\% HDI) of a posterior distribution that lies within a region of practical equivalence.
+Compute the proportion of the HDI (default to the \verb{89\%} HDI) of a posterior distribution that lies within a region of practical equivalence.
 }
 \details{
 \subsection{ROPE}{
-  Statistically, the probability of a posterior distribution of being
-  different from 0 does not make much sense (the probability of a single value
-  null hypothesis in a continuous distribution is 0). Therefore, the idea
-  underlining ROPE is to let the user define an area around the null value
-  enclosing values that are \emph{equivalent to the null} value for practical
-  purposes (\cite{Kruschke 2010, 2011, 2014}).
-  \cr \cr
-  Kruschke (2018) suggests that such null value could be set, by default,
-  to the -0.1 to 0.1 range of a standardized parameter (negligible effect
-  size according to Cohen, 1988). This could be generalized: For instance,
-  for linear models, the ROPE could be set as \code{0 +/- .1 * sd(y)}.
-  This ROPE range can be automatically computed for models using the
-  \link{rope_range} function.
-  \cr \cr
-  Kruschke (2010, 2011, 2014) suggests using the proportion of  the 95\%
-  (or 89\%, considered more stable) \link[=hdi]{HDI} that falls within the
-  ROPE as an index for "null-hypothesis" testing (as understood under the
-  Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
+Statistically, the probability of a posterior distribution of being
+different from 0 does not make much sense (the probability of a single value
+null hypothesis in a continuous distribution is 0). Therefore, the idea
+underlining ROPE is to let the user define an area around the null value
+enclosing values that are \emph{equivalent to the null} value for practical
+purposes (\cite{Kruschke 2010, 2011, 2014}).
+\cr \cr
+Kruschke (2018) suggests that such null value could be set, by default,
+to the -0.1 to 0.1 range of a standardized parameter (negligible effect
+size according to Cohen, 1988). This could be generalized: For instance,
+for linear models, the ROPE could be set as \verb{0 +/- .1 * sd(y)}.
+This ROPE range can be automatically computed for models using the
+\link{rope_range} function.
+\cr \cr
+Kruschke (2010, 2011, 2014) suggests using the proportion of  the \verb{95\%}
+(or \verb{89\%}, considered more stable) \link[=hdi]{HDI} that falls within the
+ROPE as an index for "null-hypothesis" testing (as understood under the
+Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
 }
 \subsection{Sensitivity to parameter's scale}{
-  It is important to consider the unit (i.e., the scale) of the predictors
-  when using an index based on the ROPE, as the correct interpretation of the
-  ROPE as representing a region of practical equivalence to zero is dependent
-  on the scale of the predictors. Indeed, the percentage in ROPE depend on
-  the unit of its parameter. In other words, as the ROPE represents a fixed
-  portion of the response's scale, its proximity with a coefficient depends
-  on the scale of the coefficient itself.
+It is important to consider the unit (i.e., the scale) of the predictors
+when using an index based on the ROPE, as the correct interpretation of the
+ROPE as representing a region of practical equivalence to zero is dependent
+on the scale of the predictors. Indeed, the percentage in ROPE depend on
+the unit of its parameter. In other words, as the ROPE represents a fixed
+portion of the response's scale, its proximity with a coefficient depends
+on the scale of the coefficient itself.
 }
 \subsection{Multicollinearity: Non-independent covariates}{
-  When parameters show strong correlations, i.e. when covariates are not
-  independent, the joint parameter distributions may shift towards or
-  away from the ROPE. Collinearity invalidates ROPE and hypothesis
-  testing based on univariate marginals, as the probabilities are conditional
-  on independence. Most problematic are parameters that only have partial
-  overlap with the ROPE region. In case of collinearity, the (joint) distributions
-  of these parameters may either get an increased or decreased ROPE, which
-  means that inferences based on \code{rope()} are inappropriate
-  (\cite{Kruschke 2014, 340f}).
-  \cr \cr
-  \code{rope()} performs a simple check for pairwise correlations between
-  parameters, but as there can be collinearity between more than two variables,
-  a first step to check the assumptions of this hypothesis testing is to look
-  at different pair plots. An even more sophisticated check is the projection
-  predictive variable selection (\cite{Piironen and Vehtari 2017}).
+When parameters show strong correlations, i.e. when covariates are not
+independent, the joint parameter distributions may shift towards or
+away from the ROPE. Collinearity invalidates ROPE and hypothesis
+testing based on univariate marginals, as the probabilities are conditional
+on independence. Most problematic are parameters that only have partial
+overlap with the ROPE region. In case of collinearity, the (joint) distributions
+of these parameters may either get an increased or decreased ROPE, which
+means that inferences based on \code{rope()} are inappropriate
+(\cite{Kruschke 2014, 340f}).
+\cr \cr
+\code{rope()} performs a simple check for pairwise correlations between
+parameters, but as there can be collinearity between more than two variables,
+a first step to check the assumptions of this hypothesis testing is to look
+at different pair plots. An even more sophisticated check is the projection
+predictive variable selection (\cite{Piironen and Vehtari 2017}).
 }
 \subsection{Strengths and Limitations}{
-  \strong{Strengths:} Provides information related to the practical relevance of the effects.
-  \cr \cr
-  \strong{Limitations:} A ROPE range needs to be arbitrarily defined. Sensitive to the scale (the unit) of the predictors. Not sensitive to highly significant effects.
+\strong{Strengths:} Provides information related to the practical relevance of the effects.
+\cr \cr
+\strong{Limitations:} A ROPE range needs to be arbitrarily defined. Sensitive to the scale (the unit) of the predictors. Not sensitive to highly significant effects.
 }
 }
 \note{

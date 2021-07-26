@@ -138,24 +138,24 @@ tailed) or \code{1}, \code{"right"} (right tailed).}
 \item{verbose}{Toggle off warnings.}
 
 \item{...}{Arguments passed to and from other methods. (Can be used to pass
-arguments to internal \code{\link[logspline]{logspline}}.)}
+arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.)}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to \pkg{brms}-models.}
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
 
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
 }
 \value{
 A data frame containing the (log) Bayes factor representing evidence
-  \emph{against} the null.
+\emph{against} the null.
 }
 \description{
 This method computes Bayes factors against the null (either a point or an
@@ -179,13 +179,12 @@ probabilities, and must be installed for the function to work.
 \code{bayesfactor_pointnull()} and \code{bayesfactor_rope()} are wrappers
 around \code{bayesfactor_parameters} with different defaults for the null to
 be tested against (a point and a range, respectively). Aliases of the main
-functions are prefixed with \code{bf_*}, like \code{bf_parameters()} or
+functions are prefixed with \verb{bf_*}, like \code{bf_parameters()} or
 \code{bf_pointnull()}.
 \cr \cr
 \strong{For more info, in particular on specifying correct priors for factors
 with more than 2 levels, see
-\href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the
-Bayes factors vignette}.}
+\href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 }
 \details{
 This method is used to compute Bayes factors based on prior and posterior
@@ -197,22 +196,22 @@ the prior and posterior of the non-null values (the "alternative") to one
 side of the null only (\cite{Morey & Wagenmakers, 2014}). For example, if we
 have a prior hypothesis that the parameter should be positive, the
 alternative will be restricted to the region to the right of the null (point
-or interval). For example, for a Bayes factor comparing the "null" of [0-0.1]
-to the alternative [>0.1], we would set
+or interval). For example, for a Bayes factor comparing the "null" of \code{0-0.1}
+to the alternative \verb{>0.1}, we would set
 \code{bayesfactor_parameters(null = c(0, 0.1), direction = ">")}.
 \cr\cr
 It is also possible to compute a Bayes factor for \strong{dividing}
 hypotheses - that is, for a null and alternative that are complementary,
 opposing one-sided hypotheses (\cite{Morey & Wagenmakers, 2014}). For
-example, for a Bayes factor comparing the "null" of [<0] to the alternative
-[>0], we would set \code{bayesfactor_parameters(null = c(-Inf, 0))}.
+example, for a Bayes factor comparing the "null" of \verb{<0} to the alternative
+\verb{>0}, we would set \code{bayesfactor_parameters(null = c(-Inf, 0))}.
 }
 }
 \note{
 There is also a
-  \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method}
-  implemented in the
-  \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+\href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method}
+implemented in the
+\href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \section{Setting the correct \code{prior}}{
 
@@ -230,18 +229,18 @@ See example below.)
 \cr\cr
 It is important to provide the correct \code{prior} for meaningful results.
 \itemize{
-  \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
-  \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
-  \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
-    \item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
-    \item \code{prior} can also be a model equivalent to \code{posterior} but with samples from the priors \emph{only}. See \code{\link{unupdate}}.
-    \item \strong{Note:} When \code{posterior} is a \code{brmsfit_multiple} model, \code{prior} \strong{must} be provided.
-  }
-  \item When \code{posterior} is an \code{emmGrid} object: \itemize{
-    \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
-    \item \code{prior} can also be an \code{emmGrid} object equivalent to \code{posterior} but created with a model of priors samples \emph{only}.
-    \item \strong{Note:} When the \code{emmGrid} has undergone any transformations (\code{"log"}, \code{"response"}, etc.), or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stated above.
-  }
+\item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
+\item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
+\item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
+\item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
+\item \code{prior} can also be a model equivalent to \code{posterior} but with samples from the priors \emph{only}. See \code{\link[=unupdate]{unupdate()}}.
+\item \strong{Note:} When \code{posterior} is a \code{brmsfit_multiple} model, \code{prior} \strong{must} be provided.
+}
+\item When \code{posterior} is an \code{emmGrid} object: \itemize{
+\item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
+\item \code{prior} can also be an \code{emmGrid} object equivalent to \code{posterior} but created with a model of priors samples \emph{only}.
+\item \strong{Note:} When the \code{emmGrid} has undergone any transformations (\code{"log"}, \code{"response"}, etc.), or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stated above.
+}
 }
 }
 
@@ -294,12 +293,24 @@ if (require("brms")) {
 }
 \references{
 \itemize{
-\item Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.
-\item Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The case of computing Bayes factors for regression parameters. British Journal of Mathematical and Statistical Psychology, 72(2), 316-333.
-\item Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
-\item Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.
-\item Liao, J. G., Midya, V., & Berg, A. (2020). Connecting and contrasting the Bayes factor and a modified ROPE procedure for testing interval null hypotheses. The American Statistician, 1-19.
-\item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
+\item Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010).
+Bayesian hypothesis testing for psychologists: A tutorial on the
+Savage-Dickey method. Cognitive psychology, 60(3), 158-189.
+\item Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The
+case of computing Bayes factors for regression parameters. British Journal of
+Mathematical and Statistical Psychology, 72(2), 316-333.
+\item Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between
+Bayesian order-restricted and point-null hypothesis tests. Statistics &
+Probability Letters, 92, 121-124.
+\item Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for
+testing interval null hypotheses. Psychological methods, 16(4), 406.
+\item Liao, J. G., Midya, V., & Berg, A. (2020). Connecting and contrasting
+the Bayes factor and a modified ROPE procedure for testing interval null
+hypotheses. The American Statistician, 1-19.
+\item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and
+Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology:
+An Empirical Comparison Using 855 t Tests. Perspectives on Psychological
+Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 }
 }
 \author{

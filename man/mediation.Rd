@@ -60,49 +60,49 @@ additional predictor), \code{y}, is not transformed. Then we could use
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to \code{.95} (95\%).}
+to be estimated. Default to \code{.95} (\verb{95\%}).}
 
 \item{method}{Can be \link[=eti]{'ETI'} (default), \link[=hdi]{'HDI'}, \link[=bci]{'BCI'} or \link[=si]{'SI'}.}
 }
 \value{
 A data frame with direct, indirect, mediator and
-  total effect of a multivariate-response mediation-model, as well as the
-  proportion mediated. The effect sizes are median values of the posterior
-  samples (use \code{centrality} for other centrality indices).
+total effect of a multivariate-response mediation-model, as well as the
+proportion mediated. The effect sizes are median values of the posterior
+samples (use \code{centrality} for other centrality indices).
 }
 \description{
 \code{mediation()} is a short summary for multivariate-response
-  mediation-models, i.e. this function computes average direct and average
-  causal mediation effects of multivariate response models.
+mediation-models, i.e. this function computes average direct and average
+causal mediation effects of multivariate response models.
 }
 \details{
 \code{mediation()} returns a data frame with information on the
-      \emph{direct effect} (mean value of posterior samples from \code{treatment}
-      of the outcome model), \emph{mediator effect} (mean value of posterior
-      samples from \code{mediator} of the outcome model), \emph{indirect effect}
-      (mean value of the multiplication of the posterior samples from
-      \code{mediator} of the outcome model and the posterior samples from
-      \code{treatment} of the mediation model) and the total effect (mean
-      value of sums of posterior samples used for the direct and indirect
-      effect). The \emph{proportion mediated} is the indirect effect divided
-      by the total effect.
-      \cr \cr
-      For all values, the 89\% credible intervals are calculated by default.
-      Use \code{ci} to calculate a different interval.
-      \cr \cr
-      The arguments \code{treatment} and \code{mediator} do not necessarily
-      need to be specified. If missing, \code{mediation()} tries to find the
-      treatment and mediator variable automatically. If this does not work,
-      specify these variables.
-      \cr \cr
-      The direct effect is also called \emph{average direct effect} (ADE),
-      the indirect effect is also called \emph{average causal mediation effects}
-      (ACME). See also \cite{Tingley et al. 2014} and \cite{Imai et al. 2010}.
+\emph{direct effect} (mean value of posterior samples from \code{treatment}
+of the outcome model), \emph{mediator effect} (mean value of posterior
+samples from \code{mediator} of the outcome model), \emph{indirect effect}
+(mean value of the multiplication of the posterior samples from
+\code{mediator} of the outcome model and the posterior samples from
+\code{treatment} of the mediation model) and the total effect (mean
+value of sums of posterior samples used for the direct and indirect
+effect). The \emph{proportion mediated} is the indirect effect divided
+by the total effect.
+\cr \cr
+For all values, the \verb{89\%} credible intervals are calculated by default.
+Use \code{ci} to calculate a different interval.
+\cr \cr
+The arguments \code{treatment} and \code{mediator} do not necessarily
+need to be specified. If missing, \code{mediation()} tries to find the
+treatment and mediator variable automatically. If this does not work,
+specify these variables.
+\cr \cr
+The direct effect is also called \emph{average direct effect} (ADE),
+the indirect effect is also called \emph{average causal mediation effects}
+(ACME). See also \cite{Tingley et al. 2014} and \cite{Imai et al. 2010}.
 }
 \note{
 There is an \code{as.data.frame()} method that returns the posterior
-  samples of the effects, which can be used for further processing in the
-  different \pkg{bayestestR} package.
+samples of the effects, which can be used for further processing in the
+different \pkg{bayestestR} package.
 }
 \examples{
 \dontrun{
@@ -154,5 +154,5 @@ Software, Vol. 59, No. 5, pp. 1-38.
 }
 \seealso{
 The \pkg{mediation} package for a causal mediation analysis in
-  the frequentist framework.
+the frequentist framework.
 }

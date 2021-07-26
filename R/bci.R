@@ -1,12 +1,15 @@
 #' Bias Corrected and Accelerated Interval (BCa)
 #'
-#' Compute the \strong{Bias Corrected and Accelerated Interval (BCa)} of posterior distributions.
+#' Compute the **Bias Corrected and Accelerated Interval (BCa)** of posterior
+#' distributions.
 #'
 #' @inheritParams hdi
 #' @inherit ci return
 #' @inherit hdi details
 #'
-#' @references DiCiccio, T. J. and B. Efron. (1996). Bootstrap Confidence Intervals. Statistical Science. 11(3): 189–212. \doi{10.1214/ss/1032280214}
+#' @references
+#' DiCiccio, T. J. and B. Efron. (1996). Bootstrap Confidence Intervals.
+#' Statistical Science. 11(3): 189–212. \doi{10.1214/ss/1032280214}
 #'
 #' @examples
 #' posterior <- rnorm(1000)
@@ -69,7 +72,11 @@ bci.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
 
 
 #' @export
-bci.bamlss <- function(x, ci = 0.95, component = c("all", "conditional", "location"), verbose = TRUE, ...) {
+bci.bamlss <- function(x,
+                       ci = 0.95,
+                       component = c("all", "conditional", "location"),
+                       verbose = TRUE,
+                       ...) {
   component <- match.arg(component)
   d <- insight::get_parameters(x, component = component)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "bci")
@@ -104,9 +111,21 @@ bci.BGGM <- bci.bcplm
 
 #' @rdname bci
 #' @export
-bci.sim.merMod <- function(x, ci = 0.95, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+bci.sim.merMod <- function(x,
+                           ci = 0.95,
+                           effects = c("fixed", "random", "all"),
+                           parameters = NULL,
+                           verbose = TRUE,
+                           ...) {
   effects <- match.arg(effects)
-  dat <- .compute_interval_simMerMod(x = x, ci = ci, effects = effects, parameters = parameters, verbose = verbose, fun = "bci")
+  dat <- .compute_interval_simMerMod(
+    x = x,
+    ci = ci,
+    effects = effects,
+    parameters = parameters,
+    verbose = verbose,
+    fun = "bci"
+  )
   out <- dat$result
   attr(out, "data") <- dat$data
   out
@@ -117,7 +136,13 @@ bci.sim.merMod <- function(x, ci = 0.95, effects = c("fixed", "random", "all"), 
 #' @rdname bci
 #' @export
 bci.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
-  dat <- .compute_interval_sim(x = x, ci = ci, parameters = parameters, verbose = verbose, fun = "bci")
+  dat <- .compute_interval_sim(
+    x = x,
+    ci = ci,
+    parameters = parameters,
+    verbose = verbose,
+    fun = "bci"
+  )
   out <- dat$result
   attr(out, "data") <- dat$data
   out
@@ -140,14 +165,28 @@ bci.emm_list <- bci.emmGrid
 
 #' @rdname bci
 #' @export
-bci.stanreg <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
+bci.stanreg <- function(x,
+                        ci = 0.95,
+                        effects = c("fixed", "random", "all"),
                         component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
-                        parameters = NULL, verbose = TRUE, ...) {
+                        parameters = NULL,
+                        verbose = TRUE,
+                        ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
   out <- .prepare_output(
-    eti(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose, ...),
+    eti(
+      insight::get_parameters(
+        x,
+        effects = effects,
+        component = component,
+        parameters = parameters
+      ),
+      ci = ci,
+      verbose = verbose,
+      ...
+    ),
     insight::clean_parameters(x),
     inherits(x, "stanmvreg")
   )

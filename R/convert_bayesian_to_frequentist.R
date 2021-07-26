@@ -3,7 +3,7 @@
 #' Refit Bayesian model as frequentist. Can be useful for comparisons.
 #'
 #' @param model A Bayesian model.
-#' @param data Data used by the model. If \code{NULL}, will try to extract it
+#' @param data Data used by the model. If `NULL`, will try to extract it
 #'   from the model.
 #' @examples
 #' \donttest{

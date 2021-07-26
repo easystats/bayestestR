@@ -1,30 +1,30 @@
 #' @title Summary of Bayesian multivariate-response mediation-models
 #' @name mediation
 #'
-#' @description \code{mediation()} is a short summary for multivariate-response
+#' @description `mediation()` is a short summary for multivariate-response
 #'   mediation-models, i.e. this function computes average direct and average
 #'   causal mediation effects of multivariate response models.
 #'
-#' @param model A \code{brmsfit} or \code{stanmvreg} object.
+#' @param model A `brmsfit` or `stanmvreg` object.
 #' @param treatment Character, name of the treatment variable (or direct effect)
-#'   in a (multivariate response) mediator-model. If missing, \code{mediation()}
+#'   in a (multivariate response) mediator-model. If missing, `mediation()`
 #'   tries to find the treatment variable automatically, however, this may fail.
 #' @param mediator Character, name of the mediator variable in a (multivariate
-#'   response) mediator-model. If missing, \code{mediation()} tries to find the
+#'   response) mediator-model. If missing, `mediation()` tries to find the
 #'   treatment variable automatically, however, this may fail.
 #' @param response A named character vector, indicating the names of the response
-#'   variables to be used for the mediation analysis. Usually can be \code{NULL},
-#'   in which case these variables are retrieved automatically. If not \code{NULL},
+#'   variables to be used for the mediation analysis. Usually can be `NULL`,
+#'   in which case these variables are retrieved automatically. If not `NULL`,
 #'   names should match the names of the model formulas,
-#'   \code{names(insight::find_response(model, combine = TRUE))}. This can be
+#'   `names(insight::find_response(model, combine = TRUE))`. This can be
 #'   useful if, for instance, the mediator variable used as predictor has a different
 #'   name from the mediator variable used as response. This might occur when the
 #'   mediator is transformed in one model, but used "as is" as response variable
-#'   in the other model. Example: The mediator \code{m} is used as response variable,
-#'   but the centered version \code{m_center} is used as mediator variable. The
+#'   in the other model. Example: The mediator `m` is used as response variable,
+#'   but the centered version `m_center` is used as mediator variable. The
 #'   second response variable (for the treatment model, with the mediator as
-#'   additional predictor), \code{y}, is not transformed. Then we could use
-#'   \code{response} like this: \code{mediation(model, response = c(m = "m_center", y = "y"))}.
+#'   additional predictor), `y`, is not transformed. Then we could use
+#'   `response` like this: `mediation(model, response = c(m = "m_center", y = "y"))`.
 #' @param ... Not used.
 #' @inheritParams ci
 #' @inheritParams describe_posterior
@@ -32,32 +32,32 @@
 #' @return A data frame with direct, indirect, mediator and
 #'   total effect of a multivariate-response mediation-model, as well as the
 #'   proportion mediated. The effect sizes are median values of the posterior
-#'   samples (use \code{centrality} for other centrality indices).
+#'   samples (use `centrality` for other centrality indices).
 #'
-#' @details \code{mediation()} returns a data frame with information on the
-#'       \emph{direct effect} (mean value of posterior samples from \code{treatment}
-#'       of the outcome model), \emph{mediator effect} (mean value of posterior
-#'       samples from \code{mediator} of the outcome model), \emph{indirect effect}
+#' @details `mediation()` returns a data frame with information on the
+#'       *direct effect* (mean value of posterior samples from `treatment`
+#'       of the outcome model), *mediator effect* (mean value of posterior
+#'       samples from `mediator` of the outcome model), *indirect effect*
 #'       (mean value of the multiplication of the posterior samples from
-#'       \code{mediator} of the outcome model and the posterior samples from
-#'       \code{treatment} of the mediation model) and the total effect (mean
+#'       `mediator` of the outcome model and the posterior samples from
+#'       `treatment` of the mediation model) and the total effect (mean
 #'       value of sums of posterior samples used for the direct and indirect
-#'       effect). The \emph{proportion mediated} is the indirect effect divided
+#'       effect). The *proportion mediated* is the indirect effect divided
 #'       by the total effect.
 #'       \cr \cr
-#'       For all values, the 89\% credible intervals are calculated by default.
-#'       Use \code{ci} to calculate a different interval.
+#'       For all values, the `89%` credible intervals are calculated by default.
+#'       Use `ci` to calculate a different interval.
 #'       \cr \cr
-#'       The arguments \code{treatment} and \code{mediator} do not necessarily
-#'       need to be specified. If missing, \code{mediation()} tries to find the
+#'       The arguments `treatment` and `mediator` do not necessarily
+#'       need to be specified. If missing, `mediation()` tries to find the
 #'       treatment and mediator variable automatically. If this does not work,
 #'       specify these variables.
 #'       \cr \cr
-#'       The direct effect is also called \emph{average direct effect} (ADE),
-#'       the indirect effect is also called \emph{average causal mediation effects}
+#'       The direct effect is also called *average direct effect* (ADE),
+#'       the indirect effect is also called *average causal mediation effects*
 #'       (ACME). See also \cite{Tingley et al. 2014} and \cite{Imai et al. 2010}.
 #'
-#' @note There is an \code{as.data.frame()} method that returns the posterior
+#' @note There is an `as.data.frame()` method that returns the posterior
 #'   samples of the effects, which can be used for further processing in the
 #'   different \pkg{bayestestR} package.
 #'

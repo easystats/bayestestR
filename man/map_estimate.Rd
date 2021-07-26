@@ -52,15 +52,15 @@ vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
 
 \item{...}{Currently not used.}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to \pkg{brms}-models.}
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
 
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
@@ -68,10 +68,10 @@ for the output.}
 \value{
 A numeric value if \code{posterior} is a vector. If \code{posterior}
 is a model-object, returns a data frame with following columns:
-  \itemize{
-    \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
-    \item \code{MAP_Estimate} The MAP estimate for the posterior or each model parameter.
-  }
+\itemize{
+\item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
+\item \code{MAP_Estimate} The MAP estimate for the posterior or each model parameter.
+}
 }
 \description{
 Find the \strong{Highest Maximum A Posteriori probability estimate (MAP)} of a posterior, i.e., the value associated with the highest probability density (the "peak" of the posterior distribution). In other words, it is an estimation of the \emph{mode} for continuous parameters. Note that this function relies on \link{estimate_density}, which by default uses a different smoothing bandwidth (\code{"SJ"}) compared to the legacy default implemented the base R \link{density} function (\code{"nrd0"}).

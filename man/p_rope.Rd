@@ -52,22 +52,21 @@ p_rope(x, ...)
 
 \item{range}{ROPE's lower and higher bounds. Should be \code{"default"} or
 depending on the number of outcome variables a vector or a list. In models with one response,
-`range` should be a vector of length two (e.g., \code{c(-0.1, 0.1)}). In
-multivariate models, `range` should be a list with a numeric vectors for
+\code{range} should be a vector of length two (e.g., \code{c(-0.1, 0.1)}). In
+multivariate models, \code{range} should be a list with a numeric vectors for
 each response variable. Vector names should correspond to the name of the response
-variables. If \code{"default"} and input is a vector, the range is set to \code{c(-0.1,
-0.1)}. If \code{"default"} and input is a Bayesian model,
+variables. If \code{"default"} and input is a vector, the range is set to \code{c(-0.1, 0.1)}. If \code{"default"} and input is a Bayesian model,
 \code{\link[=rope_range]{rope_range()}} is used.}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to \pkg{brms}-models.}
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
 
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}

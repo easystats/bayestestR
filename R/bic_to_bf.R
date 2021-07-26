@@ -2,7 +2,7 @@
 #'
 #' @param bic A vector of BIC values.
 #' @param denominator The BIC value to use as a denominator (to test against).
-#' @param log Return the \code{log(BF)}?
+#' @param log Return the `log(BF)`?
 #'
 #' @examples
 #' bic1 <- BIC(lm(Sepal.Length ~ 1, data = iris))
