@@ -1,4 +1,10 @@
-if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("rstanarm") && require("brms") && require("httr") && require("insight") && require("BayesFactor", quietly = TRUE)) {
+if (require("testthat") &&
+  suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) &&
+  require("rstanarm") &&
+  require("brms") &&
+  require("httr") &&
+  require("insight") &&
+  require("BayesFactor", quietly = TRUE)) {
   test_that("describe_posterior", {
     set.seed(333)
 
@@ -215,17 +221,33 @@ if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", 
     if (getRversion() >= "4.0") {
       set.seed(123)
       expect_equal(
-        describe_posterior(correlationBF(mtcars$wt, mtcars$mpg, rscale = 0.5)),
-        structure(list(
-          Parameter = "rho", Median = -0.832958463649399,
-          CI = 0.89, CI_low = -0.903528140372971, CI_high = -0.734146316854132,
-          pd = 1, ROPE_CI = 0.89, ROPE_low = -0.1, ROPE_high = 0.1,
-          ROPE_Percentage = 0, BF = 33555274.5519413, Prior_Distribution = "beta",
-          Prior_Location = 2, Prior_Scale = 2
-        ), row.names = 1L, class = c(
-          "describe_posterior",
-          "see_describe_posterior", "data.frame"
-        ), ci_method = "hdi"),
+        as.data.frame(describe_posterior(correlationBF(
+          mtcars$wt,
+          mtcars$mpg,
+          rscale = 0.5
+        ))),
+        structure(
+          list(
+            Parameter = "rho",
+            Median = -0.833281858269296,
+            CI = 0.95,
+            CI_low = -0.919418102114416,
+            CI_high = -0.715602277241063,
+            pd = 1,
+            ROPE_CI = 0.95,
+            ROPE_low = -0.05,
+            ROPE_high = 0.05,
+            ROPE_Percentage = 0,
+            log_BF = 17.328704623688,
+            BF = 33555274.5519413,
+            Prior_Distribution = "beta",
+            Prior_Location = 2,
+            Prior_Scale = 2
+          ),
+          row.names = 1L,
+          class = "data.frame",
+          ci_method = "hdi"
+        ),
         tolerance = 0.1,
         ignore_attr = TRUE
       )
@@ -233,17 +255,28 @@ if (require("testthat") && suppressPackageStartupMessages(require("bayestestR", 
       set.seed(123)
       expect_equal(
         describe_posterior(ttestBF(mtcars$wt, mu = 3), ci = 0.95),
-        structure(list(
-          Parameter = "Difference", Median = -0.192596120441321,
-          CI = 0.95, CI_low = -0.53739385387061, CI_high = 0.159711264781174,
-          pd = 0.8615, ROPE_CI = 0.95, ROPE_low = -0.0978457442989697,
-          ROPE_high = 0.0978457442989697, ROPE_Percentage = 0.255985267034991,
-          BF = 0.386851835160946, Prior_Distribution = "cauchy", Prior_Location = 0,
-          Prior_Scale = 0.707106781186548
-        ), row.names = 1L, class = c(
-          "describe_posterior",
-          "see_describe_posterior", "data.frame"
-        ), ci_method = "hdi"),
+        structure(
+          list(
+            Parameter = "Difference",
+            Median = -0.192596120441321,
+            CI = 0.95,
+            CI_low = -0.53739385387061,
+            CI_high = 0.159711264781174,
+            pd = 0.8615,
+            ROPE_CI = 0.95,
+            ROPE_low = -0.0978457442989697,
+            ROPE_high = 0.0978457442989697,
+            ROPE_Percentage = 0.255985267034991,
+            BF = 0.386851835160946,
+            Prior_Distribution = "cauchy",
+            Prior_Location = 0,
+            Prior_Scale = 0.707106781186548
+          ),
+          row.names = 1L,
+          class = c("describe_posterior",
+                    "see_describe_posterior", "data.frame"),
+          ci_method = "hdi"
+        ),
         tolerance = 0.1,
         ignore_attr = TRUE
       )

@@ -1,30 +1,70 @@
 #' @export
-print.describe_posterior <- function(x, digits = 2, caption = "Summary of Posterior Distribution", ...) {
-  .print_default(x = x, digits = digits, caption = caption, ...)
+print.describe_posterior <- function(x,
+                                     digits = 2,
+                                     caption = "Summary of Posterior Distribution",
+                                     ...) {
+  .print_default(
+    x = x,
+    digits = digits,
+    caption = caption,
+    ...
+  )
 }
 
 
 #' @export
-print.point_estimate <- function(x, digits = 2, caption = "Point Estimate", ...) {
-  .print_default(x = x, digits = digits, caption = caption, ...)
+print.point_estimate <- function(x,
+                                 digits = 2,
+                                 caption = "Point Estimate",
+                                 ...) {
+  .print_default(
+    x = x,
+    digits = digits,
+    caption = caption,
+    ...
+  )
 }
 
 
 #' @export
-print.p_direction <- function(x, digits = 2, caption = "Probability of Direction", ...) {
-  .print_default(x = x, digits = digits, caption = caption, ...)
+print.p_direction <- function(x,
+                              digits = 2,
+                              caption = "Probability of Direction",
+                              ...) {
+  .print_default(
+    x = x,
+    digits = digits,
+    caption = caption,
+    ...
+  )
 }
 
 
 #' @export
-print.p_map <- function(x, digits = 2, caption = "MAP-based p-value", ...) {
-  .print_default(x = x, digits = digits, caption = caption, ...)
+print.p_map <- function(x,
+                        digits = 2,
+                        caption = "MAP-based p-value",
+                        ...) {
+  .print_default(
+    x = x,
+    digits = digits,
+    caption = caption,
+    ...
+  )
 }
 
 
 #' @export
-print.map_estimate <- function(x, digits = 2, caption = "MAP Estimate", ...) {
-  .print_default(x = x, digits = digits, caption = caption, ...)
+print.map_estimate <- function(x,
+                               digits = 2,
+                               caption = "MAP Estimate",
+                               ...) {
+  .print_default(
+    x = x,
+    digits = digits,
+    caption = caption,
+    ...
+  )
 }
 
 
@@ -32,10 +72,19 @@ print.map_estimate <- function(x, digits = 2, caption = "MAP Estimate", ...) {
 print.p_rope <- function(x, digits = 2, ...) {
   caption <- sprintf(
     "Proportion of samples inside the ROPE [%.*f, %.*f]",
-    digits, x$ROPE_low[1], digits, x$ROPE_high[1]
+    digits,
+    x$ROPE_low[1],
+    digits,
+    x$ROPE_high[1]
   )
   x$ROPE_low <- x$ROPE_high <- NULL
-  .print_default(x = x, digits = digits, caption = caption, ci_string = "ROPE", ...)
+  .print_default(
+    x = x,
+    digits = digits,
+    caption = caption,
+    ci_string = "ROPE",
+    ...
+  )
 }
 
 
@@ -45,28 +94,58 @@ print.p_significance <- function(x, digits = 2, ...) {
     "Practical Significance (threshold: %s)",
     insight::format_value(attributes(x)$threshold, digits = digits)
   )
-  .print_default(x = x, digits = digits, caption = caption, ...)
+  .print_default(
+    x = x,
+    digits = digits,
+    caption = caption,
+    ...
+  )
 }
 
 
 #' @export
-print.bayestestR_hdi <- function(x, digits = 2, caption = "Highest Density Interval", ...) {
-  .print_default(x = x, digits = digits, caption = caption, ci_string = "HDI", ...)
+print.bayestestR_hdi <- function(x,
+                                 digits = 2,
+                                 caption = "Highest Density Interval",
+                                 ...) {
+  .print_default(
+    x = x,
+    digits = digits,
+    caption = caption,
+    ci_string = "HDI",
+    ...
+  )
 }
 
 
 #' @export
-print.bayestestR_eti <- function(x, digits = 2, caption = "Equal-Tailed Interval", ...) {
-  .print_default(x = x, digits = digits, caption = caption, ci_string = "ETI", ...)
+print.bayestestR_eti <- function(x,
+                                 digits = 2,
+                                 caption = "Equal-Tailed Interval",
+                                 ...) {
+  .print_default(
+    x = x,
+    digits = digits,
+    caption = caption,
+    ci_string = "ETI",
+    ...
+  )
 }
 
 
 #' @export
-print.bayestestR_si <- function(x, digits = 2, caption = "Support Interval", ...) {
-  .print_default(x = x, digits = digits, caption = caption, ci_string = "SI", ...)
+print.bayestestR_si <- function(x,
+                                digits = 2,
+                                caption = "Support Interval",
+                                ...) {
+  .print_default(
+    x = x,
+    digits = digits,
+    caption = caption,
+    ci_string = "SI",
+    ...
+  )
 }
-
-
 
 
 # special handling for bayes factors ------------------
@@ -80,7 +159,15 @@ print.bayesfactor_models <- function(x,
                                      caption = "Bayes Factors for Model Comparison",
                                      ...) {
   show_names <- show_names & !attr(x, "unsupported_models")
-  .print_bf_default(x = x, digits = digits, log = log, show_names = show_names, caption = caption, align = c("llr"), ...)
+  .print_bf_default(
+    x = x,
+    digits = digits,
+    log = log,
+    show_names = show_names,
+    caption = caption,
+    align = c("llr"),
+    ...
+  )
 }
 
 
@@ -90,7 +177,13 @@ print.bayesfactor_inclusion <- function(x,
                                         log = FALSE,
                                         caption = "Inclusion Bayes Factors (Model Averaged)",
                                         ...) {
-  .print_bf_default(x = x, digits = digits, log = log, caption = caption, ...)
+  .print_bf_default(
+    x = x,
+    digits = digits,
+    log = log,
+    caption = caption,
+    ...
+  )
 }
 
 
@@ -100,7 +193,13 @@ print.bayesfactor_restricted <- function(x,
                                          log = FALSE,
                                          caption = "Bayes Factor (Order-Restriction)",
                                          ...) {
-  .print_bf_default(x = x, digits = digits, log = log, caption = caption, ...)
+  .print_bf_default(
+    x = x,
+    digits = digits,
+    log = log,
+    caption = caption,
+    ...
+  )
 }
 
 
@@ -126,12 +225,15 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
 
 
 
-
-
 # util ---------------------
 
+.print_default <- function(x,
+                           digits = 2,
+                           caption = NULL,
+                           subtitles = NULL,
+                           ci_string = "CI",
+                           ...) {
 
-.print_default <- function(x, digits = 2, caption = NULL, subtitles = NULL, ci_string = "CI", ...) {
 
   # retrieve information with cleaned parameter names
   cp <- attr(x, "clean_parameters")
