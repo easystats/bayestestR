@@ -167,7 +167,9 @@ running \code{\link[=reshape_iterations]{reshape_iterations()}}.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 
-\item{bf_prior}{Distribution representing a prior for the computation of Bayes factors / SI. Used if the input is a posterior, otherwise (in the case of models) ignored.}
+\item{bf_prior}{Distribution representing a prior for the computation of
+Bayes factors / SI. Used if the input is a posterior, otherwise (in the
+case of models) ignored.}
 
 \item{BF}{The amount of support required to be included in the support interval.}
 
@@ -197,8 +199,7 @@ Compute indices relevant to describe and characterize the posterior distribution
 \details{
 One or more components of point estimates (like posterior mean or median),
 intervals and tests can be omitted from the summary output by setting the
-related argument to \code{NULL}. For example, \code{test = NULL} and
-\code{centrality = NULL} would only return the HDI (or CI).
+related argument to \code{NULL}. For example, \code{test = NULL} and \code{centrality = NULL} would only return the HDI (or CI).
 }
 \examples{
 library(bayestestR)
