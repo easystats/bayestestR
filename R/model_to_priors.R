@@ -1,6 +1,6 @@
-#' Convert model's posteriors to priors
+#' Convert model's posteriors to priors (EXPERIMENTAL)
 #'
-#' Convert model's posteriors to priors.
+#' Convert model's posteriors to (normal) priors.
 #'
 #' @param model A Bayesian model.
 #' @param scale_multiply The SD of the posterior will be multiplied by this amount before being set as a prior to avoid overly narrow priors.
