@@ -52,23 +52,27 @@ weighted_posteriors(..., prior_odds = NULL, missing = 0, verbose = TRUE)
 )
 }
 \arguments{
-\item{...}{Fitted models (see details), all fit on the same data, or a single \code{BFBayesFactor} object.}
+\item{...}{Fitted models (see details), all fit on the same data, or a single
+\code{BFBayesFactor} object.}
 
-\item{prior_odds}{Optional vector of prior odds for the models compared to the first model (or the denominator, for \code{BFBayesFactor} objects). For \code{data.frame}s, this will be used as the basis of weighting.}
+\item{prior_odds}{Optional vector of prior odds for the models compared to
+the first model (or the denominator, for \code{BFBayesFactor} objects). For
+\code{data.frame}s, this will be used as the basis of weighting.}
 
-\item{missing}{An optional numeric value to use if a model does not contain a parameter that appears in other models. Defaults to 0.}
+\item{missing}{An optional numeric value to use if a model does not contain a
+parameter that appears in other models. Defaults to 0.}
 
 \item{verbose}{Toggle off warnings.}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to \pkg{brms}-models.}
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
 
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
@@ -79,27 +83,29 @@ for the output.}
 A data frame with posterior distributions (weighted across models) .
 }
 \description{
-Extract posterior samples of parameters, weighted across models.
-Weighting is done by comparing posterior model probabilities, via \code{\link{bayesfactor_models}}.
+Extract posterior samples of parameters, weighted across models. Weighting is
+done by comparing posterior model probabilities, via \code{\link[=bayesfactor_models]{bayesfactor_models()}}.
 }
 \details{
-Note that across models some parameters might play different roles. For example,
-the parameter \code{A} plays a different role in the model \code{Y ~ A + B} (where it is a main effect)
-than it does in the model \code{Y ~ A + B + A:B} (where it is a simple effect). In many cases centering
-of predictors (mean subtracting for continuous variables, and effects coding via \code{contr.sum} or
-orthonormal coding via {\code{\link{contr.orthonorm}}} for factors) can reduce this issue. In any case
-you should be mindful of this issue.
+Note that across models some parameters might play different roles. For
+example, the parameter \code{A} plays a different role in the model \code{Y ~ A + B}
+(where it is a main effect) than it does in the model \code{Y ~ A + B + A:B}
+(where it is a simple effect). In many cases centering of predictors (mean
+subtracting for continuous variables, and effects coding via \code{contr.sum} or
+orthonormal coding via {\code{\link[=contr.orthonorm]{contr.orthonorm()}}} for factors) can reduce this
+issue. In any case you should be mindful of this issue.
 \cr\cr
-See \code{\link{bayesfactor_models}} details for more info on passed models.
+See \code{\link[=bayesfactor_models]{bayesfactor_models()}} details for more info on passed models.
 \cr\cr
-Note that for \code{BayesFactor} models, posterior samples cannot be generated from intercept only models.
+Note that for \code{BayesFactor} models, posterior samples cannot be generated
+from intercept only models.
 \cr\cr
 This function is similar in function to \code{brms::posterior_average}.
 }
 \note{
-For \code{BayesFactor < 0.9.12-4.3}, in some instances there might be
-  some problems of duplicate columns of random effects in the resulting data
-  frame.
+For \verb{BayesFactor < 0.9.12-4.3}, in some instances there might be
+some problems of duplicate columns of random effects in the resulting data
+frame.
 }
 \examples{
 \donttest{
@@ -172,12 +178,22 @@ if (require("rstanarm")) {
 }
 \references{
 \itemize{
-  \item Clyde, M., Desimone, H., & Parmigiani, G. (1996). Prediction via orthogonalized model mixing. Journal of the American Statistical Association, 91(435), 1197-1208.
-  \item Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E. (2019, March 25). A conceptual introduction to Bayesian Model Averaging. \doi{10.31234/osf.io/wgb64}
-  \item Rouder, J. N., Haaf, J. M., & Vandekerckhove, J. (2018). Bayesian inference for psychology, part IV: Parameter estimation and Bayes factors. Psychonomic bulletin & review, 25(1), 102-113.
-  \item van den Bergh, D., Haaf, J. M., Ly, A., Rouder, J. N., & Wagenmakers, E. J. (2019). A cautionary note on estimating effect size.
+\item Clyde, M., Desimone, H., & Parmigiani, G. (1996). Prediction via
+orthogonalized model mixing. Journal of the American Statistical
+Association, 91(435), 1197-1208.
+
+\item Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E.
+(2019, March 25). A conceptual introduction to Bayesian Model Averaging.
+\doi{10.31234/osf.io/wgb64}
+
+\item Rouder, J. N., Haaf, J. M., & Vandekerckhove, J. (2018). Bayesian
+inference for psychology, part IV: Parameter estimation and Bayes factors.
+Psychonomic bulletin & review, 25(1), 102-113.
+
+\item van den Bergh, D., Haaf, J. M., Ly, A., Rouder, J. N., & Wagenmakers,
+E. J. (2019). A cautionary note on estimating effect size.
 }
 }
 \seealso{
-\code{\link{bayesfactor_inclusion}} for Bayesian model averaging.
+\code{\link[=bayesfactor_inclusion]{bayesfactor_inclusion()}} for Bayesian model averaging.
 }

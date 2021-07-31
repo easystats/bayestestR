@@ -66,12 +66,12 @@ bf_restricted(posterior, hypothesis, prior = NULL, verbose = TRUE, ...)
 
 \item{...}{Currently not used.}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to \pkg{brms}-models.}
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
 }
 \value{
 A data frame containing the (log) Bayes factor representing evidence \emph{against} the un-restricted model.
@@ -80,7 +80,7 @@ A data frame containing the (log) Bayes factor representing evidence \emph{again
 This method computes Bayes factors for comparing a model with an order restrictions on its parameters
 with the fully unrestricted model. \emph{Note that this method should only be used for confirmatory analyses}.
 \cr \cr
-The \code{bf_*} function is an alias of the main function.
+The \verb{bf_*} function is an alias of the main function.
 \cr \cr
 \strong{For more info, in particular on specifying correct priors for factors with more than 2 levels, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.}
 }
@@ -108,18 +108,18 @@ See example below.)
 \cr\cr
 It is important to provide the correct \code{prior} for meaningful results.
 \itemize{
-  \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
-  \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
-  \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
-    \item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
-    \item \code{prior} can also be a model equivalent to \code{posterior} but with samples from the priors \emph{only}. See \code{\link{unupdate}}.
-    \item \strong{Note:} When \code{posterior} is a \code{brmsfit_multiple} model, \code{prior} \strong{must} be provided.
-  }
-  \item When \code{posterior} is an \code{emmGrid} object: \itemize{
-    \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
-    \item \code{prior} can also be an \code{emmGrid} object equivalent to \code{posterior} but created with a model of priors samples \emph{only}.
-    \item \strong{Note:} When the \code{emmGrid} has undergone any transformations (\code{"log"}, \code{"response"}, etc.), or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stated above.
-  }
+\item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
+\item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
+\item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
+\item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
+\item \code{prior} can also be a model equivalent to \code{posterior} but with samples from the priors \emph{only}. See \code{\link[=unupdate]{unupdate()}}.
+\item \strong{Note:} When \code{posterior} is a \code{brmsfit_multiple} model, \code{prior} \strong{must} be provided.
+}
+\item When \code{posterior} is an \code{emmGrid} object: \itemize{
+\item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
+\item \code{prior} can also be an \code{emmGrid} object equivalent to \code{posterior} but created with a model of priors samples \emph{only}.
+\item \strong{Note:} When the \code{emmGrid} has undergone any transformations (\code{"log"}, \code{"response"}, etc.), or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stated above.
+}
 }
 }
 

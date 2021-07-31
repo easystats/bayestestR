@@ -2,13 +2,13 @@
 #'
 #' This function returns the effective sample size (ESS).
 #'
-#' @param model A \code{stanreg}, \code{stanfit}, or \code{brmsfit} object.
+#' @param model A `stanreg`, `stanfit`, or `brmsfit` object.
 #' @param ... Currently not used.
 #' @inheritParams hdi
 #'
 #' @return A data frame with two columns: Parameter name and effective sample size (ESS).
 #'
-#' @details \strong{Effective Sample (ESS)} should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). The ESS corresponds to the number of independent samples with the same estimation power as the N autocorrelated samples. It is is a measure of \dQuote{how much independent information there is in autocorrelated chains} (\emph{Kruschke 2015, p182-3}).
+#' @details **Effective Sample (ESS)** should be as large as possible, altough for most applications, an effective sample size greater than 1,000 is sufficient for stable estimates (Bürkner, 2017). The ESS corresponds to the number of independent samples with the same estimation power as the N autocorrelated samples. It is is a measure of \dQuote{how much independent information there is in autocorrelated chains} (*Kruschke 2015, p182-3*).
 #'
 #' @references \itemize{
 #'   \item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.

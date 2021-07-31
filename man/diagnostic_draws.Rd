@@ -15,7 +15,7 @@ diagnostic_draws(posteriors, ...)
 Returns the accumulated log-posterior, the average Metropolis acceptance rate, divergent transitions, treedepth rather than terminated its evolution normally.
 }
 \examples{
-\donttest{
+\dontrun{
 set.seed(333)
 
 if (require("brms", quietly = TRUE)) {

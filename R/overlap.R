@@ -4,8 +4,8 @@
 #'
 #' @param x Vector of x values.
 #' @param y Vector of x values.
-#' @param method_auc Area Under the Curve (AUC) estimation method. See \code{\link{area_under_curve}}.
-#' @param method_density Density estimation method. See \code{\link{estimate_density}}.
+#' @param method_auc Area Under the Curve (AUC) estimation method. See [area_under_curve()].
+#' @param method_density Density estimation method. See [estimate_density()].
 #' @inheritParams estimate_density
 #'
 #' @examples

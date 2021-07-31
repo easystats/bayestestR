@@ -1,37 +1,40 @@
 #' Inclusion Bayes Factors for testing predictors across Bayesian models
 #'
-#' The \code{bf_*} function is an alias of the main function.
+#' The `bf_*` function is an alias of the main function.
 #' \cr \cr
-#' For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
+#' For more info, see [the Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).
 #'
 #' @author Mattan S. Ben-Shachar
-#' @param models An object of class \code{\link{bayesfactor_models}} or \code{BFBayesFactor}.
+#' @param models An object of class [bayesfactor_models()] or `BFBayesFactor`.
 #' @param match_models See details.
-#' @param prior_odds Optional vector of prior odds for the models. See \code{BayesFactor::priorOdds<-}.
+#' @param prior_odds Optional vector of prior odds for the models. See
+#'   `BayesFactor::priorOdds<-`.
 #' @param ... Arguments passed to or from other methods.
 #'
-#' @return a data frame containing the prior and posterior probabilities, and log(BF) for each effect.
+#' @return a data frame containing the prior and posterior probabilities, and
+#'   log(BF) for each effect.
 #'
-#' @details Inclusion Bayes factors answer the question: Are the observed data more
-#' probable under models with a particular effect, than they are under models without
-#' that particular effect? In other words, on average - are models with effect \eqn{X}
-#' more likely to have produced the observed data than models without effect \eqn{X}?
+#' @details Inclusion Bayes factors answer the question: Are the observed data
+#'   more probable under models with a particular effect, than they are under
+#'   models without that particular effect? In other words, on average - are
+#'   models with effect \eqn{X} more likely to have produced the observed data
+#'   than models without effect \eqn{X}?
 #'
 #' \subsection{Match Models}{
-#' If \code{match_models=FALSE} (default), Inclusion BFs are computed by comparing all models
-#' with a term against all models without that term. If \code{TRUE},
+#' If `match_models=FALSE` (default), Inclusion BFs are computed by comparing
+#' all models with a term against all models without that term. If `TRUE`,
 #' comparison is restricted to models that (1) do not include any interactions
-#' with the term of interest; (2) for interaction terms, averaging is done
-#' only across models that containe the main effect terms from which the interaction
+#' with the term of interest; (2) for interaction terms, averaging is done only
+#' across models that containe the main effect terms from which the interaction
 #' term is comprised.
 #' }
 #'
 #' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
 #'
-#' @note Random effects in the \code{lmer} style are converted to interaction terms:
-#' i.e., \code{(X|G)} will become the terms \code{1:G} and \code{X:G}.
+#' @note Random effects in the `lmer` style are converted to interaction terms:
+#' i.e., `(X|G)` will become the terms `1:G` and `X:G`.
 #'
-#' @seealso \code{\link{weighted_posteriors}} for Bayesian parameter averaging.
+#' @seealso [weighted_posteriors()] for Bayesian parameter averaging.
 #'
 #' @examples
 #' library(bayestestR)
@@ -61,12 +64,15 @@
 #' \itemize{
 #'   \item Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E. (2019, March 25). A conceptual introduction to Bayesian Model Averaging. \doi{10.31234/osf.io/wgb64}
 #'   \item Clyde, M. A., Ghosh, J., & Littman, M. L. (2011). Bayesian adaptive sampling for variable selection and model averaging. Journal of Computational and Graphical Statistics, 20(1), 80-101.
-#'   \item Mathot, S. (2017). Bayes like a Baws: Interpreting Bayesian Repeated Measures in JASP [Blog post]. Retrieved from https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp
+#'   \item Mathot, S. (2017). Bayes like a Baws: Interpreting Bayesian Repeated Measures in JASP [Blog post](https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp).
 #' }
 #'
 #'
 #' @export
-bayesfactor_inclusion <- function(models, match_models = FALSE, prior_odds = NULL, ...) {
+bayesfactor_inclusion <- function(models,
+                                  match_models = FALSE,
+                                  prior_odds = NULL,
+                                  ...) {
   UseMethod("bayesfactor_inclusion")
 }
 
@@ -75,7 +81,10 @@ bayesfactor_inclusion <- function(models, match_models = FALSE, prior_odds = NUL
 bf_inclusion <- bayesfactor_inclusion
 
 #' @export
-bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALSE, prior_odds = NULL, ...) {
+bayesfactor_inclusion.bayesfactor_models <- function(models,
+                                                     match_models = FALSE,
+                                                     prior_odds = NULL,
+                                                     ...) {
   if (isTRUE(attr(models, "unsupported_models"))) {
     stop("Can not compute inclusion Bayes factors - passed models are not (yet) supported.", call. = FALSE)
   }
@@ -152,9 +161,15 @@ bayesfactor_inclusion.bayesfactor_models <- function(models, match_models = FALS
 
 
 #' @export
-bayesfactor_inclusion.BFBayesFactor <- function(models, match_models = FALSE, prior_odds = NULL, ...) {
+bayesfactor_inclusion.BFBayesFactor <- function(models,
+                                                match_models = FALSE,
+                                                prior_odds = NULL,
+                                                ...) {
   models <- bayesfactor_models.BFBayesFactor(models)
-  bayesfactor_inclusion.bayesfactor_models(models, match_models = match_models, prior_odds = prior_odds)
+  bayesfactor_inclusion.bayesfactor_models(models,
+    match_models = match_models,
+    prior_odds = prior_odds
+  )
 }
 
 

@@ -65,7 +65,7 @@ ci(x, ...)
 \item{...}{Currently not used.}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
-to be estimated. Default to \code{.95} (95\%).}
+to be estimated. Default to \code{.95} (\verb{95\%}).}
 
 \item{method}{Can be \link[=eti]{'ETI'} (default), \link[=hdi]{'HDI'}, \link[=bci]{'BCI'} or \link[=si]{'SI'}.}
 
@@ -73,43 +73,43 @@ to be estimated. Default to \code{.95} (95\%).}
 
 \item{BF}{The amount of support required to be included in the support interval.}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
 
-\item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to \pkg{brms}-models.}
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
 }
 \value{
 A data frame with following columns:
-  \itemize{
-    \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
-    \item \code{CI} The probability of the credible interval.
-    \item \code{CI_low}, \code{CI_high} The lower and upper credible interval limits for the parameters.
-  }
+\itemize{
+\item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
+\item \code{CI} The probability of the credible interval.
+\item \code{CI_low}, \code{CI_high} The lower and upper credible interval limits for the parameters.
+}
 }
 \description{
 Compute Confidence/Credible/Compatibility Intervals (CI) or Support Intervals (SI) for Bayesian and frequentist models. The Documentation is accessible for:
 }
 \details{
 \itemize{
- \item \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{Bayesian models}
- \item \href{https://easystats.github.io/parameters/reference/ci.merMod.html}{Frequentist models}
+\item \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{Bayesian models}
+\item \href{https://easystats.github.io/parameters/reference/ci.merMod.html}{Frequentist models}
 }
 }
 \note{
 When it comes to interpretation, we recommend thinking of the CI in terms of
-  an "uncertainty" or "compatibility" interval, the latter being defined as
-  \dQuote{Given any value in the interval and the background assumptions,
-  the data should not seem very surprising} (\cite{Gelman & Greenland 2019}).
-  \cr \cr
-  There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+an "uncertainty" or "compatibility" interval, the latter being defined as
+\dQuote{Given any value in the interval and the background assumptions,
+the data should not seem very surprising} (\cite{Gelman & Greenland 2019}).
+\cr \cr
+There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
 library(bayestestR)

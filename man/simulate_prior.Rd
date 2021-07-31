@@ -26,6 +26,6 @@ if (require("rstanarm")) {
 }
 }
 \seealso{
-\code{\link{unupdate}} for directly sampling from the prior
-  distribution (useful for complex priors and designs).
+\code{\link[=unupdate]{unupdate()}} for directly sampling from the prior
+distribution (useful for complex priors and designs).
 }

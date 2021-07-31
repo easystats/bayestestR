@@ -1,18 +1,18 @@
 #' Region of Practical Equivalence (ROPE)
 #'
-#' Compute the proportion of the HDI (default to the 89\% HDI) of a posterior distribution that lies within a region of practical equivalence.
+#' Compute the proportion of the HDI (default to the `89%` HDI) of a posterior distribution that lies within a region of practical equivalence.
 #'
-#' @param x Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.
-#' @param range ROPE's lower and higher bounds. Should be \code{"default"} or
+#' @param x Vector representing a posterior distribution. Can also be a `stanreg` or `brmsfit` model.
+#' @param range ROPE's lower and higher bounds. Should be `"default"` or
 #' depending on the number of outcome variables a vector or a list. In models with one response,
-#' `range` should be a vector of length two (e.g., \code{c(-0.1, 0.1)}). In
+#' `range` should be a vector of length two (e.g., `c(-0.1, 0.1)`). In
 #' multivariate models, `range` should be a list with a numeric vectors for
 #' each response variable. Vector names should correspond to the name of the response
-#' variables. If \code{"default"} and input is a vector, the range is set to \code{c(-0.1,
-#' 0.1)}. If \code{"default"} and input is a Bayesian model,
-#' \code{\link[=rope_range]{rope_range()}} is used.
+#' variables. If `"default"` and input is a vector, the range is set to `c(-0.1,
+#' 0.1)`. If `"default"` and input is a Bayesian model,
+#' [`rope_range()`][rope_range] is used.
 #' @param ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.
-#' @param ci_method The type of interval to use to quantify the percentage in ROPE. Can be 'HDI' (default) or 'ETI'. See \code{\link{ci}}.
+#' @param ci_method The type of interval to use to quantify the percentage in ROPE. Can be 'HDI' (default) or 'ETI'. See [ci()].
 #'
 #' @inheritParams hdi
 #'
@@ -22,20 +22,20 @@
 #'   different from 0 does not make much sense (the probability of a single value
 #'   null hypothesis in a continuous distribution is 0). Therefore, the idea
 #'   underlining ROPE is to let the user define an area around the null value
-#'   enclosing values that are \emph{equivalent to the null} value for practical
+#'   enclosing values that are *equivalent to the null* value for practical
 #'   purposes (\cite{Kruschke 2010, 2011, 2014}).
 #'   \cr \cr
 #'   Kruschke (2018) suggests that such null value could be set, by default,
 #'   to the -0.1 to 0.1 range of a standardized parameter (negligible effect
 #'   size according to Cohen, 1988). This could be generalized: For instance,
-#'   for linear models, the ROPE could be set as \code{0 +/- .1 * sd(y)}.
+#'   for linear models, the ROPE could be set as `0 +/- .1 * sd(y)`.
 #'   This ROPE range can be automatically computed for models using the
-#'   \link{rope_range} function.
+#'   [rope_range] function.
 #'   \cr \cr
-#'   Kruschke (2010, 2011, 2014) suggests using the proportion of  the 95\%
-#'   (or 89\%, considered more stable) \link[=hdi]{HDI} that falls within the
+#'   Kruschke (2010, 2011, 2014) suggests using the proportion of  the `95%`
+#'   (or `89%`, considered more stable) [HDI][hdi] that falls within the
 #'   ROPE as an index for "null-hypothesis" testing (as understood under the
-#'   Bayesian framework, see \code{\link[=equivalence_test]{equivalence_test()}}).
+#'   Bayesian framework, see [`equivalence_test()`][equivalence_test]).
 #' }
 #' \subsection{Sensitivity to parameter's scale}{
 #'   It is important to consider the unit (i.e., the scale) of the predictors
@@ -54,22 +54,22 @@
 #'   on independence. Most problematic are parameters that only have partial
 #'   overlap with the ROPE region. In case of collinearity, the (joint) distributions
 #'   of these parameters may either get an increased or decreased ROPE, which
-#'   means that inferences based on \code{rope()} are inappropriate
+#'   means that inferences based on `rope()` are inappropriate
 #'   (\cite{Kruschke 2014, 340f}).
 #'   \cr \cr
-#'   \code{rope()} performs a simple check for pairwise correlations between
+#'   `rope()` performs a simple check for pairwise correlations between
 #'   parameters, but as there can be collinearity between more than two variables,
 #'   a first step to check the assumptions of this hypothesis testing is to look
 #'   at different pair plots. An even more sophisticated check is the projection
 #'   predictive variable selection (\cite{Piironen and Vehtari 2017}).
 #' }
 #' \subsection{Strengths and Limitations}{
-#'   \strong{Strengths:} Provides information related to the practical relevance of the effects.
+#'   **Strengths:** Provides information related to the practical relevance of the effects.
 #'   \cr \cr
-#'   \strong{Limitations:} A ROPE range needs to be arbitrarily defined. Sensitive to the scale (the unit) of the predictors. Not sensitive to highly significant effects.
+#'   **Limitations:** A ROPE range needs to be arbitrarily defined. Sensitive to the scale (the unit) of the predictors. Not sensitive to highly significant effects.
 #' }
 #'
-#' @note There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @references \itemize{
 #' \item Cohen, J. (1988). Statistical power analysis for the behavioural sciences.

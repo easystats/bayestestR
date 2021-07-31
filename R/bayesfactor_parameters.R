@@ -15,38 +15,38 @@
 #' model in which the tested parameter has been restricted to the point null
 #' (Wagenmakers et al., 2010; Heck, 2019).
 #' \cr \cr
-#' Note that the \code{logspline} package is used for estimating densities and
+#' Note that the `logspline` package is used for estimating densities and
 #' probabilities, and must be installed for the function to work.
 #' \cr \cr
-#' \code{bayesfactor_pointnull()} and \code{bayesfactor_rope()} are wrappers
-#' around \code{bayesfactor_parameters} with different defaults for the null to
+#' `bayesfactor_pointnull()` and `bayesfactor_rope()` are wrappers
+#' around `bayesfactor_parameters` with different defaults for the null to
 #' be tested against (a point and a range, respectively). Aliases of the main
-#' functions are prefixed with \code{bf_*}, like \code{bf_parameters()} or
-#' \code{bf_pointnull()}.
+#' functions are prefixed with `bf_*`, like `bf_parameters()` or
+#' `bf_pointnull()`.
 #' \cr \cr
 #' \strong{For more info, in particular on specifying correct priors for factors
 #' with more than 2 levels, see
-#' \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the
-#' Bayes factors vignette}.}
+#' [the
+#' Bayes factors vignette](https://easystats.github.io/bayestestR/articles/bayes_factors.html).}
 #'
-#' @param posterior A numerical vector, \code{stanreg} / \code{brmsfit} object,
-#'   \code{emmGrid} or a data frame - representing a posterior distribution(s)
+#' @param posterior A numerical vector, `stanreg` / `brmsfit` object,
+#'   `emmGrid` or a data frame - representing a posterior distribution(s)
 #'   from (see 'Details').
 #' @param prior An object representing a prior distribution (see 'Details').
-#' @param direction Test type (see 'Details'). One of \code{0},
-#'   \code{"two-sided"} (default, two tailed), \code{-1}, \code{"left"} (left
-#'   tailed) or \code{1}, \code{"right"} (right tailed).
+#' @param direction Test type (see 'Details'). One of `0`,
+#'   `"two-sided"` (default, two tailed), `-1`, `"left"` (left
+#'   tailed) or `1`, `"right"` (right tailed).
 #' @param null Value of the null, either a scalar (for point-null) or a range
 #'   (for a interval-null).
 #' @param ... Arguments passed to and from other methods. (Can be used to pass
-#'   arguments to internal \code{\link[logspline]{logspline}}.)
+#'   arguments to internal [logspline::logspline()].)
 #' @inheritParams hdi
 #'
 #' @return A data frame containing the (log) Bayes factor representing evidence
-#'   \emph{against} the null.
+#'   *against* the null.
 #'
 #' @note There is also a
-#'   \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method}
+#'   [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html)
 #'   implemented in the
 #'   \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
@@ -55,48 +55,48 @@
 #' distributions.
 #'
 #' \subsection{One-sided & Dividing Tests (setting an order restriction)}{
-#' One sided tests (controlled by \code{direction}) are conducted by restricting
+#' One sided tests (controlled by `direction`) are conducted by restricting
 #' the prior and posterior of the non-null values (the "alternative") to one
 #' side of the null only (\cite{Morey & Wagenmakers, 2014}). For example, if we
 #' have a prior hypothesis that the parameter should be positive, the
 #' alternative will be restricted to the region to the right of the null (point
-#' or interval). For example, for a Bayes factor comparing the "null" of [0-0.1]
-#' to the alternative [>0.1], we would set
-#' \code{bayesfactor_parameters(null = c(0, 0.1), direction = ">")}.
+#' or interval). For example, for a Bayes factor comparing the "null" of `0-0.1`
+#' to the alternative `>0.1`, we would set
+#' `bayesfactor_parameters(null = c(0, 0.1), direction = ">")`.
 #' \cr\cr
-#' It is also possible to compute a Bayes factor for \strong{dividing}
+#' It is also possible to compute a Bayes factor for **dividing**
 #' hypotheses - that is, for a null and alternative that are complementary,
 #' opposing one-sided hypotheses (\cite{Morey & Wagenmakers, 2014}). For
-#' example, for a Bayes factor comparing the "null" of [<0] to the alternative
-#' [>0], we would set \code{bayesfactor_parameters(null = c(-Inf, 0))}.
+#' example, for a Bayes factor comparing the "null" of `<0` to the alternative
+#' `>0`, we would set `bayesfactor_parameters(null = c(-Inf, 0))`.
 #' }
 #'
-#' @section Setting the correct \code{prior}:
+#' @section Setting the correct `prior`:
 #' For the computation of Bayes factors, the model priors must be proper priors
-#' (at the very least they should be \emph{not flat}, and it is preferable that
-#' they be \emph{informative}); As the priors for the alternative get wider, the
+#' (at the very least they should be *not flat*, and it is preferable that
+#' they be *informative*); As the priors for the alternative get wider, the
 #' likelihood of the null value(s) increases, to the extreme that for completely
 #' flat priors the null is infinitely more favorable than the alternative (this
-#' is called \emph{the Jeffreys-Lindley-Bartlett paradox}). Thus, you should
+#' is called *the Jeffreys-Lindley-Bartlett paradox*). Thus, you should
 #' only ever try (or want) to compute a Bayes factor when you have an informed
 #' prior.
 #' \cr\cr
-#' (Note that by default, \code{brms::brm()} uses flat priors for fixed-effects;
+#' (Note that by default, `brms::brm()` uses flat priors for fixed-effects;
 #' See example below.)
 #' \cr\cr
-#' It is important to provide the correct \code{prior} for meaningful results.
+#' It is important to provide the correct `prior` for meaningful results.
 #' \itemize{
-#'   \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
-#'   \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
-#'   \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
-#'     \item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
-#'     \item \code{prior} can also be a model equivalent to \code{posterior} but with samples from the priors \emph{only}. See \code{\link{unupdate}}.
-#'     \item \strong{Note:} When \code{posterior} is a \code{brmsfit_multiple} model, \code{prior} \strong{must} be provided.
+#'   \item When `posterior` is a numerical vector, `prior` should also be a numerical vector.
+#'   \item When `posterior` is a `data.frame`, `prior` should also be a `data.frame`, with matching column order.
+#'   \item When `posterior` is a `stanreg` or `brmsfit` model: \itemize{
+#'     \item `prior` can be set to `NULL`, in which case prior samples are drawn internally.
+#'     \item `prior` can also be a model equivalent to `posterior` but with samples from the priors *only*. See [unupdate()].
+#'     \item **Note:** When `posterior` is a `brmsfit_multiple` model, `prior` **must** be provided.
 #'   }
-#'   \item When \code{posterior} is an \code{emmGrid} object: \itemize{
-#'     \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
-#'     \item \code{prior} can also be an \code{emmGrid} object equivalent to \code{posterior} but created with a model of priors samples \emph{only}.
-#'     \item \strong{Note:} When the \code{emmGrid} has undergone any transformations (\code{"log"}, \code{"response"}, etc.), or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stated above.
+#'   \item When `posterior` is an `emmGrid` object: \itemize{
+#'     \item `prior` should be the `stanreg` or `brmsfit` model used to create the `emmGrid` objects.
+#'     \item `prior` can also be an `emmGrid` object equivalent to `posterior` but created with a model of priors samples *only*.
+#'     \item **Note:** When the `emmGrid` has undergone any transformations (`"log"`, `"response"`, etc.), or `regrid`ing, then `prior` must be an `emmGrid` object, as stated above.
 #'   }
 #' }
 #'
@@ -146,24 +146,46 @@
 #' }
 #' @references
 #' \itemize{
-#' \item Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the Savage-Dickey method. Cognitive psychology, 60(3), 158-189.
-#' \item Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The case of computing Bayes factors for regression parameters. British Journal of Mathematical and Statistical Psychology, 72(2), 316-333.
-#' \item Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
-#' \item Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.
-#' \item Liao, J. G., Midya, V., & Berg, A. (2020). Connecting and contrasting the Bayes factor and a modified ROPE procedure for testing interval null hypotheses. The American Statistician, 1-19.
-#' \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology: An Empirical Comparison Using 855 t Tests. Perspectives on Psychological Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
+#' \item Wagenmakers, E. J., Lodewyckx, T., Kuriyal, H., and Grasman, R. (2010).
+#' Bayesian hypothesis testing for psychologists: A tutorial on the
+#' Savage-Dickey method. Cognitive psychology, 60(3), 158-189.
+#' \item Heck, D. W. (2019). A caveat on the Savage–Dickey density ratio: The
+#' case of computing Bayes factors for regression parameters. British Journal of
+#' Mathematical and Statistical Psychology, 72(2), 316-333.
+#' \item Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between
+#' Bayesian order-restricted and point-null hypothesis tests. Statistics &
+#' Probability Letters, 92, 121-124.
+#' \item Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for
+#' testing interval null hypotheses. Psychological methods, 16(4), 406.
+#' \item Liao, J. G., Midya, V., & Berg, A. (2020). Connecting and contrasting
+#' the Bayes factor and a modified ROPE procedure for testing interval null
+#' hypotheses. The American Statistician, 1-19.
+#' \item Wetzels, R., Matzke, D., Lee, M. D., Rouder, J. N., Iverson, G. J., and
+#' Wagenmakers, E.-J. (2011). Statistical Evidence in Experimental Psychology:
+#' An Empirical Comparison Using 855 t Tests. Perspectives on Psychological
+#' Science, 6(3), 291–298. \doi{10.1177/1745691611406923}
 #' }
 #'
 #' @author Mattan S. Ben-Shachar
 #'
 #' @export
-bayesfactor_parameters <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
+bayesfactor_parameters <- function(posterior,
+                                   prior = NULL,
+                                   direction = "two-sided",
+                                   null = 0,
+                                   verbose = TRUE,
+                                   ...) {
   UseMethod("bayesfactor_parameters")
 }
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_pointnull <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
+bayesfactor_pointnull <- function(posterior,
+                                  prior = NULL,
+                                  direction = "two-sided",
+                                  null = 0,
+                                  verbose = TRUE,
+                                  ...) {
   if (length(null) > 1) {
     message("'null' is a range - computing a ROPE based Bayes factor.")
   }
@@ -180,7 +202,12 @@ bayesfactor_pointnull <- function(posterior, prior = NULL, direction = "two-side
 
 #' @rdname bayesfactor_parameters
 #' @export
-bayesfactor_rope <- function(posterior, prior = NULL, direction = "two-sided", null = rope_range(posterior), verbose = TRUE, ...) {
+bayesfactor_rope <- function(posterior,
+                             prior = NULL,
+                             direction = "two-sided",
+                             null = rope_range(posterior),
+                             verbose = TRUE,
+                             ...) {
   if (length(null) < 2) {
     message("'null' is a point - computing a Savage-Dickey (point null) Bayes factor.")
   }
@@ -388,7 +415,11 @@ bayesfactor_parameters.data.frame <- function(posterior,
 
 
 #' @keywords internal
-.bayesfactor_parameters <- function(posterior, prior, direction = 0, null = 0, ...) {
+.bayesfactor_parameters <- function(posterior,
+                                    prior,
+                                    direction = 0,
+                                    null = 0,
+                                    ...) {
   stopifnot(length(null) %in% c(1, 2))
 
   if (isTRUE(all.equal(posterior, prior))) {

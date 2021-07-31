@@ -4,7 +4,7 @@
 #' @inheritParams diagnostic_posterior
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' set.seed(333)
 #'
 #' if (require("brms", quietly = TRUE)) {

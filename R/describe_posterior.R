@@ -4,39 +4,41 @@
 #'
 #' @param posteriors A vector, data frame or model of posterior draws.
 #' @param ci_method The type of index used for Credible Interval. Can be
-#'   \code{"HDI"} (default, see \code{\link[bayestestR:hdi]{hdi}}), \code{"ETI"}
-#'   (see \code{\link[bayestestR:eti]{eti}}), \code{"BCI"} (see
-#'   \code{\link[bayestestR:bci]{bci}}) or \code{"SI"} (see \code{\link[bayestestR:si]{si}}).
+#'   `"HDI"` (default, see [bayestestR::hdi()]), `"ETI"`
+#'   (see [bayestestR::eti()]), `"BCI"` (see
+#'   [bayestestR::bci()]) or `"SI"` (see [bayestestR::si()]).
 #' @param test The indices of effect existence to compute. Character (vector) or
-#'   list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
-#'   \code{"rope"}, \code{"p_map"}, \code{"equivalence_test"} (or \code{"equitest"}),
-#'   \code{"bayesfactor"} (or \code{"bf"}) or \code{"all"} to compute all tests.
+#'   list with one or more of these options: `"p_direction"` (or `"pd"`),
+#'   `"rope"`, `"p_map"`, `"equivalence_test"` (or `"equitest"`),
+#'   `"bayesfactor"` (or `"bf"`) or `"all"` to compute all tests.
 #'   For each "test", the corresponding \pkg{bayestestR} function is called
-#'   (e.g. \code{\link[bayestestR:rope]{rope}} or \code{\link[bayestestR:p_direction]{p_direction}}) and its results
+#'   (e.g. [bayestestR::rope()] or [bayestestR::p_direction()]) and its results
 #'   included in the summary output.
 #' @param rope_range ROPE's lower and higher bounds. Should be a list of two
-#'   values (e.g., \code{c(-0.1, 0.1)}) or \code{"default"}. If \code{"default"},
-#'   the bounds are set to \code{x +- 0.1*SD(response)}.
+#'   values (e.g., `c(-0.1, 0.1)`) or `"default"`. If `"default"`,
+#'   the bounds are set to `x +- 0.1*SD(response)`.
 #' @param rope_ci The Credible Interval (CI) probability, corresponding to the
 #'   proportion of HDI, to use for the percentage in ROPE.
-#' @param keep_iterations If \code{TRUE}, will keep all iterations (draws) of
+#' @param keep_iterations If `TRUE`, will keep all iterations (draws) of
 #'   bootstrapped or Bayesian models. They will be added as additional columns
-#'   named \code{iter_1, iter_2, ...}. You can reshape them to a long format by
-#'   running \code{\link[bayestestR:reshape_iterations]{bayestestR::reshape_iterations()}}.
+#'   named `iter_1, iter_2, ...`. You can reshape them to a long format by
+#'   running [bayestestR::reshape_iterations()].
 #'
 #' @inheritParams point_estimate
 #' @inheritParams ci
 #' @inheritParams si
 #'
-#' @details One or more components of point estimates (like posterior mean or median),
-#'   intervals and tests can be omitted from the summary output by setting the
-#'   related argument to \code{NULL}. For example, \code{test = NULL} and
-#'   \code{centrality = NULL} would only return the HDI (or CI).
+#' @details
+#' One or more components of point estimates (like posterior mean or median),
+#' intervals and tests can be omitted from the summary output by setting the
+#' related argument to `NULL`. For example, `test = NULL` and `centrality =
+#' NULL` would only return the HDI (or CI).
 #'
-#' @references \itemize{
-#'   \item \href{https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html}{Comparison of Point-Estimates}
-#'   \item \href{https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html}{Region of Practical Equivalence (ROPE)}
-#'   \item \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes factors}
+#' @references
+#' \itemize{
+#'   \item [Comparison of Point-Estimates](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
+#'   \item [Region of Practical Equivalence (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
+#'   \item [Bayes factors](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
 #' }
 #'
 #' @examples
@@ -89,7 +91,16 @@
 #' }
 #' }
 #' @export
-describe_posterior <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.95, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.95, keep_iterations = FALSE, ...) {
+describe_posterior <- function(posteriors,
+                               centrality = "median",
+                               dispersion = FALSE,
+                               ci = 0.95,
+                               ci_method = "hdi",
+                               test = c("p_direction", "rope"),
+                               rope_range = "default",
+                               rope_ci = 0.95,
+                               keep_iterations = FALSE,
+                               ...) {
   UseMethod("describe_posterior")
 }
 
@@ -233,7 +244,12 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
         equi_warnings <- TRUE
       }
 
-      test_equi <- equivalence_test(x, range = rope_range, ci = rope_ci, verbose = equi_warnings, ...)
+      test_equi <- equivalence_test(x,
+        range = rope_range,
+        ci = rope_ci,
+        verbose = equi_warnings,
+        ...
+      )
       test_equi$Cleaned_Parameter <- NULL
 
       if (!"Parameter" %in% names(test_equi)) {
@@ -257,12 +273,47 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
       test_bf <- data.frame("Parameter" = NA)
     }
   } else {
-    test_pd <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA, "Response" = NA)
-    test_prope <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA, "Response" = NA)
-    test_psig <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA, "Response" = NA)
-    test_rope <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA, "Response" = NA)
-    test_bf <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA, "Response" = NA)
-    test_pmap <- data.frame("Parameter" = NA, "Effects" = NA, "Component" = NA, "Response" = NA)
+    test_pd <- data.frame(
+      "Parameter" = NA,
+      "Effects" = NA,
+      "Component" = NA,
+      "Response" = NA
+    )
+
+    test_rope <- data.frame(
+      "Parameter" = NA,
+      "Effects" = NA,
+      "Component" = NA,
+      "Response" = NA
+    )
+
+    test_prope <- data.frame(
+      "Parameter" = NA,
+      "Effects" = NA,
+      "Component" = NA,
+      "Response" = NA
+    )
+
+    test_psig <- data.frame(
+      "Parameter" = NA,
+      "Effects" = NA,
+      "Component" = NA,
+      "Response" = NA
+    )
+
+    test_bf <- data.frame(
+      "Parameter" = NA,
+      "Effects" = NA,
+      "Component" = NA,
+      "Response" = NA
+    )
+
+    test_pmap <- data.frame(
+      "Parameter" = NA,
+      "Effects" = NA,
+      "Component" = NA,
+      "Response" = NA
+    )
   }
 
 
@@ -373,10 +424,37 @@ describe_posterior <- function(posteriors, centrality = "median", dispersion = F
 
 
 #' @rdname describe_posterior
-#' @param bf_prior Distribution representing a prior for the computation of Bayes factors / SI. Used if the input is a posterior, otherwise (in the case of models) ignored.
+#' @param bf_prior Distribution representing a prior for the computation of
+#'   Bayes factors / SI. Used if the input is a posterior, otherwise (in the
+#'   case of models) ignored.
 #' @export
-describe_posterior.numeric <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.95, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.95, keep_iterations = FALSE, bf_prior = NULL, BF = 1, ...) {
-  out <- .describe_posterior(posteriors, centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, keep_iterations = keep_iterations, bf_prior = bf_prior, BF = BF, ...)
+describe_posterior.numeric <- function(posteriors,
+                                       centrality = "median",
+                                       dispersion = FALSE,
+                                       ci = 0.95,
+                                       ci_method = "hdi",
+                                       test = c("p_direction", "rope"),
+                                       rope_range = "default",
+                                       rope_ci = 0.95,
+                                       keep_iterations = FALSE,
+                                       bf_prior = NULL,
+                                       BF = 1,
+                                       ...) {
+  out <- .describe_posterior(
+    posteriors,
+    centrality = centrality,
+    dispersion = dispersion,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    rope_range = rope_range,
+    rope_ci = rope_ci,
+    keep_iterations = keep_iterations,
+    bf_prior = bf_prior,
+    BF = BF,
+    ...
+  )
+
   class(out) <- unique(c("describe_posterior", "see_describe_posterior", class(out)))
   out
 }
@@ -399,8 +477,32 @@ describe_posterior.sim <- describe_posterior.numeric
 
 
 #' @export
-describe_posterior.bayesQR <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.95, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.95, keep_iterations = FALSE, parameters = NULL, ...) {
-  out <- .describe_posterior(insight::get_parameters(posteriors), centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, rope_range = rope_range, rope_ci = rope_ci, keep_iterations = keep_iterations, effects = "fixed", parameters = parameters, ...)
+describe_posterior.bayesQR <- function(posteriors,
+                                       centrality = "median",
+                                       dispersion = FALSE,
+                                       ci = 0.95,
+                                       ci_method = "hdi",
+                                       test = c("p_direction", "rope"),
+                                       rope_range = "default",
+                                       rope_ci = 0.95,
+                                       keep_iterations = FALSE,
+                                       parameters = NULL,
+                                       ...) {
+  out <- .describe_posterior(
+    insight::get_parameters(posteriors),
+    centrality = centrality,
+    dispersion = dispersion,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    rope_range = rope_range,
+    rope_ci = rope_ci,
+    keep_iterations = keep_iterations,
+    effects = "fixed",
+    parameters = parameters,
+    ...
+  )
+
   attr(out, "ci_method") <- ci_method
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
@@ -429,7 +531,18 @@ describe_posterior.BGGM <- describe_posterior.bayesQR
 
 
 #' @export
-describe_posterior.effectsize_std_params <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.95, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.95, keep_iterations = FALSE, bf_prior = NULL, BF = 1, ...) {
+describe_posterior.effectsize_std_params <- function(posteriors,
+                                                     centrality = "median",
+                                                     dispersion = FALSE,
+                                                     ci = 0.95,
+                                                     ci_method = "hdi",
+                                                     test = c("p_direction", "rope"),
+                                                     rope_range = "default",
+                                                     rope_ci = 0.95,
+                                                     keep_iterations = FALSE,
+                                                     bf_prior = NULL,
+                                                     BF = 1,
+                                                     ...) {
   class(posteriors) <- "data.frame"
 
   no_unique <- sapply(posteriors, function(col) {
@@ -482,9 +595,23 @@ describe_posterior.effectsize_std_params <- function(posteriors, centrality = "m
 
 
 #' @export
-describe_posterior.get_predicted <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.95, ci_method = "hdi", test = NULL, ...) {
+describe_posterior.get_predicted <- function(posteriors,
+                                             centrality = "median",
+                                             dispersion = FALSE,
+                                             ci = 0.95,
+                                             ci_method = "hdi",
+                                             test = NULL,
+                                             ...) {
   if ("iterations" %in% names(attributes(posteriors))) {
-    describe_posterior(as.data.frame(t(attributes(posteriors)$iterations)), centrality = centrality, dispersion = dispersion, ci = ci, ci_method = ci_method, test = test, ...)
+    describe_posterior(
+      as.data.frame(t(attributes(posteriors)$iterations)),
+      centrality = centrality,
+      dispersion = dispersion,
+      ci = ci,
+      ci_method = ci_method,
+      test = test,
+      ...
+    )
   } else {
     stop("No iterations present in the output.")
   }
@@ -497,7 +624,18 @@ describe_posterior.get_predicted <- function(posteriors, centrality = "median", 
 
 
 #' @export
-describe_posterior.emmGrid <- function(posteriors, centrality = "median", dispersion = FALSE, ci = 0.95, ci_method = "hdi", test = c("p_direction", "rope"), rope_range = "default", rope_ci = 0.95, keep_iterations = FALSE, bf_prior = NULL, BF = 1, ...) {
+describe_posterior.emmGrid <- function(posteriors,
+                                       centrality = "median",
+                                       dispersion = FALSE,
+                                       ci = 0.95,
+                                       ci_method = "hdi",
+                                       test = c("p_direction", "rope"),
+                                       rope_range = "default",
+                                       rope_ci = 0.95,
+                                       keep_iterations = FALSE,
+                                       bf_prior = NULL,
+                                       BF = 1,
+                                       ...) {
   if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
     "si" %in% tolower(ci_method)) {
     samps <- .clean_priors_and_posteriors(posteriors, bf_prior)
@@ -979,11 +1117,12 @@ describe_posterior.BFBayesFactor <- function(posteriors,
     return(NULL)
   }
 
-  # Compute and readd BF a posteriori
+  # Compute and read BF a posteriori
   if (compute_bf) {
     tryCatch(
       {
         out$log_BF <- as.data.frame(bayesfactor_models(posteriors[1], ...))[-1, ]$log_BF
+        out$BF <- exp(out$log_BF)
       },
       error = function(e) {
         NULL

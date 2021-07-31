@@ -66,17 +66,17 @@ from (see 'Details').}
 \item{verbose}{Toggle off warnings.}
 
 \item{...}{Arguments passed to and from other methods. (Can be used to pass
-arguments to internal \code{\link[logspline]{logspline}}.)}
+arguments to internal \code{\link[logspline:logspline]{logspline::logspline()}}.)}
 
-\item{effects}{Should results for fixed effects, random effects or both be returned?
-Only applies to mixed models. May be abbreviated.}
+\item{effects}{Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.}
 
-\item{component}{Should results for all parameters, parameters for the conditional model
-or the zero-inflated part of the model be returned? May be abbreviated. Only
-applies to \pkg{brms}-models.}
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
 
-\item{parameters}{Regular expression pattern that describes the parameters that
-should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
+\item{parameters}{Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
@@ -85,7 +85,7 @@ for the output.}
 A data frame containing the lower and upper bounds of the SI.
 \cr
 Note that if the level of requested support is higher than observed in the data, the
-interval will be \code{[NA,NA]}.
+interval will be \verb{[NA,NA]}.
 }
 \description{
 A support interval contains only the values of the parameter that predict the observed data better
@@ -106,11 +106,11 @@ that by default, \code{brms::brm()} uses flat priors for fixed-effects; see exam
 \subsection{Choosing a value of \code{BF}}{
 The choice of \code{BF} (the level of support) depends on what we want our interval to represent:
 \itemize{
-  \item A \code{BF} = 1 contains values whose credibility is not decreased by observing the data.
-  \item A \code{BF} > 1 contains values who received more impressive support from the data.
-  \item A \code{BF} < 1 contains values whose credibility has \emph{not} been impressively decreased by observing the data.
-  Testing against values outside this interval will produce a Bayes factor larger than 1/\code{BF} in support of
-  the alternative. E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null will be larger than 3.
+\item A \code{BF} = 1 contains values whose credibility is not decreased by observing the data.
+\item A \code{BF} > 1 contains values who received more impressive support from the data.
+\item A \code{BF} < 1 contains values whose credibility has \emph{not} been impressively decreased by observing the data.
+Testing against values outside this interval will produce a Bayes factor larger than 1/\code{BF} in support of
+the alternative. E.g., if an SI (BF = 1/3) excludes 0, the Bayes factor against the point-null will be larger than 3.
 }
 }
 }
@@ -133,18 +133,18 @@ See example below.)
 \cr\cr
 It is important to provide the correct \code{prior} for meaningful results.
 \itemize{
-  \item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
-  \item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
-  \item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
-    \item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
-    \item \code{prior} can also be a model equivalent to \code{posterior} but with samples from the priors \emph{only}. See \code{\link{unupdate}}.
-    \item \strong{Note:} When \code{posterior} is a \code{brmsfit_multiple} model, \code{prior} \strong{must} be provided.
-  }
-  \item When \code{posterior} is an \code{emmGrid} object: \itemize{
-    \item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
-    \item \code{prior} can also be an \code{emmGrid} object equivalent to \code{posterior} but created with a model of priors samples \emph{only}.
-    \item \strong{Note:} When the \code{emmGrid} has undergone any transformations (\code{"log"}, \code{"response"}, etc.), or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stated above.
-  }
+\item When \code{posterior} is a numerical vector, \code{prior} should also be a numerical vector.
+\item When \code{posterior} is a \code{data.frame}, \code{prior} should also be a \code{data.frame}, with matching column order.
+\item When \code{posterior} is a \code{stanreg} or \code{brmsfit} model: \itemize{
+\item \code{prior} can be set to \code{NULL}, in which case prior samples are drawn internally.
+\item \code{prior} can also be a model equivalent to \code{posterior} but with samples from the priors \emph{only}. See \code{\link[=unupdate]{unupdate()}}.
+\item \strong{Note:} When \code{posterior} is a \code{brmsfit_multiple} model, \code{prior} \strong{must} be provided.
+}
+\item When \code{posterior} is an \code{emmGrid} object: \itemize{
+\item \code{prior} should be the \code{stanreg} or \code{brmsfit} model used to create the \code{emmGrid} objects.
+\item \code{prior} can also be an \code{emmGrid} object equivalent to \code{posterior} but created with a model of priors samples \emph{only}.
+\item \strong{Note:} When the \code{emmGrid} has undergone any transformations (\code{"log"}, \code{"response"}, etc.), or \code{regrid}ing, then \code{prior} must be an \code{emmGrid} object, as stated above.
+}
 }
 }
 
