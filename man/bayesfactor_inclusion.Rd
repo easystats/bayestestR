@@ -10,34 +10,37 @@ bayesfactor_inclusion(models, match_models = FALSE, prior_odds = NULL, ...)
 bf_inclusion(models, match_models = FALSE, prior_odds = NULL, ...)
 }
 \arguments{
-\item{models}{An object of class \code{\link{bayesfactor_models}} or \code{BFBayesFactor}.}
+\item{models}{An object of class \code{\link[=bayesfactor_models]{bayesfactor_models()}} or \code{BFBayesFactor}.}
 
 \item{match_models}{See details.}
 
-\item{prior_odds}{Optional vector of prior odds for the models. See \code{BayesFactor::priorOdds<-}.}
+\item{prior_odds}{Optional vector of prior odds for the models. See
+\verb{BayesFactor::priorOdds<-}.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
 \value{
-a data frame containing the prior and posterior probabilities, and log(BF) for each effect.
+a data frame containing the prior and posterior probabilities, and
+log(BF) for each effect.
 }
 \description{
-The \code{bf_*} function is an alias of the main function.
+The \verb{bf_*} function is an alias of the main function.
 \cr \cr
 For more info, see \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
 \details{
-Inclusion Bayes factors answer the question: Are the observed data more
-probable under models with a particular effect, than they are under models without
-that particular effect? In other words, on average - are models with effect \eqn{X}
-more likely to have produced the observed data than models without effect \eqn{X}?
+Inclusion Bayes factors answer the question: Are the observed data
+more probable under models with a particular effect, than they are under
+models without that particular effect? In other words, on average - are
+models with effect \eqn{X} more likely to have produced the observed data
+than models without effect \eqn{X}?
 
 \subsection{Match Models}{
-If \code{match_models=FALSE} (default), Inclusion BFs are computed by comparing all models
-with a term against all models without that term. If \code{TRUE},
+If \code{match_models=FALSE} (default), Inclusion BFs are computed by comparing
+all models with a term against all models without that term. If \code{TRUE},
 comparison is restricted to models that (1) do not include any interactions
-with the term of interest; (2) for interaction terms, averaging is done
-only across models that containe the main effect terms from which the interaction
+with the term of interest; (2) for interaction terms, averaging is done only
+across models that containe the main effect terms from which the interaction
 term is comprised.
 }
 }
@@ -81,13 +84,13 @@ bayesfactor_inclusion(BF, match_models = TRUE)
 }
 \references{
 \itemize{
-  \item Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E. (2019, March 25). A conceptual introduction to Bayesian Model Averaging. \doi{10.31234/osf.io/wgb64}
-  \item Clyde, M. A., Ghosh, J., & Littman, M. L. (2011). Bayesian adaptive sampling for variable selection and model averaging. Journal of Computational and Graphical Statistics, 20(1), 80-101.
-  \item Mathot, S. (2017). Bayes like a Baws: Interpreting Bayesian Repeated Measures in JASP [Blog post]. Retrieved from https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp
+\item Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E. (2019, March 25). A conceptual introduction to Bayesian Model Averaging. \doi{10.31234/osf.io/wgb64}
+\item Clyde, M. A., Ghosh, J., & Littman, M. L. (2011). Bayesian adaptive sampling for variable selection and model averaging. Journal of Computational and Graphical Statistics, 20(1), 80-101.
+\item Mathot, S. (2017). Bayes like a Baws: Interpreting Bayesian Repeated Measures in JASP \href{https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp}{Blog post}.
 }
 }
 \seealso{
-\code{\link{weighted_posteriors}} for Bayesian parameter averaging.
+\code{\link[=weighted_posteriors]{weighted_posteriors()}} for Bayesian parameter averaging.
 }
 \author{
 Mattan S. Ben-Shachar
