@@ -353,10 +353,14 @@ rope.brmsfit <- function(x,
     range <- rope_range(x, verbose = verbose)
     # we expect a list with named vectors (length two) in the multivariate case.
     # Names state the response variable.
-  } else if (insight::is_multivariate(x) &&
-    (!is.list(range) || length(range) != length(insight::find_response(x)) ||
-      names(range) != insight::find_response(x))) {
-    stop("With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2.")
+  } else if (insight::is_multivariate(x)) {
+    if (
+      !is.list(range) ||
+      length(range) < length(insight::find_response(x)) ||
+      !all(names(range) %in% insight::find_response(x))
+    ) {
+      stop("With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2.")
+    }
   } else if (!all(is.numeric(range)) || length(range) != 2) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
