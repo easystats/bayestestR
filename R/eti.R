@@ -5,6 +5,8 @@
 #' @inheritParams hdi
 #' @inherit ci return
 #' @inherit hdi details
+#' @inherit hdi seealso
+#' @family ci
 #'
 #' @examples
 #' library(bayestestR)

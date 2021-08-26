@@ -12,6 +12,8 @@
 #' @param BF The amount of support required to be included in the support interval.
 #' @inheritParams bayesfactor_parameters
 #' @inheritParams hdi
+#' @inherit hdi seealso
+#' @family ci
 #'
 #' @details This method is used to compute support intervals based on prior and posterior distributions.
 #' For the computation of support intervals, the model priors must be proper priors (at the very least

@@ -188,3 +188,12 @@ si(brms_model)
 \references{
 Wagenmakers, E., Gronau, Q. F., Dablander, F., & Etz, A. (2018, November 22). The Support Interval. \doi{10.31234/osf.io/zwnxb}
 }
+\seealso{
+Other ci: 
+\code{\link{bci}()},
+\code{\link{ci}()},
+\code{\link{cwi}()},
+\code{\link{eti}()},
+\code{\link{hdi}()}
+}
+\concept{ci}

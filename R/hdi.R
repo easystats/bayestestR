@@ -71,6 +71,9 @@
 #'
 #' @inherit ci return
 #'
+#' @family ci
+#' @seealso Other interval functions, such as [hdi()], [eti()], [bci()], [si()], [cwi()].
+#'
 #' @examples
 #' library(bayestestR)
 #'

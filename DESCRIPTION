@@ -81,6 +81,7 @@ Suggests:
     effectsize,
     emmeans,
     GGally,
+    ggdist,
     ggplot2,
     ggridges,
     httr,

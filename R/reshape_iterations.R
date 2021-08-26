@@ -36,12 +36,14 @@ reshape_iterations <- function(x, prefix = c("draw", "iter", "iteration", "sim")
   newname <- ifelse(endsWith(prefix, "_"), substr(prefix, 1, nchar(prefix) - 1), prefix)
 
   # Create Index column
-  x[[paste0(newname, "_index")]] <- 1:nrow(x)
+  index_col <- paste0(newname, "_index")
+  if(index_col %in% names(x)) index_col <- paste0(".", newname, "_index")
+  x[[index_col]] <- 1:nrow(x)
 
   # Reshape
   long <- stats::reshape(x,
     varying = iter_cols,
-    idvar = paste0(newname, "_index"),
+    idvar = index_col,
     v.names = paste0(newname, "_value"),
     timevar = paste0(newname, "_group"),
     direction = "long"

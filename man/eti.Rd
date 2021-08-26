@@ -168,3 +168,12 @@ eti(bf, ci = c(.80, .89, .95))
 }
 
 }
+\seealso{
+Other ci: 
+\code{\link{bci}()},
+\code{\link{ci}()},
+\code{\link{cwi}()},
+\code{\link{hdi}()},
+\code{\link{si}()}
+}
+\concept{ci}

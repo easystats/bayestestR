@@ -6,6 +6,8 @@
 #' @inheritParams hdi
 #' @inherit ci return
 #' @inherit hdi details
+#' @inherit hdi seealso
+#' @family ci
 #'
 #' @references
 #' DiCiccio, T. J. and B. Efron. (1996). Bootstrap Confidence Intervals.

@@ -179,6 +179,17 @@ hdi(bf, ci = c(.80, .90, .95))
 \item McElreath, R. (2015). Statistical rethinking: A Bayesian course with examples in R and Stan. Chapman and Hall/CRC.
 }
 }
+\seealso{
+Other interval functions, such as \code{\link[=hdi]{hdi()}}, \code{\link[=eti]{eti()}}, \code{\link[=bci]{bci()}}, \code{\link[=si]{si()}}, \code{\link[=cwi]{cwi()}}.
+
+Other ci: 
+\code{\link{bci}()},
+\code{\link{ci}()},
+\code{\link{cwi}()},
+\code{\link{eti}()},
+\code{\link{si}()}
+}
 \author{
 Credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute} and \href{https://github.com/mikemeredith/HDInterval}{HDInterval}.
 }
+\concept{ci}
