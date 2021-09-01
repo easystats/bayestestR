@@ -93,7 +93,7 @@ characterisation of posterior distributions as Credible Interval (CI)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.10.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.11.0</span>
       </span>
     </div>
 
@@ -357,6 +357,15 @@ the resulting HDI.</p>
 <li><p>McElreath, R. (2015). Statistical rethinking: A Bayesian course with examples in R and Stan. Chapman and Hall/CRC.</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other interval functions, such as <code>hdi()</code>, <code><a href='eti.html'>eti()</a></code>, <code><a href='bci.html'>bci()</a></code>, <code><a href='si.html'>si()</a></code>, <code><a href='cwi.html'>cwi()</a></code>.</p>
+<p>Other ci: 
+<code><a href='bci.html'>bci</a>()</code>,
+<code><a href='ci.html'>ci</a>()</code>,
+<code><a href='cwi.html'>cwi</a>()</code>,
+<code><a href='eti.html'>eti</a>()</code>,
+<code><a href='si.html'>si</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Credits go to <a href='https://rdrr.io/cran/ggdistribute/src/R/stats.R'>ggdistribute</a> and <a href='https://github.com/mikemeredith/HDInterval'>HDInterval</a>.</p>
@@ -366,30 +375,14 @@ the resulting HDI.</p>
 
 <span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>
 <span class='fu'>hdi</span><span class='op'>(</span><span class='va'>posterior</span>, ci <span class='op'>=</span> <span class='fl'>.89</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 89% HDI: [-1.58, 1.67]</div><div class='input'><span class='fu'>hdi</span><span class='op'>(</span><span class='va'>posterior</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Highest Density Interval
-#&gt; 
-#&gt; 80% HDI       |       90% HDI |       95% HDI
-#&gt; ---------------------------------------------
-#&gt; [-1.34, 1.30] | [-1.60, 1.74] | [-2.03, 1.99]</div><div class='input'>
+</div><div class='output co'>#&gt;           [,1]     [,2]
+#&gt; [1,] -2.026532 1.989563</div><div class='input'><span class='fu'>hdi</span><span class='op'>(</span><span class='va'>posterior</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           [,1]     [,2]
+#&gt; [1,] -2.026532 1.989563</div><div class='input'>
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'>hdi</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Highest Density Interval
-#&gt; 
-#&gt; Parameter |       95% HDI
-#&gt; -------------------------
-#&gt; X1        | [-1.67, 2.37]
-#&gt; X2        | [-1.91, 1.93]
-#&gt; X3        | [-2.20, 2.03]
-#&gt; X4        | [-1.77, 2.03]</div><div class='input'><span class='fu'>hdi</span><span class='op'>(</span><span class='va'>df</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Highest Density Interval
-#&gt; 
-#&gt; Parameter |       80% HDI |       90% HDI |       95% HDI
-#&gt; ---------------------------------------------------------
-#&gt; X1        | [-1.36, 1.36] | [-1.36, 2.05] | [-1.67, 2.37]
-#&gt; X2        | [-0.99, 1.49] | [-1.63, 1.53] | [-1.91, 1.93]
-#&gt; X3        | [-1.50, 1.22] | [-1.50, 1.95] | [-2.20, 2.03]
-#&gt; X4        | [-0.75, 1.39] | [-1.48, 1.39] | [-1.77, 2.03]</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("hdi_"): no applicable method for 'hdi_' applied to an object of class "data.frame"</span></div><div class='input'><span class='fu'>hdi</span><span class='op'>(</span><span class='va'>df</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.90</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("hdi_"): no applicable method for 'hdi_' applied to an object of class "data.frame"</span></div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>gear</span>, data <span class='op'>=</span> <span class='va'>mtcars</span>, chains <span class='op'>=</span> <span class='fl'>2</span>, iter <span class='op'>=</span> <span class='fl'>200</span>, refresh <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
 <span class='fu'>hdi</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
