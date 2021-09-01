@@ -1,6 +1,8 @@
-# bayestestR 0.10.0.1
+# bayestestR 0.11
 
 ## Bug fixes
+
+* Fixed issues related to last *brms* update.
 
 * Fixed bug in `describe_posterior.BFBayesFactor()` where Bayes factors were missing from out put ( #442 ).
 
