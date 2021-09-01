@@ -34,21 +34,20 @@ effective_sample.brmsfit <- function(model, effects = c("fixed", "random", "all"
   effects <- match.arg(effects)
   component <- match.arg(component)
 
-  pars <-
-    insight::get_parameters(
-      model,
-      effects = effects,
-      component = component,
-      parameters = parameters
-    )
+  pars <- insight::get_parameters(
+    model,
+    effects = effects,
+    component = component,
+    parameters = parameters
+  )
 
   insight::check_if_installed("rstan")
 
   s <- rstan::summary(model$fit)$summary
-  s <- subset(s, subset = make.names(rownames(s)) %in% colnames(pars))
+  s <- subset(s, subset = rownames(s) %in% colnames(pars))
 
   data.frame(
-    Parameter = make.names(rownames(s)),
+    Parameter = rownames(s),
     ESS = round(s[, "n_eff"]),
     stringsAsFactors = FALSE,
     row.names = NULL

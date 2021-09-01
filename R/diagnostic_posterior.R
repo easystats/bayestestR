@@ -225,7 +225,7 @@ diagnostic_posterior.brmsfit <- function(posteriors,
 
   # Get indices and rename
   diagnostic_df <- as.data.frame(rstan::summary(posteriors$fit)$summary)
-  diagnostic_df$Parameter <- make.names(row.names(diagnostic_df))
+  diagnostic_df$Parameter <- row.names(diagnostic_df)
   diagnostic_df$ESS <- diagnostic_df$n_eff
   # special handling for MCSE, due to some parameters (like lp__) missing in rows
   MCSE <- mcse(posteriors, effects = "all", component = "all")
