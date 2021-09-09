@@ -401,22 +401,45 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 
 <span class="co"># intercept only model</span>
 <span class="va">m0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">iris</span>, 
-          save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,  refresh <span class="op">=</span> <span class="fl">0</span>, backend <span class="op">=</span> <span class="st">"rstan"</span><span class="op">)</span>
+          prior <span class="op">=</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span>,
+          save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,  backend <span class="op">=</span> <span class="st">"rstan"</span><span class="op">)</span>
 
-<span class="co"># main effects models</span>
+<span class="co"># Petal.Length only</span>
 <span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span>, 
-          save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>, backend <span class="op">=</span> <span class="st">"rstan"</span><span class="op">)</span>
+          prior <span class="op">=</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 1)"</span>, coef <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span>,
+          save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 
+<span class="co"># Species only</span>
 <span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span>,
-          save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>, backend <span class="op">=</span> <span class="st">"rstan"</span><span class="op">)</span>
+          prior <span class="op">=</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 3)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor"</span>, <span class="st">"Speciesvirginica"</span><span class="op">)</span><span class="op">)</span>,
+          save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 
-<span class="co"># additive main effects model</span>
+<span class="co"># Species + Petal.Length model</span>
 <span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span>,
-          save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>, backend <span class="op">=</span> <span class="st">"rstan"</span><span class="op">)</span>
+          prior <span class="op">=</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 1)"</span>, coef <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span> <span class="op">+</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 3)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor"</span>, <span class="st">"Speciesvirginica"</span><span class="op">)</span><span class="op">)</span>,
+          save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 
-<span class="co"># full model</span>
+<span class="co"># full interactive model</span>
 <span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span>,
-          save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, refresh <span class="op">=</span> <span class="fl">0</span>, backend <span class="op">=</span> <span class="st">"rstan"</span><span class="op">)</span></code></pre></div>
+          prior <span class="op">=</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 1)"</span>, coef <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span> <span class="op">+</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 3)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor"</span>, <span class="st">"Speciesvirginica"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+            <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 2)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor:Petal.Length"</span>, <span class="st">"Speciesvirginica:Petal.Length"</span><span class="op">)</span><span class="op">)</span>,
+          save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We can now compare these models with the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function, using the <code>denominator</code> argument to specify the model against which the rest of the models will be compared (in this case, the intercept-only model):</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/">bayestestR</a></span><span class="op">)</span>
@@ -426,38 +449,38 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
 &gt;     Model                        BF
-&gt; [1] Petal.Length           3.62e+44
-&gt; [2] Species                5.89e+29
-&gt; [3] Species + Petal.Length 7.56e+55
-&gt; [4] Species * Petal.Length 9.75e+55
+&gt; [1] Petal.Length           1.27e+44
+&gt; [2] Species                8.34e+27
+&gt; [3] Species + Petal.Length 2.29e+53
+&gt; [4] Species * Petal.Length 9.79e+51
 &gt; 
 &gt; * Against Denominator: [5] (Intercept only)
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
-<p>We can see that the full model is the best model - with <span class="math inline">\(BF_{\text{m0}}=9\times 10^{55}\)</span> compared to the null (intercept only).</p>
-<p>Due to the transitive property of Bayes factors, we can easily change the reference model to the main effects model:</p>
+<p>We can see that the <code>Species + Petal.Length</code> model is the best model - with <span class="math inline">\(BF=2\times 10^{53}\)</span> compared to the null (intercept only).</p>
+<p>Due to the transitive property of Bayes factors, we can easily change the reference model to the full <code>Species * Petal.Length</code> model:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">comparison</span>, reference <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">comparison</span>, reference <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
 &gt;     Model                        BF
-&gt; [1] Petal.Length           4.79e-12
-&gt; [2] Species                7.79e-27
-&gt; [4] Species * Petal.Length     1.29
-&gt; [5] (Intercept only)       1.32e-56
+&gt; [1] Petal.Length           1.30e-08
+&gt; [2] Species                8.52e-25
+&gt; [3] Species + Petal.Length    23.38
+&gt; [5] (Intercept only)       1.02e-52
 &gt; 
-&gt; * Against Denominator: [3] Species + Petal.Length
+&gt; * Against Denominator: [4] Species * Petal.Length
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
-<p>As we can see, though the full model is the best, there is hardly any evidence that it is preferable to the main effects model.</p>
+<p>As we can see, the <code>Species + Petal.Length</code> model is also favored compared to the <code>Species * Petal.Length</code> model, though to several orders of magnitude less - is is only supported 23.38 times more!)</p>
 <p>We can also change the reference model to the <code>Species</code> model:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">comparison</span>, reference <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
 &gt;     Model                        BF
-&gt; [1] Petal.Length           6.14e+14
-&gt; [3] Species + Petal.Length 1.28e+26
-&gt; [4] Species * Petal.Length 1.65e+26
-&gt; [5] (Intercept only)       1.70e-30
+&gt; [1] Petal.Length           1.53e+16
+&gt; [3] Species + Petal.Length 2.74e+25
+&gt; [4] Species * Petal.Length 1.17e+24
+&gt; [5] (Intercept only)       1.20e-28
 &gt; 
 &gt; * Against Denominator: [2] Species
 &gt; *   Bayes Factor Type: marginal likelihoods (bridgesampling)</code></pre>
@@ -472,11 +495,11 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; 
 &gt;                 |      [1] |      [2] |      [3] |      [4] |      [5]
 &gt; ---------------------------------------------------------------------------------
-&gt; [1] Petal.Length           |        1 | 1.63e-15 | 2.09e+11 | 2.69e+11 | 2.76e-45
-&gt; [2] Species                | 6.14e+14 |        1 | 1.28e+26 | 1.65e+26 | 1.70e-30
-&gt; [3] Species + Petal.Length | 4.79e-12 | 7.79e-27 |        1 |     1.29 | 1.32e-56
-&gt; [4] Species * Petal.Length | 3.71e-12 | 6.05e-27 |    0.776 |        1 | 1.03e-56
-&gt; [5] (Intercept only)       | 3.62e+44 | 5.89e+29 | 7.56e+55 | 9.75e+55 |        1</code></pre>
+&gt; [1] Petal.Length           |        1 | 6.54e-17 | 1.80e+09 | 7.68e+07 | 7.85e-45
+&gt; [2] Species                | 1.53e+16 |        1 | 2.74e+25 | 1.17e+24 | 1.20e-28
+&gt; [3] Species + Petal.Length | 5.57e-10 | 3.64e-26 |        1 |    0.043 | 4.37e-54
+&gt; [4] Species * Petal.Length | 1.30e-08 | 8.52e-25 |    23.38 |        1 | 1.02e-52
+&gt; [5] (Intercept only)       | 1.27e+44 | 8.34e+27 | 2.29e+53 | 9.79e+51 |        1</code></pre>
 <p><strong>NOTE:</strong> In order to correctly and precisely estimate Bayes Factors, you always need the 4 P’s: <strong>P</strong>roper <strong>P</strong>riors,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> and a <strong>P</strong>lentiful <strong>P</strong>osterior.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 </div>
 <div id="for-frequentist-models-via-the-bic-approximation" class="section level3">
@@ -551,7 +574,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 <p>We can see that the novice botanist’s hypothesis gets a Bayes factor of ~2, indicating the data provides twice as much evidence for a model in which petal length is restricted to be positively associated with sepal length than for a model with not such restriction.</p>
-<p>What about our expert botanist? He seems to have failed miserably, with a BF favoring the <em>unrestricted</em> model many many times over (<span class="math inline">\(BF\gg1,000\)</span>). How is this possible? It seems that when <em>controlling for petal length</em>, versicolor and virginica actually have shorter sepals!</p>
+<p>What about our expert botanist? He seems to have failed miserably, with a BF favoring the <em>unrestricted</em> model many many times over. How is this possible? It seems that when <em>controlling for petal length</em>, versicolor and virginica actually have shorter sepals!</p>
 <p><img src="bayes_factors_files/figure-html/plot_iris-1.png" width="100%"></p>
 <p>Note that these Bayes factors compare the restricted model to the unrestricted model. If we wanted to compare the restricted model to the null model, we could use the transitive property of Bayes factors like so:</p>
 <p><span class="math display">\[
@@ -582,22 +605,22 @@ BF_{\text{restricted vs. NULL}} = \frac
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;                      P(prior) P(posterior) Inclusion BF
-&gt; Petal.Length             0.60         1.00     1.96e+26
-&gt; Species                  0.60         1.00     3.19e+11
-&gt; Petal.Length:Species     0.20         0.56         5.16
+&gt; Petal.Length             0.60         1.00     1.91e+25
+&gt; Species                  0.60         1.00     1.25e+09
+&gt; Petal.Length:Species     0.20         0.04        0.171
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p>If we examine the interaction term’s inclusion Bayes factor, we can see that across all 5 models, a model with the interaction term (<code>Species:Petal.Length</code>) is <em>on average</em> 5 times more likely than a model without the interaction term. Note that <code>Species</code>, a factor represented in the model with several parameters, gets a <em>single</em> Bayes factor - inclusion Bayes factors are given <strong>per predictor</strong>!</p>
+<p>If we examine the interaction term’s inclusion Bayes factor, we can see that across all 5 models, a model with the term is <em>on average</em> (1/0.171) 5.84 times less supported than a model without the term. Note that <code>Species</code>, a factor represented in the model with several parameters, gets a <em>single</em> Bayes factor - inclusion Bayes factors are given <strong>per predictor</strong>!</p>
 <p>We can also compare only matched models - such that averaging is done only across models that (1) do not include any interactions with the predictor of interest; (2) for interaction predictors, averaging is done only across models that contain the main effects from which the interaction predictor is comprised (see explanation for why you might want to do this <a href="https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp">here</a>).</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">comparison</span>, match_models <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Inclusion Bayes Factors (Model Averaged)
 &gt; 
 &gt;                      P(prior) P(posterior) Inclusion BF
-&gt; Petal.Length             0.40         0.44     1.28e+26
-&gt; Species                  0.40         0.44     2.09e+11
-&gt; Petal.Length:Species     0.20         0.56         1.29
+&gt; Petal.Length             0.40         0.96     2.74e+25
+&gt; Species                  0.40         0.96     1.80e+09
+&gt; Petal.Length:Species     0.20         0.04        0.043
 &gt; 
 &gt; * Compared among: matched models only
 &gt; *    Priors odds: uniform-equal</code></pre>
@@ -700,8 +723,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <span class="op">)</span>
 
 <span class="va">BF_carb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">mod_carb</span>, denominator <span class="op">=</span> <span class="va">mod</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">BF</span> <span class="op">&lt;-</span> <span class="va">BF_carb</span><span class="op">$</span><span class="va">BF</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">BF_carb</span><span class="op">)</span></code></pre></div>
+<span class="va">BF_carb</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
 &gt;     Model             BF
@@ -755,27 +777,31 @@ BF_{\text{restricted vs. NULL}} = \frac
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans">emmeans</a></span><span class="op">)</span>
 
-<span class="va">groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">model</span>, <span class="op">~</span><span class="va">group</span><span class="op">)</span>
-<span class="va">group_diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">groups</span><span class="op">)</span>
-
-<span class="op">(</span><span class="va">groups_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">groups</span>, <span class="va">group_diff</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt;  group contrast emmean lower.HPD upper.HPD
-&gt;  1     .          0.79      -0.5       2.0
-&gt;  2     .          2.28       1.0       3.5
-&gt;  .     1 - 2     -1.47      -3.2       0.2
+<span class="op">(</span><span class="va">group_diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>&gt; $emmeans
+&gt;  group emmean lower.HPD upper.HPD
+&gt;  1       0.79     -0.48       2.0
+&gt;  2       2.28      1.00       3.5
+&gt; 
+&gt; Point estimate displayed: median 
+&gt; HPD interval probability: 0.95 
+&gt; 
+&gt; $contrasts
+&gt;  contrast estimate lower.HPD upper.HPD
+&gt;  1 - 2       -1.47      -3.2     0.223
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># pass the original model via prior</span>
-<span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">groups_all</span>, prior <span class="op">=</span> <span class="va">model</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">group_diff</span>, prior <span class="op">=</span> <span class="va">model</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factor (Savage-Dickey density ratio)
 &gt; 
 &gt; Parameter |    BF
 &gt; -----------------
-&gt; 1, .      | 0.287
-&gt; 2, .      | 19.96
-&gt; ., 1 - 2  |  1.26
+&gt; 1         | 0.287
+&gt; 2         | 19.96
+&gt; 1 - 2     |  1.26
 &gt; 
 &gt; * Evidence Against The Null: 0</code></pre>
 <p>That is strong evidence for the mean of group 1 being 0, and for group 2 for not being 0, but hardly any evidence for the difference between them being not 0. Conflict? Uncertainty? That is the Bayesian way!</p>
@@ -783,7 +809,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/modelbased/">modelbased</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://easystats.github.io/modelbased/reference/estimate_contrasts.html">estimate_contrasts</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="st">"bf"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://easystats.github.io/modelbased/reference/estimate_contrasts.html">estimate_contrasts</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="st">"bf"</span>, bf_prior <span class="op">=</span> <span class="va">model</span><span class="op">)</span></code></pre></div>
 <p><strong>NOTE</strong>: See the <em>Specifying Correct Priors for Factors with More Than 2 Levels</em> section below.</p>
 </div>
 <div id="contr_bayes" class="section level2">
@@ -798,7 +824,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>For our example, we will be test all <strong><em>prior</em></strong> pairwise differences between the 3 species in the <code>iris</code> dataset.</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">iris</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">[</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/contrast.html">contr.sum</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.sum</span>
 
 <span class="va">fit_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">df</span>,
@@ -808,11 +834,7 @@ BF_{\text{restricted vs. NULL}} = \frac
   refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span>
 
-<span class="va">pairs_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_sum</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">em_pairs_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/mcmc-support.html">as.mcmc.emmGrid</a></span><span class="op">(</span><span class="va">pairs_sum</span>, names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pairs_sum</span><span class="op">)</span></code></pre></div>
+<span class="op">(</span><span class="va">pairs_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_sum</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
 &gt;  setosa - versicolor      -0.017      -2.8       2.7
 &gt;  setosa - virginica       -0.027      -4.0       4.6
@@ -821,7 +843,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html">stack</a></span><span class="op">(</span><span class="va">em_pairs_samples</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">values</span>, fill <span class="op">=</span> <span class="va">ind</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html">stack</a></span><span class="op">(</span><span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html">get_parameters</a></span><span class="op">(</span><span class="va">pairs_sum</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">values</span>, fill <span class="op">=</span> <span class="va">ind</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">ind</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"prior difference values"</span><span class="op">)</span> <span class="op">+</span>
@@ -838,9 +860,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contr.orthonorm"</span>, <span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Let’s again estimate the <strong><em>prior</em></strong> differences:</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">[</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/contr.orthonorm.html">contr.orthonorm</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>
-
-<span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
+<code class="sourceCode R"><span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">df</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
   prior_PD <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># sample priors</span>
@@ -848,11 +868,7 @@ BF_{\text{restricted vs. NULL}} = \frac
   refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span>
 
-<span class="va">pairs_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_bayes</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">em_pairs_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/mcmc-support.html">as.mcmc.emmGrid</a></span><span class="op">(</span><span class="va">pairs_bayes</span>, names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pairs_bayes</span><span class="op">)</span></code></pre></div>
+<span class="op">(</span><span class="va">pairs_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_bayes</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
 &gt;  setosa - versicolor       0.000     -2.98      2.67
 &gt;  setosa - virginica        0.032     -2.73      2.81
@@ -861,13 +877,14 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html">stack</a></span><span class="op">(</span><span class="va">em_pairs_samples</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">values</span>, fill <span class="op">=</span> <span class="va">ind</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html">stack</a></span><span class="op">(</span><span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html">get_parameters</a></span><span class="op">(</span><span class="va">pairs_bayes</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">values</span>, fill <span class="op">=</span> <span class="va">ind</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">ind</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"prior difference values"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-29-1.png" width="100%"></p>
 <p>We can see that using this coding scheme, we have equal priors on all pairwise contrasts.</p>
+<p>There are other solutions to this problem of priors. You can read about them in <a href="https://solomonkurz.netlify.app/post/2020-12-09-multilevel-models-and-the-index-variable-approach/">Solomon Kurz’s blog post</a>.</p>
 </div>
 <div id="order-restrictions" class="section level3">
 <h3 class="hasAnchor">
