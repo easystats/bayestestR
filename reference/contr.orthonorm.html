@@ -48,9 +48,10 @@
 
 <meta property="og:title" content="Orthonormal Contrast Matrices for Bayesian Estimation — contr.orthonorm" />
 <meta property="og:description" content="Returns a design or model matrix of orthonormal contrasts such that the
-marginal prior on all effects is identical. Implementation from Singmann &amp;amp;
-Gronau's bfrms, following
-the description in Rouder, Morey, Speckman, &amp;amp; Province (2012, p. 363).
+marginal prior on all effects is identical (see 'Details'). Implementation
+from Singmann &amp;amp; Gronau's bfrms,
+following the description in Rouder, Morey, Speckman, &amp;amp; Province (2012, p.
+363).
 
 Though using this factor coding scheme might obscure the interpretation of
 parameters, it is essential for correct estimation of Bayes factors for
@@ -199,9 +200,10 @@ the Bayes factors vignette." />
 
     <div class="ref-description">
     <p>Returns a design or model matrix of orthonormal contrasts such that the
-marginal prior on all effects is identical. Implementation from Singmann &amp;
-Gronau's <a href='https://github.com/bayesstuff/bfrms/'><code>bfrms</code></a>, following
-the description in Rouder, Morey, Speckman, &amp; Province (2012, p. 363).
+marginal prior on all effects is identical (see 'Details'). Implementation
+from Singmann &amp; Gronau's <a href='https://github.com/bayesstuff/bfrms/'><code>bfrms</code></a>,
+following the description in Rouder, Morey, Speckman, &amp; Province (2012, p.
+363).
 <br /><br />
 Though using this factor coding scheme might obscure the interpretation of
 parameters, it is essential for correct estimation of Bayes factors for
@@ -240,7 +242,25 @@ info on specifying correct priors for factors with more than 2 levels in
 
     <p>When <code>contrasts = FALSE</code>, the returned contrasts are equivalent to
 <code><a href='https://rdrr.io/r/stats/contrast.html'>contr.treatment(, contrasts = FALSE)</a></code>, as suggested by McElreath (also known
-as one-hot encoding).</p>
+as one-hot encoding).</p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Setting Priors</h3>
+
+
+<p>It is recommended to set 0-centered identically scaled priors of the dummy
+coded variables produced by this method. These priors then represent the
+distance the mean of one of the levels might have from the overall mean.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Contrasts</h4>
+
+
+<p>This method guarantees that any set of contrasts between the <em>k</em> groups will
+have the same multivariate prior regardless of level order; However,
+different contrasts within a set contrasts can have different univariate
+prior shapes/scales.
+<br /><br />
+For example the contrasts <code>A - B</code> will have the same prior as <code>B - C</code>, as
+will <code>(A + C) - B</code> and <code>(B + A) - C</code>, but <code>A - B</code> and <code>(A + C) - B</code> will
+differ.</p>
+
+
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
