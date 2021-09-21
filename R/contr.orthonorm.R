@@ -1,9 +1,10 @@
 #' Orthonormal Contrast Matrices for Bayesian Estimation
 #'
 #' Returns a design or model matrix of orthonormal contrasts such that the
-#' marginal prior on all effects is identical. Implementation from Singmann &
-#' Gronau's [`bfrms`](https://github.com/bayesstuff/bfrms/), following
-#' the description in Rouder, Morey, Speckman, & Province (2012, p. 363).
+#' marginal prior on all effects is identical (see 'Details'). Implementation
+#' from Singmann & Gronau's [`bfrms`](https://github.com/bayesstuff/bfrms/),
+#' following the description in Rouder, Morey, Speckman, & Province (2012, p.
+#' 363).
 #' \cr\cr
 #' Though using this factor coding scheme might obscure the interpretation of
 #' parameters, it is essential for correct estimation of Bayes factors for
@@ -18,6 +19,23 @@
 #' When `contrasts = FALSE`, the returned contrasts are equivalent to
 #' `contr.treatment(, contrasts = FALSE)`, as suggested by McElreath (also known
 #' as one-hot encoding).
+#'
+#' ## Setting Priors
+#' It is recommended to set 0-centered identically scaled priors of the dummy
+#' coded variables produced by this method. These priors then represent the
+#' distance the mean of one of the levels might have from the overall mean.
+#'
+#' ### Contrasts
+#' This method guarantees that any set of contrasts between the *k* groups will
+#' have the same multivariate prior regardless of level order; However,
+#' different contrasts within a set contrasts can have different univariate
+#' prior shapes/scales.
+#' \cr\cr
+#' For example the contrasts `A - B` will have the same prior as `B - C`, as
+#' will `(A + C) - B` and `(B + A) - C`, but `A - B` and `(A + C) - B` will
+#' differ.
+#'
+#'
 #'
 #' @references
 #' - McElreath, R. (2020). Statistical rethinking: A Bayesian course with

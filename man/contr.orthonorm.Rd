@@ -23,9 +23,10 @@ A \code{matrix} with n rows and k columns, with k=n-1 if contrasts is
 }
 \description{
 Returns a design or model matrix of orthonormal contrasts such that the
-marginal prior on all effects is identical. Implementation from Singmann &
-Gronau's \href{https://github.com/bayesstuff/bfrms/}{\code{bfrms}}, following
-the description in Rouder, Morey, Speckman, & Province (2012, p. 363).
+marginal prior on all effects is identical (see 'Details'). Implementation
+from Singmann & Gronau's \href{https://github.com/bayesstuff/bfrms/}{\code{bfrms}},
+following the description in Rouder, Morey, Speckman, & Province (2012, p.
+363).
 \cr\cr
 Though using this factor coding scheme might obscure the interpretation of
 parameters, it is essential for correct estimation of Bayes factors for
@@ -37,6 +38,24 @@ info on specifying correct priors for factors with more than 2 levels in
 When \code{contrasts = FALSE}, the returned contrasts are equivalent to
 \code{contr.treatment(, contrasts = FALSE)}, as suggested by McElreath (also known
 as one-hot encoding).
+\subsection{Setting Priors}{
+
+It is recommended to set 0-centered identically scaled priors of the dummy
+coded variables produced by this method. These priors then represent the
+distance the mean of one of the levels might have from the overall mean.
+\subsection{Contrasts}{
+
+This method guarantees that any set of contrasts between the \emph{k} groups will
+have the same multivariate prior regardless of level order; However,
+different contrasts within a set contrasts can have different univariate
+prior shapes/scales.
+\cr\cr
+For example the contrasts \code{A - B} will have the same prior as \code{B - C}, as
+will \code{(A + C) - B} and \code{(B + A) - C}, but \code{A - B} and \code{(A + C) - B} will
+differ.
+}
+
+}
 }
 \examples{
 contr.orthonorm(2) # Q_2 in Rouder et al. (2012, p. 363)
