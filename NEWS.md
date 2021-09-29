@@ -1,3 +1,10 @@
+# bayestestR 0.11.1
+
+## New functions
+
+* `describe_posterior()` gains a `plot()` method, which is a short cut for
+  `plot(estimate_density(describe_posterior()))`.
+
 # bayestestR 0.11
 
 ## Bug fixes

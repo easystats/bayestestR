@@ -504,6 +504,7 @@ describe_posterior.bayesQR <- function(posteriors,
   )
 
   attr(out, "ci_method") <- ci_method
+  attr(out, "object_name") <- .safe_deparse(substitute(posteriors))
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
@@ -665,6 +666,7 @@ describe_posterior.emmGrid <- function(posteriors,
 
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   attr(out, "ci_method") <- ci_method
+  attr(out, "object_name") <- .safe_deparse(substitute(posteriors))
 
   out
 }
@@ -743,6 +745,7 @@ describe_posterior.stanreg <- function(posteriors,
 
   out <- .add_clean_parameters_attribute(out, posteriors)
   attr(out, "ci_method") <- ci_method
+  attr(out, "object_name") <- .safe_deparse(substitute(posteriors))
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
@@ -809,6 +812,7 @@ describe_posterior.stanmvreg <- function(posteriors,
 
   out <- .add_clean_parameters_attribute(out, posteriors)
   attr(out, "ci_method") <- ci_method
+  attr(out, "object_name") <- .safe_deparse(substitute(posteriors))
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
@@ -931,6 +935,7 @@ describe_posterior.brmsfit <- function(posteriors,
 
   out <- .add_clean_parameters_attribute(out, posteriors)
   attr(out, "ci_method") <- ci_method
+  attr(out, "object_name") <- .safe_deparse(substitute(posteriors))
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
@@ -1017,6 +1022,7 @@ describe_posterior.bcplm <- function(posteriors,
   }
 
   attr(out, "ci_method") <- ci_method
+  attr(out, "object_name") <- .safe_deparse(substitute(posteriors))
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
@@ -1052,6 +1058,7 @@ describe_posterior.bamlss <- function(posteriors,
   )
 
   attr(out, "ci_method") <- ci_method
+  attr(out, "object_name") <- .safe_deparse(substitute(posteriors))
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }
@@ -1138,6 +1145,7 @@ describe_posterior.BFBayesFactor <- function(posteriors,
   }
 
   attr(out, "ci_method") <- ci_method
+  attr(out, "object_name") <- .safe_deparse(substitute(posteriors))
   class(out) <- c("describe_posterior", "see_describe_posterior", class(out))
   out
 }

@@ -81,3 +81,16 @@ plot.p_significance <- function(x, ...) {
   insight::check_if_installed("see", "to plot practical significance")
   NextMethod()
 }
+
+#' @export
+plot.describe_posterior <- function(x, stack = FALSE, ...) {
+  insight::check_if_installed("see", "to plot posterior samples")
+  insight::check_if_installed("ggplot2", "to plot posterior samples")
+  model <- .retrieve_model(x)
+  if (!is.null(model)) {
+    plot(estimate_density(model), stack = stack, ...) +
+      ggplot2::labs(title = "Posterior Samples", x = NULL, y = NULL)
+  } else {
+    warning(insight::format_message("Could not find model-object. Try ' plot(estimate_density(model))' instead."), call. = FALSE)
+  }
+}
