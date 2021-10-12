@@ -338,8 +338,10 @@ Let's run another Bayesian regression to predict the **weight** with the **two t
 ```{r , eval=FALSE}
 model <- stan_glm(weight ~ feed, data = data)
 ```
+
 ```{r echo=FALSE, , comment=NA, results='hide'}
-model <- stan_glm(weight ~ feed, data = data)
+model <- stan_glm(weight ~ feed, data = data, 
+                  chains = 10, iter = 5000, warmup = 1000)
 ```
 
 ### Posterior description
