@@ -164,7 +164,8 @@ library(rstanarm)
 model <- stan_glm(
   formula = extra ~ group,
   data = sleep,
-  prior = normal(0, 3, autoscale = FALSE)
+  prior = normal(0, 3, autoscale = FALSE),
+  chains = 10, iter = 5000, warmup = 1000
 )
 ```
 
@@ -173,7 +174,8 @@ model <- stan_glm(
   formula = extra ~ group,
   data = sleep,
   prior = normal(0, 3, autoscale = FALSE),
-  refresh = 0
+  refresh = 0,
+  chains = 10, iter = 5000, warmup = 1000
 )
 ```
 
@@ -498,7 +500,8 @@ m0 <- brm(Sepal.Length ~ 1, data = iris,
           prior = 
             set_prior("student_t(3, 6, 6)", class = "Intercept") + 
             set_prior("student_t(3, 0, 6)", class = "sigma"),
-          save_pars = save_pars(all = TRUE),  backend = "rstan")
+          chains = 10, iter = 5000, warmup = 1000,
+          save_pars = save_pars(all = TRUE))
 
 # Petal.Length only
 m1 <- brm(Sepal.Length ~ Petal.Length, data = iris, 
@@ -506,6 +509,7 @@ m1 <- brm(Sepal.Length ~ Petal.Length, data = iris,
             set_prior("student_t(3, 6, 6)", class = "Intercept") + 
             set_prior("student_t(3, 0, 6)", class = "sigma") + 
             set_prior("normal(0, 1)", coef = "Petal.Length"),
+          chains = 10, iter = 5000, warmup = 1000,
           save_pars = save_pars(all = TRUE))
 
 # Species only
@@ -514,6 +518,7 @@ m2 <- brm(Sepal.Length ~ Species, data = iris,
             set_prior("student_t(3, 6, 6)", class = "Intercept") + 
             set_prior("student_t(3, 0, 6)", class = "sigma") + 
             set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")),
+          chains = 10, iter = 5000, warmup = 1000,
           save_pars = save_pars(all = TRUE))
 
 # Species + Petal.Length model
@@ -523,6 +528,7 @@ m3 <- brm(Sepal.Length ~ Species + Petal.Length, data = iris,
             set_prior("student_t(3, 0, 6)", class = "sigma") + 
             set_prior("normal(0, 1)", coef = "Petal.Length") + 
             set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")),
+          chains = 10, iter = 5000, warmup = 1000,
           save_pars = save_pars(all = TRUE))
 
 # full interactive model
@@ -533,6 +539,7 @@ m4 <- brm(Sepal.Length ~ Species * Petal.Length, data = iris,
             set_prior("normal(0, 1)", coef = "Petal.Length") + 
             set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")) + 
             set_prior("normal(0, 2)", coef = c("Speciesversicolor:Petal.Length", "Speciesvirginica:Petal.Length")),
+          chains = 10, iter = 5000, warmup = 1000,
           save_pars = save_pars(all = TRUE))
 ```
 
@@ -620,10 +627,19 @@ length of its petal, as well as from its species, with priors:
 - $b_{petal} \sim N(0,2)$ 
 - $b_{versicolors}\ \&\  b_{virginica} \sim N(0,1.2)$
 
-```{r}
+```{r, eval=FALSE}
 iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
   data = iris,
   prior = normal(0, c(2, 1.2, 1.2), autoscale = FALSE),
+  chains = 10, iter = 5000, warmup = 1000
+)
+```
+
+```{r, echo=FALSE}
+iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
+  data = iris,
+  prior = normal(0, c(2, 1.2, 1.2), autoscale = FALSE),
+  chains = 10, iter = 5000, warmup = 1000, 
   refresh = 0
 )
 ```
@@ -826,6 +842,7 @@ We can determine this by comparing the following models:
 mod <- stan_glm(mpg ~ wt + am,
   data = mtcars,
   prior = normal(0, c(10, 10), autoscale = FALSE),
+  chains = 10, iter = 5000, armpup = 1000,
   diagnostic_file = file.path(tempdir(), "df1.csv"),
   refresh = 0
 )
@@ -833,6 +850,7 @@ mod <- stan_glm(mpg ~ wt + am,
 mod_carb <- stan_glm(mpg ~ wt + am + carb,
   data = mtcars,
   prior = normal(0, c(10, 10, 20), autoscale = FALSE),
+  chains = 10, iter = 5000, armpup = 1000,
   diagnostic_file = file.path(tempdir(), "df0.csv"),
   refresh = 0
 )
@@ -960,6 +978,7 @@ fit_sum <- stan_glm(Sepal.Length ~ Species,
   prior = normal(0, c(1, 1), autoscale = FALSE),
   prior_PD = TRUE, # sample priors
   family = gaussian(),
+  chains = 10, iter = 5000, armpup = 1000,
   refresh = 0
 )
 
@@ -1000,6 +1019,7 @@ fit_bayes <- stan_glm(Sepal.Length ~ Species,
   prior = normal(0, c(1, 1), autoscale = FALSE),
   prior_PD = TRUE, # sample priors
   family = gaussian(),
+  chains = 10, iter = 5000, armpup = 1000,
   refresh = 0
 )
 
@@ -1047,7 +1067,8 @@ contrasts(df$Species) <- contr.sum
 fit_sum <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
-  family = gaussian()
+  family = gaussian(),
+  chains = 10, iter = 5000, armpup = 1000,
 )
 
 em_sum <- emmeans(fit_sum, ~Species) # the posterior marginal means
@@ -1061,6 +1082,7 @@ fit_sum <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
   family = gaussian(),
+  chains = 10, iter = 5000, armpup = 1000,
   refresh = 0
 )
 
@@ -1081,7 +1103,8 @@ contrasts(df$Species) <- contr.orthonorm
 fit_bayes <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
-  family = gaussian()
+  family = gaussian(),
+  chains = 10, iter = 5000, armpup = 1000
 )
 em_bayes <- emmeans(fit_sum, ~Species) # the posterior marginal means
 bayesfactor_restricted(em_bayes, fit_sum, hypothesis = hyp)
@@ -1093,6 +1116,7 @@ fit_bayes <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
   family = gaussian(),
+  chains = 10, iter = 5000, armpup = 1000,
   refresh = 0
 )
 em_bayes <- emmeans(fit_bayes, ~Species) # the posterior marginal means

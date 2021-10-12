@@ -256,7 +256,8 @@ bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = 
   # Get BFs
   sdbf <- bayesfactor_parameters.data.frame(
     posterior = posterior, prior = prior,
-    direction = direction, null = null, ...
+    direction = direction, null = null,
+    verbose = verbose, ...
   )
   sdbf$Parameter <- NULL
   sdbf
@@ -287,7 +288,8 @@ bayesfactor_parameters.stanreg <- function(posterior,
   # Get BFs
   temp <- bayesfactor_parameters.data.frame(
     posterior = samps$posterior, prior = samps$prior,
-    direction = direction, null = null, ...
+    direction = direction, null = null,
+    verbose = verbose, ...
   )
 
   bf_val <- .prepare_output(temp, cleaned_parameters, inherits(posterior, "stanmvreg"))
@@ -325,7 +327,8 @@ bayesfactor_parameters.blavaan <- function(posterior,
   # Get BFs
   temp <- bayesfactor_parameters.data.frame(
     posterior = samps$posterior, prior = samps$prior,
-    direction = direction, null = null, ...
+    direction = direction, null = null,
+    verbose = verbose, ...
   )
 
   bf_val <- .prepare_output(temp, cleaned_parameters)
@@ -354,7 +357,8 @@ bayesfactor_parameters.emmGrid <- function(posterior,
   # Get BFs
   bayesfactor_parameters.data.frame(
     posterior = samps$posterior, prior = samps$prior,
-    direction = direction, null = null, ...
+    direction = direction, null = null,
+    verbose = verbose, ...
   )
 }
 
@@ -381,6 +385,15 @@ bayesfactor_parameters.data.frame <- function(posterior,
       " to get meaningful results."
     )
   }
+
+  if (verbose && length(null) == 1L && (nrow(posterior) < 4e4 || nrow(prior) <  4e4)) {
+    warning(
+      "Bayes factors might not be precise.\n",
+      "For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.",
+      call. = FALSE
+    )
+  }
+
 
   sdbf <- numeric(ncol(posterior))
   for (par in seq_along(posterior)) {

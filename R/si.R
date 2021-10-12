@@ -177,6 +177,22 @@ si.emmGrid <- function(posterior, prior = NULL,
 si.emm_list <- si.emmGrid
 
 
+#' @export
+si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = c("fixed", "random", "all"), ...) {
+  out <- si(insight::get_parameters(posterior, effects = effects),
+            prior = prior, BF = BF, verbose = verbose)
+  attr(out, "object_name") <- .safe_deparse(substitute(posterior))
+  out
+}
+
+#' @export
+si.get_predicted <- function(posterior, ...) {
+  out <- si(as.data.frame(t(posterior)), ...)
+  attr(out, "object_name") <- .safe_deparse(substitute(posterior))
+  out
+}
+
+
 #' @rdname si
 #' @export
 si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
@@ -200,6 +216,14 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) 
     )
   }
 
+  if (verbose && (nrow(posterior) < 4e4 || nrow(prior) <  4e4)) {
+    warning(
+      "Support Intervals might not be precise.\n",
+      "For precise Support Intervals, it is recommended sampling at least 40,000 posterior samples.",
+      call. = FALSE
+    )
+  }
+
   sis <- matrix(NA, nrow = ncol(posterior), ncol = 2)
   for (par in seq_along(posterior)) {
     sis[par, ] <- .si(posterior[[par]],
@@ -220,19 +244,6 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) 
   attr(out, "plot_data") <- .make_BF_plot_data(posterior, prior, 0, 0, ...)$plot_data
   class(out) <- unique(c("bayestestR_si", "see_si", "bayestestR_ci", "see_ci", class(out)))
 
-  out
-}
-
-
-#' @export
-si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = c("fixed", "random", "all"), ...) {
-  si(insight::get_parameters(posterior, effects = effects))
-}
-
-#' @export
-si.get_predicted <- function(posterior, ...) {
-  out <- si(as.data.frame(t(posterior)), ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(posterior))
   out
 }
 
