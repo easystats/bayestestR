@@ -74,7 +74,10 @@ conditional model or the zero-inflated part of the model be returned? May
 be abbreviated. Only applies to \pkg{brms}-models.}
 }
 \value{
-A data frame containing the (log) Bayes factor representing evidence \emph{against} the un-restricted model.
+A data frame containing the (log) Bayes factor representing evidence
+\emph{against} the un-restricted model. (A \code{bool_results} attribute contains the
+results for each sample, indicating if they are included or not in the
+hypothesized restriction.)
 }
 \description{
 This method computes Bayes factors for comparing a model with an order restrictions on its parameters
@@ -151,7 +154,18 @@ hyps <- c(
   "X > X1"
 )
 
-bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior)
+(b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
+
+if (require("see")) {
+i <- attr(b, "bool_results")[["posterior"]]
+  see::plots(
+    plot(estimate_density(posterior)),
+    # distribution **conditional** on the one of the restrictions
+    plot(estimate_density(posterior[i[["X > X1"]],]))
+  )
+}
+
+
 \dontrun{
 # rstanarm models
 # ---------------

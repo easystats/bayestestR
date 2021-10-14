@@ -23,7 +23,10 @@
 #'
 #' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
 #'
-#' @return A data frame containing the (log) Bayes factor representing evidence *against* the un-restricted model.
+#' @return A data frame containing the (log) Bayes factor representing evidence
+#'   *against* the un-restricted model. (A `bool_results` attribute contains the
+#'   results for each sample, indicating if they are included or not in the
+#'   hypothesized restriction.)
 #'
 #' @examples
 #' library(bayestestR)
@@ -44,7 +47,18 @@
 #'   "X > X1"
 #' )
 #'
-#' bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior)
+#' (b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
+#'
+#' if (require("see")) {
+#' i <- attr(b, "bool_results")[["posterior"]]
+#'   see::plots(
+#'     plot(estimate_density(posterior)),
+#'     # distribution **conditional** on the one of the restrictions
+#'     plot(estimate_density(posterior[i[["X > X1"]],]))
+#'   )
+#' }
+#'
+#'
 #' \dontrun{
 #' # rstanarm models
 #' # ---------------
@@ -168,7 +182,7 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
     )
   }
 
-  .get_prob <- function(x, data) {
+  .test_hypothesis <- function(x, data) {
     x_logical <- try(eval(x, envir = data), silent = TRUE)
     if (inherits(x_logical, "try-error")) {
       cnames <- colnames(data)
@@ -179,14 +193,19 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
     } else if (!all(is.logical(x_logical))) {
       stop("Hypotheses must be logical")
     }
-    mean(x_logical)
+    x_logical
   }
 
-  posterior_p <- sapply(p_hypothesis, .get_prob, data = posterior)
-  prior_p <- sapply(p_hypothesis, .get_prob, data = prior)
 
 
+  posterior_l <- as.data.frame(lapply(p_hypothesis, .test_hypothesis, data = posterior))
+  prior_l <- as.data.frame(lapply(p_hypothesis, .test_hypothesis, data = prior))
+  colnames(posterior_l) <- colnames(prior_l) <- if (!is.null(names(hypothesis))) names(hypothesis) else hypothesis
+
+  posterior_p <- sapply(posterior_l, mean)
+  prior_p <- sapply(prior_l, mean)
   BF <- posterior_p / prior_p
+
   res <- data.frame(
     Hypothesis = hypothesis,
     p_prior = prior_p,
@@ -194,6 +213,7 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
     log_BF = log(BF)
   )
 
+  attr(res, "bool_results") <- list(posterior = posterior_l, prior = prior_l)
   class(res) <- unique(c(
     "bayesfactor_restricted",
     class(res)
