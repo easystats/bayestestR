@@ -175,7 +175,7 @@ model <- stan_glm(
   data = sleep,
   prior = normal(0, 3, autoscale = FALSE),
   refresh = 0,
-  chains = 10, iter = 5000, warmup = 1000
+  chains = 4, iter = 2000, warmup = 1000 #to reduce time for build
 )
 ```
 
@@ -639,7 +639,7 @@ iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
 iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
   data = iris,
   prior = normal(0, c(2, 1.2, 1.2), autoscale = FALSE),
-  chains = 10, iter = 5000, warmup = 1000, 
+  chains = 4, iter = 2000, warmup = 1000, #to reduce build time
   refresh = 0
 )
 ```
@@ -838,7 +838,7 @@ naturally predict miles/gallon (`mpg`) from transition type (`am`) and weight
 
 We can determine this by comparing the following models:
 
-```{r}
+```{r, eval=FALSE}
 mod <- stan_glm(mpg ~ wt + am,
   data = mtcars,
   prior = normal(0, c(10, 10), autoscale = FALSE),
@@ -858,6 +858,28 @@ mod_carb <- stan_glm(mpg ~ wt + am + carb,
 BF_carb <- bayesfactor_models(mod_carb, denominator = mod, verbose = FALSE)
 BF_carb
 ```
+
+```{r, echo=FALSE}
+mod <- stan_glm(mpg ~ wt + am,
+  data = mtcars,
+  prior = normal(0, c(10, 10), autoscale = FALSE),
+  chains = 4, iter = 2000, warmup = 1000, # to reduce build time
+  diagnostic_file = file.path(tempdir(), "df1.csv"),
+  refresh = 0
+)
+
+mod_carb <- stan_glm(mpg ~ wt + am + carb,
+  data = mtcars,
+  prior = normal(0, c(10, 10, 20), autoscale = FALSE),
+  chains = 4, iter = 2000, warmup = 1000, # to reduce build time
+  diagnostic_file = file.path(tempdir(), "df0.csv"),
+  refresh = 0
+)
+
+BF_carb <- bayesfactor_models(mod_carb, denominator = mod, verbose = FALSE)
+BF_carb
+```
+
 
 It seems that the model without `carb` as a predictor is $1/BF=1.2$ times more
 likely than the model *with* `carb` as a predictor. We might then assume that in
@@ -969,7 +991,7 @@ pairwise differences between 3 levels of the same factor, we would expect all *a
 For our example, we will be test all ***prior*** pairwise differences between
 the 3 species in the `iris` dataset.
 
-```{r}
+```{r, eval=FALSE}
 df <- iris
 contrasts(df$Species) <- contr.sum
 
@@ -981,7 +1003,23 @@ fit_sum <- stan_glm(Sepal.Length ~ Species,
   chains = 10, iter = 5000, warmup = 1000,
   refresh = 0
 )
+```
 
+```{r, echo=FALSE}
+df <- iris
+contrasts(df$Species) <- contr.sum
+
+fit_sum <- stan_glm(Sepal.Length ~ Species,
+  data = df,
+  prior = normal(0, c(1, 1), autoscale = FALSE),
+  prior_PD = TRUE, # sample priors
+  family = gaussian(),
+  chains = 4, iter = 2000, warmup = 1000, # reduce build time
+  refresh = 0
+)
+```
+
+```{r}
 (pairs_sum <- pairs(emmeans(fit_sum, ~Species)))
 
 ggplot(stack(insight::get_parameters(pairs_sum)), aes(x = values, fill = ind)) +
@@ -1013,7 +1051,7 @@ options(contrasts = c("contr.orthonorm", "contr.poly"))
 
 Let's again estimate the ***prior*** differences:
 
-```{r}
+```{r, eval=FALSE}
 fit_bayes <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -1022,7 +1060,21 @@ fit_bayes <- stan_glm(Sepal.Length ~ Species,
   chains = 10, iter = 5000, warmup = 1000,
   refresh = 0
 )
+```
 
+```{r, echo=FALSE}
+fit_bayes <- stan_glm(Sepal.Length ~ Species,
+  data = df,
+  prior = normal(0, c(1, 1), autoscale = FALSE),
+  prior_PD = TRUE, # sample priors
+  family = gaussian(),
+  chains = 4, iter = 2000, warmup = 1000, # reduce build time
+  refresh = 0
+)
+```
+
+
+```{r}
 (pairs_bayes <- pairs(emmeans(fit_bayes, ~Species)))
 
 ggplot(stack(insight::get_parameters(pairs_bayes)), aes(x = values, fill = ind)) +
@@ -1082,8 +1134,7 @@ fit_sum <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
   family = gaussian(),
-  chains = 10, iter = 5000, warmup = 1000,
-  refresh = 0
+  chains = 4, iter = 2000, warmup = 1000, # reduce build time
 )
 
 em_sum <- emmeans(fit_sum, ~Species) # the posterior marginal means
@@ -1116,7 +1167,7 @@ fit_bayes <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
   family = gaussian(),
-  chains = 10, iter = 5000, warmup = 1000,
+  chains = 4, iter = 2000, warmup = 1000, # reduce build time
   refresh = 0
 )
 em_bayes <- emmeans(fit_bayes, ~Species) # the posterior marginal means
