@@ -175,7 +175,7 @@ there is one exception: pizza charts.
 It is an intuitive way of interpreting the strength of evidence provided by BFs as an amount of surprise. 
 
 ```{r echo=FALSE, fig.cap="Wagenmakers' pizza poking analogy. From the great <www.bayesianspectacles.org> blog.", fig.align='center', out.width="80%"}
-knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/LetsPokeAPizza.jpg")
+knitr::include_graphics("../man/figures/LetsPokeAPizza.jpg")
 ```
 
 Such "pizza plots" can be directly created through the
