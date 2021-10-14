@@ -130,7 +130,7 @@ become more or less credible?"
 
 
 ```{r deathsticks_fig, echo=FALSE, fig.cap="Bayesian analysis of the Students' (1908) Sleep data set.", fig.align='center', out.width="80%"}
-knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/deathsticks.jpg")
+knitr::include_graphics("../man/figures/deathsticks.jpg")
 ```
 
 Let's use the Students' (1908) Sleep data set (`data("sleep")`). The data comes
@@ -792,7 +792,7 @@ bayesfactor_inclusion(BF_ToothGrowth)
 ```
 
 ```{r JASP_all_fig, echo=FALSE}
-knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP1.PNG")
+knitr::include_graphics("../man/figures/JASP1.PNG")
 ```
 
 2. **Across matched models**:
@@ -803,7 +803,7 @@ bayesfactor_inclusion(BF_ToothGrowth, match_models = TRUE)
 
 
 ```{r JASP_matched_fig, echo=FALSE}
-knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP2.PNG")
+knitr::include_graphics("../man/figures/JASP2.PNG")
 ```
 
 3. **With Nuisance Effects**:
@@ -822,7 +822,7 @@ bayesfactor_inclusion(BF_ToothGrowth_against_dose)
 ```
 
 ```{r JASP_Nuisance_fig, echo=FALSE}
-knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP3.PNG")
+knitr::include_graphics("../man/figures/JASP3.PNG")
 ```
 
 ## Averaging posteriors {#weighted_posteriors}
