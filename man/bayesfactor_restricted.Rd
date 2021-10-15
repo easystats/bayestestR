@@ -136,35 +136,40 @@ null-model) (\cite{Wetzels et al. 2011}).
 }
 
 \examples{
+set.seed(444)
 library(bayestestR)
 prior <- data.frame(
-  X = rnorm(100),
-  X1 = rnorm(100),
-  X3 = rnorm(100)
+  A = rnorm(1000),
+  B = rnorm(1000),
+  C = rnorm(1000)
 )
 
 posterior <- data.frame(
-  X = rnorm(100, .4),
-  X1 = rnorm(100, -.2),
-  X3 = rnorm(100)
+  A = rnorm(1000, .4, 0.7),
+  B = rnorm(1000, -.2, 0.4),
+  C = rnorm(1000, 0, 0.5)
 )
 
 hyps <- c(
-  "X > X1 & X1 > X3",
-  "X > X1"
+  "A > B & B > C",
+  "A > B & A > C",
+  "C > A"
 )
 
 (b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
 
-if (require("see")) {
-i <- attr(b, "bool_results")[["posterior"]]
+if (require("see") && require("ggplot2")) {
+  i <- attr(b, "bool_results")[["posterior"]]
+
   see::plots(
     plot(estimate_density(posterior)),
-    # distribution **conditional** on the one of the restrictions
-    plot(estimate_density(posterior[i[["X > X1"]],]))
+    # distribution **conditional** on the restrictions
+    plot(estimate_density(posterior[i[[hyps[1]]],])) + ggplot2::ggtitle(hyps[1]),
+    plot(estimate_density(posterior[i[[hyps[2]]],])) + ggplot2::ggtitle(hyps[2]),
+    plot(estimate_density(posterior[i[[hyps[3]]],])) + ggplot2::ggtitle(hyps[3]),
+    guides = "collect"
   )
 }
-
 
 \dontrun{
 # rstanarm models
