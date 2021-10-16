@@ -792,7 +792,7 @@ bayesfactor_inclusion(BF_ToothGrowth)
 ```
 
 ```{r JASP_all_fig, echo=FALSE}
-knitr::include_graphics("../man/figures/JASP1.PNG")
+knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP1.jpg")
 ```
 
 2. **Across matched models**:
@@ -803,7 +803,7 @@ bayesfactor_inclusion(BF_ToothGrowth, match_models = TRUE)
 
 
 ```{r JASP_matched_fig, echo=FALSE}
-knitr::include_graphics("../man/figures/JASP2.PNG")
+knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP2.jpg")
 ```
 
 3. **With Nuisance Effects**:
@@ -822,7 +822,7 @@ bayesfactor_inclusion(BF_ToothGrowth_against_dose)
 ```
 
 ```{r JASP_Nuisance_fig, echo=FALSE}
-knitr::include_graphics("../man/figures/JASP3.PNG")
+knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP3.jpg")
 ```
 
 ## Averaging posteriors {#weighted_posteriors}
