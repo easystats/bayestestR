@@ -28,7 +28,7 @@ figwidth <- 6 * 1.618034
 
 knitr::opts_chunk$set(
   collapse = TRUE,
-  dpi=450,
+  dpi=300,
   fig.height=figheight,
   fig.width=figwidth, 
   fig.path = "man/figures/"

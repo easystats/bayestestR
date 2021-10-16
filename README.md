@@ -156,7 +156,7 @@ describe_posterior(
 ## 
 ## Parameter | Median |        95% CI |     pd |   ps
 ## --------------------------------------------------
-## Posterior |   0.01 | [-1.85, 2.03] | 50.55% | 0.47
+## Posterior |  -0.01 | [-2.01, 1.93] | 50.31% | 0.46
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -284,10 +284,10 @@ posterior distributions.
 By default, `hdi()` returns the 89% intervals (`ci = 0.89`), deemed to
 be more stable than, for instance, 95% intervals. An effective sample
 size of at least 10.000 is recommended if 95% intervals should be
-computed (Kruschke, 2015). Moreover, 89 indicates the arbitrariness of
-interval limits - its only remarkable property is being the highest
-prime number that does not exceed the already unstable 95% threshold
-(McElreath, 2018).
+computed (**kruschke2015doing?**). Moreover, 89 indicates the
+arbitrariness of interval limits - its only remarkable property is being
+the highest prime number that does not exceed the already unstable 95%
+threshold (McElreath, 2018).
 
 ``` r
 posterior <- distribution_chisquared(10000, 4)
@@ -298,8 +298,6 @@ hdi(posterior, ci = .89)
 eti(posterior, ci = .89)
 ## 89% ETI: [0.75, 9.25]
 ```
-
-![](man/figures/unnamed-chunk-11-1.png)<!-- -->
 
 ## Existence and Significance Testing
 
@@ -345,21 +343,21 @@ different from 0 does not make much sense (the probability of it being
 different from a single point being infinite). Therefore, the idea
 underlining ROPE is to let the user define an area around the null value
 enclosing values that are *equivalent to the null* value for practical
-purposes Kruschke (2018).
+purposes (**kruschke2018rejecting?**).
 
 Kruschke suggests that such null value could be set, by default, to the
 -0.1 to 0.1 range of a standardized parameter (negligible effect size
 according to Cohen, 1988). This could be generalized: For instance, for
 linear models, the ROPE could be set as `0 +/- .1 * sd(y)`. This ROPE
 range can be automatically computed for models using the
-[rope\_range](https://easystats.github.io/bayestestR/reference/rope_range.html)
+[rope_range](https://easystats.github.io/bayestestR/reference/rope_range.html)
 function.
 
 Kruschke suggests using the proportion of the 95% (or 90%, considered
 more stable) HDI that falls within the ROPE as an index for
 “null-hypothesis” testing (as understood under the Bayesian framework,
 see
-[equivalence\_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
+[equivalence_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
 ``` r
 posterior <- distribution_normal(10000, 0.4, 0.2)
@@ -463,7 +461,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.37
+## [1] 0.39
 ```
 
 # References
@@ -471,34 +469,18 @@ density_at(rnorm(1000, 1, 1), 1)
 <div id="refs" class="references csl-bib-body hanging-indent"
 line-spacing="2">
 
-<div id="ref-kruschke2015doing" class="csl-entry">
-
-Kruschke, J. K. (2015). *Doing Bayesian data analysis: A tutorial with
-R, JAGS, and Stan* (2. ed). Amsterdam: Elsevier, Academic Press.
-
-</div>
-
-<div id="ref-kruschke2018rejecting" class="csl-entry">
-
-Kruschke, J. K. (2018). Rejecting or accepting parameter values in
-Bayesian estimation. *Advances in Methods and Practices in Psychological
-Science*, *1*(2), 270–280. <https://doi.org/10.1177/2515245918771304>
-
-</div>
-
 <div id="ref-kruschke2018bayesian" class="csl-entry">
 
-Kruschke, J. K., & Liddell, T. M. (2018). The Bayesian new statistics:
+Kruschke, J. K., & Liddell, T. M. (2018). The bayesian new statistics:
 Hypothesis testing, estimation, meta-analysis, and power analysis from a
-Bayesian perspective. *Psychonomic Bulletin & Review*, *25*(1), 178–206.
-<https://doi.org/10.3758/s13423-016-1221-4>
+bayesian perspective. *Psychonomic Bulletin & Review*, *25*(1), 178–206.
 
 </div>
 
 <div id="ref-mcelreath2018statistical" class="csl-entry">
 
-McElreath, R. (2018). *Statistical rethinking*.
-<https://doi.org/10.1201/9781315372495>
+McElreath, R. (2018). *Statistical rethinking: A bayesian course with
+examples in r and stan*. Chapman; Hall/CRC.
 
 </div>
 
@@ -506,8 +488,7 @@ McElreath, R. (2018). *Statistical rethinking*.
 
 Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010).
 Bayesian hypothesis testing for psychologists: A tutorial on the
-SavageDickey method. *Cognitive Psychology*, *60*(3), 158–189.
-<https://doi.org/10.1016/j.cogpsych.2009.12.001>
+savage–dickey method. *Cognitive Psychology*, *60*(3), 158–189.
 
 </div>
 
