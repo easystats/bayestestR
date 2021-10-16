@@ -453,20 +453,20 @@ related argument to <code>NULL</code>. For example, <code>test = NULL</code> and
   <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='reshape_iterations.html'>reshape_iterations</a></span><span class='op'>(</span><span class='fu'>describe_posterior</span><span class='op'>(</span><span class='va'>df</span>, keep_iterations <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)') to get meaningful results.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify priors (with column order matching 'posterior') to get meaningful results.</span></div><div class='output co'>#&gt;   Parameter     Median   CI    CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high
-#&gt; 1        X1  0.1502069 0.95 -2.243426 1.623394 0.60    0.95     -0.1       0.1
-#&gt; 2        X2 -0.1649053 0.95 -1.112271 2.215582 0.55    0.95     -0.1       0.1
-#&gt; 3        X3  0.2533275 0.95 -1.713177 2.358765 0.60    0.95     -0.1       0.1
-#&gt; 4        X4 -0.1008729 0.95 -1.760210 1.791431 0.55    0.95     -0.1       0.1
-#&gt; 5        X1  0.1502069 0.95 -2.243426 1.623394 0.60    0.95     -0.1       0.1
-#&gt; 6        X2 -0.1649053 0.95 -1.112271 2.215582 0.55    0.95     -0.1       0.1
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)') to get meaningful results.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Prior not specified! Please specify priors (with column order matching 'posterior') to get meaningful results.</span></div><div class='output co'>#&gt;   Parameter      Median   CI    CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high
+#&gt; 1        X1 -0.40662582 0.95 -2.307799 1.680276 0.60    0.95     -0.1       0.1
+#&gt; 2        X2  0.52073304 0.95 -1.656892 1.864191 0.60    0.95     -0.1       0.1
+#&gt; 3        X3  0.34622569 0.95 -1.765082 1.637982 0.60    0.95     -0.1       0.1
+#&gt; 4        X4  0.05189288 0.95 -2.088871 1.718379 0.55    0.95     -0.1       0.1
+#&gt; 5        X1 -0.40662582 0.95 -2.307799 1.680276 0.60    0.95     -0.1       0.1
+#&gt; 6        X2  0.52073304 0.95 -1.656892 1.864191 0.60    0.95     -0.1       0.1
 #&gt;   ROPE_Percentage iter_index iter_group iter_value
-#&gt; 1            0.00          1          1  1.2097835
-#&gt; 2            0.10          2          1  0.7815066
-#&gt; 3            0.05          3          1 -0.5910623
-#&gt; 4            0.10          4          1 -0.2265828
-#&gt; 5            0.00          1          2  0.1403724
-#&gt; 6            0.10          2          2 -0.9572313</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt; 1            0.00          1          1 -0.8741465
+#&gt; 2            0.00          2          1 -0.5754661
+#&gt; 3            0.05          3          1 -0.8122574
+#&gt; 4            0.15          4          1 -0.2614547
+#&gt; 5            0.00          1          2 -1.0438731
+#&gt; 6            0.00          2          2  1.1829591</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># rstanarm models</span>
 <span class='co'># -----------------------------------------------</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/rvlenth/emmeans'>"emmeans"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>

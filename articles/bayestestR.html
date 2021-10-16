@@ -184,6 +184,11 @@
 <li><p><strong>The Bayesian framework assumes no such thing</strong>. The data are what they are. Based on the observed data (and a <strong>prior</strong> belief about the result), the Bayesian sampling algorithm (<strong>MCMC</strong> sampling is one example) returns a probability distribution (called <strong>the posterior</strong>) of the effect that is compatible with the observed data. For the correlation between <em>x</em> and <em>y</em>, it will return a <strong>distribution</strong> that says, for example, “the most probable effect is 0.42, but this data is also compatible with correlations of 0.12 and 0.74 with certain probabilities”.</p></li>
 <li><p>To characterize statistical significance of our effects, we do not need <em>p</em>-values, or any other such indices. We simply <em>describe</em> the posterior distribution of the effect. For example, we can report the median, the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">89% Credible Interval</a> or <a href="https://easystats.github.io/bayestestR/articles/guidelines.html">other indices</a>.</p></li>
 </ul>
+<div class="figure" style="text-align: center">
+<img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/bayesianMaster.jpg" alt="Accurate depiction of a regular Bayesian user estimating a credible interval." width="50%"><p class="caption">
+Accurate depiction of a regular Bayesian user estimating a credible interval.
+</p>
+</div>
 <p><em>Note: Altough the very purpose of this package is to advocate for the use of Bayesian statistics, please note that there are serious arguments supporting frequentist indices (see for instance <a href="https://discourse.datamethods.org/t/language-for-communicating-frequentist-results-about-treatment-effects/934/16">this thread</a>). As always, the world is not black and white (p &lt; .001).</em></p>
 <p><strong>So… how does it work?</strong></p>
 </div>
@@ -213,6 +218,24 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = Sepal.Length ~ Petal.Length, data = iris)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.2468 -0.2966 -0.0152  0.2768  1.0027 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    4.3066     0.0784    54.9   &lt;2e-16 ***
+Petal.Length   0.4089     0.0189    21.6   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.41 on 148 degrees of freedom
+Multiple R-squared:  0.76,  Adjusted R-squared:  0.758 
+F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <!-- ```{r message=FALSE, warning=FALSE, eval=FALSE} -->
 <!-- model <- lm(Sepal.Length ~ Petal.Length, data=iris) -->
 <!-- report(model) -->
@@ -244,11 +267,46 @@
 <!--   report() %>%  -->
 <!--   to_text(width=100) -->
 <!-- ``` -->
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span>
 <span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 <span class="co"># for a nicer table</span>
 <span class="fu"><a href="https://easystats.github.io/insight/reference/display.html">print_md</a></span><span class="op">(</span><span class="va">posteriors</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<caption>Summary of Posterior Distribution</caption>
+<thead><tr class="header">
+<th align="left">Parameter</th>
+<th align="right">Median</th>
+<th align="left">95% CI</th>
+<th align="left">pd</th>
+<th align="left">ROPE</th>
+<th align="right">% in ROPE</th>
+<th align="left">Rhat</th>
+<th align="left">ESS</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">4.30</td>
+<td align="left">[4.15, 4.46]</td>
+<td align="left">100%</td>
+<td align="left">[-0.08, 0.08]</td>
+<td align="right">0%</td>
+<td align="left">1.000</td>
+<td align="left">4057.00</td>
+</tr>
+<tr class="even">
+<td align="left">Petal.Length</td>
+<td align="right">0.41</td>
+<td align="left">[0.37, 0.45]</td>
+<td align="left">100%</td>
+<td align="left">[-0.08, 0.08]</td>
+<td align="right">0%</td>
+<td align="left">1.000</td>
+<td align="left">4115.00</td>
+</tr>
+</tbody>
+</table>
 <p><strong>That’s it!</strong></p>
 <p>You just fitted a Bayesian version of the model by simply using the <a href="https://mc-stan.org/rstanarm/reference/stan_glm.html"><code>stan_glm()</code></a> function instead of <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> and described the posterior distributions of the parameters!</p>
 <p>The conclusion we draw, for this example, are very similar. The effect (<em>the median of the effect’s posterior distribution</em>) is about <code>0.41</code>, and it can be also be considered as <em>significant</em> in the Bayesian sense (more on that later).</p>
