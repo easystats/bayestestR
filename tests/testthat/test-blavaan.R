@@ -74,10 +74,12 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 
 
     ## Bayes factors ----
-    x <- expect_warning(bayesfactor_models(bfit, bfit2))
+    expect_warning(bayesfactor_models(bfit, bfit2))
+    x <- suppressWarnings(bayesfactor_models(bfit, bfit2))
     expect_true(x$log_BF[2] < 0)
 
-    x <- expect_warning(weighted_posteriors(bfit, bfit2))
+    expect_warning(weighted_posteriors(bfit, bfit2))
+    x <- suppressWarnings(weighted_posteriors(bfit, bfit2))
     expect_equal(ncol(x), 14)
 
     # bfit_prior <- unupdate(bfit)
