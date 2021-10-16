@@ -85,14 +85,36 @@ if (.runThisTest &&
 
     expect_equal(
       describe_prior(mod_brms),
-      structure(list(
-        Parameter = c("(Intercept)", "cyl", "wt", "sigma"),
-        Prior_Distribution = c("student_t", "uniform", "uniform", "student_t"),
-        Prior_df = c(3, NA, NA, 3),
-        Prior_Location = c(19.2, NA, NA, 0),
-        Prior_Scale = c(5.4, NA, NA, 5.4)
-      ),
-      row.names = c(NA, -4L), class = "data.frame"
+      structure(
+        list(
+          Parameter = c("b_Intercept", "b_wt", "b_cyl", "sigma"),
+          Prior_Distribution = c("student_t", "uniform", "uniform", "student_t"),
+          Prior_Location = c(19.2, NA, NA, 0),
+          Prior_Scale = c(5.4, NA, NA, 5.4),
+          Prior_df = c(3, NA, NA, 3)
+        ),
+        row.names = c(NA, -4L),
+        class = "data.frame",
+        priors = structure(
+          list(
+            prior = c("(flat)", "(flat)", "(flat)", "student_t(3, 19.2, 5.4)",
+                      "student_t(3, 0, 5.4)"),
+            class = c("b", "b", "b", "Intercept", "sigma"),
+            coef = c("", "cyl", "wt", "", ""),
+            group = c("", "", "", "", ""),
+            resp = c("", "", "", "", ""),
+            dpar = c("", "", "", "", ""),
+            nlpar = c("", "", "", "", ""),
+            bound = c("", "", "", "", ""),
+            source = c("(unknown)", "(vectorized)", "(vectorized)", "(unknown)",
+                       "(unknown)"),
+            Parameter = c("b_", "b_cyl", "b_wt", "b_Intercept", "sigma")
+          ),
+          special = list(mu = list()),
+          row.names = c(NA, -5L),
+          sample_prior = "no",
+          class = "data.frame"
+        )
       ),
       ignore_attr = TRUE,
       tolerance = 1e-2

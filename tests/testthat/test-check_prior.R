@@ -4,8 +4,7 @@ if (.runThisTest &&
   require("rstanarm") &&
   require("testthat") &&
   require("bayestestR") &&
-  require("brms") &&
-  packageVersion("insight") > "0.13.2") {
+  require("brms")) {
   skip_on_cran()
 
   # stanreg --------------------------
@@ -37,8 +36,8 @@ if (.runThisTest &&
   expect_equal(
     check_prior(model2)$Prior_Quality,
     c(
-      "uninformative", "informative", "informative", "uninformative",
-      "uninformative", "uninformative", "informative", "informative"
+      "uninformative", "uninformative", "informative", "uninformative",
+      "uninformative", "not determinable", "not determinable", "not determinable"
     )
   )
 
@@ -46,7 +45,7 @@ if (.runThisTest &&
     check_prior(model2, method = "lakeland")$Prior_Quality,
     c(
       "informative", "informative", "informative", "informative",
-      "informative", "informative", "informative", "informative"
+      "informative", "not determinable", "not determinable", "not determinable"
     )
   )
 }
