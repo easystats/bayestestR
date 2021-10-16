@@ -24,7 +24,7 @@
     Interval - HDI; Kruschke, 2015 &lt;doi:10.1016/C2012-0-00477-2&gt;) and
     indices used for null-hypothesis testing (such as ROPE percentage, pd
     and Bayes factors).">
-<meta property="og:image" content="/logo.svg">
+<meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -258,7 +258,7 @@
 <span class="co">## </span>
 <span class="co">## Parameter | Median |        95% CI |     pd |   ps</span>
 <span class="co">## --------------------------------------------------</span>
-<span class="co">## Posterior |   0.01 | [-1.85, 2.03] | 50.55% | 0.47</span></code></pre></div>
+<span class="co">## Posterior |  -0.01 | [-2.01, 1.93] | 50.31% | 0.46</span></code></pre></div>
 <p><code><a href="reference/describe_posterior.html">describe_posterior()</a></code> works for many objects, including more complex <em>brmsfit</em>-models. For better readability, the output is separated by model components:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">zinb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"http://stats.idre.ucla.edu/stat/data/fish.csv"</span><span class="op">)</span>
@@ -350,7 +350,7 @@
 <a href="#uncertainty-ci" class="anchor"></a>Uncertainty (CI)</h2>
 <p><a href="https://easystats.github.io/bayestestR/reference/hdi.html"><strong><code>hdi()</code></strong></a> computes the <strong>Highest Density Interval (HDI)</strong> of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterization as <strong>Credible Interval (CI)</strong>.</p>
 <p>Unlike equal-tailed intervals (see <a href="https://easystats.github.io/bayestestR/reference/eti.html"><code>eti()</code></a>) that typically exclude 2.5% from each tail of the distribution, the HDI is <em>not</em> equal-tailed and therefore always includes the mode(s) of posterior distributions.</p>
-<p>By default, <code><a href="reference/hdi.html">hdi()</a></code> returns the 89% intervals (<code>ci = 0.89</code>), deemed to be more stable than, for instance, 95% intervals. An effective sample size of at least 10.000 is recommended if 95% intervals should be computed (Kruschke, 2015). Moreover, 89 indicates the arbitrariness of interval limits - its only remarkable property is being the highest prime number that does not exceed the already unstable 95% threshold (McElreath, 2018).</p>
+<p>By default, <code><a href="reference/hdi.html">hdi()</a></code> returns the 89% intervals (<code>ci = 0.89</code>), deemed to be more stable than, for instance, 95% intervals. An effective sample size of at least 10.000 is recommended if 95% intervals should be computed (<strong>kruschke2015doing?</strong>). Moreover, 89 indicates the arbitrariness of interval limits - its only remarkable property is being the highest prime number that does not exceed the already unstable 95% threshold (McElreath, 2018).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distribution.html">distribution_chisquared</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fl">4</span><span class="op">)</span>
 
@@ -359,7 +359,6 @@
 
 <span class="fu"><a href="reference/eti.html">eti</a></span><span class="op">(</span><span class="va">posterior</span>, ci <span class="op">=</span> <span class="fl">.89</span><span class="op">)</span>
 <span class="co">## 89% ETI: [0.75, 9.25]</span></code></pre></div>
-<p><img src="reference/figures/unnamed-chunk-11-1.png"><!-- --></p>
 </div>
 <div id="existence-and-significance-testing" class="section level2">
 <h2 class="hasAnchor">
@@ -379,7 +378,7 @@
 <h3 class="hasAnchor">
 <a href="#rope" class="anchor"></a>ROPE</h3>
 <p><a href="https://easystats.github.io/bayestestR/reference/rope.html"><strong><code>rope()</code></strong></a> computes the proportion (in percentage) of the HDI (default to the 89% HDI) of a posterior distribution that lies within a region of practical equivalence.</p>
-<p>Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are <em>equivalent to the null</em> value for practical purposes Kruschke (2018).</p>
+<p>Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are <em>equivalent to the null</em> value for practical purposes (<strong>kruschke2018rejecting?</strong>).</p>
 <p>Kruschke suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as <code>0 +/- .1 * sd(y)</code>. This ROPE range can be automatically computed for models using the <a href="https://easystats.github.io/bayestestR/reference/rope_range.html">rope_range</a> function.</p>
 <p>Kruschke suggests using the proportion of the 95% (or 90%, considered more stable) HDI that falls within the ROPE as an index for “null-hypothesis” testing (as understood under the Bayesian framework, see <a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html">equivalence_test</a>).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -443,7 +442,7 @@
 <p><a href="https://easystats.github.io/bayestestR/reference/density_at.html"><strong><code>density_at()</code></strong></a>: Compute the density of a given point of a distribution.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/density_at.html">density_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>
-<span class="co">## [1] 0.37</span></code></pre></div>
+<span class="co">## [1] 0.39</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -451,20 +450,14 @@
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
-<div id="ref-kruschke2015doing" class="csl-entry">
-<p>Kruschke, J. K. (2015). <em>Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan</em> (2. ed). Amsterdam: Elsevier, Academic Press.</p>
-</div>
-<div id="ref-kruschke2018rejecting" class="csl-entry">
-<p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. <em>Advances in Methods and Practices in Psychological Science</em>, <em>1</em>(2), 270–280. <a href="https://doi.org/10.1177/2515245918771304" class="uri">https://doi.org/10.1177/2515245918771304</a></p>
-</div>
 <div id="ref-kruschke2018bayesian" class="csl-entry">
-<p>Kruschke, J. K., &amp; Liddell, T. M. (2018). The Bayesian new statistics: Hypothesis testing, estimation, meta-analysis, and power analysis from a Bayesian perspective. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 178–206. <a href="https://doi.org/10.3758/s13423-016-1221-4" class="uri">https://doi.org/10.3758/s13423-016-1221-4</a></p>
+<p>Kruschke, J. K., &amp; Liddell, T. M. (2018). The bayesian new statistics: Hypothesis testing, estimation, meta-analysis, and power analysis from a bayesian perspective. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 178–206.</p>
 </div>
 <div id="ref-mcelreath2018statistical" class="csl-entry">
-<p>McElreath, R. (2018). <em>Statistical rethinking</em>. <a href="https://doi.org/10.1201/9781315372495" class="uri">https://doi.org/10.1201/9781315372495</a></p>
+<p>McElreath, R. (2018). <em>Statistical rethinking: A bayesian course with examples in r and stan</em>. Chapman; Hall/CRC.</p>
 </div>
 <div id="ref-wagenmakers2010bayesian" class="csl-entry">
-<p>Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., &amp; Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the SavageDickey method. <em>Cognitive Psychology</em>, <em>60</em>(3), 158–189. <a href="https://doi.org/10.1016/j.cogpsych.2009.12.001" class="uri">https://doi.org/10.1016/j.cogpsych.2009.12.001</a></p>
+<p>Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., &amp; Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the savage–dickey method. <em>Cognitive Psychology</em>, <em>60</em>(3), 158–189.</p>
 </div>
 </div>
 </div>
