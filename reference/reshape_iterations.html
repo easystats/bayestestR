@@ -48,7 +48,7 @@
 
 <meta property="og:title" content="Reshape estimations with multiple iterations (draws) to long format — reshape_iterations" />
 <meta property="og:description" content="Reshape a wide data.frame of iterations (such as posterior draws or bootsrapped samples) as columns to long format. Instead of having all iterations as columns (e.g., iter_1, iter_2, ...), will return 3 columns with the \*_index (the previous index of the row), the \*_group (the iteration number) and the \*_value (the value of said iteration)." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="/logo.svg" />
 
 
 
@@ -221,13 +221,8 @@
   <span class='va'>long_format</span> <span class='op'>&lt;-</span> <span class='fu'>reshape_iterations</span><span class='op'>(</span><span class='va'>draws</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>long_format</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt;   Predicted       SE   CI_low  CI_high iter_index iter_group iter_value
-#&gt; 1  24.39469 1.424064 21.60989 27.25882          1          1   22.85427
-#&gt; 2  24.39469 1.424064 21.60989 27.25882          2          1   22.85427
-#&gt; 3  24.39469 1.424064 21.60989 27.25882          3          1   22.85427
-#&gt; 4  17.19066 1.199809 14.83105 19.55467          4          1   16.25159
-#&gt; 5  17.19066 1.199809 14.83105 19.55467          5          1   16.25159
-#&gt; 6  17.19066 1.199809 14.83105 19.55467          6          1   16.25159</div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: rstanarm</span></div><div class='output co'>#&gt; <span class='message'>Error: package or namespace load failed for ‘rstanarm’ in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]):</span>
+#&gt; <span class='message'> there is no package called ‘xts’</span></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
