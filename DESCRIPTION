@@ -95,6 +95,7 @@ Suggests:
     mediation,
     modelbased,
     parameters,
+    patchwork,
     performance,
     rmarkdown,
     rstan,

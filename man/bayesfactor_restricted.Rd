@@ -158,7 +158,7 @@ hyps <- c(
 
 (b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
 
-if (require("see") && require("ggplot2")) {
+if (require("see") && require("patchwork")) {
   i <- attr(b, "bool_results")[["posterior"]]
 
   see::plots(
