@@ -35,7 +35,14 @@ if (require("testthat") &&
       "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "log_BF"
     ))
 
-    rez <- expect_warning(describe_posterior(
+    expect_warning(describe_posterior(
+      x,
+      centrality = "all",
+      dispersion = TRUE,
+      test = "all",
+      ci = c(0.8, 0.9)
+    ))
+    rez <- suppressWarnings(describe_posterior(
       x,
       centrality = "all",
       dispersion = TRUE,
@@ -55,10 +62,12 @@ if (require("testthat") &&
 
     # dataframes -------------------------------------------------
 
-    x <- data.frame(replicate(4, rnorm(40000)))
-    rez <- expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
+    x <- data.frame(replicate(4, rnorm(100)))
+    expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
+    rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
     expect_equal(dim(rez), c(4, 19))
-    rez <- expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
+    expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
+    rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
     expect_equal(dim(rez), c(8, 19))
     rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
     expect_equal(dim(rez), c(4, 4))
@@ -255,28 +264,13 @@ if (require("testthat") &&
       set.seed(123)
       expect_equal(
         describe_posterior(ttestBF(mtcars$wt, mu = 3), ci = 0.95),
-        structure(
-          list(
-            Parameter = "Difference",
-            Median = -0.192596120441321,
-            CI = 0.95,
-            CI_low = -0.53739385387061,
-            CI_high = 0.159711264781174,
-            pd = 0.8615,
-            ROPE_CI = 0.95,
-            ROPE_low = -0.0978457442989697,
-            ROPE_high = 0.0978457442989697,
-            ROPE_Percentage = 0.255985267034991,
-            BF = 0.386851835160946,
-            Prior_Distribution = "cauchy",
-            Prior_Location = 0,
-            Prior_Scale = 0.707106781186548
-          ),
-          row.names = 1L,
-          class = c("describe_posterior",
-                    "see_describe_posterior", "data.frame"),
-          ci_method = "hdi"
-        ),
+        structure(list(Parameter = "Difference", Median = -0.198578438156886,
+                       CI = 0.95, CI_low = -0.535759904384745, CI_high = 0.1557581,
+                       pd = 0.858, ROPE_CI = 0.95, ROPE_low = -0.0978457442989697,
+                       ROPE_high = 0.0978457442989697, ROPE_Percentage = 0.246250986582478,
+                       log_BF = -0.949713514141272, BF = 0.386851835160946, Prior_Distribution = "cauchy",
+                       Prior_Location = 0, Prior_Scale = 0.707106781186548), row.names = 1L, class = c("describe_posterior",
+                                                                                                       "see_describe_posterior", "data.frame"), ci_method = "hdi", object_name = "ttestBF(mtcars$wt, mu = 3)"),
         tolerance = 0.1,
         ignore_attr = TRUE
       )
@@ -287,52 +281,81 @@ if (require("testthat") &&
           x = table(mtcars$am, mtcars$cyl),
           sampleType = "poisson"
         ), ci = 0.95),
-        structure(list(
-          Parameter = c(
-            "cell[1,1]", "cell[2,1]", "cell[1,2]",
-            "cell[2,2]", "cell[1,3]", "cell[2,3]", "Ratio"
-          ), Median = c(
-            3.14460516924512,
-            7.31770781415545, 3.90882513071182, 3.10298483676201, 10.7291854218268,
-            2.28796135536168, NA
-          ), CI = c(
-            0.95, 0.95, 0.95, 0.95, 0.95, 0.95,
-            NA
-          ), CI_low = c(
-            0.730049832773011, 2.85868301180857, 0.966013626507231,
-            0.613493744479196, 5.50968258473677, 0.215624786285077, NA
+        structure(
+          list(
+            Parameter = c(
+              "cell[1,1]",
+              "cell[2,1]",
+              "cell[1,2]",
+              "cell[2,2]",
+              "cell[1,3]",
+              "cell[2,3]",
+              "Ratio"
+            ),
+            Median = c(
+              3.04620767622137,
+              7.33170140780154,
+              3.96252503900368,
+              3.06206636495483,
+              10.7088156207511,
+              2.26008072419983,
+              NA
+            ),
+            CI = c(0.95, 0.95, 0.95, 0.95, 0.95, 0.95,
+                   NA),
+            CI_low = c(
+              0.537476720942068,
+              3.33553818106395,
+              1.05013765177975,
+              0.746538992318074,
+              5.49894434136364,
+              0.275642629940081,
+              NA
+            ),
+            CI_high = c(
+              6.62852027141624,
+              12.6753970192515,
+              7.74693313388489,
+              6.87239730676778,
+              16.9198964674968,
+              5.4533083861175,
+              NA
+            ),
+            pd = c(1, 1, 1, 1, 1, 1, NA),
+            ROPE_CI = c(0.95, 0.95, 0.95,
+                        0.95, 0.95, 0.95, NA),
+            ROPE_low = c(-0.1, -0.1, -0.1, -0.1,
+                         -0.1, -0.1, NA),
+            ROPE_high = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+                          NA),
+            ROPE_Percentage = c(0, 0, 0, 0, 0, 0, NA),
+            log_BF = c(
+              3.84187678153378,
+              3.84187678153378,
+              3.84187678153378,
+              3.84187678153378,
+              3.84187678153378,
+              3.84187678153378,
+              NA
+            ),
+            BF = c(
+              46.6128745808996,
+              46.6128745808996,
+              46.6128745808996,
+              46.6128745808996,
+              46.6128745808996,
+              46.6128745808996,
+              NA
+            ),
+            Prior_Distribution = c(NA, NA, NA, NA, NA, NA, "poisson"),
+            Prior_Location = c(NA, NA, NA, NA, NA, NA, 0),
+            Prior_Scale = c(NA,
+                            NA, NA, NA, NA, NA, 1)
           ),
-          CI_high = c(
-            6.88611720053741, 12.3559628274278, 7.9413271603729,
-            6.71829769450508, 17.0745832964079, 5.42058517407967, NA
-          ),
-          pd = c(1, 1, 1, 1, 1, 1, NA), ROPE_CI = c(
-            0.95, 0.95, 0.95,
-            0.95, 0.95, 0.95, NA
-          ), ROPE_low = c(
-            -0.1, -0.1, -0.1, -0.1,
-            -0.1, -0.1, NA
-          ), ROPE_high = c(
-            0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-            NA
-          ), ROPE_Percentage = c(0, 0, 0, 0, 0, 0, NA), BF = c(
-            46.6128745808996,
-            46.6128745808996, 46.6128745808996, 46.6128745808996, 46.6128745808996,
-            46.6128745808996, NA
-          ), Prior_Distribution = c(
-            NA, NA, NA,
-            NA, NA, NA, "poisson"
-          ), Prior_Location = c(
-            NA, NA, NA, NA,
-            NA, NA, 0
-          ), Prior_Scale = c(NA, NA, NA, NA, NA, NA, 1)
-        ), row.names = c(
-          1L,
-          4L, 2L, 5L, 3L, 6L, 7L
-        ), class = c(
-          "describe_posterior", "see_describe_posterior",
-          "data.frame"
-        ), ci_method = "hdi"),
+          row.names = c(1L, 4L, 2L, 5L, 3L,
+                        6L, 7L),
+          class = c("describe_posterior", "see_describe_posterior")
+        ),
         tolerance = 0.1,
         ignore_attr = TRUE
       )
@@ -345,52 +368,85 @@ if (require("testthat") &&
           fixedMargin = "cols",
           priorConcentration = 1.6
         ), ci = 0.95),
-        structure(list(
-          Parameter = c(
-            "cell[1,1]", "cell[2,1]", "cell[1,2]",
-            "cell[2,2]", "cell[1,3]", "cell[2,3]", "Ratio"
-          ), Median = c(
-            3.32424349674923,
-            7.28516053335046, 4.14229471859295, 3.3391102912759, 10.3656561909252,
-            2.59632695760662, NA
-          ), CI = c(
-            0.95, 0.95, 0.95, 0.95, 0.95, 0.95,
-            NA
-          ), CI_low = c(
-            0.779242126479362, 3.68155765129431, 1.48888237414841,
-            0.950552863618845, 6.27921864506856, 0.442202731672178, NA
+        structure(
+          list(
+            Parameter = c(
+              "cell[1,1]",
+              "cell[2,1]",
+              "cell[1,2]",
+              "cell[2,2]",
+              "cell[1,3]",
+              "cell[2,3]",
+              "Ratio"
+            ),
+            Median = c(
+              3.33359102240953,
+              7.27094924961528,
+              4.13335763121549,
+              3.36172537199681,
+              10.3872621523407,
+              2.56061336771352,
+              NA
+            ),
+            CI = c(0.95, 0.95, 0.95, 0.95, 0.95, 0.95,
+                   NA),
+            CI_low = c(
+              0.912122089726423,
+              3.51744611674693,
+              1.39218072401004,
+              0.923175932880601,
+              6.18021898129278,
+              0.465587711080369,
+              NA
+            ),
+            CI_high = c(
+              6.61128887457661,
+              11.4058892728414,
+              7.61378018576518,
+              6.65522159416386,
+              15.1209075845299,
+              5.35853420162441,
+              NA
+            ),
+            pd = c(1, 1, 1, 1, 1, 1, NA),
+            ROPE_CI = c(0.95, 0.95, 0.95,
+                        0.95, 0.95, 0.95, NA),
+            ROPE_low = c(-0.1, -0.1, -0.1, -0.1,
+                         -0.1, -0.1, NA),
+            ROPE_high = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+                          NA),
+            ROPE_Percentage = c(0, 0, 0, 0, 0, 0, NA),
+            log_BF = c(
+              2.49338780738881,
+              2.49338780738881,
+              2.49338780738881,
+              2.49338780738881,
+              2.49338780738881,
+              2.49338780738881,
+              NA
+            ),
+            BF = c(
+              12.1022066941064,
+              12.1022066941064,
+              12.1022066941064,
+              12.1022066941064,
+              12.1022066941064,
+              12.1022066941064,
+              NA
+            ),
+            Prior_Distribution = c(NA, NA, NA, NA, NA, NA, "independent multinomial"),
+            Prior_Location = c(NA, NA, NA, NA, NA, NA, 0),
+            Prior_Scale = c(NA,
+                            NA, NA, NA, NA, NA, 1.6)
           ),
-          CI_high = c(
-            6.45022241402301, 11.5250588748997, 7.60274937010908,
-            6.50585663003352, 15.0650800734588, 5.32715733658863, NA
-          ),
-          pd = c(1, 1, 1, 1, 1, 1, NA), ROPE_CI = c(
-            0.95, 0.95, 0.95,
-            0.95, 0.95, 0.95, NA
-          ), ROPE_low = c(
-            -0.1, -0.1, -0.1, -0.1,
-            -0.1, -0.1, NA
-          ), ROPE_high = c(
-            0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-            NA
-          ), ROPE_Percentage = c(0, 0, 0, 0, 0, 0, NA), BF = c(
-            12.1022066941064,
-            12.1022066941064, 12.1022066941064, 12.1022066941064, 12.1022066941064,
-            12.1022066941064, NA
-          ), Prior_Distribution = c(
-            NA, NA, NA,
-            NA, NA, NA, "independent multinomial"
-          ), Prior_Location = c(
-            NA,
-            NA, NA, NA, NA, NA, 0
-          ), Prior_Scale = c(
-            NA, NA, NA, NA, NA,
-            NA, 1.6
-          )
-        ), row.names = c(1L, 4L, 2L, 5L, 3L, 6L, 7L), class = c(
-          "describe_posterior",
-          "see_describe_posterior", "data.frame"
-        ), ci_method = "hdi"),
+          row.names = c(1L, 4L, 2L, 5L,
+                        3L, 6L, 7L),
+          class = c("describe_posterior", "see_describe_posterior",
+                    "data.frame"),
+          ci_method = "hdi",
+          object_name = "contingencyTableBF(x = table(mtcars$am, mtcars$cyl), sampleType = \"indepMulti\", fixedMargin = \"cols\", priorConcentration = 1.6)"
+        )
+        ,
         tolerance = 0.1,
         ignore_attr = TRUE
       )
@@ -398,52 +454,77 @@ if (require("testthat") &&
       set.seed(123)
       expect_equal(
         describe_posterior(anovaBF(extra ~ group, data = sleep, progress = FALSE), ci = 0.95),
-        structure(list(
-          Parameter = c(
-            "mu", "group-1", "group-2", "sig2",
-            "g_group"
-          ), Median = c(
-            1.53667371296145, -0.571674439385088,
-            0.571674439385088, 3.69268743002151, 0.349038661644431
-          ), CI = c(
-            0.95,
-            0.95, 0.95, 0.95, 0.95
-          ), CI_low = c(
-            0.691696017646264, -1.31604531656452,
-            -0.229408603643392, 1.75779899540302, 0.0192738130412634
-          ), CI_high = c(
-            2.43317955922589,
-            0.229408603643392, 1.31604531656452, 6.88471056133351, 5.30402785651874
-          ), pd = c(0.99975, 0.927, 0.927, 1, 1), ROPE_CI = c(
-            0.95, 0.95,
-            0.95, 0.95, 0.95
-          ), ROPE_low = c(
-            -0.201791972090071, -0.201791972090071,
-            -0.201791972090071, -0.201791972090071, -0.201791972090071
+        structure(
+          list(
+            Parameter = c("mu", "group-1", "group-2", "sig2",
+                          "g_group"),
+            Median = c(
+              1.53667371296145,
+              -0.571674439385088,
+              0.571674439385088,
+              3.69268743002151,
+              0.349038661644431
+            ),
+            CI = c(0.95,
+                   0.95, 0.95, 0.95, 0.95),
+            CI_low = c(
+              0.691696017646264,
+              -1.31604531656452,
+              -0.229408603643392,
+              1.75779899540302,
+              0.0192738130412634
+            ),
+            CI_high = c(
+              2.43317955922589,
+              0.229408603643392,
+              1.31604531656452,
+              6.88471056133351,
+              5.30402785651874
+            ),
+            pd = c(0.99975, 0.927, 0.927, 1, 1),
+            ROPE_CI = c(0.95, 0.95,
+                        0.95, 0.95, 0.95),
+            ROPE_low = c(
+              -0.201791972090071,
+              -0.201791972090071,
+              -0.201791972090071,
+              -0.201791972090071,
+              -0.201791972090071
+            ),
+            ROPE_high = c(
+              0.201791972090071,
+              0.201791972090071,
+              0.201791972090071,
+              0.201791972090071,
+              0.201791972090071
+            ),
+            ROPE_Percentage = c(0,
+                                0.162325703762168, 0.162325703762168, 0, 0.346487766377269),
+            log_BF = c(
+              0.235803198474248,
+              0.235803198474248,
+              0.235803198474248,
+              0.235803198474248,
+              0.235803198474248
+            ),
+            BF = c(
+              1.26592514964916,
+              1.26592514964916,
+              1.26592514964916,
+              1.26592514964916,
+              1.26592514964916
+            ),
+            Prior_Distribution = c(NA, "cauchy", "cauchy", NA, NA),
+            Prior_Location = c(NA, 0, 0, NA, NA),
+            Prior_Scale = c(NA,
+                            0.5, 0.5, NA, NA)
           ),
-          ROPE_high = c(
-            0.201791972090071, 0.201791972090071, 0.201791972090071,
-            0.201791972090071, 0.201791972090071
-          ), ROPE_Percentage = c(
-            0,
-            0.162325703762168, 0.162325703762168, 0, 0.346487766377269
-          ), BF = c(
-            1.26592514964916, 1.26592514964916, 1.26592514964916,
-            1.26592514964916, 1.26592514964916
-          ), Prior_Distribution = c(
-            NA,
-            "cauchy", "cauchy", NA, NA
-          ), Prior_Location = c(
-            NA, 0, 0,
-            NA, NA
-          ), Prior_Scale = c(NA, 0.5, 0.5, NA, NA)
-        ), row.names = c(
-          4L,
-          2L, 3L, 5L, 1L
-        ), class = c(
-          "describe_posterior", "see_describe_posterior",
-          "data.frame"
-        ), ci_method = "hdi"),
+          row.names = c(4L, 2L, 3L, 5L, 1L),
+          class = c("describe_posterior",
+                    "see_describe_posterior", "data.frame"),
+          ci_method = "hdi",
+          object_name = "anovaBF(extra ~ group, data = sleep, progress = FALSE)"
+        ),
         tolerance = 0.1,
         ignore_attr = TRUE
       )
