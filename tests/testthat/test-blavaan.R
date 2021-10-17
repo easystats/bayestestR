@@ -3,6 +3,7 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     skip_on_cran()
     skip_if_not_installed("blavaan")
     skip_if_not_installed("lavaan")
+    skip_if_not_installed("cmdstanr")
     require(blavaan)
 
     data("PoliticalDemocracy", package = "lavaan")

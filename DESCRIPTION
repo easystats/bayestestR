@@ -77,7 +77,6 @@ Suggests:
     blavaan,
     bridgesampling,
     brms,
-    cmdstanr,
     dplyr,
     effectsize,
     emmeans,
