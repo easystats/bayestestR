@@ -265,7 +265,7 @@ if (require("testthat") &&
       expect_equal(
         describe_posterior(ttestBF(mtcars$wt, mu = 3), ci = 0.95),
         structure(list(Parameter = "Difference", Median = -0.198578438156886,
-                       CI = 0.95, CI_low = -0.535759904384745, CI_high = 0.179261351622675,
+                       CI = 0.95, CI_low = -0.535759904384745, CI_high = 0.1557581,
                        pd = 0.858, ROPE_CI = 0.95, ROPE_low = -0.0978457442989697,
                        ROPE_high = 0.0978457442989697, ROPE_Percentage = 0.246250986582478,
                        log_BF = -0.949713514141272, BF = 0.386851835160946, Prior_Distribution = "cauchy",
