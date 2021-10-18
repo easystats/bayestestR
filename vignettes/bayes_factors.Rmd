@@ -130,7 +130,7 @@ become more or less credible?"
 
 
 ```{r deathsticks_fig, echo=FALSE, fig.cap="Bayesian analysis of the Students' (1908) Sleep data set.", fig.align='center', out.width="80%"}
-knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/deathsticks.jpg")
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/deathsticks.jpg")
 ```
 
 Let's use the Students' (1908) Sleep data set (`data("sleep")`). The data comes
