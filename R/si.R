@@ -91,11 +91,11 @@ si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
   if (is.null(prior)) {
     prior <- posterior
     if (verbose) {
-      warning(
-        "Prior not specified! ",
-        "Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)')",
-        " to get meaningful results."
-      )
+      warning(insight::format_message(
+        "Prior not specified!",
+        "Support intervals ('si') can only be computed for Bayesian models with proper priors.",
+        "Please specify priors (with column order matching 'posterior')."
+      ), call. = FALSE)
     }
   }
   prior <- data.frame(X = prior)
@@ -193,11 +193,11 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) 
 
   if (is.null(prior)) {
     prior <- posterior
-    warning(
-      "Prior not specified! ",
-      "Please specify priors (with column order matching 'posterior')",
-      " to get meaningful results."
-    )
+    warning(insight::format_message(
+      "Prior not specified!",
+      "Support intervals ('si') can only be computed for Bayesian models with proper priors.",
+      "Please specify priors (with column order matching 'posterior')."
+    ), call. = FALSE)
   }
 
   sis <- matrix(NA, nrow = ncol(posterior), ncol = 2)
