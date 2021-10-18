@@ -110,36 +110,36 @@ if (require("testthat") &&
 
       # brms -------------------------------------------------
 
-      x <- brms::brm(mpg ~ wt + (1 | cyl) + (1 + wt | gear), data = mtcars, refresh = 0)
-      rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, ci = c(0.8, 0.9))
-
-      expect_equal(dim(rez), c(4, 16))
-      expect_equal(colnames(rez), c(
-        "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
-        "CI_high", "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
-        "Rhat", "ESS"
-      ))
-
-      rez <- describe_posterior(
-        x,
-        centrality = NULL,
-        dispersion = TRUE,
-        test = NULL,
-        ci_method = "quantile",
-        diagnostic = NULL
-      )
-
-      expect_equal(dim(rez), c(2, 4))
-
-      model <- brms::brm(
-        mpg ~ drat,
-        data = mtcars,
-        chains = 2,
-        algorithm = "meanfield",
-        refresh = 0
-      )
-
-      expect_equal(nrow(describe_posterior(model)), 2)
+      # x <- brms::brm(mpg ~ wt + (1 | cyl) + (1 + wt | gear), data = mtcars, refresh = 0)
+      # rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, ci = c(0.8, 0.9))
+      #
+      # expect_equal(dim(rez), c(4, 16))
+      # expect_equal(colnames(rez), c(
+      #   "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
+      #   "CI_high", "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
+      #   "Rhat", "ESS"
+      # ))
+      #
+      # rez <- describe_posterior(
+      #   x,
+      #   centrality = NULL,
+      #   dispersion = TRUE,
+      #   test = NULL,
+      #   ci_method = "quantile",
+      #   diagnostic = NULL
+      # )
+      #
+      # expect_equal(dim(rez), c(2, 4))
+      #
+      # model <- brms::brm(
+      #   mpg ~ drat,
+      #   data = mtcars,
+      #   chains = 2,
+      #   algorithm = "meanfield",
+      #   refresh = 0
+      # )
+      #
+      # expect_equal(nrow(describe_posterior(model)), 2)
 
       # rstanarm -------------------------------------------------
 
