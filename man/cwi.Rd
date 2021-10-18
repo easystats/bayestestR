@@ -3,7 +3,7 @@
 \name{cwi}
 \alias{cwi}
 \alias{cwi.data.frame}
-\title{Curve-wise Intervals (CWI)}
+\title{Curvewise Intervals (CWI)}
 \usage{
 cwi(x, ...)
 
@@ -28,51 +28,16 @@ A data frame with following columns:
 }
 }
 \description{
-Compute the \strong{Curve-Wise Interval (CWI)} of posterior distributions using \code{ggdist::curve_interval()}. These are particularly useful for visualisation of model's predictions.
+Compute the \strong{Curvewise interval (CWI)} (also called the "simultaneous interval" or "joint interval") of posterior distributions using \code{ggdist::curve_interval()}.
+Whereas the more typical "pointwise intervals" contain xx\% of the posterior for a single parameter,
+joint/curvewise intervals contain xx\% of the posterior distribution for \strong{all} parameters.
 }
 \details{
-Unlike equal-tailed intervals (see \code{eti()}) that typically exclude \verb{2.5\%}
-from each tail of the distribution and always include the median, the HDI is
-\emph{not} equal-tailed and therefore always includes the mode(s) of posterior
-distributions.
-\cr \cr
-The \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{\verb{95\%} or \verb{89\%} Credible Intervals (CI)}
-are two reasonable ranges to characterize the uncertainty related to the estimation (see \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{here} for a discussion about the differences between these two values).
-\cr
-The \verb{89\%} intervals (\code{ci = 0.89}) are deemed to be more stable than, for
-instance, \verb{95\%} intervals (\cite{Kruschke, 2014}). An effective sample size
-of at least 10.000 is recommended if one wants to estimate \verb{95\%} intervals
-with high precision (\cite{Kruschke, 2014, p. 183ff}). Unfortunately, the
-default number of posterior samples for most Bayes packages (e.g., \code{rstanarm}
-or \code{brms}) is only 4.000 (thus, you might want to increase it when fitting
-your model). Moreover, 89 indicates the arbitrariness of interval limits -
-its only remarkable property is being the highest prime number that does not
-exceed the already unstable \verb{95\%} threshold (\cite{McElreath, 2015}).
-\cr
-However, \verb{95\%} has some \href{https://easystats.github.io/blog/posts/bayestestr_95/}{advantages too}. For instance, it
-shares (in the case of a normal posterior distribution) an intuitive
-relationship with the standard deviation and it conveys a more accurate image
-of the (artificial) bounds of the distribution. Also, because it is wider, it
-makes analyses more conservative (i.e., the probability of covering 0 is
-larger for the \verb{95\%} CI than for lower ranges such as \verb{89\%}), which is a good
-thing in the context of the reproducibility crisis.
-\cr \cr
-A \verb{95\%} equal-tailed interval (ETI) has \verb{2.5\%} of the distribution on either
-side of its limits. It indicates the 2.5th percentile and the 97.5h
-percentile. In symmetric distributions, the two methods of computing credible
-intervals, the ETI and the \link[=hdi]{HDI}, return similar results.
-\cr \cr
-This is not the case for skewed distributions. Indeed, it is possible that
-parameter values in the ETI have lower credibility (are less probable) than
-parameter values outside the ETI. This property seems undesirable as a summary
-of the credible values in a distribution.
-\cr \cr
-On the other hand, the ETI range does change when transformations are applied
-to the distribution (for instance, for a log odds scale to probabilities):
-the lower and higher bounds of the transformed distribution will correspond
-to the transformed lower and higher bounds of the original distribution.
-On the contrary, applying transformations to the distribution will change
-the resulting HDI.
+Applied model predictions, pointwise intervals contain xx\% of the predicted response values \strong{conditional} on specific predictor values.
+In contrast, curvewise intervals contain xx\% of the predicted response values across all predictor values.
+Put another way, curvewise intervals contain xx\% of the full \strong{prediction lines} from the model.
+
+For more details, see the \href{https://mjskay.github.io/ggdist/articles/lineribbon.html#curve-boxplots-aka-lineribbons-with-joint-intervals-or-curvewise-intervals-}{\emph{ggdist} documentation on curvewise intervals}.
 }
 \examples{
 library(bayestestR)
