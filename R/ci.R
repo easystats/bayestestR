@@ -4,7 +4,7 @@
 #'
 #' \itemize{
 #'  \item [Bayesian models](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-#'  \item [Frequentist models](https://easystats.github.io/parameters/reference/ci.merMod.html)
+#'  \item [Frequentist models](https://easystats.github.io/parameters/reference/ci.default.html)
 #' }
 #'
 #' @param x A `stanreg` or `brmsfit` model, or a vector representing a posterior distribution.
