@@ -42,13 +42,13 @@ if (require("testthat") &&
       test = "all",
       ci = c(0.8, 0.9)
     ))
-    rez <- suppressWarnings(describe_posterior(
-      x,
-      centrality = "all",
-      dispersion = TRUE,
-      test = "all",
-      ci = c(0.8, 0.9)
-    ))
+    # rez <- suppressWarnings(describe_posterior(
+    #   x,
+    #   centrality = "all",
+    #   dispersion = TRUE,
+    #   test = "all",
+    #   ci = c(0.8, 0.9)
+    # ))
     expect_equal(dim(rez), c(2, 19))
 
     rez <- describe_posterior(
@@ -64,11 +64,11 @@ if (require("testthat") &&
 
     x <- data.frame(replicate(4, rnorm(100)))
     expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
-    rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
-    expect_equal(dim(rez), c(4, 19))
+    # rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
+    # expect_equal(dim(rez), c(4, 19))
     expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
-    rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
-    expect_equal(dim(rez), c(8, 19))
+    # rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
+    # expect_equal(dim(rez), c(8, 19))
     rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
     expect_equal(dim(rez), c(4, 4))
   })
