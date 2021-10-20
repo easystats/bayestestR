@@ -114,7 +114,7 @@ ci.emmGrid <- function(x, ci = NULL, ...) {
     }
 
     if (is.null(ci)) ci <- 0.95
-    return(parameters::ci_wald(model = x, ci = ci, dof = parameters::degrees_of_freedom(x), ...))
+    return(parameters::ci(model = x, ci = ci, ...))
   }
 
   if (is.null(ci)) ci <- 0.95
