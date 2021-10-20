@@ -49,7 +49,7 @@ if (require("testthat") &&
     #   test = "all",
     #   ci = c(0.8, 0.9)
     # ))
-    expect_equal(dim(rez), c(2, 19))
+    # expect_equal(dim(rez), c(2, 19))
 
     rez <- describe_posterior(
       x,
