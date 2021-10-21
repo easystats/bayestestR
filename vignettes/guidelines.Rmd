@@ -76,7 +76,7 @@ might cover it after transformation (see
 ### **Existence** 
 
 ```{r echo=FALSE, fig.cap="Reviewer 2 (circa a long time ago in a galaxy far away).", fig.align='center', out.width="60%"}
-knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/watto.jpg")
+knitr::include_graphics("../man/figures/watto.jpg")
 ```
 
 The Bayesian framework can neatly delineate and quantify different aspects of

@@ -38,7 +38,7 @@ set.seed(333)
 ```
 
 ```{r echo=FALSE, fig.cap="Yoda Bayes (896 BBY - 4 ABY).", fig.align='center', out.width="80%"}
-knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/YodaBayes.jpg")
+knitr::include_graphics("../man/figures/YodaBayes.jpg")
 ```
 
 ## Mixed Models

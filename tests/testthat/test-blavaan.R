@@ -84,7 +84,7 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     expect_equal(ncol(x), 14)
 
     # bfit_prior <- unupdate(bfit)
-    # capture.output(x <- bayesfactor_parameters(bfit, prior = bfit_prior))
+    # capture.output(x <- expect_warning(bayesfactor_parameters(bfit, prior = bfit_prior)))
     # expect_equal(nrow(x), 14)
     #
     # x <- expect_warning(si(bfit, prior = bfit_prior))
