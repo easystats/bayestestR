@@ -4,7 +4,7 @@
 #'
 #' \itemize{
 #'  \item [Bayesian models](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-#'  \item [Frequentist models](https://easystats.github.io/parameters/reference/ci.merMod.html)
+#'  \item [Frequentist models](https://easystats.github.io/parameters/reference/ci.default.html)
 #' }
 #'
 #' @param x A `stanreg` or `brmsfit` model, or a vector representing a posterior distribution.
@@ -114,7 +114,7 @@ ci.emmGrid <- function(x, ci = NULL, ...) {
     }
 
     if (is.null(ci)) ci <- 0.95
-    return(parameters::ci_wald(model = x, ci = ci, dof = parameters::degrees_of_freedom(x), ...))
+    return(parameters::ci(model = x, ci = ci, ...))
   }
 
   if (is.null(ci)) ci <- 0.95

@@ -1,8 +1,8 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.11.0.1
-Authors@R: 
+Version: 0.11.5
+Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
              role = c("aut", "cre"),
@@ -22,7 +22,7 @@ Authors@R:
              family = "Patil",
              role = "aut",
              email = "patilindrajeet.science@gmail.com",
-             comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@patilindrajeets")),             
+             comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@patilindrajeets")),
       person(given = "Michael D.",
              family = "Wilson",
              role = "aut",
@@ -109,11 +109,10 @@ Suggests:
 License: GPL-3
 URL: https://easystats.github.io/bayestestR/
 BugReports: https://github.com/easystats/bayestestR/issues
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
 RoxygenNote: 7.1.2
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
-Remotes: easystats/insight

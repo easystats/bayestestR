@@ -65,31 +65,31 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 }
 
 .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
-if (.runThisTest && require("brms", quietly = TRUE)) {
-  set.seed(123)
-  model <- brm(mpg ~ wt + gear, data = mtcars, iter = 500)
-  rope <- rope(model, verbose = FALSE)
-
-  test_that("rope (brms)", {
-    expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
-    expect_equal(rope$ROPE_high[1], 0.6026948)
-    expect_equal(rope$ROPE_Percentage, c(0.00, 0.00, 0.50), tolerance = 0.1)
-  })
-
-  model <- brm(mvbind(mpg, disp) ~ wt + gear, data = mtcars, iter = 500)
-  rope <- rope(model, verbose = FALSE)
-
-  test_that("rope (brms, multivariate)", {
-    expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
-    expect_equal(rope$ROPE_high[1], 0.6026948, tolerance = 0.01)
-    expect_equal(rope$ROPE_high[4], 12.3938694, tolerance = 0.01)
-    expect_equal(
-      rope$ROPE_Percentage,
-      c(0, 0, 0.493457, 0.072897, 0, 0.508411),
-      tolerance = 0.1
-    )
-  })
-}
+# if (.runThisTest && require("brms", quietly = TRUE)) {
+#   set.seed(123)
+#   model <- brm(mpg ~ wt + gear, data = mtcars, iter = 500)
+#   rope <- rope(model, verbose = FALSE)
+#
+#   test_that("rope (brms)", {
+#     expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
+#     expect_equal(rope$ROPE_high[1], 0.6026948)
+#     expect_equal(rope$ROPE_Percentage, c(0.00, 0.00, 0.50), tolerance = 0.1)
+#   })
+#
+#   model <- brm(mvbind(mpg, disp) ~ wt + gear, data = mtcars, iter = 500)
+#   rope <- rope(model, verbose = FALSE)
+#
+#   test_that("rope (brms, multivariate)", {
+#     expect_equal(rope$ROPE_high, -rope$ROPE_low, tolerance = 0.01)
+#     expect_equal(rope$ROPE_high[1], 0.6026948, tolerance = 0.01)
+#     expect_equal(rope$ROPE_high[4], 12.3938694, tolerance = 0.01)
+#     expect_equal(
+#       rope$ROPE_Percentage,
+#       c(0, 0, 0.493457, 0.072897, 0, 0.508411),
+#       tolerance = 0.1
+#     )
+#   })
+# }
 
 if (require("BayesFactor", quietly = TRUE)) {
   mods <- regressionBF(mpg ~ am + cyl, mtcars, progress = FALSE)
