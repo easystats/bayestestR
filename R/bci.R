@@ -11,7 +11,7 @@
 #'
 #' @references
 #' DiCiccio, T. J. and B. Efron. (1996). Bootstrap Confidence Intervals.
-#' Statistical Science. 11(3): 189–212. \doi{10.1214/ss/1032280214}
+#' Statistical Science. 11(3): 189–212. 10.1214/ss/1032280214
 #'
 #' @examples
 #' posterior <- rnorm(1000)

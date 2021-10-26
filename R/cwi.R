@@ -17,6 +17,7 @@
 #' @family ci
 #'
 #' @examples
+#' \donttest{
 #' library(bayestestR)
 #'
 #' if (require("ggplot2") && require("rstanarm") && require("ggdist")) {
@@ -53,7 +54,7 @@
 #'            aes(y = iter_value, group = iter_group),
 #'            alpha = 0.3)
 #' }
-#'
+#' }
 #' @export
 cwi <- function(x, ...) {
   UseMethod("cwi")

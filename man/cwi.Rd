@@ -40,6 +40,7 @@ Put another way, curvewise intervals contain xx\% of the full \strong{prediction
 For more details, see the \href{https://mjskay.github.io/ggdist/articles/lineribbon.html#curve-boxplots-aka-lineribbons-with-joint-intervals-or-curvewise-intervals-}{\emph{ggdist} documentation on curvewise intervals}.
 }
 \examples{
+\donttest{
 library(bayestestR)
 
 if (require("ggplot2") && require("rstanarm") && require("ggdist")) {
@@ -76,7 +77,7 @@ ggplot(data, aes(x = x, y = Median)) +
            aes(y = iter_value, group = iter_group),
            alpha = 0.3)
 }
-
+}
 }
 \seealso{
 Other ci: 

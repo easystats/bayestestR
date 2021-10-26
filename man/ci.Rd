@@ -151,7 +151,7 @@ if (require("emmeans")) {
 }
 }
 \references{
-Gelman A, Greenland S. Are confidence intervals better termed "uncertainty intervals"? BMJ 2019;l5381. \doi{10.1136/bmj.l5381}
+Gelman A, Greenland S. Are confidence intervals better termed "uncertainty intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381
 }
 \seealso{
 Other ci: 

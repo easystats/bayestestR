@@ -148,7 +148,7 @@ bci(posterior, ci = c(.80, .89, .95))
 }
 \references{
 DiCiccio, T. J. and B. Efron. (1996). Bootstrap Confidence Intervals.
-Statistical Science. 11(3): 189–212. \doi{10.1214/ss/1032280214}
+Statistical Science. 11(3): 189–212. 10.1214/ss/1032280214
 }
 \seealso{
 Other ci: 
