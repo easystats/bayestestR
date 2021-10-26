@@ -279,9 +279,9 @@ Wagenmakers’ pizza poking analogy. From the great &lt;www.bayesianspectacles.o
 <span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Summary of Posterior Distribution
 &gt; 
-&gt; Parameter  | Median |       95% CI |     pd |          ROPE | % in ROPE |    BF |              Prior
-&gt; ----------------------------------------------------------------------------------------------------
-&gt; Difference |   0.19 | [0.06, 0.31] | 99.75% | [-0.03, 0.03] |        0% | 17.72 | Cauchy (0 +- 0.71)</code></pre>
+&gt; Parameter  | Median |         95% CI |     pd |          ROPE | % in ROPE |    BF |              Prior
+&gt; ------------------------------------------------------------------------------------------------------
+&gt; Difference |  -0.19 | [-0.31, -0.06] | 99.75% | [-0.03, 0.03] |        0% | 17.72 | Cauchy (0 +- 0.71)</code></pre>
 <p>From the indices, we can say that the difference of <code>Sepal.Width</code> between <em>virginica</em> and <em>versicolor</em> has a probability of <strong>100% of being negative</strong> [<em>from the pd and the sign of the median</em>] (median = -0.19, 89% CI [-0.29, -0.092]). The data provides a <strong>strong evidence against the null hypothesis</strong> (BF = 18).</p>
 <p>Keep that in mind as we will see another way of investigating this question.</p>
 </div>
