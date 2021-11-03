@@ -51,6 +51,9 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   info <- insight::model_info(model)
   formula <- insight::find_formula(model)
   family <- insight::get_family(model)
+  if (inherits(family, "brmsfamily")) {
+    family <- get(family$family)(link = family$link)
+  }
 
   freq <- .convert_bayesian_as_frequentist(
     info = info, formula = formula, data = data, family = family, REML = REML
