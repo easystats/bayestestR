@@ -80,10 +80,12 @@ Suggests:
     dplyr,
     effectsize,
     emmeans,
+    gamm4,
     GGally,
     ggdist,
     ggplot2,
     ggridges,
+    glmmTMB,
     httr,
     KernSmooth,
     knitr,
@@ -112,6 +114,6 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.1.2
+RoxygenNote: 7.1.2.9000
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
