@@ -5,9 +5,9 @@
 \alias{bayesian_as_frequentist}
 \title{Convert (refit) a Bayesian model to frequentist}
 \usage{
-convert_bayesian_as_frequentist(model, data = NULL)
+convert_bayesian_as_frequentist(model, data = NULL, REML = TRUE)
 
-bayesian_as_frequentist(model, data = NULL)
+bayesian_as_frequentist(model, data = NULL, REML = TRUE)
 }
 \arguments{
 \item{model}{A Bayesian model.}
