@@ -5,6 +5,9 @@
 #' @param model A Bayesian model.
 #' @param data Data used by the model. If `NULL`, will try to extract it
 #'   from the model.
+#' @param REML For mixed effects, should models be estimated using
+#'   restricted maximum likelihood (REML) (`TRUE`, default) or maximum
+#'   likelihood (`FALSE`)?
 #' @examples
 #' \donttest{
 #' # Rstanarm ----------------------
@@ -53,7 +56,13 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
     info = info, formula = formula, data = data, family = family, REML = REML
   )
 
-  freq
+  if (inherits(freq, "error")) {
+    stop(insight::format_message(
+      "Model could not be automatically converted to frequentist model."
+    ), call. = FALSE)
+  } else {
+    return(freq)
+  }
 }
 
 # internaal
@@ -132,13 +141,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
     }
   }
 
-  if (inherits(freq, "error")) {
-    stop(insight::format_message(
-      "Model could not be automatically converted to frequentist model."
-    ), call. = FALSE)
-  } else {
-    return(freq)
-  }
+  return(freq)
 }
 
 .rebuild_cond_formula <- function(formula) {
@@ -158,7 +161,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
       random_formula <- paste0("(", as.character(formula$random)[-1], ")")
     }
     fixed_formula <- paste(as.character(formula$conditional)[c(2, 1, 3)], collapse = " ")
-    cond_formula <- as.formula(paste(
+    cond_formula <- stats::as.formula(paste(
       fixed_formula, random_formula, sep = " + "
     ))
     return(cond_formula)

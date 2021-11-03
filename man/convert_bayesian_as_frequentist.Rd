@@ -14,6 +14,10 @@ bayesian_as_frequentist(model, data = NULL, REML = TRUE)
 
 \item{data}{Data used by the model. If \code{NULL}, will try to extract it
 from the model.}
+
+\item{REML}{For mixed effects, should models be estimated using
+restricted maximum likelihood (REML) (\code{TRUE}, default) or maximum
+likelihood (\code{FALSE})?}
 }
 \description{
 Refit Bayesian model as frequentist. Can be useful for comparisons.
