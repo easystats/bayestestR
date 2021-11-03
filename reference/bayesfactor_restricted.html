@@ -350,66 +350,67 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span>
-<span class='va'>prior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
-  X <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>,
-  X1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>,
-  X3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
-  X <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>.4</span><span class='op'>)</span>,
-  X1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='op'>-</span><span class='fl'>.2</span><span class='op'>)</span>,
-  X3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='va'>hyps</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-  <span class='st'>"X &gt; X1 &amp; X1 &gt; X3"</span>,
-  <span class='st'>"X &gt; X1"</span>
-<span class='op'>)</span>
-
-<span class='fu'>bayesfactor_restricted</span><span class='op'>(</span><span class='va'>posterior</span>, hypothesis <span class='op'>=</span> <span class='va'>hyps</span>, prior <span class='op'>=</span> <span class='va'>prior</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #0000BB;'>Bayes Factor (Order-Restriction)</span>
-#&gt; 
-#&gt; Hypothesis       P(Prior) P(Posterior)   BF
-#&gt; X &gt; X1 &amp; X1 &gt; X3     0.20         0.23 1.15
-#&gt; X &gt; X1               0.47         0.74 1.57
-#&gt; 
-#&gt; * Bayes factors for the restricted model vs. the un-restricted model.</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># rstanarm models</span>
-<span class='co'># ---------------</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/rvlenth/emmeans'>"emmeans"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>fit_stan</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span> <span class='op'>+</span> <span class='va'>am</span>,
-    data <span class='op'>=</span> <span class='va'>mtcars</span>, refresh <span class='op'>=</span> <span class='fl'>0</span>
-  <span class='op'>)</span>
-  <span class='va'>hyps</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-    <span class='st'>"am &gt; 0 &amp; cyl &lt; 0"</span>,
-    <span class='st'>"cyl &lt; 0"</span>,
-    <span class='st'>"wt - cyl &gt; 0"</span>
-  <span class='op'>)</span>
-  <span class='fu'>bayesfactor_restricted</span><span class='op'>(</span><span class='va'>fit_stan</span>, hypothesis <span class='op'>=</span> <span class='va'>hyps</span><span class='op'>)</span>
-
-  <span class='co'># emmGrid objects</span>
-  <span class='co'># ---------------</span>
-  <span class='co'># replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html</span>
-  <span class='va'>disgust_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.table</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/connections.html'>url</a></span><span class='op'>(</span><span class='st'>"http://www.learnbayes.org/disgust_example.txt"</span><span class='op'>)</span>, header <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-  <span class='fu'><a href='https://rdrr.io/r/stats/contrasts.html'>contrasts</a></span><span class='op'>(</span><span class='va'>disgust_data</span><span class='op'>$</span><span class='va'>condition</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>contr.orthonorm</span> <span class='co'># see vignette</span>
-  <span class='va'>fit_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>score</span> <span class='op'>~</span> <span class='va'>condition</span>, data <span class='op'>=</span> <span class='va'>disgust_data</span>, family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-
-  <span class='va'>em_condition</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emmeans.html'>emmeans</a></span><span class='op'>(</span><span class='va'>fit_model</span>, <span class='op'>~</span><span class='va'>condition</span><span class='op'>)</span>
-  <span class='va'>hyps</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lemon &lt; control &amp; control &lt; sulfur"</span><span class='op'>)</span>
-
-  <span class='fu'>bayesfactor_restricted</span><span class='op'>(</span><span class='va'>em_condition</span>, prior <span class='op'>=</span> <span class='va'>fit_model</span>, hypothesis <span class='op'>=</span> <span class='va'>hyps</span><span class='op'>)</span>
-  <span class='co'># &gt; # Bayes Factor (Order-Restriction)</span>
-  <span class='co'># &gt;</span>
-  <span class='co'># &gt;                          Hypothesis P(Prior) P(Posterior)   BF</span>
-  <span class='co'># &gt;  lemon &lt; control &amp; control &lt; sulfur     0.17         0.75 4.49</span>
-  <span class='co'># &gt; ---</span>
-  <span class='co'># &gt; Bayes factors for the restricted model vs. the un-restricted model.</span>
-<span class='op'>}</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>prior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span class='r-in'>  X <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>,</span>
+<span class='r-in'>  X1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>,</span>
+<span class='r-in'>  X3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span class='r-in'>  X <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>.4</span><span class='op'>)</span>,</span>
+<span class='r-in'>  X1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='op'>-</span><span class='fl'>.2</span><span class='op'>)</span>,</span>
+<span class='r-in'>  X3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>hyps</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='st'>"X &gt; X1 &amp; X1 &gt; X3"</span>,</span>
+<span class='r-in'>  <span class='st'>"X &gt; X1"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>bayesfactor_restricted</span><span class='op'>(</span><span class='va'>posterior</span>, hypothesis <span class='op'>=</span> <span class='va'>hyps</span>, prior <span class='op'>=</span> <span class='va'>prior</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Bayes Factor (Order-Restriction)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hypothesis       P(Prior) P(Posterior)   BF</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> X &gt; X1 &amp; X1 &gt; X3     0.20         0.23 1.15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> X &gt; X1               0.47         0.74 1.57</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> * Bayes factors for the restricted model vs. the un-restricted model.</span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># rstanarm models</span></span>
+<span class='r-in'><span class='co'># ---------------</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/rvlenth/emmeans'>"emmeans"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='va'>fit_stan</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span> <span class='op'>+</span> <span class='va'>cyl</span> <span class='op'>+</span> <span class='va'>am</span>,</span>
+<span class='r-in'>    data <span class='op'>=</span> <span class='va'>mtcars</span>, refresh <span class='op'>=</span> <span class='fl'>0</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>hyps</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='st'>"am &gt; 0 &amp; cyl &lt; 0"</span>,</span>
+<span class='r-in'>    <span class='st'>"cyl &lt; 0"</span>,</span>
+<span class='r-in'>    <span class='st'>"wt - cyl &gt; 0"</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'>bayesfactor_restricted</span><span class='op'>(</span><span class='va'>fit_stan</span>, hypothesis <span class='op'>=</span> <span class='va'>hyps</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># emmGrid objects</span></span>
+<span class='r-in'>  <span class='co'># ---------------</span></span>
+<span class='r-in'>  <span class='co'># replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html</span></span>
+<span class='r-in'>  <span class='va'>disgust_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.table</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/connections.html'>url</a></span><span class='op'>(</span><span class='st'>"http://www.learnbayes.org/disgust_example.txt"</span><span class='op'>)</span>, header <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/stats/contrasts.html'>contrasts</a></span><span class='op'>(</span><span class='va'>disgust_data</span><span class='op'>$</span><span class='va'>condition</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>contr.orthonorm</span> <span class='co'># see vignette</span></span>
+<span class='r-in'>  <span class='va'>fit_model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>score</span> <span class='op'>~</span> <span class='va'>condition</span>, data <span class='op'>=</span> <span class='va'>disgust_data</span>, family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>gaussian</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='va'>em_condition</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/emmeans/man/emmeans.html'>emmeans</a></span><span class='op'>(</span><span class='va'>fit_model</span>, <span class='op'>~</span><span class='va'>condition</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>hyps</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lemon &lt; control &amp; control &lt; sulfur"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='fu'>bayesfactor_restricted</span><span class='op'>(</span><span class='va'>em_condition</span>, prior <span class='op'>=</span> <span class='va'>fit_model</span>, hypothesis <span class='op'>=</span> <span class='va'>hyps</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='co'># &gt; # Bayes Factor (Order-Restriction)</span></span>
+<span class='r-in'>  <span class='co'># &gt;</span></span>
+<span class='r-in'>  <span class='co'># &gt;                          Hypothesis P(Prior) P(Posterior)   BF</span></span>
+<span class='r-in'>  <span class='co'># &gt;  lemon &lt; control &amp; control &lt; sulfur     0.17         0.75 4.49</span></span>
+<span class='r-in'>  <span class='co'># &gt; ---</span></span>
+<span class='r-in'>  <span class='co'># &gt; Bayes factors for the restricted model vs. the un-restricted model.</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

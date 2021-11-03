@@ -205,7 +205,7 @@ BF_{12}=\frac{Posterior~Odds_{12}}{Prior~Odds_{12}}
 Bayesian analysis of the Students’ (1908) Sleep data set.
 </p>
 </div>
-<p>Let’s use the Students’ (1908) Sleep data set (<code><a href="https://rdrr.io/r/utils/data.html">data("sleep")</a></code>). The data comes from a study in which participants were administered a drug and the researchers assessed the extra hours of sleep that participants slept afterwards. We will try answering the following research question using Bayes factors:</p>
+<p>Let’s use the Students’ (1908) Sleep data set (<code>data("sleep")</code>). The data comes from a study in which participants were administered a drug and the researchers assessed the extra hours of sleep that participants slept afterwards. We will try answering the following research question using Bayes factors:</p>
 <blockquote>
 <p><strong>Given the observed data, has the hypothesis that the drug (the effect of <code>group</code>) has no effect on the numbers of hours of extra sleep (variable <code>extra</code>) become more of less credible?</strong></p>
 </blockquote>
@@ -705,7 +705,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <h2 class="hasAnchor">
 <a href="#weighted_posteriors" class="anchor"></a>Averaging posteriors</h2>
 <p>Similar to how we can average evidence for a predictor across models, we can also average the <strong>posterior estimate</strong> across models. This is useful in situations where Bayes factors seem to support a null effect, yet the <em>HDI</em> for the alternative excludes the null value (also see <code><a href="../reference/si.html">si()</a></code> described above).</p>
-<p>For example, looking at Motor <em>Trend Car Road Tests</em> (<code><a href="https://rdrr.io/r/utils/data.html">data(mtcars)</a></code>), we would naturally predict miles/gallon (<code>mpg</code>) from transition type (<code>am</code>) and weight (<code>wt</code>), but what about number of carburetors (<code>carb</code>)? Is this a good predictor?</p>
+<p>For example, looking at Motor <em>Trend Car Road Tests</em> (<code>data(mtcars)</code>), we would naturally predict miles/gallon (<code>mpg</code>) from transition type (<code>am</code>) and weight (<code>wt</code>), but what about number of carburetors (<code>carb</code>)? Is this a good predictor?</p>
 <p>We can determine this by comparing the following models:</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">am</span>,

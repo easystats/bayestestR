@@ -207,7 +207,7 @@
     </tr>
     <tr>
       <th>log</th>
-      <td><p>Return the <code><a href='https://rdrr.io/r/base/Log.html'>log(BF)</a></code>?</p></td>
+      <td><p>Return the <code>log(BF)</code>?</p></td>
     </tr>
     </table>
 
@@ -216,13 +216,14 @@
     <p>The Bayes Factors corresponding to the BIC values against the denominator.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>bic1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/AIC.html'>BIC</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='fl'>1</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>bic2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/AIC.html'>BIC</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>bic3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/AIC.html'>BIC</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>bic4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/AIC.html'>BIC</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='fu'>bic_to_bf</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>bic1</span>, <span class='va'>bic2</span>, <span class='va'>bic3</span>, <span class='va'>bic4</span><span class='op'>)</span>, denominator <span class='op'>=</span> <span class='va'>bic1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 1.000000e+00 1.695852e+29 5.843105e+55 2.203243e+54</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>bic1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/AIC.html'>BIC</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='fl'>1</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bic2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/AIC.html'>BIC</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bic3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/AIC.html'>BIC</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>+</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>bic4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/AIC.html'>BIC</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>Species</span> <span class='op'>*</span> <span class='va'>Petal.Length</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>bic_to_bf</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>bic1</span>, <span class='va'>bic2</span>, <span class='va'>bic3</span>, <span class='va'>bic4</span><span class='op'>)</span>, denominator <span class='op'>=</span> <span class='va'>bic1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1.000000e+00 1.695852e+29 5.843105e+55 2.203243e+54</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

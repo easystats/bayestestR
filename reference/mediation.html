@@ -251,7 +251,7 @@ treatment variable automatically, however, this may fail.</p></td>
 variables to be used for the mediation analysis. Usually can be <code>NULL</code>,
 in which case these variables are retrieved automatically. If not <code>NULL</code>,
 names should match the names of the model formulas,
-<code><a href='https://rdrr.io/r/base/names.html'>names(insight::find_response(model, combine = TRUE))</a></code>. This can be
+<code>names(insight::find_response(model, combine = TRUE))</code>. This can be
 useful if, for instance, the mediator variable used as predictor has a different
 name from the mediator variable used as response. This might occur when the
 mediator is transformed in one model, but used "as is" as response variable
@@ -329,42 +329,42 @@ Software, Vol. 59, No. 5, pp. 1-38.</p></li>
 the frequentist framework.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://imai.princeton.edu/projects/mechanisms.html'>mediation</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span>
-
-<span class='co'># load sample data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>jobs</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
-
-<span class='co'># linear models, for mediation analysis</span>
-<span class='va'>b1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>job_seek</span> <span class='op'>~</span> <span class='va'>treat</span> <span class='op'>+</span> <span class='va'>econ_hard</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>age</span>, data <span class='op'>=</span> <span class='va'>jobs</span><span class='op'>)</span>
-<span class='va'>b2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>depress2</span> <span class='op'>~</span> <span class='va'>treat</span> <span class='op'>+</span> <span class='va'>job_seek</span> <span class='op'>+</span> <span class='va'>econ_hard</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>age</span>, data <span class='op'>=</span> <span class='va'>jobs</span><span class='op'>)</span>
-<span class='co'># mediation analysis, for comparison with Stan models</span>
-<span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mediation/man/mediate.html'>mediate</a></span><span class='op'>(</span><span class='va'>b1</span>, <span class='va'>b2</span>, sims <span class='op'>=</span> <span class='fl'>1000</span>, treat <span class='op'>=</span> <span class='st'>"treat"</span>, mediator <span class='op'>=</span> <span class='st'>"job_seek"</span><span class='op'>)</span>
-
-<span class='co'># Fit Bayesian mediation model in brms</span>
-<span class='va'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>job_seek</span> <span class='op'>~</span> <span class='va'>treat</span> <span class='op'>+</span> <span class='va'>econ_hard</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>age</span><span class='op'>)</span>
-<span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>depress2</span> <span class='op'>~</span> <span class='va'>treat</span> <span class='op'>+</span> <span class='va'>job_seek</span> <span class='op'>+</span> <span class='va'>econ_hard</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>age</span><span class='op'>)</span>
-<span class='va'>m2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>f1</span> <span class='op'>+</span> <span class='va'>f2</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula-helpers.html'>set_rescor</a></span><span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>jobs</span>, cores <span class='op'>=</span> <span class='fl'>4</span>, refresh <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
-
-<span class='co'># Fit Bayesian mediation model in rstanarm</span>
-<span class='va'>m3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_mvmer.html'>stan_mvmer</a></span><span class='op'>(</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    <span class='va'>job_seek</span> <span class='op'>~</span> <span class='va'>treat</span> <span class='op'>+</span> <span class='va'>econ_hard</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>age</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>occp</span><span class='op'>)</span>,
-    <span class='va'>depress2</span> <span class='op'>~</span> <span class='va'>treat</span> <span class='op'>+</span> <span class='va'>job_seek</span> <span class='op'>+</span> <span class='va'>econ_hard</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>age</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>occp</span><span class='op'>)</span>
-  <span class='op'>)</span>,
-  data <span class='op'>=</span> <span class='va'>jobs</span>,
-  cores <span class='op'>=</span> <span class='fl'>4</span>,
-  refresh <span class='op'>=</span> <span class='fl'>0</span>
-<span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m1</span><span class='op'>)</span>
-<span class='fu'>mediation</span><span class='op'>(</span><span class='va'>m2</span>, centrality <span class='op'>=</span> <span class='st'>"mean"</span>, ci <span class='op'>=</span> <span class='fl'>.95</span><span class='op'>)</span>
-<span class='fu'>mediation</span><span class='op'>(</span><span class='va'>m3</span>, centrality <span class='op'>=</span> <span class='st'>"mean"</span>, ci <span class='op'>=</span> <span class='fl'>.95</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://imai.princeton.edu/projects/mechanisms.html'>mediation</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mc-stan.org/rstanarm/'>rstanarm</a></span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># load sample data</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>jobs</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># linear models, for mediation analysis</span></span>
+<span class='r-in'><span class='va'>b1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>job_seek</span> <span class='op'>~</span> <span class='va'>treat</span> <span class='op'>+</span> <span class='va'>econ_hard</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>age</span>, data <span class='op'>=</span> <span class='va'>jobs</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>b2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>depress2</span> <span class='op'>~</span> <span class='va'>treat</span> <span class='op'>+</span> <span class='va'>job_seek</span> <span class='op'>+</span> <span class='va'>econ_hard</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>age</span>, data <span class='op'>=</span> <span class='va'>jobs</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># mediation analysis, for comparison with Stan models</span></span>
+<span class='r-in'><span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/mediation/man/mediate.html'>mediate</a></span><span class='op'>(</span><span class='va'>b1</span>, <span class='va'>b2</span>, sims <span class='op'>=</span> <span class='fl'>1000</span>, treat <span class='op'>=</span> <span class='st'>"treat"</span>, mediator <span class='op'>=</span> <span class='st'>"job_seek"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Fit Bayesian mediation model in brms</span></span>
+<span class='r-in'><span class='va'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>job_seek</span> <span class='op'>~</span> <span class='va'>treat</span> <span class='op'>+</span> <span class='va'>econ_hard</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>age</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula.html'>bf</a></span><span class='op'>(</span><span class='va'>depress2</span> <span class='op'>~</span> <span class='va'>treat</span> <span class='op'>+</span> <span class='va'>job_seek</span> <span class='op'>+</span> <span class='va'>econ_hard</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>age</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>m2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brm.html'>brm</a></span><span class='op'>(</span><span class='va'>f1</span> <span class='op'>+</span> <span class='va'>f2</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/pkg/brms/man/brmsformula-helpers.html'>set_rescor</a></span><span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>jobs</span>, cores <span class='op'>=</span> <span class='fl'>4</span>, refresh <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Fit Bayesian mediation model in rstanarm</span></span>
+<span class='r-in'><span class='va'>m3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_mvmer.html'>stan_mvmer</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>job_seek</span> <span class='op'>~</span> <span class='va'>treat</span> <span class='op'>+</span> <span class='va'>econ_hard</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>age</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>occp</span><span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='va'>depress2</span> <span class='op'>~</span> <span class='va'>treat</span> <span class='op'>+</span> <span class='va'>job_seek</span> <span class='op'>+</span> <span class='va'>econ_hard</span> <span class='op'>+</span> <span class='va'>sex</span> <span class='op'>+</span> <span class='va'>age</span> <span class='op'>+</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>|</span> <span class='va'>occp</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='op'>)</span>,</span>
+<span class='r-in'>  data <span class='op'>=</span> <span class='va'>jobs</span>,</span>
+<span class='r-in'>  cores <span class='op'>=</span> <span class='fl'>4</span>,</span>
+<span class='r-in'>  refresh <span class='op'>=</span> <span class='fl'>0</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>m1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>mediation</span><span class='op'>(</span><span class='va'>m2</span>, centrality <span class='op'>=</span> <span class='st'>"mean"</span>, ci <span class='op'>=</span> <span class='fl'>.95</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>mediation</span><span class='op'>(</span><span class='va'>m3</span>, centrality <span class='op'>=</span> <span class='st'>"mean"</span>, ci <span class='op'>=</span> <span class='fl'>.95</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

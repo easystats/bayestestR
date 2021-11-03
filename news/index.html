@@ -195,7 +195,7 @@
 <a href="#new-functions" class="anchor"></a>New functions</h2>
 <ul>
 <li>
-<code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> gains a <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> method, which is a short cut for <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot(estimate_density(describe_posterior()))</a></code>.</li>
+<code><a href="../reference/describe_posterior.html">describe_posterior()</a></code> gains a <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> method, which is a short cut for <code>plot(estimate_density(describe_posterior()))</code>.</li>
 </ul>
 </div>
 </div>
@@ -220,7 +220,7 @@
 <h2 class="hasAnchor">
 <a href="#breaking" class="anchor"></a>Breaking</h2>
 <ul>
-<li>All Bayes factors are now returned as <code><a href="https://rdrr.io/r/base/Log.html">log(BF)</a></code> (column name <code>log_BF</code>). Printing is unaffected. To retrieve the raw BFs, you can run <code><a href="https://rdrr.io/r/base/Log.html">exp(result$log_BF)</a></code>.</li>
+<li>All Bayes factors are now returned as <code>log(BF)</code> (column name <code>log_BF</code>). Printing is unaffected. To retrieve the raw BFs, you can run <code>exp(result$log_BF)</code>.</li>
 </ul>
 </div>
 <div id="new-functions-1" class="section level2">
@@ -493,7 +493,7 @@
 <a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li><p><code><a href="../reference/point_estimate.html">point_estimate()</a></code>: argument <code>centrality</code> default value changed from ‘median’ to ‘all’.</p></li>
-<li><p><code><a href="../reference/p_rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code>mhdior()</code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/p_rope.html">p_rope()</a></code> will refer to <code><a href="../reference/rope.html">rope(..., ci = 1)</a></code> ( <a href='https://github.com/easystats/bayestestR/issues/258'>#258</a> )</p></li>
+<li><p><code><a href="../reference/p_rope.html">p_rope()</a></code>, previously as exploratory index, was renamed as <code>mhdior()</code> (for <em>Max HDI inside/outside ROPE</em>), as <code><a href="../reference/p_rope.html">p_rope()</a></code> will refer to <code>rope(..., ci = 1)</code> ( <a href='https://github.com/easystats/bayestestR/issues/258'>#258</a> )</p></li>
 </ul>
 </div>
 <div id="bug-fixes-9" class="section level2">
