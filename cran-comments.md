@@ -1,8 +1,15 @@
+## Test environments
+
+* local Windows install, R 4.1.2
+
+* ubuntu 18.04 (on gitub-actions-ci), R 4.1.2
+
+* win-builder (devel and release)
+
 ## R CMD check results
 
 0 errors | 0 warnings | 0 note
 
-* Fixes failing tests in CRAN checks.
 
 ## revdepcheck results
 

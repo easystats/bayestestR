@@ -80,19 +80,19 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   # knots,
   # meta-analysis
   if (info$is_dispersion ||
-      info$is_zero_inflated ||
-      info$is_zeroinf ||
-      info$is_hurdle) {
+    info$is_zero_inflated ||
+    info$is_zeroinf ||
+    info$is_hurdle) {
     insight::check_if_installed("glmmTMB")
 
     cond_formula <- .rebuild_cond_formula(formula)
     dispformula <- formula$dispersion
     if (is.null(dispformula)) dispformula <- formula$sigma
-    if (is.null(dispformula)) dispformula <- ~ 1
+    if (is.null(dispformula)) dispformula <- ~1
 
     ziformula <- formula$zero_inflated
     if (is.null(ziformula)) ziformula <- formula$zi
-    if (is.null(ziformula)) ziformula <- ~ 0
+    if (is.null(ziformula)) ziformula <- ~0
 
     freq <- tryCatch(
       glmmTMB::glmmTMB(
@@ -102,7 +102,8 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
         family = family,
         data = data,
         REML = REML
-      ), error = function(e) e
+      ),
+      error = function(e) e
     )
   } else if (info$is_gam) {
     insight::check_if_installed("gamm4")
@@ -113,9 +114,9 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
         random = formula$random,
         family = family,
         data = data
-      ), error = function(e) e
+      ),
+      error = function(e) e
     )
-
   } else if (info$is_mixed) {
     insight::check_if_installed("lme4")
 
@@ -125,7 +126,8 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
         lme4::lmer(
           formula = cond_formula,
           data = data
-        ), error = function(e) e
+        ),
+        error = function(e) e
       )
     } else {
       freq <- tryCatch(
@@ -133,7 +135,8 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
           formula = cond_formula,
           family = family,
           data = data
-        ), error = function(e) e
+        ),
+        error = function(e) e
       )
     }
   } else {
@@ -165,7 +168,8 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
     }
     fixed_formula <- paste(as.character(formula$conditional)[c(2, 1, 3)], collapse = " ")
     cond_formula <- stats::as.formula(paste(
-      fixed_formula, random_formula, sep = " + "
+      fixed_formula, random_formula,
+      sep = " + "
     ))
     return(cond_formula)
   }

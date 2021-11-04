@@ -356,8 +356,8 @@ rope.brmsfit <- function(x,
   } else if (insight::is_multivariate(x)) {
     if (
       !is.list(range) ||
-      length(range) < length(insight::find_response(x)) ||
-      !all(names(range) %in% insight::find_response(x))
+        length(range) < length(insight::find_response(x)) ||
+        !all(names(range) %in% insight::find_response(x))
     ) {
       stop("With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2.")
     }

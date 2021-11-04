@@ -33,17 +33,17 @@ model_to_priors.brmsfit <- function(model, scale_multiply = 3, ...) {
   priors_params <- attributes(insight::get_priors(model, ...))$priors
   priors <- brms::prior_summary(model)
 
-  for(p in priors_params$Parameter) {
-    if(p %in% params$Parameter) {
+  for (p in priors_params$Parameter) {
+    if (p %in% params$Parameter) {
       subset <- params[params$Parameter == p, ]
       priors$prior[priors_params$Parameter == p] <- paste0(
         "normal(",
         insight::format_value(subset$Mean),
         ", ",
         insight::format_value(subset$SD * scale_multiply),
-        ")")
+        ")"
+      )
     }
   }
   priors
 }
-

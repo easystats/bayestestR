@@ -37,7 +37,7 @@ reshape_iterations <- function(x, prefix = c("draw", "iter", "iteration", "sim")
 
   # Create Index column
   index_col <- paste0(newname, "_index")
-  if(index_col %in% names(x)) index_col <- paste0(".", newname, "_index")
+  if (index_col %in% names(x)) index_col <- paste0(".", newname, "_index")
   x[[index_col]] <- 1:nrow(x)
 
   # Reshape

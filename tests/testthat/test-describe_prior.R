@@ -97,8 +97,10 @@ if (.runThisTest &&
         class = "data.frame",
         priors = structure(
           list(
-            prior = c("(flat)", "(flat)", "(flat)", "student_t(3, 19.2, 5.4)",
-                      "student_t(3, 0, 5.4)"),
+            prior = c(
+              "(flat)", "(flat)", "(flat)", "student_t(3, 19.2, 5.4)",
+              "student_t(3, 0, 5.4)"
+            ),
             class = c("b", "b", "b", "Intercept", "sigma"),
             coef = c("", "cyl", "wt", "", ""),
             group = c("", "", "", "", ""),
@@ -106,8 +108,10 @@ if (.runThisTest &&
             dpar = c("", "", "", "", ""),
             nlpar = c("", "", "", "", ""),
             bound = c("", "", "", "", ""),
-            source = c("(unknown)", "(vectorized)", "(vectorized)", "(unknown)",
-                       "(unknown)"),
+            source = c(
+              "(unknown)", "(vectorized)", "(vectorized)", "(unknown)",
+              "(unknown)"
+            ),
             Parameter = c("b_", "b_cyl", "b_wt", "b_Intercept", "sigma")
           ),
           special = list(mu = list()),

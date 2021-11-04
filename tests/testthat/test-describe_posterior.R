@@ -264,13 +264,17 @@ if (require("testthat") &&
       set.seed(123)
       expect_equal(
         describe_posterior(ttestBF(mtcars$wt, mu = 3), ci = 0.95),
-        structure(list(Parameter = "Difference", Median = -0.198578438156886,
-                       CI = 0.95, CI_low = -0.535759904384745, CI_high = 0.1557581,
-                       pd = 0.858, ROPE_CI = 0.95, ROPE_low = -0.0978457442989697,
-                       ROPE_high = 0.0978457442989697, ROPE_Percentage = 0.246250986582478,
-                       log_BF = -0.949713514141272, BF = 0.386851835160946, Prior_Distribution = "cauchy",
-                       Prior_Location = 0, Prior_Scale = 0.707106781186548), row.names = 1L, class = c("describe_posterior",
-                                                                                                       "see_describe_posterior", "data.frame"), ci_method = "hdi", object_name = "ttestBF(mtcars$wt, mu = 3)"),
+        structure(list(
+          Parameter = "Difference", Median = -0.198578438156886,
+          CI = 0.95, CI_low = -0.535759904384745, CI_high = 0.1557581,
+          pd = 0.858, ROPE_CI = 0.95, ROPE_low = -0.0978457442989697,
+          ROPE_high = 0.0978457442989697, ROPE_Percentage = 0.246250986582478,
+          log_BF = -0.949713514141272, BF = 0.386851835160946, Prior_Distribution = "cauchy",
+          Prior_Location = 0, Prior_Scale = 0.707106781186548
+        ), row.names = 1L, class = c(
+          "describe_posterior",
+          "see_describe_posterior", "data.frame"
+        ), ci_method = "hdi", object_name = "ttestBF(mtcars$wt, mu = 3)"),
         tolerance = 0.1,
         ignore_attr = TRUE
       )
@@ -301,8 +305,10 @@ if (require("testthat") &&
               2.26008072419983,
               NA
             ),
-            CI = c(0.95, 0.95, 0.95, 0.95, 0.95, 0.95,
-                   NA),
+            CI = c(
+              0.95, 0.95, 0.95, 0.95, 0.95, 0.95,
+              NA
+            ),
             CI_low = c(
               0.537476720942068,
               3.33553818106395,
@@ -322,12 +328,18 @@ if (require("testthat") &&
               NA
             ),
             pd = c(1, 1, 1, 1, 1, 1, NA),
-            ROPE_CI = c(0.95, 0.95, 0.95,
-                        0.95, 0.95, 0.95, NA),
-            ROPE_low = c(-0.1, -0.1, -0.1, -0.1,
-                         -0.1, -0.1, NA),
-            ROPE_high = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-                          NA),
+            ROPE_CI = c(
+              0.95, 0.95, 0.95,
+              0.95, 0.95, 0.95, NA
+            ),
+            ROPE_low = c(
+              -0.1, -0.1, -0.1, -0.1,
+              -0.1, -0.1, NA
+            ),
+            ROPE_high = c(
+              0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+              NA
+            ),
             ROPE_Percentage = c(0, 0, 0, 0, 0, 0, NA),
             log_BF = c(
               3.84187678153378,
@@ -349,11 +361,15 @@ if (require("testthat") &&
             ),
             Prior_Distribution = c(NA, NA, NA, NA, NA, NA, "poisson"),
             Prior_Location = c(NA, NA, NA, NA, NA, NA, 0),
-            Prior_Scale = c(NA,
-                            NA, NA, NA, NA, NA, 1)
+            Prior_Scale = c(
+              NA,
+              NA, NA, NA, NA, NA, 1
+            )
           ),
-          row.names = c(1L, 4L, 2L, 5L, 3L,
-                        6L, 7L),
+          row.names = c(
+            1L, 4L, 2L, 5L, 3L,
+            6L, 7L
+          ),
           class = c("describe_posterior", "see_describe_posterior")
         ),
         tolerance = 0.1,
@@ -388,8 +404,10 @@ if (require("testthat") &&
               2.56061336771352,
               NA
             ),
-            CI = c(0.95, 0.95, 0.95, 0.95, 0.95, 0.95,
-                   NA),
+            CI = c(
+              0.95, 0.95, 0.95, 0.95, 0.95, 0.95,
+              NA
+            ),
             CI_low = c(
               0.912122089726423,
               3.51744611674693,
@@ -409,12 +427,18 @@ if (require("testthat") &&
               NA
             ),
             pd = c(1, 1, 1, 1, 1, 1, NA),
-            ROPE_CI = c(0.95, 0.95, 0.95,
-                        0.95, 0.95, 0.95, NA),
-            ROPE_low = c(-0.1, -0.1, -0.1, -0.1,
-                         -0.1, -0.1, NA),
-            ROPE_high = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-                          NA),
+            ROPE_CI = c(
+              0.95, 0.95, 0.95,
+              0.95, 0.95, 0.95, NA
+            ),
+            ROPE_low = c(
+              -0.1, -0.1, -0.1, -0.1,
+              -0.1, -0.1, NA
+            ),
+            ROPE_high = c(
+              0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+              NA
+            ),
             ROPE_Percentage = c(0, 0, 0, 0, 0, 0, NA),
             log_BF = c(
               2.49338780738881,
@@ -436,17 +460,22 @@ if (require("testthat") &&
             ),
             Prior_Distribution = c(NA, NA, NA, NA, NA, NA, "independent multinomial"),
             Prior_Location = c(NA, NA, NA, NA, NA, NA, 0),
-            Prior_Scale = c(NA,
-                            NA, NA, NA, NA, NA, 1.6)
+            Prior_Scale = c(
+              NA,
+              NA, NA, NA, NA, NA, 1.6
+            )
           ),
-          row.names = c(1L, 4L, 2L, 5L,
-                        3L, 6L, 7L),
-          class = c("describe_posterior", "see_describe_posterior",
-                    "data.frame"),
+          row.names = c(
+            1L, 4L, 2L, 5L,
+            3L, 6L, 7L
+          ),
+          class = c(
+            "describe_posterior", "see_describe_posterior",
+            "data.frame"
+          ),
           ci_method = "hdi",
           object_name = "contingencyTableBF(x = table(mtcars$am, mtcars$cyl), sampleType = \"indepMulti\", fixedMargin = \"cols\", priorConcentration = 1.6)"
-        )
-        ,
+        ),
         tolerance = 0.1,
         ignore_attr = TRUE
       )
@@ -456,8 +485,10 @@ if (require("testthat") &&
         describe_posterior(anovaBF(extra ~ group, data = sleep, progress = FALSE), ci = 0.95),
         structure(
           list(
-            Parameter = c("mu", "group-1", "group-2", "sig2",
-                          "g_group"),
+            Parameter = c(
+              "mu", "group-1", "group-2", "sig2",
+              "g_group"
+            ),
             Median = c(
               1.53667371296145,
               -0.571674439385088,
@@ -465,8 +496,10 @@ if (require("testthat") &&
               3.69268743002151,
               0.349038661644431
             ),
-            CI = c(0.95,
-                   0.95, 0.95, 0.95, 0.95),
+            CI = c(
+              0.95,
+              0.95, 0.95, 0.95, 0.95
+            ),
             CI_low = c(
               0.691696017646264,
               -1.31604531656452,
@@ -482,8 +515,10 @@ if (require("testthat") &&
               5.30402785651874
             ),
             pd = c(0.99975, 0.927, 0.927, 1, 1),
-            ROPE_CI = c(0.95, 0.95,
-                        0.95, 0.95, 0.95),
+            ROPE_CI = c(
+              0.95, 0.95,
+              0.95, 0.95, 0.95
+            ),
             ROPE_low = c(
               -0.201791972090071,
               -0.201791972090071,
@@ -498,8 +533,10 @@ if (require("testthat") &&
               0.201791972090071,
               0.201791972090071
             ),
-            ROPE_Percentage = c(0,
-                                0.162325703762168, 0.162325703762168, 0, 0.346487766377269),
+            ROPE_Percentage = c(
+              0,
+              0.162325703762168, 0.162325703762168, 0, 0.346487766377269
+            ),
             log_BF = c(
               0.235803198474248,
               0.235803198474248,
@@ -516,12 +553,16 @@ if (require("testthat") &&
             ),
             Prior_Distribution = c(NA, "cauchy", "cauchy", NA, NA),
             Prior_Location = c(NA, 0, 0, NA, NA),
-            Prior_Scale = c(NA,
-                            0.5, 0.5, NA, NA)
+            Prior_Scale = c(
+              NA,
+              0.5, 0.5, NA, NA
+            )
           ),
           row.names = c(4L, 2L, 3L, 5L, 1L),
-          class = c("describe_posterior",
-                    "see_describe_posterior", "data.frame"),
+          class = c(
+            "describe_posterior",
+            "see_describe_posterior", "data.frame"
+          ),
           ci_method = "hdi",
           object_name = "anovaBF(extra ~ group, data = sleep, progress = FALSE)"
         ),

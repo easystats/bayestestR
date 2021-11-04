@@ -1,3 +1,9 @@
+# bayestestR 0.11.5.1
+
+# bayestestR 0.11.5
+
+* Fixes failing tests in CRAN checks.
+
 # bayestestR 0.11.1
 
 ## New functions

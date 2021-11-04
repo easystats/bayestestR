@@ -12,6 +12,8 @@ Bayesfactor
 Bergh
 Bridgesampling
 CRC
+CWI
+Curvewise
 DOI
 DV
 Dablander
@@ -22,7 +24,6 @@ Driing
 ESS
 ETI
 Efron
-Elsevier
 Etz
 Fernández
 Funder
@@ -44,6 +45,7 @@ Kass
 Keele
 Kruschke
 Kuriyal
+Kurz's
 Ley
 Liao
 Liddell
@@ -78,7 +80,6 @@ Rouder
 SEM
 SEXIT
 SHA
-SavageDickey
 Shachar
 Speckman
 Tada
@@ -104,6 +105,7 @@ bayesian
 bcplm
 behavioural
 blogpost
+bmj
 bootsrapped
 brms
 brmsfit
@@ -111,13 +113,11 @@ centred
 characterisation
 characterises
 ci
-cogpsych
-cogsci
 columbia
 compte
 containe
-contr
 cplm
+curvewise
 doi
 driiiing
 eXistence
@@ -134,7 +134,7 @@ frequentis
 frequentist's
 fullrank
 generalised
-gg
+ggdist
 ggdistribute
 github
 grano
@@ -146,9 +146,9 @@ interpretability
 interpretable
 io
 iteratively
-jasp
 jmp
 joss
+kruschke
 lavaan
 lentiful
 lm
@@ -157,7 +157,6 @@ mcmc
 modelling
 nbinom
 neq
-nl
 notin
 objets
 operationlizing
@@ -179,6 +178,8 @@ salis
 setosa
 setosas
 splinefun
+ss
+stan
 stanfit
 stanreg
 statmodeling
@@ -196,5 +197,4 @@ visualisation
 visualise
 warmup
 wil
-www
 xy
