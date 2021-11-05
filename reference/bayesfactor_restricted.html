@@ -290,7 +290,10 @@ be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame containing the (log) Bayes factor representing evidence <em>against</em> the un-restricted model.</p>
+    <p>A data frame containing the (log) Bayes factor representing evidence
+<em>against</em> the un-restricted model. (A <code>bool_results</code> attribute contains the
+results for each sample, indicating if they are included or not in the
+hypothesized restriction.)</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This method is used to compute Bayes factors for order-restricted models vs un-restricted
@@ -350,32 +353,52 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span></span>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>444</span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/bayestestR/'>bayestestR</a></span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>prior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
-<span class='r-in'>  X <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>,</span>
-<span class='r-in'>  X1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>,</span>
-<span class='r-in'>  X3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span></span>
+<span class='r-in'>  A <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>,</span>
+<span class='r-in'>  B <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>,</span>
+<span class='r-in'>  C <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
-<span class='r-in'>  X <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>.4</span><span class='op'>)</span>,</span>
-<span class='r-in'>  X1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='op'>-</span><span class='fl'>.2</span><span class='op'>)</span>,</span>
-<span class='r-in'>  X3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span></span>
+<span class='r-in'>  A <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>.4</span>, <span class='fl'>0.7</span><span class='op'>)</span>,</span>
+<span class='r-in'>  B <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='op'>-</span><span class='fl'>.2</span>, <span class='fl'>0.4</span><span class='op'>)</span>,</span>
+<span class='r-in'>  C <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='fl'>0</span>, <span class='fl'>0.5</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='va'>hyps</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
-<span class='r-in'>  <span class='st'>"X &gt; X1 &amp; X1 &gt; X3"</span>,</span>
-<span class='r-in'>  <span class='st'>"X &gt; X1"</span></span>
+<span class='r-in'>  <span class='st'>"A &gt; B &amp; B &gt; C"</span>,</span>
+<span class='r-in'>  <span class='st'>"A &gt; B &amp; A &gt; C"</span>,</span>
+<span class='r-in'>  <span class='st'>"C &gt; A"</span></span>
 <span class='r-in'><span class='op'>)</span></span>
 <span class='r-in'></span>
-<span class='r-in'><span class='fu'>bayesfactor_restricted</span><span class='op'>(</span><span class='va'>posterior</span>, hypothesis <span class='op'>=</span> <span class='va'>hyps</span>, prior <span class='op'>=</span> <span class='va'>prior</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>(</span><span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fu'>bayesfactor_restricted</span><span class='op'>(</span><span class='va'>posterior</span>, hypothesis <span class='op'>=</span> <span class='va'>hyps</span>, prior <span class='op'>=</span> <span class='va'>prior</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Bayes Factor (Order-Restriction)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Hypothesis       P(Prior) P(Posterior)   BF</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> X &gt; X1 &amp; X1 &gt; X3     0.20         0.23 1.15</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> X &gt; X1               0.47         0.74 1.57</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hypothesis    P(Prior) P(Posterior)    BF</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A &gt; B &amp; B &gt; C     0.17         0.25  1.52</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> A &gt; B &amp; A &gt; C     0.33         0.62  1.91</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C &gt; A             0.52         0.31 0.600</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> * Bayes factors for the restricted model vs. the un-restricted model.</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://easystats.github.io/see/'>"see"</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://patchwork.data-imaginist.com'>"patchwork"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='va'>i</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span><span class='op'>(</span><span class='va'>b</span>, <span class='st'>"bool_results"</span><span class='op'>)</span><span class='op'>[[</span><span class='st'>"posterior"</span><span class='op'>]</span><span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='fu'>see</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/see/reference/plots.html'>plots</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='estimate_density.html'>estimate_density</a></span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='co'># distribution **conditional** on the restrictions</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='estimate_density.html'>estimate_density</a></span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>[</span><span class='va'>i</span><span class='op'>[[</span><span class='va'>hyps</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>]</span>,<span class='op'>]</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span><span class='op'>(</span><span class='va'>hyps</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='estimate_density.html'>estimate_density</a></span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>[</span><span class='va'>i</span><span class='op'>[[</span><span class='va'>hyps</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span><span class='op'>]</span>,<span class='op'>]</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span><span class='op'>(</span><span class='va'>hyps</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>,</span>
+<span class='r-in'>    <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='estimate_density.html'>estimate_density</a></span><span class='op'>(</span><span class='va'>posterior</span><span class='op'>[</span><span class='va'>i</span><span class='op'>[[</span><span class='va'>hyps</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>]</span><span class='op'>]</span>,<span class='op'>]</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span><span class='op'>(</span><span class='va'>hyps</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>,</span>
+<span class='r-in'>    guides <span class='op'>=</span> <span class='st'>"collect"</span></span>
+<span class='r-in'>  <span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: see</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: patchwork</span>
+<span class='r-plt img'><img src='bayesfactor_restricted-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
 <span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'><span class='co'># rstanarm models</span></span>
 <span class='r-in'><span class='co'># ---------------</span></span>

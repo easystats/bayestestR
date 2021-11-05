@@ -219,7 +219,8 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span>
   formula <span class="op">=</span> <span class="va">extra</span> <span class="op">~</span> <span class="va">group</span>,
   data <span class="op">=</span> <span class="va">sleep</span>,
-  prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+  prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
+  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>
 <span class="op">)</span></code></pre></div>
 <div id="testing-against-a-null-region" class="section level3">
 <h3 class="hasAnchor">
@@ -404,7 +405,8 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
           prior <span class="op">=</span> 
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span> 
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span>,
-          save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,  backend <span class="op">=</span> <span class="st">"rstan"</span><span class="op">)</span>
+          chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,
+          save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Petal.Length only</span>
 <span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html">brm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span>, 
@@ -412,6 +414,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span> 
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span> 
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 1)"</span>, coef <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span>,
+          chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,
           save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Species only</span>
@@ -420,6 +423,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 6, 6)"</span>, class <span class="op">=</span> <span class="st">"Intercept"</span><span class="op">)</span> <span class="op">+</span> 
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span> 
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 3)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor"</span>, <span class="st">"Speciesvirginica"</span><span class="op">)</span><span class="op">)</span>,
+          chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,
           save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Species + Petal.Length model</span>
@@ -429,6 +433,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"student_t(3, 0, 6)"</span>, class <span class="op">=</span> <span class="st">"sigma"</span><span class="op">)</span> <span class="op">+</span> 
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 1)"</span>, coef <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span> <span class="op">+</span> 
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 3)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor"</span>, <span class="st">"Speciesvirginica"</span><span class="op">)</span><span class="op">)</span>,
+          chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,
           save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># full interactive model</span>
@@ -439,6 +444,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 1)"</span>, coef <span class="op">=</span> <span class="st">"Petal.Length"</span><span class="op">)</span> <span class="op">+</span> 
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 3)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor"</span>, <span class="st">"Speciesvirginica"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
             <span class="fu"><a href="https://rdrr.io/pkg/brms/man/set_prior.html">set_prior</a></span><span class="op">(</span><span class="st">"normal(0, 2)"</span>, coef <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Speciesversicolor:Petal.Length"</span>, <span class="st">"Speciesvirginica:Petal.Length"</span><span class="op">)</span><span class="op">)</span>,
+          chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,
           save_pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/save_pars.html">save_pars</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We can now compare these models with the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function, using the <code>denominator</code> argument to specify the model against which the rest of the models will be compared (in this case, the intercept-only model):</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
@@ -538,7 +544,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <code class="sourceCode R"><span class="va">iris_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>,
   data <span class="op">=</span> <span class="va">iris</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1.2</span>, <span class="fl">1.2</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
-  refresh <span class="op">=</span> <span class="fl">0</span>
+  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>
 <span class="op">)</span></code></pre></div>
 <p>These priors are <strong>unrestricted</strong> - that is, <strong>all values</strong> between <span class="math inline">\(-\infty\)</span> and <span class="math inline">\(\infty\)</span> of all parameters in the model have some non-zero credibility (no matter how small; this is true for both the prior and posterior distribution). Subsequently, <em>a priori</em> the ordering of the parameters relating to the iris species can have any ordering, such that <em>a priori</em> setosa can have larger sepals than virginica, but it is also possible for virginica to have larger sepals than setosa!</p>
 <p>Does it make sense to let our priors cover all of these possibilities? That depends on our <em>prior</em> knowledge or hypotheses. For example, even a novice botanist will assume that it is unlikely that petal length will be <em>negatively</em> associated with sepal length - an iris with longer petals is likely larger, and thus will also have a longer sepal. And an expert botanist will perhaps assume that setosas have smaller sepals than both versicolors and virginica.</p>
@@ -711,6 +717,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <code class="sourceCode R"><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">am</span>,
   data <span class="op">=</span> <span class="va">mtcars</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
+  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,
   diagnostic_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"df1.csv"</span><span class="op">)</span>,
   refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span>
@@ -718,6 +725,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <span class="va">mod_carb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">am</span> <span class="op">+</span> <span class="va">carb</span>,
   data <span class="op">=</span> <span class="va">mtcars</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
+  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,
   diagnostic_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"df0.csv"</span><span class="op">)</span>,
   refresh <span class="op">=</span> <span class="fl">0</span>
 <span class="op">)</span>
@@ -760,7 +768,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; carb        | [-1.69,  0.00]</code></pre>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">BMA_hdi</span><span class="op">)</span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-21-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-23-1.png" width="100%"></p>
 <p>We can see that across both models under consideration, the posterior of the <code>carb</code> effect is almost equally weighted between the alternative model and the null model - as represented by about half of the posterior mass concentrated at 0 - which makes sense as both models were almost equally supported by the data. We can also see that across both models, that now <strong>the HDI does contain 0</strong>. Thus we have resolved the conflict between the Bayes factor and the HDI <span class="citation">(Rouder, Haaf, &amp; Vandekerckhove, 2018)</span>!</p>
 <p><strong>Note</strong>: Parameters might play different roles across different models.</p>
 <p>For example, the parameter <code>A</code> plays a different role in the model <code>Y ~ A + B</code> (where it is a <em>main</em> effect) than it does in the model <code>Y ~ A + B + A:B</code> (where it is a <em>simple</em> effect). In many cases centering of predictors (mean subtracting for continuous variables, and effects coding via <code>contr.sum</code> or orthonormal coding via <a href="https://easystats.github.io/bayestestR/reference/contr.orthonorm.html"><code>contr.orthonorm</code></a> for factors) can in some cases reduce this issue.</p>
@@ -831,10 +839,11 @@ BF_{\text{restricted vs. NULL}} = \frac
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
   prior_PD <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># sample priors</span>
   family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">gaussian</a></span><span class="op">(</span><span class="op">)</span>,
+  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,
   refresh <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-
-<span class="op">(</span><span class="va">pairs_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_sum</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span><span class="va">pairs_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_sum</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
 &gt;  setosa - versicolor      -0.017      -2.8       2.7
 &gt;  setosa - virginica       -0.027      -4.0       4.6
@@ -842,33 +851,34 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html">stack</a></span><span class="op">(</span><span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html">get_parameters</a></span><span class="op">(</span><span class="va">pairs_sum</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">values</span>, fill <span class="op">=</span> <span class="va">ind</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">ind</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"prior difference values"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-26-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-30-1.png" width="100%"></p>
 <p>Notice that, though the prior estimate for all 3 pairwise contrasts is ~0, the scale or the HDI is much narrower for the prior of the <code>setosa - versicolor</code> contrast!</p>
 <p><strong>What happened???</strong></p>
 <p>This is caused by an inherent bias in the priors introduced by the <em>effects</em> coding (it’s even worse with the default treatment coding, because the prior for the intercept is usually drastically different from the effect’s parameters). <strong>And since it affects the priors, this bias will also bias the Bayes factors over / understating evidence for some contrasts over others!</strong></p>
 <p>The solution is to use <em>orthonormal</em> factor coding, a-la <code>contr.orthonorm</code>, which can either specify this factor coding per-factor:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.orthonorm</span></code></pre></div>
 <p>Or you can set it globally:</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contr.orthonorm"</span>, <span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Let’s again estimate the <strong><em>prior</em></strong> differences:</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">df</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
   prior_PD <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># sample priors</span>
   family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">gaussian</a></span><span class="op">(</span><span class="op">)</span>,
+  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,
   refresh <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span>
-
-<span class="op">(</span><span class="va">pairs_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_bayes</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">(</span><span class="va">pairs_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_bayes</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
 &gt;  setosa - versicolor       0.000     -2.98      2.67
 &gt;  setosa - virginica        0.032     -2.73      2.81
@@ -876,13 +886,13 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html">stack</a></span><span class="op">(</span><span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html">get_parameters</a></span><span class="op">(</span><span class="va">pairs_bayes</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">values</span>, fill <span class="op">=</span> <span class="va">ind</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">ind</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"prior difference values"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
-<p><img src="bayes_factors_files/figure-html/unnamed-chunk-29-1.png" width="100%"></p>
+<p><img src="bayes_factors_files/figure-html/unnamed-chunk-35-1.png" width="100%"></p>
 <p>We can see that using this coding scheme, we have equal priors on all pairwise contrasts.</p>
 <p>There are other solutions to this problem of priors. You can read about them in <a href="https://solomonkurz.netlify.app/post/2020-12-09-multilevel-models-and-the-index-variable-approach/">Solomon Kurz’s blog post</a>.</p>
 </div>
@@ -891,7 +901,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <a href="#order-restrictions" class="anchor"></a>Order restrictions</h3>
 <p>This bias also affect order restrictions involving 3 or more levels. For example, if we want to test an order restriction among A, B, and C, the <em>a priori</em> probability of obtaining the order A &gt; C &gt; B is 1/6 (reach back to <em>intro to stats</em> year 1), but…</p>
 <p>For our example, we will be interested in the following order restrictions in the <code>iris</code> dataset (each line is a separate restriction):</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hyp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
   <span class="co"># comparing 2 levels</span>
   <span class="st">"setosa &lt; versicolor"</span>,
@@ -904,17 +914,118 @@ BF_{\text{restricted vs. NULL}} = \frac
   <span class="st">"setosa    &lt; versicolor &amp; versicolor &lt; virginica"</span>
 <span class="op">)</span></code></pre></div>
 <p>With the default factor coding, this looks like this:</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.sum</span>
 <span class="va">fit_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">df</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
-  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">gaussian</a></span><span class="op">(</span><span class="op">)</span>
+  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">gaussian</a></span><span class="op">(</span><span class="op">)</span>,
+  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,
 <span class="op">)</span>
 
 <span class="va">em_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_sum</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span> <span class="co"># the posterior marginal means</span>
 
 <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span><span class="va">em_sum</span>, <span class="va">fit_sum</span>, hypothesis <span class="op">=</span> <span class="va">hyp</span><span class="op">)</span></code></pre></div>
+<pre><code>&gt; 
+&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
+&gt; Chain 1: 
+&gt; Chain 1: Gradient evaluation took 2.6e-05 seconds
+&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.26 seconds.
+&gt; Chain 1: Adjust your expectations accordingly!
+&gt; Chain 1: 
+&gt; Chain 1: 
+&gt; Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
+&gt; Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
+&gt; Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
+&gt; Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
+&gt; Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
+&gt; Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+&gt; Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+&gt; Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+&gt; Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+&gt; Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
+&gt; Chain 1: 
+&gt; Chain 1:  Elapsed Time: 0.058608 seconds (Warm-up)
+&gt; Chain 1:                0.087333 seconds (Sampling)
+&gt; Chain 1:                0.145941 seconds (Total)
+&gt; Chain 1: 
+&gt; 
+&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
+&gt; Chain 2: 
+&gt; Chain 2: Gradient evaluation took 2.5e-05 seconds
+&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.25 seconds.
+&gt; Chain 2: Adjust your expectations accordingly!
+&gt; Chain 2: 
+&gt; Chain 2: 
+&gt; Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
+&gt; Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
+&gt; Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
+&gt; Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
+&gt; Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
+&gt; Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+&gt; Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+&gt; Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+&gt; Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+&gt; Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
+&gt; Chain 2: 
+&gt; Chain 2:  Elapsed Time: 0.068158 seconds (Warm-up)
+&gt; Chain 2:                0.084182 seconds (Sampling)
+&gt; Chain 2:                0.15234 seconds (Total)
+&gt; Chain 2: 
+&gt; 
+&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
+&gt; Chain 3: 
+&gt; Chain 3: Gradient evaluation took 6.1e-05 seconds
+&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.61 seconds.
+&gt; Chain 3: Adjust your expectations accordingly!
+&gt; Chain 3: 
+&gt; Chain 3: 
+&gt; Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
+&gt; Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
+&gt; Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
+&gt; Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
+&gt; Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
+&gt; Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+&gt; Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+&gt; Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+&gt; Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+&gt; Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
+&gt; Chain 3: 
+&gt; Chain 3:  Elapsed Time: 0.061803 seconds (Warm-up)
+&gt; Chain 3:                0.073594 seconds (Sampling)
+&gt; Chain 3:                0.135397 seconds (Total)
+&gt; Chain 3: 
+&gt; 
+&gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
+&gt; Chain 4: 
+&gt; Chain 4: Gradient evaluation took 1.5e-05 seconds
+&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+&gt; Chain 4: Adjust your expectations accordingly!
+&gt; Chain 4: 
+&gt; Chain 4: 
+&gt; Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
+&gt; Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
+&gt; Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
+&gt; Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
+&gt; Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
+&gt; Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
+&gt; Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
+&gt; Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
+&gt; Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
+&gt; Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
+&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
+&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
+&gt; Chain 4: 
+&gt; Chain 4:  Elapsed Time: 0.056572 seconds (Warm-up)
+&gt; Chain 4:                0.074945 seconds (Sampling)
+&gt; Chain 4:                0.131517 seconds (Total)
+&gt; Chain 4:</code></pre>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
 &gt; Hypothesis                                       P(Prior) P(Posterior)       BF
@@ -934,12 +1045,13 @@ BF_{\text{restricted vs. NULL}} = \frac
 </li>
 </ol>
 <p>Again, this is solved by using the <em>orthonormal</em> factor coding (from above).</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.orthonorm</span>
 <span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,
   data <span class="op">=</span> <span class="va">df</span>,
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
-  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">gaussian</a></span><span class="op">(</span><span class="op">)</span>
+  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">gaussian</a></span><span class="op">(</span><span class="op">)</span>,
+  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>
 <span class="op">)</span>
 <span class="va">em_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">fit_sum</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span> <span class="co"># the posterior marginal means</span>
 <span class="fu"><a href="../reference/bayesfactor_restricted.html">bayesfactor_restricted</a></span><span class="op">(</span><span class="va">em_bayes</span>, <span class="va">fit_sum</span>, hypothesis <span class="op">=</span> <span class="va">hyp</span><span class="op">)</span></code></pre></div>

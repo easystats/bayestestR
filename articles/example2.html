@@ -201,9 +201,9 @@
 <h3 class="hasAnchor">
 <a href="#bayes-factor-bf" class="anchor"></a>Bayes Factor (BF)</h3>
 <p>We said previously that a correlation test actually compares two hypotheses, a null (absence of effect) with an alternative one (presence of an effect). The <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html"><strong>Bayes factor (BF)</strong></a> allows the same comparison and determines <strong>under which of these two models the observed data are more probable</strong>: a model with the effect of interest, and a null model without the effect of interest. So, in the context of our correlation example, the null hypothesis would be no correlation between the two variables (<span class="math inline">\(h0: \rho = 0\)</span>; where <span class="math inline">\(\rho\)</span> stands for Bayesian correlation coefficient), while the alternative hypothesis would be that there is a correlation <strong>different</strong> than 0 - positive or negative (<span class="math inline">\(h1: \rho \neq 0\)</span>).</p>
-<p>We can use <code><a href="../reference/bayesfactor.html">bayesfactor()</a></code> to specifically compute the Bayes factor comparing those models:</p>
+<p>We can use <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> to specifically compute the Bayes factor comparing those models:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor.html">bayesfactor</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Bayes Factors for Model Comparison
 &gt; 
 &gt;     Model         BF
@@ -228,7 +228,7 @@
 <p>In general, <strong>pie charts are an absolute no-go in data visualisation</strong>, as our brain’s perceptive system heavily distorts the information presented in such way<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Nevertheless, there is one exception: pizza charts.</p>
 <p>It is an intuitive way of interpreting the strength of evidence provided by BFs as an amount of surprise.</p>
 <div class="figure" style="text-align: center">
-<img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/LetsPokeAPizza.jpg" alt="Wagenmakers' pizza poking analogy. From the great &lt;www.bayesianspectacles.org&gt; blog." width="80%"><p class="caption">
+<img src="../man/figures/LetsPokeAPizza.jpg" alt="Wagenmakers' pizza poking analogy. From the great &lt;www.bayesianspectacles.org&gt; blog." width="80%"><p class="caption">
 Wagenmakers’ pizza poking analogy. From the great &lt;www.bayesianspectacles.org&gt; blog.
 </p>
 </div>
@@ -236,7 +236,7 @@ Wagenmakers’ pizza poking analogy. From the great &lt;www.bayesianspectacles.o
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/">see</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/bayesfactor.html">bayesfactor</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://easystats.github.io/see/reference/scale_color_pizza.html">scale_fill_pizza</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="example2_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
 <p>So, after seeing this pizza, how much would you be surprised by the outcome of a blinded poke?</p>
@@ -297,7 +297,9 @@ Wagenmakers’ pizza poking analogy. From the great &lt;www.bayesianspectacles.o
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/">rstanarm</a></span><span class="op">)</span>
 
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">data</span>, family <span class="op">=</span> <span class="st">"binomial"</span>, refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
+<span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">Sepal.Width</span>, data <span class="op">=</span> <span class="va">data</span>, family <span class="op">=</span> <span class="st">"binomial"</span>,
+                  chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>,
+                  refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="visualise-the-model" class="section level3">
 <h3 class="hasAnchor">
@@ -323,10 +325,10 @@ Wagenmakers’ pizza poking analogy. From the great &lt;www.bayesianspectacles.o
 <code class="sourceCode R"><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pd"</span>, <span class="st">"ROPE"</span>, <span class="st">"BF"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt; Summary of Posterior Distribution
 &gt; 
-&gt; Parameter   | Median |          95% CI |     pd |          ROPE | % in ROPE |  Rhat |     ESS |    BF
-&gt; -----------------------------------------------------------------------------------------------------
-&gt; (Intercept) |  -6.15 | [-10.26, -2.13] | 99.92% | [-0.18, 0.18] |        0% | 1.001 | 2651.00 | 11.76
-&gt; Sepal.Width |   2.13 | [  0.77,  3.60] | 99.95% | [-0.18, 0.18] |        0% | 1.001 | 2639.00 | 12.71</code></pre>
+&gt; Parameter   | Median |          95% CI |     pd |          ROPE | % in ROPE |  Rhat |      ESS |    BF
+&gt; ------------------------------------------------------------------------------------------------------
+&gt; (Intercept) |  -6.12 | [-10.25, -2.08] | 99.92% | [-0.18, 0.18] |        0% | 1.000 | 26540.00 | 13.02
+&gt; Sepal.Width |   2.13 | [  0.70,  3.53] | 99.94% | [-0.18, 0.18] |        0% | 1.000 | 26693.00 | 13.16</code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/performance/">performance</a></span><span class="op">)</span>
 
@@ -335,7 +337,7 @@ Wagenmakers’ pizza poking analogy. From the great &lt;www.bayesianspectacles.o
 &gt; 
 &gt; ELPD    | ELPD_SE |   LOOIC | LOOIC_SE |    WAIC |    R2 |  RMSE | Sigma | Log_loss | Score_log | Score_spherical
 &gt; -----------------------------------------------------------------------------------------------------------------
-&gt; -66.265 |   3.071 | 132.530 |    6.142 | 132.519 | 0.099 | 0.477 | 1.000 |    0.643 |   -34.666 |           0.014</code></pre>
+&gt; -66.284 |   3.052 | 132.568 |    6.104 | 132.562 | 0.099 | 0.477 | 1.000 |    0.643 |   -35.436 |           0.014</code></pre>
 </div>
 <div id="visualise-the-indices" class="section level3">
 <h3 class="hasAnchor">

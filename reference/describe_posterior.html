@@ -454,21 +454,25 @@ related argument to <code>NULL</code>. For example, <code>test = NULL</code> and
 <span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='reshape_iterations.html'>reshape_iterations</a></span><span class='op'>(</span><span class='fu'>describe_posterior</span><span class='op'>(</span><span class='va'>df</span>, keep_iterations <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='op'>}</span></span>
 <span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>Prior not specified! Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)') to get meaningful results.</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>Bayes factors might not be precise.</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.</span>
 <span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>Prior not specified! Please specify priors (with column order matching 'posterior') to get meaningful results.</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>Bayes factors might not be precise.</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   Parameter      Median   CI    CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1        X1 -0.40662582 0.95 -2.307799 1.680276 0.60    0.95     -0.1       0.1</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 2        X2  0.52073304 0.95 -1.656892 1.864191 0.60    0.95     -0.1       0.1</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 3        X3  0.34622569 0.95 -1.765082 1.637982 0.60    0.95     -0.1       0.1</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 4        X4  0.05189288 0.95 -2.088871 1.718379 0.55    0.95     -0.1       0.1</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 5        X1 -0.40662582 0.95 -2.307799 1.680276 0.60    0.95     -0.1       0.1</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 6        X2  0.52073304 0.95 -1.656892 1.864191 0.60    0.95     -0.1       0.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1        X1  0.03082071 0.95 -2.683293 2.134393 0.50    0.95     -0.1       0.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2        X2  0.05796759 0.95 -2.965922 1.408350 0.50    0.95     -0.1       0.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3        X3  0.24120419 0.95 -2.782019 2.180062 0.55    0.95     -0.1       0.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4        X4 -0.16551758 0.95 -2.119502 1.587682 0.70    0.95     -0.1       0.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5        X1  0.03082071 0.95 -2.683293 2.134393 0.50    0.95     -0.1       0.1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6        X2  0.05796759 0.95 -2.965922 1.408350 0.50    0.95     -0.1       0.1</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span>   ROPE_Percentage iter_index iter_group iter_value</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1            0.00          1          1 -0.8741465</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 2            0.00          2          1 -0.5754661</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 3            0.05          3          1 -0.8122574</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 4            0.15          4          1 -0.2614547</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 5            0.00          1          2 -1.0438731</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 6            0.00          2          2  1.1829591</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1            0.05          1          1 -1.4905827</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2            0.05          2          1  0.9779056</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3            0.00          3          1 -0.5303282</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4            0.10          4          1 -0.4821490</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5            0.05          1          2 -1.2998224</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6            0.05          2          2 -0.7012259</span>
 <span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'><span class='co'># rstanarm models</span></span>
 <span class='r-in'><span class='co'># -----------------------------------------------</span></span>

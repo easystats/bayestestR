@@ -337,9 +337,9 @@ There is also a <a href='https://easystats.github.io/see/articles/bayestestR.htm
 <span class='r-in'></span>
 <span class='r-in'><span class='va'>posterior</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'>ci</span><span class='op'>(</span><span class='va'>posterior</span>, method <span class='op'>=</span> <span class='st'>"ETI"</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 95% ETI: [-1.85, 1.88]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95% ETI: [-2.06, 2.04]</span>
 <span class='r-in'><span class='fu'>ci</span><span class='op'>(</span><span class='va'>posterior</span>, method <span class='op'>=</span> <span class='st'>"HDI"</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 95% HDI: [-1.87, 1.84]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 95% HDI: [-1.90, 2.14]</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='fu'>ci</span><span class='op'>(</span><span class='va'>df</span>, method <span class='op'>=</span> <span class='st'>"ETI"</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span></span>
@@ -347,19 +347,19 @@ There is also a <a href='https://easystats.github.io/see/articles/bayestestR.htm
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter |       80% ETI |       89% ETI |       95% ETI</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------------------------------------------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> X1        | [-1.31, 1.27] | [-1.64, 1.51] | [-1.86, 2.13]</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> X2        | [-1.37, 1.25] | [-1.57, 1.52] | [-1.73, 1.84]</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> X3        | [-1.18, 1.27] | [-1.42, 1.55] | [-1.88, 2.05]</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> X4        | [-1.25, 1.62] | [-1.68, 1.88] | [-1.98, 2.16]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> X1        | [-1.37, 1.29] | [-1.62, 1.55] | [-2.15, 1.84]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> X2        | [-1.03, 1.18] | [-1.34, 1.40] | [-1.61, 1.94]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> X3        | [-1.41, 1.40] | [-1.69, 1.59] | [-1.80, 1.91]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> X4        | [-1.23, 1.21] | [-1.64, 1.49] | [-2.43, 1.85]</span>
 <span class='r-in'><span class='fu'>ci</span><span class='op'>(</span><span class='va'>df</span>, method <span class='op'>=</span> <span class='st'>"HDI"</span>, ci <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.80</span>, <span class='fl'>.89</span>, <span class='fl'>.95</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Highest Density Interval</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> Parameter |       80% HDI |       89% HDI |       95% HDI</span>
 <span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------------------------------------------</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> X1        | [-1.11, 1.43] | [-1.68, 1.46] | [-2.30, 1.61]</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> X2        | [-1.43, 1.12] | [-1.59, 1.52] | [-1.79, 1.73]</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> X3        | [-1.30, 0.99] | [-1.44, 1.58] | [-2.30, 1.67]</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> X4        | [-0.83, 1.92] | [-1.41, 2.08] | [-2.10, 2.08]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> X1        | [-1.04, 1.56] | [-1.48, 1.64] | [-1.79, 2.32]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> X2        | [-1.13, 1.04] | [-1.28, 1.53] | [-1.64, 1.96]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> X3        | [-1.87, 0.70] | [-1.74, 1.51] | [-1.87, 1.66]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> X4        | [-1.04, 1.39] | [-1.53, 1.65] | [-2.11, 1.97]</span>
 <span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://mc-stan.org/rstanarm/'>"rstanarm"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'>  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>stan_glm</a></span><span class='op'>(</span><span class='va'>mpg</span> <span class='op'>~</span> <span class='va'>wt</span>, data <span class='op'>=</span> <span class='va'>mtcars</span>, chains <span class='op'>=</span> <span class='fl'>2</span>, iter <span class='op'>=</span> <span class='fl'>200</span>, refresh <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></span>
