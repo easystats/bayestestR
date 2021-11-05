@@ -338,8 +338,10 @@ Let's run another Bayesian regression to predict the **weight** with the **two t
 ```{r , eval=FALSE}
 model <- stan_glm(weight ~ feed, data = data)
 ```
+
 ```{r echo=FALSE, , comment=NA, results='hide'}
-model <- stan_glm(weight ~ feed, data = data)
+model <- stan_glm(weight ~ feed, data = data, 
+                  chains = 10, iter = 5000, warmup = 1000)
 ```
 
 ### Posterior description
@@ -402,7 +404,7 @@ don't really trust **his definition of ROPE**. Is there a more **objective** way
 of defining it?
 
 ```{r echo=FALSE, fig.cap="Prof. Sanders giving default values to define the Region of Practical Equivalence (ROPE).", fig.align='center', out.width="75%"}
-knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/profsanders.jpg")
+knitr::include_graphics("../man/figures/profsanders.jpg")
 ```
 
 **Yes!** One of the practice is for instance to use the **tenth (`1/10 = 0.1`) of the standard deviation (SD)** of the response variable, which can be considered as a "negligible" effect size [@cohen1988statistical].

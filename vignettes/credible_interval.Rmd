@@ -181,8 +181,8 @@ indicates which values of a parameter have gained support by the observed
 data by some factor greater or equal to *k* [@wagenmakers2018SI].
 
 ```{r warning=FALSE, message=FALSE}
-prior <- distribution_normal(1000, mean = 0, sd = 1)
-posterior <- distribution_normal(1000, mean = .5, sd = .3)
+prior <- distribution_normal(40000, mean = 0, sd = 1)
+posterior <- distribution_normal(40000, mean = .5, sd = .3)
 
 si_1 <- si(posterior, prior, BF = 1)
 si_3 <- si(posterior, prior, BF = 3)

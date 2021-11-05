@@ -5,20 +5,20 @@ if (require("rstanarm") && suppressPackageStartupMessages(require("bayestestR", 
     prior <- distribution_normal(1000, mean = 0, sd = 1)
     posterior <- distribution_normal(1000, mean = .5, sd = .3)
 
-    res <- si(posterior, prior)
+    expect_warning(res <- si(posterior, prior), regexp = "40")
     expect_equal(res$CI_low, 0.03999124, tolerance = 0.02)
     expect_equal(res$CI_high, 1.053103, tolerance = 0.02)
     expect_s3_class(res, c("bayestestR_si"))
 
-    res <- si(posterior, prior, BF = 3)
+    res <- si(posterior, prior, BF = 3, verbose = FALSE)
     expect_equal(res$CI_low, 0.333, tolerance = 0.02)
     expect_equal(res$CI_high, 0.759, tolerance = 0.02)
 
-    res <- si(posterior, prior, BF = 100)
+    res <- si(posterior, prior, BF = 100, verbose = FALSE)
     expect_true(all(is.na(res$CI_low)))
     expect_true(all(is.na(res$CI_high)))
 
-    res <- si(posterior, prior, BF = c(1 / 3, 1, 3))
+    res <- si(posterior, prior, BF = c(1 / 3, 1, 3), verbose = FALSE)
     expect_equal(res$CI, c(1 / 3, 1, 3), tolerance = 0.02)
     expect_equal(res$CI_low, c(-0.119, 0.039, 0.333), tolerance = 0.02)
     expect_equal(res$CI_high, c(1.213, 1.053, 0.759), tolerance = 0.02)
@@ -43,7 +43,7 @@ if (require("rstanarm") && suppressPackageStartupMessages(require("bayestestR", 
 
     set.seed(123)
     group_diff <- pairs(emmeans(stan_model, ~group))
-    res3 <- si(group_diff, prior = stan_model)
+    res3 <- si(group_diff, prior = stan_model, verbose = FALSE)
 
     expect_equal(res3$CI_low, -2.746, tolerance = 0.3)
     expect_equal(res3$CI_high, -0.4, tolerance = 0.3)

@@ -10,7 +10,7 @@ if (require("testthat") &&
 
     # numeric -------------------------------------------------
 
-    x <- distribution_normal(1000)
+    x <- distribution_normal(40000)
 
     expect_warning(describe_posterior(
       x,
@@ -80,7 +80,7 @@ if (require("testthat") &&
       set.seed(333)
       # Rstanarm
       x <- rstanarm::stan_glm(mpg ~ wt, data = mtcars, refresh = 0, iter = 500)
-      rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
+      expect_warning(rez <- describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
       expect_equal(dim(rez), c(2, 21))
       expect_equal(colnames(rez), c(
         "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
@@ -88,16 +88,16 @@ if (require("testthat") &&
         "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "log_BF", "Rhat",
         "ESS"
       ))
-      rez <- describe_posterior(
+      expect_warning(rez <- describe_posterior(
         x,
         centrality = "all",
         dispersion = TRUE,
         test = "all",
         ci = c(0.8, 0.9)
-      )
+      ))
       expect_equal(dim(rez), c(4, 21))
 
-      rez <- describe_posterior(
+      expect_warning(rez <- describe_posterior(
         x,
         centrality = NULL,
         dispersion = TRUE,
@@ -105,7 +105,7 @@ if (require("testthat") &&
         ci_method = "quantile",
         diagnostic = NULL,
         priors = FALSE
-      )
+      ))
       expect_equal(dim(rez), c(2, 4))
 
       # brms -------------------------------------------------
@@ -210,7 +210,7 @@ if (require("testthat") &&
 
       x <- insight::download_model("stanreg_lm_1")
       set.seed(555)
-      rez <- describe_posterior(x, ci_method = "SI", test = "bf")
+      expect_warning(rez <- describe_posterior(x, ci_method = "SI", test = "bf"))
 
 
       # test si
