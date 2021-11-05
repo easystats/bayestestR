@@ -40,7 +40,7 @@ When \code{contrasts = FALSE}, the returned contrasts are equivalent to
 as one-hot encoding).
 \subsection{Setting Priors}{
 
-It is recommended to set 0-centered identically scaled priors of the dummy
+It is recommended to set 0-centered, identically-scaled priors on the dummy
 coded variables produced by this method. These priors then represent the
 distance the mean of one of the levels might have from the overall mean.
 \subsection{Contrasts}{

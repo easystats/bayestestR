@@ -218,8 +218,8 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) 
 
   if (verbose && (nrow(posterior) < 4e4 || nrow(prior) <  4e4)) {
     warning(
-      "Support Intervals might not be precise.\n",
-      "For precise Support Intervals, it is recommended sampling at least 40,000 posterior samples.",
+      "Support intervals might not be precise.\n",
+      "For precise support intervals, sampling at least 40,000 posterior samples is recommended.",
       call. = FALSE
     )
   }

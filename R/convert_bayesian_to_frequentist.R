@@ -68,7 +68,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   }
 }
 
-# internaal
+# internal
 
 .convert_bayesian_as_frequentist <- function(info, formula, data, family, REML = TRUE) {
   # TODO: Check for

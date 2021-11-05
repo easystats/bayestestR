@@ -389,7 +389,7 @@ bayesfactor_parameters.data.frame <- function(posterior,
   if (verbose && length(null) == 1L && (nrow(posterior) < 4e4 || nrow(prior) <  4e4)) {
     warning(
       "Bayes factors might not be precise.\n",
-      "For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.",
+      "For precise Bayes factors, sampling at least 40,000 posterior samples is recommended.",
       call. = FALSE
     )
   }

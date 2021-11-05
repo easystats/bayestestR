@@ -170,7 +170,7 @@ transformation): the lower and higher bounds of the transformed distribution
 will correspond to the transformed lower and higher bounds of the original
 distribution. On the contrary, applying transformations to the distribution will
 change the resulting HDI. Thus, for instance, if exponentiated credible
-intervals are required, it is recommended to calculate the ETI.
+intervals are required, calculating the ETI is recommended.
 
 # The Support Interval
 

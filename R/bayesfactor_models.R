@@ -205,7 +205,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   if (any(n_samps < 4e4)) {
     warning(
       "Bayes factors might not be precise.\n",
-      "For precise Bayes factors, it is recommended sampling at least 40,000 posterior samples.",
+      "For precise Bayes factors, sampling at least 40,000 posterior samples is recommended.",
       call. = FALSE, immediate. = TRUE
     )
   }
