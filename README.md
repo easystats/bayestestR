@@ -4,6 +4,7 @@
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.01541/status.svg)](https://doi.org/10.21105/joss.01541)
 [![downloads](http://cranlogs.r-pkg.org/badges/bayestestR)](https://cran.r-project.org/package=bayestestR)
 [![total](https://cranlogs.r-pkg.org/badges/grand-total/bayestestR)](https://cranlogs.r-pkg.org/)
+[![status](https://tinyverse.netlify.com/badge/bayestestR)](https://CRAN.R-project.org/package=bayestestR)
 
 ***Become a Bayesian master you will***
 
@@ -156,7 +157,7 @@ describe_posterior(
 ## 
 ## Parameter | Median |        95% CI |     pd |   ps
 ## --------------------------------------------------
-## Posterior |  -0.01 | [-2.01, 1.93] | 50.31% | 0.46
+## Posterior |  -0.02 | [-1.99, 1.98] | 50.75% | 0.47
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -461,7 +462,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.39
+## [1] 0.42
 ```
 
 # References
