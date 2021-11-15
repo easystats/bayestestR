@@ -55,9 +55,16 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
     family <- get(family$family)(link = family$link)
   }
 
-  freq <- .convert_bayesian_as_frequentist(
+  freq <- tryCatch(.convert_bayesian_as_frequentist(
     info = info, formula = formula, data = data, family = family, REML = REML
-  )
+  ), error = function(e) e)
+
+  if (inherits(freq, "error")) {
+    family = get(family$family)(link = family$link)
+    freq <- .convert_bayesian_as_frequentist(
+      info = info, formula = formula, data = data, family = family, REML = REML
+    )
+  }
 
   if (inherits(freq, "error")) {
     stop(insight::format_message(
