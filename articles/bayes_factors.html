@@ -226,23 +226,23 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <h3 class="hasAnchor">
 <a href="#testing-against-a-null-region" class="anchor"></a>Testing against a null-<em>region</em>
 </h3>
-<p>One way of operationlizing the null-hypothesis is by setting a null region, such that an effect that falls within this interval would be <em>practically</em> equivalent to the null <span class="citation">(Kruschke, 2010)</span>. In our case, that means defining a range of effects we would consider equal to the drug having no effect at all. We can then compute the prior probability of the drug’s effect falling <em>within this null-region</em>, and the prior probability of the drug’s effect falling <em>outside the null-region</em> to get our <em>prior odds</em>. Say any effect smaller than an hour of extra sleep is practically equivalent to being no effect at all, we would define our prior odds as:</p>
+<p>One way of operationlizing the null-hypothesis is by setting a null region, such that an effect that falls within this interval would be <em>practically</em> equivalent to the null <span class="citation">(Kruschke, 2010)</span>. In our case, that means defining a range of effects we would consider equal to the drug having no effect at all. We can then compute the prior probability of the drug’s effect falling <em>outside this null-region</em>, and the prior probability of the drug’s effect falling <em>within the null-region</em> to get our <em>prior odds</em>. Say any effect smaller than an hour of extra sleep is practically equivalent to being no effect at all, we would define our prior odds as:</p>
 <p><span class="math display">\[
 \frac
-{P(b_{drug} \in [-1, 1])}
 {P(b_{drug} \notin [-1, 1])}
+{P(b_{drug} \in [-1, 1])}
 \]</span></p>
 <p>Given our prior has a normal distribution centered at 0 hours with a scale (an SD) of 3 hours, our priors would look like this:</p>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-2-1.png" width="100%"></p>
-<p>and the prior odds would be 2.2.</p>
-<p>By looking at the posterior distribution, can now compute the posterior probability of the drug’s effect falling <em>within the null-region</em>, and the posterior probability of the drug’s effect falling <em>outside the null-region</em> to get our <em>posterior odds</em>:</p>
+<p>and the prior odds would be 2.8.</p>
+<p>By looking at the posterior distribution, we can now compute the posterior probability of the drug’s effect falling <em>outside the null-region</em>, and the posterior probability of the drug’s effect falling <em>within the null-region</em> to get our <em>posterior odds</em>:</p>
 <p><span class="math display">\[
 \frac
-{P(b_{drug} \in [-1,1] | Data)}
 {P(b_{drug} \notin [-1,1] | Data)}
+{P(b_{drug} \in [-1,1] | Data)}
 \]</span></p>
 <p><img src="bayes_factors_files/figure-html/rstanarm_fit-1.png" width="100%"></p>
-<p>We can see that the center of the posterior distribution has shifted away from 0 (to ~1.5). Likewise, the posterior odds are 2, which seems to favor <strong>the effect being non-null</strong>. <strong>But</strong>, does this mean the data support the alternative over the null? Hard to say, since even before the data were observed, the priors already favored the alternative - so we need to take our priors into account here!</p>
+<p>We can see that the center of the posterior distribution has shifted away from 0 (to ~1.5). Likewise, the posterior odds are 2.5, which seems to favor <strong>the effect being non-null</strong>. <strong>But</strong>, does this mean the data support the alternative over the null? Hard to say, since even before the data were observed, the priors already favored the alternative - so we need to take our priors into account here!</p>
 <p>Let’s compute the Bayes factor as the change from the prior odds to the posterior odds: <span class="math inline">\(BF_{10} = Odds_{posterior} / Odds_{prior} = 0.9\)</span>! This BF indicates that the data provide 1/0.9 = 1.1 times more evidence for the effect of the drug being practically nothing than it does for the drug having some clinically significant effect. Thus, although the center of distribution has shifted away from 0, and the posterior distribution seems to favor a non-null effect of the drug, it seems that given the observed data, the probability mass has <em>overall</em> shifted closer to the null interval, making the values in the null interval more probable! <span class="citation">(see <em>Non-overlapping Hypotheses</em> in Morey &amp; Rouder, 2011)</span></p>
 <p>All of this can be achieved with the function <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code>, which computes a Bayes factor for each of the model’s parameters:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -273,7 +273,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <blockquote>
 <p><strong>What if we don’t know what region would be practically equivalent to 0?</strong></p>
 </blockquote>
-<p>Or if we just want the null to be exactly zero? Not a problem - as the width of null region shrinks to a point, the change from the prior probability to the posterior probability of the null can be estimated by comparing the density of the null value between the two distributions.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> This ratio is called the <strong>Savage-Dickey ratio</strong>, and has the added benefit of also being an approximation of a Bayes factor comparing the estimated model against the a model in which the parameter of interest has been restricted to a point-null:</p>
+<p>Or if we just want the null to be exactly zero? Not a problem - as the width of null region shrinks to a point, the change from the prior probability to the posterior probability of the null can be estimated by comparing the density of the null value between the two distributions.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> This ratio is called the <strong>Savage-Dickey ratio</strong>, and has the added benefit of also being an approximation of a Bayes factor comparing the estimated model against a model in which the parameter of interest has been restricted to a point-null:</p>
 <blockquote>
 <p>“[…] the Bayes factor for <span class="math inline">\(H_0\)</span> versus <span class="math inline">\(H_1\)</span> could be obtained by analytically integrating out the model parameter <span class="math inline">\(\theta\)</span>. However, the Bayes factor may likewise be obtained by only considering <span class="math inline">\(H_1\)</span>, and dividing the height of the posterior for <span class="math inline">\(\theta\)</span> by the height of the prior for <span class="math inline">\(\theta\)</span>, at the point of interest.” <span class="citation">(Wagenmakers, Lodewyckx, Kuriyal, &amp; Grasman, 2010)</span></p>
 </blockquote>
@@ -657,7 +657,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP1.jpg" width="100%"></p>
+<p><img src="https://github.com/easystats/bayestestR/raw/master/man/figures/JASP1.jpg" width="100%"></p>
 <ol start="2" style="list-style-type: decimal">
 <li>
 <strong>Across matched models</strong>:</li>
@@ -673,7 +673,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; * Compared among: matched models only
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP2.jpg" width="100%"></p>
+<p><img src="https://github.com/easystats/bayestestR/raw/master/man/figures/JASP2.jpg" width="100%"></p>
 <ol start="3" style="list-style-type: decimal">
 <li>
 <strong>With Nuisance Effects</strong>:</li>
@@ -705,7 +705,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP3.jpg" width="100%"></p>
+<p><img src="https://github.com/easystats/bayestestR/raw/master/man/figures/JASP3.jpg" width="100%"></p>
 </div>
 <div id="weighted_posteriors" class="section level2">
 <h2 class="hasAnchor">
@@ -929,8 +929,8 @@ BF_{\text{restricted vs. NULL}} = \frac
 <pre><code>&gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 &gt; Chain 1: 
-&gt; Chain 1: Gradient evaluation took 3e-05 seconds
-&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.3 seconds.
+&gt; Chain 1: Gradient evaluation took 2.6e-05 seconds
+&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.26 seconds.
 &gt; Chain 1: Adjust your expectations accordingly!
 &gt; Chain 1: 
 &gt; Chain 1: 
@@ -947,15 +947,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 1: 
-&gt; Chain 1:  Elapsed Time: 0.087055 seconds (Warm-up)
-&gt; Chain 1:                0.108366 seconds (Sampling)
-&gt; Chain 1:                0.195421 seconds (Total)
+&gt; Chain 1:  Elapsed Time: 0.055532 seconds (Warm-up)
+&gt; Chain 1:                0.076222 seconds (Sampling)
+&gt; Chain 1:                0.131754 seconds (Total)
 &gt; Chain 1: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 &gt; Chain 2: 
-&gt; Chain 2: Gradient evaluation took 1.7e-05 seconds
-&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
+&gt; Chain 2: Gradient evaluation took 1.2e-05 seconds
+&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
 &gt; Chain 2: Adjust your expectations accordingly!
 &gt; Chain 2: 
 &gt; Chain 2: 
@@ -972,15 +972,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 2: 
-&gt; Chain 2:  Elapsed Time: 0.067905 seconds (Warm-up)
-&gt; Chain 2:                0.076859 seconds (Sampling)
-&gt; Chain 2:                0.144764 seconds (Total)
+&gt; Chain 2:  Elapsed Time: 0.055852 seconds (Warm-up)
+&gt; Chain 2:                0.071503 seconds (Sampling)
+&gt; Chain 2:                0.127355 seconds (Total)
 &gt; Chain 2: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 &gt; Chain 3: 
-&gt; Chain 3: Gradient evaluation took 2.2e-05 seconds
-&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
+&gt; Chain 3: Gradient evaluation took 1.2e-05 seconds
+&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
 &gt; Chain 3: Adjust your expectations accordingly!
 &gt; Chain 3: 
 &gt; Chain 3: 
@@ -997,15 +997,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 3: 
-&gt; Chain 3:  Elapsed Time: 0.059197 seconds (Warm-up)
-&gt; Chain 3:                0.068349 seconds (Sampling)
-&gt; Chain 3:                0.127546 seconds (Total)
+&gt; Chain 3:  Elapsed Time: 0.055365 seconds (Warm-up)
+&gt; Chain 3:                0.065615 seconds (Sampling)
+&gt; Chain 3:                0.12098 seconds (Total)
 &gt; Chain 3: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 &gt; Chain 4: 
-&gt; Chain 4: Gradient evaluation took 1.7e-05 seconds
-&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
+&gt; Chain 4: Gradient evaluation took 1.1e-05 seconds
+&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 &gt; Chain 4: Adjust your expectations accordingly!
 &gt; Chain 4: 
 &gt; Chain 4: 
@@ -1022,9 +1022,9 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 4: 
-&gt; Chain 4:  Elapsed Time: 0.06347 seconds (Warm-up)
-&gt; Chain 4:                0.07749 seconds (Sampling)
-&gt; Chain 4:                0.14096 seconds (Total)
+&gt; Chain 4:  Elapsed Time: 0.053251 seconds (Warm-up)
+&gt; Chain 4:                0.06905 seconds (Sampling)
+&gt; Chain 4:                0.122301 seconds (Total)
 &gt; Chain 4:</code></pre>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
