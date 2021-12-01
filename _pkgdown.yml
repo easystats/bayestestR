@@ -96,6 +96,7 @@ reference:
   - sexit_thresholds
   - reshape_iterations
   - diagnostic_draws
+  - model_to_priors
 
 
 navbar:
