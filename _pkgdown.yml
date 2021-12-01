@@ -97,6 +97,7 @@ reference:
   - reshape_iterations
   - diagnostic_draws
   - model_to_priors
+  - cwi
 
 
 navbar:
