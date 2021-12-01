@@ -10,15 +10,6 @@ authors:
   Michael D. Wilson:
     href: http://www.humanfactors.io
 
-navbar:
-  structure:
-    right: [twitter, github]
-  components:
-    twitter:
-      icon: fa-twitter
-      href: http://twitter.com/easystats4u
-      aria-label: Twitter
-
 
 template:
   bootstrap: 5
@@ -109,6 +100,13 @@ reference:
 
 navbar:
   type: default
+  right:
+  - icon: fa-twitter
+    href: http://twitter.com/easystats4u
+    aria-label: Twitter
+  - icon: fa-github
+    href: https://github.com/easystats/bayestestR/
+    aria-label: GitHub
   left:
   - icon: fa-home fa-lg
     href: index.html
@@ -144,4 +142,3 @@ navbar:
         href: articles/mediation.html
   - text: Guidelines
     href: articles/guidelines.html
-
