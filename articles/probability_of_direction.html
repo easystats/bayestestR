@@ -4,7 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="bayestestR">
 <title>Probability of Direction (pd) • bayestestR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
@@ -12,152 +13,121 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Probability of Direction (pd)">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Probability of Direction (pd)">
 <meta property="og:description" content="bayestestR">
-<meta property="og:image" content="/logo.png">
+<meta property="og:image" content="/reference/figures/card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@easystats4u">
+<meta name="twitter:site" content="@easystats4u">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-97457476-7"></script><script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-97457476-7');
-</script>
+<![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">bayestestR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.11.5.1</span>
-      </span>
-    </div>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
+    <nav class="navbar fixed-top navbar-default navbar-expand-lg bg-light"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.5.1</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-2">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">News</a>
 </li>
-<li>
-  <a href="../reference/index.html">Features</a>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Features</a>
 </li>
-<li>
-  <a href="../articles/bayestestR.html">Get started</a>
+<li class="nav-item">
+  <a class="nav-link" href="../articles/bayestestR.html">Get started</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Examples
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/example1.html">1. Initiation to Bayesian models</a>
-    </li>
-    <li>
-      <a href="../articles/example2.html">2. Confirmation of Bayesian skills</a>
-    </li>
-    <li>
-      <a href="../articles/example3.html">3. Become a Bayesian master</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/credible_interval.html">Credible Intervals (CI)</a>
-    </li>
-    <li>
-      <a href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
-    </li>
-    <li>
-      <a href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
-    </li>
-    <li>
-      <a href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
-    </li>
-    <li>
-      <a href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
-    </li>
-    <li>
-      <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full">Comparison of Indices of Effect Existence</a>
-    </li>
-    <li>
-      <a href="../articles/mediation.html">Mediation Analysis: Direct and Indirect Effects</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="../articles/guidelines.html">Guidelines</a>
-</li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/easystats/bayestestR/">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
-</div>
-<!--/.nav-collapse -->
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-examples">Examples</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-examples">
+    <a class="dropdown-item" href="../articles/example1.html">1. Initiation to Bayesian models</a>
+    <a class="dropdown-item" href="../articles/example2.html">2. Confirmation of Bayesian skills</a>
+    <a class="dropdown-item" href="../articles/example3.html">3. Become a Bayesian master</a>
   </div>
-<!--/.container -->
+</li>
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/credible_interval.html">Credible Intervals (CI)</a>
+    <a class="dropdown-item" href="../articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a>
+    <a class="dropdown-item" href="../articles/probability_of_direction.html">Probability of Direction (pd)</a>
+    <a class="dropdown-item" href="../articles/bayes_factors.html">Bayes Factors (BF)</a>
+    <a class="dropdown-item" href="../articles/indicesEstimationComparison.html">Comparison of Point-Estimates</a>
+    <a class="external-link dropdown-item" href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full">Comparison of Indices of Effect Existence</a>
+    <a class="dropdown-item" href="../articles/mediation.html">Mediation Analysis: Direct and Indirect Effects</a>
+  </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../articles/guidelines.html">Guidelines</a>
+</li>
+      </ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="http://twitter.com/easystats4u" aria-label="Twitter">
+    <span class="fa fa-twitter"></span>
+     
+  </a>
+</li>
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/easystats/bayestestR/" aria-label="GitHub">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
-<!--/.navbar -->
 
-      
-
-      </header><script src="probability_of_direction_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Probability of Direction (pd)</h1>
+    
+  </div>
+</nav><div class="container template-article">
+<script src="probability_of_direction_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+  <main id="main"><div class="page-header">
+      <img src="../logo.png" class="logo" alt=""><h1>Probability of Direction (pd)</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/master/vignettes/probability_of_direction.Rmd"><code>vignettes/probability_of_direction.Rmd</code></a></small>
-      <div class="hidden name"><code>probability_of_direction.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/easystats/bayestestR/blob/HEAD/vignettes/probability_of_direction.Rmd" class="external-link"><code>vignettes/probability_of_direction.Rmd</code></a></small>
+      <div class="d-none name"><code>probability_of_direction.Rmd</code></div>
     </div>
 
     
     
 <p>This vignette can be referred to by citing the package:</p>
 <ul>
-<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019). <em>bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework</em>. Journal of Open Source Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="uri">https://doi.org/10.21105/joss.01541</a>
+<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019). <em>bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework</em>. Journal of Open Source Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="external-link uri">https://doi.org/10.21105/joss.01541</a>
 </li>
-<li>Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., &amp; Lüdecke, D. (2019). <em>Indices of Effect Existence and Significance in the Bayesian Framework</em>. Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.2019.02767">10.3389/fpsyg.2019.02767</a>
+<li>Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., &amp; Lüdecke, D. (2019). <em>Indices of Effect Existence and Significance in the Bayesian Framework</em>. Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.2019.02767" class="external-link">10.3389/fpsyg.2019.02767</a>
 </li>
 </ul>
 <hr>
-<div id="what-is-the-pd" class="section level1">
-<h1 class="hasAnchor">
-<a href="#what-is-the-pd" class="anchor"></a>What is the <em>pd?</em>
+<div class="section level1">
+<h1 id="what-is-the-pd">What is the <em>pd?</em><a class="anchor" aria-label="anchor" href="#what-is-the-pd"></a>
 </h1>
 <p>The <strong>Probability of Direction (pd)</strong> is an index of <strong>effect existence</strong>, ranging from 50% to 100%, representing the certainty with which an effect goes in a particular direction (<em>i.e.</em>, is positive or negative).</p>
 <p>Beyond its <strong>simplicity of interpretation, understanding and computation</strong>, this index also presents other interesting properties:</p>
@@ -166,12 +136,12 @@
 <li>It is <strong>robust</strong> to the scale of both the response variable and the predictors.</li>
 <li>It is strongly correlated with the frequentist <strong><em>p</em>-value</strong>, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics.</li>
 </ul>
-<p>However, this index is not relevant to assess the magnitude and importance of an effect (the meaning of “significance”), which is better achieved through other indices such as the <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html">ROPE percentage</a>. In fact, indices of significance and existence are totally independent. You can have an effect with a <em>pd</em> of <strong>99.99%</strong>, for which the whole posterior distribution is concentrated within the <code>[0.0001, 0.0002]</code> range. In this case, the effect is <strong>positive with a high certainty</strong>, but also <strong>not significant</strong> (<em>i.e.</em>, very small).</p>
+<p>However, this index is not relevant to assess the magnitude and importance of an effect (the meaning of “significance”), which is better achieved through other indices such as the <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html" class="external-link">ROPE percentage</a>. In fact, indices of significance and existence are totally independent. You can have an effect with a <em>pd</em> of <strong>99.99%</strong>, for which the whole posterior distribution is concentrated within the <code>[0.0001, 0.0002]</code> range. In this case, the effect is <strong>positive with a high certainty</strong>, but also <strong>not significant</strong> (<em>i.e.</em>, very small).</p>
 <p>Indices of effect existence, such as the <em>pd</em>, are particularly useful in exploratory research or clinical studies, for which the focus is to make sure that the effect of interest is not in the opposite direction (for clinical studies, that a treatment is not harmful). However, once the effect’s direction is confirmed, the focus should shift toward its significance, including a precise estimation of its magnitude, relevance and importance.</p>
 </div>
-<div id="relationship-with-the-p-value" class="section level1">
-<h1 class="hasAnchor">
-<a href="#relationship-with-the-p-value" class="anchor"></a>Relationship with the <em>p</em>-value</h1>
+<div class="section level1">
+<h1 id="relationship-with-the-p-value">Relationship with the <em>p</em>-value<a class="anchor" aria-label="anchor" href="#relationship-with-the-p-value"></a>
+</h1>
 <p>In most cases, it seems that the <em>pd</em> has a direct correspondence with the frequentist <strong>one-sided <em>p</em>-value</strong> through the formula: <span class="math display">\[p_{one-sided} =
 1-p_d\]</span> Similarly, the <strong>two-sided <em>p</em>-value</strong> (the most commonly reported one) is equivalent through the formula: <span class="math display">\[p_{two-sided} = 2*(1-p_d)\]</span> Thus, the two-sided <em>p</em>-value of respectively <strong>.1</strong>, <strong>.05</strong>, <strong>.01</strong> and <strong>.001</strong> would correspond approximately to a <em>pd</em> of <strong>95%</strong>, <strong>97.5%</strong>, <strong>99.5%</strong> and <strong>99.95%</strong> .</p>
 <div class="figure" style="text-align: center">
@@ -184,33 +154,33 @@ Correlation between the frequentist p-value and the probability of direction (pd
 </blockquote>
 <p>In fact, this aspect of the reproducibility crisis might have been misunderstood. Indeed, it is not that the <em>p</em>-value is an intrinsically bad or wrong. Instead, it is its <strong>misuse</strong>, <strong>misunderstanding</strong> and <strong>misinterpretation</strong> that fuels the decay of the situation. For instance, the fact that the <strong>pd</strong> is highly correlated with the <em>p</em>-value suggests that the latter is more an index of effect <em>existence</em> than <em>significance</em> (<em>i.e.</em>, “worth of interest”). The Bayesian version, the <strong>pd</strong>, has an intuitive meaning and makes obvious the fact that <strong>all thresholds are arbitrary</strong>. Additionally, the <strong>mathematical and interpretative transparency</strong> of the <strong>pd</strong>, and its reconceptualisation as an index of effect existence, offers a valuable insight into the characterization of Bayesian results. Moreover, its concomitant proximity with the frequentist <em>p</em>-value makes it a perfect metric to ease the transition of psychological research into the adoption of the Bayesian framework.</p>
 </div>
-<div id="methods-of-computation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#methods-of-computation" class="anchor"></a>Methods of computation</h1>
+<div class="section level1">
+<h1 id="methods-of-computation">Methods of computation<a class="anchor" aria-label="anchor" href="#methods-of-computation"></a>
+</h1>
 <p>The most <strong>simple and direct</strong> way to compute the <strong>pd</strong> is to 1) look at the median’s sign, 2) select the portion of the posterior of the same sign and 3) compute the percentage that this portion represents. This “simple” method is the most straightforward, but its precision is directly tied to the number of posterior draws.</p>
-<p>The second approach relies on <a href="https://easystats.github.io/bayestestR/reference/estimate_density.html"><strong>density estimation</strong></a>. It starts by estimating the density function (for which many methods are available), and then computing the <a href="https://easystats.github.io/bayestestR/reference/area_under_curve.html"><strong>area under the curve</strong></a> (AUC) of the density curve on the other side of 0. The density-based method could hypothetically be considered as more precise, but strongly depends on the method used to estimate the density function.</p>
+<p>The second approach relies on <a href="https://easystats.github.io/bayestestR/reference/estimate_density.html" class="external-link"><strong>density estimation</strong></a>. It starts by estimating the density function (for which many methods are available), and then computing the <a href="https://easystats.github.io/bayestestR/reference/area_under_curve.html" class="external-link"><strong>area under the curve</strong></a> (AUC) of the density curve on the other side of 0. The density-based method could hypothetically be considered as more precise, but strongly depends on the method used to estimate the density function.</p>
 </div>
-<div id="methods-comparison" class="section level1">
-<h1 class="hasAnchor">
-<a href="#methods-comparison" class="anchor"></a>Methods comparison</h1>
-<p>Let’s compare the 4 available methods, the <strong>direct</strong> method and 3 <strong>density-based</strong> methods differing by their density estimation algorithm (see <a href="https://easystats.github.io/bayestestR/reference/estimate_density.html"><code>estimate_density</code></a>).</p>
-<div id="correlation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#correlation" class="anchor"></a>Correlation</h2>
+<div class="section level1">
+<h1 id="methods-comparison">Methods comparison<a class="anchor" aria-label="anchor" href="#methods-comparison"></a>
+</h1>
+<p>Let’s compare the 4 available methods, the <strong>direct</strong> method and 3 <strong>density-based</strong> methods differing by their density estimation algorithm (see <a href="https://easystats.github.io/bayestestR/reference/estimate_density.html" class="external-link"><code>estimate_density</code></a>).</p>
+<div class="section level2">
+<h2 id="correlation">Correlation<a class="anchor" aria-label="anchor" href="#correlation"></a>
+</h2>
 <p>Let’s start by testing the proximity and similarity of the results obtained by different methods.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/">bayestestR</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">logspline</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">KernSmooth</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/" class="external-link">bayestestR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">logspline</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">KernSmooth</span><span class="op">)</span>
 
 <span class="co"># Compute the correlations</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="op">)</span>
-<span class="kw">for</span> <span class="op">(</span><span class="va">the_mean</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">0</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="kw">for</span> <span class="op">(</span><span class="va">the_sd</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">0.5</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="va">the_mean</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">the_sd</span><span class="op">)</span><span class="op">)</span>
-    <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">the_mean</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">0</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw">for</span> <span class="op">(</span><span class="va">the_sd</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">0.5</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="va">the_mean</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">the_sd</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span>
       <span class="va">data</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
         <span class="st">"direct"</span> <span class="op">=</span> <span class="fu"><a href="../reference/p_direction.html">pd</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,
         <span class="st">"kernel"</span> <span class="op">=</span> <span class="fu"><a href="../reference/p_direction.html">pd</a></span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"kernel"</span><span class="op">)</span>,
         <span class="st">"logspline"</span> <span class="op">=</span> <span class="fu"><a href="../reference/p_direction.html">pd</a></span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"logspline"</span><span class="op">)</span>,
@@ -219,35 +189,35 @@ Correlation between the frequentist p-value and the probability of direction (pd
     <span class="op">)</span>
   <span class="op">}</span>
 <span class="op">}</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">as.numeric</span><span class="op">)</span><span class="op">)</span>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">as.numeric</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Visualize the correlations</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggobi.github.io/ggally/">GGally</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggobi.github.io/ggally/" class="external-link">GGally</a></span><span class="op">)</span>
 
-<span class="fu">GGally</span><span class="fu">::</span><span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggpairs.html">ggpairs</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu">GGally</span><span class="fu">::</span><span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggpairs.html" class="external-link">ggpairs</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="probability_of_direction_files/figure-html/unnamed-chunk-3-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>All methods give are highly correlated and give very similar results. That means that the method choice is not a drastic game changer and cannot be used to tweak the results too much.</p>
 </div>
-<div id="accuracy" class="section level2">
-<h2 class="hasAnchor">
-<a href="#accuracy" class="anchor"></a>Accuracy</h2>
+<div class="section level2">
+<h2 id="accuracy">Accuracy<a class="anchor" aria-label="anchor" href="#accuracy"></a>
+</h2>
 <p>To test the accuracy of each methods, we will start by computing the <strong>direct <em>pd</em></strong> from a very dense distribution (with a large amount of observations). This will be our baseline, or “true” <em>pd</em>. Then, we will iteratively draw smaller samples from this parent distribution, and we will compute the <em>pd</em> with different methods. The closer this estimate is from the reference one, the better.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">25</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">the_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">4</span><span class="op">)</span>
-  <span class="va">the_sd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">parent_distribution</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100000</span>, <span class="va">the_mean</span>, <span class="va">the_sd</span><span class="op">)</span>
+  <span class="va">the_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">4</span><span class="op">)</span>
+  <span class="va">the_sd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.5</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">parent_distribution</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100000</span>, <span class="va">the_mean</span>, <span class="va">the_sd</span><span class="op">)</span>
   <span class="va">true_pd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/p_direction.html">pd</a></span><span class="op">(</span><span class="va">parent_distribution</span><span class="op">)</span>
 
   <span class="kw">for</span> <span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">25</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">sample_size</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">25</span>, <span class="fl">5000</span><span class="op">)</span><span class="op">)</span>
-    <span class="va">subsample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">parent_distribution</span>, <span class="va">sample_size</span><span class="op">)</span>
-    <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span>
+    <span class="va">sample_size</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">25</span>, <span class="fl">5000</span><span class="op">)</span><span class="op">)</span>
+    <span class="va">subsample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">parent_distribution</span>, <span class="va">sample_size</span><span class="op">)</span>
+    <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span>
       <span class="va">data</span>,
-      <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
         <span class="st">"sample_size"</span> <span class="op">=</span> <span class="va">sample_size</span>,
         <span class="st">"true"</span> <span class="op">=</span> <span class="va">true_pd</span>,
         <span class="st">"direct"</span> <span class="op">=</span> <span class="fu"><a href="../reference/p_direction.html">pd</a></span><span class="op">(</span><span class="va">subsample</span><span class="op">)</span> <span class="op">-</span> <span class="va">true_pd</span>,
@@ -258,59 +228,56 @@ Correlation between the frequentist p-value and the probability of direction (pd
     <span class="op">)</span>
   <span class="op">}</span>
 <span class="op">}</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">as.numeric</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">as.numeric</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 
-<span class="va">data</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html">gather</a></span><span class="op">(</span><span class="va">Method</span>, <span class="va">Distance</span>, <span class="op">-</span><span class="va">sample_size</span>, <span class="op">-</span><span class="va">true</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sample_size</span>, y <span class="op">=</span> <span class="va">Distance</span>, color <span class="op">=</span> <span class="va">Method</span>, fill <span class="op">=</span> <span class="va">Method</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span>, stroke <span class="op">=</span> <span class="fl">0</span>, shape <span class="op">=</span> <span class="fl">16</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"\nDistribution Size"</span><span class="op">)</span></code></pre></div>
+<span class="va">data</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/gather.html" class="external-link">gather</a></span><span class="op">(</span><span class="va">Method</span>, <span class="va">Distance</span>, <span class="op">-</span><span class="va">sample_size</span>, <span class="op">-</span><span class="va">true</span><span class="op">)</span> <span class="op"><a href="https://tidyr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sample_size</span>, y <span class="op">=</span> <span class="va">Distance</span>, color <span class="op">=</span> <span class="va">Method</span>, fill <span class="op">=</span> <span class="va">Method</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span>, stroke <span class="op">=</span> <span class="fl">0</span>, shape <span class="op">=</span> <span class="fl">16</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"\nDistribution Size"</span><span class="op">)</span></code></pre></div>
 <p><img src="probability_of_direction_files/figure-html/unnamed-chunk-5-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>The “Kernel” based density methods seems to consistently underestimate the <em>pd</em>. Interestingly, the “direct” method appears as being the more reliable, even in the case of small number of posterior draws.</p>
 </div>
-<div id="can-the-pd-be-100" class="section level2">
-<h2 class="hasAnchor">
-<a href="#can-the-pd-be-100" class="anchor"></a>Can the pd be 100%?</h2>
+<div class="section level2">
+<h2 id="can-the-pd-be-100">Can the pd be 100%?<a class="anchor" aria-label="anchor" href="#can-the-pd-be-100"></a>
+</h2>
 <p><code>p = 0.000</code> is coined as one of the term to avoid when reporting results <span class="citation">(Lilienfeld et al., 2015)</span>, even if often displayed by statistical software. The rationale is that for every probability distribution, there is no value with a probability of exactly 0. There is always some infinitesimal probability associated with each data point, and the <code>p = 0.000</code> returned by software is due to approximations related, among other, to finite memory hardware.</p>
 <p>One could apply this rationale for the <em>pd</em>: since all data points have a non-null probability density, then the <em>pd</em> (a particular portion of the probability density) can <em>never</em> be 100%. While this is an entirely valid point, people using the <em>direct</em> method might argue that their <em>pd</em> is based on the posterior draws, rather than on the theoretical, hidden, true posterior distribution (which is only approximated by the posterior draws). These posterior draws represent a finite sample for which <code>pd = 100%</code> is a valid statement.</p>
 <div id="refs" class="references">
 <div id="ref-lilienfeld2015fifty">
-<p>Lilienfeld, S. O., Sauvigné, K. C., Lynn, S. J., Cautin, R. L., Latzman, R. D., &amp; Waldman, I. D. (2015). Fifty psychological and psychiatric terms to avoid: A list of inaccurate, misleading, misused, ambiguous, and logically confused words and phrases. <em>Frontiers in Psychology</em>, <em>6</em>, 1100. <a href="https://doi.org/10.3389/fpsyg.2015.01100">https://doi.org/10.3389/fpsyg.2015.01100</a></p>
+<p>Lilienfeld, S. O., Sauvigné, K. C., Lynn, S. J., Cautin, R. L., Latzman, R. D., &amp; Waldman, I. D. (2015). Fifty psychological and psychiatric terms to avoid: A list of inaccurate, misleading, misused, ambiguous, and logically confused words and phrases. <em>Frontiers in Psychology</em>, <em>6</em>, 1100. <a href="https://doi.org/10.3389/fpsyg.2015.01100" class="external-link">https://doi.org/10.3389/fpsyg.2015.01100</a></p>
 </div>
 </div>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by <a href="https://dominiquemakowski.github.io/">Dominique Makowski</a>, <a href="https://github.com/strengejacke">Daniel Lüdecke</a>, <a href="https://github.com/mattansb">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a>, <a href="http://www.humanfactors.io">Michael D. Wilson</a>, Brenton M. Wiernik.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://github.com/mattansb" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, <a href="http://www.humanfactors.io" class="external-link">Michael D. Wilson</a>, Brenton M. Wiernik.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
 
+  
 
   </body>
 </html>
