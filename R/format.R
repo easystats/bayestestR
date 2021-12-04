@@ -11,7 +11,7 @@ format.describe_posterior <- function(x,
   # reshape CI
   if (is.data.frame(x) && .n_unique(x$CI) > 1) {
     att <- attributes(x)
-    x <- reshape_ci(x)
+    x <- datawizard::reshape_ci(x)
     attributes(x) <- utils::modifyList(att, attributes(x))
   }
 

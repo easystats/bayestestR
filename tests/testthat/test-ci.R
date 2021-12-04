@@ -12,9 +12,9 @@ if (require("rstanarm") && require("httr") && require("brms") && require("insigh
 
     x <- data.frame(replicate(4, rnorm(100)))
     x <- ci(x, ci = c(0.68, 0.89, 0.95))
-    a <- reshape_ci(x)
+    a <- datawizard::reshape_ci(x)
     expect_equal(c(nrow(x), ncol(x)), c(12, 4))
-    expect_true(all(reshape_ci(a) == x))
+    expect_true(all(datawizard::reshape_ci(a) == x))
   })
 
 
