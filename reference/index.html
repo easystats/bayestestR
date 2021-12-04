@@ -120,14 +120,19 @@
 
       <dl><dt>
           
-          <code><a href="point_estimate.html">point_estimate()</a></code> 
+          <code><a href="as.numeric.p_direction.html">as.numeric(<i>&lt;map_estimate&gt;</i>)</a></code> <code><a href="as.numeric.p_direction.html">as.numeric(<i>&lt;p_direction&gt;</i>)</a></code> <code><a href="as.numeric.p_direction.html">as.numeric(<i>&lt;p_map&gt;</i>)</a></code> <code><a href="as.numeric.p_direction.html">as.numeric(<i>&lt;p_significance&gt;</i>)</a></code> 
         </dt>
-        <dd>Point-estimates of posterior distributions</dd>
+        <dd>Convert to Numeric</dd>
       </dl><dl><dt>
           
           <code><a href="map_estimate.html">map_estimate()</a></code> 
         </dt>
         <dd>Maximum A Posteriori probability estimate (MAP)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="point_estimate.html">point_estimate()</a></code> 
+        </dt>
+        <dd>Point-estimates of posterior distributions</dd>
       </dl><dl><dt>
           
           <code><a href="bci.html">bci()</a></code> <code><a href="bci.html">bcai()</a></code> 
@@ -177,19 +182,29 @@
         <dd>Probability of Direction (pd)</dd>
       </dl><dl><dt>
           
-          <code><a href="p_rope.html">p_rope()</a></code> 
-        </dt>
-        <dd>Probability of being in the ROPE</dd>
-      </dl><dl><dt>
-          
           <code><a href="p_map.html">p_map()</a></code> <code><a href="p_map.html">p_pointnull()</a></code> 
         </dt>
         <dd>Bayesian p-value based on the density at the Maximum A Posteriori (MAP)</dd>
       </dl><dl><dt>
           
+          <code><a href="p_rope.html">p_rope()</a></code> 
+        </dt>
+        <dd>Probability of being in the ROPE</dd>
+      </dl><dl><dt>
+          
           <code><a href="p_significance.html">p_significance()</a></code> 
         </dt>
         <dd>Practical Significance (ps)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="pd_to_p.html">pd_to_p()</a></code> <code><a href="pd_to_p.html">p_to_pd()</a></code> <code><a href="pd_to_p.html">convert_p_to_pd()</a></code> <code><a href="pd_to_p.html">convert_pd_to_p()</a></code> 
+        </dt>
+        <dd>Convert between Probability of Direction (pd) and p-value.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="bayesfactor_parameters.html">bayesfactor_parameters()</a></code> <code><a href="bayesfactor_parameters.html">bayesfactor_pointnull()</a></code> <code><a href="bayesfactor_parameters.html">bayesfactor_rope()</a></code> <code><a href="bayesfactor_parameters.html">bf_parameters()</a></code> <code><a href="bayesfactor_parameters.html">bf_pointnull()</a></code> <code><a href="bayesfactor_parameters.html">bf_rope()</a></code> 
+        </dt>
+        <dd>Bayes Factors (BF) for a Single Parameter</dd>
       </dl><dl><dt>
           
           <code><a href="rope.html">rope()</a></code> 
@@ -205,11 +220,6 @@
           <code><a href="equivalence_test.html">equivalence_test()</a></code> 
         </dt>
         <dd>Test for Practical Equivalence</dd>
-      </dl><dl><dt>
-          
-          <code><a href="pd_to_p.html">pd_to_p()</a></code> <code><a href="pd_to_p.html">p_to_pd()</a></code> <code><a href="pd_to_p.html">convert_p_to_pd()</a></code> <code><a href="pd_to_p.html">convert_pd_to_p()</a></code> 
-        </dt>
-        <dd>Convert between Probability of Direction (pd) and p-value.</dd>
       </dl></div><div class="section level2">
       
       <h3 id="bayes-factors">Bayes factors<a class="anchor" aria-label="anchor" href="#bayes-factors"></a></h3>
@@ -228,9 +238,9 @@
         <dd>Bayes Factors (BF)</dd>
       </dl><dl><dt>
           
-          <code><a href="bayesfactor_parameters.html">bayesfactor_parameters()</a></code> <code><a href="bayesfactor_parameters.html">bayesfactor_pointnull()</a></code> <code><a href="bayesfactor_parameters.html">bayesfactor_rope()</a></code> <code><a href="bayesfactor_parameters.html">bf_parameters()</a></code> <code><a href="bayesfactor_parameters.html">bf_pointnull()</a></code> <code><a href="bayesfactor_parameters.html">bf_rope()</a></code> 
+          <code><a href="bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> <code><a href="bayesfactor_inclusion.html">bf_inclusion()</a></code> 
         </dt>
-        <dd>Bayes Factors (BF) for a Single Parameter</dd>
+        <dd>Inclusion Bayes Factors for testing predictors across Bayesian models</dd>
       </dl><dl><dt>
           
           <code><a href="bayesfactor_models.html">bayesfactor_models()</a></code> <code><a href="bayesfactor_models.html">bf_models()</a></code> <code><a href="bayesfactor_models.html">update(<i>&lt;bayesfactor_models&gt;</i>)</a></code> <code><a href="bayesfactor_models.html">as.matrix(<i>&lt;bayesfactor_models&gt;</i>)</a></code> 
@@ -238,9 +248,9 @@
         <dd>Bayes Factors (BF) for model comparison</dd>
       </dl><dl><dt>
           
-          <code><a href="bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> <code><a href="bayesfactor_inclusion.html">bf_inclusion()</a></code> 
+          <code><a href="bayesfactor_parameters.html">bayesfactor_parameters()</a></code> <code><a href="bayesfactor_parameters.html">bayesfactor_pointnull()</a></code> <code><a href="bayesfactor_parameters.html">bayesfactor_rope()</a></code> <code><a href="bayesfactor_parameters.html">bf_parameters()</a></code> <code><a href="bayesfactor_parameters.html">bf_pointnull()</a></code> <code><a href="bayesfactor_parameters.html">bf_rope()</a></code> 
         </dt>
-        <dd>Inclusion Bayes Factors for testing predictors across Bayesian models</dd>
+        <dd>Bayes Factors (BF) for a Single Parameter</dd>
       </dl><dl><dt>
           
           <code><a href="bayesfactor_restricted.html">bayesfactor_restricted()</a></code> <code><a href="bayesfactor_restricted.html">bf_restricted()</a></code> 
@@ -289,9 +299,19 @@
         <dd>Check if Prior is Informative</dd>
       </dl><dl><dt>
           
+          <code><a href="simulate_correlation.html">simulate_correlation()</a></code> <code><a href="simulate_correlation.html">simulate_ttest()</a></code> <code><a href="simulate_correlation.html">simulate_difference()</a></code> 
+        </dt>
+        <dd>Data Simulation</dd>
+      </dl><dl><dt>
+          
           <code><a href="simulate_prior.html">simulate_prior()</a></code> 
         </dt>
         <dd>Returns Priors of a Model as Empirical Distributions</dd>
+      </dl><dl><dt>
+          
+          <code><a href="simulate_simpson.html">simulate_simpson()</a></code> 
+        </dt>
+        <dd>Simpson's paradox dataset simulation</dd>
       </dl><dl><dt>
           
           <code><a href="unupdate.html">unupdate()</a></code> 
@@ -367,16 +387,6 @@
 
       <dl><dt>
           
-          <code><a href="simulate_correlation.html">simulate_correlation()</a></code> <code><a href="simulate_correlation.html">simulate_ttest()</a></code> <code><a href="simulate_correlation.html">simulate_difference()</a></code> 
-        </dt>
-        <dd>Data Simulation</dd>
-      </dl><dl><dt>
-          
-          <code><a href="simulate_simpson.html">simulate_simpson()</a></code> 
-        </dt>
-        <dd>Simpson's paradox dataset simulation</dd>
-      </dl><dl><dt>
-          
           <code><a href="mediation.html">mediation()</a></code> 
         </dt>
         <dd>Summary of Bayesian multivariate-response mediation-models</dd>
@@ -435,7 +445,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
     </footer></div>
