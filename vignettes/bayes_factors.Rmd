@@ -253,7 +253,7 @@ ggplot(mapping = aes(x_vals, d_vals_post, fill = in_null, group = range_groups))
 
 My_first_BF <- bayesfactor_parameters(model, null = c(-1, 1), prior = model_prior)
 
-BF <- My_first_BF$BF[2]
+BF <- as.numeric(My_first_BF)[2]
 post_odds <- prior_odds * BF
 
 med_post <- point_estimate(posterior)$Median
@@ -358,7 +358,7 @@ test_group2_right <- bayesfactor_parameters(
   direction = ">"
 )
 
-BF <- test_group2_right$BF
+BF <- as.numeric(test_group2_right)
 
 print(test_group2_right)
 ```

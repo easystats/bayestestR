@@ -97,7 +97,7 @@
 #'   BFmods <- bayesfactor_models(m0, m1)
 #'
 #'   wp <- weighted_posteriors(pred_m0, pred_m1,
-#'     prior_odds = BFmods$BF[2]
+#'     prior_odds = as.numeric(BFmods)[2]
 #'   )
 #'
 #'   # look at first 5 prediction intervals
