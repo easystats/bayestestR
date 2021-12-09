@@ -21,7 +21,8 @@ bf_inclusion(models, match_models = FALSE, prior_odds = NULL, ...)
 }
 \value{
 a data frame containing the prior and posterior probabilities, and
-log(BF) for each effect.
+log(BF) for each effect (Use \code{as.numeric()} to extract the non-log Bayes
+factors; see examples).
 }
 \description{
 The \verb{bf_*} function is an alias of the main function.
@@ -68,7 +69,10 @@ mo2 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
 mo3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 
 BFmodels <- bayesfactor_models(mo1, mo2, mo3, denominator = mo0)
-bayesfactor_inclusion(BFmodels)
+(bf_inc <- bayesfactor_inclusion(BFmodels))
+
+as.numeric(bf_inc)
+
 \dontrun{
 # BayesFactor
 # -------------------------------

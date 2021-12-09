@@ -75,8 +75,9 @@ be abbreviated. Only applies to \pkg{brms}-models.}
 }
 \value{
 A data frame containing the (log) Bayes factor representing evidence
-\emph{against} the un-restricted model. (A \code{bool_results} attribute contains the
-results for each sample, indicating if they are included or not in the
+\emph{against} the un-restricted model (Use \code{as.numeric()} to extract the
+non-log Bayes factors; see examples). (A \code{bool_results} attribute contains
+the results for each sample, indicating if they are included or not in the
 hypothesized restriction.)
 }
 \description{
@@ -157,6 +158,8 @@ hyps <- c(
 )
 
 (b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
+
+as.numeric(b)
 
 if (require("see") && require("patchwork")) {
   i <- attr(b, "bool_results")[["posterior"]]

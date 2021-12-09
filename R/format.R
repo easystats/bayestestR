@@ -91,10 +91,7 @@ format.bayesfactor_models <- function(x,
   formula_length <- attr(BFE, "text_length")
 
   BFE <- as.data.frame(BFE)
-  if (!log) {
-    BFE$log_BF <- exp(BFE$log_BF)
-  }
-
+  BFE$log_BF <- as.numeric(x, log = log)
   BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
 
   if (any((sgn <- sign(BFE$log_BF) < 0)[!is.na(BFE$log_BF)])) {
@@ -161,9 +158,7 @@ format.bayesfactor_inclusion <- function(x,
 
   # format table
   BFE <- as.data.frame(x)
-  if (!log) {
-    BFE$log_BF <- exp(BFE$log_BF)
-  }
+  BFE$log_BF <- as.numeric(x, log = log)
   BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
 
   if (any((sgn <- sign(BFE$log_BF) < 0)[!is.na(BFE$log_BF)])) {
@@ -214,9 +209,7 @@ format.bayesfactor_restricted <- function(x,
   BFE <- as.data.frame(x)
 
   # Format
-  if (!log) {
-    BFE$log_BF <- exp(BFE$log_BF)
-  }
+  BFE$log_BF <- as.numeric(x, log = log)
   BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
 
   if (any((sgn <- sign(BFE$log_BF) < 0)[!is.na(BFE$log_BF)])) {
@@ -260,9 +253,7 @@ format.bayesfactor_parameters <- function(x,
   null <- attr(x, "hypothesis")
   direction <- attr(x, "direction")
 
-  if (!log) {
-    x$log_BF <- exp(x$log_BF)
-  }
+  x$log_BF <- as.numeric(x, log = log)
 
   x$BF_override <- insight::format_bf(abs(x$log_BF), name = NULL, exact = exact, ...)
 

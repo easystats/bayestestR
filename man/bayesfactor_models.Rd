@@ -36,7 +36,8 @@ model.}
 }
 \value{
 A data frame containing the models' formulas (reconstructed fixed and
-random effects) and their \code{log(BF)}s, that prints nicely.
+random effects) and their \code{log(BF)}s  (Use \code{as.numeric()} to extract the
+non-log Bayes factors; see examples), that prints nicely.
 }
 \description{
 This function computes or extracts Bayes factors from fitted models.
@@ -96,6 +97,7 @@ BFM <- bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
 
 update(BFM, reference = "bottom")
 as.matrix(BFM)
+as.numeric(BFM)
 \dontrun{
 # With lmerMod objects:
 # ---------------------

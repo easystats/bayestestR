@@ -24,8 +24,9 @@
 #' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
 #'
 #' @return A data frame containing the (log) Bayes factor representing evidence
-#'   *against* the un-restricted model. (A `bool_results` attribute contains the
-#'   results for each sample, indicating if they are included or not in the
+#'   *against* the un-restricted model (Use `as.numeric()` to extract the
+#'   non-log Bayes factors; see examples). (A `bool_results` attribute contains
+#'   the results for each sample, indicating if they are included or not in the
 #'   hypothesized restriction.)
 #'
 #' @examples
@@ -50,6 +51,8 @@
 #' )
 #'
 #' (b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
+#'
+#' as.numeric(b)
 #'
 #' if (require("see") && require("patchwork")) {
 #'   i <- attr(b, "bool_results")[["posterior"]]

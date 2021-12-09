@@ -155,7 +155,8 @@ for the output.}
 }
 \value{
 A data frame containing the (log) Bayes factor representing evidence
-\emph{against} the null.
+\emph{against} the null  (Use \code{as.numeric()} to extract the non-log Bayes
+factors; see examples).
 }
 \description{
 This method computes Bayes factors against the null (either a point or an
@@ -258,7 +259,9 @@ library(bayestestR)
 if (require("logspline")) {
   prior <- distribution_normal(1000, mean = 0, sd = 1)
   posterior <- distribution_normal(1000, mean = .5, sd = .3)
-  bayesfactor_parameters(posterior, prior)
+  (BF_pars <- bayesfactor_parameters(posterior, prior))
+
+  as.numeric(BF_pars)
 }
 \dontrun{
 # rstanarm models

@@ -43,7 +43,8 @@
 #' @inheritParams hdi
 #'
 #' @return A data frame containing the (log) Bayes factor representing evidence
-#'   *against* the null.
+#'   *against* the null  (Use `as.numeric()` to extract the non-log Bayes
+#'   factors; see examples).
 #'
 #' @note There is also a
 #'   [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html)
@@ -112,7 +113,9 @@
 #' if (require("logspline")) {
 #'   prior <- distribution_normal(1000, mean = 0, sd = 1)
 #'   posterior <- distribution_normal(1000, mean = .5, sd = .3)
-#'   bayesfactor_parameters(posterior, prior)
+#'   (BF_pars <- bayesfactor_parameters(posterior, prior))
+#'
+#'   as.numeric(BF_pars)
 #' }
 #' \dontrun{
 #' # rstanarm models
