@@ -315,7 +315,8 @@ for the output.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data frame containing the (log) Bayes factor representing evidence
-<em>against</em> the null.</p>
+<em>against</em> the null  (Use <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric()</a></code> to extract the non-log Bayes
+factors; see examples).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -417,17 +418,13 @@ Science, 6(3), 291–298. doi: <a href="https://doi.org/10.1177/1745691611406923
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"logspline"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="va">prior</span> <span class="op">&lt;-</span> <span class="fu"><a href="distribution.html">distribution_normal</a></span><span class="op">(</span><span class="fl">1000</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-in">  <span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="distribution.html">distribution_normal</a></span><span class="op">(</span><span class="fl">1000</span>, mean <span class="op">=</span> <span class="fl">.5</span>, sd <span class="op">=</span> <span class="fl">.3</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">bayesfactor_parameters</span><span class="op">(</span><span class="va">posterior</span>, <span class="va">prior</span><span class="op">)</span></span>
+<span class="r-in">  <span class="op">(</span><span class="va">BF_pars</span> <span class="op">&lt;-</span> <span class="fu">bayesfactor_parameters</span><span class="op">(</span><span class="va">posterior</span>, <span class="va">prior</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">BF_pars</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Bayes factors might not be precise.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> For precise Bayes factors, sampling at least 40,000 posterior samples is recommended.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Bayes Factor (Savage-Dickey density ratio)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> BF  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.23</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Evidence Against The Null: <span style="color: #00BBBB;">0</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.233105</span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="co"># rstanarm models</span></span>
 <span class="r-in"><span class="co"># ---------------</span></span>

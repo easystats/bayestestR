@@ -115,7 +115,8 @@ For more info, see <a href="https://easystats.github.io/bayestestR/articles/baye
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>a data frame containing the prior and posterior probabilities, and
-log(BF) for each effect.</p>
+log(BF) for each effect (Use <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric()</a></code> to extract the non-log Bayes
+factors; see examples).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -178,7 +179,7 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 <span class="r-in"><span class="va">mo3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">BFmodels</span> <span class="op">&lt;-</span> <span class="fu"><a href="bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">mo1</span>, <span class="va">mo2</span>, <span class="va">mo3</span>, denominator <span class="op">=</span> <span class="va">mo0</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">bayesfactor_inclusion</span><span class="op">(</span><span class="va">BFmodels</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">(</span><span class="va">bf_inc</span> <span class="op">&lt;-</span> <span class="fu">bayesfactor_inclusion</span><span class="op">(</span><span class="va">BFmodels</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Inclusion Bayes Factors (Model Averaged)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                      P(prior) P(posterior) Inclusion BF</span>
@@ -188,6 +189,10 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Compared among: <span style="color: #00BBBB;">all models</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *    Priors odds: <span style="color: #00BBBB;">uniform-equal</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bf_inc</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.021143e+55 3.575448e+26 1.131202e-01</span>
+<span class="r-in"></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="co"># BayesFactor</span></span>
 <span class="r-in"><span class="co"># -------------------------------</span></span>
