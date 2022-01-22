@@ -84,7 +84,7 @@
 #       }
 #     }
 #
-#     x <- .remove_column(x, c("CI_low", "CI_high"))
+#     x <- datawizard::data_remove(x, c("CI_low", "CI_high"))
 #   }
 #
 #
@@ -96,7 +96,7 @@
 #       x$ROPE_CI <- insight::format_ci(x$ROPE_low, x$ROPE_high, ci = NULL, digits = digits, width = "auto")
 #       colnames(x)[colnames(x) == "ROPE_CI"] <- sprintf("%.5g%% ROPE", rci)
 #     }
-#     x <- .remove_column(x, c("ROPE_low", "ROPE_high"))
+#     x <- datawizard::data_remove(x, c("ROPE_low", "ROPE_high"))
 #   }
 #
 #   x <- insight::format_table(x, digits = digits, ...)
@@ -116,14 +116,14 @@
 #   x$HDI <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = "auto", missing = "NA")
 #
 #   if (length(ci) == 1) {
-#     xsub <- .remove_column(x, c("CI", "CI_low", "CI_high"))
+#     xsub <- datawizard::data_remove(x, c("CI", "CI_low", "CI_high"))
 #     colnames(xsub)[ncol(xsub)] <- sprintf("%.5g%% %s", 100 * ci, ci_string)
 #     if (inherits(x, "bayestestR_si")) colnames(xsub)[ncol(xsub)] <- sprintf("BF = %.5g %s", ci, ci_string)
 #     print_data_frame(xsub, digits = digits)
 #   } else {
 #     for (i in ci) {
 #       xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
-#       xsub <- .remove_column(xsub, c("CI", "CI_low", "CI_high"))
+#       xsub <- datawizard::data_remove(xsub, c("CI", "CI_low", "CI_high"))
 #       colnames(xsub)[ncol(xsub)] <- sprintf("%.5g%% %s", 100 * i, ci_string)
 #       if (inherits(x, "bayestestR_si")) colnames(xsub)[ncol(xsub)] <- sprintf("BF = %.5g %s", i, ci_string)
 #       print_data_frame(xsub, digits = digits)

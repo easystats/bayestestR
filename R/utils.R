@@ -14,30 +14,6 @@
   name %in% names(x)
 }
 
-# remove NULL elements from lists
-#' @keywords internal
-.compact_list <- function(x) x[!sapply(x, function(i) length(i) == 0 || is.null(i) || any(i == "NULL", na.rm = TRUE))]
-
-# is string empty?
-#' @keywords internal
-.is_empty_object <- function(x) {
-  if (is.list(x)) {
-    x <- tryCatch(
-      {
-        .compact_list(x)
-      },
-      error = function(x) {
-        x
-      }
-    )
-  }
-  # this is an ugly fix because of ugly tibbles
-  if (inherits(x, c("tbl_df", "tbl"))) x <- as.data.frame(x)
-  x <- suppressWarnings(x[!is.na(x)])
-  length(x) == 0 || is.null(x)
-}
-
-
 # select rows where values in "variable" match "value"
 #' @keywords internal
 .select_rows <- function(data, variable, value) {
@@ -46,7 +22,7 @@
 
 # remove column
 #' @keywords internal
-.remove_column <- function(data, variables) {
+datawizard::data_remove <- function(data, variables) {
   data[variables] <- NULL
   data
 }
@@ -171,7 +147,7 @@
     out <- out[!is.na(out$Effects) & !is.na(out$Component) & !duplicated(out$.roworder), ]
   }
   attr(out, "Cleaned_Parameter") <- out$Cleaned_Parameter[order(out$.roworder)]
-  .remove_column(out[order(out$.roworder), ], remove_cols)
+  datawizard::data_remove(out[order(out$.roworder), ], remove_cols)
 }
 
 
@@ -182,7 +158,7 @@
   }
   x$.rowid <- 1:nrow(x)
   x <- merge(x, y, by = by, all = all)
-  .remove_column(x[order(x$.rowid), ], ".rowid")
+  datawizard::data_remove(x[order(x$.rowid), ], ".rowid")
 }
 
 

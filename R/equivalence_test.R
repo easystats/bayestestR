@@ -152,7 +152,7 @@ equivalence_test.numeric <- function(x, range = "default", ci = 0.95, verbose = 
 #' @rdname equivalence_test
 #' @export
 equivalence_test.data.frame <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
-  l <- .compact_list(lapply(
+  l <- datawizard::compact_list(lapply(
     x,
     equivalence_test,
     range = range,

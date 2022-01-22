@@ -67,7 +67,7 @@ Depends:
     R (>= 3.4)
 Imports:
     insight (>= 0.14.1),
-    datawizard (>= 0.2.0),
+    datawizard (>= 0.2.2.9000),
     methods,
     stats,
     utils
@@ -108,6 +108,7 @@ Suggests:
     testthat,
     tidyr,
     tweedie
+Remotes: easystats/datawizard
 License: GPL-3
 URL: https://easystats.github.io/bayestestR/
 BugReports: https://github.com/easystats/bayestestR/issues
