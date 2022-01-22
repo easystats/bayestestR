@@ -8,55 +8,6 @@
 }
 
 
-# has object an element with given name?
-#' @keywords internal
-.obj_has_name <- function(x, name) {
-  name %in% names(x)
-}
-
-# select rows where values in "variable" match "value"
-#' @keywords internal
-.select_rows <- function(data, variable, value) {
-  data[which(data[[variable]] == value), ]
-}
-
-# remove column
-#' @keywords internal
-datawizard::data_remove <- function(data, variables) {
-  data[variables] <- NULL
-  data
-}
-
-
-#' @keywords internal
-.to_long <- function(x, names_to = "key", values_to = "value", columns = colnames(x)) {
-  if (is.numeric(columns)) columns <- colnames(x)[columns]
-  dat <- stats::reshape(
-    as.data.frame(x),
-    idvar = "id",
-    ids = row.names(x),
-    times = columns,
-    timevar = names_to,
-    v.names = values_to,
-    varying = list(columns),
-    direction = "long"
-  )
-
-  if (is.factor(dat[[values_to]])) {
-    dat[[values_to]] <- as.character(dat[[values_to]])
-  }
-
-  dat[, 1:(ncol(dat) - 1), drop = FALSE]
-}
-
-#' select numerics columns
-#' @keywords internal
-.select_nums <- function(x) {
-  x[unlist(lapply(x, is.numeric))]
-}
-
-
-
 ## TODO remove?!?
 
 # #' Used in describe_posterior
@@ -160,24 +111,6 @@ datawizard::data_remove <- function(data, variables) {
   x <- merge(x, y, by = by, all = all)
   datawizard::data_remove(x[order(x$.rowid), ], ".rowid")
 }
-
-
-
-# returns the row-indices for grouped data frames
-#' @keywords internal
-.group_indices <- function(x) {
-  # dplyr < 0.8.0 returns attribute "indices"
-  grps <- attr(x, "groups", exact = TRUE)
-
-  # dplyr < 0.8.0?
-  if (is.null(grps)) {
-    attr(x, "indices", exact = TRUE)
-  } else {
-    grps[[".rows"]]
-  }
-}
-
-
 
 # returns the variables that were used for grouping data frames (dplyr::group_var())
 #' @keywords internal
