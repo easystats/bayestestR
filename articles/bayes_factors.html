@@ -43,7 +43,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
   <a class="nav-link" href="../index.html">
@@ -107,6 +107,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="bayes_factors_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Bayes Factors</h1>
@@ -128,9 +131,9 @@
 <p>The <code>bayestestR</code> package does <strong>not</strong> take a side in this debate, and offers tools to carry out analysis irrespective of the school you subscribe to. Instead, it strongly supports the notion of an <em>informed choice</em>:</p>
 <p><strong>discover the methods, learn about them, understand them, try them, and decide for yourself</strong>.</p>
 <p>Having said that, here’s an introduction to Bayes factors :)</p>
-<div class="section level1">
-<h1 id="the-bayes-factor">The Bayes Factor<a class="anchor" aria-label="anchor" href="#the-bayes-factor"></a>
-</h1>
+<div class="section level2">
+<h2 id="the-bayes-factor">The Bayes Factor<a class="anchor" aria-label="anchor" href="#the-bayes-factor"></a>
+</h2>
 <p><strong>Bayes Factors (BFs) are indices of <em>relative</em> evidence of one “model” over another</strong>.</p>
 <p>In their role as a hypothesis testing index, they are to Bayesian framework what a <span class="math inline">\(p\)</span>-value is to the <strong>classical/frequentist framework</strong>. In significance-based testing, <span class="math inline">\(p\)</span>-values are used to assess how unlikely are the observed data if the <strong>null hypothesis</strong> were true, while in the <strong>Bayesian model selection framework</strong>, Bayes factors assess evidence for different models, each model corresponding to a specific hypothesis.</p>
 <p>According to Bayes’ theorem, we can update prior probabilities of some model <span class="math inline">\(M\)</span> (<span class="math inline">\(P(M)\)</span>) to posterior probabilities (<span class="math inline">\(P(M|D)\)</span>) after observing some datum <span class="math inline">\(D\)</span> by accounting for the probability of observing that datum given the model (<span class="math inline">\(P(D|M)\)</span>, also known as the <em>likelihood</em>):</p>
@@ -164,15 +167,15 @@ BF_{12}=\frac{Posterior~Odds_{12}}{Prior~Odds_{12}}
 <li><strong>comparing statistical models themselves</strong></li>
 </ul>
 </div>
-<div class="section level1">
-<h1 id="bayesfactor_parameters">Testing Models’ Parameters with Bayes Factors<a class="anchor" aria-label="anchor" href="#bayesfactor_parameters"></a>
-</h1>
+<div class="section level2">
+<h2 id="bayesfactor_parameters">Testing Models’ Parameters with Bayes Factors<a class="anchor" aria-label="anchor" href="#bayesfactor_parameters"></a>
+</h2>
 <p>A <strong>Bayes factor for a single parameter</strong> can be used to answer the question:</p>
 <blockquote>
 <p>“Given the observed data, has the null hypothesis of an absence of an effect become more or less credible?”</p>
 </blockquote>
 <div class="figure" style="text-align: center">
-<img src="https://github.com/easystats/bayestestR/raw/master/reference/figures/deathsticks.jpg" alt="Bayesian analysis of the Students' (1908) Sleep data set." width="80%"><p class="caption">
+<img src="https://github.com/easystats/bayestestR/raw/master/man/figures/deathsticks.jpg" alt="Bayesian analysis of the Students' (1908) Sleep data set." width="80%"><p class="caption">
 Bayesian analysis of the Students’ (1908) Sleep data set.
 </p>
 </div>
@@ -193,9 +196,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
   prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html" class="external-link">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
   chains <span class="op">=</span> <span class="fl">10</span>, iter <span class="op">=</span> <span class="fl">5000</span>, warmup <span class="op">=</span> <span class="fl">1000</span>
 <span class="op">)</span></code></pre></div>
-<div class="section level3">
-<h3 id="testing-against-a-null-region">Testing against a null-<em>region</em><a class="anchor" aria-label="anchor" href="#testing-against-a-null-region"></a>
-</h3>
+<div class="section level4">
+<h4 id="testing-against-a-null-region">Testing against a null-<em>region</em><a class="anchor" aria-label="anchor" href="#testing-against-a-null-region"></a>
+</h4>
 <p>One way of operationlizing the null-hypothesis is by setting a null region, such that an effect that falls within this interval would be <em>practically</em> equivalent to the null <span class="citation">(Kruschke, 2010)</span>. In our case, that means defining a range of effects we would consider equal to the drug having no effect at all. We can then compute the prior probability of the drug’s effect falling <em>outside this null-region</em>, and the prior probability of the drug’s effect falling <em>within the null-region</em> to get our <em>prior odds</em>. Say any effect smaller than an hour of extra sleep is practically equivalent to being no effect at all, we would define our prior odds as:</p>
 <p><span class="math display">\[
 \frac
@@ -237,9 +240,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <pre><code>&gt; [1] "anecdotal evidence (BF = 1/1.13) against"
 &gt; (Rules: jeffreys1961)</code></pre>
 </div>
-<div class="section level3">
-<h3 id="testing-against-the-point-null-0">Testing against the <em>point</em>-null (0)<a class="anchor" aria-label="anchor" href="#testing-against-the-point-null-0"></a>
-</h3>
+<div class="section level4">
+<h4 id="testing-against-the-point-null-0">Testing against the <em>point</em>-null (0)<a class="anchor" aria-label="anchor" href="#testing-against-the-point-null-0"></a>
+</h4>
 <blockquote>
 <p><strong>What if we don’t know what region would be practically equivalent to 0?</strong></p>
 </blockquote>
@@ -261,9 +264,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">My_second_BF</span><span class="op">)</span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-9-1.png" width="100%"></p>
 </div>
-<div class="section level3">
-<h3 id="directional-hypotheses">Directional hypotheses<a class="anchor" aria-label="anchor" href="#directional-hypotheses"></a>
-</h3>
+<div class="section level4">
+<h4 id="directional-hypotheses">Directional hypotheses<a class="anchor" aria-label="anchor" href="#directional-hypotheses"></a>
+</h4>
 <p>We can also compute Bayes factors for directional hypotheses (“one sided”), if we have a prior hypotheses about the direction of the effect. This can be done by setting an <em>order restriction</em> on the prior distribution (which results in an order restriction on the posterior distribution) of the alternative <span class="citation">(Morey &amp; Wagenmakers, 2014)</span>. For example, if we have a prior hypothesis that <em>the drug has a positive effect on the number of sleep hours</em>, the alternative will be restricted to the region to the right of the null (point or interval):</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">test_group2_right</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters</a></span><span class="op">(</span><span class="va">model</span>, direction <span class="op">=</span> <span class="st">"&gt;"</span><span class="op">)</span>
@@ -306,9 +309,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 \]</span></p>
 <p><strong>NOTE</strong>: See the <em>Testing Contrasts</em> appendix below.</p>
 </div>
-<div class="section level3">
-<h3 id="si">Support intervals<a class="anchor" aria-label="anchor" href="#si"></a>
-</h3>
+<div class="section level4">
+<h4 id="si">Support intervals<a class="anchor" aria-label="anchor" href="#si"></a>
+</h4>
 <p>So far we’ve seen that Bayes factors quantify relative support between competing hypotheses. However, we can also ask:</p>
 <blockquote>
 <p><strong>Upon observing the data, the credibility of which of the parameter’s values has increased (or decreased)?</strong></p>
@@ -346,18 +349,18 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 </ul>
 </div>
 </div>
-<div class="section level1">
-<h1 id="bayesfactor_models">Comparing Models using Bayes Factors<a class="anchor" aria-label="anchor" href="#bayesfactor_models"></a>
-</h1>
+<div class="section level2">
+<h2 id="bayesfactor_models">Comparing Models using Bayes Factors<a class="anchor" aria-label="anchor" href="#bayesfactor_models"></a>
+</h2>
 <p>Bayes factors can also be used to compare statistical <strong>models</strong>. In this statistical context, they answer the following question:</p>
 <blockquote>
 <p><strong>Under which model are the observed data more probable?</strong></p>
 </blockquote>
 <p>In other words, which model is more likely to have produced the observed data? This is usually done by comparing the marginal likelihoods of two models. In such a case, the Bayes factor is a measure of the <strong>relative</strong> evidence for one model over the other.</p>
 <p>Let’s use Bayes factors for model comparison to find a model that best describes the length of an iris’ sepal using the <code>iris</code> data set.</p>
-<div class="section level3">
-<h3 id="for-bayesian-models-brms-and-rstanarm">For Bayesian models (<code>brms</code> and <code>rstanarm</code>)<a class="anchor" aria-label="anchor" href="#for-bayesian-models-brms-and-rstanarm"></a>
-</h3>
+<div class="section level4">
+<h4 id="for-bayesian-models-brms-and-rstanarm">For Bayesian models (<code>brms</code> and <code>rstanarm</code>)<a class="anchor" aria-label="anchor" href="#for-bayesian-models-brms-and-rstanarm"></a>
+</h4>
 <p><strong>Note: In order to compute Bayes factors for Bayesian models, non-default arguments must be added upon fitting:</strong></p>
 <ul>
 <li>
@@ -478,9 +481,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; [5] (Intercept only)       | 1.27e+44 | 8.34e+27 | 2.29e+53 | 9.79e+51 |        1</code></pre>
 <p><strong>NOTE:</strong> In order to correctly and precisely estimate Bayes Factors, you always need the 4 P’s: <strong>P</strong>roper <strong>P</strong>riors,<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;&lt;a href="https://doi.org/10.1016/j.jmp.2015.08.002" class="external-link"&gt;Robert, 2016&lt;/a&gt;; &lt;a href="https://doi.org/10.1080/01621459.1995.10476572" class="external-link"&gt;Kass &amp;amp; Raftery, 1993&lt;/a&gt;; &lt;a href="https://doi.org/10.1016/S0304-4076(00)00076-2" class="external-link"&gt;Fernández, Ley, &amp;amp; Steel, 2001&lt;/a&gt;&lt;/p&gt;'><sup>3</sup></a> and a <strong>P</strong>lentiful <strong>P</strong>osterior.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;&lt;a href="https://arxiv.org/abs/1710.08162" class="external-link"&gt;Gronau, Singmann, &amp;amp; Wagenmakers, 2017&lt;/a&gt;&lt;/p&gt;'><sup>4</sup></a></p>
 </div>
-<div class="section level3">
-<h3 id="for-frequentist-models-via-the-bic-approximation">For Frequentist models via the BIC approximation<a class="anchor" aria-label="anchor" href="#for-frequentist-models-via-the-bic-approximation"></a>
-</h3>
+<div class="section level4">
+<h4 id="for-frequentist-models-via-the-bic-approximation">For Frequentist models via the BIC approximation<a class="anchor" aria-label="anchor" href="#for-frequentist-models-via-the-bic-approximation"></a>
+</h4>
 <p>It is also possible to compute Bayes factors for the comparison of frequentist models. This is done by comparing BIC measures, allowing a Bayesian comparison of non-nested frequentist models <span class="citation">(Wagenmakers, 2007)</span>.</p>
 <p>Let’s try it out on some <strong>linear mixed-effects models</strong>:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
@@ -506,9 +509,9 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; * Against Denominator: [m0] 1 + (1 | Species)
 &gt; *   Bayes Factor Type: BIC approximation</code></pre>
 </div>
-<div class="section level3">
-<h3 id="bayesfactor_restricted">Order restricted models<a class="anchor" aria-label="anchor" href="#bayesfactor_restricted"></a>
-</h3>
+<div class="section level4">
+<h4 id="bayesfactor_restricted">Order restricted models<a class="anchor" aria-label="anchor" href="#bayesfactor_restricted"></a>
+</h4>
 <p>As stated above when discussing one-sided hypothesis tests, we can create new models by imposing order restrictions on a given model. For example, consider the following model, in which we predict the length of an iris’ sepal from the length of its petal, as well as from its species, with priors: - <span class="math inline">\(b_{petal} \sim N(0,2)\)</span> - <span class="math inline">\(b_{versicolors}\ \&amp;\  b_{virginica} \sim N(0,1.2)\)</span></p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>,
@@ -562,13 +565,13 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p><strong>NOTE</strong>: See the <em>Specifying Correct Priors for Factors with More Than 2 Levels</em> appendix below.</p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="bayesian-model-averaging">Bayesian Model Averaging<a class="anchor" aria-label="anchor" href="#bayesian-model-averaging"></a>
-</h1>
+<div class="section level2">
+<h2 id="bayesian-model-averaging">Bayesian Model Averaging<a class="anchor" aria-label="anchor" href="#bayesian-model-averaging"></a>
+</h2>
 <p>In the previous section, we discussed the direct comparison of two models to determine if an effect is supported by the data. However, in many cases there are too many models to consider, or perhaps it is not straightforward which models we should compare to determine if an effect is supported by the data. For such cases, we can use Bayesian model averaging (BMA) to determine the support provided by the data for a parameter or term across many models.</p>
-<div class="section level3">
-<h3 id="bayesfactor_inclusion">Inclusion Bayes factors<a class="anchor" aria-label="anchor" href="#bayesfactor_inclusion"></a>
-</h3>
+<div class="section level4">
+<h4 id="bayesfactor_inclusion">Inclusion Bayes factors<a class="anchor" aria-label="anchor" href="#bayesfactor_inclusion"></a>
+</h4>
 <p>Inclusion Bayes factors answer the question:</p>
 <blockquote>
 <p><strong>Are the observed data more probable under models with a particular predictor, than they are under models without that particular predictor?</strong></p>
@@ -601,9 +604,9 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; * Compared among: matched models only
 &gt; *    Priors odds: uniform-equal</code></pre>
 </div>
-<div class="section level3">
-<h3 id="comparison-with-jasp">Comparison with JASP<a class="anchor" aria-label="anchor" href="#comparison-with-jasp"></a>
-</h3>
+<div class="section level4">
+<h4 id="comparison-with-jasp">Comparison with JASP<a class="anchor" aria-label="anchor" href="#comparison-with-jasp"></a>
+</h4>
 <p><code><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion()</a></code> is meant to provide Bayes Factors per predictor, similar to JASP’s <em>Effects</em> option.</p>
 <p>Let’s compare the two:</p>
 <ol style="list-style-type: decimal">
@@ -627,7 +630,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/bayestestR/raw/master/reference/figures/JASP1.jpg" width="100%"></p>
+<p><img src="https://github.com/easystats/bayestestR/raw/master/man/figures/JASP1.jpg" width="100%"></p>
 <ol start="2" style="list-style-type: decimal">
 <li>
 <strong>Across matched models</strong>:</li>
@@ -643,7 +646,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; * Compared among: matched models only
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/bayestestR/raw/master/reference/figures/JASP2.jpg" width="100%"></p>
+<p><img src="https://github.com/easystats/bayestestR/raw/master/man/figures/JASP2.jpg" width="100%"></p>
 <ol start="3" style="list-style-type: decimal">
 <li>
 <strong>With Nuisance Effects</strong>:</li>
@@ -675,11 +678,11 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; * Compared among: all models
 &gt; *    Priors odds: uniform-equal</code></pre>
-<p><img src="https://github.com/easystats/bayestestR/raw/master/reference/figures/JASP3.jpg" width="100%"></p>
+<p><img src="https://github.com/easystats/bayestestR/raw/master/man/figures/JASP3.jpg" width="100%"></p>
 </div>
-<div class="section level2">
-<h2 id="weighted_posteriors">Averaging posteriors<a class="anchor" aria-label="anchor" href="#weighted_posteriors"></a>
-</h2>
+<div class="section level3">
+<h3 id="weighted_posteriors">Averaging posteriors<a class="anchor" aria-label="anchor" href="#weighted_posteriors"></a>
+</h3>
 <p>Similar to how we can average evidence for a predictor across models, we can also average the <strong>posterior estimate</strong> across models. This is useful in situations where Bayes factors seem to support a null effect, yet the <em>HDI</em> for the alternative excludes the null value (also see <code><a href="../reference/si.html">si()</a></code> described above).</p>
 <p>For example, looking at Motor <em>Trend Car Road Tests</em> (<code>data(mtcars)</code>), we would naturally predict miles/gallon (<code>mpg</code>) from transition type (<code>am</code>) and weight (<code>wt</code>), but what about number of carburetors (<code>carb</code>)? Is this a good predictor?</p>
 <p>We can determine this by comparing the following models:</p>
@@ -744,12 +747,12 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>For example, the parameter <code>A</code> plays a different role in the model <code>Y ~ A + B</code> (where it is a <em>main</em> effect) than it does in the model <code>Y ~ A + B + A:B</code> (where it is a <em>simple</em> effect). In many cases centering of predictors (mean subtracting for continuous variables, and effects coding via <code>contr.sum</code> or orthonormal coding via <a href="https://easystats.github.io/bayestestR/reference/contr.orthonorm.html" class="external-link"><code>contr.orthonorm</code></a> for factors) can in some cases reduce this issue.</p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="appendices">Appendices<a class="anchor" aria-label="anchor" href="#appendices"></a>
-</h1>
 <div class="section level2">
-<h2 id="testing-contrasts-with-emmeans-modelbased">Testing contrasts (with <code>emmeans</code> / <code>modelbased</code>)<a class="anchor" aria-label="anchor" href="#testing-contrasts-with-emmeans-modelbased"></a>
+<h2 id="appendices">Appendices<a class="anchor" aria-label="anchor" href="#appendices"></a>
 </h2>
+<div class="section level3">
+<h3 id="testing-contrasts-with-emmeans-modelbased">Testing contrasts (with <code>emmeans</code> / <code>modelbased</code>)<a class="anchor" aria-label="anchor" href="#testing-contrasts-with-emmeans-modelbased"></a>
+</h3>
 <p>Besides testing parameter <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> can be used to test any estimate based on the prior and posterior distribution of the estimate. One way to achieve this is with a mix of <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> + <a href="https://cran.r-project.org/package=emmeans" class="external-link"><strong><code>emmeans</code></strong></a> to <a href="https://easystats.github.io/blog/posts/bayestestr_emmeans/" class="external-link">test Bayesian contrasts</a>.</p>
 <p>For example, in the <code>sleep</code> example from above, we can estimate the group means and the difference between them:</p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
@@ -790,14 +793,14 @@ BF_{\text{restricted vs. NULL}} = \frac
 <span class="fu"><a href="https://easystats.github.io/modelbased/reference/estimate_contrasts.html" class="external-link">estimate_contrasts</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="st">"bf"</span>, bf_prior <span class="op">=</span> <span class="va">model</span><span class="op">)</span></code></pre></div>
 <p><strong>NOTE</strong>: See the <em>Specifying Correct Priors for Factors with More Than 2 Levels</em> section below.</p>
 </div>
-<div class="section level2">
-<h2 id="contr_bayes">Specifying correct priors for factors<a class="anchor" aria-label="anchor" href="#contr_bayes"></a>
-</h2>
+<div class="section level3">
+<h3 id="contr_bayes">Specifying correct priors for factors<a class="anchor" aria-label="anchor" href="#contr_bayes"></a>
+</h3>
 <p>This section introduces the biased priors obtained when using the common <em>effects</em> factor coding (<code>contr.sum</code>) or dummy factor coding (<code>contr.treatment</code>), and the solution of using orthonormal factor coding (<code>contr.orthonorm</code>) <span class="citation">(as outlined in Rouder, Morey, Speckman, &amp; Province, 2012, sec. 7.2)</span>.</p>
 <p><strong>Special care should be taken when working with factors with 3 or more levels</strong>.</p>
-<div class="section level3">
-<h3 id="contrasts-and-marginal-means">Contrasts (and marginal means)<a class="anchor" aria-label="anchor" href="#contrasts-and-marginal-means"></a>
-</h3>
+<div class="section level4">
+<h4 id="contrasts-and-marginal-means">Contrasts (and marginal means)<a class="anchor" aria-label="anchor" href="#contrasts-and-marginal-means"></a>
+</h4>
 <p>The <em>effects</em> factor coding commonly used in factorial analysis carries a hidden bias when it is applies to Bayesian priors. For example, if we want to test all pairwise differences between 3 levels of the same factor, we would expect all <em>a priori</em> differences to have the same distribution, but…</p>
 <p>For our example, we will be test all <strong><em>prior</em></strong> pairwise differences between the 3 species in the <code>iris</code> dataset.</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
@@ -866,9 +869,9 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p>We can see that using this coding scheme, we have equal priors on all pairwise contrasts.</p>
 <p>There are other solutions to this problem of priors. You can read about them in <a href="https://solomonkurz.netlify.app/post/2020-12-09-multilevel-models-and-the-index-variable-approach/" class="external-link">Solomon Kurz’s blog post</a>.</p>
 </div>
-<div class="section level3">
-<h3 id="order-restrictions">Order restrictions<a class="anchor" aria-label="anchor" href="#order-restrictions"></a>
-</h3>
+<div class="section level4">
+<h4 id="order-restrictions">Order restrictions<a class="anchor" aria-label="anchor" href="#order-restrictions"></a>
+</h4>
 <p>This bias also affect order restrictions involving 3 or more levels. For example, if we want to test an order restriction among A, B, and C, the <em>a priori</em> probability of obtaining the order A &gt; C &gt; B is 1/6 (reach back to <em>intro to stats</em> year 1), but…</p>
 <p>For our example, we will be interested in the following order restrictions in the <code>iris</code> dataset (each line is a separate restriction):</p>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
@@ -899,8 +902,8 @@ BF_{\text{restricted vs. NULL}} = \frac
 <pre><code>&gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 &gt; Chain 1: 
-&gt; Chain 1: Gradient evaluation took 3.1e-05 seconds
-&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.31 seconds.
+&gt; Chain 1: Gradient evaluation took 3e-05 seconds
+&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.3 seconds.
 &gt; Chain 1: Adjust your expectations accordingly!
 &gt; Chain 1: 
 &gt; Chain 1: 
@@ -917,15 +920,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 1: 
-&gt; Chain 1:  Elapsed Time: 0.054383 seconds (Warm-up)
-&gt; Chain 1:                0.080284 seconds (Sampling)
-&gt; Chain 1:                0.134667 seconds (Total)
+&gt; Chain 1:  Elapsed Time: 0.073094 seconds (Warm-up)
+&gt; Chain 1:                0.100784 seconds (Sampling)
+&gt; Chain 1:                0.173878 seconds (Total)
 &gt; Chain 1: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 &gt; Chain 2: 
-&gt; Chain 2: Gradient evaluation took 1.7e-05 seconds
-&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
+&gt; Chain 2: Gradient evaluation took 3e-05 seconds
+&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.3 seconds.
 &gt; Chain 2: Adjust your expectations accordingly!
 &gt; Chain 2: 
 &gt; Chain 2: 
@@ -942,15 +945,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 2: 
-&gt; Chain 2:  Elapsed Time: 0.056917 seconds (Warm-up)
-&gt; Chain 2:                0.071384 seconds (Sampling)
-&gt; Chain 2:                0.128301 seconds (Total)
+&gt; Chain 2:  Elapsed Time: 0.076657 seconds (Warm-up)
+&gt; Chain 2:                0.090862 seconds (Sampling)
+&gt; Chain 2:                0.167519 seconds (Total)
 &gt; Chain 2: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 &gt; Chain 3: 
-&gt; Chain 3: Gradient evaluation took 2.1e-05 seconds
-&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
+&gt; Chain 3: Gradient evaluation took 1.6e-05 seconds
+&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
 &gt; Chain 3: Adjust your expectations accordingly!
 &gt; Chain 3: 
 &gt; Chain 3: 
@@ -967,15 +970,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 3: 
-&gt; Chain 3:  Elapsed Time: 0.055493 seconds (Warm-up)
-&gt; Chain 3:                0.066742 seconds (Sampling)
-&gt; Chain 3:                0.122235 seconds (Total)
+&gt; Chain 3:  Elapsed Time: 0.073541 seconds (Warm-up)
+&gt; Chain 3:                0.083461 seconds (Sampling)
+&gt; Chain 3:                0.157002 seconds (Total)
 &gt; Chain 3: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 &gt; Chain 4: 
-&gt; Chain 4: Gradient evaluation took 2.2e-05 seconds
-&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
+&gt; Chain 4: Gradient evaluation took 1.6e-05 seconds
+&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
 &gt; Chain 4: Adjust your expectations accordingly!
 &gt; Chain 4: 
 &gt; Chain 4: 
@@ -992,9 +995,9 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 4: 
-&gt; Chain 4:  Elapsed Time: 0.0534 seconds (Warm-up)
-&gt; Chain 4:                0.070635 seconds (Sampling)
-&gt; Chain 4:                0.124035 seconds (Total)
+&gt; Chain 4:  Elapsed Time: 0.071237 seconds (Warm-up)
+&gt; Chain 4:                0.091968 seconds (Sampling)
+&gt; Chain 4:                0.163205 seconds (Total)
 &gt; Chain 4:</code></pre>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
@@ -1037,9 +1040,9 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; * Bayes factors for the restricted model vs. the un-restricted model.</code></pre>
 </div>
-<div class="section level3">
-<h3 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
-</h3>
+<div class="section level4">
+<h4 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
+</h4>
 <p>When comparing the results from the two factor coding schemes, we find:<br>
 1. In both cases, the estimated (posterior) means are quite similar (if not identical).<br>
 2. The priors and Bayes factors differ between the two schemes.<br>
@@ -1047,9 +1050,9 @@ BF_{\text{restricted vs. NULL}} = \frac
 </div>
 </div>
 </div>
-<div class="section level1 unnumbered">
-<h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
-</h1>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references">
 <div id="ref-van2019cautionary">
 <p>Bergh, D. van den, Haaf, J. M., Ly, A., Rouder, J. N., &amp; Wagenmakers, E.-J. (2019). <em>A cautionary note on estimating effect size</em>.</p>
@@ -1100,7 +1103,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

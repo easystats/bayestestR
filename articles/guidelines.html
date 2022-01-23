@@ -43,7 +43,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
   <a class="nav-link" href="../index.html">
@@ -107,6 +107,9 @@
     
   </div>
 </nav><div class="container template-article">
+
+
+
 <script src="guidelines_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <main id="main"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Reporting Guidelines</h1>
@@ -126,31 +129,31 @@
 </li>
 </ul>
 <hr>
-<div class="section level1">
-<h1 id="reporting-guidelines">Reporting Guidelines<a class="anchor" aria-label="anchor" href="#reporting-guidelines"></a>
-</h1>
 <div class="section level2">
-<h2 id="how-to-describe-and-report-the-parameters-of-a-model">How to describe and report the parameters of a model<a class="anchor" aria-label="anchor" href="#how-to-describe-and-report-the-parameters-of-a-model"></a>
+<h2 id="reporting-guidelines">Reporting Guidelines<a class="anchor" aria-label="anchor" href="#reporting-guidelines"></a>
 </h2>
+<div class="section level3">
+<h3 id="how-to-describe-and-report-the-parameters-of-a-model">How to describe and report the parameters of a model<a class="anchor" aria-label="anchor" href="#how-to-describe-and-report-the-parameters-of-a-model"></a>
+</h3>
 <p>A Bayesian analysis returns a posterior distribution for each parameter (or <em>effect</em>). To minimally describe these distributions, we recommend reporting a point-estimate of <a href="https://en.wikipedia.org/wiki/Central_tendency" class="external-link">centrality</a> as well as information characterizing the estimation uncertainty (the <a href="https://en.wikipedia.org/wiki/Statistical_dispersion" class="external-link">dispersion</a>). Additionally, one can also report indices of effect existence and/or significance.</p>
 <p>Based on the previous <a href="https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html" class="external-link"><strong>comparison of point-estimates</strong></a> and <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full" class="external-link"><strong>indices of effect existence</strong></a>, we can draw the following recommendations.</p>
-<div class="section level3">
-<h3 id="centrality">
+<div class="section level4">
+<h4 id="centrality">
 <strong>Centrality</strong><a class="anchor" aria-label="anchor" href="#centrality"></a>
-</h3>
+</h4>
 <p>We suggest reporting the <a href="https://easystats.github.io/bayestestR/reference/point_estimate.html" class="external-link"><strong>median</strong></a> as an index of centrality, as it is more robust compared to the <a href="https://easystats.github.io/bayestestR/reference/point_estimate.html" class="external-link">mean</a> or the <a href="https://easystats.github.io/bayestestR/reference/map_estimate.html" class="external-link">MAP estimate</a>. However, in case of a severely skewed posterior distribution, the MAP estimate could be a good alternative.</p>
 </div>
-<div class="section level3">
-<h3 id="uncertainty">
+<div class="section level4">
+<h4 id="uncertainty">
 <strong>Uncertainty</strong><a class="anchor" aria-label="anchor" href="#uncertainty"></a>
-</h3>
+</h4>
 <p>The <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html" class="external-link"><strong>95% or 89% Credible Intervals (CI)</strong></a> are two reasonable ranges to characterize the uncertainty related to the estimation (see <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html" class="external-link">here</a> for a discussion about the differences between these two values). We also recommend computing the CIs based on the <a href="https://easystats.github.io/bayestestR/reference/hdi.html" class="external-link">HDI</a> rather than <a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link">quantiles</a>, favouring probable over central values.</p>
 <p>Note that a CI based on the quantile (equal-tailed interval) might be more appropriate in case of transformations (for instance when transforming log-odds to probabilities). Otherwise, intervals that originally do not cover the null might cover it after transformation (see <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis" class="external-link">here</a>).</p>
 </div>
-<div class="section level3">
-<h3 id="existence">
+<div class="section level4">
+<h4 id="existence">
 <strong>Existence</strong><a class="anchor" aria-label="anchor" href="#existence"></a>
-</h3>
+</h4>
 <div class="figure" style="text-align: center">
 <img src="../reference/figures/watto.jpg" alt="Reviewer 2 (circa a long time ago in a galaxy far away)." width="60%"><p class="caption">
 Reviewer 2 (circa a long time ago in a galaxy far away).
@@ -172,10 +175,10 @@ Reviewer 2 (circa a long time ago in a galaxy far away).
 <em>pd</em> <strong>&gt; 99.9%</strong>: certainly existing</li>
 </ul>
 </div>
-<div class="section level3">
-<h3 id="significance">
+<div class="section level4">
+<h4 id="significance">
 <strong>Significance</strong><a class="anchor" aria-label="anchor" href="#significance"></a>
-</h3>
+</h4>
 <p>The percentage in <strong>ROPE</strong> is a index of <strong>significance</strong> (in its primary meaning), informing us whether a parameter is related or not to a non-negligible change (in terms of magnitude) in the outcome. We suggest reporting the <strong>percentage of the full posterior distribution</strong> (the <em>full</em> ROPE) instead of a given proportion of CI in the ROPE, which appears to be more sensitive (especially to delineate highly significant effects). Rather than using it as a binary, all-or-nothing decision criterion, such as suggested by the original <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html#equivalence-test" class="external-link">equivalence test</a>, we recommend using the percentage as a <em>continuous</em> index of significance. However, based on <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full" class="external-link">simulation data</a>, we suggest the following reference values as an interpretation helpers:</p>
 <ul>
 <li>
@@ -191,25 +194,25 @@ Reviewer 2 (circa a long time ago in a galaxy far away).
 </ul>
 <p><em>Note that extra caution is required as its interpretation highly depends on other parameters such as sample size and ROPE range (see <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html#sensitivity-to-parameters-scale" class="external-link">here</a>)</em>.</p>
 </div>
-<div class="section level3">
-<h3 id="template-sentence">
+<div class="section level4">
+<h4 id="template-sentence">
 <strong>Template Sentence</strong><a class="anchor" aria-label="anchor" href="#template-sentence"></a>
-</h3>
+</h4>
 <p>Based on these suggestions, a template sentence for minimal reporting of a parameter based on its posterior distribution could be:</p>
 <blockquote>
 <p>“the effect of <em>X</em> has a probability of <strong><em>pd</em></strong> of being <em>negative</em> (Median = <strong><em>median</em></strong>, 89% CI [ <strong><em>HDI<sub>low</sub></em></strong> , <strong><em>HDI<sub>high</sub></em></strong> ] and can be considered as <em>significant</em> (<strong><em>ROPE</em></strong>% in ROPE).”</p>
 </blockquote>
 </div>
 </div>
-<div class="section level2">
-<h2 id="how-to-compare-different-models">How to compare different models<a class="anchor" aria-label="anchor" href="#how-to-compare-different-models"></a>
-</h2>
+<div class="section level3">
+<h3 id="how-to-compare-different-models">How to compare different models<a class="anchor" aria-label="anchor" href="#how-to-compare-different-models"></a>
+</h3>
 <p>Although it can also be used to assess effect existence and significance, the <strong>Bayes factor (BF)</strong> is a versatile index that can be used to directly compare different models (or data generation processes). The <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html" class="external-link">Bayes factor</a> is a ratio that informs us by how much more (or less) likely the observed data are under two compared models - usually a model <em>with</em> versus a model <em>without</em> the effect. Depending on the specifications of the null model (whether it is a point-estimate (e.g., <strong>0</strong>) or an interval), the Bayes factor could be used both in the context of effect existence and significance.</p>
 <p>In general, a Bayes factor greater than 1 is taken as evidence in favour of one of the model (in the nominator), and a Bayes factor smaller than 1 is taken as evidence in favour of the other model (in the denominator). Several rules of thumb exist to help the interpretation (see <a href="https://easystats.github.io/effectsize/reference/interpret_bf.html" class="external-link">here</a>), with <strong>&gt; 3</strong> being one common threshold to categorize non-anecdotal evidence.</p>
-<div class="section level3">
-<h3 id="template-sentence-1">
+<div class="section level4">
+<h4 id="template-sentence-1">
 <strong>Template Sentence</strong><a class="anchor" aria-label="anchor" href="#template-sentence-1"></a>
-</h3>
+</h4>
 <p>When reporting Bayes factors (BF), one can use the following sentence:</p>
 <blockquote>
 <p>“There is <em>moderate evidence</em> in favour of an <em>absence</em> of effect of <em>x</em> (BF = <em>BF</em>).”</p>
@@ -217,9 +220,9 @@ Reviewer 2 (circa a long time ago in a galaxy far away).
 </div>
 </div>
 </div>
-<div class="section level1">
-<h1 id="suggestions">Suggestions<a class="anchor" aria-label="anchor" href="#suggestions"></a>
-</h1>
+<div class="section level2">
+<h2 id="suggestions">Suggestions<a class="anchor" aria-label="anchor" href="#suggestions"></a>
+</h2>
 <p>If you have any advice, opinion or such, we encourage you to let us know by opening an <a href="https://github.com/easystats/bayestestR/issues" class="external-link">discussion thread</a> or making a pull request.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -235,7 +238,7 @@ Reviewer 2 (circa a long time ago in a galaxy far away).
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>
