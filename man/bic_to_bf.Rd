@@ -11,13 +11,13 @@ bic_to_bf(bic, denominator, log = FALSE)
 
 \item{denominator}{The BIC value to use as a denominator (to test against).}
 
-\item{log}{Return the \code{log(BF)}?}
+\item{log}{If \code{TRUE}, return the \code{log(BF)}.}
 }
 \value{
 The Bayes Factors corresponding to the BIC values against the denominator.
 }
 \description{
-Convert BIC indices to Bayes Factors via the BIC-approximation method.
+The difference between two Bayesian information criterion (BIC) indices of two models can be used to approximate Bayes factors by dividing it by \code{-2.}
 }
 \examples{
 bic1 <- BIC(lm(Sepal.Length ~ 1, data = iris))
@@ -26,4 +26,7 @@ bic3 <- BIC(lm(Sepal.Length ~ Species + Petal.Length, data = iris))
 bic4 <- BIC(lm(Sepal.Length ~ Species * Petal.Length, data = iris))
 
 bic_to_bf(c(bic1, bic2, bic3, bic4), denominator = bic1)
+}
+\references{
+Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin & review, 14(5), 779-804
 }

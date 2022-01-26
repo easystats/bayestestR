@@ -600,7 +600,7 @@ as.matrix(comparison)
 
 It is also possible to compute Bayes factors for the comparison of frequentist
 models. This is done by comparing BIC measures, allowing a Bayesian comparison
-of non-nested frequentist models [@wagenmakers2007practical].
+of nested as well as non-nested frequentist models [@wagenmakers2007practical].
 
 Let's try it out on some **linear mixed-effects models**:
 

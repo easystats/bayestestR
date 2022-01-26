@@ -1,8 +1,13 @@
 #' Convert BIC indices to Bayes Factors via the BIC-approximation method.
 #'
+#' The difference between two Bayesian information criterion (BIC) indices of two models can be used to approximate Bayes factors by dividing it by `-2.`
+#'
 #' @param bic A vector of BIC values.
 #' @param denominator The BIC value to use as a denominator (to test against).
-#' @param log Return the `log(BF)`?
+#' @param log If `TRUE`, return the `log(BF)`.
+#'
+#' @references
+#' Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin & review, 14(5), 779-804
 #'
 #' @examples
 #' bic1 <- BIC(lm(Sepal.Length ~ 1, data = iris))
