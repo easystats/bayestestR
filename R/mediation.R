@@ -338,7 +338,7 @@ print.bayestestR_mediation <- function(x, digits = 3, ...) {
   x <- x[-nrow(x), ]
 
   x$CI <- insight::format_ci(x$CI_low, x$CI_high, ci = NULL, digits = digits, width = "auto", missing = "NA")
-  x <- .remove_column(x, c("CI_low", "CI_high"))
+  x <- datawizard::data_remove(x, c("CI_low", "CI_high"))
   colnames(x)[ncol(x)] <- sprintf("%.5g%% %s", 100 * attributes(x)$ci, attributes(x)$ci_method)
 
   # remove class, to avoid conflicts with "as.data.frame.bayestestR_mediation()"
