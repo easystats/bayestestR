@@ -7,64 +7,10 @@
   paste0(sapply(deparse(string, width.cutoff = 500), .trim, simplify = TRUE), collapse = "")
 }
 
-
-# remove NULL elements from lists
-#' @keywords internal
-.compact_list <- function(x) x[!sapply(x, function(i) length(i) == 0 || is.null(i) || any(i == "NULL", na.rm = TRUE))]
-
-# is string empty?
-#' @keywords internal
-.is_empty_object <- function(x) {
-  if (is.list(x)) {
-    x <- tryCatch(
-      {
-        .compact_list(x)
-      },
-      error = function(x) {
-        x
-      }
-    )
-  }
-  # this is an ugly fix because of ugly tibbles
-  if (inherits(x, c("tbl_df", "tbl"))) x <- as.data.frame(x)
-  x <- suppressWarnings(x[!is.na(x)])
-  length(x) == 0 || is.null(x)
-}
-
-
 # select rows where values in "variable" match "value"
 #' @keywords internal
 .select_rows <- function(data, variable, value) {
   data[which(data[[variable]] == value), ]
-}
-
-# remove column
-#' @keywords internal
-.remove_column <- function(data, variables) {
-  data[variables] <- NULL
-  data
-}
-
-
-#' @keywords internal
-.to_long <- function(x, names_to = "key", values_to = "value", columns = colnames(x)) {
-  if (is.numeric(columns)) columns <- colnames(x)[columns]
-  dat <- stats::reshape(
-    as.data.frame(x),
-    idvar = "id",
-    ids = row.names(x),
-    times = columns,
-    timevar = names_to,
-    v.names = values_to,
-    varying = list(columns),
-    direction = "long"
-  )
-
-  if (is.factor(dat[[values_to]])) {
-    dat[[values_to]] <- as.character(dat[[values_to]])
-  }
-
-  dat[, 1:(ncol(dat) - 1), drop = FALSE]
 }
 
 #' select numerics columns
@@ -72,30 +18,6 @@
 .select_nums <- function(x) {
   x[unlist(lapply(x, is.numeric))]
 }
-
-
-
-## TODO remove?!?
-
-# #' Used in describe_posterior
-# #' @keywords internal
-# .reorder_rows <- function(x, out, ci = NULL) {
-#   if (!is.data.frame(out) || nrow(out) == 1) {
-#     return(out)
-#   }
-#
-#   if (is.null(ci)) {
-#     refdata <- point_estimate(x, centrality = "median", dispersion = FALSE)
-#     order <- refdata$Parameter
-#     out <- out[match(order, out$Parameter), ]
-#   } else {
-#     uncertainty <- ci(x, ci = ci)
-#     order <- paste0(uncertainty$Parameter, uncertainty$CI)
-#     out <- out[match(order, paste0(out$Parameter, out$CI)), ]
-#   }
-#   rownames(out) <- NULL
-#   out
-# }
 
 
 #' @keywords internal
@@ -165,7 +87,7 @@
     out <- out[!is.na(out$Effects) & !is.na(out$Component) & !duplicated(out$.roworder), ]
   }
   attr(out, "Cleaned_Parameter") <- out$Cleaned_Parameter[order(out$.roworder)]
-  .remove_column(out[order(out$.roworder), ], remove_cols)
+  datawizard::data_remove(out[order(out$.roworder), ], remove_cols)
 }
 
 
@@ -176,25 +98,8 @@
   }
   x$.rowid <- 1:nrow(x)
   x <- merge(x, y, by = by, all = all)
-  .remove_column(x[order(x$.rowid), ], ".rowid")
+  datawizard::data_remove(x[order(x$.rowid), ], ".rowid")
 }
-
-
-
-# returns the row-indices for grouped data frames
-#' @keywords internal
-.group_indices <- function(x) {
-  # dplyr < 0.8.0 returns attribute "indices"
-  grps <- attr(x, "groups", exact = TRUE)
-
-  # dplyr < 0.8.0?
-  if (is.null(grps)) {
-    attr(x, "indices", exact = TRUE)
-  } else {
-    grps[[".rows"]]
-  }
-}
-
 
 
 # returns the variables that were used for grouping data frames (dplyr::group_var())

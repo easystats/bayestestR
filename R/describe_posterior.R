@@ -384,7 +384,7 @@ describe_posterior <- function(posteriors,
   if (all(is.na(out$Response)) || length(unique(out$Response)) < 2) remove_columns <- c(remove_columns, "Response")
 
   # Restore columns order
-  out <- .remove_column(out[order(out$.rowid), ], remove_columns)
+  out <- datawizard::data_remove(out[order(out$.rowid), ], remove_columns)
 
   # Add iterations
   if (keep_iterations == TRUE) {
