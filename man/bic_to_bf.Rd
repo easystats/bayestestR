@@ -17,7 +17,10 @@ bic_to_bf(bic, denominator, log = FALSE)
 The Bayes Factors corresponding to the BIC values against the denominator.
 }
 \description{
-The difference between two Bayesian information criterion (BIC) indices of two models can be used to approximate Bayes factors by dividing it by \code{-2.}
+The difference between two Bayesian information criterion (BIC) indices of
+two models can be used to approximate Bayes factors via:
+\cr
+\deqn{BF_{10} = e^{(BIC_0 - BIC_1)/2}}{BF10 = exp((BIC0-BIC1)/2)}
 }
 \examples{
 bic1 <- BIC(lm(Sepal.Length ~ 1, data = iris))
