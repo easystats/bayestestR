@@ -11,7 +11,7 @@ format.describe_posterior <- function(x,
   # reshape CI
   if (is.data.frame(x) && .n_unique(x$CI) > 1) {
     att <- attributes(x)
-    x <- reshape_ci(x)
+    x <- datawizard::reshape_ci(x)
     attributes(x) <- utils::modifyList(att, attributes(x))
   }
 
@@ -91,10 +91,7 @@ format.bayesfactor_models <- function(x,
   formula_length <- attr(BFE, "text_length")
 
   BFE <- as.data.frame(BFE)
-  if (!log) {
-    BFE$log_BF <- exp(BFE$log_BF)
-  }
-
+  BFE$log_BF <- as.numeric(x, log = log)
   BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
 
   if (any((sgn <- sign(BFE$log_BF) < 0)[!is.na(BFE$log_BF)])) {
@@ -134,7 +131,7 @@ format.bayesfactor_models <- function(x,
       caption <- c(caption, "blue")
     }
   } else {
-    footer <- .compact_list(list(
+    footer <- datawizard::compact_list(list(
       paste0("Against Denominator: ", denM),
       paste0("Bayes Factor Type: ", grid.type),
       if (log) "Bayes Factors are on the log-scale."
@@ -161,9 +158,7 @@ format.bayesfactor_inclusion <- function(x,
 
   # format table
   BFE <- as.data.frame(x)
-  if (!log) {
-    BFE$log_BF <- exp(BFE$log_BF)
-  }
+  BFE$log_BF <- as.numeric(x, log = log)
   BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
 
   if (any((sgn <- sign(BFE$log_BF) < 0)[!is.na(BFE$log_BF)])) {
@@ -189,7 +184,7 @@ format.bayesfactor_inclusion <- function(x,
       caption <- c(caption, "blue")
     }
   } else {
-    footer <- .compact_list(list(
+    footer <- datawizard::compact_list(list(
       paste0("Compared among: ", if (matched) "matched models only" else "all models"),
       paste0("Priors odds: ", if (!is.null(priorOdds)) "custom" else "uniform-equal"),
       if (log) "Bayes Factors are on the log-scale."
@@ -214,9 +209,7 @@ format.bayesfactor_restricted <- function(x,
   BFE <- as.data.frame(x)
 
   # Format
-  if (!log) {
-    BFE$log_BF <- exp(BFE$log_BF)
-  }
+  BFE$log_BF <- as.numeric(x, log = log)
   BFE$BF <- insight::format_bf(abs(BFE$log_BF), name = NULL, exact = exact, ...)
 
   if (any((sgn <- sign(BFE$log_BF) < 0)[!is.na(BFE$log_BF)])) {
@@ -236,7 +229,7 @@ format.bayesfactor_restricted <- function(x,
       caption <- c(caption, "blue")
     }
   } else {
-    footer <- .compact_list(list(
+    footer <- datawizard::compact_list(list(
       "Bayes factors for the restricted model vs. the un-restricted model.",
       if (log) "Bayes Factors are on the log-scale."
     ))
@@ -260,9 +253,7 @@ format.bayesfactor_parameters <- function(x,
   null <- attr(x, "hypothesis")
   direction <- attr(x, "direction")
 
-  if (!log) {
-    x$log_BF <- exp(x$log_BF)
-  }
+  x$log_BF <- as.numeric(x, log = log)
 
   x$BF_override <- insight::format_bf(abs(x$log_BF), name = NULL, exact = exact, ...)
 
@@ -305,7 +296,7 @@ format.bayesfactor_parameters <- function(x,
       if (log) c("\n\nBayes Factors are on the log-scale.\n", "red")
     )
   } else {
-    footer <- .compact_list(list(
+    footer <- datawizard::compact_list(list(
       paste0("Evidence Against The Null: ", null),
       if (direction) c("Direction: "),
       if (direction < 0) "Left-Sided test",

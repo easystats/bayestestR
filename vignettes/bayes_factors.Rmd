@@ -39,7 +39,7 @@ knitr::opts_chunk$set(
 
 pkgs <- c(
   "rstanarm", "BayesFactor", "emmeans", "logspline", "lme4", "ggplot2",
-  "see", "insight", "emmeans", "knitr", "effectsize", "bayestestR"
+  "see", "insight", "knitr", "effectsize", "bayestestR"
 )
 if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
   knitr::opts_chunk$set(eval = FALSE)
@@ -185,16 +185,16 @@ One way of operationlizing the null-hypothesis is by setting a null region, such
 that an effect that falls within this interval would be *practically* equivalent
 to the null [@kruschke2010believe]. In our case, that means defining a range of
 effects we would consider equal to the drug having no effect at all. We can then
-compute the prior probability of the drug's effect falling *within this null-region*, 
-and the prior probability of the drug's effect falling *outside the null-region*
+compute the prior probability of the drug's effect falling *outside this null-region*, 
+and the prior probability of the drug's effect falling *within the null-region*
 to get our *prior odds*. Say any effect smaller than an hour of extra sleep is
 practically equivalent to being no effect at all, we would define our prior odds
 as:
 
 $$
 \frac
-{P(b_{drug} \in [-1, 1])}
 {P(b_{drug} \notin [-1, 1])}
+{P(b_{drug} \in [-1, 1])}
 $$
 
 Given our prior has a normal distribution centered at 0 hours with a scale (an
@@ -219,18 +219,18 @@ ggplot(mapping = aes(x_vals, d_vals, fill = in_null, group = range_groups)) +
   theme_modern() +
   theme(legend.position = c(0.2, 0.8))
 
-pnull <- diff(pnorm(null, sd = 2.5))
+pnull <- diff(pnorm(null, sd = 3))
 prior_odds <- (1 - pnull) / pnull
 ```
 
-and the prior odds would be 2.2.
+and the prior odds would be 2.8.
 
-By looking at the posterior distribution, can now compute the posterior probability of the drug's effect falling *within the null-region*, and the posterior probability of the drug's effect falling *outside the null-region* to get our *posterior odds*:
+By looking at the posterior distribution, we can now compute the posterior probability of the drug's effect falling *outside the null-region*, and the posterior probability of the drug's effect falling *within the null-region* to get our *posterior odds*:
 
 $$
 \frac
-{P(b_{drug} \in [-1,1] | Data)}
 {P(b_{drug} \notin [-1,1] | Data)}
+{P(b_{drug} \in [-1,1] | Data)}
 $$
 
 ```{r rstanarm_fit, echo=FALSE}
@@ -253,14 +253,14 @@ ggplot(mapping = aes(x_vals, d_vals_post, fill = in_null, group = range_groups))
 
 My_first_BF <- bayesfactor_parameters(model, null = c(-1, 1), prior = model_prior)
 
-BF <- My_first_BF$BF[2]
+BF <- as.numeric(My_first_BF)[2]
 post_odds <- prior_odds * BF
 
 med_post <- point_estimate(posterior)$Median
 ```
 
 We can see that the center of the posterior distribution has shifted away from 0
-(to ~1.5). Likewise, the posterior odds are 2, which seems to favor **the effect being non-null**. **But**, does this mean the data support the alternative over
+(to ~1.5). Likewise, the posterior odds are 2.5, which seems to favor **the effect being non-null**. **But**, does this mean the data support the alternative over
 the null? Hard to say, since even before the data were observed, the priors
 already favored the alternative - so we need to take our priors into account
 here!
@@ -313,8 +313,8 @@ the null value between the two distributions.^[Note that as the width of null
 interval shrinks to zero, the prior probability and posterior probability of the
 alternative tends towards 1.00.] This ratio is called the **Savage-Dickey ratio**, 
 and has the added benefit of also being an approximation of a Bayes factor
-comparing the estimated model against the a model in which the parameter of
-interest has been restricted to a point-null:
+comparing the estimated model against a model in which the parameter of interest
+has been restricted to a point-null:
 
 > "[...] the Bayes factor for $H_0$ versus $H_1$ could be obtained by
 analytically integrating out the model parameter $\theta$. However, the Bayes
@@ -358,7 +358,7 @@ test_group2_right <- bayesfactor_parameters(
   direction = ">"
 )
 
-BF <- test_group2_right$BF
+BF <- as.numeric(test_group2_right)
 
 print(test_group2_right)
 ```
@@ -600,7 +600,7 @@ as.matrix(comparison)
 
 It is also possible to compute Bayes factors for the comparison of frequentist
 models. This is done by comparing BIC measures, allowing a Bayesian comparison
-of non-nested frequentist models [@wagenmakers2007practical].
+of nested as well as non-nested frequentist models [@wagenmakers2007practical].
 
 Let's try it out on some **linear mixed-effects models**:
 
@@ -792,7 +792,7 @@ bayesfactor_inclusion(BF_ToothGrowth)
 ```
 
 ```{r JASP_all_fig, echo=FALSE}
-knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP1.jpg")
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/JASP1.jpg")
 ```
 
 2. **Across matched models**:
@@ -803,7 +803,7 @@ bayesfactor_inclusion(BF_ToothGrowth, match_models = TRUE)
 
 
 ```{r JASP_matched_fig, echo=FALSE}
-knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP2.jpg")
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/JASP2.jpg")
 ```
 
 3. **With Nuisance Effects**:
@@ -822,7 +822,7 @@ bayesfactor_inclusion(BF_ToothGrowth_against_dose)
 ```
 
 ```{r JASP_Nuisance_fig, echo=FALSE}
-knitr::include_graphics("https://github.com/easystats/easystats/raw/master/man/figures/bayestestR/JASP3.jpg")
+knitr::include_graphics("https://github.com/easystats/bayestestR/raw/master/man/figures/JASP3.jpg")
 ```
 
 ## Averaging posteriors {#weighted_posteriors}

@@ -10,25 +10,27 @@ authors:
   Michael D. Wilson:
     href: http://www.humanfactors.io
 
-template:
-  params:
-    ganalytics: UA-97457476-7
-    bootswatch: cosmo
 
-toc:
-  depth: 3
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#0054AD"
+  opengraph:
+    image:
+      src: man/figures/card.png
+    twitter:
+      creator: "@easystats4u"
+      card: summary_large_image
 
 reference:
 - title: "Posterior Description"
   contents:
-  - describe_posterior
-  - describe_prior
+  - starts_with("describe_")
   - sexit
 
 - title: "Centrality and Uncertainty"
   contents:
-  - point_estimate
-  - map_estimate
+  - ends_with("_estimate")
   - bci
   - eti
   - hdi
@@ -39,22 +41,14 @@ reference:
   desc: "Functions for Bayesian Inference"
 - subtitle: "Posterior Based Methods"
   contents:
-  - p_direction
-  - p_rope
-  - p_map
-  - p_significance
-  - rope
-  - rope_range
+  - starts_with("p_")
+  - contains("rope")
   - equivalence_test
   - convert_pd_to_p
 
 - subtitle: "Bayes factors"
   contents:
-  - bayesfactor
-  - bayesfactor_parameters
-  - bayesfactor_models
-  - bayesfactor_inclusion
-  - bayesfactor_restricted
+  - contains("bayesfactor")
   - si
   - weighted_posteriors
   - bic_to_bf
@@ -64,7 +58,7 @@ reference:
   - diagnostic_posterior
   - sensitivity_to_prior
   - check_prior
-  - simulate_prior
+  - starts_with("simulate_")
   - unupdate
   - effective_sample
   - mcse
@@ -82,8 +76,6 @@ reference:
 
 - title: "Utilities"
   contents:
-  - simulate_correlation
-  - simulate_simpson
   - mediation
   - convert_bayesian_as_frequentist
   - contr.orthonorm
@@ -92,10 +84,19 @@ reference:
   - sexit_thresholds
   - reshape_iterations
   - diagnostic_draws
+  - model_to_priors
+  - cwi
 
 
 navbar:
   type: default
+  right:
+  - icon: fa-twitter
+    href: http://twitter.com/easystats4u
+    aria-label: Twitter
+  - icon: fa-github
+    href: https://github.com/easystats/bayestestR/
+    aria-label: GitHub
   left:
   - icon: fa-home fa-lg
     href: index.html
@@ -131,4 +132,3 @@ navbar:
         href: articles/mediation.html
   - text: Guidelines
     href: articles/guidelines.html
-

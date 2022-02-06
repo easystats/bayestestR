@@ -12,7 +12,8 @@
 #' @param ... Arguments passed to or from other methods.
 #'
 #' @return a data frame containing the prior and posterior probabilities, and
-#'   log(BF) for each effect.
+#'   log(BF) for each effect (Use `as.numeric()` to extract the non-log Bayes
+#'   factors; see examples).
 #'
 #' @details Inclusion Bayes factors answer the question: Are the observed data
 #'   more probable under models with a particular effect, than they are under
@@ -47,7 +48,10 @@
 #' mo3 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
 #'
 #' BFmodels <- bayesfactor_models(mo1, mo2, mo3, denominator = mo0)
-#' bayesfactor_inclusion(BFmodels)
+#' (bf_inc <- bayesfactor_inclusion(BFmodels))
+#'
+#' as.numeric(bf_inc)
+#'
 #' \dontrun{
 #' # BayesFactor
 #' # -------------------------------

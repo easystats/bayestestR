@@ -52,7 +52,8 @@
 #' @inheritSection bayesfactor_parameters Interpreting Bayes Factors
 #'
 #' @return A data frame containing the models' formulas (reconstructed fixed and
-#'   random effects) and their `log(BF)`s, that prints nicely.
+#'   random effects) and their `log(BF)`s  (Use `as.numeric()` to extract the
+#'   non-log Bayes factors; see examples), that prints nicely.
 #'
 #' @examples
 #' # With lm objects:
@@ -67,6 +68,7 @@
 #'
 #' update(BFM, reference = "bottom")
 #' as.matrix(BFM)
+#' as.numeric(BFM)
 #' \dontrun{
 #' # With lmerMod objects:
 #' # ---------------------

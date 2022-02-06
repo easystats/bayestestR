@@ -180,7 +180,8 @@ si.emm_list <- si.emmGrid
 #' @export
 si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects = c("fixed", "random", "all"), ...) {
   out <- si(insight::get_parameters(posterior, effects = effects),
-            prior = prior, BF = BF, verbose = verbose)
+    prior = prior, BF = BF, verbose = verbose
+  )
   attr(out, "object_name") <- .safe_deparse(substitute(posterior))
   out
 }
@@ -216,7 +217,7 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) 
     ), call. = FALSE)
   }
 
-  if (verbose && (nrow(posterior) < 4e4 || nrow(prior) <  4e4)) {
+  if (verbose && (nrow(posterior) < 4e4 || nrow(prior) < 4e4)) {
     warning(
       "Support intervals might not be precise.\n",
       "For precise support intervals, sampling at least 40,000 posterior samples is recommended.",

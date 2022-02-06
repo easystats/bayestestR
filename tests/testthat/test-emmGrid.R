@@ -99,8 +99,8 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
     )
 
     expect_equal(
-      describe_posterior(all_, bf_prior = model_p, test = "bf")$BF,
-      describe_posterior(emc_, bf_prior = model_p, test = "bf")$BF
+      describe_posterior(all_, bf_prior = model_p, test = "bf")$log_BF,
+      describe_posterior(emc_, bf_prior = model_p, test = "bf")$log_BF
     )
   })
 
