@@ -294,7 +294,7 @@ E. J. (2019). A cautionary note on estimating effect size.</p></li>
 <span class="r-in">  <span class="va">BFmods</span> <span class="op">&lt;-</span> <span class="fu"><a href="bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">m0</span>, <span class="va">m1</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in">  <span class="va">wp</span> <span class="op">&lt;-</span> <span class="fu">weighted_posteriors</span><span class="op">(</span><span class="va">pred_m0</span>, <span class="va">pred_m1</span>,</span>
-<span class="r-in">    prior_odds <span class="op">=</span> <span class="va">BFmods</span><span class="op">$</span><span class="va">BF</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
+<span class="r-in">    prior_odds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">BFmods</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
 <span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in">  <span class="co"># look at first 5 prediction intervals</span></span>
@@ -305,8 +305,6 @@ E. J. (2019). A cautionary note on estimating effect size.</p></li>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Bayes factors might not be precise.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> For precise Bayes factors, sampling at least 40,000 posterior samples is recommended.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Computation of Bayes factors: estimating marginal likelihood, please wait...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'prior_odds = NULL'; Using uniform priors odds.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> For weighted data frame, 'prior_odds' should be specified as a numeric vector.</span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in UseMethod("hdi_"):</span> no applicable method for 'hdi_' applied to an object of class "data.frame"</span>
 <span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>

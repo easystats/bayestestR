@@ -142,8 +142,7 @@ near-perfect distribution.</p>
 <dt>...</dt>
 <dd><p>Arguments passed to or from other methods.</p></dd>
 <dt>n</dt>
-<dd><p>number of observations. If <code>length(n) &gt; 1</code>, the length
-    is taken to be the number required.</p></dd>
+<dd><p>the number of observations</p></dd>
 <dt>random</dt>
 <dd><p>Generate near-perfect or random (simple wrappers for the base R
 <code>r*</code> functions) distributions.</p></dd>
@@ -171,12 +170,17 @@ near-perfect distribution.</p>
 <dt>sd</dt>
 <dd><p>vector of standard deviations.</p></dd>
 <dt>mu</dt>
-<dd><p>alternative parametrization via mean: see ‘Details’.</p></dd>
+<dd><p>the mean</p></dd>
 <dt>phi</dt>
 <dd><p>Corresponding to <code>glmmTMB</code>'s implementation of nbinom
 distribution, where <code>size=mu/phi</code>.</p></dd>
 <dt>lambda</dt>
 <dd><p>vector of (non-negative) means.</p></dd>
+<dt>xi</dt>
+<dd><p>the value of \(\xi\) such that the variance is 
+	\(\mbox{var}[Y]=\phi\mu^{\xi}\)</p></dd>
+<dt>power</dt>
+<dd><p>a synonym for \(\xi\)</p></dd>
 <dt>min</dt>
 <dd><p>lower and upper limits of the distribution.  Must be finite.</p></dd>
 <dt>max</dt>
