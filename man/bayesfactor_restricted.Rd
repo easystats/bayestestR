@@ -167,9 +167,9 @@ if (require("see") && require("patchwork")) {
   see::plots(
     plot(estimate_density(posterior)),
     # distribution **conditional** on the restrictions
-    plot(estimate_density(posterior[i[[hyps[1]]],])) + ggplot2::ggtitle(hyps[1]),
-    plot(estimate_density(posterior[i[[hyps[2]]],])) + ggplot2::ggtitle(hyps[2]),
-    plot(estimate_density(posterior[i[[hyps[3]]],])) + ggplot2::ggtitle(hyps[3]),
+    plot(estimate_density(posterior[i[[hyps[1]]], ])) + ggplot2::ggtitle(hyps[1]),
+    plot(estimate_density(posterior[i[[hyps[2]]], ])) + ggplot2::ggtitle(hyps[2]),
+    plot(estimate_density(posterior[i[[hyps[3]]], ])) + ggplot2::ggtitle(hyps[3]),
     guides = "collect"
   )
 }
