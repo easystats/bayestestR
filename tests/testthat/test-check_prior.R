@@ -36,7 +36,7 @@ if (.runThisTest &&
   expect_equal(
     check_prior(model2)$Prior_Quality,
     c(
-      "uninformative", "informative", "informative", "uninformative",
+      "uninformative", "uninformative", "informative", "uninformative",
       "uninformative", "not determinable", "not determinable", "not determinable"
     )
   )
@@ -44,7 +44,7 @@ if (.runThisTest &&
   expect_equal(
     check_prior(model2, method = "lakeland")$Prior_Quality,
     c(
-      "informative", "misinformative", "informative", "informative",
+      "informative", "informative", "informative", "informative",
       "informative", "not determinable", "not determinable", "not determinable"
     )
   )
