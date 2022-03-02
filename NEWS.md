@@ -1,4 +1,8 @@
-# bayestestR 0.11.5.1
+# bayestestR 0.11.5.2
+
+## Breaking
+
+* `Bayesfactor_models()` for frequentist models now relies on the updated `insight::get_loglikelihood()`. This might change some results for REML based models. See documentation. 
 
 # bayestestR 0.11.5
 
