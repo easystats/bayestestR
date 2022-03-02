@@ -3,6 +3,7 @@
 \name{bayesfactor_models}
 \alias{bayesfactor_models}
 \alias{bf_models}
+\alias{bayesfactor_models.default}
 \alias{update.bayesfactor_models}
 \alias{as.matrix.bayesfactor_models}
 \title{Bayes Factors (BF) for model comparison}
@@ -10,6 +11,8 @@
 bayesfactor_models(..., denominator = 1, verbose = TRUE)
 
 bf_models(..., denominator = 1, verbose = TRUE)
+
+\method{bayesfactor_models}{default}(..., denominator = 1, verbose = TRUE, ll_args = list())
 
 \method{update}{bayesfactor_models}(object, subset = NULL, reference = NULL, ...)
 
@@ -25,6 +28,9 @@ the denominator, or a model to be used as a denominator. Ignored for
 \code{BFBayesFactor}.}
 
 \item{verbose}{Toggle off warnings.}
+
+\item{ll_args}{A list of arguments passed to \link[insight:get_loglikelihood]{insight::get_loglikelihood}
+when the passed models are frequentist.}
 
 \item{object, x}{A \code{\link[=bayesfactor_models]{bayesfactor_models()}} object.}
 
@@ -48,7 +54,6 @@ The \verb{bf_*} function is an alias of the main function.
 If the passed models are supported by \pkg{insight} the DV of all models will be tested for equality
 (else this is assumed to be true), and the models' terms will be extracted (allowing for follow-up
 analysis with \code{bayesfactor_inclusion}).
-
 \itemize{
 \item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
 \itemize{
@@ -56,11 +61,9 @@ analysis with \code{bayesfactor_inclusion}).
 \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
 }
 \item For \code{BFBayesFactor}, \code{bayesfactor_models()} is mostly a wraparound \code{BayesFactor::extractBF()}.
-\item BIC approximations are used to compute Bayes factors for all other model types (with a BIC method).
-\itemize{
-\item \strong{Note} that BICs are extracted from models as-is. So if for example you want to compare mixed-models bases on ML instead of REML, you must supply models fit with ML.
+\item For all other model types, Bayes factors are computed using the BIC approximation. Note that BICs are extracted from using \link[insight:get_loglikelihood]{insight::get_loglikelihood}, see documentation there for options for dealing with transformed responses and REML estimation.
 }
-}
+
 In order to correctly and precisely estimate Bayes factors, a rule of thumb
 are the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful
 \strong{P}osteriors. How many? The number of posterior samples needed for
