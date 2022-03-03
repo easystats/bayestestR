@@ -179,7 +179,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE,
   if (verbose) do.call(stats::BIC, unname(mods))
   mBIC <- sapply(mods, function(m) {
     LL <- do.call(insight::get_loglikelihood, c(list(m), ll_args))
-    BIC(LL)
+    stats::BIC(LL)
   })
   mBFs <- bic_to_bf(mBIC, denominator = mBIC[denominator], log = TRUE)
 
