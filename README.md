@@ -80,8 +80,8 @@ check-out these vignettes:
 
 #### Articles
 
--   [Credible
-    Intervals (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+-   [Credible Intervals
+    (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
 -   [Probability of Direction
     (pd)](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
 -   [Region of Practical Equivalence
@@ -155,9 +155,9 @@ describe_posterior(
 )
 ## Summary of Posterior Distribution
 ## 
-## Parameter | Median |        95% CI |     pd |   ps
-## --------------------------------------------------
-## Posterior |  -0.02 | [-1.99, 1.98] | 50.75% | 0.47
+## Parameter |   Median |        95% CI |     pd |   ps
+## ----------------------------------------------------
+## Posterior | 5.53e-03 | [-1.89, 1.98] | 50.21% | 0.46
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -462,8 +462,15 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.42
+## [1] 0.37
 ```
+
+## Code of Conduct
+
+Please note that the bayestestR project is released with a [Contributor
+Code of
+Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
 
 # References
 
