@@ -25,7 +25,7 @@ This vignette can be referred to by citing the package:
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 if (!requireNamespace("see", quietly = TRUE) ||
-  !requireNamespace("magrittr", quietly = TRUE) ||
+  !requireNamespace("poorman", quietly = TRUE) ||
   !requireNamespace("datawizard", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE) ||
   !requireNamespace("logspline", quietly = TRUE) ||
@@ -88,7 +88,7 @@ correspond approximately to a *pd* of **95\%**, **97.5\%**, **99.5\%** and
 ```{r message=FALSE, warning=FALSE, echo=FALSE, fig.cap="Correlation between the frequentist p-value and the probability of direction (pd)", fig.align='center'}
 library(ggplot2)
 library(see)
-library(magrittr)
+library(poorman)
 
 read.csv("https://raw.github.com/easystats/easystats/master/publications/makowski_2019_bayesian/data/data.csv") %>%
   transform(

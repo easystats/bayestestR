@@ -99,6 +99,7 @@ Suggests:
     parameters,
     patchwork,
     performance,
+    poorman,
     rmarkdown,
     rstan,
     rstanarm,
