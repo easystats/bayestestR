@@ -7,7 +7,6 @@
 \alias{map_estimate.stanreg}
 \alias{map_estimate.brmsfit}
 \alias{map_estimate.data.frame}
-\alias{map_estimate.emmGrid}
 \title{Maximum A Posteriori probability estimate (MAP)}
 \usage{
 map_estimate(x, precision = 2^10, method = "kernel", ...)
@@ -38,8 +37,6 @@ map_estimate(x, precision = 2^10, method = "kernel", ...)
 )
 
 \method{map_estimate}{data.frame}(x, precision = 2^10, method = "kernel", ...)
-
-\method{map_estimate}{emmGrid}(x, precision = 2^10, method = "kernel", ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution, or a data frame of such
