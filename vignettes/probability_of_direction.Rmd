@@ -25,9 +25,9 @@ This vignette can be referred to by citing the package:
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 if (!requireNamespace("see", quietly = TRUE) ||
-  !requireNamespace("dplyr", quietly = TRUE) ||
+  !requireNamespace("magrittr", quietly = TRUE) ||
+  !requireNamespace("datawizard", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE) ||
-  !requireNamespace("tidyr", quietly = TRUE) ||
   !requireNamespace("logspline", quietly = TRUE) ||
   !requireNamespace("KernSmooth", quietly = TRUE) ||
   !requireNamespace("GGally", quietly = TRUE)) {
@@ -35,9 +35,8 @@ if (!requireNamespace("see", quietly = TRUE) ||
 }
 
 library(knitr)
-options(knitr.kable.NA = "")
 knitr::opts_chunk$set(comment = ">")
-options(digits = 2)
+options(knitr.kable.NA = "", digits = 2)
 
 set.seed(333)
 ```
@@ -87,14 +86,13 @@ correspond approximately to a *pd* of **95\%**, **97.5\%**, **99.5\%** and
 
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE, fig.cap="Correlation between the frequentist p-value and the probability of direction (pd)", fig.align='center'}
-library(dplyr)
-library(tidyr)
 library(ggplot2)
 library(see)
+library(magrittr)
 
 read.csv("https://raw.github.com/easystats/easystats/master/publications/makowski_2019_bayesian/data/data.csv") %>%
-  mutate(
-    effect_existence = ifelse(true_effect == 1, "Presence of true effect", "Absence of true effect"),
+  transform(
+    effect_existence = ifelse(d$true_effect == 1, "Presence of true effect", "Absence of true effect"),
     p_direction = p_direction * 100
   ) %>%
   ggplot(aes(x = p_direction, y = p_value, color = effect_existence)) +
@@ -181,7 +179,6 @@ for (the_mean in runif(25, 0, 4)) {
 data <- as.data.frame(sapply(data, as.numeric))
 
 # Visualize the correlations
-library(ggplot2)
 library(GGally)
 
 GGally::ggpairs(data) +
@@ -229,11 +226,9 @@ data <- as.data.frame(sapply(data, as.numeric))
 ```
 
 ```{r message=FALSE, warning=FALSE, fig.align='center'}
-library(tidyr)
-library(dplyr)
-
+library(datawizard) # for reshape_longer
 data %>%
-  tidyr::gather(Method, Distance, -sample_size, -true) %>%
+  reshape_longer(cols = 3:6, colnames_to = "Method", values_to = "Distance") %>%
   ggplot(aes(x = sample_size, y = Distance, color = Method, fill = Method)) +
   geom_point(alpha = 0.3, stroke = 0, shape = 16) +
   geom_smooth(alpha = 0.2) +
