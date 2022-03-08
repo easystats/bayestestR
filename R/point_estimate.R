@@ -61,7 +61,7 @@ point_estimate <- function(x, centrality = "all", dispersion = FALSE, ...) {
 #' @rdname point_estimate
 #' @export
 point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, threshold = .1, ...) {
-  centrality <- match.arg(tolower(centrality), c("median", "mean", "map", "trimmed", "all"), several.ok = TRUE)
+  centrality <- match.arg(tolower(centrality), c("median", "mean", "map", "trimmed", "mode", "all"), several.ok = TRUE)
   if ("all" %in% centrality) {
     estimate_list <- c("median", "mean", "map")
   } else {
@@ -99,12 +99,24 @@ point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, th
     out$MAP <- as.numeric(map_estimate(x))
   }
 
+  # MODE
+  if ("mode" %in% estimate_list) {
+    out$Mode <- .mode_estimate(x)
+  }
+
+
   out <- out[names(out) != ".temp"]
   attr(out, "data") <- x
   attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 
   out
+}
+
+
+.mode_estimate <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
 }
 
 
