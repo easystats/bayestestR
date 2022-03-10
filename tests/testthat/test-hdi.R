@@ -4,7 +4,7 @@ if (require("rstanarm") && require("brms") && require("httr") && require("testth
   test_that("hdi", {
     expect_equal(hdi(distribution_normal(1000), ci = .90)$CI_low[1], -1.64, tolerance = 0.02)
     expect_equal(nrow(hdi(distribution_normal(1000), ci = c(.80, .90, .95))), 3, tolerance = 0.01)
-    expect_equal(hdi(distribution_normal(1000), ci = 1)$CI_low[1], -3.09, tolerance = 0.02)
+    expect_equal(hdi(distribution_normal(1000), ci = 1)$CI_low[1], -3.29, tolerance = 0.02)
     expect_equal(nchar(capture.output(print(hdi(distribution_normal(1000))))), 22)
     expect_equal(length(capture.output(print(hdi(distribution_normal(1000), ci = c(.80, .90))))), 5)
 
@@ -13,7 +13,7 @@ if (require("rstanarm") && require("brms") && require("httr") && require("testth
     expect_warning(hdi(c(2, 3)))
     expect_warning(hdi(distribution_normal(1000), ci = 0.0000001))
     expect_warning(hdi(distribution_normal(1000), ci = 950))
-    expect_warning(hdi(c(distribution_normal(1000, 0, 1), distribution_normal(1000, 6, 1), distribution_normal(1000, 12, 1)), ci = .10))
+    expect_warning(hdi(c(0,0,0)))
   })
 
 
