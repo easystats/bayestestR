@@ -11,6 +11,9 @@
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams tweedie::rtweedie
 #'
+#' @details
+#' When `random = FALSE`, these function return `q*(ppoints(n), ...)`.
+#'
 #' @examples
 #' library(bayestestR)
 #' x <- distribution(n = 10)
