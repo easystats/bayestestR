@@ -75,9 +75,30 @@
       "Prior not specified! ",
       "Please provide the original model to get meaningful results."
     )
-  } else if (!inherits(prior, "emmGrid")) { # then is it a model
+  }
+
+
+  if (!inherits(prior, "emmGrid")) { # then is it a model
+    on.exit(
+      stop(
+        "Unable to reconstruct prior estimates.\n",
+        "Perhaps the emmGrid object has been transformed or regrid()-ed?\n",
+        "See function details.\n\n",
+        "Instead, you can reestimate the emmGrid with a prior model, Try:\n",
+        "\tprior_model <- unupdate(mode)\n",
+        "\tprior_emmgrid <- emmeans(prior_model, ...) # pass this as the 'prior' argument.",
+        call. = FALSE
+      )
+    )
+
+    if (inherits(prior, "brmsfit")) {
+      stop("Cannot rebuild prior emmGrid from a brmsfit model.", call. = FALSE)
+    }
+
+
     prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
-    if (methods::is(prior, "try-error")) {
+    if (inherits(prior, "try-error")) {
+      on.exit() # undo general error message
       if (grepl("flat priors", prior)) {
         prior <- paste0(
           prior, "Could not therefore compute Bayes factors, as these inform about ",
@@ -88,17 +109,16 @@
       }
       stop(prior, call. = FALSE)
     }
+
     prior <- emmeans::ref_grid(prior)
     prior <- prior@post.beta
 
     if (!isTRUE(all.equal(colnames(prior), colnames(posterior@post.beta)))) {
-      stop(
-        "Unable to reconstruct prior estimates.\n",
-        "Perhaps the emmGrid object has been transformed? See function details.\n",
-        call. = FALSE
-      )
+      stop("post.beta and prior.beta are non-conformable arguments.",
+           call. = FALSE)
     }
     prior <- stats::update(posterior, post.beta = prior)
+    on.exit() # undo general error message
   }
 
   prior <- insight::get_parameters(prior)
@@ -118,9 +138,16 @@
       "Prior not specified! ",
       "Please provide the original model to get meaningful results."
     )
-  } else if (!inherits(prior, "emm_list")) {
+  }
+
+  if (!inherits(prior, "emm_list")) { # prior is a model
+
+    if (inherits(prior, "brmsfit")) {
+      stop("Cannot rebuild prior emm_list from a brmsfit model.", call. = FALSE)
+    }
+
     prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
-    if (methods::is(prior, "try-error")) {
+    if (inherits(prior, "try-error")) {
       if (grepl("flat priors", prior)) {
         prior <- paste0(
           prior, "Could not therefore compute Bayes factors, as these inform about ",
