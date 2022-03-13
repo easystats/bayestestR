@@ -89,15 +89,15 @@
 #' \itemize{
 #'   \item When `posterior` is a numerical vector, `prior` should also be a numerical vector.
 #'   \item When `posterior` is a `data.frame`, `prior` should also be a `data.frame`, with matching column order.
-#'   \item When `posterior` is a `stanreg` or `brmsfit` model: \itemize{
+#'   \item When `posterior` is a `stanreg`, `brmsfit` or other supported Bayesian model: \itemize{
 #'     \item `prior` can be set to `NULL`, in which case prior samples are drawn internally.
 #'     \item `prior` can also be a model equivalent to `posterior` but with samples from the priors *only*. See [unupdate()].
 #'     \item **Note:** When `posterior` is a `brmsfit_multiple` model, `prior` **must** be provided.
 #'   }
-#'   \item When `posterior` is an `emmGrid` object: \itemize{
-#'     \item `prior` should be the `stanreg` or `brmsfit` model used to create the `emmGrid` objects.
-#'     \item `prior` can also be an `emmGrid` object equivalent to `posterior` but created with a model of priors samples *only*.
-#'     \item **Note:** When the `emmGrid` has undergone any transformations (`"log"`, `"response"`, etc.), or `regrid`ing, then `prior` must be an `emmGrid` object, as stated above.
+#'   \item When `posterior` is an `emmGrid` / `emm_list` object: \itemize{
+#'     \item `prior` should also be an `emmGrid` / `emm_list` object equivalent to `posterior` but created with a model of priors samples *only*. See [unupdate()].
+#'     \item `prior` can also be the original (posterior) *model*. If so, the function will try to update the `emmGrid` / `emm_list` to use the [unupdate()]d prior-model. (*This cannot be done for `brmsfit` models.*)
+#'     \item **Note**: When the `emmGrid` has undergone any transformations (`"log"`, `"response"`, etc.), or `regrid`ing, then `prior` must be an `emmGrid` object, as stated above.
 #'   }
 #' }
 #'
@@ -130,6 +130,10 @@
 #'   # ---------------
 #'   group_diff <- pairs(emmeans(stan_model, ~group))
 #'   bayesfactor_parameters(group_diff, prior = stan_model)
+#'
+#'   # Or
+#'   group_diff_prior <- pairs(emmeans(unupdate(stan_model), ~group))
+#'   bayesfactor_parameters(group_diff, prior = group_diff_prior)
 #' }
 #'
 #' # brms models
