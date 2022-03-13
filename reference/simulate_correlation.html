@@ -238,10 +238,10 @@ the groups.</p></dd>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">V1</span>, <span class="va">data</span><span class="op">$</span><span class="va">V0</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="simulate_correlation-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">V1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">V1</span><span class="op">)</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0 0.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 1</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">V1</span> <span class="op">~</span> <span class="va">data</span><span class="op">$</span><span class="va">V0</span><span class="op">)</span><span class="op">$</span><span class="va">estimate</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mean in group 1 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       0.5464734 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       0.6113187 </span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">V1</span> <span class="op">~</span> <span class="va">V0</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
@@ -249,16 +249,18 @@ the groups.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Min      1Q  Median      3Q     Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -1.5789 -0.8196  0.1068  0.5207  1.5425 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -1.8428 -0.8750  0.1129  0.5565  1.8020 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  -0.2550     0.2213  -1.153    0.259</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> V01           0.5465     0.3239   1.687    0.103</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  -0.2853     0.2408  -1.185   0.2460  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V01           0.6113     0.3524   1.735   0.0938 .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 0.885 on 28 degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.09229,	Adjusted R-squared:  0.05987 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 2.847 on 1 and 28 DF,  p-value: 0.1027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 0.963 on 28 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.09703,	Adjusted R-squared:  0.06478 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 3.009 on 1 and 28 DF,  p-value: 0.09382</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">V0</span> <span class="op">~</span> <span class="va">V1</span>, data <span class="op">=</span> <span class="va">data</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -267,18 +269,18 @@ the groups.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Deviance Residuals: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Min       1Q   Median       3Q      Max  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -1.4764  -1.0728  -0.6724   1.0838   1.5624  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -1.4786  -1.0730  -0.6459   1.0857   1.5630  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error z value Pr(&gt;|z|)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  -0.1472     0.3845  -0.383    0.702</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> V1            0.7340     0.4586   1.601    0.109</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  -0.1480     0.3855  -0.384    0.701</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V1            0.6989     0.4283   1.632    0.103</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Dispersion parameter for binomial family taken to be 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Null deviance: 41.455  on 29  degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual deviance: 38.578  on 28  degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 42.578</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual deviance: 38.411  on 28  degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 42.411</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Fisher Scoring iterations: 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -288,7 +290,7 @@ the groups.</p></dd>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">V1</span>, <span class="va">data</span><span class="op">$</span><span class="va">V0</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="simulate_correlation-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">V1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">V1</span><span class="op">)</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.0 0.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 1</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">V1</span> <span class="op">~</span> <span class="va">data</span><span class="op">$</span><span class="va">V0</span><span class="op">)</span><span class="op">$</span><span class="va">estimate</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mean in group 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             0.3 </span>
@@ -298,17 +300,17 @@ the groups.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = V1 ~ V0, data = data)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     Min      1Q  Median      3Q     Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -1.5011 -0.6212  0.0000  0.6212  1.5011 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Min     1Q Median     3Q    Max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -1.834 -0.677  0.000  0.677  1.834 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  -0.1500     0.2206  -0.680    0.502</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> V01           0.3000     0.3119   0.962    0.344</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  -0.1500     0.2562  -0.586    0.563</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V01           0.3000     0.3623   0.828    0.415</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 0.8542 on 28 degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.03198,	Adjusted R-squared:  -0.00259 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 0.9251 on 1 and 28 DF,  p-value: 0.3444</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 0.9922 on 28 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.0239,	Adjusted R-squared:  -0.01096 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 0.6857 on 1 and 28 DF,  p-value: 0.4146</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">V0</span> <span class="op">~</span> <span class="va">V1</span>, data <span class="op">=</span> <span class="va">data</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -317,18 +319,18 @@ the groups.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Deviance Residuals: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Min      1Q  Median      3Q     Max  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -1.436  -1.143   0.000   1.143   1.436  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -1.417  -1.151   0.000   1.151   1.417  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Estimate Std. Error z value Pr(&gt;|z|)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) -3.116e-16  3.711e-01   0.000    1.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> V1           4.369e-01  4.515e-01   0.968    0.333</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate Std. Error z value Pr(&gt;|z|)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 8.207e-17  3.696e-01   0.000    1.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V1          3.251e-01  3.877e-01   0.839    0.402</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Dispersion parameter for binomial family taken to be 1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Null deviance: 41.589  on 29  degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual deviance: 40.618  on 28  degrees of freedom</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 44.618</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual deviance: 40.865  on 28  degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 44.865</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Fisher Scoring iterations: 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
