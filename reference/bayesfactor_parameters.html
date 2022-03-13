@@ -366,13 +366,13 @@ See example below.)
 <br><br>
 It is important to provide the correct <code>prior</code> for meaningful results.</p><ul><li><p>When <code>posterior</code> is a numerical vector, <code>prior</code> should also be a numerical vector.</p></li>
 <li><p>When <code>posterior</code> is a <code>data.frame</code>, <code>prior</code> should also be a <code>data.frame</code>, with matching column order.</p></li>
-<li><p>When <code>posterior</code> is a <code>stanreg</code> or <code>brmsfit</code> model:</p><ul><li><p><code>prior</code> can be set to <code>NULL</code>, in which case prior samples are drawn internally.</p></li>
+<li><p>When <code>posterior</code> is a <code>stanreg</code>, <code>brmsfit</code> or other supported Bayesian model:</p><ul><li><p><code>prior</code> can be set to <code>NULL</code>, in which case prior samples are drawn internally.</p></li>
 <li><p><code>prior</code> can also be a model equivalent to <code>posterior</code> but with samples from the priors <em>only</em>. See <code><a href="unupdate.html">unupdate()</a></code>.</p></li>
 <li><p><strong>Note:</strong> When <code>posterior</code> is a <code>brmsfit_multiple</code> model, <code>prior</code> <strong>must</strong> be provided.</p></li>
 </ul></li>
-<li><p>When <code>posterior</code> is an <code>emmGrid</code> object:</p><ul><li><p><code>prior</code> should be the <code>stanreg</code> or <code>brmsfit</code> model used to create the <code>emmGrid</code> objects.</p></li>
-<li><p><code>prior</code> can also be an <code>emmGrid</code> object equivalent to <code>posterior</code> but created with a model of priors samples <em>only</em>.</p></li>
-<li><p><strong>Note:</strong> When the <code>emmGrid</code> has undergone any transformations (<code>"log"</code>, <code>"response"</code>, etc.), or <code>regrid</code>ing, then <code>prior</code> must be an <code>emmGrid</code> object, as stated above.</p></li>
+<li><p>When <code>posterior</code> is an <code>emmGrid</code> / <code>emm_list</code> object:</p><ul><li><p><code>prior</code> should also be an <code>emmGrid</code> / <code>emm_list</code> object equivalent to <code>posterior</code> but created with a model of priors samples <em>only</em>. See <code><a href="unupdate.html">unupdate()</a></code>.</p></li>
+<li><p><code>prior</code> can also be the original (posterior) <em>model</em>. If so, the function will try to update the <code>emmGrid</code> / <code>emm_list</code> to use the <code><a href="unupdate.html">unupdate()</a></code>d prior-model. (<em>This cannot be done for <code>brmsfit</code> models.</em>)</p></li>
+<li><p><strong>Note</strong>: When the <code>emmGrid</code> has undergone any transformations (<code>"log"</code>, <code>"response"</code>, etc.), or <code>regrid</code>ing, then <code>prior</code> must be an <code>emmGrid</code> object, as stated above.</p></li>
 </ul></li>
 </ul></div>
     <div class="section level2">
@@ -438,6 +438,10 @@ Science, 6(3), 291–298. doi: <a href="https://doi.org/10.1177/1745691611406923
 <span class="r-in">  <span class="co"># ---------------</span></span>
 <span class="r-in">  <span class="va">group_diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">stan_model</span>, <span class="op">~</span><span class="va">group</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in">  <span class="fu">bayesfactor_parameters</span><span class="op">(</span><span class="va">group_diff</span>, prior <span class="op">=</span> <span class="va">stan_model</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in">  <span class="co"># Or</span></span>
+<span class="r-in">  <span class="va">group_diff_prior</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="fu"><a href="unupdate.html">unupdate</a></span><span class="op">(</span><span class="va">stan_model</span><span class="op">)</span>, <span class="op">~</span><span class="va">group</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">bayesfactor_parameters</span><span class="op">(</span><span class="va">group_diff</span>, prior <span class="op">=</span> <span class="va">group_diff_prior</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># brms models</span></span>
