@@ -197,17 +197,6 @@ si.get_predicted <- function(posterior, ...) {
 #' @rdname si
 #' @export
 si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
-  if (length(BF) > 1) {
-    SIs <- lapply(BF, function(i) {
-      si(posterior, prior = prior, BF = i, verbose = verbose, ...)
-    })
-    out <- do.call(rbind, SIs)
-
-    attr(out, "plot_data") <- attr(SIs[[1]], "plot_data")
-    class(out) <- unique(c("bayestestR_si", "bayestestR_ci", class(out)))
-    return(out)
-  }
-
   if (is.null(prior)) {
     prior <- posterior
     warning(insight::format_message(
@@ -225,21 +214,10 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) 
     )
   }
 
-  sis <- matrix(NA, nrow = ncol(posterior), ncol = 2)
-  for (par in seq_along(posterior)) {
-    sis[par, ] <- .si(posterior[[par]],
-      prior[[par]],
-      BF = BF, ...
-    )
-  }
-
-  out <- data.frame(
-    Parameter = colnames(posterior),
-    CI = BF,
-    CI_low = sis[, 1],
-    CI_high = sis[, 2],
-    stringsAsFactors = FALSE
-  )
+  out <- lapply(BF, function(BFi) {
+    .si.data.frame(posterior, prior, BFi)
+  })
+  out <- do.call(rbind, out)
 
   attr(out, "ci_method") <- "SI"
   attr(out, "ci") <- BF
@@ -250,6 +228,24 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) 
 }
 
 # Helper ------------------------------------------------------------------
+
+.si.data.frame <- function(posterior, prior, BF, ...) {
+  sis <- matrix(NA, nrow = ncol(posterior), ncol = 2)
+  for (par in seq_along(posterior)) {
+    sis[par, ] <- .si(posterior[[par]],
+                      prior[[par]],
+                      BF = BF, ...
+    )
+  }
+
+  out <- data.frame(
+    Parameter = colnames(posterior),
+    CI = BF,
+    CI_low = sis[, 1],
+    CI_high = sis[, 2],
+    stringsAsFactors = FALSE
+  )
+}
 
 
 

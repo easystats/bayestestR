@@ -1,5 +1,9 @@
 # bayestestR 0.11.5.1
 
+## Breaking
+
+* All `distribution_*(random = FALSE)` functions now rely on `ppoints()`, which will result in slightly diffrent results, especially with small `n`s.
+
 # bayestestR 0.11.5
 
 * Fixes failing tests in CRAN checks.
