@@ -70,7 +70,7 @@ bayesfactor <- function(...,
   } else if (inherits(mods[[1]], "bayesfactor_models")) {
     bayesfactor_inclusion(..., match_models = match_models, prior_odds = prior_odds)
   } else if (inherits(mods[[1]], "BFBayesFactor")) {
-    if (class(mods[[1]]@numerator[[1]]) == "BFlinearModel") {
+    if (inherits(mods[[1]]@numerator[[1]], "BFlinearModel")) {
       bayesfactor_inclusion(..., match_models = match_models, prior_odds = prior_odds)
     } else {
       bayesfactor_models(...)

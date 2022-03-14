@@ -401,20 +401,6 @@ as.double.bayesfactor_parameters <- as.numeric.bayesfactor_inclusion
 #' @export
 as.double.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion
 
-## Vector:
-
-#' @export
-as.vector.bayesfactor_inclusion <- as.numeric.bayesfactor_inclusion
-
-#' @export
-as.vector.bayesfactor_models <- as.numeric.bayesfactor_inclusion
-
-#' @export
-as.vector.bayesfactor_parameters <- as.numeric.bayesfactor_inclusion
-
-#' @export
-as.vector.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion
-
 
 
 # logspline ---------------------------------------------------------------

@@ -8,6 +8,9 @@
 #'   `"beta"`.
 #' @param random Generate near-perfect or random (simple wrappers for the base R
 #'   `r*` functions) distributions.
+#' @param xi For tweedie distributions, the value of `xi` such that the variance
+#' is `var(Y) = phi * mu^xi`.
+#' @param power Alias for `xi`.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams tweedie::rtweedie
 #'
