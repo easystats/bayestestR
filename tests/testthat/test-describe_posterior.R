@@ -222,7 +222,7 @@ if (require("testthat") &&
       # test BF
       set.seed(555)
       rez_bf <- bayesfactor_parameters(x)
-      expect_equal(rez$BF, as.numeric(rez_bf), tolerance = 0.1)
+      expect_equal(rez$log_BF, log(as.numeric(rez_bf)), tolerance = 0.1)
     })
 
     # BayesFactor -------------------------------------------------
@@ -264,17 +264,16 @@ if (require("testthat") &&
       set.seed(123)
       expect_equal(
         describe_posterior(ttestBF(mtcars$wt, mu = 3), ci = 0.95),
-        structure(list(
-          Parameter = "Difference", Median = -0.198578438156886,
-          CI = 0.95, CI_low = -0.535759904384745, CI_high = 0.1557581,
-          pd = 0.858, ROPE_CI = 0.95, ROPE_low = -0.0978457442989697,
-          ROPE_high = 0.0978457442989697, ROPE_Percentage = 0.246250986582478,
-          log_BF = -0.949713514141272, BF = 0.386851835160946, Prior_Distribution = "cauchy",
-          Prior_Location = 0, Prior_Scale = 0.707106781186548
-        ), row.names = 1L, class = c(
-          "describe_posterior",
-          "see_describe_posterior", "data.frame"
-        ), ci_method = "hdi", object_name = "ttestBF(mtcars$wt, mu = 3)"),
+        structure(
+          list(
+            Parameter = "Difference", Median = 0.192275922178887, CI = 0.95,
+            CI_low = -0.172955539648102, CI_high = 0.526426796879103, pd = 0.85875,
+            ROPE_CI = 0.95, ROPE_low = -0.0978457442989697, ROPE_high = 0.0978457442989697,
+            ROPE_Percentage = 0.257300710339384, log_BF = -0.94971351422473,
+            BF = 0.386851835128661, Prior_Distribution = "cauchy",
+            Prior_Location = 0, Prior_Scale = 0.707106781186548),
+          row.names = 1L, class = c("describe_posterior", "see_describe_posterior", "data.frame"),
+          ci_method = "hdi", object_name = "ttestBF(mtcars$wt, mu = 3)"),
         tolerance = 0.1,
         ignore_attr = TRUE
       )

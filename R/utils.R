@@ -87,7 +87,7 @@
     out <- out[!is.na(out$Effects) & !is.na(out$Component) & !duplicated(out$.roworder), ]
   }
   attr(out, "Cleaned_Parameter") <- out$Cleaned_Parameter[order(out$.roworder)]
-  datawizard::data_remove(out[order(out$.roworder), ], remove_cols)
+  datawizard::data_remove(out[order(out$.roworder), ], remove_cols, verbose = FALSE)
 }
 
 
@@ -98,7 +98,7 @@
   }
   x$.rowid <- 1:nrow(x)
   x <- merge(x, y, by = by, all = all)
-  datawizard::data_remove(x[order(x$.rowid), ], ".rowid")
+  datawizard::data_remove(x[order(x$.rowid), ], ".rowid", verbose = FALSE)
 }
 
 

@@ -463,7 +463,7 @@ rope.sim.merMod <- function(x, range = "default", ci = 0.95, ci_method = "HDI", 
   )
 
   if (all(dat$Group == dat$Group[1])) {
-    dat <- datawizard::data_remove(dat, "Group")
+    dat <- datawizard::data_remove(dat, "Group", verbose = FALSE)
   }
 
   HDI_area_attributes <- lapply(datawizard::compact_list(list), attr, "HDI_area")

@@ -90,7 +90,7 @@
   d <- do.call(rbind, list(fixed, random))
 
   if (length(unique(d$Group)) == 1) {
-    d <- datawizard::data_remove(d, "Group")
+    d <- datawizard::data_remove(d, "Group", verbose = FALSE)
   }
 
   list(result = d, data = do.call(cbind, datawizard::compact_list(list(fixed.data, random.data))))
