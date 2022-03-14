@@ -63,10 +63,10 @@ if (require("testthat") &&
     # dataframes -------------------------------------------------
 
     x <- data.frame(replicate(4, rnorm(100)))
-    expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
+    expect_warning(expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")))
     # rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
     # expect_equal(dim(rez), c(4, 19))
-    expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
+    expect_warning(expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))))
     # rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
     # expect_equal(dim(rez), c(8, 19))
     rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
@@ -151,11 +151,11 @@ if (require("testthat") &&
 
       expect_equal(nrow(describe_posterior(model)), 2)
 
-      model <- rstanarm::stan_glm(mpg ~ drat,
+      model <- suppressWarnings(rstanarm::stan_glm(mpg ~ drat,
         data = mtcars,
         algorithm = "optimizing",
         refresh = 0
-      )
+      ))
 
       expect_equal(nrow(describe_posterior(model)), 2)
 

@@ -33,19 +33,19 @@ if (.runThisTest &&
     chains = 2, silent = TRUE, refresh = 0
   )
 
-  expect_equal(
+  expect_warning(expect_equal(
     check_prior(model2)$Prior_Quality,
     c(
       "uninformative", "uninformative", "informative", "uninformative",
       "uninformative", "not determinable", "not determinable", "not determinable"
     )
-  )
+  ))
 
-  expect_equal(
+  expect_warning(expect_equal(
     check_prior(model2, method = "lakeland")$Prior_Quality,
     c(
       "informative", "informative", "informative", "informative",
       "informative", "not determinable", "not determinable", "not determinable"
     )
-  )
+  ))
 }
