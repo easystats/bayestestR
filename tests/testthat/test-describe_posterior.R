@@ -196,11 +196,11 @@ if (require("testthat") &&
       p <- insight::get_parameters(m, effects = "all", component = "all")
 
       test_that("describe_posterior", {
-        expect_equal(
+        expect_warning(expect_equal(
           describe_posterior(m, effects = "all", component = "all")$Median,
           describe_posterior(p)$Median,
           tolerance = 1e-3
-        )
+        ))
       })
     }
 
@@ -210,12 +210,12 @@ if (require("testthat") &&
 
       x <- insight::download_model("stanreg_lm_1")
       set.seed(555)
-      expect_warning(rez <- describe_posterior(x, ci_method = "SI", test = "bf"))
+      expect_warning(expect_warning(rez <- describe_posterior(x, ci_method = "SI", test = "bf")))
 
 
       # test si
       set.seed(555)
-      rez_si <- si(x)
+      expect_warning(rez_si <- si(x))
       expect_equal(rez$CI_low, rez_si$CI_low, tolerance = 0.1)
       expect_equal(rez$CI_high, rez_si$CI_high, tolerance = 0.1)
 
