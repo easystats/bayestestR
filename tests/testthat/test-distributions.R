@@ -11,13 +11,13 @@ test_that("distributions", {
   expect_equal(mean(distribution_cauchy(10)), 0, tolerance = 0.01)
   expect_equal(length(distribution_cauchy(10, random = TRUE)), 10, tolerance = 0.01)
 
-  expect_equal(mean(distribution_chisquared(10, 1)), 0.778, tolerance = 0.01)
+  expect_equal(mean(distribution_chisquared(10, 1)), 0.893, tolerance = 0.01)
   expect_equal(length(distribution_chisquared(10, 1, random = TRUE)), 10, tolerance = 0.01)
 
-  expect_equal(mean(distribution_gamma(10, 1)), 0.874, tolerance = 0.01)
+  expect_equal(mean(distribution_gamma(10, 1)), 0.9404, tolerance = 0.01)
   expect_equal(length(distribution_gamma(10, 1, random = TRUE)), 10, tolerance = 0.01)
 
-  expect_equal(mean(distribution_poisson(10)), 0.8, tolerance = 0.01)
+  expect_equal(mean(distribution_poisson(10)), 1, tolerance = 0.01)
   expect_equal(length(distribution_poisson(10, random = TRUE)), 10, tolerance = 0.01)
 
   expect_equal(mean(distribution_student(10, 1)), 0, tolerance = 0.01)
