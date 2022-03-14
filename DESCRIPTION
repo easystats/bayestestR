@@ -68,6 +68,7 @@ Depends:
 Imports:
     insight (>= 0.15.0),
     datawizard (>= 0.2.3),
+    graphics,
     methods,
     stats,
     utils
