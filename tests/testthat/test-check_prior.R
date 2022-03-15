@@ -33,19 +33,46 @@ if (.runThisTest &&
     chains = 2, silent = TRUE, refresh = 0
   )
 
-  expect_warning(expect_equal(
-    check_prior(model2)$Prior_Quality,
-    c(
-      "uninformative", "informative", "informative", "uninformative",
-      "uninformative", "not determinable", "not determinable", "not determinable"
-    )
-  ))
+  linux <- tryCatch({
+    si <- Sys.info()
+    if (!is.null(si["sysname"])) {
+      si["sysname"] == "Linux" || grepl("^linux", R.version$os)
+    } else {
+      FALSE
+    }
+  })
 
-  expect_warning(expect_equal(
-    check_prior(model2, method = "lakeland")$Prior_Quality,
-    c(
-      "informative", "misinformative", "informative", "informative",
-      "informative", "not determinable", "not determinable", "not determinable"
-    )
-  ))
+  if (isTRUE(linux)) {
+    expect_warning(expect_equal(
+      check_prior(model2)$Prior_Quality,
+      c(
+        "uninformative", "informative", "informative", "uninformative",
+        "uninformative", "not determinable", "not determinable", "not determinable"
+      )
+    ))
+
+    expect_warning(expect_equal(
+      check_prior(model2, method = "lakeland")$Prior_Quality,
+      c(
+        "informative", "misinformative", "informative", "informative",
+        "informative", "not determinable", "not determinable", "not determinable"
+      )
+    ))
+  } else {
+    expect_warning(expect_equal(
+      check_prior(model2)$Prior_Quality,
+      c(
+        "uninformative", "uninformative", "informative", "uninformative",
+        "uninformative", "not determinable", "not determinable", "not determinable"
+      )
+    ))
+
+    expect_warning(expect_equal(
+      check_prior(model2, method = "lakeland")$Prior_Quality,
+      c(
+        "informative", "informative", "informative", "informative",
+        "informative", "not determinable", "not determinable", "not determinable"
+      )
+    ))
+  }
 }
