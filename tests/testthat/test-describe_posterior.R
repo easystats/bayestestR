@@ -271,9 +271,11 @@ if (require("testthat") &&
             ROPE_CI = 0.95, ROPE_low = -0.0978457442989697, ROPE_high = 0.0978457442989697,
             ROPE_Percentage = 0.257300710339384, log_BF = -0.94971351422473,
             BF = 0.386851835128661, Prior_Distribution = "cauchy",
-            Prior_Location = 0, Prior_Scale = 0.707106781186548),
+            Prior_Location = 0, Prior_Scale = 0.707106781186548
+          ),
           row.names = 1L, class = c("describe_posterior", "see_describe_posterior", "data.frame"),
-          ci_method = "hdi", object_name = "ttestBF(mtcars$wt, mu = 3)"),
+          ci_method = "hdi", object_name = "ttestBF(mtcars$wt, mu = 3)"
+        ),
         tolerance = 0.1,
         ignore_attr = TRUE
       )

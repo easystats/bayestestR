@@ -173,7 +173,7 @@ p_direction.numeric <- function(x, method = "direct", null = 0, ...) {
 #' @rdname p_direction
 #' @export
 p_direction.data.frame <- function(x, method = "direct", null = 0, ...) {
-  obj_name <- .safe_deparse(substitute(x))
+  obj_name <- insight::safe_deparse(substitute(x))
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
@@ -205,7 +205,7 @@ p_direction.MCMCglmm <- function(x, method = "direct", null = 0, ...) {
     null = null,
     ...
   )
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -365,7 +365,7 @@ p_direction.stanreg <- function(x,
 
   attr(out, "clean_parameters") <- cleaned_parameters
   class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -406,7 +406,7 @@ p_direction.brmsfit <- function(x,
 
   attr(out, "clean_parameters") <- cleaned_parameters
   class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -415,7 +415,7 @@ p_direction.brmsfit <- function(x,
 #' @export
 p_direction.BFBayesFactor <- function(x, method = "direct", null = 0, ...) {
   out <- p_direction(insight::get_parameters(x), method = method, null = null, ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -426,7 +426,7 @@ p_direction.get_predicted <- function(x, ...) {
   } else {
     stop("No iterations present in the output.")
   }
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 

@@ -244,7 +244,7 @@ bf_rope <- bayesfactor_rope
 #' @rdname bayesfactor_parameters
 #' @export
 bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = "two-sided", null = 0, verbose = TRUE, ...) {
-  # nm <- .safe_deparse(substitute(posterior)
+  # nm <- insight::safe_deparse(substitute(posterior)
 
   if (is.null(prior)) {
     prior <- posterior

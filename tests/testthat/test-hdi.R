@@ -13,7 +13,7 @@ if (require("rstanarm") && require("brms") && require("httr") && require("testth
     expect_warning(hdi(c(2, 3)))
     expect_warning(hdi(distribution_normal(1000), ci = 0.0000001))
     expect_warning(hdi(distribution_normal(1000), ci = 950))
-    expect_warning(hdi(c(0,0,0)))
+    expect_warning(hdi(c(0, 0, 0)))
   })
 
 

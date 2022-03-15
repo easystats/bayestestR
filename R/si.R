@@ -137,7 +137,7 @@ si.stanreg <- function(posterior, prior = NULL,
   out <- .prepare_output(temp, cleaned_parameters, inherits(posterior, "stanmvreg"))
 
   attr(out, "ci_method") <- "SI"
-  attr(out, "object_name") <- .safe_deparse(substitute(posterior))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(posterior))
   class(out) <- class(temp)
   attr(out, "plot_data") <- attr(temp, "plot_data")
 
@@ -169,7 +169,7 @@ si.emmGrid <- function(posterior, prior = NULL,
   )
 
   attr(out, "ci_method") <- "SI"
-  attr(out, "object_name") <- .safe_deparse(substitute(posterior))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(posterior))
   out
 }
 
@@ -182,14 +182,14 @@ si.stanfit <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, effects 
   out <- si(insight::get_parameters(posterior, effects = effects),
     prior = prior, BF = BF, verbose = verbose
   )
-  attr(out, "object_name") <- .safe_deparse(substitute(posterior))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(posterior))
   out
 }
 
 #' @export
 si.get_predicted <- function(posterior, ...) {
   out <- si(as.data.frame(t(posterior)), ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(posterior))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(posterior))
   out
 }
 
@@ -233,8 +233,8 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) 
   sis <- matrix(NA, nrow = ncol(posterior), ncol = 2)
   for (par in seq_along(posterior)) {
     sis[par, ] <- .si(posterior[[par]],
-                      prior[[par]],
-                      BF = BF, ...
+      prior[[par]],
+      BF = BF, ...
     )
   }
 

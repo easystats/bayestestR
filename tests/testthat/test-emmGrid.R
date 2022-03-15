@@ -1,8 +1,10 @@
 if (require("rstanarm") && require("testthat") && require("bayestestR") && require("emmeans")) {
   set.seed(300)
-  model <- stan_glm(extra ~ group, data = sleep,
-                    refresh = 0,
-                    chains = 6, iter = 7000, warmup = 200)
+  model <- stan_glm(extra ~ group,
+    data = sleep,
+    refresh = 0,
+    chains = 6, iter = 7000, warmup = 200
+  )
 
   em_ <- emmeans(model, ~group)
   c_ <- pairs(em_)
