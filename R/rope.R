@@ -184,7 +184,7 @@ rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "HDI", 
   row.names(dat) <- NULL
 
   attr(dat, "HDI_area") <- HDI_area_attributes
-  attr(dat, "object_name") <- .safe_deparse(substitute(x))
+  attr(dat, "object_name") <- insight::safe_deparse(substitute(x))
 
   class(dat) <- c("rope", "see_rope", "data.frame")
   dat
@@ -198,7 +198,7 @@ rope.emmGrid <- function(x, range = "default", ci = 0.95, ci_method = "HDI", ver
   xdf <- insight::get_parameters(x)
 
   dat <- rope(xdf, range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
-  attr(dat, "object_name") <- .safe_deparse(substitute(x))
+  attr(dat, "object_name") <- insight::safe_deparse(substitute(x))
   dat
 }
 
@@ -214,7 +214,7 @@ rope.BFBayesFactor <- function(x, range = "default", ci = 0.95, ci_method = "HDI
     range <- rope_range(x, verbose = verbose)
   }
   out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -228,7 +228,7 @@ rope.bamlss <- rope.BFBayesFactor
 rope.MCMCglmm <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
   out <- rope(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -237,7 +237,7 @@ rope.MCMCglmm <- function(x, range = "default", ci = 0.95, ci_method = "HDI", ve
 rope.mcmc <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {
   out <- rope(as.data.frame(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
   attr(out, "object_name") <- NULL
-  attr(out, "data") <- .safe_deparse(substitute(x))
+  attr(out, "data") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -248,7 +248,7 @@ rope.mcmc <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbos
 rope.bcplm <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {
   out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
   attr(out, "object_name") <- NULL
-  attr(out, "data") <- .safe_deparse(substitute(x))
+  attr(out, "data") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -321,7 +321,7 @@ rope.stanreg <- function(x, range = "default", ci = 0.95, ci_method = "HDI", eff
   out <- .prepare_output(rope_data, insight::clean_parameters(x), inherits(x, "stanmvreg"))
 
   attr(out, "HDI_area") <- attr(rope_data, "HDI_area")
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   class(out) <- class(rope_data)
 
   out
@@ -411,7 +411,7 @@ rope.brmsfit <- function(x,
   }
 
   attr(out, "HDI_area") <- attr(rope_data, "HDI_area")
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   class(out) <- class(rope_data)
 
   out
@@ -463,7 +463,7 @@ rope.sim.merMod <- function(x, range = "default", ci = 0.95, ci_method = "HDI", 
   )
 
   if (all(dat$Group == dat$Group[1])) {
-    dat <- datawizard::data_remove(dat, "Group")
+    dat <- datawizard::data_remove(dat, "Group", verbose = FALSE)
   }
 
   HDI_area_attributes <- lapply(datawizard::compact_list(list), attr, "HDI_area")
@@ -475,7 +475,7 @@ rope.sim.merMod <- function(x, range = "default", ci = 0.95, ci_method = "HDI", 
   }
 
   attr(dat, "HDI_area") <- HDI_area_attributes
-  attr(dat, "object_name") <- .safe_deparse(substitute(x))
+  attr(dat, "object_name") <- insight::safe_deparse(substitute(x))
 
   dat
 }
@@ -511,7 +511,7 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "HDI", paramet
     dat <- NULL
   }
 
-  attr(dat, "object_name") <- .safe_deparse(substitute(x))
+  attr(dat, "object_name") <- insight::safe_deparse(substitute(x))
 
   dat
 }

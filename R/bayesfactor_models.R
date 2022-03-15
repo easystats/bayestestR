@@ -338,8 +338,8 @@ bayesfactor_models.stanreg <- function(..., denominator = 1, verbose = TRUE) {
   denominator <- list(denominator)
 
   cl <- match.call(expand.dots = FALSE)
-  names(mods) <- sapply(cl$`...`, .safe_deparse)
-  names(denominator) <- .safe_deparse(cl$denominator)
+  names(mods) <- sapply(cl$`...`, insight::safe_deparse)
+  names(denominator) <- insight::safe_deparse(cl$denominator)
 
   mods <- .cleanup_BF_models(mods, denominator, cl)
   denominator <- attr(mods, "denominator", exact = TRUE)
@@ -356,8 +356,8 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1, verbose = TRUE) {
   denominator <- list(denominator)
 
   cl <- match.call(expand.dots = FALSE)
-  names(mods) <- sapply(cl$`...`, .safe_deparse)
-  names(denominator) <- .safe_deparse(cl$denominator)
+  names(mods) <- sapply(cl$`...`, insight::safe_deparse)
+  names(denominator) <- insight::safe_deparse(cl$denominator)
 
   mods <- .cleanup_BF_models(mods, denominator, cl)
   denominator <- attr(mods, "denominator", exact = TRUE)
@@ -375,8 +375,8 @@ bayesfactor_models.blavaan <- function(..., denominator = 1, verbose = TRUE) {
   denominator <- list(denominator)
 
   cl <- match.call(expand.dots = FALSE)
-  names(mods) <- sapply(cl$`...`, .safe_deparse)
-  names(denominator) <- .safe_deparse(cl$denominator)
+  names(mods) <- sapply(cl$`...`, insight::safe_deparse)
+  names(denominator) <- insight::safe_deparse(cl$denominator)
 
   mods <- .cleanup_BF_models(mods, denominator, cl)
   denominator <- attr(mods, "denominator", exact = TRUE)
@@ -468,7 +468,7 @@ as.matrix.bayesfactor_models <- function(x, ...) {
     mods <- mods[[1]]
     mod_names <- tryCatch(
       {
-        sapply(cl$`...`[[1]][-1], .safe_deparse)
+        sapply(cl$`...`[[1]][-1], insight::safe_deparse)
       },
       error = function(e) {
         NULL

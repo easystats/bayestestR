@@ -4,6 +4,10 @@
 
 * `Bayesfactor_models()` for frequentist models now relies on the updated `insight::get_loglikelihood()`. This might change some results for REML based models. See documentation. 
 
+## Breaking
+
+* All `distribution_*(random = FALSE)` functions now rely on `ppoints()`, which will result in slightly diffrent results, especially with small `n`s.
+
 # bayestestR 0.11.5
 
 * Fixes failing tests in CRAN checks.

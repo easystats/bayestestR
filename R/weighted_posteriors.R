@@ -133,7 +133,7 @@ weighted_posteriors <- function(..., prior_odds = NULL, missing = 0, verbose = T
 #' @rdname weighted_posteriors
 weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, verbose = TRUE) {
   Mods <- list(...)
-  mnames <- sapply(match.call(expand.dots = FALSE)$`...`, .safe_deparse)
+  mnames <- sapply(match.call(expand.dots = FALSE)$`...`, insight::safe_deparse)
 
   # find min nrow
   iterations <- min(sapply(Mods, nrow))

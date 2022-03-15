@@ -61,6 +61,6 @@ print.overlap <- function(x, ...) {
 plot.overlap <- function(x, ...) {
   # Can be improved through see
   data <- attributes(x)$data
-  plot(data$x, data$exclusion, type = "l")
+  graphics::plot(data$x, data$exclusion, type = "l")
   graphics::polygon(data$x, data$intersection, col = "red")
 }

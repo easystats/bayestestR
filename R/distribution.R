@@ -8,8 +8,14 @@
 #'   `"beta"`.
 #' @param random Generate near-perfect or random (simple wrappers for the base R
 #'   `r*` functions) distributions.
+#' @param xi For tweedie distributions, the value of `xi` such that the variance
+#' is `var(Y) = phi * mu^xi`.
+#' @param power Alias for `xi`.
 #' @param ... Arguments passed to or from other methods.
 #' @inheritParams tweedie::rtweedie
+#'
+#' @details
+#' When `random = FALSE`, these function return `q*(ppoints(n), ...)`.
 #'
 #' @examples
 #' library(bayestestR)
@@ -56,7 +62,7 @@ distribution_custom <- function(n, type = "norm", ..., random = FALSE) {
     f(n, ...)
   } else {
     f <- match.fun(paste0("q", type))
-    f(seq(1 / n, 1 - 1 / n, length.out = n), ...)
+    f(stats::ppoints(n), ...)
   }
 }
 
@@ -72,7 +78,7 @@ distribution_beta <- function(n, shape1, shape2, ncp = 0, random = FALSE, ...) {
   if (random) {
     stats::rbeta(n, shape1, shape2, ncp = ncp)
   } else {
-    stats::qbeta(seq(1 / n, 1 - 1 / n, length.out = n), shape1, shape2, ncp = ncp, ...)
+    stats::qbeta(stats::ppoints(n), shape1, shape2, ncp = ncp, ...)
   }
 }
 
@@ -83,7 +89,7 @@ distribution_binomial <- function(n, size = 1, prob = 0.5, random = FALSE, ...) 
   if (random) {
     stats::rbinom(n, size, prob)
   } else {
-    stats::qbinom(seq(1 / n, 1 - 1 / n, length.out = n), size, prob, ...)
+    stats::qbinom(stats::ppoints(n), size, prob, ...)
   }
 }
 
@@ -101,7 +107,7 @@ distribution_cauchy <- function(n, location = 0, scale = 1, random = FALSE, ...)
   if (random) {
     stats::rcauchy(n, location, scale)
   } else {
-    stats::qcauchy(seq(1 / n, 1 - 1 / n, length.out = n), location, scale, ...)
+    stats::qcauchy(stats::ppoints(n), location, scale, ...)
   }
 }
 
@@ -112,7 +118,7 @@ distribution_chisquared <- function(n, df, ncp = 0, random = FALSE, ...) {
   if (random) {
     stats::rchisq(n, df, ncp)
   } else {
-    stats::qchisq(seq(1 / n, 1 - 1 / n, length.out = n), df, ncp, ...)
+    stats::qchisq(stats::ppoints(n), df, ncp, ...)
   }
 }
 
@@ -129,7 +135,7 @@ distribution_gamma <- function(n, shape, scale = 1, random = FALSE, ...) {
   if (random) {
     stats::rgamma(n = n, shape = shape, scale = scale)
   } else {
-    stats::qgamma(p = seq(1 / n, 1 - 1 / n, length.out = n), shape = shape, scale = scale)
+    stats::qgamma(p = stats::ppoints(n), shape = shape, scale = scale)
   }
 }
 
@@ -159,7 +165,7 @@ distribution_normal <- function(n, mean = 0, sd = 1, random = FALSE, ...) {
   if (random) {
     stats::rnorm(n, mean, sd)
   } else {
-    stats::qnorm(seq(1 / n, 1 - 1 / n, length.out = n), mean, sd, ...)
+    stats::qnorm(stats::ppoints(n), mean, sd, ...)
   }
 }
 
@@ -181,7 +187,7 @@ distribution_nbinom <- function(n, size, prob, mu, phi, random = FALSE, ...) {
   if (random) {
     stats::rnbinom(n, size, prob, mu)
   } else {
-    stats::qnbinom(seq(1 / n, 1 - 1 / n, length.out = n), size, prob, mu, ...)
+    stats::qnbinom(stats::ppoints(n), size, prob, mu, ...)
   }
 }
 
@@ -193,7 +199,7 @@ distribution_poisson <- function(n, lambda = 1, random = FALSE, ...) {
   if (random) {
     stats::rpois(n, lambda)
   } else {
-    stats::qpois(seq(1 / n, 1 - 1 / n, length.out = n), lambda, ...)
+    stats::qpois(stats::ppoints(n), lambda, ...)
   }
 }
 
@@ -205,7 +211,7 @@ distribution_student <- function(n, df, ncp, random = FALSE, ...) {
   if (random) {
     stats::rt(n, df, ncp)
   } else {
-    stats::qt(seq(1 / n, 1 - 1 / n, length.out = n), df, ncp, ...)
+    stats::qt(stats::ppoints(n), df, ncp, ...)
   }
 }
 
@@ -239,7 +245,7 @@ distribution_tweedie <- function(n,
     )
   } else {
     tweedie::qtweedie(
-      p = seq(1 / n, 1 - 1 / n, length.out = n),
+      p = stats::ppoints(n),
       xi = xi,
       mu = mu,
       phi = phi,
@@ -255,7 +261,7 @@ distribution_uniform <- function(n, min = 0, max = 1, random = FALSE, ...) {
   if (random) {
     stats::runif(n, min, max)
   } else {
-    stats::qunif(seq(1 / n, 1 - 1 / n, length.out = n), min, max, ...)
+    stats::qunif(stats::ppoints(n), min, max, ...)
   }
 }
 
@@ -266,5 +272,5 @@ distribution_uniform <- function(n, min = 0, max = 1, random = FALSE, ...) {
 #' @export
 rnorm_perfect <- function(n, mean = 0, sd = 1) {
   .Deprecated("distribution_normal")
-  stats::qnorm(seq(1 / n, 1 - 1 / n, length.out = n), mean, sd)
+  stats::qnorm(stats::ppoints(n), mean, sd)
 }

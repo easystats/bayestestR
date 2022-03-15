@@ -68,6 +68,7 @@ Depends:
 Imports:
     insight (>= 0.16.0.5),
     datawizard (>= 0.2.3),
+    graphics,
     methods,
     stats,
     utils
@@ -121,3 +122,4 @@ Language: en-US
 RoxygenNote: 7.1.2.9000
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
+Remotes: easystats/insight

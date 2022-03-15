@@ -9,7 +9,7 @@ format.describe_posterior <- function(x,
                                       ...) {
 
   # reshape CI
-  if (is.data.frame(x) && .n_unique(x$CI) > 1) {
+  if (is.data.frame(x) && insight::n_unique(x$CI) > 1) {
     att <- attributes(x)
     x <- datawizard::reshape_ci(x)
     attributes(x) <- utils::modifyList(att, attributes(x))
@@ -112,7 +112,7 @@ format.bayesfactor_models <- function(x,
   }
 
   # Denominator
-  denM <- .trim(paste0(BFE$i, " ", BFE$Model)[denominator])
+  denM <- insight::trim_ws(paste0(BFE$i, " ", BFE$Model)[denominator])
   BFE <- BFE[-denominator, ]
   BFE <- BFE[c("i", "Model", "BF")]
   colnames(BFE)[1] <- ifelse(identical(format, "html"), "Name", "")
