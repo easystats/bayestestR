@@ -73,7 +73,7 @@ p_significance.numeric <- function(x, threshold = "default", ...) {
 
 #' @export
 p_significance.data.frame <- function(x, threshold = "default", ...) {
-  obj_name <- .safe_deparse(substitute(x))
+  obj_name <- insight::safe_deparse(substitute(x))
   threshold <- .select_threshold_ps(threshold = threshold)
   x <- .select_nums(x)
 
@@ -135,7 +135,7 @@ p_significance.parameters_simulate_model <- function(x, threshold = "default", .
 p_significance.MCMCglmm <- function(x, threshold = "default", ...) {
   nF <- x$Fixed$nfl
   out <- p_significance(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), threshold = threshold, ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -143,7 +143,7 @@ p_significance.MCMCglmm <- function(x, threshold = "default", ...) {
 #' @export
 p_significance.BFBayesFactor <- function(x, threshold = "default", ...) {
   out <- p_significance(insight::get_parameters(x), threshold = threshold, ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -186,7 +186,7 @@ p_significance.emmGrid <- function(x, threshold = "default", ...) {
   xdf <- insight::get_parameters(x)
 
   out <- p_significance(xdf, threshold = threshold, ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -216,7 +216,7 @@ p_significance.stanreg <- function(x, threshold = "default", effects = c("fixed"
 
   attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "threshold") <- threshold
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   class(out) <- class(data)
 
   out
@@ -250,7 +250,7 @@ p_significance.brmsfit <- function(x, threshold = "default", effects = c("fixed"
 
   attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "threshold") <- threshold
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   class(out) <- class(data)
 
   out

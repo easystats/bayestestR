@@ -1,12 +1,3 @@
-# trim leading / trailing whitespace
-.trim <- function(x) gsub("^\\s+|\\s+$", "", x)
-
-
-# safe depare, also for very long strings
-.safe_deparse <- function(string) {
-  paste0(sapply(deparse(string, width.cutoff = 500), .trim, simplify = TRUE), collapse = "")
-}
-
 # select rows where values in "variable" match "value"
 #' @keywords internal
 .select_rows <- function(data, variable, value) {
@@ -139,13 +130,4 @@
   )
   attr(params, "clean_parameters") <- cp
   params
-}
-
-
-.n_unique <- function(x, na.rm = TRUE) {
-  if (is.null(x)) {
-    return(0)
-  }
-  if (isTRUE(na.rm)) x <- stats::na.omit(x)
-  length(unique(x))
 }

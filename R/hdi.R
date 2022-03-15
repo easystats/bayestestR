@@ -133,7 +133,7 @@ hdi.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 hdi.data.frame <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "hdi")
-  attr(dat, "object_name") <- .safe_deparse(substitute(x))
+  attr(dat, "object_name") <- insight::safe_deparse(substitute(x))
   dat
 }
 
@@ -159,7 +159,7 @@ hdi.bamlss <- function(x,
   d <- insight::get_parameters(x, component = component)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
   dat <- .add_clean_parameters_attribute(dat, x)
-  attr(dat, "data") <- .safe_deparse(substitute(x))
+  attr(dat, "data") <- insight::safe_deparse(substitute(x))
   dat
 }
 
@@ -168,7 +168,7 @@ hdi.bamlss <- function(x,
 hdi.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
   d <- as.data.frame(x)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
-  attr(dat, "data") <- .safe_deparse(substitute(x))
+  attr(dat, "data") <- insight::safe_deparse(substitute(x))
   dat
 }
 
@@ -177,7 +177,7 @@ hdi.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
 hdi.bcplm <- function(x, ci = 0.95, verbose = TRUE, ...) {
   d <- insight::get_parameters(x)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
-  attr(dat, "data") <- .safe_deparse(substitute(x))
+  attr(dat, "data") <- insight::safe_deparse(substitute(x))
   dat
 }
 
@@ -239,7 +239,7 @@ hdi.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
 
   out <- hdi(xdf, ci = ci, verbose = verbose, ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -277,7 +277,7 @@ hdi.stanreg <- function(x,
   )
 
   attr(out, "clean_parameters") <- cleaned_parameters
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
   out
 }
@@ -318,7 +318,7 @@ hdi.brmsfit <- function(x,
   )
 
   attr(out, "clean_parameters") <- cleaned_parameters
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
   out
 }
@@ -328,7 +328,7 @@ hdi.brmsfit <- function(x,
 #' @export
 hdi.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
   out <- hdi(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -340,7 +340,7 @@ hdi.get_predicted <- function(x, ...) {
   } else {
     stop("No iterations present in the output.")
   }
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 

@@ -115,7 +115,8 @@
 
     if (!isTRUE(all.equal(colnames(prior), colnames(posterior@post.beta)))) {
       stop("post.beta and prior.beta are non-conformable arguments.",
-           call. = FALSE)
+        call. = FALSE
+      )
     }
     prior <- stats::update(posterior, post.beta = prior)
     on.exit() # undo general error message
@@ -292,7 +293,7 @@
   insight::check_if_installed("logspline")
 
   estimate_samples_density <- function(samples) {
-    nm <- .safe_deparse(substitute(samples))
+    nm <- insight::safe_deparse(substitute(samples))
     samples <- utils::stack(samples)
     samples <- split(samples, samples$ind)
 
