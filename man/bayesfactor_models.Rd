@@ -12,7 +12,7 @@ bayesfactor_models(..., denominator = 1, verbose = TRUE)
 
 bf_models(..., denominator = 1, verbose = TRUE)
 
-\method{bayesfactor_models}{default}(..., denominator = 1, verbose = TRUE, ll_args = list())
+\method{bayesfactor_models}{default}(..., denominator = 1, verbose = TRUE)
 
 \method{update}{bayesfactor_models}(object, subset = NULL, reference = NULL, ...)
 
@@ -21,16 +21,18 @@ bf_models(..., denominator = 1, verbose = TRUE)
 \arguments{
 \item{...}{Fitted models (see details), all fit on the same data, or a single
 \code{BFBayesFactor} object (see 'Details'). Ignored in \code{as.matrix()},
-\code{update()}.}
+\code{update()}. If the following named arguments are present, they are passed
+to \link[insight:get_loglikelihood]{insight::get_loglikelihood} (see details):
+\itemize{
+\item \code{estimator} (defaults to \code{"ML"})
+\item \code{check_response}  (defaults to \code{FALSE})
+}}
 
 \item{denominator}{Either an integer indicating which of the models to use as
 the denominator, or a model to be used as a denominator. Ignored for
 \code{BFBayesFactor}.}
 
 \item{verbose}{Toggle off warnings.}
-
-\item{ll_args}{A list of arguments passed to \link[insight:get_loglikelihood]{insight::get_loglikelihood}
-when the passed models are frequentist.}
 
 \item{object, x}{A \code{\link[=bayesfactor_models]{bayesfactor_models()}} object.}
 

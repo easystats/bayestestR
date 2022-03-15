@@ -8,7 +8,10 @@
 #'
 #' @param ... Fitted models (see details), all fit on the same data, or a single
 #'   `BFBayesFactor` object (see 'Details'). Ignored in `as.matrix()`,
-#'   `update()`.
+#'   `update()`. If the following named arguments are present, they are passed
+#'   to [insight::get_loglikelihood] (see details):
+#'   - `estimator` (defaults to `"ML"`)
+#'   - `check_response`  (defaults to `FALSE`)
 #' @param denominator Either an integer indicating which of the models to use as
 #'   the denominator, or a model to be used as a denominator. Ignored for
 #'   `BFBayesFactor`.
@@ -147,10 +150,7 @@ bf_models <- bayesfactor_models
 
 #' @export
 #' @rdname bayesfactor_models
-#' @param ll_args A list of arguments passed to [insight::get_loglikelihood]
-#'   when the passed models are frequentist.
-bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE,
-                                       ll_args = list()) {
+bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   # Organize the models and their names
   mods <- list(...)
   denominator <- list(denominator)
@@ -175,12 +175,37 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE,
     supported_models[!has_terms] <- FALSE
   }
 
-  # Get BF
-  if (verbose) do.call(stats::BIC, unname(mods))
+  objects <- do.call(insight::ellipsis_info, mods)
+  were_checked <- inherits(objects, "ListModels")
+
+  # Validate response
+  if (were_checked && verbose &&
+      !isTRUE(attr(objects, "same_response"))) {
+    warning(insight::format_message(
+      "When comparing models, please note that probably not all models were fit from same data."),
+      call. = FALSE)
+  }
+
+  # Get BIC
+  if (were_checked && estimator == "REML" &&
+      any(sapply(mods, insight::is_mixed_model)) &&
+      !isTRUE(attr(objects, "same_fixef"))) {
+    # estimator <- "ML"
+    if (verbose) {
+      warning(insight::format_message(
+        "Information criteria (like BIC) based on REML fits (i.e. `estimator=\"REML\"`)",
+        "are not recommended for comparison between models with different fixed effects.",
+        "Concider setting `estimator=\"ML\"`."),
+        call. = FALSE)
+    }
+  }
+
   mBIC <- sapply(mods, function(m) {
-    LL <- do.call(insight::get_loglikelihood, c(list(m), ll_args))
+    LL <- insight::get_loglikelihood(m, estimator = estimator)
     stats::BIC(LL)
   })
+
+  # Get BF
   mBFs <- bic_to_bf(mBIC, denominator = mBIC[denominator], log = TRUE)
 
   res <- data.frame(
