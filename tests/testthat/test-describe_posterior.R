@@ -97,7 +97,7 @@ if (require("testthat") &&
       ))
       expect_equal(dim(rez), c(4, 21))
 
-      expect_warning(rez <- describe_posterior(
+      rez <- describe_posterior(
         x,
         centrality = NULL,
         dispersion = TRUE,
@@ -105,7 +105,7 @@ if (require("testthat") &&
         ci_method = "quantile",
         diagnostic = NULL,
         priors = FALSE
-      ))
+      )
       expect_equal(dim(rez), c(2, 4))
 
       # brms -------------------------------------------------
