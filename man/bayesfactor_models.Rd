@@ -92,29 +92,36 @@ null-model) (\cite{Wetzels et al. 2011}).
 \examples{
 # With lm objects:
 # ----------------
-lm1 <- lm(Sepal.Length ~ 1, data = iris)
-lm2 <- lm(Sepal.Length ~ Species, data = iris)
-lm3 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
-lm4 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
-bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1)
-bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result
-BFM <- bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
+lm1 <- lm(mpg ~ 1, data = mtcars)
+lm2 <- lm(mpg ~ hp, data = mtcars)
+lm3 <- lm(mpg ~ hp + drat, data = mtcars)
+lm4 <- lm(mpg ~ hp * drat, data = mtcars)
+(BFM <- bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1))
+# bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result
+# bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
+
 
 update(BFM, reference = "bottom")
 as.matrix(BFM)
 as.numeric(BFM)
+
+
+lm2b <- lm(sqrt(mpg) ~ hp, data = mtcars)
+# Set check_response = TRUE for transformed responses
+bayesfactor_models(lm2b, denominator = lm2, check_response = TRUE)
+
+
 \dontrun{
 # With lmerMod objects:
 # ---------------------
 if (require("lme4")) {
   lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
   lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
-  lmer3 <- lmer(
-    Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
-    data = iris
-  )
-  bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
-  bayesfactor_models(lmer1, lmer2, lmer3, denominator = lmer1)
+  lmer3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
+                data = iris)
+  bayesfactor_models(lmer1, lmer2, lmer3,
+                     denominator = 1,
+                     estimator = "REML")
 }
 
 # rstanarm models
