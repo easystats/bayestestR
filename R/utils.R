@@ -1,12 +1,3 @@
-# trim leading / trailing whitespace
-.trim <- function(x) gsub("^\\s+|\\s+$", "", x)
-
-
-# safe depare, also for very long strings
-.safe_deparse <- function(string) {
-  paste0(sapply(deparse(string, width.cutoff = 500), .trim, simplify = TRUE), collapse = "")
-}
-
 # select rows where values in "variable" match "value"
 #' @keywords internal
 .select_rows <- function(data, variable, value) {
@@ -87,7 +78,7 @@
     out <- out[!is.na(out$Effects) & !is.na(out$Component) & !duplicated(out$.roworder), ]
   }
   attr(out, "Cleaned_Parameter") <- out$Cleaned_Parameter[order(out$.roworder)]
-  datawizard::data_remove(out[order(out$.roworder), ], remove_cols)
+  datawizard::data_remove(out[order(out$.roworder), ], remove_cols, verbose = FALSE)
 }
 
 
@@ -98,7 +89,7 @@
   }
   x$.rowid <- 1:nrow(x)
   x <- merge(x, y, by = by, all = all)
-  datawizard::data_remove(x[order(x$.rowid), ], ".rowid")
+  datawizard::data_remove(x[order(x$.rowid), ], ".rowid", verbose = FALSE)
 }
 
 
@@ -139,13 +130,4 @@
   )
   attr(params, "clean_parameters") <- cp
   params
-}
-
-
-.n_unique <- function(x, na.rm = TRUE) {
-  if (is.null(x)) {
-    return(0)
-  }
-  if (isTRUE(na.rm)) x <- stats::na.omit(x)
-  length(unique(x))
 }

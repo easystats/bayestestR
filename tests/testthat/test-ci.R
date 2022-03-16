@@ -2,7 +2,7 @@ if (require("rstanarm") && require("httr") && require("brms") && require("insigh
   test_that("ci", {
     expect_equal(ci(distribution_normal(1000), ci = .90)$CI_low[1], -1.6361, tolerance = 0.02)
     expect_equal(nrow(ci(distribution_normal(1000), ci = c(.80, .90, .95))), 3, tolerance = 0.01)
-    expect_equal(ci(distribution_normal(1000), ci = 1)$CI_low[1], -3.09, tolerance = 0.02)
+    expect_equal(ci(distribution_normal(1000), ci = 1)$CI_low[1], -3.29, tolerance = 0.02)
     # expect_equal(length(capture.output(print(ci(distribution_normal(1000))))))
     # expect_equal(length(capture.output(print(ci(distribution_normal(1000), ci = c(.80, .90))))))
 

@@ -105,10 +105,10 @@ distribution, where \code{size=mu/phi}.}
 
 \item{lambda}{vector of (non-negative) means.}
 
-\item{xi}{the value of \eqn{\xi}{xi} such that the variance is 
-	\eqn{\mbox{var}[Y]=\phi\mu^{\xi}}{var(Y) = phi * mu^xi}}
+\item{xi}{For tweedie distributions, the value of \code{xi} such that the variance
+is \code{var(Y) = phi * mu^xi}.}
 
-\item{power}{a synonym for \eqn{\xi}{xi}}
+\item{power}{Alias for \code{xi}.}
 
 \item{min}{lower and upper limits of the distribution.  Must be finite.}
 
@@ -117,6 +117,9 @@ distribution, where \code{size=mu/phi}.}
 \description{
 Generate a sequence of n-quantiles, i.e., a sample of size \code{n} with a
 near-perfect distribution.
+}
+\details{
+When \code{random = FALSE}, these function return \verb{q*(ppoints(n), ...)}.
 }
 \examples{
 library(bayestestR)

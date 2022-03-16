@@ -63,10 +63,10 @@ if (require("testthat") &&
     # dataframes -------------------------------------------------
 
     x <- data.frame(replicate(4, rnorm(100)))
-    expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
+    expect_warning(expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")))
     # rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
     # expect_equal(dim(rez), c(4, 19))
-    expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
+    expect_warning(expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))))
     # rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
     # expect_equal(dim(rez), c(8, 19))
     rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
@@ -97,7 +97,7 @@ if (require("testthat") &&
       ))
       expect_equal(dim(rez), c(4, 21))
 
-      expect_warning(rez <- describe_posterior(
+      rez <- describe_posterior(
         x,
         centrality = NULL,
         dispersion = TRUE,
@@ -105,7 +105,7 @@ if (require("testthat") &&
         ci_method = "quantile",
         diagnostic = NULL,
         priors = FALSE
-      ))
+      )
       expect_equal(dim(rez), c(2, 4))
 
       # brms -------------------------------------------------
@@ -151,11 +151,11 @@ if (require("testthat") &&
 
       expect_equal(nrow(describe_posterior(model)), 2)
 
-      model <- rstanarm::stan_glm(mpg ~ drat,
+      model <- suppressWarnings(rstanarm::stan_glm(mpg ~ drat,
         data = mtcars,
         algorithm = "optimizing",
         refresh = 0
-      )
+      ))
 
       expect_equal(nrow(describe_posterior(model)), 2)
 
@@ -196,11 +196,11 @@ if (require("testthat") &&
       p <- insight::get_parameters(m, effects = "all", component = "all")
 
       test_that("describe_posterior", {
-        expect_equal(
+        expect_warning(expect_equal(
           describe_posterior(m, effects = "all", component = "all")$Median,
           describe_posterior(p)$Median,
           tolerance = 1e-3
-        )
+        ))
       })
     }
 
@@ -210,19 +210,19 @@ if (require("testthat") &&
 
       x <- insight::download_model("stanreg_lm_1")
       set.seed(555)
-      expect_warning(rez <- describe_posterior(x, ci_method = "SI", test = "bf"))
+      expect_warning(expect_warning(rez <- describe_posterior(x, ci_method = "SI", test = "bf")))
 
 
       # test si
       set.seed(555)
-      rez_si <- si(x)
+      expect_warning(rez_si <- si(x))
       expect_equal(rez$CI_low, rez_si$CI_low, tolerance = 0.1)
       expect_equal(rez$CI_high, rez_si$CI_high, tolerance = 0.1)
 
       # test BF
       set.seed(555)
       rez_bf <- bayesfactor_parameters(x)
-      expect_equal(rez$BF, as.numeric(rez_bf), tolerance = 0.1)
+      expect_equal(rez$log_BF, log(as.numeric(rez_bf)), tolerance = 0.1)
     })
 
     # BayesFactor -------------------------------------------------
@@ -264,17 +264,18 @@ if (require("testthat") &&
       set.seed(123)
       expect_equal(
         describe_posterior(ttestBF(mtcars$wt, mu = 3), ci = 0.95),
-        structure(list(
-          Parameter = "Difference", Median = -0.198578438156886,
-          CI = 0.95, CI_low = -0.535759904384745, CI_high = 0.1557581,
-          pd = 0.858, ROPE_CI = 0.95, ROPE_low = -0.0978457442989697,
-          ROPE_high = 0.0978457442989697, ROPE_Percentage = 0.246250986582478,
-          log_BF = -0.949713514141272, BF = 0.386851835160946, Prior_Distribution = "cauchy",
-          Prior_Location = 0, Prior_Scale = 0.707106781186548
-        ), row.names = 1L, class = c(
-          "describe_posterior",
-          "see_describe_posterior", "data.frame"
-        ), ci_method = "hdi", object_name = "ttestBF(mtcars$wt, mu = 3)"),
+        structure(
+          list(
+            Parameter = "Difference", Median = 0.192275922178887, CI = 0.95,
+            CI_low = -0.172955539648102, CI_high = 0.526426796879103, pd = 0.85875,
+            ROPE_CI = 0.95, ROPE_low = -0.0978457442989697, ROPE_high = 0.0978457442989697,
+            ROPE_Percentage = 0.257300710339384, log_BF = -0.94971351422473,
+            BF = 0.386851835128661, Prior_Distribution = "cauchy",
+            Prior_Location = 0, Prior_Scale = 0.707106781186548
+          ),
+          row.names = 1L, class = c("describe_posterior", "see_describe_posterior", "data.frame"),
+          ci_method = "hdi", object_name = "ttestBF(mtcars$wt, mu = 3)"
+        ),
         tolerance = 0.1,
         ignore_attr = TRUE
       )

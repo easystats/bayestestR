@@ -19,7 +19,7 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     expect_equal(rope(rnorm(1000, mean = 0, sd = 3), ci = c(.1, .5, .9), verbose = FALSE)$CI, c(.1, .5, .9))
 
     x <- equivalence_test(distribution_normal(1000, 1, 1), ci = c(.50, .99))
-    expect_equal(x$ROPE_Percentage[2], 0.0494, tolerance = 0.01)
+    expect_equal(x$ROPE_Percentage[2], 0.0484, tolerance = 0.01)
     expect_equal(x$ROPE_Equivalence[2], "Undecided")
 
     expect_error(rope(distribution_normal(1000, 0, 1), range = c(0.0, 0.1, 0.2)))

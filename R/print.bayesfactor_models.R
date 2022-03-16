@@ -19,7 +19,7 @@
 #   }
 #
 #   # Denominator
-#   denM <- .trim(paste0(BFE$i, " ", BFE$Model)[denominator])
+#   denM <- insight::trim_ws(paste0(BFE$i, " ", BFE$Model)[denominator])
 #   BFE <- BFE[-denominator, ]
 #   BFE <- BFE[c("i", "Model", "BF")]
 #   colnames(BFE)[1] <- ""

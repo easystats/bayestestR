@@ -68,13 +68,13 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
       iter = 500,
       diagnostic_file = file.path(tempdir(), "df0.csv")
     )
-    stan_bf_1 <- rstanarm::stan_glm(
+    stan_bf_1 <- suppressWarnings(rstanarm::stan_glm(
       Sepal.Length ~ Species,
       data = iris,
       refresh = 0,
       iter = 500,
       diagnostic_file = file.path(tempdir(), "df1.csv")
-    )
+    ))
 
 
     set.seed(333) # compare against bridgesampling

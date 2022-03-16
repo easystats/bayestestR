@@ -116,7 +116,7 @@ p_map.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {
   xdf <- insight::get_parameters(x)
 
   out <- p_map(xdf, precision = precision, method = method, ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -240,7 +240,7 @@ p_map.stanreg <- function(x, precision = 2^10, method = "kernel", effects = c("f
 
   attr(out, "clean_parameters") <- cleaned_parameters
   class(out) <- unique(c("p_map", class(out)))
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -267,7 +267,7 @@ p_map.brmsfit <- function(x, precision = 2^10, method = "kernel", effects = c("f
 
   attr(out, "clean_parameters") <- cleaned_parameters
   class(out) <- unique(c("p_map", class(out)))
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -278,7 +278,7 @@ p_map.brmsfit <- function(x, precision = 2^10, method = "kernel", effects = c("f
 #' @export
 p_map.BFBayesFactor <- function(x, precision = 2^10, method = "kernel", ...) {
   out <- p_map(insight::get_parameters(x), precision = precision, method = method, ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -288,7 +288,7 @@ p_map.BFBayesFactor <- function(x, precision = 2^10, method = "kernel", ...) {
 p_map.MCMCglmm <- function(x, precision = 2^10, method = "kernel", ...) {
   nF <- x$Fixed$nfl
   out <- p_map(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), precision = precision, method = method, ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 
@@ -297,7 +297,7 @@ p_map.MCMCglmm <- function(x, precision = 2^10, method = "kernel", ...) {
 #' @export
 p_map.bayesQR <- function(x, precision = 2^10, method = "kernel", ...) {
   out <- p_map(insight::get_parameters(x), precision = precision, method = method, ...)
-  attr(out, "object_name") <- .safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
 

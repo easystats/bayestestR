@@ -1,6 +1,10 @@
 if (require("rstanarm") && require("testthat") && require("bayestestR") && require("emmeans")) {
   set.seed(300)
-  model <- stan_glm(extra ~ group, data = sleep, refresh = 0)
+  model <- stan_glm(extra ~ group,
+    data = sleep,
+    refresh = 0,
+    chains = 6, iter = 7000, warmup = 200
+  )
 
   em_ <- emmeans(model, ~group)
   c_ <- pairs(em_)
@@ -98,6 +102,7 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
       describe_posterior(emc_)$median
     )
 
+    skip_on_cran()
     expect_equal(
       describe_posterior(all_, bf_prior = model_p, test = "bf")$log_BF,
       describe_posterior(emc_, bf_prior = model_p, test = "bf")$log_BF
@@ -111,7 +116,8 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
     set.seed(4)
     expect_equal(
       bayesfactor_parameters(all_, prior = model, verbose = FALSE),
-      bayesfactor_parameters(all_, prior = model_p, verbose = FALSE)
+      bayesfactor_parameters(all_, prior = model_p, verbose = FALSE),
+      tolerance = 0.001
     )
 
     emc_p <- emmeans(model_p, pairwise ~ group)
@@ -122,11 +128,11 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
     expect_equal(xbfp$log_BF, xbfp3$log_BF)
 
     w <- capture_warnings(bayesfactor_parameters(all_))
-    expect_match(w[1], "Prior")
-    expect_match(w[2], "40")
+    expect_match(w, "Prior")
 
     # error - cannot deal with regrid / transform
-    expect_error(bayesfactor_parameters(regrid(all_), prior = model))
+    e <- capture_error(bayesfactor_parameters(regrid(all_), prior = model))
+    expect_match(as.character(e), "Unable to reconstruct prior estimates")
   })
 
   test_that("emmGrid bayesfactor_restricted", {
@@ -196,7 +202,7 @@ if (require("rstanarm") && require("testthat") && require("bayestestR") && requi
     xsdbf1 <- bayesfactor_parameters(bayes_sum, prior = fit_bayes, verbose = FALSE)
     xsdbf2 <- bayesfactor_parameters(bayes_sum, prior = bayes_sum_prior, verbose = FALSE)
 
-    expect_equal(xsdbf1$log_BF, xsdbf2$log_BF, tolerance = 0.1)
+    expect_equal(xsdbf1$log_BF, xsdbf2$log_BF, tolerance = 0.01)
   })
 
   # link vs response
