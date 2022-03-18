@@ -39,10 +39,10 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     m1 <- lm(mpg ~ 1, mtcars)
     m2 <- lm(sqrt(mpg) ~ 1, mtcars)
 
-    BF1 <- bayesfactor_models(m1, m2, ll_args = list(check_response = TRUE))
+    BF1 <- bayesfactor_models(m1, m2, check_response = TRUE)
     expect_equal(BF1$log_BF[2], 2.4404/2, tolerance = 0.01)
 
-    BF2 <- bayesfactor_models(m1, m2, ll_args = list(check_response = FALSE))
+    BF2 <- bayesfactor_models(m1, m2, check_response = FALSE)
     expect_false(isTRUE(all.equal(BF1, BF2)))
   })
 
@@ -62,7 +62,7 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     expect_warning(bayesfactor_models(fit1, fit2a))
 
     # Should fail
-    expect_error(bayesfactor_models(fit1, fit2b))
+    suppressWarnings(expect_message(bayesfactor_models(fit1, fit2b), "Unable"))
   })
 
 

@@ -171,8 +171,8 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   cl$...$estimator <- cl$...$check_response <- NULL
 
 
-  names(mods) <- sapply(cl$`...`, .safe_deparse)
-  names(denominator) <- .safe_deparse(cl$denominator)
+  names(mods) <- sapply(cl$`...`, insight::safe_deparse)
+  names(denominator) <- insight::safe_deparse(cl$denominator)
 
   mods <- .cleanup_BF_models(mods, denominator, cl)
   mforms <- names(mods)
@@ -190,37 +190,43 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     supported_models[!has_terms] <- FALSE
   }
 
-  objects <- do.call(insight::ellipsis_info, mods)
-  were_checked <- inherits(objects, "ListModels")
+  objects <- tryCatch(do.call(insight::ellipsis_info, mods), error = function(...) NULL)
+  if (!is.null(objects)) {
+    were_checked <- inherits(objects, "ListModels")
 
-  # Validate response
-  if (were_checked && verbose &&
-      !isTRUE(attr(objects, "same_response"))) {
-    warning(insight::format_message(
-      "When comparing models, please note that probably not all models were fit from same data."),
-      call. = FALSE)
-  }
-
-  # Get BIC
-  if (were_checked && estimator == "REML" &&
-      any(sapply(mods, insight::is_mixed_model)) &&
-      !isTRUE(attr(objects, "same_fixef"))) {
-    # estimator <- "ML"
-    if (verbose) {
+    # Validate response
+    if (were_checked && verbose &&
+        !isTRUE(attr(objects, "same_response"))) {
       warning(insight::format_message(
-        "Information criteria (like BIC) based on REML fits (i.e. `estimator=\"REML\"`)",
-        "are not recommended for comparison between models with different fixed effects.",
-        "Concider setting `estimator=\"ML\"`."),
+        "When comparing models, please note that probably not all models were fit from same data."),
         call. = FALSE)
     }
+
+    # Get BIC
+    if (were_checked && estimator == "REML" &&
+        any(sapply(mods, insight::is_mixed_model)) &&
+        !isTRUE(attr(objects, "same_fixef"))) {
+      # estimator <- "ML"
+      if (verbose) {
+        warning(insight::format_message(
+          "Information criteria (like BIC) based on REML fits (i.e. `estimator=\"REML\"`)",
+          "are not recommended for comparison between models with different fixed effects.",
+          "Concider setting `estimator=\"ML\"`."),
+          call. = FALSE)
+      }
+    }
+  } else if (verbose) {
+    message("Unable to validate that all models were fit with the same data.")
   }
 
-  mBIC <- sapply(mods, function(m) {
+  mBIC <- tryCatch(sapply(mods, function(m) {
     LL <- insight::get_loglikelihood(
       m, estimator = estimator, check_response = check_response
     )
     stats::BIC(LL)
-  })
+  }), error = function(...) NULL)
+
+  if (is.null(mBIC)) mBIC <- sapply(mods, BIC)
 
   # Get BF
   mBFs <- bic_to_bf(mBIC, denominator = mBIC[denominator], log = TRUE)
