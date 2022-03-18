@@ -190,7 +190,8 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     supported_models[!has_terms] <- FALSE
   }
 
-  objects <- tryCatch(do.call(insight::ellipsis_info, mods), error = function(...) NULL)
+  objects <- tryCatch(do.call(insight::ellipsis_info, c(mods, verbose = FALSE)),
+                      error = function(...) NULL)
   if (!is.null(objects)) {
     were_checked <- inherits(objects, "ListModels")
 
