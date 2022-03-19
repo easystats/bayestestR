@@ -227,7 +227,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     stats::BIC(LL)
   }), error = function(...) NULL)
 
-  if (is.null(mBIC)) mBIC <- sapply(mods, BIC)
+  if (is.null(mBIC)) mBIC <- sapply(mods, stats::BIC)
 
   # Get BF
   mBFs <- bic_to_bf(mBIC, denominator = mBIC[denominator], log = TRUE)
