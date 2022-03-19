@@ -1,7 +1,7 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.11.5.1
+Version: 0.11.5.2
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
@@ -66,8 +66,8 @@ Description: Provides utilities to describe posterior
 Depends:
     R (>= 3.4)
 Imports:
-    insight (>= 0.16.0),
-    datawizard (>= 0.3.0),
+    insight (>= 0.16.0.5),
+    datawizard (>= 0.2.3),
     graphics,
     methods,
     stats,
@@ -110,6 +110,8 @@ Suggests:
     testthat,
     tidyr,
     tweedie
+Remotes:
+    easystats/insight
 License: GPL-3
 URL: https://easystats.github.io/bayestestR/
 BugReports: https://github.com/easystats/bayestestR/issues
@@ -120,4 +122,3 @@ Language: en-US
 RoxygenNote: 7.1.2.9000
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
-Remotes: easystats/insight

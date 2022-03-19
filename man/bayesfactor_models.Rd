@@ -3,6 +3,7 @@
 \name{bayesfactor_models}
 \alias{bayesfactor_models}
 \alias{bf_models}
+\alias{bayesfactor_models.default}
 \alias{update.bayesfactor_models}
 \alias{as.matrix.bayesfactor_models}
 \title{Bayes Factors (BF) for model comparison}
@@ -11,6 +12,8 @@ bayesfactor_models(..., denominator = 1, verbose = TRUE)
 
 bf_models(..., denominator = 1, verbose = TRUE)
 
+\method{bayesfactor_models}{default}(..., denominator = 1, verbose = TRUE)
+
 \method{update}{bayesfactor_models}(object, subset = NULL, reference = NULL, ...)
 
 \method{as.matrix}{bayesfactor_models}(x, ...)
@@ -18,7 +21,12 @@ bf_models(..., denominator = 1, verbose = TRUE)
 \arguments{
 \item{...}{Fitted models (see details), all fit on the same data, or a single
 \code{BFBayesFactor} object (see 'Details'). Ignored in \code{as.matrix()},
-\code{update()}.}
+\code{update()}. If the following named arguments are present, they are passed
+to \link[insight:get_loglikelihood]{insight::get_loglikelihood} (see details):
+\itemize{
+\item \code{estimator} (defaults to \code{"ML"})
+\item \code{check_response}  (defaults to \code{FALSE})
+}}
 
 \item{denominator}{Either an integer indicating which of the models to use as
 the denominator, or a model to be used as a denominator. Ignored for
@@ -48,7 +56,6 @@ The \verb{bf_*} function is an alias of the main function.
 If the passed models are supported by \pkg{insight} the DV of all models will be tested for equality
 (else this is assumed to be true), and the models' terms will be extracted (allowing for follow-up
 analysis with \code{bayesfactor_inclusion}).
-
 \itemize{
 \item For \code{brmsfit} or \code{stanreg} models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
 \itemize{
@@ -56,11 +63,9 @@ analysis with \code{bayesfactor_inclusion}).
 \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
 }
 \item For \code{BFBayesFactor}, \code{bayesfactor_models()} is mostly a wraparound \code{BayesFactor::extractBF()}.
-\item BIC approximations are used to compute Bayes factors for all other model types (with a BIC method).
-\itemize{
-\item \strong{Note} that BICs are extracted from models as-is. So if for example you want to compare mixed-models bases on ML instead of REML, you must supply models fit with ML.
+\item For all other model types, Bayes factors are computed using the BIC approximation. Note that BICs are extracted from using \link[insight:get_loglikelihood]{insight::get_loglikelihood}, see documentation there for options for dealing with transformed responses and REML estimation.
 }
-}
+
 In order to correctly and precisely estimate Bayes factors, a rule of thumb
 are the 4 P's: \strong{P}roper \strong{P}riors and \strong{P}lentiful
 \strong{P}osteriors. How many? The number of posterior samples needed for
@@ -87,29 +92,36 @@ null-model) (\cite{Wetzels et al. 2011}).
 \examples{
 # With lm objects:
 # ----------------
-lm1 <- lm(Sepal.Length ~ 1, data = iris)
-lm2 <- lm(Sepal.Length ~ Species, data = iris)
-lm3 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
-lm4 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
-bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1)
-bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result
-BFM <- bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
+lm1 <- lm(mpg ~ 1, data = mtcars)
+lm2 <- lm(mpg ~ hp, data = mtcars)
+lm3 <- lm(mpg ~ hp + drat, data = mtcars)
+lm4 <- lm(mpg ~ hp * drat, data = mtcars)
+(BFM <- bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1))
+# bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result
+# bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
+
 
 update(BFM, reference = "bottom")
 as.matrix(BFM)
 as.numeric(BFM)
+
+
+lm2b <- lm(sqrt(mpg) ~ hp, data = mtcars)
+# Set check_response = TRUE for transformed responses
+bayesfactor_models(lm2b, denominator = lm2, check_response = TRUE)
+
+
 \dontrun{
 # With lmerMod objects:
 # ---------------------
 if (require("lme4")) {
   lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
   lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
-  lmer3 <- lmer(
-    Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
-    data = iris
-  )
-  bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
-  bayesfactor_models(lmer1, lmer2, lmer3, denominator = lmer1)
+  lmer3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
+                data = iris)
+  bayesfactor_models(lmer1, lmer2, lmer3,
+                     denominator = 1,
+                     estimator = "REML")
 }
 
 # rstanarm models

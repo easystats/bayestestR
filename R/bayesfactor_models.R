@@ -8,7 +8,10 @@
 #'
 #' @param ... Fitted models (see details), all fit on the same data, or a single
 #'   `BFBayesFactor` object (see 'Details'). Ignored in `as.matrix()`,
-#'   `update()`.
+#'   `update()`. If the following named arguments are present, they are passed
+#'   to [insight::get_loglikelihood] (see details):
+#'   - `estimator` (defaults to `"ML"`)
+#'   - `check_response`  (defaults to `FALSE`)
 #' @param denominator Either an integer indicating which of the models to use as
 #'   the denominator, or a model to be used as a denominator. Ignored for
 #'   `BFBayesFactor`.
@@ -26,18 +29,12 @@
 #' (else this is assumed to be true), and the models' terms will be extracted (allowing for follow-up
 #' analysis with `bayesfactor_inclusion`).
 #'
-#' \itemize{
-#'   \item For `brmsfit` or `stanreg` models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
-#'   \itemize{
-#'     \item `brmsfit` models must have been fitted with `save_pars = save_pars(all = TRUE)`.
-#'     \item `stanreg` models must have been fitted with a defined `diagnostic_file`.
-#'   }
-#'   \item For `BFBayesFactor`, `bayesfactor_models()` is mostly a wraparound `BayesFactor::extractBF()`.
-#'   \item BIC approximations are used to compute Bayes factors for all other model types (with a BIC method).
-#'   \itemize{
-#'     \item **Note** that BICs are extracted from models as-is. So if for example you want to compare mixed-models bases on ML instead of REML, you must supply models fit with ML.
-#'   }
-#' }
+#' - For `brmsfit` or `stanreg` models, Bayes factors are computed using the \CRANpkg{bridgesampling} package.
+#'   - `brmsfit` models must have been fitted with `save_pars = save_pars(all = TRUE)`.
+#'   - `stanreg` models must have been fitted with a defined `diagnostic_file`.
+#' - For `BFBayesFactor`, `bayesfactor_models()` is mostly a wraparound `BayesFactor::extractBF()`.
+#' - For all other model types, Bayes factors are computed using the BIC approximation. Note that BICs are extracted from using [insight::get_loglikelihood], see documentation there for options for dealing with transformed responses and REML estimation.
+#'
 #' In order to correctly and precisely estimate Bayes factors, a rule of thumb
 #' are the 4 P's: **P**roper **P**riors and **P**lentiful
 #' **P**osteriors. How many? The number of posterior samples needed for
@@ -58,29 +55,36 @@
 #' @examples
 #' # With lm objects:
 #' # ----------------
-#' lm1 <- lm(Sepal.Length ~ 1, data = iris)
-#' lm2 <- lm(Sepal.Length ~ Species, data = iris)
-#' lm3 <- lm(Sepal.Length ~ Species + Petal.Length, data = iris)
-#' lm4 <- lm(Sepal.Length ~ Species * Petal.Length, data = iris)
-#' bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1)
-#' bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result
-#' BFM <- bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
+#' lm1 <- lm(mpg ~ 1, data = mtcars)
+#' lm2 <- lm(mpg ~ hp, data = mtcars)
+#' lm3 <- lm(mpg ~ hp + drat, data = mtcars)
+#' lm4 <- lm(mpg ~ hp * drat, data = mtcars)
+#' (BFM <- bayesfactor_models(lm1, lm2, lm3, lm4, denominator = 1))
+#' # bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result
+#' # bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result
+#'
 #'
 #' update(BFM, reference = "bottom")
 #' as.matrix(BFM)
 #' as.numeric(BFM)
+#'
+#'
+#' lm2b <- lm(sqrt(mpg) ~ hp, data = mtcars)
+#' # Set check_response = TRUE for transformed responses
+#' bayesfactor_models(lm2b, denominator = lm2, check_response = TRUE)
+#'
+#'
 #' \dontrun{
 #' # With lmerMod objects:
 #' # ---------------------
 #' if (require("lme4")) {
 #'   lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
 #'   lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
-#'   lmer3 <- lmer(
-#'     Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
-#'     data = iris
-#'   )
-#'   bayesfactor_models(lmer1, lmer2, lmer3, denominator = 1)
-#'   bayesfactor_models(lmer1, lmer2, lmer3, denominator = lmer1)
+#'   lmer3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
+#'                 data = iris)
+#'   bayesfactor_models(lmer1, lmer2, lmer3,
+#'                      denominator = 1,
+#'                      estimator = "REML")
 #' }
 #'
 #' # rstanarm models
@@ -152,12 +156,21 @@ bayesfactor_models <- function(..., denominator = 1, verbose = TRUE) {
 bf_models <- bayesfactor_models
 
 #' @export
+#' @rdname bayesfactor_models
 bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   # Organize the models and their names
   mods <- list(...)
   denominator <- list(denominator)
-
   cl <- match.call(expand.dots = FALSE)
+
+  estimator <- mods[["estimator"]]
+  check_response <- mods[["check_response"]]
+  if (is.null(estimator)) estimator <- "ML"
+  if (is.null(check_response)) check_response <- FALSE
+  mods[["check_response"]] <- mods[["estimator"]] <- NULL
+  cl$...$estimator <- cl$...$check_response <- NULL
+
+
   names(mods) <- sapply(cl$`...`, insight::safe_deparse)
   names(denominator) <- insight::safe_deparse(cl$denominator)
 
@@ -177,8 +190,46 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     supported_models[!has_terms] <- FALSE
   }
 
+  objects <- tryCatch(do.call(insight::ellipsis_info, c(mods, verbose = FALSE)),
+                      error = function(...) NULL)
+  if (!is.null(objects)) {
+    were_checked <- inherits(objects, "ListModels")
+
+    # Validate response
+    if (were_checked && verbose &&
+        !isTRUE(attr(objects, "same_response"))) {
+      warning(insight::format_message(
+        "When comparing models, please note that probably not all models were fit from same data."),
+        call. = FALSE)
+    }
+
+    # Get BIC
+    if (were_checked && estimator == "REML" &&
+        any(sapply(mods, insight::is_mixed_model)) &&
+        !isTRUE(attr(objects, "same_fixef"))) {
+      # estimator <- "ML"
+      if (verbose) {
+        warning(insight::format_message(
+          "Information criteria (like BIC) based on REML fits (i.e. `estimator=\"REML\"`)",
+          "are not recommended for comparison between models with different fixed effects.",
+          "Concider setting `estimator=\"ML\"`."),
+          call. = FALSE)
+      }
+    }
+  } else if (verbose) {
+    message("Unable to validate that all models were fit with the same data.")
+  }
+
+  mBIC <- tryCatch(sapply(mods, function(m) {
+    LL <- insight::get_loglikelihood(
+      m, estimator = estimator, check_response = check_response
+    )
+    stats::BIC(LL)
+  }), error = function(...) NULL)
+
+  if (is.null(mBIC)) mBIC <- sapply(mods, stats::BIC)
+
   # Get BF
-  mBIC <- .BIC_list(mods)
   mBFs <- bic_to_bf(mBIC, denominator = mBIC[denominator], log = TRUE)
 
   res <- data.frame(
@@ -483,21 +534,6 @@ as.matrix.bayesfactor_models <- function(x, ...) {
     })
   }
   paste(c(conditional, random), collapse = " + ")
-}
-
-#' @keywords internal
-.BIC_list <- function(x) {
-  sapply(x, function(m) {
-    tryCatch(
-      {
-        bic <- stats::BIC(m, x[[1]])
-        bic$BIC[1]
-      },
-      warning = function(w) {
-        stop(conditionMessage(w), call. = FALSE)
-      }
-    )
-  })
 }
 
 #' @keywords internal

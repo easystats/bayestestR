@@ -22,7 +22,7 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
     expect_equal(BFM1, bayestestR::bayesfactor_models(list(mo2 = mo2, mo3 = mo3, mo4 = mo4, mo1 = mo1), denominator = 4))
 
     # only on same data!
-    expect_error(bayestestR::bayesfactor_models(mo1, mo2, mo4_e))
+    expect_warning(bayestestR::bayesfactor_models(mo1, mo2, mo4_e))
 
     # update models
     expect_equal(update(BFM2, subset = c(1, 2))$log_BF, c(1, 57.3, 54.52), tolerance = 0.1)
@@ -32,6 +32,18 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
       c(0, -2.8, -6.2, -57.4),
       tolerance = 0.1
     )
+  })
+
+
+  test_that("bayesfactor_models BIC, transformed responses", {
+    m1 <- lm(mpg ~ 1, mtcars)
+    m2 <- lm(sqrt(mpg) ~ 1, mtcars)
+
+    BF1 <- bayesfactor_models(m1, m2, check_response = TRUE)
+    expect_equal(BF1$log_BF[2], 2.4404/2, tolerance = 0.01)
+
+    BF2 <- bayesfactor_models(m1, m2, check_response = FALSE)
+    expect_false(isTRUE(all.equal(BF1, BF2)))
   })
 
   test_that("bayesfactor_models BIC (unsupported / diff nobs)", {
@@ -46,12 +58,11 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
       stats:::logLik.lm(...)
     }
 
-    # Should fail
-    expect_error(bayesfactor_models(fit1, fit2a))
+    # Should warm
+    expect_warning(bayesfactor_models(fit1, fit2a))
 
-    # Should warn, but still work
-    res <- bayesfactor_models(fit1, fit2b)
-    expect_equal(res$log_BF, c(0, -133.97), tolerance = 0.1)
+    # Should fail
+    suppressWarnings(expect_message(bayesfactor_models(fit1, fit2b), "Unable"))
   })
 
 
@@ -112,13 +123,13 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 
     bfinc_all <- bayesfactor_inclusion(BFM4, match_models = FALSE)
     expect_equal(bfinc_all$p_prior, c(1, 0.8, 0.6, 0.4, 0.2), tolerance = 0.1)
-    expect_equal(bfinc_all$p_posterior, c(1, 1, 0.06, 0.01, 0), tolerance = 0.1)
-    expect_equal(bfinc_all$log_BF, c(NaN, 56.04, -3.22, -5.9, -8.21), tolerance = 0.1)
+    expect_equal(bfinc_all$p_posterior, c(1, 1, 0.12, 0.01, 0), tolerance = 0.1)
+    expect_equal(bfinc_all$log_BF, c(NaN, 57.651, -2.352, -4.064, -4.788), tolerance = 0.1)
 
     # + match_models
     bfinc_matched <- bayesfactor_inclusion(BFM4, match_models = TRUE)
     expect_equal(bfinc_matched$p_prior, c(1, 0.2, 0.6, 0.2, 0.2), tolerance = 0.1)
-    expect_equal(bfinc_matched$p_posterior, c(1, 0.94, 0.06, 0.01, 0), tolerance = 0.1)
-    expect_equal(bfinc_matched$log_BF, c(NaN, 57.37, -3.92, -5.25, -3.25), tolerance = 0.1)
+    expect_equal(bfinc_matched$p_posterior, c(1, 0.875, 0.125, 0.009, 0.002), tolerance = 0.1)
+    expect_equal(bfinc_matched$log_BF, c(NaN, 58.904, -3.045, -3.573, -1.493), tolerance = 0.1)
   })
 }
