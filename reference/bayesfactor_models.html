@@ -14,7 +14,7 @@ The bf_* function is an alias of the main function."><meta property="og:image" c
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.5.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.11.5.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,6 +99,9 @@ The <code>bf_*</code> function is an alias of the main function.</p>
 
 <span class="fu">bf_models</span><span class="op">(</span><span class="va">...</span>, denominator <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
+<span class="co"># S3 method for default</span>
+<span class="fu">bayesfactor_models</span><span class="op">(</span><span class="va">...</span>, denominator <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
 <span class="co"># S3 method for bayesfactor_models</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">object</span>, subset <span class="op">=</span> <span class="cn">NULL</span>, reference <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
 
@@ -111,7 +114,10 @@ The <code>bf_*</code> function is an alias of the main function.</p>
     <dl><dt>...</dt>
 <dd><p>Fitted models (see details), all fit on the same data, or a single
 <code>BFBayesFactor</code> object (see 'Details'). Ignored in <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code>,
-<code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code>.</p></dd>
+<code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code>. If the following named arguments are present, they are passed
+to <a href="https://easystats.github.io/insight/reference/get_loglikelihood.html" class="external-link">insight::get_loglikelihood</a> (see details):</p><ul><li><p><code>estimator</code> (defaults to <code>"ML"</code>)</p></li>
+<li><p><code>check_response</code>  (defaults to <code>FALSE</code>)</p></li>
+</ul></dd>
 <dt>denominator</dt>
 <dd><p>Either an integer indicating which of the models to use as
 the denominator, or a model to be used as a denominator. Ignored for
@@ -137,13 +143,11 @@ non-log Bayes factors; see examples), that prints nicely.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>If the passed models are supported by <span class="pkg">insight</span> the DV of all models will be tested for equality
 (else this is assumed to be true), and the models' terms will be extracted (allowing for follow-up
-analysis with <code>bayesfactor_inclusion</code>).</p>
-<ul><li><p>For <code>brmsfit</code> or <code>stanreg</code> models, Bayes factors are computed using the <a href="https://CRAN.R-project.org/package=bridgesampling" class="external-link"><span class="pkg">bridgesampling</span></a> package.</p><ul><li><p><code>brmsfit</code> models must have been fitted with <code>save_pars = save_pars(all = TRUE)</code>.</p></li>
+analysis with <code>bayesfactor_inclusion</code>).</p><ul><li><p>For <code>brmsfit</code> or <code>stanreg</code> models, Bayes factors are computed using the <a href="https://CRAN.R-project.org/package=bridgesampling" class="external-link"><span class="pkg">bridgesampling</span></a> package.</p><ul><li><p><code>brmsfit</code> models must have been fitted with <code>save_pars = save_pars(all = TRUE)</code>.</p></li>
 <li><p><code>stanreg</code> models must have been fitted with a defined <code>diagnostic_file</code>.</p></li>
 </ul></li>
 <li><p>For <code>BFBayesFactor</code>, <code>bayesfactor_models()</code> is mostly a wraparound <code><a href="https://rdrr.io/pkg/BayesFactor/man/extractBF-methods.html" class="external-link">BayesFactor::extractBF()</a></code>.</p></li>
-<li><p>BIC approximations are used to compute Bayes factors for all other model types (with a BIC method).</p><ul><li><p><strong>Note</strong> that BICs are extracted from models as-is. So if for example you want to compare mixed-models bases on ML instead of REML, you must supply models fit with ML.</p></li>
-</ul></li>
+<li><p>For all other model types, Bayes factors are computed using the BIC approximation. Note that BICs are extracted from using <a href="https://easystats.github.io/insight/reference/get_loglikelihood.html" class="external-link">insight::get_loglikelihood</a>, see documentation there for options for dealing with transformed responses and REML estimation.</p></li>
 </ul><p>In order to correctly and precisely estimate Bayes factors, a rule of thumb
 are the 4 P's: <strong>P</strong>roper <strong>P</strong>riors and <strong>P</strong>lentiful
 <strong>P</strong>osteriors. How many? The number of posterior samples needed for
@@ -187,68 +191,73 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># With lm objects:</span></span>
 <span class="r-in"><span class="co"># ----------------</span></span>
-<span class="r-in"><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lm3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">+</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lm4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span> <span class="op">*</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">bayesfactor_models</span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>, <span class="va">lm4</span>, denominator <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">lm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">lm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">hp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">lm3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">hp</span> <span class="op">+</span> <span class="va">drat</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">lm4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">hp</span> <span class="op">*</span> <span class="va">drat</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">(</span><span class="va">BFM</span> <span class="op">&lt;-</span> <span class="fu">bayesfactor_models</span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>, <span class="va">lm4</span>, denominator <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Bayes Factors for Model Comparison</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       Model                        BF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [lm2] Species                1.70e+29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [lm3] Species + Petal.Length 5.84e+55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [lm4] Species * Petal.Length 2.20e+54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Model           BF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [lm2] hp        4.54e+05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [lm3] hp + drat 7.70e+07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [lm4] hp * drat 1.59e+07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Against Denominator: <span style="color: #00BBBB;">[lm1] (Intercept only)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *   Bayes Factor Type: <span style="color: #00BBBB;">BIC approximation</span></span>
-<span class="r-in"><span class="fu">bayesfactor_models</span><span class="op">(</span><span class="va">lm2</span>, <span class="va">lm3</span>, <span class="va">lm4</span>, denominator <span class="op">=</span> <span class="va">lm1</span><span class="op">)</span> <span class="co"># same result</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Bayes Factors for Model Comparison</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       Model                        BF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [lm2] Species                1.70e+29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [lm3] Species + Petal.Length 5.84e+55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [lm4] Species * Petal.Length 2.20e+54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Against Denominator: <span style="color: #00BBBB;">[lm1] (Intercept only)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *   Bayes Factor Type: <span style="color: #00BBBB;">BIC approximation</span></span>
-<span class="r-in"><span class="va">BFM</span> <span class="op">&lt;-</span> <span class="fu">bayesfactor_models</span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>, <span class="va">lm4</span>, denominator <span class="op">=</span> <span class="va">lm1</span><span class="op">)</span> <span class="co"># same result</span></span>
+<span class="r-in"><span class="co"># bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result</span></span>
+<span class="r-in"><span class="co"># bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result</span></span>
+<span class="r-in"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">BFM</span>, reference <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Bayes Factors for Model Comparison</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       Model                        BF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [lm2] Species                1.70e+29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [lm3] Species + Petal.Length 5.84e+55</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [lm4] Species * Petal.Length 2.20e+54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Model           BF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [lm2] hp        4.54e+05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [lm3] hp + drat 7.70e+07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [lm4] hp * drat 1.59e+07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Against Denominator: <span style="color: #00BBBB;">[lm1] (Intercept only)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *   Bayes Factor Type: <span style="color: #00BBBB;">BIC approximation</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">BFM</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Bayes Factors for Model Comparison</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               Numerator</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Numerator</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Denominator</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 |      [1] |      [2] |      [3] |      [4]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] (Intercept only)       |        1 | 1.70e+29 | 5.84e+55 | 2.20e+54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] Species                | 5.90e-30 |        1 | 3.45e+26 | 1.30e+25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] Species + Petal.Length | 1.71e-56 | 2.90e-27 |        1 |    0.038</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] Species * Petal.Length | 4.54e-55 | 7.70e-26 |    26.52 |        1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           |      [1] |      [2] |      [3] |      [4]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] (Intercept only) |        1 | 4.54e+05 | 7.70e+07 | 1.59e+07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] hp               | 2.20e-06 |        1 |   169.72 |    35.09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] hp + drat        | 1.30e-08 |    0.006 |        1 |    0.207</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4] hp * drat        | 6.28e-08 |    0.028 |     4.84 |        1</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">BFM</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.000000e+00 1.695852e+29 5.843105e+55 2.203243e+54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]        1.0   453874.3 77029881.3 15925712.4</span>
+<span class="r-in"></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">lm2b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span> <span class="op">~</span> <span class="va">hp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span>
+<span class="r-in"><span class="co"># Set check_response = TRUE for transformed responses</span></span>
+<span class="r-in"><span class="fu">bayesfactor_models</span><span class="op">(</span><span class="va">lm2b</span>, denominator <span class="op">=</span> <span class="va">lm2</span>, check_response <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Bayes Factors for Model Comparison</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Model   BF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [lm2b] hp    6.94</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Against Denominator: <span style="color: #00BBBB;">[lm2] hp</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> *   Bayes Factor Type: <span style="color: #00BBBB;">BIC approximation</span></span>
+<span class="r-in"></span>
+<span class="r-in"></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="co"># With lmerMod objects:</span></span>
 <span class="r-in"><span class="co"># ---------------------</span></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/lme4/lme4/" class="external-link">"lme4"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="va">lmer1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in">  <span class="va">lmer2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="va">Petal.Length</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">lmer3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="va">Petal.Length</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Petal.Width</span><span class="op">)</span>,</span>
-<span class="r-in">    data <span class="op">=</span> <span class="va">iris</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in">  <span class="fu">bayesfactor_models</span><span class="op">(</span><span class="va">lmer1</span>, <span class="va">lmer2</span>, <span class="va">lmer3</span>, denominator <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in">  <span class="fu">bayesfactor_models</span><span class="op">(</span><span class="va">lmer1</span>, <span class="va">lmer2</span>, <span class="va">lmer3</span>, denominator <span class="op">=</span> <span class="va">lmer1</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">lmer3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="va">Petal.Length</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Petal.Width</span><span class="op">)</span>,</span>
+<span class="r-in">                data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu">bayesfactor_models</span><span class="op">(</span><span class="va">lmer1</span>, <span class="va">lmer2</span>, <span class="va">lmer3</span>,</span>
+<span class="r-in">                     denominator <span class="op">=</span> <span class="fl">1</span>,</span>
+<span class="r-in">                     estimator <span class="op">=</span> <span class="st">"REML"</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># rstanarm models</span></span>
