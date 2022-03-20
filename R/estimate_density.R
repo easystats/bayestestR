@@ -11,7 +11,8 @@
 #' @param extend Extend the range of the x axis by a factor of `extend_scale`.
 #' @param extend_scale Ratio of range by which to extend the x axis. A value of `0.1` means that the x axis will be extended by `1/10` of the range of the data.
 #' @param select Character vector of column names. If NULL (the default), all numeric variables will be selected.
-#' @param group_by Optional character vector. If not `NULL` and `x` is a data frame, density estimation is performed for each group (subset) indicated by `group_by`.
+#' @param at Optional character vector. If not `NULL` and input is a data frame, density estimation is performed for each group (subsets) indicated by `at`. See examples.
+#' @param group_by Deprecated in favourt of `at`.
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
@@ -57,8 +58,8 @@
 #' head(estimate_density(iris, select = "Sepal.Width"))
 #'
 #' # Grouped data
-#' head(estimate_density(iris, group_by = "Species"))
-#' head(estimate_density(iris$Petal.Width, group_by = iris$Species))
+#' head(estimate_density(iris, at = "Species"))
+#' head(estimate_density(iris$Petal.Width, at = iris$Species))
 #' \dontrun{
 #' # rstanarm models
 #' # -----------------------------------------------
@@ -128,12 +129,19 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 
 
 #' @export
-estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, group_by = NULL, ...) {
-  if (!is.null(group_by)) {
-    if (length(group_by) == 1) {
+estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, at = NULL, ...) {
+
+  # Sanity
+  if(!is.null(group_by)) {
+    warning("The 'group_by' argument is deprecated and might be removed in a future update. Please replace by 'at'.")
+    at <- group_by
+  }
+
+  if (!is.null(at)) {
+    if (length(at) == 1) {
       stop("`group_by` must be either the name of a group column if a data.frame is entered as input, or in this case (where a single vector was passed) a vector of same length.")
     }
-    out <- estimate_density(data.frame(V1 = x, Group = group_by), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, group_by = "Group", ...)
+    out <- estimate_density(data.frame(V1 = x, Group = at), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, at = "Group", ...)
     out$Parameter <- NULL
     return(out)
   }
@@ -148,17 +156,25 @@ estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, ext
 
 #' @rdname estimate_density
 #' @export
-estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, select = NULL, group_by = NULL, ...) {
-  if (is.null(group_by)) {
+estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, select = NULL, at = NULL, group_by = NULL, ...) {
+
+  # Sanity
+  if(!is.null(group_by)) {
+    warning("The 'group_by' argument is deprecated and might be removed in a future update. Please replace by 'at'.")
+    at <- group_by
+  }
+
+  if (is.null(at)) {
+    # No grouping -------------------
     out <- .estimate_density_df(x = x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, select = select, ...)
   } else {
-    xlist <- split(x, x[group_by])
-    out <- lapply(names(xlist), function(group) {
-      dens <- .estimate_density_df(x = xlist[[group]], method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, select = select, ...)
-      dens$Group <- group
-      dens
-    })
-    out <- do.call(rbind, out)
+    # Deal with at- grouping --------
+    groups <- insight::get_datagrid(x[, at, drop = FALSE], at = at) # Get combinations
+    out <- data.frame()
+    for(row in 1:nrow(groups)) {
+      subdata <- .estimate_density_df(datawizard::data_match(x, groups[row, , drop = FALSE]), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, select = select, ...)
+      out <- rbind(out, merge(subdata, groups[row, , drop = FALSE]))
+    }
   }
 
   class(out) <- .set_density_df_class(out)

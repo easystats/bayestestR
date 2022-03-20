@@ -2,9 +2,11 @@
 
 ## Breaking
 
-* `Bayesfactor_models()` for frequentist models now relies on the updated `insight::get_loglikelihood()`. This might change some results for REML based models. See documentation. 
+* `Bayesfactor_models()` for frequentist models now relies on the updated `insight::get_loglikelihood()`. This might change some results for REML based models. See documentation.
 
 ## Breaking
+
+* `estimate_density()` argument `group_by` is renamed `at`.
 
 * All `distribution_*(random = FALSE)` functions now rely on `ppoints()`, which will result in slightly diffrent results, especially with small `n`s.
 
@@ -31,13 +33,13 @@
 
 ## Breaking
 
-* All Bayes factors are now returned as `log(BF)` (column name `log_BF`). 
+* All Bayes factors are now returned as `log(BF)` (column name `log_BF`).
   Printing is unaffected. To retrieve the raw BFs, you can run `exp(result$log_BF)`.
 
 ## New functions
 
 * `bci()` (and its alias `bcai()`) to compute bias-corrected and accelerated
-  bootstrap intervals. Along with this new function, `ci()` and 
+  bootstrap intervals. Along with this new function, `ci()` and
   `describe_posterior()` gain a new `ci_method` type, `"bci"`.
 
 ## Changes
