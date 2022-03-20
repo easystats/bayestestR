@@ -110,6 +110,7 @@
   bw <span class="op">=</span> <span class="st">"SJ"</span>,
   ci <span class="op">=</span> <span class="cn">NULL</span>,
   select <span class="op">=</span> <span class="cn">NULL</span>,
+  at <span class="op">=</span> <span class="cn">NULL</span>,
   group_by <span class="op">=</span> <span class="cn">NULL</span>,
   <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
@@ -137,8 +138,10 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
 <dd><p>Currently not used.</p></dd>
 <dt>select</dt>
 <dd><p>Character vector of column names. If NULL (the default), all numeric variables will be selected.</p></dd>
+<dt>at</dt>
+<dd><p>Optional character vector. If not <code>NULL</code> and input is a data frame, density estimation is performed for each group (subsets) indicated by <code>at</code>. See examples.</p></dd>
 <dt>group_by</dt>
-<dd><p>Optional character vector. If not <code>NULL</code> and <code>x</code> is a data frame, density estimation is performed for each group (subset) indicated by <code>group_by</code>.</p></dd>
+<dd><p>Deprecated in favourt of <code>at</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -212,22 +215,10 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 Sepal.Width 2.011730 0.05071174</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Grouped data</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">estimate_density</span><span class="op">(</span><span class="va">iris</span>, group_by <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      Parameter        x         y  Group</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Sepal.Length 4.300000 0.2355986 setosa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 Sepal.Length 4.301466 0.2375879 setosa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Sepal.Length 4.302933 0.2395766 setosa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 Sepal.Length 4.304399 0.2415640 setosa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 Sepal.Length 4.305865 0.2435508 setosa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 Sepal.Length 4.307331 0.2455353 setosa</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">estimate_density</span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Petal.Width</span>, group_by <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           x        y  Group</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.1000000 9.011872 setosa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.1004888 8.955399 setosa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.1009775 8.792239 setosa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.1014663 8.528268 setosa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.1019550 8.172719 setosa</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.1024438 7.737660 setosa</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">estimate_density</span><span class="op">(</span><span class="va">iris</span>, at <span class="op">=</span> <span class="st">"Species"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in density.default(x, n = precision, bw = bw, from = x_range[1],     to = x_range[2], ...):</span> need at least 2 points to select a bandwidth automatically</span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">estimate_density</span><span class="op">(</span><span class="va">iris</span><span class="op">$</span><span class="va">Petal.Width</span>, at <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in density.default(x, n = precision, bw = bw, from = x_range[1],     to = x_range[2], ...):</span> need at least 2 points to select a bandwidth automatically</span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="co"># rstanarm models</span></span>
 <span class="r-in"><span class="co"># -----------------------------------------------</span></span>
