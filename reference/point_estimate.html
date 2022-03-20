@@ -165,21 +165,21 @@ for the output.</p></dd>
 <span class="r-in"><span class="fu">point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Point Estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Median    |     Mean |   MAP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -8.64e-03 | 7.97e-03 | -0.04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Median | Mean |  MAP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.05   | 0.03 | 0.14</span>
 <span class="r-in"><span class="fu">point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span>, centrality <span class="op">=</span> <span class="st">"all"</span>, dispersion <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Point Estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Median    |  MAD |  Mean |   SD |  MAP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -5.22e-03 | 1.03 | -0.01 | 0.99 | 0.06</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Median |  MAD |      Mean |   SD |   MAP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -0.04  | 0.96 | -4.90e-03 | 0.94 | -0.16</span>
 <span class="r-in"><span class="fu">point_estimate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span>, centrality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"MAP"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Point Estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Median |   MAP</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -0.08  | -0.27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -0.04  | -0.17</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">point_estimate</span><span class="op">(</span><span class="va">df</span>, centrality <span class="op">=</span> <span class="st">"all"</span>, dispersion <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -187,19 +187,19 @@ for the output.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |  MAD |  Mean |   SD |   MAP</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.07 | 1.02 |  0.03 | 0.97 | -0.39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.04 | 0.88 | -0.03 | 1.03 |  0.02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |  -0.24 | 0.94 | -0.09 | 1.08 | -0.34</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |   0.08 | 1.00 | -0.03 | 0.95 |  0.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.07 | 1.06 | -0.07 | 0.99 | -0.09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |   0.06 | 0.98 |  0.09 | 0.97 |  0.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |   0.02 | 1.03 | -0.07 | 1.01 | -0.53</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |  -0.21 | 0.84 | -0.12 | 0.90 | -0.42</span>
 <span class="r-in"><span class="fu">point_estimate</span><span class="op">(</span><span class="va">df</span>, centrality <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"MAP"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Point Estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |   MAP</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.07 | -0.39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.04 |  0.02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |  -0.24 | -0.34</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |   0.08 |  0.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.07 | -0.09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |   0.06 |  0.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |   0.02 | -0.53</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |  -0.21 | -0.42</span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="co"># rstanarm models</span></span>
 <span class="r-in"><span class="co"># -----------------------------------------------</span></span>
