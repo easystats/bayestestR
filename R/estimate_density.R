@@ -80,7 +80,7 @@
 #' @references Deng, H., & Wickham, H. (2011). Density estimation in R. Electronic publication.
 #'
 #' @export
-estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, ...) {
+estimate_density <- function(x, ...) {
   UseMethod("estimate_density")
 }
 

@@ -5,16 +5,7 @@
 \alias{estimate_density.data.frame}
 \title{Density Estimation}
 \usage{
-estimate_density(
-  x,
-  method = "kernel",
-  precision = 2^10,
-  extend = FALSE,
-  extend_scale = 0.1,
-  bw = "SJ",
-  ci = NULL,
-  ...
-)
+estimate_density(x, ...)
 
 \method{estimate_density}{data.frame}(
   x,
@@ -35,6 +26,8 @@ estimate_density(
 vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
 \code{MCMCglmm}, \code{mcmc} or \code{bcplm}) or a \code{BayesFactor} model.}
 
+\item{...}{Currently not used.}
+
 \item{method}{Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.}
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \code{density}.}
@@ -46,8 +39,6 @@ vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
 \item{bw}{See the eponymous argument in \code{density}. Here, the default has been changed for \code{"SJ"}, which is recommended.}
 
 \item{ci}{The confidence interval threshold. Only used when \code{method = "kernel"}. This feature is experimental, use with caution.}
-
-\item{...}{Currently not used.}
 
 \item{select}{Character vector of column names. If NULL (the default), all numeric variables will be selected.}
 
