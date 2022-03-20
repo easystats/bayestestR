@@ -186,7 +186,7 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
   if(is.null(select)) {
     x <- .select_nums(x)
   } else {
-    x <- x[, datawizard::data_findcols(iris, select), drop = FALSE]
+    x <- x[, datawizard::data_findcols(x, select), drop = FALSE]
   }
 
   out <- sapply(x, estimate_density, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, simplify = FALSE)
