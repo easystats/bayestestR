@@ -129,7 +129,7 @@ estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FA
 
 
 #' @export
-estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, at = NULL, ...) {
+estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, at = NULL, group_by = NULL, ...) {
 
   # Sanity
   if(!is.null(group_by)) {
