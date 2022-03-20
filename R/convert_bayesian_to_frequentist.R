@@ -60,7 +60,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   ), error = function(e) e)
 
   if (inherits(freq, "error")) {
-    family = get(family$family)(link = family$link)
+    family <- get(family$family)(link = family$link)
     freq <- .convert_bayesian_as_frequentist(
       info = info, formula = formula, data = data, family = family, REML = REML
     )

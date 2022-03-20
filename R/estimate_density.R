@@ -132,7 +132,7 @@ estimate_density <- function(x, ...) {
 estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, at = NULL, group_by = NULL, ...) {
 
   # Sanity
-  if(!is.null(group_by)) {
+  if (!is.null(group_by)) {
     warning("The 'group_by' argument is deprecated and might be removed in a future update. Please replace by 'at'.")
     at <- group_by
   }
@@ -159,7 +159,7 @@ estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, ext
 estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, select = NULL, at = NULL, group_by = NULL, ...) {
 
   # Sanity
-  if(!is.null(group_by)) {
+  if (!is.null(group_by)) {
     warning("The 'group_by' argument is deprecated and might be removed in a future update. Please replace by 'at'.")
     at <- group_by
   }
@@ -171,7 +171,7 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
     # Deal with at- grouping --------
     groups <- insight::get_datagrid(x[, at, drop = FALSE], at = at) # Get combinations
     out <- data.frame()
-    for(row in 1:nrow(groups)) {
+    for (row in 1:nrow(groups)) {
       subdata <- .estimate_density_df(datawizard::data_match(x, groups[row, , drop = FALSE]), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, select = select, ...)
       out <- rbind(out, merge(subdata, groups[row, , drop = FALSE]))
     }
@@ -183,7 +183,7 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
 
 .estimate_density_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, select = NULL, ...) {
   # TODO: replace by exposed select argument
-  if(is.null(select)) {
+  if (is.null(select)) {
     x <- .select_nums(x)
   } else {
     x <- x[, datawizard::data_findcols(x, select), drop = FALSE]

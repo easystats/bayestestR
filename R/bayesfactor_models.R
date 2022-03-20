@@ -73,7 +73,6 @@
 #' # Set check_response = TRUE for transformed responses
 #' bayesfactor_models(lm2b, denominator = lm2, check_response = TRUE)
 #'
-#'
 #' \dontrun{
 #' # With lmerMod objects:
 #' # ---------------------
@@ -81,10 +80,12 @@
 #'   lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
 #'   lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
 #'   lmer3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
-#'                 data = iris)
+#'     data = iris
+#'   )
 #'   bayesfactor_models(lmer1, lmer2, lmer3,
-#'                      denominator = 1,
-#'                      estimator = "REML")
+#'     denominator = 1,
+#'     estimator = "REML"
+#'   )
 #' }
 #'
 #' # rstanarm models
@@ -191,29 +192,34 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   }
 
   objects <- tryCatch(do.call(insight::ellipsis_info, c(mods, verbose = FALSE)),
-                      error = function(...) NULL)
+    error = function(...) NULL
+  )
   if (!is.null(objects)) {
     were_checked <- inherits(objects, "ListModels")
 
     # Validate response
     if (were_checked && verbose &&
-        !isTRUE(attr(objects, "same_response"))) {
+      !isTRUE(attr(objects, "same_response"))) {
       warning(insight::format_message(
-        "When comparing models, please note that probably not all models were fit from same data."),
-        call. = FALSE)
+        "When comparing models, please note that probably not all models were fit from same data."
+      ),
+      call. = FALSE
+      )
     }
 
     # Get BIC
     if (were_checked && estimator == "REML" &&
-        any(sapply(mods, insight::is_mixed_model)) &&
-        !isTRUE(attr(objects, "same_fixef"))) {
+      any(sapply(mods, insight::is_mixed_model)) &&
+      !isTRUE(attr(objects, "same_fixef"))) {
       # estimator <- "ML"
       if (verbose) {
         warning(insight::format_message(
           "Information criteria (like BIC) based on REML fits (i.e. `estimator=\"REML\"`)",
           "are not recommended for comparison between models with different fixed effects.",
-          "Concider setting `estimator=\"ML\"`."),
-          call. = FALSE)
+          "Concider setting `estimator=\"ML\"`."
+        ),
+        call. = FALSE
+        )
       }
     }
   } else if (verbose) {
@@ -222,7 +228,8 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   mBIC <- tryCatch(sapply(mods, function(m) {
     LL <- insight::get_loglikelihood(
-      m, estimator = estimator, check_response = check_response
+      m,
+      estimator = estimator, check_response = check_response
     )
     stats::BIC(LL)
   }), error = function(...) NULL)
