@@ -5,11 +5,12 @@
 #' @inheritParams hdi
 #' @inheritParams stats::density
 #' @param bw See the eponymous argument in `density`. Here, the default has been changed for `"SJ"`, which is recommended.
-#' @param ci The confidence interval threshold. Only used when `method = "kernel"`.
+#' @param ci The confidence interval threshold. Only used when `method = "kernel"`. This feature is experimental, use with caution.
 #' @param method Density estimation method. Can be `"kernel"` (default), `"logspline"` or `"KernSmooth"`.
 #' @param precision Number of points of density data. See the `n` parameter in `density`.
 #' @param extend Extend the range of the x axis by a factor of `extend_scale`.
 #' @param extend_scale Ratio of range by which to extend the x axis. A value of `0.1` means that the x axis will be extended by `1/10` of the range of the data.
+#' @param select Character vector of column names. If NULL (the default), all numeric variables will be selected.
 #' @param group_by Optional character vector. If not `NULL` and `x` is a data frame, density estimation is performed for each group (subset) indicated by `group_by`.
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
@@ -52,12 +53,12 @@
 #' lines(density_default$x, density_default$y, col = "black", lwd = 3)
 #'
 #' # Multiple columns
-#' df <- data.frame(replicate(4, rnorm(100)))
-#' head(estimate_density(df))
+#' head(estimate_density(iris))
+#' head(estimate_density(iris, select = "Sepal.Width"))
 #'
 #' # Grouped data
-#' estimate_density(iris, group_by = "Species")
-#' estimate_density(iris$Petal.Width, group_by = iris$Species)
+#' head(estimate_density(iris, group_by = "Species"))
+#' head(estimate_density(iris$Petal.Width, group_by = iris$Species))
 #' \dontrun{
 #' # rstanarm models
 #' # -----------------------------------------------
@@ -78,7 +79,7 @@
 #' @references Deng, H., & Wickham, H. (2011). Density estimation in R. Electronic publication.
 #'
 #' @export
-estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ...) {
+estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, ...) {
   UseMethod("estimate_density")
 }
 
@@ -147,13 +148,13 @@ estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, ext
 
 #' @rdname estimate_density
 #' @export
-estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, group_by = NULL, ...) {
+estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, select = NULL, group_by = NULL, ...) {
   if (is.null(group_by)) {
-    out <- .estimate_density_df(x = x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, ...)
+    out <- .estimate_density_df(x = x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, select = select, ...)
   } else {
     xlist <- split(x, x[group_by])
     out <- lapply(names(xlist), function(group) {
-      dens <- .estimate_density_df(x = xlist[[group]], method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, ...)
+      dens <- .estimate_density_df(x = xlist[[group]], method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, select = select, ...)
       dens$Group <- group
       dens
     })
@@ -164,8 +165,14 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
   out
 }
 
-.estimate_density_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, ...) {
-  x <- .select_nums(x)
+.estimate_density_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, select = NULL, ...) {
+  # TODO: replace by exposed select argument
+  if(is.null(select)) {
+    x <- .select_nums(x)
+  } else {
+    x <- x[, datawizard::data_findcols(iris, select), drop = FALSE]
+  }
+
   out <- sapply(x, estimate_density, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, simplify = FALSE)
   for (i in names(out)) {
     out[[i]]$Parameter <- i
@@ -178,14 +185,14 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
 
 
 #' @export
-estimate_density.grouped_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, ...) {
+estimate_density.grouped_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, select = NULL, ...) {
   groups <- .group_vars(x)
   ungrouped_x <- as.data.frame(x)
 
   xlist <- split(ungrouped_x, ungrouped_x[groups])
 
   out <- lapply(names(xlist), function(group) {
-    dens <- estimate_density(xlist[[group]], method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci)
+    dens <- estimate_density(xlist[[group]], method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, select = select, ...)
     dens$Group <- group
     dens
   })

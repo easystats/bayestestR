@@ -12,6 +12,7 @@ estimate_density(
   extend = FALSE,
   extend_scale = 0.1,
   bw = "SJ",
+  ci = NULL,
   ...
 )
 
@@ -23,6 +24,7 @@ estimate_density(
   extend_scale = 0.1,
   bw = "SJ",
   ci = NULL,
+  select = NULL,
   group_by = NULL,
   ...
 )
@@ -42,9 +44,11 @@ vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
 
 \item{bw}{See the eponymous argument in \code{density}. Here, the default has been changed for \code{"SJ"}, which is recommended.}
 
+\item{ci}{The confidence interval threshold. Only used when \code{method = "kernel"}. This feature is experimental, use with caution.}
+
 \item{...}{Currently not used.}
 
-\item{ci}{The confidence interval threshold. Only used when \code{method = "kernel"}.}
+\item{select}{Character vector of column names. If NULL (the default), all numeric variables will be selected.}
 
 \item{group_by}{Optional character vector. If not \code{NULL} and \code{x} is a data frame, density estimation is performed for each group (subset) indicated by \code{group_by}.}
 }
@@ -92,12 +96,12 @@ lines(density_extended$x, density_extended$y, col = "red", lwd = 3)
 lines(density_default$x, density_default$y, col = "black", lwd = 3)
 
 # Multiple columns
-df <- data.frame(replicate(4, rnorm(100)))
-head(estimate_density(df))
+head(estimate_density(iris))
+head(estimate_density(iris, select = "Sepal.Width"))
 
 # Grouped data
-estimate_density(iris, group_by = "Species")
-estimate_density(iris$Petal.Width, group_by = iris$Species)
+head(estimate_density(iris, group_by = "Species"))
+head(estimate_density(iris$Petal.Width, group_by = iris$Species))
 \dontrun{
 # rstanarm models
 # -----------------------------------------------
