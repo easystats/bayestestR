@@ -40,7 +40,7 @@ vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
 
 \item{ci}{The confidence interval threshold. Only used when \code{method = "kernel"}. This feature is experimental, use with caution.}
 
-\item{select}{Character vector of column names. If NULL (the default), all numeric variables will be selected.}
+\item{select}{Character vector of column names. If NULL (the default), all numeric variables will be selected. Other arguments from \code{\link[datawizard:find_columns]{datawizard::find_columns()}} (such as \code{exclude} or \code{starts_with}) can also be used.}
 
 \item{at}{Optional character vector. If not \code{NULL} and input is a data frame, density estimation is performed for each group (subsets) indicated by \code{at}. See examples.}
 

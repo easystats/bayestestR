@@ -10,7 +10,7 @@
 #' @param precision Number of points of density data. See the `n` parameter in `density`.
 #' @param extend Extend the range of the x axis by a factor of `extend_scale`.
 #' @param extend_scale Ratio of range by which to extend the x axis. A value of `0.1` means that the x axis will be extended by `1/10` of the range of the data.
-#' @param select Character vector of column names. If NULL (the default), all numeric variables will be selected.
+#' @param select Character vector of column names. If NULL (the default), all numeric variables will be selected. Other arguments from [datawizard::find_columns()] (such as `exclude` or `starts_with`) can also be used.
 #' @param at Optional character vector. If not `NULL` and input is a data frame, density estimation is performed for each group (subsets) indicated by `at`. See examples.
 #' @param group_by Deprecated in favourt of `at`.
 #'
@@ -91,6 +91,10 @@ estimate_density <- function(x, ...) {
 
   # Remove NA
   x <- x[!is.na(x)]
+
+  if(length(x) < 2) {
+    return(setNames(data.frame(matrix(ncol = 3, nrow = 0)), c("Parameter", "x", "y")))
+  }
 
   # Range
   x_range <- range(x)
@@ -186,12 +190,16 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
   if (is.null(select)) {
     x <- .select_nums(x)
   } else {
-    x <- x[, datawizard::data_findcols(x, select), drop = FALSE]
+    x <- x[, datawizard::find_columns(x, select, ...), drop = FALSE]
   }
 
   out <- sapply(x, estimate_density, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, simplify = FALSE)
   for (i in names(out)) {
-    out[[i]]$Parameter <- i
+    if(nrow(out[[i]]) == 0) {
+      warning(paste0("'", i, "', or one of its 'at' groups, is empty and has no density information."))
+    } else {
+      out[[i]]$Parameter <- i
+    }
   }
   out <- do.call(rbind, out)
 
@@ -434,5 +442,6 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 }
 
 .set_density_class <- function(out) {
+  if(is.null(out)) return(NULL)
   setdiff(unique(c("estimate_density", "see_estimate_density", class(out))), c("estimate_density_df", "see_estimate_density_df"))
 }
