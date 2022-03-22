@@ -19,16 +19,6 @@
     ))
   }
 
-  if (anyNA(x)) {
-    if (verbose) {
-      warning("The posterior contains NAs, returning NAs.")
-    }
-    return(data.frame(
-      "CI" = ci,
-      "CI_low" = NA,
-      "CI_high" = NA
-    ))
-  }
 
   if (length(x) < 3) {
     if (verbose) {
