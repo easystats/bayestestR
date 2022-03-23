@@ -269,9 +269,9 @@ bci.get_predicted <- function(x, ...) {
   a <- top / under
 
   lower.inv <- stats::pnorm(z + (z + stats::qnorm(low)) / (1 - a * (z + stats::qnorm(low))))
-  lower <- stats::quantile(x, lower.inv, names = FALSE)
+  lower <- stats::quantile(x, lower.inv, names = FALSE, na.rm = TRUE)
   upper.inv <- stats::pnorm(z + (z + stats::qnorm(high)) / (1 - a * (z + stats::qnorm(high))))
-  upper <- stats::quantile(x, upper.inv, names = FALSE)
+  upper <- stats::quantile(x, upper.inv, names = FALSE, na.rm = TRUE)
 
   data.frame(
     "CI" = ci,

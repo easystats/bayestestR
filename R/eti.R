@@ -241,7 +241,8 @@ eti.get_predicted <- function(x, ...) {
   results <- as.vector(stats::quantile(
     x,
     probs = c((1 - ci) / 2, (1 + ci) / 2),
-    names = FALSE
+    names = FALSE,
+    na.rm = TRUE
   ))
 
   data.frame(

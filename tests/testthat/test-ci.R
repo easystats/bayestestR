@@ -6,7 +6,7 @@ if (require("rstanarm") && require("httr") && require("brms") && require("insigh
     # expect_equal(length(capture.output(print(ci(distribution_normal(1000))))))
     # expect_equal(length(capture.output(print(ci(distribution_normal(1000), ci = c(.80, .90))))))
 
-    expect_warning(ci(c(2, 3, NA)))
+    expect_equal(ci(c(2, 3, NA))$CI_low, 2.02, tolerance = 1e-2)
     expect_warning(ci(c(2, 3)))
     expect_warning(ci(distribution_normal(1000), ci = 950))
 
