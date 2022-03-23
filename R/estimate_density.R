@@ -10,7 +10,7 @@
 #' @param precision Number of points of density data. See the `n` parameter in `density`.
 #' @param extend Extend the range of the x axis by a factor of `extend_scale`.
 #' @param extend_scale Ratio of range by which to extend the x axis. A value of `0.1` means that the x axis will be extended by `1/10` of the range of the data.
-#' @param select Character vector of column names. If NULL (the default), all numeric variables will be selected. Other arguments from [datawizard::find_columns()] (such as `exclude` or `starts_with`) can also be used.
+#' @param select Character vector of column names. If NULL (the default), all numeric variables will be selected. Other arguments from [datawizard::find_columns()] (such as `exclude`) can also be used.
 #' @param at Optional character vector. If not `NULL` and input is a data frame, density estimation is performed for each group (subsets) indicated by `at`. See examples.
 #' @param group_by Deprecated in favourt of `at`.
 #'

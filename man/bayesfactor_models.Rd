@@ -110,7 +110,6 @@ lm2b <- lm(sqrt(mpg) ~ hp, data = mtcars)
 # Set check_response = TRUE for transformed responses
 bayesfactor_models(lm2b, denominator = lm2, check_response = TRUE)
 
-
 \dontrun{
 # With lmerMod objects:
 # ---------------------
@@ -118,10 +117,12 @@ if (require("lme4")) {
   lmer1 <- lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
   lmer2 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
   lmer3 <- lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species) + (1 | Petal.Width),
-                data = iris)
+    data = iris
+  )
   bayesfactor_models(lmer1, lmer2, lmer3,
-                     denominator = 1,
-                     estimator = "REML")
+    denominator = 1,
+    estimator = "REML"
+  )
 }
 
 # rstanarm models
