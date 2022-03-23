@@ -40,7 +40,7 @@
 .compute_interval_dataframe <- function(x, ci, verbose, fun) {
   numeric_variables <- sapply(x, is.numeric, simplify = TRUE)
 
-  out <- datawizard::compact_list(lapply(
+  out <- insight::compact_list(lapply(
     x[, numeric_variables, drop = FALSE],
     get(fun, asNamespace("bayestestR")),
     ci = ci,
@@ -83,7 +83,7 @@
     d <- datawizard::data_remove(d, "Group", verbose = FALSE)
   }
 
-  list(result = d, data = do.call(cbind, datawizard::compact_list(list(fixed.data, random.data))))
+  list(result = d, data = do.call(cbind, insight::compact_list(list(fixed.data, random.data))))
 }
 
 

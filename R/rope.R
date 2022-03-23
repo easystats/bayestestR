@@ -175,7 +175,7 @@ rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "HDI", ver
 #' @export
 rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {
   out <- .prepare_rope_df(x, range, ci, ci_method, verbose)
-  HDI_area_attributes <- datawizard::compact_list(out$HDI_area)
+  HDI_area_attributes <- insight::compact_list(out$HDI_area)
   dat <- data.frame(
     Parameter = rep(names(HDI_area_attributes), each = length(ci)),
     out$tmp,
@@ -436,7 +436,7 @@ rope.sim.merMod <- function(x, range = "default", ci = 0.95, ci_method = "HDI", 
     tmp <- getropedata$tmp
     HDI_area <- getropedata$HDI_area
 
-    if (!datawizard::is_empty_object(tmp)) {
+    if (!insight::is_empty_object(tmp)) {
       tmp <- .clean_up_tmp_stanreg(
         tmp,
         group = .x,
@@ -444,7 +444,7 @@ rope.sim.merMod <- function(x, range = "default", ci = 0.95, ci_method = "HDI", 
         parms = names(parms)
       )
 
-      if (!datawizard::is_empty_object(HDI_area)) {
+      if (!insight::is_empty_object(HDI_area)) {
         attr(tmp, "HDI_area") <- HDI_area
       }
     } else {
@@ -454,7 +454,7 @@ rope.sim.merMod <- function(x, range = "default", ci = 0.95, ci_method = "HDI", 
     tmp
   })
 
-  dat <- do.call(rbind, args = c(datawizard::compact_list(list), make.row.names = FALSE))
+  dat <- do.call(rbind, args = c(insight::compact_list(list), make.row.names = FALSE))
 
   dat <- switch(effects,
     fixed = .select_rows(dat, "Group", "fixed"),
@@ -466,7 +466,7 @@ rope.sim.merMod <- function(x, range = "default", ci = 0.95, ci_method = "HDI", 
     dat <- datawizard::data_remove(dat, "Group", verbose = FALSE)
   }
 
-  HDI_area_attributes <- lapply(datawizard::compact_list(list), attr, "HDI_area")
+  HDI_area_attributes <- lapply(insight::compact_list(list), attr, "HDI_area")
 
   if (effects != "all") {
     HDI_area_attributes <- HDI_area_attributes[[1]]
@@ -496,7 +496,7 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "HDI", paramet
   dat <- getropedata$tmp
   HDI_area <- getropedata$HDI_area
 
-  if (!datawizard::is_empty_object(dat)) {
+  if (!insight::is_empty_object(dat)) {
     dat <- .clean_up_tmp_stanreg(
       dat,
       group = "fixed",
@@ -504,7 +504,7 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "HDI", paramet
       parms = names(parms)
     )
 
-    if (!datawizard::is_empty_object(HDI_area)) {
+    if (!insight::is_empty_object(HDI_area)) {
       attr(dat, "HDI_area") <- HDI_area
     }
   } else {

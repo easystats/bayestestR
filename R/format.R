@@ -131,7 +131,7 @@ format.bayesfactor_models <- function(x,
       caption <- c(caption, "blue")
     }
   } else {
-    footer <- datawizard::compact_list(list(
+    footer <- insight::compact_list(list(
       paste0("Against Denominator: ", denM),
       paste0("Bayes Factor Type: ", grid.type),
       if (log) "Bayes Factors are on the log-scale."
@@ -184,7 +184,7 @@ format.bayesfactor_inclusion <- function(x,
       caption <- c(caption, "blue")
     }
   } else {
-    footer <- datawizard::compact_list(list(
+    footer <- insight::compact_list(list(
       paste0("Compared among: ", if (matched) "matched models only" else "all models"),
       paste0("Priors odds: ", if (!is.null(priorOdds)) "custom" else "uniform-equal"),
       if (log) "Bayes Factors are on the log-scale."
@@ -229,7 +229,7 @@ format.bayesfactor_restricted <- function(x,
       caption <- c(caption, "blue")
     }
   } else {
-    footer <- datawizard::compact_list(list(
+    footer <- insight::compact_list(list(
       "Bayes factors for the restricted model vs. the un-restricted model.",
       if (log) "Bayes Factors are on the log-scale."
     ))
@@ -296,7 +296,7 @@ format.bayesfactor_parameters <- function(x,
       if (log) c("\n\nBayes Factors are on the log-scale.\n", "red")
     )
   } else {
-    footer <- datawizard::compact_list(list(
+    footer <- insight::compact_list(list(
       paste0("Evidence Against The Null: ", null),
       if (direction) c("Direction: "),
       if (direction < 0) "Left-Sided test",

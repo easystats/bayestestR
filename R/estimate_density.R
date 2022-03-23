@@ -176,7 +176,7 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
     groups <- insight::get_datagrid(x[, at, drop = FALSE], at = at) # Get combinations
     out <- data.frame()
     for (row in 1:nrow(groups)) {
-      subdata <- .estimate_density_df(datawizard::data_match(x, groups[row, , drop = FALSE]), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, select = select, ...)
+      subdata <- .estimate_density_df(datawizard::data_match(x, groups[row, , drop = FALSE], return_indices = FALSE), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, select = select, ...)
       out <- rbind(out, merge(subdata, groups[row, , drop = FALSE]))
     }
   }
@@ -195,7 +195,7 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
 
   out <- sapply(x, estimate_density, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, simplify = FALSE)
   for (i in names(out)) {
-    if(nrow(out[[i]]) == 0) {
+    if (nrow(out[[i]]) == 0) {
       warning(paste0("'", i, "', or one of its 'at' groups, is empty and has no density information."))
     } else {
       out[[i]]$Parameter <- i
