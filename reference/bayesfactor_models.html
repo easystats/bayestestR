@@ -246,7 +246,6 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Against Denominator: <span style="color: #00BBBB;">[lm2] hp</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *   Bayes Factor Type: <span style="color: #00BBBB;">BIC approximation</span></span>
 <span class="r-in"></span>
-<span class="r-in"></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="co"># With lmerMod objects:</span></span>
 <span class="r-in"><span class="co"># ---------------------</span></span>
@@ -254,10 +253,12 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 <span class="r-in">  <span class="va">lmer1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in">  <span class="va">lmer2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="va">Petal.Length</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in">  <span class="va">lmer3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span> <span class="op">+</span> <span class="op">(</span><span class="va">Petal.Length</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">Petal.Width</span><span class="op">)</span>,</span>
-<span class="r-in">                data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
+<span class="r-in">    data <span class="op">=</span> <span class="va">iris</span></span>
+<span class="r-in">  <span class="op">)</span></span>
 <span class="r-in">  <span class="fu">bayesfactor_models</span><span class="op">(</span><span class="va">lmer1</span>, <span class="va">lmer2</span>, <span class="va">lmer3</span>,</span>
-<span class="r-in">                     denominator <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">                     estimator <span class="op">=</span> <span class="st">"REML"</span><span class="op">)</span></span>
+<span class="r-in">    denominator <span class="op">=</span> <span class="fl">1</span>,</span>
+<span class="r-in">    estimator <span class="op">=</span> <span class="st">"REML"</span></span>
+<span class="r-in">  <span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># rstanarm models</span></span>
