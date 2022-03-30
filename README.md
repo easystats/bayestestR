@@ -40,20 +40,22 @@ You can reference the package and its documentation as follows:
 ## Installation
 
 [![CRAN](http://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR)
+[![insight status
+badge](https://easystats.r-universe.dev/badges/bayestestR)](https://easystats.r-universe.dev)
 ![Tests](https://github.com/easystats/bayestestR/workflows/Tests/badge.svg)
 
-Run the following to install the stable release of **bayestestR** from
-CRAN:
+The *bayestestR* package is available on CRAN, while its latest
+development version is available on R-universe (from *rOpenSci*).
+
+| Type        | Source     | Command                                                                      |
+|-------------|------------|------------------------------------------------------------------------------|
+| Release     | CRAN       | `install.packages("bayestestR")`                                             |
+| Development | R-universe | `install.packages("bayestestR", repos = "https://easystats.r-universe.dev")` |
+
+Once you have downloaded the package, you can then load it using:
 
 ``` r
-install.packages("bayestestR")
-```
-
-Or this one to install the latest development version:
-
-``` r
-install.packages("remotes")
-remotes::install_github("easystats/bayestestR")
+library("bayestestR")
 ```
 
 ## Documentation
@@ -80,8 +82,8 @@ check-out these vignettes:
 
 #### Articles
 
--   [Credible Intervals
-    (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+-   [Credible
+    Intervals (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
 -   [Probability of Direction
     (pd)](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
 -   [Region of Practical Equivalence
@@ -157,7 +159,7 @@ describe_posterior(
 ## 
 ## Parameter |   Median |        95% CI |     pd |   ps
 ## ----------------------------------------------------
-## Posterior | 5.53e-03 | [-1.89, 1.98] | 50.21% | 0.46
+## Posterior | 3.28e-03 | [-1.90, 2.03] | 50.13% | 0.46
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -256,7 +258,7 @@ As for other [**easystats**](https://github.com/easystats) packages,
 `plot()` methods are available from the
 [**see**](https://easystats.github.io/see/) package for many functions:
 
-![](man/figures/unnamed-chunk-9-1.png)<!-- -->
+![](man/figures/unnamed-chunk-8-1.png)<!-- -->
 
 While the **median** and the **mean** are available through base R
 functions,
@@ -330,7 +332,7 @@ p_direction(posterior)
 ## Probability of Direction: 0.98
 ```
 
-![](man/figures/unnamed-chunk-13-1.png)<!-- -->
+![](man/figures/unnamed-chunk-12-1.png)<!-- -->
 
 ### ROPE
 
@@ -370,7 +372,7 @@ rope(posterior, range = c(-0.1, 0.1))
 ## 4.41 %
 ```
 
-![](man/figures/unnamed-chunk-15-1.png)<!-- -->
+![](man/figures/unnamed-chunk-14-1.png)<!-- -->
 
 ### Bayes Factor
 
@@ -399,12 +401,12 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 ## 
 ## BF  
 ## ----
-## 1.95
+## 1.94
 ## 
 ## * Evidence Against The Null: 0
 ```
 
-![](man/figures/unnamed-chunk-17-1.png)<!-- -->
+![](man/figures/unnamed-chunk-16-1.png)<!-- -->
 
 <sup>*The lollipops represent the density of a point-null on the prior
 distribution (the blue lollipop on the dotted distribution) and on the
@@ -452,7 +454,7 @@ Generate a sample of size n with near-perfect distributions.
 
 ``` r
 distribution(n = 10)
-##  [1] -1.28 -0.88 -0.59 -0.34 -0.11  0.11  0.34  0.59  0.88  1.28
+##  [1] -1.55 -1.00 -0.66 -0.38 -0.12  0.12  0.38  0.66  1.00  1.55
 ```
 
 ### Probability of a Value
@@ -462,7 +464,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.37
+## [1] 0.36
 ```
 
 ## Code of Conduct
