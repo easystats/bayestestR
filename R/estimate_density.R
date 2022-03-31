@@ -93,7 +93,7 @@ estimate_density <- function(x, ...) {
   x <- x[!is.na(x)]
 
   if (length(x) < 2) {
-    return(setNames(data.frame(matrix(ncol = 3, nrow = 0)), c("Parameter", "x", "y")))
+    return(stats::setNames(data.frame(matrix(ncol = 3, nrow = 0)), c("Parameter", "x", "y")))
   }
 
   # Range
