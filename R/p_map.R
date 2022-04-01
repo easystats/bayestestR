@@ -110,6 +110,12 @@ p_map.data.frame <- function(x, precision = 2^10, method = "kernel", ...) {
 
 
 
+#' @export
+p_map.draws <- function(x, precision = 2^10, method = "kernel", ...) {
+  p_map(.posterior_draws_to_df(x), precision = precision, method = method, ...)
+}
+
+
 
 #' @export
 p_map.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {

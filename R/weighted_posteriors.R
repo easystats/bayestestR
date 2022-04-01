@@ -160,6 +160,7 @@ weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, 
   return(res)
 }
 
+
 #' @export
 #' @rdname weighted_posteriors
 weighted_posteriors.stanreg <- function(...,
