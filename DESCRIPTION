@@ -101,6 +101,7 @@ Suggests:
     patchwork,
     performance,
     poorman,
+    posterior,
     rmarkdown,
     rstan,
     rstanarm,
