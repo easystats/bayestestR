@@ -124,7 +124,19 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
 
   negligible_value <- tryCatch(
     {
-      if (!is.null(response) && information$link_function == "identity") {
+      if (!is.null(response_transform) && grepl("log", response_transform, fixed = TRUE)) {
+        # for log-transform, we assume that a 1% change represents the ROPE adequately
+        # see https://github.com/easystats/bayestestR/issues/487
+        0.01
+      } else if (information$is_linear && information$link_function == "log") {
+        # for log-transform, we assume that a 1% change represents the ROPE adequately
+        # see https://github.com/easystats/bayestestR/issues/487
+        0.01
+      } else if (information$family == "lognormal") {
+        # for log-transform, we assume that a 1% change represents the ROPE adequately
+        # see https://github.com/easystats/bayestestR/issues/487
+        0.01
+      } else if (!is.null(response) && information$link_function == "identity") {
         # Linear Models
         0.1 * stats::sd(response, na.rm = TRUE)
         # 0.1 * stats::sigma(x) # https://github.com/easystats/bayestestR/issues/364
@@ -145,18 +157,6 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
         sig <- stats::sigma(x)
         if (is.null(sig) || length(sig) == 0 || is.na(sig)) stop()
         0.1 * sig
-      } else if (!is.null(response_transform) && grepl("log", response_transform, fixed = TRUE)) {
-        # for log-transform, we assume that a 1% change represents the ROPE adequately
-        # see https://github.com/easystats/bayestestR/issues/487
-        0.01
-      } else if (information$is_linear && information$link_function == "log") {
-        # for log-transform, we assume that a 1% change represents the ROPE adequately
-        # see https://github.com/easystats/bayestestR/issues/487
-        0.01
-      } else if (information$family == "lognormal") {
-        # for log-transform, we assume that a 1% change represents the ROPE adequately
-        # see https://github.com/easystats/bayestestR/issues/487
-        0.01
       } else {
         # Default
         stop()
