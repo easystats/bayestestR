@@ -83,14 +83,19 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.11.5.2" id="bayestestr-01152">bayestestR 0.11.5.2<a class="anchor" aria-label="anchor" href="#bayestestr-01152"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.12.1" id="bayestestr-0121">bayestestR 0.12.1<a class="anchor" aria-label="anchor" href="#bayestestr-0121"></a></h2>
+<ul><li>
+<code><a href="../reference/rope_range.html">rope_range()</a></code> now handles log(normal)-families and models with log-transformed outcomes.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.12.0" id="bayestestr-0120">bayestestR 0.12.0<a class="anchor" aria-label="anchor" href="#bayestestr-0120"></a></h2>
 <div class="section level3">
-<h3 id="breaking-0-11-5-2">Breaking<a class="anchor" aria-label="anchor" href="#breaking-0-11-5-2"></a></h3>
+<h3 id="breaking-0-12-0">Breaking<a class="anchor" aria-label="anchor" href="#breaking-0-12-0"></a></h3>
 <ul><li>
 <code>Bayesfactor_models()</code> for frequentist models now relies on the updated <code><a href="https://easystats.github.io/insight/reference/get_loglikelihood.html" class="external-link">insight::get_loglikelihood()</a></code>. This might change some results for REML based models. See documentation.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="breaking-0-11-5-2-1">Breaking<a class="anchor" aria-label="anchor" href="#breaking-0-11-5-2-1"></a></h3>
+<h3 id="breaking-0-12-0-1">Breaking<a class="anchor" aria-label="anchor" href="#breaking-0-12-0-1"></a></h3>
 <ul><li><p><code><a href="../reference/estimate_density.html">estimate_density()</a></code> argument <code>group_by</code> is renamed <code>at</code>.</p></li>
 <li><p>All <code>distribution_*(random = FALSE)</code> functions now rely on <code><a href="https://rdrr.io/r/stats/ppoints.html" class="external-link">ppoints()</a></code>, which will result in slightly diffrent results, especially with small <code>n</code>s.</p></li>
 </ul></div>
