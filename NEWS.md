@@ -2,6 +2,8 @@
 
 * *bayestestR* functions now support `draws` objects from package *posterior*.
 
+* `rope_range()` now handles log(normal)-families and models with log-transformed outcomes.
+
 # bayestestR 0.12.0
 
 ## Breaking

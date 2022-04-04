@@ -85,16 +85,17 @@ rope_range <- function(x, ...) {
 #' @export
 rope_range.default <- function(x, verbose = TRUE, ...) {
   response <- insight::get_response(x)
+  response_transform <- insight::find_transformation(x)
   information <- insight::model_info(x)
 
   if (insight::is_multivariate(x)) {
     ret <- mapply(
-      function(i, j, ...) .rope_range(x, i, j), information, response, verbose,
+      function(i, j, ...) .rope_range(x, i, j), information, response, response_transform, verbose,
       SIMPLIFY = FALSE
     )
     return(ret)
   } else {
-    .rope_range(x, information, response, verbose)
+    .rope_range(x, information, response, response_transform, verbose)
   }
 }
 
@@ -106,7 +107,7 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
   response <- insight::get_response(x)
   information <- insight::model_info(x)
 
-  lapply(response, function(i) .rope_range(x, information, i, verbose))
+  lapply(response, function(i) .rope_range(x, information, i, response_transform = NULL, verbose))
 }
 
 
@@ -114,7 +115,7 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
 # helper ------------------
 
 
-.rope_range <- function(x, information = NULL, response = NULL, verbose = TRUE) {
+.rope_range <- function(x, information = NULL, response = NULL, response_transform = NULL, verbose = TRUE) {
 
   # if(method != "legacy") {
   #   message("Other ROPE range methods than 'legacy' are currently not implemented. See https://github.com/easystats/bayestestR/issues/364", call. = FALSE)
@@ -123,15 +124,27 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
 
   negligible_value <- tryCatch(
     {
-      if (!is.null(response) && information$link == "identity") {
+      if (!is.null(response_transform) && grepl("log", response_transform, fixed = TRUE)) {
+        # for log-transform, we assume that a 1% change represents the ROPE adequately
+        # see https://github.com/easystats/bayestestR/issues/487
+        0.01
+      } else if (information$is_linear && information$link_function == "log") {
+        # for log-transform, we assume that a 1% change represents the ROPE adequately
+        # see https://github.com/easystats/bayestestR/issues/487
+        0.01
+      } else if (information$family == "lognormal") {
+        # for log-transform, we assume that a 1% change represents the ROPE adequately
+        # see https://github.com/easystats/bayestestR/issues/487
+        0.01
+      } else if (!is.null(response) && information$link_function == "identity") {
         # Linear Models
         0.1 * stats::sd(response, na.rm = TRUE)
         # 0.1 * stats::sigma(x) # https://github.com/easystats/bayestestR/issues/364
-      } else if (information$link == "logit") {
+      } else if (information$is_logit) {
         # Logistic Models (any)
         # Sigma==pi / sqrt(3)
         0.1 * pi / sqrt(3)
-      } else if (information$link == "probit") {
+      } else if (information$is_probit) {
         # Probit models
         # Sigma==1
         0.1 * 1
