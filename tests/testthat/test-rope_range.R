@@ -12,13 +12,19 @@ test_that("rope_range gaussian", {
 test_that("rope_range log gaussian", {
   data(mtcars)
   mod <- lm(log(mpg) ~ gear + hp, data = mtcars)
-  expect_equal(rope_range(mod), c(-0.01, 0.01))
+  expect_equal(rope_range(mod), c(-0.01, 0.01), tolerance = 1e-3)
 })
 
 test_that("rope_range log gaussian 2", {
   data(mtcars)
   mod <- glm(mpg ~ gear + hp, data = mtcars, family = gaussian("log"))
-  expect_equal(rope_range(mod), c(-0.01, 0.01))
+  expect_equal(rope_range(mod), c(-0.01, 0.01), tolerance = 1e-3)
+})
+
+test_that("rope_range logistic", {
+  data(mtcars)
+  mod <- glm(am ~ gear + hp, data = mtcars, family = binomial())
+  expect_equal(rope_range(mod), c(-1 * 0.1 * pi / sqrt(3), 0.1 * pi / sqrt(3)), tolerance = 1e-3)
 })
 
 .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
