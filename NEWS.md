@@ -1,4 +1,8 @@
-# bayestestR 0.11.5.2
+# bayestestR 0.12.1
+
+* `rope_range()` now handles log(normal)-families and models with log-transformed outcomes.
+
+# bayestestR 0.12.0
 
 ## Breaking
 
