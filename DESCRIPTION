@@ -106,7 +106,7 @@ Suggests:
     rstanarm,
     see,
     spelling,
-    spin,
+    SPIn,
     stringr,
     testthat,
     tidyr,
