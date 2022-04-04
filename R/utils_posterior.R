@@ -1,24 +1,27 @@
 # helper ------------------------------
 
+
 .posterior_draws_to_df <- function(x) {
   UseMethod(".posterior_draws_to_df")
 }
 
-.posterior_draws_to_df.draws_array <- function(x) {
-  cn <- dimnames(x)$variable
-  old_dim <- dim(x)
-  dim(x) <- c(old_dim[1] * old_dim[2], old_dim[3])
-  out <- as.data.frame(x)
-  colnames(out) <- cn
-  out
+.posterior_draws_to_df.default <- function(x) {
+  stop(paste0("Objects of class '%s' are not yet supported.", class(x)[1]))
 }
 
-.posterior_draws_to_df.draws_list <- function(x) {
-  do.call(rbind.data.frame, x)
+.posterior_draws_to_df.data.frame <- function(x) {
+  x
 }
 
 .posterior_draws_to_df.draws_df <- function(x) {
-  datawizard::data_remove(as.data.frame(x), c(".chain", ".iteration", ".draw"))
+  insight::check_if_installed("posterior")
+  datawizard::data_remove(as.data.frame(posterior::as_draws_df(x)), c(".chain", ".iteration", ".draw"))
 }
 
 .posterior_draws_to_df.draws_matrix <- .posterior_draws_to_df.draws_df
+
+.posterior_draws_to_df.draws_array <- .posterior_draws_to_df.draws_df
+
+.posterior_draws_to_df.draws_list <- .posterior_draws_to_df.draws_df
+
+.posterior_draws_to_df.draws_rvars <- .posterior_draws_to_df.draws_df
