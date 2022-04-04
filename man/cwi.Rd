@@ -87,6 +87,7 @@ Other ci:
 \code{\link{ci}()},
 \code{\link{eti}()},
 \code{\link{hdi}()},
-\code{\link{si}()}
+\code{\link{si}()},
+\code{\link{spi}()}
 }
 \concept{ci}

@@ -1,4 +1,14 @@
 #' @keywords internal
+.check_ci_fun <- function(dots) {
+  ci_fun <- "hdi"
+  if (identical(dots$ci_method, "spi")) {
+    ci_fun <- "spi"
+  }
+  ci_fun
+}
+
+
+#' @keywords internal
 .check_ci_argument <- function(x, ci, verbose = TRUE) {
   if (ci > 1) {
     if (verbose) {
@@ -53,6 +63,11 @@
     stringsAsFactors = FALSE,
     row.names = NULL
   )
+
+  # rename for SPI, should be HDI
+  if (identical(fun, "spi")) {
+    fun <- "hdi"
+  }
 
   class(dat) <- unique(c(paste0("bayestestR_", fun), paste0("see_", fun), class(dat)))
   dat

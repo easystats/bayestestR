@@ -159,6 +159,7 @@ Other ci:
 \code{\link{cwi}()},
 \code{\link{eti}()},
 \code{\link{hdi}()},
-\code{\link{si}()}
+\code{\link{si}()},
+\code{\link{spi}()}
 }
 \concept{ci}
