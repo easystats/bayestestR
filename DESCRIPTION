@@ -1,7 +1,7 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.12.0
+Version: 0.12.0.1
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
@@ -101,6 +101,7 @@ Suggests:
     patchwork,
     performance,
     poorman,
+    posterior,
     rmarkdown,
     rstan,
     rstanarm,
@@ -117,6 +118,6 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.1.2.9000
+RoxygenNote: 7.1.2
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)

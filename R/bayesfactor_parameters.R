@@ -433,6 +433,24 @@ bayesfactor_parameters.data.frame <- function(posterior,
 }
 
 
+#' @export
+bayesfactor_parameters.draws <- function(posterior,
+                                         prior = NULL,
+                                         direction = "two-sided",
+                                         null = 0,
+                                         verbose = TRUE,
+                                         ...) {
+  bayesfactor_parameters(
+    .posterior_draws_to_df(posterior),
+    prior = prior,
+    direction = direction,
+    null = null,
+    verbose = verbose,
+    ...
+  )
+}
+
+
 
 #' @keywords internal
 .bayesfactor_parameters <- function(posterior,

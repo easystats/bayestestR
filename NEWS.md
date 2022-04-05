@@ -1,5 +1,7 @@
 # bayestestR 0.12.1
 
+* *bayestestR* functions now support `draws` objects from package *posterior*.
+
 * `rope_range()` now handles log(normal)-families and models with log-transformed outcomes.
 
 # bayestestR 0.12.0
@@ -12,7 +14,7 @@
 
 * `estimate_density()` argument `group_by` is renamed `at`.
 
-* All `distribution_*(random = FALSE)` functions now rely on `ppoints()`, which will result in slightly diffrent results, especially with small `n`s.
+* All `distribution_*(random = FALSE)` functions now rely on `ppoints()`, which will result in slightly different results, especially with small `n`s.
 
 # bayestestR 0.11.5
 

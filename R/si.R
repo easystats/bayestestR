@@ -227,6 +227,14 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) 
   out
 }
 
+
+#' @export
+si.draws <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
+  si(.posterior_draws_to_df(posterior), prior = prior, BF = BF, verbose = verbose, ...)
+}
+
+
+
 # Helper ------------------------------------------------------------------
 
 .si.data.frame <- function(posterior, prior, BF, ...) {

@@ -229,3 +229,9 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
 
   res
 }
+
+
+#' @export
+bayesfactor_restricted.draws <- function(posterior, hypothesis, prior = NULL, ...) {
+  bayesfactor_restricted(.posterior_draws_to_df(posterior), hypothesis = hypothesis, prior = prior, ...)
+}

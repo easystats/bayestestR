@@ -138,6 +138,14 @@ hdi.data.frame <- function(x, ci = 0.95, verbose = TRUE, ...) {
 }
 
 
+#' @export
+hdi.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
+  dat <- .compute_interval_dataframe(x = .posterior_draws_to_df(x), ci = ci, verbose = verbose, fun = "hdi")
+  attr(dat, "object_name") <- insight::safe_deparse(substitute(x))
+  dat
+}
+
+
 #' @rdname hdi
 #' @export
 hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
