@@ -281,7 +281,7 @@ if (require("testthat") &&
       )
 
       set.seed(123)
-      expect_equal(
+      expect_warning(expect_equal(
         describe_posterior(contingencyTableBF(
           x = table(mtcars$am, mtcars$cyl),
           sampleType = "poisson"
@@ -375,10 +375,10 @@ if (require("testthat") &&
         ),
         tolerance = 0.1,
         ignore_attr = TRUE
-      )
+      ))
 
       set.seed(123)
-      expect_equal(
+      expect_warning(expect_equal(
         describe_posterior(contingencyTableBF(
           x = table(mtcars$am, mtcars$cyl),
           sampleType = "indepMulti",
@@ -479,7 +479,7 @@ if (require("testthat") &&
         ),
         tolerance = 0.1,
         ignore_attr = TRUE
-      )
+      ))
 
       set.seed(123)
       expect_equal(

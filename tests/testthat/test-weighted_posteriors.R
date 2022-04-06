@@ -75,7 +75,7 @@ if (.runThisTest) {
 
 
       set.seed(444)
-      res_BT <- weighted_posteriors(fit1, fit2)
+      expect_warning(res_BT <- weighted_posteriors(fit1, fit2))
 
       set.seed(444)
       res_brms <- brms::posterior_average(fit1, fit2, weights = "bma", missing = 0)
