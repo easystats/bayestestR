@@ -1,6 +1,8 @@
 #' Shortest Probability Interval (SPI)
 #'
 #' Compute the **Shortest Probability Interval (SPI)** of posterior distributions.
+#' The SPI is a more computationally stable HDI. The implementation is based on
+#' the algorithm from the **SPIn** package.
 #'
 #' @inheritParams hdi
 #' @inherit ci return
@@ -8,7 +10,12 @@
 #' @inherit hdi seealso
 #' @family ci
 #'
-#' @references http://www.stat.columbia.edu/~gelman/research/published/spin.pdf
+#' @note The code to compute the SPI was adapted from the **SPIn** package,
+#' and slightly modified to be more robust for Stan models. Thus, credits go
+#' to Ying Liu for the original SPI algorithm and R implementation.
+#'
+#' @references
+#' Liu, Y., Gelman, A., & Zheng, T. (2015). Simulation-efficient shortest probability intervals. Statistics and Computing, 25(4), 809–819. https://doi.org/10.1007/s11222-015-9563-8
 #'
 #' @examples
 #' library(bayestestR)

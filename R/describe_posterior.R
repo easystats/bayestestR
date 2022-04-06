@@ -6,7 +6,8 @@
 #' @param ci_method The type of index used for Credible Interval. Can be
 #'   `"HDI"` (default, see [bayestestR::hdi()]), `"ETI"`
 #'   (see [bayestestR::eti()]), `"BCI"` (see
-#'   [bayestestR::bci()]) or `"SI"` (see [bayestestR::si()]).
+#'   [bayestestR::bci()]), `"SPI"` (see [bayestestR::spi()]), or
+#'   `"SI"` (see [bayestestR::si()]).
 #' @param test The indices of effect existence to compute. Character (vector) or
 #'   list with one or more of these options: `"p_direction"` (or `"pd"`),
 #'   `"rope"`, `"p_map"`, `"equivalence_test"` (or `"equitest"`),

@@ -62,7 +62,7 @@ additional predictor), \code{y}, is not transformed. Then we could use
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
 to be estimated. Default to \code{.95} (\verb{95\%}).}
 
-\item{method}{Can be \link[=eti]{'ETI'} (default), \link[=hdi]{'HDI'}, \link[=bci]{'BCI'} or \link[=si]{'SI'}.}
+\item{method}{Can be \link[=eti]{'ETI'} (default), \link[=hdi]{'HDI'}, \link[=bci]{'BCI'}, \link[=spi]{'SPI'} or \link[=si]{'SI'}.}
 }
 \value{
 A data frame with direct, indirect, mediator and

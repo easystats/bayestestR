@@ -70,6 +70,8 @@ A data frame with following columns:
 }
 \description{
 Compute the \strong{Shortest Probability Interval (SPI)} of posterior distributions.
+The SPI is a more computationally stable HDI. The implementation is based on
+the algorithm from the \strong{SPIn} package.
 }
 \details{
 Unlike equal-tailed intervals (see \code{eti()}) that typically exclude \verb{2.5\%}
@@ -115,6 +117,11 @@ to the transformed lower and higher bounds of the original distribution.
 On the contrary, applying transformations to the distribution will change
 the resulting HDI.
 }
+\note{
+The code to compute the SPI was adapted from the \strong{SPIn} package,
+and slightly modified to be more robust for Stan models. Thus, credits go
+to Ying Liu for the original SPI algorithm and R implementation.
+}
 \examples{
 library(bayestestR)
 
@@ -133,7 +140,7 @@ spi(model)
 
 }
 \references{
-http://www.stat.columbia.edu/~gelman/research/published/spin.pdf
+Liu, Y., Gelman, A., & Zheng, T. (2015). Simulation-efficient shortest probability intervals. Statistics and Computing, 25(4), 809–819. https://doi.org/10.1007/s11222-015-9563-8
 }
 \seealso{
 Other ci: 

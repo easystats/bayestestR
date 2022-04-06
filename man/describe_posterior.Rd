@@ -143,7 +143,8 @@ to be estimated. Default to \code{.95} (\verb{95\%}).}
 \item{ci_method}{The type of index used for Credible Interval. Can be
 \code{"HDI"} (default, see \code{\link[=hdi]{hdi()}}), \code{"ETI"}
 (see \code{\link[=eti]{eti()}}), \code{"BCI"} (see
-\code{\link[=bci]{bci()}}) or \code{"SI"} (see \code{\link[=si]{si()}}).}
+\code{\link[=bci]{bci()}}), \code{"SPI"} (see \code{\link[=spi]{spi()}}), or
+\code{"SI"} (see \code{\link[=si]{si()}}).}
 
 \item{test}{The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: \code{"p_direction"} (or \code{"pd"}),
