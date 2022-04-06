@@ -108,11 +108,17 @@ print.bayestestR_hdi <- function(x,
                                  digits = 2,
                                  caption = "Highest Density Interval",
                                  ...) {
+  ci_string <- "HDI"
+  if (inherits(x, "bayestestR_spi")) {
+    caption <- "Shortest Probability Interval"
+    ci_string <- "SPI"
+  }
+
   .print_default(
     x = x,
     digits = digits,
     caption = caption,
-    ci_string = "HDI",
+    ci_string = ci_string,
     ...
   )
 }

@@ -149,9 +149,10 @@ hdi.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @rdname hdi
 #' @export
 hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
+  ci_fun <- .check_ci_fun(list(...))
   nF <- x$Fixed$nfl
   d <- as.data.frame(x$Sol[, 1:nF, drop = FALSE])
-  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
+  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = ci_fun)
   attr(dat, "data") <- deparse(substitute(x), width.cutoff = 500)
   dat
 }
@@ -163,9 +164,10 @@ hdi.bamlss <- function(x,
                        component = c("all", "conditional", "location"),
                        verbose = TRUE,
                        ...) {
+  ci_fun <- .check_ci_fun(list(...))
   component <- match.arg(component)
   d <- insight::get_parameters(x, component = component)
-  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
+  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = ci_fun)
   dat <- .add_clean_parameters_attribute(dat, x)
   attr(dat, "data") <- insight::safe_deparse(substitute(x))
   dat
@@ -174,8 +176,9 @@ hdi.bamlss <- function(x,
 
 #' @export
 hdi.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
+  ci_fun <- .check_ci_fun(list(...))
   d <- as.data.frame(x)
-  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
+  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = ci_fun)
   attr(dat, "data") <- insight::safe_deparse(substitute(x))
   dat
 }
@@ -183,8 +186,9 @@ hdi.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
 
 #' @export
 hdi.bcplm <- function(x, ci = 0.95, verbose = TRUE, ...) {
+  ci_fun <- .check_ci_fun(list(...))
   d <- insight::get_parameters(x)
-  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "hdi")
+  dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = ci_fun)
   attr(dat, "data") <- insight::safe_deparse(substitute(x))
   dat
 }
@@ -210,6 +214,7 @@ hdi.sim.merMod <- function(x,
                            parameters = NULL,
                            verbose = TRUE,
                            ...) {
+  ci_fun <- .check_ci_fun(list(...))
   effects <- match.arg(effects)
   dat <- .compute_interval_simMerMod(
     x = x,
@@ -217,7 +222,7 @@ hdi.sim.merMod <- function(x,
     effects = effects,
     parameters = parameters,
     verbose = verbose,
-    fun = "hdi"
+    fun = ci_fun
   )
   out <- dat$result
   attr(out, "data") <- dat$data
@@ -225,15 +230,15 @@ hdi.sim.merMod <- function(x,
 }
 
 
-#' @rdname hdi
 #' @export
 hdi.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
+  ci_fun <- .check_ci_fun(list(...))
   dat <- .compute_interval_sim(
     x = x,
     ci = ci,
     parameters = parameters,
     verbose = verbose,
-    fun = "hdi"
+    fun = ci_fun
   )
   out <- dat$result
   attr(out, "data") <- dat$data
@@ -241,11 +246,9 @@ hdi.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 }
 
 
-#' @rdname hdi
 #' @export
 hdi.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
-
   out <- hdi(xdf, ci = ci, verbose = verbose, ...)
   attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out

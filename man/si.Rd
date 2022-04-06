@@ -194,6 +194,7 @@ Other ci:
 \code{\link{ci}()},
 \code{\link{cwi}()},
 \code{\link{eti}()},
-\code{\link{hdi}()}
+\code{\link{hdi}()},
+\code{\link{spi}()}
 }
 \concept{ci}

@@ -6,8 +6,6 @@
 \alias{hdi.data.frame}
 \alias{hdi.MCMCglmm}
 \alias{hdi.sim.merMod}
-\alias{hdi.sim}
-\alias{hdi.emmGrid}
 \alias{hdi.stanreg}
 \alias{hdi.brmsfit}
 \alias{hdi.BFBayesFactor}
@@ -29,10 +27,6 @@ hdi(x, ...)
   verbose = TRUE,
   ...
 )
-
-\method{hdi}{sim}(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...)
-
-\method{hdi}{emmGrid}(x, ci = 0.95, verbose = TRUE, ...)
 
 \method{hdi}{stanreg}(
   x,
@@ -187,7 +181,8 @@ Other ci:
 \code{\link{ci}()},
 \code{\link{cwi}()},
 \code{\link{eti}()},
-\code{\link{si}()}
+\code{\link{si}()},
+\code{\link{spi}()}
 }
 \author{
 Credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute} and \href{https://github.com/mikemeredith/HDInterval}{HDInterval}.

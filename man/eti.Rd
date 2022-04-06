@@ -174,6 +174,7 @@ Other ci:
 \code{\link{ci}()},
 \code{\link{cwi}()},
 \code{\link{hdi}()},
-\code{\link{si}()}
+\code{\link{si}()},
+\code{\link{spi}()}
 }
 \concept{ci}
