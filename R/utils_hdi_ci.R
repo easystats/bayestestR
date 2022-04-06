@@ -66,10 +66,11 @@
 
   # rename for SPI, should be HDI
   if (identical(fun, "spi")) {
-    fun <- "hdi"
+    class(dat) <- unique(c("bayestestR_hdi", "see_hdi", "bayestestR_spi", class(dat)))
+  } else {
+    class(dat) <- unique(c(paste0("bayestestR_", fun), paste0("see_", fun), class(dat)))
   }
 
-  class(dat) <- unique(c(paste0("bayestestR_", fun), paste0("see_", fun), class(dat)))
   dat
 }
 

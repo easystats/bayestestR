@@ -38,7 +38,7 @@ spi.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
   out <- do.call(rbind, lapply(ci, function(i) {
     .spi(x = x, ci = i, verbose = verbose)
   }))
-  class(out) <- unique(c("bayestestR_hdi", "see_hdi", "bayestestR_ci", "see_ci", class(out)))
+  class(out) <- unique(c("bayestestR_hdi", "see_hdi", "bayestestR_ci", "see_ci", "bayestestR_spi", class(out)))
   attr(out, "data") <- x
   out
 }
@@ -149,7 +149,7 @@ spi.stanreg <- function(x,
 
   attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "object_name") <- insight::safe_deparse(substitute(x))
-  class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
+  class(out) <- unique(c("bayestestR_hdi", "see_hdi", "bayestestR_spi", class(out)))
   out
 }
 
@@ -190,7 +190,7 @@ spi.brmsfit <- function(x,
 
   attr(out, "clean_parameters") <- cleaned_parameters
   attr(out, "object_name") <- insight::safe_deparse(substitute(x))
-  class(out) <- unique(c("bayestestR_hdi", "see_hdi", class(out)))
+  class(out) <- unique(c("bayestestR_hdi", "see_hdi", "bayestestR_spi", class(out)))
   out
 }
 
