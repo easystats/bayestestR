@@ -265,7 +265,7 @@ spi.get_predicted <- function(x, ...) {
       }, error = function(e) e)
 
       if (frac <= .1) {
-        message(insight::print_color(insight::format_message(
+        message(insight::colour_text(insight::format_message(
           "Could not find a solution for the SPI lower bound."
         ), color = "red"))
         x.l <- NA
