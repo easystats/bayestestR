@@ -253,10 +253,8 @@ spi.get_predicted <- function(x, ...) {
 
 
   # lower bound
-  if (!is.na(k) && all(k == 1)) {
-    x1 <- l
-    w.l <- 1
-    x.l <- NA
+  if (all(!is.na(k)) && all(k == 1)) {
+    x.l <- l
   } else {
     x.l <- tryCatch({
       .spi_lower(bw = bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x)
@@ -279,10 +277,8 @@ spi.get_predicted <- function(x, ...) {
   }
 
   # upper bound
-  if (!is.na(ui) && all(ui == n.sims)) {
-    x2 <- u
-    w.u <- 1
-    x.u <- NA
+  if (all(!is.na(ui)) && all(ui == n.sims)) {
+    x.u <- u
   } else {
     x.u <- tryCatch({
       .spi_upper(bw = bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x)
