@@ -185,6 +185,23 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
   out
 }
 
+
+#' @export
+estimate_density.draws <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, select = NULL, at = NULL, group_by = NULL, ...) {
+  estimate_density(
+    .posterior_draws_to_df(x),
+    method = method,
+    precision = precision,
+    extend = extend,
+    extend_scale = extend_scale,
+    bw = bw,
+    select = select,
+    at = at,
+    group_by = group_by
+  )
+}
+
+
 .estimate_density_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, select = NULL, ...) {
   # TODO: replace by exposed select argument
   if (is.null(select)) {

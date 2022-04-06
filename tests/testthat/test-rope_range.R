@@ -1,10 +1,30 @@
-test_that("rope_range", {
+test_that("rope_range cor", {
   x <- cor.test(ToothGrowth$len, ToothGrowth$dose)
+  expect_equal(rope_range(x), c(-0.05, 0.05), tolerance = 1e-3)
+})
 
-  expect_equal(
-    rope_range(x),
-    c(-0.05, 0.05)
-  )
+test_that("rope_range gaussian", {
+  data(mtcars)
+  mod <- lm(mpg ~ gear + hp, data = mtcars)
+  expect_equal(rope_range(mod), c(-.1 * sd(mtcars$mpg), .1 * sd(mtcars$mpg)), tolerance = 1e-3)
+})
+
+test_that("rope_range log gaussian", {
+  data(mtcars)
+  mod <- lm(log(mpg) ~ gear + hp, data = mtcars)
+  expect_equal(rope_range(mod), c(-0.01, 0.01), tolerance = 1e-3)
+})
+
+test_that("rope_range log gaussian 2", {
+  data(mtcars)
+  mod <- glm(mpg ~ gear + hp, data = mtcars, family = gaussian("log"))
+  expect_equal(rope_range(mod), c(-0.01, 0.01), tolerance = 1e-3)
+})
+
+test_that("rope_range logistic", {
+  data(mtcars)
+  mod <- glm(am ~ gear + hp, data = mtcars, family = binomial())
+  expect_equal(rope_range(mod), c(-1 * 0.1 * pi / sqrt(3), 0.1 * pi / sqrt(3)), tolerance = 1e-3)
 })
 
 .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"

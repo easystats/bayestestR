@@ -64,6 +64,9 @@ diagnostic_posterior.numeric <- function(posteriors, diagnostic = c("ESS", "Rhat
 diagnostic_posterior.data.frame <- diagnostic_posterior.numeric
 
 #' @export
+diagnostic_posterior.draws <- diagnostic_posterior.numeric
+
+#' @export
 diagnostic_posterior.BFBayesFactor <- diagnostic_posterior.numeric
 
 

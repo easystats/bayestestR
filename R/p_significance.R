@@ -99,6 +99,12 @@ p_significance.data.frame <- function(x, threshold = "default", ...) {
 
 
 #' @export
+p_significance.draws <- function(x, threshold = "default", ...) {
+  p_significance(.posterior_draws_to_df(x), threshold = threshold, ...)
+}
+
+
+#' @export
 p_significance.parameters_simulate_model <- function(x, threshold = "default", ...) {
   obj_name <- attr(x, "object_name")
   if (!is.null(obj_name)) {

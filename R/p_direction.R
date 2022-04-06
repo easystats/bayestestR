@@ -196,6 +196,12 @@ p_direction.data.frame <- function(x, method = "direct", null = 0, ...) {
 }
 
 
+#' @export
+p_direction.draws <- function(x, method = "direct", null = 0, ...) {
+  p_direction(.posterior_draws_to_df(x), method = method, null = null, ...)
+}
+
+
 #' @rdname p_direction
 #' @export
 p_direction.MCMCglmm <- function(x, method = "direct", null = 0, ...) {

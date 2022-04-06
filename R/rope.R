@@ -192,6 +192,13 @@ rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "HDI", 
 
 
 
+#' @export
+rope.draws <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {
+  rope(.posterior_draws_to_df(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+}
+
+
+
 #' @rdname rope
 #' @export
 rope.emmGrid <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {

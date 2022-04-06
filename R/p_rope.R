@@ -43,6 +43,13 @@ p_rope.numeric <- function(x, range = "default", ...) {
 #' @export
 p_rope.data.frame <- p_rope.numeric
 
+
+#' @export
+p_rope.draws <- function(x, range = "default", ...) {
+  p_rope(.posterior_draws_to_df(x), range = range, ...)
+}
+
+
 #' @rdname p_rope
 #' @export
 p_rope.emmGrid <- function(x, range = "default", ...) {

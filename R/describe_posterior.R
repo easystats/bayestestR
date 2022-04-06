@@ -238,7 +238,7 @@ describe_posterior <- function(posteriors,
     # Equivalence test
 
     if (any(c("equivalence", "equivalence_test", "equitest") %in% test)) {
-      if (any(c("rope") %in% test)) {
+      if (any("rope" %in% test)) {
         equi_warnings <- FALSE
       } else {
         equi_warnings <- TRUE
@@ -524,6 +524,39 @@ describe_posterior.mcmc.list <- describe_posterior.bayesQR
 
 #' @export
 describe_posterior.BGGM <- describe_posterior.bayesQR
+
+
+#' @export
+describe_posterior.draws <- function(posteriors,
+                                     centrality = "median",
+                                     dispersion = FALSE,
+                                     ci = 0.95,
+                                     ci_method = "hdi",
+                                     test = c("p_direction", "rope"),
+                                     rope_range = "default",
+                                     rope_ci = 0.95,
+                                     keep_iterations = FALSE,
+                                     bf_prior = NULL,
+                                     BF = 1,
+                                     ...) {
+  out <- .describe_posterior(
+    .posterior_draws_to_df(posteriors),
+    centrality = centrality,
+    dispersion = dispersion,
+    ci = ci,
+    ci_method = ci_method,
+    test = test,
+    rope_range = rope_range,
+    rope_ci = rope_ci,
+    keep_iterations = keep_iterations,
+    bf_prior = bf_prior,
+    BF = BF,
+    ...
+  )
+
+  class(out) <- unique(c("describe_posterior", "see_describe_posterior", class(out)))
+  out
+}
 
 
 

@@ -107,6 +107,12 @@ ci.data.frame <- ci.numeric
 
 
 #' @export
+ci.draws <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, ...) {
+  .ci_bayesian(.posterior_draws_to_df(x), ci = ci, method = method, verbose = verbose, BF = BF, ...)
+}
+
+
+#' @export
 ci.emmGrid <- function(x, ci = NULL, ...) {
   if (!.is_baysian_emmeans(x)) {
     if (!requireNamespace("parameters")) {
