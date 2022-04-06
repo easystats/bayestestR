@@ -50,21 +50,23 @@
 #'   "C > A"
 #' )
 #'
-#' (b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
+#' if (getRversion() > "3.5.0") {
+#'   (b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
 #'
-#' as.numeric(b)
+#'   as.numeric(b)
 #'
-#' if (require("see") && require("patchwork")) {
-#'   i <- attr(b, "bool_results")[["posterior"]]
+#'   if (require("see") && require("patchwork")) {
+#'     i <- attr(b, "bool_results")[["posterior"]]
 #'
-#'   see::plots(
-#'     plot(estimate_density(posterior)),
-#'     # distribution **conditional** on the restrictions
-#'     plot(estimate_density(posterior[i[[hyps[1]]], ])) + ggplot2::ggtitle(hyps[1]),
-#'     plot(estimate_density(posterior[i[[hyps[2]]], ])) + ggplot2::ggtitle(hyps[2]),
-#'     plot(estimate_density(posterior[i[[hyps[3]]], ])) + ggplot2::ggtitle(hyps[3]),
-#'     guides = "collect"
-#'   )
+#'     see::plots(
+#'       plot(estimate_density(posterior)),
+#'       # distribution **conditional** on the restrictions
+#'       plot(estimate_density(posterior[i[[hyps[1]]], ])) + ggplot2::ggtitle(hyps[1]),
+#'       plot(estimate_density(posterior[i[[hyps[2]]], ])) + ggplot2::ggtitle(hyps[2]),
+#'       plot(estimate_density(posterior[i[[hyps[3]]], ])) + ggplot2::ggtitle(hyps[3]),
+#'       guides = "collect"
+#'     )
+#'   }
 #' }
 #'
 #' \dontrun{
@@ -102,11 +104,9 @@
 #' }
 #' }
 #' @references
-#' \itemize{
-#' \item Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
-#' \item Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.
-#' \item Morey, R. D. (Jan, 2015). Multiple Comparisons with BayesFactor, Part 2 – order restrictions. Retrived from https://richarddmorey.org/category/order-restrictions/.
-#' }
+#' - Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
+#' - Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.
+#' - Morey, R. D. (Jan, 2015). Multiple Comparisons with BayesFactor, Part 2 – order restrictions. Retrieved from https://richarddmorey.org/category/order-restrictions/.
 #'
 #' @export
 bayesfactor_restricted <- function(posterior, hypothesis, prior = NULL, verbose = TRUE, ...) {
