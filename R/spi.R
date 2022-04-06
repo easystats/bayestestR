@@ -265,9 +265,9 @@ spi.get_predicted <- function(x, ...) {
       }, error = function(e) e)
 
       if (frac <= .1) {
-        message(insight::colour(insight::format_message(
+        message(insight::print_color(insight::format_message(
           "Could not find a solution for the SPI lower bound."
-        ), colour = "red"))
+        ), color = "red"))
         x.l <- NA
       }
     }
@@ -290,9 +290,9 @@ spi.get_predicted <- function(x, ...) {
       }, error = function(e) e)
 
       if (frac <= .1) {
-        message(insight::colour(insight::format_message(
+        message(insight::color_text(insight::format_message(
           "Could not find a solution for the SPI upper bound."
-        ), colour = "red"))
+        ), color = "red"))
         x.u <- NA
       }
     }
