@@ -236,6 +236,10 @@ spi.get_predicted <- function(x, ...) {
   n.sims <- length(x)
   conf <- 1 - ci
   nn <- round(n.sims * conf)
+  # sanity check for very low CI levels
+  if (nn >= n.sims) {
+    nn <- n.sims <- 1
+  }
   x <- sort(x)
   xx <- x[(n.sims - nn):n.sims] - x[1:(nn + 1)]
   m <- min(xx)
@@ -249,9 +253,10 @@ spi.get_predicted <- function(x, ...) {
 
 
   # lower bound
-  if (k == 1) {
+  if (!is.na(k) && all(k == 1)) {
     x1 <- l
     w.l <- 1
+    x.l <- NA
   } else {
     x.l <- tryCatch({
       .spi_lower(bw = bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x)
@@ -274,9 +279,10 @@ spi.get_predicted <- function(x, ...) {
   }
 
   # upper bound
-  if (ui == n.sims) {
+  if (!is.na(ui) && all(ui == n.sims)) {
     x2 <- u
     w.u <- 1
+    x.u <- NA
   } else {
     x.u <- tryCatch({
       .spi_upper(bw = bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x)
