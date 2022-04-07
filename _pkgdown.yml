@@ -36,7 +36,6 @@ reference:
   - hdi
   - spi
   - ci
-  - reshape_ci
 
 - title: "Effect Existence and Significance"
   desc: "Functions for Bayesian Inference"
