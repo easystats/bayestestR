@@ -265,14 +265,14 @@ spi.get_predicted <- function(x, ...) {
   } else {
     x.l <- tryCatch({
       .spi_lower(bw = bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x)
-    }, error = function(e) e)
+    }, error = function(e) NULL)
 
     frac <- 1
-    while (inherits(x.l, "simpleError")) {
+    while (is.null(x.l)) {
       frac <- frac - .1
       x.l <- tryCatch({
         .spi_lower(bw = frac * bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x)
-      }, error = function(e) e)
+      }, error = function(e) NULL)
 
       if (frac <= .1) {
         message(insight::color_text(insight::format_message(
@@ -289,14 +289,14 @@ spi.get_predicted <- function(x, ...) {
   } else {
     x.u <- tryCatch({
       .spi_upper(bw = bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x)
-    }, error = function(e) e)
+    }, error = function(e) NULL)
 
     frac <- 1
-    while (inherits(x.u, "simpleError")) {
+    while (is.null(x.u)) {
       frac <- frac - .1
       x.u <- tryCatch({
         .spi_upper(bw = frac * bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x)
-      }, error = function(e) e)
+      }, error = function(e) NULL)
 
       if (frac <= .1) {
         message(insight::color_text(insight::format_message(
