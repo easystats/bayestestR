@@ -34,6 +34,7 @@ reference:
   - bci
   - eti
   - hdi
+  - spi
   - ci
   - reshape_ci
 
