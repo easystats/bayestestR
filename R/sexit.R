@@ -135,7 +135,7 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
   centrality$Effects <- centrality$Component <- NULL
   centrality_text <- paste0("Median = ", insight::format_value(centrality$Median))
   direction <- ifelse(centrality$Median < 0, "negative", "positive")
-  uncertainty <- ci(x, ci = ci, method = "HDI", ...)[c("CI", "CI_low", "CI_high")]
+  uncertainty <- ci(x, ci = ci, method = "ETI", ...)[c("CI", "CI_low", "CI_high")]
   uncertainty_text <- insight::format_ci(uncertainty$CI_low, uncertainty$CI_high, uncertainty$CI)
 
   # Indices
@@ -216,7 +216,7 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
 
   # Prepare output
   attr(out, "sexit_info") <- "Following the Sequential Effect eXistence and sIgnificance Testing (SEXIT) framework, we report the median of the posterior distribution and its 95% CI (Highest Density Interval), along the probability of direction (pd), the probability of significance and the probability of being large."
-  attr(out, "sexit_ci_method") <- "HDI"
+  attr(out, "sexit_ci_method") <- "ETI"
   attr(out, "sexit_significance") <- significant
   attr(out, "sexit_large") <- large
   attr(out, "sexit_textlong") <- text_full
