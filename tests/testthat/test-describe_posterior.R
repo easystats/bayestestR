@@ -221,7 +221,7 @@ if (require("testthat") &&
 
       # test BF
       set.seed(555)
-      rez_bf <- bayesfactor_parameters(x)
+      rez_bf <- suppressWarnings(bayesfactor_parameters(x))
       expect_equal(rez$log_BF, log(as.numeric(rez_bf)), tolerance = 0.1)
     })
 
