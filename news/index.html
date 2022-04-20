@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,15 +83,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.12.0" id="bayestestr-0120">bayestestR 0.12.0<a class="anchor" aria-label="anchor" href="#bayestestr-0120"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.12.5" id="bayestestr-0125">bayestestR 0.12.5<a class="anchor" aria-label="anchor" href="#bayestestr-0125"></a></h2>
 <div class="section level3">
-<h3 id="breaking-0-12-0">Breaking<a class="anchor" aria-label="anchor" href="#breaking-0-12-0"></a></h3>
+<h3 id="breaking-0-12-5">Breaking<a class="anchor" aria-label="anchor" href="#breaking-0-12-5"></a></h3>
 <ul><li><p><code>Bayesfactor_models()</code> for frequentist models now relies on the updated <code><a href="https://easystats.github.io/insight/reference/get_loglikelihood.html" class="external-link">insight::get_loglikelihood()</a></code>. This might change some results for REML based models. See documentation.</p></li>
 <li><p><code><a href="../reference/estimate_density.html">estimate_density()</a></code> argument <code>group_by</code> is renamed <code>at</code>.</p></li>
 <li><p>All <code>distribution_*(random = FALSE)</code> functions now rely on <code><a href="https://rdrr.io/r/stats/ppoints.html" class="external-link">ppoints()</a></code>, which will result in slightly different results, especially with small <code>n</code>s.</p></li>
+<li><p>Uncertainty estimation now defaults to <code>"eti"</code> (formerly was <code>"hdi"</code>).</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="canges-0-12-0">Canges<a class="anchor" aria-label="anchor" href="#canges-0-12-0"></a></h3>
+<h3 id="canges-0-12-5">Canges<a class="anchor" aria-label="anchor" href="#canges-0-12-5"></a></h3>
 <ul><li><p><em>bayestestR</em> functions now support <code>draws</code> objects from package <em>posterior</em>.</p></li>
 <li><p><code><a href="../reference/rope_range.html">rope_range()</a></code> now handles log(normal)-families and models with log-transformed outcomes.</p></li>
 <li><p>New function <code><a href="../reference/spi.html">spi()</a></code>, to compute shorest probability intervals. Furthermore, the <code>"spi"</code> option was added as new method to compute uncertainty intervals.</p></li>
