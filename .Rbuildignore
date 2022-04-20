@@ -23,6 +23,7 @@ tests\^spelling
 ^man/figures/JASP.
 ^man/figures/b.
 ^man/figures/d.
+^man/figures/p.
 ^man/figures/Lets.
 ^man/figures/watto.
 ^man/figures/Yoda.
