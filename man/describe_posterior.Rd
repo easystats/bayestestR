@@ -15,7 +15,7 @@ describe_posterior(
   centrality = "median",
   dispersion = FALSE,
   ci = 0.95,
-  ci_method = "hdi",
+  ci_method = "eti",
   test = c("p_direction", "rope"),
   rope_range = "default",
   rope_ci = 0.95,
@@ -28,7 +28,7 @@ describe_posterior(
   centrality = "median",
   dispersion = FALSE,
   ci = 0.95,
-  ci_method = "hdi",
+  ci_method = "eti",
   test = c("p_direction", "rope"),
   rope_range = "default",
   rope_ci = 0.95,
@@ -43,7 +43,7 @@ describe_posterior(
   centrality = "median",
   dispersion = FALSE,
   ci = 0.95,
-  ci_method = "hdi",
+  ci_method = "eti",
   test = c("p_direction", "rope"),
   rope_range = "default",
   rope_ci = 0.95,
@@ -64,7 +64,7 @@ describe_posterior(
   centrality = "median",
   dispersion = FALSE,
   ci = 0.95,
-  ci_method = "hdi",
+  ci_method = "eti",
   test = "p_direction",
   rope_range = "default",
   rope_ci = 0.95,
@@ -84,7 +84,7 @@ describe_posterior(
   centrality = "median",
   dispersion = FALSE,
   ci = 0.95,
-  ci_method = "hdi",
+  ci_method = "eti",
   test = c("p_direction", "rope"),
   rope_range = "default",
   rope_ci = 0.95,
@@ -105,7 +105,7 @@ describe_posterior(
   centrality = "median",
   dispersion = FALSE,
   ci = 0.95,
-  ci_method = "hdi",
+  ci_method = "eti",
   test = c("p_direction", "rope"),
   rope_range = "default",
   rope_ci = 0.95,
@@ -120,7 +120,7 @@ describe_posterior(
   centrality = "median",
   dispersion = FALSE,
   ci = 0.95,
-  ci_method = "hdi",
+  ci_method = "eti",
   test = c("p_direction", "rope", "bf"),
   rope_range = "default",
   rope_ci = 0.95,
@@ -141,8 +141,8 @@ describe_posterior(
 to be estimated. Default to \code{.95} (\verb{95\%}).}
 
 \item{ci_method}{The type of index used for Credible Interval. Can be
-\code{"HDI"} (default, see \code{\link[=hdi]{hdi()}}), \code{"ETI"}
-(see \code{\link[=eti]{eti()}}), \code{"BCI"} (see
+\code{"ETI"} (default, see \code{\link[=eti]{eti()}}), \code{"HDI"}
+(see \code{\link[=hdi]{hdi()}}), \code{"BCI"} (see
 \code{\link[=bci]{bci()}}), \code{"SPI"} (see \code{\link[=spi]{spi()}}), or
 \code{"SI"} (see \code{\link[=si]{si()}}).}
 

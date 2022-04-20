@@ -90,7 +90,7 @@ ci <- function(x, ...) {
   } else if (tolower(method) %in% c("si")) {
     return(si(x, BF = BF, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))
   } else {
-    stop("`method` should be 'ETI' (for equal-tailed interval),'HDI' (for highest density interval), `BCI` (for bias corrected and accelerated bootstrap intervals) or 'SI' (for support interval).")
+    stop(insight::format_message("`method` should be 'ETI' (for equal-tailed interval),'HDI' (for highest density interval), 'BCI' (for bias corrected and accelerated bootstrap intervals), 'SPI' (for shortest probability interval) or 'SI' (for support interval)."), call. = FALSE)
   }
 }
 

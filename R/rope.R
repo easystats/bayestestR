@@ -136,7 +136,7 @@ rope.default <- function(x, ...) {
 
 #' @rdname rope
 #' @export
-rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {
+rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   if (all(range == "default")) {
     range <- c(-0.1, 0.1)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
@@ -173,7 +173,7 @@ rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "HDI", ver
 
 #' @rdname rope
 #' @export
-rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {
+rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   out <- .prepare_rope_df(x, range, ci, ci_method, verbose)
   HDI_area_attributes <- insight::compact_list(out$HDI_area)
   dat <- data.frame(
@@ -193,7 +193,7 @@ rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "HDI", 
 
 
 #' @export
-rope.draws <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {
+rope.draws <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   rope(.posterior_draws_to_df(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
 }
 
@@ -201,7 +201,7 @@ rope.draws <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbo
 
 #' @rdname rope
 #' @export
-rope.emmGrid <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {
+rope.emmGrid <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
 
   dat <- rope(xdf, range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
@@ -216,7 +216,7 @@ rope.emm_list <- rope.emmGrid
 
 #' @rdname rope
 #' @export
-rope.BFBayesFactor <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {
+rope.BFBayesFactor <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   }
@@ -232,7 +232,7 @@ rope.bamlss <- rope.BFBayesFactor
 
 #' @rdname rope
 #' @export
-rope.MCMCglmm <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {
+rope.MCMCglmm <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
   out <- rope(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
   attr(out, "object_name") <- insight::safe_deparse(substitute(x))
@@ -241,7 +241,7 @@ rope.MCMCglmm <- function(x, range = "default", ci = 0.95, ci_method = "HDI", ve
 
 
 #' @export
-rope.mcmc <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {
+rope.mcmc <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   out <- rope(as.data.frame(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
   attr(out, "object_name") <- NULL
   attr(out, "data") <- insight::safe_deparse(substitute(x))
@@ -252,7 +252,7 @@ rope.mcmc <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbos
 
 
 #' @export
-rope.bcplm <- function(x, range = "default", ci = 0.95, ci_method = "HDI", verbose = TRUE, ...) {
+rope.bcplm <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   out <- rope(insight::get_parameters(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
   attr(out, "object_name") <- NULL
   attr(out, "data") <- insight::safe_deparse(substitute(x))
@@ -274,7 +274,7 @@ rope.mcmc.list <- rope.bcplm
 
 
 #' @keywords internal
-.rope <- function(x, range = c(-0.1, 0.1), ci = 0.95, ci_method = "HDI", verbose = TRUE) {
+.rope <- function(x, range = c(-0.1, 0.1), ci = 0.95, ci_method = "ETI", verbose = TRUE) {
   ci_bounds <- ci(x, ci = ci, method = ci_method, verbose = verbose)
 
   if (anyNA(ci_bounds)) {
@@ -303,7 +303,7 @@ rope.mcmc.list <- rope.bcplm
 
 #' @rdname rope
 #' @export
-rope.stanreg <- function(x, range = "default", ci = 0.95, ci_method = "HDI", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, verbose = TRUE, ...) {
+rope.stanreg <- function(x, range = "default", ci = 0.95, ci_method = "ETI", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
@@ -346,7 +346,7 @@ rope.blavaan <- rope.stanreg
 rope.brmsfit <- function(x,
                          range = "default",
                          ci = 0.95,
-                         ci_method = "HDI",
+                         ci_method = "ETI",
                          effects = c("fixed", "random", "all"),
                          component = c("conditional", "zi", "zero_inflated", "all"),
                          parameters = NULL,
@@ -427,7 +427,7 @@ rope.brmsfit <- function(x,
 
 
 #' @export
-rope.sim.merMod <- function(x, range = "default", ci = 0.95, ci_method = "HDI", effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+rope.sim.merMod <- function(x, range = "default", ci = 0.95, ci_method = "ETI", effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
   effects <- match.arg(effects)
 
   if (all(range == "default")) {
@@ -490,7 +490,7 @@ rope.sim.merMod <- function(x, range = "default", ci = 0.95, ci_method = "HDI", 
 
 
 #' @export
-rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "HDI", parameters = NULL, verbose = TRUE, ...) {
+rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", parameters = NULL, verbose = TRUE, ...) {
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {

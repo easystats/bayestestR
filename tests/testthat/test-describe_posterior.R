@@ -263,7 +263,7 @@ if (require("testthat") &&
 
       set.seed(123)
       expect_equal(
-        describe_posterior(ttestBF(mtcars$wt, mu = 3), ci = 0.95),
+        describe_posterior(ttestBF(mtcars$wt, mu = 3), ci = 0.95, ci_method = "hdi"),
         structure(
           list(
             Parameter = "Difference", Median = 0.192275922178887, CI = 0.95,
@@ -282,10 +282,14 @@ if (require("testthat") &&
 
       set.seed(123)
       expect_warning(expect_equal(
-        describe_posterior(contingencyTableBF(
-          x = table(mtcars$am, mtcars$cyl),
-          sampleType = "poisson"
-        ), ci = 0.95),
+        describe_posterior(
+          contingencyTableBF(
+            x = table(mtcars$am, mtcars$cyl),
+            sampleType = "poisson"
+          ),
+          ci = 0.95,
+          ci_method = "hdi"
+        ),
         structure(
           list(
             Parameter = c(
@@ -483,7 +487,7 @@ if (require("testthat") &&
 
       set.seed(123)
       expect_equal(
-        describe_posterior(anovaBF(extra ~ group, data = sleep, progress = FALSE), ci = 0.95),
+        describe_posterior(anovaBF(extra ~ group, data = sleep, progress = FALSE), ci_method = "hdi", ci = 0.95),
         structure(
           list(
             Parameter = c(

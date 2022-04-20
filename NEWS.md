@@ -1,4 +1,4 @@
-# bayestestR 0.12.0
+# bayestestR 0.12.5
 
 ## Breaking
 
@@ -7,6 +7,8 @@
 * `estimate_density()` argument `group_by` is renamed `at`.
 
 * All `distribution_*(random = FALSE)` functions now rely on `ppoints()`, which will result in slightly different results, especially with small `n`s.
+
+* Uncertainty estimation now defaults to `"eti"` (formerly was `"hdi"`).
 
 ## Canges
 
