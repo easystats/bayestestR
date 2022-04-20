@@ -719,10 +719,10 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; Parameter   |        95% HDI
 &gt; ----------------------------
-&gt; (Intercept) | [28.10, 40.09]
-&gt; wt          | [-5.48, -1.72]
-&gt; am          | [-0.81,  5.86]
-&gt; carb        | [-2.04, -0.38]</code></pre>
+&gt; (Intercept) | [28.09, 40.15]
+&gt; wt          | [-5.51, -1.74]
+&gt; am          | [-1.01,  5.57]
+&gt; carb        | [-2.02, -0.35]</code></pre>
 <p>How can this be? By estimating the HDI of the effect for <code>carb</code> in the full model, we are acting under the assumption that this model is correct. However, as we’ve just seen, both models are practically tied. If this is the case <strong>why limit our estimation of the effect just to one model?</strong> <span class="citation">(Bergh, Haaf, Ly, Rouder, &amp; Wagenmakers, 2019)</span>.</p>
 <p>Using Bayesian Model Averaging, we can combine the posteriors samples from several models, weighted by the models’ marginal likelihood (done via the <code><a href="../reference/bayesfactor_models.html">bayesfactor_models()</a></code> function). If some parameter is part of some of the models but is missing from others, it is assumed to be fixed a 0 (which can also be seen as a method of applying shrinkage to our estimates). This results in a posterior distribution across several models, which we can now treat like any posterior distribution, and estimate the HDI.</p>
 <p>In <code>bayestestR</code>, we can do this with the <code><a href="../reference/weighted_posteriors.html">weighted_posteriors()</a></code> function:</p>
@@ -735,10 +735,10 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; Parameter   |        95% HDI
 &gt; ----------------------------
-&gt; (Intercept) | [29.03, 42.43]
-&gt; wt          | [-6.66, -2.14]
-&gt; am          | [-2.80,  5.04]
-&gt; carb        | [-1.69,  0.00]</code></pre>
+&gt; (Intercept) | [29.18, 42.48]
+&gt; wt          | [-6.64, -2.15]
+&gt; am          | [-2.74,  5.03]
+&gt; carb        | [-1.68,  0.00]</code></pre>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">BMA_hdi</span><span class="op">)</span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-23-1.png" width="100%"></p>
@@ -780,8 +780,8 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; Parameter |    BF
 &gt; -----------------
-&gt; 1         | 0.287
-&gt; 2         | 19.96
+&gt; 1         | 0.286
+&gt; 2         | 20.91
 &gt; 1 - 2     |  1.26
 &gt; 
 &gt; * Evidence Against The Null: 0</code></pre>
@@ -902,8 +902,8 @@ BF_{\text{restricted vs. NULL}} = \frac
 <pre><code>&gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 &gt; Chain 1: 
-&gt; Chain 1: Gradient evaluation took 2.9e-05 seconds
-&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.29 seconds.
+&gt; Chain 1: Gradient evaluation took 3.2e-05 seconds
+&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.32 seconds.
 &gt; Chain 1: Adjust your expectations accordingly!
 &gt; Chain 1: 
 &gt; Chain 1: 
@@ -920,15 +920,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 1: 
-&gt; Chain 1:  Elapsed Time: 0.077752 seconds (Warm-up)
-&gt; Chain 1:                0.103652 seconds (Sampling)
-&gt; Chain 1:                0.181404 seconds (Total)
+&gt; Chain 1:  Elapsed Time: 0.072879 seconds (Warm-up)
+&gt; Chain 1:                0.100497 seconds (Sampling)
+&gt; Chain 1:                0.173376 seconds (Total)
 &gt; Chain 1: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 &gt; Chain 2: 
-&gt; Chain 2: Gradient evaluation took 1.5e-05 seconds
-&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+&gt; Chain 2: Gradient evaluation took 2.1e-05 seconds
+&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
 &gt; Chain 2: Adjust your expectations accordingly!
 &gt; Chain 2: 
 &gt; Chain 2: 
@@ -945,15 +945,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 2: 
-&gt; Chain 2:  Elapsed Time: 0.074993 seconds (Warm-up)
-&gt; Chain 2:                0.093573 seconds (Sampling)
-&gt; Chain 2:                0.168566 seconds (Total)
+&gt; Chain 2:  Elapsed Time: 0.074512 seconds (Warm-up)
+&gt; Chain 2:                0.092243 seconds (Sampling)
+&gt; Chain 2:                0.166755 seconds (Total)
 &gt; Chain 2: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 &gt; Chain 3: 
-&gt; Chain 3: Gradient evaluation took 1.5e-05 seconds
-&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+&gt; Chain 3: Gradient evaluation took 2.4e-05 seconds
+&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.24 seconds.
 &gt; Chain 3: Adjust your expectations accordingly!
 &gt; Chain 3: 
 &gt; Chain 3: 
@@ -970,15 +970,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 3: 
-&gt; Chain 3:  Elapsed Time: 0.078464 seconds (Warm-up)
-&gt; Chain 3:                0.087912 seconds (Sampling)
-&gt; Chain 3:                0.166376 seconds (Total)
+&gt; Chain 3:  Elapsed Time: 0.07258 seconds (Warm-up)
+&gt; Chain 3:                0.085236 seconds (Sampling)
+&gt; Chain 3:                0.157816 seconds (Total)
 &gt; Chain 3: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 &gt; Chain 4: 
-&gt; Chain 4: Gradient evaluation took 1.6e-05 seconds
-&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
+&gt; Chain 4: Gradient evaluation took 2.3e-05 seconds
+&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.23 seconds.
 &gt; Chain 4: Adjust your expectations accordingly!
 &gt; Chain 4: 
 &gt; Chain 4: 
@@ -995,9 +995,9 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 4: 
-&gt; Chain 4:  Elapsed Time: 0.073585 seconds (Warm-up)
-&gt; Chain 4:                0.091217 seconds (Sampling)
-&gt; Chain 4:                0.164802 seconds (Total)
+&gt; Chain 4:  Elapsed Time: 0.071964 seconds (Warm-up)
+&gt; Chain 4:                0.090838 seconds (Sampling)
+&gt; Chain 4:                0.162802 seconds (Total)
 &gt; Chain 4:</code></pre>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 

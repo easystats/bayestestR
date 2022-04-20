@@ -334,7 +334,7 @@
 <pre><code>&gt; [1] 52</code></pre>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/hdi.html">hdi</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">$</span><span class="va">feedsunflower</span><span class="op">)</span></code></pre></div>
-<pre><code>&gt; 95% HDI: [2.58, 99.57]</code></pre>
+<pre><code>&gt; 95% HDI: [3.76, 102.90]</code></pre>
 <p>It makes you fat by around 51 grams (the median). However, the uncertainty is quite high: <strong>there is 89% chance that the difference between the two feed types is between 14 and 91.</strong></p>
 <blockquote>
 <p><strong>Is this effect different from 0?</strong></p>
@@ -358,7 +358,7 @@
 &gt; 
 &gt; inside ROPE
 &gt; -----------
-&gt; 4.54 %</code></pre>
+&gt; 5.31 %</code></pre>
 <p><strong>5% of the 89% CI can be considered as null</strong>. Is that a lot? Based on our <a href="https://easystats.github.io/bayestestR/articles/guidelines.html" class="external-link"><strong>guidelines</strong></a>, yes, it is too much. <strong>Based on this particular definition of ROPE</strong>, we conclude that this effect is not significant (the probability of being negligible is too high).</p>
 <p>That said, to be honest, I have <strong>some doubts about this Prof. Sanders</strong>. I don’t really trust <strong>his definition of ROPE</strong>. Is there a more <strong>objective</strong> way of defining it?</p>
 <div class="figure" style="text-align: center">
@@ -452,8 +452,8 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 &gt; 
 &gt; Parameter     | Median |           95% CI |     pd |          ROPE | % in ROPE |  Rhat |      ESS |     BF
 &gt; ----------------------------------------------------------------------------------------------------------
-&gt; (Intercept)   | 277.05 | [241.93, 312.74] |   100% | [-6.17, 6.17] |        0% | 1.000 | 34085.00 | &gt; 1000
-&gt; feedsunflower |  51.81 | [  2.58,  99.57] | 98.08% | [-6.17, 6.17] |     0.95% | 1.000 | 32916.00 |  0.800</code></pre>
+&gt; (Intercept)   | 276.98 | [241.25, 312.89] |   100% | [-6.17, 6.17] |        0% | 1.000 | 33441.00 | &gt; 1000
+&gt; feedsunflower |  51.86 | [  3.76, 102.90] | 97.84% | [-6.17, 6.17] |     0.67% | 1.000 | 34048.00 |  0.769</code></pre>
 <p><strong>Tada!</strong> There we have it! The <strong>median</strong>, the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE percentage</strong>!</p>
 <p>Understanding and describing posterior distributions is just one aspect of Bayesian modelling. <strong>Are you ready for more?!</strong> <a href="https://easystats.github.io/bayestestR/articles/example2.html" class="external-link"><strong>Click here</strong></a> to see the next example.</p>
 </div>
