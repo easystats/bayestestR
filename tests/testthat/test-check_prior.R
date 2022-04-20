@@ -54,7 +54,7 @@ if (.runThisTest &&
     expect_warning(expect_equal(
       check_prior(model2, method = "lakeland")$Prior_Quality,
       c(
-        "informative", "misinformative", "informative", "informative",
+        "informative", "informative", "informative", "informative",
         "informative", "not determinable", "not determinable", "not determinable"
       )
     ))
