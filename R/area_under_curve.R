@@ -27,7 +27,7 @@ area_under_curve <- function(x, y, method = c("trapezoid", "step", "spline"), ..
   # Stolen from DescTools: https://github.com/cran/DescTools/blob/master/R/StatsAndCIs.r
 
   if (length(x) != length(y)) {
-    stop("length x must equal length y")
+    stop("Length of x must be equal to length of y.")
   }
 
   idx <- order(x)
