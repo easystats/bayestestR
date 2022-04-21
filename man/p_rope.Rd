@@ -4,10 +4,6 @@
 \alias{p_rope}
 \alias{p_rope.default}
 \alias{p_rope.numeric}
-\alias{p_rope.data.frame}
-\alias{p_rope.emmGrid}
-\alias{p_rope.BFBayesFactor}
-\alias{p_rope.MCMCglmm}
 \alias{p_rope.stanreg}
 \alias{p_rope.brmsfit}
 \title{Probability of being in the ROPE}
@@ -17,14 +13,6 @@ p_rope(x, ...)
 \method{p_rope}{default}(x, ...)
 
 \method{p_rope}{numeric}(x, range = "default", ...)
-
-\method{p_rope}{data.frame}(x, range = "default", ...)
-
-\method{p_rope}{emmGrid}(x, range = "default", ...)
-
-\method{p_rope}{BFBayesFactor}(x, range = "default", ...)
-
-\method{p_rope}{MCMCglmm}(x, range = "default", ...)
 
 \method{p_rope}{stanreg}(
   x,

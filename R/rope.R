@@ -170,8 +170,6 @@ rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "ETI", ver
 
 
 
-
-#' @rdname rope
 #' @export
 rope.data.frame <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   out <- .prepare_rope_df(x, range, ci, ci_method, verbose)
@@ -199,7 +197,6 @@ rope.draws <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbo
 
 
 
-#' @rdname rope
 #' @export
 rope.emmGrid <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
@@ -214,7 +211,6 @@ rope.emm_list <- rope.emmGrid
 
 
 
-#' @rdname rope
 #' @export
 rope.BFBayesFactor <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   if (all(range == "default")) {
@@ -230,7 +226,6 @@ rope.BFBayesFactor <- function(x, range = "default", ci = 0.95, ci_method = "ETI
 rope.bamlss <- rope.BFBayesFactor
 
 
-#' @rdname rope
 #' @export
 rope.MCMCglmm <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
@@ -247,8 +242,6 @@ rope.mcmc <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbos
   attr(out, "data") <- insight::safe_deparse(substitute(x))
   out
 }
-
-
 
 
 #' @export

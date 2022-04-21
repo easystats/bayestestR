@@ -39,7 +39,6 @@ p_rope.numeric <- function(x, range = "default", ...) {
 }
 
 
-#' @rdname p_rope
 #' @export
 p_rope.data.frame <- p_rope.numeric
 
@@ -50,7 +49,6 @@ p_rope.draws <- function(x, range = "default", ...) {
 }
 
 
-#' @rdname p_rope
 #' @export
 p_rope.emmGrid <- function(x, range = "default", ...) {
   xdf <- insight::get_parameters(x)
@@ -63,11 +61,9 @@ p_rope.emmGrid <- function(x, range = "default", ...) {
 #' @export
 p_rope.emm_list <- p_rope.emmGrid
 
-#' @rdname p_rope
 #' @export
 p_rope.BFBayesFactor <- p_rope.numeric
 
-#' @rdname p_rope
 #' @export
 p_rope.MCMCglmm <- p_rope.numeric
 
