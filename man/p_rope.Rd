@@ -2,15 +2,12 @@
 % Please edit documentation in R/p_rope.R
 \name{p_rope}
 \alias{p_rope}
-\alias{p_rope.default}
 \alias{p_rope.numeric}
 \alias{p_rope.stanreg}
 \alias{p_rope.brmsfit}
 \title{Probability of being in the ROPE}
 \usage{
 p_rope(x, ...)
-
-\method{p_rope}{default}(x, ...)
 
 \method{p_rope}{numeric}(x, range = "default", ...)
 

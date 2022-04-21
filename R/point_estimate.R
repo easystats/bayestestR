@@ -59,7 +59,7 @@ point_estimate <- function(x, ...) {
 
 #' @export
 point_estimate.default <- function(x, ...) {
-  stop(insight::format_message(paste0("'point_estimate()' is not yet implemented for objects of class '", class(posteriors)[1], "'.")), call. = FALSE)
+  stop(insight::format_message(paste0("'point_estimate()' is not yet implemented for objects of class '", class(x)[1], "'.")), call. = FALSE)
 }
 
 

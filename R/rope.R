@@ -125,13 +125,10 @@ as.double.rope <- function(x, ...) {
 }
 
 
-
-#' @rdname rope
 #' @export
 rope.default <- function(x, ...) {
   NULL
 }
-
 
 
 #' @rdname rope

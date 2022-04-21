@@ -22,8 +22,6 @@ as.double.p_rope <- function(x, ...) {
 }
 
 
-
-#' @rdname p_rope
 #' @export
 p_rope.default <- function(x, ...) {
   NULL

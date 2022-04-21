@@ -137,7 +137,7 @@ pd <- p_direction
 
 #' @export
 p_direction.default <- function(x, ...) {
-  stop(insight::format_message(paste0("'p_direction()' is not yet implemented for objects of class '", class(posteriors)[1], "'.")), call. = FALSE)
+  stop(insight::format_message(paste0("'p_direction()' is not yet implemented for objects of class '", class(x)[1], "'.")), call. = FALSE)
 }
 
 

@@ -2,15 +2,12 @@
 % Please edit documentation in R/rope.R
 \name{rope}
 \alias{rope}
-\alias{rope.default}
 \alias{rope.numeric}
 \alias{rope.stanreg}
 \alias{rope.brmsfit}
 \title{Region of Practical Equivalence (ROPE)}
 \usage{
 rope(x, ...)
-
-\method{rope}{default}(x, ...)
 
 \method{rope}{numeric}(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...)
 
