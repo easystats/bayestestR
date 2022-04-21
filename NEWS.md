@@ -18,6 +18,10 @@
 
 * New function `spi()`, to compute shorest probability intervals. Furthermore, the `"spi"` option was added as new method to compute uncertainty intervals.
 
+## Bug fixes
+
+* `bci()` for some objects incorrectly returned the equal-tailed intervals.
+
 # bayestestR 0.11.5
 
 * Fixes failing tests in CRAN checks.

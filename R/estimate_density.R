@@ -137,15 +137,15 @@ estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, ext
 
   # Sanity
   if (!is.null(group_by)) {
-    warning("The 'group_by' argument is deprecated and might be removed in a future update. Please replace by 'at'.")
+    warning(insight::format_message("The 'group_by' argument is deprecated and might be removed in a future update. Please replace by 'at'."), call. = FALSE)
     at <- group_by
   }
 
   if (!is.null(at)) {
     if (length(at) == 1) {
-      stop("`group_by` must be either the name of a group column if a data.frame is entered as input, or in this case (where a single vector was passed) a vector of same length.")
+      stop(insight::format_message("`group_by` must be either the name of a group column if a data.frame is entered as input, or in this case (where a single vector was passed) a vector of same length."))
     }
-    out <- estimate_density(data.frame(V1 = x, Group = at), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, at = "Group", ...)
+    out <- estimate_density(data.frame(V1 = x, Group = at, stringsAsFactors = FALSE), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, at = "Group", ...)
     out$Parameter <- NULL
     return(out)
   }
@@ -164,7 +164,7 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
 
   # Sanity
   if (!is.null(group_by)) {
-    warning("The 'group_by' argument is deprecated and might be removed in a future update. Please replace by 'at'.")
+    warning(insight::format_message("The 'group_by' argument is deprecated and might be removed in a future update. Please replace by 'at'."), call. = FALSE)
     at <- group_by
   }
 
@@ -207,13 +207,13 @@ estimate_density.draws <- function(x, method = "kernel", precision = 2^10, exten
   if (is.null(select)) {
     x <- .select_nums(x)
   } else {
-    x <- x[, datawizard::find_columns(x, select, ...), drop = FALSE]
+    x <- datawizard::data_select(x, select, ...)
   }
 
   out <- sapply(x, estimate_density, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, simplify = FALSE)
   for (i in names(out)) {
     if (nrow(out[[i]]) == 0) {
-      warning(paste0("'", i, "', or one of its 'at' groups, is empty and has no density information."))
+      warning(insight::format_message(paste0("'", i, "', or one of its 'at' groups, is empty and has no density information.")), call. = FALSE)
     } else {
       out[[i]]$Parameter <- i
     }
@@ -408,15 +408,7 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 
 
 .estimate_density_logspline <- function(x, x_range, precision, ...) {
-  if (!requireNamespace("logspline")) {
-    if (interactive()) {
-      readline("Package \"logspline\" needed for this function. Press ENTER to install or ESCAPE to abort.")
-      utils::install.packages("logspline")
-    } else {
-      stop("Package \"logspline\" needed for this function. Press run 'install.packages(\"logspline\")'.")
-    }
-  }
-
+  insight::check_if_installed("logspline")
   x_axis <- seq(x_range[1], x_range[2], length.out = precision)
   y <- logspline::dlogspline(x_axis, logspline::logspline(x, ...), ...)
   data.frame(x = x_axis, y = y)
@@ -424,14 +416,7 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 
 
 .estimate_density_KernSmooth <- function(x, x_range, precision, ...) {
-  if (!requireNamespace("KernSmooth")) {
-    if (interactive()) {
-      readline("Package \"KernSmooth\" needed for this function. Press ENTER to install or ESCAPE to abort.")
-      utils::install.packages("KernSmooth")
-    } else {
-      stop("Package \"KernSmooth\" needed for this function. Press run 'install.packages(\"KernSmooth\")'.")
-    }
-  }
+  insight::check_if_installed("KernSmooth")
   as.data.frame(KernSmooth::bkde(x, range.x = x_range, gridsize = precision, truncate = TRUE, ...))
 }
 
