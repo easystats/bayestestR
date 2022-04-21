@@ -1,5 +1,6 @@
 ADE
 Altough
+BCI
 BCa
 BFs
 BGGM
@@ -21,6 +22,7 @@ DescTools
 Desimone
 DiCiccio
 Driing
+Elsevier
 ESS
 ETI
 Efron
@@ -51,6 +53,7 @@ Liao
 Liddell
 Lindley
 Littman
+Liu
 Lodewyckx
 Ly
 MCMCglmm
@@ -82,6 +85,8 @@ SEXIT
 SHA
 Shachar
 Speckman
+SPI
+SPIn
 Tada
 Tingley
 Un
@@ -94,6 +99,8 @@ Wetzels
 Wickham
 Wookies
 Yamamoto
+Ying
+Zheng
 al
 altough
 analsyes
@@ -172,6 +179,7 @@ reproducibility
 richarddmorey
 riors
 rmsb
+rOpenSci
 rstanarm
 sIgnificance
 salis
@@ -187,6 +195,7 @@ summarise
 summarised
 th
 treedepth
+tweedie
 un
 underbrace
 versicolor
