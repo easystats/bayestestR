@@ -10,18 +10,7 @@
 \alias{describe_posterior.BFBayesFactor}
 \title{Describe Posterior Distributions}
 \usage{
-describe_posterior(
-  posteriors,
-  centrality = "median",
-  dispersion = FALSE,
-  ci = 0.95,
-  ci_method = "eti",
-  test = c("p_direction", "rope"),
-  rope_range = "default",
-  rope_ci = 0.95,
-  keep_iterations = FALSE,
-  ...
-)
+describe_posterior(posteriors, ...)
 
 \method{describe_posterior}{numeric}(
   posteriors,
@@ -133,6 +122,8 @@ describe_posterior(
 \arguments{
 \item{posteriors}{A vector, data frame or model of posterior draws.}
 
+\item{...}{Additional arguments to be passed to or from methods.}
+
 \item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
 
 \item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
@@ -165,8 +156,6 @@ proportion of HDI, to use for the percentage in ROPE.}
 bootstrapped or Bayesian models. They will be added as additional columns
 named \verb{iter_1, iter_2, ...}. You can reshape them to a long format by
 running \code{\link[=reshape_iterations]{reshape_iterations()}}.}
-
-\item{...}{Additional arguments to be passed to or from methods.}
 
 \item{bf_prior}{Distribution representing a prior for the computation of
 Bayes factors / SI. Used if the input is a posterior, otherwise (in the

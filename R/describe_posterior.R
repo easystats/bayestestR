@@ -92,16 +92,7 @@
 #' }
 #' }
 #' @export
-describe_posterior <- function(posteriors,
-                               centrality = "median",
-                               dispersion = FALSE,
-                               ci = 0.95,
-                               ci_method = "eti",
-                               test = c("p_direction", "rope"),
-                               rope_range = "default",
-                               rope_ci = 0.95,
-                               keep_iterations = FALSE,
-                               ...) {
+describe_posterior <- function(posteriors, ...) {
   UseMethod("describe_posterior")
 }
 
@@ -179,7 +170,7 @@ describe_posterior <- function(posteriors,
     # no ROPE for multi-response models
     if (insight::is_multivariate(x)) {
       test <- setdiff(test, c("rope", "p_rope"))
-      warning("Multivariate response models are not yet supported for tests 'rope' and 'p_rope'.", call. = FALSE)
+      warning(insight::format_message("Multivariate response models are not yet supported for tests 'rope' and 'p_rope'."), call. = FALSE)
     }
 
     # MAP-based p-value
@@ -380,9 +371,9 @@ describe_posterior <- function(posteriors,
   # column consist only of missing values, we remove those columns as well
 
   remove_columns <- ".rowid"
-  if (all(is.na(out$Effects)) || length(unique(out$Effects)) < 2) remove_columns <- c(remove_columns, "Effects")
-  if (all(is.na(out$Component)) || length(unique(out$Component)) < 2) remove_columns <- c(remove_columns, "Component")
-  if (all(is.na(out$Response)) || length(unique(out$Response)) < 2) remove_columns <- c(remove_columns, "Response")
+  if (insight::n_unique(out$Effects, na.rm = TRUE) == 0) remove_columns <- c(remove_columns, "Effects")
+  if (insight::n_unique(out$Component, na.rm = TRUE) == 0) remove_columns <- c(remove_columns, "Component")
+  if (insight::n_unique(out$Response, na.rm = TRUE) == 0) remove_columns <- c(remove_columns, "Response")
 
   # Restore columns order
   out <- datawizard::data_remove(out[order(out$.rowid), ], remove_columns, verbose = FALSE)
