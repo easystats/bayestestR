@@ -6,8 +6,10 @@
 #' characterisation of posterior distributions as **Credible Interval (CI)**.
 #'
 #' @param x Vector representing a posterior distribution, or a data frame of such
-#'   vectors. Can also be a Bayesian model (`stanreg`, `brmsfit`,
-#'   `MCMCglmm`, `mcmc` or `bcplm`) or a `BayesFactor` model.
+#'   vectors. Can also be a Bayesian model. **bayestestR** supports a wide range
+#'   of models (see, for example, `methods("hdi")`) and not all of those are
+#'   documented in the 'Usage' section, because methods for other classes mostly
+#'   resemble the arguments of the `.numeric` or `.data.frame`methods.
 #' @param ci Value or vector of probability of the (credible) interval - CI
 #'   (between 0 and 1) to be estimated. Default to `.95` (`95%`).
 #' @param effects Should results for fixed effects, random effects or both be
@@ -28,7 +30,9 @@
 #' @details Unlike equal-tailed intervals (see `eti()`) that typically exclude `2.5%`
 #' from each tail of the distribution and always include the median, the HDI is
 #' *not* equal-tailed and therefore always includes the mode(s) of posterior
-#' distributions.
+#' distributions. While this can be useful to better represent the credibility
+#' mass of a distribution, the HDI also has some limitations. See [spi()] for
+#' details.
 #' \cr \cr
 #' The [`95%` or `89%` Credible Intervals (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
 #' are two reasonable ranges to characterize the uncertainty related to the estimation (see [here](https://easystats.github.io/bayestestR/articles/credible_interval.html) for a discussion about the differences between these two values).
@@ -116,6 +120,11 @@ hdi <- function(x, ...) {
 }
 
 
+#' @export
+hdi.default <- function(x, ...) {
+  stop(insight::format_message(paste0("'hdi()' is not yet implemented for objects of class '", class(posteriors)[1], "'.")), call. = FALSE)
+}
+
 
 #' @rdname hdi
 #' @export
@@ -146,7 +155,6 @@ hdi.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
 }
 
 
-#' @rdname hdi
 #' @export
 hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
   ci_fun <- .check_ci_fun(list(...))
@@ -206,7 +214,6 @@ hdi.mcmc.list <- hdi.bcplm
 hdi.BGGM <- hdi.bcplm
 
 
-#' @rdname hdi
 #' @export
 hdi.sim.merMod <- function(x,
                            ci = 0.95,
@@ -335,7 +342,6 @@ hdi.brmsfit <- function(x,
 }
 
 
-#' @rdname hdi
 #' @export
 hdi.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
   out <- hdi(insight::get_parameters(x), ci = ci, verbose = verbose, ...)

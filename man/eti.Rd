@@ -3,36 +3,13 @@
 \name{eti}
 \alias{eti}
 \alias{eti.numeric}
-\alias{eti.data.frame}
-\alias{eti.MCMCglmm}
-\alias{eti.sim.merMod}
-\alias{eti.sim}
-\alias{eti.emmGrid}
 \alias{eti.stanreg}
 \alias{eti.brmsfit}
-\alias{eti.BFBayesFactor}
 \title{Equal-Tailed Interval (ETI)}
 \usage{
 eti(x, ...)
 
 \method{eti}{numeric}(x, ci = 0.95, verbose = TRUE, ...)
-
-\method{eti}{data.frame}(x, ci = 0.95, verbose = TRUE, ...)
-
-\method{eti}{MCMCglmm}(x, ci = 0.95, verbose = TRUE, ...)
-
-\method{eti}{sim.merMod}(
-  x,
-  ci = 0.95,
-  effects = c("fixed", "random", "all"),
-  parameters = NULL,
-  verbose = TRUE,
-  ...
-)
-
-\method{eti}{sim}(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...)
-
-\method{eti}{emmGrid}(x, ci = 0.95, verbose = TRUE, ...)
 
 \method{eti}{stanreg}(
   x,
@@ -54,13 +31,13 @@ eti(x, ...)
   verbose = TRUE,
   ...
 )
-
-\method{eti}{BFBayesFactor}(x, ci = 0.95, verbose = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution, or a data frame of such
-vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
-\code{MCMCglmm}, \code{mcmc} or \code{bcplm}) or a \code{BayesFactor} model.}
+vectors. Can also be a Bayesian model. \strong{bayestestR} supports a wide range
+of models (see, for example, \code{methods("hdi")}) and not all of those are
+documented in the 'Usage' section, because methods for other classes mostly
+resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 
 \item{...}{Currently not used.}
 
@@ -72,15 +49,15 @@ vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
 
+\item{component}{Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to \pkg{brms}-models.}
+
 \item{parameters}{Regular expression pattern that describes the parameters
 that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
-
-\item{component}{Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to \pkg{brms}-models.}
 }
 \value{
 A data frame with following columns:
@@ -97,7 +74,9 @@ Compute the \strong{Equal-Tailed Interval (ETI)} of posterior distributions usin
 Unlike equal-tailed intervals (see \code{eti()}) that typically exclude \verb{2.5\%}
 from each tail of the distribution and always include the median, the HDI is
 \emph{not} equal-tailed and therefore always includes the mode(s) of posterior
-distributions.
+distributions. While this can be useful to better represent the credibility
+mass of a distribution, the HDI also has some limitations. See \code{\link[=spi]{spi()}} for
+details.
 \cr \cr
 The \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{\verb{95\%} or \verb{89\%} Credible Intervals (CI)}
 are two reasonable ranges to characterize the uncertainty related to the estimation (see \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{here} for a discussion about the differences between these two values).

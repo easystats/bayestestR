@@ -3,6 +3,9 @@
 #' Compute indices relevant to describe and characterize the posterior distributions.
 #'
 #' @param posteriors A vector, data frame or model of posterior draws.
+#'   **bayestestR** supports a wide range of models (see `methods("describe_posterior")`)
+#'   and not all of those are documented in the 'Usage' section, because methods
+#'   for other classes mostly resemble the arguments of the `.numeric` method.
 #' @param ci_method The type of index used for Credible Interval. Can be
 #'   `"ETI"` (default, see [bayestestR::eti()]), `"HDI"`
 #'   (see [bayestestR::hdi()]), `"BCI"` (see
@@ -24,6 +27,10 @@
 #'   bootstrapped or Bayesian models. They will be added as additional columns
 #'   named `iter_1, iter_2, ...`. You can reshape them to a long format by
 #'   running [bayestestR::reshape_iterations()].
+#' @param bf_prior Distribution representing a prior for the computation of
+#'   Bayes factors / SI. Used if the input is a posterior, otherwise (in the
+#'   case of models) ignored.
+#' @param priors Add the prior used for each parameter.
 #'
 #' @inheritParams point_estimate
 #' @inheritParams ci
@@ -422,9 +429,6 @@ describe_posterior.default <- function(posteriors, ...) {
 
 
 #' @rdname describe_posterior
-#' @param bf_prior Distribution representing a prior for the computation of
-#'   Bayes factors / SI. Used if the input is a posterior, otherwise (in the
-#'   case of models) ignored.
 #' @export
 describe_posterior.numeric <- function(posteriors,
                                        centrality = "median",
@@ -714,7 +718,6 @@ describe_posterior.emm_list <- describe_posterior.emmGrid
 
 #' @inheritParams insight::get_parameters
 #' @inheritParams diagnostic_posterior
-#' @param priors Add the prior used for each parameter.
 #' @rdname describe_posterior
 #' @export
 describe_posterior.stanreg <- function(posteriors,
@@ -784,8 +787,6 @@ describe_posterior.stanreg <- function(posteriors,
 
 #' @inheritParams insight::get_parameters
 #' @inheritParams diagnostic_posterior
-#' @param priors Add the prior used for each parameter.
-#' @rdname describe_posterior
 #' @export
 describe_posterior.stanmvreg <- function(posteriors,
                                          centrality = "median",

@@ -62,8 +62,10 @@ bcai(x, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution, or a data frame of such
-vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
-\code{MCMCglmm}, \code{mcmc} or \code{bcplm}) or a \code{BayesFactor} model.}
+vectors. Can also be a Bayesian model. \strong{bayestestR} supports a wide range
+of models (see, for example, \code{methods("hdi")}) and not all of those are
+documented in the 'Usage' section, because methods for other classes mostly
+resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 
 \item{...}{Currently not used.}
 
@@ -101,7 +103,9 @@ distributions.
 Unlike equal-tailed intervals (see \code{eti()}) that typically exclude \verb{2.5\%}
 from each tail of the distribution and always include the median, the HDI is
 \emph{not} equal-tailed and therefore always includes the mode(s) of posterior
-distributions.
+distributions. While this can be useful to better represent the credibility
+mass of a distribution, the HDI also has some limitations. See \code{\link[=spi]{spi()}} for
+details.
 \cr \cr
 The \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{\verb{95\%} or \verb{89\%} Credible Intervals (CI)}
 are two reasonable ranges to characterize the uncertainty related to the estimation (see \href{https://easystats.github.io/bayestestR/articles/credible_interval.html}{here} for a discussion about the differences between these two values).

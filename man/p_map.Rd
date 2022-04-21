@@ -34,8 +34,10 @@ p_pointnull(x, precision = 2^10, method = "kernel", ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution, or a data frame of such
-vectors. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit},
-\code{MCMCglmm}, \code{mcmc} or \code{bcplm}) or a \code{BayesFactor} model.}
+vectors. Can also be a Bayesian model. \strong{bayestestR} supports a wide range
+of models (see, for example, \code{methods("hdi")}) and not all of those are
+documented in the 'Usage' section, because methods for other classes mostly
+resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \code{density}.}
 

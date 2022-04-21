@@ -4,7 +4,6 @@
 \alias{describe_posterior}
 \alias{describe_posterior.numeric}
 \alias{describe_posterior.stanreg}
-\alias{describe_posterior.stanmvreg}
 \alias{describe_posterior.brmsfit}
 \title{Describe Posterior Distributions}
 \usage{
@@ -46,26 +45,6 @@ describe_posterior(posteriors, ...)
   ...
 )
 
-\method{describe_posterior}{stanmvreg}(
-  posteriors,
-  centrality = "median",
-  dispersion = FALSE,
-  ci = 0.95,
-  ci_method = "eti",
-  test = "p_direction",
-  rope_range = "default",
-  rope_ci = 0.95,
-  keep_iterations = FALSE,
-  bf_prior = NULL,
-  diagnostic = c("ESS", "Rhat"),
-  priors = FALSE,
-  effects = c("fixed", "random", "all"),
-  component = c("location", "all", "conditional", "smooth_terms", "sigma",
-    "distributional", "auxiliary"),
-  parameters = NULL,
-  ...
-)
-
 \method{describe_posterior}{brmsfit}(
   posteriors,
   centrality = "median",
@@ -88,7 +67,10 @@ describe_posterior(posteriors, ...)
 )
 }
 \arguments{
-\item{posteriors}{A vector, data frame or model of posterior draws.}
+\item{posteriors}{A vector, data frame or model of posterior draws.
+\strong{bayestestR} supports a wide range of models (see \code{methods("describe_posterior")})
+and not all of those are documented in the 'Usage' section, because methods
+for other classes mostly resemble the arguments of the \code{.numeric} method.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 

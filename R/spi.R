@@ -6,13 +6,20 @@
 #'
 #' @inheritParams hdi
 #' @inherit ci return
-#' @inherit hdi details
 #' @inherit hdi seealso
 #' @family ci
 #'
 #' @note The code to compute the SPI was adapted from the **SPIn** package,
 #' and slightly modified to be more robust for Stan models. Thus, credits go
 #' to Ying Liu for the original SPI algorithm and R implementation.
+#'
+#' @details The SPI is an alternative method to the HDI ([hdi()]) to quantify
+#' uncertainty of (posterior) distributions. The SPI is said to be more stable
+#' than the HDI, because, the _"HDI can be noisy (that is, have a high Monte Carlo error)"_
+#' (Liu et al. 2015). Furthermore, the HDI is sensitive to additional assumptions,
+#' in particular assumptions related to the different estimation methods, which
+#' can make the HDI less accurate or reliable (see also discussion
+#' [here](https://twitter.com/betanalpha/status/1479107186030624771)).
 #'
 #' @references
 #' Liu, Y., Gelman, A., & Zheng, T. (2015). Simulation-efficient shortest probability intervals. Statistics and Computing, 25(4), 809–819. https://doi.org/10.1007/s11222-015-9563-8
@@ -39,6 +46,12 @@ spi <- function(x, ...) {
 }
 
 
+#' @export
+spi.default <- function(x, ...) {
+  stop(insight::format_message(paste0("'spi()' is not yet implemented for objects of class '", class(posteriors)[1], "'.")), call. = FALSE)
+}
+
+
 #' @rdname spi
 #' @export
 spi.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
@@ -51,7 +64,6 @@ spi.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
 }
 
 
-#' @rdname spi
 #' @export
 spi.data.frame <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "spi")
