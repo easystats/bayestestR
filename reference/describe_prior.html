@@ -108,6 +108,19 @@
 <dd><p>A Bayesian model.</p></dd>
 <dt>...</dt>
 <dd><p>Currently not used.</p></dd>
+<dt>effects</dt>
+<dd><p>Should results for fixed effects, random effects or both be
+returned? Only applies to mixed models. May be abbreviated.</p></dd>
+<dt>component</dt>
+<dd><p>Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></dd>
+<dt>parameters</dt>
+<dd><p>Regular expression pattern that describes the parameters
+that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
+filtered by default, so only parameters that typically appear in the
+<code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
+for the output.</p></dd>
 </dl></div>
 
     <div class="section level2">
