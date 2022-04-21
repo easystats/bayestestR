@@ -4,6 +4,7 @@
 #'
 #' @param model A Bayesian model.
 #' @param ... Currently not used.
+#' @inheritParams describe_posterior
 #'
 #' @examples
 #' \dontrun{
