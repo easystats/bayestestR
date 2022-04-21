@@ -13,7 +13,7 @@ osx <- tryCatch(
 )
 
 
-if (!osx && requiet("rstanarm", quietly = TRUE)) {
+if (!osx && requiet("rstanarm")) {
   test_that("insight::get_predicted", {
     x <- insight::get_predicted(rstanarm::stan_glm(hp ~ mpg, data = mtcars, iter = 500, refresh = 0))
 
@@ -52,7 +52,7 @@ if (!osx && requiet("rstanarm", quietly = TRUE)) {
   })
 }
 
-if (!osx && requiet("bayesQR", quietly = TRUE)) {
+if (!osx && requiet("bayesQR")) {
   test_that("bayesQR", {
     x <- bayesQR::bayesQR(Sepal.Length ~ Petal.Width, data = iris, quantile = 0.1, alasso = TRUE, ndraw = 500)
 
