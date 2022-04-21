@@ -105,15 +105,6 @@ Carlo Standard Error <code>MCSE</code>).</p>
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="co"># S3 method for stanmvreg</span>
-<span class="fu">diagnostic_posterior</span><span class="op">(</span>
-  <span class="va">posteriors</span>,
-  diagnostic <span class="op">=</span> <span class="st">"all"</span>,
-  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span>, <span class="st">"all"</span><span class="op">)</span>,
-  parameters <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
 <span class="co"># S3 method for brmsfit</span>
 <span class="fu">diagnostic_posterior</span><span class="op">(</span>
   <span class="va">posteriors</span>,
@@ -128,7 +119,7 @@ Carlo Standard Error <code>MCSE</code>).</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>posteriors</dt>
-<dd><p>A stanreg or brms model.</p></dd>
+<dd><p>A <code>stanreg</code>, <code>stanfit</code>, <code>brmsfit</code>, or <code>blavaan</code> object.</p></dd>
 <dt>diagnostic</dt>
 <dd><p>Diagnostic metrics to compute.  Character (vector) or list
 with one or more of these options: <code>"ESS"</code>, <code>"Rhat"</code>, <code>"MCSE"</code> or <code>"all"</code>.</p></dd>
