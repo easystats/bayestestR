@@ -109,7 +109,6 @@ equivalence_test <- function(x, ...) {
 }
 
 
-
 #' @rdname equivalence_test
 #' @export
 equivalence_test.default <- function(x, ...) {
@@ -117,9 +116,6 @@ equivalence_test.default <- function(x, ...) {
 }
 
 
-
-
-#' @rdname equivalence_test
 #' @export
 equivalence_test.numeric <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
   rope_data <- rope(x, range = range, ci = ci)
@@ -181,7 +177,6 @@ equivalence_test.draws <- function(x, range = "default", ci = 0.95, verbose = TR
 }
 
 
-#' @rdname equivalence_test
 #' @export
 equivalence_test.emmGrid <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
@@ -195,7 +190,6 @@ equivalence_test.emmGrid <- function(x, range = "default", ci = 0.95, verbose = 
 equivalence_test.emm_list <- equivalence_test.emmGrid
 
 
-#' @rdname equivalence_test
 #' @export
 equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
   out <- equivalence_test(insight::get_parameters(x), range = range, ci = ci, verbose = verbose, ...)
