@@ -52,10 +52,15 @@
 #' }
 #'
 #' @export
-point_estimate <- function(x, centrality = "all", dispersion = FALSE, ...) {
+point_estimate <- function(x, ...) {
   UseMethod("point_estimate")
 }
 
+
+#' @export
+point_estimate.default <- function(x, ...) {
+  stop(insight::format_message(paste0("'point_estimate()' is not yet implemented for objects of class '", class(posteriors)[1], "'.")), call. = FALSE)
+}
 
 
 #' @rdname point_estimate

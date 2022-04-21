@@ -97,6 +97,12 @@ describe_posterior <- function(posteriors, ...) {
 }
 
 
+#' @export
+describe_posterior.default <- function(posteriors, ...) {
+  stop(insight::format_message(paste0("'describe_posterior()' is not yet implemented for objects of class '", class(posteriors)[1], "'.")), call. = FALSE)
+}
+
+
 #' @keywords internal
 .describe_posterior <- function(x,
                                 centrality = "median",
@@ -976,7 +982,6 @@ describe_posterior.blavaan <- describe_posterior.stanfit
 
 
 #' @inheritParams describe_posterior.stanreg
-#' @rdname describe_posterior
 #' @export
 describe_posterior.MCMCglmm <- function(posteriors,
                                         centrality = "median",
@@ -1094,7 +1099,6 @@ describe_posterior.bamlss <- function(posteriors,
 # BayesFactor --------------------
 
 
-#' @rdname describe_posterior
 #' @export
 describe_posterior.BFBayesFactor <- function(posteriors,
                                              centrality = "median",

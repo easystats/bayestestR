@@ -85,6 +85,12 @@ estimate_density <- function(x, ...) {
 }
 
 
+#' @export
+estimate_density.default <- function(x, ...) {
+  stop(insight::format_message(paste0("'estimate_density()' is not yet implemented for objects of class '", class(posteriors)[1], "'.")), call. = FALSE)
+}
+
+
 #' @keywords internal
 .estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, ...) {
   method <- match.arg(tolower(method), c("kernel", "logspline", "kernsmooth", "smooth", "mixture", "mclust"))

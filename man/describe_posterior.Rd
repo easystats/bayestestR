@@ -6,8 +6,6 @@
 \alias{describe_posterior.stanreg}
 \alias{describe_posterior.stanmvreg}
 \alias{describe_posterior.brmsfit}
-\alias{describe_posterior.MCMCglmm}
-\alias{describe_posterior.BFBayesFactor}
 \title{Describe Posterior Distributions}
 \usage{
 describe_posterior(posteriors, ...)
@@ -88,36 +86,6 @@ describe_posterior(posteriors, ...)
   priors = FALSE,
   ...
 )
-
-\method{describe_posterior}{MCMCglmm}(
-  posteriors,
-  centrality = "median",
-  dispersion = FALSE,
-  ci = 0.95,
-  ci_method = "eti",
-  test = c("p_direction", "rope"),
-  rope_range = "default",
-  rope_ci = 0.95,
-  keep_iterations = FALSE,
-  diagnostic = "ESS",
-  parameters = NULL,
-  ...
-)
-
-\method{describe_posterior}{BFBayesFactor}(
-  posteriors,
-  centrality = "median",
-  dispersion = FALSE,
-  ci = 0.95,
-  ci_method = "eti",
-  test = c("p_direction", "rope", "bf"),
-  rope_range = "default",
-  rope_ci = 0.95,
-  keep_iterations = FALSE,
-  priors = TRUE,
-  verbose = TRUE,
-  ...
-)
 }
 \arguments{
 \item{posteriors}{A vector, data frame or model of posterior draws.}
@@ -180,8 +148,6 @@ that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
-
-\item{verbose}{Toggle off warnings.}
 }
 \description{
 Compute indices relevant to describe and characterize the posterior distributions.
