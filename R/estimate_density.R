@@ -422,15 +422,7 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 
 
 .estimate_density_mixture <- function(x, x_range, precision, ...) {
-  if (!requireNamespace("mclust")) {
-    if (interactive()) {
-      readline("Package \"mclust\" needed for this function. Press ENTER to install or ESCAPE to abort.")
-      utils::install.packages("KernSmooth")
-    } else {
-      stop("Package \"mclust\" needed for this function. Press run 'install.packages(\"mclust\")'.")
-    }
-  }
-
+  insight::check_if_installed("mclust")
   x_axis <- seq(x_range[1], x_range[2], length.out = precision)
   y <- stats::predict(mclust::densityMclust(x, verbose = FALSE, ...), newdata = x_axis, ...)
   data.frame(x = x_axis, y = y)
@@ -444,6 +436,6 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 }
 
 .set_density_class <- function(out) {
-  if(is.null(out)) return(NULL)
+  if (is.null(out)) return(NULL)
   setdiff(unique(c("estimate_density", "see_estimate_density", class(out))), c("estimate_density_df", "see_estimate_density_df"))
 }
