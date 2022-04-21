@@ -16,7 +16,7 @@
 
 * `rope_range()` now handles log(normal)-families and models with log-transformed outcomes.
 
-* New function `spi()`, to compute shorest probability intervals. Furthermore, the `"spi"` option was added as new method to compute uncertainty intervals.
+* New function `spi()`, to compute shortest probability intervals. Furthermore, the `"spi"` option was added as new method to compute uncertainty intervals.
 
 ## Bug fixes
 
