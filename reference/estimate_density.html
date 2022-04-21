@@ -111,8 +111,10 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>Vector representing a posterior distribution, or a data frame of such
-vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code>,
-<code>MCMCglmm</code>, <code>mcmc</code> or <code>bcplm</code>) or a <code>BayesFactor</code> model.</p></dd>
+vectors. Can also be a Bayesian model. <strong>bayestestR</strong> supports a wide range
+of models (see, for example, <code>methods("hdi")</code>) and not all of those are
+documented in the 'Usage' section, because methods for other classes mostly
+resemble the arguments of the <code>.numeric</code> or <code>.data.frame</code>methods.</p></dd>
 <dt>...</dt>
 <dd><p>Currently not used.</p></dd>
 <dt>method</dt>

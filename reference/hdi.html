@@ -106,19 +106,6 @@ characterisation of posterior distributions as <strong>Credible Interval (CI)</s
 <span class="co"># S3 method for data.frame</span>
 <span class="fu">hdi</span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
 
-<span class="co"># S3 method for MCMCglmm</span>
-<span class="fu">hdi</span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for sim.merMod</span>
-<span class="fu">hdi</span><span class="op">(</span>
-  <span class="va">x</span>,
-  ci <span class="op">=</span> <span class="fl">0.95</span>,
-  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span>, <span class="st">"all"</span><span class="op">)</span>,
-  parameters <span class="op">=</span> <span class="cn">NULL</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
 <span class="co"># S3 method for stanreg</span>
 <span class="fu">hdi</span><span class="op">(</span>
   <span class="va">x</span>,
@@ -140,18 +127,17 @@ characterisation of posterior distributions as <strong>Credible Interval (CI)</s
   parameters <span class="op">=</span> <span class="cn">NULL</span>,
   verbose <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for BFBayesFactor</span>
-<span class="fu">hdi</span><span class="op">(</span><span class="va">x</span>, ci <span class="op">=</span> <span class="fl">0.95</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>Vector representing a posterior distribution, or a data frame of such
-vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code>,
-<code>MCMCglmm</code>, <code>mcmc</code> or <code>bcplm</code>) or a <code>BayesFactor</code> model.</p></dd>
+vectors. Can also be a Bayesian model. <strong>bayestestR</strong> supports a wide range
+of models (see, for example, <code>methods("hdi")</code>) and not all of those are
+documented in the 'Usage' section, because methods for other classes mostly
+resemble the arguments of the <code>.numeric</code> or <code>.data.frame</code>methods.</p></dd>
 <dt>...</dt>
 <dd><p>Currently not used.</p></dd>
 <dt>ci</dt>
@@ -162,16 +148,16 @@ vectors. Can also be a Bayesian model (<code>stanreg</code>, <code>brmsfit</code
 <dt>effects</dt>
 <dd><p>Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.</p></dd>
+<dt>component</dt>
+<dd><p>Should results for all parameters, parameters for the
+conditional model or the zero-inflated part of the model be returned? May
+be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></dd>
 <dt>parameters</dt>
 <dd><p>Regular expression pattern that describes the parameters
 that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
 filtered by default, so only parameters that typically appear in the
 <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></dd>
-<dt>component</dt>
-<dd><p>Should results for all parameters, parameters for the
-conditional model or the zero-inflated part of the model be returned? May
-be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -184,7 +170,9 @@ be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></dd>
     <p>Unlike equal-tailed intervals (see <code><a href="eti.html">eti()</a></code>) that typically exclude <code>2.5%</code>
 from each tail of the distribution and always include the median, the HDI is
 <em>not</em> equal-tailed and therefore always includes the mode(s) of posterior
-distributions.
+distributions. While this can be useful to better represent the credibility
+mass of a distribution, the HDI also has some limitations. See <code><a href="spi.html">spi()</a></code> for
+details.
 <br><br>
 The <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html" class="external-link"><code>95%</code> or <code>89%</code> Credible Intervals (CI)</a>
 are two reasonable ranges to characterize the uncertainty related to the estimation (see <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html" class="external-link">here</a> for a discussion about the differences between these two values).

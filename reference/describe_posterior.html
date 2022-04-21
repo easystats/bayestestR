@@ -129,27 +129,6 @@
   <span class="va">...</span>
 <span class="op">)</span>
 
-<span class="co"># S3 method for stanmvreg</span>
-<span class="fu">describe_posterior</span><span class="op">(</span>
-  <span class="va">posteriors</span>,
-  centrality <span class="op">=</span> <span class="st">"median"</span>,
-  dispersion <span class="op">=</span> <span class="cn">FALSE</span>,
-  ci <span class="op">=</span> <span class="fl">0.95</span>,
-  ci_method <span class="op">=</span> <span class="st">"eti"</span>,
-  test <span class="op">=</span> <span class="st">"p_direction"</span>,
-  rope_range <span class="op">=</span> <span class="st">"default"</span>,
-  rope_ci <span class="op">=</span> <span class="fl">0.95</span>,
-  keep_iterations <span class="op">=</span> <span class="cn">FALSE</span>,
-  bf_prior <span class="op">=</span> <span class="cn">NULL</span>,
-  diagnostic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ESS"</span>, <span class="st">"Rhat"</span><span class="op">)</span>,
-  priors <span class="op">=</span> <span class="cn">FALSE</span>,
-  effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixed"</span>, <span class="st">"random"</span>, <span class="st">"all"</span><span class="op">)</span>,
-  component <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"location"</span>, <span class="st">"all"</span>, <span class="st">"conditional"</span>, <span class="st">"smooth_terms"</span>, <span class="st">"sigma"</span>,
-    <span class="st">"distributional"</span>, <span class="st">"auxiliary"</span><span class="op">)</span>,
-  parameters <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
 <span class="co"># S3 method for brmsfit</span>
 <span class="fu">describe_posterior</span><span class="op">(</span>
   <span class="va">posteriors</span>,
@@ -176,7 +155,10 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>posteriors</dt>
-<dd><p>A vector, data frame or model of posterior draws.</p></dd>
+<dd><p>A vector, data frame or model of posterior draws.
+<strong>bayestestR</strong> supports a wide range of models (see <code>methods("describe_posterior")</code>)
+and not all of those are documented in the 'Usage' section, because methods
+for other classes mostly resemble the arguments of the <code>.numeric</code> method.</p></dd>
 <dt>...</dt>
 <dd><p>Additional arguments to be passed to or from methods.</p></dd>
 <dt>centrality</dt>
