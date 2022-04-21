@@ -2,9 +2,19 @@
 % Please edit documentation in R/describe_prior.R
 \name{describe_prior}
 \alias{describe_prior}
+\alias{describe_prior.brmsfit}
 \title{Describe Priors}
 \usage{
 describe_prior(model, ...)
+
+\method{describe_prior}{brmsfit}(
+  model,
+  effects = c("fixed", "random", "all"),
+  component = c("conditional", "zi", "zero_inflated", "all", "location",
+    "distributional", "auxiliary"),
+  parameters = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{A Bayesian model.}

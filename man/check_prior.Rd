@@ -7,7 +7,7 @@
 check_prior(model, method = "gelman", simulate_priors = TRUE, ...)
 }
 \arguments{
-\item{model}{A \code{stanreg}, \code{stanfit}, or \code{brmsfit} object.}
+\item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{blavaan}, or \code{MCMCglmm} object.}
 
 \item{method}{Can be \code{"gelman"} or \code{"lakeland"}. For the
 \code{"gelman"} method, if the SD of the posterior is more than 0.1 times

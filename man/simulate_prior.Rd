@@ -7,7 +7,7 @@
 simulate_prior(model, n = 1000, ...)
 }
 \arguments{
-\item{model}{A \code{stanreg}, \code{stanfit}, or \code{brmsfit} object.}
+\item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{blavaan}, or \code{MCMCglmm} object.}
 
 \item{n}{Size of the simulated prior distributions.}
 

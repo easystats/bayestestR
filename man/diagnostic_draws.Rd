@@ -7,7 +7,7 @@
 diagnostic_draws(posteriors, ...)
 }
 \arguments{
-\item{posteriors}{A stanreg or brms model.}
+\item{posteriors}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object.}
 
 \item{...}{Currently not used.}
 }

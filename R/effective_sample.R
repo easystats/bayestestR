@@ -2,7 +2,7 @@
 #'
 #' This function returns the effective sample size (ESS).
 #'
-#' @param model A `stanreg`, `stanfit`, or `brmsfit` object.
+#' @param model A `stanreg`, `stanfit`, `brmsfit`, `blavaan`, or `MCMCglmm` object.
 #' @param ... Currently not used.
 #' @inheritParams hdi
 #'
@@ -24,6 +24,12 @@
 #' @export
 effective_sample <- function(model, ...) {
   UseMethod("effective_sample")
+}
+
+
+#' @export
+effective_sample.default <- function(model, ...) {
+  stop(insight::format_message(paste0("'effective_sample()' is not yet implemented for objects of class '", class(posteriors)[1], "'.")), call. = FALSE)
 }
 
 
@@ -55,7 +61,6 @@ effective_sample.brmsfit <- function(model, effects = c("fixed", "random", "all"
 }
 
 
-
 #' @rdname effective_sample
 #' @export
 effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
@@ -81,7 +86,6 @@ effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"
     row.names = NULL
   )
 }
-
 
 
 #' @export
@@ -110,7 +114,6 @@ effective_sample.stanfit <- function(model, effects = c("fixed", "random", "all"
 }
 
 
-#' @rdname effective_sample
 #' @export
 effective_sample.blavaan <- function(model, parameters = NULL, ...) {
   insight::check_if_installed("blavaan")
@@ -126,7 +129,6 @@ effective_sample.blavaan <- function(model, parameters = NULL, ...) {
 }
 
 
-#' @rdname effective_sample
 #' @export
 effective_sample.MCMCglmm <- function(model, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   # check arguments

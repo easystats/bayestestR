@@ -4,8 +4,6 @@
 \alias{effective_sample}
 \alias{effective_sample.brmsfit}
 \alias{effective_sample.stanreg}
-\alias{effective_sample.blavaan}
-\alias{effective_sample.MCMCglmm}
 \title{Effective Sample Size (ESS)}
 \usage{
 effective_sample(model, ...)
@@ -26,18 +24,9 @@ effective_sample(model, ...)
   parameters = NULL,
   ...
 )
-
-\method{effective_sample}{blavaan}(model, parameters = NULL, ...)
-
-\method{effective_sample}{MCMCglmm}(
-  model,
-  effects = c("fixed", "random", "all"),
-  parameters = NULL,
-  ...
-)
 }
 \arguments{
-\item{model}{A \code{stanreg}, \code{stanfit}, or \code{brmsfit} object.}
+\item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{blavaan}, or \code{MCMCglmm} object.}
 
 \item{...}{Currently not used.}
 

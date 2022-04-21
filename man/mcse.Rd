@@ -17,7 +17,7 @@ mcse(model, ...)
 )
 }
 \arguments{
-\item{model}{A \code{stanreg}, \code{stanfit}, or \code{brmsfit} object.}
+\item{model}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, \code{blavaan}, or \code{MCMCglmm} object.}
 
 \item{...}{Currently not used.}
 

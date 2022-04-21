@@ -3,7 +3,7 @@
 #' Extract diagnostic metrics (Effective Sample Size (`ESS`), `Rhat` and Monte
 #' Carlo Standard Error `MCSE`).
 #'
-#' @param posteriors A stanreg or brms model.
+#' @param posteriors A `stanreg`, `stanfit`, `brmsfit`, or `blavaan` object.
 #' @param diagnostic Diagnostic metrics to compute.  Character (vector) or list
 #'   with one or more of these options: `"ESS"`, `"Rhat"`, `"MCSE"` or `"all"`.
 #'
@@ -56,19 +56,9 @@ diagnostic_posterior <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 
 
 #' @export
-diagnostic_posterior.numeric <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...) {
-  stop("`diagnostic_posterior` only works with rstanarm or brms models.")
+diagnostic_posterior.default <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...) {
+  stop("'diagnostic_posterior()' only works with rstanarm, brms or blavaan models.")
 }
-
-#' @export
-diagnostic_posterior.data.frame <- diagnostic_posterior.numeric
-
-#' @export
-diagnostic_posterior.draws <- diagnostic_posterior.numeric
-
-#' @export
-diagnostic_posterior.BFBayesFactor <- diagnostic_posterior.numeric
-
 
 #' @inheritParams insight::get_parameters.BFBayesFactor
 #' @inheritParams insight::get_parameters
@@ -125,7 +115,6 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
 
 
 #' @inheritParams insight::get_parameters
-#' @rdname diagnostic_posterior
 #' @export
 diagnostic_posterior.stanmvreg <- function(posteriors,
                                            diagnostic = "all",

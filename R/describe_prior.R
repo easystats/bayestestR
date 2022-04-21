@@ -36,7 +36,7 @@ describe_prior <- function(model, ...) {
 }
 
 
-
+#' @rdname describe_prior
 #' @export
 describe_prior.brmsfit <- function(model,
                                    effects = c("fixed", "random", "all"),
@@ -90,10 +90,8 @@ describe_prior.brmsfit <- function(model,
   priors
 }
 
-
 #' @export
 describe_prior.stanreg <- .describe_prior
-
 
 
 #' @export
@@ -101,23 +99,6 @@ describe_prior.bcplm <- .describe_prior
 
 #' @export
 describe_prior.blavaan <- .describe_prior
-
-#' @export
-describe_prior.mcmc.list <- function(model, ...) {
-  NULL
-}
-
-#' @export
-describe_prior.BGGM <- function(model, ...) {
-  NULL
-}
-
-#' @export
-describe_prior.bamlss <- function(model, ...) {
-  NULL
-}
-
-
 
 #' @export
 describe_prior.BFBayesFactor <- function(model, ...) {
@@ -128,3 +109,20 @@ describe_prior.BFBayesFactor <- function(model, ...) {
 
   priors
 }
+
+
+# unsupported ----------------
+
+#' @export
+describe_prior.BGGM <- function(model, ...) {
+  NULL
+}
+
+#' @export
+describe_prior.BGGM <- describe_prior.BGGM
+
+#' @export
+describe_prior.bamlss <- describe_prior.BGGM
+
+#' @export
+describe_prior.draws <- describe_prior.BGGM

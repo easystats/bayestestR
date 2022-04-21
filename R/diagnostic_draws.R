@@ -23,8 +23,6 @@ diagnostic_draws <- function(posteriors, ...) {
 }
 
 
-
-
 #' @export
 diagnostic_draws.brmsfit <- function(posteriors, ...) {
   insight::check_if_installed("brms")

@@ -3,7 +3,6 @@
 \name{diagnostic_posterior}
 \alias{diagnostic_posterior}
 \alias{diagnostic_posterior.stanreg}
-\alias{diagnostic_posterior.stanmvreg}
 \alias{diagnostic_posterior.brmsfit}
 \title{Posteriors Sampling Diagnostic}
 \usage{
@@ -19,14 +18,6 @@ diagnostic_posterior(posteriors, diagnostic = c("ESS", "Rhat"), ...)
   ...
 )
 
-\method{diagnostic_posterior}{stanmvreg}(
-  posteriors,
-  diagnostic = "all",
-  effects = c("fixed", "random", "all"),
-  parameters = NULL,
-  ...
-)
-
 \method{diagnostic_posterior}{brmsfit}(
   posteriors,
   diagnostic = "all",
@@ -37,7 +28,7 @@ diagnostic_posterior(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 )
 }
 \arguments{
-\item{posteriors}{A stanreg or brms model.}
+\item{posteriors}{A \code{stanreg}, \code{stanfit}, \code{brmsfit}, or \code{blavaan} object.}
 
 \item{diagnostic}{Diagnostic metrics to compute.  Character (vector) or list
 with one or more of these options: \code{"ESS"}, \code{"Rhat"}, \code{"MCSE"} or \code{"all"}.}
