@@ -1,10 +1,10 @@
-if (require("testthat") &&
-  suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) &&
-  require("rstanarm") &&
-  require("brms") &&
-  require("httr") &&
-  require("insight") &&
-  require("BayesFactor", quietly = TRUE)) {
+if (requiet("testthat") &&
+  requiet("bayestestR") &&
+  requiet("rstanarm") &&
+  requiet("brms") &&
+  requiet("httr") &&
+  requiet("insight") &&
+  requiet("BayesFactor")) {
   test_that("describe_posterior", {
     set.seed(333)
 
@@ -180,7 +180,7 @@ if (require("testthat") &&
       # expect_equal(dim(rez), c(4, 4))
     })
 
-    if (require("insight")) {
+    if (requiet("insight")) {
       m <- insight::download_model("stanreg_merMod_5")
       p <- insight::get_parameters(m, effects = "all")
 

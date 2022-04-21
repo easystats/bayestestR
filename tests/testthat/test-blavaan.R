@@ -1,11 +1,6 @@
-if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("testthat")) {
+if (requiet("bayestestR") && requiet("testthat") && requiet("blavaan") && requiet("lavaan") && requiet("cmdstanr")) {
   test_that("blavaan, all", {
     skip_on_cran()
-    skip_if_not_installed("blavaan")
-    skip_if_not_installed("lavaan")
-    skip_if_not_installed("cmdstanr")
-    require(blavaan)
-
     data("PoliticalDemocracy", package = "lavaan")
 
     model <- "

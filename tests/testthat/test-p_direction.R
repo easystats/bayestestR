@@ -1,4 +1,4 @@
-if (require("testthat", quietly = TRUE) && suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("rstanarm", quietly = TRUE) && require("brms", quietly = TRUE)) {
+if (requiet("testthat") && requiet("bayestestR") && requiet("rstanarm") && requiet("brms")) {
   test_that("p_direction", {
     set.seed(333)
     x <- bayestestR::distribution_normal(10000, 1, 1)

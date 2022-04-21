@@ -1,4 +1,4 @@
-if (require("testthat") && require("BayesFactor") && suppressPackageStartupMessages(require("bayestestR", quietly = TRUE))) {
+if (requiet("testthat") && requiet("BayesFactor") && requiet("bayestestR")) {
   set.seed(333)
   x <- BayesFactor::correlationBF(y = iris$Sepal.Length, x = iris$Sepal.Width)
   test_that("p_direction", {

@@ -1,13 +1,13 @@
 .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
 
 if (.runThisTest &&
-  require("testthat") &&
-  require("bayestestR") &&
-  require("rstanarm") &&
-  require("brms") &&
-  require("httr") &&
-  require("insight") &&
-  require("BayesFactor") &&
+  requiet("testthat") &&
+  requiet("bayestestR") &&
+  requiet("rstanarm") &&
+  requiet("brms") &&
+  requiet("httr") &&
+  requiet("insight") &&
+  requiet("BayesFactor") &&
   packageVersion("insight") > "0.13.2") {
   test_that("describe_prior", {
 

@@ -1,4 +1,4 @@
-if (require("rstanarm") && require("brms") && require("insight")) {
+if (requiet("rstanarm") && requiet("brms") && requiet("insight")) {
   test_that("effective_sample", {
     brms_1 <- insight::download_model("brms_1")
     res <- effective_sample(brms_1)

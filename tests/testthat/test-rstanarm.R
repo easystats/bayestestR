@@ -1,6 +1,6 @@
 .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
 if (.runThisTest) {
-  if (require("rstanarm") && suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("httr") && require("insight")) {
+  if (requiet("rstanarm") && requiet("bayestestR") && requiet("httr") && requiet("insight")) {
     test_that("rstanarm", {
       skip_on_cran()
 

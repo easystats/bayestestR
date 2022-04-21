@@ -1,8 +1,7 @@
-if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("testthat")) {
+if (requiet("bayestestR") && requiet("testthat") && requiet("lme4")) {
 
   # bayesfactor_models BIC --------------------------------------------------
   test_that("bayesfactor_models BIC", {
-    skip_if_not_installed("lme4")
     set.seed(444)
     mo1 <- lme4::lmer(Sepal.Length ~ (1 | Species), data = iris)
     mo2 <- lme4::lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
@@ -19,10 +18,10 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 
     expect_equal(BFM1, BFM2)
     expect_equal(BFM1, BFM3)
-    expect_equal(BFM1, bayestestR::bayesfactor_models(list(mo2 = mo2, mo3 = mo3, mo4 = mo4, mo1 = mo1), denominator = 4))
+    expect_equal(BFM1, bayesfactor_models(list(mo2 = mo2, mo3 = mo3, mo4 = mo4, mo1 = mo1), denominator = 4))
 
     # only on same data!
-    expect_warning(bayestestR::bayesfactor_models(mo1, mo2, mo4_e))
+    expect_warning(bayesfactor_models(mo1, mo2, mo4_e))
 
     # update models
     expect_equal(update(BFM2, subset = c(1, 2))$log_BF, c(1, 57.3, 54.52), tolerance = 0.1)
@@ -67,58 +66,57 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 
 
   # bayesfactor_models STAN ---------------------------------------------
-  test_that("bayesfactor_models STAN", {
-    skip_on_cran()
-    skip_if_not_installed("rstanarm")
-    skip_if_not_installed("bridgesampling")
-    set.seed(333)
-    stan_bf_0 <- rstanarm::stan_glm(
-      Sepal.Length ~ 1,
-      data = iris,
-      refresh = 0,
-      iter = 500,
-      diagnostic_file = file.path(tempdir(), "df0.csv")
-    )
-    stan_bf_1 <- suppressWarnings(rstanarm::stan_glm(
-      Sepal.Length ~ Species,
-      data = iris,
-      refresh = 0,
-      iter = 500,
-      diagnostic_file = file.path(tempdir(), "df1.csv")
-    ))
+  if (requiet("rstanarm") && requiet("bridgesampling")) {
+    test_that("bayesfactor_models STAN", {
+      skip_on_cran()
+      set.seed(333)
+      stan_bf_0 <- rstanarm::stan_glm(
+        Sepal.Length ~ 1,
+        data = iris,
+        refresh = 0,
+        iter = 500,
+        diagnostic_file = file.path(tempdir(), "df0.csv")
+      )
+      stan_bf_1 <- suppressWarnings(rstanarm::stan_glm(
+        Sepal.Length ~ Species,
+        data = iris,
+        refresh = 0,
+        iter = 500,
+        diagnostic_file = file.path(tempdir(), "df1.csv")
+      ))
 
 
-    set.seed(333) # compare against bridgesampling
-    bridge_BF <- bridgesampling::bayes_factor(
-      bridgesampling::bridge_sampler(stan_bf_1),
-      bridgesampling::bridge_sampler(stan_bf_0)
-    )
+      set.seed(333) # compare against bridgesampling
+      bridge_BF <- bridgesampling::bayes_factor(
+        bridgesampling::bridge_sampler(stan_bf_1),
+        bridgesampling::bridge_sampler(stan_bf_0)
+      )
 
-    set.seed(333)
-    expect_warning(stan_models <- bayesfactor_models(stan_bf_0, stan_bf_1))
-    expect_s3_class(stan_models, "bayesfactor_models")
-    expect_equal(length(stan_models$log_BF), 2)
-    expect_equal(stan_models$log_BF[2], log(bridge_BF$bf), tolerance = 0.1)
-  })
+      set.seed(333)
+      expect_warning(stan_models <- bayesfactor_models(stan_bf_0, stan_bf_1))
+      expect_s3_class(stan_models, "bayesfactor_models")
+      expect_equal(length(stan_models$log_BF), 2)
+      expect_equal(stan_models$log_BF[2], log(bridge_BF$bf), tolerance = 0.1)
+    })
+  }
 
 
   # bayesfactor_inclusion ---------------------------------------------------
-  test_that("bayesfactor_inclusion | BayesFactor", {
-    set.seed(444)
-    skip_if_not_installed("BayesFactor")
-    # BayesFactor
-    ToothGrowth$dose <- as.factor(ToothGrowth$dose)
-    BF_ToothGrowth <- BayesFactor::anovaBF(len ~ dose * supp, ToothGrowth)
-    expect_equal(
-      bayesfactor_inclusion(BF_ToothGrowth),
-      bayesfactor_inclusion(bayesfactor_models(BF_ToothGrowth))
-    )
-  })
+  if (requiet("BayesFactor")) {
+    test_that("bayesfactor_inclusion | BayesFactor", {
+      set.seed(444)
+      # BayesFactor
+      ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+      BF_ToothGrowth <- BayesFactor::anovaBF(len ~ dose * supp, ToothGrowth)
+      expect_equal(
+        bayesfactor_inclusion(BF_ToothGrowth),
+        bayesfactor_inclusion(bayesfactor_models(BF_ToothGrowth))
+      )
+    })
+  }
 
   test_that("bayesfactor_inclusion | LMM", {
     # with random effects in all models:
-    skip_if_not_installed("lme4")
-
     expect_true(is.nan(bayesfactor_inclusion(BFM1)["1:Species", "log_BF"]))
 
     bfinc_all <- bayesfactor_inclusion(BFM4, match_models = FALSE)

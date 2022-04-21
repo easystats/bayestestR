@@ -1,9 +1,9 @@
-if (require("rstanarm") &&
-  require("BayesFactor") &&
-  require("testthat") &&
-  require("insight") &&
-  require("httr") &&
-  require("brms")) {
+if (requiet("rstanarm") &&
+  requiet("BayesFactor") &&
+  requiet("testthat") &&
+  requiet("insight") &&
+  requiet("httr") &&
+  requiet("brms")) {
 
   # bayesfactor_parameters data frame ---------------------------------------
 

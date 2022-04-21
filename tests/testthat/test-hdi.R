@@ -1,4 +1,4 @@
-if (require("rstanarm") && require("brms") && require("httr") && require("testthat") && require("BayesFactor")) {
+if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("testthat") && requiet("BayesFactor")) {
 
   # numeric -------------------------------
   test_that("hdi", {
@@ -20,7 +20,7 @@ if (require("rstanarm") && require("brms") && require("httr") && require("testth
 
   .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
   if (.runThisTest) {
-    if (require("insight")) {
+    if (requiet("insight")) {
       # stanreg ---------------------------
       m <- insight::download_model("stanreg_merMod_5")
       p <- insight::get_parameters(m, effects = "all")

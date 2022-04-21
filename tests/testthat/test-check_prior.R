@@ -1,10 +1,10 @@
 .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
 
 if (.runThisTest &&
-  require("rstanarm") &&
-  require("testthat") &&
-  require("bayestestR") &&
-  require("brms")) {
+  requiet("rstanarm") &&
+  requiet("testthat") &&
+  requiet("bayestestR") &&
+  requiet("brms")) {
   skip_on_cran()
 
   # stanreg --------------------------
