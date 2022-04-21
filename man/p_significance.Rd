@@ -3,7 +3,6 @@
 \name{p_significance}
 \alias{p_significance}
 \alias{p_significance.numeric}
-\alias{p_significance.emmGrid}
 \alias{p_significance.stanreg}
 \alias{p_significance.brmsfit}
 \title{Practical Significance (ps)}
@@ -11,8 +10,6 @@
 p_significance(x, ...)
 
 \method{p_significance}{numeric}(x, threshold = "default", ...)
-
-\method{p_significance}{emmGrid}(x, threshold = "default", ...)
 
 \method{p_significance}{stanreg}(
   x,

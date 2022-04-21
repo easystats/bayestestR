@@ -48,6 +48,10 @@ p_significance <- function(x, ...) {
 }
 
 
+#' @export
+p_significance.default <- function(x, ...) {
+  stop(insight::format_message(paste0("'p_significance()' is not yet implemented for objects of class '", class(posteriors)[1], "'.")), call. = FALSE)
+}
 
 
 #' @rdname p_significance
@@ -186,7 +190,6 @@ p_significance.blrm <- p_significance.bcplm
 p_significance.BGGM <- p_significance.bcplm
 
 
-#' @rdname p_significance
 #' @export
 p_significance.emmGrid <- function(x, threshold = "default", ...) {
   xdf <- insight::get_parameters(x)
@@ -198,10 +201,6 @@ p_significance.emmGrid <- function(x, threshold = "default", ...) {
 
 #' @export
 p_significance.emm_list <- p_significance.emmGrid
-
-
-
-
 
 
 
@@ -231,12 +230,8 @@ p_significance.stanreg <- function(x, threshold = "default", effects = c("fixed"
 #' @export
 p_significance.stanfit <- p_significance.stanreg
 
-
 #' @export
 p_significance.blavaan <- p_significance.stanreg
-
-
-
 
 
 #' @rdname p_significance
@@ -264,7 +259,7 @@ p_significance.brmsfit <- function(x, threshold = "default", effects = c("fixed"
 
 
 
-
+# methods ---------------------------
 
 #' @rdname as.numeric.p_direction
 #' @export
@@ -282,6 +277,8 @@ as.numeric.p_significance <- function(x, ...) {
 as.double.p_significance <- as.numeric.p_significance
 
 
+
+# helpers --------------------------
 
 #' @keywords internal
 .select_threshold_ps <- function(model = NULL, threshold = "default") {
