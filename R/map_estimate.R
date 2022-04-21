@@ -5,8 +5,8 @@
 #' @inheritParams hdi
 #' @inheritParams estimate_density
 #'
-#' @return A numeric value if `posterior` is a vector. If `posterior`
-#' is a model-object, returns a data frame with following columns:
+#' @return A numeric value if `x` is a vector. If `x` is a model-object,
+#' returns a data frame with following columns:
 #'   \itemize{
 #'     \item `Parameter` The model parameter(s), if `x` is a model-object. If `x` is a vector, this column is missing.
 #'     \item `MAP_Estimate` The MAP estimate for the posterior or each model parameter.
@@ -62,7 +62,6 @@ map_estimate.numeric <- function(x, precision = 2^10, method = "kernel", ...) {
 
 # other models -----------------------
 
-#' @rdname map_estimate
 #' @export
 map_estimate.bayesQR <- function(x, precision = 2^10, method = "kernel", ...) {
   x <- insight::get_parameters(x)

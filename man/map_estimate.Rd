@@ -3,7 +3,6 @@
 \name{map_estimate}
 \alias{map_estimate}
 \alias{map_estimate.numeric}
-\alias{map_estimate.bayesQR}
 \alias{map_estimate.stanreg}
 \alias{map_estimate.brmsfit}
 \alias{map_estimate.data.frame}
@@ -12,8 +11,6 @@
 map_estimate(x, precision = 2^10, method = "kernel", ...)
 
 \method{map_estimate}{numeric}(x, precision = 2^10, method = "kernel", ...)
-
-\method{map_estimate}{bayesQR}(x, precision = 2^10, method = "kernel", ...)
 
 \method{map_estimate}{stanreg}(
   x,
@@ -65,8 +62,8 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 }
 \value{
-A numeric value if \code{posterior} is a vector. If \code{posterior}
-is a model-object, returns a data frame with following columns:
+A numeric value if \code{x} is a vector. If \code{x} is a model-object,
+returns a data frame with following columns:
 \itemize{
 \item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
 \item \code{MAP_Estimate} The MAP estimate for the posterior or each model parameter.
