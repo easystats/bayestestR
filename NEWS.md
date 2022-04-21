@@ -10,7 +10,7 @@
 
 * Uncertainty estimation now defaults to `"eti"` (formerly was `"hdi"`).
 
-## Canges
+## Changes
 
 * *bayestestR* functions now support `draws` objects from package *posterior*.
 

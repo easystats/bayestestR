@@ -166,7 +166,7 @@ bci.sim <- function(x, ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
 bci.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
 
-  dat <- eti(xdf, ci = ci, verbose = verbose, ...)
+  dat <- bci(xdf, ci = ci, verbose = verbose, ...)
   attr(dat, "object_name") <- insight::safe_deparse(substitute(x))
   dat
 }
@@ -187,7 +187,7 @@ bci.stanreg <- function(x,
   component <- match.arg(component)
 
   out <- .prepare_output(
-    eti(
+    bci(
       insight::get_parameters(
         x,
         effects = effects,
@@ -225,7 +225,7 @@ bci.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
   component <- match.arg(component)
 
   out <- .prepare_output(
-    eti(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose, ...),
+    bci(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose, ...),
     insight::clean_parameters(x)
   )
 
@@ -239,7 +239,7 @@ bci.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
 #' @rdname bci
 #' @export
 bci.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
-  out <- eti(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
+  out <- bci(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
   attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
 }
@@ -248,7 +248,7 @@ bci.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 bci.get_predicted <- function(x, ...) {
   if ("iterations" %in% names(attributes(x))) {
-    out <- hdi(as.data.frame(t(attributes(x)$iterations)), ...)
+    out <- bci(as.data.frame(t(attributes(x)$iterations)), ...)
   } else {
     stop("No iterations present in the output.")
   }
