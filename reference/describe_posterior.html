@@ -170,38 +170,6 @@
   BF <span class="op">=</span> <span class="fl">1</span>,
   priors <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for MCMCglmm</span>
-<span class="fu">describe_posterior</span><span class="op">(</span>
-  <span class="va">posteriors</span>,
-  centrality <span class="op">=</span> <span class="st">"median"</span>,
-  dispersion <span class="op">=</span> <span class="cn">FALSE</span>,
-  ci <span class="op">=</span> <span class="fl">0.95</span>,
-  ci_method <span class="op">=</span> <span class="st">"eti"</span>,
-  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"p_direction"</span>, <span class="st">"rope"</span><span class="op">)</span>,
-  rope_range <span class="op">=</span> <span class="st">"default"</span>,
-  rope_ci <span class="op">=</span> <span class="fl">0.95</span>,
-  keep_iterations <span class="op">=</span> <span class="cn">FALSE</span>,
-  diagnostic <span class="op">=</span> <span class="st">"ESS"</span>,
-  parameters <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for BFBayesFactor</span>
-<span class="fu">describe_posterior</span><span class="op">(</span>
-  <span class="va">posteriors</span>,
-  centrality <span class="op">=</span> <span class="st">"median"</span>,
-  dispersion <span class="op">=</span> <span class="cn">FALSE</span>,
-  ci <span class="op">=</span> <span class="fl">0.95</span>,
-  ci_method <span class="op">=</span> <span class="st">"eti"</span>,
-  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"p_direction"</span>, <span class="st">"rope"</span>, <span class="st">"bf"</span><span class="op">)</span>,
-  rope_range <span class="op">=</span> <span class="st">"default"</span>,
-  rope_ci <span class="op">=</span> <span class="fl">0.95</span>,
-  keep_iterations <span class="op">=</span> <span class="cn">FALSE</span>,
-  priors <span class="op">=</span> <span class="cn">TRUE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -268,8 +236,6 @@ that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_
 filtered by default, so only parameters that typically appear in the
 <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></dd>
-<dt>verbose</dt>
-<dd><p>Toggle off warnings.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
