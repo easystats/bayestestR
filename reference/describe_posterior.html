@@ -89,18 +89,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">describe_posterior</span><span class="op">(</span>
-  <span class="va">posteriors</span>,
-  centrality <span class="op">=</span> <span class="st">"median"</span>,
-  dispersion <span class="op">=</span> <span class="cn">FALSE</span>,
-  ci <span class="op">=</span> <span class="fl">0.95</span>,
-  ci_method <span class="op">=</span> <span class="st">"eti"</span>,
-  test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"p_direction"</span>, <span class="st">"rope"</span><span class="op">)</span>,
-  rope_range <span class="op">=</span> <span class="st">"default"</span>,
-  rope_ci <span class="op">=</span> <span class="fl">0.95</span>,
-  keep_iterations <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">describe_posterior</span><span class="op">(</span><span class="va">posteriors</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for numeric</span>
 <span class="fu">describe_posterior</span><span class="op">(</span>
@@ -220,6 +209,8 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>posteriors</dt>
 <dd><p>A vector, data frame or model of posterior draws.</p></dd>
+<dt>...</dt>
+<dd><p>Additional arguments to be passed to or from methods.</p></dd>
 <dt>centrality</dt>
 <dd><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></dd>
 <dt>dispersion</dt>
@@ -253,8 +244,6 @@ proportion of HDI, to use for the percentage in ROPE.</p></dd>
 bootstrapped or Bayesian models. They will be added as additional columns
 named <code>iter_1, iter_2, ...</code>. You can reshape them to a long format by
 running <code><a href="reshape_iterations.html">reshape_iterations()</a></code>.</p></dd>
-<dt>...</dt>
-<dd><p>Additional arguments to be passed to or from methods.</p></dd>
 <dt>bf_prior</dt>
 <dd><p>Distribution representing a prior for the computation of
 Bayes factors / SI. Used if the input is a posterior, otherwise (in the
