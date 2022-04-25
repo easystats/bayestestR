@@ -101,7 +101,7 @@ Click on the buttons above to access the package [documentation](https://easysta
 
 In the Bayesian framework, parameters are estimated in a probabilistic fashion as *distributions*. These distributions can be summarised and described by reporting four types of indices:
 
-- [**Centrality**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
+- [**Centrality**](https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html)
   - `mean()`, `median()` or [`map_estimate()`](https://easystats.github.io/bayestestR/reference/map_estimate.html) for an estimation of the mode.
   - [`point_estimate()`](https://easystats.github.io/bayestestR/reference/point_estimate.html) can be used to get them at once and can be run directly on models.
   

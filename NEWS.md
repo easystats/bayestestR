@@ -1,4 +1,4 @@
-# bayestestR 0.12.5
+# bayestestR 0.12.1
 
 ## Breaking
 

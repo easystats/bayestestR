@@ -43,7 +43,7 @@ as well as information characterizing the estimation uncertainty (the
 Additionally, one can also report indices of effect existence and/or
 significance.
 
-Based on the previous [**comparison of point-estimates**](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
+Based on the previous [**comparison of point-estimates**](https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html)
 and [**indices of effect existence**](https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full),
 we can draw the following recommendations.
 
