@@ -91,8 +91,8 @@ Click on the buttons above to access the package [documentation](https://easysta
 - [Probability of Direction (pd)](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
 - [Region of Practical Equivalence (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
 - [Bayes Factors (BF)](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
-- [Comparison of Point-Estimates](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
-- [Comparison of Indices of Effect Existence](https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full)
+- [Comparison of Point-Estimates](https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html)
+- [Comparison of Indices of Effect Existence](https://doi.org/10.3389/fpsyg.2019.02767)
 - [Reporting Guidelines](https://easystats.github.io/bayestestR/articles/guidelines.html)
 
 

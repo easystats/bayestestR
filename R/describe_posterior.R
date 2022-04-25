@@ -44,7 +44,7 @@
 #'
 #' @references
 #' \itemize{
-#'   \item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., \& Lüdecke, D. (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*. Frontiers in Psychology 2019;10:2767. [10.3389/fpsyg.2019.02767](https://doi.org/10.3389/fpsyg.2019.02767)
+#'   \item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., \& Lüdecke, D. (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 #'   \item [Region of Practical Equivalence (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
 #'   \item [Bayes factors](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
 #' }

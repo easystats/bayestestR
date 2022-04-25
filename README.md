@@ -91,9 +91,9 @@ these vignettes:
 -   [Bayes Factors
     (BF)](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
 -   [Comparison of
-    Point-Estimates](https://easystats.github.io/bayestestR/articles/indicesEstimationComparison.html)
+    Point-Estimates](https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html)
 -   [Comparison of Indices of Effect
-    Existence](https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full)
+    Existence](https://doi.org/10.3389/fpsyg.2019.02767)
 -   [Reporting
     Guidelines](https://easystats.github.io/bayestestR/articles/guidelines.html)
 
@@ -159,9 +159,9 @@ describe_posterior(
 )
 ## Summary of Posterior Distribution
 ## 
-## Parameter |    Median |        95% CI |     pd |   ps
-## -----------------------------------------------------
-## Posterior | -5.48e-03 | [-1.90, 1.97] | 50.19% | 0.46
+## Parameter | Median |        95% CI |     pd |   ps
+## --------------------------------------------------
+## Posterior |  -0.01 | [-1.96, 1.95] | 50.48% | 0.46
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -458,7 +458,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.37
+## [1] 0.41
 ```
 
 ## Code of Conduct
