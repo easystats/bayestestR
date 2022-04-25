@@ -179,10 +179,13 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
     out <- .estimate_density_df(x = x, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, select = select, ...)
   } else {
     # Deal with at- grouping --------
+
     groups <- insight::get_datagrid(x[, at, drop = FALSE], at = at) # Get combinations
     out <- data.frame()
     for (row in 1:nrow(groups)) {
-      subdata <- .estimate_density_df(datawizard::data_match(x, groups[row, , drop = FALSE], return_indices = FALSE), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, select = select, ...)
+      subdata <- datawizard::data_match(x, groups[row, , drop = FALSE])
+      subdata[names(groups)] <- NULL
+      subdata <- .estimate_density_df(subdata, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, select = select, ...)
       out <- rbind(out, merge(subdata, groups[row, , drop = FALSE]))
     }
   }
