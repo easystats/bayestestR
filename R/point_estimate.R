@@ -8,7 +8,7 @@
 #' @param ... Additional arguments to be passed to or from methods.
 #' @inheritParams hdi
 #'
-#' @references Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., \& Lüdecke, D. (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*. Frontiers in Psychology 2019;10:2767. [10.3389/fpsyg.2019.02767](https://doi.org/10.3389/fpsyg.2019.02767)
+#' @references Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., \& Lüdecke, D. (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'

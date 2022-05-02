@@ -110,5 +110,5 @@ point_estimate(bf, centrality = c("median", "MAP"))
 
 }
 \references{
-Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., \& Lüdecke, D. (2019). \emph{Indices of Effect Existence and Significance in the Bayesian Framework}. Frontiers in Psychology 2019;10:2767. \href{https://doi.org/10.3389/fpsyg.2019.02767}{10.3389/fpsyg.2019.02767}
+Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., \& Lüdecke, D. (2019). \emph{Indices of Effect Existence and Significance in the Bayesian Framework}. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 }
