@@ -1,3 +1,9 @@
+# bayestestR 0.12.2
+
+## New functions
+
+* `p_to_bf()`, to convert p-values into Bayes factors.
+
 # bayestestR 0.12.1
 
 ## Breaking
