@@ -24,7 +24,6 @@ Convert p-values to Bayes Factors
 if (requireNamespace("parameters", quietly = TRUE)) {
   data(iris)
   model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
-  parameters::p_value(model)
   p_to_bf(model)
 }
 }
