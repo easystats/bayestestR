@@ -20,11 +20,11 @@ csl: apa.csl
 library(knitr)
 
 if (!requireNamespace("see", quietly = TRUE) ||
-  !requireNamespace("dplyr", quietly = TRUE) ||
   !requireNamespace("parameters", quietly = TRUE) ||
   !requireNamespace("stringr", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE) ||
-  !requireNamespace("tidyr", quietly = TRUE)) {
+  !requireNamespace("datawizard", quietly = TRUE) ||
+  !requireNamespace("poorman", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
@@ -96,8 +96,8 @@ code used for generation is available
 
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2)
-library(dplyr)
-library(tidyr)
+library(poorman)
+library(datawizard)
 library(stringr)
 library(see)
 library(parameters)
@@ -114,7 +114,11 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_stu
 ```{r, message=FALSE, warning=FALSE}
 df %>%
   select(error, true_effect, outcome_type, Coefficient, Median, Mean, MAP) %>%
-  gather(estimate, value, -error, -true_effect, -outcome_type) %>%
+  reshape_longer(
+    select = -c("error", "true_effect", "outcome_type"),
+    names_to = "estimate",
+    values_to = "value"
+  ) %>%
   mutate(temp = as.factor(cut(error, 10, labels = FALSE))) %>%
   group_by(temp) %>%
   mutate(error_group = round(mean(error), 1)) %>%
@@ -141,7 +145,11 @@ df %>%
 ```{r, message=FALSE, warning=FALSE}
 df %>%
   select(sample_size, true_effect, outcome_type, Coefficient, Median, Mean, MAP) %>%
-  gather(estimate, value, -sample_size, -true_effect, -outcome_type) %>%
+  reshape_longer(
+    select = -c("sample_size", "true_effect", "outcome_type"),
+    names_to = "estimate",
+    values_to = "value"
+  ) %>%
   mutate(temp = as.factor(cut(sample_size, 10, labels = FALSE))) %>%
   group_by(temp) %>%
   mutate(size_group = round(mean(sample_size))) %>%
@@ -172,9 +180,10 @@ their interaction with noise and sample size.
 ```{r, message=FALSE, warning=FALSE}
 df %>%
   select(sample_size, error, true_effect, outcome_type, Coefficient, Median, Mean, MAP) %>%
-  pivot_longer(
-    c(-sample_size, -error, -true_effect, -outcome_type),
-    names_to = "estimate"
+  reshape_longer(
+    select = -c("sample_size", "error", "true_effect", "outcome_type"),
+    names_to = "estimate",
+    values_to = "value"
   ) %>%
   glm(true_effect ~ outcome_type / estimate / value, data = ., family = "binomial") %>%
   parameters(df_method = "wald") %>%
@@ -265,7 +274,11 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_stu
 ```{r, message=FALSE, warning=FALSE}
 df %>%
   select(iterations, true_effect, outcome_type, beta, Median, Mean, MAP) %>%
-  gather(estimate, value, -iterations, -true_effect, -outcome_type) %>%
+  reshape_longer(
+    select = -c("iterations", "true_effect", "outcome_type"),
+    names_to = "estimate",
+    values_to = "value"
+  ) %>%
   mutate(temp = as.factor(cut(iterations, 5, labels = FALSE))) %>%
   group_by(temp) %>%
   mutate(iterations_group = round(mean(iterations), 1)) %>%
@@ -289,7 +302,11 @@ df %>%
 df %>%
   mutate(warmup = warmup / iterations) %>%
   select(warmup, true_effect, outcome_type, beta, Median, Mean, MAP) %>%
-  gather(estimate, value, -warmup, -true_effect, -outcome_type) %>%
+  reshape_longer(
+    select = -c("warmup", "true_effect", "outcome_type"),
+    names_to = "estimate",
+    values_to = "value"
+  ) %>%
   mutate(temp = as.factor(cut(warmup, 3, labels = FALSE))) %>%
   group_by(temp) %>%
   mutate(warmup_group = round(mean(warmup), 1)) %>%

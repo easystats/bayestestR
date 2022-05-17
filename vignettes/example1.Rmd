@@ -38,7 +38,7 @@ options(digits = 2)
 set.seed(333)
 
 if (!requireNamespace("rstanarm", quietly = TRUE) ||
-  !requireNamespace("dplyr", quietly = TRUE) ||
+  !requireNamespace("poorman", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
@@ -327,7 +327,7 @@ interest for us (*we do have peculiar interests*): **meat meals** and
 ### Data preparation and model fitting
 
 ```{r }
-library(dplyr)
+library(poorman)
 
 # We keep only rows for which feed is meatmeal or sunflower
 data <- filter(chickwts, feed %in% c("meatmeal", "sunflower"))

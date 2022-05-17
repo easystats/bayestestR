@@ -151,7 +151,7 @@ summary(model)
 <!-- report(model) -->
 <!-- ``` -->
 <!-- ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=NA} -->
-<!-- library(dplyr) -->
+<!-- library(poorman) -->
 
 <!-- lm(Sepal.Length ~ Petal.Length, data=iris) %>%  -->
 <!--   report() %>%  -->

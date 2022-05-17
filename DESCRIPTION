@@ -78,7 +78,6 @@ Suggests:
     blavaan,
     bridgesampling,
     brms,
-    dplyr,
     effectsize,
     emmeans,
     gamm4,
@@ -110,7 +109,6 @@ Suggests:
     spelling,
     stringr,
     testthat,
-    tidyr,
     tweedie
 License: GPL-3
 URL: https://easystats.github.io/bayestestR/

@@ -24,7 +24,7 @@ This vignette can be referred to by citing the package:
 
 ```{r , include=FALSE}
 if (!requireNamespace("see", quietly = TRUE) ||
-  !requireNamespace("dplyr", quietly = TRUE) ||
+  !requireNamespace("poorman", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE) ||
   !requireNamespace("performance", quietly = TRUE) ||
   !requireNamespace("BayesFactor", quietly = TRUE) ||
@@ -206,7 +206,7 @@ observations corresponding to the *setosa* specie, and we will then visualise
 the observations and the distribution of the `Sepal.Width` variable.
 
 ```{r }
-library(dplyr)
+library(poorman)
 library(ggplot2)
 
 # Select only two relevant species
