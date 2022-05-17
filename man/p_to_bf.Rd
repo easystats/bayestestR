@@ -2,20 +2,23 @@
 % Please edit documentation in R/p_to_bf.R
 \name{p_to_bf}
 \alias{p_to_bf}
+\alias{p_to_bf.numeric}
+\alias{p_to_bf.default}
 \title{Convert p-values to Bayes Factors}
 \usage{
-p_to_bf(x, n_obs = NULL, log = FALSE)
+p_to_bf(x, log = FALSE, ...)
+
+\method{p_to_bf}{numeric}(x, log = FALSE, n_obs = NULL, ...)
+
+\method{p_to_bf}{default}(x, log = FALSE, ...)
 }
 \arguments{
 \item{x}{A (frequentist) model object, or a (numeric) vector of p-values.}
 
-\item{n_obs}{Number of observations. When \code{x} is a model object, this is
-automatically extracted from the model via \code{insight::n_obs()}.}
-
-\item{log}{If \code{TRUE}, return the \code{log(BF)}.}
+\item{n_obs}{Number of observations. Either length 1, or same length as \code{p}.}
 }
 \value{
-The Bayes Factors corresponding to the p-values.
+A data frame with the p-values and Bayes factors (against the null).
 }
 \description{
 Convert p-values to Bayes Factors
@@ -26,7 +29,15 @@ if (requireNamespace("parameters", quietly = TRUE)) {
   model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
   p_to_bf(model)
 }
+
 }
 \references{
-Wagenmakers, E.-J. (2022). Approximate objective Bayes factors from p-values and sample size: The 3p(sqrt(n)) rule. Preprint available on ArXiv: https://psyarxiv.com/egydq
+\itemize{
+\item Wagenmakers, E.J. (2022). Approximate objective Bayes factors from p-values
+and sample size: The 3p(sqrt(n)) rule. Preprint available on ArXiv:
+https://psyarxiv.com/egydq
+}
+}
+\seealso{
+\code{\link[=bic_to_bf]{bic_to_bf()}}
 }
