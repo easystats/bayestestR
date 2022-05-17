@@ -30,7 +30,7 @@ options(digits=2)
 
 if (!requireNamespace("ggplot2", quietly = TRUE) || 
     !requireNamespace("logspline", quietly = TRUE) ||
-    !requireNamespace("dplyr", quietly = TRUE)) {
+    !requireNamespace("poorman", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
@@ -100,7 +100,7 @@ the `method` argument of the `ci()` function. What is the difference? Let's see:
 
 ```{r warning=FALSE, message=FALSE}
 library(bayestestR)
-library(dplyr)
+library(poorman)
 library(ggplot2)
 
 # Generate a normal distribution

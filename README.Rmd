@@ -18,7 +18,7 @@ editor_options:
 
 ```{r, echo = FALSE, warning=FALSE, message=FALSE}
 library(ggplot2)
-library(dplyr)
+library(poorman)
 library(bayestestR)
 
 options(digits=2)
