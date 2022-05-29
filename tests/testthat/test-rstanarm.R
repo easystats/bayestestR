@@ -64,7 +64,7 @@ if (.runThisTest) {
       set.seed(333)
       model <- insight::download_model("stanreg_merMod_3")
 
-      out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean")
+      out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean")
       s <- summary(model)
       expect_identical(colnames(out), c(
         "Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
@@ -81,7 +81,7 @@ if (.runThisTest) {
       set.seed(333)
       model <- insight::download_model("stanmvreg_1")
 
-      out <- describe_posterior(model, effects = "fixed", components = "all", centrality = "mean", test = NULL)
+      out <- describe_posterior(model, effects = "fixed", component = "all", centrality = "mean", test = NULL)
       s <- summary(model)
       expect_identical(colnames(out), c(
         "Parameter", "Response", "Mean", "CI", "CI_low", "CI_high",
@@ -98,7 +98,7 @@ if (.runThisTest) {
       set.seed(333)
       model <- insight::download_model("stanmvreg_1")
 
-      out <- describe_posterior(model, effects = "fixed", components = "all", centrality = "mean", test = NULL, priors = TRUE)
+      out <- describe_posterior(model, effects = "fixed", component = "all", centrality = "mean", test = NULL, priors = TRUE)
       expect_identical(colnames(out), c(
         "Parameter", "Response", "Mean", "CI", "CI_low", "CI_high",
         "Rhat", "ESS", "Prior_Distribution", "Prior_Location",

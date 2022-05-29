@@ -19,7 +19,7 @@ if (.runThisTest && requiet("brms") && requiet("testthat") && requiet("insight")
     expect_equal(colnames(hdi(model, effects = "all")), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
     # expect_equal(nrow(equivalence_test(model)), 2)
 
-    out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean")
+    out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean")
     suppressWarnings(
       s <- summary(model)
     )
@@ -41,7 +41,7 @@ if (.runThisTest && requiet("brms") && requiet("testthat") && requiet("insight")
     set.seed(333)
     model <- insight::download_model("brms_1")
 
-    out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean")
+    out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean")
     s <- summary(model)
     expect_identical(colnames(out), c(
       "Parameter", "Mean", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
@@ -58,7 +58,7 @@ if (.runThisTest && requiet("brms") && requiet("testthat") && requiet("insight")
     set.seed(333)
     model <- insight::download_model("brms_mv_2")
 
-    out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean", test = NULL)
+    out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean", test = NULL)
     s <- suppressWarnings(summary(model))
     expect_identical(colnames(out), c(
       "Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
@@ -74,7 +74,7 @@ if (.runThisTest && requiet("brms") && requiet("testthat") && requiet("insight")
     set.seed(333)
     model <- insight::download_model("brms_2")
 
-    out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean", test = NULL)
+    out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean", test = NULL)
     s <- summary(model)
     expect_equal(as.vector(s$fixed[, 1, drop = TRUE]), out$Mean, tolerance = 1e-3)
     expect_equal(as.vector(s$fixed[, 5, drop = TRUE]), out$Rhat, tolerance = 1e-1)
