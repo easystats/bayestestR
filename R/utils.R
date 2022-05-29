@@ -47,6 +47,9 @@
 
 #' @keywords internal
 .prepare_output <- function(temp, cleaned_parameters, is_stan_mv = FALSE, is_brms_mv = FALSE) {
+  if (is.null(cleaned_parameters)) {
+    return(temp)
+  }
   if (isTRUE(is_stan_mv)) {
     temp$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", temp$Parameter)
     for (i in unique(temp$Response)) {

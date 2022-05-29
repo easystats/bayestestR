@@ -128,6 +128,12 @@ describe_posterior.default <- function(posteriors, ...) {
     return(NULL)
   }
 
+  if (!is.data.frame(x)) {
+    cleaned_parameters <- insight::clean_parameters(x)
+    x <- insight::get_parameters(x, ...)
+  } else {
+    cleaned_parameters <- NULL
+  }
 
   # Arguments fixes
   if (!is.null(centrality) && length(centrality) == 1 && (centrality == "none" || centrality == FALSE)) centrality <- NULL
@@ -321,6 +327,21 @@ describe_posterior.default <- function(posteriors, ...) {
     )
   }
 
+  # we need to add Effects and Component columns for model objects,
+  # but only once - so check for first valid object
+
+  if (ncol(estimates) > 1) {
+    estimates <- .prepare_output(estimates, cleaned_parameters)
+  } else if (ncol(uncertainty) > 1) {
+    uncertainty <- .prepare_output(uncertainty, cleaned_parameters)
+  } else if (any(stats::complete.cases(test_pmap))) {
+    test_pmap <- .prepare_output(test_pmap, cleaned_parameters)
+  } else if (any(stats::complete.cases(test_pd))) {
+    test_pd <- .prepare_output(test_pd, cleaned_parameters)
+  } else if (any(stats::complete.cases(test_rope))) {
+    test_rope <- .prepare_output(test_rope, cleaned_parameters)
+  }
+
 
   # for data frames or numeric, and even for some models, we don't
   # have the "Effects" or "Component" column for all data frames.
@@ -368,7 +389,6 @@ describe_posterior.default <- function(posteriors, ...) {
   # merge all data frames
   merge_by <- c("Parameter", "Effects", "Component", "Response")
   # merge_by <- intersect(merge_by, colnames(estimates))
-
   out <- merge(estimates, uncertainty, by = merge_by, all = TRUE)
   out <- merge(out, test_pmap, by = merge_by, all = TRUE)
   out <- merge(out, test_pd, by = merge_by, all = TRUE)
@@ -377,7 +397,6 @@ describe_posterior.default <- function(posteriors, ...) {
   out <- merge(out, test_rope, by = merge_by, all = TRUE)
   out <- merge(out, test_bf, by = merge_by, all = TRUE)
   out <- out[!is.na(out$Parameter), ]
-
 
   # check which columns can be removed at the end. In any case, we don't
   # need .rowid in the returned data frame, and when the Effects or Component
@@ -743,15 +762,9 @@ describe_posterior.stanreg <- function(posteriors,
 
   effects <- match.arg(effects)
   component <- match.arg(component)
-  cleaned_parameters <- insight::clean_parameters(posteriors)
-
-  draws <- .prepare_output(
-    insight::get_parameters(posteriors, effects = effects, component = component, parameters = parameters),
-    cleaned_parameters
-  )
 
   out <- .describe_posterior(
-    draws,
+    posteriors,
     centrality = centrality,
     dispersion = dispersion,
     ci = ci,
@@ -931,19 +944,12 @@ describe_posterior.brmsfit <- function(posteriors,
                                        ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-  cleaned_parameters <- insight::clean_parameters(posteriors)
-
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) | "si" %in% tolower(ci_method)) & is.null(bf_prior)) {
     bf_prior <- unupdate(posteriors)
   }
 
-  draws <- .prepare_output(
-    insight::get_parameters(posteriors, effects = effects, component = component, parameters = parameters),
-    cleaned_parameters
-  )
-
   out <- .describe_posterior(
-    draws,
+    posteriors,
     centrality = centrality,
     dispersion = dispersion,
     ci = ci,

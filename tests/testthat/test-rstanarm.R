@@ -48,7 +48,7 @@ if (.runThisTest) {
       set.seed(333)
       model <- insight::download_model("stanreg_glm_3")
 
-      out <- describe_posterior(model, effects = "all", components = "all", centrality = "mean")
+      out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean")
       s <- summary(model)
       expect_identical(colnames(out), c(
         "Parameter", "Mean", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
