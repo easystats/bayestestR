@@ -925,13 +925,19 @@ describe_posterior.brmsfit <- function(posteriors,
                                        ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
+  cleaned_parameters <- insight::clean_parameters(posteriors)
 
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) | "si" %in% tolower(ci_method)) & is.null(bf_prior)) {
     bf_prior <- unupdate(posteriors)
   }
 
+  draws <- .prepare_output(
+    insight::get_parameters(posteriors, effects = effects, component = component, parameters = parameters),
+    cleaned_parameters
+  )
+
   out <- .describe_posterior(
-    posteriors,
+    draws,
     centrality = centrality,
     dispersion = dispersion,
     ci = ci,
