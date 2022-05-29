@@ -743,9 +743,15 @@ describe_posterior.stanreg <- function(posteriors,
 
   effects <- match.arg(effects)
   component <- match.arg(component)
+  cleaned_parameters <- insight::clean_parameters(posteriors)
+
+  draws <- .prepare_output(
+    insight::get_parameters(posteriors, effects = effects, component = component, parameters = parameters),
+    cleaned_parameters
+  )
 
   out <- .describe_posterior(
-    posteriors,
+    draws,
     centrality = centrality,
     dispersion = dispersion,
     ci = ci,
