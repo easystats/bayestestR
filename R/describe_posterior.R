@@ -129,6 +129,7 @@ describe_posterior.default <- function(posteriors, ...) {
   }
 
   if (!is.data.frame(x)) {
+    is_stanmvreg <- inherits(x, "stanmvreg")
     cleaned_parameters <- insight::clean_parameters(x)
     x <- insight::get_parameters(x, ...)
   } else {
@@ -147,7 +148,7 @@ describe_posterior.default <- function(posteriors, ...) {
     estimates <- .prepare_output(
       point_estimate(x, centrality = centrality, dispersion = dispersion, ...),
       cleaned_parameters,
-      inherits(x, "stanmvreg")
+      is_stanmvreg
     )
     if (!"Parameter" %in% names(estimates)) {
       estimates <- cbind(data.frame("Parameter" = "Posterior"), estimates)
@@ -169,7 +170,7 @@ describe_posterior.default <- function(posteriors, ...) {
     uncertainty <- .prepare_output(
       uncertainty,
       cleaned_parameters,
-      inherits(x, "stanmvreg")
+      is_stanmvreg
     )
 
     if (!"Parameter" %in% names(uncertainty)) {
@@ -207,7 +208,7 @@ describe_posterior.default <- function(posteriors, ...) {
       test_pmap <- .prepare_output(
         p_map(x, ...),
         cleaned_parameters,
-        inherits(x, "stanmvreg")
+        is_stanmvreg
       )
       if (!is.data.frame(test_pmap)) test_pmap <- data.frame("Parameter" = "Posterior", "p_map" = test_pmap)
     } else {
@@ -221,7 +222,7 @@ describe_posterior.default <- function(posteriors, ...) {
       test_pd <- .prepare_output(
         p_direction(x, ...),
         cleaned_parameters,
-        inherits(x, "stanmvreg")
+        is_stanmvreg
       )
       if (!is.data.frame(test_pd)) test_pd <- data.frame("Parameter" = "Posterior", "pd" = test_pd)
     } else {
@@ -234,7 +235,7 @@ describe_posterior.default <- function(posteriors, ...) {
       test_prope <- .prepare_output(
         p_rope(x, range = rope_range, ...),
         cleaned_parameters,
-        inherits(x, "stanmvreg")
+        is_stanmvreg
       )
       if (!"Parameter" %in% names(test_prope)) {
         test_prope <- cbind(data.frame("Parameter" = "Posterior"), test_prope)
@@ -249,7 +250,7 @@ describe_posterior.default <- function(posteriors, ...) {
       test_psig <- .prepare_output(
         p_significance(x, threshold = rope_range, ...),
         cleaned_parameters,
-        inherits(x, "stanmvreg")
+        is_stanmvreg
       )
       if (!is.data.frame(test_psig)) test_psig <- data.frame("Parameter" = "Posterior", "ps" = test_psig)
     } else {
@@ -263,7 +264,7 @@ describe_posterior.default <- function(posteriors, ...) {
       test_rope <- .prepare_output(
         rope(x, range = rope_range, ci = rope_ci, ...),
         cleaned_parameters,
-        inherits(x, "stanmvreg")
+        is_stanmvreg
       )
       if (!"Parameter" %in% names(test_rope)) {
         test_rope <- cbind(data.frame("Parameter" = "Posterior"), test_rope)
@@ -291,7 +292,7 @@ describe_posterior.default <- function(posteriors, ...) {
           ...
         ),
         cleaned_parameters,
-        inherits(x, "stanmvreg")
+        is_stanmvreg
       )
       test_equi$Cleaned_Parameter <- NULL
 
@@ -311,7 +312,7 @@ describe_posterior.default <- function(posteriors, ...) {
       test_bf <- .prepare_output(
         bayesfactor_parameters(x, prior = bf_prior, ...),
         cleaned_parameters,
-        inherits(x, "stanmvreg")
+        is_stanmvreg
       )
       if (!"Parameter" %in% names(test_bf)) {
         test_bf <- cbind(data.frame("Parameter" = "Posterior"), test_bf)
