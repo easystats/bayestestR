@@ -962,6 +962,7 @@ describe_posterior.brmsfit <- function(posteriors,
                                        ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
+
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) | "si" %in% tolower(ci_method)) & is.null(bf_prior)) {
     bf_prior <- unupdate(posteriors)
   }
