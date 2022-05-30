@@ -435,11 +435,7 @@ describe_posterior.default <- function(posteriors, ...) {
   # Add iterations
   if (keep_iterations == TRUE) {
     row_order <- out$Parameter
-    if (insight::is_model(x)) {
-      iter <- as.data.frame(t(insight::get_parameters(x, ...)))
-    } else {
-      iter <- as.data.frame(t(as.data.frame(x, ...)))
-    }
+    iter <- as.data.frame(t(as.data.frame(x, ...)))
     names(iter) <- paste0("iter_", 1:ncol(iter))
     iter$Parameter <- row.names(iter)
     out <- merge(out, iter, all.x = TRUE, by = "Parameter")
