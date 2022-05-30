@@ -144,7 +144,11 @@ describe_posterior.default <- function(posteriors, ...) {
   # Point-estimates
 
   if (!is.null(centrality)) {
-    estimates <- point_estimate(x, centrality = centrality, dispersion = dispersion, ...)
+    estimates <- .prepare_output(
+      point_estimate(x, centrality = centrality, dispersion = dispersion, ...),
+      cleaned_parameters,
+      inherits(x, "stanmvreg")
+    )
     if (!"Parameter" %in% names(estimates)) {
       estimates <- cbind(data.frame("Parameter" = "Posterior"), estimates)
     }
@@ -162,6 +166,11 @@ describe_posterior.default <- function(posteriors, ...) {
     } else {
       uncertainty <- ci(x, ci = ci, method = ci_method, ...)
     }
+    uncertainty <- .prepare_output(
+      uncertainty,
+      cleaned_parameters,
+      inherits(x, "stanmvreg")
+    )
 
     if (!"Parameter" %in% names(uncertainty)) {
       uncertainty <- cbind(data.frame("Parameter" = "Posterior"), uncertainty)
@@ -195,7 +204,11 @@ describe_posterior.default <- function(posteriors, ...) {
     # MAP-based p-value
 
     if (any(c("p_map", "p_pointnull") %in% test)) {
-      test_pmap <- p_map(x, ...)
+      test_pmap <- .prepare_output(
+        p_map(x, ...),
+        cleaned_parameters,
+        inherits(x, "stanmvreg")
+      )
       if (!is.data.frame(test_pmap)) test_pmap <- data.frame("Parameter" = "Posterior", "p_map" = test_pmap)
     } else {
       test_pmap <- data.frame("Parameter" = NA)
@@ -205,7 +218,11 @@ describe_posterior.default <- function(posteriors, ...) {
     # Probability of direction
 
     if (any(c("pd", "p_direction", "pdir", "mpe") %in% test)) {
-      test_pd <- p_direction(x, ...)
+      test_pd <- .prepare_output(
+        p_direction(x, ...),
+        cleaned_parameters,
+        inherits(x, "stanmvreg")
+      )
       if (!is.data.frame(test_pd)) test_pd <- data.frame("Parameter" = "Posterior", "pd" = test_pd)
     } else {
       test_pd <- data.frame("Parameter" = NA)
@@ -214,7 +231,11 @@ describe_posterior.default <- function(posteriors, ...) {
     # Probability of rope
 
     if (any(c("p_rope") %in% test)) {
-      test_prope <- p_rope(x, range = rope_range, ...)
+      test_prope <- .prepare_output(
+        p_rope(x, range = rope_range, ...),
+        cleaned_parameters,
+        inherits(x, "stanmvreg")
+      )
       if (!"Parameter" %in% names(test_prope)) {
         test_prope <- cbind(data.frame("Parameter" = "Posterior"), test_prope)
       }
@@ -225,7 +246,11 @@ describe_posterior.default <- function(posteriors, ...) {
     # Probability of significance
 
     if (any(c("ps", "p_sig", "p_significance") %in% test)) {
-      test_psig <- p_significance(x, threshold = rope_range, ...)
+      test_psig <- .prepare_output(
+        p_significance(x, threshold = rope_range, ...),
+        cleaned_parameters,
+        inherits(x, "stanmvreg")
+      )
       if (!is.data.frame(test_psig)) test_psig <- data.frame("Parameter" = "Posterior", "ps" = test_psig)
     } else {
       test_psig <- data.frame("Parameter" = NA)
@@ -235,8 +260,11 @@ describe_posterior.default <- function(posteriors, ...) {
     # ROPE
 
     if (any(c("rope") %in% test)) {
-      test_rope <- rope(x, range = rope_range, ci = rope_ci, ...)
-
+      test_rope <- .prepare_output(
+        rope(x, range = rope_range, ci = rope_ci, ...),
+        cleaned_parameters,
+        inherits(x, "stanmvreg")
+      )
       if (!"Parameter" %in% names(test_rope)) {
         test_rope <- cbind(data.frame("Parameter" = "Posterior"), test_rope)
       }
@@ -255,11 +283,15 @@ describe_posterior.default <- function(posteriors, ...) {
         equi_warnings <- TRUE
       }
 
-      test_equi <- equivalence_test(x,
-        range = rope_range,
-        ci = rope_ci,
-        verbose = equi_warnings,
-        ...
+      test_equi <- .prepare_output(
+        equivalence_test(x,
+          range = rope_range,
+          ci = rope_ci,
+          verbose = equi_warnings,
+          ...
+        ),
+        cleaned_parameters,
+        inherits(x, "stanmvreg")
       )
       test_equi$Cleaned_Parameter <- NULL
 
@@ -276,7 +308,11 @@ describe_posterior.default <- function(posteriors, ...) {
     # Bayes Factors
 
     if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
-      test_bf <- bayesfactor_parameters(x, prior = bf_prior, ...)
+      test_bf <- .prepare_output(
+        bayesfactor_parameters(x, prior = bf_prior, ...),
+        cleaned_parameters,
+        inherits(x, "stanmvreg")
+      )
       if (!"Parameter" %in% names(test_bf)) {
         test_bf <- cbind(data.frame("Parameter" = "Posterior"), test_bf)
       }
@@ -325,21 +361,6 @@ describe_posterior.default <- function(posteriors, ...) {
       "Component" = NA,
       "Response" = NA
     )
-  }
-
-  # we need to add Effects and Component columns for model objects,
-  # but only once - so check for first valid object
-
-  if (ncol(estimates) > 1) {
-    estimates <- .prepare_output(estimates, cleaned_parameters)
-  } else if (ncol(uncertainty) > 1) {
-    uncertainty <- .prepare_output(uncertainty, cleaned_parameters)
-  } else if (any(stats::complete.cases(test_pmap))) {
-    test_pmap <- .prepare_output(test_pmap, cleaned_parameters)
-  } else if (any(stats::complete.cases(test_pd))) {
-    test_pd <- .prepare_output(test_pd, cleaned_parameters)
-  } else if (any(stats::complete.cases(test_rope))) {
-    test_rope <- .prepare_output(test_rope, cleaned_parameters)
   }
 
 
