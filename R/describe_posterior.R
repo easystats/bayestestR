@@ -128,7 +128,7 @@ describe_posterior.default <- function(posteriors, ...) {
     return(NULL)
   }
 
-  if (!is.data.frame(x)) {
+  if (!is.data.frame(x) && !is.numeric(x)) {
     is_stanmvreg <- inherits(x, "stanmvreg")
     cleaned_parameters <- insight::clean_parameters(x)
     x <- insight::get_parameters(x, ...)
@@ -309,11 +309,12 @@ describe_posterior.default <- function(posteriors, ...) {
     # Bayes Factors
 
     if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
-      test_bf <- .prepare_output(
-        bayesfactor_parameters(x, prior = bf_prior, ...),
-        cleaned_parameters,
-        is_stanmvreg
-      )
+      test_bf <- tryCatch(
+        .prepare_output(
+           bayesfactor_parameters(x, prior = bf_prior, ...),
+           cleaned_parameters,
+           is_stanmvreg
+        ), error = function(e) data.frame("Parameter" = NA))
       if (!"Parameter" %in% names(test_bf)) {
         test_bf <- cbind(data.frame("Parameter" = "Posterior"), test_bf)
       }
