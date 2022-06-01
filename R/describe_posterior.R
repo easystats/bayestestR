@@ -165,8 +165,9 @@ describe_posterior.default <- function(posteriors, ...) {
 
   if (!is.null(ci)) {
     ci_method <- match.arg(tolower(ci_method), c("hdi", "spi", "quantile", "ci", "eti", "si", "bci", "bcai"))
+    # not sure why "si" requires the model object
     if (ci_method == "si") {
-      uncertainty <- ci(x_df, BF = BF, method = ci_method, prior = bf_prior, ...)
+      uncertainty <- ci(x, BF = BF, method = ci_method, prior = bf_prior, ...)
     } else {
       uncertainty <- ci(x_df, ci = ci, method = ci_method, ...)
     }
