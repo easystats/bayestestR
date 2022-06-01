@@ -129,6 +129,16 @@ describe_posterior.default <- function(posteriors, ...) {
   }
 
 
+  if (!is.data.frame(x) && !is.numeric(x)) {
+    is_stanmvreg <- inherits(x, "stanmvreg")
+    cleaned_parameters <- insight::clean_parameters(x)
+    # rename to use `x` in bayes factor later
+    x_df <- insight::get_parameters(x, ...)
+  } else {
+    cleaned_parameters <- NULL
+    x_df <- x
+  }
+
   # Arguments fixes
   if (!is.null(centrality) && length(centrality) == 1 && (centrality == "none" || centrality == FALSE)) centrality <- NULL
   if (!is.null(ci) && length(ci) == 1 && (is.na(ci) || ci == FALSE)) ci <- NULL
@@ -138,7 +148,11 @@ describe_posterior.default <- function(posteriors, ...) {
   # Point-estimates
 
   if (!is.null(centrality)) {
-    estimates <- point_estimate(x, centrality = centrality, dispersion = dispersion, ...)
+    estimates <- .prepare_output(
+      point_estimate(x_df, centrality = centrality, dispersion = dispersion, ...),
+      cleaned_parameters,
+      is_stanmvreg
+    )
     if (!"Parameter" %in% names(estimates)) {
       estimates <- cbind(data.frame("Parameter" = "Posterior"), estimates)
     }
@@ -151,11 +165,17 @@ describe_posterior.default <- function(posteriors, ...) {
 
   if (!is.null(ci)) {
     ci_method <- match.arg(tolower(ci_method), c("hdi", "spi", "quantile", "ci", "eti", "si", "bci", "bcai"))
+    # not sure why "si" requires the model object
     if (ci_method == "si") {
       uncertainty <- ci(x, BF = BF, method = ci_method, prior = bf_prior, ...)
     } else {
-      uncertainty <- ci(x, ci = ci, method = ci_method, ...)
+      uncertainty <- ci(x_df, ci = ci, method = ci_method, ...)
     }
+    uncertainty <- .prepare_output(
+      uncertainty,
+      cleaned_parameters,
+      is_stanmvreg
+    )
 
     if (!"Parameter" %in% names(uncertainty)) {
       uncertainty <- cbind(data.frame("Parameter" = "Posterior"), uncertainty)
@@ -174,14 +194,14 @@ describe_posterior.default <- function(posteriors, ...) {
     }
 
     ## TODO no BF for arm::sim
-    if (inherits(x, c("sim", "sim.merMod", "mcmc", "stanfit"))) {
+    if (inherits(x_df, c("sim", "sim.merMod", "mcmc", "stanfit"))) {
       test <- setdiff(test, "bf")
     }
 
     ## TODO enable once "rope()" works for multi-response models
 
     # no ROPE for multi-response models
-    if (insight::is_multivariate(x)) {
+    if (insight::is_multivariate(x_df)) {
       test <- setdiff(test, c("rope", "p_rope"))
       warning(insight::format_message("Multivariate response models are not yet supported for tests 'rope' and 'p_rope'."), call. = FALSE)
     }
@@ -189,7 +209,11 @@ describe_posterior.default <- function(posteriors, ...) {
     # MAP-based p-value
 
     if (any(c("p_map", "p_pointnull") %in% test)) {
-      test_pmap <- p_map(x, ...)
+      test_pmap <- .prepare_output(
+        p_map(x_df, ...),
+        cleaned_parameters,
+        is_stanmvreg
+      )
       if (!is.data.frame(test_pmap)) test_pmap <- data.frame("Parameter" = "Posterior", "p_map" = test_pmap)
     } else {
       test_pmap <- data.frame("Parameter" = NA)
@@ -199,7 +223,11 @@ describe_posterior.default <- function(posteriors, ...) {
     # Probability of direction
 
     if (any(c("pd", "p_direction", "pdir", "mpe") %in% test)) {
-      test_pd <- p_direction(x, ...)
+      test_pd <- .prepare_output(
+        p_direction(x_df, ...),
+        cleaned_parameters,
+        is_stanmvreg
+      )
       if (!is.data.frame(test_pd)) test_pd <- data.frame("Parameter" = "Posterior", "pd" = test_pd)
     } else {
       test_pd <- data.frame("Parameter" = NA)
@@ -208,7 +236,11 @@ describe_posterior.default <- function(posteriors, ...) {
     # Probability of rope
 
     if (any(c("p_rope") %in% test)) {
-      test_prope <- p_rope(x, range = rope_range, ...)
+      test_prope <- .prepare_output(
+        p_rope(x_df, range = rope_range, ...),
+        cleaned_parameters,
+        is_stanmvreg
+      )
       if (!"Parameter" %in% names(test_prope)) {
         test_prope <- cbind(data.frame("Parameter" = "Posterior"), test_prope)
       }
@@ -219,7 +251,11 @@ describe_posterior.default <- function(posteriors, ...) {
     # Probability of significance
 
     if (any(c("ps", "p_sig", "p_significance") %in% test)) {
-      test_psig <- p_significance(x, threshold = rope_range, ...)
+      test_psig <- .prepare_output(
+        p_significance(x_df, threshold = rope_range, ...),
+        cleaned_parameters,
+        is_stanmvreg
+      )
       if (!is.data.frame(test_psig)) test_psig <- data.frame("Parameter" = "Posterior", "ps" = test_psig)
     } else {
       test_psig <- data.frame("Parameter" = NA)
@@ -229,8 +265,11 @@ describe_posterior.default <- function(posteriors, ...) {
     # ROPE
 
     if (any(c("rope") %in% test)) {
-      test_rope <- rope(x, range = rope_range, ci = rope_ci, ...)
-
+      test_rope <- .prepare_output(
+        rope(x_df, range = rope_range, ci = rope_ci, ...),
+        cleaned_parameters,
+        is_stanmvreg
+      )
       if (!"Parameter" %in% names(test_rope)) {
         test_rope <- cbind(data.frame("Parameter" = "Posterior"), test_rope)
       }
@@ -249,11 +288,15 @@ describe_posterior.default <- function(posteriors, ...) {
         equi_warnings <- TRUE
       }
 
-      test_equi <- equivalence_test(x,
-        range = rope_range,
-        ci = rope_ci,
-        verbose = equi_warnings,
-        ...
+      test_equi <- .prepare_output(
+        equivalence_test(x_df,
+          range = rope_range,
+          ci = rope_ci,
+          verbose = equi_warnings,
+          ...
+        ),
+        cleaned_parameters,
+        is_stanmvreg
       )
       test_equi$Cleaned_Parameter <- NULL
 
@@ -270,7 +313,12 @@ describe_posterior.default <- function(posteriors, ...) {
     # Bayes Factors
 
     if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
-      test_bf <- bayesfactor_parameters(x, prior = bf_prior, ...)
+      test_bf <- tryCatch(
+        .prepare_output(
+           bayesfactor_parameters(x, prior = bf_prior, ...),
+           cleaned_parameters,
+           is_stanmvreg
+        ), error = function(e) data.frame("Parameter" = NA))
       if (!"Parameter" %in% names(test_bf)) {
         test_bf <- cbind(data.frame("Parameter" = "Posterior"), test_bf)
       }
@@ -368,7 +416,6 @@ describe_posterior.default <- function(posteriors, ...) {
   # merge all data frames
   merge_by <- c("Parameter", "Effects", "Component", "Response")
   # merge_by <- intersect(merge_by, colnames(estimates))
-
   out <- merge(estimates, uncertainty, by = merge_by, all = TRUE)
   out <- merge(out, test_pmap, by = merge_by, all = TRUE)
   out <- merge(out, test_pd, by = merge_by, all = TRUE)
@@ -377,7 +424,6 @@ describe_posterior.default <- function(posteriors, ...) {
   out <- merge(out, test_rope, by = merge_by, all = TRUE)
   out <- merge(out, test_bf, by = merge_by, all = TRUE)
   out <- out[!is.na(out$Parameter), ]
-
 
   # check which columns can be removed at the end. In any case, we don't
   # need .rowid in the returned data frame, and when the Effects or Component
@@ -394,11 +440,7 @@ describe_posterior.default <- function(posteriors, ...) {
   # Add iterations
   if (keep_iterations == TRUE) {
     row_order <- out$Parameter
-    if (insight::is_model(x)) {
-      iter <- as.data.frame(t(insight::get_parameters(x, ...)))
-    } else {
-      iter <- as.data.frame(t(as.data.frame(x, ...)))
-    }
+    iter <- as.data.frame(t(as.data.frame(x_df, ...)))
     names(iter) <- paste0("iter_", 1:ncol(iter))
     iter$Parameter <- row.names(iter)
     out <- merge(out, iter, all.x = TRUE, by = "Parameter")
@@ -738,7 +780,7 @@ describe_posterior.stanreg <- function(posteriors,
                                        BF = 1,
                                        ...) {
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) | "si" %in% tolower(ci_method)) & is.null(bf_prior)) {
-    bf_prior <- unupdate(posteriors)
+    bf_prior <- suppressMessages(unupdate(posteriors))
   }
 
   effects <- match.arg(effects)
@@ -927,7 +969,7 @@ describe_posterior.brmsfit <- function(posteriors,
   component <- match.arg(component)
 
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) | "si" %in% tolower(ci_method)) & is.null(bf_prior)) {
-    bf_prior <- unupdate(posteriors)
+    bf_prior <- suppressMessages(unupdate(posteriors))
   }
 
   out <- .describe_posterior(

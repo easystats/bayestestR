@@ -394,8 +394,20 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 # Different functions -----------------------------------------------------
 
 .estimate_density_kernel <- function(x, x_range, precision, bw, ci = 0.95, ...) {
+
+  # unsupported arguments raise warnings
+  dots <- list(...)
+  dots[c("effects", "component", "parameters")] <- NULL
+
   # Get the kernel density estimation (KDE)
-  kde <- stats::density(x, n = precision, bw = bw, from = x_range[1], to = x_range[2], ...)
+  args <- c(dots, list(
+    x = x,
+    n = precision,
+    bw = bw,
+    from = x_range[1],
+    to = x_range[2]))
+  fun <- get("density", asNamespace("stats"))
+  kde <- do.call("fun", args)
   df <- as.data.frame(kde)
 
   # Get CI (https://bookdown.org/egarpor/NP-UC3M/app-kde-ci.html)
