@@ -24,7 +24,7 @@ if (.runThisTest && requiet("brms") && requiet("testthat") && requiet("insight")
       s <- summary(model)
     )
     expect_identical(colnames(out), c(
-      "Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
+      "Parameter", "Effects", "Component", "Mean", "CI", "CI_low", "CI_high",
       "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
       "Rhat", "ESS"
     ))
@@ -44,7 +44,7 @@ if (.runThisTest && requiet("brms") && requiet("testthat") && requiet("insight")
     out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean")
     s <- summary(model)
     expect_identical(colnames(out), c(
-      "Parameter", "Mean", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
+      "Parameter", "Component", "Mean", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
       "ROPE_low", "ROPE_high", "ROPE_Percentage", "Rhat", "ESS"
     ))
     expect_equal(as.vector(s$fixed[, 1, drop = TRUE]), out$Mean[1:3], tolerance = 1e-3)
@@ -61,11 +61,16 @@ if (.runThisTest && requiet("brms") && requiet("testthat") && requiet("insight")
     out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean", test = NULL)
     s <- suppressWarnings(summary(model))
     expect_identical(colnames(out), c(
-      "Parameter", "Effects", "Mean", "CI", "CI_low", "CI_high",
+      "Parameter", "Effects", "Component", "Mean", "CI", "CI_low", "CI_high",
       "Rhat", "ESS"
     ))
-    expect_equal(as.vector(s$fixed[, 1, drop = TRUE]), out$Mean[c(1, 11, 2:5, 12:14)], tolerance = 1e-3)
-    expect_equal(as.vector(s$fixed[, 5, drop = TRUE]), out$Rhat[c(1, 11, 2:5, 12:14)], tolerance = 1e-1)
+
+    known <- s$fixed
+    unknown <- out[out$Effects == "fixed" & out$Component == "conditional",]
+    idx <- match(row.names(known), gsub("b_", "", unknown$Parameter))
+    unknown <- unknown[idx, ]
+    expect_equal(unknown$Mean, known$Estimate)
+    expect_equal(unknown$Rhat, known$Rhat, tolerance = 1e-2)
   })
 
   test_that("brms", {
