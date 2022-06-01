@@ -15,7 +15,11 @@ osx <- tryCatch(
 
 if (!osx && requiet("rstanarm")) {
   test_that("insight::get_predicted", {
-    x <- insight::get_predicted(rstanarm::stan_glm(hp ~ mpg, data = mtcars, iter = 500, refresh = 0))
+    x <- suppressWarnings(
+            insight::get_predicted(
+                rstanarm::stan_glm(hp ~ mpg, data = mtcars, iter = 500, refresh = 0)
+            )
+        )
 
     rez <- point_estimate(x)
     expect_equal(c(nrow(rez), ncol(rez)), c(32, 4))
