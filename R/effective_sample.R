@@ -40,17 +40,18 @@ effective_sample.brmsfit <- function(model, effects = c("fixed", "random", "all"
   effects <- match.arg(effects)
   component <- match.arg(component)
 
-  pars <- insight::get_parameters(
+  pars <- insight::find_parameters(
     model,
     effects = effects,
     component = component,
-    parameters = parameters
+    parameters = parameters,
+    flatten = TRUE
   )
 
   insight::check_if_installed("rstan")
 
   s <- rstan::summary(model$fit)$summary
-  s <- subset(s, subset = rownames(s) %in% colnames(pars))
+  s <- subset(s, subset = rownames(s) %in% pars)
 
   data.frame(
     Parameter = rownames(s),
@@ -69,15 +70,16 @@ effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"
   component <- match.arg(component)
 
   pars <-
-    insight::get_parameters(
+    insight::find_parameters(
       model,
       effects = effects,
       component = component,
-      parameters = parameters
+      parameters = parameters,
+      flatten = TRUE
     )
 
   s <- as.data.frame(summary(model))
-  s <- s[rownames(s) %in% colnames(pars), ]
+  s <- s[rownames(s) %in% pars, ]
 
   data.frame(
     Parameter = rownames(s),
