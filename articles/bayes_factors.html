@@ -110,7 +110,8 @@
 
 
 
-<script src="bayes_factors_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Bayes Factors</h1>
             
@@ -298,7 +299,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">test_group2_dividing</span><span class="op">)</span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-11-1.png" width="100%"></p>
-<p>We can see that this test produces even stronger (more conclusive) evidence than the one-sided vs. point-null test! And indeed, as a rule of thumb, the more specific the two hypotheses are, and the more distinct they are from one another, the more <em>power</em> our Bayes factor has!<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;For more, see &lt;a href="https://philstatwars.files.wordpress.com/2020/09/richard_presentation.mp4" class="external-link"&gt;this talk by Richard D. Morey, minute 48&lt;/a&gt;&lt;/p&gt;'><sup>2</sup></a></p>
+<p>We can see that this test produces even stronger (more conclusive) evidence than the one-sided vs. point-null test! And indeed, as a rule of thumb, the more specific the two hypotheses are, and the more distinct they are from one another, the more <em>power</em> our Bayes factor has! <a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;For more, see &lt;a href="https://philstatwars.files.wordpress.com/2020/09/richard_presentation.mp4" class="external-link"&gt;this talk by Richard D. Morey, minute 48&lt;/a&gt;&lt;/p&gt;'><sup>2</sup></a></p>
 <p>Thanks to the transitivity of Bayes factors, we can also use <code><a href="../reference/bayesfactor_parameters.html">bayesfactor_parameters()</a></code> to compare even more types of hypotheses, with some trickery. For example:</p>
 <p><span class="math display">\[
 \underbrace{BF_{0&lt;b&lt;1\text{ vs. }b=0}}_{\text{range vs. point}}
@@ -479,7 +480,7 @@ Bayesian analysis of the Students’ (1908) Sleep data set.
 &gt; [3] Species + Petal.Length | 5.57e-10 | 3.64e-26 |        1 |    0.043 | 4.37e-54
 &gt; [4] Species * Petal.Length | 1.30e-08 | 8.52e-25 |    23.38 |        1 | 1.02e-52
 &gt; [5] (Intercept only)       | 1.27e+44 | 8.34e+27 | 2.29e+53 | 9.79e+51 |        1</code></pre>
-<p><strong>NOTE:</strong> In order to correctly and precisely estimate Bayes Factors, you always need the 4 P’s: <strong>P</strong>roper <strong>P</strong>riors,<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;&lt;a href="https://doi.org/10.1016/j.jmp.2015.08.002" class="external-link"&gt;Robert, 2016&lt;/a&gt;; &lt;a href="https://doi.org/10.1080/01621459.1995.10476572" class="external-link"&gt;Kass &amp;amp; Raftery, 1993&lt;/a&gt;; &lt;a href="https://doi.org/10.1016/S0304-4076(00)00076-2" class="external-link"&gt;Fernández, Ley, &amp;amp; Steel, 2001&lt;/a&gt;&lt;/p&gt;'><sup>3</sup></a> and a <strong>P</strong>lentiful <strong>P</strong>osterior.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;&lt;a href="https://arxiv.org/abs/1710.08162" class="external-link"&gt;Gronau, Singmann, &amp;amp; Wagenmakers, 2017&lt;/a&gt;&lt;/p&gt;'><sup>4</sup></a></p>
+<p><strong>NOTE:</strong> In order to correctly and precisely estimate Bayes Factors, you always need the 4 P’s: <strong>P</strong>roper <strong>P</strong>riors <a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;&lt;a href="https://doi.org/10.1016/j.jmp.2015.08.002" class="external-link"&gt;Robert, 2016&lt;/a&gt;; &lt;a href="https://doi.org/10.1080/01621459.1995.10476572" class="external-link"&gt;Kass &amp;amp; Raftery, 1993&lt;/a&gt;; &lt;a href="https://doi.org/10.1016/S0304-4076(00)00076-2" class="external-link"&gt;Fernández, Ley, &amp;amp; Steel, 2001&lt;/a&gt;&lt;/p&gt;'><sup>3</sup></a>, and a <strong>P</strong>lentiful <strong>P</strong>osterior <a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;&lt;a href="https://arxiv.org/abs/1710.08162" class="external-link"&gt;Gronau, Singmann, &amp;amp; Wagenmakers, 2017&lt;/a&gt;&lt;/p&gt;'><sup>4</sup></a>.</p>
 </div>
 <div class="section level4">
 <h4 id="for-frequentist-models-via-the-bic-approximation">For Frequentist models via the BIC approximation<a class="anchor" aria-label="anchor" href="#for-frequentist-models-via-the-bic-approximation"></a>
@@ -577,7 +578,7 @@ BF_{\text{restricted vs. NULL}} = \frac
 <p><strong>Are the observed data more probable under models with a particular predictor, than they are under models without that particular predictor?</strong></p>
 </blockquote>
 <p>In other words, on average, are models with predictor <span class="math inline">\(X\)</span> more likely to have produced the observed data than models without predictor <span class="math inline">\(X\)</span>?<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;A model without predictor &lt;span class="math inline"&gt;\(X\)&lt;/span&gt; can be thought of as a model in which the parameter(s) of the predictor have been restricted to a null-point of 0.&lt;/p&gt;'><sup>5</sup></a></p>
-<p>Since each model has a prior probability, it is possible to sum the prior probability of all models that include a predictor of interest (the <em>prior inclusion probability</em>), and of all models that do not include that predictor (the <em>prior exclusion probability</em>). After the data are observed, and each model is assigned a posterior probability, we can similarly consider the sums of the posterior models’ probabilities to obtain the <em>posterior inclusion probability</em> and the <em>posterior exclusion probability</em>. Once again, the change from prior inclusion odds to the posterior inclusion odds is the <strong>Inclusion Bayes factor</strong> <span class="citation">(“<span class="math inline">\(BF_{Inclusion}\)</span>”; Clyde, Ghosh, &amp; Littman, 2011)</span>.</p>
+<p>Since each model has a prior probability, it is possible to sum the prior probability of all models that include a predictor of interest (the <em>prior inclusion probability</em>), and of all models that do not include that predictor (the <em>prior exclusion probability</em>). After the data are observed, and each model is assigned a posterior probability, we can similarly consider the sums of the posterior models’ probabilities to obtain the <em>posterior inclusion probability</em> and the <em>posterior exclusion probability</em>. Once again, the change from prior inclusion odds to the posterior inclusion odds is the <strong>Inclusion Bayes factor</strong> [“<span class="math inline">\(BF_{Inclusion}\)</span>”; <span class="citation">Clyde, Ghosh, &amp; Littman (2011)</span>].</p>
 <p>Lets use the <code>brms</code> example from above:</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/bayesfactor_inclusion.html">bayesfactor_inclusion</a></span><span class="op">(</span><span class="va">comparison</span><span class="op">)</span></code></pre></div>
@@ -780,8 +781,8 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; 
 &gt; Parameter       |    BF
 &gt; -----------------------
-&gt; 1               | 0.286
-&gt; 2               | 20.91
+&gt; 1               | 0.287
+&gt; 2               | 19.97
 &gt; group1 - group2 |  1.26
 &gt; 
 &gt; * Evidence Against The Null: 0</code></pre>
@@ -902,8 +903,8 @@ BF_{\text{restricted vs. NULL}} = \frac
 <pre><code>&gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 &gt; Chain 1: 
-&gt; Chain 1: Gradient evaluation took 2.6e-05 seconds
-&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.26 seconds.
+&gt; Chain 1: Gradient evaluation took 2.1e-05 seconds
+&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.21 seconds.
 &gt; Chain 1: Adjust your expectations accordingly!
 &gt; Chain 1: 
 &gt; Chain 1: 
@@ -920,15 +921,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 1: 
-&gt; Chain 1:  Elapsed Time: 0.068907 seconds (Warm-up)
-&gt; Chain 1:                0.096342 seconds (Sampling)
-&gt; Chain 1:                0.165249 seconds (Total)
+&gt; Chain 1:  Elapsed Time: 0.032563 seconds (Warm-up)
+&gt; Chain 1:                0.057237 seconds (Sampling)
+&gt; Chain 1:                0.0898 seconds (Total)
 &gt; Chain 1: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 &gt; Chain 2: 
-&gt; Chain 2: Gradient evaluation took 1.4e-05 seconds
-&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
+&gt; Chain 2: Gradient evaluation took 1.7e-05 seconds
+&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
 &gt; Chain 2: Adjust your expectations accordingly!
 &gt; Chain 2: 
 &gt; Chain 2: 
@@ -945,15 +946,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 2: 
-&gt; Chain 2:  Elapsed Time: 0.073533 seconds (Warm-up)
-&gt; Chain 2:                0.087611 seconds (Sampling)
-&gt; Chain 2:                0.161144 seconds (Total)
+&gt; Chain 2:  Elapsed Time: 0.034146 seconds (Warm-up)
+&gt; Chain 2:                0.049825 seconds (Sampling)
+&gt; Chain 2:                0.083971 seconds (Total)
 &gt; Chain 2: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 &gt; Chain 3: 
-&gt; Chain 3: Gradient evaluation took 1.5e-05 seconds
-&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+&gt; Chain 3: Gradient evaluation took 1.2e-05 seconds
+&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
 &gt; Chain 3: Adjust your expectations accordingly!
 &gt; Chain 3: 
 &gt; Chain 3: 
@@ -970,15 +971,15 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 3: 
-&gt; Chain 3:  Elapsed Time: 0.075713 seconds (Warm-up)
-&gt; Chain 3:                0.082884 seconds (Sampling)
-&gt; Chain 3:                0.158597 seconds (Total)
+&gt; Chain 3:  Elapsed Time: 0.032026 seconds (Warm-up)
+&gt; Chain 3:                0.046237 seconds (Sampling)
+&gt; Chain 3:                0.078263 seconds (Total)
 &gt; Chain 3: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 &gt; Chain 4: 
-&gt; Chain 4: Gradient evaluation took 1.4e-05 seconds
-&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
+&gt; Chain 4: Gradient evaluation took 1.3e-05 seconds
+&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 &gt; Chain 4: Adjust your expectations accordingly!
 &gt; Chain 4: 
 &gt; Chain 4: 
@@ -995,9 +996,9 @@ BF_{\text{restricted vs. NULL}} = \frac
 &gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 4: 
-&gt; Chain 4:  Elapsed Time: 0.069283 seconds (Warm-up)
-&gt; Chain 4:                0.090019 seconds (Sampling)
-&gt; Chain 4:                0.159302 seconds (Total)
+&gt; Chain 4:  Elapsed Time: 0.032028 seconds (Warm-up)
+&gt; Chain 4:                0.050255 seconds (Sampling)
+&gt; Chain 4:                0.082283 seconds (Total)
 &gt; Chain 4:</code></pre>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
@@ -1051,41 +1052,41 @@ BF_{\text{restricted vs. NULL}} = \frac
 </div>
 </div>
 <div class="section level2">
-<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references">
-<div id="ref-van2019cautionary">
-<p>Bergh, D. van den, Haaf, J. M., Ly, A., Rouder, J. N., &amp; Wagenmakers, E.-J. (2019). <em>A cautionary note on estimating effect size</em>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-van2019cautionary" class="csl-entry">
+Bergh, D. van den, Haaf, J. M., Ly, A., Rouder, J. N., &amp; Wagenmakers, E.-J. (2019). <em>A cautionary note on estimating effect size</em>.
 </div>
-<div id="ref-clyde2011bayesian">
-<p>Clyde, M. A., Ghosh, J., &amp; Littman, M. L. (2011). Bayesian adaptive sampling for variable selection and model averaging. <em>Journal of Computational and Graphical Statistics</em>, <em>20</em>(1), 80–101.</p>
+<div id="ref-clyde2011bayesian" class="csl-entry">
+Clyde, M. A., Ghosh, J., &amp; Littman, M. L. (2011). Bayesian adaptive sampling for variable selection and model averaging. <em>Journal of Computational and Graphical Statistics</em>, <em>20</em>(1), 80–101.
 </div>
-<div id="ref-kruschke2010believe">
-<p>Kruschke, J. K. (2010). What to believe: Bayesian methods for data analysis. <em>Trends in Cognitive Sciences</em>, <em>14</em>(7), 293–300.</p>
+<div id="ref-kruschke2010believe" class="csl-entry">
+Kruschke, J. K. (2010). What to believe: Bayesian methods for data analysis. <em>Trends in Cognitive Sciences</em>, <em>14</em>(7), 293–300.
 </div>
-<div id="ref-morey_2015_blog">
-<p>Morey, R. D. (2015). <em>Multiple comparisons with bayesfactor, part 2 – order restrictions</em>. Retrieved from <a href="http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html" class="external-link">http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html</a></p>
+<div id="ref-morey_2015_blog" class="csl-entry">
+Morey, R. D. (2015). <em>Multiple comparisons with BayesFactor, part 2 – order restrictions</em>. Retrieved from <a href="http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html" class="external-link">http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html</a>
 </div>
-<div id="ref-morey2011bayesinterval">
-<p>Morey, R. D., &amp; Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. <em>Psychological Methods</em>, <em>16</em>(4), 406.</p>
+<div id="ref-morey2011bayesinterval" class="csl-entry">
+Morey, R. D., &amp; Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. <em>Psychological Methods</em>, <em>16</em>(4), 406.
 </div>
-<div id="ref-morey2014simple">
-<p>Morey, R. D., &amp; Wagenmakers, E.-J. (2014). Simple relation between bayesian order-restricted and point-null hypothesis tests. <em>Statistics &amp; Probability Letters</em>, <em>92</em>, 121–124.</p>
+<div id="ref-morey2014simple" class="csl-entry">
+Morey, R. D., &amp; Wagenmakers, E.-J. (2014). Simple relation between bayesian order-restricted and point-null hypothesis tests. <em>Statistics &amp; Probability Letters</em>, <em>92</em>, 121–124.
 </div>
-<div id="ref-rouder2018bayesian">
-<p>Rouder, J. N., Haaf, J. M., &amp; Vandekerckhove, J. (2018). Bayesian inference for psychology, part iv: Parameter estimation and bayes factors. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 102–113.</p>
+<div id="ref-rouder2018bayesian" class="csl-entry">
+Rouder, J. N., Haaf, J. M., &amp; Vandekerckhove, J. (2018). Bayesian inference for psychology, part IV: Parameter estimation and bayes factors. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 102–113.
 </div>
-<div id="ref-rouder2012default">
-<p>Rouder, J. N., Morey, R. D., Speckman, P. L., &amp; Province, J. M. (2012). Default bayes factors for anova designs. <em>Journal of Mathematical Psychology</em>, <em>56</em>(5), 356–374.</p>
+<div id="ref-rouder2012default" class="csl-entry">
+Rouder, J. N., Morey, R. D., Speckman, P. L., &amp; Province, J. M. (2012). Default bayes factors for ANOVA designs. <em>Journal of Mathematical Psychology</em>, <em>56</em>(5), 356–374.
 </div>
-<div id="ref-wagenmakers2007practical">
-<p>Wagenmakers, E.-J. (2007). A practical solution to the pervasive problems ofp values. <em>Psychonomic Bulletin &amp; Review</em>, <em>14</em>(5), 779–804.</p>
+<div id="ref-wagenmakers2007practical" class="csl-entry">
+Wagenmakers, E.-J. (2007). A practical solution to the pervasive problems ofp values. <em>Psychonomic Bulletin &amp; Review</em>, <em>14</em>(5), 779–804.
 </div>
-<div id="ref-wagenmakers2018SI">
-<p>Wagenmakers, E.-J., Gronau, Q. F., Dablander, F., &amp; Etz, A. (2018). <em>The support interval</em>. <a href="https://doi.org/10.31234/osf.io/zwnxb" class="external-link">https://doi.org/10.31234/osf.io/zwnxb</a></p>
+<div id="ref-wagenmakers2018SI" class="csl-entry">
+Wagenmakers, E.-J., Gronau, Q. F., Dablander, F., &amp; Etz, A. (2018). <em>The support interval</em>. <a href="https://doi.org/10.31234/osf.io/zwnxb" class="external-link">https://doi.org/10.31234/osf.io/zwnxb</a>
 </div>
-<div id="ref-wagenmakers2010bayesian">
-<p>Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., &amp; Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the savage–dickey method. <em>Cognitive Psychology</em>, <em>60</em>(3), 158–189.</p>
+<div id="ref-wagenmakers2010bayesian" class="csl-entry">
+Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., &amp; Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the savage–dickey method. <em>Cognitive Psychology</em>, <em>60</em>(3), 158–189.
 </div>
 </div>
 </div>

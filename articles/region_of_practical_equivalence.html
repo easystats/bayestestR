@@ -110,7 +110,8 @@
 
 
 
-<script src="region_of_practical_equivalence_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Region of Practical Equivalence (ROPE)</h1>
             
@@ -131,17 +132,17 @@
 <h2 id="what-is-the-rope">What is the <em>ROPE?</em><a class="anchor" aria-label="anchor" href="#what-is-the-rope"></a>
 </h2>
 <p>Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against “zero”. Indeed, the Bayesian framework offers a probabilistic view of the parameters, allowing assessment of the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as <strong>“practically no effect”</strong> (<em>i.e.</em>, a negligible magnitude) is sufficient. This range is called the <strong>region of practical equivalence (ROPE)</strong>.</p>
-<p>Indeed, statistically, the probability of a posterior distribution being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are <strong>equivalent to the null</strong> value for practical purposes <span class="citation">(Kruschke, 2014, 2010; Kruschke, Aguinis, &amp; Joo, 2012)</span>.</p>
+<p>Indeed, statistically, the probability of a posterior distribution being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are <strong>equivalent to the null</strong> value for practical purposes <span class="citation">(J. Kruschke, 2014; J. K. Kruschke, 2010; J. K. Kruschke, Aguinis, &amp; Joo, 2012)</span>.</p>
 </div>
 <div class="section level2">
 <h2 id="equivalence-test">Equivalence Test<a class="anchor" aria-label="anchor" href="#equivalence-test"></a>
 </h2>
-<p>The ROPE, being a region corresponding to a “null” hypothesis, is used for the <strong>equivalence test</strong>, to test whether a parameter is <strong>significant</strong> (in the sense of <em>important</em> enough to be cared about). This test is usually based on the <strong>“HDI+ROPE decision rule”</strong> <span class="citation">(Kruschke, 2014; Kruschke &amp; Liddell, 2018)</span> to check whether parameter values should be accepted or rejected against an explicitly formulated “null hypothesis” (<em>i.e.</em>, a ROPE). In other words, it checks the percentage of Credible Interval (CI) that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.</p>
+<p>The ROPE, being a region corresponding to a “null” hypothesis, is used for the <strong>equivalence test</strong>, to test whether a parameter is <strong>significant</strong> (in the sense of <em>important</em> enough to be cared about). This test is usually based on the <strong>“HDI+ROPE decision rule”</strong> <span class="citation">(J. Kruschke, 2014; J. K. Kruschke &amp; Liddell, 2018)</span> to check whether parameter values should be accepted or rejected against an explicitly formulated “null hypothesis” (<em>i.e.</em>, a ROPE). In other words, it checks the percentage of Credible Interval (CI) that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.</p>
 </div>
 <div class="section level2">
 <h2 id="credible-interval-in-rope-vs-full-posterior-in-rope">Credible interval in ROPE <em>vs</em> full posterior in ROPE<a class="anchor" aria-label="anchor" href="#credible-interval-in-rope-vs-full-posterior-in-rope"></a>
 </h2>
-<p>Using the ROPE and the HDI as Credible Interval, Kruschke (2018) suggests using the percentage of the 95% HDI that falls within the ROPE as a decision rule. However, as the 89% HDI <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html" class="external-link">is considered a better choice</a> <span class="citation">(Kruschke, 2014; McElreath, 2014, 2018)</span>, <code>bayestestR</code> provides by default the percentage of the 89% HDI that falls within the ROPE.</p>
+<p>Using the ROPE and the HDI as Credible Interval, Kruschke (2018) suggests using the percentage of the 95% HDI that falls within the ROPE as a decision rule. However, as the 89% HDI <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html" class="external-link">is considered a better choice</a> <span class="citation">(J. Kruschke, 2014; R. McElreath, 2014; Richard McElreath, 2018)</span>, <code>bayestestR</code> provides by default the percentage of the 89% HDI that falls within the ROPE.</p>
 <p>However, <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full" class="external-link"><em>simulation studies data</em></a> suggest that using the percentage of the full posterior distribution, instead of a CI, might be more sensitive (especially do delineate highly significant effects). Thus, we recommend that the user considers using the <strong>full ROPE</strong> percentage (by setting <code>ci = 1</code>), which will return the portion of the entire posterior distribution in the ROPE.</p>
 </div>
 <div class="section level2">
@@ -239,29 +240,29 @@
 <div class="section level2">
 <h2 id="multicollinearity-non-independent-covariates">Multicollinearity: Non-independent covariates<a class="anchor" aria-label="anchor" href="#multicollinearity-non-independent-covariates"></a>
 </h2>
-<p>When <strong>parameters show strong correlations</strong>, <em>i.e.</em>, when covariates are not independent, the joint parameter distributions may shift towards or away from the ROPE. Collinearity invalidates ROPE and hypothesis testing based on univariate marginals, as the probabilities are conditional on independence. Most problematic are parameters that only have partial overlap with the ROPE region. In case of collinearity, the (joint) distributions of these parameters may either get an increased or decreased ROPE, which means that inferences based on ROPE are inappropriate <span class="citation">(Kruschke, 2014)</span>.</p>
+<p>When <strong>parameters show strong correlations</strong>, <em>i.e.</em>, when covariates are not independent, the joint parameter distributions may shift towards or away from the ROPE. Collinearity invalidates ROPE and hypothesis testing based on univariate marginals, as the probabilities are conditional on independence. Most problematic are parameters that only have partial overlap with the ROPE region. In case of collinearity, the (joint) distributions of these parameters may either get an increased or decreased ROPE, which means that inferences based on ROPE are inappropriate <span class="citation">(J. Kruschke, 2014)</span>.</p>
 <p>The <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> and <code><a href="../reference/rope.html">rope()</a></code> functions perform a simple check for pairwise correlations between parameters, but as there can be collinearity between more than two variables, a first step to check the assumptions of this hypothesis testing is to look at different pair plots. An even more sophisticated check is the projection predictive variable selection <span class="citation">(Piironen &amp; Vehtari, 2017)</span>.</p>
-<div id="refs" class="references">
-<div id="ref-kruschke2014doing">
-<p>Kruschke, J. (2014). <em>Doing bayesian data analysis: A tutorial with r, jags, and stan</em>. Academic Press.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-kruschke2014doing" class="csl-entry">
+Kruschke, J. (2014). <em>Doing bayesian data analysis: A tutorial with r, JAGS, and stan</em>. Academic Press.
 </div>
-<div id="ref-kruschke2010believe">
-<p>Kruschke, J. K. (2010). What to believe: Bayesian methods for data analysis. <em>Trends in Cognitive Sciences</em>, <em>14</em>(7), 293–300.</p>
+<div id="ref-kruschke2010believe" class="csl-entry">
+Kruschke, J. K. (2010). What to believe: Bayesian methods for data analysis. <em>Trends in Cognitive Sciences</em>, <em>14</em>(7), 293–300.
 </div>
-<div id="ref-kruschke2012time">
-<p>Kruschke, J. K., Aguinis, H., &amp; Joo, H. (2012). The time has come: Bayesian methods for data analysis in the organizational sciences. <em>Organizational Research Methods</em>, <em>15</em>(4), 722–752.</p>
+<div id="ref-kruschke2012time" class="csl-entry">
+Kruschke, J. K., Aguinis, H., &amp; Joo, H. (2012). The time has come: Bayesian methods for data analysis in the organizational sciences. <em>Organizational Research Methods</em>, <em>15</em>(4), 722–752.
 </div>
-<div id="ref-kruschke2018bayesian">
-<p>Kruschke, J. K., &amp; Liddell, T. M. (2018). The bayesian new statistics: Hypothesis testing, estimation, meta-analysis, and power analysis from a bayesian perspective. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 178–206.</p>
+<div id="ref-kruschke2018bayesian" class="csl-entry">
+Kruschke, J. K., &amp; Liddell, T. M. (2018). The bayesian new statistics: Hypothesis testing, estimation, meta-analysis, and power analysis from a bayesian perspective. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 178–206.
 </div>
-<div id="ref-mcelreath2014rethinking">
-<p>McElreath, R. (2014). <em>Rethinking: Statistical rethinking book package. R package version 1.391</em>.</p>
+<div id="ref-mcelreath2014rethinking" class="csl-entry">
+McElreath, R. (2014). <em>Rethinking: Statistical rethinking book package. R package version 1.391</em>.
 </div>
-<div id="ref-mcelreath2018statistical">
-<p>McElreath, R. (2018). <em>Statistical rethinking: A bayesian course with examples in r and stan</em>. Chapman; Hall/CRC.</p>
+<div id="ref-mcelreath2018statistical" class="csl-entry">
+McElreath, Richard. (2018). <em>Statistical rethinking: A bayesian course with examples in r and stan</em>. Chapman; Hall/CRC.
 </div>
-<div id="ref-piironen2017comparison">
-<p>Piironen, J., &amp; Vehtari, A. (2017). Comparison of bayesian predictive methods for model selection. <em>Statistics and Computing</em>, <em>27</em>(3), 711–735.</p>
+<div id="ref-piironen2017comparison" class="csl-entry">
+Piironen, J., &amp; Vehtari, A. (2017). Comparison of bayesian predictive methods for model selection. <em>Statistics and Computing</em>, <em>27</em>(3), 711–735.
 </div>
 </div>
 </div>

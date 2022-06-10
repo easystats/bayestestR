@@ -275,51 +275,51 @@
   test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"p_direction"</span>, <span class="st">"p_significance"</span><span class="op">)</span>,
   centrality <span class="op">=</span> <span class="st">"all"</span>
 <span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">## Summary of Posterior Distribution</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">## </span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co">## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co">## --------------------------------------------------------------------------------------</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">## (Intercept) |   0.96 |  0.96 |  0.96 | [-0.81,  2.51] | 90.00% | 0.88 | 1.011 | 110.00</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co">## child       |  -1.16 | -1.16 | -1.16 | [-1.36, -0.94] |   100% | 1.00 | 0.996 | 278.00</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">## camper      |   0.73 |  0.72 |  0.73 | [ 0.54,  0.91] |   100% | 1.00 | 0.996 | 271.00</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">## </span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">## # Fixed effects (zero-inflated)</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">## </span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">## --------------------------------------------------------------------------------------</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">## (Intercept) |  -0.48 | -0.51 | -0.22 | [-2.03,  0.89] | 78.00% | 0.73 | 0.997 | 138.00</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## child       |   1.85 |  1.86 |  1.81 | [ 1.19,  2.54] |   100% | 1.00 | 0.996 | 303.00</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">## camper      |  -0.88 | -0.86 | -0.99 | [-1.61, -0.07] | 98.40% | 0.96 | 0.996 | 292.00</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## </span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## # Random effects (conditional) Intercept: persons</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## </span></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## Parameter |    Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS</span></span>
-<span id="cb4-20"><a href="#cb4-20"></a><span class="co">## ---------------------------------------------------------------------------------------</span></span>
-<span id="cb4-21"><a href="#cb4-21"></a><span class="co">## persons.1 |     -0.99 | -1.01 | -0.84 | [-2.68,  0.80] | 92.00% | 0.90 | 1.007 | 106.00</span></span>
-<span id="cb4-22"><a href="#cb4-22"></a><span class="co">## persons.2 | -4.65e-03 | -0.04 |  0.03 | [-1.63,  1.66] | 50.00% | 0.45 | 1.013 | 109.00</span></span>
-<span id="cb4-23"><a href="#cb4-23"></a><span class="co">## persons.3 |      0.69 |  0.66 |  0.69 | [-0.95,  2.34] | 79.60% | 0.78 | 1.010 | 114.00</span></span>
-<span id="cb4-24"><a href="#cb4-24"></a><span class="co">## persons.4 |      1.57 |  1.56 |  1.56 | [-0.05,  3.29] | 96.80% | 0.96 | 1.009 | 114.00</span></span>
-<span id="cb4-25"><a href="#cb4-25"></a><span class="co">## </span></span>
-<span id="cb4-26"><a href="#cb4-26"></a><span class="co">## # Random effects (zero-inflated) Intercept: persons</span></span>
-<span id="cb4-27"><a href="#cb4-27"></a><span class="co">## </span></span>
-<span id="cb4-28"><a href="#cb4-28"></a><span class="co">## Parameter | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS</span></span>
-<span id="cb4-29"><a href="#cb4-29"></a><span class="co">## ------------------------------------------------------------------------------------</span></span>
-<span id="cb4-30"><a href="#cb4-30"></a><span class="co">## persons.1 |   1.10 |  1.11 |  1.08 | [-0.23,  2.72] | 94.80% | 0.93 | 0.997 | 166.00</span></span>
-<span id="cb4-31"><a href="#cb4-31"></a><span class="co">## persons.2 |   0.18 |  0.18 |  0.22 | [-0.94,  1.58] | 63.20% | 0.54 | 0.996 | 154.00</span></span>
-<span id="cb4-32"><a href="#cb4-32"></a><span class="co">## persons.3 |  -0.30 | -0.31 | -0.54 | [-1.79,  1.02] | 64.00% | 0.59 | 0.997 | 154.00</span></span>
-<span id="cb4-33"><a href="#cb4-33"></a><span class="co">## persons.4 |  -1.45 | -1.46 | -1.44 | [-2.90, -0.10] | 98.00% | 0.97 | 1.000 | 189.00</span></span>
-<span id="cb4-34"><a href="#cb4-34"></a><span class="co">## </span></span>
-<span id="cb4-35"><a href="#cb4-35"></a><span class="co">## # Random effects (conditional) SD/Cor: persons</span></span>
-<span id="cb4-36"><a href="#cb4-36"></a><span class="co">## </span></span>
-<span id="cb4-37"><a href="#cb4-37"></a><span class="co">## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat |    ESS</span></span>
-<span id="cb4-38"><a href="#cb4-38"></a><span class="co">## ----------------------------------------------------------------------------------</span></span>
-<span id="cb4-39"><a href="#cb4-39"></a><span class="co">## (Intercept) |   1.42 | 1.58 | 1.07 | [ 0.71,  3.58] | 100% | 1.00 | 1.010 | 126.00</span></span>
-<span id="cb4-40"><a href="#cb4-40"></a><span class="co">## </span></span>
-<span id="cb4-41"><a href="#cb4-41"></a><span class="co">## # Random effects (zero-inflated) SD/Cor: persons</span></span>
-<span id="cb4-42"><a href="#cb4-42"></a><span class="co">## </span></span>
-<span id="cb4-43"><a href="#cb4-43"></a><span class="co">## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat |    ESS</span></span>
-<span id="cb4-44"><a href="#cb4-44"></a><span class="co">## ----------------------------------------------------------------------------------</span></span>
-<span id="cb4-45"><a href="#cb4-45"></a><span class="co">## (Intercept) |   1.30 | 1.49 | 0.99 | [ 0.63,  3.41] | 100% | 1.00 | 0.996 | 129.00</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Summary of Posterior Distribution</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">## --------------------------------------------------------------------------------------</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) |   0.96 |  0.96 |  0.96 | [-0.81,  2.51] | 90.00% | 0.88 | 1.011 | 110.00</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">## child       |  -1.16 | -1.16 | -1.16 | [-1.36, -0.94] |   100% | 1.00 | 0.996 | 278.00</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">## camper      |   0.73 |  0.72 |  0.73 | [ 0.54,  0.91] |   100% | 1.00 | 0.996 | 271.00</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## # Fixed effects (zero-inflated)</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Parameter   | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## --------------------------------------------------------------------------------------</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) |  -0.48 | -0.51 | -0.22 | [-2.03,  0.89] | 78.00% | 0.73 | 0.997 | 138.00</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="do">## child       |   1.85 |  1.86 |  1.81 | [ 1.19,  2.54] |   100% | 1.00 | 0.996 | 303.00</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="do">## camper      |  -0.88 | -0.86 | -0.99 | [-1.61, -0.07] | 98.40% | 0.96 | 0.996 | 292.00</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="do">## # Random effects (conditional) Intercept: persons</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Parameter |    Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="do">## ---------------------------------------------------------------------------------------</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="do">## persons.1 |     -0.99 | -1.01 | -0.84 | [-2.68,  0.80] | 92.00% | 0.90 | 1.007 | 106.00</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="do">## persons.2 | -4.65e-03 | -0.04 |  0.03 | [-1.63,  1.66] | 50.00% | 0.45 | 1.013 | 109.00</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="do">## persons.3 |      0.69 |  0.66 |  0.69 | [-0.95,  2.34] | 79.60% | 0.78 | 1.010 | 114.00</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="do">## persons.4 |      1.57 |  1.56 |  1.56 | [-0.05,  3.29] | 96.80% | 0.96 | 1.009 | 114.00</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="do">## # Random effects (zero-inflated) Intercept: persons</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="do">## Parameter | Median |  Mean |   MAP |         95% CI |     pd |   ps |  Rhat |    ESS</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="do">## ------------------------------------------------------------------------------------</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="do">## persons.1 |   1.10 |  1.11 |  1.08 | [-0.23,  2.72] | 94.80% | 0.93 | 0.997 | 166.00</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="do">## persons.2 |   0.18 |  0.18 |  0.22 | [-0.94,  1.58] | 63.20% | 0.54 | 0.996 | 154.00</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="do">## persons.3 |  -0.30 | -0.31 | -0.54 | [-1.79,  1.02] | 64.00% | 0.59 | 0.997 | 154.00</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="do">## persons.4 |  -1.45 | -1.46 | -1.44 | [-2.90, -0.10] | 98.00% | 0.97 | 1.000 | 189.00</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="do">## # Random effects (conditional) SD/Cor: persons</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="do">## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat |    ESS</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="do">## ----------------------------------------------------------------------------------</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) |   1.42 | 1.58 | 1.07 | [ 0.71,  3.58] | 100% | 1.00 | 1.010 | 126.00</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="do">## # Random effects (zero-inflated) SD/Cor: persons</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="do">## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat |    ESS</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="do">## ----------------------------------------------------------------------------------</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) |   1.30 | 1.49 | 0.99 | [ 0.63,  3.41] | 100% | 1.00 | 0.996 | 129.00</span></span></code></pre></div>
 <p><em>bayestestR</em> also includes <a href="https://easystats.github.io/bayestestR/reference/index.html" class="external-link"><strong>many other features</strong></a> useful for your Bayesian analsyes. Here are some more examples:</p>
 <div class="section level2">
 <h2 id="point-estimates">Point-estimates<a class="anchor" aria-label="anchor" href="#point-estimates"></a>
@@ -448,9 +448,10 @@
 <h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h1>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
-<div id="ref-kruschke2018rejecting" class="csl-entry"><p>Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. <em>Advances in Methods and Practices in Psychological Science</em>, <em>1</em>(2), 270–280. <a href="https://doi.org/10.1177/2515245918771304" class="external-link uri">https://doi.org/10.1177/2515245918771304</a></p></div>
-<div id="ref-kruschke2018bayesian" class="csl-entry"><p>Kruschke, J. K., &amp; Liddell, T. M. (2018). The bayesian new statistics: Hypothesis testing, estimation, meta-analysis, and power analysis from a bayesian perspective. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 178–206.</p></div>
-<div id="ref-wagenmakers2010bayesian" class="csl-entry"><p>Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., &amp; Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the savage–dickey method. <em>Cognitive Psychology</em>, <em>60</em>(3), 158–189.</p></div>
+<div id="ref-kruschke2018rejecting" class="csl-entry">Kruschke, J. K. (2018). Rejecting or accepting parameter values in Bayesian estimation. <em>Advances in Methods and Practices in Psychological Science</em>, <em>1</em>(2), 270–280. <a href="https://doi.org/10.1177/2515245918771304" class="external-link uri">https://doi.org/10.1177/2515245918771304</a>
+</div>
+<div id="ref-kruschke2018bayesian" class="csl-entry">Kruschke, J. K., &amp; Liddell, T. M. (2018). The bayesian new statistics: Hypothesis testing, estimation, meta-analysis, and power analysis from a bayesian perspective. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 178–206.</div>
+<div id="ref-wagenmakers2010bayesian" class="csl-entry">Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., &amp; Grasman, R. (2010). Bayesian hypothesis testing for psychologists: A tutorial on the savage–dickey method. <em>Cognitive Psychology</em>, <em>60</em>(3), 158–189.</div>
 </div>
 </div>
 
