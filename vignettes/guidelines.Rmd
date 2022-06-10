@@ -134,7 +134,7 @@ parameter based on its posterior distribution could be:
 
 > "the effect of *X* has a probability of ***pd*** of being *negative* (Median =
 ***median***, 89\% CI [ ***HDI<sub>low</sub>*** , ***HDI<sub>high</sub>*** ] and
-can be considered as *significant* (***ROPE***\% in ROPE)."
+can be considered as *significant* (***ROPE***\% in ROPE))."
 
 ## How to compare different models
 
