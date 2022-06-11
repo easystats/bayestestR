@@ -115,29 +115,8 @@ equivalence could be set, by default, to a range from <code>-0.1</code> to
 according to Cohen, 1988).</p>
 <ul><li><p>For <strong>linear models (lm)</strong>, this can be generalised to
 -0.1 * SD<sub>y</sub>, 0.1 *
-    SD<sub>y</sub>.</p><div class="sourceCode"><pre><code>\item For **logistic models**, the parameters expressed in log odds
-ratio can be converted to standardized difference through the formula
-\ifelse{html}{\out{&amp;pi;/&amp;radic;(3)}}{\eqn{\pi/\sqrt{3}}}, resulting in a
-range of `-0.18` to `0.18`.
-
-\item For other models with **binary outcome**, it is strongly
-recommended to manually specify the rope argument. Currently, the same
-default is applied that for logistic models.
-
-\item For models from **count data**, the residual variance is used.
-This is a rather experimental threshold and is probably often similar to
-`-0.1, 0.1`, but should be used with care!
-
-\item For **t-tests**, the standard deviation of the response is
-used, similarly to linear models (see above).
-
-\item For **correlations**, `-0.05, 0.05` is used, i.e., half
-the value of a negligible correlation as suggested by Cohen's (1988)
-rules of thumb.
-
-\item For all other models, `-0.1, 0.1` is used to determine the
-ROPE limits, but it is strongly advised to specify it manually.
-</code></pre></div></li>
+    SD<sub>y</sub>.</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div></li>
 </ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
