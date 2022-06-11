@@ -91,6 +91,31 @@ effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"
 
 
 #' @export
+effective_sample.stanmvreg <- function(model, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
+  # check arguments
+  effects <- match.arg(effects)
+  component <- match.arg(component)
+
+  pars <- insight::get_parameters(
+    model,
+    effects = effects,
+    component = component,
+    parameters = parameters
+  )
+
+  s <- as.data.frame(summary(model))
+  s <- s[rownames(s) %in% colnames(pars), ]
+
+  data.frame(
+    Parameter = rownames(s),
+    ESS = s[["n_eff"]],
+    stringsAsFactors = FALSE,
+    row.names = NULL
+  )
+}
+
+
+#' @export
 effective_sample.stanfit <- function(model, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
   # check arguments
   effects <- match.arg(effects)
