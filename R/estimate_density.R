@@ -1,6 +1,6 @@
 #' Density Estimation
 #'
-#' This function is a wrapper over different methods of density estimation. By default, it uses the base R `density` with by default uses a different smoothing bandwidth (`"SJ"`) from the legacy default implemented the base R `density` function (`"nrd0"`). However, Deng \& Wickham suggest that `method = "KernSmooth"` is the fastest and the most accurate.
+#' This function is a wrapper over different methods of density estimation. By default, it uses the base R `density` with by default uses a different smoothing bandwidth (`"SJ"`) from the legacy default implemented the base R `density` function (`"nrd0"`). However, Deng and Wickham suggest that `method = "KernSmooth"` is the fastest and the most accurate.
 #'
 #' @inheritParams hdi
 #' @inheritParams stats::density
@@ -405,7 +405,8 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
     n = precision,
     bw = bw,
     from = x_range[1],
-    to = x_range[2]))
+    to = x_range[2]
+  ))
   fun <- get("density", asNamespace("stats"))
   kde <- do.call("fun", args)
   df <- as.data.frame(kde)
@@ -457,6 +458,8 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 }
 
 .set_density_class <- function(out) {
-  if (is.null(out)) return(NULL)
+  if (is.null(out)) {
+    return(NULL)
+  }
   setdiff(unique(c("estimate_density", "see_estimate_density", class(out))), c("estimate_density_df", "see_estimate_density_df"))
 }

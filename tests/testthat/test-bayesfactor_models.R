@@ -4,12 +4,12 @@ if (requiet("bayestestR") && requiet("testthat") && requiet("lme4")) {
   test_that("bayesfactor_models BIC", {
     set.seed(444)
     void <- suppressMessages(capture.output({
-    mo1 <- lme4::lmer(Sepal.Length ~ (1 | Species), data = iris)
-    mo2 <- lme4::lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
-    mo3 <- lme4::lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
-    mo4 <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris)
-    mo5 <- lme4::lmer(Sepal.Length ~ Petal.Length * Petal.Width + (Petal.Length | Species), data = iris)
-    mo4_e <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris[-1, ])
+      mo1 <- lme4::lmer(Sepal.Length ~ (1 | Species), data = iris)
+      mo2 <- lme4::lmer(Sepal.Length ~ Petal.Length + (1 | Species), data = iris)
+      mo3 <- lme4::lmer(Sepal.Length ~ Petal.Length + (Petal.Length | Species), data = iris)
+      mo4 <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris)
+      mo5 <- lme4::lmer(Sepal.Length ~ Petal.Length * Petal.Width + (Petal.Length | Species), data = iris)
+      mo4_e <- lme4::lmer(Sepal.Length ~ Petal.Length + Petal.Width + (Petal.Length | Species), data = iris[-1, ])
     }))
 
     # both uses of denominator

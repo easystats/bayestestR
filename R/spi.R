@@ -275,16 +275,22 @@ spi.get_predicted <- function(x, ...) {
   if (all(!is.na(k)) && all(k == 1)) {
     x.l <- l
   } else {
-    x.l <- tryCatch({
-      .spi_lower(bw = bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x)
-    }, error = function(e) NULL)
+    x.l <- tryCatch(
+      {
+        .spi_lower(bw = bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x)
+      },
+      error = function(e) NULL
+    )
 
     frac <- 1
     while (is.null(x.l)) {
       frac <- frac - .1
-      x.l <- tryCatch({
-        .spi_lower(bw = frac * bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x)
-      }, error = function(e) NULL)
+      x.l <- tryCatch(
+        {
+          .spi_lower(bw = frac * bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x)
+        },
+        error = function(e) NULL
+      )
 
       if (frac <= .1) {
         message(insight::color_text(insight::format_message(
@@ -299,16 +305,22 @@ spi.get_predicted <- function(x, ...) {
   if (all(!is.na(ui)) && all(ui == n.sims)) {
     x.u <- u
   } else {
-    x.u <- tryCatch({
-      .spi_upper(bw = bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x)
-    }, error = function(e) NULL)
+    x.u <- tryCatch(
+      {
+        .spi_upper(bw = bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x)
+      },
+      error = function(e) NULL
+    )
 
     frac <- 1
     while (is.null(x.u)) {
       frac <- frac - .1
-      x.u <- tryCatch({
-        .spi_upper(bw = frac * bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x)
-      }, error = function(e) NULL)
+      x.u <- tryCatch(
+        {
+          .spi_upper(bw = frac * bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x)
+        },
+        error = function(e) NULL
+      )
 
       if (frac <= .1) {
         message(insight::color_text(insight::format_message(
@@ -331,7 +343,7 @@ spi.get_predicted <- function(x, ...) {
   l.l <- max(1, k - bw)
   l.u <- k + (k - l.l)
   range_ll_lu <- l.u - l.l
-  range_ll_k  <-   k - l.l
+  range_ll_k <- k - l.l
   n.l <- range_ll_lu + 1
   D.l <- matrix(nrow = n.l, ncol = n.l)
 
@@ -344,7 +356,7 @@ spi.get_predicted <- function(x, ...) {
     d.q[r] <- dens$y[which.min(abs(dens$x - Q[r]))]
   }
   Q. <- 1 / d.q
-  diag(D.l) <- 2 * (Q ^ 2 + p * q * Q. ^ 2 / (n.sims + 2))
+  diag(D.l) <- 2 * (Q^2 + p * q * Q.^2 / (n.sims + 2))
   d.l <- 2 * Q * l
   if (n.l > 1) {
     for (j in 1:(n.l - 1)) {
@@ -364,7 +376,7 @@ spi.get_predicted <- function(x, ...) {
         if (x[l.l + j + 1] == x[l.l + j]) {
           A.l[1 + j, j + 1] <- 1
           A.l[1 + j, j + 2] <- -1
-        } else{
+        } else {
           aa <- (x[l.l + j] - x[l.l + j - 1]) / (x[l.l + j + 1] - x[l.l + j])
           A.l[1 + j, j] <- 1
           A.l[1 + j, j + 1] <- -(aa + 1)
@@ -376,7 +388,7 @@ spi.get_predicted <- function(x, ...) {
         if (x[k + j + 1] == x[k + j + 2]) {
           A.l[range_ll_k + 1 + j, range_ll_k + 2 + j] <- 1
           A.l[range_ll_k + 1 + j, range_ll_k + 3 + j] <- -1
-        } else{
+        } else {
           aa <- (x[k + j] - x[k + j + 1]) / (x[k + j + 1] - x[k + j + 2])
           A.l[range_ll_k + 1 + j, range_ll_k + 1 + j] <- -1
           A.l[range_ll_k + 1 + j, range_ll_k + 2 + j] <- aa + 1
@@ -387,7 +399,7 @@ spi.get_predicted <- function(x, ...) {
   }
   if (x[k + 1] == x[k]) {
     aa <- (x[k] - x[k - 1]) / (x[k + 1] - x[k] + .000001)
-  } else{
+  } else {
     aa <- (x[k] - x[k - 1]) / (x[k + 1] - x[k])
   }
   A.l[range_ll_lu, range_ll_k + 1] <- aa - 1
@@ -410,7 +422,7 @@ spi.get_predicted <- function(x, ...) {
   u.u <- min(n.sims, ui + bw)
   u.l <- ui - (u.u - ui)
   range_ul_uu <- u.u - u.l
-  range_ul_ui <-  ui - u.l
+  range_ul_ui <- ui - u.l
   n.u <- range_ul_uu + 1
   D.u <- matrix(nrow = n.u, ncol = n.u)
 
@@ -423,7 +435,7 @@ spi.get_predicted <- function(x, ...) {
     d.q[r] <- dens$y[which.min(abs(dens$x - Q[r]))]
   }
   Q. <- 1 / d.q
-  diag(D.u) <- 2 * (Q ^ 2 + p * q * Q. ^ 2 / (n.sims + 2))
+  diag(D.u) <- 2 * (Q^2 + p * q * Q.^2 / (n.sims + 2))
   d.u <- 2 * Q * u
   if (n.u > 1) {
     for (j in 1:(n.u - 1)) {
@@ -443,7 +455,7 @@ spi.get_predicted <- function(x, ...) {
         if (x[u.l + j + 1] == x[u.l + j]) {
           A.u[1 + j, j + 1] <- 1
           A.u[1 + j, j + 2] <- -1
-        } else{
+        } else {
           aa <- (x[u.l + j] - x[u.l + j - 1]) / (x[u.l + j + 1] - x[u.l + j])
           A.u[1 + j, j] <- 1
           A.u[1 + j, j + 1] <- -(aa + 1)
@@ -456,7 +468,7 @@ spi.get_predicted <- function(x, ...) {
         if (x[ui + i + 1] == x[ui + i + 2]) {
           A.u[1 + j, j + 2] <- 1
           A.u[1 + j, j + 3] <- -1
-        } else{
+        } else {
           aa <- (x[ui + i] - x[ui + i + 1]) / (x[ui + i + 1] - x[ui + i + 2])
           A.u[1 + j, j + 1] <- -1
           A.u[1 + j, j + 2] <- aa + 1

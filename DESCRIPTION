@@ -66,12 +66,14 @@ Description: Provides utilities to describe posterior
 Depends:
     R (>= 3.4)
 Imports:
-    insight (>= 0.17.0),
-    datawizard (>= 0.4.0),
+    insight (>= 0.17.1.7),
+    datawizard (>= 0.4.1),
     graphics,
     methods,
     stats,
     utils
+Remotes:
+    easystats/insight
 Suggests:
     BayesFactor,
     bayesQR,
@@ -117,6 +119,6 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)

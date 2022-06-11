@@ -11,8 +11,10 @@ if (.runThisTest && require("posterior") && require("brms")) {
     expect_equal(mp$Parameter, c("b_Intercept", "b_wt", "b_cyl", "sigma", "lp__"))
     expect_equal(
       colnames(mp),
-      c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
-        "ROPE_low", "ROPE_high", "ROPE_Percentage")
+      c(
+        "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
+        "ROPE_low", "ROPE_high", "ROPE_Percentage"
+      )
     )
   })
 
@@ -24,8 +26,10 @@ if (.runThisTest && require("posterior") && require("brms")) {
     expect_equal(mp$Parameter, c("b_Intercept", "b_wt", "b_cyl", "sigma", "lp__"))
     expect_equal(
       colnames(mp),
-      c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
-        "ROPE_low", "ROPE_high", "ROPE_Percentage")
+      c(
+        "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
+        "ROPE_low", "ROPE_high", "ROPE_Percentage"
+      )
     )
   })
 
@@ -37,8 +41,10 @@ if (.runThisTest && require("posterior") && require("brms")) {
     expect_equal(mp$Parameter, c("b_Intercept", "b_wt", "b_cyl", "sigma", "lp__"))
     expect_equal(
       colnames(mp),
-      c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
-        "ROPE_low", "ROPE_high", "ROPE_Percentage")
+      c(
+        "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
+        "ROPE_low", "ROPE_high", "ROPE_Percentage"
+      )
     )
   })
 
@@ -50,8 +56,10 @@ if (.runThisTest && require("posterior") && require("brms")) {
     expect_equal(mp$Parameter, c("b_Intercept", "b_wt", "b_cyl", "sigma", "lp__"))
     expect_equal(
       colnames(mp),
-      c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
-        "ROPE_low", "ROPE_high", "ROPE_Percentage")
+      c(
+        "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
+        "ROPE_low", "ROPE_high", "ROPE_Percentage"
+      )
     )
   })
 
@@ -63,8 +71,10 @@ if (.runThisTest && require("posterior") && require("brms")) {
     expect_equal(mp$Parameter, c("b_Intercept", "b_wt", "b_cyl", "sigma", "lp__"))
     expect_equal(
       colnames(mp),
-      c("Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
-        "ROPE_low", "ROPE_high", "ROPE_Percentage")
+      c(
+        "Parameter", "Median", "CI", "CI_low", "CI_high", "pd", "ROPE_CI",
+        "ROPE_low", "ROPE_high", "ROPE_Percentage"
+      )
     )
   })
 }

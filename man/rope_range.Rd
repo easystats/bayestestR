@@ -29,7 +29,9 @@ according to Cohen, 1988).
 \itemize{
 \item For \strong{linear models (lm)}, this can be generalised to
 \ifelse{html}{\out{-0.1 * SD<sub>y</sub>, 0.1 *
-    SD<sub>y</sub>}}{\eqn{[-0.1*SD_{y}, 0.1*SD_{y}]}}.\preformatted{\\item For **logistic models**, the parameters expressed in log odds
+    SD<sub>y</sub>}}{\eqn{[-0.1*SD_{y}, 0.1*SD_{y}]}}.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{\\item For **logistic models**, the parameters expressed in log odds
 ratio can be converted to standardized difference through the formula
 \ifelse{html}{\out{&pi;/&radic;(3)}}{\eqn{\pi/\sqrt{3}}}, resulting in a
 range of `-0.18` to `0.18`.
@@ -51,7 +53,7 @@ rules of thumb.
 
 \\item For all other models, `-0.1, 0.1` is used to determine the
 ROPE limits, but it is strongly advised to specify it manually.
-}
+}\if{html}{\out{</div>}}
 
 }
 }

@@ -75,9 +75,7 @@ rnorm_perfect(n, mean = 0, sd = 1)
 \item{random}{Generate near-perfect or random (simple wrappers for the base R
 \verb{r*} functions) distributions.}
 
-\item{shape1}{non-negative parameters of the Beta distribution.}
-
-\item{shape2}{non-negative parameters of the Beta distribution.}
+\item{shape1, shape2}{non-negative parameters of the Beta distribution.}
 
 \item{ncp}{non-centrality parameter.}
 
@@ -85,14 +83,9 @@ rnorm_perfect(n, mean = 0, sd = 1)
 
 \item{prob}{probability of success on each trial.}
 
-\item{location}{location and scale parameters.}
-
-\item{scale}{location and scale parameters.}
+\item{location, scale}{location and scale parameters.}
 
 \item{df}{degrees of freedom (non-negative, but can be non-integer).}
-
-\item{shape}{shape and scale parameters.  Must be positive,
-    \code{scale} strictly.}
 
 \item{mean}{vector of means.}
 
@@ -110,9 +103,7 @@ is \code{var(Y) = phi * mu^xi}.}
 
 \item{power}{Alias for \code{xi}.}
 
-\item{min}{lower and upper limits of the distribution.  Must be finite.}
-
-\item{max}{lower and upper limits of the distribution.  Must be finite.}
+\item{min, max}{lower and upper limits of the distribution.  Must be finite.}
 }
 \description{
 Generate a sequence of n-quantiles, i.e., a sample of size \code{n} with a

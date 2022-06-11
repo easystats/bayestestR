@@ -44,7 +44,7 @@
 #'
 #' @references
 #' \itemize{
-#'   \item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., \& Lüdecke, D. (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
+#'   \item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 #'   \item [Region of Practical Equivalence (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
 #'   \item [Bayes factors](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
 #' }
@@ -315,10 +315,12 @@ describe_posterior.default <- function(posteriors, ...) {
     if (any(c("bf", "bayesfactor", "bayes_factor") %in% test)) {
       test_bf <- tryCatch(
         .prepare_output(
-           bayesfactor_parameters(x, prior = bf_prior, ...),
-           cleaned_parameters,
-           is_stanmvreg
-        ), error = function(e) data.frame("Parameter" = NA))
+          bayesfactor_parameters(x, prior = bf_prior, ...),
+          cleaned_parameters,
+          is_stanmvreg
+        ),
+        error = function(e) data.frame("Parameter" = NA)
+      )
       if (!"Parameter" %in% names(test_bf)) {
         test_bf <- cbind(data.frame("Parameter" = "Posterior"), test_bf)
       }

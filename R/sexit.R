@@ -73,7 +73,7 @@
 #'  namely the thresholds for significant and large effects. They are set, by
 #'  default, to `0.05` and `0.3` of the standard deviation of the outcome
 #'  variable (tiny and large effect sizes for correlations according to Funder
-#'  \& Ozer, 2019). However, these defaults were chosen by lack of a better
+#'  and Ozer, 2019). However, these defaults were chosen by lack of a better
 #'  option, and might not be adapted to your case. Thus, they are to be handled
 #'  with care, and the chosen thresholds should always be explicitly reported
 #'  and justified.

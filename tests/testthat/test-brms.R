@@ -66,7 +66,7 @@ if (.runThisTest && requiet("brms") && requiet("testthat") && requiet("insight")
     ))
 
     known <- s$fixed
-    unknown <- out[out$Effects == "fixed" & out$Component == "conditional",]
+    unknown <- out[out$Effects == "fixed" & out$Component == "conditional", ]
     idx <- match(row.names(known), gsub("b_", "", unknown$Parameter))
     unknown <- unknown[idx, ]
     expect_equal(unknown$Mean, known$Estimate)
