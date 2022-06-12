@@ -21,7 +21,6 @@ library(knitr)
 
 if (!requireNamespace("see", quietly = TRUE) ||
   !requireNamespace("parameters", quietly = TRUE) ||
-  !requireNamespace("stringr", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE) ||
   !requireNamespace("datawizard", quietly = TRUE) ||
   !requireNamespace("poorman", quietly = TRUE)) {
@@ -98,7 +97,6 @@ code used for generation is available
 library(ggplot2)
 library(poorman)
 library(datawizard)
-library(stringr)
 library(see)
 library(parameters)
 
@@ -206,42 +204,6 @@ the **Median**, the **MAP** and the frequentist **Coefficient**.
 
 Overall, the **median** appears to be a safe choice, maintaining a high
 performance across different types of models.
-
-<!-- ```{r, message=FALSE, warning=FALSE} -->
-<!-- df %>% -->
-<!--   select(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) %>% -->
-<!--   gather(estimate, value, -sample_size, -error, -true_effect, -outcome_type) %>% -->
-<!--   glm(true_effect ~ outcome_type / value * estimate * sample_size * error, data=., family="binomial") %>% -->
-<!--   broom::tidy() %>% -->
-<!--   select(term, estimate, p=p.value) %>% -->
-<!--   filter(stringr::str_detect(term, 'outcome_type'), -->
-<!--          stringr::str_detect(term, ':value')) %>% -->
-<!--   mutate( -->
-<!--     sample_size = stringr::str_detect(term, 'sample_size'), -->
-<!--     error = stringr::str_detect(term, 'error'), -->
-<!--     term = stringr::str_remove(term, "estimate"), -->
-<!--     term = stringr::str_remove(term, "outcome_type"), -->
-<!--     p = paste0(sprintf("%.2f", p), ifelse(p < .001, "***", ifelse(p < .01, "**", ifelse(p < .05, "*", ""))))) %>% -->
-<!--   arrange(sample_size, error, term) %>%  -->
-<!--   select(-sample_size, -error) %>%  -->
-<!--   knitr::kable(digits=2)  -->
-<!-- ``` -->
-
-
-<!-- This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist's beta: -->
-
-<!-- - For linear Models; -->
-
-<!--   - The **mean**, followed closely by the **median**, and the **MAP** estimate had a superior performance, altough not significantly. -->
-<!--   - The **mean**, followed closely by the **median**, and the **MAP** estimate, were less affected by noise, altough not significantly. -->
-<!--   - No difference for the sensitivity to sample size was found. -->
-
-<!-- - For logistic models: -->
-
-<!--   - The **MAP** estimate, followed by the **median** and the **mean**, estimate had a superior performance. -->
-<!--   - The **MAP** estimate, followed by the **median**, and the **mean**, were less affected by noise, altough not significantly. -->
-<!--   - The **MAP** estimate, followed by the **mean**, and the **median**, were less affected by sample size, altough not significantly. -->
-
 
 ## Experiment 2: Relationship with Sampling Characteristics
 
