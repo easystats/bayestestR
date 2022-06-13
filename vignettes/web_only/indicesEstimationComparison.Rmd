@@ -185,7 +185,7 @@ df %>%
   ) %>%
   glm(true_effect ~ outcome_type / estimate / value, data = ., family = "binomial") %>%
   parameters(ci_method = "wald") %>%
-  data_select("Parameter", "Coefficient", "p") %>%
+  data_select(c("Parameter", "Coefficient", "p")) %>%
   data_filter(filter = grep("^outcome_type(.*):value$", x = .$Parameter)) %>%
   arrange(desc(Coefficient)) %>%
   knitr::kable(digits = 2)
