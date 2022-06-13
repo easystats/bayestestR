@@ -179,19 +179,16 @@ their interaction with noise and sample size.
 
 ```{r, message=FALSE, warning=FALSE}
 df %>%
-  select(sample_size, error, true_effect, outcome_type, Coefficient, Median, Mean, MAP) %>%
+  data_select(c("sample_size", "error", "true_effect", "outcome_type", "Coefficient", "Median", "Mean", "MAP")) %>%
   reshape_longer(
     select = -c("sample_size", "error", "true_effect", "outcome_type"),
     names_to = "estimate",
     values_to = "value"
   ) %>%
   glm(true_effect ~ outcome_type / estimate / value, data = ., family = "binomial") %>%
-  parameters(df_method = "wald") %>%
-  select(Parameter, Coefficient, p) %>%
-  filter(
-    str_detect(Parameter, "outcome_type"),
-    str_detect(Parameter, ":value")
-  ) %>%
+  parameters(ci_method = "wald") %>%
+  data_select("Parameter", "Coefficient", "p") %>%
+  data_filter(filter = grep("^outcome_type(.*):value$", x = .$Parameter)) %>%
   arrange(desc(Coefficient)) %>%
   knitr::kable(digits = 2)
 ```
