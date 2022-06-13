@@ -161,7 +161,6 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nathaneastwood.github.io/poorman/" class="external-link">poorman</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/datawizard/" class="external-link">datawizard</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/see/" class="external-link">see</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/parameters/" class="external-link">parameters</a></span><span class="op">)</span>
 
@@ -238,19 +237,16 @@
 <p>We fitted a (frequentist) multiple linear regression to statistically test the the predict the presence or absence of effect with the estimates as well as their interaction with noise and sample size.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://nathaneastwood.github.io/poorman/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">sample_size</span>, <span class="va">error</span>, <span class="va">true_effect</span>, <span class="va">outcome_type</span>, <span class="va">Coefficient</span>, <span class="va">Median</span>, <span class="va">Mean</span>, <span class="va">MAP</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://easystats.github.io/datawizard/reference/find_columns.html" class="external-link">data_select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample_size"</span>, <span class="st">"error"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span>, <span class="st">"Coefficient"</span>, <span class="st">"Median"</span>, <span class="st">"Mean"</span>, <span class="st">"MAP"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_to_long.html" class="external-link">reshape_longer</a></span><span class="op">(</span>
     select <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sample_size"</span>, <span class="st">"error"</span>, <span class="st">"true_effect"</span>, <span class="st">"outcome_type"</span><span class="op">)</span>,
     names_to <span class="op">=</span> <span class="st">"estimate"</span>,
     values_to <span class="op">=</span> <span class="st">"value"</span>
   <span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">true_effect</span> <span class="op">~</span> <span class="va">outcome_type</span> <span class="op">/</span> <span class="va">estimate</span> <span class="op">/</span> <span class="va">value</span>, data <span class="op">=</span> <span class="va">.</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html" class="external-link">parameters</a></span><span class="op">(</span>df_method <span class="op">=</span> <span class="st">"wald"</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://nathaneastwood.github.io/poorman/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Parameter</span>, <span class="va">Coefficient</span>, <span class="va">p</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://nathaneastwood.github.io/poorman/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">Parameter</span>, <span class="st">"outcome_type"</span><span class="op">)</span>,
-    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">Parameter</span>, <span class="st">":value"</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://easystats.github.io/parameters/reference/model_parameters.html" class="external-link">parameters</a></span><span class="op">(</span>ci_method <span class="op">=</span> <span class="st">"wald"</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://easystats.github.io/datawizard/reference/find_columns.html" class="external-link">data_select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Parameter"</span>, <span class="st">"Coefficient"</span>, <span class="st">"p"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_match.html" class="external-link">data_filter</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"^outcome_type(.*):value$"</span>, x <span class="op">=</span> <span class="va">.</span><span class="op">$</span><span class="va">Parameter</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://nathaneastwood.github.io/poorman/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://nathaneastwood.github.io/poorman/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">Coefficient</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <table class="table">
@@ -317,34 +313,6 @@
 <li>For logistic models, the <strong>MAP</strong> was the better predictor, followed by the <strong>Median</strong>, the <strong>Mean</strong> and, behind, the frequentist <strong>Coefficient</strong>.</li>
 </ul>
 <p>Overall, the <strong>median</strong> appears to be a safe choice, maintaining a high performance across different types of models.</p>
-<!-- ```{r, message=FALSE, warning=FALSE} -->
-<!-- df %>% -->
-<!--   select(sample_size, error, true_effect, outcome_type, beta, Median, Mean, MAP) %>% -->
-<!--   gather(estimate, value, -sample_size, -error, -true_effect, -outcome_type) %>% -->
-<!--   glm(true_effect ~ outcome_type / value * estimate * sample_size * error, data=., family="binomial") %>% -->
-<!--   broom::tidy() %>% -->
-<!--   select(term, estimate, p=p.value) %>% -->
-<!--   filter(stringr::str_detect(term, 'outcome_type'), -->
-<!--          stringr::str_detect(term, ':value')) %>% -->
-<!--   mutate( -->
-<!--     sample_size = stringr::str_detect(term, 'sample_size'), -->
-<!--     error = stringr::str_detect(term, 'error'), -->
-<!--     term = stringr::str_remove(term, "estimate"), -->
-<!--     term = stringr::str_remove(term, "outcome_type"), -->
-<!--     p = paste0(sprintf("%.2f", p), ifelse(p < .001, "***", ifelse(p < .01, "**", ifelse(p < .05, "*", ""))))) %>% -->
-<!--   arrange(sample_size, error, term) %>%  -->
-<!--   select(-sample_size, -error) %>%  -->
-<!--   knitr::kable(digits=2)  -->
-<!-- ``` -->
-<!-- This suggests that, in order to delineate between the presence and the absence of an effect, compared to the frequentist's beta: -->
-<!-- - For linear Models; -->
-<!--   - The **mean**, followed closely by the **median**, and the **MAP** estimate had a superior performance, altough not significantly. -->
-<!--   - The **mean**, followed closely by the **median**, and the **MAP** estimate, were less affected by noise, altough not significantly. -->
-<!--   - No difference for the sensitivity to sample size was found. -->
-<!-- - For logistic models: -->
-<!--   - The **MAP** estimate, followed by the **median** and the **mean**, estimate had a superior performance. -->
-<!--   - The **MAP** estimate, followed by the **median**, and the **mean**, were less affected by noise, altough not significantly. -->
-<!--   - The **MAP** estimate, followed by the **mean**, and the **median**, were less affected by sample size, altough not significantly. -->
 </div>
 </div>
 </div>
