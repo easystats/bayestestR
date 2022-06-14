@@ -169,7 +169,7 @@
 &gt; F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <p>We can also zoom in on the parameters of interest to us:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html" class="external-link">get_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html" class="external-link">get_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></code></pre></div>
 <pre><code>&gt;      Parameter Estimate
 &gt; 1  (Intercept)     4.31
 &gt; 2 Petal.Length     0.41</code></pre>
@@ -193,7 +193,7 @@
 </h3>
 <p>Once it is done, let us extract the parameters (<em>i.e.</em>, coefficients) of the model.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html" class="external-link">get_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html" class="external-link">get_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">)</span> <span class="co"># Show the first 6 rows</span></code></pre></div>
 <pre><code>&gt;   (Intercept) Petal.Length
@@ -218,7 +218,7 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span>, chains <span class="op">=</span> <span class="fl">2</span>, iter <span class="op">=</span> <span class="fl">1000</span>, warmup <span class="op">=</span> <span class="fl">250</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html" class="external-link">get_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="co"># Size (number of rows)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html" class="external-link">get_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="co"># Size (number of rows)</span></code></pre></div>
 <pre><code>[1] 1500</code></pre>
 <p>In this case, as would be expected, we have <strong><code>2 chains * (1000 iterations - 250 warm-up) = 1500</code></strong> posterior draws. But let’s keep our first model with the default setup (as it has more draws).</p>
 </div>
@@ -311,10 +311,10 @@
 <h3 id="data-preparation-and-model-fitting">Data preparation and model fitting<a class="anchor" aria-label="anchor" href="#data-preparation-and-model-fitting"></a>
 </h3>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nathaneastwood.github.io/poorman/" class="external-link">poorman</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/datawizard/" class="external-link">datawizard</a></span><span class="op">)</span>
 
 <span class="co"># We keep only rows for which feed is meatmeal or sunflower</span>
-<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://nathaneastwood.github.io/poorman/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">chickwts</span>, <span class="va">feed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"meatmeal"</span>, <span class="st">"sunflower"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_match.html" class="external-link">data_filter</a></span><span class="op">(</span><span class="va">chickwts</span>, <span class="va">feed</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"meatmeal"</span>, <span class="st">"sunflower"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Let’s run another Bayesian regression to predict the <strong>weight</strong> with the <strong>two types of feed type</strong>.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">weight</span> <span class="op">~</span> <span class="va">feed</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span></code></pre></div>
@@ -323,7 +323,7 @@
 <h3 id="posterior-description">Posterior description<a class="anchor" aria-label="anchor" href="#posterior-description"></a>
 </h3>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu">insight</span><span class="fu">::</span><span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html" class="external-link">get_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">posteriors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://easystats.github.io/insight/reference/get_parameters.html" class="external-link">get_parameters</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span>
 
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">posteriors</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">feedsunflower</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html" class="external-link">geom_density</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></code></pre></div>
@@ -393,9 +393,8 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 </h3>
 <p>Maybe we are not interested in whether the effect is non-negligible. Maybe <strong>we just want to know if this effect is positive or negative</strong>. In this case, we can simply compute the proportion of the posterior that is positive, no matter the “size” of the effect.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">n_positive</span> <span class="op">&lt;-</span> <span class="va">posteriors</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://nathaneastwood.github.io/poorman/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">feedsunflower</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://nathaneastwood.github.io/poorman/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># select only positive values</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Get length</span>
+<code class="sourceCode R"><span class="co"># select only positive values</span>
+<span class="va">n_positive</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="fu"><a href="https://easystats.github.io/datawizard/reference/data_match.html" class="external-link">data_filter</a></span><span class="op">(</span><span class="va">posteriors</span>, <span class="va">feedsunflower</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">n_positive</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">posteriors</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span></code></pre></div>
 <pre><code>&gt; [1] 98</code></pre>
