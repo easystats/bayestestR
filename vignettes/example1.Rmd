@@ -38,13 +38,13 @@ options(digits = 2)
 set.seed(333)
 
 if (!requireNamespace("rstanarm", quietly = TRUE) ||
-  !requireNamespace("poorman", quietly = TRUE) ||
+  !requireNamespace("datawizard", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
 format_percent <- function(x, digits = 0, ...) {
-  paste0(format_value(x * 100, digits = digits, ...), "%")
+  paste0(insight::format_value(x * 100, digits = digits, ...), "%")
 }
 ```
 
@@ -81,7 +81,7 @@ summary(model)
 We can also zoom in on the parameters of interest to us:
 
 ```{r}
-insight::get_parameters(model)
+get_parameters(model)
 ```
 
 In this model, the linear relationship between `Petal.Length` and `Sepal.Length`
@@ -123,13 +123,13 @@ Once it is done, let us extract the parameters (*i.e.*, coefficients) of the
 model.
 
 ```{r , eval=FALSE}
-posteriors <- insight::get_parameters(model)
+posteriors <- get_parameters(model)
 
 head(posteriors) # Show the first 6 rows
 ```
 
 ```{r , echo=FALSE}
-posteriors <- insight::get_parameters(model)
+posteriors <- get_parameters(model)
 
 head(posteriors) # Show the first 6 rows
 ```
@@ -173,12 +173,12 @@ We can change that, for instance:
 ```{r , eval=FALSE}
 model <- stan_glm(Sepal.Length ~ Petal.Length, data = iris, chains = 2, iter = 1000, warmup = 250)
 
-nrow(insight::get_parameters(model)) # Size (number of rows)
+nrow(get_parameters(model)) # Size (number of rows)
 ```
  
 ```{r echo=FALSE, , comment=NA, echo=FALSE}
 model <- stan_glm(Sepal.Length ~ Petal.Length, data = iris, chains = 2, iter = 1000, warmup = 250, refresh = 0)
-nrow(insight::get_parameters(model)) # Size (number of rows)
+nrow(get_parameters(model)) # Size (number of rows)
 ```
 
 In this case, as would be expected, we have **`2 chains * (1000 iterations - 250 warm-up) = 1500`** posterior draws. But let's keep our first model with the default setup (as it has more draws).
@@ -327,10 +327,10 @@ interest for us (*we do have peculiar interests*): **meat meals** and
 ### Data preparation and model fitting
 
 ```{r }
-library(poorman)
+library(datawizard)
 
 # We keep only rows for which feed is meatmeal or sunflower
-data <- filter(chickwts, feed %in% c("meatmeal", "sunflower"))
+data <- data_filter(chickwts, feed %in% c("meatmeal", "sunflower"))
 ```
 
 Let's run another Bayesian regression to predict the **weight** with the **two types of feed type**.
@@ -348,7 +348,7 @@ model <- stan_glm(weight ~ feed, data = data,
 
 
 ```{r }
-posteriors <- insight::get_parameters(model)
+posteriors <- get_parameters(model)
 
 ggplot(posteriors, aes(x = feedsunflower)) +
   geom_density(fill = "red")
@@ -438,9 +438,8 @@ simply compute the proportion of the posterior that is positive, no matter the
 "size" of the effect.
 
 ```{r }
-n_positive <- posteriors %>%
-  filter(feedsunflower > 0) %>% # select only positive values
-  nrow() # Get length
+# select only positive values
+n_positive <- nrow(data_filter(posteriors, feedsunflower > 0))
 
 n_positive / nrow(posteriors) * 100
 ```

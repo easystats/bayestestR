@@ -29,8 +29,7 @@ knitr::opts_chunk$set(comment=">")
 options(digits=2)
 
 if (!requireNamespace("ggplot2", quietly = TRUE) || 
-    !requireNamespace("logspline", quietly = TRUE) ||
-    !requireNamespace("poorman", quietly = TRUE)) {
+    !requireNamespace("logspline", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
@@ -100,7 +99,6 @@ the `method` argument of the `ci()` function. What is the difference? Let's see:
 
 ```{r warning=FALSE, message=FALSE}
 library(bayestestR)
-library(poorman)
 library(ggplot2)
 
 # Generate a normal distribution
@@ -111,9 +109,8 @@ ci_hdi <- ci(posterior, method = "HDI")
 ci_eti <- ci(posterior, method = "ETI")
 
 # Plot the distribution and add the limits of the two CIs
-posterior %>% 
-  estimate_density(extend=TRUE) %>% 
-  ggplot(aes(x = x, y = y)) +
+out <- estimate_density(posterior, extend = TRUE)
+ggplot(out, aes(x = x, y = y)) +
   geom_area(fill = "orange") +
   theme_classic() +
   # HDI in blue
@@ -137,9 +134,8 @@ ci_hdi <- ci(posterior, method = "HDI")
 ci_eti <- ci(posterior, method = "ETI")
 
 # Plot the distribution and add the limits of the two CIs
-posterior %>% 
-  estimate_density(extend = TRUE) %>% 
-  ggplot(aes(x = x, y = y)) +
+out <- estimate_density(posterior, extend = TRUE)
+  ggplot(out, aes(x = x, y = y)) +
   geom_area(fill = "orange") +
   theme_classic() +
   # HDI in blue
