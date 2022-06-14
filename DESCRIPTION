@@ -86,7 +86,6 @@ Suggests:
     GGally,
     ggdist,
     ggplot2,
-    ggridges,
     glmmTMB,
     httr,
     KernSmooth,
