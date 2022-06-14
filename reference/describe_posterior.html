@@ -159,21 +159,33 @@
 <strong>bayestestR</strong> supports a wide range of models (see <code>methods("describe_posterior")</code>)
 and not all of those are documented in the 'Usage' section, because methods
 for other classes mostly resemble the arguments of the <code>.numeric</code> method.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments to be passed to or from methods.</p></dd>
+
+
 <dt>centrality</dt>
 <dd><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></dd>
+
+
 <dt>dispersion</dt>
 <dd><p>Logical, if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></dd>
+
+
 <dt>ci</dt>
 <dd><p>Value or vector of probability of the CI (between 0 and 1)
 to be estimated. Default to <code>.95</code> (<code>95%</code>).</p></dd>
+
+
 <dt>ci_method</dt>
 <dd><p>The type of index used for Credible Interval. Can be
 <code>"ETI"</code> (default, see <code><a href="eti.html">eti()</a></code>), <code>"HDI"</code>
 (see <code><a href="hdi.html">hdi()</a></code>), <code>"BCI"</code> (see
 <code><a href="bci.html">bci()</a></code>), <code>"SPI"</code> (see <code><a href="spi.html">spi()</a></code>), or
 <code>"SI"</code> (see <code><a href="si.html">si()</a></code>).</p></dd>
+
+
 <dt>test</dt>
 <dd><p>The indices of effect existence to compute. Character (vector) or
 list with one or more of these options: <code>"p_direction"</code> (or <code>"pd"</code>),
@@ -182,42 +194,63 @@ list with one or more of these options: <code>"p_direction"</code> (or <code>"pd
 For each "test", the corresponding <span class="pkg">bayestestR</span> function is called
 (e.g. <code><a href="rope.html">rope()</a></code> or <code><a href="p_direction.html">p_direction()</a></code>) and its results
 included in the summary output.</p></dd>
+
+
 <dt>rope_range</dt>
 <dd><p>ROPE's lower and higher bounds. Should be a list of two
 values (e.g., <code>c(-0.1, 0.1)</code>) or <code>"default"</code>. If <code>"default"</code>,
 the bounds are set to <code>x +- 0.1*SD(response)</code>.</p></dd>
+
+
 <dt>rope_ci</dt>
 <dd><p>The Credible Interval (CI) probability, corresponding to the
 proportion of HDI, to use for the percentage in ROPE.</p></dd>
+
+
 <dt>keep_iterations</dt>
 <dd><p>If <code>TRUE</code>, will keep all iterations (draws) of
 bootstrapped or Bayesian models. They will be added as additional columns
 named <code>iter_1, iter_2, ...</code>. You can reshape them to a long format by
 running <code><a href="reshape_iterations.html">reshape_iterations()</a></code>.</p></dd>
+
+
 <dt>bf_prior</dt>
 <dd><p>Distribution representing a prior for the computation of
 Bayes factors / SI. Used if the input is a posterior, otherwise (in the
 case of models) ignored.</p></dd>
+
+
 <dt>BF</dt>
 <dd><p>The amount of support required to be included in the support interval.</p></dd>
+
+
 <dt>diagnostic</dt>
 <dd><p>Diagnostic metrics to compute.  Character (vector) or list
 with one or more of these options: <code>"ESS"</code>, <code>"Rhat"</code>, <code>"MCSE"</code> or <code>"all"</code>.</p></dd>
+
+
 <dt>priors</dt>
 <dd><p>Add the prior used for each parameter.</p></dd>
+
+
 <dt>effects</dt>
 <dd><p>Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.</p></dd>
+
+
 <dt>component</dt>
 <dd><p>Should results for all parameters, parameters for the
 conditional model or the zero-inflated part of the model be returned? May
 be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></dd>
+
+
 <dt>parameters</dt>
 <dd><p>Regular expression pattern that describes the parameters
 that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
 filtered by default, so only parameters that typically appear in the
 <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -314,7 +347,7 @@ related argument to <code>NULL</code>. For example, <code>test = NULL</code> and
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

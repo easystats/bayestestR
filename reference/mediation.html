@@ -126,16 +126,24 @@ causal mediation effects of multivariate response models.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>model</dt>
 <dd><p>A <code>brmsfit</code> or <code>stanmvreg</code> object.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Not used.</p></dd>
+
+
 <dt>treatment</dt>
 <dd><p>Character, name of the treatment variable (or direct effect)
 in a (multivariate response) mediator-model. If missing, <code>mediation()</code>
 tries to find the treatment variable automatically, however, this may fail.</p></dd>
+
+
 <dt>mediator</dt>
 <dd><p>Character, name of the mediator variable in a (multivariate
 response) mediator-model. If missing, <code>mediation()</code> tries to find the
 treatment variable automatically, however, this may fail.</p></dd>
+
+
 <dt>response</dt>
 <dd><p>A named character vector, indicating the names of the response
 variables to be used for the mediation analysis. Usually can be <code>NULL</code>,
@@ -150,17 +158,26 @@ but the centered version <code>m_center</code> is used as mediator variable. The
 second response variable (for the treatment model, with the mediator as
 additional predictor), <code>y</code>, is not transformed. Then we could use
 <code>response</code> like this: <code>mediation(model, response = c(m = "m_center", y = "y"))</code>.</p></dd>
+
+
 <dt>centrality</dt>
 <dd><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></dd>
+
+
 <dt>ci</dt>
 <dd><p>Value or vector of probability of the CI (between 0 and 1)
 to be estimated. Default to <code>.95</code> (<code>95%</code>).</p></dd>
+
+
 <dt>method</dt>
 <dd><p>Can be <a href="eti.html">'ETI'</a> (default), <a href="hdi.html">'HDI'</a>, <a href="bci.html">'BCI'</a>, <a href="spi.html">'SPI'</a> or <a href="si.html">'SI'</a>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame with direct, indirect, mediator and
+    
+
+<p>A data frame with direct, indirect, mediator and
 total effect of a multivariate-response mediation-model, as well as the
 proportion mediated. The effect sizes are median values of the posterior
 samples (use <code>centrality</code> for other centrality indices).</p>
@@ -260,7 +277,7 @@ the frequentist framework.</p></div>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

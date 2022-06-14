@@ -158,25 +158,40 @@ The <code>bf_*</code> function is an alias of the main function.
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>posterior</dt>
 <dd><p>A <code>stanreg</code> / <code>brmsfit</code> object, <code>emmGrid</code> or a data frame - representing a posterior distribution(s) from (see Details).</p></dd>
+
+
 <dt>hypothesis</dt>
 <dd><p>A character vector specifying the restrictions as logical conditions (see examples below).</p></dd>
+
+
 <dt>prior</dt>
 <dd><p>An object representing a prior distribution (see Details).</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Toggle off warnings.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Currently not used.</p></dd>
+
+
 <dt>effects</dt>
 <dd><p>Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.</p></dd>
+
+
 <dt>component</dt>
 <dd><p>Should results for all parameters, parameters for the
 conditional model or the zero-inflated part of the model be returned? May
 be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data frame containing the (log) Bayes factor representing evidence
+    
+
+<p>A data frame containing the (log) Bayes factor representing evidence
 <em>against</em> the un-restricted model (Use <code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric()</a></code> to extract the
 non-log Bayes factors; see examples). (A <code>bool_results</code> attribute contains
 the results for each sample, indicating if they are included or not in the
@@ -325,7 +340,7 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

@@ -129,27 +129,42 @@ vectors. Can also be a Bayesian model. <strong>bayestestR</strong> supports a wi
 of models (see, for example, <code>methods("hdi")</code>) and not all of those are
 documented in the 'Usage' section, because methods for other classes mostly
 resemble the arguments of the <code>.numeric</code> or <code>.data.frame</code>methods.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional arguments to be passed to or from methods.</p></dd>
+
+
 <dt>centrality</dt>
 <dd><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></dd>
+
+
 <dt>dispersion</dt>
 <dd><p>Logical, if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></dd>
+
+
 <dt>threshold</dt>
 <dd><p>For <code>centrality = "trimmed"</code> (i.e. trimmed mean), indicates the fraction (0 to 0.5) of observations to be trimmed from each end of the vector before the mean is computed.</p></dd>
+
+
 <dt>effects</dt>
 <dd><p>Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.</p></dd>
+
+
 <dt>component</dt>
 <dd><p>Should results for all parameters, parameters for the
 conditional model or the zero-inflated part of the model be returned? May
 be abbreviated. Only applies to <span class="pkg">brms</span>-models.</p></dd>
+
+
 <dt>parameters</dt>
 <dd><p>Regular expression pattern that describes the parameters
 that should be returned. Meta-parameters (like <code>lp__</code> or <code>prior_</code>) are
 filtered by default, so only parameters that typically appear in the
 <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> are returned. Use <code>parameters</code> to select specific parameters
 for the output.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -242,7 +257,7 @@ for the output.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>
