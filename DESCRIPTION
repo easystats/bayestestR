@@ -100,7 +100,6 @@ Suggests:
     parameters,
     patchwork,
     performance,
-    poorman,
     quadprog,
     posterior,
     rmarkdown,

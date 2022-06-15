@@ -24,7 +24,7 @@ This vignette can be referred to by citing the package:
 
 ```{r , include=FALSE}
 if (!requireNamespace("see", quietly = TRUE) ||
-  !requireNamespace("poorman", quietly = TRUE) ||
+  !requireNamespace("datawizard", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE) ||
   !requireNamespace("performance", quietly = TRUE) ||
   !requireNamespace("BayesFactor", quietly = TRUE) ||
@@ -206,17 +206,14 @@ observations corresponding to the *setosa* specie, and we will then visualise
 the observations and the distribution of the `Sepal.Width` variable.
 
 ```{r }
-library(poorman)
+library(datawizard)
 library(ggplot2)
 
 # Select only two relevant species
-data <- iris %>%
-  filter(Species != "setosa") %>%
-  droplevels()
+data <- droplevels(data_filter(iris, Species != "setosa"))
 
 # Visualise distributions and observations
-data %>%
-  ggplot(aes(x = Species, y = Sepal.Width, fill = Species)) +
+ggplot(data, aes(x = Species, y = Sepal.Width, fill = Species)) +
   geom_violindot(fill_dots = "black", size_dots = 1) +
   scale_fill_material() +
   theme_modern()
