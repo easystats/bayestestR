@@ -29,7 +29,7 @@ if (!requireNamespace("see", quietly = TRUE) ||
   !requireNamespace("ggplot2", quietly = TRUE) ||
   !requireNamespace("logspline", quietly = TRUE) ||
   !requireNamespace("KernSmooth", quietly = TRUE) ||
-  !requireNamespace("GGally", quietly = TRUE)) {
+  !requireNamespace("bayesplot", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
@@ -178,9 +178,7 @@ for (the_mean in runif(25, 0, 4)) {
 data <- as.data.frame(sapply(data, as.numeric))
 
 # Visualize the correlations
-library(GGally)
-
-GGally::ggpairs(data) +
+bayesplot::mcmc_pairs(data) +
   theme_classic()
 ```
 
