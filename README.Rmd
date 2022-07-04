@@ -20,16 +20,16 @@ editor_options:
 library(ggplot2)
 library(bayestestR)
 
-options(digits=2)
+options(digits = 2)
 
 figheight <- 6
 figwidth <- 6 * 1.618034
 
 knitr::opts_chunk$set(
   collapse = TRUE,
-  dpi=300,
-  fig.height=figheight,
-  fig.width=figwidth, 
+  dpi = 300,
+  fig.height = figheight,
+  fig.width = figwidth,
   fig.path = "man/figures/"
 )
 ```
@@ -135,7 +135,7 @@ zinb <- read.csv("http://stats.idre.ucla.edu/stat/data/fish.csv")
 set.seed(123)
 model <- brm(
   bf(
-    count ~ child + camper + (1 | persons), 
+    count ~ child + camper + (1 | persons),
     zi ~ child + camper + (1 | persons)
   ),
   data = zinb,
@@ -174,8 +174,8 @@ describe_posterior(
 ```{r message=FALSE, warning=FALSE}
 library(bayestestR)
 
-posterior <- distribution_gamma(10000, 1.5)  # Generate a skewed distribution
-centrality <- point_estimate(posterior)  # Get indices of centrality
+posterior <- distribution_gamma(10000, 1.5) # Generate a skewed distribution
+centrality <- point_estimate(posterior) # Get indices of centrality
 centrality
 ```
 
@@ -195,8 +195,8 @@ library(see)
 plot(centrality) +
   xlab("nParameter Value") +
   theme(axis.text.y = element_blank()) +
-  scale_x_continuous(limits=c(NA, 8)) +
-  see::theme_modern() 
+  scale_x_continuous(limits = c(NA, 8)) +
+  see::theme_modern()
 ```
 
 While the **median** and the **mean** are available through base R functions, [`map_estimate()`](https://easystats.github.io/bayestestR/reference/map_estimate.html) in *bayestestR* can be used to directly find the **Highest Maximum A Posteriori (MAP)** estimate of a posterior, *i.e.*, the value associated with the highest probability density (the "peak" of the posterior distribution). In other words, it is an estimation of the *mode* for continuous parameters.
@@ -224,15 +224,16 @@ dat <- as.data.frame(density(posterior))
 
 dat1 <- dat
 dat1$fill <- ifelse(dat1$x < hdi(posterior)$CI_low, "low",
-                     ifelse(dat1$x > hdi(posterior)$CI_high, "high", "middle"))
+  ifelse(dat1$x > hdi(posterior)$CI_high, "high", "middle")
+)
 
-p1 <- ggplot(dat1, aes(x=x, y=y, fill=fill)) +
-  geom_ribbon(aes(ymin=0, ymax=y)) +
-  geom_vline(xintercept=0, linetype="dotted") +
+p1 <- ggplot(dat1, aes(x = x, y = y, fill = fill)) +
+  geom_ribbon(aes(ymin = 0, ymax = y)) +
+  geom_vline(xintercept = 0, linetype = "dotted") +
   theme_classic(base_size = 12) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, .25)) +
-  scale_fill_manual(values=c("high"="#FFC107", "low"="#FFC107", "middle"="#E91E63"), guide=FALSE) +
-  annotate("text", x=2.5, y=.05, label="The 95% HDI", color="white", size=5) +
+  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#FFC107", "middle" = "#E91E63"), guide = FALSE) +
+  annotate("text", x = 2.5, y = .05, label = "The 95% HDI", color = "white", size = 5) +
   xlab(NULL) +
   ylab("Probability Density\n")
 
@@ -240,14 +241,15 @@ p1 <- ggplot(dat1, aes(x=x, y=y, fill=fill)) +
 
 dat2 <- dat
 dat2$fill <- ifelse(dat2$x < ci(posterior)$CI_low, "low",
-                     ifelse(dat2$x > ci(posterior)$CI_high, "high", "middle"))
-p2 <- ggplot(dat2, aes(x=x, y=y, fill=fill)) +
-  geom_ribbon(aes(ymin=0, ymax=y)) +
-  geom_vline(xintercept=0, linetype="dotted") +
+  ifelse(dat2$x > ci(posterior)$CI_high, "high", "middle")
+)
+p2 <- ggplot(dat2, aes(x = x, y = y, fill = fill)) +
+  geom_ribbon(aes(ymin = 0, ymax = y)) +
+  geom_vline(xintercept = 0, linetype = "dotted") +
   theme_classic(base_size = 12) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, .25)) +
-  scale_fill_manual(values=c("high"="#FFC107", "low"="#FFC107", "middle"="#2196F3"), guide=FALSE) +
-  annotate("text", x=2.9, y=.05, label="The 95% ETI", color="white", size=5) +
+  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#FFC107", "middle" = "#2196F3"), guide = FALSE) +
+  annotate("text", x = 2.9, y = .05, label = "The 95% ETI", color = "white", size = 5) +
   xlab("\nParameter Value") +
   ylab("Probability Density\n")
 
@@ -275,12 +277,12 @@ posterior <- distribution_normal(10000, 0.4, 0.2)
 dat3 <- as.data.frame(density(posterior))
 dat3$fill <- ifelse(dat3$x < 0, "low", "high")
 
-ggplot(dat3, aes(x=x, y=y, fill=fill)) +
-  geom_ribbon(aes(ymin=0, ymax=y)) +
-  geom_vline(xintercept=0, linetype="dotted") +
+ggplot(dat3, aes(x = x, y = y, fill = fill)) +
+  geom_ribbon(aes(ymin = 0, ymax = y)) +
+  geom_vline(xintercept = 0, linetype = "dotted") +
   theme_classic(base_size = 12) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
-  scale_fill_manual(values=c("high"="#FFC107", "low"="#E91E63"), guide=FALSE) +
+  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#E91E63"), guide = FALSE) +
   xlab("\nParameter Value") +
   ylab("Probability Density\n")
 ```
@@ -308,15 +310,16 @@ posterior <- distribution_normal(10000, 0.4, 0.2)
 
 dat4 <- as.data.frame(density(posterior))
 dat4$fill <- ifelse(dat4$x < -0.1, "low",
-                       ifelse(dat4$x > 0.1, "high", "middle"))
+  ifelse(dat4$x > 0.1, "high", "middle")
+)
 
-ggplot(dat4, aes(x=x, y=y, fill=fill)) +
-  geom_ribbon(aes(ymin=0, ymax=y)) +
-  geom_vline(xintercept=0, linetype="dotted") +
+ggplot(dat4, aes(x = x, y = y, fill = fill)) +
+  geom_ribbon(aes(ymin = 0, ymax = y)) +
+  geom_vline(xintercept = 0, linetype = "dotted") +
   theme_classic(base_size = 12) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
   scale_x_continuous(breaks = c(-0.1, 0.1, 0.4)) +
-  scale_fill_manual(values=c("high"="#FFC107", "low"="#FFC107", "middle"="#E91E63"), guide=FALSE) +
+  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#FFC107", "middle" = "#E91E63"), guide = FALSE) +
   xlab("\nParameter Value") +
   ylab("Probability Density\n")
 ```
@@ -343,16 +346,16 @@ bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
 posterior <- as.data.frame(density(distribution_normal(10000, mean = 1, sd = 0.7)))
 prior <- as.data.frame(density(distribution_normal(10000, mean = 0, sd = 1)))
 
-ggplot(posterior, aes(x=x, y=y)) +
-  geom_ribbon(aes(ymin=0, ymax=y), fill="#FFC107") +
-  geom_line(data=prior, size=1, linetype="dotted") +
-  geom_segment(x=0, xend=0, y=0, yend=max(prior$y), color="#2196F3", size=1) +
-  geom_point(x=0, y=max(prior$y), color="#2196F3", size=5) +
-  geom_segment(x=0, xend=0, y=0, yend=density_at(posterior$x, 0, bw="nrd0"), color="#E91E63", size=1) +
-  geom_point(x=0, y=density_at(posterior$x, 0, bw="nrd0"), color="#E91E63", size=5) +
+ggplot(posterior, aes(x = x, y = y)) +
+  geom_ribbon(aes(ymin = 0, ymax = y), fill = "#FFC107") +
+  geom_line(data = prior, size = 1, linetype = "dotted") +
+  geom_segment(x = 0, xend = 0, y = 0, yend = max(prior$y), color = "#2196F3", size = 1) +
+  geom_point(x = 0, y = max(prior$y), color = "#2196F3", size = 5) +
+  geom_segment(x = 0, xend = 0, y = 0, yend = density_at(posterior$x, 0, bw = "nrd0"), color = "#E91E63", size = 1) +
+  geom_point(x = 0, y = density_at(posterior$x, 0, bw = "nrd0"), color = "#E91E63", size = 5) +
   theme_classic(base_size = 12) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 0.65)) +
-  scale_fill_manual(values=c("high"="#FFC107", "low"="#E91E63"), guide=FALSE) +
+  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#E91E63"), guide = FALSE) +
   xlab("\nParameter Value") +
   ylab("Probability Density\n")
 ```

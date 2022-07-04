@@ -340,8 +340,10 @@ model <- stan_glm(weight ~ feed, data = data)
 ```
 
 ```{r echo=FALSE, , comment=NA, results='hide'}
-model <- stan_glm(weight ~ feed, data = data, 
-                  chains = 10, iter = 5000, warmup = 1000)
+model <- stan_glm(weight ~ feed,
+  data = data,
+  chains = 10, iter = 5000, warmup = 1000
+)
 ```
 
 ### Posterior description

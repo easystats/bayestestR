@@ -1,5 +1,4 @@
 if (require("testthat")) {
-
   # bayesfactor_restricted data.frame ---------------------------------------
 
   test_that("bayesfactor_restricted df", {

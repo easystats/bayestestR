@@ -1,5 +1,4 @@
 if (requiet("bayestestR") && requiet("testthat") && requiet("lme4")) {
-
   # bayesfactor_models BIC --------------------------------------------------
   test_that("bayesfactor_models BIC", {
     set.seed(444)

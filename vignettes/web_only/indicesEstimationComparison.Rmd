@@ -111,12 +111,12 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_stu
 dat <- df
 dat <- data_select(dat, select = c("error", "true_effect", "outcome_type", "Coefficient", "Median", "Mean", "MAP"))
 dat <- reshape_longer(
-  dat, 
+  dat,
   select = -c("error", "true_effect", "outcome_type"),
   names_to = "estimate",
   values_to = "value"
-) 
-dat$temp = as.factor(cut(dat$error, 10, labels = FALSE))
+)
+dat$temp <- as.factor(cut(dat$error, 10, labels = FALSE))
 
 tmp <- lapply(split(dat, dat$temp), function(x) {
   x$error_group <- rep(round(mean(x$error), 1), times = nrow(x))
@@ -124,7 +124,7 @@ tmp <- lapply(split(dat, dat$temp), function(x) {
 })
 
 dat <- do.call(rbind, tmp)
-dat <- data_filter(dat, value < 6) 
+dat <- data_filter(dat, value < 6)
 
 ggplot(dat, aes(x = error_group, y = value, fill = estimate, group = interaction(estimate, error_group))) +
   # geom_hline(yintercept = 0) +
@@ -149,11 +149,11 @@ ggplot(dat, aes(x = error_group, y = value, fill = estimate, group = interaction
 dat <- df
 dat <- data_select(dat, select = c("sample_size", "true_effect", "outcome_type", "Coefficient", "Median", "Mean", "MAP"))
 dat <- reshape_longer(
-  dat, 
+  dat,
   select = -c("sample_size", "true_effect", "outcome_type"),
   names_to = "estimate",
   values_to = "value"
-) 
+)
 dat$temp <- as.factor(cut(dat$sample_size, 10, labels = FALSE))
 
 tmp <- lapply(split(dat, dat$temp), function(x) {
@@ -162,7 +162,7 @@ tmp <- lapply(split(dat, dat$temp), function(x) {
 })
 
 dat <- do.call(rbind, tmp)
-dat <- data_filter(dat, value < 6) 
+dat <- data_filter(dat, value < 6)
 
 ggplot(dat, aes(x = size_group, y = value, fill = estimate, group = interaction(estimate, size_group))) +
   # geom_hline(yintercept = 0) +
@@ -191,16 +191,16 @@ their interaction with noise and sample size.
 dat <- df
 dat <- data_select(dat, select = c("sample_size", "true_effect", "outcome_type", "Coefficient", "Median", "Mean", "MAP"))
 dat <- reshape_longer(
-  dat, 
+  dat,
   select = -c("sample_size", "error", "true_effect", "outcome_type"),
   names_to = "estimate",
   values_to = "value"
-) 
+)
 
 out <- glm(true_effect ~ outcome_type / estimate / value, data = dat, family = "binomial")
 out <- parameters(out, df_method = "wald")
 out <- data_select(out, c("Parameter", "Coefficient", "p"))
-out <- data_filter(out, grep("^outcome_type(.*):value$", x = out$Parameter)) 
+out <- data_filter(out, grep("^outcome_type(.*):value$", x = out$Parameter))
 out <- out[order(out$Coefficient, decreasing = TRUE), ]
 knitr::kable(out, digits = 2)
 ```
@@ -249,11 +249,11 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_stu
 dat <- df
 dat <- data_select(dat, select = c("iterations", "true_effect", "outcome_type", "beta", "Median", "Mean", "MAP"))
 dat <- reshape_longer(
-  dat, 
+  dat,
   select = -c("iterations", "true_effect", "outcome_type"),
   names_to = "estimate",
   values_to = "value"
-) 
+)
 dat$temp <- as.factor(cut(dat$iterations, 5, labels = FALSE))
 
 tmp <- lapply(split(dat, dat$temp), function(x) {
@@ -283,11 +283,11 @@ dat <- df
 dat$warmup <- dat$warmup / dat$iterations
 dat <- data_select(dat, select = c("warmup", "true_effect", "outcome_type", "beta", "Median", "Mean", "MAP"))
 dat <- reshape_longer(
-  dat, 
+  dat,
   select = -c("warmup", "true_effect", "outcome_type"),
   names_to = "estimate",
   values_to = "value"
-) 
+)
 dat$temp <- as.factor(cut(dat$warmup, 3, labels = FALSE))
 
 tmp <- lapply(split(dat, dat$temp), function(x) {

@@ -1157,7 +1157,6 @@ describe_posterior.BFBayesFactor <- function(posteriors,
                                              priors = TRUE,
                                              verbose = TRUE,
                                              ...) {
-
   # Match test args  to catch BFs
   if (!is.null(test)) {
     test <- .check_test_values(test)

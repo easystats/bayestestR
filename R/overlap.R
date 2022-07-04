@@ -18,7 +18,6 @@
 #' plot(overlap(x, y))
 #' @export
 overlap <- function(x, y, method_density = "kernel", method_auc = "trapezoid", precision = 2^10, extend = TRUE, extend_scale = 0.1, ...) {
-
   # Generate densities
   dx <- estimate_density(x, method = method_density, precision = precision, extend = extend, extend_scale = extend_scale, ...)
   dy <- estimate_density(y, method = method_density, precision = precision, extend = extend, extend_scale = extend_scale, ...)

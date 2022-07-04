@@ -175,7 +175,7 @@ model <- stan_glm(
   data = sleep,
   prior = normal(0, 3, autoscale = FALSE),
   refresh = 0,
-  chains = 4, iter = 2000, warmup = 1000 #to reduce time for build
+  chains = 4, iter = 2000, warmup = 1000 # to reduce time for build
 )
 ```
 
@@ -496,51 +496,61 @@ Let's first fit 5 Bayesian regressions with `brms` to predict `Sepal.Length`:
 library(brms)
 
 # intercept only model
-m0 <- brm(Sepal.Length ~ 1, data = iris, 
-          prior = 
-            set_prior("student_t(3, 6, 6)", class = "Intercept") + 
-            set_prior("student_t(3, 0, 6)", class = "sigma"),
-          chains = 10, iter = 5000, warmup = 1000,
-          save_pars = save_pars(all = TRUE))
+m0 <- brm(Sepal.Length ~ 1,
+  data = iris,
+  prior =
+    set_prior("student_t(3, 6, 6)", class = "Intercept") +
+      set_prior("student_t(3, 0, 6)", class = "sigma"),
+  chains = 10, iter = 5000, warmup = 1000,
+  save_pars = save_pars(all = TRUE)
+)
 
 # Petal.Length only
-m1 <- brm(Sepal.Length ~ Petal.Length, data = iris, 
-          prior = 
-            set_prior("student_t(3, 6, 6)", class = "Intercept") + 
-            set_prior("student_t(3, 0, 6)", class = "sigma") + 
-            set_prior("normal(0, 1)", coef = "Petal.Length"),
-          chains = 10, iter = 5000, warmup = 1000,
-          save_pars = save_pars(all = TRUE))
+m1 <- brm(Sepal.Length ~ Petal.Length,
+  data = iris,
+  prior =
+    set_prior("student_t(3, 6, 6)", class = "Intercept") +
+      set_prior("student_t(3, 0, 6)", class = "sigma") +
+      set_prior("normal(0, 1)", coef = "Petal.Length"),
+  chains = 10, iter = 5000, warmup = 1000,
+  save_pars = save_pars(all = TRUE)
+)
 
 # Species only
-m2 <- brm(Sepal.Length ~ Species, data = iris,
-          prior = 
-            set_prior("student_t(3, 6, 6)", class = "Intercept") + 
-            set_prior("student_t(3, 0, 6)", class = "sigma") + 
-            set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")),
-          chains = 10, iter = 5000, warmup = 1000,
-          save_pars = save_pars(all = TRUE))
+m2 <- brm(Sepal.Length ~ Species,
+  data = iris,
+  prior =
+    set_prior("student_t(3, 6, 6)", class = "Intercept") +
+      set_prior("student_t(3, 0, 6)", class = "sigma") +
+      set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")),
+  chains = 10, iter = 5000, warmup = 1000,
+  save_pars = save_pars(all = TRUE)
+)
 
 # Species + Petal.Length model
-m3 <- brm(Sepal.Length ~ Species + Petal.Length, data = iris,
-          prior = 
-            set_prior("student_t(3, 6, 6)", class = "Intercept") + 
-            set_prior("student_t(3, 0, 6)", class = "sigma") + 
-            set_prior("normal(0, 1)", coef = "Petal.Length") + 
-            set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")),
-          chains = 10, iter = 5000, warmup = 1000,
-          save_pars = save_pars(all = TRUE))
+m3 <- brm(Sepal.Length ~ Species + Petal.Length,
+  data = iris,
+  prior =
+    set_prior("student_t(3, 6, 6)", class = "Intercept") +
+      set_prior("student_t(3, 0, 6)", class = "sigma") +
+      set_prior("normal(0, 1)", coef = "Petal.Length") +
+      set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")),
+  chains = 10, iter = 5000, warmup = 1000,
+  save_pars = save_pars(all = TRUE)
+)
 
 # full interactive model
-m4 <- brm(Sepal.Length ~ Species * Petal.Length, data = iris,
-          prior = 
-            set_prior("student_t(3, 6, 6)", class = "Intercept") + 
-            set_prior("student_t(3, 0, 6)", class = "sigma") + 
-            set_prior("normal(0, 1)", coef = "Petal.Length") + 
-            set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")) + 
-            set_prior("normal(0, 2)", coef = c("Speciesversicolor:Petal.Length", "Speciesvirginica:Petal.Length")),
-          chains = 10, iter = 5000, warmup = 1000,
-          save_pars = save_pars(all = TRUE))
+m4 <- brm(Sepal.Length ~ Species * Petal.Length,
+  data = iris,
+  prior =
+    set_prior("student_t(3, 6, 6)", class = "Intercept") +
+      set_prior("student_t(3, 0, 6)", class = "sigma") +
+      set_prior("normal(0, 1)", coef = "Petal.Length") +
+      set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")) +
+      set_prior("normal(0, 2)", coef = c("Speciesversicolor:Petal.Length", "Speciesvirginica:Petal.Length")),
+  chains = 10, iter = 5000, warmup = 1000,
+  save_pars = save_pars(all = TRUE)
+)
 ```
 
 We can now compare these models with the `bayesfactor_models()` function, using
@@ -556,11 +566,13 @@ comparison
 
 ```{r, echo = FALSE}
 comparison <- structure(
-  list(Model = c("Petal.Length", "Species", "Species + Petal.Length", "Species * Petal.Length", "1"), 
-       log_BF = c(101.556419030653, 64.2903334815192, 122.864721399001, 119.712908243647, 0)), 
-  class = c("bayesfactor_models", "see_bayesfactor_models", "data.frame"), 
-  row.names = c("m1", "m2", "m3", "m4", "m0"), 
-  denominator = 5L, 
+  list(
+    Model = c("Petal.Length", "Species", "Species + Petal.Length", "Species * Petal.Length", "1"),
+    log_BF = c(101.556419030653, 64.2903334815192, 122.864721399001, 119.712908243647, 0)
+  ),
+  class = c("bayesfactor_models", "see_bayesfactor_models", "data.frame"),
+  row.names = c("m1", "m2", "m3", "m4", "m0"),
+  denominator = 5L,
   BF_method = "marginal likelihoods (bridgesampling)",
   unsupported_models = FALSE
 )
@@ -639,7 +651,7 @@ iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
 iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
   data = iris,
   prior = normal(0, c(2, 1.2, 1.2), autoscale = FALSE),
-  chains = 4, iter = 2000, warmup = 1000, #to reduce build time
+  chains = 4, iter = 2000, warmup = 1000, # to reduce build time
   refresh = 0
 )
 ```

@@ -255,7 +255,6 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
 
 .bayesfactor_models_stan <- function(mods, denominator = 1, verbose = TRUE) {
-
   # Warn
   n_samps <- sapply(mods, function(x) {
     alg <- insight::find_algorithm(x)

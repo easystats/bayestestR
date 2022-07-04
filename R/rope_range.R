@@ -116,7 +116,6 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
 
 
 .rope_range <- function(x, information = NULL, response = NULL, response_transform = NULL, verbose = TRUE) {
-
   # if(method != "legacy") {
   #   message("Other ROPE range methods than 'legacy' are currently not implemented. See https://github.com/easystats/bayestestR/issues/364", call. = FALSE)
   # }

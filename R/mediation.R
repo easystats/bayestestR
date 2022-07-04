@@ -173,7 +173,6 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
                        method = "ETI",
                        pattern = "b_%s_%s",
                        ...) {
-
   # only one HDI interval
   if (length(ci) > 1) ci <- ci[1]
 

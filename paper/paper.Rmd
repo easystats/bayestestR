@@ -154,12 +154,12 @@ We can change that, for instance:
 
 ```{r}
 model <- stan_glm(
-    formula = Sepal.Length ~ Petal.Length,
-    data = iris,
-    chains = 2,
-    iter = 1000,
-    warmup = 250
-  )
+  formula = Sepal.Length ~ Petal.Length,
+  data = iris,
+  chains = 2,
+  iter = 1000,
+  warmup = 250
+)
 
 nrow(insight::get_parameters(model)) # Size (number of rows)
 ```
@@ -523,11 +523,11 @@ In the case of the difference of `Sepal.Width` between *virginica* and *versicol
 library(rstanarm)
 
 model <- stan_glm(
-    Species ~ Sepal.Width,
-    data = data,
-    family = "binomial",
-    refresh = 0
-  )
+  Species ~ Sepal.Width,
+  data = data,
+  family = "binomial",
+  refresh = 0
+)
 ```
 
 ### Visualise the model
@@ -541,7 +541,7 @@ vizdata <- estimate_relation(model)
 
 ggplot(vizdata, aes(x = Sepal.Width, y = Predicted)) +
   geom_ribbon(aes(ymin = CI_low, ymax = CI_high), alpha = 0.5) +
-  geom_line() + 
+  geom_line() +
   ylab("Probability of being virginica") +
   theme_modern()
 ```

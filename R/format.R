@@ -7,7 +7,6 @@ format.describe_posterior <- function(x,
                                       caption = NULL,
                                       subtitles = NULL,
                                       ...) {
-
   # reshape CI
   if (is.data.frame(x) && insight::n_unique(x$CI) > 1) {
     att <- attributes(x)

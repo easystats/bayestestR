@@ -211,7 +211,6 @@ print.bayesfactor_restricted <- function(x,
 
 #' @export
 print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
-
   # retrieve information with cleaned parameter names
   cp <- attr(x, "clean_parameters")
 
@@ -239,8 +238,6 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
                            subtitles = NULL,
                            ci_string = "CI",
                            ...) {
-
-
   # retrieve information with cleaned parameter names
   cp <- attr(x, "clean_parameters")
 
@@ -258,7 +255,6 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
 
   # check if we have a 1x1 data frame (i.e. a numeric input)
   if (is.data.frame(formatted_table) && nrow(formatted_table) == 1 && ncol(formatted_table) == 1) {
-
     # print for numeric
 
     caption <- attr(formatted_table, "table_caption")
@@ -271,7 +267,6 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
     }
     cat(formatted_table[1, 1])
   } else {
-
     # print for data frame
 
     cat(insight::export_table(
@@ -291,7 +286,6 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
                               caption = NULL,
                               align = NULL,
                               ...) {
-
   # format data frame and columns
   formatted_table <- format(
     x,

@@ -10,7 +10,6 @@ if (.runThisTest &&
   requiet("BayesFactor") &&
   packageVersion("insight") > "0.13.2") {
   test_that("describe_prior", {
-
     # Bayes Factor ----------------------------------------
 
     expect_equal(

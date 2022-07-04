@@ -127,7 +127,6 @@ print_md.bayesfactor_restricted <- function(x,
 
 #' @export
 print_md.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
-
   # retrieve information with cleaned parameter names
   cp <- attr(x, "clean_parameters")
 
@@ -152,7 +151,6 @@ print_md.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
 
 
 .print_md_default <- function(x, digits = 2, caption = NULL, subtitles = NULL, ci_string = "CI", ...) {
-
   # retrieve information with cleaned parameter names
   cp <- attr(x, "clean_parameters")
 

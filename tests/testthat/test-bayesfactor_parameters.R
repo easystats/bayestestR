@@ -4,7 +4,6 @@ if (requiet("rstanarm") &&
   requiet("insight") &&
   requiet("httr") &&
   requiet("brms")) {
-
   # bayesfactor_parameters data frame ---------------------------------------
 
   test_that("bayesfactor_parameters data frame", {

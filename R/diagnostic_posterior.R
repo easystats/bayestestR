@@ -65,7 +65,6 @@ diagnostic_posterior.default <- function(posteriors, diagnostic = c("ESS", "Rhat
 #' @rdname diagnostic_posterior
 #' @export
 diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
-
   # Find parameters
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -121,8 +120,6 @@ diagnostic_posterior.stanmvreg <- function(posteriors,
                                            effects = c("fixed", "random", "all"),
                                            parameters = NULL,
                                            ...) {
-
-
   # Find parameters
   effects <- match.arg(effects)
   all_params <- insight::find_parameters(
@@ -188,8 +185,6 @@ diagnostic_posterior.brmsfit <- function(posteriors,
                                          component = c("conditional", "zi", "zero_inflated", "all"),
                                          parameters = NULL,
                                          ...) {
-
-
   # Find parameters
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -240,7 +235,6 @@ diagnostic_posterior.brmsfit <- function(posteriors,
 #' @inheritParams insight::get_parameters
 #' @export
 diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
-
   # Find parameters
   effects <- match.arg(effects)
   params <- insight::find_parameters(posteriors, effects = effects, parameters = parameters, flatten = TRUE)
@@ -291,7 +285,6 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects
 
 #' @export
 diagnostic_posterior.blavaan <- function(posteriors, diagnostic = "all", ...) {
-
   # Find parameters
   params <- suppressWarnings(insight::find_parameters(posteriors, flatten = TRUE))
 

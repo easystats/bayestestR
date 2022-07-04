@@ -140,7 +140,6 @@ estimate_density.default <- function(x, ...) {
 
 #' @export
 estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, at = NULL, group_by = NULL, ...) {
-
   # Sanity
   if (!is.null(group_by)) {
     warning(insight::format_message("The 'group_by' argument is deprecated and might be removed in a future update. Please replace by 'at'."), call. = FALSE)
@@ -167,7 +166,6 @@ estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, ext
 #' @rdname estimate_density
 #' @export
 estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, select = NULL, at = NULL, group_by = NULL, ...) {
-
   # Sanity
   if (!is.null(group_by)) {
     warning(insight::format_message("The 'group_by' argument is deprecated and might be removed in a future update. Please replace by 'at'."), call. = FALSE)
@@ -394,7 +392,6 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 # Different functions -----------------------------------------------------
 
 .estimate_density_kernel <- function(x, x_range, precision, bw, ci = 0.95, ...) {
-
   # unsupported arguments raise warnings
   dots <- list(...)
   dots[c("effects", "component", "parameters")] <- NULL
