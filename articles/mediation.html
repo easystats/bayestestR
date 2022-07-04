@@ -127,73 +127,75 @@
 <h2 id="mediation-analysis-in-brms-and-rstanarm">Mediation Analysis in brms and rstanarm<a class="anchor" aria-label="anchor" href="#mediation-analysis-in-brms-and-rstanarm"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/" class="external-link">bayestestR</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://imai.princeton.edu/projects/mechanisms.html" class="external-link">mediation</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/paul-buerkner/brms" class="external-link">brms</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/" class="external-link">rstanarm</a></span><span class="op">)</span>
-
-<span class="co"># load sample data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">jobs</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
-<span class="co"># linear models, for mediation analysis</span>
-<span class="va">b1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">job_seek</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">jobs</span><span class="op">)</span>
-<span class="va">b2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">depress2</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">job_seek</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">jobs</span><span class="op">)</span>
-
-<span class="co"># mediation analysis, for comparison with brms</span>
-<span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mediation/man/mediate.html" class="external-link">mediate</a></span><span class="op">(</span><span class="va">b1</span>, <span class="va">b2</span>, sims <span class="op">=</span> <span class="fl">1000</span>, treat <span class="op">=</span> <span class="st">"treat"</span>, mediator <span class="op">=</span> <span class="st">"job_seek"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/" class="external-link">bayestestR</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://imai.princeton.edu/projects/mechanisms.html" class="external-link">mediation</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/paul-buerkner/brms" class="external-link">brms</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/" class="external-link">rstanarm</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># load sample data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">jobs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="co"># linear models, for mediation analysis</span></span>
+<span><span class="va">b1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">job_seek</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">jobs</span><span class="op">)</span></span>
+<span><span class="va">b2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">depress2</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">job_seek</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span>, data <span class="op">=</span> <span class="va">jobs</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># mediation analysis, for comparison with brms</span></span>
+<span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mediation/man/mediate.html" class="external-link">mediate</a></span><span class="op">(</span><span class="va">b1</span>, <span class="va">b2</span>, sims <span class="op">=</span> <span class="fl">1000</span>, treat <span class="op">=</span> <span class="st">"treat"</span>, mediator <span class="op">=</span> <span class="st">"job_seek"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Fit Bayesian mediation model in brms</span>
-<span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brmsformula.html" class="external-link">bf</a></span><span class="op">(</span><span class="va">job_seek</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span><span class="op">)</span>
-<span class="va">f2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brmsformula.html" class="external-link">bf</a></span><span class="op">(</span><span class="va">depress2</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">job_seek</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span><span class="op">)</span>
-<span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">f1</span> <span class="op">+</span> <span class="va">f2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brmsformula-helpers.html" class="external-link">set_rescor</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">jobs</span>, cores <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Fit Bayesian mediation model in brms</span></span>
+<span><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brmsformula.html" class="external-link">bf</a></span><span class="op">(</span><span class="va">job_seek</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span><span class="op">)</span></span>
+<span><span class="va">f2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brmsformula.html" class="external-link">bf</a></span><span class="op">(</span><span class="va">depress2</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">job_seek</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span><span class="op">)</span></span>
+<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">f1</span> <span class="op">+</span> <span class="va">f2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/brms/man/brmsformula-helpers.html" class="external-link">set_rescor</a></span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">jobs</span>, cores <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Fit Bayesian mediation model in rstanarm</span>
-<span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_mvmer.html" class="external-link">stan_mvmer</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">job_seek</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">occp</span><span class="op">)</span>,
-       <span class="va">depress2</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">job_seek</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">occp</span><span class="op">)</span><span class="op">)</span>,
-  data <span class="op">=</span> <span class="va">jobs</span>,
-  cores <span class="op">=</span> <span class="fl">4</span>,
-  refresh <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Fit Bayesian mediation model in rstanarm</span></span>
+<span><span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_mvmer.html" class="external-link">stan_mvmer</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="va">job_seek</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">occp</span><span class="op">)</span>,</span>
+<span>    <span class="va">depress2</span> <span class="op">~</span> <span class="va">treat</span> <span class="op">+</span> <span class="va">job_seek</span> <span class="op">+</span> <span class="va">econ_hard</span> <span class="op">+</span> <span class="va">sex</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">occp</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">jobs</span>,</span>
+<span>  cores <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  refresh <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><code><a href="../reference/mediation.html">mediation()</a></code> is a summary function, especially for mediation analysis, i.e. for multivariate response models with casual mediation effects.</p>
 <p>In the models <code>m2</code> and <code>m3</code>, <code>treat</code> is the treatment effect and <code>job_seek</code> is the mediator effect. For the <em>brms</em> model (<code>m2</code>), <code>f1</code> describes the mediator model and <code>f2</code> describes the outcome model. This is similar for the <em>rstanarm</em> model.</p>
 <p><code><a href="../reference/mediation.html">mediation()</a></code> returns a data frame with information on the <em>direct effect</em> (median value of posterior samples from treatment of the outcome model), <em>mediator effect</em> (median value of posterior samples from mediator of the outcome model), <em>indirect effect</em> (median value of the multiplication of the posterior samples from mediator of the outcome model and the posterior samples from treatment of the mediation model) and the <em>total effect</em> (median value of sums of posterior samples used for the direct and indirect effect). The <em>proportion mediated</em> is the indirect effect divided by the total effect.</p>
 <p>The simplest call just needs the model-object.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># for brms</span>
-<span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span>
-<span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Treatment: treat</span>
-<span class="co">#&gt;   Mediator : job_seek</span>
-<span class="co">#&gt;   Response : depress2</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Effect                 | Estimate |          95% ETI</span>
-<span class="co">#&gt; ----------------------------------------------------</span>
-<span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.124,  0.046]</span>
-<span class="co">#&gt; Indirect Effect (ACME) |   -0.015 | [-0.041,  0.008]</span>
-<span class="co">#&gt; Mediator Effect        |   -0.240 | [-0.294, -0.185]</span>
-<span class="co">#&gt; Total Effect           |   -0.055 | [-0.145,  0.034]</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Proportion mediated: 28.14% [-181.46%, 237.75%]</span>
-
-<span class="co"># for rstanarm</span>
-<span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span>
-<span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Treatment: treat</span>
-<span class="co">#&gt;   Mediator : job_seek</span>
-<span class="co">#&gt;   Response : depress2</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Effect                 | Estimate |          95% ETI</span>
-<span class="co">#&gt; ----------------------------------------------------</span>
-<span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.129,  0.048]</span>
-<span class="co">#&gt; Indirect Effect (ACME) |   -0.018 | [-0.042,  0.006]</span>
-<span class="co">#&gt; Mediator Effect        |   -0.241 | [-0.296, -0.187]</span>
-<span class="co">#&gt; Total Effect           |   -0.057 | [-0.151,  0.033]</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Proportion mediated: 30.59% [-221.09%, 282.26%]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># for brms</span></span>
+<span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Treatment: treat</span></span>
+<span><span class="co">#&gt;   Mediator : job_seek</span></span>
+<span><span class="co">#&gt;   Response : depress2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Effect                 | Estimate |          95% ETI</span></span>
+<span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.124,  0.046]</span></span>
+<span><span class="co">#&gt; Indirect Effect (ACME) |   -0.015 | [-0.041,  0.008]</span></span>
+<span><span class="co">#&gt; Mediator Effect        |   -0.240 | [-0.294, -0.185]</span></span>
+<span><span class="co">#&gt; Total Effect           |   -0.055 | [-0.145,  0.034]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Proportion mediated: 28.14% [-181.46%, 237.75%]</span></span>
+<span></span>
+<span><span class="co"># for rstanarm</span></span>
+<span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Treatment: treat</span></span>
+<span><span class="co">#&gt;   Mediator : job_seek</span></span>
+<span><span class="co">#&gt;   Response : depress2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Effect                 | Estimate |          95% ETI</span></span>
+<span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.129,  0.048]</span></span>
+<span><span class="co">#&gt; Indirect Effect (ACME) |   -0.018 | [-0.042,  0.006]</span></span>
+<span><span class="co">#&gt; Mediator Effect        |   -0.241 | [-0.296, -0.187]</span></span>
+<span><span class="co">#&gt; Total Effect           |   -0.057 | [-0.151,  0.033]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Proportion mediated: 30.59% [-221.09%, 282.26%]</span></span></code></pre></div>
 <p>Typically, <code><a href="../reference/mediation.html">mediation()</a></code> finds the treatment and mediator variables automatically. If this does not work, use the <code>treatment</code> and <code>mediator</code> arguments to specify the related variable names. For all values, the 89% credible intervals are calculated by default. Use <code>ci</code> to calculate a different interval.</p>
 </div>
 <div class="section level2">
@@ -201,72 +203,72 @@
 </h2>
 <p>Here is a comparison with the <em>mediation</em> package. Note that the <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>-output of the <em>mediation</em> package shows the indirect effect first, followed by the direct effect.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Causal Mediation Analysis </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Quasi-Bayesian Confidence Intervals</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;                Estimate 95% CI Lower 95% CI Upper p-value</span>
-<span class="co">#&gt; ACME            -0.0157      -0.0387         0.01    0.19</span>
-<span class="co">#&gt; ADE             -0.0438      -0.1315         0.04    0.35</span>
-<span class="co">#&gt; Total Effect    -0.0595      -0.1530         0.02    0.21</span>
-<span class="co">#&gt; Prop. Mediated   0.2137      -2.0277         2.70    0.32</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Sample Size Used: 899 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Simulations: 1000</span>
-
-<span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span>
-<span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Treatment: treat</span>
-<span class="co">#&gt;   Mediator : job_seek</span>
-<span class="co">#&gt;   Response : depress2</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Effect                 | Estimate |          95% ETI</span>
-<span class="co">#&gt; ----------------------------------------------------</span>
-<span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.124,  0.046]</span>
-<span class="co">#&gt; Indirect Effect (ACME) |   -0.015 | [-0.041,  0.008]</span>
-<span class="co">#&gt; Mediator Effect        |   -0.240 | [-0.294, -0.185]</span>
-<span class="co">#&gt; Total Effect           |   -0.055 | [-0.145,  0.034]</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Proportion mediated: 28.14% [-181.46%, 237.75%]</span>
-
-<span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m3</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span>
-<span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Treatment: treat</span>
-<span class="co">#&gt;   Mediator : job_seek</span>
-<span class="co">#&gt;   Response : depress2</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Effect                 | Estimate |          95% ETI</span>
-<span class="co">#&gt; ----------------------------------------------------</span>
-<span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.129,  0.048]</span>
-<span class="co">#&gt; Indirect Effect (ACME) |   -0.018 | [-0.042,  0.006]</span>
-<span class="co">#&gt; Mediator Effect        |   -0.241 | [-0.296, -0.187]</span>
-<span class="co">#&gt; Total Effect           |   -0.057 | [-0.151,  0.033]</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Proportion mediated: 30.59% [-221.09%, 282.26%]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Causal Mediation Analysis </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Quasi-Bayesian Confidence Intervals</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;                Estimate 95% CI Lower 95% CI Upper p-value</span></span>
+<span><span class="co">#&gt; ACME            -0.0157      -0.0387         0.01    0.19</span></span>
+<span><span class="co">#&gt; ADE             -0.0438      -0.1315         0.04    0.35</span></span>
+<span><span class="co">#&gt; Total Effect    -0.0595      -0.1530         0.02    0.21</span></span>
+<span><span class="co">#&gt; Prop. Mediated   0.2137      -2.0277         2.70    0.32</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Sample Size Used: 899 </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Simulations: 1000</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Treatment: treat</span></span>
+<span><span class="co">#&gt;   Mediator : job_seek</span></span>
+<span><span class="co">#&gt;   Response : depress2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Effect                 | Estimate |          95% ETI</span></span>
+<span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.124,  0.046]</span></span>
+<span><span class="co">#&gt; Indirect Effect (ACME) |   -0.015 | [-0.041,  0.008]</span></span>
+<span><span class="co">#&gt; Mediator Effect        |   -0.240 | [-0.294, -0.185]</span></span>
+<span><span class="co">#&gt; Total Effect           |   -0.055 | [-0.145,  0.034]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Proportion mediated: 28.14% [-181.46%, 237.75%]</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m3</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Treatment: treat</span></span>
+<span><span class="co">#&gt;   Mediator : job_seek</span></span>
+<span><span class="co">#&gt;   Response : depress2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Effect                 | Estimate |          95% ETI</span></span>
+<span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.129,  0.048]</span></span>
+<span><span class="co">#&gt; Indirect Effect (ACME) |   -0.018 | [-0.042,  0.006]</span></span>
+<span><span class="co">#&gt; Mediator Effect        |   -0.241 | [-0.296, -0.187]</span></span>
+<span><span class="co">#&gt; Total Effect           |   -0.057 | [-0.151,  0.033]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Proportion mediated: 30.59% [-221.09%, 282.26%]</span></span></code></pre></div>
 <p>If you want to calculate mean instead of median values from the posterior samples, use the <code>centrality</code>-argument. Furthermore, there is a <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>-method, which allows to print more digits.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, centrality <span class="op">=</span> <span class="st">"mean"</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">m</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
-<span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Treatment: treat</span>
-<span class="co">#&gt;   Mediator : job_seek</span>
-<span class="co">#&gt;   Response : depress2</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Effect                 | Estimate |            95% ETI</span>
-<span class="co">#&gt; ------------------------------------------------------</span>
-<span class="co">#&gt; Direct Effect (ADE)    |  -0.0395 | [-0.1237,  0.0456]</span>
-<span class="co">#&gt; Indirect Effect (ACME) |  -0.0158 | [-0.0405,  0.0083]</span>
-<span class="co">#&gt; Mediator Effect        |  -0.2401 | [-0.2944, -0.1846]</span>
-<span class="co">#&gt; Total Effect           |  -0.0553 | [-0.1454,  0.0341]</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Proportion mediated: 28.60% [-181.01%, 238.20%]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, centrality <span class="op">=</span> <span class="st">"mean"</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">m</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Treatment: treat</span></span>
+<span><span class="co">#&gt;   Mediator : job_seek</span></span>
+<span><span class="co">#&gt;   Response : depress2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Effect                 | Estimate |            95% ETI</span></span>
+<span><span class="co">#&gt; ------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Direct Effect (ADE)    |  -0.0395 | [-0.1237,  0.0456]</span></span>
+<span><span class="co">#&gt; Indirect Effect (ACME) |  -0.0158 | [-0.0405,  0.0083]</span></span>
+<span><span class="co">#&gt; Mediator Effect        |  -0.2401 | [-0.2944, -0.1846]</span></span>
+<span><span class="co">#&gt; Total Effect           |  -0.0553 | [-0.1454,  0.0341]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Proportion mediated: 28.60% [-181.01%, 238.20%]</span></span></code></pre></div>
 <p>As you can see, the results are similar to what the <em>mediation</em> package produces for non-Bayesian models.</p>
 </div>
 <div class="section level2">
@@ -274,95 +276,95 @@
 </h2>
 <p>Finally, we also compare the results to a SEM model, using <em>lavaan</em>. This example should demonstrate how to “translate” the same model in different packages or modeling approached.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">jobs</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span>
-
-<span class="va">model</span> <span class="op">&lt;-</span> <span class="st">' # direct effects
-             depress2 ~ c1*treat + c2*econ_hard + c3*sex + c4*age + b*job_seek
-             
-           # mediation
-             job_seek ~ a1*treat + a2*econ_hard + a3*sex + a4*age
-             
-           # indirect effects (a*b)
-             indirect_treat := a1*b
-             indirect_econ_hard := a2*b
-             indirect_sex := a3*b
-             indirect_age := a4*b
-             
-           # total effects
-             total_treat := c1 + (a1*b)
-             total_econ_hard := c2 + (a2*b)
-             total_sex := c3 + (a3*b)
-             total_age := c4 + (a4*b)
-         '</span>
-<span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">sem</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="va">jobs</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">m4</span><span class="op">)</span>
-<span class="co">#&gt; lavaan 0.6-11 ended normally after 1 iterations</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Estimator                                         ML</span>
-<span class="co">#&gt;   Optimization method                           NLMINB</span>
-<span class="co">#&gt;   Number of model parameters                        11</span>
-<span class="co">#&gt;                                                       </span>
-<span class="co">#&gt;   Number of observations                           899</span>
-<span class="co">#&gt;                                                       </span>
-<span class="co">#&gt; Model Test User Model:</span>
-<span class="co">#&gt;                                                       </span>
-<span class="co">#&gt;   Test statistic                                 0.000</span>
-<span class="co">#&gt;   Degrees of freedom                                 0</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Parameter Estimates:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Standard errors                             Standard</span>
-<span class="co">#&gt;   Information                                 Expected</span>
-<span class="co">#&gt;   Information saturated (h1) model          Structured</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Regressions:</span>
-<span class="co">#&gt;                    Estimate  Std.Err  z-value  P(&gt;|z|)</span>
-<span class="co">#&gt;   depress2 ~                                          </span>
-<span class="co">#&gt;     treat     (c1)   -0.040    0.043   -0.929    0.353</span>
-<span class="co">#&gt;     econ_hard (c2)    0.149    0.021    7.156    0.000</span>
-<span class="co">#&gt;     sex       (c3)    0.107    0.041    2.604    0.009</span>
-<span class="co">#&gt;     age       (c4)    0.001    0.002    0.332    0.740</span>
-<span class="co">#&gt;     job_seek   (b)   -0.240    0.028   -8.524    0.000</span>
-<span class="co">#&gt;   job_seek ~                                          </span>
-<span class="co">#&gt;     treat     (a1)    0.066    0.051    1.278    0.201</span>
-<span class="co">#&gt;     econ_hard (a2)    0.053    0.025    2.167    0.030</span>
-<span class="co">#&gt;     sex       (a3)   -0.008    0.049   -0.157    0.875</span>
-<span class="co">#&gt;     age       (a4)    0.005    0.002    1.983    0.047</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Variances:</span>
-<span class="co">#&gt;                    Estimate  Std.Err  z-value  P(&gt;|z|)</span>
-<span class="co">#&gt;    .depress2          0.373    0.018   21.201    0.000</span>
-<span class="co">#&gt;    .job_seek          0.524    0.025   21.201    0.000</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Defined Parameters:</span>
-<span class="co">#&gt;                    Estimate  Std.Err  z-value  P(&gt;|z|)</span>
-<span class="co">#&gt;     indirect_treat   -0.016    0.012   -1.264    0.206</span>
-<span class="co">#&gt;     indirct_cn_hrd   -0.013    0.006   -2.100    0.036</span>
-<span class="co">#&gt;     indirect_sex      0.002    0.012    0.157    0.875</span>
-<span class="co">#&gt;     indirect_age     -0.001    0.001   -1.932    0.053</span>
-<span class="co">#&gt;     total_treat      -0.056    0.045   -1.244    0.214</span>
-<span class="co">#&gt;     total_econ_hrd    0.136    0.022    6.309    0.000</span>
-<span class="co">#&gt;     total_sex         0.109    0.043    2.548    0.011</span>
-<span class="co">#&gt;     total_age        -0.000    0.002   -0.223    0.824</span>
-
-<span class="co"># just to have the numbers right at hand and you don't need to scroll up</span>
-<span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span>
-<span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Treatment: treat</span>
-<span class="co">#&gt;   Mediator : job_seek</span>
-<span class="co">#&gt;   Response : depress2</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Effect                 | Estimate |          95% ETI</span>
-<span class="co">#&gt; ----------------------------------------------------</span>
-<span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.124,  0.046]</span>
-<span class="co">#&gt; Indirect Effect (ACME) |   -0.015 | [-0.041,  0.008]</span>
-<span class="co">#&gt; Mediator Effect        |   -0.240 | [-0.294, -0.185]</span>
-<span class="co">#&gt; Total Effect           |   -0.055 | [-0.145,  0.034]</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Proportion mediated: 28.14% [-181.46%, 237.75%]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lavaan.ugent.be" class="external-link">lavaan</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">jobs</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model</span> <span class="op">&lt;-</span> <span class="st">" # direct effects</span></span>
+<span><span class="st">             depress2 ~ c1*treat + c2*econ_hard + c3*sex + c4*age + b*job_seek</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">           # mediation</span></span>
+<span><span class="st">             job_seek ~ a1*treat + a2*econ_hard + a3*sex + a4*age</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">           # indirect effects (a*b)</span></span>
+<span><span class="st">             indirect_treat := a1*b</span></span>
+<span><span class="st">             indirect_econ_hard := a2*b</span></span>
+<span><span class="st">             indirect_sex := a3*b</span></span>
+<span><span class="st">             indirect_age := a4*b</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">           # total effects</span></span>
+<span><span class="st">             total_treat := c1 + (a1*b)</span></span>
+<span><span class="st">             total_econ_hard := c2 + (a2*b)</span></span>
+<span><span class="st">             total_sex := c3 + (a3*b)</span></span>
+<span><span class="st">             total_age := c4 + (a4*b)</span></span>
+<span><span class="st">         "</span></span>
+<span><span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lavaan/man/sem.html" class="external-link">sem</a></span><span class="op">(</span><span class="va">model</span>, data <span class="op">=</span> <span class="va">jobs</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">m4</span><span class="op">)</span></span>
+<span><span class="co">#&gt; lavaan 0.6-11 ended normally after 1 iterations</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Estimator                                         ML</span></span>
+<span><span class="co">#&gt;   Optimization method                           NLMINB</span></span>
+<span><span class="co">#&gt;   Number of model parameters                        11</span></span>
+<span><span class="co">#&gt;                                                       </span></span>
+<span><span class="co">#&gt;   Number of observations                           899</span></span>
+<span><span class="co">#&gt;                                                       </span></span>
+<span><span class="co">#&gt; Model Test User Model:</span></span>
+<span><span class="co">#&gt;                                                       </span></span>
+<span><span class="co">#&gt;   Test statistic                                 0.000</span></span>
+<span><span class="co">#&gt;   Degrees of freedom                                 0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parameter Estimates:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Standard errors                             Standard</span></span>
+<span><span class="co">#&gt;   Information                                 Expected</span></span>
+<span><span class="co">#&gt;   Information saturated (h1) model          Structured</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Regressions:</span></span>
+<span><span class="co">#&gt;                    Estimate  Std.Err  z-value  P(&gt;|z|)</span></span>
+<span><span class="co">#&gt;   depress2 ~                                          </span></span>
+<span><span class="co">#&gt;     treat     (c1)   -0.040    0.043   -0.929    0.353</span></span>
+<span><span class="co">#&gt;     econ_hard (c2)    0.149    0.021    7.156    0.000</span></span>
+<span><span class="co">#&gt;     sex       (c3)    0.107    0.041    2.604    0.009</span></span>
+<span><span class="co">#&gt;     age       (c4)    0.001    0.002    0.332    0.740</span></span>
+<span><span class="co">#&gt;     job_seek   (b)   -0.240    0.028   -8.524    0.000</span></span>
+<span><span class="co">#&gt;   job_seek ~                                          </span></span>
+<span><span class="co">#&gt;     treat     (a1)    0.066    0.051    1.278    0.201</span></span>
+<span><span class="co">#&gt;     econ_hard (a2)    0.053    0.025    2.167    0.030</span></span>
+<span><span class="co">#&gt;     sex       (a3)   -0.008    0.049   -0.157    0.875</span></span>
+<span><span class="co">#&gt;     age       (a4)    0.005    0.002    1.983    0.047</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Variances:</span></span>
+<span><span class="co">#&gt;                    Estimate  Std.Err  z-value  P(&gt;|z|)</span></span>
+<span><span class="co">#&gt;    .depress2          0.373    0.018   21.201    0.000</span></span>
+<span><span class="co">#&gt;    .job_seek          0.524    0.025   21.201    0.000</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Defined Parameters:</span></span>
+<span><span class="co">#&gt;                    Estimate  Std.Err  z-value  P(&gt;|z|)</span></span>
+<span><span class="co">#&gt;     indirect_treat   -0.016    0.012   -1.264    0.206</span></span>
+<span><span class="co">#&gt;     indirct_cn_hrd   -0.013    0.006   -2.100    0.036</span></span>
+<span><span class="co">#&gt;     indirect_sex      0.002    0.012    0.157    0.875</span></span>
+<span><span class="co">#&gt;     indirect_age     -0.001    0.001   -1.932    0.053</span></span>
+<span><span class="co">#&gt;     total_treat      -0.056    0.045   -1.244    0.214</span></span>
+<span><span class="co">#&gt;     total_econ_hrd    0.136    0.022    6.309    0.000</span></span>
+<span><span class="co">#&gt;     total_sex         0.109    0.043    2.548    0.011</span></span>
+<span><span class="co">#&gt;     total_age        -0.000    0.002   -0.223    0.824</span></span>
+<span></span>
+<span><span class="co"># just to have the numbers right at hand and you don't need to scroll up</span></span>
+<span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Treatment: treat</span></span>
+<span><span class="co">#&gt;   Mediator : job_seek</span></span>
+<span><span class="co">#&gt;   Response : depress2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Effect                 | Estimate |          95% ETI</span></span>
+<span><span class="co">#&gt; ----------------------------------------------------</span></span>
+<span><span class="co">#&gt; Direct Effect (ADE)    |   -0.040 | [-0.124,  0.046]</span></span>
+<span><span class="co">#&gt; Indirect Effect (ACME) |   -0.015 | [-0.041,  0.008]</span></span>
+<span><span class="co">#&gt; Mediator Effect        |   -0.240 | [-0.294, -0.185]</span></span>
+<span><span class="co">#&gt; Total Effect           |   -0.055 | [-0.145,  0.034]</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Proportion mediated: 28.14% [-181.46%, 237.75%]</span></span></code></pre></div>
 <p>The summary output from <em>lavaan</em> is longer, but we can find the related numbers quite easily:</p>
 <ul>
 <li>the <em>direct effect</em> of treatment is <code>treat (c1)</code>, which is <code>-0.040</code>

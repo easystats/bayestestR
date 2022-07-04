@@ -89,13 +89,13 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">pd_to_p</span><span class="op">(</span><span class="va">pd</span>, direction <span class="op">=</span> <span class="st">"two-sided"</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">p_to_pd</span><span class="op">(</span><span class="va">p</span>, direction <span class="op">=</span> <span class="st">"two-sided"</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">convert_p_to_pd</span><span class="op">(</span><span class="va">p</span>, direction <span class="op">=</span> <span class="st">"two-sided"</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">convert_pd_to_p</span><span class="op">(</span><span class="va">pd</span>, direction <span class="op">=</span> <span class="st">"two-sided"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pd_to_p</span><span class="op">(</span><span class="va">pd</span>, direction <span class="op">=</span> <span class="st">"two-sided"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">p_to_pd</span><span class="op">(</span><span class="va">p</span>, direction <span class="op">=</span> <span class="st">"two-sided"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">convert_p_to_pd</span><span class="op">(</span><span class="va">p</span>, direction <span class="op">=</span> <span class="st">"two-sided"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">convert_pd_to_p</span><span class="op">(</span><span class="va">pd</span>, direction <span class="op">=</span> <span class="st">"two-sided"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -120,9 +120,9 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">pd_to_p</span><span class="op">(</span>pd <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">pd_to_p</span><span class="op">(</span>pd <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1</span>
-<span class="r-in"><span class="fu">pd_to_p</span><span class="op">(</span>pd <span class="op">=</span> <span class="fl">0.95</span>, direction <span class="op">=</span> <span class="st">"one-sided"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">pd_to_p</span><span class="op">(</span>pd <span class="op">=</span> <span class="fl">0.95</span>, direction <span class="op">=</span> <span class="st">"one-sided"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.05</span>
 </code></pre></div>
     </div>
