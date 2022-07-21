@@ -46,7 +46,6 @@ For more details, see the \href{https://mjskay.github.io/ggdist/articles/linerib
 library(bayestestR)
 
 if (require("ggplot2") && require("rstanarm") && require("ggdist")) {
-
   # Generate data =============================================
   k <- 11 # number of curves (iterations)
   n <- 201 # number of rows
