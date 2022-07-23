@@ -16,7 +16,6 @@ StripTrailingWhitespace: Yes
 
 BuildType: Package
 PackageUseDevtools: Yes
-PackageCleanBeforeInstall: Yes
 PackageInstallArgs: --with-keep.source
 PackageBuildArgs: --compact-vignettes=both
 PackageCheckArgs: --as-cran --run-donttest
