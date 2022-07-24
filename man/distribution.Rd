@@ -87,6 +87,8 @@ rnorm_perfect(n, mean = 0, sd = 1)
 
 \item{df}{degrees of freedom (non-negative, but can be non-integer).}
 
+\item{shape}{Shape parameter.}
+
 \item{mean}{vector of means.}
 
 \item{sd}{vector of standard deviations.}
