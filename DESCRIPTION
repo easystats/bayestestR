@@ -1,7 +1,7 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.12.1.1
+Version: 0.12.1.2
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
@@ -76,6 +76,7 @@ Suggests:
     BayesFactor,
     bayesQR,
     bayesplot,
+    BH,
     blavaan,
     bridgesampling,
     brms,
@@ -100,6 +101,7 @@ Suggests:
     performance,
     quadprog,
     posterior,
+    RcppEigen,
     rmarkdown,
     rstan,
     rstanarm,

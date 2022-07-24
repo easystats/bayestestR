@@ -130,6 +130,7 @@ distribution_chisq <- distribution_chisquared
 
 #' @rdname distribution
 #' @inheritParams stats::rgamma
+#' @param shape Shape parameter.
 #' @export
 distribution_gamma <- function(n, shape, scale = 1, random = FALSE, ...) {
   if (random) {
