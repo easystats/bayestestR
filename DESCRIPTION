@@ -101,6 +101,7 @@ Suggests:
     performance,
     quadprog,
     posterior,
+    RcppEigen,
     rmarkdown,
     rstan,
     rstanarm,

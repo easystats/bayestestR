@@ -5,6 +5,7 @@ if (.runThisTest &&
   requiet("testthat") &&
   requiet("bayestestR") &&
   requiet("BH") &&
+  requiet("RcppEigen") &&
   requiet("brms")) {
   skip_on_cran()
 
