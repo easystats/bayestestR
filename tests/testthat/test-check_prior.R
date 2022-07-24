@@ -8,6 +8,7 @@ if (.runThisTest &&
   requiet("RcppEigen") &&
   requiet("brms")) {
   skip_on_cran()
+  skip_on_os(os = "windows")
 
   # stanreg --------------------------
 
