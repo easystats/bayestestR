@@ -20,7 +20,10 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
+<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Understand and Describe Bayesian Models and Posterior Distributions">
 <meta property="og:description" content="Provides utilities to describe posterior
@@ -29,7 +32,7 @@
     Interval - HDI; Kruschke, 2015 &lt;doi:10.1016/C2012-0-00477-2&gt;) and
     indices used for null-hypothesis testing (such as ROPE percentage, pd
     and Bayes factors).">
-<meta property="og:image" content="/reference/figures/card.png">
+<meta property="og:image" content="https://easystats.github.io/bayestestR/reference/figures/card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@easystats4u">
 <meta name="twitter:site" content="@easystats4u">
@@ -42,7 +45,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-default navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="index.html">bayestestR</a>
 
@@ -55,17 +58,12 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="active nav-item">
-  <a class="nav-link" href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+<li class="nav-item">
+  <a class="nav-link" href="reference/index.html">
+    <span class="fa fa fa fa-file-code"></span>
      
+    Reference
   </a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="news/index.html">News</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="reference/index.html">Features</a>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="articles/bayestestR.html">Get started</a>
@@ -93,12 +91,39 @@
 <li class="nav-item">
   <a class="nav-link" href="articles/guidelines.html">Guidelines</a>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="news/index.html">
+    <span class="fa fa fa fa-newspaper"></span>
+     
+    News
+  </a>
+</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
       <ul class="navbar-nav">
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--easystats">
+    <span class="fab fa fab fa-r-project"></span>
+     
+    easystats
+  </a>
+  <div class="dropdown-menu" aria-labelledby="dropdown--easystats">
+    <a class="dropdown-item" href="https://easystats.github.io/bayestestR/">bayestestR</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/correlation/">correlation</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/datawizard/">datawizard</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/easystats/">easystats</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/effectsize/">effectsize</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/insight/">insight</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/modelbased/">modelbased</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/performance/">performance</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/parameters/">parameters</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/report/">report</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/see/">see</a>
+  </div>
+</li>
 <li class="nav-item">
   <a class="external-link nav-link" href="http://twitter.com/easystats4u" aria-label="Twitter">
     <span class="fa fa-twitter"></span>
@@ -106,8 +131,8 @@
   </a>
 </li>
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/easystats/bayestestR/" aria-label="GitHub">
-    <span class="fa fa-github"></span>
+  <a class="external-link nav-link" href="https://github.com/easystats/bayestestR/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -126,7 +151,7 @@
 
 <p><strong><em>Become a Bayesian master you will</em></strong></p>
 <hr>
-<p><span class="emoji" data-emoji="warning">⚠️</span> We changed the default the CI width! Please make an <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html" class="external-link">informed decision</a> and set it explicitly (<code>ci = 0.89</code>, <code>ci = 0.95</code> or anything else that you decide) <span class="emoji" data-emoji="warning">⚠️</span></p>
+<p><span class="emoji" data-emoji="warning">⚠️</span> We changed the default the CI width! Please make an <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">informed decision</a> and set it explicitly (<code>ci = 0.89</code>, <code>ci = 0.95</code> or anything else that you decide) <span class="emoji" data-emoji="warning">⚠️</span></p>
 <hr>
 <p>Existing R packages allow users to easily fit a large variety of models and extract and visualize the posterior draws. However, most of these packages only return a limited set of indices (e.g., point-estimates and CIs). <strong>bayestestR</strong> provides a comprehensive and consistent set of functions to analyze and describe posterior distributions generated by a variety of models objects, including popular modeling packages such as <strong>rstanarm</strong>, <strong>brms</strong> or <strong>BayesFactor</strong>.</p>
 <p>You can reference the package and its documentation as follows:</p>
@@ -167,34 +192,34 @@
 </table>
 <p>Once you have downloaded the package, you can then load it using:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/bayestestR/" class="external-link">"bayestestR"</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/bayestestR/">"bayestestR"</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
-<p><a href="https://easystats.github.io/bayestestR/" class="external-link"><img src="https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63" alt="Documentation"></a> <a href="https://easystats.github.io/blog/posts/" class="external-link"><img src="https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800" alt="Blog"></a> <a href="https://easystats.github.io/bayestestR/reference/index.html" class="external-link"><img src="https://img.shields.io/badge/features-bayestestR-orange.svg?colorB=2196F3" alt="Features"></a></p>
-<p>Click on the buttons above to access the package <a href="https://easystats.github.io/bayestestR/" class="external-link">documentation</a> and the <a href="https://easystats.github.io/blog/posts/" class="external-link">easystats blog</a>, and check-out these vignettes:</p>
+<p><a href="https://easystats.github.io/bayestestR/"><img src="https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63" alt="Documentation"></a> <a href="https://easystats.github.io/blog/posts/" class="external-link"><img src="https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800" alt="Blog"></a> <a href="https://easystats.github.io/bayestestR/reference/index.html"><img src="https://img.shields.io/badge/features-bayestestR-orange.svg?colorB=2196F3" alt="Features"></a></p>
+<p>Click on the buttons above to access the package <a href="https://easystats.github.io/bayestestR/">documentation</a> and the <a href="https://easystats.github.io/blog/posts/" class="external-link">easystats blog</a>, and check-out these vignettes:</p>
 <div class="section level4">
 <h4 id="tutorials">Tutorials<a class="anchor" aria-label="anchor" href="#tutorials"></a>
 </h4>
 <ul>
-<li><a href="https://easystats.github.io/bayestestR/articles/bayestestR.html" class="external-link">Get Started with Bayesian Analysis</a></li>
-<li><a href="https://easystats.github.io/bayestestR/articles/example1.html" class="external-link">Example 1: Initiation to Bayesian models</a></li>
-<li><a href="https://easystats.github.io/bayestestR/articles/example2.html" class="external-link">Example 2: Confirmation of Bayesian skills</a></li>
-<li><a href="https://easystats.github.io/bayestestR/articles/example3.html" class="external-link">Example 3: Become a Bayesian master</a></li>
+<li><a href="https://easystats.github.io/bayestestR/articles/bayestestR.html">Get Started with Bayesian Analysis</a></li>
+<li><a href="https://easystats.github.io/bayestestR/articles/example1.html">Example 1: Initiation to Bayesian models</a></li>
+<li><a href="https://easystats.github.io/bayestestR/articles/example2.html">Example 2: Confirmation of Bayesian skills</a></li>
+<li><a href="https://easystats.github.io/bayestestR/articles/example3.html">Example 3: Become a Bayesian master</a></li>
 </ul>
 </div>
 <div class="section level4">
 <h4 id="articles">Articles<a class="anchor" aria-label="anchor" href="#articles"></a>
 </h4>
 <ul>
-<li><a href="https://easystats.github.io/bayestestR/articles/credible_interval.html" class="external-link">Credible Intervals (CI)</a></li>
-<li><a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html" class="external-link">Probability of Direction (pd)</a></li>
-<li><a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html" class="external-link">Region of Practical Equivalence (ROPE)</a></li>
-<li><a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html" class="external-link">Bayes Factors (BF)</a></li>
-<li><a href="https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html" class="external-link">Comparison of Point-Estimates</a></li>
+<li><a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">Credible Intervals (CI)</a></li>
+<li><a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html">Probability of Direction (pd)</a></li>
+<li><a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html">Region of Practical Equivalence (ROPE)</a></li>
+<li><a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html">Bayes Factors (BF)</a></li>
+<li><a href="https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html">Comparison of Point-Estimates</a></li>
 <li><a href="https://doi.org/10.3389/fpsyg.2019.02767" class="external-link">Comparison of Indices of Effect Existence</a></li>
-<li><a href="https://easystats.github.io/bayestestR/articles/guidelines.html" class="external-link">Reporting Guidelines</a></li>
+<li><a href="https://easystats.github.io/bayestestR/articles/guidelines.html">Reporting Guidelines</a></li>
 </ul>
 </div>
 </div>
@@ -205,43 +230,43 @@
 <p>In the Bayesian framework, parameters are estimated in a probabilistic fashion as <em>distributions</em>. These distributions can be summarised and described by reporting four types of indices:</p>
 <ul>
 <li>
-<a href="https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html" class="external-link"><strong>Centrality</strong></a><ul>
+<a href="https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html"><strong>Centrality</strong></a><ul>
 <li>
-<code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html" class="external-link">median()</a></code> or <a href="https://easystats.github.io/bayestestR/reference/map_estimate.html" class="external-link"><code>map_estimate()</code></a> for an estimation of the mode.</li>
+<code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html" class="external-link">median()</a></code> or <a href="https://easystats.github.io/bayestestR/reference/map_estimate.html"><code>map_estimate()</code></a> for an estimation of the mode.</li>
 <li>
-<a href="https://easystats.github.io/bayestestR/reference/point_estimate.html" class="external-link"><code>point_estimate()</code></a> can be used to get them at once and can be run directly on models.</li>
+<a href="https://easystats.github.io/bayestestR/reference/point_estimate.html"><code>point_estimate()</code></a> can be used to get them at once and can be run directly on models.</li>
 </ul>
 </li>
 <li>
-<a href="https://easystats.github.io/bayestestR/articles/credible_interval.html" class="external-link"><strong>Uncertainty</strong></a><ul>
+<a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>Uncertainty</strong></a><ul>
 <li>
-<a href="https://easystats.github.io/bayestestR/reference/hdi.html" class="external-link"><code>hdi()</code></a> for <em>Highest Density Intervals (HDI)</em>, <a href="https://easystats.github.io/bayestestR/reference/spi.html" class="external-link"><code>spi()</code></a> for <em>Shortest Probability Intervals (SPI)</em> or <a href="https://easystats.github.io/bayestestR/reference/eti.html" class="external-link"><code>eti()</code></a> for <em>Equal-Tailed Intervals (ETI)</em>.</li>
+<a href="https://easystats.github.io/bayestestR/reference/hdi.html"><code>hdi()</code></a> for <em>Highest Density Intervals (HDI)</em>, <a href="https://easystats.github.io/bayestestR/reference/spi.html"><code>spi()</code></a> for <em>Shortest Probability Intervals (SPI)</em> or <a href="https://easystats.github.io/bayestestR/reference/eti.html"><code>eti()</code></a> for <em>Equal-Tailed Intervals (ETI)</em>.</li>
 <li>
-<a href="https://easystats.github.io/bayestestR/reference/ci.html" class="external-link"><code>ci()</code></a> can be used as a general method for Confidence and Credible Intervals (CI).</li>
+<a href="https://easystats.github.io/bayestestR/reference/ci.html"><code>ci()</code></a> can be used as a general method for Confidence and Credible Intervals (CI).</li>
 </ul>
 </li>
 <li>
-<a href="https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html" class="external-link"><strong>Effect Existence</strong></a>: whether an effect is different from 0.<ul>
+<a href="https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html"><strong>Effect Existence</strong></a>: whether an effect is different from 0.<ul>
 <li>
-<a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link"><code>p_direction()</code></a> for a Bayesian equivalent of the frequentist <em>p</em>-value (see <a href="https://doi.org/10.3389/fpsyg.2019.02767" class="external-link">Makowski et al., 2019</a>)</li>
+<a href="https://easystats.github.io/bayestestR/reference/p_direction.html"><code>p_direction()</code></a> for a Bayesian equivalent of the frequentist <em>p</em>-value (see <a href="https://doi.org/10.3389/fpsyg.2019.02767" class="external-link">Makowski et al., 2019</a>)</li>
 <li>
-<a href="https://easystats.github.io/bayestestR/reference/p_map.html" class="external-link"><code>p_pointnull()</code></a> represents the odds of null hypothesis (<em>h0 = 0</em>) compared to the most likely hypothesis (the MAP).</li>
+<a href="https://easystats.github.io/bayestestR/reference/p_map.html"><code>p_pointnull()</code></a> represents the odds of null hypothesis (<em>h0 = 0</em>) compared to the most likely hypothesis (the MAP).</li>
 <li>
-<a href="https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html" class="external-link"><code>bf_pointnull()</code></a> for a classic <em>Bayes Factor (BF)</em> assessing the likelihood of effect presence against its absence (<em>h0 = 0</em>).</li>
+<a href="https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html"><code>bf_pointnull()</code></a> for a classic <em>Bayes Factor (BF)</em> assessing the likelihood of effect presence against its absence (<em>h0 = 0</em>).</li>
 </ul>
 </li>
 <li>
-<a href="https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html" class="external-link"><strong>Effect Significance</strong></a>: whether the effect size can be considered as non-negligible.<ul>
+<a href="https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html"><strong>Effect Significance</strong></a>: whether the effect size can be considered as non-negligible.<ul>
 <li>
-<a href="https://easystats.github.io/bayestestR/reference/p_rope.html" class="external-link"><code>p_rope()</code></a> is the probability of the effect falling inside a <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html" class="external-link"><em>Region of Practical Equivalence (ROPE)</em></a>.</li>
+<a href="https://easystats.github.io/bayestestR/reference/p_rope.html"><code>p_rope()</code></a> is the probability of the effect falling inside a <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html"><em>Region of Practical Equivalence (ROPE)</em></a>.</li>
 <li>
-<a href="https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html" class="external-link"><code>bf_rope()</code></a> computes a Bayes factor against the null as defined by a region (the ROPE).</li>
+<a href="https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html"><code>bf_rope()</code></a> computes a Bayes factor against the null as defined by a region (the ROPE).</li>
 <li>
-<a href="https://easystats.github.io/bayestestR/reference/p_significance.html" class="external-link"><code>p_significance()</code></a> that combines a region of equivalence with the probability of direction.</li>
+<a href="https://easystats.github.io/bayestestR/reference/p_significance.html"><code>p_significance()</code></a> that combines a region of equivalence with the probability of direction.</li>
 </ul>
 </li>
 </ul>
-<p><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html" class="external-link"><code>describe_posterior()</code></a> is the master function with which you can compute all of the indices cited below at once.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/describe_posterior.html"><code>describe_posterior()</code></a> is the master function with which you can compute all of the indices cited below at once.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span>,</span>
@@ -320,12 +345,12 @@
 <span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="do">## Parameter   | Median | Mean |  MAP |         95% CI |   pd |   ps |  Rhat |    ESS</span></span>
 <span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="do">## ----------------------------------------------------------------------------------</span></span>
 <span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) |   1.30 | 1.49 | 0.99 | [ 0.63,  3.41] | 100% | 1.00 | 0.996 | 129.00</span></span></code></pre></div>
-<p><em>bayestestR</em> also includes <a href="https://easystats.github.io/bayestestR/reference/index.html" class="external-link"><strong>many other features</strong></a> useful for your Bayesian analsyes. Here are some more examples:</p>
+<p><em>bayestestR</em> also includes <a href="https://easystats.github.io/bayestestR/reference/index.html"><strong>many other features</strong></a> useful for your Bayesian analsyes. Here are some more examples:</p>
 <div class="section level2">
 <h2 id="point-estimates">Point-estimates<a class="anchor" aria-label="anchor" href="#point-estimates"></a>
 </h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/" class="external-link">bayestestR</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/">bayestestR</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distribution.html">distribution_gamma</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fl">1.5</span><span class="op">)</span>  <span class="co"># Generate a skewed distribution</span></span>
 <span><span class="va">centrality</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/point_estimate.html">point_estimate</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span>  <span class="co"># Get indices of centrality</span></span>
@@ -337,13 +362,13 @@
 <span><span class="co">## 1.18   | 1.50 | 0.51</span></span></code></pre></div>
 <p>As for other <a href="https://github.com/easystats" class="external-link"><strong>easystats</strong></a> packages, <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> methods are available from the <a href="https://easystats.github.io/see/" class="external-link"><strong>see</strong></a> package for many functions:</p>
 <p><img src="reference/figures/unnamed-chunk-8-1.png"><!-- --></p>
-<p>While the <strong>median</strong> and the <strong>mean</strong> are available through base R functions, <a href="https://easystats.github.io/bayestestR/reference/map_estimate.html" class="external-link"><code>map_estimate()</code></a> in <em>bayestestR</em> can be used to directly find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.</em>, the value associated with the highest probability density (the “peak” of the posterior distribution). In other words, it is an estimation of the <em>mode</em> for continuous parameters.</p>
+<p>While the <strong>median</strong> and the <strong>mean</strong> are available through base R functions, <a href="https://easystats.github.io/bayestestR/reference/map_estimate.html"><code>map_estimate()</code></a> in <em>bayestestR</em> can be used to directly find the <strong>Highest Maximum A Posteriori (MAP)</strong> estimate of a posterior, <em>i.e.</em>, the value associated with the highest probability density (the “peak” of the posterior distribution). In other words, it is an estimation of the <em>mode</em> for continuous parameters.</p>
 </div>
 <div class="section level2">
 <h2 id="uncertainty-ci">Uncertainty (CI)<a class="anchor" aria-label="anchor" href="#uncertainty-ci"></a>
 </h2>
-<p><a href="https://easystats.github.io/bayestestR/reference/hdi.html" class="external-link"><code>hdi()</code></a> computes the <strong>Highest Density Interval (HDI)</strong> of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterization as <strong>Credible Interval (CI)</strong>.</p>
-<p>Unlike equal-tailed intervals (see <a href="https://easystats.github.io/bayestestR/reference/eti.html" class="external-link"><code>eti()</code></a>) that typically exclude 2.5% from each tail of the distribution, the HDI is <em>not</em> equal-tailed and therefore always includes the mode(s) of posterior distributions.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/hdi.html"><code>hdi()</code></a> computes the <strong>Highest Density Interval (HDI)</strong> of a posterior distribution, i.e., the interval which contains all points within the interval have a higher probability density than points outside the interval. The HDI can be used in the context of Bayesian posterior characterization as <strong>Credible Interval (CI)</strong>.</p>
+<p>Unlike equal-tailed intervals (see <a href="https://easystats.github.io/bayestestR/reference/eti.html"><code>eti()</code></a>) that typically exclude 2.5% from each tail of the distribution, the HDI is <em>not</em> equal-tailed and therefore always includes the mode(s) of posterior distributions.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distribution.html">distribution_chisquared</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span></span>
@@ -359,8 +384,8 @@
 <div class="section level3">
 <h3 id="probability-of-direction-pd">Probability of Direction (<em>pd</em>)<a class="anchor" aria-label="anchor" href="#probability-of-direction-pd"></a>
 </h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/p_direction.html" class="external-link"><code>p_direction()</code></a> computes the <em>Probability of Direction</em> (<em>p</em>d, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% (<em>i.e.</em>, <code>0.5</code> and <code>1</code>) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median’s sign. Although differently expressed, this index is fairly similar (<em>i.e.</em>, is strongly correlated) to the frequentist <em>p</em>-value.</p>
-<p><strong>Relationship with the p-value</strong>: In most cases, it seems that the <em>pd</em> corresponds to the frequentist one-sided <em>p</em>-value through the formula <code>p-value = (1-pd/100)</code> and to the two-sided <em>p</em>-value (the most commonly reported) through the formula <code>p-value = 2*(1-pd/100)</code>. Thus, a <code>pd</code> of <code>95%</code>, <code>97.5%</code> <code>99.5%</code> and <code>99.95%</code> corresponds approximately to a two-sided <em>p</em>-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code>. See the <a href="https://easystats.github.io/bayestestR/articles/guidelines.html" class="external-link"><em>reporting guidelines</em></a>.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/p_direction.html"><code>p_direction()</code></a> computes the <em>Probability of Direction</em> (<em>p</em>d, also known as the Maximum Probability of Effect - <em>MPE</em>). It varies between 50% and 100% (<em>i.e.</em>, <code>0.5</code> and <code>1</code>) and can be interpreted as the probability (expressed in percentage) that a parameter (described by its posterior distribution) is strictly positive or negative (whichever is the most probable). It is mathematically defined as the proportion of the posterior distribution that is of the median’s sign. Although differently expressed, this index is fairly similar (<em>i.e.</em>, is strongly correlated) to the frequentist <em>p</em>-value.</p>
+<p><strong>Relationship with the p-value</strong>: In most cases, it seems that the <em>pd</em> corresponds to the frequentist one-sided <em>p</em>-value through the formula <code>p-value = (1-pd/100)</code> and to the two-sided <em>p</em>-value (the most commonly reported) through the formula <code>p-value = 2*(1-pd/100)</code>. Thus, a <code>pd</code> of <code>95%</code>, <code>97.5%</code> <code>99.5%</code> and <code>99.95%</code> corresponds approximately to a two-sided <em>p</em>-value of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code>. See the <a href="https://easystats.github.io/bayestestR/articles/guidelines.html"><em>reporting guidelines</em></a>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distribution.html">distribution_normal</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/p_direction.html">p_direction</a></span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span></span>
@@ -370,10 +395,10 @@
 <div class="section level3">
 <h3 id="rope">ROPE<a class="anchor" aria-label="anchor" href="#rope"></a>
 </h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/rope.html" class="external-link"><code>rope()</code></a> computes the proportion (in percentage) of the HDI (default to the 89% HDI) of a posterior distribution that lies within a region of practical equivalence.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/rope.html"><code>rope()</code></a> computes the proportion (in percentage) of the HDI (default to the 89% HDI) of a posterior distribution that lies within a region of practical equivalence.</p>
 <p>Statistically, the probability of a posterior distribution of being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are <em>equivalent to the null</em> value for practical purposes Kruschke (2018).</p>
-<p>Kruschke suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as <code>0 +/- .1 * sd(y)</code>. This ROPE range can be automatically computed for models using the <a href="https://easystats.github.io/bayestestR/reference/rope_range.html" class="external-link">rope_range</a> function.</p>
-<p>Kruschke suggests using the proportion of the 95% (or 90%, considered more stable) HDI that falls within the ROPE as an index for “null-hypothesis” testing (as understood under the Bayesian framework, see <a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html" class="external-link">equivalence_test</a>).</p>
+<p>Kruschke suggests that such null value could be set, by default, to the -0.1 to 0.1 range of a standardized parameter (negligible effect size according to Cohen, 1988). This could be generalized: For instance, for linear models, the ROPE could be set as <code>0 +/- .1 * sd(y)</code>. This ROPE range can be automatically computed for models using the <a href="https://easystats.github.io/bayestestR/reference/rope_range.html">rope_range</a> function.</p>
+<p>Kruschke suggests using the proportion of the 95% (or 90%, considered more stable) HDI that falls within the ROPE as an index for “null-hypothesis” testing (as understood under the Bayesian framework, see <a href="https://easystats.github.io/bayestestR/reference/equivalence_test.html">equivalence_test</a>).</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distribution.html">distribution_normal</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/rope.html">rope</a></span><span class="op">(</span><span class="va">posterior</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span>
@@ -387,7 +412,7 @@
 <div class="section level3">
 <h3 id="bayes-factor">Bayes Factor<a class="anchor" aria-label="anchor" href="#bayes-factor"></a>
 </h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html" class="external-link"><code>bayesfactor_parameters()</code></a> computes Bayes factors against the null (either a point or an interval), bases on prior and posterior samples of a single parameter. This Bayes factor indicates the degree by which the mass of the posterior distribution has shifted further away from or closer to the null value(s) (relative to the prior distribution), thus indicating if the null value has become less or more likely given the observed data.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html"><code>bayesfactor_parameters()</code></a> computes Bayes factors against the null (either a point or an interval), bases on prior and posterior samples of a single parameter. This Bayes factor indicates the degree by which the mass of the posterior distribution has shifted further away from or closer to the null value(s) (relative to the prior distribution), thus indicating if the null value has become less or more likely given the observed data.</p>
 <p>When the null is an interval, the Bayes factor is computed by comparing the prior and posterior odds of the parameter falling within or outside the null; When the null is a point, a Savage-Dickey density ratio is computed, which is also an approximation of a Bayes factor comparing the marginal likelihoods of the model against a model in which the tested parameter has been restricted to the point null (Wagenmakers, Lodewyckx, Kuriyal, &amp; Grasman, 2010).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prior</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/distribution.html">distribution_normal</a></span><span class="op">(</span><span class="fl">10000</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
@@ -403,7 +428,7 @@
 <span><span class="co">## * Evidence Against The Null: 0</span></span></code></pre></div>
 <p><img src="reference/figures/unnamed-chunk-16-1.png"><!-- --></p>
 <p><sup><em>The lollipops represent the density of a point-null on the prior distribution (the blue lollipop on the dotted distribution) and on the posterior distribution (the red lollipop on the yellow distribution). The ratio between the two - the Savage-Dickey ratio - indicates the degree by which the mass of the parameter distribution has shifted away from or closer to the null.</em></sup></p>
-<p>For more info, see <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html" class="external-link">the Bayes factors vignette</a>.</p>
+<p>For more info, see <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html">the Bayes factors vignette</a>.</p>
 </div>
 </div>
 <div class="section level2">
@@ -412,19 +437,19 @@
 <div class="section level3">
 <h3 id="find-ropes-appropriate-range">Find ROPE’s appropriate range<a class="anchor" aria-label="anchor" href="#find-ropes-appropriate-range"></a>
 </h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/rope_range.html" class="external-link"><code>rope_range()</code></a>: This function attempts at automatically finding suitable “default” values for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests that such null value could be set, by default, to a range from <code>-0.1</code> to <code>0.1</code> of a standardized parameter (negligible effect size according to Cohen, 1988), which can be generalised for linear models to <code>-0.1 * sd(y), 0.1 * sd(y)</code>. For logistic models, the parameters expressed in log odds ratio can be converted to standardized difference through the formula <code>sqrt(3)/pi</code>, resulting in a range of <code>-0.05</code> to <code>0.05</code>.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/rope_range.html"><code>rope_range()</code></a>: This function attempts at automatically finding suitable “default” values for the Region Of Practical Equivalence (ROPE). Kruschke (2018) suggests that such null value could be set, by default, to a range from <code>-0.1</code> to <code>0.1</code> of a standardized parameter (negligible effect size according to Cohen, 1988), which can be generalised for linear models to <code>-0.1 * sd(y), 0.1 * sd(y)</code>. For logistic models, the parameters expressed in log odds ratio can be converted to standardized difference through the formula <code>sqrt(3)/pi</code>, resulting in a range of <code>-0.05</code> to <code>0.05</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/rope_range.html">rope_range</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="density-estimation">Density Estimation<a class="anchor" aria-label="anchor" href="#density-estimation"></a>
 </h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/estimate_density.html" class="external-link"><code>estimate_density()</code></a>: This function is a wrapper over different methods of density estimation. By default, it uses the base R <code>density</code> with by default uses a different smoothing bandwidth (<code>"SJ"</code>) from the legacy default implemented the base R <code>density</code> function (<code>"nrd0"</code>). However, Deng &amp; Wickham suggest that <code>method = "KernSmooth"</code> is the fastest and the most accurate.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/estimate_density.html"><code>estimate_density()</code></a>: This function is a wrapper over different methods of density estimation. By default, it uses the base R <code>density</code> with by default uses a different smoothing bandwidth (<code>"SJ"</code>) from the legacy default implemented the base R <code>density</code> function (<code>"nrd0"</code>). However, Deng &amp; Wickham suggest that <code>method = "KernSmooth"</code> is the fastest and the most accurate.</p>
 </div>
 <div class="section level3">
 <h3 id="perfect-distributions">Perfect Distributions<a class="anchor" aria-label="anchor" href="#perfect-distributions"></a>
 </h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/distribution.html" class="external-link"><code>distribution()</code></a>: Generate a sample of size n with near-perfect distributions.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/distribution.html"><code>distribution()</code></a>: Generate a sample of size n with near-perfect distributions.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/distribution.html">distribution</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">##  [1] -1.55 -1.00 -0.66 -0.38 -0.12  0.12  0.38  0.66  1.00  1.55</span></span></code></pre></div>
@@ -432,7 +457,7 @@
 <div class="section level3">
 <h3 id="probability-of-a-value">Probability of a Value<a class="anchor" aria-label="anchor" href="#probability-of-a-value"></a>
 </h3>
-<p><a href="https://easystats.github.io/bayestestR/reference/density_at.html" class="external-link"><code>density_at()</code></a>: Compute the density of a given point of a distribution.</p>
+<p><a href="https://easystats.github.io/bayestestR/reference/density_at.html"><code>density_at()</code></a>: Compute the density of a given point of a distribution.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/density_at.html">density_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">## [1] 0.36</span></span></code></pre></div>
@@ -494,12 +519,13 @@
 <li>
 <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-8895-3206" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>
-<a href="https://github.com/mattansb" class="external-link">Mattan S. Ben-Shachar</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-4287-4801" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-4287-4801" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>
 <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-1995-6531" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>
 <a href="http://www.humanfactors.io" class="external-link">Michael D. Wilson</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-4143-7308" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Brenton M. Wiernik <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9560-6336" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>
+<a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9560-6336" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -520,12 +546,12 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://github.com/mattansb" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, <a href="http://www.humanfactors.io" class="external-link">Michael D. Wilson</a>, Brenton M. Wiernik.</p>
+<p>Developed by <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, <a href="http://www.humanfactors.io" class="external-link">Michael D. Wilson</a>, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
     </footer>

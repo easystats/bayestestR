@@ -15,11 +15,14 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
+<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Credible Intervals (CI)">
 <meta property="og:description" content="bayestestR">
-<meta property="og:image" content="/reference/figures/card.png">
+<meta property="og:image" content="https://easystats.github.io/bayestestR/reference/figures/card.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@easystats4u">
 <meta name="twitter:site" content="@easystats4u">
@@ -32,7 +35,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-default navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
@@ -46,16 +49,11 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
-  <a class="nav-link" href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+  <a class="nav-link" href="../reference/index.html">
+    <span class="fa fa fa fa-file-code"></span>
      
+    Reference
   </a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">News</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Features</a>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../articles/bayestestR.html">Get started</a>
@@ -83,12 +81,39 @@
 <li class="nav-item">
   <a class="nav-link" href="../articles/guidelines.html">Guidelines</a>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">
+    <span class="fa fa fa fa-newspaper"></span>
+     
+    News
+  </a>
+</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
       <ul class="navbar-nav">
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--easystats">
+    <span class="fab fa fab fa-r-project"></span>
+     
+    easystats
+  </a>
+  <div class="dropdown-menu" aria-labelledby="dropdown--easystats">
+    <a class="dropdown-item" href="https://easystats.github.io/bayestestR/">bayestestR</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/correlation/">correlation</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/datawizard/">datawizard</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/easystats/">easystats</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/effectsize/">effectsize</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/insight/">insight</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/modelbased/">modelbased</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/performance/">performance</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/parameters/">parameters</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/report/">report</a>
+    <a class="external-link dropdown-item" href="https://easystats.github.io/see/">see</a>
+  </div>
+</li>
 <li class="nav-item">
   <a class="external-link nav-link" href="http://twitter.com/easystats4u" aria-label="Twitter">
     <span class="fa fa-twitter"></span>
@@ -96,8 +121,8 @@
   </a>
 </li>
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/easystats/bayestestR/" aria-label="GitHub">
-    <span class="fa fa-github"></span>
+  <a class="external-link nav-link" href="https://github.com/easystats/bayestestR/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -141,7 +166,7 @@
 <p>Using 89% is another popular choice, and used to be the default for a long time (<a href="https://github.com/easystats/bayestestR/discussions/250" class="external-link">read here the story of the change</a>). How did it start?</p>
 <p>Naturally, when it came about choosing the CI level to report by default, <strong>people started using 95%</strong>, the arbitrary convention used in the <strong>frequentist</strong> world. However, some authors suggested that 95% might not be the most appropriate for Bayesian posterior distributions, potentially lacking stability if not enough posterior samples are drawn <span class="citation">(Kruschke, 2014)</span>.</p>
 <p>The proposition was to use 90% instead of 95%. However, recently, McElreath (2014, 2018) suggested that if we were to use arbitrary thresholds in the first place, why not use 89%? Moreover, 89 is the highest <strong>prime number</strong> that does not exceed the already unstable 95% threshold. What does it have to do with anything? <em>Nothing</em>, but it reminds us of the total arbitrariness of these conventions <span class="citation">(McElreath, 2018)</span>.</p>
-<p>Thus, CIs computed with 89% intervals (<code>ci = 0.89</code>), are deemed to be more stable than, for instance, 95% intervals <span class="citation">(Kruschke, 2014)</span>. An effective sample size (ESS; see <a href="https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html" class="external-link">here</a>) of at least 10.000 is recommended if one wants to compute precise 95% intervals (Kruschke, 2014, p. 183ff). Unfortunately, the default number of posterior samples for most Bayes packages (e.g., <code>rstanarm</code> or <code>brms</code>) is only 4.000 (thus, you might want to increase it when fitting your model).</p>
+<p>Thus, CIs computed with 89% intervals (<code>ci = 0.89</code>), are deemed to be more stable than, for instance, 95% intervals <span class="citation">(Kruschke, 2014)</span>. An effective sample size (ESS; see <a href="https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html">here</a>) of at least 10.000 is recommended if one wants to compute precise 95% intervals (Kruschke, 2014, p. 183ff). Unfortunately, the default number of posterior samples for most Bayes packages (e.g., <code>rstanarm</code> or <code>brms</code>) is only 4.000 (thus, you might want to increase it when fitting your model).</p>
 <p>However, 95% has some <a href="https://easystats.github.io/blog/posts/bayestestr_95/" class="external-link"><strong>advantages too</strong></a>. For instance, it shares (in the case of a normal posterior distribution) an intuitive relationship with the standard deviation and it conveys a more accurate image of the (artificial) bounds of the distribution. Also, because it is wider, it makes analyses more conservative (i.e., the probability of covering 0 is larger for the 95% CI than for lower ranges such as 89%), which is a good thing in the context of the reproducibility crisis.</p>
 <p>To add to the mess, some other software use different default, such as for instance 90%. Ultimately, <strong>you as the user should make an informed decision</strong>, based on your needs and goals, and justify your choice.</p>
 </div>
@@ -150,7 +175,7 @@
 </h2>
 <p>The reader might notice that <code>bayestestR</code> provides <strong>two methods</strong> to compute credible intervals, the <strong>Highest Density Interval (HDI)</strong> (<code><a href="../reference/hdi.html">hdi()</a></code>) and the <strong>Equal-tailed Interval (ETI)</strong> (<code><a href="../reference/eti.html">eti()</a></code>). These methods can also be changed via the <code>method</code> argument of the <code><a href="../reference/ci.html">ci()</a></code> function. What is the difference? Let’s see:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/" class="external-link">bayestestR</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/">bayestestR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Generate a normal distribution</span></span>
@@ -259,12 +284,12 @@ Wagenmakers, E.-J., Gronau, Q. F., Dablander, F., &amp; Etz, A. (2018). <em>The 
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://github.com/mattansb" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, <a href="http://www.humanfactors.io" class="external-link">Michael D. Wilson</a>, Brenton M. Wiernik.</p>
+<p>Developed by <a href="https://dominiquemakowski.github.io/" class="external-link">Dominique Makowski</a>, <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>, <a href="https://home.msbstats.info/" class="external-link">Mattan S. Ben-Shachar</a>, <a href="https://sites.google.com/site/indrajeetspatilmorality/" class="external-link">Indrajeet Patil</a>, <a href="http://www.humanfactors.io" class="external-link">Michael D. Wilson</a>, <a href="https://wiernik.org/" class="external-link">Brenton M. Wiernik</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
     </footer>
