@@ -1,26 +1,8 @@
-authors:
-  Dominique Makowski:
-    href: https://dominiquemakowski.github.io/
-  Daniel Lüdecke:
-    href: https://github.com/strengejacke
-  Mattan S. Ben-Shachar:
-    href: https://github.com/mattansb
-  Indrajeet Patil:
-    href: https://sites.google.com/site/indrajeetspatilmorality/
-  Michael D. Wilson:
-    href: http://www.humanfactors.io
-
+url: https://easystats.github.io/bayestestR/
 
 template:
   bootstrap: 5
-  bslib:
-    primary: "#0054AD"
-  opengraph:
-    image:
-      src: man/figures/card.png
-    twitter:
-      creator: "@easystats4u"
-      card: summary_large_image
+  package: easystatstemplate
 
 reference:
 - title: "Posterior Description"
@@ -88,34 +70,24 @@ reference:
   - cwi
 
 
+# Keep articles organized
 navbar:
-  type: default
-  right:
-  - icon: fa-twitter
-    href: http://twitter.com/easystats4u
-    aria-label: Twitter
-  - icon: fa-github
-    href: https://github.com/easystats/bayestestR/
-    aria-label: GitHub
   left:
-  - icon: fa-home fa-lg
-    href: index.html
-  - text: News
-    href: news/index.html
-  - text: Features
-    href: reference/index.html
-  - text: Get started
-    href: articles/bayestestR.html
-  - text: Examples
-    menu:
+    - icon: fa fa-file-code
+      text: Reference
+      href: reference/index.html
+    - text: Get started
+      href: articles/bayestestR.html
+    - text: Examples
+      menu:
       - text: '1. Initiation to Bayesian models'
         href: articles/example1.html
       - text: '2. Confirmation of Bayesian skills'
         href: articles/example2.html
       - text: '3. Become a Bayesian master'
         href: articles/example3.html
-  - text: Articles
-    menu:
+    - text: Articles
+      menu:
       - text: 'Credible Intervals (CI)'
         href: articles/credible_interval.html
       - text: 'Region of Practical Equivalence (ROPE)'
@@ -130,5 +102,8 @@ navbar:
         href: https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full
       - text: 'Mediation Analysis: Direct and Indirect Effects'
         href: articles/mediation.html
-  - text: Guidelines
-    href: articles/guidelines.html
+    - text: Guidelines
+      href: articles/guidelines.html
+    - icon: fa fa-newspaper
+      text: News
+      href: news/index.html
