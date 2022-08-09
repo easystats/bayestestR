@@ -475,10 +475,10 @@ Prof. Sanders giving default values to define the Region of Practical Equivalen
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"p_direction"</span>, <span class="st">"rope"</span>, <span class="st">"bayesfactor"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Summary of Posterior Distribution
 &gt; 
-&gt; Parameter     | Median |           95% CI |     pd |          ROPE | % in ROPE |  Rhat |      ESS |       BF
-&gt; ------------------------------------------------------------------------------------------------------------
-&gt; (Intercept)   | 276.84 | [241.50, 312.32] |   100% | [-0.10, 0.10] |        0% | 1.000 | 35566.00 | 2.27e+14
-&gt; feedsunflower |  52.03 | [  2.38, 100.48] | 97.99% | [-0.10, 0.10] |        0% | 1.000 | 34922.00 |    0.758</code></pre>
+&gt; Parameter     | Median |           95% CI |     pd |          ROPE | % in ROPE |  Rhat |      ESS |     BF
+&gt; ----------------------------------------------------------------------------------------------------------
+&gt; (Intercept)   | 276.84 | [241.50, 312.32] |   100% | [-0.10, 0.10] |        0% | 1.000 | 35566.00 | &gt; 1000
+&gt; feedsunflower |  52.03 | [  2.38, 100.48] | 97.99% | [-0.10, 0.10] |        0% | 1.000 | 34922.00 |  0.758</code></pre>
 <p><strong>Tada!</strong> There we have it! The <strong>median</strong>, the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE percentage</strong>!</p>
 <p>Understanding and describing posterior distributions is just one aspect of Bayesian modelling. <strong>Are you ready for more?!</strong> <a href="https://easystats.github.io/bayestestR/articles/example2.html"><strong>Click here</strong></a> to see the next example.</p>
 </div>
