@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.2.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.0/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.1.2</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--easystats">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--easystats" aria-label="easystats">
     <span class="fab fa fab fa-r-project"></span>
      
     easystats
@@ -149,9 +149,14 @@
     
 <p>This vignette can be referred to by citing the package:</p>
 <ul>
-<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019). <em>bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework</em>. Journal of Open Source Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="external-link uri">https://doi.org/10.21105/joss.01541</a>
+<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019).
+<em>bayestestR: Describing Effects and their Uncertainty, Existence and
+Significance within the Bayesian Framework</em>. Journal of Open Source
+Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="external-link uri">https://doi.org/10.21105/joss.01541</a>
 </li>
-<li>Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., &amp; Lüdecke, D. (2019). <em>Indices of Effect Existence and Significance in the Bayesian Framework</em>. Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.2019.02767" class="external-link">10.3389/fpsyg.2019.02767</a>
+<li>Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., &amp; Lüdecke, D.
+(2019). <em>Indices of Effect Existence and Significance in the Bayesian
+Framework</em>. Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.2019.02767" class="external-link">10.3389/fpsyg.2019.02767</a>
 </li>
 </ul>
 <hr>
@@ -161,20 +166,42 @@
 <div class="section level3">
 <h3 id="how-to-describe-and-report-the-parameters-of-a-model">How to describe and report the parameters of a model<a class="anchor" aria-label="anchor" href="#how-to-describe-and-report-the-parameters-of-a-model"></a>
 </h3>
-<p>A Bayesian analysis returns a posterior distribution for each parameter (or <em>effect</em>). To minimally describe these distributions, we recommend reporting a point-estimate of <a href="https://en.wikipedia.org/wiki/Central_tendency" class="external-link">centrality</a> as well as information characterizing the estimation uncertainty (the <a href="https://en.wikipedia.org/wiki/Statistical_dispersion" class="external-link">dispersion</a>). Additionally, one can also report indices of effect existence and/or significance.</p>
-<p>Based on the previous <a href="https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html"><strong>comparison of point-estimates</strong></a> and <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full" class="external-link"><strong>indices of effect existence</strong></a>, we can draw the following recommendations.</p>
+<p>A Bayesian analysis returns a posterior distribution for each
+parameter (or <em>effect</em>). To minimally describe these
+distributions, we recommend reporting a point-estimate of <a href="https://en.wikipedia.org/wiki/Central_tendency" class="external-link">centrality</a> as
+well as information characterizing the estimation uncertainty (the <a href="https://en.wikipedia.org/wiki/Statistical_dispersion" class="external-link">dispersion</a>).
+Additionally, one can also report indices of effect existence and/or
+significance.</p>
+<p>Based on the previous <a href="https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html"><strong>comparison
+of point-estimates</strong></a> and <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full" class="external-link"><strong>indices
+of effect existence</strong></a>, we can draw the following
+recommendations.</p>
 <div class="section level4">
 <h4 id="centrality">
 <strong>Centrality</strong><a class="anchor" aria-label="anchor" href="#centrality"></a>
 </h4>
-<p>We suggest reporting the <a href="https://easystats.github.io/bayestestR/reference/point_estimate.html"><strong>median</strong></a> as an index of centrality, as it is more robust compared to the <a href="https://easystats.github.io/bayestestR/reference/point_estimate.html">mean</a> or the <a href="https://easystats.github.io/bayestestR/reference/map_estimate.html">MAP estimate</a>. However, in case of a severely skewed posterior distribution, the MAP estimate could be a good alternative.</p>
+<p>We suggest reporting the <a href="https://easystats.github.io/bayestestR/reference/point_estimate.html"><strong>median</strong></a>
+as an index of centrality, as it is more robust compared to the <a href="https://easystats.github.io/bayestestR/reference/point_estimate.html">mean</a>
+or the <a href="https://easystats.github.io/bayestestR/reference/map_estimate.html">MAP
+estimate</a>. However, in case of a severely skewed posterior
+distribution, the MAP estimate could be a good alternative.</p>
 </div>
 <div class="section level4">
 <h4 id="uncertainty">
 <strong>Uncertainty</strong><a class="anchor" aria-label="anchor" href="#uncertainty"></a>
 </h4>
-<p>The <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>95% or 89% Credible Intervals (CI)</strong></a> are two reasonable ranges to characterize the uncertainty related to the estimation (see <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">here</a> for a discussion about the differences between these two values). We also recommend computing the CIs based on the <a href="https://easystats.github.io/bayestestR/reference/hdi.html">HDI</a> rather than <a href="https://easystats.github.io/bayestestR/reference/ci.html">quantiles</a>, favouring probable over central values.</p>
-<p>Note that a CI based on the quantile (equal-tailed interval) might be more appropriate in case of transformations (for instance when transforming log-odds to probabilities). Otherwise, intervals that originally do not cover the null might cover it after transformation (see <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis">here</a>).</p>
+<p>The <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html"><strong>95%
+or 89% Credible Intervals (CI)</strong></a> are two reasonable ranges to
+characterize the uncertainty related to the estimation (see <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">here</a>
+for a discussion about the differences between these two values). We
+also recommend computing the CIs based on the <a href="https://easystats.github.io/bayestestR/reference/hdi.html">HDI</a>
+rather than <a href="https://easystats.github.io/bayestestR/reference/ci.html">quantiles</a>,
+favouring probable over central values.</p>
+<p>Note that a CI based on the quantile (equal-tailed interval) might be
+more appropriate in case of transformations (for instance when
+transforming log-odds to probabilities). Otherwise, intervals that
+originally do not cover the null might cover it after transformation
+(see <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html#different-types-of-cis">here</a>).</p>
 </div>
 <div class="section level4">
 <h4 id="existence">
@@ -185,14 +212,31 @@
 Reviewer 2 (circa a long time ago in a galaxy far away).
 </p>
 </div>
-<p>The Bayesian framework can neatly delineate and quantify different aspects of hypothesis testing, such as effect <em>existence</em> and <em>significance</em>. The most straightforward index to describe existence of an effect is the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>Probability of Direction (pd)</strong></a>, representing the certainty associated with the most probable direction (positive or negative) of the effect. This index is easy to understand, simple to interpret, straightforward to compute, robust to model characteristics, and independent from the scale of the data.</p>
-<p>Moreover, it is strongly correlated with the frequentist <strong>p<em>-value<strong>, and can thus be used to draw parallels and give some reference to readers non-familiar with Bayesian statistics. A </strong>two-sided </em>p<em>-value<strong> of respectively <code>.1</code>, <code>.05</code>, <code>.01</code> and <code>.001</code> correspond approximately to a </strong></em>pd</strong>* of 95%, 97.5%, 99.5% and 99.95%.</p>
-<p>Thus, for convenience, we suggest the following reference values as an interpretation helpers:</p>
+<p>The Bayesian framework can neatly delineate and quantify different
+aspects of hypothesis testing, such as effect <em>existence</em> and
+<em>significance</em>. The most straightforward index to describe
+existence of an effect is the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><strong>Probability
+of Direction (pd)</strong></a>, representing the certainty associated
+with the most probable direction (positive or negative) of the effect.
+This index is easy to understand, simple to interpret, straightforward
+to compute, robust to model characteristics, and independent from the
+scale of the data.</p>
+<p>Moreover, it is strongly correlated with the frequentist
+<strong>p<em>-value<strong>, and can thus be used to draw parallels and
+give some reference to readers non-familiar with Bayesian statistics. A
+</strong>two-sided </em>p<em>-value<strong> of respectively
+<code>.1</code>, <code>.05</code>, <code>.01</code> and
+<code>.001</code> correspond approximately to a
+</strong></em>pd</strong>* of 95%, 97.5%, 99.5% and 99.95%.</p>
+<p>Thus, for convenience, we suggest the following reference values as
+an interpretation helpers:</p>
 <ul>
 <li>
-<em>pd</em> <strong>&lt;= 95%</strong> ~ <em>p</em> &gt; .1: uncertain</li>
+<em>pd</em> <strong>&lt;= 95%</strong> ~ <em>p</em> &gt; .1:
+uncertain</li>
 <li>
-<em>pd</em> <strong>&gt; 95%</strong> ~ <em>p</em> &lt; .1: possibly existing</li>
+<em>pd</em> <strong>&gt; 95%</strong> ~ <em>p</em> &lt; .1: possibly
+existing</li>
 <li>
 <em>pd</em> <strong>&gt; 97%</strong>: likely existing</li>
 <li>
@@ -205,43 +249,82 @@ Reviewer 2 (circa a long time ago in a galaxy far away).
 <h4 id="significance">
 <strong>Significance</strong><a class="anchor" aria-label="anchor" href="#significance"></a>
 </h4>
-<p>The percentage in <strong>ROPE</strong> is a index of <strong>significance</strong> (in its primary meaning), informing us whether a parameter is related or not to a non-negligible change (in terms of magnitude) in the outcome. We suggest reporting the <strong>percentage of the full posterior distribution</strong> (the <em>full</em> ROPE) instead of a given proportion of CI in the ROPE, which appears to be more sensitive (especially to delineate highly significant effects). Rather than using it as a binary, all-or-nothing decision criterion, such as suggested by the original <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html#equivalence-test">equivalence test</a>, we recommend using the percentage as a <em>continuous</em> index of significance. However, based on <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full" class="external-link">simulation data</a>, we suggest the following reference values as an interpretation helpers:</p>
+<p>The percentage in <strong>ROPE</strong> is a index of
+<strong>significance</strong> (in its primary meaning), informing us
+whether a parameter is related or not to a non-negligible change (in
+terms of magnitude) in the outcome. We suggest reporting the
+<strong>percentage of the full posterior distribution</strong> (the
+<em>full</em> ROPE) instead of a given proportion of CI in the ROPE,
+which appears to be more sensitive (especially to delineate highly
+significant effects). Rather than using it as a binary, all-or-nothing
+decision criterion, such as suggested by the original <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html#equivalence-test">equivalence
+test</a>, we recommend using the percentage as a <em>continuous</em>
+index of significance. However, based on <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full" class="external-link">simulation
+data</a>, we suggest the following reference values as an interpretation
+helpers:</p>
 <ul>
 <li>
-<strong>&gt; 99%</strong> in ROPE: negligible (we can accept the null hypothesis)</li>
+<strong>&gt; 99%</strong> in ROPE: negligible (we can accept the
+null hypothesis)</li>
 <li>
 <strong>&gt; 97.5%</strong> in ROPE: probably negligible</li>
 <li>
-<strong>&lt;= 97.5%</strong> &amp; <strong>&gt;= 2.5%</strong> in ROPE: undecided significance</li>
+<strong>&lt;= 97.5%</strong> &amp; <strong>&gt;= 2.5%</strong> in
+ROPE: undecided significance</li>
 <li>
 <strong>&lt; 2.5%</strong> in ROPE: probably significant</li>
 <li>
-<strong>&lt; 1%</strong> in ROPE: significant (we can reject the null hypothesis)</li>
+<strong>&lt; 1%</strong> in ROPE: significant (we can reject the
+null hypothesis)</li>
 </ul>
-<p><em>Note that extra caution is required as its interpretation highly depends on other parameters such as sample size and ROPE range (see <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html#sensitivity-to-parameters-scale">here</a>)</em>.</p>
+<p><em>Note that extra caution is required as its interpretation highly
+depends on other parameters such as sample size and ROPE range (see <a href="https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html#sensitivity-to-parameters-scale">here</a>)</em>.</p>
 </div>
 <div class="section level4">
 <h4 id="template-sentence">
 <strong>Template Sentence</strong><a class="anchor" aria-label="anchor" href="#template-sentence"></a>
 </h4>
-<p>Based on these suggestions, a template sentence for minimal reporting of a parameter based on its posterior distribution could be:</p>
+<p>Based on these suggestions, a template sentence for minimal reporting
+of a parameter based on its posterior distribution could be:</p>
 <blockquote>
-<p>“the effect of <em>X</em> has a probability of <strong><em>pd</em></strong> of being <em>negative</em> (Median = <strong><em>median</em></strong>, 89% CI [ <strong><em>HDI<sub>low</sub></em></strong> , <strong><em>HDI<sub>high</sub></em></strong> ] and can be considered as <em>significant</em> [<strong><em>ROPE</em></strong>% in ROPE]).”</p>
+<p>“the effect of <em>X</em> has a probability of
+<strong><em>pd</em></strong> of being <em>negative</em> (Median =
+<strong><em>median</em></strong>, 89% CI [
+<strong><em>HDI<sub>low</sub></em></strong> ,
+<strong><em>HDI<sub>high</sub></em></strong> ] and can be considered as
+<em>significant</em> [<strong><em>ROPE</em></strong>% in ROPE]).”</p>
 </blockquote>
 </div>
 </div>
 <div class="section level3">
 <h3 id="how-to-compare-different-models">How to compare different models<a class="anchor" aria-label="anchor" href="#how-to-compare-different-models"></a>
 </h3>
-<p>Although it can also be used to assess effect existence and significance, the <strong>Bayes factor (BF)</strong> is a versatile index that can be used to directly compare different models (or data generation processes). The <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html">Bayes factor</a> is a ratio that informs us by how much more (or less) likely the observed data are under two compared models - usually a model <em>with</em> versus a model <em>without</em> the effect. Depending on the specifications of the null model (whether it is a point-estimate (e.g., <strong>0</strong>) or an interval), the Bayes factor could be used both in the context of effect existence and significance.</p>
-<p>In general, a Bayes factor greater than 1 is taken as evidence in favour of one of the model (in the nominator), and a Bayes factor smaller than 1 is taken as evidence in favour of the other model (in the denominator). Several rules of thumb exist to help the interpretation (see <a href="https://easystats.github.io/effectsize/reference/interpret_bf.html" class="external-link">here</a>), with <strong>&gt; 3</strong> being one common threshold to categorize non-anecdotal evidence.</p>
+<p>Although it can also be used to assess effect existence and
+significance, the <strong>Bayes factor (BF)</strong> is a versatile
+index that can be used to directly compare different models (or data
+generation processes). The <a href="https://easystats.github.io/bayestestR/articles/bayes_factors.html">Bayes
+factor</a> is a ratio that informs us by how much more (or less) likely
+the observed data are under two compared models - usually a model
+<em>with</em> versus a model <em>without</em> the effect. Depending on
+the specifications of the null model (whether it is a point-estimate
+(e.g., <strong>0</strong>) or an interval), the Bayes factor could be
+used both in the context of effect existence and significance.</p>
+<p>In general, a Bayes factor greater than 1 is taken as evidence in
+favour of one of the model (in the nominator), and a Bayes factor
+smaller than 1 is taken as evidence in favour of the other model (in the
+denominator). Several rules of thumb exist to help the interpretation
+(see <a href="https://easystats.github.io/effectsize/reference/interpret_bf.html" class="external-link">here</a>),
+with <strong>&gt; 3</strong> being one common threshold to categorize
+non-anecdotal evidence.</p>
 <div class="section level4">
 <h4 id="template-sentence-1">
 <strong>Template Sentence</strong><a class="anchor" aria-label="anchor" href="#template-sentence-1"></a>
 </h4>
-<p>When reporting Bayes factors (BF), one can use the following sentence:</p>
+<p>When reporting Bayes factors (BF), one can use the following
+sentence:</p>
 <blockquote>
-<p>“There is <em>moderate evidence</em> in favour of an <em>absence</em> of effect of <em>x</em> (BF = <em>BF</em>).”</p>
+<p>“There is <em>moderate evidence</em> in favour of an <em>absence</em>
+of effect of <em>x</em> (BF = <em>BF</em>).”</p>
 </blockquote>
 </div>
 </div>
@@ -249,7 +332,9 @@ Reviewer 2 (circa a long time ago in a galaxy far away).
 <div class="section level2">
 <h2 id="suggestions">Suggestions<a class="anchor" aria-label="anchor" href="#suggestions"></a>
 </h2>
-<p>If you have any advice, opinion or such, we encourage you to let us know by opening an <a href="https://github.com/easystats/bayestestR/issues" class="external-link">discussion thread</a> or making a pull request.</p>
+<p>If you have any advice, opinion or such, we encourage you to let us
+know by opening an <a href="https://github.com/easystats/bayestestR/issues" class="external-link">discussion
+thread</a> or making a pull request.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.2.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.0/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.1.2</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--easystats">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--easystats" aria-label="easystats">
     <span class="fab fa fab fa-r-project"></span>
      
     easystats
@@ -149,23 +149,33 @@
     
 <p>This vignette can be referred to by citing the following:</p>
 <ul>
-<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019). <em>bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework</em>. Journal of Open Source Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="external-link uri">https://doi.org/10.21105/joss.01541</a>
+<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019).
+<em>bayestestR: Describing Effects and their Uncertainty, Existence and
+Significance within the Bayesian Framework</em>. Journal of Open Source
+Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="external-link uri">https://doi.org/10.21105/joss.01541</a>
 </li>
-<li>Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., &amp; Lüdecke, D. (2019). <em>Indices of Effect Existence and Significance in the Bayesian Framework</em>. Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.2019.02767" class="external-link">10.3389/fpsyg.2019.02767</a>
+<li>Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., &amp; Lüdecke, D.
+(2019). <em>Indices of Effect Existence and Significance in the Bayesian
+Framework</em>. Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.2019.02767" class="external-link">10.3389/fpsyg.2019.02767</a>
 </li>
 </ul>
 <hr>
 <div class="section level2">
-<h2 id="indices-of-effect-existence-and-significance-in-the-bayesian-framework">Indices of Effect <em>Existence</em> and <em>Significance</em> in the Bayesian Framework<a class="anchor" aria-label="anchor" href="#indices-of-effect-existence-and-significance-in-the-bayesian-framework"></a>
+<h2 id="indices-of-effect-existence-and-significance-in-the-bayesian-framework">Indices of Effect <em>Existence</em> and <em>Significance</em> in
+the Bayesian Framework<a class="anchor" aria-label="anchor" href="#indices-of-effect-existence-and-significance-in-the-bayesian-framework"></a>
 </h2>
-<p>A comparison of different Bayesian indices (<em>pd</em>, <em>BFs</em>, ROPE etc.) is accessible <a href="https://doi.org/10.3389/fpsyg.2019.02767" class="external-link"><strong>here</strong></a>.</p>
-<p>But, in case you don’t wish to read the full article, the following table summarizes the key takeaways!</p>
+<p>A comparison of different Bayesian indices (<em>pd</em>,
+<em>BFs</em>, ROPE etc.) is accessible <a href="https://doi.org/10.3389/fpsyg.2019.02767" class="external-link"><strong>here</strong></a>.</p>
+<p>But, in case you don’t wish to read the full article, the following
+table summarizes the key takeaways!</p>
 <p><img src="https://www.frontiersin.org/files/Articles/498833/fpsyg-10-02767-HTML/image_m/fpsyg-10-02767-t003.jpg" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="suggestions">Suggestions<a class="anchor" aria-label="anchor" href="#suggestions"></a>
 </h2>
-<p>If you have any advice, opinion or such, we encourage you to let us know by opening an <a href="https://github.com/easystats/bayestestR/issues" class="external-link">discussion thread</a> or making a pull request.</p>
+<p>If you have any advice, opinion or such, we encourage you to let us
+know by opening an <a href="https://github.com/easystats/bayestestR/issues" class="external-link">discussion
+thread</a> or making a pull request.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.2.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.0/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.1.2</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--easystats">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--easystats" aria-label="easystats">
     <span class="fab fa fab fa-r-project"></span>
      
     easystats
@@ -149,50 +149,133 @@
     
 <p>This vignette can be referred to by citing the package:</p>
 <ul>
-<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019). <em>bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework</em>. Journal of Open Source Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="external-link uri">https://doi.org/10.21105/joss.01541</a>
+<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019).
+<em>bayestestR: Describing Effects and their Uncertainty, Existence and
+Significance within the Bayesian Framework</em>. Journal of Open Source
+Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="external-link uri">https://doi.org/10.21105/joss.01541</a>
 </li>
 </ul>
 <hr>
 <div class="section level2">
 <h2 id="what-is-the-rope">What is the <em>ROPE?</em><a class="anchor" aria-label="anchor" href="#what-is-the-rope"></a>
 </h2>
-<p>Unlike a frequentist approach, Bayesian inference is not based on statistical significance, where effects are tested against “zero”. Indeed, the Bayesian framework offers a probabilistic view of the parameters, allowing assessment of the uncertainty related to them. Thus, rather than concluding that an effect is present when it simply differs from zero, we would conclude that the probability of being outside a specific range that can be considered as <strong>“practically no effect”</strong> (<em>i.e.</em>, a negligible magnitude) is sufficient. This range is called the <strong>region of practical equivalence (ROPE)</strong>.</p>
-<p>Indeed, statistically, the probability of a posterior distribution being different from 0 does not make much sense (the probability of it being different from a single point being infinite). Therefore, the idea underlining ROPE is to let the user define an area around the null value enclosing values that are <strong>equivalent to the null</strong> value for practical purposes <span class="citation">(J. Kruschke, 2014; J. K. Kruschke, 2010; J. K. Kruschke, Aguinis, &amp; Joo, 2012)</span>.</p>
+<p>Unlike a frequentist approach, Bayesian inference is not based on
+statistical significance, where effects are tested against “zero”.
+Indeed, the Bayesian framework offers a probabilistic view of the
+parameters, allowing assessment of the uncertainty related to them.
+Thus, rather than concluding that an effect is present when it simply
+differs from zero, we would conclude that the probability of being
+outside a specific range that can be considered as <strong>“practically
+no effect”</strong> (<em>i.e.</em>, a negligible magnitude) is
+sufficient. This range is called the <strong>region of practical
+equivalence (ROPE)</strong>.</p>
+<p>Indeed, statistically, the probability of a posterior distribution
+being different from 0 does not make much sense (the probability of it
+being different from a single point being infinite). Therefore, the idea
+underlining ROPE is to let the user define an area around the null value
+enclosing values that are <strong>equivalent to the null</strong> value
+for practical purposes <span class="citation">(J. Kruschke, 2014; J. K.
+Kruschke, 2010; J. K. Kruschke, Aguinis, &amp; Joo, 2012)</span>.</p>
 </div>
 <div class="section level2">
 <h2 id="equivalence-test">Equivalence Test<a class="anchor" aria-label="anchor" href="#equivalence-test"></a>
 </h2>
-<p>The ROPE, being a region corresponding to a “null” hypothesis, is used for the <strong>equivalence test</strong>, to test whether a parameter is <strong>significant</strong> (in the sense of <em>important</em> enough to be cared about). This test is usually based on the <strong>“HDI+ROPE decision rule”</strong> <span class="citation">(J. Kruschke, 2014; J. K. Kruschke &amp; Liddell, 2018)</span> to check whether parameter values should be accepted or rejected against an explicitly formulated “null hypothesis” (<em>i.e.</em>, a ROPE). In other words, it checks the percentage of Credible Interval (CI) that is the null region (the ROPE). If this percentage is sufficiently low, the null hypothesis is rejected. If this percentage is sufficiently high, the null hypothesis is accepted.</p>
+<p>The ROPE, being a region corresponding to a “null” hypothesis, is
+used for the <strong>equivalence test</strong>, to test whether a
+parameter is <strong>significant</strong> (in the sense of
+<em>important</em> enough to be cared about). This test is usually based
+on the <strong>“HDI+ROPE decision rule”</strong> <span class="citation">(J. Kruschke, 2014; J. K. Kruschke &amp; Liddell,
+2018)</span> to check whether parameter values should be accepted or
+rejected against an explicitly formulated “null hypothesis”
+(<em>i.e.</em>, a ROPE). In other words, it checks the percentage of
+Credible Interval (CI) that is the null region (the ROPE). If this
+percentage is sufficiently low, the null hypothesis is rejected. If this
+percentage is sufficiently high, the null hypothesis is accepted.</p>
 </div>
 <div class="section level2">
 <h2 id="credible-interval-in-rope-vs-full-posterior-in-rope">Credible interval in ROPE <em>vs</em> full posterior in ROPE<a class="anchor" aria-label="anchor" href="#credible-interval-in-rope-vs-full-posterior-in-rope"></a>
 </h2>
-<p>Using the ROPE and the HDI as Credible Interval, Kruschke (2018) suggests using the percentage of the 95% HDI that falls within the ROPE as a decision rule. However, as the 89% HDI <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">is considered a better choice</a> <span class="citation">(J. Kruschke, 2014; R. McElreath, 2014; Richard McElreath, 2018)</span>, <code>bayestestR</code> provides by default the percentage of the 89% HDI that falls within the ROPE.</p>
-<p>However, <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full" class="external-link"><em>simulation studies data</em></a> suggest that using the percentage of the full posterior distribution, instead of a CI, might be more sensitive (especially do delineate highly significant effects). Thus, we recommend that the user considers using the <strong>full ROPE</strong> percentage (by setting <code>ci = 1</code>), which will return the portion of the entire posterior distribution in the ROPE.</p>
+<p>Using the ROPE and the HDI as Credible Interval, Kruschke (2018)
+suggests using the percentage of the 95% HDI that falls within the ROPE
+as a decision rule. However, as the 89% HDI <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">is
+considered a better choice</a> <span class="citation">(J. Kruschke,
+2014; R. McElreath, 2014; Richard McElreath, 2018)</span>,
+<code>bayestestR</code> provides by default the percentage of the 89%
+HDI that falls within the ROPE.</p>
+<p>However, <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full" class="external-link"><em>simulation
+studies data</em></a> suggest that using the percentage of the full
+posterior distribution, instead of a CI, might be more sensitive
+(especially do delineate highly significant effects). Thus, we recommend
+that the user considers using the <strong>full ROPE</strong> percentage
+(by setting <code>ci = 1</code>), which will return the portion of the
+entire posterior distribution in the ROPE.</p>
 </div>
 <div class="section level2">
 <h2 id="what-percentage-in-rope-to-accept-or-to-reject">What percentage in ROPE to accept or to reject?<a class="anchor" aria-label="anchor" href="#what-percentage-in-rope-to-accept-or-to-reject"></a>
 </h2>
-<p>If the HDI is completely outside the ROPE, the “null hypothesis” for this parameter is “rejected”. If the ROPE completely covers the HDI, <em>i.e.</em>, all most credible values of a parameter are inside the region of practical equivalence, the null hypothesis is accepted. Else, it’s unclear whether the null hypothesis should be accepted or rejected.</p>
-<p>If the <strong>full ROPE</strong> is used (<em>i.e.</em>, 100% of the HDI), then the null hypothesis is rejected or accepted if the percentage of the posterior within the ROPE is smaller than to 2.5% or greater than 97.5%. Desirable results are low proportions inside the ROPE (the closer to zero the better).</p>
+<p>If the HDI is completely outside the ROPE, the “null hypothesis” for
+this parameter is “rejected”. If the ROPE completely covers the HDI,
+<em>i.e.</em>, all most credible values of a parameter are inside the
+region of practical equivalence, the null hypothesis is accepted. Else,
+it’s unclear whether the null hypothesis should be accepted or
+rejected.</p>
+<p>If the <strong>full ROPE</strong> is used (<em>i.e.</em>, 100% of the
+HDI), then the null hypothesis is rejected or accepted if the percentage
+of the posterior within the ROPE is smaller than to 2.5% or greater than
+97.5%. Desirable results are low proportions inside the ROPE (the closer
+to zero the better).</p>
 </div>
 <div class="section level2">
 <h2 id="how-to-define-the-rope-range">How to define the ROPE range?<a class="anchor" aria-label="anchor" href="#how-to-define-the-rope-range"></a>
 </h2>
-<p>Kruschke (2018) suggests that the ROPE could be set, by default, to a range from <code>-0.1</code> to <code>0.1</code> of a standardized parameter (negligible effect size according to Cohen, 1988).</p>
+<p>Kruschke (2018) suggests that the ROPE could be set, by default, to a
+range from <code>-0.1</code> to <code>0.1</code> of a standardized
+parameter (negligible effect size according to Cohen, 1988).</p>
 <ul>
-<li>For <strong>linear models (lm)</strong>, this can be generalised to: <span class="math display">\[[-0.1*SD_{y}, 0.1*SD_{y}]\]</span>.</li>
-<li>For <strong>logistic models</strong>, the parameters expressed in log odds ratio can be converted to standardized difference through the formula: <span class="math display">\[\pi/\sqrt{3}\]</span> (see <a href="https://easystats.github.io/effectsize/articles/convert.html#from-odds-ratios" class="external-link">the <strong>effectsize</strong> package</a>, resulting in a range of <code>-0.18</code> to <code>-0.18</code>. For other models with binary outcome, it is strongly recommended to manually specify the rope argument. Currently, the same default is applied that for logistic models.</li>
-<li>For <strong>t-tests</strong>, the standard deviation of the response is used, similarly to linear models (see above).</li>
-<li>For <strong>correlations</strong>, <code>-0.05, 0.05</code> is used, <em>i.e.</em>, half the value of a negligible correlation as suggested by Cohen’s (1988) rules of thumb.</li>
-<li>For all other models, <code>-0.1, 0.1</code> is used to determine the ROPE limits, but it is strongly advised to specify it manually.</li>
+<li>For <strong>linear models (lm)</strong>, this can be generalised to:
+<span class="math display">\[[-0.1*SD_{y}, 0.1*SD_{y}]\]</span>.</li>
+<li>For <strong>logistic models</strong>, the parameters expressed in
+log odds ratio can be converted to standardized difference through the
+formula: <span class="math display">\[\pi/\sqrt{3}\]</span> (see <a href="https://easystats.github.io/effectsize/articles/convert.html#from-odds-ratios" class="external-link">the
+<strong>effectsize</strong> package</a>, resulting in a range of
+<code>-0.18</code> to <code>-0.18</code>. For other models with binary
+outcome, it is strongly recommended to manually specify the rope
+argument. Currently, the same default is applied that for logistic
+models.</li>
+<li>For <strong>t-tests</strong>, the standard deviation of the response
+is used, similarly to linear models (see above).</li>
+<li>For <strong>correlations</strong>, <code>-0.05, 0.05</code> is used,
+<em>i.e.</em>, half the value of a negligible correlation as suggested
+by Cohen’s (1988) rules of thumb.</li>
+<li>For all other models, <code>-0.1, 0.1</code> is used to determine
+the ROPE limits, but it is strongly advised to specify it manually.</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="sensitivity-to-parameters-scale">Sensitivity to parameter’s scale<a class="anchor" aria-label="anchor" href="#sensitivity-to-parameters-scale"></a>
 </h2>
-<p>It is important to consider <strong>the unit (<em>i.e.</em>, the scale) of the predictors</strong> when using an index based on the ROPE, as the correct interpretation of the ROPE as representing a region of practical equivalence to zero is dependent on the scale of the predictors. Indeed, unlike other indices (such as the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><code>pd</code></a>), the percentage in <strong>ROPE</strong> depend on the unit of its parameter. In other words, as the ROPE represents a fixed portion of the response’s scale, its proximity with a coefficient depends on the scale of the coefficient itself.</p>
-<p>For instance, if we consider a simple regression <code>growth ~ time</code>, modelling the development of <strong>Wookies babies</strong>, a negligible change (the ROPE) is less than <strong>54 cm</strong>. If our <code>time</code> variable is <strong>expressed in days</strong>, we will find that the coefficient (representing the growth <strong>by day</strong>) is of about <strong>10 cm</strong> (<em>the median of the posterior of the coefficient is 10</em>). Which we would consider as <strong>negligible</strong>. However, if we decide to express the <code>time</code> variable <strong>in years</strong>, the coefficient will be scaled by this transformation (as it will now represent the growth <strong>by year</strong>). The coefficient will now be around <strong>3550</strong> cm (<code>10 * 355</code>), which we would now consider as <strong>significant</strong>.</p>
+<p>It is important to consider <strong>the unit (<em>i.e.</em>, the
+scale) of the predictors</strong> when using an index based on the ROPE,
+as the correct interpretation of the ROPE as representing a region of
+practical equivalence to zero is dependent on the scale of the
+predictors. Indeed, unlike other indices (such as the <a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html"><code>pd</code></a>),
+the percentage in <strong>ROPE</strong> depend on the unit of its
+parameter. In other words, as the ROPE represents a fixed portion of the
+response’s scale, its proximity with a coefficient depends on the scale
+of the coefficient itself.</p>
+<p>For instance, if we consider a simple regression
+<code>growth ~ time</code>, modelling the development of <strong>Wookies
+babies</strong>, a negligible change (the ROPE) is less than <strong>54
+cm</strong>. If our <code>time</code> variable is <strong>expressed in
+days</strong>, we will find that the coefficient (representing the
+growth <strong>by day</strong>) is of about <strong>10 cm</strong>
+(<em>the median of the posterior of the coefficient is 10</em>). Which
+we would consider as <strong>negligible</strong>. However, if we decide
+to express the <code>time</code> variable <strong>in years</strong>, the
+coefficient will be scaled by this transformation (as it will now
+represent the growth <strong>by year</strong>). The coefficient will now
+be around <strong>3550</strong> cm (<code>10 * 355</code>), which we
+would now consider as <strong>significant</strong>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/" class="external-link">rstanarm</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/">bayestestR</a></span><span class="op">)</span></span>
@@ -228,7 +311,12 @@
 &gt; -------------------------
 &gt; (Intercept) |      0.00 %
 &gt; Sepal.Width |     16.28 %</code></pre>
-<p>We can see that the <em>pd</em> and the percentage in ROPE of the linear relationship between <strong>Sepal.Length</strong> and <strong>Sepal.Width</strong> are respectively of about <code>92.95%</code> and <code>15.95%</code>, corresponding to an <strong>uncertain</strong> and <strong>not significant</strong> effect. What happen if we scale our predictor?</p>
+<p>We can see that the <em>pd</em> and the percentage in ROPE of the
+linear relationship between <strong>Sepal.Length</strong> and
+<strong>Sepal.Width</strong> are respectively of about
+<code>92.95%</code> and <code>15.95%</code>, corresponding to an
+<strong>uncertain</strong> and <strong>not significant</strong> effect.
+What happen if we scale our predictor?</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span><span class="op">$</span><span class="va">Sepal.Width_scaled</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">Sepal.Width</span> <span class="op">/</span> <span class="fl">100</span> <span class="co"># Divide predictor by 100</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width_scaled</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="co"># Fit model</span></span></code></pre></div>
@@ -260,34 +348,68 @@
 &gt; --------------------------------
 &gt; (Intercept)        |      0.00 %
 &gt; Sepal.Width_scaled |      0.10 %</code></pre>
-<p>As you can see, by simply dividing the predictor by 100, we <strong>drastically</strong> changed the conclusion related to the <strong>percentage in ROPE</strong> (which became very close to <code>0</code>): the effect could now be <strong>interpreted as being significant</strong>. Thus, we recommend paying close attention to the unit of the predictors when selecting the ROPE range (<em>e.g.</em>, what coefficient would correspond to a small effect?), and when reporting or reading ROPE results.</p>
+<p>As you can see, by simply dividing the predictor by 100, we
+<strong>drastically</strong> changed the conclusion related to the
+<strong>percentage in ROPE</strong> (which became very close to
+<code>0</code>): the effect could now be <strong>interpreted as being
+significant</strong>. Thus, we recommend paying close attention to the
+unit of the predictors when selecting the ROPE range (<em>e.g.</em>,
+what coefficient would correspond to a small effect?), and when
+reporting or reading ROPE results.</p>
 </div>
 <div class="section level2">
 <h2 id="multicollinearity-non-independent-covariates">Multicollinearity: Non-independent covariates<a class="anchor" aria-label="anchor" href="#multicollinearity-non-independent-covariates"></a>
 </h2>
-<p>When <strong>parameters show strong correlations</strong>, <em>i.e.</em>, when covariates are not independent, the joint parameter distributions may shift towards or away from the ROPE. Collinearity invalidates ROPE and hypothesis testing based on univariate marginals, as the probabilities are conditional on independence. Most problematic are parameters that only have partial overlap with the ROPE region. In case of collinearity, the (joint) distributions of these parameters may either get an increased or decreased ROPE, which means that inferences based on ROPE are inappropriate <span class="citation">(J. Kruschke, 2014)</span>.</p>
-<p>The <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> and <code><a href="../reference/rope.html">rope()</a></code> functions perform a simple check for pairwise correlations between parameters, but as there can be collinearity between more than two variables, a first step to check the assumptions of this hypothesis testing is to look at different pair plots. An even more sophisticated check is the projection predictive variable selection <span class="citation">(Piironen &amp; Vehtari, 2017)</span>.</p>
+<p>When <strong>parameters show strong correlations</strong>,
+<em>i.e.</em>, when covariates are not independent, the joint parameter
+distributions may shift towards or away from the ROPE. Collinearity
+invalidates ROPE and hypothesis testing based on univariate marginals,
+as the probabilities are conditional on independence. Most problematic
+are parameters that only have partial overlap with the ROPE region. In
+case of collinearity, the (joint) distributions of these parameters may
+either get an increased or decreased ROPE, which means that inferences
+based on ROPE are inappropriate <span class="citation">(J. Kruschke,
+2014)</span>.</p>
+<p>The <code><a href="../reference/equivalence_test.html">equivalence_test()</a></code> and <code><a href="../reference/rope.html">rope()</a></code> functions
+perform a simple check for pairwise correlations between parameters, but
+as there can be collinearity between more than two variables, a first
+step to check the assumptions of this hypothesis testing is to look at
+different pair plots. An even more sophisticated check is the projection
+predictive variable selection <span class="citation">(Piironen &amp;
+Vehtari, 2017)</span>.</p>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
 <div id="ref-kruschke2014doing" class="csl-entry">
-Kruschke, J. (2014). <em>Doing bayesian data analysis: A tutorial with r, JAGS, and stan</em>. Academic Press.
+Kruschke, J. (2014). <em>Doing bayesian data analysis: A tutorial with
+r, JAGS, and stan</em>. Academic Press.
 </div>
 <div id="ref-kruschke2010believe" class="csl-entry">
-Kruschke, J. K. (2010). What to believe: Bayesian methods for data analysis. <em>Trends in Cognitive Sciences</em>, <em>14</em>(7), 293–300.
+Kruschke, J. K. (2010). What to believe: Bayesian methods for data
+analysis. <em>Trends in Cognitive Sciences</em>, <em>14</em>(7),
+293–300.
 </div>
 <div id="ref-kruschke2012time" class="csl-entry">
-Kruschke, J. K., Aguinis, H., &amp; Joo, H. (2012). The time has come: Bayesian methods for data analysis in the organizational sciences. <em>Organizational Research Methods</em>, <em>15</em>(4), 722–752.
+Kruschke, J. K., Aguinis, H., &amp; Joo, H. (2012). The time has come:
+Bayesian methods for data analysis in the organizational sciences.
+<em>Organizational Research Methods</em>, <em>15</em>(4), 722–752.
 </div>
 <div id="ref-kruschke2018bayesian" class="csl-entry">
-Kruschke, J. K., &amp; Liddell, T. M. (2018). The bayesian new statistics: Hypothesis testing, estimation, meta-analysis, and power analysis from a bayesian perspective. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 178–206.
+Kruschke, J. K., &amp; Liddell, T. M. (2018). The bayesian new
+statistics: Hypothesis testing, estimation, meta-analysis, and power
+analysis from a bayesian perspective. <em>Psychonomic Bulletin &amp;
+Review</em>, <em>25</em>(1), 178–206.
 </div>
 <div id="ref-mcelreath2014rethinking" class="csl-entry">
-McElreath, R. (2014). <em>Rethinking: Statistical rethinking book package. R package version 1.391</em>.
+McElreath, R. (2014). <em>Rethinking: Statistical rethinking book
+package. R package version 1.391</em>.
 </div>
 <div id="ref-mcelreath2018statistical" class="csl-entry">
-McElreath, Richard. (2018). <em>Statistical rethinking: A bayesian course with examples in r and stan</em>. Chapman; Hall/CRC.
+McElreath, Richard. (2018). <em>Statistical rethinking: A bayesian
+course with examples in r and stan</em>. Chapman; Hall/CRC.
 </div>
 <div id="ref-piironen2017comparison" class="csl-entry">
-Piironen, J., &amp; Vehtari, A. (2017). Comparison of bayesian predictive methods for model selection. <em>Statistics and Computing</em>, <em>27</em>(3), 711–735.
+Piironen, J., &amp; Vehtari, A. (2017). Comparison of bayesian
+predictive methods for model selection. <em>Statistics and
+Computing</em>, <em>27</em>(3), 711–735.
 </div>
 </div>
 </div>

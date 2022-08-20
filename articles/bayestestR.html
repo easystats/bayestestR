@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.2.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.0/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.1.2</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--easystats">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--easystats" aria-label="easystats">
     <span class="fab fa fab fa-r-project"></span>
      
     easystats
@@ -149,47 +149,124 @@
     
 <p>This vignette can be referred to by citing the package:</p>
 <ul>
-<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019). <em>bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework</em>. Journal of Open Source Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="external-link uri">https://doi.org/10.21105/joss.01541</a>
+<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019).
+<em>bayestestR: Describing Effects and their Uncertainty, Existence and
+Significance within the Bayesian Framework</em>. Journal of Open Source
+Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="external-link uri">https://doi.org/10.21105/joss.01541</a>
 </li>
 </ul>
 <hr>
 <div class="section level2">
 <h2 id="why-use-the-bayesian-framework">Why use the Bayesian Framework?<a class="anchor" aria-label="anchor" href="#why-use-the-bayesian-framework"></a>
 </h2>
-<p>The Bayesian framework for statistics is quickly gaining in popularity among scientists, associated with the general shift towards <strong>open and honest science</strong>. Reasons to prefer this approach are:</p>
+<p>The Bayesian framework for statistics is quickly gaining in
+popularity among scientists, associated with the general shift towards
+<strong>open and honest science</strong>. Reasons to prefer this
+approach are:</p>
 <ul>
 <li>
-<strong>reliability</strong> <span class="citation">(Etz &amp; Vandekerckhove, 2016)</span>
+<strong>reliability</strong> <span class="citation">(Etz &amp;
+Vandekerckhove, 2016)</span>
 </li>
 <li>
 <strong>accuracy</strong> (in noisy data and small samples) <span class="citation">(Kruschke, Aguinis, &amp; Joo, 2012)</span>
 </li>
-<li>the possibility of introducing <strong>prior knowledge</strong> into the analysis <span class="citation">(Andrews &amp; Baguley, 2013; Kruschke et al., 2012)</span>
+<li>the possibility of introducing <strong>prior knowledge</strong> into
+the analysis <span class="citation">(Andrews &amp; Baguley, 2013;
+Kruschke et al., 2012)</span>
 </li>
-<li>critically, <strong>intuitive nature of results</strong> and their <strong>straightforward interpretation</strong> <span class="citation">(Kruschke, 2010; Wagenmakers et al., 2018)</span>
+<li>critically, <strong>intuitive nature of results</strong> and their
+<strong>straightforward interpretation</strong> <span class="citation">(Kruschke, 2010; Wagenmakers et al., 2018)</span>
 </li>
 </ul>
-<p>In general, the frequentist approach has been associated with the focus on the null hypothesis testing, and the misuse of <em>p</em>-values has been shown to critically contribute to the reproducibility crisis in social and psychological sciences <span class="citation">(Chambers, Feredoes, Muthukumaraswamy, &amp; Etchells, 2014; Szucs &amp; Ioannidis, 2016)</span>. There is an emerging consensus that the generalization of the Bayesian approach is <em>one</em> way of overcoming these issues <span class="citation">(Benjamin et al., 2018; Etz &amp; Vandekerckhove, 2016)</span>.</p>
-<p>Once we agree that the Bayesian framework is the right way to go, you might wonder <em>what</em> exactly is this framework.</p>
+<p>In general, the frequentist approach has been associated with the
+focus on the null hypothesis testing, and the misuse of
+<em>p</em>-values has been shown to critically contribute to the
+reproducibility crisis in social and psychological sciences <span class="citation">(Chambers, Feredoes, Muthukumaraswamy, &amp; Etchells,
+2014; Szucs &amp; Ioannidis, 2016)</span>. There is an emerging
+consensus that the generalization of the Bayesian approach is
+<em>one</em> way of overcoming these issues <span class="citation">(Benjamin et al., 2018; Etz &amp; Vandekerckhove,
+2016)</span>.</p>
+<p>Once we agree that the Bayesian framework is the right way to go, you
+might wonder <em>what</em> exactly is this framework.</p>
 <p><strong>What’s all the fuss about?</strong></p>
 </div>
 <div class="section level2">
 <h2 id="what-is-the-bayesian-framework">What is the Bayesian Framework?<a class="anchor" aria-label="anchor" href="#what-is-the-bayesian-framework"></a>
 </h2>
-<p>Adopting the Bayesian framework is more of a shift in the paradigm than a change in the methodology. Indeed, all the common statistical procedures (<em>t</em>-tests, correlations, ANOVAs, regressions, etc.) can be achieved using the Bayesian framework. The key difference is that in the <strong>frequentist framework</strong> (the “classical” approach to statistics, with <em>p</em> and <em>t</em> values, as well as some weird <em>degrees of freedom</em>), <strong>the effects are fixed</strong> (but unknown) and <strong>data are random</strong>. In other words, it assumes that the unknown parameter has a <strong>unique</strong> value that we are trying to estimate/guess using our sample data. On the other hand, in the <strong>Bayesian framework</strong>, instead of estimating the “true effect”, the probability of different effects <em>given the observed data</em> is computed, resulting in a <strong>distribution</strong> of possible values for the parameters, called the <strong>posterior distribution</strong>.</p>
-<p>The uncertainty in Bayesian inference can be summarized, for instance, by the <strong>median</strong> of the distribution, as well as a range of values of the posterior distribution that includes the 95% most probable values (the 95% <strong>credible interval</strong>). <em>Cum grano salis</em>, these are considered the counterparts to the point-estimate and confidence interval in a frequentist framework. To illustrate the difference of interpretation, the Bayesian framework allows to say <em>“given the observed data, the effect has 95% probability of falling within this range”</em>, while the frequentist (less intuitive) alternative would be <em>“when repeatedly computing confidence intervals from data of this sort, there is a 95% probability that the effect falls within a given range”</em>. In essence, the Bayesian sampling algorithms (such as MCMC sampling) return a probability distribution (<em>the posterior</em>) of an effect that is compatible with the observed data. Thus, an effect can be described by <a href="https://easystats.github.io/bayestestR/articles/guidelines.html">characterizing its posterior distribution</a> in relation to its centrality (point-estimates), uncertainty, as well as its existence and significance</p>
-<p>In other words, putting the maths behind it aside for a moment, we can say that:</p>
+<p>Adopting the Bayesian framework is more of a shift in the paradigm
+than a change in the methodology. Indeed, all the common statistical
+procedures (<em>t</em>-tests, correlations, ANOVAs, regressions, etc.)
+can be achieved using the Bayesian framework. The key difference is that
+in the <strong>frequentist framework</strong> (the “classical” approach
+to statistics, with <em>p</em> and <em>t</em> values, as well as some
+weird <em>degrees of freedom</em>), <strong>the effects are
+fixed</strong> (but unknown) and <strong>data are random</strong>. In
+other words, it assumes that the unknown parameter has a
+<strong>unique</strong> value that we are trying to estimate/guess using
+our sample data. On the other hand, in the <strong>Bayesian
+framework</strong>, instead of estimating the “true effect”, the
+probability of different effects <em>given the observed data</em> is
+computed, resulting in a <strong>distribution</strong> of possible
+values for the parameters, called the <strong>posterior
+distribution</strong>.</p>
+<p>The uncertainty in Bayesian inference can be summarized, for
+instance, by the <strong>median</strong> of the distribution, as well as
+a range of values of the posterior distribution that includes the 95%
+most probable values (the 95% <strong>credible interval</strong>).
+<em>Cum grano salis</em>, these are considered the counterparts to the
+point-estimate and confidence interval in a frequentist framework. To
+illustrate the difference of interpretation, the Bayesian framework
+allows to say <em>“given the observed data, the effect has 95%
+probability of falling within this range”</em>, while the frequentist
+(less intuitive) alternative would be <em>“when repeatedly computing
+confidence intervals from data of this sort, there is a 95% probability
+that the effect falls within a given range”</em>. In essence, the
+Bayesian sampling algorithms (such as MCMC sampling) return a
+probability distribution (<em>the posterior</em>) of an effect that is
+compatible with the observed data. Thus, an effect can be described by
+<a href="https://easystats.github.io/bayestestR/articles/guidelines.html">characterizing
+its posterior distribution</a> in relation to its centrality
+(point-estimates), uncertainty, as well as its existence and
+significance</p>
+<p>In other words, putting the maths behind it aside for a moment, we
+can say that:</p>
 <ul>
-<li><p>The frequentist approach tries to estimate the <strong>real effect</strong>. For instance, the “real” value of the correlation between <em>x</em> and <em>y</em>. Hence, the frequentist models return a <strong>point-estimate</strong> (i.e., a <strong>single</strong> value and not a distribution) of the “real” correlation (e.g., <span class="math inline">\(r = 0.42\)</span>) estimated under a number of obscure assumptions (at a minimum, considering that the data is sampled at random from a “parent”, usually normal distribution).</p></li>
-<li><p><strong>The Bayesian framework assumes no such thing</strong>. The data are what they are. Based on the observed data (and a <strong>prior</strong> belief about the result), the Bayesian sampling algorithm (<strong>MCMC</strong> sampling is one example) returns a probability distribution (called <strong>the posterior</strong>) of the effect that is compatible with the observed data. For the correlation between <em>x</em> and <em>y</em>, it will return a <strong>distribution</strong> that says, for example, “the most probable effect is 0.42, but this data is also compatible with correlations of 0.12 and 0.74 with certain probabilities”.</p></li>
-<li><p>To characterize statistical significance of our effects, we do not need <em>p</em>-values, or any other such indices. We simply <em>describe</em> the posterior distribution of the effect. For example, we can report the median, the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">89% Credible Interval</a> or <a href="https://easystats.github.io/bayestestR/articles/guidelines.html">other indices</a>.</p></li>
+<li><p>The frequentist approach tries to estimate the <strong>real
+effect</strong>. For instance, the “real” value of the correlation
+between <em>x</em> and <em>y</em>. Hence, the frequentist models return
+a <strong>point-estimate</strong> (i.e., a <strong>single</strong> value
+and not a distribution) of the “real” correlation (e.g., <span class="math inline">\(r = 0.42\)</span>) estimated under a number of
+obscure assumptions (at a minimum, considering that the data is sampled
+at random from a “parent”, usually normal distribution).</p></li>
+<li><p><strong>The Bayesian framework assumes no such thing</strong>.
+The data are what they are. Based on the observed data (and a
+<strong>prior</strong> belief about the result), the Bayesian sampling
+algorithm (<strong>MCMC</strong> sampling is one example) returns a
+probability distribution (called <strong>the posterior</strong>) of the
+effect that is compatible with the observed data. For the correlation
+between <em>x</em> and <em>y</em>, it will return a
+<strong>distribution</strong> that says, for example, “the most probable
+effect is 0.42, but this data is also compatible with correlations of
+0.12 and 0.74 with certain probabilities”.</p></li>
+<li><p>To characterize statistical significance of our effects, we do
+not need <em>p</em>-values, or any other such indices. We simply
+<em>describe</em> the posterior distribution of the effect. For example,
+we can report the median, the <a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">89%
+Credible Interval</a> or <a href="https://easystats.github.io/bayestestR/articles/guidelines.html">other
+indices</a>.</p></li>
 </ul>
 <div class="figure" style="text-align: center">
 <img src="../reference/figures/bayesianMaster.jpg" alt="Accurate depiction of a regular Bayesian user estimating a credible interval." width="50%"><p class="caption">
-Accurate depiction of a regular Bayesian user estimating a credible interval.
+Accurate depiction of a regular Bayesian user estimating a credible
+interval.
 </p>
 </div>
-<p><em>Note: Altough the very purpose of this package is to advocate for the use of Bayesian statistics, please note that there are serious arguments supporting frequentist indices (see for instance <a href="https://discourse.datamethods.org/t/language-for-communicating-frequentist-results-about-treatment-effects/934/16" class="external-link">this thread</a>). As always, the world is not black and white (p &lt; .001).</em></p>
+<p><em>Note: Altough the very purpose of this package is to advocate for
+the use of Bayesian statistics, please note that there are serious
+arguments supporting frequentist indices (see for instance <a href="https://discourse.datamethods.org/t/language-for-communicating-frequentist-results-about-treatment-effects/934/16" class="external-link">this
+thread</a>). As always, the world is not black and white (p &lt;
+.001).</em></p>
 <p><strong>So… how does it work?</strong></p>
 </div>
 <div class="section level2">
@@ -199,7 +276,8 @@ Accurate depiction of a regular Bayesian user estimating a credible interval.
 <h3 id="bayestestr-installation">
 <code>bayestestR</code> installation<a class="anchor" aria-label="anchor" href="#bayestestr-installation"></a>
 </h3>
-<p>You can install <code>bayestestR</code> along with the whole <a href="https://github.com/easystats/easystats" class="external-link"><strong>easystats</strong></a> suite by running the following:</p>
+<p>You can install <code>bayestestR</code> along with the whole <a href="https://github.com/easystats/easystats" class="external-link"><strong>easystats</strong></a>
+suite by running the following:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"easystats/easystats"</span><span class="op">)</span></span></code></pre></div>
@@ -207,7 +285,9 @@ Accurate depiction of a regular Bayesian user estimating a credible interval.
 <!-- ```{r message=FALSE, warning=FALSE} -->
 <!-- library(report)  # Calling library(...) enables you to use the package's functions -->
 <!-- ``` -->
-<p>Let’s also install and load the <a href="https://mc-stan.org/rstanarm/" class="external-link"><code>rstanarm</code></a>, that allows fitting Bayesian models, as well as <a href="https://github.com/easystats/bayestestR" class="external-link"><code>bayestestR</code></a>, to describe them.</p>
+<p>Let’s also install and load the <a href="https://mc-stan.org/rstanarm/" class="external-link"><code>rstanarm</code></a>, that
+allows fitting Bayesian models, as well as <a href="https://github.com/easystats/bayestestR" class="external-link"><code>bayestestR</code></a>,
+to describe them.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"rstanarm"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mc-stan.org/rstanarm/" class="external-link">rstanarm</a></span><span class="op">)</span></span></code></pre></div>
@@ -215,7 +295,11 @@ Accurate depiction of a regular Bayesian user estimating a credible interval.
 <div class="section level3">
 <h3 id="traditional-linear-regression">Traditional linear regression<a class="anchor" aria-label="anchor" href="#traditional-linear-regression"></a>
 </h3>
-<p>Let’s start by fitting a simple frequentist linear regression (the <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> function stands for <em>linear model</em>) between two numeric variables, <code>Sepal.Length</code> and <code>Petal.Length</code> from the famous <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set" class="external-link"><code>iris</code></a> dataset, included by default in R.</p>
+<p>Let’s start by fitting a simple frequentist linear regression (the
+<code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> function stands for <em>linear model</em>) between two
+numeric variables, <code>Sepal.Length</code> and
+<code>Petal.Length</code> from the famous <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set" class="external-link"><code>iris</code></a>
+dataset, included by default in R.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Petal.Length</span>, data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
@@ -247,8 +331,12 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <!--   report() %>%  -->
 <!--   to_text(width=100) -->
 <!-- ``` -->
-<p>This analysis suggests that there is a statistically <strong>significant</strong> (whatever that means) and <strong>positive</strong> (with a coefficient of <code>0.41</code>) linear relationship between the two variables.</p>
-<p>Fitting and interpreting the frequentist models is so easy that it is obvious that people use it instead of the Bayesian framework… right?</p>
+<p>This analysis suggests that there is a statistically
+<strong>significant</strong> (whatever that means) and
+<strong>positive</strong> (with a coefficient of <code>0.41</code>)
+linear relationship between the two variables.</p>
+<p>Fitting and interpreting the frequentist models is so easy that it is
+obvious that people use it instead of the Bayesian framework… right?</p>
 <p><strong>Not anymore.</strong></p>
 </div>
 <div class="section level3">
@@ -275,6 +363,16 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 <span><span class="fu"><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md</a></span><span class="op">(</span><span class="va">posteriors</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Summary of Posterior Distribution</caption>
+<colgroup>
+<col width="17%">
+<col width="9%">
+<col width="17%">
+<col width="6%">
+<col width="18%">
+<col width="13%">
+<col width="7%">
+<col width="10%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Parameter</th>
 <th align="right">Median</th>
@@ -309,11 +407,19 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 </tbody>
 </table>
 <p><strong>That’s it!</strong></p>
-<p>You just fitted a Bayesian version of the model by simply using the <a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link"><code>stan_glm()</code></a> function instead of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> and described the posterior distributions of the parameters!</p>
-<p>The conclusion we draw, for this example, are very similar. The effect (<em>the median of the effect’s posterior distribution</em>) is about <code>0.41</code>, and it can be also be considered as <em>significant</em> in the Bayesian sense (more on that later).</p>
+<p>You just fitted a Bayesian version of the model by simply using the
+<a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link"><code>stan_glm()</code></a>
+function instead of <code><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm()</a></code> and described the posterior
+distributions of the parameters!</p>
+<p>The conclusion we draw, for this example, are very similar. The
+effect (<em>the median of the effect’s posterior distribution</em>) is
+about <code>0.41</code>, and it can be also be considered as
+<em>significant</em> in the Bayesian sense (more on that later).</p>
 <p><strong>So, ready to learn more?</strong></p>
-<p>Check out the <a href="https://easystats.github.io/bayestestR/articles/example1.html"><strong>next tutorial</strong></a>!</p>
-<p>And, if you want even more, you can check out other articles describing all the functionality the package has to offer!</p>
+<p>Check out the <a href="https://easystats.github.io/bayestestR/articles/example1.html"><strong>next
+tutorial</strong></a>!</p>
+<p>And, if you want even more, you can check out other articles
+describing all the functionality the package has to offer!</p>
 <p><a href="https://easystats.github.io/bayestestR/articles/" class="uri">https://easystats.github.io/bayestestR/articles/</a></p>
 </div>
 </div>
@@ -322,28 +428,46 @@ F-statistic:  469 on 1 and 148 DF,  p-value: &lt;2e-16</code></pre>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
 <div id="ref-andrews2013prior" class="csl-entry">
-Andrews, M., &amp; Baguley, T. (2013). Prior approval: The growth of bayesian methods in psychology. <em>British Journal of Mathematical and Statistical Psychology</em>, <em>66</em>(1), 1–7.
+Andrews, M., &amp; Baguley, T. (2013). Prior approval: The growth of
+bayesian methods in psychology. <em>British Journal of Mathematical and
+Statistical Psychology</em>, <em>66</em>(1), 1–7.
 </div>
 <div id="ref-benjamin2018redefine" class="csl-entry">
-Benjamin, D. J., Berger, J. O., Johannesson, M., Nosek, B. A., Wagenmakers, E.-J., Berk, R., … others. (2018). Redefine statistical significance. <em>Nature Human Behaviour</em>, <em>2</em>(1), 6.
+Benjamin, D. J., Berger, J. O., Johannesson, M., Nosek, B. A.,
+Wagenmakers, E.-J., Berk, R., et al.others. (2018). Redefine statistical
+significance. <em>Nature Human Behaviour</em>, <em>2</em>(1), 6.
 </div>
 <div id="ref-chambers2014instead" class="csl-entry">
-Chambers, C. D., Feredoes, E., Muthukumaraswamy, S. D., &amp; Etchells, P. (2014). Instead of ’playing the game’ it is time to change the rules: Registered reports at AIMS neuroscience and beyond. <em>AIMS Neuroscience</em>, <em>1</em>(1), 4–17.
+Chambers, C. D., Feredoes, E., Muthukumaraswamy, S. D., &amp; Etchells,
+P. (2014). Instead of ’playing the game’ it is time to change the rules:
+Registered reports at AIMS neuroscience and beyond. <em>AIMS
+Neuroscience</em>, <em>1</em>(1), 4–17.
 </div>
 <div id="ref-etz2016bayesian" class="csl-entry">
-Etz, A., &amp; Vandekerckhove, J. (2016). A bayesian perspective on the reproducibility project: psychology. <em>PloS One</em>, <em>11</em>(2), e0149794.
+Etz, A., &amp; Vandekerckhove, J. (2016). A bayesian perspective on the
+reproducibility project: psychology. <em>PloS One</em>, <em>11</em>(2),
+e0149794.
 </div>
 <div id="ref-kruschke2010believe" class="csl-entry">
-Kruschke, J. K. (2010). What to believe: Bayesian methods for data analysis. <em>Trends in Cognitive Sciences</em>, <em>14</em>(7), 293–300.
+Kruschke, J. K. (2010). What to believe: Bayesian methods for data
+analysis. <em>Trends in Cognitive Sciences</em>, <em>14</em>(7),
+293–300.
 </div>
 <div id="ref-kruschke2012time" class="csl-entry">
-Kruschke, J. K., Aguinis, H., &amp; Joo, H. (2012). The time has come: Bayesian methods for data analysis in the organizational sciences. <em>Organizational Research Methods</em>, <em>15</em>(4), 722–752.
+Kruschke, J. K., Aguinis, H., &amp; Joo, H. (2012). The time has come:
+Bayesian methods for data analysis in the organizational sciences.
+<em>Organizational Research Methods</em>, <em>15</em>(4), 722–752.
 </div>
 <div id="ref-szucs2016empirical" class="csl-entry">
-Szucs, D., &amp; Ioannidis, J. P. (2016). Empirical assessment of published effect sizes and power in the recent cognitive neuroscience and psychology literature. <em>BioRxiv</em>, 071530.
+Szucs, D., &amp; Ioannidis, J. P. (2016). Empirical assessment of
+published effect sizes and power in the recent cognitive neuroscience
+and psychology literature. <em>BioRxiv</em>, 071530.
 </div>
 <div id="ref-wagenmakers2018bayesian" class="csl-entry">
-Wagenmakers, E.-J., Marsman, M., Jamil, T., Ly, A., Verhagen, J., Love, J., … others. (2018). Bayesian inference for psychology. Part i: Theoretical advantages and practical ramifications. <em>Psychonomic Bulletin &amp; Review</em>, <em>25</em>(1), 35–57.
+Wagenmakers, E.-J., Marsman, M., Jamil, T., Ly, A., Verhagen, J., Love,
+J., et al.others. (2018). Bayesian inference for psychology. Part i:
+Theoretical advantages and practical ramifications. <em>Psychonomic
+Bulletin &amp; Review</em>, <em>25</em>(1), 35–57.
 </div>
 </div>
 </div>

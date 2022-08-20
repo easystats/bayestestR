@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.2.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.0/bootstrap.bundle.min.js"></script><link href="../deps/Roboto-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
 <link href="../deps/Roboto_Slab-0.4.2/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.1.2</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.12.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--easystats">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--easystats" aria-label="easystats">
     <span class="fab fa fab fa-r-project"></span>
      
     easystats
@@ -149,31 +149,90 @@
     
 <p>This vignette can be referred to by citing the package:</p>
 <ul>
-<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019). <em>bayestestR: Describing Effects and their Uncertainty, Existence and Significance within the Bayesian Framework</em>. Journal of Open Source Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="external-link uri">https://doi.org/10.21105/joss.01541</a>
+<li>Makowski, D., Ben-Shachar, M. S., &amp; Lüdecke, D. (2019).
+<em>bayestestR: Describing Effects and their Uncertainty, Existence and
+Significance within the Bayesian Framework</em>. Journal of Open Source
+Software, 4(40), 1541. <a href="https://doi.org/10.21105/joss.01541" class="external-link uri">https://doi.org/10.21105/joss.01541</a>
 </li>
 </ul>
 <hr>
 <div class="section level2">
 <h2 id="what-is-a-credible-interval">What is a <em>Credible</em> Interval?<a class="anchor" aria-label="anchor" href="#what-is-a-credible-interval"></a>
 </h2>
-<p>Credible intervals are an important concept in Bayesian statistics. Its core purpose is to describe and summarise <strong>the uncertainty</strong> related to the unknown parameters you are trying to estimate. In this regard, it could appear as quite similar to the frequentist <strong>Confidence Intervals</strong>. However, while their goal is similar, <strong>their statistical definition and meaning is very different</strong>. Indeed, while the latter is obtained through a complex algorithm full of rarely-tested assumptions and approximations, the credible intervals are fairly straightforward to compute.</p>
-<p>As the Bayesian inference returns a <strong>distribution</strong> of possible effect values (the posterior), the credible interval is just the range containing a particular percentage of probable values. For instance, the 95% credible interval is simply the central portion of the posterior distribution that contains 95% of the values.</p>
-<p>Note how this drastically improve the interpretability of the Bayesian interval compared to the frequentist one. Indeed, the Bayesian framework allows us to say <em>“given the observed data, the effect has 95% probability of falling within this range”</em>, compared to the less straightforward, frequentist alternative (the 95% <strong>Confidence* Interval</strong>) would be “<em>there is a 95% probability that when computing a confidence interval from data of this sort, the effect falls within this range</em>”.</p>
+<p>Credible intervals are an important concept in Bayesian statistics.
+Its core purpose is to describe and summarise <strong>the
+uncertainty</strong> related to the unknown parameters you are trying to
+estimate. In this regard, it could appear as quite similar to the
+frequentist <strong>Confidence Intervals</strong>. However, while their
+goal is similar, <strong>their statistical definition and meaning is
+very different</strong>. Indeed, while the latter is obtained through a
+complex algorithm full of rarely-tested assumptions and approximations,
+the credible intervals are fairly straightforward to compute.</p>
+<p>As the Bayesian inference returns a <strong>distribution</strong> of
+possible effect values (the posterior), the credible interval is just
+the range containing a particular percentage of probable values. For
+instance, the 95% credible interval is simply the central portion of the
+posterior distribution that contains 95% of the values.</p>
+<p>Note how this drastically improve the interpretability of the
+Bayesian interval compared to the frequentist one. Indeed, the Bayesian
+framework allows us to say <em>“given the observed data, the effect has
+95% probability of falling within this range”</em>, compared to the less
+straightforward, frequentist alternative (the 95% <strong>Confidence*
+Interval</strong>) would be “<em>there is a 95% probability that when
+computing a confidence interval from data of this sort, the effect falls
+within this range</em>”.</p>
 </div>
 <div class="section level2">
 <h2 id="vs--95-ci">89% vs. 95% CI<a class="anchor" aria-label="anchor" href="#vs--95-ci"></a>
 </h2>
-<p>Using 89% is another popular choice, and used to be the default for a long time (<a href="https://github.com/easystats/bayestestR/discussions/250" class="external-link">read here the story of the change</a>). How did it start?</p>
-<p>Naturally, when it came about choosing the CI level to report by default, <strong>people started using 95%</strong>, the arbitrary convention used in the <strong>frequentist</strong> world. However, some authors suggested that 95% might not be the most appropriate for Bayesian posterior distributions, potentially lacking stability if not enough posterior samples are drawn <span class="citation">(Kruschke, 2014)</span>.</p>
-<p>The proposition was to use 90% instead of 95%. However, recently, McElreath (2014, 2018) suggested that if we were to use arbitrary thresholds in the first place, why not use 89%? Moreover, 89 is the highest <strong>prime number</strong> that does not exceed the already unstable 95% threshold. What does it have to do with anything? <em>Nothing</em>, but it reminds us of the total arbitrariness of these conventions <span class="citation">(McElreath, 2018)</span>.</p>
-<p>Thus, CIs computed with 89% intervals (<code>ci = 0.89</code>), are deemed to be more stable than, for instance, 95% intervals <span class="citation">(Kruschke, 2014)</span>. An effective sample size (ESS; see <a href="https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html">here</a>) of at least 10.000 is recommended if one wants to compute precise 95% intervals (Kruschke, 2014, p. 183ff). Unfortunately, the default number of posterior samples for most Bayes packages (e.g., <code>rstanarm</code> or <code>brms</code>) is only 4.000 (thus, you might want to increase it when fitting your model).</p>
-<p>However, 95% has some <a href="https://easystats.github.io/blog/posts/bayestestr_95/" class="external-link"><strong>advantages too</strong></a>. For instance, it shares (in the case of a normal posterior distribution) an intuitive relationship with the standard deviation and it conveys a more accurate image of the (artificial) bounds of the distribution. Also, because it is wider, it makes analyses more conservative (i.e., the probability of covering 0 is larger for the 95% CI than for lower ranges such as 89%), which is a good thing in the context of the reproducibility crisis.</p>
-<p>To add to the mess, some other software use different default, such as for instance 90%. Ultimately, <strong>you as the user should make an informed decision</strong>, based on your needs and goals, and justify your choice.</p>
+<p>Using 89% is another popular choice, and used to be the default for a
+long time (<a href="https://github.com/easystats/bayestestR/discussions/250" class="external-link">read here
+the story of the change</a>). How did it start?</p>
+<p>Naturally, when it came about choosing the CI level to report by
+default, <strong>people started using 95%</strong>, the arbitrary
+convention used in the <strong>frequentist</strong> world. However, some
+authors suggested that 95% might not be the most appropriate for
+Bayesian posterior distributions, potentially lacking stability if not
+enough posterior samples are drawn <span class="citation">(Kruschke,
+2014)</span>.</p>
+<p>The proposition was to use 90% instead of 95%. However, recently,
+McElreath (2014, 2018) suggested that if we were to use arbitrary
+thresholds in the first place, why not use 89%? Moreover, 89 is the
+highest <strong>prime number</strong> that does not exceed the already
+unstable 95% threshold. What does it have to do with anything?
+<em>Nothing</em>, but it reminds us of the total arbitrariness of these
+conventions <span class="citation">(McElreath, 2018)</span>.</p>
+<p>Thus, CIs computed with 89% intervals (<code>ci = 0.89</code>), are
+deemed to be more stable than, for instance, 95% intervals <span class="citation">(Kruschke, 2014)</span>. An effective sample size (ESS;
+see <a href="https://easystats.github.io/bayestestR/reference/diagnostic_posterior.html">here</a>)
+of at least 10.000 is recommended if one wants to compute precise 95%
+intervals (Kruschke, 2014, p. 183ff). Unfortunately, the default number
+of posterior samples for most Bayes packages (e.g.,
+<code>rstanarm</code> or <code>brms</code>) is only 4.000 (thus, you
+might want to increase it when fitting your model).</p>
+<p>However, 95% has some <a href="https://easystats.github.io/blog/posts/bayestestr_95/" class="external-link"><strong>advantages
+too</strong></a>. For instance, it shares (in the case of a normal
+posterior distribution) an intuitive relationship with the standard
+deviation and it conveys a more accurate image of the (artificial)
+bounds of the distribution. Also, because it is wider, it makes analyses
+more conservative (i.e., the probability of covering 0 is larger for the
+95% CI than for lower ranges such as 89%), which is a good thing in the
+context of the reproducibility crisis.</p>
+<p>To add to the mess, some other software use different default, such
+as for instance 90%. Ultimately, <strong>you as the user should make an
+informed decision</strong>, based on your needs and goals, and justify
+your choice.</p>
 </div>
 <div class="section level2">
 <h2 id="different-types-of-cis">Different types of CIs<a class="anchor" aria-label="anchor" href="#different-types-of-cis"></a>
 </h2>
-<p>The reader might notice that <code>bayestestR</code> provides <strong>two methods</strong> to compute credible intervals, the <strong>Highest Density Interval (HDI)</strong> (<code><a href="../reference/hdi.html">hdi()</a></code>) and the <strong>Equal-tailed Interval (ETI)</strong> (<code><a href="../reference/eti.html">eti()</a></code>). These methods can also be changed via the <code>method</code> argument of the <code><a href="../reference/ci.html">ci()</a></code> function. What is the difference? Let’s see:</p>
+<p>The reader might notice that <code>bayestestR</code> provides
+<strong>two methods</strong> to compute credible intervals, the
+<strong>Highest Density Interval (HDI)</strong> (<code><a href="../reference/hdi.html">hdi()</a></code>) and
+the <strong>Equal-tailed Interval (ETI)</strong> (<code><a href="../reference/eti.html">eti()</a></code>).
+These methods can also be changed via the <code>method</code> argument
+of the <code><a href="../reference/ci.html">ci()</a></code> function. What is the difference? Let’s
+see:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/bayestestR/">bayestestR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -224,14 +283,36 @@
 <blockquote>
 <p><strong>The difference is strong with this one.</strong></p>
 </blockquote>
-<p>Contrary to the <strong>HDI</strong>, for which all points within the interval have a higher probability density than points outside the interval, the <strong>ETI</strong> is <strong>equal-tailed</strong>. This means that a 90% interval has 5% of the distribution on either side of its limits. It indicates the 5th percentile and the 95th percentile. In symmetric distributions, the two methods of computing credible intervals, the ETI and the HDI, return similar results.</p>
-<p>This is not the case for skewed distributions. Indeed, it is possible that parameter values in the ETI have lower credibility (are less probable) than parameter values outside the ETI. This property seems undesirable as a summary of the credible values in a distribution.</p>
-<p>On the other hand, the ETI range does <em>not</em> change when transformations are applied to the distribution (for instance, for log-odds to probabilities transformation): the lower and higher bounds of the transformed distribution will correspond to the transformed lower and higher bounds of the original distribution. On the contrary, applying transformations to the distribution will change the resulting HDI. Thus, for instance, if exponentiated credible intervals are required, calculating the ETI is recommended.</p>
+<p>Contrary to the <strong>HDI</strong>, for which all points within the
+interval have a higher probability density than points outside the
+interval, the <strong>ETI</strong> is <strong>equal-tailed</strong>.
+This means that a 90% interval has 5% of the distribution on either side
+of its limits. It indicates the 5th percentile and the 95th percentile.
+In symmetric distributions, the two methods of computing credible
+intervals, the ETI and the HDI, return similar results.</p>
+<p>This is not the case for skewed distributions. Indeed, it is possible
+that parameter values in the ETI have lower credibility (are less
+probable) than parameter values outside the ETI. This property seems
+undesirable as a summary of the credible values in a distribution.</p>
+<p>On the other hand, the ETI range does <em>not</em> change when
+transformations are applied to the distribution (for instance, for
+log-odds to probabilities transformation): the lower and higher bounds
+of the transformed distribution will correspond to the transformed lower
+and higher bounds of the original distribution. On the contrary,
+applying transformations to the distribution will change the resulting
+HDI. Thus, for instance, if exponentiated credible intervals are
+required, calculating the ETI is recommended.</p>
 </div>
 <div class="section level2">
 <h2 id="the-support-interval">The Support Interval<a class="anchor" aria-label="anchor" href="#the-support-interval"></a>
 </h2>
-<p>Unlike the HDI and the ETI, which look at the posterior distribution, the <strong>Support Interval (SI)</strong> provides information regarding the change in the credibility of values from the prior to the posterior - in other words, it indicates which values of a parameter have gained support by the observed data by some factor greater or equal to <em>k</em> <span class="citation">(Wagenmakers, Gronau, Dablander, &amp; Etz, 2018)</span>.</p>
+<p>Unlike the HDI and the ETI, which look at the posterior distribution,
+the <strong>Support Interval (SI)</strong> provides information
+regarding the change in the credibility of values from the prior to the
+posterior - in other words, it indicates which values of a parameter
+have gained support by the observed data by some factor greater or equal
+to <em>k</em> <span class="citation">(Wagenmakers, Gronau, Dablander,
+&amp; Etz, 2018)</span>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prior</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/distribution.html">distribution_normal</a></span><span class="op">(</span><span class="fl">40000</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/distribution.html">distribution_normal</a></span><span class="op">(</span><span class="fl">40000</span>, mean <span class="op">=</span> <span class="fl">.5</span>, sd <span class="op">=</span> <span class="fl">.3</span><span class="op">)</span></span>
@@ -258,21 +339,30 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">si_3</span><span class="op">$</span><span class="va">CI_low</span>, color <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">si_3</span><span class="op">$</span><span class="va">CI_high</span>, color <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="credible_interval_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<p>Between the blue lines are values that received <em>some</em> support by the data (this is a <span class="math inline">\(BF = 1~SI\)</span>), while between the red lines are values that received at least <em>moderate</em> support (<span class="math inline">\(BF = 3~SI\)</span>) by the data.</p>
-<p>From the perspective of the Savage-Dickey Bayes factor, testing against a point null hypothesis for any value within the Support Interval will yield a Bayes factor smaller than 1/<code>BF</code>.</p>
+<p>Between the blue lines are values that received <em>some</em> support
+by the data (this is a <span class="math inline">\(BF = 1~SI\)</span>),
+while between the red lines are values that received at least
+<em>moderate</em> support (<span class="math inline">\(BF =
+3~SI\)</span>) by the data.</p>
+<p>From the perspective of the Savage-Dickey Bayes factor, testing
+against a point null hypothesis for any value within the Support
+Interval will yield a Bayes factor smaller than 1/<code>BF</code>.</p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
 <div id="ref-kruschke2014doing" class="csl-entry">
-Kruschke, J. (2014). <em>Doing bayesian data analysis: A tutorial with r, JAGS, and stan</em>. Academic Press.
+Kruschke, J. (2014). <em>Doing bayesian data analysis: A tutorial with
+r, JAGS, and stan</em>. Academic Press.
 </div>
 <div id="ref-mcelreath2018statistical" class="csl-entry">
-McElreath, R. (2018). <em>Statistical rethinking: A bayesian course with examples in r and stan</em>. Chapman; Hall/CRC.
+McElreath, R. (2018). <em>Statistical rethinking: A bayesian course with
+examples in r and stan</em>. Chapman; Hall/CRC.
 </div>
 <div id="ref-wagenmakers2018SI" class="csl-entry">
-Wagenmakers, E.-J., Gronau, Q. F., Dablander, F., &amp; Etz, A. (2018). <em>The support interval</em>. <a href="https://doi.org/10.31234/osf.io/zwnxb" class="external-link">https://doi.org/10.31234/osf.io/zwnxb</a>
+Wagenmakers, E.-J., Gronau, Q. F., Dablander, F., &amp; Etz, A. (2018).
+<em>The support interval</em>. <a href="https://doi.org/10.31234/osf.io/zwnxb" class="external-link">https://doi.org/10.31234/osf.io/zwnxb</a>
 </div>
 </div>
 </div>
