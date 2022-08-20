@@ -66,8 +66,8 @@ Description: Provides utilities to describe posterior
 Depends:
     R (>= 3.5)
 Imports:
-    insight (>= 0.17.1.8),
-    datawizard (>= 0.4.1),
+    insight (>= 0.18.2),
+    datawizard (>= 0.5.1),
     graphics,
     methods,
     stats,
@@ -116,5 +116,9 @@ VignetteBuilder:
 Encoding: UTF-8
 Language: en-US
 RoxygenNote: 7.2.1
-Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3
+Config/Needs/website:
+    rstudio/bslib,
+    r-lib/pkgdown,
+    easystats/easystatstemplate
