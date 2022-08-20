@@ -1,18 +1,7 @@
 ---
-output: 
-  github_document:
-    toc: false
-    fig_width: 10.08
-    fig_height: 6
-tags: [r, bayesian, posterior, test]
-vignette: >
-  %\VignetteIndexEntry{README}
-  \usepackage[utf8]{inputenc}
-  %\VignetteEngine{knitr::rmarkdown}
+output: github_document
 bibliography: paper/paper.bib
 csl: vignettes/apa.csl
-editor_options: 
-  chunk_output_type: console
 ---
 # bayestestR <img src='man/figures/logo.png' align="right" height="139" />
 
@@ -54,7 +43,8 @@ You can reference the package and its documentation as follows:
 
 ## Installation
 
-[![CRAN](http://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR) [![insight status badge](https://easystats.r-universe.dev/badges/bayestestR)](https://easystats.r-universe.dev) ![Tests](https://github.com/easystats/bayestestR/workflows/Tests/badge.svg) 
+[![CRAN](http://www.r-pkg.org/badges/version/bayestestR)](https://cran.r-project.org/package=bayestestR) [![insight status badge](https://easystats.r-universe.dev/badges/bayestestR)](https://easystats.r-universe.dev) [![R-CMD-check](https://github.com/easystats/datawizard/workflows/R-CMD-check/badge.svg?branch=main)](https://github.com/easystats/datawizard/actions)
+
 
 The *bayestestR* package is available on CRAN, while its latest development version is available on R-universe (from _rOpenSci_).
 

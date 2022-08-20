@@ -27,12 +27,13 @@
 #' summary(lm(V2 ~ V1, data = data))
 #'
 #' # Generate multiple variables
-#' cor_matrix <- matrix(c(
-#'   1.0, 0.2, 0.4,
-#'   0.2, 1.0, 0.3,
-#'   0.4, 0.3, 1.0
-#' ),
-#' nrow = 3
+#' cor_matrix <- matrix(
+#'   c(
+#'     1.0, 0.2, 0.4,
+#'     0.2, 1.0, 0.3,
+#'     0.4, 0.3, 1.0
+#'   ),
+#'   nrow = 3
 #' )
 #'
 #' data <- simulate_correlation(r = cor_matrix, names = c("y", "x1", "x2"))

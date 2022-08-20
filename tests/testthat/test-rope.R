@@ -27,10 +27,11 @@ if (requiet("bayestestR") && requiet("testthat") && requiet("rstanarm") && requi
     set.seed(333)
     expect_s3_class(rope(distribution_normal(1000, 0, 1), verbose = FALSE), "rope")
     expect_error(rope(distribution_normal(1000, 0, 1), range = c("A", 0.1)))
-    expect_equal(as.numeric(rope(distribution_normal(1000, 0, 1),
-      range = c(-0.1, 0.1)
-    )), 0.084,
-    tolerance = 0.01
+    expect_equal(
+      as.numeric(rope(distribution_normal(1000, 0, 1),
+        range = c(-0.1, 0.1)
+      )), 0.084,
+      tolerance = 0.01
     )
   })
 
