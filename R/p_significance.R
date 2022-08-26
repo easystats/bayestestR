@@ -288,7 +288,7 @@ as.double.p_significance <- as.numeric.p_significance
       # If symmetric range
       threshold <- abs(threshold[2])
     } else {
-      stop("`threshold` should be 'default' or a numeric value (e.g., 0.1).")
+      stop("`threshold` should be 'default' or a numeric value (e.g., 0.1).", call. = FALSE)
     }
   }
   # If default
@@ -299,7 +299,7 @@ as.double.p_significance <- as.numeric.p_significance
       threshold <- 0.1
     }
   } else if (!all(is.numeric(threshold))) {
-    stop("`threshold` should be 'default' or a numeric value (e.g., 0.1).")
+    stop("`threshold` should be 'default' or a numeric value (e.g., 0.1).", call. = FALSE)
   }
   threshold
 }

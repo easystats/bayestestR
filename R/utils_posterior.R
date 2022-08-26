@@ -6,7 +6,7 @@
 }
 
 .posterior_draws_to_df.default <- function(x) {
-  stop(paste0("Objects of class '%s' are not yet supported.", class(x)[1]))
+  stop(paste0("Objects of class '%s' are not yet supported.", class(x)[1]), call. = FALSE)
 }
 
 .posterior_draws_to_df.data.frame <- function(x) {

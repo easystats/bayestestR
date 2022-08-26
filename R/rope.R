@@ -137,7 +137,7 @@ rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "ETI", ver
   if (all(range == "default")) {
     range <- c(-0.1, 0.1)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
   }
 
   rope_values <- lapply(ci, function(i) {
@@ -300,7 +300,7 @@ rope.stanreg <- function(x, range = "default", ci = 0.95, ci_method = "ETI", eff
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
   }
 
   # check for possible collinearity that might bias ROPE
@@ -356,10 +356,10 @@ rope.brmsfit <- function(x,
         length(range) < length(insight::find_response(x)) ||
         !all(names(range) %in% insight::find_response(x))
     ) {
-      stop("With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2.")
+      stop("With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2.", call. = FALSE)
     }
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
   }
 
   # check for possible collinearity that might bias ROPE and print a warning
@@ -423,7 +423,7 @@ rope.sim.merMod <- function(x, range = "default", ci = 0.95, ci_method = "ETI", 
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
   }
 
   list <- lapply(c("fixed", "random"), function(.x) {
@@ -484,7 +484,7 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", paramet
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
   }
 
   parms <- insight::get_parameters(x, parameters = parameters)

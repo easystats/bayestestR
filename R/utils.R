@@ -13,7 +13,7 @@
 
 #' @keywords internal
 .get_direction <- function(direction) {
-  if (length(direction) > 1) warning("Using first 'direction' value.")
+  if (length(direction) > 1) warning("Using first 'direction' value.", call. = FALSE)
 
   if (is.numeric(direction[1])) {
     return(sign(direction[1]))
@@ -39,7 +39,7 @@
   direction <- Value[tolower(direction[1])]
 
   if (is.na(direction)) {
-    stop("Unrecognized 'direction' argument.")
+    stop("Unrecognized 'direction' argument.", call. = FALSE)
   }
   direction
 }

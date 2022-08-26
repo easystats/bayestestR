@@ -126,7 +126,7 @@ estimate_density.default <- function(x, ...) {
   } else if (method %in% c("mixture", "mclust")) {
     kde <- .estimate_density_mixture(x, x_range, precision, ...)
   } else {
-    stop("method should be one of 'kernel', 'logspline', 'KernSmooth' or 'mixture'.")
+    stop("method should be one of 'kernel', 'logspline', 'KernSmooth' or 'mixture'.", call. = FALSE)
   }
   kde
 }
@@ -148,7 +148,7 @@ estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, ext
 
   if (!is.null(at)) {
     if (length(at) == 1) {
-      stop(insight::format_message("`group_by` must be either the name of a group column if a data.frame is entered as input, or in this case (where a single vector was passed) a vector of same length."))
+      stop(insight::format_message("`group_by` must be either the name of a group column if a data.frame is entered as input, or in this case (where a single vector was passed) a vector of same length."), call. = FALSE)
     }
     out <- estimate_density(data.frame(V1 = x, Group = at, stringsAsFactors = FALSE), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, at = "Group", ...)
     out$Parameter <- NULL

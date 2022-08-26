@@ -190,7 +190,7 @@ check_prior.blavaan <- check_prior.brmsfit
   } else if (method == "lakeland") {
     result <- mapply(.lakeland, priors, posteriors)
   } else {
-    stop("method should be 'gelman' or 'lakeland'.")
+    stop("method should be 'gelman' or 'lakeland'.", call. = FALSE)
   }
 
   data.frame(

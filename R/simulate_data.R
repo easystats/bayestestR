@@ -68,21 +68,21 @@ simulate_correlation <- function(n = 100,
   if (is.matrix(r)) {
     if (isSymmetric(r)) {
       if (any(r > 1)) {
-        stop("'r' should only contain values between -1 and 1.")
+        stop("'r' should only contain values between -1 and 1.", call. = FALSE)
       } else {
         sigma <- r
       }
     } else {
-      stop("'r' should be a symetric matrix (relative to the diagonal).")
+      stop("'r' should be a symetric matrix (relative to the diagonal).", call. = FALSE)
     }
   } else if (length(r) == 1) {
     if (abs(r) > 1) {
-      stop("'r' should only contain values between -1 and 1.")
+      stop("'r' should only contain values between -1 and 1.", call. = FALSE)
     } else {
       sigma <- matrix(c(1, r, r, 1), nrow = 2)
     }
   } else {
-    stop("'r' should be a value (e.g., r = 0.5) or a square matrix.")
+    stop("'r' should be a value (e.g., r = 0.5) or a square matrix.", call. = FALSE)
   }
 
 

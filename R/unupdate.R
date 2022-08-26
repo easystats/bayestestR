@@ -81,7 +81,7 @@ unupdate.brmsfit <- function(model, verbose = TRUE, ...) {
         call. = FALSE
       )
     } else {
-      stop(model_prior)
+      stop(model_prior, call. = FALSE)
     }
   }
 
@@ -123,7 +123,7 @@ unupdate.brmsfit_multiple <- function(model,
         call. = FALSE
       )
     } else {
-      stop(model_prior)
+      stop(model_prior, call. = FALSE)
     }
   }
 

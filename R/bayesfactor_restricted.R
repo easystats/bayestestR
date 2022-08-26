@@ -197,9 +197,9 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
       is_name <- make.names(cnames) == cnames
       cnames[!is_name] <- paste0("`", cnames[!is_name], "`")
       cnames <- paste0(cnames, collapse = ", ")
-      stop(x_logical, "Available parameters are: ", cnames)
+      stop(x_logical, "Available parameters are: ", cnames, call. = FALSE)
     } else if (!all(is.logical(x_logical))) {
-      stop("Hypotheses must be logical")
+      stop("Hypotheses must be logical", call. = FALSE)
     }
     x_logical
   }

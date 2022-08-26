@@ -300,7 +300,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   )
 
   if (!all(from_same_data_as_den)) {
-    stop("Models were not computed from the same data.")
+    stop("Models were not computed from the same data.", call. = FALSE)
   }
 
   # Get BF
@@ -588,7 +588,7 @@ as.matrix.bayesfactor_models <- function(x, ...) {
         m_txt[!is_null & !is_range] <- paste0("p != ", pp)
         m_txt <- sub("<p<", " < p < ", m_txt)
       } else {
-        stop("!")
+        stop("!", call. = FALSE)
       }
 
       ## wrap with () for readability ##

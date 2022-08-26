@@ -693,7 +693,7 @@ describe_posterior.get_predicted <- function(posteriors,
       ...
     )
   } else {
-    stop("No iterations present in the output.")
+    stop("No iterations present in the output.", call. = FALSE)
   }
 }
 
