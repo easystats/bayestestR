@@ -1,3 +1,13 @@
+# bayestestR 0.12.2
+
+## New functions
+
+* `contr.equalprior` (previously `contr.orthonorm`) gains two new functions: `contr.equalprior_pairs` and `contr.equalprior_deviation` to aide in setting more intuitive priors.
+
+## Changes
+
+*  has been renamed *`contr.equalprior`* to be more explicit about its function.
+
 # bayestestR 0.12.1
 
 ## Breaking
