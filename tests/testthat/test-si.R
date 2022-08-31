@@ -1,5 +1,4 @@
-if (require("rstanarm") && suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) &&
-  require("testthat") && require("emmeans")) {
+if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("testthat")) {
   test_that("si.numeric", {
     set.seed(333)
     prior <- distribution_normal(1000, mean = 0, sd = 1)
@@ -26,9 +25,10 @@ if (require("rstanarm") && suppressPackageStartupMessages(require("bayestestR", 
 
   test_that("si.rstanarm", {
     skip_on_cran()
+    skip_if_not_installed("rstanarm")
 
     data(sleep)
-    contrasts(sleep$group) <- contr.orthonorm # See vignette
+    contrasts(sleep$group) <- contr.equalprior_pairs # See vignette
     stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep, refresh = 0)
 
     set.seed(333)
@@ -41,6 +41,7 @@ if (require("rstanarm") && suppressPackageStartupMessages(require("bayestestR", 
     expect_s3_class(res1, c("bayestestR_si"))
     expect_equal(res1, res2)
 
+    skip_if_not_installed("emmeans")
     set.seed(123)
     group_diff <- pairs(emmeans(stan_model, ~group))
     res3 <- si(group_diff, prior = stan_model, verbose = FALSE)
