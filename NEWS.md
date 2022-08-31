@@ -1,3 +1,9 @@
+# bayestestR 0.12.x
+
+* `p_direction()` now accepts objects of class `parameters_model()` (from
+  `parameters::model_parameters()`), to compute probability of direction for
+  parameters of frequentist models.
+
 # bayestestR 0.12.1
 
 ## Breaking
