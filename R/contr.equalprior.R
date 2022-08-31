@@ -146,7 +146,7 @@
 #' @return A `matrix` with n rows and k columns, with k=n-1 if contrasts is
 #'   `TRUE` and k=n if contrasts is `FALSE`.
 #'
-#' @aliases contr.bayes, contr.orthonorm
+#' @aliases contr.bayes contr.orthonorm
 #'
 #' @examples
 #' contr.equalprior(2) # Q_2 in Rouder et al. (2012, p. 363)

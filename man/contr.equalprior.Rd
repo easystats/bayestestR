@@ -2,7 +2,7 @@
 % Please edit documentation in R/contr.equalprior.R
 \name{contr.equalprior}
 \alias{contr.equalprior}
-\alias{contr.bayes,}
+\alias{contr.bayes}
 \alias{contr.orthonorm}
 \alias{contr.equalprior_pairs}
 \alias{contr.equalprior_deviations}
