@@ -2,7 +2,7 @@
 
 ## New functions
 
-* `contr.equalprior` (previously `contr.orthonorm`) gains two new functions: `contr.equalprior_pairs` and `contr.equalprior_deviation` to aide in setting more intuitive priors.
+* `contr.equalprior` (previously `contr.orthonorm`) gains two new functions: `contr.equalprior_pairs` and `contr.equalprior_deviations` to aide in setting more intuitive priors.
 
 ## Changes
 

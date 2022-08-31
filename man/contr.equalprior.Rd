@@ -5,14 +5,14 @@
 \alias{contr.bayes,}
 \alias{contr.orthonorm}
 \alias{contr.equalprior_pairs}
-\alias{contr.equalprior_deviation}
+\alias{contr.equalprior_deviations}
 \title{Contrast Matrices for Equal Marginal Priors in Bayesian Estimation}
 \usage{
 contr.equalprior(n, contrasts = TRUE, sparse = FALSE)
 
 contr.equalprior_pairs(n, contrasts = TRUE, sparse = FALSE)
 
-contr.equalprior_deviation(n, contrasts = TRUE, sparse = FALSE)
+contr.equalprior_deviations(n, contrasts = TRUE, sparse = FALSE)
 }
 \arguments{
 \item{n}{a vector of levels for a factor, or the number of levels.}
@@ -154,7 +154,7 @@ All means have the same prior distribution, and the distribution of the
 differences matches the prior we set of \code{"normal(0, 10)"}. Success!
 }
 
-\subsection{\code{contr.equalprior_deviation}}{
+\subsection{\code{contr.equalprior_deviations}}{
 
 Useful for setting priors in terms of the deviations of each mean from the
 grand mean - the scales of the priors defines the prior distribution of the

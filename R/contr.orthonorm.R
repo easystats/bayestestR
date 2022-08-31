@@ -127,7 +127,7 @@
 #' All means have the same prior distribution, and the distribution of the
 #' differences matches the prior we set of `"normal(0, 10)"`. Success!
 #'
-#' ## `contr.equalprior_deviation`
+#' ## `contr.equalprior_deviations`
 #'
 #' Useful for setting priors in terms of the deviations of each mean from the
 #' grand mean - the scales of the priors defines the prior distribution of the
@@ -182,7 +182,7 @@ contr.equalprior_pairs <- function (n, contrasts = TRUE, sparse = FALSE) {
 
 #' @export
 #' @rdname contr.equalprior
-contr.equalprior_deviation <- function (n, contrasts = TRUE, sparse = FALSE) {
+contr.equalprior_deviations <- function (n, contrasts = TRUE, sparse = FALSE) {
   contr <- contr.equalprior(n, contrasts, sparse)
   k <- nrow(contr)
 
