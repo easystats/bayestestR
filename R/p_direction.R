@@ -174,6 +174,26 @@ p_direction.numeric <- function(x, method = "direct", null = 0, ...) {
 
 
 
+#' @export
+p_direction.parameters_model <- function(x, ...) {
+  out <- data.frame(
+    "Parameter" = x$Parameter,
+    "pd" = p_to_pd(p = x[["p"]]),
+    row.names = NULL,
+    stringsAsFactors = FALSE
+  )
+
+  if (!is.null(x$Component)) {
+    out$Component <- x$Component
+  }
+
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
+
+  out
+}
+
+
 #' @rdname p_direction
 #' @export
 p_direction.data.frame <- function(x, method = "direct", null = 0, ...) {
@@ -275,8 +295,10 @@ p_direction.emmGrid <- function(x, method = "direct", null = 0, ...) {
   out
 }
 
+
 #' @export
 p_direction.emm_list <- p_direction.emmGrid
+
 
 #' @keywords internal
 .p_direction_models <- function(x,

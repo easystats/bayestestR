@@ -1,4 +1,4 @@
-# bayestestR 0.12.2
+# bayestestR 0.12.x
 
 ## Breaking
 
@@ -11,6 +11,9 @@
 ## Changes
 
 *  has been renamed *`contr.equalprior`* to be more explicit about its function.
+* `p_direction()` now accepts objects of class `parameters_model()` (from
+  `parameters::model_parameters()`), to compute probability of direction for
+  parameters of frequentist models.
 
 # bayestestR 0.12.1
 
