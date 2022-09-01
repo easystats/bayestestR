@@ -162,7 +162,7 @@ contr.equalprior <- function(n, contrasts = TRUE, sparse = FALSE) {
   contr <- contr - 1/k
 
   if (contrasts) {
-    contr <- eigen(contr)$vectors[, seq_len(n - 1), drop = FALSE]
+    contr <- eigen(contr)$vectors[, seq_len(k - 1), drop = FALSE]
   }
 
   contr

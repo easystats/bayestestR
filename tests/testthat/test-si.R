@@ -29,7 +29,7 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 
     data(sleep)
     contrasts(sleep$group) <- contr.equalprior_pairs # See vignette
-    stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep, refresh = 0)
+    stan_model <- rstanarm::stan_glmer(extra ~ group + (1 | ID), data = sleep, refresh = 0)
 
     set.seed(333)
     stan_model_p <- update(stan_model, prior_PD = TRUE)
@@ -43,7 +43,7 @@ if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && req
 
     skip_if_not_installed("emmeans")
     set.seed(123)
-    group_diff <- pairs(emmeans(stan_model, ~group))
+    group_diff <- pairs(emmeans::emmeans(stan_model, ~group))
     res3 <- si(group_diff, prior = stan_model, verbose = FALSE)
 
     expect_equal(res3$CI_low, -2.746, tolerance = 0.3)
