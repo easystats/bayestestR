@@ -1,5 +1,9 @@
 # bayestestR 0.12.2
 
+## Breaking
+
+* `contr.equalprior(contrasts = FALSE)` (previously `contr.orthonorm`) no longer returns an identity matrix, but a shifted `diag(n) - 1/n`, for consistency.
+
 ## New functions
 
 * `contr.equalprior` (previously `contr.orthonorm`) gains two new functions: `contr.equalprior_pairs` and `contr.equalprior_deviations` to aide in setting more intuitive priors.

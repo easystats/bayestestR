@@ -106,9 +106,7 @@ levels in \href{https://easystats.github.io/bayestestR/articles/bayes_factors.ht
 
 \code{contr.equalprior} returns the original orthogonal-normal contrasts as
 described in Rouder, Morey, Speckman, & Province (2012, p. 363). Setting
-\code{contrasts = FALSE} returns contrasts that are equivalent to
-\code{contr.treatment(, contrasts = FALSE)}, as suggested by McElreath (also known
-as one-hot encoding).
+\code{contrasts = FALSE} returns the \eqn{I_{n} - \frac{1}{n}} matrix.
 \subsection{\code{contr.equalprior_pairs}}{
 
 Useful for setting priors in terms of pairwise differences between means -
@@ -172,11 +170,7 @@ Q3 <- contr.equalprior(3)
 Q3 \%*\% t(Q3) ## 2/3 on diagonal and -1/3 on off-diagonal elements
 }
 \references{
-\itemize{
-\item McElreath, R. (2020). Statistical rethinking: A Bayesian course with
-examples in R and Stan. CRC press.
-\item Rouder, J. N., Morey, R. D., Speckman, P. L., & Province, J. M. (2012).
+Rouder, J. N., Morey, R. D., Speckman, P. L., & Province, J. M. (2012).
 Default Bayes factors for ANOVA designs. \emph{Journal of Mathematical
 Psychology}, 56(5), 356-374. https://doi.org/10.1016/j.jmp.2012.08.001
-}
 }

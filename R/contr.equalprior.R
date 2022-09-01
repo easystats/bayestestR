@@ -78,9 +78,7 @@
 #'
 #' `contr.equalprior` returns the original orthogonal-normal contrasts as
 #' described in Rouder, Morey, Speckman, & Province (2012, p. 363). Setting
-#' `contrasts = FALSE` returns contrasts that are equivalent to
-#' `contr.treatment(, contrasts = FALSE)`, as suggested by McElreath (also known
-#' as one-hot encoding).
+#' `contrasts = FALSE` returns the \eqn{I_{n} - \frac{1}{n}} matrix.
 #'
 #' ## `contr.equalprior_pairs`
 #'
@@ -136,12 +134,9 @@
 #'
 #'
 #' @references
-#' - McElreath, R. (2020). Statistical rethinking: A Bayesian course with
-#'   examples in R and Stan. CRC press.
-#'
-#' - Rouder, J. N., Morey, R. D., Speckman, P. L., & Province, J. M. (2012).
-#'   Default Bayes factors for ANOVA designs. *Journal of Mathematical
-#'   Psychology*, 56(5), 356-374. https://doi.org/10.1016/j.jmp.2012.08.001
+#' Rouder, J. N., Morey, R. D., Speckman, P. L., & Province, J. M. (2012).
+#' Default Bayes factors for ANOVA designs. *Journal of Mathematical
+#' Psychology*, 56(5), 356-374. https://doi.org/10.1016/j.jmp.2012.08.001
 #'
 #' @return A `matrix` with n rows and k columns, with k=n-1 if contrasts is
 #'   `TRUE` and k=n if contrasts is `FALSE`.
@@ -163,12 +158,11 @@ contr.equalprior <- function(n, contrasts = TRUE, sparse = FALSE) {
     sparse = sparse & !contrasts
   )
 
+  k <- nrow(contr)
+  contr <- contr - 1/k
+
   if (contrasts) {
-    n <- ncol(contr)
-    I_a <- diag(n)
-    J_a <- matrix(1, nrow = n, ncol = n)
-    Sigma_a <- I_a - J_a / n
-    contr <- eigen(Sigma_a)$vectors[, seq_len(n - 1), drop = FALSE]
+    contr <- eigen(contr)$vectors[, seq_len(n - 1), drop = FALSE]
   }
 
   contr
