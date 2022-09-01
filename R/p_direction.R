@@ -225,6 +225,9 @@ p_direction.draws <- function(x, method = "direct", null = 0, ...) {
   p_direction(.posterior_draws_to_df(x), method = method, null = null, ...)
 }
 
+#' @export
+p_direction.rvar <- p_direction.draws
+
 
 #' @rdname p_direction
 #' @export

@@ -43,11 +43,11 @@
 #' NULL` would only return the HDI (or CI).
 #'
 #' @references
-#' \itemize{
-#'   \item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
-#'   \item [Region of Practical Equivalence (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
-#'   \item [Bayes factors](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
-#' }
+#' - Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
+#'   *Indices of Effect Existence and Significance in the Bayesian Framework*.
+#'   Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
+#' - [Region of Practical Equivalence (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
+#' - [Bayes factors](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
 #'
 #' @examples
 #' library(bayestestR)
@@ -106,7 +106,9 @@ describe_posterior <- function(posteriors, ...) {
 
 #' @export
 describe_posterior.default <- function(posteriors, ...) {
-  stop(insight::format_message(paste0("'describe_posterior()' is not yet implemented for objects of class '", class(posteriors)[1], "'.")), call. = FALSE)
+  stop(insight::format_message(
+    paste0("`describe_posterior()` is not yet implemented for objects of class `", class(posteriors)[1], "`.")
+  ), call. = FALSE)
 }
 
 
@@ -203,7 +205,9 @@ describe_posterior.default <- function(posteriors, ...) {
     # no ROPE for multi-response models
     if (insight::is_multivariate(x_df)) {
       test <- setdiff(test, c("rope", "p_rope"))
-      warning(insight::format_message("Multivariate response models are not yet supported for tests 'rope' and 'p_rope'."), call. = FALSE)
+      warning(insight::format_message(
+        "Multivariate response models are not yet supported for tests `rope` and `p_rope`."
+      ), call. = FALSE)
     }
 
     # MAP-based p-value
@@ -391,21 +395,21 @@ describe_posterior.default <- function(posteriors, ...) {
   # row-order after merging
 
   if (!all(is.na(estimates$Parameter))) {
-    estimates$.rowid <- 1:nrow(estimates)
+    estimates$.rowid <- seq_len(nrow(estimates))
   } else if (!all(is.na(test_pmap$Parameter))) {
-    test_pmap$.rowid <- 1:nrow(test_pmap)
+    test_pmap$.rowid <- seq_len(nrow(test_pmap))
   } else if (!all(is.na(test_pd$Parameter))) {
-    test_pd$.rowid <- 1:nrow(test_pd)
+    test_pd$.rowid <- seq_len(nrow(test_pd))
   } else if (!all(is.na(test_prope$Parameter))) {
-    test_prope$.rowid <- 1:nrow(test_prope)
+    test_prope$.rowid <- seq_len(nrow(test_prope))
   } else if (!all(is.na(test_psig$Parameter))) {
-    test_psig$.rowid <- 1:nrow(test_psig)
+    test_psig$.rowid <- seq_len(nrow(test_psig))
   } else if (!all(is.na(test_rope$Parameter))) {
-    test_rope$.rowid <- 1:nrow(test_rope)
+    test_rope$.rowid <- seq_len(nrow(test_rope))
   } else if (!all(is.na(test_bf$Parameter))) {
-    test_bf$.rowid <- 1:nrow(test_bf)
+    test_bf$.rowid <- seq_len(nrow(test_bf))
   } else {
-    estimates$.rowid <- 1:nrow(estimates)
+    estimates$.rowid <- seq_len(nrow(estimates))
   }
 
 
@@ -443,7 +447,7 @@ describe_posterior.default <- function(posteriors, ...) {
   if (keep_iterations == TRUE) {
     row_order <- out$Parameter
     iter <- as.data.frame(t(as.data.frame(x_df, ...)))
-    names(iter) <- paste0("iter_", 1:ncol(iter))
+    names(iter) <- paste0("iter_", seq_len(ncol(iter)))
     iter$Parameter <- row.names(iter)
     out <- merge(out, iter, all.x = TRUE, by = "Parameter")
     out <- out[match(row_order, out$Parameter), ]
@@ -604,6 +608,8 @@ describe_posterior.draws <- function(posteriors,
   out
 }
 
+#' @export
+describe_posterior.rvar <- describe_posterior.draws
 
 
 

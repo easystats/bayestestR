@@ -1,5 +1,7 @@
 # bayestestR 0.12.x
 
+* *bayestestR* now supports objects of class `rvar` from package *posterior*.
+
 * `p_direction()` now accepts objects of class `parameters_model()` (from
   `parameters::model_parameters()`), to compute probability of direction for
   parameters of frequentist models.

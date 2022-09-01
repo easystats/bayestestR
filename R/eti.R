@@ -79,6 +79,9 @@ eti.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat
 }
 
+#' @export
+eti.rvar <- eti.draws
+
 
 
 #' @export

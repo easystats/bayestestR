@@ -244,6 +244,9 @@ estimate_density.draws <- function(x, method = "kernel", precision = 2^10, exten
   )
 }
 
+#' @export
+estimate_density.rvar <- estimate_density.draws
+
 
 .estimate_density_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, select = NULL, ...) {
   # TODO: replace by exposed select argument

@@ -46,6 +46,9 @@ p_rope.draws <- function(x, range = "default", ...) {
   p_rope(.posterior_draws_to_df(x), range = range, ...)
 }
 
+#' @export
+p_rope.rvar <- p_rope.draws
+
 
 #' @export
 p_rope.emmGrid <- function(x, range = "default", ...) {

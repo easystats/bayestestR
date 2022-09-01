@@ -191,7 +191,9 @@ if (require("BayesFactor")) {
 }
 \references{
 \itemize{
-\item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019). \emph{Indices of Effect Existence and Significance in the Bayesian Framework}. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
+\item Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019).
+\emph{Indices of Effect Existence and Significance in the Bayesian Framework}.
+Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 \item \href{https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html}{Region of Practical Equivalence (ROPE)}
 \item \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{Bayes factors}
 }

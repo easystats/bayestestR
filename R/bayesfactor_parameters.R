@@ -450,6 +450,8 @@ bayesfactor_parameters.draws <- function(posterior,
   )
 }
 
+#' @export
+bayesfactor_parameters.rvar <- bayesfactor_parameters.draws
 
 
 #' @keywords internal

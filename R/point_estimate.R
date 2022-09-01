@@ -152,6 +152,9 @@ point_estimate.draws <- function(x, centrality = "all", dispersion = FALSE, thre
   point_estimate(.posterior_draws_to_df(x), centrality = centrality, dispersion = dispersion, threshold = threshold, ...)
 }
 
+#' @export
+point_estimate.rvar <- point_estimate.draws
+
 
 #' @export
 point_estimate.mcmc <- function(x, centrality = "all", dispersion = FALSE, ...) {
