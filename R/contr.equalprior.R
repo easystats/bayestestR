@@ -185,7 +185,7 @@ contr.equalprior_deviations <- function (n, contrasts = TRUE, sparse = FALSE) {
   VCOV <- matrix(r * V, k, k)
   diag(VCOV) <- V
   wts <- c(1 - 1 / k, rep(-1 / k, k - 1))
-  scale <- c(sqrt(wts %*% VCOV %*% wts))
+  scale <- as.vector(sqrt(wts %*% VCOV %*% wts))
 
   contr / scale
 }
