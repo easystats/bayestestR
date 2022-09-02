@@ -154,6 +154,9 @@ hdi.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat
 }
 
+#' @export
+hdi.rvar <- hdi.draws
+
 
 #' @export
 hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {

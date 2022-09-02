@@ -155,6 +155,9 @@ map_estimate.draws <- function(x, precision = 2^10, method = "kernel", ...) {
   .map_estimate_models(.posterior_draws_to_df(x), precision = precision, method = method)
 }
 
+#' @export
+map_estimate.rvar <- map_estimate.draws
+
 
 #' @export
 map_estimate.emmGrid <- function(x, precision = 2^10, method = "kernel", ...) {

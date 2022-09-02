@@ -192,6 +192,9 @@ rope.draws <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbo
   rope(.posterior_draws_to_df(x), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
 }
 
+#' @export
+rope.rvar <- rope.draws
+
 
 
 #' @export
