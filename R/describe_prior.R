@@ -127,3 +127,6 @@ describe_prior.bamlss <- describe_prior.BGGM
 
 #' @export
 describe_prior.draws <- describe_prior.BGGM
+
+#' @export
+describe_prior.rvar <- describe_prior.BGGM

@@ -176,6 +176,9 @@ equivalence_test.draws <- function(x, range = "default", ci = 0.95, verbose = TR
   equivalence_test(.posterior_draws_to_df(x), range = range, ci = ci, verbose = verbose, ...)
 }
 
+#' @export
+equivalence_test.rvar <- equivalence_test.draws
+
 
 #' @export
 equivalence_test.emmGrid <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {

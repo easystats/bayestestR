@@ -233,6 +233,9 @@ si.draws <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
   si(.posterior_draws_to_df(posterior), prior = prior, BF = BF, verbose = verbose, ...)
 }
 
+#' @export
+si.rvar <- si.draws
+
 
 
 # Helper ------------------------------------------------------------------

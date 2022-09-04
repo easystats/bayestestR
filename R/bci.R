@@ -58,6 +58,8 @@ bci.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat
 }
 
+#' @export
+bci.rvar <- bci.draws
 
 
 #' @rdname bci
