@@ -1099,9 +1099,8 @@ different models.</p>
 the model <code>Y ~ A + B</code> (where it is a <em>main</em> effect)
 than it does in the model <code>Y ~ A + B + A:B</code> (where it is a
 <em>simple</em> effect). In many cases centering of predictors (mean
-subtracting for continuous variables, and effects coding via
-<code>contr.sum</code> or orthonormal coding via <a href="https://easystats.github.io/bayestestR/reference/contr.orthonorm.html"><code>contr.orthonorm</code></a>
-for factors) can in some cases reduce this issue.</p>
+subtracting for continuous variables, and orthogonal coding for factors)
+can in some cases reduce this issue.</p>
 </div>
 </div>
 <div class="section level2">
@@ -1168,7 +1167,7 @@ Factors with More Than 2 Levels</em> section below.</p>
 <p>This section introduces the biased priors obtained when using the
 common <em>effects</em> factor coding (<code>contr.sum</code>) or dummy
 factor coding (<code>contr.treatment</code>), and the solution of using
-orthonormal factor coding (<code>contr.orthonorm</code>) <span class="citation">(as outlined in Rouder, Morey, Speckman, &amp;
+orthonormal factor coding (<code>contr.equalprior</code>) <span class="citation">(as outlined in Rouder, Morey, Speckman, &amp;
 Province, 2012, sec. 7.2)</span>.</p>
 <p><strong>Special care should be taken when working with factors with 3
 or more levels</strong>.</p>
@@ -1221,14 +1220,14 @@ coding, because the prior for the intercept is usually drastically
 different from the effect’s parameters). <strong>And since it affects
 the priors, this bias will also bias the Bayes factors over /
 understating evidence for some contrasts over others!</strong></p>
-<p>The solution is to use <em>orthonormal</em> factor coding, a-la
-<code>contr.orthonorm</code>, which can either specify this factor
-coding per-factor:</p>
+<p>The solution is to use <em>equal-prior</em> factor coding, a-la the
+<code>contr.equalprior*</code> family, which can either specify this
+factor coding per-factor:</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html" class="external-link">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.orthonorm</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html" class="external-link">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.equalprior_pairs</span></span></code></pre></div>
 <p>Or you can set it globally:</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"contr.orthonorm"</span>, <span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>contrasts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"contr.equalprior_pairs"</span>, <span class="st">"contr.poly"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s again estimate the <strong><em>prior</em></strong>
 differences:</p>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
@@ -1243,9 +1242,9 @@ differences:</p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">pairs_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit_bayes</span>, <span class="op">~</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt;  contrast               estimate lower.HPD upper.HPD
-&gt;  setosa - versicolor       0.000     -2.98      2.67
-&gt;  setosa - virginica        0.032     -2.73      2.81
-&gt;  versicolor - virginica    0.003     -2.91      2.67
+&gt;  setosa - versicolor      0.0000     -2.10      1.89
+&gt;  setosa - virginica       0.0228     -1.93      1.99
+&gt;  versicolor - virginica   0.0021     -2.06      1.89
 &gt; 
 &gt; Point estimate displayed: median 
 &gt; HPD interval probability: 0.95</code></pre>
@@ -1256,8 +1255,10 @@ differences:</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"prior difference values"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="bayes_factors_files/figure-html/unnamed-chunk-35-1.png" width="100%"></p>
-<p>We can see that using this coding scheme, we have equal priors on all
-pairwise contrasts.</p>
+<p>We can see that using the <code>contr.equalprior_pairs</code> coding
+scheme, we have equal priors on all pairwise contrasts, with the width
+corresponding to the <code>normal(0, c(1, 1), autoscale = FALSE)</code>
+prior we set!</p>
 <p>There are other solutions to this problem of priors. You can read
 about them in <a href="https://solomonkurz.netlify.app/post/2020-12-09-multilevel-models-and-the-index-variable-approach/" class="external-link">Solomon
 Kurz’s blog post</a>.</p>
@@ -1287,6 +1288,7 @@ restriction):</p>
 <p>With the default factor coding, this looks like this:</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html" class="external-link">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.sum</span></span>
+<span></span>
 <span><span class="va">fit_sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">df</span>,</span>
 <span>  prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html" class="external-link">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
@@ -1300,8 +1302,8 @@ restriction):</p>
 <pre><code>&gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 &gt; Chain 1: 
-&gt; Chain 1: Gradient evaluation took 1.9e-05 seconds
-&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
+&gt; Chain 1: Gradient evaluation took 2.2e-05 seconds
+&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.22 seconds.
 &gt; Chain 1: Adjust your expectations accordingly!
 &gt; Chain 1: 
 &gt; Chain 1: 
@@ -1318,15 +1320,15 @@ restriction):</p>
 &gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 1: 
-&gt; Chain 1:  Elapsed Time: 0.0304 seconds (Warm-up)
-&gt; Chain 1:                0.051588 seconds (Sampling)
-&gt; Chain 1:                0.081988 seconds (Total)
+&gt; Chain 1:  Elapsed Time: 0.034637 seconds (Warm-up)
+&gt; Chain 1:                0.057736 seconds (Sampling)
+&gt; Chain 1:                0.092373 seconds (Total)
 &gt; Chain 1: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 &gt; Chain 2: 
-&gt; Chain 2: Gradient evaluation took 1.1e-05 seconds
-&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+&gt; Chain 2: Gradient evaluation took 1.6e-05 seconds
+&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
 &gt; Chain 2: Adjust your expectations accordingly!
 &gt; Chain 2: 
 &gt; Chain 2: 
@@ -1343,15 +1345,15 @@ restriction):</p>
 &gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 2: 
-&gt; Chain 2:  Elapsed Time: 0.031513 seconds (Warm-up)
-&gt; Chain 2:                0.04732 seconds (Sampling)
-&gt; Chain 2:                0.078833 seconds (Total)
+&gt; Chain 2:  Elapsed Time: 0.035648 seconds (Warm-up)
+&gt; Chain 2:                0.052795 seconds (Sampling)
+&gt; Chain 2:                0.088443 seconds (Total)
 &gt; Chain 2: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 &gt; Chain 3: 
-&gt; Chain 3: Gradient evaluation took 1.1e-05 seconds
-&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+&gt; Chain 3: Gradient evaluation took 1.4e-05 seconds
+&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 &gt; Chain 3: Adjust your expectations accordingly!
 &gt; Chain 3: 
 &gt; Chain 3: 
@@ -1368,15 +1370,15 @@ restriction):</p>
 &gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 3: 
-&gt; Chain 3:  Elapsed Time: 0.030684 seconds (Warm-up)
-&gt; Chain 3:                0.045547 seconds (Sampling)
-&gt; Chain 3:                0.076231 seconds (Total)
+&gt; Chain 3:  Elapsed Time: 0.034988 seconds (Warm-up)
+&gt; Chain 3:                0.05079 seconds (Sampling)
+&gt; Chain 3:                0.085778 seconds (Total)
 &gt; Chain 3: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 &gt; Chain 4: 
-&gt; Chain 4: Gradient evaluation took 1.1e-05 seconds
-&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
+&gt; Chain 4: Gradient evaluation took 1.5e-05 seconds
+&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
 &gt; Chain 4: Adjust your expectations accordingly!
 &gt; Chain 4: 
 &gt; Chain 4: 
@@ -1393,9 +1395,9 @@ restriction):</p>
 &gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 4: 
-&gt; Chain 4:  Elapsed Time: 0.029907 seconds (Warm-up)
-&gt; Chain 4:                0.047148 seconds (Sampling)
-&gt; Chain 4:                0.077055 seconds (Total)
+&gt; Chain 4:  Elapsed Time: 0.033921 seconds (Warm-up)
+&gt; Chain 4:                0.052791 seconds (Sampling)
+&gt; Chain 4:                0.086712 seconds (Total)
 &gt; Chain 4:</code></pre>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
@@ -1418,10 +1420,11 @@ order restriction - i.e. <strong>some orders are <em>a priori</em> more
 likely than others!!!</strong>
 </li>
 </ol>
-<p>Again, this is solved by using the <em>orthonormal</em> factor coding
+<p>Again, this is solved by using the <em>equal prior</em> factor coding
 (from above).</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html" class="external-link">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.orthonorm</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/contrasts.html" class="external-link">contrasts</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contr.equalprior_pairs</span></span>
+<span></span>
 <span><span class="va">fit_bayes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Species</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">df</span>,</span>
 <span>  prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html" class="external-link">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, autoscale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
@@ -1450,8 +1453,10 @@ find:<br>
 1. In both cases, the estimated (posterior) means are quite similar (if
 not identical).<br>
 2. The priors and Bayes factors differ between the two schemes.<br>
-3. Only with <code>contr.orthonorm</code>, the prior distribution of the
-difference or the order of 3 (or more) means is balanced.</p>
+3. Only with <code>contr.equalprior*</code>, the prior distribution of
+the difference or the order of 3 (or more) means is balanced.</p>
+<p>Read more about the equal prior contrasts in the
+<code>contr.equalprior</code> docs!</p>
 </div>
 </div>
 </div>
