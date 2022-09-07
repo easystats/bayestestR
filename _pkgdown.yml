@@ -60,7 +60,7 @@ reference:
   contents:
   - mediation
   - convert_bayesian_as_frequentist
-  - contr.orthonorm
+  - contr.equalprior_pairs
   - as.numeric.p_direction
   - as.data.frame.density
   - sexit_thresholds

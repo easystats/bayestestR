@@ -267,7 +267,7 @@ if (require("logspline")) {
 # rstanarm models
 # ---------------
 if (require("rstanarm") && require("emmeans") && require("logspline")) {
-  contrasts(sleep$group) <- contr.orthonorm # see vingette
+  contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
   stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
   bayesfactor_parameters(stan_model)
   bayesfactor_parameters(stan_model, null = rope_range(stan_model))
@@ -285,7 +285,7 @@ if (require("rstanarm") && require("emmeans") && require("logspline")) {
 # brms models
 # -----------
 if (require("brms")) {
-  contrasts(sleep$group) <- contr.orthonorm # see vingette
+  contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
   my_custom_priors <-
     set_prior("student_t(3, 0, 1)", class = "b") +
     set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")
