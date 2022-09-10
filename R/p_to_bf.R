@@ -19,7 +19,7 @@
 #'   p_to_bf(model)
 #' }
 #'
-#' @return A data frame with the p-values and Bayes factors (against the null).
+#' @return A data frame with the p-values and pseudo-Bayes factors (against the null).
 #'
 #' @seealso [bic_to_bf()] for more accurate approximate Bayes factors.
 #'
