@@ -1,7 +1,7 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.12.1.1
+Version: 0.12.1.4
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
@@ -64,10 +64,10 @@ Description: Provides utilities to describe posterior
     indices used for null-hypothesis testing (such as ROPE percentage, pd
     and Bayes factors).
 Depends:
-    R (>= 3.4)
+    R (>= 3.5)
 Imports:
-    insight (>= 0.17.0),
-    datawizard (>= 0.4.0),
+    insight (>= 0.18.2),
+    datawizard (>= 0.5.1),
     graphics,
     methods,
     stats,
@@ -75,17 +75,16 @@ Imports:
 Suggests:
     BayesFactor,
     bayesQR,
+    bayesplot,
+    BH,
     blavaan,
     bridgesampling,
     brms,
-    dplyr,
     effectsize,
     emmeans,
     gamm4,
-    GGally,
     ggdist,
     ggplot2,
-    ggridges,
     glmmTMB,
     httr,
     KernSmooth,
@@ -100,17 +99,14 @@ Suggests:
     parameters,
     patchwork,
     performance,
-    poorman,
     quadprog,
     posterior,
+    RcppEigen,
     rmarkdown,
     rstan,
     rstanarm,
     see,
-    spelling,
-    stringr,
     testthat,
-    tidyr,
     tweedie
 License: GPL-3
 URL: https://easystats.github.io/bayestestR/
@@ -119,6 +115,10 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.1.2
-Config/testthat/edition: 3
+RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3
+Config/Needs/website:
+    rstudio/bslib,
+    r-lib/pkgdown,
+    easystats/easystatstemplate

@@ -78,7 +78,8 @@
   }
 
 
-  if (!inherits(prior, "emmGrid")) { # then is it a model
+  if (!inherits(prior, "emmGrid")) {
+    # then is it a model
     on.exit(
       stop(
         "Unable to reconstruct prior estimates.\n",
@@ -141,7 +142,8 @@
     )
   }
 
-  if (!inherits(prior, "emm_list")) { # prior is a model
+  if (!inherits(prior, "emm_list")) {
+    # prior is a model
 
     if (inherits(prior, "brmsfit")) {
       stop("Cannot rebuild prior emm_list from a brmsfit model.", call. = FALSE)

@@ -18,7 +18,8 @@ density_at(posterior, x, precision = 2^10, method = "kernel", ...)
 \item{...}{Currently not used.}
 }
 \description{
-Compute the density value at a given point of a distribution (i.e., the value of the \code{y} axis of a value \code{x} of a distribution).
+Compute the density value at a given point of a distribution (i.e.,
+the value of the \code{y} axis of a value \code{x} of a distribution).
 }
 \examples{
 library(bayestestR)

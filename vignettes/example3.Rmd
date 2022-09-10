@@ -24,7 +24,7 @@ This vignette can be referred to by citing the package:
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
-options(knitr.kable.NA = '')
+options(knitr.kable.NA = "")
 knitr::opts_chunk$set(
   comment = ">",
   message = FALSE,
@@ -32,7 +32,7 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 
-options(digits=2)
+options(digits = 2)
 
 set.seed(333)
 ```

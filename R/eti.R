@@ -79,6 +79,9 @@ eti.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat
 }
 
+#' @export
+eti.rvar <- eti.draws
+
 
 
 #' @export
@@ -227,7 +230,7 @@ eti.get_predicted <- function(x, ...) {
   if ("iterations" %in% names(attributes(x))) {
     out <- eti(as.data.frame(t(attributes(x)$iterations)), ...)
   } else {
-    stop("No iterations present in the output.")
+    stop("No iterations present in the output.", call. = FALSE)
   }
   attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out

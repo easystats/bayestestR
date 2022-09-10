@@ -20,8 +20,8 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
   BF = 1,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
-  component = c("conditional", "location", "zi", "zero_inflated", "all",
-    "smooth_terms", "sigma", "distributional", "auxiliary"),
+  component = c("conditional", "location", "zi", "zero_inflated", "all", "smooth_terms",
+    "sigma", "distributional", "auxiliary"),
   parameters = NULL,
   ...
 )
@@ -32,8 +32,8 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
   BF = 1,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
-  component = c("conditional", "location", "zi", "zero_inflated", "all",
-    "smooth_terms", "sigma", "distributional", "auxiliary"),
+  component = c("conditional", "location", "zi", "zero_inflated", "all", "smooth_terms",
+    "sigma", "distributional", "auxiliary"),
   parameters = NULL,
   ...
 )
@@ -44,8 +44,8 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
   BF = 1,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
-  component = c("conditional", "location", "zi", "zero_inflated", "all",
-    "smooth_terms", "sigma", "distributional", "auxiliary"),
+  component = c("conditional", "location", "zi", "zero_inflated", "all", "smooth_terms",
+    "sigma", "distributional", "auxiliary"),
   parameters = NULL,
   ...
 )
@@ -159,7 +159,7 @@ si(posterior, prior)
 # rstanarm models
 # ---------------
 library(rstanarm)
-contrasts(sleep$group) <- contr.orthonorm # see vingette
+contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
 stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 si(stan_model)
 si(stan_model, BF = 3)
@@ -173,7 +173,7 @@ si(group_diff, prior = stan_model)
 # brms models
 # -----------
 library(brms)
-contrasts(sleep$group) <- contr.orthonorm # see vingette
+contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
 my_custom_priors <-
   set_prior("student_t(3, 0, 1)", class = "b") +
   set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")

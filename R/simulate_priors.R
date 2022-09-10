@@ -31,7 +31,6 @@ simulate_prior.stanreg <- function(model,
                                    parameters = NULL,
                                    verbose = TRUE,
                                    ...) {
-
   # check arguments
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -58,7 +57,6 @@ simulate_prior.brmsfit <- function(model,
                                    parameters = NULL,
                                    verbose = TRUE,
                                    ...) {
-
   # check arguments
   effects <- match.arg(effects)
   component <- match.arg(component)

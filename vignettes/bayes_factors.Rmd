@@ -175,7 +175,7 @@ model <- stan_glm(
   data = sleep,
   prior = normal(0, 3, autoscale = FALSE),
   refresh = 0,
-  chains = 4, iter = 2000, warmup = 1000 #to reduce time for build
+  chains = 4, iter = 2000, warmup = 1000 # to reduce time for build
 )
 ```
 
@@ -496,51 +496,61 @@ Let's first fit 5 Bayesian regressions with `brms` to predict `Sepal.Length`:
 library(brms)
 
 # intercept only model
-m0 <- brm(Sepal.Length ~ 1, data = iris, 
-          prior = 
-            set_prior("student_t(3, 6, 6)", class = "Intercept") + 
-            set_prior("student_t(3, 0, 6)", class = "sigma"),
-          chains = 10, iter = 5000, warmup = 1000,
-          save_pars = save_pars(all = TRUE))
+m0 <- brm(Sepal.Length ~ 1,
+  data = iris,
+  prior =
+    set_prior("student_t(3, 6, 6)", class = "Intercept") +
+      set_prior("student_t(3, 0, 6)", class = "sigma"),
+  chains = 10, iter = 5000, warmup = 1000,
+  save_pars = save_pars(all = TRUE)
+)
 
 # Petal.Length only
-m1 <- brm(Sepal.Length ~ Petal.Length, data = iris, 
-          prior = 
-            set_prior("student_t(3, 6, 6)", class = "Intercept") + 
-            set_prior("student_t(3, 0, 6)", class = "sigma") + 
-            set_prior("normal(0, 1)", coef = "Petal.Length"),
-          chains = 10, iter = 5000, warmup = 1000,
-          save_pars = save_pars(all = TRUE))
+m1 <- brm(Sepal.Length ~ Petal.Length,
+  data = iris,
+  prior =
+    set_prior("student_t(3, 6, 6)", class = "Intercept") +
+      set_prior("student_t(3, 0, 6)", class = "sigma") +
+      set_prior("normal(0, 1)", coef = "Petal.Length"),
+  chains = 10, iter = 5000, warmup = 1000,
+  save_pars = save_pars(all = TRUE)
+)
 
 # Species only
-m2 <- brm(Sepal.Length ~ Species, data = iris,
-          prior = 
-            set_prior("student_t(3, 6, 6)", class = "Intercept") + 
-            set_prior("student_t(3, 0, 6)", class = "sigma") + 
-            set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")),
-          chains = 10, iter = 5000, warmup = 1000,
-          save_pars = save_pars(all = TRUE))
+m2 <- brm(Sepal.Length ~ Species,
+  data = iris,
+  prior =
+    set_prior("student_t(3, 6, 6)", class = "Intercept") +
+      set_prior("student_t(3, 0, 6)", class = "sigma") +
+      set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")),
+  chains = 10, iter = 5000, warmup = 1000,
+  save_pars = save_pars(all = TRUE)
+)
 
 # Species + Petal.Length model
-m3 <- brm(Sepal.Length ~ Species + Petal.Length, data = iris,
-          prior = 
-            set_prior("student_t(3, 6, 6)", class = "Intercept") + 
-            set_prior("student_t(3, 0, 6)", class = "sigma") + 
-            set_prior("normal(0, 1)", coef = "Petal.Length") + 
-            set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")),
-          chains = 10, iter = 5000, warmup = 1000,
-          save_pars = save_pars(all = TRUE))
+m3 <- brm(Sepal.Length ~ Species + Petal.Length,
+  data = iris,
+  prior =
+    set_prior("student_t(3, 6, 6)", class = "Intercept") +
+      set_prior("student_t(3, 0, 6)", class = "sigma") +
+      set_prior("normal(0, 1)", coef = "Petal.Length") +
+      set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")),
+  chains = 10, iter = 5000, warmup = 1000,
+  save_pars = save_pars(all = TRUE)
+)
 
 # full interactive model
-m4 <- brm(Sepal.Length ~ Species * Petal.Length, data = iris,
-          prior = 
-            set_prior("student_t(3, 6, 6)", class = "Intercept") + 
-            set_prior("student_t(3, 0, 6)", class = "sigma") + 
-            set_prior("normal(0, 1)", coef = "Petal.Length") + 
-            set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")) + 
-            set_prior("normal(0, 2)", coef = c("Speciesversicolor:Petal.Length", "Speciesvirginica:Petal.Length")),
-          chains = 10, iter = 5000, warmup = 1000,
-          save_pars = save_pars(all = TRUE))
+m4 <- brm(Sepal.Length ~ Species * Petal.Length,
+  data = iris,
+  prior =
+    set_prior("student_t(3, 6, 6)", class = "Intercept") +
+      set_prior("student_t(3, 0, 6)", class = "sigma") +
+      set_prior("normal(0, 1)", coef = "Petal.Length") +
+      set_prior("normal(0, 3)", coef = c("Speciesversicolor", "Speciesvirginica")) +
+      set_prior("normal(0, 2)", coef = c("Speciesversicolor:Petal.Length", "Speciesvirginica:Petal.Length")),
+  chains = 10, iter = 5000, warmup = 1000,
+  save_pars = save_pars(all = TRUE)
+)
 ```
 
 We can now compare these models with the `bayesfactor_models()` function, using
@@ -556,11 +566,13 @@ comparison
 
 ```{r, echo = FALSE}
 comparison <- structure(
-  list(Model = c("Petal.Length", "Species", "Species + Petal.Length", "Species * Petal.Length", "1"), 
-       log_BF = c(101.556419030653, 64.2903334815192, 122.864721399001, 119.712908243647, 0)), 
-  class = c("bayesfactor_models", "see_bayesfactor_models", "data.frame"), 
-  row.names = c("m1", "m2", "m3", "m4", "m0"), 
-  denominator = 5L, 
+  list(
+    Model = c("Petal.Length", "Species", "Species + Petal.Length", "Species * Petal.Length", "1"),
+    log_BF = c(101.556419030653, 64.2903334815192, 122.864721399001, 119.712908243647, 0)
+  ),
+  class = c("bayesfactor_models", "see_bayesfactor_models", "data.frame"),
+  row.names = c("m1", "m2", "m3", "m4", "m0"),
+  denominator = 5L,
   BF_method = "marginal likelihoods (bridgesampling)",
   unsupported_models = FALSE
 )
@@ -639,7 +651,7 @@ iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
 iris_model <- stan_glm(Sepal.Length ~ Species + Petal.Length,
   data = iris,
   prior = normal(0, c(2, 1.2, 1.2), autoscale = FALSE),
-  chains = 4, iter = 2000, warmup = 1000, #to reduce build time
+  chains = 4, iter = 2000, warmup = 1000, # to reduce build time
   refresh = 0
 )
 ```
@@ -927,10 +939,7 @@ Thus we have resolved the conflict between the Bayes factor and the HDI
 For example, the parameter `A` plays a different role in the model `Y ~ A + B`
 (where it is a *main* effect) than it does in the model `Y ~ A + B + A:B` (where
 it is a *simple* effect). In many cases centering of predictors (mean subtracting
-for continuous variables, and effects coding via `contr.sum` or orthonormal
-coding via
-[`contr.orthonorm`](https://easystats.github.io/bayestestR/reference/contr.orthonorm.html)
-for factors) can in some cases reduce this issue.
+for continuous variables, and orthogonal coding for factors) can in some cases reduce this issue.
 
 # Appendices
 
@@ -978,7 +987,7 @@ estimate_contrasts(model, test = "bf", bf_prior = model)
 
 ## Specifying correct priors for factors {#contr_bayes}
 
-This section introduces the biased priors obtained when using the common *effects* factor coding (`contr.sum`) or dummy factor coding (`contr.treatment`), and the solution of using orthonormal factor coding (`contr.orthonorm`) [as outlined in @rouder2012default, section 7.2]. 
+This section introduces the biased priors obtained when using the common *effects* factor coding (`contr.sum`) or dummy factor coding (`contr.treatment`), and the solution of using orthonormal factor coding (`contr.equalprior`) [as outlined in @rouder2012default, section 7.2]. 
 
 **Special care should be taken when working with factors with 3 or more levels**.
 
@@ -1037,16 +1046,16 @@ contrast!
 
 This is caused by an inherent bias in the priors introduced by the *effects* coding (it's even worse with the default treatment coding, because the prior for the intercept is usually drastically different from the effect's parameters). **And since it affects the priors, this bias will also bias the Bayes factors over / understating evidence for some contrasts over others!**
 
-The solution is to use *orthonormal* factor coding, a-la `contr.orthonorm`, which can either specify this factor coding per-factor:
+The solution is to use *equal-prior* factor coding, a-la the `contr.equalprior*` family, which can either specify this factor coding per-factor:
 
 ```{r}
-contrasts(df$Species) <- contr.orthonorm
+contrasts(df$Species) <- contr.equalprior_pairs
 ```
 
 Or you can set it globally:
 
 ```{r, eval=FALSE}
-options(contrasts = c("contr.orthonorm", "contr.poly"))
+options(contrasts = c("contr.equalprior_pairs", "contr.poly"))
 ```
 
 Let's again estimate the ***prior*** differences:
@@ -1084,7 +1093,7 @@ ggplot(stack(insight::get_parameters(pairs_bayes)), aes(x = values, fill = ind))
   theme(legend.position = "none")
 ```
 
-We can see that using this coding scheme, we have equal priors on all pairwise contrasts.
+We can see that using the `contr.equalprior_pairs` coding scheme, we have equal priors on all pairwise contrasts, with the width corresponding to the `normal(0, c(1, 1), autoscale = FALSE)` prior we set!
 
 There are other solutions to this problem of priors. You can read about them in [Solomon Kurz's blog post](https://solomonkurz.netlify.app/post/2020-12-09-multilevel-models-and-the-index-variable-approach/).
 
@@ -1116,6 +1125,7 @@ With the default factor coding, this looks like this:
 
 ```{r, eval=FALSE}
 contrasts(df$Species) <- contr.sum
+
 fit_sum <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -1130,6 +1140,7 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
 
 ```{r, echo=FALSE}
 contrasts(df$Species)[, ] <- contr.sum(3)
+
 fit_sum <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -1147,10 +1158,11 @@ bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
 1. The comparison of 2 levels all have a prior of ~0.5, as expected.  
 2. The comparison of 3 levels has different priors, depending on the order restriction - i.e. **some orders are *a priori* more likely than others!!!**  
 
-Again, this is solved by using the *orthonormal* factor coding (from above).
+Again, this is solved by using the *equal prior* factor coding (from above).
 
 ```{r, eval=FALSE}
-contrasts(df$Species) <- contr.orthonorm
+contrasts(df$Species) <- contr.equalprior_pairs
+
 fit_bayes <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -1162,7 +1174,7 @@ bayesfactor_restricted(em_bayes, fit_sum, hypothesis = hyp)
 ```
 
 ```{r, echo=FALSE}
-contrasts(df$Species)[, ] <- contr.orthonorm(3)
+contrasts(df$Species)[, ] <- contr.equalprior_pairs(3)
 fit_bayes <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
@@ -1179,6 +1191,8 @@ bayesfactor_restricted(em_bayes, fit_bayes, hypothesis = hyp)
 When comparing the results from the two factor coding schemes, we find:  
 1. In both cases, the estimated (posterior) means are quite similar (if not identical).  
 2. The priors and Bayes factors differ between the two schemes.  
-3. Only with `contr.orthonorm`, the prior distribution of the difference or the order of 3 (or more) means is balanced.
+3. Only with `contr.equalprior*`, the prior distribution of the difference or the order of 3 (or more) means is balanced.
+
+Read more about the equal prior contrasts in the `contr.equalprior` docs!
 
 # References

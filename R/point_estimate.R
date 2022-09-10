@@ -8,7 +8,7 @@
 #' @param ... Additional arguments to be passed to or from methods.
 #' @inheritParams hdi
 #'
-#' @references Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., \& Lüdecke, D. (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
+#' @references Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
@@ -151,6 +151,9 @@ point_estimate.data.frame <- function(x, centrality = "all", dispersion = FALSE,
 point_estimate.draws <- function(x, centrality = "all", dispersion = FALSE, threshold = .1, ...) {
   point_estimate(.posterior_draws_to_df(x), centrality = centrality, dispersion = dispersion, threshold = threshold, ...)
 }
+
+#' @export
+point_estimate.rvar <- point_estimate.draws
 
 
 #' @export

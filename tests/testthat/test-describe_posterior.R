@@ -196,11 +196,11 @@ if (requiet("testthat") &&
       p <- insight::get_parameters(m, effects = "all", component = "all")
 
       test_that("describe_posterior", {
-        expect_warning(expect_equal(
+        expect_equal(
           describe_posterior(m, effects = "all", component = "all")$Median,
           describe_posterior(p)$Median,
           tolerance = 1e-3
-        ))
+        )
       })
     }
 

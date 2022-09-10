@@ -21,7 +21,6 @@
 #' library(bayestestR)
 #'
 #' if (require("ggplot2") && require("rstanarm") && require("ggdist")) {
-#'
 #'   # Generate data =============================================
 #'   k <- 11 # number of curves (iterations)
 #'   n <- 201 # number of rows

@@ -88,7 +88,7 @@
 #'   # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html
 #'   disgust_data <- read.table(url("http://www.learnbayes.org/disgust_example.txt"), header = TRUE)
 #'
-#'   contrasts(disgust_data$condition) <- contr.orthonorm # see vignette
+#'   contrasts(disgust_data$condition) <- contr.equalprior_pairs # see vignette
 #'   fit_model <- stan_glm(score ~ condition, data = disgust_data, family = gaussian())
 #'
 #'   em_condition <- emmeans(fit_model, ~condition)
@@ -197,9 +197,9 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
       is_name <- make.names(cnames) == cnames
       cnames[!is_name] <- paste0("`", cnames[!is_name], "`")
       cnames <- paste0(cnames, collapse = ", ")
-      stop(x_logical, "Available parameters are: ", cnames)
+      stop(x_logical, "Available parameters are: ", cnames, call. = FALSE)
     } else if (!all(is.logical(x_logical))) {
-      stop("Hypotheses must be logical")
+      stop("Hypotheses must be logical", call. = FALSE)
     }
     x_logical
   }
@@ -235,3 +235,6 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
 bayesfactor_restricted.draws <- function(posterior, hypothesis, prior = NULL, ...) {
   bayesfactor_restricted(.posterior_draws_to_df(posterior), hypothesis = hypothesis, prior = prior, ...)
 }
+
+#' @export
+bayesfactor_restricted.rvar <- bayesfactor_restricted.draws

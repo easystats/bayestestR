@@ -19,6 +19,9 @@ publication/*
 ^CRAN-RELEASE$
 tests\^spelling
 ^LICENSE\.md$
+\.code-workspace$
+\.lintr$
+^CRAN-SUBMISSION$
 
 ^man/figures/JASP.
 ^man/figures/b.

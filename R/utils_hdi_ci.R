@@ -12,7 +12,7 @@
 .check_ci_argument <- function(x, ci, verbose = TRUE) {
   if (ci > 1) {
     if (verbose) {
-      warning("`ci` should be less than 1, returning NAs.")
+      warning("`ci` should be less than 1, returning NAs.", call. = FALSE)
     }
     return(data.frame(
       "CI" = ci,
@@ -32,7 +32,7 @@
 
   if (length(x) < 3) {
     if (verbose) {
-      warning("The posterior is too short, returning NAs.")
+      warning("The posterior is too short, returning NAs.", call. = FALSE)
     }
     return(data.frame(
       "CI" = ci,

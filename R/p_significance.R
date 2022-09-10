@@ -107,6 +107,9 @@ p_significance.draws <- function(x, threshold = "default", ...) {
   p_significance(.posterior_draws_to_df(x), threshold = threshold, ...)
 }
 
+#' @export
+p_significance.rvar <- p_significance.draws
+
 
 #' @export
 p_significance.parameters_simulate_model <- function(x, threshold = "default", ...) {
@@ -284,10 +287,11 @@ as.double.p_significance <- as.numeric.p_significance
 .select_threshold_ps <- function(model = NULL, threshold = "default") {
   # If a range is passed
   if (length(threshold) > 1) {
-    if (length(unique(abs(threshold))) == 1) { # If symmetric range
+    if (length(unique(abs(threshold))) == 1) {
+      # If symmetric range
       threshold <- abs(threshold[2])
     } else {
-      stop("`threshold` should be 'default' or a numeric value (e.g., 0.1).")
+      stop("`threshold` should be 'default' or a numeric value (e.g., 0.1).", call. = FALSE)
     }
   }
   # If default
@@ -298,7 +302,7 @@ as.double.p_significance <- as.numeric.p_significance
       threshold <- 0.1
     }
   } else if (!all(is.numeric(threshold))) {
-    stop("`threshold` should be 'default' or a numeric value (e.g., 0.1).")
+    stop("`threshold` should be 'default' or a numeric value (e.g., 0.1).", call. = FALSE)
   }
   threshold
 }

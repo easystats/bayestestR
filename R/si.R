@@ -52,7 +52,7 @@
 #' # rstanarm models
 #' # ---------------
 #' library(rstanarm)
-#' contrasts(sleep$group) <- contr.orthonorm # see vingette
+#' contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
 #' stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #' si(stan_model)
 #' si(stan_model, BF = 3)
@@ -66,7 +66,7 @@
 #' # brms models
 #' # -----------
 #' library(brms)
-#' contrasts(sleep$group) <- contr.orthonorm # see vingette
+#' contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
 #' my_custom_priors <-
 #'   set_prior("student_t(3, 0, 1)", class = "b") +
 #'   set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")
@@ -232,6 +232,9 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) 
 si.draws <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
   si(.posterior_draws_to_df(posterior), prior = prior, BF = BF, verbose = verbose, ...)
 }
+
+#' @export
+si.rvar <- si.draws
 
 
 

@@ -113,12 +113,15 @@ ci.draws <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, BF = 1, ...) 
   .ci_bayesian(.posterior_draws_to_df(x), ci = ci, method = method, verbose = verbose, BF = BF, ...)
 }
 
+#' @export
+ci.rvar <- ci.draws
+
 
 #' @export
 ci.emmGrid <- function(x, ci = NULL, ...) {
   if (!.is_baysian_emmeans(x)) {
     if (!requireNamespace("parameters")) {
-      stop("'parameters' required for this function to work.")
+      stop("'parameters' required for this function to work.", call. = FALSE)
     }
 
     if (is.null(ci)) ci <- 0.95

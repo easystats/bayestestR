@@ -13,7 +13,7 @@
 
 #' @keywords internal
 .get_direction <- function(direction) {
-  if (length(direction) > 1) warning("Using first 'direction' value.")
+  if (length(direction) > 1) warning("Using first 'direction' value.", call. = FALSE)
 
   if (is.numeric(direction[1])) {
     return(sign(direction[1]))
@@ -39,7 +39,7 @@
   direction <- Value[tolower(direction[1])]
 
   if (is.na(direction)) {
-    stop("Unrecognized 'direction' argument.")
+    stop("Unrecognized 'direction' argument.", call. = FALSE)
   }
   direction
 }
@@ -47,6 +47,9 @@
 
 #' @keywords internal
 .prepare_output <- function(temp, cleaned_parameters, is_stan_mv = FALSE, is_brms_mv = FALSE) {
+  if (is.null(cleaned_parameters)) {
+    return(temp)
+  }
   if (isTRUE(is_stan_mv)) {
     temp$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", temp$Parameter)
     for (i in unique(temp$Response)) {

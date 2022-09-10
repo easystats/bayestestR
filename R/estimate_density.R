@@ -1,6 +1,6 @@
 #' Density Estimation
 #'
-#' This function is a wrapper over different methods of density estimation. By default, it uses the base R `density` with by default uses a different smoothing bandwidth (`"SJ"`) from the legacy default implemented the base R `density` function (`"nrd0"`). However, Deng \& Wickham suggest that `method = "KernSmooth"` is the fastest and the most accurate.
+#' This function is a wrapper over different methods of density estimation. By default, it uses the base R `density` with by default uses a different smoothing bandwidth (`"SJ"`) from the legacy default implemented the base R `density` function (`"nrd0"`). However, Deng and Wickham suggest that `method = "KernSmooth"` is the fastest and the most accurate.
 #'
 #' @inheritParams hdi
 #' @inheritParams stats::density
@@ -87,13 +87,25 @@ estimate_density <- function(x, ...) {
 
 #' @export
 estimate_density.default <- function(x, ...) {
-  stop(insight::format_message(paste0("'estimate_density()' is not yet implemented for objects of class '", class(x)[1], "'.")), call. = FALSE)
+  stop(insight::format_message(
+    paste0("`estimate_density()` is not yet implemented for objects of class `", class(x)[1], "`.")
+  ), call. = FALSE)
 }
 
 
 #' @keywords internal
-.estimate_density <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, ...) {
-  method <- match.arg(tolower(method), c("kernel", "logspline", "kernsmooth", "smooth", "mixture", "mclust"))
+.estimate_density <- function(x,
+                              method = "kernel",
+                              precision = 2^10,
+                              extend = FALSE,
+                              extend_scale = 0.1,
+                              bw = "SJ",
+                              ci = NULL,
+                              ...) {
+  method <- match.arg(
+    tolower(method), 
+    c("kernel", "logspline", "kernsmooth", "smooth", "mixture", "mclust")
+  )
 
   # Remove NA
   x <- x[!is.na(x)]
@@ -126,7 +138,7 @@ estimate_density.default <- function(x, ...) {
   } else if (method %in% c("mixture", "mclust")) {
     kde <- .estimate_density_mixture(x, x_range, precision, ...)
   } else {
-    stop("method should be one of 'kernel', 'logspline', 'KernSmooth' or 'mixture'.")
+    stop("method should be one of 'kernel', 'logspline', 'KernSmooth' or 'mixture'.", call. = FALSE)
   }
   kde
 }
@@ -139,19 +151,42 @@ estimate_density.default <- function(x, ...) {
 
 
 #' @export
-estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, at = NULL, group_by = NULL, ...) {
-
+estimate_density.numeric <- function(x,
+                                     method = "kernel",
+                                     precision = 2^10,
+                                     extend = FALSE,
+                                     extend_scale = 0.1,
+                                     bw = "SJ",
+                                     ci = NULL,
+                                     at = NULL,
+                                     group_by = NULL,
+                                     ...) {
+  # TODO remove deprecation warning
   # Sanity
   if (!is.null(group_by)) {
-    warning(insight::format_message("The 'group_by' argument is deprecated and might be removed in a future update. Please replace by 'at'."), call. = FALSE)
+    warning(insight::format_message(
+      "The `group_by` argument is deprecated and might be removed in a future update. Please replace by `at`."
+    ), call. = FALSE)
     at <- group_by
   }
 
   if (!is.null(at)) {
     if (length(at) == 1) {
-      stop(insight::format_message("`group_by` must be either the name of a group column if a data.frame is entered as input, or in this case (where a single vector was passed) a vector of same length."))
+      stop(insight::format_message(
+        "`at` must be either the name of a group column if a data frame is entered as input, or in this case (where a single vector was passed) a vector of same length."
+      ), call. = FALSE)
     }
-    out <- estimate_density(data.frame(V1 = x, Group = at, stringsAsFactors = FALSE), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, at = "Group", ...)
+    out <- estimate_density(
+      data.frame(V1 = x, Group = at, stringsAsFactors = FALSE),
+      method = method,
+      precision = precision,
+      extend = extend,
+      extend_scale = extend_scale,
+      bw = bw,
+      ci = ci,
+      at = "Group",
+      ...
+    )
     out$Parameter <- NULL
     return(out)
   }
@@ -167,7 +202,6 @@ estimate_density.numeric <- function(x, method = "kernel", precision = 2^10, ext
 #' @rdname estimate_density
 #' @export
 estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, select = NULL, at = NULL, group_by = NULL, ...) {
-
   # Sanity
   if (!is.null(group_by)) {
     warning(insight::format_message("The 'group_by' argument is deprecated and might be removed in a future update. Please replace by 'at'."), call. = FALSE)
@@ -182,7 +216,7 @@ estimate_density.data.frame <- function(x, method = "kernel", precision = 2^10, 
 
     groups <- insight::get_datagrid(x[, at, drop = FALSE], at = at) # Get combinations
     out <- data.frame()
-    for (row in 1:nrow(groups)) {
+    for (row in seq_len(nrow(groups))) {
       subdata <- datawizard::data_match(x, groups[row, , drop = FALSE])
       subdata[names(groups)] <- NULL
       subdata <- .estimate_density_df(subdata, method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ci = ci, select = select, ...)
@@ -209,6 +243,9 @@ estimate_density.draws <- function(x, method = "kernel", precision = 2^10, exten
     group_by = group_by
   )
 }
+
+#' @export
+estimate_density.rvar <- estimate_density.draws
 
 
 .estimate_density_df <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", ci = NULL, select = NULL, ...) {
@@ -369,7 +406,8 @@ as.data.frame.density <- function(x, ...) {
 
 #' Density Probability at a Given Value
 #'
-#' Compute the density value at a given point of a distribution (i.e., the value of the `y` axis of a value `x` of a distribution).
+#' Compute the density value at a given point of a distribution (i.e., 
+#' the value of the `y` axis of a value `x` of a distribution).
 #'
 #' @param posterior Vector representing a posterior distribution.
 #' @param x The value of which to get the approximate probability.
@@ -394,8 +432,20 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 # Different functions -----------------------------------------------------
 
 .estimate_density_kernel <- function(x, x_range, precision, bw, ci = 0.95, ...) {
+  # unsupported arguments raise warnings
+  dots <- list(...)
+  dots[c("effects", "component", "parameters")] <- NULL
+
   # Get the kernel density estimation (KDE)
-  kde <- stats::density(x, n = precision, bw = bw, from = x_range[1], to = x_range[2], ...)
+  args <- c(dots, list(
+    x = x,
+    n = precision,
+    bw = bw,
+    from = x_range[1],
+    to = x_range[2]
+  ))
+  fun <- get("density", asNamespace("stats"))
+  kde <- do.call("fun", args)
   df <- as.data.frame(kde)
 
   # Get CI (https://bookdown.org/egarpor/NP-UC3M/app-kde-ci.html)
@@ -445,6 +495,8 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 }
 
 .set_density_class <- function(out) {
-  if (is.null(out)) return(NULL)
+  if (is.null(out)) {
+    return(NULL)
+  }
   setdiff(unique(c("estimate_density", "see_estimate_density", class(out))), c("estimate_density_df", "see_estimate_density_df"))
 }

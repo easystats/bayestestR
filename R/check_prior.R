@@ -59,7 +59,6 @@ check_prior.brmsfit <- function(model,
                                 parameters = NULL,
                                 verbose = TRUE,
                                 ...) {
-
   # check arguments
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -108,13 +107,10 @@ check_prior.blavaan <- check_prior.brmsfit
                          method = "gelman",
                          verbose = TRUE,
                          cleaned_parameters = NULL) {
-
-
   # sanity check for matching parameters. Some weird priors like
   # rstanarm's R2 prior might cause problems
 
   if (!is.null(cleaned_parameters) && ncol(priors) != ncol(posteriors)) {
-
     ## TODO for now only fixed effects
     if ("Effects" %in% colnames(cleaned_parameters)) {
       cleaned_parameters <- cleaned_parameters[cleaned_parameters$Effects == "fixed", ]
@@ -194,7 +190,7 @@ check_prior.blavaan <- check_prior.brmsfit
   } else if (method == "lakeland") {
     result <- mapply(.lakeland, priors, posteriors)
   } else {
-    stop("method should be 'gelman' or 'lakeland'.")
+    stop("method should be 'gelman' or 'lakeland'.", call. = FALSE)
   }
 
   data.frame(

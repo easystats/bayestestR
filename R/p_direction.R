@@ -174,6 +174,26 @@ p_direction.numeric <- function(x, method = "direct", null = 0, ...) {
 
 
 
+#' @export
+p_direction.parameters_model <- function(x, ...) {
+  out <- data.frame(
+    "Parameter" = x$Parameter,
+    "pd" = p_to_pd(p = x[["p"]]),
+    row.names = NULL,
+    stringsAsFactors = FALSE
+  )
+
+  if (!is.null(x$Component)) {
+    out$Component <- x$Component
+  }
+
+  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  class(out) <- unique(c("p_direction", "see_p_direction", class(out)))
+
+  out
+}
+
+
 #' @rdname p_direction
 #' @export
 p_direction.data.frame <- function(x, method = "direct", null = 0, ...) {
@@ -204,6 +224,9 @@ p_direction.data.frame <- function(x, method = "direct", null = 0, ...) {
 p_direction.draws <- function(x, method = "direct", null = 0, ...) {
   p_direction(.posterior_draws_to_df(x), method = method, null = null, ...)
 }
+
+#' @export
+p_direction.rvar <- p_direction.draws
 
 
 #' @rdname p_direction
@@ -275,8 +298,10 @@ p_direction.emmGrid <- function(x, method = "direct", null = 0, ...) {
   out
 }
 
+
 #' @export
 p_direction.emm_list <- p_direction.emmGrid
+
 
 #' @keywords internal
 .p_direction_models <- function(x,
@@ -434,7 +459,7 @@ p_direction.get_predicted <- function(x, ...) {
   if ("iterations" %in% names(attributes(x))) {
     out <- p_direction(as.data.frame(t(attributes(x)$iterations)), ...)
   } else {
-    stop("No iterations present in the output.")
+    stop("No iterations present in the output.", call. = FALSE)
   }
   attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out

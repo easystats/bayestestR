@@ -10,7 +10,6 @@ if (.runThisTest &&
   requiet("BayesFactor") &&
   packageVersion("insight") > "0.13.2") {
   test_that("describe_prior", {
-
     # Bayes Factor ----------------------------------------
 
     expect_equal(
@@ -142,15 +141,16 @@ if (.runThisTest &&
 
     expect_equal(
       describe_prior(mod_stanreg2),
-      structure(list(
-        Parameter = c("(Intercept)", "cyl"),
-        Prior_Distribution = c(
-          "normal",
-          "normal"
-        ), Prior_Location = c(0, 0),
-        Prior_Scale = c(2.5, 1.39983744766986)
-      ),
-      row.names = c(NA, -2L), class = "data.frame"
+      structure(
+        list(
+          Parameter = c("(Intercept)", "cyl"),
+          Prior_Distribution = c(
+            "normal",
+            "normal"
+          ), Prior_Location = c(0, 0),
+          Prior_Scale = c(2.5, 1.39983744766986)
+        ),
+        row.names = c(NA, -2L), class = "data.frame"
       )
     )
   })

@@ -1,5 +1,4 @@
 if (require("testthat") && requireNamespace("rstanarm", quietly = TRUE)) {
-
   # numeric ----------------------
   test_that("map_estimate", {
     expect_equal(

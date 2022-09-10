@@ -29,7 +29,6 @@
       results <- results[results$pvalue < 0.05 & results$Var1 != results$Var2, ]
 
       if (nrow(results) > 0) {
-
         # Remove duplicates
         results$where <- paste0(results$Var1, " and ", results$Var2)
         results$where2 <- paste0(results$Var2, " and ", results$Var1)

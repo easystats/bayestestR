@@ -154,6 +154,9 @@ hdi.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat
 }
 
+#' @export
+hdi.rvar <- hdi.draws
+
 
 #' @export
 hdi.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
@@ -355,7 +358,7 @@ hdi.get_predicted <- function(x, ...) {
   if ("iterations" %in% names(attributes(x))) {
     out <- hdi(as.data.frame(t(attributes(x)$iterations)), ...)
   } else {
-    stop("No iterations present in the output.")
+    stop("No iterations present in the output.", call. = FALSE)
   }
   attr(out, "object_name") <- insight::safe_deparse(substitute(x))
   out
@@ -380,7 +383,7 @@ hdi.get_predicted <- function(x, ...) {
 
   if (window_size < 2) {
     if (verbose) {
-      warning("`ci` is too small or x does not contain enough data points, returning NAs.")
+      warning("`ci` is too small or x does not contain enough data points, returning NAs.", call. = FALSE)
     }
     return(data.frame(
       "CI" = ci,
@@ -393,7 +396,7 @@ hdi.get_predicted <- function(x, ...) {
 
   if (nCIs < 1) {
     if (verbose) {
-      warning("`ci` is too large or x does not contain enough data points, returning NAs.")
+      warning("`ci` is too large or x does not contain enough data points, returning NAs.", call. = FALSE)
     }
     return(data.frame(
       "CI" = ci,

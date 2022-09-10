@@ -1,9 +1,16 @@
 #' Reshape estimations with multiple iterations (draws) to long format
 #'
-#' Reshape a wide data.frame of iterations (such as posterior draws or bootsrapped samples) as columns to long format. Instead of having all iterations as columns (e.g., `iter_1, iter_2, ...`), will return 3 columns with the `\*_index` (the previous index of the row), the `\*_group` (the iteration number) and the `\*_value` (the value of said iteration).
+#' Reshape a wide data.frame of iterations (such as posterior draws or
+#' bootsrapped samples) as columns to long format. Instead of having all
+#' iterations as columns (e.g., `iter_1, iter_2, ...`), will return 3 columns
+#' with the `\*_index` (the previous index of the row), the `\*_group` (the
+#' iteration number) and the `\*_value` (the value of said iteration).
 #'
-#' @param x A data.frame containing posterior draws obtained from `estimate_response` or `estimate_link`.
-#' @param prefix The prefix of the draws (for instance, `"iter_"` for columns named as `iter_1, iter_2, iter_3`). If more than one are provided, will search for the first one that matches.
+#' @param x A data.frame containing posterior draws obtained from
+#'   `estimate_response` or `estimate_link`.
+#' @param prefix The prefix of the draws (for instance, `"iter_"` for columns
+#'   named as `iter_1, iter_2, iter_3`). If more than one are provided, will
+#' search for the first one that matches.
 #' @examples
 #' \donttest{
 #' if (require("rstanarm")) {
@@ -16,7 +23,6 @@
 #' @return Data frame of reshaped draws in long format.
 #' @export
 reshape_iterations <- function(x, prefix = c("draw", "iter", "iteration", "sim")) {
-
   # Accomodate output from get_predicted
   if (inherits(x, "get_predicted") && "iterations" %in% names(attributes(x))) {
     x <- as.data.frame(x)
@@ -26,7 +32,9 @@ reshape_iterations <- function(x, prefix = c("draw", "iter", "iteration", "sim")
   prefix <- prefix[min(which(sapply(tolower(prefix), function(prefix) sum(grepl(prefix, tolower(names(x)))) > 1)))]
 
   if (is.na(prefix) || is.null(prefix)) {
-    stop("Couldn't find columns corresponding to iterations in your dataframe, please specify the correct prefix.")
+    stop(insight::format_message(
+      "Couldn't find columns corresponding to iterations in your dataframe, please specify the correct prefix."
+    ), call. = FALSE)
   }
 
   # Get column names
@@ -38,7 +46,7 @@ reshape_iterations <- function(x, prefix = c("draw", "iter", "iteration", "sim")
   # Create Index column
   index_col <- paste0(newname, "_index")
   if (index_col %in% names(x)) index_col <- paste0(".", newname, "_index")
-  x[[index_col]] <- 1:nrow(x)
+  x[[index_col]] <- seq_len(nrow(x))
 
   # Reshape
   long <- stats::reshape(x,

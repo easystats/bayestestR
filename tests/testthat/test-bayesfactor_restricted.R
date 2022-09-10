@@ -1,5 +1,4 @@
 if (require("testthat")) {
-
   # bayesfactor_restricted data.frame ---------------------------------------
 
   test_that("bayesfactor_restricted df", {
@@ -48,7 +47,7 @@ if (require("testthat")) {
     )
 
     set.seed(444)
-    fit_p <- unupdate(fit_stan)
+    fit_p <- suppressMessages(unupdate(fit_stan))
     bfr1 <- bayesfactor_restricted(fit_stan, prior = fit_p, hypothesis = hyps)
 
     set.seed(444)

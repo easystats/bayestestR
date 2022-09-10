@@ -200,10 +200,11 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     # Validate response
     if (were_checked && verbose &&
       !isTRUE(attr(objects, "same_response"))) {
-      warning(insight::format_message(
-        "When comparing models, please note that probably not all models were fit from same data."
-      ),
-      call. = FALSE
+      warning(
+        insight::format_message(
+          "When comparing models, please note that probably not all models were fit from same data."
+        ),
+        call. = FALSE
       )
     }
 
@@ -213,12 +214,13 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
       !isTRUE(attr(objects, "same_fixef"))) {
       # estimator <- "ML"
       if (verbose) {
-        warning(insight::format_message(
-          "Information criteria (like BIC) based on REML fits (i.e. `estimator=\"REML\"`)",
-          "are not recommended for comparison between models with different fixed effects.",
-          "Concider setting `estimator=\"ML\"`."
-        ),
-        call. = FALSE
+        warning(
+          insight::format_message(
+            "Information criteria (like BIC) based on REML fits (i.e. `estimator=\"REML\"`)",
+            "are not recommended for comparison between models with different fixed effects.",
+            "Concider setting `estimator=\"ML\"`."
+          ),
+          call. = FALSE
         )
       }
     }
@@ -255,7 +257,6 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
 
 .bayesfactor_models_stan <- function(mods, denominator = 1, verbose = TRUE) {
-
   # Warn
   n_samps <- sapply(mods, function(x) {
     alg <- insight::find_algorithm(x)
@@ -299,7 +300,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   )
 
   if (!all(from_same_data_as_den)) {
-    stop("Models were not computed from the same data.")
+    stop("Models were not computed from the same data.", call. = FALSE)
   }
 
   # Get BF
@@ -587,7 +588,7 @@ as.matrix.bayesfactor_models <- function(x, ...) {
         m_txt[!is_null & !is_range] <- paste0("p != ", pp)
         m_txt <- sub("<p<", " < p < ", m_txt)
       } else {
-        stop("!")
+        stop("!", call. = FALSE)
       }
 
       ## wrap with () for readability ##

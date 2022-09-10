@@ -1,8 +1,23 @@
-# bayestestR 0.12.2
+# bayestestR 0.12.x
 
-## New functions
 
-* `p_to_bf()`, to convert p-values into Bayes factors.
+## Breaking
+
+* `contr.equalprior(contrasts = FALSE)` (previously `contr.orthonorm`) no longer returns an identity matrix, but a shifted `diag(n) - 1/n`, for consistency.
+
+## New functionality
+
+* `p_to_bf()`, to convert p-values into Bayes factors. For more accurate approximate Bayes factors, use `bic_to_bf()`.
+* *bayestestR* now supports objects of class `rvar` from package *posterior*.
+* `contr.equalprior` (previously `contr.orthonorm`) gains two new functions: `contr.equalprior_pairs` and `contr.equalprior_deviations` to aide in setting more intuitive priors.
+
+## Changes
+
+*  has been renamed *`contr.equalprior`* to be more explicit about its function.
+* `p_direction()` now accepts objects of class `parameters_model()` (from
+  `parameters::model_parameters()`), to compute probability of direction for
+  parameters of frequentist models.
+
 
 # bayestestR 0.12.1
 

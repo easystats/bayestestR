@@ -176,6 +176,9 @@ equivalence_test.draws <- function(x, range = "default", ci = 0.95, verbose = TR
   equivalence_test(.posterior_draws_to_df(x), range = range, ci = ci, verbose = verbose, ...)
 }
 
+#' @export
+equivalence_test.rvar <- equivalence_test.draws
+
 
 #' @export
 equivalence_test.emmGrid <- function(x, range = "default", ci = 0.95, verbose = TRUE, ...) {
@@ -205,7 +208,7 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verb
   if (all(range == "default")) {
     range <- rope_range(x)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
+    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
   }
 
   if (verbose && !inherits(x, "blavaan")) .check_multicollinearity(x)

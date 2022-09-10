@@ -46,7 +46,7 @@
 #' @references
 #' \itemize{
 #'   \item Gelman, A., & Rubin, D. B. (1992). Inference from iterative simulation using multiple sequences. Statistical science, 7(4), 457-472.
-#'   \item Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., \& Bürkner, P. C. (2019). Rank-normalization, folding, and localization: An improved Rhat for assessing convergence of MCMC. arXiv preprint arXiv:1903.08008.
+#'   \item Vehtari, A., Gelman, A., Simpson, D., Carpenter, B., and Bürkner, P. C. (2019). Rank-normalization, folding, and localization: An improved Rhat for assessing convergence of MCMC. arXiv preprint arXiv:1903.08008.
 #'   \item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
 #' }
 #' @export
@@ -57,7 +57,7 @@ diagnostic_posterior <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 
 #' @export
 diagnostic_posterior.default <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...) {
-  stop("'diagnostic_posterior()' only works with rstanarm, brms or blavaan models.")
+  stop("'diagnostic_posterior()' only works with rstanarm, brms or blavaan models.", call. = FALSE)
 }
 
 #' @inheritParams insight::get_parameters.BFBayesFactor
@@ -65,7 +65,6 @@ diagnostic_posterior.default <- function(posteriors, diagnostic = c("ESS", "Rhat
 #' @rdname diagnostic_posterior
 #' @export
 diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
-
   # Find parameters
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -121,8 +120,6 @@ diagnostic_posterior.stanmvreg <- function(posteriors,
                                            effects = c("fixed", "random", "all"),
                                            parameters = NULL,
                                            ...) {
-
-
   # Find parameters
   effects <- match.arg(effects)
   all_params <- insight::find_parameters(
@@ -188,8 +185,6 @@ diagnostic_posterior.brmsfit <- function(posteriors,
                                          component = c("conditional", "zi", "zero_inflated", "all"),
                                          parameters = NULL,
                                          ...) {
-
-
   # Find parameters
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -240,7 +235,6 @@ diagnostic_posterior.brmsfit <- function(posteriors,
 #' @inheritParams insight::get_parameters
 #' @export
 diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects = c("fixed", "random", "all"), parameters = NULL, ...) {
-
   # Find parameters
   effects <- match.arg(effects)
   params <- insight::find_parameters(posteriors, effects = effects, parameters = parameters, flatten = TRUE)
@@ -291,7 +285,6 @@ diagnostic_posterior.stanfit <- function(posteriors, diagnostic = "all", effects
 
 #' @export
 diagnostic_posterior.blavaan <- function(posteriors, diagnostic = "all", ...) {
-
   # Find parameters
   params <- suppressWarnings(insight::find_parameters(posteriors, flatten = TRUE))
 

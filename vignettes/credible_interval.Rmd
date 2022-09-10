@@ -24,13 +24,12 @@ This vignette can be referred to by citing the package:
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(knitr)
-options(knitr.kable.NA = '')
-knitr::opts_chunk$set(comment=">")
-options(digits=2)
+options(knitr.kable.NA = "")
+knitr::opts_chunk$set(comment = ">")
+options(digits = 2)
 
-if (!requireNamespace("ggplot2", quietly = TRUE) || 
-    !requireNamespace("logspline", quietly = TRUE) ||
-    !requireNamespace("dplyr", quietly = TRUE)) {
+if (!requireNamespace("ggplot2", quietly = TRUE) ||
+  !requireNamespace("logspline", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
 }
 
@@ -100,7 +99,6 @@ the `method` argument of the `ci()` function. What is the difference? Let's see:
 
 ```{r warning=FALSE, message=FALSE}
 library(bayestestR)
-library(dplyr)
 library(ggplot2)
 
 # Generate a normal distribution
@@ -111,9 +109,8 @@ ci_hdi <- ci(posterior, method = "HDI")
 ci_eti <- ci(posterior, method = "ETI")
 
 # Plot the distribution and add the limits of the two CIs
-posterior %>% 
-  estimate_density(extend=TRUE) %>% 
-  ggplot(aes(x = x, y = y)) +
+out <- estimate_density(posterior, extend = TRUE)
+ggplot(out, aes(x = x, y = y)) +
   geom_area(fill = "orange") +
   theme_classic() +
   # HDI in blue
@@ -137,9 +134,8 @@ ci_hdi <- ci(posterior, method = "HDI")
 ci_eti <- ci(posterior, method = "ETI")
 
 # Plot the distribution and add the limits of the two CIs
-posterior %>% 
-  estimate_density(extend = TRUE) %>% 
-  ggplot(aes(x = x, y = y)) +
+out <- estimate_density(posterior, extend = TRUE)
+ggplot(out, aes(x = x, y = y)) +
   geom_area(fill = "orange") +
   theme_classic() +
   # HDI in blue
@@ -190,11 +186,15 @@ si_3 <- si(posterior, prior, BF = 3)
 ggplot(mapping = aes(x = x, y = y)) +
   theme_classic() +
   # The posterior
-  geom_area(fill = "orange",
-            data = estimate_density(posterior, extend = TRUE)) +
+  geom_area(
+    fill = "orange",
+    data = estimate_density(posterior, extend = TRUE)
+  ) +
   # The prior
-  geom_area(color = "black", fill = NA, size = 1, linetype = "dashed",
-            data = estimate_density(prior, extend = TRUE)) +
+  geom_area(
+    color = "black", fill = NA, size = 1, linetype = "dashed",
+    data = estimate_density(prior, extend = TRUE)
+  ) +
   # BF = 1 SI in blue
   geom_vline(xintercept = si_1$CI_low, color = "royalblue", size = 1) +
   geom_vline(xintercept = si_1$CI_high, color = "royalblue", size = 1) +

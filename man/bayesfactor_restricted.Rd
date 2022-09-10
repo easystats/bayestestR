@@ -195,7 +195,7 @@ if (require("rstanarm") && require("emmeans")) {
   # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html
   disgust_data <- read.table(url("http://www.learnbayes.org/disgust_example.txt"), header = TRUE)
 
-  contrasts(disgust_data$condition) <- contr.orthonorm # see vignette
+  contrasts(disgust_data$condition) <- contr.equalprior_pairs # see vignette
   fit_model <- stan_glm(score ~ condition, data = disgust_data, family = gaussian())
 
   em_condition <- emmeans(fit_model, ~condition)
