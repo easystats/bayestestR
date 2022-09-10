@@ -19,7 +19,7 @@
 #'
 #' @return A data frame with the p-values and Bayes factors (against the null).
 #'
-#' @seealso [bic_to_bf()]
+#' @seealso [bic_to_bf()] for more accurate approximate Bayes factors.
 #'
 #' @export
 p_to_bf <- function(x, log = FALSE, ...) {
