@@ -4,7 +4,7 @@
 \alias{p_to_bf}
 \alias{p_to_bf.numeric}
 \alias{p_to_bf.default}
-\title{Convert p-values to Bayes Factors}
+\title{Convert p-values to (pseudo) Bayes Factors}
 \usage{
 p_to_bf(x, log = FALSE, ...)
 
@@ -15,13 +15,17 @@ p_to_bf(x, log = FALSE, ...)
 \arguments{
 \item{x}{A (frequentist) model object, or a (numeric) vector of p-values.}
 
+\item{log}{Wether to return log Bayes Factors.}
+
+\item{...}{Other arguments to be passed (not used for now).}
+
 \item{n_obs}{Number of observations. Either length 1, or same length as \code{p}.}
 }
 \value{
 A data frame with the p-values and Bayes factors (against the null).
 }
 \description{
-Convert p-values to Bayes Factors
+Convert p-values to (pseudo) Bayes Factors. This transformation has been suggested by Wagenmakers (2022), but is based on a vast amount of assumptions. It might therefore be not reliable. Use at your own risks. For more accurate approximate Bayes factors, use \code{\link[=bic_to_bf]{bic_to_bf()}} instead.
 }
 \examples{
 if (requireNamespace("parameters", quietly = TRUE)) {
@@ -39,5 +43,5 @@ https://psyarxiv.com/egydq
 }
 }
 \seealso{
-\code{\link[=bic_to_bf]{bic_to_bf()}}
+\code{\link[=bic_to_bf]{bic_to_bf()}} for more accurate approximate Bayes factors.
 }

@@ -1,9 +1,11 @@
-#' Convert p-values to Bayes Factors
+#' Convert p-values to (pseudo) Bayes Factors
 #'
-#' Convert p-values to pseudo-Bayes Factors. For more accurate approximate Bayes factors, use [bic_to_bf()] instead. 
+#' Convert p-values to (pseudo) Bayes Factors. This transformation has been suggested by Wagenmakers (2022), but is based on a vast amount of assumptions. It might therefore be not reliable. Use at your own risks. For more accurate approximate Bayes factors, use [bic_to_bf()] instead.
 #'
 #' @param x A (frequentist) model object, or a (numeric) vector of p-values.
 #' @param n_obs Number of observations. Either length 1, or same length as `p`.
+#' @param log Wether to return log Bayes Factors.
+#' @param ... Other arguments to be passed (not used for now).
 #'
 #' @references
 #' - Wagenmakers, E.J. (2022). Approximate objective Bayes factors from p-values
