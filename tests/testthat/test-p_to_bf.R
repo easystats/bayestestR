@@ -7,6 +7,6 @@ if (requiet("testthat") && requiet("parameters") && requiet("bayestestR")) {
 
   test_that("p_to_bf works", {
     expect_equal(p_to_bf(m, log = FALSE)[-1, ]$BF, exp(-log(bfs)), tolerance = 1e-4, ignore_attr = TRUE)
-    expect_equal(p_to_bf(m, log = TRUE)[-1, ]$BF, -log(bfs), tolerance = 1e-4, ignore_attr = TRUE)
+    expect_equal(p_to_bf(m, log = TRUE)[-1, ]$log_BF, -log(bfs), tolerance = 1e-4, ignore_attr = TRUE)
   })
 }

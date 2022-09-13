@@ -15,7 +15,9 @@ p_to_bf(x, log = FALSE, ...)
 \arguments{
 \item{x}{A (frequentist) model object, or a (numeric) vector of p-values.}
 
-\item{log}{Wether to return log Bayes Factors.}
+\item{log}{Wether to return log Bayes Factors. \strong{Note:} The \code{print()} method
+always shows \code{BF} - the \code{"log_BF"} column is only accessible from the returned
+data frame.}
 
 \item{...}{Other arguments to be passed (not used for now).}
 

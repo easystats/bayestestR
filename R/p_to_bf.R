@@ -7,7 +7,9 @@
 #'
 #' @param x A (frequentist) model object, or a (numeric) vector of p-values.
 #' @param n_obs Number of observations. Either length 1, or same length as `p`.
-#' @param log Wether to return log Bayes Factors.
+#' @param log Wether to return log Bayes Factors. **Note:** The `print()` method
+#' always shows `BF` - the `"log_BF"` column is only accessible from the returned
+#' data frame.
 #' @param ... Other arguments to be passed (not used for now).
 #'
 #' @references
@@ -113,7 +115,7 @@ p_to_bf.default <- function(x, log = FALSE, ...) {
     stop("Argument `x` must be a model object, or a numeric vector of p-values.", call. = FALSE)
   }
 
-  out <- p_to_bf(params$p, n_obs = n_obs, log = log)
+  out <- p_to_bf(p, n_obs = n_obs, log = log)
   out <- cbind(params, out[, -1, drop = FALSE])
 
   class(out) <- c("p_to_pseudo_bf", "data.frame")
