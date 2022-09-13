@@ -126,5 +126,5 @@ p_to_bf.default <- function(x, log = FALSE, ...) {
 
 #' @export
 print.p_to_pseudo_bf <- function(x, ...) {
-  insight::export_table(insight::format_table(x), caption = "Pseudo-BF (against NULL)")
+  cat(insight::export_table(insight::format_table(x), caption = "Pseudo-BF (against NULL)"))
 }
