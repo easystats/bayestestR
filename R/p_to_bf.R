@@ -20,6 +20,27 @@
 #'   data(iris)
 #'   model <- lm(Petal.Length ~ Sepal.Length + Species, data = iris)
 #'   p_to_bf(model)
+#'
+#'   # Examples that demonstrate comparison between
+#'   # BIC-approximated and pseudo BF
+#'   # --------------------------------------------
+#'   m0 <- lm(mpg ~ 1, mtcars)
+#'   m1 <- lm(mpg ~ am, mtcars)
+#'   m2 <- lm(mpg ~ factor(cyl), mtcars)
+#'
+#'   # In this first example, BIC-approximated BF and
+#'   # pseudo-BF based on p-values are close...
+#'
+#'   # BIC-approximated BF, m1 against null model
+#'   bic_to_bf(BIC(m1), denominator = BIC(m0))
+#'
+#'   # pseudo-BF based on p-values - dropping intercept
+#'   p_to_bf(m1)[-1, ]
+#'
+#'   # The second example shows that results from pseudo-BF are less accurate
+#'   # and should be handled wit caution!
+#'   bic_to_bf(BIC(m2), denominator = BIC(m0))
+#'   p_to_bf(anova(m2), n_obs = nrow(mtcars))
 #' }
 #'
 #' @return A data frame with the p-values and pseudo-Bayes factors (against the null).
@@ -62,7 +83,8 @@ p_to_bf.numeric <- function(x, log = FALSE, n_obs = NULL, ...) {
   out <- data.frame(
     p = p,
     # IMPORTANT! This is BF10!
-    log_BF = -log_BF
+    log_BF = -log_BF,
+    stringsAsFactors = FALSE
   )
 
   if (!log) {
@@ -70,6 +92,7 @@ p_to_bf.numeric <- function(x, log = FALSE, n_obs = NULL, ...) {
     out$log_BF <- NULL
   }
 
+  class(out) <- c("p_to_pseudo_bf", "data.frame")
   out
 }
 
@@ -81,10 +104,27 @@ p_to_bf.default <- function(x, log = FALSE, ...) {
     params <- parameters::p_value(x)
     p <- params$p
     n_obs <- insight::n_obs(x)
+    # sanity check
+    if (is.null(n_obs)) {
+      # user may also pass n_obs via dots...
+      n_obs <- list(...)$n_obs
+    }
   } else {
     stop("Argument `x` must be a model object, or a numeric vector of p-values.", call. = FALSE)
   }
 
   out <- p_to_bf(params$p, n_obs = n_obs, log = log)
-  cbind(params, out[, -1, drop = FALSE])
+  out <- cbind(params, out[, -1, drop = FALSE])
+
+  class(out) <- c("p_to_pseudo_bf", "data.frame")
+  out
+}
+
+
+
+# methods ---------------
+
+#' @export
+print.p_to_pseudo_bf <- function(x, ...) {
+  insight::export_table(insight::format_table(x), caption = "Pseudo-BF (against NULL)")
 }
