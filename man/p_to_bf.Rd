@@ -22,10 +22,13 @@ p_to_bf(x, log = FALSE, ...)
 \item{n_obs}{Number of observations. Either length 1, or same length as \code{p}.}
 }
 \value{
-A data frame with the p-values and Bayes factors (against the null).
+A data frame with the p-values and pseudo-Bayes factors (against the null).
 }
 \description{
-Convert p-values to (pseudo) Bayes Factors. This transformation has been suggested by Wagenmakers (2022), but is based on a vast amount of assumptions. It might therefore be not reliable. Use at your own risks. For more accurate approximate Bayes factors, use \code{\link[=bic_to_bf]{bic_to_bf()}} instead.
+Convert p-values to (pseudo) Bayes Factors. This transformation has been
+suggested by Wagenmakers (2022), but is based on a vast amount of assumptions.
+It might therefore be not reliable. Use at your own risks. For more accurate
+approximate Bayes factors, use \code{\link[=bic_to_bf]{bic_to_bf()}} instead.
 }
 \examples{
 if (requireNamespace("parameters", quietly = TRUE)) {

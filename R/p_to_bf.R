@@ -1,6 +1,9 @@
 #' Convert p-values to (pseudo) Bayes Factors
 #'
-#' Convert p-values to (pseudo) Bayes Factors. This transformation has been suggested by Wagenmakers (2022), but is based on a vast amount of assumptions. It might therefore be not reliable. Use at your own risks. For more accurate approximate Bayes factors, use [bic_to_bf()] instead.
+#' Convert p-values to (pseudo) Bayes Factors. This transformation has been
+#' suggested by Wagenmakers (2022), but is based on a vast amount of assumptions.
+#' It might therefore be not reliable. Use at your own risks. For more accurate
+#' approximate Bayes factors, use [bic_to_bf()] instead.
 #'
 #' @param x A (frequentist) model object, or a (numeric) vector of p-values.
 #' @param n_obs Number of observations. Either length 1, or same length as `p`.
@@ -34,11 +37,11 @@ p_to_bf.numeric <- function(x, log = FALSE, n_obs = NULL, ...) {
   p <- x
   # Validate n_obs
   if (is.null(n_obs)) {
-    stop("Argument 'n_obs' must be specified.", call. = FALSE)
+    stop("Argument `n_obs` must be specified.", call. = FALSE)
   } else if (length(n_obs) == 1L) {
     n_obs <- rep(n_obs, times = length(p))
   } else if (length(n_obs) != length(p)) {
-    stop("'n_obs' must be of length 1 or same length as 'p'.")
+    stop("`n_obs` must be of length 1 or same length as `p`.", call. = FALSE)
   }
 
   # Convert
@@ -79,9 +82,9 @@ p_to_bf.default <- function(x, log = FALSE, ...) {
     p <- params$p
     n_obs <- insight::n_obs(x)
   } else {
-    stop("Argument must be a model object, or a numeric vector of p-values.", call. = FALSE)
+    stop("Argument `x` must be a model object, or a numeric vector of p-values.", call. = FALSE)
   }
 
   out <- p_to_bf(params$p, n_obs = n_obs)
-  cbind(params, out[,-1, drop = FALSE])
+  cbind(params, out[, -1, drop = FALSE])
 }
