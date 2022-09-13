@@ -85,6 +85,6 @@ p_to_bf.default <- function(x, log = FALSE, ...) {
     stop("Argument `x` must be a model object, or a numeric vector of p-values.", call. = FALSE)
   }
 
-  out <- p_to_bf(params$p, n_obs = n_obs)
+  out <- p_to_bf(params$p, n_obs = n_obs, log = log)
   cbind(params, out[, -1, drop = FALSE])
 }
