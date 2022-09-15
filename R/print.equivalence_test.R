@@ -108,7 +108,7 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   for (i in ci) {
     xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
     colnames(xsub)[colnames(xsub) == "HDI"] <- sprintf("%i%% HDI", 100 * i)
-    print_data_frame(xsub, digits = digits)
+    .print_data_frame(xsub, digits = digits)
     cat("\n")
   }
 }

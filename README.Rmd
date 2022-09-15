@@ -3,6 +3,7 @@ output: github_document
 bibliography: paper/paper.bib
 csl: vignettes/apa.csl
 ---
+
 # bayestestR <img src='man/figures/logo.png' align="right" height="139" />
 
 ```{r, echo = FALSE, warning=FALSE, message=FALSE}
