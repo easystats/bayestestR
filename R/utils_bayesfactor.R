@@ -225,6 +225,8 @@
     for (m in seq_len(nrow(df.model))) {
       tmp_terms <- .make_terms(df.model$Modelnames[m])
       if (length(tmp_terms) > 0) {
+        missing_terms <- !tmp_terms %in% colnames(df.model)
+        if (any(missing_terms)) df.model[, tmp_terms[missing_terms]] <- NA
         df.model[m, tmp_terms] <- TRUE
       }
     }
@@ -411,7 +413,8 @@ as.double.bayesfactor_restricted <- as.numeric.bayesfactor_inclusion
   insight::check_if_installed("logspline")
 
   in_args <- list(...)
-
+  # arg_names <- names(formals(logspline::logspline, envir = parent.frame()))
+  arg_names <- names(formals(logspline::logspline))
   in_args <- in_args[names(in_args) %in% arg_names]
   in_args <- c(list(x = x), in_args)
   suppressWarnings(do.call(logspline::logspline, in_args))
