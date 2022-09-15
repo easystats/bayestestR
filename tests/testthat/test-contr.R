@@ -42,9 +42,11 @@ test_that("contr.equalprior | pairs", {
   means1 <- t(contr1 %*% t(samps1))
   means2 <- t(contr2 %*% t(samps2))
 
-  w <- matrix(c(-1, 1, 0,
-                1, 0, -1,
-                0, -1, 1), 3,3)
+  w <- matrix(c(
+    -1, 1, 0,
+    1, 0, -1,
+    0, -1, 1
+  ), 3, 3)
 
   pairs1 <- t(w %*% t(means1))
   pairs2 <- t(w %*% t(means2))
@@ -77,4 +79,3 @@ test_that("contr.equalprior | dev", {
   expect_equal(mean(apply(means1, 2, sd)), g, tolerance = 0.1)
   expect_equal(mean(apply(means1, 2, sd)), mean(apply(means2, 2, sd)), tolerance = 0.1)
 })
-

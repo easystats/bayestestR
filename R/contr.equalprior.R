@@ -159,7 +159,7 @@ contr.equalprior <- function(n, contrasts = TRUE, sparse = FALSE) {
   )
 
   k <- nrow(contr)
-  contr <- contr - 1/k
+  contr <- contr - 1 / k
 
   if (contrasts) {
     contr <- eigen(contr)$vectors[, seq_len(k - 1), drop = FALSE]
@@ -170,13 +170,13 @@ contr.equalprior <- function(n, contrasts = TRUE, sparse = FALSE) {
 
 #' @export
 #' @rdname contr.equalprior
-contr.equalprior_pairs <- function (n, contrasts = TRUE, sparse = FALSE) {
+contr.equalprior_pairs <- function(n, contrasts = TRUE, sparse = FALSE) {
   contr <- contr.equalprior(n, contrasts, sparse) / sqrt(2)
 }
 
 #' @export
 #' @rdname contr.equalprior
-contr.equalprior_deviations <- function (n, contrasts = TRUE, sparse = FALSE) {
+contr.equalprior_deviations <- function(n, contrasts = TRUE, sparse = FALSE) {
   contr <- contr.equalprior(n, contrasts, sparse)
   k <- nrow(contr)
 

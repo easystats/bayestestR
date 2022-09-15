@@ -103,7 +103,7 @@ estimate_density.default <- function(x, ...) {
                               ci = NULL,
                               ...) {
   method <- match.arg(
-    tolower(method), 
+    tolower(method),
     c("kernel", "logspline", "kernsmooth", "smooth", "mixture", "mclust")
   )
 
@@ -406,7 +406,7 @@ as.data.frame.density <- function(x, ...) {
 
 #' Density Probability at a Given Value
 #'
-#' Compute the density value at a given point of a distribution (i.e., 
+#' Compute the density value at a given point of a distribution (i.e.,
 #' the value of the `y` axis of a value `x` of a distribution).
 #'
 #' @param posterior Vector representing a posterior distribution.
