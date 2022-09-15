@@ -1,4 +1,4 @@
-print_data_frame <- function(x, digits) {
+.print_data_frame <- function(x, digits) {
   out <- list(x)
   names(out) <- "fixed"
 

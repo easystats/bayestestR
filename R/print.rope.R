@@ -65,12 +65,12 @@ print.rope <- function(x, digits = 2, ...) {
   # more difficult to read...
   if (length(ci) == 1) {
     # print complete data frame, because we have no different CI values here
-    print_data_frame(x, digits = digits)
+    .print_data_frame(x, digits = digits)
   } else {
     for (i in ci) {
       xsub <- x[x$CI == i, -which(colnames(x) == "CI"), drop = FALSE]
       insight::print_color(sprintf("ROPE for the %s%% HDI:\n\n", 100 * i), "cyan")
-      print_data_frame(xsub, digits = digits)
+      .print_data_frame(xsub, digits = digits)
       cat("\n")
     }
   }

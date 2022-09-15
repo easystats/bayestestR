@@ -314,7 +314,7 @@ print.sexit <- function(x, summary = FALSE, digits = 2, ...) {
       df <- cbind(df, x[c("Direction", "Significance", "Large")])
     }
     names(df) <- attributes(x)$pretty_cols
-    print_data_frame(df, digits = digits, ...)
+    .print_data_frame(df, digits = digits, ...)
 
     # Short
   } else {
