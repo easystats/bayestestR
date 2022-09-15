@@ -788,7 +788,7 @@ describe_posterior.stanreg <- function(posteriors,
                                        BF = 1,
                                        ...) {
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-      "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
+    "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
     bf_prior <- suppressMessages(unupdate(posteriors))
   }
 
@@ -978,7 +978,7 @@ describe_posterior.brmsfit <- function(posteriors,
   component <- match.arg(component)
 
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-      "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
+    "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
     bf_prior <- suppressMessages(unupdate(posteriors))
   }
 

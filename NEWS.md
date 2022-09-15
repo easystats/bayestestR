@@ -1,7 +1,8 @@
 # bayestestR 0.12.x
 
-
 ## Breaking
+
+* The minimum needed R version has been bumped to `3.6`.
 
 * `contr.equalprior(contrasts = FALSE)` (previously `contr.orthonorm`) no longer returns an identity matrix, but a shifted `diag(n) - 1/n`, for consistency.
 

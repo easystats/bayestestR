@@ -46,7 +46,10 @@
 
 
 #' @keywords internal
-.prepare_output <- function(temp, cleaned_parameters, is_stan_mv = FALSE, is_brms_mv = FALSE) {
+.prepare_output <- function(temp,
+                            cleaned_parameters,
+                            is_stan_mv = FALSE,
+                            is_brms_mv = FALSE) {
   if (is.null(cleaned_parameters)) {
     return(temp)
   }
