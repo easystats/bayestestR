@@ -193,15 +193,19 @@
 <p>Once you have downloaded the package, you can then load it using:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://easystats.github.io/bayestestR/">"bayestestR"</a></span><span class="op">)</span></span></code></pre></div>
+<blockquote>
+<p><strong>Tip</strong></p>
+<p><strong>Instead of <code><a href="https://easystats.github.io/datawizard/" class="external-link">library(datawizard)</a></code>, use <code><a href="https://easystats.github.io/easystats/" class="external-link">library(easystats)</a></code>.</strong> <strong>This will make all features of the easystats-ecosystem available.</strong></p>
+<p><strong>To stay updated, use <code>easystats::install_latest()</code>.</strong></p>
+</blockquote>
 </div>
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
-<p><a href="https://easystats.github.io/bayestestR/"><img src="https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63" alt="Documentation"></a> <a href="https://easystats.github.io/blog/posts/" class="external-link"><img src="https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800" alt="Blog"></a> <a href="https://easystats.github.io/bayestestR/reference/index.html"><img src="https://img.shields.io/badge/features-bayestestR-orange.svg?colorB=2196F3" alt="Features"></a></p>
-<p>Click on the buttons above to access the package <a href="https://easystats.github.io/bayestestR/">documentation</a> and the <a href="https://easystats.github.io/blog/posts/" class="external-link">easystats blog</a>, and check-out these vignettes:</p>
-<div class="section level4">
-<h4 id="tutorials">Tutorials<a class="anchor" aria-label="anchor" href="#tutorials"></a>
-</h4>
+<p>Access the package <a href="https://easystats.github.io/bayestestR/">documentation</a> and check-out these vignettes:</p>
+<div class="section level3">
+<h3 id="tutorials">Tutorials<a class="anchor" aria-label="anchor" href="#tutorials"></a>
+</h3>
 <ul>
 <li><a href="https://easystats.github.io/bayestestR/articles/bayestestR.html">Get Started with Bayesian Analysis</a></li>
 <li><a href="https://easystats.github.io/bayestestR/articles/example1.html">Example 1: Initiation to Bayesian models</a></li>
@@ -209,9 +213,9 @@
 <li><a href="https://easystats.github.io/bayestestR/articles/example3.html">Example 3: Become a Bayesian master</a></li>
 </ul>
 </div>
-<div class="section level4">
-<h4 id="articles">Articles<a class="anchor" aria-label="anchor" href="#articles"></a>
-</h4>
+<div class="section level3">
+<h3 id="articles">Articles<a class="anchor" aria-label="anchor" href="#articles"></a>
+</h3>
 <ul>
 <li><a href="https://easystats.github.io/bayestestR/articles/credible_interval.html">Credible Intervals (CI)</a></li>
 <li><a href="https://easystats.github.io/bayestestR/articles/probability_of_direction.html">Probability of Direction (pd)</a></li>
@@ -279,9 +283,9 @@
 <span><span class="op">)</span></span>
 <span><span class="co">## Summary of Posterior Distribution</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## Parameter |   Median |        95% CI |     pd |   ps</span></span>
-<span><span class="co">## ----------------------------------------------------</span></span>
-<span><span class="co">## Posterior | 5.58e-03 | [-1.99, 1.94] | 50.25% | 0.46</span></span></code></pre></div>
+<span><span class="co">## Parameter |    Median |        95% CI |     pd |   ps</span></span>
+<span><span class="co">## -----------------------------------------------------</span></span>
+<span><span class="co">## Posterior | -4.19e-03 | [-1.91, 1.98] | 50.18% | 0.46</span></span></code></pre></div>
 <p><code><a href="reference/describe_posterior.html">describe_posterior()</a></code> works for many objects, including more complex <em>brmsfit</em>-models. For better readability, the output is separated by model components:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">zinb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"http://stats.idre.ucla.edu/stat/data/fish.csv"</span><span class="op">)</span></span>
@@ -465,7 +469,7 @@
 <p><a href="https://easystats.github.io/bayestestR/reference/density_at.html"><code>density_at()</code></a>: Compute the density of a given point of a distribution.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/density_at.html">density_at</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">## [1] 0.38</span></span></code></pre></div>
+<span><span class="co">## [1] 0.45</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -548,6 +552,7 @@ Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., &amp; Grasman, R. (2010). Bayesi
 <li><a href="https://cran.r-project.org/package=bayestestR" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/bayestestR" alt="downloads"></a></li>
 <li><a href="https://cranlogs.r-pkg.org/" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/bayestestR" alt="total"></a></li>
 <li><a href="https://CRAN.R-project.org/package=bayestestR" class="external-link"><img src="https://tinyverse.netlify.com/badge/bayestestR" alt="status"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
 </ul>
 </div>
 
