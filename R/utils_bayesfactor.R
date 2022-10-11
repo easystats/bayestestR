@@ -295,7 +295,7 @@
   insight::check_if_installed("logspline")
 
   estimate_samples_density <- function(samples) {
-    nm <- insight::safe_deparse(substitute(samples))
+    nm <- insight::safe_deparse_symbol(substitute(samples))
     samples <- utils::stack(samples)
     samples <- split(samples, samples$ind)
 

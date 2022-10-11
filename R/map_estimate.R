@@ -103,7 +103,7 @@ map_estimate.mcmc.list <- map_estimate.bayesQR
 
   out <- .add_clean_parameters_attribute(out, x)
   attr(out, "MAP_density") <- sapply(l, attr, "MAP_density")
-  attr(out, "object_name") <- deparse(substitute(x), width.cutoff = 500)
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   attr(out, "centrality") <- "map"
   class(out) <- unique(c("map_estimate", "see_point_estimate", class(out)))
   out

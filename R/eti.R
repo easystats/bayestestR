@@ -66,7 +66,7 @@ eti.numeric <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 eti.data.frame <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = x, ci = ci, verbose = verbose, fun = "eti")
-  attr(dat, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
 
@@ -75,7 +75,7 @@ eti.data.frame <- function(x, ci = 0.95, verbose = TRUE, ...) {
 #' @export
 eti.draws <- function(x, ci = 0.95, verbose = TRUE, ...) {
   dat <- .compute_interval_dataframe(x = .posterior_draws_to_df(x), ci = ci, verbose = verbose, fun = "eti")
-  attr(dat, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
 
@@ -89,7 +89,7 @@ eti.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
   d <- as.data.frame(x$Sol[, 1:nF, drop = FALSE])
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "eti")
-  attr(dat, "data") <- insight::safe_deparse(substitute(x))
+  attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
 
@@ -99,7 +99,7 @@ eti.MCMCglmm <- function(x, ci = 0.95, verbose = TRUE, ...) {
 eti.mcmc <- function(x, ci = 0.95, verbose = TRUE, ...) {
   d <- as.data.frame(x)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "eti")
-  attr(dat, "data") <- insight::safe_deparse(substitute(x))
+  attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
 
@@ -110,7 +110,7 @@ eti.bamlss <- function(x, ci = 0.95, component = c("all", "conditional", "locati
   component <- match.arg(component)
   d <- insight::get_parameters(x, component = component)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "eti")
-  attr(dat, "data") <- insight::safe_deparse(substitute(x))
+  attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
 
@@ -120,7 +120,7 @@ eti.bamlss <- function(x, ci = 0.95, component = c("all", "conditional", "locati
 eti.bcplm <- function(x, ci = 0.95, verbose = TRUE, ...) {
   d <- insight::get_parameters(x)
   dat <- .compute_interval_dataframe(x = d, ci = ci, verbose = verbose, fun = "eti")
-  attr(dat, "data") <- insight::safe_deparse(substitute(x))
+  attr(dat, "data") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
 
@@ -162,7 +162,7 @@ eti.emmGrid <- function(x, ci = 0.95, verbose = TRUE, ...) {
   xdf <- insight::get_parameters(x)
 
   dat <- eti(xdf, ci = ci, verbose = verbose, ...)
-  attr(dat, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(dat, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   dat
 }
 
@@ -185,7 +185,7 @@ eti.stanreg <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
   )
 
   class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
@@ -212,7 +212,7 @@ eti.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
   )
 
   class(out) <- unique(c("bayestestR_eti", "see_eti", class(out)))
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
@@ -220,7 +220,7 @@ eti.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
 #' @export
 eti.BFBayesFactor <- function(x, ci = 0.95, verbose = TRUE, ...) {
   out <- eti(insight::get_parameters(x), ci = ci, verbose = verbose, ...)
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
@@ -232,7 +232,7 @@ eti.get_predicted <- function(x, ...) {
   } else {
     stop("No iterations present in the output.", call. = FALSE)
   }
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 

@@ -1,4 +1,10 @@
-# bayestestR 0.12.x
+# bayestestR 0.13.1
+
+## Changes
+
+* Improved speed performance when functions are called using `do.call()`.
+
+# bayestestR 0.13.0
 
 ## Breaking
 

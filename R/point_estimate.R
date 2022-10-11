@@ -204,7 +204,7 @@ point_estimate.emmGrid <- function(x, centrality = "all", dispersion = FALSE, ..
   xdf <- insight::get_parameters(x)
 
   out <- point_estimate(xdf, centrality = centrality, dispersion = dispersion, ...)
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
@@ -236,7 +236,7 @@ point_estimate.stanreg <- function(x, centrality = "all", dispersion = FALSE, ef
     inherits(x, "stanmvreg")
   )
 
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   attr(out, "centrality") <- centrality
   attr(out, "clean_parameters") <- cleaned_parameters
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
@@ -263,7 +263,7 @@ point_estimate.brmsfit <- function(x, centrality = "all", dispersion = FALSE, ef
     cleaned_parameters
   )
 
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   attr(out, "centrality") <- centrality
   attr(out, "clean_parameters") <- cleaned_parameters
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
@@ -319,7 +319,7 @@ point_estimate.sim <- function(x, centrality = "all", dispersion = FALSE, parame
 #' @export
 point_estimate.BFBayesFactor <- function(x, centrality = "all", dispersion = FALSE, ...) {
   out <- point_estimate(insight::get_parameters(x), centrality = centrality, dispersion = dispersion, ...)
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   attr(out, "centrality") <- centrality
   class(out) <- unique(c("point_estimate", "see_point_estimate", class(out)))
 

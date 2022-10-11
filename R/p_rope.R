@@ -32,7 +32,7 @@ p_rope.default <- function(x, ...) {
 #' @export
 p_rope.numeric <- function(x, range = "default", ...) {
   out <- .p_rope(rope(x, range = range, ci = 1, ...))
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
@@ -55,7 +55,7 @@ p_rope.emmGrid <- function(x, range = "default", ...) {
   xdf <- insight::get_parameters(x)
 
   out <- p_rope(xdf, range = range)
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
@@ -74,7 +74,7 @@ p_rope.MCMCglmm <- p_rope.numeric
 p_rope.stanreg <- function(x, range = "default", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
   out <- .p_rope(rope(x, range = range, ci = 1, effects = effects, component = component, parameters = parameters, ...))
   out <- .add_clean_parameters_attribute(out, x)
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
@@ -90,7 +90,7 @@ p_rope.blavaan <- p_rope.stanreg
 p_rope.brmsfit <- function(x, range = "default", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
   out <- .p_rope(rope(x, range = range, ci = 1, effects = effects, component = component, parameters = parameters, ...))
   out <- .add_clean_parameters_attribute(out, x)
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
@@ -102,7 +102,7 @@ p_rope.sim.merMod <- p_rope.stanreg
 #' @export
 p_rope.sim <- function(x, range = "default", parameters = NULL, ...) {
   out <- .p_rope(rope(x, range = range, ci = 1, parameters = parameters, ...))
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
@@ -111,14 +111,14 @@ p_rope.bamlss <- function(x, range = "default", component = c("all", "conditiona
   component <- match.arg(component)
   out <- .p_rope(rope(x, range = range, ci = 1, effects = "all", component = component, parameters = parameters, ...))
   out <- .add_clean_parameters_attribute(out, x)
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
 #' @export
 p_rope.mcmc <- function(x, range = "default", parameters = NULL, ...) {
   out <- .p_rope(rope(x, range = range, ci = 1, parameters = parameters, ...))
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 

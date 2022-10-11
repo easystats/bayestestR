@@ -311,7 +311,7 @@ estimate_density.stanreg <- function(x, method = "kernel", precision = 2^10, ext
   component <- match.arg(component)
 
   out <- estimate_density(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
 
   class(out) <- .set_density_class(out)
   out
@@ -331,7 +331,7 @@ estimate_density.brmsfit <- function(x, method = "kernel", precision = 2^10, ext
   component <- match.arg(component)
 
   out <- estimate_density(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
 
   class(out) <- .set_density_class(out)
   out
@@ -344,7 +344,7 @@ estimate_density.brmsfit <- function(x, method = "kernel", precision = 2^10, ext
 estimate_density.MCMCglmm <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", parameters = NULL, ...) {
   nF <- x$Fixed$nfl
   out <- estimate_density(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
 
   class(out) <- .set_density_class(out)
   out
@@ -356,7 +356,7 @@ estimate_density.MCMCglmm <- function(x, method = "kernel", precision = 2^10, ex
 #' @export
 estimate_density.mcmc <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", parameters = NULL, ...) {
   out <- estimate_density(insight::get_parameters(x, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
 
   class(out) <- .set_density_class(out)
   out
@@ -382,7 +382,7 @@ estimate_density.mcmc.list <- estimate_density.mcmc
 estimate_density.bamlss <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", component = c("all", "conditional", "location"), parameters = NULL, ...) {
   component <- match.arg(component)
   out <- estimate_density(insight::get_parameters(x, component = component, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
-  attr(out, "object_name") <- insight::safe_deparse(substitute(x))
+  attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
 
   class(out) <- .set_density_class(out)
   out
