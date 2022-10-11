@@ -74,7 +74,7 @@ unupdate.brmsfit <- function(model, verbose = TRUE, ...) {
   )
 
   if (methods::is(model_prior, "try-error")) {
-    if (grepl("proper priors", model_prior)) {
+    if (grepl("proper priors", model_prior, fixed = TRUE)) {
       stop(
         "Cannot sample from flat priors (such as the default ",
         "priors for fixed-effects in a 'brmsfit' model).",
@@ -116,14 +116,13 @@ unupdate.brmsfit_multiple <- function(model,
     )), silent = TRUE))
 
   if (methods::is(model_prior, "try-error")) {
-    if (grepl("proper priors", model_prior)) {
-      stop(
+    if (grepl("proper priors", model_prior, fixed = TRUE)) {
+      insight::format_error(
         "Cannot sample from flat priors (such as the default ",
         "priors for fixed-effects in a 'brmsfit' model).",
-        call. = FALSE
       )
     } else {
-      stop(model_prior, call. = FALSE)
+      insight::format_error(model_prior)
     }
   }
 

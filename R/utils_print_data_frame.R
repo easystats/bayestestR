@@ -63,7 +63,7 @@
       # remove ".1" etc. suffix
       out[[i]]$Parameter <- gsub("(.*)(\\.)(\\d)$", "\\1 \\3", out[[i]]$Parameter)
       # remove "__zi"
-      out[[i]]$Parameter <- gsub("__zi", "", out[[i]]$Parameter)
+      out[[i]]$Parameter <- gsub("__zi", "", out[[i]]$Parameter, fixed = TRUE)
     }
 
     if (length(out) > 1) {

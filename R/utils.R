@@ -70,12 +70,12 @@
     remove_cols <- c("Group", "Cleaned_Parameter", "Response", "Function", ".roworder")
   }
   merge_by <- intersect(merge_by, colnames(temp))
-  temp$.roworder <- 1:nrow(temp)
+  temp$.roworder <- seq_len(nrow(temp))
   out <- merge(x = temp, y = cleaned_parameters, by = merge_by, all.x = TRUE)
   # hope this works for stanmvreg...
   if ((isTRUE(is_stan_mv) || isTRUE(is_brms_mv)) && all(is.na(out$Effects)) && all(is.na(out$Component))) {
-    out$Effects <- cleaned_parameters$Effects[1:nrow(out)]
-    out$Component <- cleaned_parameters$Component[1:nrow(out)]
+    out$Effects <- cleaned_parameters$Effects[seq_len(nrow(out))]
+    out$Component <- cleaned_parameters$Component[seq_len(nrow(out))]
   }
   # this here is required for multiple response models...
   if (all(is.na(out$Effects)) || all(is.na(out$Component))) {
@@ -93,7 +93,7 @@
   if (is.null(ncol(y))) {
     return(x)
   }
-  x$.rowid <- 1:nrow(x)
+  x$.rowid <- seq_len(nrow(x))
   x <- merge(x, y, by = by, all = all)
   datawizard::data_remove(x[order(x$.rowid), ], ".rowid", verbose = FALSE)
 }

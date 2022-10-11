@@ -260,7 +260,7 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
     caption <- attr(formatted_table, "table_caption")
 
     # if we have no useful column name and a caption, use caption
-    if (!is.null(caption) && !grepl(paste0(ci_string, "$"), colnames(formatted_table))) {
+    if (!is.null(caption) && !endsWith(colnames(formatted_table), ci_string)) {
       cat(paste0(caption, ": "))
     } else {
       cat(paste0(colnames(formatted_table), ": "))

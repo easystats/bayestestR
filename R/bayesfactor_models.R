@@ -551,12 +551,12 @@ as.matrix.bayesfactor_models <- function(x, ...) {
       m_txt <- character(length = length(m_names))
 
       ## Detect types ##
-      is_null <- grepl("^Null", m_names)
-      is_rho <- grepl("rho", m_names)
-      is_mu <- grepl("mu", m_names)
-      is_d <- grepl("d", m_names)
-      is_p <- grepl("p", m_names)
-      is_range <- grepl("<", m_names)
+      is_null <- startsWith(m_names, "Null")
+      is_rho <- grepl("rho", m_names, fixed = TRUE)
+      is_mu <- grepl("mu", m_names, fixed = TRUE)
+      is_d <- grepl("d", m_names, fixed = TRUE)
+      is_p <- grepl("p", m_names, fixed = TRUE)
+      is_range <- grepl("<", m_names, fixed = TRUE)
 
       ## Range Alts ##
       m_txt[!is_null & is_range] <-
@@ -564,21 +564,21 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 
       ## Null models + Not nulls ##
       if (any(is_d & is_p)) {
-        is_null <- !grepl("^Non", m_names)
+        is_null <- !startsWith(m_names, "Non")
         temp <- m_names[is_null][1]
         mi <- gregexpr("\\(.*\\)", temp)
         aa <- unlist(regmatches(temp, m = mi))
 
-        m_txt[is_null] <- sub("a=", "a = ", aa)
-        m_txt[!is_null & !is_range] <- sub("a=", "a != ", aa)
+        m_txt[is_null] <- sub("a=", "a = ", aa, fixed = TRUE)
+        m_txt[!is_null & !is_range] <- sub("a=", "a != ", aa, fixed = TRUE)
       } else if (any(is_rho)) {
         m_txt[is_null] <- "rho = 0"
         m_txt[!is_null & !is_range] <- "rho != 0"
-        m_txt <- sub("<rho<", " < rho < ", m_txt)
+        m_txt <- sub("<rho<", " < rho < ", m_txt, fixed = TRUE)
       } else if (any(is_d | is_mu)) {
         m_txt[is_null] <- "d = 0"
         m_txt[!is_null & !is_range] <- "d != 0"
-        m_txt <- sub("<d<", " < d < ", m_txt)
+        m_txt <- sub("<d<", " < d < ", m_txt, fixed = TRUE)
       } else if (any(is_p)) {
         temp <- m_names[is_null][1]
         mi <- gregexpr("[0-9|\\.]+", temp)
@@ -592,7 +592,7 @@ as.matrix.bayesfactor_models <- function(x, ...) {
       }
 
       ## wrap with () for readability ##
-      is_wrapped <- grepl("\\(", m_txt)
+      is_wrapped <- grepl("(", m_txt, fixed = TRUE)
       m_txt[!is_wrapped] <- paste0("(", m_txt[!is_wrapped], ")")
 
       return(m_txt)

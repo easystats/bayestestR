@@ -19,7 +19,7 @@
 
   prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
   if (methods::is(prior, "try-error")) {
-    if (grepl("flat priors", prior)) {
+    if (grepl("flat priors", prior, fixed = TRUE)) {
       prior <- paste0(
         prior, "Could not therefore compute Bayes factors, as these inform about ",
         "the raltive likelihood of two 'hypotheses', and flat priors provide no ",
@@ -27,7 +27,7 @@
         "See '?bayesfactor_parameters' for more information.\n"
       )
     }
-    stop(prior, call. = FALSE)
+    insight::format_error(prior)
   }
 
   prior <- insight::get_parameters(prior, effects = effects, component = component, ...)
@@ -100,7 +100,7 @@
     prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
     if (inherits(prior, "try-error")) {
       on.exit() # undo general error message
-      if (grepl("flat priors", prior)) {
+      if (grepl("flat priors", prior, fixed = TRUE)) {
         prior <- paste0(
           prior, "Could not therefore compute Bayes factors, as these inform about ",
           "the raltive likelihood of two 'hypotheses', and flat priors provide no ",
@@ -151,7 +151,7 @@
 
     prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
     if (inherits(prior, "try-error")) {
-      if (grepl("flat priors", prior)) {
+      if (grepl("flat priors", prior, fixed = TRUE)) {
         prior <- paste0(
           prior, "Could not therefore compute Bayes factors, as these inform about ",
           "the raltive likelihood of two 'hypotheses', and flat priors provide no ",

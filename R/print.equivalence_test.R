@@ -8,8 +8,8 @@ print.equivalence_test <- function(x, digits = 2, ...) {
   model <- .retrieve_model(x)
   if (!is.null(model)) {
     cp <- insight::clean_parameters(model)
-    if (!is.null(cp$Group) && any(grepl("^SD/Cor", cp$Group))) {
-      cp <- cp[grepl("^SD/Cor", cp$Group), ]
+    if (!is.null(cp$Group) && any(startsWith(cp$Group, "SD/Cor"))) {
+      cp <- cp[startsWith(cp$Group, "SD/Cor"), ]
       matches <- match(cp$Parameter, x$Parameter)
       if (length(matches)) x$Parameter[matches] <- paste0("SD/Cor: ", cp$Cleaned_Parameter[stats::na.omit(match(x$Parameter, cp$Parameter))])
     }

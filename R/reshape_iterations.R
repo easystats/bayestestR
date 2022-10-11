@@ -29,7 +29,7 @@ reshape_iterations <- function(x, prefix = c("draw", "iter", "iteration", "sim")
   }
 
   # Find columns' name
-  prefix <- prefix[min(which(sapply(tolower(prefix), function(prefix) sum(grepl(prefix, tolower(names(x)))) > 1)))]
+  prefix <- prefix[min(which(sapply(tolower(prefix), function(prefix) sum(grepl(prefix, tolower(names(x)), fixed = TRUE)) > 1)))]
 
   if (is.na(prefix) || is.null(prefix)) {
     stop(insight::format_message(
@@ -38,7 +38,7 @@ reshape_iterations <- function(x, prefix = c("draw", "iter", "iteration", "sim")
   }
 
   # Get column names
-  iter_cols <- tolower(names(x))[grepl(prefix, tolower(names(x)))]
+  iter_cols <- tolower(names(x))[grepl(prefix, tolower(names(x)), fixed = TRUE)]
 
   # Drop "_" if prefix ends with it
   newname <- ifelse(endsWith(prefix, "_"), substr(prefix, 1, nchar(prefix) - 1), prefix)

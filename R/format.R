@@ -18,7 +18,7 @@ format.describe_posterior <- function(x,
   out <- insight::format_table(x, digits = digits, format = format, ...)
 
   # different CI-types as column names?
-  if (ci_string != "CI" && any(grepl("CI$", colnames(out)))) {
+  if (ci_string != "CI" && any(endsWith(colnames(out), "CI"))) {
     colnames(out) <- gsub("(.*)CI$", paste0("\\1", ci_string), colnames(out))
   }
 
