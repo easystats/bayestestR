@@ -60,22 +60,25 @@ Once you have downloaded the package, you can then load it using:
 library("bayestestR")
 ```
 
+> **Tip**
+>
+> **Instead of `library(datawizard)`, use `library(easystats)`.**
+> **This will make all features of the  easystats-ecosystem available.**
+>
+> **To stay updated, use `easystats::install_latest()`.**
+
 ## Documentation
 
-[![Documentation](https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63)](https://easystats.github.io/bayestestR/) 
-[![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
-[![Features](https://img.shields.io/badge/features-bayestestR-orange.svg?colorB=2196F3)](https://easystats.github.io/bayestestR/reference/index.html)
+Access the package [documentation](https://easystats.github.io/bayestestR/) and check-out these vignettes:
 
-Click on the buttons above to access the package [documentation](https://easystats.github.io/bayestestR/) and the [easystats blog](https://easystats.github.io/blog/posts/), and check-out these vignettes:
-
-#### Tutorials
+### Tutorials
 
 - [Get Started with Bayesian Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
 - [Example 1: Initiation to Bayesian models](https://easystats.github.io/bayestestR/articles/example1.html)
 - [Example 2: Confirmation of Bayesian skills](https://easystats.github.io/bayestestR/articles/example2.html)
 - [Example 3: Become a Bayesian master](https://easystats.github.io/bayestestR/articles/example3.html)
 
-#### Articles
+### Articles
 
 - [Credible Intervals (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
 - [Probability of Direction (pd)](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
@@ -84,8 +87,6 @@ Click on the buttons above to access the package [documentation](https://easysta
 - [Comparison of Point-Estimates](https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html)
 - [Comparison of Indices of Effect Existence](https://doi.org/10.3389/fpsyg.2019.02767)
 - [Reporting Guidelines](https://easystats.github.io/bayestestR/articles/guidelines.html)
-
-
 
 # Features
 

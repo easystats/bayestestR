@@ -5,6 +5,7 @@
 [![downloads](http://cranlogs.r-pkg.org/badges/bayestestR)](https://cran.r-project.org/package=bayestestR)
 [![total](https://cranlogs.r-pkg.org/badges/grand-total/bayestestR)](https://cranlogs.r-pkg.org/)
 [![status](https://tinyverse.netlify.com/badge/bayestestR)](https://CRAN.R-project.org/package=bayestestR)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 
 ***Become a Bayesian master you will***
 
@@ -58,18 +59,20 @@ Once you have downloaded the package, you can then load it using:
 library("bayestestR")
 ```
 
+> **Tip**
+>
+> **Instead of `library(datawizard)`, use `library(easystats)`.** **This
+> will make all features of the easystats-ecosystem available.**
+>
+> **To stay updated, use `easystats::install_latest()`.**
+
 ## Documentation
 
-[![Documentation](https://img.shields.io/badge/documentation-bayestestR-orange.svg?colorB=E91E63)](https://easystats.github.io/bayestestR/)
-[![Blog](https://img.shields.io/badge/blog-easystats-orange.svg?colorB=FF9800)](https://easystats.github.io/blog/posts/)
-[![Features](https://img.shields.io/badge/features-bayestestR-orange.svg?colorB=2196F3)](https://easystats.github.io/bayestestR/reference/index.html)
-
-Click on the buttons above to access the package
-[documentation](https://easystats.github.io/bayestestR/) and the
-[easystats blog](https://easystats.github.io/blog/posts/), and check-out
+Access the package
+[documentation](https://easystats.github.io/bayestestR/) and check-out
 these vignettes:
 
-#### Tutorials
+### Tutorials
 
 - [Get Started with Bayesian
   Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
@@ -80,7 +83,7 @@ these vignettes:
 - [Example 3: Become a Bayesian
   master](https://easystats.github.io/bayestestR/articles/example3.html)
 
-#### Articles
+### Articles
 
 - [Credible Intervals
   (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
@@ -157,9 +160,9 @@ describe_posterior(
 )
 ## Summary of Posterior Distribution
 ## 
-## Parameter |   Median |        95% CI |     pd |   ps
-## ----------------------------------------------------
-## Posterior | 5.58e-03 | [-1.99, 1.94] | 50.25% | 0.46
+## Parameter |    Median |        95% CI |     pd |   ps
+## -----------------------------------------------------
+## Posterior | -4.19e-03 | [-1.91, 1.98] | 50.18% | 0.46
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -458,7 +461,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.38
+## [1] 0.45
 ```
 
 ## Code of Conduct
