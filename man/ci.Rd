@@ -95,7 +95,9 @@ A data frame with following columns:
 }
 }
 \description{
-Compute Confidence/Credible/Compatibility Intervals (CI) or Support Intervals (SI) for Bayesian and frequentist models. The Documentation is accessible for:
+Compute Confidence/Credible/Compatibility Intervals (CI) or Support Intervals
+(SI) for Bayesian and frequentist models. The Documentation is accessible
+for:
 }
 \details{
 \itemize{

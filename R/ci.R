@@ -1,6 +1,8 @@
 #' Confidence/Credible/Compatibility Interval (CI)
 #'
-#' Compute Confidence/Credible/Compatibility Intervals (CI) or Support Intervals (SI) for Bayesian and frequentist models. The Documentation is accessible for:
+#' Compute Confidence/Credible/Compatibility Intervals (CI) or Support Intervals
+#' (SI) for Bayesian and frequentist models. The Documentation is accessible
+#' for:
 #'
 #' \itemize{
 #'  \item [Bayesian models](https://easystats.github.io/bayestestR/articles/credible_interval.html)
@@ -78,7 +80,15 @@ ci <- function(x, ...) {
 
 
 #' @keywords internal
-.ci_bayesian <- function(x, ci = 0.95, method = "ETI", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, BF = 1, ...) {
+.ci_bayesian <- function(x,
+                         ci = 0.95,
+                         method = "ETI",
+                         effects = c("fixed", "random", "all"),
+                         component = c("conditional", "zi", "zero_inflated", "all"),
+                         parameters = NULL,
+                         verbose = TRUE,
+                         BF = 1,
+                         ...) {
   if (tolower(method) %in% c("eti", "equal", "ci", "quantile")) {
     return(eti(x, ci = ci, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))
   } else if (tolower(method) %in% c("bci", "bca", "bcai")) {
@@ -90,7 +100,12 @@ ci <- function(x, ...) {
   } else if (tolower(method) %in% c("si")) {
     return(si(x, BF = BF, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))
   } else {
-    stop(insight::format_message("`method` should be 'ETI' (for equal-tailed interval),'HDI' (for highest density interval), 'BCI' (for bias corrected and accelerated bootstrap intervals), 'SPI' (for shortest probability interval) or 'SI' (for support interval)."), call. = FALSE)
+    stop(
+      insight::format_message(
+        "`method` should be 'ETI' (for equal-tailed interval),'HDI' (for highest density interval), 'BCI' (for bias corrected and accelerated bootstrap intervals), 'SPI' (for shortest probability interval) or 'SI' (for support interval)."
+      ),
+      call. = FALSE
+    )
   }
 }
 
