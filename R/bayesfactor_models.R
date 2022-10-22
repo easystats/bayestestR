@@ -52,8 +52,6 @@
 #'   random effects) and their `log(BF)`s  (Use `as.numeric()` to extract the
 #'   non-log Bayes factors; see examples), that prints nicely.
 #'
-#' @importFrom stats median
-#'
 #' @examples
 #' # With lm objects:
 #' # ----------------
@@ -309,7 +307,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   check_brmsfit <- sapply(mods, class)
 
   # Add a check here for brmsfit object to avoid unnecessary computation of the ML
-  if (all(grepl("brmsfit", check_brmsfit))) {
+  if (all(check_brmsfit == "brmsfit")) {
     mML <- .get_brmsfit_mML(mods, verbose)
   } else {
     # Get BF
@@ -623,7 +621,7 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 
     # If marginal likelihood exists, use the stored criteria
     if (!is.na(criteria_pos)) {
-      marglik <- median(x$criteria$marglik$logml)
+      marglik <- stats::median(x$criteria$marglik$logml)
     } else {
       # Get marginal likelihood
       if (verbose) {
