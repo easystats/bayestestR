@@ -52,6 +52,8 @@
 #'   random effects) and their `log(BF)`s  (Use `as.numeric()` to extract the
 #'   non-log Bayes factors; see examples), that prints nicely.
 #'
+#' @importFrom stats median
+#'
 #' @examples
 #' # With lm objects:
 #' # ----------------
@@ -303,14 +305,22 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     stop("Models were not computed from the same data.", call. = FALSE)
   }
 
-  # Get BF
-  if (verbose) {
-    message("Computation of Bayes factors: estimating marginal likelihood, please wait...")
-  }
+  # Check the class of the models
+  check_brmsfit <- sapply(mods, class)
 
-  mML <- lapply(mods, function(x) {
-    bridgesampling::bridge_sampler(x, silent = TRUE)
-  })
+  # Add a check here for brmsfit object to avoid unnecessary computation of the ML
+  if (all(grepl("brmsfit", check_brmsfit))) {
+    mML <- .get_brmsfit_mML(mods, verbose)
+  } else {
+    # Get BF
+    if (verbose) {
+      message("Computation of Bayes factors: estimating marginal likelihood, please wait...")
+    }
+
+    mML <- lapply(mods, function(x) {
+      bridgesampling::bridge_sampler(x, silent = TRUE)
+    })
+  }
 
   mBFs <- sapply(mML, function(x) {
     bf <- bridgesampling::bf(x, mML[[denominator]], log = TRUE)
@@ -379,7 +389,6 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1, verbose = TRUE) {
 
   .bayesfactor_models_stan(mods, denominator = denominator, verbose = verbose)
 }
-
 
 #' @export
 bayesfactor_models.blavaan <- function(..., denominator = 1, verbose = TRUE) {
@@ -602,3 +611,35 @@ as.matrix.bayesfactor_models <- function(x, ...) {
     }
   )
 }
+
+#' @keywords internal
+.get_brmsfit_mML <- function(mods, verbose, ...) {
+
+  # Need to allow for NAs here, so function is a bit verbose
+  mML <- lapply(mods, function(x) {
+
+    # Retrive the positions of name of the already stored criteria
+    criteria_pos <- match("marglik", names(x$criteria))
+
+    # If marginal likelihood exists, use the stored criteria
+    if (!is.na(criteria_pos)) {
+      marglik <- median(x$criteria$marglik$logml)
+    } else {
+      # Get marginal likelihood
+      if (verbose) {
+        message("Computation of Marginal Likelihood: estimating marginal likelihood, please wait...")
+      }
+      # Should probably allow additional arguments such as reps or cores to for bridge_sampler
+      marglik <- bridgesampling::bridge_sampler(x, silent = TRUE)
+    }
+
+    # Return the bridge_list object
+    return(marglik)
+  })
+
+  # Return the list of marglik objects
+  return(mML)
+}
+
+
+
