@@ -303,22 +303,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     stop("Models were not computed from the same data.", call. = FALSE)
   }
 
-  # Check the class of the models
-  check_brmsfit <- sapply(mods, class)
-
-  # Add a check here for brmsfit object to avoid unnecessary computation of the ML
-  if (all(check_brmsfit == "brmsfit")) {
-    mML <- .get_brmsfit_mML(mods, verbose)
-  } else {
-    # Get BF
-    if (verbose) {
-      message("Computation of Bayes factors: estimating marginal likelihood, please wait...")
-    }
-
-    mML <- lapply(mods, function(x) {
-      bridgesampling::bridge_sampler(x, silent = TRUE)
-    })
-  }
+  mML <- lapply(mods, .get_marglik, verbose = verbose)
 
   mBFs <- sapply(mML, function(x) {
     bf <- bridgesampling::bf(x, mML[[denominator]], log = TRUE)
@@ -611,32 +596,18 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 }
 
 #' @keywords internal
-.get_brmsfit_mML <- function(mods, verbose, ...) {
+.get_marglik <- function(mod, verbose, ...) {
+  # Add a check here for brmsfit object to avoid unnecessary computation of the ML
+  if (inherits(mod, "brmsfit") && "marglik" %in% names(mod$criteria)) {
+    return(stats::median(mod$criteria$marglik$logml))
+  }
 
-  # Need to allow for NAs here, so function is a bit verbose
-  mML <- lapply(mods, function(x) {
-
-    # Retrive the positions of name of the already stored criteria
-    criteria_pos <- match("marglik", names(x$criteria))
-
-    # If marginal likelihood exists, use the stored criteria
-    if (!is.na(criteria_pos)) {
-      marglik <- stats::median(x$criteria$marglik$logml)
-    } else {
-      # Get marginal likelihood
-      if (verbose) {
-        message("Computation of Marginal Likelihood: estimating marginal likelihood, please wait...")
-      }
-      # Should probably allow additional arguments such as reps or cores to for bridge_sampler
-      marglik <- bridgesampling::bridge_sampler(x, silent = TRUE)
-    }
-
-    # Return the bridge_list object
-    return(marglik)
-  })
-
-  # Return the list of marglik objects
-  return(mML)
+  # Else... Get marginal likelihood
+  if (verbose) {
+    message("Computation of Marginal Likelihood: estimating marginal likelihood, please wait...")
+  }
+  # Should probably allow additional arguments such as reps or cores to for bridge_sampler
+  bridgesampling::bridge_sampler(mod, silent = TRUE)
 }
 
 
