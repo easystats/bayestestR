@@ -67,7 +67,7 @@ if (requiet("bayestestR") && requiet("testthat") && requiet("lme4")) {
 
 
   # bayesfactor_models STAN ---------------------------------------------
-  if (requiet("rstanarm") && requiet("bridgesampling")) {
+  if (requiet("rstanarm") && requiet("bridgesampling") && requiet("brms")) {
     test_that("bayesfactor_models STAN", {
       skip_on_cran()
       set.seed(333)
@@ -99,6 +99,43 @@ if (requiet("bayestestR") && requiet("testthat") && requiet("lme4")) {
       expect_equal(length(stan_models$log_BF), 2)
       expect_equal(stan_models$log_BF[2], log(bridge_BF$bf), tolerance = 0.1)
     })
+
+    # Checks for brms models
+    set.seed(333)
+    suppressWarnings(stan_brms_model_0 <- brms::brm(
+      Sepal.Length ~ 1,
+      data = iris,
+      iter = 500,
+      refresh = 0,
+      save_pars = brms::save_pars(all = TRUE)
+    ))
+
+    stan_brms_model_0 <- brms::add_criterion(
+      stan_brms_model_0,
+      criterion = "marglik",
+      repetitions = 5,
+      silent = TRUE
+    )
+
+    stan_brms_model_1 <- brms::brm(
+      Sepal.Length ~ Petal.Length,
+      data = iris,
+      iter = 500,
+      refresh = 0,
+      save_pars = brms::save_pars(all = TRUE)
+    )
+
+    stan_brms_model_1 <- brms::add_criterion(
+      stan_brms_model_1,
+      criterion = "marglik",
+      repetitions = 5,
+      silent = TRUE
+    )
+
+    set.seed(333)
+    expect_warning(stan_brms_models <- bayesfactor_models(stan_brms_model_0, stan_brms_model_1))
+    expect_s3_class(stan_brms_models, "bayesfactor_models")
+    expect_equal(length(stan_brms_models$log_BF), 2)
   }
 
 
