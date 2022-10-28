@@ -55,6 +55,7 @@ This function is a wrapper over different methods of density estimation. By defa
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
+\dontshow{if (requireNamespace("logspline", quietly = TRUE) && requireNamespace("KernSmooth", quietly = TRUE) && requireNamespace("mclust", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 set.seed(1)
@@ -114,7 +115,7 @@ library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 estimate_density(model)
 }
-
+\dontshow{\}) # examplesIf}
 }
 \references{
 Deng, H., & Wickham, H. (2011). Density estimation in R. Electronic publication.
