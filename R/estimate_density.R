@@ -16,7 +16,7 @@
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
-#' @examples
+#' @examplesIf requireNamespace("logspline", quietly = TRUE) && requireNamespace("KernSmooth", quietly = TRUE) && requireNamespace("mclust", quietly = TRUE) &&
 #' library(bayestestR)
 #'
 #' set.seed(1)
