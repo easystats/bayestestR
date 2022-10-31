@@ -204,9 +204,9 @@ Unlike equal-tailed intervals (see [`eti()`](https://easystats.github.io/bayeste
 ```{r message=FALSE, warning=FALSE}
 posterior <- distribution_chisquared(10000, 4)
 
-hdi(posterior, ci = .89)
+hdi(posterior, ci = 0.89)
 
-eti(posterior, ci = .89)
+eti(posterior, ci = 0.89)
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}

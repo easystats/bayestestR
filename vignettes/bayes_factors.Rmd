@@ -900,7 +900,7 @@ indicate the credibility of the null in the posterior. However, this is not the
 case:
 
 ```{r}
-hdi(mod_carb, ci = .95)
+hdi(mod_carb, ci = 0.95)
 ```
 
 How can this be? By estimating the HDI of the effect for `carb` in the full
@@ -920,7 +920,7 @@ In `bayestestR`, we can do this with the `weighted_posteriors()` function:
 ```{r}
 BMA_draws <- weighted_posteriors(mod, mod_carb)
 
-BMA_hdi <- hdi(BMA_draws, ci = .95)
+BMA_hdi <- hdi(BMA_draws, ci = 0.95)
 BMA_hdi
 
 plot(BMA_hdi)

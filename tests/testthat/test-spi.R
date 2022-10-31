@@ -26,8 +26,8 @@ if (require("rstanarm") && require("brms") && require("httr") && require("testth
 
       test_that("ci", {
         expect_equal(
-          spi(m, ci = c(.5, .8), effects = "all")$CI_low,
-          spi(p, ci = c(.5, .8))$CI_low,
+          spi(m, ci = c(0.5, 0.8), effects = "all")$CI_low,
+          spi(p, ci = c(0.5, 0.8))$CI_low,
           tolerance = 1e-3
         )
       })
@@ -38,8 +38,8 @@ if (require("rstanarm") && require("brms") && require("httr") && require("testth
 
       test_that("spi brms", {
         expect_equal(
-          spi(m, ci = c(.5, .8), effects = "all", component = "all")$CI_low,
-          spi(p, ci = c(.5, .8))$CI_low,
+          spi(m, ci = c(0.5, 0.8), effects = "all", component = "all")$CI_low,
+          spi(p, ci = c(0.5, 0.8))$CI_low,
           tolerance = 1e-3
         )
       })
@@ -50,8 +50,8 @@ if (require("rstanarm") && require("brms") && require("httr") && require("testth
 
       test_that("ci - BayesFactor", {
         expect_equal(
-          spi(mod_bf, ci = c(.5, .8), effects = "all", component = "all")$CI_low,
-          spi(p_bf, ci = c(.5, .8))$CI_low,
+          spi(mod_bf, ci = c(0.5, 0.8), effects = "all", component = "all")$CI_low,
+          spi(p_bf, ci = c(0.5, 0.8))$CI_low,
           tolerance = 0.1
         )
       })

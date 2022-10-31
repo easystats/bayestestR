@@ -520,7 +520,7 @@
 - `hdi()` returned multiple class attributes (#72)
 
 - Printing results from `hdi()` failed when `ci`-argument had fractional parts
-  for percentage values (e.g. `ci = .995`).
+  for percentage values (e.g. `ci = 0.995`).
 
 - `plot.equivalence_test()` did not work properly for *brms*-models (#76).
 

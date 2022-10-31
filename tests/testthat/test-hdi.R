@@ -26,8 +26,8 @@ if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("testth
 
       test_that("ci", {
         expect_equal(
-          hdi(m, ci = c(.5, .8), effects = "all")$CI_low,
-          hdi(p, ci = c(.5, .8))$CI_low,
+          hdi(m, ci = c(0.5, 0.8), effects = "all")$CI_low,
+          hdi(p, ci = c(0.5, 0.8))$CI_low,
           tolerance = 1e-3
         )
       })
@@ -38,8 +38,8 @@ if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("testth
 
       test_that("rope", {
         expect_equal(
-          hdi(m, ci = c(.5, .8), effects = "all", component = "all")$CI_low,
-          hdi(p, ci = c(.5, .8))$CI_low,
+          hdi(m, ci = c(0.5, 0.8), effects = "all", component = "all")$CI_low,
+          hdi(p, ci = c(0.5, 0.8))$CI_low,
           tolerance = 1e-3
         )
       })
@@ -50,8 +50,8 @@ if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("testth
 
       test_that("ci - BayesFactor", {
         expect_equal(
-          hdi(mod_bf, ci = c(.5, .8), effects = "all", component = "all")$CI_low,
-          hdi(p_bf, ci = c(.5, .8))$CI_low,
+          hdi(mod_bf, ci = c(0.5, 0.8), effects = "all", component = "all")$CI_low,
+          hdi(p_bf, ci = c(0.5, 0.8))$CI_low,
           tolerance = 0.1
         )
       })

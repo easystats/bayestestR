@@ -26,8 +26,8 @@ if (requiet("rstanarm") && requiet("httr") && requiet("brms") && requiet("insigh
 
     test_that("ci", {
       expect_equal(
-        ci(m, ci = c(.5, .8), effects = "all")$CI_low,
-        ci(p, ci = c(.5, .8))$CI_low,
+        ci(m, ci = c(0.5, 0.8), effects = "all")$CI_low,
+        ci(p, ci = c(0.5, 0.8))$CI_low,
         tolerance = 1e-3
       )
     })
@@ -37,8 +37,8 @@ if (requiet("rstanarm") && requiet("httr") && requiet("brms") && requiet("insigh
 
     test_that("rope", {
       expect_equal(
-        ci(m, ci = c(.5, .8), effects = "all", component = "all")$CI_low,
-        ci(p, ci = c(.5, .8))$CI_low,
+        ci(m, ci = c(0.5, 0.8), effects = "all", component = "all")$CI_low,
+        ci(p, ci = c(0.5, 0.8))$CI_low,
         tolerance = 1e-3
       )
     })

@@ -175,7 +175,7 @@ check_prior.blavaan <- check_prior.brmsfit
     if (all(is.na(prior))) {
       "not determinable"
     } else {
-      hdi <- hdi(prior, ci = .95)
+      hdi <- hdi(prior, ci = 0.95)
       r <- rope(posterior, ci = 1, range = c(hdi$CI_low, hdi$CI_high))
       if (as.numeric(r) > 0.99) {
         "informative"
