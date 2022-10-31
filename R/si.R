@@ -41,7 +41,7 @@
 #' Note that if the level of requested support is higher than observed in the data, the
 #' interval will be `[NA,NA]`.
 #'
-#' @examples
+#' @examplesIf requireNamespace("logspline", quietly = TRUE)
 #' library(bayestestR)
 #'
 #' prior <- distribution_normal(1000, mean = 0, sd = 1)
@@ -52,7 +52,7 @@
 #' # rstanarm models
 #' # ---------------
 #' library(rstanarm)
-#' contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
+#' contrasts(sleep$group) <- contr.equalprior_pairs # see vignette
 #' stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
 #' si(stan_model)
 #' si(stan_model, BF = 3)

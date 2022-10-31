@@ -1,5 +1,7 @@
 if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("testthat")) {
   test_that("si.numeric", {
+    skip_if_not_installed("logspline")
+
     set.seed(333)
     prior <- distribution_normal(1000, mean = 0, sd = 1)
     posterior <- distribution_normal(1000, mean = .5, sd = .3)
