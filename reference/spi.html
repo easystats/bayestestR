@@ -234,7 +234,7 @@ to Ying Liu for the original SPI algorithm and R implementation.</p>
 <span class="r-in"><span><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">spi</span><span class="op">(</span><span class="va">posterior</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 95% SPI: [-1.99, 1.88]</span>
-<span class="r-in"><span><span class="fu">spi</span><span class="op">(</span><span class="va">posterior</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.80</span>, <span class="fl">.89</span>, <span class="fl">.95</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">spi</span><span class="op">(</span><span class="va">posterior</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.89</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Shortest Probability Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 80% SPI       |       89% SPI |       95% SPI</span>
@@ -251,7 +251,7 @@ to Ying Liu for the original SPI algorithm and R implementation.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X2        | [-1.93, 2.30]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-1.60, 2.00]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-1.99, 1.72]</span>
-<span class="r-in"><span><span class="fu">spi</span><span class="op">(</span><span class="va">df</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.80</span>, <span class="fl">.89</span>, <span class="fl">.95</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">spi</span><span class="op">(</span><span class="va">df</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.89</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Shortest Probability Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |       80% SPI |       89% SPI |       95% SPI</span>

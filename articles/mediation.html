@@ -271,7 +271,7 @@ shows the indirect effect first, followed by the direct effect.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Simulations: 1000</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Treatment: treat</span></span>
@@ -287,7 +287,7 @@ shows the indirect effect first, followed by the direct effect.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Proportion mediated: 28.14% [-181.46%, 237.75%]</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m3</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m3</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Treatment: treat</span></span>
@@ -307,7 +307,7 @@ posterior samples, use the <code>centrality</code>-argument.
 Furthermore, there is a <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>-method, which allows to
 print more digits.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, centrality <span class="op">=</span> <span class="st">"mean"</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, centrality <span class="op">=</span> <span class="st">"mean"</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">m</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -407,7 +407,7 @@ same model in different packages or modeling approached.</p>
 <span><span class="co">#&gt;     total_age        -0.000    0.002   -0.223    0.824</span></span>
 <span></span>
 <span><span class="co"># just to have the numbers right at hand and you don't need to scroll up</span></span>
-<span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, ci <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/mediation.html">mediation</a></span><span class="op">(</span><span class="va">m2</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # Causal Mediation Analysis for Stan Model</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Treatment: treat</span></span>
