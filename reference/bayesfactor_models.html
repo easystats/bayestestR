@@ -231,31 +231,31 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 <span class="r-in"><span><span class="va">lm3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">hp</span> <span class="op">+</span> <span class="va">drat</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">lm4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">hp</span> <span class="op">*</span> <span class="va">drat</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">(</span><span class="va">BFM</span> <span class="op">&lt;-</span> <span class="fu">bayesfactor_models</span><span class="op">(</span><span class="va">lm1</span>, <span class="va">lm2</span>, <span class="va">lm3</span>, <span class="va">lm4</span>, denominator <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bayes Factors for Model Comparison</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Bayes Factors for Model Comparison</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Model           BF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [lm2] hp        4.54e+05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [lm3] hp + drat 7.70e+07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [lm4] hp * drat 1.59e+07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Against Denominator: [lm1] (Intercept only)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *   Bayes Factor Type: BIC approximation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Against Denominator: <span style="color: #00BBBB;">[lm1] (Intercept only)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> *   Bayes Factor Type: <span style="color: #00BBBB;">BIC approximation</span></span>
 <span class="r-in"><span><span class="co"># bayesfactor_models(lm2, lm3, lm4, denominator = lm1) # same result</span></span></span>
 <span class="r-in"><span><span class="co"># bayesfactor_models(lm1, lm2, lm3, lm4, denominator = lm1) # same result</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">BFM</span>, reference <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bayes Factors for Model Comparison</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Bayes Factors for Model Comparison</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Model           BF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [lm2] hp        4.54e+05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [lm3] hp + drat 7.70e+07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [lm4] hp * drat 1.59e+07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Against Denominator: [lm1] (Intercept only)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *   Bayes Factor Type: BIC approximation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Against Denominator: <span style="color: #00BBBB;">[lm1] (Intercept only)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> *   Bayes Factor Type: <span style="color: #00BBBB;">BIC approximation</span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">BFM</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> # Bayes Factors for Model Comparison </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Bayes Factors for Model Comparison</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            Numerator</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Denominator</span>
@@ -273,13 +273,13 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 <span class="r-in"><span><span class="va">lm2b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span> <span class="op">~</span> <span class="va">hp</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Set check_response = TRUE for transformed responses</span></span></span>
 <span class="r-in"><span><span class="fu">bayesfactor_models</span><span class="op">(</span><span class="va">lm2b</span>, denominator <span class="op">=</span> <span class="va">lm2</span>, check_response <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Bayes Factors for Model Comparison</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Bayes Factors for Model Comparison</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        Model   BF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [lm2b] hp    6.94</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Against Denominator: [lm2] hp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *   Bayes Factor Type: BIC approximation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Against Denominator: <span style="color: #00BBBB;">[lm2] hp</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> *   Bayes Factor Type: <span style="color: #00BBBB;">BIC approximation</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># With lmerMod objects:</span></span></span>

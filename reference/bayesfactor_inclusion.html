@@ -211,15 +211,15 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">BFmodels</span> <span class="op">&lt;-</span> <span class="fu"><a href="bayesfactor_models.html">bayesfactor_models</a></span><span class="op">(</span><span class="va">mo1</span>, <span class="va">mo2</span>, <span class="va">mo3</span>, denominator <span class="op">=</span> <span class="va">mo0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">(</span><span class="va">bf_inc</span> <span class="op">&lt;-</span> <span class="fu">bayesfactor_inclusion</span><span class="op">(</span><span class="va">BFmodels</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Inclusion Bayes Factors (Model Averaged)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Inclusion Bayes Factors (Model Averaged)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                      P(prior) P(posterior) Inclusion BF</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Species                  0.75         1.00     2.02e+55</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length             0.50         1.00     3.58e+26</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length:Species     0.25         0.04        0.113</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Compared among: all models</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *    Priors odds: uniform-equal</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Compared among: <span style="color: #00BBBB;">all models</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> *    Priors odds: <span style="color: #00BBBB;">uniform-equal</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">bf_inc</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.021143e+55 3.575448e+26 1.131202e-01</span>
