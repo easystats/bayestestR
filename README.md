@@ -290,10 +290,10 @@ posterior distributions.
 ``` r
 posterior <- distribution_chisquared(10000, 4)
 
-hdi(posterior, ci = .89)
+hdi(posterior, ci = 0.89)
 ## 89% HDI: [0.18, 7.63]
 
-eti(posterior, ci = .89)
+eti(posterior, ci = 0.89)
 ## 89% ETI: [0.75, 9.25]
 ```
 

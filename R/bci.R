@@ -16,7 +16,7 @@
 #' @examples
 #' posterior <- rnorm(1000)
 #' bci(posterior)
-#' bci(posterior, ci = c(.80, .89, .95))
+#' bci(posterior, ci = c(0.80, 0.89, 0.95))
 #' @export
 bci <- function(x, ...) {
   UseMethod("bci")

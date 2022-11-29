@@ -5,71 +5,70 @@ template:
   package: easystatstemplate
 
 reference:
-- title: "Posterior Description"
-  contents:
-  - starts_with("describe_")
-  - sexit
+  - title: "Posterior Description"
+    contents:
+      - starts_with("describe_")
+      - sexit
 
-- title: "Centrality and Uncertainty"
-  contents:
-  - ends_with("_estimate")
-  - bci
-  - eti
-  - hdi
-  - spi
-  - ci
+  - title: "Centrality and Uncertainty"
+    contents:
+      - ends_with("_estimate")
+      - bci
+      - eti
+      - hdi
+      - spi
+      - ci
 
-- title: "Effect Existence and Significance"
-  desc: "Functions for Bayesian Inference"
-- subtitle: "Posterior Based Methods"
-  contents:
-  - starts_with("p_")
-  - contains("rope")
-  - equivalence_test
-  - convert_pd_to_p
+  - title: "Effect Existence and Significance"
+    desc: "Functions for Bayesian Inference"
+  - subtitle: "Posterior Based Methods"
+    contents:
+      - starts_with("p_")
+      - contains("rope")
+      - equivalence_test
+      - convert_pd_to_p
 
-- subtitle: "Bayes factors"
-  contents:
-  - contains("bayesfactor")
-  - si
-  - weighted_posteriors
-  - bic_to_bf
-  - p_to_bf
+  - subtitle: "Bayes factors"
+    contents:
+      - contains("bayesfactor")
+      - si
+      - weighted_posteriors
+      - bic_to_bf
+      - p_to_bf
 
-- title: "Model Diagnostics"
-  contents:
-  - diagnostic_posterior
-  - sensitivity_to_prior
-  - check_prior
-  - starts_with("simulate_")
-  - unupdate
-  - effective_sample
-  - mcse
+  - title: "Model Diagnostics"
+    contents:
+      - diagnostic_posterior
+      - sensitivity_to_prior
+      - check_prior
+      - starts_with("simulate_")
+      - unupdate
+      - effective_sample
+      - mcse
 
-- title: "Density Estimation"
-  contents:
-  - estimate_density
-  - density_at
-  - area_under_curve
-  - overlap
+  - title: "Density Estimation"
+    contents:
+      - estimate_density
+      - density_at
+      - area_under_curve
+      - overlap
 
-- title: "Distributions"
-  contents:
-  - distribution
+  - title: "Distributions"
+    contents:
+      - distribution
 
-- title: "Utilities"
-  contents:
-  - mediation
-  - convert_bayesian_as_frequentist
-  - contr.equalprior_pairs
-  - as.numeric.p_direction
-  - as.data.frame.density
-  - sexit_thresholds
-  - reshape_iterations
-  - diagnostic_draws
-  - model_to_priors
-  - cwi
-
+  - title: "Utilities"
+    contents:
+      - mediation
+      - convert_bayesian_as_frequentist
+      - contr.equalprior_pairs
+      - as.numeric.p_direction
+      - as.data.frame.density
+      - sexit_thresholds
+      - reshape_iterations
+      - diagnostic_draws
+      - model_to_priors
+      - cwi
 
 # Keep articles organized
 navbar:
@@ -81,28 +80,28 @@ navbar:
       href: articles/bayestestR.html
     - text: Examples
       menu:
-      - text: '1. Initiation to Bayesian models'
-        href: articles/example1.html
-      - text: '2. Confirmation of Bayesian skills'
-        href: articles/example2.html
-      - text: '3. Become a Bayesian master'
-        href: articles/example3.html
+        - text: "1. Initiation to Bayesian models"
+          href: articles/example1.html
+        - text: "2. Confirmation of Bayesian skills"
+          href: articles/example2.html
+        - text: "3. Become a Bayesian master"
+          href: articles/example3.html
     - text: Articles
       menu:
-      - text: 'Credible Intervals (CI)'
-        href: articles/credible_interval.html
-      - text: 'Region of Practical Equivalence (ROPE)'
-        href: articles/region_of_practical_equivalence.html
-      - text: 'Probability of Direction (pd)'
-        href: articles/probability_of_direction.html
-      - text: 'Bayes Factors (BF)'
-        href: articles/bayes_factors.html
-      - text: 'Comparison of Point-Estimates'
-        href: articles/web_only/indicesEstimationComparison.html
-      - text: 'Comparison of Indices of Effect Existence'
-        href: https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full
-      - text: 'Mediation Analysis: Direct and Indirect Effects'
-        href: articles/mediation.html
+        - text: "Credible Intervals (CI)"
+          href: articles/credible_interval.html
+        - text: "Region of Practical Equivalence (ROPE)"
+          href: articles/region_of_practical_equivalence.html
+        - text: "Probability of Direction (pd)"
+          href: articles/probability_of_direction.html
+        - text: "Bayes Factors (BF)"
+          href: articles/bayes_factors.html
+        - text: "Comparison of Point-Estimates"
+          href: articles/web_only/indicesEstimationComparison.html
+        - text: "Comparison of Indices of Effect Existence"
+          href: https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02767/full
+        - text: "Mediation Analysis: Direct and Indirect Effects"
+          href: articles/mediation.html
     - text: Guidelines
       href: articles/guidelines.html
     - icon: fa fa-newspaper

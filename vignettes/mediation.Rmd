@@ -128,9 +128,9 @@ followed by the direct effect.
 ```{r}
 summary(m1)
 
-mediation(m2, ci = .95)
+mediation(m2, ci = 0.95)
 
-mediation(m3, ci = .95)
+mediation(m3, ci = 0.95)
 ```
 
 If you want to calculate mean instead of median values from the posterior
@@ -138,7 +138,7 @@ samples, use the `centrality`-argument. Furthermore, there is a
 `print()`-method, which allows to print more digits.
 
 ```{r, message=TRUE}
-m <- mediation(m2, centrality = "mean", ci = .95)
+m <- mediation(m2, centrality = "mean", ci = 0.95)
 print(m, digits = 4)
 ```
 
@@ -178,7 +178,7 @@ m4 <- sem(model, data = jobs)
 summary(m4)
 
 # just to have the numbers right at hand and you don't need to scroll up
-mediation(m2, ci = .95)
+mediation(m2, ci = 0.95)
 ```
 
 The summary output from *lavaan* is longer, but we can find the related numbers

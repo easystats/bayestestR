@@ -137,8 +137,8 @@ m3 <- stan_mvmer(
 )
 
 summary(m1)
-mediation(m2, centrality = "mean", ci = .95)
-mediation(m3, centrality = "mean", ci = .95)
+mediation(m2, centrality = "mean", ci = 0.95)
+mediation(m3, centrality = "mean", ci = 0.95)
 }
 }
 \references{

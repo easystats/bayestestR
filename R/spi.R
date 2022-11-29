@@ -29,11 +29,11 @@
 #'
 #' posterior <- rnorm(1000)
 #' spi(posterior)
-#' spi(posterior, ci = c(.80, .89, .95))
+#' spi(posterior, ci = c(0.80, 0.89, 0.95))
 #'
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' spi(df)
-#' spi(df, ci = c(.80, .89, .95))
+#' spi(df, ci = c(0.80, 0.89, 0.95))
 #' \dontrun{
 #' library(rstanarm)
 #' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
