@@ -1,7 +1,7 @@
 Type: Package
 Package: bayestestR
 Title: Understand and Describe Bayesian Models and Posterior Distributions
-Version: 0.13.0.2
+Version: 0.13.0.3
 Authors@R:
     c(person(given = "Dominique",
              family = "Makowski",
@@ -66,7 +66,7 @@ Description: Provides utilities to describe posterior
 Depends:
     R (>= 3.6)
 Imports:
-    insight (>= 0.18.2),
+    insight (>= 0.18.8.2),
     datawizard (>= 0.5.1),
     graphics,
     methods,
@@ -122,3 +122,4 @@ Config/Needs/website:
     rstudio/bslib,
     r-lib/pkgdown,
     easystats/easystatstemplate
+Remotes: easystats/insight@revise_get_data
