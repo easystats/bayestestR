@@ -4,6 +4,9 @@
 
 * Improved speed performance when functions are called using `do.call()`.
 
+* Improved speed performance to `bayesfactor_models()` for `brmsfit` objects
+  that already included a `marglik` element in the model object.
+
 # bayestestR 0.13.0
 
 ## Breaking
