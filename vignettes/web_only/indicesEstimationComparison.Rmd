@@ -198,7 +198,7 @@ dat <- reshape_longer(
 )
 
 out <- glm(true_effect ~ outcome_type / estimate / value, data = dat, family = "binomial")
-out <- parameters(out, df_method = "wald")
+out <- parameters(out, ci_method = "wald")
 out <- data_select(out, c("Parameter", "Coefficient", "p"))
 out <- data_filter(out, grep("^outcome_type(.*):value$", x = out$Parameter))
 out <- out[order(out$Coefficient, decreasing = TRUE), ]
