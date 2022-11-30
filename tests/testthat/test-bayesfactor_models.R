@@ -1,3 +1,4 @@
+# library(testthat)
 if (requiet("bayestestR") && requiet("testthat") && requiet("lme4")) {
   # bayesfactor_models BIC --------------------------------------------------
   test_that("bayesfactor_models BIC", {
@@ -67,7 +68,7 @@ if (requiet("bayestestR") && requiet("testthat") && requiet("lme4")) {
 
 
   # bayesfactor_models STAN ---------------------------------------------
-  if (requiet("rstanarm") && requiet("bridgesampling")) {
+  if (requiet("rstanarm") && requiet("bridgesampling") && requiet("brms")) {
     test_that("bayesfactor_models STAN", {
       skip_on_cran()
       set.seed(333)
@@ -98,6 +99,50 @@ if (requiet("bayestestR") && requiet("testthat") && requiet("lme4")) {
       expect_s3_class(stan_models, "bayesfactor_models")
       expect_equal(length(stan_models$log_BF), 2)
       expect_equal(stan_models$log_BF[2], log(bridge_BF$bf), tolerance = 0.1)
+    })
+
+    test_that("bayesfactor_models BRMS", {
+      # Checks for brms models
+      skip_on_cran()
+      skip_on_ci()
+
+      set.seed(333)
+      stan_brms_model_0 <- brms::brm(
+        Sepal.Length ~ 1,
+        data = iris,
+        iter = 500,
+        refresh = 0,
+        save_pars = brms::save_pars(all = TRUE)
+      )
+
+      stan_brms_model_1 <- brms::brm(
+        Sepal.Length ~ Petal.Length,
+        data = iris,
+        iter = 500,
+        refresh = 0,
+        save_pars = brms::save_pars(all = TRUE)
+      )
+
+      set.seed(444)
+      expect_message(bfm <- bayesfactor_models(stan_brms_model_0, stan_brms_model_1), regexp = "marginal")
+
+      set.seed(444)
+      stan_brms_model_0wc <- brms::add_criterion(
+        stan_brms_model_0,
+        criterion = "marglik",
+        repetitions = 5,
+        silent = TRUE
+      )
+
+      stan_brms_model_1wc <- brms::add_criterion(
+        stan_brms_model_1,
+        criterion = "marglik",
+        repetitions = 5,
+        silent = TRUE
+      )
+
+      expect_message(bfmwc <- bayesfactor_models(stan_brms_model_0wc, stan_brms_model_1wc), regexp = NA)
+      expect_equal(bfmwc$log_BF, bfm$log_BF, tolerance = 0.01)
     })
   }
 

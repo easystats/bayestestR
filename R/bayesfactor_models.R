@@ -303,14 +303,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     stop("Models were not computed from the same data.", call. = FALSE)
   }
 
-  # Get BF
-  if (verbose) {
-    message("Computation of Bayes factors: estimating marginal likelihood, please wait...")
-  }
-
-  mML <- lapply(mods, function(x) {
-    bridgesampling::bridge_sampler(x, silent = TRUE)
-  })
+  mML <- lapply(mods, .get_marglik, verbose = verbose)
 
   mBFs <- sapply(mML, function(x) {
     bf <- bridgesampling::bf(x, mML[[denominator]], log = TRUE)
@@ -379,7 +372,6 @@ bayesfactor_models.brmsfit <- function(..., denominator = 1, verbose = TRUE) {
 
   .bayesfactor_models_stan(mods, denominator = denominator, verbose = verbose)
 }
-
 
 #' @export
 bayesfactor_models.blavaan <- function(..., denominator = 1, verbose = TRUE) {
@@ -602,3 +594,21 @@ as.matrix.bayesfactor_models <- function(x, ...) {
     }
   )
 }
+
+#' @keywords internal
+.get_marglik <- function(mod, verbose, ...) {
+  # Add a check here for brmsfit object to avoid unnecessary computation of the ML
+  if (inherits(mod, "brmsfit") && "marglik" %in% names(mod$criteria)) {
+    return(stats::median(mod$criteria$marglik$logml))
+  }
+
+  # Else... Get marginal likelihood
+  if (verbose) {
+    message("Computation of Marginal Likelihood: estimating marginal likelihood, please wait...")
+  }
+  # Should probably allow additional arguments such as reps or cores to for bridge_sampler
+  bridgesampling::bridge_sampler(mod, silent = TRUE)
+}
+
+
+
