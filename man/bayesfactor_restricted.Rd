@@ -7,6 +7,7 @@
 \alias{bayesfactor_restricted.brmsfit}
 \alias{bayesfactor_restricted.blavaan}
 \alias{bayesfactor_restricted.emmGrid}
+\alias{as.logical.bayesfactor_restricted}
 \title{Bayes Factors (BF) for Order Restricted Models}
 \usage{
 bayesfactor_restricted(
@@ -54,6 +55,8 @@ bf_restricted(posterior, hypothesis, prior = NULL, verbose = TRUE, ...)
   verbose = TRUE,
   ...
 )
+
+\method{as.logical}{bayesfactor_restricted}(x, which = c("posterior", "prior"), ...)
 }
 \arguments{
 \item{posterior}{A \code{stanreg} / \code{brmsfit} object, \code{emmGrid} or a data frame - representing a posterior distribution(s) from (see Details).}
@@ -72,6 +75,10 @@ returned? Only applies to mixed models. May be abbreviated.}
 \item{component}{Should results for all parameters, parameters for the
 conditional model or the zero-inflated part of the model be returned? May
 be abbreviated. Only applies to \pkg{brms}-models.}
+
+\item{x}{An object of class \code{bayesfactor_restricted}}
+
+\item{which}{Should the logical matrix be of the posterior or prior distribution(s)?}
 }
 \value{
 A data frame containing the (log) Bayes factor representing evidence
@@ -157,59 +164,57 @@ hyps <- c(
   "C > A"
 )
 
-if (getRversion() > "3.5.0") {
-  (b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
 
-  as.numeric(b)
+(b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
 
-  if (require("see") && require("patchwork")) {
-    i <- attr(b, "bool_results")[["posterior"]]
+bool <- as.logical(b, which = "posterior")
+head(bool)
 
-    see::plots(
-      plot(estimate_density(posterior)),
-      # distribution **conditional** on the restrictions
-      plot(estimate_density(posterior[i[[hyps[1]]], ])) + ggplot2::ggtitle(hyps[1]),
-      plot(estimate_density(posterior[i[[hyps[2]]], ])) + ggplot2::ggtitle(hyps[2]),
-      plot(estimate_density(posterior[i[[hyps[3]]], ])) + ggplot2::ggtitle(hyps[3]),
-      guides = "collect"
-    )
-  }
-}
+\dontshow{if (require("see") && require("patchwork")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
+see::plots(
+  plot(estimate_density(posterior)),
+  # distribution **conditional** on the restrictions
+  plot(estimate_density(posterior[bool[, hyps[1]], ])) + ggplot2::ggtitle(hyps[1]),
+  plot(estimate_density(posterior[bool[, hyps[2]], ])) + ggplot2::ggtitle(hyps[2]),
+  plot(estimate_density(posterior[bool[, hyps[3]], ])) + ggplot2::ggtitle(hyps[3]),
+  guides = "collect"
+)
+\dontshow{\}) # examplesIf}
+\dontshow{if (require("rstanarm")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \dontrun{
 # rstanarm models
 # ---------------
-if (require("rstanarm") && require("emmeans")) {
-  fit_stan <- stan_glm(mpg ~ wt + cyl + am,
-    data = mtcars, refresh = 0
-  )
-  hyps <- c(
-    "am > 0 & cyl < 0",
-    "cyl < 0",
-    "wt - cyl > 0"
-  )
-  bayesfactor_restricted(fit_stan, hypothesis = hyps)
+data("mtcars")
 
-  # emmGrid objects
-  # ---------------
-  # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html
-  disgust_data <- read.table(url("http://www.learnbayes.org/disgust_example.txt"), header = TRUE)
+fit_stan <- rstanarm::stan_glm(mpg ~ wt + cyl + am,
+  data = mtcars, refresh = 0
+)
+hyps <- c(
+  "am > 0 & cyl < 0",
+  "cyl < 0",
+  "wt - cyl > 0"
+)
 
-  contrasts(disgust_data$condition) <- contr.equalprior_pairs # see vignette
-  fit_model <- stan_glm(score ~ condition, data = disgust_data, family = gaussian())
-
-  em_condition <- emmeans(fit_model, ~condition)
-  hyps <- c("lemon < control & control < sulfur")
-
-  bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
-  # > # Bayes Factor (Order-Restriction)
-  # >
-  # >                          Hypothesis P(Prior) P(Posterior)   BF
-  # >  lemon < control & control < sulfur     0.17         0.75 4.49
-  # > ---
-  # > Bayes factors for the restricted model vs. the un-restricted model.
+bayesfactor_restricted(fit_stan, hypothesis = hyps)
 }
+\dontshow{\}) # examplesIf}
+\dontshow{if (require("rstanarm") && require("emmeans")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontrun{
+# emmGrid objects
+# ---------------
+data("mtcars")
+mtcars$cyl <- factor(mtcars$cyl, labels = paste0("cyl", c(4, 6, 8)))
+contrasts(mtcars$cyl) <- contr.equalprior_pairs
+
+mod <- rstanarm::stan_glm(mpg ~ cyl, data = mtcars, refresh = 0)
+
+means <- emmeans::emmeans(mod, ~cyl)
+
+hyps <- c("cyl4 > cyl6 & (cyl6 - cyl8) < 7")
+bayesfactor_restricted(means, prior = mod, hypothesis = hyps)
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{
