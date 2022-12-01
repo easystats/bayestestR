@@ -609,6 +609,3 @@ as.matrix.bayesfactor_models <- function(x, ...) {
   # Should probably allow additional arguments such as reps or cores to for bridge_sampler
   bridgesampling::bridge_sampler(mod, silent = TRUE)
 }
-
-
-
