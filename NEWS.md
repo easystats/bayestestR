@@ -6,6 +6,10 @@
 
 * Improved speed performance to `bayesfactor_models()` for `brmsfit` objects
   that already included a `marglik` element in the model object.
+  
+## Bug fixes
+
+* `p_map()` gains a new `null` argument to specify any non-0 nulls.
 
 # bayestestR 0.13.0
 
