@@ -141,7 +141,7 @@ p_map.emm_list <- p_map.emmGrid
 
 
 #' @keywords internal
-.p_map_models <- function(x, precision, method, effects, component, parameters, ...) {
+.p_map_models <- function(x, null, precision, method, effects, component, parameters, ...) {
   p_map(
     insight::get_parameters(
       x,
