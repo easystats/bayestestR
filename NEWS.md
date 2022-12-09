@@ -6,6 +6,11 @@
 
 * Improved speed performance to `bayesfactor_models()` for `brmsfit` objects
   that already included a `marglik` element in the model object.
+  
+## New functionality
+
+* `as.logical()` for `bayesfactor_restricted()` results, extracts the boolean
+  vector(s) the mark which draws are part of the order restriction.
 
 # bayestestR 0.13.0
 
