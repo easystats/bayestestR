@@ -18,7 +18,6 @@
 #' - Makowski et al. (2019) \doi{10.21105/joss.01541}
 #' - Makowski et al. (2019) \doi{10.3389/fpsyg.2019.02767}
 #'
-#'
 #' @docType package
 #' @aliases bayestestR bayestestR-package
 #' @name bayestestR-package
