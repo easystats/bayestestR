@@ -203,16 +203,21 @@ bayesfactor_restricted(fit_stan, hypothesis = hyps)
 \dontrun{
 # emmGrid objects
 # ---------------
-data("mtcars")
-mtcars$cyl <- factor(mtcars$cyl, labels = paste0("cyl", c(4, 6, 8)))
-contrasts(mtcars$cyl) <- contr.equalprior_pairs
+# replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html
+data("disgust")
+contrasts(disgust$condition) <- contr.equalprior_pairs # see vignette
+fit_model <- rstanarm::stan_glm(score ~ condition, data = disgust, family = gaussian())
 
-mod <- rstanarm::stan_glm(mpg ~ cyl, data = mtcars, refresh = 0)
+em_condition <- emmeans::emmeans(fit_model, ~condition)
+hyps <- c("lemon < control & control < sulfur")
 
-means <- emmeans::emmeans(mod, ~cyl)
-
-hyps <- c("cyl4 > cyl6 & (cyl6 - cyl8) < 7")
-bayesfactor_restricted(means, prior = mod, hypothesis = hyps)
+bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
+# > # Bayes Factor (Order-Restriction)
+# >
+# >                          Hypothesis P(Prior) P(Posterior)   BF
+# >  lemon < control & control < sulfur     0.17         0.75 4.49
+# > ---
+# > Bayes factors for the restricted model vs. the un-restricted model.
 }
 \dontshow{\}) # examplesIf}
 }
