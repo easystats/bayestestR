@@ -50,59 +50,62 @@
 #'   "C > A"
 #' )
 #'
-#' if (getRversion() > "3.5.0") {
-#'   (b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
 #'
-#'   as.numeric(b)
+#' (b <- bayesfactor_restricted(posterior, hypothesis = hyps, prior = prior))
 #'
-#'   if (require("see") && require("patchwork")) {
-#'     i <- attr(b, "bool_results")[["posterior"]]
+#' bool <- as.logical(b, which = "posterior")
+#' head(bool)
 #'
-#'     see::plots(
-#'       plot(estimate_density(posterior)),
-#'       # distribution **conditional** on the restrictions
-#'       plot(estimate_density(posterior[i[[hyps[1]]], ])) + ggplot2::ggtitle(hyps[1]),
-#'       plot(estimate_density(posterior[i[[hyps[2]]], ])) + ggplot2::ggtitle(hyps[2]),
-#'       plot(estimate_density(posterior[i[[hyps[3]]], ])) + ggplot2::ggtitle(hyps[3]),
-#'       guides = "collect"
-#'     )
-#'   }
-#' }
+#' @examplesIf require("see") && require("patchwork")
 #'
+#' see::plots(
+#'   plot(estimate_density(posterior)),
+#'   # distribution **conditional** on the restrictions
+#'   plot(estimate_density(posterior[bool[, hyps[1]], ])) + ggplot2::ggtitle(hyps[1]),
+#'   plot(estimate_density(posterior[bool[, hyps[2]], ])) + ggplot2::ggtitle(hyps[2]),
+#'   plot(estimate_density(posterior[bool[, hyps[3]], ])) + ggplot2::ggtitle(hyps[3]),
+#'   guides = "collect"
+#' )
+#'
+#' @examplesIf require("rstanarm")
 #' \dontrun{
 #' # rstanarm models
 #' # ---------------
-#' if (require("rstanarm") && require("emmeans")) {
-#'   fit_stan <- stan_glm(mpg ~ wt + cyl + am,
-#'     data = mtcars, refresh = 0
-#'   )
-#'   hyps <- c(
-#'     "am > 0 & cyl < 0",
-#'     "cyl < 0",
-#'     "wt - cyl > 0"
-#'   )
-#'   bayesfactor_restricted(fit_stan, hypothesis = hyps)
+#' data("mtcars")
 #'
-#'   # emmGrid objects
-#'   # ---------------
-#'   # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html
-#'   disgust_data <- read.table(url("http://www.learnbayes.org/disgust_example.txt"), header = TRUE)
+#' fit_stan <- rstanarm::stan_glm(mpg ~ wt + cyl + am,
+#'   data = mtcars, refresh = 0
+#' )
+#' hyps <- c(
+#'   "am > 0 & cyl < 0",
+#'   "cyl < 0",
+#'   "wt - cyl > 0"
+#' )
 #'
-#'   contrasts(disgust_data$condition) <- contr.equalprior_pairs # see vignette
-#'   fit_model <- stan_glm(score ~ condition, data = disgust_data, family = gaussian())
-#'
-#'   em_condition <- emmeans(fit_model, ~condition)
-#'   hyps <- c("lemon < control & control < sulfur")
-#'
-#'   bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
-#'   # > # Bayes Factor (Order-Restriction)
-#'   # >
-#'   # >                          Hypothesis P(Prior) P(Posterior)   BF
-#'   # >  lemon < control & control < sulfur     0.17         0.75 4.49
-#'   # > ---
-#'   # > Bayes factors for the restricted model vs. the un-restricted model.
+#' bayesfactor_restricted(fit_stan, hypothesis = hyps)
 #' }
+#'
+#' @examplesIf require("rstanarm") && require("emmeans")
+#' \dontrun{
+#' # emmGrid objects
+#' # ---------------
+#' # replicating http://bayesfactor.blogspot.com/2015/01/multiple-comparisons-with-bayesfactor-2.html
+#' data("disgust")
+#' contrasts(disgust$condition) <- contr.equalprior_pairs # see vignette
+#' fit_model <- rstanarm::stan_glm(score ~ condition, data = disgust, family = gaussian())
+#'
+#' em_condition <- emmeans::emmeans(fit_model, ~condition)
+#' hyps <- c("lemon < control & control < sulfur")
+#'
+#' bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)
+#' # > # Bayes Factor (Order-Restriction)
+#' # >
+#' # >                          Hypothesis P(Prior) P(Posterior)   BF
+#' # >  lemon < control & control < sulfur     0.17         0.75 4.49
+#' # > ---
+#' # > Bayes factors for the restricted model vs. the un-restricted model.
 #' }
+#'
 #' @references
 #' - Morey, R. D., & Wagenmakers, E. J. (2014). Simple relation between Bayesian order-restricted and point-null hypothesis tests. Statistics & Probability Letters, 92, 121-124.
 #' - Morey, R. D., & Rouder, J. N. (2011). Bayes factor approaches for testing interval null hypotheses. Psychological methods, 16(4), 406.
@@ -238,3 +241,16 @@ bayesfactor_restricted.draws <- function(posterior, hypothesis, prior = NULL, ..
 
 #' @export
 bayesfactor_restricted.rvar <- bayesfactor_restricted.draws
+
+
+# Methods -----------------------------------------------------------------
+
+#' @export
+#' @rdname bayesfactor_restricted
+#' @param x An object of class `bayesfactor_restricted`
+#' @param which Should the logical matrix be of the posterior or prior distribution(s)?
+as.logical.bayesfactor_restricted <- function(x, which = c("posterior", "prior"), ...) {
+  which <- match.arg(which)
+  as.matrix(attr(x, "bool_results")[[which]])
+}
+

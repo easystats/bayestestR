@@ -69,6 +69,7 @@ reference:
       - diagnostic_draws
       - model_to_priors
       - cwi
+      - disgust
 
 # Keep articles organized
 navbar:
