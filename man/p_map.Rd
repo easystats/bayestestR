@@ -7,12 +7,13 @@
 \alias{p_map.brmsfit}
 \title{Bayesian p-value based on the density at the Maximum A Posteriori (MAP)}
 \usage{
-p_map(x, precision = 2^10, method = "kernel", ...)
+p_map(x, null = 0, precision = 2^10, method = "kernel", ...)
 
-p_pointnull(x, precision = 2^10, method = "kernel", ...)
+p_pointnull(x, null = 0, precision = 2^10, method = "kernel", ...)
 
 \method{p_map}{stanreg}(
   x,
+  null = 0,
   precision = 2^10,
   method = "kernel",
   effects = c("fixed", "random", "all"),
@@ -24,6 +25,7 @@ p_pointnull(x, precision = 2^10, method = "kernel", ...)
 
 \method{p_map}{brmsfit}(
   x,
+  null = 0,
   precision = 2^10,
   method = "kernel",
   effects = c("fixed", "random", "all"),
@@ -38,6 +40,8 @@ vectors. Can also be a Bayesian model. \strong{bayestestR} supports a wide range
 of models (see, for example, \code{methods("hdi")}) and not all of those are
 documented in the 'Usage' section, because methods for other classes mostly
 resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
+
+\item{null}{The value considered as a "null" effect. Traditionally 0, but could also be 1 in the case of ratios.}
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \code{density}.}
 
@@ -59,7 +63,11 @@ filtered by default, so only parameters that typically appear in the
 for the output.}
 }
 \description{
-Compute a Bayesian equivalent of the \emph{p}-value, related to the odds that a parameter (described by its posterior distribution) has against the null hypothesis (\emph{h0}) using Mills' (2014, 2017) \emph{Objective Bayesian Hypothesis Testing} framework. It corresponds to the density value at 0 divided by the density at the Maximum A Posteriori (MAP).
+Compute a Bayesian equivalent of the \emph{p}-value, related to the odds that a
+parameter (described by its posterior distribution) has against the null
+hypothesis (\emph{h0}) using Mills' (2014, 2017) \emph{Objective Bayesian Hypothesis
+Testing} framework. It corresponds to the density value at the null (e.g., 0)
+divided by the density at the Maximum A Posteriori (MAP).
 }
 \details{
 Note that this method is sensitive to the density estimation \code{method} (see the section in the examples below).

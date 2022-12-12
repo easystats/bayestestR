@@ -12,6 +12,10 @@
 * `as.logical()` for `bayesfactor_restricted()` results, extracts the boolean
   vector(s) the mark which draws are part of the order restriction.
 
+## Bug fixes
+
+* `p_map()` gains a new `null` argument to specify any non-0 nulls.
+
 # bayestestR 0.13.0
 
 ## Breaking
