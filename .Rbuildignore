@@ -16,12 +16,14 @@
 ^revdep$
 publication/*
 ^_pkgdown\.yml$
+^_pkgdown\.yaml$
 ^CRAN-RELEASE$
 tests\^spelling
 ^LICENSE\.md$
 \.code-workspace$
 \.lintr$
 ^CRAN-SUBMISSION$
+^data-raw$
 
 ^man/figures/JASP.
 ^man/figures/b.
