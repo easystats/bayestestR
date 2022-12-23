@@ -124,7 +124,6 @@ if (require("rstanarm") && require("see")) {
     diagnostic_file = file.path(tempdir(), "df1.csv")
   )
 
-
   res <- weighted_posteriors(stan_m0, stan_m1)
 
   plot(eti(res))

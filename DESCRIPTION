@@ -62,7 +62,7 @@ Description: Provides utilities to describe posterior
     Maximum A Posteriori (MAP), measures of dispersion (Highest Density
     Interval - HDI; Kruschke, 2015 <doi:10.1016/C2012-0-00477-2>) and
     indices used for null-hypothesis testing (such as ROPE percentage, pd
-    and Bayes factors).
+    and Bayes factors). References: Makowski et al. (2021) <doi:10.21105/joss.01541>.
 Depends:
     R (>= 3.6)
 Imports:
