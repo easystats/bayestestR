@@ -1,6 +1,6 @@
 skip_if_offline()
 
-if (requiet("rstanarm") && requiet("brms") && requiet("insight")) {
+if (requiet("rstanarm") && requiet("brms")) {
   test_that("effective_sample", {
     brms_1 <- insight::download_model("brms_1")
     res <- effective_sample(brms_1)

@@ -1,12 +1,12 @@
 skip_if_offline()
 
-if (requiet("testthat") &&
-  requiet("bayestestR") &&
+if (
+
   requiet("rstanarm") &&
-  requiet("brms") &&
-  requiet("httr") &&
-  requiet("insight") &&
-  requiet("BayesFactor")) {
+    requiet("brms") &&
+    requiet("httr") &&
+
+    requiet("BayesFactor")) {
   test_that("describe_posterior", {
     set.seed(333)
 

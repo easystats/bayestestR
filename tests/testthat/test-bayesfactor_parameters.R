@@ -2,8 +2,8 @@ skip_if_offline()
 
 if (requiet("rstanarm") &&
   requiet("BayesFactor") &&
-  requiet("testthat") &&
-  requiet("insight") &&
+
+
   requiet("httr") &&
   requiet("brms")) {
   # bayesfactor_parameters data frame ---------------------------------------

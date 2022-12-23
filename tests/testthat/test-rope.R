@@ -1,6 +1,6 @@
 skip_if_offline()
 
-if (requiet("bayestestR") && requiet("testthat") && requiet("rstanarm") && requiet("brms")) {
+if (requiet("rstanarm") && requiet("brms")) {
   test_that("rope", {
     expect_equal(as.numeric(rope(distribution_normal(1000, 0, 1), verbose = FALSE)), 0.084, tolerance = 0.01)
     expect_equal(equivalence_test(distribution_normal(1000, 0, 1))$ROPE_Equivalence, "Undecided")

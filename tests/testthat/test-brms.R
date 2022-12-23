@@ -1,7 +1,7 @@
 skip_if_offline()
 .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
 
-if (.runThisTest && requiet("brms") && requiet("testthat") && requiet("insight") && requiet("httr")) {
+if (.runThisTest && requiet("brms") && requiet("httr")) {
   test_that("brms", {
     skip_on_cran()
 
@@ -36,7 +36,6 @@ if (.runThisTest && requiet("brms") && requiet("testthat") && requiet("insight")
   })
 
   test_that("brms", {
-    # skip_on_travis()
     skip_on_cran()
 
     set.seed(333)
@@ -53,7 +52,6 @@ if (.runThisTest && requiet("brms") && requiet("testthat") && requiet("insight")
   })
 
   test_that("brms", {
-    # skip_on_travis()
     skip_on_cran()
 
     set.seed(333)

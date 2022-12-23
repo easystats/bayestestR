@@ -1,4 +1,4 @@
-if (requiet("testthat") && requiet("parameters") && requiet("bayestestR")) {
+if (requiet("parameters") && requiet("bayestestR")) {
   m <- lm(mpg ~ hp + cyl + am, data = mtcars)
   p <- coef(summary(m))[-1, 4]
 

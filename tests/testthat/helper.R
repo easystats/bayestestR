@@ -4,3 +4,7 @@ requiet <- function(package) {
     require(package, warn.conflicts = FALSE, character.only = TRUE)
   )
 }
+
+# load hard dependencies
+library(insight)
+library(datawizard)
