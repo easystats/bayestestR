@@ -162,7 +162,7 @@ describe_posterior(
 ## 
 ## Parameter |   Median |        95% CI |     pd |   ps
 ## ----------------------------------------------------
-## Posterior | 7.54e-03 | [-1.98, 1.97] | 50.31% | 0.46
+## Posterior | 5.93e-03 | [-1.93, 1.96] | 50.29% | 0.46
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -461,7 +461,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.41
+## [1] 0.37
 ```
 
 ## Code of Conduct
@@ -480,7 +480,7 @@ line-spacing="2">
 
 Kruschke, J. K. (2018). Rejecting or accepting parameter values in
 Bayesian estimation. *Advances in Methods and Practices in Psychological
-Science*, *1*(2), 270–280. <https://doi.org/10.1177/2515245918771304>
+Science*, *1*(2), 270–280.
 
 </div>
 

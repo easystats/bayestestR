@@ -253,4 +253,3 @@ as.logical.bayesfactor_restricted <- function(x, which = c("posterior", "prior")
   which <- match.arg(which)
   as.matrix(attr(x, "bool_results")[[which]])
 }
-
