@@ -145,7 +145,6 @@ print(test, digits = 4)
 library(rstanarm)
 model <- rstanarm::stan_glm(mpg ~ wt + cyl, data = mtcars)
 equivalence_test(model)
-equivalence_test(model, ci = c(.50, 1))
 
 # plot result
 test <- equivalence_test(model)
@@ -157,12 +156,10 @@ equivalence_test(emtrends(model, ~1, "wt"))
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 equivalence_test(model)
-equivalence_test(model, ci = c(.50, .99))
 
 library(BayesFactor)
 bf <- ttestBF(x = rnorm(100, 1, 1))
 equivalence_test(bf)
-equivalence_test(bf, ci = c(.50, .99))
 }
 }
 \references{
