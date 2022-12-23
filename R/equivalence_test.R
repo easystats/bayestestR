@@ -97,7 +97,7 @@
 #'
 #' library(BayesFactor)
 #' bf <- ttestBF(x = rnorm(100, 1, 1))
-#' equivalence_test(bf)
+#' # equivalence_test(bf)
 #' }
 #' @export
 equivalence_test <- function(x, ...) {
