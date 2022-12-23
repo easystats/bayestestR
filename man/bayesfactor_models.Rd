@@ -14,7 +14,7 @@ bf_models(..., denominator = 1, verbose = TRUE)
 
 \method{bayesfactor_models}{default}(..., denominator = 1, verbose = TRUE)
 
-\method{update}{bayesfactor_models}(object, subset = NULL, reference = NULL, ...)
+update.bayesfactor_models(object, subset = NULL, reference = NULL, ...)
 
 \method{as.matrix}{bayesfactor_models}(x, ...)
 }

@@ -85,7 +85,6 @@
 #' if (require("brms")) {
 #'   model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 #'   describe_posterior(model)
-#'   describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
 #'   describe_posterior(model, ci = c(0.80, 0.90))
 #' }
 #'
