@@ -35,7 +35,7 @@
 #' @references Gelman A, Greenland S. Are confidence intervals better termed "uncertainty intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381
 #'
 #'
-#' @examples
+#' @examplesIf require("rstanarm", quietly = TRUE)
 #' library(bayestestR)
 #'
 #' posterior <- rnorm(1000)
@@ -45,34 +45,25 @@
 #' df <- data.frame(replicate(4, rnorm(100)))
 #' ci(df, method = "ETI", ci = c(0.80, 0.89, 0.95))
 #' ci(df, method = "HDI", ci = c(0.80, 0.89, 0.95))
-#' \dontrun{
-#' if (require("rstanarm")) {
-#'   model <- stan_glm(mpg ~ wt, data = mtcars, chains = 2, iter = 200, refresh = 0)
-#'   ci(model, method = "ETI", ci = c(0.80, 0.89))
-#'   ci(model, method = "HDI", ci = c(0.80, 0.89))
-#'   ci(model, method = "SI")
-#' }
 #'
-#' if (require("brms")) {
-#'   model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#'   ci(model, method = "ETI")
-#'   ci(model, method = "HDI")
-#'   ci(model, method = "SI")
-#' }
+#' model <- stan_glm(mpg ~ wt, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#' ci(model, method = "ETI", ci = c(0.80, 0.89))
+#' ci(model, method = "HDI", ci = c(0.80, 0.89))
 #'
-#' if (require("BayesFactor")) {
-#'   bf <- ttestBF(x = rnorm(100, 1, 1))
-#'   ci(bf, method = "ETI")
-#'   ci(bf, method = "HDI")
-#' }
+#' @examplesIf require("brms", quietly = TRUE)
+#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+#' ci(model, method = "ETI")
+#' ci(model, method = "HDI")
 #'
-#' if (require("emmeans")) {
-#'   model <- emtrends(model, ~1, "wt")
-#'   ci(model, method = "ETI")
-#'   ci(model, method = "HDI")
-#'   ci(model, method = "SI")
-#' }
-#' }
+#' @examplesIf require("BayesFactor", quietly = TRUE)
+#' bf <- ttestBF(x = rnorm(100, 1, 1))
+#' ci(bf, method = "ETI")
+#' ci(bf, method = "HDI")
+#'
+#' @examplesIf require("emmeans", quietly = TRUE)
+#' model <- emtrends(model, ~1, "wt")
+#' ci(model, method = "ETI")
+#' ci(model, method = "HDI")
 #' @export
 ci <- function(x, ...) {
   UseMethod("ci")
@@ -90,15 +81,65 @@ ci <- function(x, ...) {
                          BF = 1,
                          ...) {
   if (tolower(method) %in% c("eti", "equal", "ci", "quantile")) {
-    return(eti(x, ci = ci, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))
+    return(
+      eti(
+        x,
+        ci = ci,
+        effects = effects,
+        component = component,
+        parameters = parameters,
+        verbose = verbose,
+        ...
+      )
+    )
   } else if (tolower(method) %in% c("bci", "bca", "bcai")) {
-    return(bci(x, ci = ci, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))
+    return(
+      bci(
+        x,
+        ci = ci,
+        effects = effects,
+        component = component,
+        parameters = parameters,
+        verbose = verbose,
+        ...
+      )
+    )
   } else if (tolower(method) %in% c("hdi")) {
-    return(hdi(x, ci = ci, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))
+    return(
+      hdi(
+        x,
+        ci = ci,
+        effects = effects,
+        component = component,
+        parameters = parameters,
+        verbose = verbose,
+        ...
+      )
+    )
   } else if (tolower(method) %in% c("spi")) {
-    return(spi(x, ci = ci, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))
+    return(
+      spi(
+        x,
+        ci = ci,
+        effects = effects,
+        component = component,
+        parameters = parameters,
+        verbose = verbose,
+        ...
+      )
+    )
   } else if (tolower(method) %in% c("si")) {
-    return(si(x, BF = BF, effects = effects, component = component, parameters = parameters, verbose = verbose, ...))
+    return(
+      si(
+        x,
+        BF = BF,
+        effects = effects,
+        component = component,
+        parameters = parameters,
+        verbose = verbose,
+        ...
+      )
+    )
   } else {
     stop(
       insight::format_message(
@@ -156,36 +197,101 @@ ci.emm_list <- ci.emmGrid
 
 #' @rdname ci
 #' @export
-ci.sim.merMod <- function(x, ci = 0.95, method = "ETI", effects = c("fixed", "random", "all"),
-                          parameters = NULL, verbose = TRUE, ...) {
-  .ci_bayesian(x, ci = ci, method = method, effects = effects, parameters = parameters, verbose = verbose, ...)
+ci.sim.merMod <- function(x,
+                          ci = 0.95,
+                          method = "ETI",
+                          effects = c("fixed", "random", "all"),
+                          parameters = NULL,
+                          verbose = TRUE,
+                          ...) {
+  .ci_bayesian(
+    x,
+    ci = ci,
+    method = method,
+    effects = effects,
+    parameters = parameters,
+    verbose = verbose,
+    ...
+  )
 }
 
 
 
 #' @rdname ci
 #' @export
-ci.sim <- function(x, ci = 0.95, method = "ETI", parameters = NULL, verbose = TRUE, ...) {
-  .ci_bayesian(x, ci = ci, method = method, parameters = parameters, verbose = verbose, ...)
+ci.sim <- function(x,
+                   ci = 0.95,
+                   method = "ETI",
+                   parameters = NULL,
+                   verbose = TRUE,
+                   ...) {
+  .ci_bayesian(
+    x,
+    ci = ci,
+    method = method,
+    parameters = parameters,
+    verbose = verbose,
+    ...
+  )
 }
 
 
 
 #' @rdname ci
 #' @export
-ci.stanreg <- function(x, ci = 0.95, method = "ETI", effects = c("fixed", "random", "all"),
-                       component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
-                       parameters = NULL, verbose = TRUE, BF = 1, ...) {
-  .ci_bayesian(x, ci = ci, method = method, effects = effects, component = component, parameters = parameters, verbose = verbose, BF = BF, ...)
+ci.stanreg <- function(x,
+                       ci = 0.95,
+                       method = "ETI",
+                       effects = c("fixed", "random", "all"),
+                       component = c(
+                         "location",
+                         "all",
+                         "conditional",
+                         "smooth_terms",
+                         "sigma",
+                         "distributional",
+                         "auxiliary"
+                       ),
+                       parameters = NULL,
+                       verbose = TRUE,
+                       BF = 1,
+                       ...) {
+  .ci_bayesian(
+    x,
+    ci = ci,
+    method = method,
+    effects = effects,
+    component = component,
+    parameters = parameters,
+    verbose = verbose,
+    BF = BF,
+    ...
+  )
 }
 
 
 #' @rdname ci
 #' @export
-ci.brmsfit <- function(x, ci = 0.95, method = "ETI", effects = c("fixed", "random", "all"),
+ci.brmsfit <- function(x,
+                       ci = 0.95,
+                       method = "ETI",
+                       effects = c("fixed", "random", "all"),
                        component = c("conditional", "zi", "zero_inflated", "all"),
-                       parameters = NULL, verbose = TRUE, BF = 1, ...) {
-  .ci_bayesian(x, ci = ci, method = method, effects = effects, component = component, parameters = parameters, verbose = verbose, BF = BF, ...)
+                       parameters = NULL,
+                       verbose = TRUE,
+                       BF = 1,
+                       ...) {
+  .ci_bayesian(
+    x,
+    ci = ci,
+    method = method,
+    effects = effects,
+    component = component,
+    parameters = parameters,
+    verbose = verbose,
+    BF = BF,
+    ...
+  )
 }
 
 
@@ -208,14 +314,31 @@ ci.BFBayesFactor <- ci.numeric
 #' @export
 ci.MCMCglmm <- function(x, ci = 0.95, method = "ETI", verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
-  ci(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), ci = ci, method = method, verbose = verbose, ...)
+  ci(
+    as.data.frame(x$Sol[, 1:nF, drop = FALSE]),
+    ci = ci,
+    method = method,
+    verbose = verbose,
+    ...
+  )
 }
 
 
 #' @export
-ci.bamlss <- function(x, ci = 0.95, method = "ETI", component = c("all", "conditional", "location"), verbose = TRUE, ...) {
+ci.bamlss <- function(x,
+                      ci = 0.95,
+                      method = "ETI",
+                      component = c("all", "conditional", "location"),
+                      verbose = TRUE,
+                      ...) {
   component <- match.arg(component)
-  ci(insight::get_parameters(x, component = component), ci = ci, method = method, verbose = verbose, ...)
+  ci(
+    insight::get_parameters(x, component = component),
+    ci = ci,
+    method = method,
+    verbose = verbose,
+    ...
+  )
 }
 
 

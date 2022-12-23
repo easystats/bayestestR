@@ -114,6 +114,7 @@ the data should not seem very surprising} (\cite{Gelman & Greenland 2019}).
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \examples{
+\dontshow{if (require("rstanarm", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(bayestestR)
 
 posterior <- rnorm(1000)
@@ -123,34 +124,26 @@ ci(posterior, method = "HDI")
 df <- data.frame(replicate(4, rnorm(100)))
 ci(df, method = "ETI", ci = c(0.80, 0.89, 0.95))
 ci(df, method = "HDI", ci = c(0.80, 0.89, 0.95))
-\dontrun{
-if (require("rstanarm")) {
-  model <- stan_glm(mpg ~ wt, data = mtcars, chains = 2, iter = 200, refresh = 0)
-  ci(model, method = "ETI", ci = c(0.80, 0.89))
-  ci(model, method = "HDI", ci = c(0.80, 0.89))
-  ci(model, method = "SI")
-}
 
-if (require("brms")) {
-  model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-  ci(model, method = "ETI")
-  ci(model, method = "HDI")
-  ci(model, method = "SI")
-}
-
-if (require("BayesFactor")) {
-  bf <- ttestBF(x = rnorm(100, 1, 1))
-  ci(bf, method = "ETI")
-  ci(bf, method = "HDI")
-}
-
-if (require("emmeans")) {
-  model <- emtrends(model, ~1, "wt")
-  ci(model, method = "ETI")
-  ci(model, method = "HDI")
-  ci(model, method = "SI")
-}
-}
+model <- stan_glm(mpg ~ wt, data = mtcars, chains = 2, iter = 200, refresh = 0)
+ci(model, method = "ETI", ci = c(0.80, 0.89))
+ci(model, method = "HDI", ci = c(0.80, 0.89))
+\dontshow{\}) # examplesIf}
+\dontshow{if (require("brms", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
+ci(model, method = "ETI")
+ci(model, method = "HDI")
+\dontshow{\}) # examplesIf}
+\dontshow{if (require("BayesFactor", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+bf <- ttestBF(x = rnorm(100, 1, 1))
+ci(bf, method = "ETI")
+ci(bf, method = "HDI")
+\dontshow{\}) # examplesIf}
+\dontshow{if (require("emmeans", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+model <- emtrends(model, ~1, "wt")
+ci(model, method = "ETI")
+ci(model, method = "HDI")
+\dontshow{\}) # examplesIf}
 }
 \references{
 Gelman A, Greenland S. Are confidence intervals better termed "uncertainty intervals"? BMJ 2019;l5381. 10.1136/bmj.l5381
