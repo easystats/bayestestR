@@ -1,3 +1,5 @@
+skip_if_offline()
+
 if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("rstanarm", quietly = TRUE) && require("testthat", quietly = TRUE)) {
   test_that("p_significance", {
     # numeric

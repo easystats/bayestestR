@@ -9,6 +9,7 @@ if (.runThisTest &&
   requiet("brms")) {
   skip_on_cran()
   skip_on_os(os = "windows")
+  skip_if_offline()
 
   # stanreg --------------------------
 

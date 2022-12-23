@@ -1,3 +1,5 @@
+skip_if_offline()
+
 if (requiet("rstanarm") &&
   requiet("BayesFactor") &&
   requiet("testthat") &&

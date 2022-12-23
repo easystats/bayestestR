@@ -1,3 +1,5 @@
+skip_if_offline()
+
 if (requiet("rstanarm") && requiet("httr") && requiet("brms") && requiet("insight") && requiet("testthat")) {
   test_that("ci", {
     expect_equal(ci(distribution_normal(1000), ci = .90)$CI_low[1], -1.6361, tolerance = 0.02)

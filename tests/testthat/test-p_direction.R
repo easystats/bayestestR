@@ -1,3 +1,5 @@
+skip_if_offline()
+
 if (requiet("testthat") && requiet("bayestestR") && requiet("rstanarm") && requiet("brms")) {
   test_that("p_direction", {
     set.seed(333)

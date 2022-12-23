@@ -1,3 +1,5 @@
+skip_if_offline()
+
 .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
 if (.runThisTest) {
   if (requiet("rstanarm") && requiet("bayestestR") && requiet("httr") && requiet("insight")) {

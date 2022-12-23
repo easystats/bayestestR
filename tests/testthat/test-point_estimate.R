@@ -1,3 +1,5 @@
+skip_if_offline()
+
 if (requiet("rstanarm") && requiet("brms") && requiet("insight") && requiet("httr")) {
   m <- insight::download_model("stanreg_merMod_5")
   p <- insight::get_parameters(m, effects = "all")

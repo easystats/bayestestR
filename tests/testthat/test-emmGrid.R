@@ -1,4 +1,4 @@
-if (require("rstanarm") && require("testthat") && require("bayestestR") && require("emmeans")) {
+if (require("rstanarm") && require("bayestestR") && require("emmeans")) {
   set.seed(300)
   model <- stan_glm(extra ~ group,
     data = sleep,

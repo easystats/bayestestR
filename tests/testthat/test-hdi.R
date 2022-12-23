@@ -1,4 +1,6 @@
-if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("testthat") && requiet("BayesFactor")) {
+skip_if_offline()
+
+if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("BayesFactor")) {
   # numeric -------------------------------
   test_that("hdi", {
     expect_equal(hdi(distribution_normal(1000), ci = .90)$CI_low[1], -1.64, tolerance = 0.02)

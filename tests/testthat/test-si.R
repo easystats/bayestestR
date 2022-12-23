@@ -1,4 +1,4 @@
-if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("testthat")) {
+if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE))) {
   test_that("si.numeric", {
     skip_if_not_installed("logspline")
 

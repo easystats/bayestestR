@@ -1,3 +1,5 @@
+skip_if_offline()
+
 if (requireNamespace("rstanarm", quietly = TRUE)) {
   test_that("p_map", {
     expect_equal(as.numeric(p_map(distribution_normal(1000))), 1, tolerance = 0.1)

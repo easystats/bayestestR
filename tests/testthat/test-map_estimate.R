@@ -1,4 +1,6 @@
-if (require("testthat") && requireNamespace("rstanarm", quietly = TRUE)) {
+skip_if_offline()
+
+if (requireNamespace("rstanarm", quietly = TRUE)) {
   # numeric ----------------------
   test_that("map_estimate", {
     expect_equal(
@@ -7,9 +9,6 @@ if (require("testthat") && requireNamespace("rstanarm", quietly = TRUE)) {
       tolerance = 0.01
     )
   })
-
-
-
 
   if (require("insight") && require("BayesFactor")) {
     # stanreg ----------------------

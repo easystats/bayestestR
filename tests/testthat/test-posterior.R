@@ -1,3 +1,5 @@
+skip_if_offline()
+
 .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
 
 if (.runThisTest && require("posterior") && require("brms")) {
