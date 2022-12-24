@@ -1,4 +1,3 @@
-
 test_that("contr.equalprior | gen", {
   skip_on_cran()
   set.seed(1234)
