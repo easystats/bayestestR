@@ -2,8 +2,6 @@
 
 if (.runThisTest &&
   requiet("rstanarm") &&
-
-
   requiet("BH") &&
   requiet("RcppEigen") &&
   requiet("brms")) {

@@ -75,7 +75,7 @@ simulate_correlation <- function(n = 100,
     } else {
       stop("'r' should be a symetric matrix (relative to the diagonal).", call. = FALSE)
     }
-  } else if (length(r) == 1) {
+  } else if (length(r) == 1L) {
     if (abs(r) > 1) {
       stop("'r' should only contain values between -1 and 1.", call. = FALSE)
     } else {
