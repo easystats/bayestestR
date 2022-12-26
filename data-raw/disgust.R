@@ -1,4 +1,3 @@
-
 disgust <- tibble::tribble(
   ~score, ~condition,
   13L, "control",

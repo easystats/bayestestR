@@ -1,4 +1,3 @@
-
 # clean priors and posteriors ---------------------------------------------
 
 #' @keywords internal

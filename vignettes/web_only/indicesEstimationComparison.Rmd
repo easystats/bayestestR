@@ -145,7 +145,6 @@ ggplot(dat, aes(x = error_group, y = value, fill = estimate, group = interaction
 #### Sensitivity to Sample Size
 
 ```{r, message=FALSE, warning=FALSE}
-
 dat <- df
 dat <- data_select(dat, select = c("sample_size", "true_effect", "outcome_type", "Coefficient", "Median", "Mean", "MAP"))
 dat <- reshape_longer(
@@ -187,7 +186,6 @@ the predict the presence or absence of effect with the estimates as well as
 their interaction with noise and sample size.
 
 ```{r, message=FALSE, warning=FALSE}
-
 dat <- df
 dat <- data_select(dat, select = c("sample_size", "true_effect", "outcome_type", "Coefficient", "Median", "Mean", "MAP"))
 dat <- reshape_longer(
@@ -245,7 +243,6 @@ df <- read.csv("https://raw.github.com/easystats/circus/master/data/bayesSim_stu
 #### Sensitivity to number of iterations
 
 ```{r, message=FALSE, warning=FALSE}
-
 dat <- df
 dat <- data_select(dat, select = c("iterations", "true_effect", "outcome_type", "beta", "Median", "Mean", "MAP"))
 dat <- reshape_longer(
