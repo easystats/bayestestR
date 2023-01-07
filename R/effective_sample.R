@@ -29,13 +29,23 @@ effective_sample <- function(model, ...) {
 
 #' @export
 effective_sample.default <- function(model, ...) {
-  stop(insight::format_message(paste0("'effective_sample()' is not yet implemented for objects of class '", class(model)[1], "'.")), call. = FALSE)
+  stop(insight::format_message(
+    paste0(
+      "'effective_sample()' is not yet implemented for objects of class '",
+      class(model)[1],
+      "'."
+    )
+  ), call. = FALSE)
 }
 
 
 #' @rdname effective_sample
 #' @export
-effective_sample.brmsfit <- function(model, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, ...) {
+effective_sample.brmsfit <- function(model,
+                                     effects = c("fixed", "random", "all"),
+                                     component = c("conditional", "zi", "zero_inflated", "all"),
+                                     parameters = NULL,
+                                     ...) {
   # check arguments
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -64,13 +74,16 @@ effective_sample.brmsfit <- function(model, effects = c("fixed", "random", "all"
 
 #' @rdname effective_sample
 #' @export
-effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
+effective_sample.stanreg <- function(model,
+                                     effects = c("fixed", "random", "all"),
+                                     component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                                     parameters = NULL,
+                                     ...) {
   # check arguments
   effects <- match.arg(effects)
   component <- match.arg(component)
 
-  pars <-
-    insight::find_parameters(
+  pars <- insight::find_parameters(
       model,
       effects = effects,
       component = component,
@@ -91,7 +104,11 @@ effective_sample.stanreg <- function(model, effects = c("fixed", "random", "all"
 
 
 #' @export
-effective_sample.stanmvreg <- function(model, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, ...) {
+effective_sample.stanmvreg <- function(model,
+                                       effects = c("fixed", "random", "all"),
+                                       component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                                       parameters = NULL,
+                                       ...) {
   # check arguments
   effects <- match.arg(effects)
   component <- match.arg(component)
@@ -116,7 +133,10 @@ effective_sample.stanmvreg <- function(model, effects = c("fixed", "random", "al
 
 
 #' @export
-effective_sample.stanfit <- function(model, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+effective_sample.stanfit <- function(model,
+                                     effects = c("fixed", "random", "all"),
+                                     parameters = NULL,
+                                     ...) {
   # check arguments
   effects <- match.arg(effects)
 
@@ -157,7 +177,10 @@ effective_sample.blavaan <- function(model, parameters = NULL, ...) {
 
 
 #' @export
-effective_sample.MCMCglmm <- function(model, effects = c("fixed", "random", "all"), parameters = NULL, ...) {
+effective_sample.MCMCglmm <- function(model,
+                                      effects = c("fixed", "random", "all"),
+                                      parameters = NULL,
+                                      ...) {
   # check arguments
   effects <- match.arg(effects)
 
@@ -179,7 +202,7 @@ effective_sample.MCMCglmm <- function(model, effects = c("fixed", "random", "all
     row.names = NULL
   )
 
-  if (nrow(s.random) > 0) {
+  if (nrow(s.random) > 0L) {
     es <- rbind(es, data.frame(
       Parameter = rownames(s.random),
       ESS = round(s.random[["eff.samp"]]),
