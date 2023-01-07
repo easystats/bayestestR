@@ -200,15 +200,27 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verb
 
 
 #' @keywords internal
-.equivalence_test_models <- function(x, range = "default", ci = 0.95, effects = "fixed", component = "conditional", parameters = NULL, verbose = TRUE) {
+.equivalence_test_models <- function(x,
+                                     range = "default",
+                                     ci = 0.95,
+                                     effects = "fixed",
+                                     component = "conditional",
+                                     parameters = NULL,
+                                     verbose = TRUE) {
   if (all(range == "default")) {
     range <- rope_range(x)
-  } else if (!all(is.numeric(range)) || length(range) != 2) {
+  } else if (!all(is.numeric(range)) || length(range) != 2L) {
     stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
   }
 
   if (verbose && !inherits(x, "blavaan")) .check_multicollinearity(x)
-  params <- insight::get_parameters(x, component = component, effects = effects, parameters = parameters)
+  params <- insight::get_parameters(
+    x,
+    component = component,
+    effects = effects,
+    parameters = parameters,
+    verbose = verbose
+  )
 
   l <- sapply(
     params,
@@ -233,7 +245,14 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verb
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.stanreg <- function(x, range = "default", ci = 0.95, effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, verbose = TRUE, ...) {
+equivalence_test.stanreg <- function(x,
+                                     range = "default",
+                                     ci = 0.95,
+                                     effects = c("fixed", "random", "all"),
+                                     component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                                     parameters = NULL,
+                                     verbose = TRUE,
+                                     ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
@@ -260,7 +279,14 @@ equivalence_test.blavaan <- equivalence_test.stanreg
 
 #' @rdname equivalence_test
 #' @export
-equivalence_test.brmsfit <- function(x, range = "default", ci = 0.95, effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
+equivalence_test.brmsfit <- function(x,
+                                     range = "default",
+                                     ci = 0.95,
+                                     effects = c("fixed", "random", "all"),
+                                     component = c("conditional", "zi", "zero_inflated", "all"),
+                                     parameters = NULL,
+                                     verbose = TRUE,
+                                     ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
 
@@ -280,8 +306,22 @@ equivalence_test.brmsfit <- function(x, range = "default", ci = 0.95, effects = 
 
 
 #' @export
-equivalence_test.sim.merMod <- function(x, range = "default", ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
-  out <- .equivalence_test_models(x, range, ci, effects = "fixed", component = "conditional", parameters, verbose = FALSE)
+equivalence_test.sim.merMod <- function(x,
+                                        range = "default",
+                                        ci = 0.95,
+                                        parameters = NULL,
+                                        verbose = TRUE,
+                                        ...) {
+  out <- .equivalence_test_models(
+    x,
+    range,
+    ci,
+    effects = "fixed",
+    component = "conditional",
+    parameters,
+    verbose = verbose
+  )
+
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -291,16 +331,44 @@ equivalence_test.sim <- equivalence_test.sim.merMod
 
 
 #' @export
-equivalence_test.mcmc <- function(x, range = "default", ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
-  out <- .equivalence_test_models(as.data.frame(x), range, ci, effects = "fixed", component = "conditional", parameters, verbose = FALSE)
+equivalence_test.mcmc <- function(x,
+                                  range = "default",
+                                  ci = 0.95,
+                                  parameters = NULL,
+                                  verbose = TRUE,
+                                  ...) {
+  out <- .equivalence_test_models(
+    as.data.frame(x),
+    range,
+    ci,
+    effects = "fixed",
+    component = "conditional",
+    parameters,
+    verbose = verbose
+  )
+
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
 
 
 #' @export
-equivalence_test.bcplm <- function(x, range = "default", ci = 0.95, parameters = NULL, verbose = TRUE, ...) {
-  out <- .equivalence_test_models(insight::get_parameters(x), range, ci, effects = "fixed", component = "conditional", parameters, verbose = FALSE)
+equivalence_test.bcplm <- function(x,
+                                   range = "default",
+                                   ci = 0.95,
+                                   parameters = NULL,
+                                   verbose = TRUE,
+                                   ...) {
+  out <- .equivalence_test_models(
+    insight::get_parameters(x),
+    range,
+    ci,
+    effects = "fixed",
+    component = "conditional",
+    parameters,
+    verbose = verbose
+  )
+
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -317,9 +385,24 @@ equivalence_test.bayesQR <- equivalence_test.bcplm
 
 
 #' @export
-equivalence_test.bamlss <- function(x, range = "default", ci = 0.95, component = c("all", "conditional", "location"), parameters = NULL, verbose = TRUE, ...) {
+equivalence_test.bamlss <- function(x,
+                                    range = "default",
+                                    ci = 0.95,
+                                    component = c("all", "conditional", "location"),
+                                    parameters = NULL,
+                                    verbose = TRUE,
+                                    ...) {
   component <- match.arg(component)
-  out <- .equivalence_test_models(insight::get_parameters(x, component = component), range, ci, effects = "fixed", component = "conditional", parameters, verbose = FALSE)
+  out <- .equivalence_test_models(
+    insight::get_parameters(x, component = component),
+    range,
+    ci,
+    effects = "fixed",
+    component = "conditional",
+    parameters,
+    verbose = verbose
+  )
+
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
