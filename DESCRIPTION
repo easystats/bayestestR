@@ -103,6 +103,7 @@ Suggests:
     posterior,
     RcppEigen,
     rmarkdown,
+    rstan,
     rstanarm,
     see (>= 0.7.4),
     testthat,
