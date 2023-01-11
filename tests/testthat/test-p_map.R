@@ -1,6 +1,6 @@
 skip_if_offline()
 
-if (requireNamespace("rstanarm", quietly = TRUE)) {
+if (requiet("rstanarm")) {
   test_that("p_map", {
     expect_equal(as.numeric(p_map(distribution_normal(1000))), 1, tolerance = 0.1)
     expect_equal(as.numeric(p_map(distribution_normal(1000, 1, 1))), 0.62, tolerance = 0.1)

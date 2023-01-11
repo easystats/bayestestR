@@ -1,6 +1,6 @@
 skip_if_offline()
 
-if (requireNamespace("rstanarm", quietly = TRUE)) {
+if (requiet("rstanarm")) {
   # numeric ----------------------
   test_that("map_estimate", {
     expect_equal(

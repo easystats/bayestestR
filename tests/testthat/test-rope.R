@@ -94,7 +94,7 @@ if (requiet("rstanarm") && requiet("brms")) {
 #   })
 # }
 
-if (requiet("BayesFactor", quietly = TRUE)) {
+if (requiet("BayesFactor")) {
   mods <- regressionBF(mpg ~ am + cyl, mtcars, progress = FALSE)
   rx <- suppressMessages(rope(mods, verbose = FALSE))
   expect_equal(rx$ROPE_high, -rx$ROPE_low, tolerance = 0.01)
