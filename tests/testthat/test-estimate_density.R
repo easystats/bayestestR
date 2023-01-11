@@ -1,4 +1,4 @@
-if (require("logspline") && require("KernSmooth") && require("mclust")) {
+if (requiet("logspline") && requiet("KernSmooth") && requiet("mclust")) {
   test_that("estimate_density", {
     set.seed(333)
     x <- distribution_normal(500, 1)

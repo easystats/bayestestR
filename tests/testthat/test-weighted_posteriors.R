@@ -1,6 +1,7 @@
+requiet("BayesFactor")
+skip_on_cran()
+
 test_that("weighted_posteriors for BayesFactor", {
-  skip_on_cran()
-  requiet("BayesFactor")
   set.seed(123)
 
   # compute Bayes Factor for 31 different regression models
@@ -24,7 +25,6 @@ test_that("weighted_posteriors for BayesFactor", {
 test_that("weighted_posteriors for BayesFactor (intercept)", {
   set.seed(123)
   # fails for win old-release
-  skip_on_cran()
   skip_on_ci()
 
   dat <- data.frame(
@@ -59,7 +59,6 @@ test_that("weighted_posteriors for nonlinear BayesFactor", {
 })
 
 test_that("weighted_posteriors vs posterior_average", {
-  skip_on_cran()
   requiet("brms")
 
   fit1 <- brm(rating ~ treat + period + carry,

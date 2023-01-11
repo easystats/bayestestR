@@ -1,6 +1,6 @@
 skip_if_offline()
 
-if (suppressPackageStartupMessages(require("bayestestR", quietly = TRUE)) && require("rstanarm", quietly = TRUE) && require("testthat", quietly = TRUE)) {
+if (requiet("rstanarm")) {
   test_that("p_significance", {
     # numeric
     set.seed(333)

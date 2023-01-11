@@ -2,7 +2,7 @@ skip_if_offline()
 
 .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
 
-if (.runThisTest && require("posterior") && require("brms")) {
+if (.runThisTest && requiet("posterior") && requiet("brms")) {
   model <- insight::download_model("brms_1")
 
   test_that("mp-posterior-draws", {

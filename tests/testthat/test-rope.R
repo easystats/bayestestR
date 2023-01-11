@@ -68,7 +68,7 @@ if (requiet("rstanarm") && requiet("brms")) {
 }
 
 .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
-# if (.runThisTest && require("brms", quietly = TRUE)) {
+# if (.runThisTest && requiet("brms")) {
 #   set.seed(123)
 #   model <- brm(mpg ~ wt + gear, data = mtcars, iter = 500)
 #   rope <- rope(model, verbose = FALSE)
@@ -94,7 +94,7 @@ if (requiet("rstanarm") && requiet("brms")) {
 #   })
 # }
 
-if (require("BayesFactor", quietly = TRUE)) {
+if (requiet("BayesFactor", quietly = TRUE)) {
   mods <- regressionBF(mpg ~ am + cyl, mtcars, progress = FALSE)
   rx <- suppressMessages(rope(mods, verbose = FALSE))
   expect_equal(rx$ROPE_high, -rx$ROPE_low, tolerance = 0.01)

@@ -1,4 +1,4 @@
-if (requiet("BayesFactor") && requiet("bayestestR")) {
+if (requiet("BayesFactor")) {
   set.seed(333)
   x <- BayesFactor::correlationBF(y = iris$Sepal.Length, x = iris$Sepal.Width)
   test_that("p_direction", {
