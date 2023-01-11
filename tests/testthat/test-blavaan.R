@@ -1,4 +1,4 @@
-if (requiet("blavaan") && requiet("lavaan") && requiet("cmdstanr")) {
+if (requiet("blavaan") && requiet("lavaan") && requiet("cmdstanr") && requiet("rstan")) {
   test_that("blavaan, all", {
     skip_on_cran()
     data("PoliticalDemocracy", package = "lavaan")

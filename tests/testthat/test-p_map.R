@@ -11,29 +11,27 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
 
   .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
   if (.runThisTest) {
-    if (require("insight")) {
-      m <- insight::download_model("stanreg_merMod_5")
-      p <- insight::get_parameters(m, effects = "all")
+    m <- insight::download_model("stanreg_merMod_5")
+    p <- insight::get_parameters(m, effects = "all")
 
-      test_that("p_map", {
-        expect_equal(
-          p_map(m, effects = "all")$p_MAP,
-          p_map(p)$p_MAP,
-          tolerance = 0.1
-        )
-      })
+    test_that("p_map", {
+      expect_equal(
+        p_map(m, effects = "all")$p_MAP,
+        p_map(p)$p_MAP,
+        tolerance = 0.1
+      )
+    })
 
-      m <- insight::download_model("brms_zi_3")
-      p <- insight::get_parameters(m, effects = "all", component = "all")
+    m <- insight::download_model("brms_zi_3")
+    p <- insight::get_parameters(m, effects = "all", component = "all")
 
-      test_that("p_map", {
-        expect_equal(
-          p_map(m, effects = "all", component = "all")$p_MAP,
-          p_map(p)$p_MAP,
-          tolerance = 0.1
-        )
-      })
-    }
+    test_that("p_map", {
+      expect_equal(
+        p_map(m, effects = "all", component = "all")$p_MAP,
+        p_map(p)$p_MAP,
+        tolerance = 0.1
+      )
+    })
   }
 }
 

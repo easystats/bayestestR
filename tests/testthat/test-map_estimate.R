@@ -10,7 +10,7 @@ if (requireNamespace("rstanarm", quietly = TRUE)) {
     )
   })
 
-  if (require("insight") && require("BayesFactor")) {
+  if (require("BayesFactor")) {
     # stanreg ----------------------
     m <- insight::download_model("stanreg_merMod_5")
 

@@ -15,28 +15,26 @@ if (requiet("rstanarm") && requiet("brms")) {
 
   .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
   if (.runThisTest) {
-    if (require("insight")) {
-      m <- insight::download_model("stanreg_merMod_5")
-      p <- insight::get_parameters(m, effects = "all")
+    m <- insight::download_model("stanreg_merMod_5")
+    p <- insight::get_parameters(m, effects = "all")
 
-      test_that("p_direction", {
-        expect_equal(
-          p_direction(m, effects = "all")$pd,
-          p_direction(p)$pd,
-          tolerance = 1e-3
-        )
-      })
+    test_that("p_direction", {
+      expect_equal(
+        p_direction(m, effects = "all")$pd,
+        p_direction(p)$pd,
+        tolerance = 1e-3
+      )
+    })
 
-      m <- insight::download_model("brms_zi_3")
-      p <- insight::get_parameters(m, effects = "all", component = "all")
+    m <- insight::download_model("brms_zi_3")
+    p <- insight::get_parameters(m, effects = "all", component = "all")
 
-      test_that("p_direction", {
-        expect_equal(
-          p_direction(m, effects = "all", component = "all")$pd,
-          p_direction(p)$pd,
-          tolerance = 1e-3
-        )
-      })
-    }
+    test_that("p_direction", {
+      expect_equal(
+        p_direction(m, effects = "all", component = "all")$pd,
+        p_direction(p)$pd,
+        tolerance = 1e-3
+      )
+    })
   }
 }

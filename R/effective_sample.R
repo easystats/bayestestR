@@ -84,12 +84,12 @@ effective_sample.stanreg <- function(model,
   component <- match.arg(component)
 
   pars <- insight::find_parameters(
-      model,
-      effects = effects,
-      component = component,
-      parameters = parameters,
-      flatten = TRUE
-    )
+    model,
+    effects = effects,
+    component = component,
+    parameters = parameters,
+    flatten = TRUE
+  )
 
   s <- as.data.frame(summary(model))
   s <- s[rownames(s) %in% pars, ]
