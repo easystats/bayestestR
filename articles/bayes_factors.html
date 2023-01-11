@@ -1157,7 +1157,7 @@ package to compute Bayes factors for contrasts:</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/modelbased/" class="external-link">modelbased</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/modelbased/man/estimate_contrasts.html" class="external-link">estimate_contrasts</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="st">"bf"</span>, bf_prior <span class="op">=</span> <span class="va">model</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://easystats.github.io/modelbased/reference/estimate_contrasts.html" class="external-link">estimate_contrasts</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="st">"bf"</span>, bf_prior <span class="op">=</span> <span class="va">model</span><span class="op">)</span></span></code></pre></div>
 <p><strong>NOTE</strong>: See the <em>Specifying Correct Priors for
 Factors with More Than 2 Levels</em> section below.</p>
 </div>
@@ -1302,8 +1302,8 @@ restriction):</p>
 <pre><code>&gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 &gt; Chain 1: 
-&gt; Chain 1: Gradient evaluation took 2e-05 seconds
-&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.
+&gt; Chain 1: Gradient evaluation took 1.9e-05 seconds
+&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
 &gt; Chain 1: Adjust your expectations accordingly!
 &gt; Chain 1: 
 &gt; Chain 1: 
@@ -1320,15 +1320,15 @@ restriction):</p>
 &gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 1: 
-&gt; Chain 1:  Elapsed Time: 0.028166 seconds (Warm-up)
-&gt; Chain 1:                0.047933 seconds (Sampling)
-&gt; Chain 1:                0.076099 seconds (Total)
+&gt; Chain 1:  Elapsed Time: 0.034001 seconds (Warm-up)
+&gt; Chain 1:                0.057372 seconds (Sampling)
+&gt; Chain 1:                0.091373 seconds (Total)
 &gt; Chain 1: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 &gt; Chain 2: 
-&gt; Chain 2: Gradient evaluation took 1.4e-05 seconds
-&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
+&gt; Chain 2: Gradient evaluation took 1.3e-05 seconds
+&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 &gt; Chain 2: Adjust your expectations accordingly!
 &gt; Chain 2: 
 &gt; Chain 2: 
@@ -1345,15 +1345,15 @@ restriction):</p>
 &gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 2: 
-&gt; Chain 2:  Elapsed Time: 0.028868 seconds (Warm-up)
-&gt; Chain 2:                0.043688 seconds (Sampling)
-&gt; Chain 2:                0.072556 seconds (Total)
+&gt; Chain 2:  Elapsed Time: 0.035162 seconds (Warm-up)
+&gt; Chain 2:                0.05228 seconds (Sampling)
+&gt; Chain 2:                0.087442 seconds (Total)
 &gt; Chain 2: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 &gt; Chain 3: 
-&gt; Chain 3: Gradient evaluation took 1.4e-05 seconds
-&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
+&gt; Chain 3: Gradient evaluation took 1.2e-05 seconds
+&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
 &gt; Chain 3: Adjust your expectations accordingly!
 &gt; Chain 3: 
 &gt; Chain 3: 
@@ -1370,9 +1370,9 @@ restriction):</p>
 &gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 3: 
-&gt; Chain 3:  Elapsed Time: 0.028622 seconds (Warm-up)
-&gt; Chain 3:                0.042062 seconds (Sampling)
-&gt; Chain 3:                0.070684 seconds (Total)
+&gt; Chain 3:  Elapsed Time: 0.034449 seconds (Warm-up)
+&gt; Chain 3:                0.05 seconds (Sampling)
+&gt; Chain 3:                0.084449 seconds (Total)
 &gt; Chain 3: 
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
@@ -1395,9 +1395,9 @@ restriction):</p>
 &gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 &gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 &gt; Chain 4: 
-&gt; Chain 4:  Elapsed Time: 0.027293 seconds (Warm-up)
-&gt; Chain 4:                0.043821 seconds (Sampling)
-&gt; Chain 4:                0.071114 seconds (Total)
+&gt; Chain 4:  Elapsed Time: 0.033231 seconds (Warm-up)
+&gt; Chain 4:                0.052191 seconds (Sampling)
+&gt; Chain 4:                0.085422 seconds (Total)
 &gt; Chain 4:</code></pre>
 <pre><code>&gt; Bayes Factor (Order-Restriction)
 &gt; 
