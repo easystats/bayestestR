@@ -90,7 +90,9 @@ bayesfactor_inclusion.bayesfactor_models <- function(models,
                                                      prior_odds = NULL,
                                                      ...) {
   if (isTRUE(attr(models, "unsupported_models"))) {
-    stop("Can not compute inclusion Bayes factors - passed models are not (yet) supported.", call. = FALSE)
+    insight::format_error(
+      "Can not compute inclusion Bayes factors - passed models are not (yet) supported."
+    )
   }
 
   # Build Models Table #
@@ -99,12 +101,12 @@ bayesfactor_inclusion.bayesfactor_models <- function(models,
 
   # Build Interaction Matrix #
   if (isTRUE(match_models)) {
-    effects.matrix <- as.matrix(df.model[, -c(1:3)])
+    effects.matrix <- as.matrix(df.model[, -(1:3)])
 
     df.interaction <- data.frame(effnames, stringsAsFactors = FALSE)
 
     for (eff in effnames) {
-      df.interaction[, eff] <- sapply(effnames, function(x) .includes_interaction(x, eff))
+      df.interaction[, eff] <- sapply(effnames, .includes_interaction, effnames = eff)
     }
     rownames(df.interaction) <- effnames
     df.interaction <- as.matrix(df.interaction[, -1])
@@ -179,10 +181,10 @@ bayesfactor_inclusion.BFBayesFactor <- function(models,
 
 #' @keywords internal
 .includes_interaction <- function(eff, effnames) {
-  eff_b <- strsplit(eff, "\\:")
-  effnames_b <- strsplit(effnames, "\\:")
+  eff_b <- strsplit(eff, ":", fixed = TRUE)
+  effnames_b <- strsplit(effnames, ":", fixed = TRUE)
 
-  is_int <- sapply(effnames_b, function(x) length(x) > 1)
+  is_int <- vapply(effnames_b, function(x) length(x) > 1, TRUE)
 
   temp <- logical(length(effnames))
 
