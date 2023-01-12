@@ -181,7 +181,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
   # Get formula / model names
   # supported models
-  supported_models <- sapply(mods, insight::is_model_supported)
+  supported_models <- vapply(mods, insight::is_model_supported, TRUE)
   if (all(supported_models)) {
     temp_forms <- sapply(mods, .find_full_formula)
 
@@ -198,34 +198,25 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     were_checked <- inherits(objects, "ListModels")
 
     # Validate response
-    if (were_checked && verbose &&
-      !isTRUE(attr(objects, "same_response"))) {
-      warning(
-        insight::format_message(
-          "When comparing models, please note that probably not all models were fit from same data."
-        ),
-        call. = FALSE
+    if (were_checked && verbose && !isTRUE(attr(objects, "same_response"))) {
+      insight::format_warning(
+        "When comparing models, please note that probably not all models were fit from same data."
       )
     }
 
     # Get BIC
     if (were_checked && estimator == "REML" &&
-      any(sapply(mods, insight::is_mixed_model)) &&
-      !isTRUE(attr(objects, "same_fixef"))) {
-      # estimator <- "ML"
-      if (verbose) {
-        warning(
-          insight::format_message(
-            "Information criteria (like BIC) based on REML fits (i.e. `estimator=\"REML\"`)",
-            "are not recommended for comparison between models with different fixed effects.",
-            "Concider setting `estimator=\"ML\"`."
-          ),
-          call. = FALSE
-        )
-      }
+          any(vapply(mods, insight::is_mixed_model, TRUE)) &&
+          !isTRUE(attr(objects, "same_fixef")) &&
+          verbose) {
+      insight::format_warning(
+        "Information criteria (like BIC) based on REML fits (i.e. `estimator=\"REML\"`)",
+        "are not recommended for comparison between models with different fixed effects.",
+        "Concider setting `estimator=\"ML\"`."
+      )
     }
   } else if (verbose) {
-    message("Unable to validate that all models were fit with the same data.")
+    insight::format_alert("Unable to validate that all models were fit with the same data.")
   }
 
   mBIC <- tryCatch(sapply(mods, function(m) {
