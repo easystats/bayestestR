@@ -263,9 +263,9 @@ There is also a <a href="https://easystats.github.io/see/articles/bayestestR.htm
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">posterior</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">posterior</span>, method <span class="op">=</span> <span class="st">"ETI"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 95% ETI: [-2.06, 2.04]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95% ETI: [-1.91, 1.95]</span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">posterior</span>, method <span class="op">=</span> <span class="st">"HDI"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 95% HDI: [-1.90, 2.14]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 95% HDI: [-1.98, 1.82]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">df</span>, method <span class="op">=</span> <span class="st">"ETI"</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.89</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -273,24 +273,21 @@ There is also a <a href="https://easystats.github.io/see/articles/bayestestR.htm
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |       80% ETI |       89% ETI |       95% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | [-1.37, 1.29] | [-1.62, 1.55] | [-2.15, 1.84]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | [-1.03, 1.18] | [-1.34, 1.40] | [-1.61, 1.94]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-1.41, 1.40] | [-1.69, 1.59] | [-1.80, 1.91]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-1.23, 1.21] | [-1.64, 1.49] | [-2.43, 1.85]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | [-1.09, 1.23] | [-1.38, 1.65] | [-1.58, 1.95]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | [-1.56, 1.02] | [-1.82, 1.15] | [-2.11, 1.35]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-1.21, 0.97] | [-1.28, 1.12] | [-1.52, 1.71]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-1.06, 1.54] | [-1.50, 1.74] | [-1.93, 2.01]</span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">df</span>, method <span class="op">=</span> <span class="st">"HDI"</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.89</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Highest Density Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |       80% HDI |       89% HDI |       95% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | [-1.04, 1.56] | [-1.48, 1.64] | [-1.79, 2.32]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | [-1.13, 1.04] | [-1.28, 1.53] | [-1.64, 1.96]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-1.87, 0.70] | [-1.74, 1.51] | [-1.87, 1.66]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-1.04, 1.39] | [-1.53, 1.65] | [-2.11, 1.97]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        | [-1.04, 1.29] | [-1.60, 1.26] | [-1.60, 1.91]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        | [-1.18, 1.18] | [-1.67, 1.22] | [-2.39, 1.22]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        | [-1.00, 1.06] | [-1.28, 1.16] | [-1.89, 1.30]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        | [-0.70, 1.74] | [-1.21, 1.92] | [-2.02, 2.08]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">mtcars</span>, chains <span class="op">=</span> <span class="fl">2</span>, iter <span class="op">=</span> <span class="fl">200</span>, refresh <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The largest R-hat is 1.06, indicating chains have not mixed.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#r-hat</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#bulk-ess</span>
@@ -302,23 +299,23 @@ There is also a <a href="https://easystats.github.io/see/articles/bayestestR.htm
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |        80% ETI |        89% ETI | Effects |   Component</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | [34.13, 39.79] | [33.43, 40.64] |   fixed | conditional</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | [-6.12, -4.46] | [-6.36, -4.23] |   fixed | conditional</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | [35.16, 39.35] | [34.66, 40.09] |   fixed | conditional</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | [-6.01, -4.66] | [-6.23, -4.49] |   fixed | conditional</span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"HDI"</span>, ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.80</span>, <span class="fl">0.89</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Highest Density Interval</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |        80% HDI |        89% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | [34.72, 40.05] | [33.58, 40.69]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | [-6.11, -4.44] | [-6.37, -4.23]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | [35.08, 39.34] | [34.61, 39.97]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | [-5.92, -4.60] | [-6.27, -4.60]</span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">brms</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/brms/man/brm.html" class="external-link">brm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">cyl</span>, data <span class="op">=</span> <span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Compiling Stan program...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start sampling</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL '667cda6873b3c0bde53ba0b20ec47308' NOW (CHAIN 1).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 2e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.2 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Gradient evaluation took 1.1e-05 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
@@ -335,15 +332,15 @@ There is also a <a href="https://easystats.github.io/see/articles/bayestestR.htm
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.025972 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.025195 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.051167 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:  Elapsed Time: 0.027078 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.023596 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1:                0.050674 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 1: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL '667cda6873b3c0bde53ba0b20ec47308' NOW (CHAIN 2).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 1e-05 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Gradient evaluation took 7e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
@@ -360,15 +357,15 @@ There is also a <a href="https://easystats.github.io/see/articles/bayestestR.htm
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.026263 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.022124 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.048387 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:  Elapsed Time: 0.02757 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.029905 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2:                0.057475 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 2: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL '667cda6873b3c0bde53ba0b20ec47308' NOW (CHAIN 3).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Gradient evaluation took 9e-06 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.09 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Gradient evaluation took 6e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
@@ -385,15 +382,15 @@ There is also a <a href="https://easystats.github.io/see/articles/bayestestR.htm
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.025451 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.023756 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.049207 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:  Elapsed Time: 0.028694 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.032058 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3:                0.060752 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 3: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SAMPLING FOR MODEL '667cda6873b3c0bde53ba0b20ec47308' NOW (CHAIN 4).</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Gradient evaluation took 8e-06 seconds</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.08 seconds.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Gradient evaluation took 6e-06 seconds</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Adjust your expectations accordingly!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
@@ -410,52 +407,52 @@ There is also a <a href="https://easystats.github.io/see/articles/bayestestR.htm
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.025915 seconds (Warm-up)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.028173 seconds (Sampling)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.054088 seconds (Total)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:  Elapsed Time: 0.027353 seconds (Warm-up)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.026503 seconds (Sampling)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4:                0.053856 seconds (Total)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Chain 4: </span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"ETI"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Tailed Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |        95% ETI | Effects |   Component</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b_Intercept | [36.19, 43.31] |   fixed | conditional</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b_wt        | [-4.80, -1.62] |   fixed | conditional</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b_cyl       | [-2.37, -0.64] |   fixed | conditional</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b_Intercept | [36.13, 43.22] |   fixed | conditional</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b_wt        | [-4.83, -1.62] |   fixed | conditional</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> b_cyl       | [-2.39, -0.63] |   fixed | conditional</span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"HDI"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Highest Density Interval</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |        95% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | [36.00, 43.08]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | [-4.78, -1.60]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         | [-2.37, -0.64]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | [36.25, 43.29]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          | [-4.64, -1.47]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> cyl         | [-2.42, -0.67]</span>
 <span class="r-in"><span><span class="va">bf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BayesFactor/man/ttestBF.html" class="external-link">ttestBF</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">bf</span>, method <span class="op">=</span> <span class="st">"ETI"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Tailed Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  |      95% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference | [0.80, 1.18]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference | [0.70, 1.12]</span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">bf</span>, method <span class="op">=</span> <span class="st">"HDI"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Highest Density Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  |      95% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference | [0.79, 1.18]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference | [0.73, 1.13]</span>
 <span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emtrends.html" class="external-link">emtrends</a></span><span class="op">(</span><span class="va">model</span>, <span class="op">~</span><span class="fl">1</span>, <span class="st">"wt"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"ETI"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Tailed Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |        95% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> overall   | [-4.80, -1.62]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> overall   | [-4.83, -1.62]</span>
 <span class="r-in"><span><span class="fu">ci</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"HDI"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Highest Density Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter |        95% HDI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> overall   | [-4.78, -1.60]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> overall   | [-4.64, -1.47]</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
