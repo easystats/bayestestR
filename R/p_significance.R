@@ -50,7 +50,9 @@ p_significance <- function(x, ...) {
 
 #' @export
 p_significance.default <- function(x, ...) {
-  stop(insight::format_message(paste0("'p_significance()' is not yet implemented for objects of class '", class(x)[1], "'.")), call. = FALSE)
+  insight::format_error(
+    paste0("'p_significance()' is not yet implemented for objects of class '", class(x)[1], "'.")
+  )
 }
 
 
@@ -209,10 +211,16 @@ p_significance.emm_list <- p_significance.emmGrid
 
 #' @rdname p_significance
 #' @export
-p_significance.stanreg <- function(x, threshold = "default", effects = c("fixed", "random", "all"), component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"), parameters = NULL, verbose = TRUE, ...) {
+p_significance.stanreg <- function(x,
+                                   threshold = "default",
+                                   effects = c("fixed", "random", "all"),
+                                   component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                                   parameters = NULL,
+                                   verbose = TRUE,
+                                   ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-  threshold <- .select_threshold_ps(model = x, threshold = threshold)
+  threshold <- .select_threshold_ps(model = x, threshold = threshold, verbose = verbose)
 
   data <- p_significance(
     insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
@@ -239,10 +247,16 @@ p_significance.blavaan <- p_significance.stanreg
 
 #' @rdname p_significance
 #' @export
-p_significance.brmsfit <- function(x, threshold = "default", effects = c("fixed", "random", "all"), component = c("conditional", "zi", "zero_inflated", "all"), parameters = NULL, verbose = TRUE, ...) {
+p_significance.brmsfit <- function(x,
+                                   threshold = "default",
+                                   effects = c("fixed", "random", "all"),
+                                   component = c("conditional", "zi", "zero_inflated", "all"),
+                                   parameters = NULL,
+                                   verbose = TRUE,
+                                   ...) {
   effects <- match.arg(effects)
   component <- match.arg(component)
-  threshold <- .select_threshold_ps(model = x, threshold = threshold)
+  threshold <- .select_threshold_ps(model = x, threshold = threshold, verbose = verbose)
 
   data <- p_significance(
     insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
@@ -284,7 +298,7 @@ as.double.p_significance <- as.numeric.p_significance
 # helpers --------------------------
 
 #' @keywords internal
-.select_threshold_ps <- function(model = NULL, threshold = "default") {
+.select_threshold_ps <- function(model = NULL, threshold = "default", verbose = TRUE) {
   # If a range is passed
   if (length(threshold) > 1) {
     if (length(unique(abs(threshold))) == 1) {
@@ -297,7 +311,7 @@ as.double.p_significance <- as.numeric.p_significance
   # If default
   if (all(threshold == "default")) {
     if (!is.null(model)) {
-      threshold <- rope_range(model)[2]
+      threshold <- rope_range(model, verbose = verbose)[2]
     } else {
       threshold <- 0.1
     }

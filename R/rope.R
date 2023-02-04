@@ -11,8 +11,10 @@
 #' variables. If `"default"` and input is a vector, the range is set to `c(-0.1,
 #' 0.1)`. If `"default"` and input is a Bayesian model,
 #' [`rope_range()`][rope_range] is used.
-#' @param ci The Credible Interval (CI) probability, corresponding to the proportion of HDI, to use for the percentage in ROPE.
-#' @param ci_method The type of interval to use to quantify the percentage in ROPE. Can be 'HDI' (default) or 'ETI'. See [ci()].
+#' @param ci The Credible Interval (CI) probability, corresponding to the
+#'   proportion of HDI, to use for the percentage in ROPE.
+#' @param ci_method The type of interval to use to quantify the percentage in
+#'   ROPE. Can be 'HDI' (default) or 'ETI'. See [ci()].
 #'
 #' @inheritParams hdi
 #'
