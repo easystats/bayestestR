@@ -533,9 +533,7 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", paramet
     simplify = FALSE
   )
 
-  HDI_area <- lapply(tmp, function(.x) {
-    attr(.x, "HDI_area")
-  })
+  HDI_area <- lapply(tmp, attr, which = "HDI_area")
 
   # HDI_area <- lapply(HDI_area, function(.x) {
   #   dat <- cbind(CI = ci, data.frame(do.call(rbind, .x)))
