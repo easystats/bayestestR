@@ -125,7 +125,7 @@ describe_posterior.default <- function(posteriors, ...) {
                                 BF = 1,
                                 ...) {
   if (is.null(x)) {
-    warning("Could not extract posterior samples.", call. = FALSE)
+    insight::format_warning("Could not extract posterior samples.")
     return(NULL)
   }
 
@@ -141,9 +141,15 @@ describe_posterior.default <- function(posteriors, ...) {
   }
 
   # Arguments fixes
-  if (!is.null(centrality) && length(centrality) == 1 && (centrality == "none" || centrality == FALSE)) centrality <- NULL
-  if (!is.null(ci) && length(ci) == 1 && (is.na(ci) || ci == FALSE)) ci <- NULL
-  if (!is.null(test) && length(test) == 1 && (test == "none" || test == FALSE)) test <- NULL
+  if (!is.null(centrality) && length(centrality) == 1 && (centrality == "none" || isFALSE(centrality))) {
+    centrality <- NULL
+  }
+  if (!is.null(ci) && length(ci) == 1 && (is.na(ci) || isFALSE(ci))) {
+    ci <- NULL
+  }
+  if (!is.null(test) && length(test) == 1 && (test == "none" || isFALSE(test))) {
+    test <- NULL
+  }
 
 
   # Point-estimates
@@ -155,10 +161,13 @@ describe_posterior.default <- function(posteriors, ...) {
       is_stanmvreg
     )
     if (!"Parameter" %in% names(estimates)) {
-      estimates <- cbind(data.frame("Parameter" = "Posterior"), estimates)
+      estimates <- cbind(
+        data.frame(Parameter = "Posterior", stringsAsFactors = FALSE),
+        estimates
+      )
     }
   } else {
-    estimates <- data.frame("Parameter" = NA)
+    estimates <- data.frame(Parameter = NA)
   }
 
 
@@ -179,10 +188,13 @@ describe_posterior.default <- function(posteriors, ...) {
     )
 
     if (!"Parameter" %in% names(uncertainty)) {
-      uncertainty <- cbind(data.frame("Parameter" = "Posterior"), uncertainty)
+      uncertainty <- cbind(
+        data.frame(Parameter = "Posterior", stringsAsFactors = FALSE),
+        uncertainty
+      )
     }
   } else {
-    uncertainty <- data.frame("Parameter" = NA)
+    uncertainty <- data.frame(Parameter = NA)
   }
 
 
@@ -204,9 +216,9 @@ describe_posterior.default <- function(posteriors, ...) {
     # no ROPE for multi-response models
     if (insight::is_multivariate(x_df)) {
       test <- setdiff(test, c("rope", "p_rope"))
-      warning(insight::format_message(
+      insight::format_warning(
         "Multivariate response models are not yet supported for tests `rope` and `p_rope`."
-      ), call. = FALSE)
+      )
     }
 
     # MAP-based p-value
@@ -217,9 +229,15 @@ describe_posterior.default <- function(posteriors, ...) {
         cleaned_parameters,
         is_stanmvreg
       )
-      if (!is.data.frame(test_pmap)) test_pmap <- data.frame("Parameter" = "Posterior", "p_map" = test_pmap)
+      if (!is.data.frame(test_pmap)) {
+        test_pmap <- data.frame(
+          Parameter = "Posterior",
+          p_map = test_pmap,
+          stringsAsFactors = FALSE
+        )
+      }
     } else {
-      test_pmap <- data.frame("Parameter" = NA)
+      test_pmap <- data.frame(Parameter = NA)
     }
 
 
@@ -231,24 +249,33 @@ describe_posterior.default <- function(posteriors, ...) {
         cleaned_parameters,
         is_stanmvreg
       )
-      if (!is.data.frame(test_pd)) test_pd <- data.frame("Parameter" = "Posterior", "pd" = test_pd)
+      if (!is.data.frame(test_pd)) {
+        test_pd <- data.frame(
+          Parameter = "Posterior",
+          pd = test_pd,
+          stringsAsFactors = FALSE
+        )
+      }
     } else {
-      test_pd <- data.frame("Parameter" = NA)
+      test_pd <- data.frame(Parameter = NA)
     }
 
     # Probability of rope
 
-    if (any(c("p_rope") %in% test)) {
+    if (any("p_rope" %in% test)) {
       test_prope <- .prepare_output(
         p_rope(x_df, range = rope_range, ...),
         cleaned_parameters,
         is_stanmvreg
       )
       if (!"Parameter" %in% names(test_prope)) {
-        test_prope <- cbind(data.frame("Parameter" = "Posterior"), test_prope)
+        test_prope <- cbind(
+          data.frame(Parameter = "Posterior", stringsAsFactors = FALSE),
+          test_prope
+        )
       }
     } else {
-      test_prope <- data.frame("Parameter" = NA)
+      test_prope <- data.frame(Parameter = NA)
     }
 
     # Probability of significance
@@ -259,26 +286,35 @@ describe_posterior.default <- function(posteriors, ...) {
         cleaned_parameters,
         is_stanmvreg
       )
-      if (!is.data.frame(test_psig)) test_psig <- data.frame("Parameter" = "Posterior", "ps" = test_psig)
+      if (!is.data.frame(test_psig)) {
+        test_psig <- data.frame(
+          Parameter = "Posterior",
+          ps = test_psig,
+          stringsAsFactors = FALSE
+        )
+      }
     } else {
-      test_psig <- data.frame("Parameter" = NA)
+      test_psig <- data.frame(Parameter = NA)
     }
 
 
     # ROPE
 
-    if (any(c("rope") %in% test)) {
+    if (any("rope" %in% test)) {
       test_rope <- .prepare_output(
         rope(x_df, range = rope_range, ci = rope_ci, ...),
         cleaned_parameters,
         is_stanmvreg
       )
       if (!"Parameter" %in% names(test_rope)) {
-        test_rope <- cbind(data.frame("Parameter" = "Posterior"), test_rope)
+        test_rope <- cbind(
+          data.frame(Parameter = "Posterior", stringsAsFactors = FALSE),
+          test_rope
+        )
       }
       names(test_rope)[names(test_rope) == "CI"] <- "ROPE_CI"
     } else {
-      test_rope <- data.frame("Parameter" = NA)
+      test_rope <- data.frame(Parameter = NA)
     }
 
 
@@ -304,7 +340,10 @@ describe_posterior.default <- function(posteriors, ...) {
       test_equi$Cleaned_Parameter <- NULL
 
       if (!"Parameter" %in% names(test_equi)) {
-        test_equi <- cbind(data.frame("Parameter" = "Posterior"), test_equi)
+        test_equi <- cbind(
+          data.frame(Parameter = "Posterior", stringsAsFactors = FALSE),
+          test_equi
+        )
       }
       names(test_equi)[names(test_equi) == "CI"] <- "ROPE_CI"
 
@@ -325,7 +364,10 @@ describe_posterior.default <- function(posteriors, ...) {
         error = function(e) data.frame("Parameter" = NA)
       )
       if (!"Parameter" %in% names(test_bf)) {
-        test_bf <- cbind(data.frame("Parameter" = "Posterior"), test_bf)
+        test_bf <- cbind(
+          data.frame(Parameter = "Posterior", stringsAsFactors = FALSE),
+          test_bf
+        )
       }
     } else {
       test_bf <- data.frame("Parameter" = NA)
@@ -443,7 +485,7 @@ describe_posterior.default <- function(posteriors, ...) {
   out <- datawizard::data_remove(out[order(out$.rowid), ], remove_columns, verbose = FALSE)
 
   # Add iterations
-  if (keep_iterations == TRUE) {
+  if (keep_iterations) {
     row_order <- out$Parameter
     iter <- as.data.frame(t(as.data.frame(x_df, ...)))
     names(iter) <- paste0("iter_", seq_len(ncol(iter)))
