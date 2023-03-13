@@ -129,6 +129,10 @@ describe_posterior.default <- function(posteriors, ...) {
     return(NULL)
   }
 
+  # we need this information from the original object
+  if (all(rope_range == "default")) {
+    rope_range <- rope_range(x)
+  }
 
   if (!is.data.frame(x) && !is.numeric(x)) {
     is_stanmvreg <- inherits(x, "stanmvreg")
@@ -262,7 +266,7 @@ describe_posterior.default <- function(posteriors, ...) {
 
     # Probability of rope
 
-    if (any("p_rope" %in% test)) {
+    if ("p_rope" %in% test) {
       test_prope <- .prepare_output(
         p_rope(x_df, range = rope_range, ...),
         cleaned_parameters,

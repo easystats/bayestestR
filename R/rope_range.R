@@ -163,7 +163,7 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
     },
     error = function(e) {
       if (isTRUE(verbose)) {
-        warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.", call. = FALSE)
+        insight::format_warning("Could not estimate a good default ROPE range. Using 'c(-0.1, 0.1)'.")
       }
       0.1
     }

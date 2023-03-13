@@ -305,7 +305,7 @@ rope.stanreg <- function(x, range = "default", ci = 0.95, ci_method = "ETI", eff
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
+    insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
   # check for possible collinearity that might bias ROPE
