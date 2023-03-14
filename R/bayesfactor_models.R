@@ -107,7 +107,7 @@
 #'     family = gaussian(),
 #'     diagnostic_file = file.path(tempdir(), "df2.csv")
 #'   )
-#'   bayesfactor_models(stan_m1, stan_m2, denominator = stan_m0)
+#'   bayesfactor_models(stan_m1, stan_m2, denominator = stan_m0, verbose = FALSE)
 #' }
 #'
 #'
@@ -254,7 +254,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     if (is.null(alg$iterations)) alg$iterations <- alg$sample
     (alg$iterations - alg$warmup) * alg$chains
   })
-  if (any(n_samps < 4e4)) {
+  if (any(n_samps < 4e4) && verbose) {
     warning(
       "Bayes factors might not be precise.\n",
       "For precise Bayes factors, sampling at least 40,000 posterior samples is recommended.",
