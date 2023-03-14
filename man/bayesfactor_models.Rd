@@ -160,7 +160,7 @@ if (require("brms")) {
     save_pars = save_pars(all = TRUE)
   )
 
-  bayesfactor_models(brm1, brm2, brm3, denominator = 1)
+  bayesfactor_models(brm1, brm2, brm3, denominator = 1, verbose = FALSE)
 }
 
 
