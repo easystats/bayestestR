@@ -96,7 +96,7 @@ map_estimate.mcmc.list <- map_estimate.bayesQR
 
   out <- data.frame(
     Parameter = colnames(x),
-    MAP_Estimate = unlist(l),
+    MAP_Estimate = unlist(l, use.names = FALSE),
     stringsAsFactors = FALSE,
     row.names = NULL
   )

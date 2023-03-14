@@ -173,10 +173,7 @@ ci.rvar <- ci.draws
 #' @export
 ci.emmGrid <- function(x, ci = NULL, ...) {
   if (!.is_baysian_emmeans(x)) {
-    if (!requireNamespace("parameters")) {
-      stop("'parameters' required for this function to work.", call. = FALSE)
-    }
-
+    insight::check_if_installed("parameters")
     if (is.null(ci)) ci <- 0.95
     return(parameters::ci(model = x, ci = ci, ...))
   }

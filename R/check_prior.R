@@ -146,7 +146,7 @@ check_prior.blavaan <- check_prior.brmsfit
     priors <- priors[common_columns]
     posteriors <- posteriors[common_columns]
     if (verbose) {
-      warning("Parameters and priors could not be fully matched. Only returning results for parameters with matching priors.", call. = FALSE)
+      insight::format_warning("Parameters and priors could not be fully matched. Only returning results for parameters with matching priors.")
     }
   }
 
@@ -158,7 +158,7 @@ check_prior.blavaan <- check_prior.brmsfit
   })
 
   if (any(all_missing) && verbose) {
-    warning("Some priors could not be simulated.", call. = FALSE)
+    insight::format_warning("Some priors could not be simulated.")
   }
 
   .gelman <- function(prior, posterior) {
@@ -190,7 +190,7 @@ check_prior.blavaan <- check_prior.brmsfit
   } else if (method == "lakeland") {
     result <- mapply(.lakeland, priors, posteriors)
   } else {
-    stop("method should be 'gelman' or 'lakeland'.", call. = FALSE)
+    insight::format_error("method should be 'gelman' or 'lakeland'.")
   }
 
   data.frame(

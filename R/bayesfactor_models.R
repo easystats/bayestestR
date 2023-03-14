@@ -291,7 +291,7 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
   )
 
   if (!all(from_same_data_as_den)) {
-    stop("Models were not computed from the same data.", call. = FALSE)
+    insight::format_error("Models were not computed from the same data.")
   }
 
   mML <- lapply(mods, .get_marglik, verbose = verbose)
@@ -313,11 +313,11 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
 
 .bayesfactor_models_stan_SEM <- function(mods, denominator, verbose = TRUE) {
   utils::capture.output(
-    suppressWarnings(
+    suppressWarnings({
       mBFs <- sapply(mods, function(m) {
         blavaan::blavCompare(m, mods[[denominator]])[["bf"]][1]
       })
-    )
+    })
   )
 
   res <- data.frame(
@@ -550,7 +550,7 @@ as.matrix.bayesfactor_models <- function(x, ...) {
         is_null <- !startsWith(m_names, "Non")
         temp <- m_names[is_null][1]
         mi <- gregexpr("\\(.*\\)", temp)
-        aa <- unlist(regmatches(temp, m = mi))
+        aa <- unlist(regmatches(temp, m = mi), use.names = FALSE)
 
         m_txt[is_null] <- sub("a=", "a = ", aa, fixed = TRUE)
         m_txt[!is_null & !is_range] <- sub("a=", "a != ", aa, fixed = TRUE)
@@ -565,11 +565,11 @@ as.matrix.bayesfactor_models <- function(x, ...) {
       } else if (any(is_p)) {
         temp <- m_names[is_null][1]
         mi <- gregexpr("[0-9|\\.]+", temp)
-        pp <- unlist(regmatches(temp, m = mi))
+        pp <- unlist(regmatches(temp, m = mi), use.names = FALSE)
 
         m_txt[is_null] <- paste0("p = ", pp)
         m_txt[!is_null & !is_range] <- paste0("p != ", pp)
-        m_txt <- sub("<p<", " < p < ", m_txt)
+        m_txt <- sub("<p<", " < p < ", m_txt, fixed = TRUE)
       } else {
         stop("!", call. = FALSE)
       }

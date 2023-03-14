@@ -146,14 +146,14 @@ distribution_gamma <- function(n, shape, scale = 1, random = FALSE, ...) {
 #' @export
 distribution_mixture_normal <- function(n, mean = c(-3, 3), sd = 1, random = FALSE, ...) {
   n <- round(n / length(mean))
-  sd <- c(sd)
+  sd <- sd
   if (length(sd) != length(mean)) {
     sd <- rep(sd, length.out = length(mean))
   }
 
 
-  x <- c()
-  for (i in 1:length(mean)) {
+  x <- NULL
+  for (i in seq_along(mean)) {
     x <- c(x, distribution_normal(n = n, mean = mean[i], sd = sd[i], random = random))
   }
   x

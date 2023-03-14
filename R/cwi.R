@@ -67,5 +67,5 @@ cwi <- function(x, ...) {
 cwi.data.frame <- function(x, ci = 0.95, ...) {
   insight::check_if_installed("ggdist")
 
-  print("Comming soon!")
+  print("Comming soon!") # @DominiqueMakowski GitBlame says this was 2 years ago - when is "soon"? :-)
 }

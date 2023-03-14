@@ -131,8 +131,8 @@ diagnostic_posterior.stanmvreg <- function(posteriors,
 
   params <- unlist(lapply(names(all_params), function(i) {
     all_params[[i]]$sigma <- NULL
-    unlist(all_params[[i]])
-  }))
+    unlist(all_params[[i]], use.names = FALSE)
+  }), use.names = FALSE)
 
   # If no diagnostic
   if (is.null(diagnostic)) {
@@ -143,7 +143,7 @@ diagnostic_posterior.stanmvreg <- function(posteriors,
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE", "khat")
   } else {
-    diagnostic <- c(diagnostic)
+    diagnostic <- diagnostic
     if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
   }
 
@@ -299,7 +299,7 @@ diagnostic_posterior.blavaan <- function(posteriors, diagnostic = "all", ...) {
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE")
   } else {
-    diagnostic <- c(diagnostic)
+    diagnostic <- diagnostic
     if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
   }
 
