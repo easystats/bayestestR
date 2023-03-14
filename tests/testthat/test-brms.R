@@ -16,14 +16,14 @@ if (.runThisTest && requiet("brms") && requiet("httr")) {
     expect_s3_class(p_map(model), "data.frame")
     expect_s3_class(p_direction(model), "data.frame")
 
-    expect_equal(colnames(hdi(model)), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
-    expect_equal(colnames(hdi(model, effects = "all")), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
+    expect_identical(colnames(hdi(model)), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
+    expect_identical(colnames(hdi(model, effects = "all")), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
     # expect_equal(nrow(equivalence_test(model)), 2)
 
     out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean")
-    suppressWarnings(
+    suppressWarnings({
       s <- summary(model)
-    )
+    })
     expect_identical(colnames(out), c(
       "Parameter", "Effects", "Component", "Mean", "CI", "CI_low", "CI_high",
       "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
