@@ -367,7 +367,7 @@ p_map.bayesQR <- function(x, null = 0, precision = 2^10, method = "kernel", ...)
 #' @method as.numeric p_map
 #' @export
 as.numeric.p_map <- function(x, ...) {
-  if ("data.frame" %in% class(x)) {
+  if (inherits(x, "data.frame")) {
     return(as.numeric(as.vector(x$p_MAP)))
   } else {
     return(as.vector(x))

@@ -474,7 +474,7 @@ p_direction.get_predicted <- function(x, ...) {
 #' @method as.numeric p_direction
 #' @export
 as.numeric.p_direction <- function(x, ...) {
-  if ("data.frame" %in% class(x)) {
+  if (inherits(x, "data.frame")) {
     return(as.numeric(as.vector(x$pd)))
   } else {
     return(as.vector(x))

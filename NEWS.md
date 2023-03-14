@@ -16,6 +16,10 @@
 
 * `p_map()` gains a new `null` argument to specify any non-0 nulls.
 
+* Fixed non-working examples for `ci(method = "SI")`.
+
+* Fixed wrong calculation of rope range for model objects in `describe_posterior()`.
+
 # bayestestR 0.13.0
 
 ## Breaking

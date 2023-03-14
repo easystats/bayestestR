@@ -16,14 +16,14 @@ if (.runThisTest && requiet("brms") && requiet("httr")) {
     expect_s3_class(p_map(model), "data.frame")
     expect_s3_class(p_direction(model), "data.frame")
 
-    expect_equal(colnames(hdi(model)), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
-    expect_equal(colnames(hdi(model, effects = "all")), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
+    expect_identical(colnames(hdi(model)), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
+    expect_identical(colnames(hdi(model, effects = "all")), c("Parameter", "CI", "CI_low", "CI_high", "Effects", "Component"))
     # expect_equal(nrow(equivalence_test(model)), 2)
 
     out <- describe_posterior(model, effects = "all", component = "all", centrality = "mean")
-    suppressWarnings(
+    suppressWarnings({
       s <- summary(model)
-    )
+    })
     expect_identical(colnames(out), c(
       "Parameter", "Effects", "Component", "Mean", "CI", "CI_low", "CI_high",
       "pd", "ROPE_CI", "ROPE_low", "ROPE_high", "ROPE_Percentage",
@@ -68,8 +68,8 @@ if (.runThisTest && requiet("brms") && requiet("httr")) {
     unknown <- out[out$Effects == "fixed" & out$Component == "conditional", ]
     idx <- match(row.names(known), gsub("b_", "", unknown$Parameter, fixed = TRUE))
     unknown <- unknown[idx, ]
-    expect_equal(unknown$Mean, known$Estimate)
-    expect_equal(unknown$Rhat, known$Rhat, tolerance = 1e-2)
+    expect_equal(unknown$Mean, known$Estimate, ignore_attr = TRUE)
+    expect_equal(unknown$Rhat, known$Rhat, tolerance = 1e-2, ignore_attr = TRUE)
   })
 
   test_that("brms", {
