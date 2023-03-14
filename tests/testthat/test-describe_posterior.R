@@ -195,8 +195,8 @@ if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("BayesF
 
       test_that("describe_posterior", {
         expect_equal(
-          describe_posterior(m, effects = "all", component = "all", verbose = FALSE)$Median,
-          describe_posterior(p, verbose = FALSE)$Median,
+          suppressWarnings(describe_posterior(m, effects = "all", component = "all", verbose = FALSE)$Median),
+          suppressWarnings(describe_posterior(p, verbose = FALSE)$Median),
           tolerance = 1e-3
         )
       })

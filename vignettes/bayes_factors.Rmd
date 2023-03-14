@@ -244,7 +244,7 @@ f_post <- logspline::logspline(posterior)
 d_vals_post <- logspline::dlogspline(x_vals, f_post)
 
 ggplot(mapping = aes(x_vals, d_vals_post, fill = in_null, group = range_groups)) +
-  geom_area(color = "black", size = 1) +
+  geom_area(color = "black", linewidth = 1) +
   scale_fill_flat(name = "", labels = c("Alternative", "Null")) +
   labs(x = "Drug effect", y = "Density") +
   coord_cartesian(ylim = c(0, 0.45)) +
