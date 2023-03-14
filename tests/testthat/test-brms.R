@@ -68,8 +68,8 @@ if (.runThisTest && requiet("brms") && requiet("httr")) {
     unknown <- out[out$Effects == "fixed" & out$Component == "conditional", ]
     idx <- match(row.names(known), gsub("b_", "", unknown$Parameter, fixed = TRUE))
     unknown <- unknown[idx, ]
-    expect_equal(unknown$Mean, known$Estimate)
-    expect_equal(unknown$Rhat, known$Rhat, tolerance = 1e-2)
+    expect_equal(unknown$Mean, known$Estimate, ignore_attr = TRUE)
+    expect_equal(unknown$Rhat, known$Rhat, tolerance = 1e-2, ignore_attr = TRUE)
   })
 
   test_that("brms", {
