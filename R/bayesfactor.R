@@ -35,7 +35,7 @@
 #' # ---------------
 #' if (require("rstanarm")) {
 #'   model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
-#'   bayesfactor(model)
+#'   bayesfactor(model, verbose = FALSE)
 #' }
 #' }
 #'

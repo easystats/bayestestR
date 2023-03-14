@@ -1,12 +1,6 @@
 skip_if_offline()
 
-if (
-
-  requiet("rstanarm") &&
-    requiet("brms") &&
-    requiet("httr") &&
-
-    requiet("BayesFactor")) {
+if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("BayesFactor")) {
   test_that("describe_posterior", {
     set.seed(333)
 
@@ -38,13 +32,13 @@ if (
       "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "log_BF"
     ))
 
-    expect_warning(describe_posterior(
+    expect_warning(expect_warning(describe_posterior(
       x,
       centrality = "all",
       dispersion = TRUE,
       test = "all",
       ci = c(0.8, 0.9)
-    ))
+    )))
     # rez <- suppressWarnings(describe_posterior(
     #   x,
     #   centrality = "all",
@@ -59,7 +53,8 @@ if (
       centrality = NULL,
       dispersion = TRUE,
       test = NULL,
-      ci_method = "quantile"
+      ci_method = "quantile",
+      verbose = FALSE
     )
     expect_equal(dim(rez), c(1, 4))
 
@@ -189,8 +184,8 @@ if (
 
       test_that("describe_posterior", {
         expect_equal(
-          describe_posterior(m, effects = "all")$Median,
-          describe_posterior(p)$Median,
+          describe_posterior(m, effects = "all", verbose = FALSE)$Median,
+          describe_posterior(p, verbose = FALSE)$Median,
           tolerance = 1e-3
         )
       })

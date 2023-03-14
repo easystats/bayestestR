@@ -85,7 +85,7 @@ diagnostic_posterior.stanreg <- function(posteriors, diagnostic = "all", effects
   if ("all" %in% diagnostic) {
     diagnostic <- c("ESS", "Rhat", "MCSE", "khat")
   } else {
-    diagnostic <- c(diagnostic)
+    diagnostic <- diagnostic
     if ("Rhat" %in% diagnostic) diagnostic <- c(diagnostic, "khat")
   }
 
