@@ -60,15 +60,7 @@ sexit_thresholds.stanreg <- sexit_thresholds.brmsfit
 sexit_thresholds.BFBayesFactor <- function(x, ...) {
   fac <- 1
   if (inherits(x@numerator[[1]], "BFlinearModel")) {
-    response <- tryCatch(
-      {
-        insight::get_response(x)
-      },
-      error = function(e) {
-        NULL
-      }
-    )
-
+    response <- .safe(insight::get_response(x))
     if (!is.null(response)) {
       fac <- stats::sd(response, na.rm = TRUE)
     }

@@ -84,7 +84,7 @@ rope_range <- function(x, ...) {
 #' @rdname rope_range
 #' @export
 rope_range.default <- function(x, verbose = TRUE, ...) {
-  response <- insight::get_response(x)
+  response <- insight::get_response(x, source = "mf")
   response_transform <- insight::find_transformation(x)
   information <- insight::model_info(x)
 
