@@ -118,25 +118,11 @@ p_significance.parameters_simulate_model <- function(x, threshold = "default", .
   obj_name <- attr(x, "object_name")
   if (!is.null(obj_name)) {
     # first try, parent frame
-    model <- tryCatch(
-      {
-        get(obj_name, envir = parent.frame())
-      },
-      error = function(e) {
-        NULL
-      }
-    )
+    model <- .safe(get(obj_name, envir = parent.frame()))
 
     if (is.null(model)) {
       # second try, global env
-      model <- tryCatch(
-        {
-          get(obj_name, envir = globalenv())
-        },
-        error = function(e) {
-          NULL
-        }
-      )
+      model <- .safe(get(obj_name, envir = globalenv()))
     }
   }
   threshold <- .select_threshold_ps(model = model, threshold = threshold)
@@ -281,7 +267,7 @@ p_significance.brmsfit <- function(x,
 #' @rdname as.numeric.p_direction
 #' @export
 as.numeric.p_significance <- function(x, ...) {
-  if ("data.frame" %in% class(x)) {
+  if (inherits(x, "data.frame")) {
     return(as.numeric(as.vector(x$ps)))
   } else {
     return(as.vector(x))
@@ -305,7 +291,7 @@ as.double.p_significance <- as.numeric.p_significance
       # If symmetric range
       threshold <- abs(threshold[2])
     } else {
-      stop("`threshold` should be 'default' or a numeric value (e.g., 0.1).", call. = FALSE)
+      insight::format_error("`threshold` should be 'default' or a numeric value (e.g., 0.1).")
     }
   }
   # If default
@@ -316,7 +302,7 @@ as.double.p_significance <- as.numeric.p_significance
       threshold <- 0.1
     }
   } else if (!all(is.numeric(threshold))) {
-    stop("`threshold` should be 'default' or a numeric value (e.g., 0.1).", call. = FALSE)
+    insight::format_error("`threshold` should be 'default' or a numeric value (e.g., 0.1).")
   }
   threshold
 }

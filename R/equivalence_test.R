@@ -210,7 +210,7 @@ equivalence_test.BFBayesFactor <- function(x, range = "default", ci = 0.95, verb
   if (all(range == "default")) {
     range <- rope_range(x)
   } else if (!all(is.numeric(range)) || length(range) != 2L) {
-    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
+    insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
   if (verbose && !inherits(x, "blavaan")) .check_multicollinearity(x)

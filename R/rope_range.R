@@ -89,14 +89,20 @@ rope_range.default <- function(x, verbose = TRUE, ...) {
   information <- insight::model_info(x)
 
   if (insight::is_multivariate(x)) {
-    ret <- mapply(
-      function(i, j, ...) .rope_range(x, i, j), information, response, response_transform, verbose,
-      SIMPLIFY = FALSE
+    ret <- Map(
+      function(i, j, ...) .rope_range(x, i, j), information, response, response_transform, verbose
     )
     return(ret)
   } else {
     .rope_range(x, information, response, response_transform, verbose)
   }
+}
+
+
+#' @export
+rope_range.data.frame <- function(x, verbose = TRUE, ...) {
+  # to avoid errors with "get_response()" in the default method
+  c(-0.1, 0.1)
 }
 
 

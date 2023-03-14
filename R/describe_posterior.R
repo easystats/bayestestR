@@ -211,14 +211,14 @@ describe_posterior.default <- function(posteriors, ...) {
     }
 
     ## TODO no BF for arm::sim
-    if (inherits(x_df, c("sim", "sim.merMod", "mcmc", "stanfit"))) {
+    if (inherits(x, c("sim", "sim.merMod", "mcmc", "stanfit"))) {
       test <- setdiff(test, "bf")
     }
 
     ## TODO enable once "rope()" works for multi-response models
 
     # no ROPE for multi-response models
-    if (insight::is_multivariate(x_df)) {
+    if (insight::is_multivariate(x)) {
       test <- setdiff(test, c("rope", "p_rope"))
       insight::format_warning(
         "Multivariate response models are not yet supported for tests `rope` and `p_rope`."
@@ -304,7 +304,7 @@ describe_posterior.default <- function(posteriors, ...) {
 
     # ROPE
 
-    if (any("rope" %in% test)) {
+    if ("rope" %in% test) {
       test_rope <- .prepare_output(
         rope(x_df, range = rope_range, ci = rope_ci, ...),
         cleaned_parameters,
@@ -325,17 +325,11 @@ describe_posterior.default <- function(posteriors, ...) {
     # Equivalence test
 
     if (any(c("equivalence", "equivalence_test", "equitest") %in% test)) {
-      if (any("rope" %in% test)) {
-        equi_warnings <- FALSE
-      } else {
-        equi_warnings <- TRUE
-      }
-
       test_equi <- .prepare_output(
         equivalence_test(x_df,
           range = rope_range,
           ci = rope_ci,
-          verbose = equi_warnings,
+          verbose = !"rope" %in% test,
           ...
         ),
         cleaned_parameters,

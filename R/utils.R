@@ -1,3 +1,8 @@
+# small wrapper around this commonly used try-catch
+.safe <- function(code, on_error = NULL) {
+  tryCatch(code, error = function(e) on_error)
+}
+
 # select rows where values in "variable" match "value"
 #' @keywords internal
 .select_rows <- function(data, variable, value) {
