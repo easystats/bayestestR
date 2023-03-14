@@ -29,13 +29,13 @@ effective_sample <- function(model, ...) {
 
 #' @export
 effective_sample.default <- function(model, ...) {
-  stop(insight::format_message(
+  insight::format_error(
     paste0(
       "'effective_sample()' is not yet implemented for objects of class '",
       class(model)[1],
       "'."
     )
-  ), call. = FALSE)
+  )
 }
 
 

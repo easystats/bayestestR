@@ -739,7 +739,7 @@ describe_posterior.get_predicted <- function(posteriors,
       ...
     )
   } else {
-    stop("No iterations present in the output.", call. = FALSE)
+    insight::format_error("No iterations present in the output.")
   }
 }
 

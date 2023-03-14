@@ -67,9 +67,7 @@ convert_bayesian_as_frequentist <- function(model, data = NULL, REML = TRUE) {
   }
 
   if (inherits(freq, "error")) {
-    stop(insight::format_message(
-      "Model could not be automatically converted to frequentist model."
-    ), call. = FALSE)
+    insight::format_error("Model could not be automatically converted to frequentist model.")
   } else {
     return(freq)
   }

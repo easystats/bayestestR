@@ -57,7 +57,7 @@ diagnostic_posterior <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...)
 
 #' @export
 diagnostic_posterior.default <- function(posteriors, diagnostic = c("ESS", "Rhat"), ...) {
-  stop("'diagnostic_posterior()' only works with rstanarm, brms or blavaan models.", call. = FALSE)
+  insight::format_error("'diagnostic_posterior()' only works with rstanarm, brms or blavaan models.")
 }
 
 #' @inheritParams insight::get_parameters.BFBayesFactor

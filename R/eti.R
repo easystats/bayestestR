@@ -46,7 +46,7 @@ eti <- function(x, ...) {
 
 #' @export
 eti.default <- function(x, ...) {
-  stop(insight::format_message(paste0("'eti()' is not yet implemented for objects of class '", class(x)[1], "'.")), call. = FALSE)
+  insight::format_error(paste0("'eti()' is not yet implemented for objects of class '", class(x)[1], "'."))
 }
 
 
@@ -230,7 +230,7 @@ eti.get_predicted <- function(x, ...) {
   if ("iterations" %in% names(attributes(x))) {
     out <- eti(as.data.frame(t(attributes(x)$iterations)), ...)
   } else {
-    stop("No iterations present in the output.", call. = FALSE)
+    insight::format_error("No iterations present in the output.")
   }
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out

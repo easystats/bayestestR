@@ -358,7 +358,7 @@ hdi.get_predicted <- function(x, ...) {
   if ("iterations" %in% names(attributes(x))) {
     out <- hdi(as.data.frame(t(attributes(x)$iterations)), ...)
   } else {
-    stop("No iterations present in the output.", call. = FALSE)
+    insight::format_error("No iterations present in the output.")
   }
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
@@ -383,7 +383,7 @@ hdi.get_predicted <- function(x, ...) {
 
   if (window_size < 2) {
     if (verbose) {
-      warning("`ci` is too small or x does not contain enough data points, returning NAs.", call. = FALSE)
+      insight::format_warning("`ci` is too small or x does not contain enough data points, returning NAs.")
     }
     return(data.frame(
       "CI" = ci,
@@ -396,7 +396,7 @@ hdi.get_predicted <- function(x, ...) {
 
   if (nCIs < 1) {
     if (verbose) {
-      warning("`ci` is too large or x does not contain enough data points, returning NAs.", call. = FALSE)
+      insight::format_warning("`ci` is too large or x does not contain enough data points, returning NAs.")
     }
     return(data.frame(
       "CI" = ci,
@@ -414,7 +414,7 @@ hdi.get_predicted <- function(x, ...) {
   if (n_candies > 1) {
     if (any(diff(sort(min_i)) != 1)) {
       if (verbose) {
-        warning("Identical densities found along different segments of the distribution, choosing rightmost.", call. = FALSE)
+        insight::format_warning("Identical densities found along different segments of the distribution, choosing rightmost.")
       }
       min_i <- max(min_i)
     } else {

@@ -174,7 +174,7 @@ map_estimate.get_predicted <- function(x, ...) {
   if ("iterations" %in% names(attributes(x))) {
     map_estimate(as.data.frame(t(attributes(x)$iterations)), ...)
   } else {
-    stop("No iterations present in the output.", call. = FALSE)
+    insight::format_error("No iterations present in the output.")
   }
 }
 

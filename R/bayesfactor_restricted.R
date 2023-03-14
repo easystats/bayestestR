@@ -186,7 +186,7 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
 
   if (is.null(prior)) {
     prior <- posterior
-    warning(
+    insight::format_warning(
       "Prior not specified! ",
       "Please specify priors (with column names matching 'posterior')",
       " to get meaningful results."
@@ -199,14 +199,15 @@ bayesfactor_restricted.data.frame <- function(posterior, hypothesis, prior = NUL
       cnames <- colnames(data)
       is_name <- make.names(cnames) == cnames
       cnames[!is_name] <- paste0("`", cnames[!is_name], "`")
-      cnames <- toString(cnames)
-      stop(x_logical, "Available parameters are: ", cnames, call. = FALSE)
+      insight::format_error(
+        x_logical,
+        paste("Available parameters are:", toString(cnames))
+      )
     } else if (!all(is.logical(x_logical))) {
-      stop("Hypotheses must be logical", call. = FALSE)
+      insight::format_error("Hypotheses must be logical.")
     }
     x_logical
   }
-
 
 
   posterior_l <- as.data.frame(lapply(p_hypothesis, .test_hypothesis, data = posterior))
