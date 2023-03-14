@@ -107,7 +107,7 @@
 #' hdi(bf)
 #' hdi(bf, ci = c(.80, .90, .95))
 #' }
-#' @author Credits go to [ggdistribute](https://rdrr.io/cran/ggdistribute/src/R/stats.R) and [HDInterval](https://github.com/mikemeredith/HDInterval).
+#' @author Credits go to **ggdistribute** and [**HDInterval**](https://github.com/mikemeredith/HDInterval).
 #'
 #' @references \itemize{
 #'   \item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.

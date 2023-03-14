@@ -173,6 +173,6 @@ Other ci:
 \code{\link{spi}()}
 }
 \author{
-Credits go to \href{https://rdrr.io/cran/ggdistribute/src/R/stats.R}{ggdistribute} and \href{https://github.com/mikemeredith/HDInterval}{HDInterval}.
+Credits go to \strong{ggdistribute} and \href{https://github.com/mikemeredith/HDInterval}{\strong{HDInterval}}.
 }
 \concept{ci}
