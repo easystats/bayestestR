@@ -127,6 +127,11 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
   # }
 
 
+  print(response_transform)
+  cat("\n")
+  cat(response_transform)
+  cat("\n")
+
   negligible_value <- tryCatch(
     {
       if (!is.null(response_transform) && grepl("log", response_transform, fixed = TRUE)) {
