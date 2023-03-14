@@ -1,9 +1,13 @@
 #' @title Find Effect Size Thresholds
 #'
-#' @description This function attempts at automatically finding suitable default values for a "significant" (i.e., non-negligible) and "large" effect. This is to be used with care, and the chosen threshold should always be explicitly reported and justified. See the detail section in [`sexit()`][sexit] for more information.
-#'
+#' @description This function attempts at automatically finding suitable default
+#' values for a "significant" (i.e., non-negligible) and "large" effect. This is
+#' to be used with care, and the chosen threshold should always be explicitly
+#' reported and justified. See the detail section in [`sexit()`][sexit] for more
+#' information.
 #'
 #' @inheritParams rope
+#' @param verbose Toggle warnings.
 #'
 #' @examples
 #' sexit_thresholds(rnorm(1000))
@@ -41,14 +45,14 @@ sexit_thresholds <- function(x, ...) {
 
 
 #' @export
-sexit_thresholds.brmsfit <- function(x, ...) {
+sexit_thresholds.brmsfit <- function(x, verbose = TRUE, ...) {
   response <- insight::get_response(x, source = "mf")
   information <- insight::model_info(x, verbose = FALSE)
 
   if (insight::is_multivariate(x)) {
-    mapply(function(i, j) .sexit_thresholds(i, j), x, information, response)
+    mapply(function(i, j) .sexit_thresholds(i, j), x, information, response, verbose)
   } else {
-    .sexit_thresholds(x, information, response)
+    .sexit_thresholds(x, information, response, verbose)
   }
 }
 
@@ -60,13 +64,13 @@ sexit_thresholds.stanreg <- sexit_thresholds.brmsfit
 sexit_thresholds.BFBayesFactor <- function(x, ...) {
   fac <- 1
   if (inherits(x@numerator[[1]], "BFlinearModel")) {
-    response <- .safe(insight::get_response(x))
+    response <- .safe(insight::get_response(x, source = "mf"))
     if (!is.null(response)) {
       fac <- stats::sd(response, na.rm = TRUE)
     }
   }
 
-  fac * .sexit_thresholds(x)
+  fac * .sexit_thresholds(x, verbose = verbose)
 }
 
 #' @export
@@ -126,11 +130,11 @@ sexit_thresholds.default <- function(x, ...) {
 }
 
 #' @export
-sexit_thresholds.mlm <- function(x, ...) {
+sexit_thresholds.mlm <- function(x, verbose = TRUE, ...) {
   response <- insight::get_response(x, type = "mf")
   information <- insight::model_info(x, verbose = FALSE)
 
-  lapply(response, function(i) .sexit_thresholds(x, information, i))
+  lapply(response, function(i) .sexit_thresholds(x, information, i, verbose = verbose))
 }
 
 
@@ -139,7 +143,7 @@ sexit_thresholds.mlm <- function(x, ...) {
 # helper ------------------
 
 
-.sexit_thresholds <- function(x, information = NULL, response = NULL) {
+.sexit_thresholds <- function(x, information = NULL, response = NULL, verbose = TRUE) {
   if (is.null(information) && is.null(response)) {
     norm <- 1
   } else {
@@ -164,10 +168,12 @@ sexit_thresholds.mlm <- function(x, ...) {
 
           # T-tests
         } else if (information$is_ttest) {
-          if ("BFBayesFactor" %in% class(x)) {
+          if (inherits(x, "BFBayesFactor")) {
             stats::sd(x@data[, 1])
           } else {
-            warning("Could not estimate good thresholds, using default values.", call. = FALSE)
+            if (verbose) {
+              insight::format_warning("Could not estimate good thresholds, using default values.")
+            }
             1
           }
 
@@ -182,7 +188,9 @@ sexit_thresholds.mlm <- function(x, ...) {
         }
       },
       error = function(e) {
-        warning("Could not estimate good thresholds, using default values.", call. = FALSE)
+        if (verbose) {
+          insight::format_warning("Could not estimate good thresholds, using default values.")
+        }
         1
       }
     )
