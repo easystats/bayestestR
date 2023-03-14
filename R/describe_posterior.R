@@ -105,9 +105,9 @@ describe_posterior <- function(posteriors, ...) {
 
 #' @export
 describe_posterior.default <- function(posteriors, ...) {
-  stop(insight::format_message(
+  insight::format_error(
     paste0("`describe_posterior()` is not yet implemented for objects of class `", class(posteriors)[1], "`.")
-  ), call. = FALSE)
+  )
 }
 
 
