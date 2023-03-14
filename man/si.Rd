@@ -20,7 +20,8 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
   BF = 1,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
-  component = c("conditional", "all", "smooth_terms", "sigma", "auxiliary"),
+  component = c("location", "conditional", "all", "smooth_terms", "sigma", "auxiliary",
+    "distributional"),
   parameters = NULL,
   ...
 )
@@ -31,7 +32,8 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
   BF = 1,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
-  component = c("conditional", "all", "smooth_terms", "sigma", "auxiliary"),
+  component = c("location", "conditional", "all", "smooth_terms", "sigma", "auxiliary",
+    "distributional"),
   parameters = NULL,
   ...
 )
@@ -42,7 +44,8 @@ si(posterior, prior = NULL, BF = 1, verbose = TRUE, ...)
   BF = 1,
   verbose = TRUE,
   effects = c("fixed", "random", "all"),
-  component = c("conditional", "all", "smooth_terms", "sigma", "auxiliary"),
+  component = c("location", "conditional", "all", "smooth_terms", "sigma", "auxiliary",
+    "distributional"),
   parameters = NULL,
   ...
 )
