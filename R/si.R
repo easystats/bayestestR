@@ -91,11 +91,11 @@ si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
   if (is.null(prior)) {
     prior <- posterior
     if (verbose) {
-      warning(insight::format_message(
+      insight::format_warning(
         "Prior not specified!",
         "Support intervals ('si') can only be computed for Bayesian models with proper priors.",
         "Please specify priors (with column order matching 'posterior')."
-      ), call. = FALSE)
+      )
     }
   }
   prior <- data.frame(X = prior)
@@ -115,7 +115,7 @@ si.numeric <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
 si.stanreg <- function(posterior, prior = NULL,
                        BF = 1, verbose = TRUE,
                        effects = c("fixed", "random", "all"),
-                       component = c("conditional", "location", "zi", "zero_inflated", "all", "smooth_terms", "sigma", "distributional", "auxiliary"),
+                       component = c("location", "all", "conditional", "smooth_terms", "sigma", "distributional", "auxiliary"),
                        parameters = NULL,
                        ...) {
   cleaned_parameters <- insight::clean_parameters(posterior)

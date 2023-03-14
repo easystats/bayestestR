@@ -104,7 +104,7 @@ ci <- function(x, ...) {
         ...
       )
     )
-  } else if (tolower(method) %in% c("hdi")) {
+  } else if (tolower(method) == "hdi") {
     return(
       hdi(
         x,
@@ -116,7 +116,7 @@ ci <- function(x, ...) {
         ...
       )
     )
-  } else if (tolower(method) %in% c("spi")) {
+  } else if (tolower(method) == "spi") {
     return(
       spi(
         x,
@@ -128,7 +128,7 @@ ci <- function(x, ...) {
         ...
       )
     )
-  } else if (tolower(method) %in% c("si")) {
+  } else if (tolower(method) == "si") {
     return(
       si(
         x,
@@ -141,11 +141,8 @@ ci <- function(x, ...) {
       )
     )
   } else {
-    stop(
-      insight::format_message(
-        "`method` should be 'ETI' (for equal-tailed interval),'HDI' (for highest density interval), 'BCI' (for bias corrected and accelerated bootstrap intervals), 'SPI' (for shortest probability interval) or 'SI' (for support interval)."
-      ),
-      call. = FALSE
+    insight::format_error(
+      "`method` should be 'ETI' (for equal-tailed interval),'HDI' (for highest density interval), 'BCI' (for bias corrected and accelerated bootstrap intervals), 'SPI' (for shortest probability interval) or 'SI' (for support interval)."
     )
   }
 }
