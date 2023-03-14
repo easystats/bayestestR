@@ -18,7 +18,9 @@
 
 #' @keywords internal
 .get_direction <- function(direction) {
-  if (length(direction) > 1) warning("Using first 'direction' value.", call. = FALSE)
+  if (length(direction) > 1) {
+    insight::format_warning("Using first 'direction' value.")
+  }
 
   if (is.numeric(direction[1])) {
     return(sign(direction[1]))

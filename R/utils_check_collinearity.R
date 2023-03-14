@@ -32,8 +32,8 @@
         # Remove duplicates
         results$where <- paste0(results$Var1, " and ", results$Var2)
         results$where2 <- paste0(results$Var2, " and ", results$Var1)
-        to_remove <- c()
-        for (i in 1:nrow(results)) {
+        to_remove <- NULL
+        for (i in seq_len(nrow(results))) {
           if (results$where2[i] %in% results$where[1:i]) {
             to_remove <- c(to_remove, i)
           }
@@ -41,17 +41,17 @@
         results <- results[-to_remove, ]
 
         # Filter by first threshold
-        threshold <- ifelse(threshold >= .9, .9, threshold)
-        results <- results[results$corr > threshold & results$corr <= .9, ]
+        threshold <- pmin(threshold, 0.9)
+        results <- results[results$corr > threshold & results$corr <= 0.9, ]
         if (nrow(results) > 0) {
-          where <- paste0("between ", paste0(paste0(results$where, " (r = ", round(results$corr, 2), ")"), collapse = ", "), "")
+          where <- paste0("between ", toString(paste0(results$where, " (r = ", round(results$corr, 2), ")")), "")
           message("Possible multicollinearity ", where, ". This might lead to inappropriate results. See 'Details' in '?", method, "'.")
         }
 
         # Filter by second threshold
-        results <- results[results$corr > .9, ]
+        results <- results[results$corr > 0.9, ]
         if (nrow(results) > 0) {
-          where <- paste0("between ", paste0(paste0(results$where, " (r = ", round(results$corr, 2), ")"), collapse = ", "), "")
+          where <- paste0("between ", toString(paste0(results$where, " (r = ", round(results$corr, 2), ")")), "")
           warning("Probable multicollinearity ", where, ". This might lead to inappropriate results. See 'Details' in '?", method, "'.", call. = FALSE)
         }
       }
