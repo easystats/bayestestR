@@ -20,6 +20,8 @@
 
 * Fixed wrong calculation of rope range for model objects in `describe_posterior()`.
 
+* Some smaller bug fixes.
+
 # bayestestR 0.13.0
 
 ## Breaking
