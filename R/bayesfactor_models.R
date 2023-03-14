@@ -255,10 +255,9 @@ bayesfactor_models.default <- function(..., denominator = 1, verbose = TRUE) {
     (alg$iterations - alg$warmup) * alg$chains
   })
   if (any(n_samps < 4e4) && verbose) {
-    warning(
-      "Bayes factors might not be precise.\n",
-      "For precise Bayes factors, sampling at least 40,000 posterior samples is recommended.",
-      call. = FALSE, immediate. = TRUE
+    insight::format_warning(
+      "Bayes factors might not be precise.",
+      "For precise Bayes factors, sampling at least 40,000 posterior samples is recommended."
     )
   }
 

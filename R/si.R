@@ -199,18 +199,17 @@ si.get_predicted <- function(posterior, ...) {
 si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) {
   if (is.null(prior)) {
     prior <- posterior
-    warning(insight::format_message(
+    insight::format_warning(
       "Prior not specified!",
       "Support intervals ('si') can only be computed for Bayesian models with proper priors.",
       "Please specify priors (with column order matching 'posterior')."
-    ), call. = FALSE)
+    )
   }
 
   if (verbose && (nrow(posterior) < 4e4 || nrow(prior) < 4e4)) {
-    warning(
-      "Support intervals might not be precise.\n",
-      "For precise support intervals, sampling at least 40,000 posterior samples is recommended.",
-      call. = FALSE
+    insight::format_warning(
+      "Support intervals might not be precise.",
+      "For precise support intervals, sampling at least 40,000 posterior samples is recommended."
     )
   }
 
