@@ -268,7 +268,11 @@ if (require("logspline")) {
 # ---------------
 if (require("rstanarm") && require("emmeans") && require("logspline")) {
   contrasts(sleep$group) <- contr.equalprior_pairs # see vingette
-  stan_model <- stan_lmer(extra ~ group + (1 | ID), data = sleep)
+  stan_model <- suppressWarnings(stan_lmer(
+    extra ~ group + (1 | ID),
+    data = sleep,
+    refresh = 0
+  ))
   bayesfactor_parameters(stan_model)
   bayesfactor_parameters(stan_model, null = rope_range(stan_model))
 
