@@ -127,10 +127,16 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
   # }
 
 
-  print(response_transform)
-  cat("\n")
-  cat(response_transform)
-  cat("\n")
+  if (length(response_transform) > 1) {
+    print(response_transform)
+    cat("\n")
+    cat(response_transform)
+    cat("\n")
+    print(insight::find_formula(x))
+    cat("\n")
+    cat(insight::find_formula(x))
+    cat("\n")
+  }
 
   negligible_value <- tryCatch(
     {
