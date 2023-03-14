@@ -19,7 +19,8 @@ if (
       centrality = "all",
       dispersion = TRUE,
       test = "all",
-      ci = 0.89
+      ci = 0.89,
+      verbose = FALSE
     ))
 
     rez <- as.data.frame(suppressWarnings(describe_posterior(
@@ -31,7 +32,7 @@ if (
     )))
 
     expect_equal(dim(rez), c(1, 19))
-    expect_equal(colnames(rez), c(
+    expect_identical(colnames(rez), c(
       "Parameter", "Median", "MAD", "Mean", "SD", "MAP", "CI", "CI_low",
       "CI_high", "p_map", "pd", "p_ROPE", "ps", "ROPE_CI", "ROPE_low",
       "ROPE_high", "ROPE_Percentage", "ROPE_Equivalence", "log_BF"
@@ -199,8 +200,8 @@ if (
 
       test_that("describe_posterior", {
         expect_equal(
-          describe_posterior(m, effects = "all", component = "all")$Median,
-          describe_posterior(p)$Median,
+          describe_posterior(m, effects = "all", component = "all", verbose = FALSE)$Median,
+          describe_posterior(p, verbose = FALSE)$Median,
           tolerance = 1e-3
         )
       })
