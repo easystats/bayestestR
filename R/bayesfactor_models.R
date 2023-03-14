@@ -115,8 +115,8 @@
 #' # --------------------
 #' # (note the save_pars MUST be set to save_pars(all = TRUE) in order to work)
 #' if (require("brms")) {
-#'   brm1 <- brm(Sepal.Length ~ 1, data = iris, save_all_pars = TRUE)
-#'   brm2 <- brm(Sepal.Length ~ Species, data = iris, save_all_pars = TRUE)
+#'   brm1 <- brm(Sepal.Length ~ 1, data = iris, save_pars = save_pars(all = TRUE))
+#'   brm2 <- brm(Sepal.Length ~ Species, data = iris, save_pars = save_pars(all = TRUE))
 #'   brm3 <- brm(
 #'     Sepal.Length ~ Species + Petal.Length,
 #'     data = iris,

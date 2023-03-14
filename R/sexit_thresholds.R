@@ -7,7 +7,6 @@
 #' information.
 #'
 #' @inheritParams rope
-#' @param verbose Toggle warnings.
 #'
 #' @examples
 #' sexit_thresholds(rnorm(1000))
@@ -61,7 +60,7 @@ sexit_thresholds.brmsfit <- function(x, verbose = TRUE, ...) {
 sexit_thresholds.stanreg <- sexit_thresholds.brmsfit
 
 #' @export
-sexit_thresholds.BFBayesFactor <- function(x, ...) {
+sexit_thresholds.BFBayesFactor <- function(x, verbose = TRUE, ...) {
   fac <- 1
   if (inherits(x@numerator[[1]], "BFlinearModel")) {
     response <- .safe(insight::get_response(x, source = "mf"))
@@ -125,8 +124,8 @@ sexit_thresholds.zeroinfl <- sexit_thresholds.brmsfit
 sexit_thresholds.bayesQR <- sexit_thresholds.brmsfit
 
 #' @export
-sexit_thresholds.default <- function(x, ...) {
-  .sexit_thresholds(x)
+sexit_thresholds.default <- function(x, verbose = TRUE, ...) {
+  .sexit_thresholds(x, verbose = verbose)
 }
 
 #' @export

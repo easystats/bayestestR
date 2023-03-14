@@ -10,8 +10,6 @@ sexit_thresholds(x, ...)
 \item{x}{Vector representing a posterior distribution. Can also be a \code{stanreg} or \code{brmsfit} model.}
 
 \item{...}{Currently not used.}
-
-\item{verbose}{Toggle warnings.}
 }
 \description{
 This function attempts at automatically finding suitable default
