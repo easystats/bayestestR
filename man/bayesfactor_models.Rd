@@ -144,7 +144,7 @@ if (require("rstanarm")) {
     family = gaussian(),
     diagnostic_file = file.path(tempdir(), "df2.csv")
   )
-  bayesfactor_models(stan_m1, stan_m2, denominator = stan_m0)
+  bayesfactor_models(stan_m1, stan_m2, denominator = stan_m0, verbose = FALSE)
 }
 
 
