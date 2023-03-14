@@ -122,17 +122,6 @@ rope_range.mlm <- function(x, verbose = TRUE, ...) {
 
 
 .rope_range <- function(x, information = NULL, response = NULL, response_transform = NULL, verbose = TRUE) {
-  # if(method != "legacy") {
-  #   message("Other ROPE range methods than 'legacy' are currently not implemented. See https://github.com/easystats/bayestestR/issues/364", call. = FALSE)
-  # }
-
-
-  if (length(response_transform) > 1) {
-    print(response_transform)
-    print(insight::find_formula(x))
-    print(insight::get_call(x))
-  }
-
   negligible_value <- tryCatch(
     {
       if (!is.null(response_transform) && grepl("log", response_transform, fixed = TRUE)) {
