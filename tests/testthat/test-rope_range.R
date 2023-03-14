@@ -10,8 +10,8 @@ test_that("rope_range gaussian", {
 })
 
 test_that("rope_range log gaussian", {
-  data(mtcars)
-  mod <- lm(log(mpg) ~ gear + hp, data = mtcars)
+  data(iris)
+  mod <- lm(log(Sepal.Length) ~ Species, data = iris)
   expect_equal(rope_range(mod), c(-0.01, 0.01), tolerance = 1e-3)
 })
 
