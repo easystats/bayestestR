@@ -113,7 +113,7 @@
 #' if (require("logspline")) {
 #'   prior <- distribution_normal(1000, mean = 0, sd = 1)
 #'   posterior <- distribution_normal(1000, mean = .5, sd = .3)
-#'   (BF_pars <- bayesfactor_parameters(posterior, prior))
+#'   (BF_pars <- bayesfactor_parameters(posterior, prior, verbose = FALSE))
 #'
 #'   as.numeric(BF_pars)
 #' }
@@ -193,7 +193,7 @@ bayesfactor_pointnull <- function(posterior,
                                   null = 0,
                                   verbose = TRUE,
                                   ...) {
-  if (length(null) > 1) {
+  if (length(null) > 1 && verbose) {
     message("'null' is a range - computing a ROPE based Bayes factor.")
   }
 
@@ -215,8 +215,8 @@ bayesfactor_rope <- function(posterior,
                              null = rope_range(posterior),
                              verbose = TRUE,
                              ...) {
-  if (length(null) < 2) {
-    message("'null' is a point - computing a Savage-Dickey (point null) Bayes factor.")
+  if (length(null) < 2 && verbose) {
+    insight::format_alert("'null' is a point - computing a Savage-Dickey (point null) Bayes factor.")
   }
 
   bayesfactor_parameters(
@@ -249,10 +249,8 @@ bayesfactor_parameters.numeric <- function(posterior, prior = NULL, direction = 
   if (is.null(prior)) {
     prior <- posterior
     if (verbose) {
-      warning(
-        "Prior not specified! ",
-        "Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)')",
-        " to get meaningful results."
+      insight::format_warning(
+        "Prior not specified! Please specify a prior (in the form 'prior = distribution_normal(1000, 0, 1)') to get meaningful results."
       )
     }
   }
@@ -386,18 +384,17 @@ bayesfactor_parameters.data.frame <- function(posterior,
 
   if (is.null(prior)) {
     prior <- posterior
-    warning(
-      "Prior not specified! ",
-      "Please specify priors (with column order matching 'posterior')",
-      " to get meaningful results."
-    )
+    if (verbose) {
+      insight::format_warning(
+        "Prior not specified! Please specify priors (with column order matching 'posterior') to get meaningful results."
+      )
+    }
   }
 
   if (verbose && length(null) == 1L && (nrow(posterior) < 4e4 || nrow(prior) < 4e4)) {
-    warning(
-      "Bayes factors might not be precise.\n",
-      "For precise Bayes factors, sampling at least 40,000 posterior samples is recommended.",
-      call. = FALSE
+    insight::format_warning(
+      "Bayes factors might not be precise.",
+      "For precise Bayes factors, sampling at least 40,000 posterior samples is recommended."
     )
   }
 

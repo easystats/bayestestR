@@ -259,7 +259,7 @@ library(bayestestR)
 if (require("logspline")) {
   prior <- distribution_normal(1000, mean = 0, sd = 1)
   posterior <- distribution_normal(1000, mean = .5, sd = .3)
-  (BF_pars <- bayesfactor_parameters(posterior, prior))
+  (BF_pars <- bayesfactor_parameters(posterior, prior, verbose = FALSE))
 
   as.numeric(BF_pars)
 }
