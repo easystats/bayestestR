@@ -131,7 +131,7 @@ describe_posterior.default <- function(posteriors, ...) {
 
   # we need this information from the original object
   if (all(rope_range == "default")) {
-    rope_range <- rope_range(x)
+    rope_range <- rope_range(x, ...)
   }
 
   if (!is.data.frame(x) && !is.numeric(x)) {

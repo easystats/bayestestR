@@ -86,7 +86,7 @@ rope_range <- function(x, ...) {
 rope_range.default <- function(x, verbose = TRUE, ...) {
   response <- insight::get_response(x, source = "mf")
   response_transform <- insight::find_transformation(x)
-  information <- insight::model_info(x)
+  information <- insight::model_info(x, verbose = FALSE)
 
   if (insight::is_multivariate(x)) {
     ret <- Map(
@@ -110,8 +110,8 @@ rope_range.data.frame <- function(x, verbose = TRUE, ...) {
 
 #' @export
 rope_range.mlm <- function(x, verbose = TRUE, ...) {
-  response <- insight::get_response(x)
-  information <- insight::model_info(x)
+  response <- insight::get_response(x, source = "mf")
+  information <- insight::model_info(x, verbose = FALSE)
 
   lapply(response, function(i) .rope_range(x, information, i, response_transform = NULL, verbose))
 }

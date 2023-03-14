@@ -487,7 +487,7 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
     to = x_range[2]
   ))
   fun <- get("density", asNamespace("stats"))
-  kde <- do.call("fun", args)
+  kde <- suppressWarnings(do.call("fun", args))
   df <- as.data.frame(kde)
 
   # Get CI (https://bookdown.org/egarpor/NP-UC3M/app-kde-ci.html)

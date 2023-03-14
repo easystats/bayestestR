@@ -42,8 +42,8 @@ sexit_thresholds <- function(x, ...) {
 
 #' @export
 sexit_thresholds.brmsfit <- function(x, ...) {
-  response <- insight::get_response(x)
-  information <- insight::model_info(x)
+  response <- insight::get_response(x, source = "mf")
+  information <- insight::model_info(x, verbose = FALSE)
 
   if (insight::is_multivariate(x)) {
     mapply(function(i, j) .sexit_thresholds(i, j), x, information, response)
@@ -127,8 +127,8 @@ sexit_thresholds.default <- function(x, ...) {
 
 #' @export
 sexit_thresholds.mlm <- function(x, ...) {
-  response <- insight::get_response(x)
-  information <- insight::model_info(x)
+  response <- insight::get_response(x, type = "mf")
+  information <- insight::model_info(x, verbose = FALSE)
 
   lapply(response, function(i) .sexit_thresholds(x, information, i))
 }

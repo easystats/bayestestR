@@ -6,16 +6,16 @@ if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("BayesF
 
     # numeric -------------------------------------------------
 
-    x <- distribution_normal(40000)
+    x <- distribution_normal(4000)
 
-    expect_warning(describe_posterior(
+    describe_posterior(
       x,
       centrality = "all",
       dispersion = TRUE,
       test = "all",
       ci = 0.89,
       verbose = FALSE
-    ))
+    )
 
     rez <- as.data.frame(suppressWarnings(describe_posterior(
       x,
