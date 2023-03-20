@@ -390,7 +390,7 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
   mBFs <- c(0, BayesFactor::extractBF(models, TRUE, TRUE))
   mforms <- sapply(c(models@denominator, models@numerator), function(x) x@shortName)
 
-  if (!"BFlinearModel" %in% class(models@denominator)) {
+  if (!inherits(models@denominator, "BFlinearModel")) {
     mforms <- .clean_non_linBF_mods(mforms)
   } else {
     mforms[mforms == "Intercept only"] <- "1"
@@ -405,7 +405,7 @@ bayesfactor_models.BFBayesFactor <- function(..., verbose = TRUE) {
   .bf_models_output(res,
     denominator = 1,
     bf_method = "JZS (BayesFactor)",
-    unsupported_models = !"BFlinearModel" %in% class(models@denominator)
+    unsupported_models = !inherits(models@denominator, "BFlinearModel")
   )
 }
 
