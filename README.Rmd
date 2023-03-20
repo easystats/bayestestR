@@ -342,7 +342,7 @@ prior <- as.data.frame(density(distribution_normal(10000, mean = 0, sd = 1)))
 
 ggplot(posterior, aes(x = x, y = y)) +
   geom_ribbon(aes(ymin = 0, ymax = y), fill = "#FFC107") +
-  geom_line(data = prior, size = 1, linetype = "dotted") +
+  geom_line(data = prior, linewidth = 1, linetype = "dotted") +
   geom_segment(x = 0, xend = 0, y = 0, yend = max(prior$y), color = "#2196F3", size = 1) +
   geom_point(x = 0, y = max(prior$y), color = "#2196F3", size = 5) +
   geom_segment(x = 0, xend = 0, y = 0, yend = density_at(posterior$x, 0, bw = "nrd0"), color = "#E91E63", size = 1) +

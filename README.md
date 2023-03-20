@@ -161,9 +161,9 @@ describe_posterior(
 )
 ## Summary of Posterior Distribution
 ## 
-## Parameter | Median |        95% CI |     pd |   ps
-## --------------------------------------------------
-## Posterior |  -0.01 | [-1.96, 1.96] | 50.27% | 0.46
+## Parameter |   Median |        95% CI |     pd |   ps
+## ----------------------------------------------------
+## Posterior | 1.15e-03 | [-2.01, 1.92] | 50.07% | 0.46
 ```
 
 `describe_posterior()` works for many objects, including more complex

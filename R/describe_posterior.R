@@ -54,9 +54,14 @@
 #'
 #' if (require("logspline")) {
 #'   x <- rnorm(1000)
-#'   describe_posterior(x)
-#'   describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
-#'   describe_posterior(x, ci = c(0.80, 0.90))
+#'   describe_posterior(x, verbose = FALSE)
+#'   describe_posterior(x,
+#'     centrality = "all",
+#'     dispersion = TRUE,
+#'     test = "all",
+#'     verbose = FALSE
+#'   )
+#'   describe_posterior(x, ci = c(0.80, 0.90), verbose = FALSE)
 #'
 #'   df <- data.frame(replicate(4, rnorm(100)))
 #'   describe_posterior(df, verbose = FALSE)
@@ -763,7 +768,7 @@ describe_posterior.emmGrid <- function(posteriors,
                                        BF = 1,
                                        ...) {
   if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-    "si" %in% tolower(ci_method)) {
+        "si" %in% tolower(ci_method)) {
     samps <- .clean_priors_and_posteriors(posteriors, bf_prior)
     bf_prior <- samps$prior
     posteriors <- samps$posterior
@@ -832,7 +837,7 @@ describe_posterior.stanreg <- function(posteriors,
                                        BF = 1,
                                        ...) {
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-    "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
+         "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
     bf_prior <- suppressMessages(unupdate(posteriors))
   }
 
@@ -1030,7 +1035,7 @@ describe_posterior.brmsfit <- function(posteriors,
   component <- match.arg(component)
 
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-    "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
+         "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
     bf_prior <- suppressMessages(unupdate(posteriors))
   }
 

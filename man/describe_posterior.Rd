@@ -144,9 +144,14 @@ library(bayestestR)
 
 if (require("logspline")) {
   x <- rnorm(1000)
-  describe_posterior(x)
-  describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")
-  describe_posterior(x, ci = c(0.80, 0.90))
+  describe_posterior(x, verbose = FALSE)
+  describe_posterior(x,
+    centrality = "all",
+    dispersion = TRUE,
+    test = "all",
+    verbose = FALSE
+  )
+  describe_posterior(x, ci = c(0.80, 0.90), verbose = FALSE)
 
   df <- data.frame(replicate(4, rnorm(100)))
   describe_posterior(df, verbose = FALSE)
