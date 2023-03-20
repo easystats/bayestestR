@@ -273,17 +273,17 @@ if (require("rstanarm") && require("emmeans") && require("logspline")) {
     data = sleep,
     refresh = 0
   ))
-  bayesfactor_parameters(stan_model)
+  bayesfactor_parameters(stan_model, verbose = FALSE)
   bayesfactor_parameters(stan_model, null = rope_range(stan_model))
 
   # emmGrid objects
   # ---------------
   group_diff <- pairs(emmeans(stan_model, ~group))
-  bayesfactor_parameters(group_diff, prior = stan_model)
+  bayesfactor_parameters(group_diff, prior = stan_model, verbose = FALSE)
 
   # Or
   group_diff_prior <- pairs(emmeans(unupdate(stan_model), ~group))
-  bayesfactor_parameters(group_diff, prior = group_diff_prior)
+  bayesfactor_parameters(group_diff, prior = group_diff_prior, verbose = FALSE)
 }
 
 # brms models

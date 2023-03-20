@@ -287,9 +287,9 @@ format.bayesfactor_parameters <- function(x,
   # footer
   if (is.null(format) || format == "text") {
     footer <- list(
-      c("\n* Evidence Against The Null: "),
-      c(null, "cyan"),
-      if (direction) c("\n*                 Direction: "),
+      "\n* Evidence Against The Null: ",
+      c(paste0(null, "\n"), "cyan"),
+      if (direction) "*                 Direction: ",
       if (direction < 0) c("Left-Sided test", "cyan"),
       if (direction > 0) c("Right-Sided test", "cyan"),
       if (log) c("\n\nBayes Factors are on the log-scale.\n", "red")
@@ -297,7 +297,7 @@ format.bayesfactor_parameters <- function(x,
   } else {
     footer <- insight::compact_list(list(
       paste0("Evidence Against The Null: ", null),
-      if (direction) c("Direction: "),
+      if (direction) "Direction: ",
       if (direction < 0) "Left-Sided test",
       if (direction > 0) "Right-Sided test",
       if (log) "Bayes Factors are on the log-scale."
