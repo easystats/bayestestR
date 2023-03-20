@@ -161,7 +161,7 @@ describe_posterior(
 ## 
 ## Parameter |   Median |        95% CI |     pd |   ps
 ## ----------------------------------------------------
-## Posterior | 2.67e-03 | [-1.94, 1.93] | 50.06% | 0.46
+## Posterior | 4.45e-03 | [-1.98, 1.96] | 50.10% | 0.46
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -460,7 +460,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.35
+## [1] 0.37
 ```
 
 ## Code of Conduct
