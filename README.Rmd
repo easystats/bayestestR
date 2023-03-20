@@ -152,7 +152,8 @@ describe_posterior(
   effects = "all",
   component = "all",
   test = c("p_direction", "p_significance"),
-  centrality = "all"
+  centrality = "all",
+  verbose = FALSE
 )
 ```
 
