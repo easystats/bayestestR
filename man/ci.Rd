@@ -129,11 +129,6 @@ model <- stan_glm(mpg ~ wt, data = mtcars, chains = 2, iter = 200, refresh = 0)
 ci(model, method = "ETI", ci = c(0.80, 0.89))
 ci(model, method = "HDI", ci = c(0.80, 0.89))
 \dontshow{\}) # examplesIf}
-\dontshow{if (require("brms", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-ci(model, method = "ETI")
-ci(model, method = "HDI")
-\dontshow{\}) # examplesIf}
 \dontshow{if (require("BayesFactor", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 bf <- ttestBF(x = rnorm(100, 1, 1))
 ci(bf, method = "ETI")

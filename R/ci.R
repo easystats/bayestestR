@@ -50,11 +50,6 @@
 #' ci(model, method = "ETI", ci = c(0.80, 0.89))
 #' ci(model, method = "HDI", ci = c(0.80, 0.89))
 #'
-#' @examplesIf require("brms", quietly = TRUE)
-#' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#' ci(model, method = "ETI")
-#' ci(model, method = "HDI")
-#'
 #' @examplesIf require("BayesFactor", quietly = TRUE)
 #' bf <- ttestBF(x = rnorm(100, 1, 1))
 #' ci(bf, method = "ETI")
