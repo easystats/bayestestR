@@ -331,7 +331,8 @@ My_second_BF
 My_second_BF <- bayesfactor_parameters(
   data.frame(group2 = posterior),
   data.frame(group2 = prior),
-  null = 0
+  null = 0,
+  verbose = FALSE
 )
 
 print(My_second_BF)
