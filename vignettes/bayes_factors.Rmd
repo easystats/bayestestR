@@ -432,7 +432,8 @@ In `bayestestR`, this can be achieved with the `si()` function:
 my_first_si <- si(
   posterior = data.frame(group2 = posterior),
   prior = data.frame(group2 = prior),
-  BF = 1
+  BF = 1,
+  verbose = FALSE
 )
 
 print(my_first_si)
