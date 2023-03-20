@@ -296,9 +296,10 @@ if (require("brms")) {
 
   brms_model <- brm(extra ~ group + (1 | ID),
     data = sleep,
-    prior = my_custom_priors
+    prior = my_custom_priors,
+    refresh = 0,
   )
-  bayesfactor_parameters(brms_model)
+  bayesfactor_parameters(brms_model, verbose = FALSE)
 }
 }
 }

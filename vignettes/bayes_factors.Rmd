@@ -356,7 +356,8 @@ test_group2_right <- bayesfactor_parameters(
   data.frame(group2 = posterior),
   data.frame(group2 = prior),
   null = 0,
-  direction = ">"
+  direction = ">",
+  verbose = FALSE
 )
 
 BF <- as.numeric(test_group2_right)
