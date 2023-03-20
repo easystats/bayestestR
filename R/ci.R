@@ -55,7 +55,7 @@
 #' ci(bf, method = "ETI")
 #' ci(bf, method = "HDI")
 #'
-#' @examplesIf require("emmeans", quietly = TRUE)
+#' @examplesIf require("emmeans", quietly = TRUE) && require("rstanarm", quietly = TRUE)
 #' model <- emtrends(model, ~1, "wt")
 #' ci(model, method = "ETI")
 #' ci(model, method = "HDI")
