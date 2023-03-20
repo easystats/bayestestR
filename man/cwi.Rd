@@ -68,12 +68,12 @@ if (require("ggplot2") && require("rstanarm") && require("ggdist")) {
   data[c("ETI_low", "ETI_high")] <- eti(iters, ci = 0.5)[c("CI_low", "CI_high")]
 
   # Compute CWI
-  # ggdist::curve_interval(reshape_iterations(data), iter_value .width = c(.5))
+  # ggdist::curve_interval(reshape_iterations(data), iter_value .width = 0.5)
 
   # Visualization =============================================
   ggplot(data, aes(x = x, y = Median)) +
     geom_ribbon(aes(ymin = ETI_low, ymax = ETI_high), fill = "red", alpha = 0.3) +
-    geom_line(size = 1) +
+    geom_line(linewidth = 1) +
     geom_line(
       data = reshape_iterations(data),
       aes(y = iter_value, group = iter_group),

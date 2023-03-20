@@ -43,7 +43,7 @@
 #'   data[c("ETI_low", "ETI_high")] <- eti(iters, ci = 0.5)[c("CI_low", "CI_high")]
 #'
 #'   # Compute CWI
-#'   # ggdist::curve_interval(reshape_iterations(data), iter_value .width = c(.5))
+#'   # ggdist::curve_interval(reshape_iterations(data), iter_value .width = 0.5)
 #'
 #'   # Visualization =============================================
 #'   ggplot(data, aes(x = x, y = Median)) +
