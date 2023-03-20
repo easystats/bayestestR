@@ -421,9 +421,25 @@ estimate_density.mcmc.list <- estimate_density.mcmc
 
 
 #' @export
-estimate_density.bamlss <- function(x, method = "kernel", precision = 2^10, extend = FALSE, extend_scale = 0.1, bw = "SJ", component = c("all", "conditional", "location"), parameters = NULL, ...) {
+estimate_density.bamlss <- function(x,
+                                    method = "kernel",
+                                    precision = 2^10,
+                                    extend = FALSE,
+                                    extend_scale = 0.1,
+                                    bw = "SJ",
+                                    component = c("all", "conditional", "location"),
+                                    parameters = NULL,
+                                    ...) {
   component <- match.arg(component)
-  out <- estimate_density(insight::get_parameters(x, component = component, parameters = parameters), method = method, precision = precision, extend = extend, extend_scale = extend_scale, bw = bw, ...)
+  out <- estimate_density(
+    insight::get_parameters(x, component = component, parameters = parameters),
+    method = method,
+    precision = precision,
+    extend = extend,
+    extend_scale = extend_scale,
+    bw = bw,
+    ...
+  )
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
 
   class(out) <- .set_density_class(out)
@@ -533,12 +549,18 @@ density_at <- function(posterior, x, precision = 2^10, method = "kernel", ...) {
 # helper ----------------------------------------------------------
 
 .set_density_df_class <- function(out) {
-  setdiff(unique(c("estimate_density_df", "see_estimate_density_df", class(out))), c("estimate_density", "see_estimate_density"))
+  setdiff(
+    unique(c("estimate_density_df", "see_estimate_density_df", class(out))),
+    c("estimate_density", "see_estimate_density")
+  )
 }
 
 .set_density_class <- function(out) {
   if (is.null(out)) {
     return(NULL)
   }
-  setdiff(unique(c("estimate_density", "see_estimate_density", class(out))), c("estimate_density_df", "see_estimate_density_df"))
+  setdiff(
+    unique(c("estimate_density", "see_estimate_density", class(out))),
+    c("estimate_density_df", "see_estimate_density_df")
+  )
 }

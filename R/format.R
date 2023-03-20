@@ -172,9 +172,9 @@ format.bayesfactor_inclusion <- function(x,
   # footer
   if (is.null(format) || format == "text") {
     footer <- list(
-      c("\n* Compared among: "),
+      "\n* Compared among: ",
       c(if (matched) "matched models only" else "all models", "cyan"),
-      c("\n*    Priors odds: "),
+      "\n*    Priors odds: ",
       c(if (!is.null(priorOdds)) "custom" else "uniform-equal", "cyan"),
       if (log) c("\n\nBayes Factors are on the log-scale.", "red")
     )
@@ -220,7 +220,7 @@ format.bayesfactor_restricted <- function(x,
   # footer
   if (is.null(format) || format == "text") {
     footer <- list(
-      c("\n* Bayes factors for the restricted model vs. the un-restricted model.\n"),
+      "\n* Bayes factors for the restricted model vs. the un-restricted model.\n",
       if (log) c("\nBayes Factors are on the log-scale.\n", "red")
     )
     # color formatting for caption

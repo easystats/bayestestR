@@ -68,7 +68,11 @@ A data frame with following columns:
 }
 }
 \description{
-Compute the \strong{Equal-Tailed Interval (ETI)} of posterior distributions using the quantiles method. The probability of being below this interval is equal to the probability of being above it. The ETI can be used in the context of uncertainty characterisation of posterior distributions as \strong{Credible Interval (CI)}.
+Compute the \strong{Equal-Tailed Interval (ETI)} of posterior distributions using
+the quantiles method. The probability of being below this interval is equal
+to the probability of being above it. The ETI can be used in the context of
+uncertainty characterisation of posterior distributions as
+\strong{Credible Interval (CI)}.
 }
 \details{
 Unlike equal-tailed intervals (see \code{eti()}) that typically exclude \verb{2.5\%}
