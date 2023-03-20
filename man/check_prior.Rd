@@ -50,7 +50,7 @@ if (require("rstanarm")) {
   check_prior(model, method = "gelman")
   check_prior(model, method = "lakeland")
   # can provide visual confirmation to the Lakeland method
-  plot(si(model, verbose = TRUE))
+  plot(si(model, verbose = FALSE))
 }
 }
 }

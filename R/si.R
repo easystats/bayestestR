@@ -215,7 +215,7 @@ si.data.frame <- function(posterior, prior = NULL, BF = 1, verbose = TRUE, ...) 
   }
 
   out <- lapply(BF, function(BFi) {
-    .si.data.frame(posterior, prior, BFi)
+    .si.data.frame(posterior, prior, BFi, verbose = verbose)
   })
   out <- do.call(rbind, out)
 
@@ -240,12 +240,14 @@ si.rvar <- si.draws
 
 # Helper ------------------------------------------------------------------
 
-.si.data.frame <- function(posterior, prior, BF, ...) {
+.si.data.frame <- function(posterior, prior, BF, verbose = TRUE, ...) {
   sis <- matrix(NA, nrow = ncol(posterior), ncol = 2)
   for (par in seq_along(posterior)) {
     sis[par, ] <- .si(posterior[[par]],
       prior[[par]],
-      BF = BF, ...
+      BF = BF,
+      verbose = verbose,
+      ...
     )
   }
 
@@ -261,7 +263,7 @@ si.rvar <- si.draws
 
 
 #' @keywords internal
-.si <- function(posterior, prior, BF = 1, extend_scale = 0.05, precision = 2^8, ...) {
+.si <- function(posterior, prior, BF = 1, extend_scale = 0.05, precision = 2^8, verbose = TRUE, ...) {
   insight::check_if_installed("logspline")
 
   if (isTRUE(all.equal(prior, posterior))) {
@@ -290,9 +292,9 @@ si.rvar <- si.draws
 
   crit <- relative_d >= BF
 
-  cp <- rle(c(stats::na.omit(crit)))
-  if (length(cp$lengths) > 3) {
-    warning("More than 1 SI detected. Plot the result to investigate.", call. = FALSE)
+  cp <- rle(stats::na.omit(crit))
+  if (length(cp$lengths) > 3 && verbose) {
+    insight::format_warning("More than 1 SI detected. Plot the result to investigate.")
   }
 
   x_supported <- stats::na.omit(x_axis[crit])
