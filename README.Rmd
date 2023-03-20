@@ -116,7 +116,8 @@ In the Bayesian framework, parameters are estimated in a probabilistic fashion a
 describe_posterior(
   rnorm(10000),
   centrality = "median",
-  test = c("p_direction", "p_significance")
+  test = c("p_direction", "p_significance"),
+  verbose = FALSE
 )
 ```
 

@@ -154,13 +154,14 @@ cited below at once.
 describe_posterior(
   rnorm(10000),
   centrality = "median",
-  test = c("p_direction", "p_significance")
+  test = c("p_direction", "p_significance"),
+  verbose = FALSE
 )
 ## Summary of Posterior Distribution
 ## 
-## Parameter |   Median |        95% CI |     pd |   ps
-## ----------------------------------------------------
-## Posterior | 5.93e-03 | [-1.93, 1.96] | 50.29% | 0.46
+## Parameter | Median |        95% CI |     pd |   ps
+## --------------------------------------------------
+## Posterior |  -0.02 | [-1.94, 1.95] | 51.00% | 0.47
 ```
 
 `describe_posterior()` works for many objects, including more complex
