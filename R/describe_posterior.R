@@ -763,7 +763,7 @@ describe_posterior.emmGrid <- function(posteriors,
                                        BF = 1,
                                        ...) {
   if (any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-        "si" %in% tolower(ci_method)) {
+    "si" %in% tolower(ci_method)) {
     samps <- .clean_priors_and_posteriors(posteriors, bf_prior)
     bf_prior <- samps$prior
     posteriors <- samps$posterior
@@ -823,14 +823,16 @@ describe_posterior.stanreg <- function(posteriors,
                                        diagnostic = c("ESS", "Rhat"),
                                        priors = FALSE,
                                        effects = c("fixed", "random", "all"),
-                                       component = c("location", "all", "conditional",
-                                                     "smooth_terms", "sigma", "distributional",
-                                                     "auxiliary"),
+                                       component = c(
+                                         "location", "all", "conditional",
+                                         "smooth_terms", "sigma", "distributional",
+                                         "auxiliary"
+                                       ),
                                        parameters = NULL,
                                        BF = 1,
                                        ...) {
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-         "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
+    "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
     bf_prior <- suppressMessages(unupdate(posteriors))
   }
 
@@ -894,9 +896,11 @@ describe_posterior.stanmvreg <- function(posteriors,
                                          diagnostic = c("ESS", "Rhat"),
                                          priors = FALSE,
                                          effects = c("fixed", "random", "all"),
-                                         component = c("location", "all", "conditional",
-                                                       "smooth_terms", "sigma", "distributional",
-                                                       "auxiliary"),
+                                         component = c(
+                                           "location", "all", "conditional",
+                                           "smooth_terms", "sigma", "distributional",
+                                           "auxiliary"
+                                         ),
                                          parameters = NULL,
                                          ...) {
   effects <- match.arg(effects)
@@ -1013,9 +1017,11 @@ describe_posterior.brmsfit <- function(posteriors,
                                        bf_prior = NULL,
                                        diagnostic = c("ESS", "Rhat"),
                                        effects = c("fixed", "random", "all"),
-                                       component = c("conditional", "zi", "zero_inflated",
-                                                     "all", "location", "distributional",
-                                                     "auxiliary"),
+                                       component = c(
+                                         "conditional", "zi", "zero_inflated",
+                                         "all", "location", "distributional",
+                                         "auxiliary"
+                                       ),
                                        parameters = NULL,
                                        BF = 1,
                                        priors = FALSE,
@@ -1024,7 +1030,7 @@ describe_posterior.brmsfit <- function(posteriors,
   component <- match.arg(component)
 
   if ((any(c("all", "bf", "bayesfactor", "bayes_factor") %in% tolower(test)) ||
-         "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
+    "si" %in% tolower(ci_method)) && is.null(bf_prior)) {
     bf_prior <- suppressMessages(unupdate(posteriors))
   }
 

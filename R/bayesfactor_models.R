@@ -22,7 +22,8 @@
 #'   model.
 #' @inheritParams hdi
 #'
-#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+#' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html)
+#' implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
 #' @details
 #' If the passed models are supported by \pkg{insight} the DV of all models will be tested for equality
@@ -33,7 +34,9 @@
 #'   - `brmsfit` models must have been fitted with `save_pars = save_pars(all = TRUE)`.
 #'   - `stanreg` models must have been fitted with a defined `diagnostic_file`.
 #' - For `BFBayesFactor`, `bayesfactor_models()` is mostly a wraparound `BayesFactor::extractBF()`.
-#' - For all other model types, Bayes factors are computed using the BIC approximation. Note that BICs are extracted from using [insight::get_loglikelihood], see documentation there for options for dealing with transformed responses and REML estimation.
+#' - For all other model types, Bayes factors are computed using the BIC approximation.
+#'   Note that BICs are extracted from using [insight::get_loglikelihood], see documentation
+#'   there for options for dealing with transformed responses and REML estimation.
 #'
 #' In order to correctly and precisely estimate Bayes factors, a rule of thumb
 #' are the 4 P's: **P**roper **P**riors and **P**lentiful

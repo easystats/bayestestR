@@ -63,7 +63,9 @@ analysis with \code{bayesfactor_inclusion}).
 \item \code{stanreg} models must have been fitted with a defined \code{diagnostic_file}.
 }
 \item For \code{BFBayesFactor}, \code{bayesfactor_models()} is mostly a wraparound \code{BayesFactor::extractBF()}.
-\item For all other model types, Bayes factors are computed using the BIC approximation. Note that BICs are extracted from using \link[insight:get_loglikelihood]{insight::get_loglikelihood}, see documentation there for options for dealing with transformed responses and REML estimation.
+\item For all other model types, Bayes factors are computed using the BIC approximation.
+Note that BICs are extracted from using \link[insight:get_loglikelihood]{insight::get_loglikelihood}, see documentation
+there for options for dealing with transformed responses and REML estimation.
 }
 
 In order to correctly and precisely estimate Bayes factors, a rule of thumb
@@ -78,7 +80,8 @@ are detected, \code{bayesfactor_models()} gives a warning.
 See also \href{https://easystats.github.io/bayestestR/articles/bayes_factors.html}{the Bayes factors vignette}.
 }
 \note{
-There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
+There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method}
+implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 }
 \section{Interpreting Bayes Factors}{
 

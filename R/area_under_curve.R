@@ -1,10 +1,18 @@
 #' Area under the Curve (AUC)
 #'
-#' Based on the DescTools `AUC` function. It can calculate the area under the curve with a naive algorithm or a more elaborated spline approach. The curve must be given by vectors of xy-coordinates. This function can handle unsorted x values (by sorting x) and ties for the x values (by ignoring duplicates).
+#' Based on the DescTools `AUC` function. It can calculate the area under the
+#' curve with a naive algorithm or a more elaborated spline approach. The curve
+#' must be given by vectors of xy-coordinates. This function can handle unsorted
+#' x values (by sorting x) and ties for the x values (by ignoring duplicates).
 #'
 #' @param x Vector of x values.
 #' @param y Vector of y values.
-#' @param method Method to compute the Area Under the Curve (AUC). Can be `"trapezoid"` (default), `"step"` or `"spline"`. If "trapezoid", the curve is formed by connecting all points by a direct line (composite trapezoid rule). If "step" is chosen then a stepwise connection of two points is used. For calculating the area under a spline interpolation the splinefun function is used in combination with integrate.
+#' @param method Method to compute the Area Under the Curve (AUC). Can be
+#'   `"trapezoid"` (default), `"step"` or `"spline"`. If "trapezoid", the curve
+#'   is formed by connecting all points by a direct line (composite trapezoid
+#'   rule). If "step" is chosen then a stepwise connection of two points is
+#'   used. For calculating the area under a spline interpolation the splinefun
+#'   function is used in combination with integrate.
 #' @param ... Arguments passed to or from other methods.
 #'
 #'
