@@ -14,7 +14,7 @@ this blogpost."><meta property="og:image" content="https://easystats.github.io/b
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.0.9</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.0.10</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -176,13 +176,9 @@ determined).</p>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">check_prior</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"gelman"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">check_prior</span><span class="op">(</span><span class="va">model</span>, method <span class="op">=</span> <span class="st">"lakeland"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="si.html">si</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="co"># can provide visual confirmation to the Lakeland method</span></span></span>
+<span class="r-in"><span>  <span class="co"># can provide visual confirmation to the Lakeland method</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="si.html">si</a></span><span class="op">(</span><span class="va">model</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sampling priors, please wait...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Support intervals might not be precise.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   For precise support intervals, sampling at least 40,000 posterior</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   samples is recommended.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>More than 1 SI detected. Plot the result to investigate.</span>
 <span class="r-plt img"><img src="check_prior-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>

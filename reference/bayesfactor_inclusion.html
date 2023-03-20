@@ -14,7 +14,7 @@ For more info, see the Bayes factors vignette."><meta property="og:image" conten
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.0.9</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.0.10</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -185,9 +185,13 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     
-<ul><li><p>Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E. (2019, March 25). A conceptual introduction to Bayesian Model Averaging. <a href="https://doi.org/10.31234/osf.io/wgb64" class="external-link">doi:10.31234/osf.io/wgb64</a></p></li>
-<li><p>Clyde, M. A., Ghosh, J., &amp; Littman, M. L. (2011). Bayesian adaptive sampling for variable selection and model averaging. Journal of Computational and Graphical Statistics, 20(1), 80-101.</p></li>
-<li><p>Mathot, S. (2017). Bayes like a Baws: Interpreting Bayesian Repeated Measures in JASP <a href="https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp" class="external-link">Blog post</a>.</p></li>
+<ul><li><p>Hinne, M., Gronau, Q. F., van den Bergh, D., and Wagenmakers, E. (2019, March 25).
+A conceptual introduction to Bayesian Model Averaging. <a href="https://doi.org/10.31234/osf.io/wgb64" class="external-link">doi:10.31234/osf.io/wgb64</a></p></li>
+<li><p>Clyde, M. A., Ghosh, J., &amp; Littman, M. L. (2011). Bayesian adaptive sampling
+for variable selection and model averaging. Journal of Computational and Graphical Statistics,
+20(1), 80-101.</p></li>
+<li><p>Mathot, S. (2017). Bayes like a Baws: Interpreting Bayesian Repeated Measures in JASP.
+<a href="https://www.cogsci.nl/blog/interpreting-bayesian-repeated-measures-in-jasp" class="external-link">Blog post</a>.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -242,9 +246,9 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Inclusion Bayes Factors (Model Averaged)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           P(prior) P(posterior) Inclusion BF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> supp          0.60         0.98        36.22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dose          0.60         1.00     5.94e+12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dose:supp     0.20         0.56         5.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp          0.60         0.98        34.84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dose          0.60         1.00     5.72e+12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dose:supp     0.20         0.55         4.81</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Compared among: <span style="color: #00BBBB;">all models</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *    Priors odds: <span style="color: #00BBBB;">uniform-equal</span></span>
@@ -254,13 +258,14 @@ null-model) (<cite>Wetzels et al. 2011</cite>).</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Inclusion Bayes Factors (Model Averaged)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           P(prior) P(posterior) Inclusion BF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> supp          0.40         0.42        23.21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dose          0.40         0.44     3.90e+12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> dose:supp     0.20         0.56         1.34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> supp          0.40         0.44        23.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dose          0.40         0.45     3.89e+12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dose:supp     0.20         0.55         1.25</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Compared among: <span style="color: #00BBBB;">matched models only</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> *    Priors odds: <span style="color: #00BBBB;">uniform-equal</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
