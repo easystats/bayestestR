@@ -48,7 +48,7 @@
 #'   # Visualization =============================================
 #'   ggplot(data, aes(x = x, y = Median)) +
 #'     geom_ribbon(aes(ymin = ETI_low, ymax = ETI_high), fill = "red", alpha = 0.3) +
-#'     geom_line(size = 1) +
+#'     geom_line(linewidth = 1) +
 #'     geom_line(
 #'       data = reshape_iterations(data),
 #'       aes(y = iter_value, group = iter_group),
