@@ -61,13 +61,34 @@ if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("BayesF
     # dataframes -------------------------------------------------
 
     x <- data.frame(replicate(4, rnorm(100)))
-    expect_warning(expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all")))
+    expect_warning(expect_warning(
+      describe_posterior(
+        x,
+        centrality = "all",
+        dispersion = TRUE,
+        test = "all"
+      )
+    ))
     # rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all"))
     # expect_equal(dim(rez), c(4, 19))
-    expect_warning(expect_warning(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9))))
+    expect_warning(expect_warning(
+      describe_posterior(
+        x,
+        centrality = "all",
+        dispersion = TRUE,
+        test = "all",
+        ci = c(0.8, 0.9)
+      )
+    ))
     # rez <- suppressWarnings(describe_posterior(x, centrality = "all", dispersion = TRUE, test = "all", ci = c(0.8, 0.9)))
     # expect_equal(dim(rez), c(8, 19))
-    rez <- describe_posterior(x, centrality = NULL, dispersion = TRUE, test = NULL, ci_method = "quantile")
+    rez <- describe_posterior(
+      x,
+      centrality = NULL,
+      dispersion = TRUE,
+      test = NULL,
+      ci_method = "quantile"
+    )
     expect_equal(dim(rez), c(4, 4))
   })
 
@@ -264,12 +285,21 @@ if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("BayesF
         describe_posterior(ttestBF(mtcars$wt, mu = 3), ci = 0.95, ci_method = "hdi"),
         structure(
           list(
-            Parameter = "Difference", Median = 0.192275922178887, CI = 0.95,
-            CI_low = -0.172955539648102, CI_high = 0.526426796879103, pd = 0.85875,
-            ROPE_CI = 0.95, ROPE_low = -0.0978457442989697, ROPE_high = 0.0978457442989697,
-            ROPE_Percentage = 0.257300710339384, log_BF = -0.94971351422473,
-            BF = 0.386851835128661, Prior_Distribution = "cauchy",
-            Prior_Location = 0, Prior_Scale = 0.707106781186548
+            Parameter = "Difference",
+            Median = 0.192275922178887,
+            CI = 0.95,
+            CI_low = -0.172955539648102,
+            CI_high = 0.526426796879103,
+            pd = 0.85875,
+            ROPE_CI = 0.95,
+            ROPE_low = -0.0978457442989697,
+            ROPE_high = 0.0978457442989697,
+            ROPE_Percentage = 0.257300710339384,
+            log_BF = -0.94971351422473,
+            BF = 0.386851835128661,
+            Prior_Distribution = "cauchy",
+            Prior_Location = 0,
+            Prior_Scale = 0.707106781186548
           ),
           row.names = 1L, class = c("describe_posterior", "see_describe_posterior", "data.frame"),
           ci_method = "hdi", object_name = "ttestBF(mtcars$wt, mu = 3)"

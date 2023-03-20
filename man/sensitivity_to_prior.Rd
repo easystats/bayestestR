@@ -9,14 +9,22 @@ sensitivity_to_prior(model, index = "Median", magnitude = 10, ...)
 \arguments{
 \item{model}{A Bayesian model (\code{stanreg} or \code{brmsfit}).}
 
-\item{index}{The indices from which to compute the sensitivity. Can be one or multiple names of the columns returned by \code{describe_posterior}. The case is important here (e.g., write 'Median' instead of 'median').}
+\item{index}{The indices from which to compute the sensitivity. Can be one or
+multiple names of the columns returned by \code{describe_posterior}. The case is
+important here (e.g., write 'Median' instead of 'median').}
 
-\item{magnitude}{This represent the magnitude by which to shift the antagonistic prior (to test the sensitivity). For instance, a magnitude of 10 (default) means that the mode wil be updated with a prior located at 10 standard deviations from its original location.}
+\item{magnitude}{This represent the magnitude by which to shift the
+antagonistic prior (to test the sensitivity). For instance, a magnitude of
+10 (default) means that the mode wil be updated with a prior located at 10
+standard deviations from its original location.}
 
 \item{...}{Arguments passed to or from other methods.}
 }
 \description{
-Computes the sensitivity to priors specification. This represents the proportion of change in some indices when the model is fitted with an antagonistic prior (a prior of same shape located on the opposite of the effect).
+Computes the sensitivity to priors specification. This represents the
+proportion of change in some indices when the model is fitted with an
+antagonistic prior (a prior of same shape located on the opposite of the
+effect).
 }
 \examples{
 \dontrun{

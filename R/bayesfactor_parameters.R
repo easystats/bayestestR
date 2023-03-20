@@ -127,17 +127,17 @@
 #'     data = sleep,
 #'     refresh = 0
 #'   ))
-#'   bayesfactor_parameters(stan_model)
+#'   bayesfactor_parameters(stan_model, verbose = FALSE)
 #'   bayesfactor_parameters(stan_model, null = rope_range(stan_model))
 #'
 #'   # emmGrid objects
 #'   # ---------------
 #'   group_diff <- pairs(emmeans(stan_model, ~group))
-#'   bayesfactor_parameters(group_diff, prior = stan_model)
+#'   bayesfactor_parameters(group_diff, prior = stan_model, verbose = FALSE)
 #'
 #'   # Or
 #'   group_diff_prior <- pairs(emmeans(unupdate(stan_model), ~group))
-#'   bayesfactor_parameters(group_diff, prior = group_diff_prior)
+#'   bayesfactor_parameters(group_diff, prior = group_diff_prior, verbose = FALSE)
 #' }
 #'
 #' # brms models
@@ -148,11 +148,12 @@
 #'     set_prior("student_t(3, 0, 1)", class = "b") +
 #'     set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")
 #'
-#'   brms_model <- brm(extra ~ group + (1 | ID),
+#'   brms_model <- suppressWarnings(brm(extra ~ group + (1 | ID),
 #'     data = sleep,
-#'     prior = my_custom_priors
-#'   )
-#'   bayesfactor_parameters(brms_model)
+#'     prior = my_custom_priors,
+#'     refresh = 0
+#'   ))
+#'   bayesfactor_parameters(brms_model, verbose = FALSE)
 #' }
 #' }
 #' @references
@@ -485,8 +486,7 @@ bayesfactor_parameters.rvar <- bayesfactor_parameters.draws
       d_samples / norm_samples
     }
 
-    return(relative_density(prior) /
-      relative_density(posterior))
+    return(relative_density(prior) / relative_density(posterior))
   } else if (length(null) == 2) {
     null <- sort(null)
     null[is.infinite(null)] <- 1.797693e+308 * sign(null[is.infinite(null)])
@@ -519,17 +519,17 @@ bayesfactor_parameters.rvar <- bayesfactor_parameters.draws
 
 #' @export
 bayesfactor_parameters.bayesfactor_models <- function(...) {
-  stop(
-    "Oh no, 'bayesfactor_parameters()' does not know how to deal with multiple models :(\n",
+  insight::format_error(
+    "Oh no, 'bayesfactor_parameters()' does not know how to deal with multiple models :(",
     "You might want to use 'bayesfactor_inclusion()' here to test specific terms across models."
   )
 }
 
 #' @export
 bayesfactor_parameters.sim <- function(...) {
-  stop(
-    "Bayes factors are based on the shift from a prior to a posterior. ",
-    "Since simulated draws are not based on any priors, computing Bayes factors does not make sense :(\n",
+  insight::format_error(
+    "Bayes factors are based on the shift from a prior to a posterior.",
+    "Since simulated draws are not based on any priors, computing Bayes factors does not make sense :(",
     "You might want to try `rope`, `ci`, `pd` or `pmap` for posterior-based inference."
   )
 }

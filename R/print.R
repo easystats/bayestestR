@@ -171,7 +171,7 @@ print.bayesfactor_models <- function(x,
     log = log,
     show_names = show_names,
     caption = caption,
-    align = c("llr"),
+    align = "llr",
     ...
   )
 }

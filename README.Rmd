@@ -116,7 +116,8 @@ In the Bayesian framework, parameters are estimated in a probabilistic fashion a
 describe_posterior(
   rnorm(10000),
   centrality = "median",
-  test = c("p_direction", "p_significance")
+  test = c("p_direction", "p_significance"),
+  verbose = FALSE
 )
 ```
 
@@ -151,7 +152,8 @@ describe_posterior(
   effects = "all",
   component = "all",
   test = c("p_direction", "p_significance"),
-  centrality = "all"
+  centrality = "all",
+  verbose = FALSE
 )
 ```
 
@@ -223,9 +225,9 @@ p1 <- ggplot(dat1, aes(x = x, y = y, fill = fill)) +
   geom_ribbon(aes(ymin = 0, ymax = y)) +
   geom_vline(xintercept = 0, linetype = "dotted") +
   theme_classic(base_size = 12) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, .25)) +
-  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#FFC107", "middle" = "#E91E63"), guide = FALSE) +
-  annotate("text", x = 2.5, y = .05, label = "The 95% HDI", color = "white", size = 5) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.25)) +
+  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#FFC107", "middle" = "#E91E63"), guide = "none") +
+  annotate("text", x = 2.5, y = 0.05, label = "The 95% HDI", color = "white", size = 5) +
   xlab(NULL) +
   ylab("Probability Density\n")
 
@@ -239,9 +241,9 @@ p2 <- ggplot(dat2, aes(x = x, y = y, fill = fill)) +
   geom_ribbon(aes(ymin = 0, ymax = y)) +
   geom_vline(xintercept = 0, linetype = "dotted") +
   theme_classic(base_size = 12) +
-  scale_y_continuous(expand = c(0, 0), limits = c(0, .25)) +
-  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#FFC107", "middle" = "#2196F3"), guide = FALSE) +
-  annotate("text", x = 2.9, y = .05, label = "The 95% ETI", color = "white", size = 5) +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 0.25)) +
+  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#FFC107", "middle" = "#2196F3"), guide = "none") +
+  annotate("text", x = 2.9, y = 0.05, label = "The 95% ETI", color = "white", size = 5) +
   xlab("\nParameter Value") +
   ylab("Probability Density\n")
 
@@ -274,7 +276,7 @@ ggplot(dat3, aes(x = x, y = y, fill = fill)) +
   geom_vline(xintercept = 0, linetype = "dotted") +
   theme_classic(base_size = 12) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
-  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#E91E63"), guide = FALSE) +
+  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#E91E63"), guide = "none") +
   xlab("\nParameter Value") +
   ylab("Probability Density\n")
 ```
@@ -311,7 +313,7 @@ ggplot(dat4, aes(x = x, y = y, fill = fill)) +
   theme_classic(base_size = 12) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 2)) +
   scale_x_continuous(breaks = c(-0.1, 0.1, 0.4)) +
-  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#FFC107", "middle" = "#E91E63"), guide = FALSE) +
+  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#FFC107", "middle" = "#E91E63"), guide = "none") +
   xlab("\nParameter Value") +
   ylab("Probability Density\n")
 ```
@@ -331,7 +333,7 @@ When the null is an interval, the Bayes factor is computed by comparing the prio
 prior <- distribution_normal(10000, mean = 0, sd = 1)
 posterior <- distribution_normal(10000, mean = 1, sd = 0.7)
 
-bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
+bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0, verbose = FALSE)
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
@@ -347,7 +349,7 @@ ggplot(posterior, aes(x = x, y = y)) +
   geom_point(x = 0, y = density_at(posterior$x, 0, bw = "nrd0"), color = "#E91E63", size = 5) +
   theme_classic(base_size = 12) +
   scale_y_continuous(expand = c(0, 0), limits = c(0, 0.65)) +
-  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#E91E63"), guide = FALSE) +
+  scale_fill_manual(values = c("high" = "#FFC107", "low" = "#E91E63"), guide = "none") +
   xlab("\nParameter Value") +
   ylab("Probability Density\n")
 ```

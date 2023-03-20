@@ -172,9 +172,9 @@ format.bayesfactor_inclusion <- function(x,
   # footer
   if (is.null(format) || format == "text") {
     footer <- list(
-      c("\n* Compared among: "),
+      "\n* Compared among: ",
       c(if (matched) "matched models only" else "all models", "cyan"),
-      c("\n*    Priors odds: "),
+      "\n*    Priors odds: ",
       c(if (!is.null(priorOdds)) "custom" else "uniform-equal", "cyan"),
       if (log) c("\n\nBayes Factors are on the log-scale.", "red")
     )
@@ -220,7 +220,7 @@ format.bayesfactor_restricted <- function(x,
   # footer
   if (is.null(format) || format == "text") {
     footer <- list(
-      c("\n* Bayes factors for the restricted model vs. the un-restricted model.\n"),
+      "\n* Bayes factors for the restricted model vs. the un-restricted model.\n",
       if (log) c("\nBayes Factors are on the log-scale.\n", "red")
     )
     # color formatting for caption
@@ -287,17 +287,18 @@ format.bayesfactor_parameters <- function(x,
   # footer
   if (is.null(format) || format == "text") {
     footer <- list(
-      c("\n* Evidence Against The Null: "),
-      c(null, "cyan"),
-      if (direction) c("\n*                 Direction: "),
+      "\n* Evidence Against The Null: ",
+      c(paste0(null, "\n"), "cyan"),
+      if (direction) "*                 Direction: ",
       if (direction < 0) c("Left-Sided test", "cyan"),
       if (direction > 0) c("Right-Sided test", "cyan"),
+      if (direction) "\n",
       if (log) c("\n\nBayes Factors are on the log-scale.\n", "red")
     )
   } else {
     footer <- insight::compact_list(list(
       paste0("Evidence Against The Null: ", null),
-      if (direction) c("Direction: "),
+      if (direction) "Direction: ",
       if (direction < 0) "Left-Sided test",
       if (direction > 0) "Right-Sided test",
       if (log) "Bayes Factors are on the log-scale."

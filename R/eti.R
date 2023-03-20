@@ -1,6 +1,10 @@
 #' Equal-Tailed Interval (ETI)
 #'
-#' Compute the **Equal-Tailed Interval (ETI)** of posterior distributions using the quantiles method. The probability of being below this interval is equal to the probability of being above it. The ETI can be used in the context of uncertainty characterisation of posterior distributions as **Credible Interval (CI)**.
+#' Compute the **Equal-Tailed Interval (ETI)** of posterior distributions using
+#' the quantiles method. The probability of being below this interval is equal
+#' to the probability of being above it. The ETI can be used in the context of
+#' uncertainty characterisation of posterior distributions as
+#' **Credible Interval (CI)**.
 #'
 #' @inheritParams hdi
 #' @inherit ci return
@@ -139,9 +143,21 @@ eti.BGGM <- eti.bcplm
 
 
 #' @export
-eti.sim.merMod <- function(x, ci = 0.95, effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+eti.sim.merMod <- function(x,
+                           ci = 0.95,
+                           effects = c("fixed", "random", "all"),
+                           parameters = NULL,
+                           verbose = TRUE,
+                           ...) {
   effects <- match.arg(effects)
-  dat <- .compute_interval_simMerMod(x = x, ci = ci, effects = effects, parameters = parameters, verbose = verbose, fun = "eti")
+  dat <- .compute_interval_simMerMod(
+    x = x,
+    ci = ci,
+    effects = effects,
+    parameters = parameters,
+    verbose = verbose,
+    fun = "eti"
+  )
   out <- dat$result
   attr(out, "data") <- dat$data
   out
@@ -179,7 +195,12 @@ eti.stanreg <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
   component <- match.arg(component)
 
   out <- .prepare_output(
-    eti(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose, ...),
+    eti(
+      insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+      ci = ci,
+      verbose = verbose,
+      ...
+    ),
     insight::clean_parameters(x),
     inherits(x, "stanmvreg")
   )
@@ -207,7 +228,12 @@ eti.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
   component <- match.arg(component)
 
   out <- .prepare_output(
-    eti(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose, ...),
+    eti(
+      insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+      ci = ci,
+      verbose = verbose,
+      ...
+    ),
     insight::clean_parameters(x)
   )
 

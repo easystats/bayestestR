@@ -331,7 +331,8 @@ My_second_BF
 My_second_BF <- bayesfactor_parameters(
   data.frame(group2 = posterior),
   data.frame(group2 = prior),
-  null = 0
+  null = 0,
+  verbose = FALSE
 )
 
 print(My_second_BF)
@@ -355,7 +356,8 @@ test_group2_right <- bayesfactor_parameters(
   data.frame(group2 = posterior),
   data.frame(group2 = prior),
   null = 0,
-  direction = ">"
+  direction = ">",
+  verbose = FALSE
 )
 
 BF <- as.numeric(test_group2_right)
@@ -430,7 +432,8 @@ In `bayestestR`, this can be achieved with the `si()` function:
 my_first_si <- si(
   posterior = data.frame(group2 = posterior),
   prior = data.frame(group2 = prior),
-  BF = 1
+  BF = 1,
+  verbose = FALSE
 )
 
 print(my_first_si)
@@ -918,7 +921,7 @@ posterior distribution, and estimate the HDI.
 In `bayestestR`, we can do this with the `weighted_posteriors()` function:
 
 ```{r}
-BMA_draws <- weighted_posteriors(mod, mod_carb)
+BMA_draws <- weighted_posteriors(mod, mod_carb, verbose = FALSE)
 
 BMA_hdi <- hdi(BMA_draws, ci = 0.95)
 BMA_hdi
@@ -1130,7 +1133,7 @@ fit_sum <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
   family = gaussian(),
-  chains = 10, iter = 5000, warmup = 1000,
+  chains = 10, iter = 5000, warmup = 1000
 )
 
 em_sum <- emmeans(fit_sum, ~Species) # the posterior marginal means
@@ -1145,7 +1148,7 @@ fit_sum <- stan_glm(Sepal.Length ~ Species,
   data = df,
   prior = normal(0, c(1, 1), autoscale = FALSE),
   family = gaussian(),
-  chains = 4, iter = 2000, warmup = 1000, # reduce build time
+  chains = 4, iter = 2000, warmup = 1000 # reduce build time
 )
 
 em_sum <- emmeans(fit_sum, ~Species) # the posterior marginal means
