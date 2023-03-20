@@ -333,7 +333,7 @@ When the null is an interval, the Bayes factor is computed by comparing the prio
 prior <- distribution_normal(10000, mean = 0, sd = 1)
 posterior <- distribution_normal(10000, mean = 1, sd = 0.7)
 
-bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0)
+bayesfactor_parameters(posterior, prior, direction = "two-sided", null = 0, verbose = FALSE)
 ```
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}

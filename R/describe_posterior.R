@@ -59,12 +59,20 @@
 #'   describe_posterior(x, ci = c(0.80, 0.90))
 #'
 #'   df <- data.frame(replicate(4, rnorm(100)))
-#'   describe_posterior(df)
-#'   describe_posterior(df, centrality = "all", dispersion = TRUE, test = "all")
-#'   describe_posterior(df, ci = c(0.80, 0.90))
+#'   describe_posterior(df, verbose = FALSE)
+#'   describe_posterior(
+#'     df,
+#'     centrality = "all",
+#'     dispersion = TRUE,
+#'     test = "all",
+#'     verbose = FALSE
+#'   )
+#'   describe_posterior(df, ci = c(0.80, 0.90), verbose = FALSE)
 #'
 #'   df <- data.frame(replicate(4, rnorm(20)))
-#'   head(reshape_iterations(describe_posterior(df, keep_iterations = TRUE)))
+#'   head(reshape_iterations(
+#'     describe_posterior(df, keep_iterations = TRUE, verbose = FALSE)
+#'   ))
 #' }
 #' \dontrun{
 #' # rstanarm models
@@ -78,14 +86,6 @@
 #'   # emmeans estimates
 #'   # -----------------------------------------------
 #'   describe_posterior(emtrends(model, ~1, "wt"))
-#' }
-#'
-#' # brms models
-#' # -----------------------------------------------
-#' if (require("brms")) {
-#'   model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
-#'   describe_posterior(model)
-#'   describe_posterior(model, ci = c(0.80, 0.90))
 #' }
 #'
 #' # BayesFactor objects
