@@ -294,11 +294,11 @@ if (require("brms")) {
     set_prior("student_t(3, 0, 1)", class = "b") +
     set_prior("student_t(3, 0, 1)", class = "sd", group = "ID")
 
-  brms_model <- brm(extra ~ group + (1 | ID),
+  brms_model <- suppressWarnings(brm(extra ~ group + (1 | ID),
     data = sleep,
     prior = my_custom_priors,
-    refresh = 0,
-  )
+    refresh = 0
+  ))
   bayesfactor_parameters(brms_model, verbose = FALSE)
 }
 }
