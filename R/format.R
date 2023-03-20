@@ -292,6 +292,7 @@ format.bayesfactor_parameters <- function(x,
       if (direction) "*                 Direction: ",
       if (direction < 0) c("Left-Sided test", "cyan"),
       if (direction > 0) c("Right-Sided test", "cyan"),
+      if (direction) "\n",
       if (log) c("\n\nBayes Factors are on the log-scale.\n", "red")
     )
   } else {
