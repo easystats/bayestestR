@@ -142,7 +142,8 @@ weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, 
     prior_odds <- c(1, prior_odds)
   } else {
     if (verbose) {
-      insight::format_warning("'prior_odds = NULL'; Using uniform priors odds.\n",
+      insight::format_warning(
+        "'prior_odds = NULL'; Using uniform priors odds.\n",
         "For weighted data frame, 'prior_odds' should be specified as a numeric vector."
       )
     }
