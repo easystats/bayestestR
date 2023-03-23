@@ -508,7 +508,11 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 
 
 #' @keywords internal
-.bf_models_output <- function(res, denominator = 1, bf_method = "method", unsupported_models = FALSE, model_names = NULL) {
+.bf_models_output <- function(res,
+                              denominator = 1,
+                              bf_method = "method",
+                              unsupported_models = FALSE,
+                              model_names = NULL) {
   attr(res, "denominator") <- denominator
   attr(res, "BF_method") <- bf_method
   attr(res, "unsupported_models") <- unsupported_models
