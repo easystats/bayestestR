@@ -58,7 +58,10 @@ if (!osx && requiet("rstanarm")) {
 
 if (!osx && requiet("bayesQR")) {
   test_that("bayesQR", {
-    x <- bayesQR::bayesQR(Sepal.Length ~ Petal.Width, data = iris, quantile = 0.1, alasso = TRUE, ndraw = 500)
+    invisible(capture.output(
+      x <- bayesQR::bayesQR(Sepal.Length ~ Petal.Width, data = iris, quantile = 0.1,
+                       alasso = TRUE, ndraw = 500)
+    ))
 
     rez <- p_direction(x)
     expect_equal(c(nrow(rez), ncol(rez)), c(2, 2))

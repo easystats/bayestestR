@@ -90,12 +90,16 @@ if (requiet("lme4")) {
 
       set.seed(333) # compare against bridgesampling
       bridge_BF <- bridgesampling::bayes_factor(
-        bridgesampling::bridge_sampler(stan_bf_1),
-        bridgesampling::bridge_sampler(stan_bf_0)
+        bridgesampling::bridge_sampler(stan_bf_1, silent = TRUE),
+        bridgesampling::bridge_sampler(stan_bf_0, silent = TRUE)
       )
 
       set.seed(333)
-      expect_warning(stan_models <- bayesfactor_models(stan_bf_0, stan_bf_1))
+      suppressMessages({
+        expect_warning(
+          stan_models <- bayesfactor_models(stan_bf_0, stan_bf_1)
+        )
+      })
       expect_s3_class(stan_models, "bayesfactor_models")
       expect_equal(length(stan_models$log_BF), 2)
       expect_equal(stan_models$log_BF[2], log(bridge_BF$bf), tolerance = 0.1)
@@ -107,38 +111,45 @@ if (requiet("lme4")) {
       skip_on_ci()
 
       set.seed(333)
-      stan_brms_model_0 <- brms::brm(
+      stan_brms_model_0 <- suppressWarnings(brms::brm(
         Sepal.Length ~ 1,
         data = iris,
         iter = 500,
         refresh = 0,
-        save_pars = brms::save_pars(all = TRUE)
-      )
+        save_pars = brms::save_pars(all = TRUE),
+        silent = 2
+      ))
 
-      stan_brms_model_1 <- brms::brm(
+      stan_brms_model_1 <- suppressWarnings(brms::brm(
         Sepal.Length ~ Petal.Length,
         data = iris,
         iter = 500,
         refresh = 0,
-        save_pars = brms::save_pars(all = TRUE)
-      )
+        save_pars = brms::save_pars(all = TRUE),
+        silent = 2
+      ))
 
       set.seed(444)
-      expect_message(bfm <- bayesfactor_models(stan_brms_model_0, stan_brms_model_1), regexp = "marginal")
+      suppressMessages(
+        expect_message(
+          bfm <- bayesfactor_models(stan_brms_model_0, stan_brms_model_1),
+          regexp = "marginal"
+        )
+      )
 
       set.seed(444)
       stan_brms_model_0wc <- brms::add_criterion(
         stan_brms_model_0,
         criterion = "marglik",
         repetitions = 5,
-        silent = TRUE
+        silent = 2
       )
 
       stan_brms_model_1wc <- brms::add_criterion(
         stan_brms_model_1,
         criterion = "marglik",
         repetitions = 5,
-        silent = TRUE
+        silent = 2
       )
 
       expect_message(bfmwc <- bayesfactor_models(stan_brms_model_0wc, stan_brms_model_1wc), regexp = NA)

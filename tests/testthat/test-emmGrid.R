@@ -127,11 +127,16 @@ if (requiet("rstanarm") && requiet("emmeans")) {
     expect_equal(xbfp$log_BF, xbfp2$log_BF)
     expect_equal(xbfp$log_BF, xbfp3$log_BF)
 
-    w <- capture_warnings(bayesfactor_parameters(all_))
-    expect_match(w, "Prior")
+    expect_warning(
+      suppressMessages(
+        bayesfactor_parameters(all_)
+      ),
+      regexp = "Prior not specified"
+    )
 
     # error - cannot deal with regrid / transform
-    e <- capture_error(bayesfactor_parameters(regrid(all_), prior = model))
+
+    e <- capture_error(suppressMessages(bayesfactor_parameters(regrid(all_), prior = model)))
     expect_match(as.character(e), "Unable to reconstruct prior estimates")
   })
 

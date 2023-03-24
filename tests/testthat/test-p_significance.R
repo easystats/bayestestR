@@ -4,8 +4,8 @@ if (requiet("rstanarm")) {
   test_that("p_significance", {
     # numeric
     set.seed(333)
-    x <- bayestestR::distribution_normal(10000, 1, 1)
-    ps <- bayestestR::p_significance(x)
+    x <- distribution_normal(10000, 1, 1)
+    ps <- p_significance(x)
     expect_equal(as.numeric(ps), 0.816, tolerance = 0.1)
     expect_equal(nrow(p_significance(data.frame(replicate(4, rnorm(100))))), 4)
     expect_s3_class(ps, "p_significance")

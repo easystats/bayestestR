@@ -3,8 +3,8 @@ skip_if_offline()
 if (requiet("rstanarm") && requiet("brms")) {
   test_that("p_direction", {
     set.seed(333)
-    x <- bayestestR::distribution_normal(10000, 1, 1)
-    pd <- bayestestR::p_direction(x)
+    x <- distribution_normal(10000, 1, 1)
+    pd <- p_direction(x)
     expect_equal(as.numeric(pd), 0.842, tolerance = 0.1)
     expect_equal(as.numeric(p_direction(x, method = "kernel")), 0.842, tolerance = 0.1)
     expect_equal(nrow(p_direction(data.frame(replicate(4, rnorm(100))))), 4)

@@ -31,9 +31,9 @@ if (requiet("rstanarm") &&
     bfsd <- bayesfactor_parameters(Xposterior, prior = Xprior, null = 0.5, direction = 0, verbose = FALSE)
     expect_equal(bfsd$log_BF, c(-0.12, 0.37), tolerance = 0.1)
 
-    expect_warning(bayestestR::bayesfactor_parameters(Xposterior, Xprior))
+    expect_warning(bayesfactor_parameters(Xposterior, Xprior))
 
-    w <- capture_warnings(bfsd <- bayestestR::bayesfactor_parameters(Xposterior))
+    w <- capture_warnings(bfsd <- bayesfactor_parameters(Xposterior))
     expect_match(w, "Prior", all = FALSE)
     expect_match(w, "40", all = FALSE)
     expect_equal(bfsd$log_BF, c(0, 0), tolerance = 0.1)
@@ -65,10 +65,10 @@ if (requiet("rstanarm") &&
   test_that("bayesfactor_parameters RSTANARM", {
     skip_on_cran()
 
-    fit <- stan_glm(mpg ~ ., data = mtcars, refresh = 0)
+    fit <- suppressMessages(stan_glm(mpg ~ ., data = mtcars, refresh = 0))
 
     set.seed(333)
-    fit_p <- unupdate(fit)
+    fit_p <- unupdate(fit, verbose = FALSE)
     expect_warning(BF2 <- bayesfactor_parameters(fit, fit_p))
 
     set.seed(333)
@@ -76,7 +76,9 @@ if (requiet("rstanarm") &&
 
     expect_equal(BF1, BF2)
 
-    model_flat <- stan_glm(extra ~ group, data = sleep, prior = NULL, refresh = 0)
+    model_flat <- suppressMessages(
+      stan_glm(extra ~ group, data = sleep, prior = NULL, refresh = 0)
+    )
     expect_error(bayesfactor_parameters(model_flat))
 
     skip_on_ci()
