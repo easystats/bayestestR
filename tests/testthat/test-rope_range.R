@@ -27,9 +27,9 @@ test_that("rope_range logistic", {
   expect_equal(rope_range(mod), c(-1 * 0.1 * pi / sqrt(3), 0.1 * pi / sqrt(3)), tolerance = 1e-3)
 })
 
-.runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
 
-# if (.runThisTest && requiet("brms")) {
+
+# if ( requiet("brms")) {
 #   test_that("rope_range", {
 #     model <- brm(mpg ~ wt + gear, data = mtcars, iter = 300)
 #

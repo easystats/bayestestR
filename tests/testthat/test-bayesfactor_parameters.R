@@ -86,8 +86,7 @@ if (requiet("rstanarm") &&
 
 
   # bayesfactor_parameters BRMS ---------------------------------------------
-  # .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
-  # if (.runThisTest) {
+  #
   #   test_that("bayesfactor_parameters BRMS", {
   #     skip_on_cran()
   #
@@ -106,5 +105,4 @@ if (requiet("rstanarm") &&
   #     brms_mixed_1 <- insight::download_model("brms_mixed_1")
   #     expect_error(bayesfactor_parameters(brms_mixed_1))
   #   })
-  # }
 }
