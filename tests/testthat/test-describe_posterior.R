@@ -93,8 +93,8 @@ if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("BayesF
   })
 
 
-  .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
-  if (.runThisTest && Sys.info()["sysname"] != "Darwin") {
+
+  if (Sys.info()["sysname"] != "Darwin") {
     test_that("describe_posterior", {
       set.seed(333)
       # Rstanarm
@@ -199,29 +199,27 @@ if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("BayesF
       # expect_equal(dim(rez), c(4, 4))
     })
 
-    if (requiet("insight")) {
-      m <- insight::download_model("stanreg_merMod_5")
-      p <- insight::get_parameters(m, effects = "all")
+    m <- insight::download_model("stanreg_merMod_5")
+    p <- insight::get_parameters(m, effects = "all")
 
-      test_that("describe_posterior", {
-        expect_equal(
-          describe_posterior(m, effects = "all", verbose = FALSE)$Median,
-          describe_posterior(p, verbose = FALSE)$Median,
-          tolerance = 1e-3
-        )
-      })
+    test_that("describe_posterior", {
+      expect_equal(
+        describe_posterior(m, effects = "all", verbose = FALSE)$Median,
+        describe_posterior(p, verbose = FALSE)$Median,
+        tolerance = 1e-3
+      )
+    })
 
-      m <- insight::download_model("brms_zi_3")
-      p <- insight::get_parameters(m, effects = "all", component = "all")
+    m <- insight::download_model("brms_zi_3")
+    p <- insight::get_parameters(m, effects = "all", component = "all")
 
-      test_that("describe_posterior", {
-        expect_equal(
-          suppressWarnings(describe_posterior(m, effects = "all", component = "all", verbose = FALSE)$Median),
-          suppressWarnings(describe_posterior(p, verbose = FALSE)$Median),
-          tolerance = 1e-3
-        )
-      })
-    }
+    test_that("describe_posterior", {
+      expect_equal(
+        suppressWarnings(describe_posterior(m, effects = "all", component = "all", verbose = FALSE)$Median),
+        suppressWarnings(describe_posterior(p, verbose = FALSE)$Median),
+        tolerance = 1e-3
+      )
+    })
 
 
     test_that("describe_posterior w/ BF+SI", {

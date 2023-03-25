@@ -38,37 +38,37 @@ if (requiet("rstanarm") && requiet("brms")) {
   })
 
 
-  .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
-  if (.runThisTest) {
-    if (requiet("insight")) {
-      m <- insight::download_model("stanreg_merMod_5")
-      p <- insight::get_parameters(m, effects = "all")
 
-      test_that("rope", {
-        expect_equal(
-          # fix range to -.1/.1, to compare to data frame method
-          rope(m, range = c(-.1, .1), effects = "all", verbose = FALSE)$ROPE_Percentage,
-          rope(p, verbose = FALSE)$ROPE_Percentage,
-          tolerance = 1e-3
-        )
-      })
 
-      m <- insight::download_model("brms_zi_3")
-      p <- insight::get_parameters(m, effects = "all", component = "all")
 
-      test_that("rope", {
-        expect_equal(
-          rope(m, effects = "all", component = "all", verbose = FALSE)$ROPE_Percentage,
-          rope(p, verbose = FALSE)$ROPE_Percentage,
-          tolerance = 1e-3
-        )
-      })
-    }
-  }
+  m <- insight::download_model("stanreg_merMod_5")
+  p <- insight::get_parameters(m, effects = "all")
+
+  test_that("rope", {
+    expect_equal(
+      # fix range to -.1/.1, to compare to data frame method
+      rope(m, range = c(-.1, .1), effects = "all", verbose = FALSE)$ROPE_Percentage,
+      rope(p, verbose = FALSE)$ROPE_Percentage,
+      tolerance = 1e-3
+    )
+  })
+
+  m <- insight::download_model("brms_zi_3")
+  p <- insight::get_parameters(m, effects = "all", component = "all")
+
+  test_that("rope", {
+    expect_equal(
+      rope(m, effects = "all", component = "all", verbose = FALSE)$ROPE_Percentage,
+      rope(p, verbose = FALSE)$ROPE_Percentage,
+      tolerance = 1e-3
+    )
+  })
 }
 
-.runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
-# if (.runThisTest && requiet("brms")) {
+
+
+
+# if ( requiet("brms")) {
 #   set.seed(123)
 #   model <- brm(mpg ~ wt + gear, data = mtcars, iter = 500)
 #   rope <- rope(model, verbose = FALSE)
