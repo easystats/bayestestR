@@ -19,42 +19,41 @@ if (requiet("rstanarm") && requiet("brms") && requiet("httr") && requiet("BayesF
 
 
 
-  .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
-  if (.runThisTest) {
-    # stanreg ---------------------------
-    m <- insight::download_model("stanreg_merMod_5")
-    p <- insight::get_parameters(m, effects = "all")
 
-    test_that("ci", {
-      expect_equal(
-        hdi(m, ci = c(0.5, 0.8), effects = "all")$CI_low,
-        hdi(p, ci = c(0.5, 0.8))$CI_low,
-        tolerance = 1e-3
-      )
-    })
 
-    # brms ---------------------------
-    m <- insight::download_model("brms_zi_3")
-    p <- insight::get_parameters(m, effects = "all", component = "all")
+  # stanreg ---------------------------
+  m <- insight::download_model("stanreg_merMod_5")
+  p <- insight::get_parameters(m, effects = "all")
 
-    test_that("rope", {
-      expect_equal(
-        hdi(m, ci = c(0.5, 0.8), effects = "all", component = "all")$CI_low,
-        hdi(p, ci = c(0.5, 0.8))$CI_low,
-        tolerance = 1e-3
-      )
-    })
+  test_that("ci", {
+    expect_equal(
+      hdi(m, ci = c(0.5, 0.8), effects = "all")$CI_low,
+      hdi(p, ci = c(0.5, 0.8))$CI_low,
+      tolerance = 1e-3
+    )
+  })
 
-    # BayesFactor ---------------------------
-    mod_bf <- proportionBF(y = 15, N = 25, p = .5)
-    p_bf <- insight::get_parameters(mod_bf)
+  # brms ---------------------------
+  m <- insight::download_model("brms_zi_3")
+  p <- insight::get_parameters(m, effects = "all", component = "all")
 
-    test_that("ci - BayesFactor", {
-      expect_equal(
-        hdi(mod_bf, ci = c(0.5, 0.8), effects = "all", component = "all")$CI_low,
-        hdi(p_bf, ci = c(0.5, 0.8))$CI_low,
-        tolerance = 0.1
-      )
-    })
-  }
+  test_that("rope", {
+    expect_equal(
+      hdi(m, ci = c(0.5, 0.8), effects = "all", component = "all")$CI_low,
+      hdi(p, ci = c(0.5, 0.8))$CI_low,
+      tolerance = 1e-3
+    )
+  })
+
+  # BayesFactor ---------------------------
+  mod_bf <- proportionBF(y = 15, N = 25, p = .5)
+  p_bf <- insight::get_parameters(mod_bf)
+
+  test_that("ci - BayesFactor", {
+    expect_equal(
+      hdi(mod_bf, ci = c(0.5, 0.8), effects = "all", component = "all")$CI_low,
+      hdi(p_bf, ci = c(0.5, 0.8))$CI_low,
+      tolerance = 0.1
+    )
+  })
 }

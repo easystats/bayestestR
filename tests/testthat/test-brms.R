@@ -1,7 +1,7 @@
 skip_if_offline()
-.runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
 
-if (.runThisTest && requiet("brms") && requiet("httr")) {
+
+if (requiet("brms") && requiet("httr")) {
   test_that("brms", {
     skip_on_cran()
 

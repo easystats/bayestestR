@@ -1,10 +1,4 @@
-.runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
-
-if (.runThisTest &&
-  requiet("rstanarm") &&
-  requiet("BH") &&
-  requiet("RcppEigen") &&
-  requiet("brms")) {
+if (requiet("rstanarm") && requiet("BH") && requiet("RcppEigen") && requiet("brms")) {
   skip_on_cran()
   skip_on_os(os = "windows")
   skip_if_offline()

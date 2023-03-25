@@ -19,30 +19,25 @@ if (requiet("rstanarm") && requiet("httr") && requiet("brms")) {
     expect_true(all(datawizard::reshape_ci(a) == x))
   })
 
+  m <- insight::download_model("stanreg_merMod_5")
+  p <- insight::get_parameters(m, effects = "all")
 
+  test_that("ci", {
+    expect_equal(
+      ci(m, ci = c(0.5, 0.8), effects = "all")$CI_low,
+      ci(p, ci = c(0.5, 0.8))$CI_low,
+      tolerance = 1e-3
+    )
+  })
 
-  .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
-  if (.runThisTest) {
-    m <- insight::download_model("stanreg_merMod_5")
-    p <- insight::get_parameters(m, effects = "all")
+  m <- insight::download_model("brms_zi_3")
+  p <- insight::get_parameters(m, effects = "all", component = "all")
 
-    test_that("ci", {
-      expect_equal(
-        ci(m, ci = c(0.5, 0.8), effects = "all")$CI_low,
-        ci(p, ci = c(0.5, 0.8))$CI_low,
-        tolerance = 1e-3
-      )
-    })
-
-    m <- insight::download_model("brms_zi_3")
-    p <- insight::get_parameters(m, effects = "all", component = "all")
-
-    test_that("rope", {
-      expect_equal(
-        ci(m, ci = c(0.5, 0.8), effects = "all", component = "all")$CI_low,
-        ci(p, ci = c(0.5, 0.8))$CI_low,
-        tolerance = 1e-3
-      )
-    })
-  }
+  test_that("rope", {
+    expect_equal(
+      ci(m, ci = c(0.5, 0.8), effects = "all", component = "all")$CI_low,
+      ci(p, ci = c(0.5, 0.8))$CI_low,
+      tolerance = 1e-3
+    )
+  })
 }
