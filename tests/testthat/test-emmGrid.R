@@ -1,3 +1,8 @@
+# TODO: decide how to rearrange the tests
+
+skip_if_not_or_load_if_installed("rstanarm")
+skip_if_not_or_load_if_installed("emmeans")
+
 if (requiet("rstanarm") && requiet("emmeans")) {
   set.seed(300)
   model <- stan_glm(extra ~ group,
