@@ -7,14 +7,14 @@
 
 ***Become a Bayesian master you will***
 
------
+------------------------------------------------------------------------
 
-:warning: We changed the default the CI width\! Please make an [informed
+:warning: We changed the default the CI width! Please make an [informed
 decision](https://easystats.github.io/bayestestR/articles/credible_interval.html)
 and set it explicitly (`ci = 0.89`, `ci = 0.95` or anything else that
 you decide) :warning:
 
------
+------------------------------------------------------------------------
 
 Existing R packages allow users to easily fit a large variety of models
 and extract and visualize the posterior draws. However, most of these
@@ -26,15 +26,15 @@ variety of models objects, including popular modeling packages such as
 
 You can reference the package and its documentation as follows:
 
-  - Makowski, D., Ben-Shachar, M. S., & Lüdecke, D. (2019). *bayestestR:
-    Describing Effects and their Uncertainty, Existence and Significance
-    within the Bayesian Framework*. Journal of Open Source Software,
-    4(40), 1541.
-    [10.21105/joss.01541](https://doi.org/10.21105/joss.01541)
-  - Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., & Lüdecke, D.
-    (2019). *Indices of Effect Existence and Significance in the
-    Bayesian Framework*. Frontiers in Psychology 2019;10:2767.
-    [10.3389/fpsyg.2019.02767](https://doi.org/10.3389/fpsyg.2019.02767)
+- Makowski, D., Ben-Shachar, M. S., & Lüdecke, D. (2019). *bayestestR:
+  Describing Effects and their Uncertainty, Existence and Significance
+  within the Bayesian Framework*. Journal of Open Source Software,
+  4(40), 1541.
+  [10.21105/joss.01541](https://doi.org/10.21105/joss.01541)
+- Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., & Lüdecke, D.
+  (2019). *Indices of Effect Existence and Significance in the Bayesian
+  Framework*. Frontiers in Psychology 2019;10:2767.
+  [10.3389/fpsyg.2019.02767](https://doi.org/10.3389/fpsyg.2019.02767)
 
 ## Installation
 
@@ -47,7 +47,7 @@ The *bayestestR* package is available on CRAN, while its latest
 development version is available on R-universe (from *rOpenSci*).
 
 | Type        | Source     | Command                                                                      |
-| ----------- | ---------- | ---------------------------------------------------------------------------- |
+|-------------|------------|------------------------------------------------------------------------------|
 | Release     | CRAN       | `install.packages("bayestestR")`                                             |
 | Development | R-universe | `install.packages("bayestestR", repos = "https://easystats.r-universe.dev")` |
 
@@ -58,10 +58,10 @@ library("bayestestR")
 ```
 
 > **Tip**
-> 
+>
 > **Instead of `library(datawizard)`, use `library(easystats)`.** **This
 > will make all features of the easystats-ecosystem available.**
-> 
+>
 > **To stay updated, use `easystats::install_latest()`.**
 
 ## Documentation
@@ -72,31 +72,31 @@ these vignettes:
 
 ### Tutorials
 
-  - [Get Started with Bayesian
-    Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
-  - [Example 1: Initiation to Bayesian
-    models](https://easystats.github.io/bayestestR/articles/example1.html)
-  - [Example 2: Confirmation of Bayesian
-    skills](https://easystats.github.io/bayestestR/articles/example2.html)
-  - [Example 3: Become a Bayesian
-    master](https://easystats.github.io/bayestestR/articles/example3.html)
+- [Get Started with Bayesian
+  Analysis](https://easystats.github.io/bayestestR/articles/bayestestR.html)
+- [Example 1: Initiation to Bayesian
+  models](https://easystats.github.io/bayestestR/articles/example1.html)
+- [Example 2: Confirmation of Bayesian
+  skills](https://easystats.github.io/bayestestR/articles/example2.html)
+- [Example 3: Become a Bayesian
+  master](https://easystats.github.io/bayestestR/articles/example3.html)
 
 ### Articles
 
-  - [Credible Intervals
-    (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-  - [Probability of Direction
-    (pd)](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
-  - [Region of Practical Equivalence
-    (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
-  - [Bayes Factors
-    (BF)](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
-  - [Comparison of
-    Point-Estimates](https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html)
-  - [Comparison of Indices of Effect
-    Existence](https://doi.org/10.3389/fpsyg.2019.02767)
-  - [Reporting
-    Guidelines](https://easystats.github.io/bayestestR/articles/guidelines.html)
+- [Credible Intervals
+  (CI)](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+- [Probability of Direction
+  (pd)](https://easystats.github.io/bayestestR/articles/probability_of_direction.html)
+- [Region of Practical Equivalence
+  (ROPE)](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html)
+- [Bayes Factors
+  (BF)](https://easystats.github.io/bayestestR/articles/bayes_factors.html)
+- [Comparison of
+  Point-Estimates](https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html)
+- [Comparison of Indices of Effect
+  Existence](https://doi.org/10.3389/fpsyg.2019.02767)
+- [Reporting
+  Guidelines](https://easystats.github.io/bayestestR/articles/guidelines.html)
 
 # Features
 
@@ -104,49 +104,47 @@ In the Bayesian framework, parameters are estimated in a probabilistic
 fashion as *distributions*. These distributions can be summarised and
 described by reporting four types of indices:
 
-  - [**Centrality**](https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html)
-      - `mean()`, `median()` or
-        [`map_estimate()`](https://easystats.github.io/bayestestR/reference/map_estimate.html)
-        for an estimation of the mode.
-      - [`point_estimate()`](https://easystats.github.io/bayestestR/reference/point_estimate.html)
-        can be used to get them at once and can be run directly on
-        models.
-  - [**Uncertainty**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
-      - [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.html)
-        for *Highest Density Intervals (HDI)*,
-        [`spi()`](https://easystats.github.io/bayestestR/reference/spi.html)
-        for *Shortest Probability Intervals (SPI)* or
-        [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html)
-        for *Equal-Tailed Intervals (ETI)*.
-      - [`ci()`](https://easystats.github.io/bayestestR/reference/ci.html)
-        can be used as a general method for Confidence and Credible
-        Intervals (CI).
-  - [**Effect
-    Existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html):
-    whether an effect is different from 0.
-      - [`p_direction()`](https://easystats.github.io/bayestestR/reference/p_direction.html)
-        for a Bayesian equivalent of the frequentist *p*-value (see
-        [Makowski et
-        al., 2019](https://doi.org/10.3389/fpsyg.2019.02767))
-      - [`p_pointnull()`](https://easystats.github.io/bayestestR/reference/p_map.html)
-        represents the odds of null hypothesis (*h0 = 0*) compared to
-        the most likely hypothesis (the MAP).
-      - [`bf_pointnull()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html)
-        for a classic *Bayes Factor (BF)* assessing the likelihood of
-        effect presence against its absence (*h0 = 0*).
-  - [**Effect
-    Significance**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html):
-    whether the effect size can be considered as non-negligible.
-      - [`p_rope()`](https://easystats.github.io/bayestestR/reference/p_rope.html)
-        is the probability of the effect falling inside a [*Region of
-        Practical Equivalence
-        (ROPE)*](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html).
-      - [`bf_rope()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html)
-        computes a Bayes factor against the null as defined by a region
-        (the ROPE).
-      - [`p_significance()`](https://easystats.github.io/bayestestR/reference/p_significance.html)
-        that combines a region of equivalence with the probability of
-        direction.
+- [**Centrality**](https://easystats.github.io/bayestestR/articles/web_only/indicesEstimationComparison.html)
+  - `mean()`, `median()` or
+    [`map_estimate()`](https://easystats.github.io/bayestestR/reference/map_estimate.html)
+    for an estimation of the mode.
+  - [`point_estimate()`](https://easystats.github.io/bayestestR/reference/point_estimate.html)
+    can be used to get them at once and can be run directly on models.
+- [**Uncertainty**](https://easystats.github.io/bayestestR/articles/credible_interval.html)
+  - [`hdi()`](https://easystats.github.io/bayestestR/reference/hdi.html)
+    for *Highest Density Intervals (HDI)*,
+    [`spi()`](https://easystats.github.io/bayestestR/reference/spi.html)
+    for *Shortest Probability Intervals (SPI)* or
+    [`eti()`](https://easystats.github.io/bayestestR/reference/eti.html)
+    for *Equal-Tailed Intervals (ETI)*.
+  - [`ci()`](https://easystats.github.io/bayestestR/reference/ci.html)
+    can be used as a general method for Confidence and Credible
+    Intervals (CI).
+- [**Effect
+  Existence**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html):
+  whether an effect is different from 0.
+  - [`p_direction()`](https://easystats.github.io/bayestestR/reference/p_direction.html)
+    for a Bayesian equivalent of the frequentist *p*-value (see
+    [Makowski et al., 2019](https://doi.org/10.3389/fpsyg.2019.02767))
+  - [`p_pointnull()`](https://easystats.github.io/bayestestR/reference/p_map.html)
+    represents the odds of null hypothesis (*h0 = 0*) compared to the
+    most likely hypothesis (the MAP).
+  - [`bf_pointnull()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html)
+    for a classic *Bayes Factor (BF)* assessing the likelihood of effect
+    presence against its absence (*h0 = 0*).
+- [**Effect
+  Significance**](https://easystats.github.io/bayestestR/articles/indicesExistenceComparison.html):
+  whether the effect size can be considered as non-negligible.
+  - [`p_rope()`](https://easystats.github.io/bayestestR/reference/p_rope.html)
+    is the probability of the effect falling inside a [*Region of
+    Practical Equivalence
+    (ROPE)*](https://easystats.github.io/bayestestR/articles/region_of_practical_equivalence.html).
+  - [`bf_rope()`](https://easystats.github.io/bayestestR/reference/bayesfactor_parameters.html)
+    computes a Bayes factor against the null as defined by a region (the
+    ROPE).
+  - [`p_significance()`](https://easystats.github.io/bayestestR/reference/p_significance.html)
+    that combines a region of equivalence with the probability of
+    direction.
 
 [`describe_posterior()`](https://easystats.github.io/bayestestR/reference/describe_posterior.html)
 is the master function with which you can compute all of the indices
@@ -161,9 +159,9 @@ describe_posterior(
 )
 ## Summary of Posterior Distribution
 ## 
-## Parameter |   Median |        95% CI |     pd |   ps
-## ----------------------------------------------------
-## Posterior | 1.15e-03 | [-2.01, 1.92] | 50.07% | 0.46
+## Parameter |    Median |        95% CI |     pd |   ps
+## -----------------------------------------------------
+## Posterior | -8.68e-03 | [-1.96, 1.92] | 50.35% | 0.46
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -344,21 +342,21 @@ different from 0 does not make much sense (the probability of it being
 different from a single point being infinite). Therefore, the idea
 underlining ROPE is to let the user define an area around the null value
 enclosing values that are *equivalent to the null* value for practical
-purposes (Kruschke & Liddell, 2018, p. @kruschke2018rejecting).
+purposes Kruschke (2018).
 
 Kruschke suggests that such null value could be set, by default, to the
 -0.1 to 0.1 range of a standardized parameter (negligible effect size
 according to Cohen, 1988). This could be generalized: For instance, for
 linear models, the ROPE could be set as `0 +/- .1 * sd(y)`. This ROPE
 range can be automatically computed for models using the
-[rope\_range](https://easystats.github.io/bayestestR/reference/rope_range.html)
+[rope_range](https://easystats.github.io/bayestestR/reference/rope_range.html)
 function.
 
 Kruschke suggests using the proportion of the 95% (or 90%, considered
 more stable) HDI that falls within the ROPE as an index for
 “null-hypothesis” testing (as understood under the Bayesian framework,
 see
-[equivalence\_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
+[equivalence_test](https://easystats.github.io/bayestestR/reference/equivalence_test.html)).
 
 ``` r
 posterior <- distribution_normal(10000, 0.4, 0.2)
@@ -462,7 +460,7 @@ Compute the density of a given point of a distribution.
 
 ``` r
 density_at(rnorm(1000, 1, 1), 1)
-## [1] 0.37
+## [1] 0.39
 ```
 
 ## Code of Conduct
@@ -474,9 +472,10 @@ By contributing to this project, you agree to abide by its terms.
 
 # References
 
-<div id="refs" class="references">
+<div id="refs" class="references csl-bib-body hanging-indent"
+line-spacing="2">
 
-<div id="ref-kruschke2018rejecting">
+<div id="ref-kruschke2018rejecting" class="csl-entry">
 
 Kruschke, J. K. (2018). Rejecting or accepting parameter values in
 Bayesian estimation. *Advances in Methods and Practices in Psychological
@@ -484,7 +483,7 @@ Science*, *1*(2), 270–280.
 
 </div>
 
-<div id="ref-kruschke2018bayesian">
+<div id="ref-kruschke2018bayesian" class="csl-entry">
 
 Kruschke, J. K., & Liddell, T. M. (2018). The bayesian new statistics:
 Hypothesis testing, estimation, meta-analysis, and power analysis from a
@@ -492,7 +491,7 @@ bayesian perspective. *Psychonomic Bulletin & Review*, *25*(1), 178–206.
 
 </div>
 
-<div id="ref-wagenmakers2010bayesian">
+<div id="ref-wagenmakers2010bayesian" class="csl-entry">
 
 Wagenmakers, E.-J., Lodewyckx, T., Kuriyal, H., & Grasman, R. (2010).
 Bayesian hypothesis testing for psychologists: A tutorial on the

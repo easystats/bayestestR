@@ -13,24 +13,23 @@ if (requiet("rstanarm")) {
   })
 
 
-  .runThisTest <- Sys.getenv("RunAllbayestestRTests") == "yes"
-  if (.runThisTest) {
-    # stanreg
-    m <- insight::download_model("stanreg_merMod_5")
 
-    expect_equal(
-      p_significance(m, effects = "all")$ps[1],
-      0.99,
-      tolerance = 1e-2
-    )
 
-    # brms
-    m2 <- insight::download_model("brms_1")
+  # stanreg
+  m <- insight::download_model("stanreg_merMod_5")
 
-    expect_equal(
-      p_significance(m2, effects = "all")$ps,
-      c(1.0000, 0.9985, 0.9785),
-      tolerance = 0.01
-    )
-  }
+  expect_equal(
+    p_significance(m, effects = "all")$ps[1],
+    0.99,
+    tolerance = 1e-2
+  )
+
+  # brms
+  m2 <- insight::download_model("brms_1")
+
+  expect_equal(
+    p_significance(m2, effects = "all")$ps,
+    c(1.0000, 0.9985, 0.9785),
+    tolerance = 0.01
+  )
 }
