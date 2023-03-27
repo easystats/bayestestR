@@ -42,4 +42,3 @@ test_that("p_direction", {
     tolerance = 1e-3
   )
 })
-

@@ -29,4 +29,3 @@ test_that("point_estimate: brms", {
     tolerance = 1e-3
   )
 })
-

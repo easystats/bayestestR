@@ -34,4 +34,3 @@ test_that("estimate_density", {
   rez <- estimate_density(x, select = "Sepal.Length", at = c("Species", "Fac"), method = "KernSmooth")
   expect_equal(dim(rez), c(1024 * 3 * 2, 5))
 })
-

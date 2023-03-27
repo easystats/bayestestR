@@ -32,12 +32,12 @@ test_that("blavaan, all", {
   "
   suppressWarnings(capture.output({
     bfit <- blavaan::bsem(model,
-                          data = PoliticalDemocracy,
-                          n.chains = 1, burnin = 50, sample = 100
+      data = PoliticalDemocracy,
+      n.chains = 1, burnin = 50, sample = 100
     )
     bfit2 <- blavaan::bsem(model2,
-                           data = PoliticalDemocracy,
-                           n.chains = 1, burnin = 50, sample = 100
+      data = PoliticalDemocracy,
+      n.chains = 1, burnin = 50, sample = 100
     )
   }))
 

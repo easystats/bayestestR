@@ -72,4 +72,3 @@ test_that("ci - BayesFactor", {
     tolerance = 0.1
   )
 })
-

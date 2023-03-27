@@ -43,4 +43,3 @@ test_that("map_estimate", {
   m <- correlationBF(y = iris$Sepal.Length, x = iris$Sepal.Width)
   expect_error(map_estimate(m))
 })
-

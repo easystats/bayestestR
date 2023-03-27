@@ -29,8 +29,8 @@ test_that("bayesfactor_models BIC", {
 
   # update reference
   expect_equal(update(BFM2, reference = 1)$log_BF,
-               c(0, -2.8, -6.2, -57.4),
-               tolerance = 0.1
+    c(0, -2.8, -6.2, -57.4),
+    tolerance = 0.1
   )
 })
 

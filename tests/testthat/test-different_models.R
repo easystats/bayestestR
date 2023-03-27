@@ -47,8 +47,10 @@ test_that("bayesQR", {
   skip_if_not_or_load_if_installed("bayesQR")
 
   invisible(capture.output(
-    x <- bayesQR(Sepal.Length ~ Petal.Width, data = iris, quantile = 0.1,
-                 alasso = TRUE, ndraw = 500)
+    x <- bayesQR(Sepal.Length ~ Petal.Width,
+      data = iris, quantile = 0.1,
+      alasso = TRUE, ndraw = 500
+    )
   ))
 
   rez <- p_direction(x)
@@ -81,4 +83,3 @@ test_that("bayesQR", {
   rez <- estimate_density(x)
   expect_equal(c(nrow(rez), ncol(rez)), c(2048, 3))
 })
-

@@ -172,25 +172,25 @@ test_that("describe_posterior", {
   # rstanarm -------------------------------------------------
 
   model <- rstanarm::stan_glm(mpg ~ drat,
-                              data = mtcars,
-                              algorithm = "meanfield",
-                              refresh = 0
+    data = mtcars,
+    algorithm = "meanfield",
+    refresh = 0
   )
 
   expect_equal(nrow(describe_posterior(model)), 2)
 
   model <- suppressWarnings(rstanarm::stan_glm(mpg ~ drat,
-                                               data = mtcars,
-                                               algorithm = "optimizing",
-                                               refresh = 0
+    data = mtcars,
+    algorithm = "optimizing",
+    refresh = 0
   ))
 
   expect_equal(nrow(describe_posterior(model)), 2)
 
   model <- rstanarm::stan_glm(mpg ~ drat,
-                              data = mtcars,
-                              algorithm = "fullrank",
-                              refresh = 0
+    data = mtcars,
+    algorithm = "fullrank",
+    refresh = 0
   )
 
   expect_equal(nrow(describe_posterior(model)), 2)

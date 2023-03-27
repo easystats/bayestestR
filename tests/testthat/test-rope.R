@@ -7,7 +7,7 @@ test_that("rope", {
   expect_equal(equivalence_test(distribution_normal(1000, 0, 1))$ROPE_Equivalence, "Undecided")
   expect_equal(length(capture.output(print(equivalence_test(distribution_normal(1000))))), 9)
   expect_equal(length(capture.output(print(equivalence_test(distribution_normal(1000),
-                                                            ci = c(0.8, 0.9)
+    ci = c(0.8, 0.9)
   )))), 14)
 
   expect_equal(as.numeric(rope(distribution_normal(1000, 2, 0.01), verbose = FALSE)), 0, tolerance = 0.01)
@@ -32,7 +32,7 @@ test_that("rope", {
   expect_error(rope(distribution_normal(1000, 0, 1), range = c("A", 0.1)))
   expect_equal(
     as.numeric(rope(distribution_normal(1000, 0, 1),
-                    range = c(-0.1, 0.1)
+      range = c(-0.1, 0.1)
     )), 0.084,
     tolerance = 0.01
   )
@@ -71,7 +71,7 @@ test_that("rope", {
 })
 
 
-# if ( requiet("brms")) {
+# if ( skip_if_not_or_load_if_installed("brms")) {
 #   set.seed(123)
 #   model <- brm(mpg ~ wt + gear, data = mtcars, iter = 500)
 #   rope <- rope(model, verbose = FALSE)

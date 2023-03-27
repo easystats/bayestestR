@@ -29,7 +29,7 @@ test_that("rope_range logistic", {
 
 
 
-# if ( requiet("brms")) {
+# if ( skip_if_not_or_load_if_installed("brms")) {
 #   test_that("rope_range", {
 #     model <- brm(mpg ~ wt + gear, data = mtcars, iter = 300)
 #

@@ -28,8 +28,10 @@ test_that("rstanarm", {
 
   model <- insight::download_model("stanreg_gam_1")
   invisible(capture.output(
-    expect_warning(params <- describe_posterior(model, centrality = "all",
-                                                test = "all", dispersion = TRUE))
+    expect_warning(params <- describe_posterior(model,
+      centrality = "all",
+      test = "all", dispersion = TRUE
+    ))
   ))
   expect_equal(c(nrow(params), ncol(params)), c(4, 22))
 
@@ -128,4 +130,3 @@ test_that("rstanarm", {
   ))
   expect_equal(nrow(out), 5)
 })
-

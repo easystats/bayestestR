@@ -1,5 +1,3 @@
-
-
 test_that("check_prior - stanreg", {
   skip_on_cran()
   skip_on_os(os = "windows")
@@ -36,9 +34,9 @@ test_that("check_prior - brms (linux)", {
   # need to use a custom example here
   set.seed(333)
   model2 <- brm(rating ~ period + carry + cs(treat),
-                data = inhaler, family = sratio("logit"),
-                prior = set_prior("normal(0,5)"),
-                chains = 2, silent = TRUE, refresh = 0
+    data = inhaler, family = sratio("logit"),
+    prior = set_prior("normal(0,5)"),
+    chains = 2, silent = TRUE, refresh = 0
   )
 
   test_that("check prior", {
@@ -74,9 +72,9 @@ test_that("check_prior - brms (linux)", {
   # need to use a custom example here
   set.seed(333)
   model2 <- brm(rating ~ period + carry + cs(treat),
-                data = inhaler, family = sratio("logit"),
-                prior = set_prior("normal(0,5)"),
-                chains = 2, silent = TRUE, refresh = 0
+    data = inhaler, family = sratio("logit"),
+    prior = set_prior("normal(0,5)"),
+    chains = 2, silent = TRUE, refresh = 0
   )
 
   # TODO: check hard-coded values")
@@ -112,9 +110,9 @@ test_that("check_prior - brms (not linux or windows)", {
   set.seed(333)
   suppressMessages({
     model2 <- brm(rating ~ period + carry + cs(treat),
-                  data = inhaler, family = sratio("logit"),
-                  prior = set_prior("normal(0,5)"),
-                  chains = 2, silent = TRUE, refresh = 0
+      data = inhaler, family = sratio("logit"),
+      prior = set_prior("normal(0,5)"),
+      chains = 2, silent = TRUE, refresh = 0
     )
   })
 

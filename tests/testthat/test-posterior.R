@@ -120,4 +120,3 @@ test_that("mp-posterior-draws_rvar", {
     )
   )
 })
-
