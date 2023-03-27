@@ -1,7 +1,7 @@
-requiet("BayesFactor")
-skip_on_cran()
-
 test_that("weighted_posteriors for BayesFactor", {
+  skip_on_cran()
+  skip_if_not_or_load_if_installed("BayesFactor")
+
   set.seed(123)
 
   # compute Bayes Factor for 31 different regression models
@@ -23,9 +23,12 @@ test_that("weighted_posteriors for BayesFactor", {
 })
 
 test_that("weighted_posteriors for BayesFactor (intercept)", {
-  set.seed(123)
   # fails for win old-release
   skip_on_ci()
+  skip_on_cran()
+  skip_if_not_or_load_if_installed("BayesFactor")
+
+  set.seed(123)
 
   dat <- data.frame(
     x1 = rnorm(10),
@@ -43,6 +46,9 @@ test_that("weighted_posteriors for BayesFactor (intercept)", {
 })
 
 test_that("weighted_posteriors for nonlinear BayesFactor", {
+  skip_on_cran()
+  skip_if_not_or_load_if_installed("BayesFactor")
+
   set.seed(123)
   data(sleep)
 
@@ -60,7 +66,9 @@ test_that("weighted_posteriors for nonlinear BayesFactor", {
 
 test_that("weighted_posteriors vs posterior_average", {
   skip("Test creates error, must check why...")
-  requiet("brms")
+  skip_on_cran()
+  skip_if_not_or_load_if_installed("BayesFactor")
+  skip_if_not_or_load_if_installed("brms")
 
   fit1 <- brm(rating ~ treat + period + carry,
     data = inhaler,
