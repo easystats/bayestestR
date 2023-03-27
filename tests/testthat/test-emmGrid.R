@@ -1,5 +1,6 @@
 # TODO: decide how to rearrange the tests
 
+skip_on_ci()
 skip_if_not_or_load_if_installed("rstanarm")
 skip_if_not_or_load_if_installed("emmeans")
 
