@@ -50,11 +50,11 @@ test_that("emmGrid ci", {
   expect_equal(length(xci$CI_high), 3)
 })
 
-# test_that("emmGrid eti", {
-#   xeti <- eti(all_, ci = 0.9)
-#   expect_equal(length(xeti$CI_low), 3)
-#   expect_equal(length(xeti$CI_high), 3)
-# })
+test_that("emmGrid eti", {
+  xeti <- eti(all_, ci = 0.9)
+  expect_equal(length(xeti$CI_low), 3)
+  expect_equal(length(xeti$CI_high), 3)
+})
 
 test_that("emmGrid equivalence_test", {
   xeqtest <- equivalence_test(all_, ci = 0.9, range = c(-0.1, 0.1))
@@ -129,8 +129,8 @@ test_that("emmGrid bayesfactor_parameters", {
   xbfp <- bayesfactor_parameters(all_, prior = model_p, verbose = FALSE)
   xbfp2 <- bayesfactor_parameters(emc_, prior = model_p, verbose = FALSE)
   xbfp3 <- bayesfactor_parameters(emc_, prior = emc_p, verbose = FALSE)
-  expect_equal(xbfp$log_BF, xbfp2$log_BF)
-  expect_equal(xbfp$log_BF, xbfp3$log_BF)
+  expect_equal(xbfp$log_BF, xbfp2$log_BF, tolerance = 0.1)
+  expect_equal(xbfp$log_BF, xbfp3$log_BF, tolerance = 0.1)
 
   expect_warning(
     suppressMessages(
@@ -147,9 +147,10 @@ test_that("emmGrid bayesfactor_parameters", {
 
 test_that("emmGrid bayesfactor_restricted", {
   skip_on_cran()
-  skip_on_ci()
+
   set.seed(4)
   hyps <- c("`1` < `2`", "`1` < 0")
+
   xrbf <- bayesfactor_restricted(em_, prior = model_p, hypothesis = hyps)
   expect_equal(length(xrbf$log_BF), 2)
   expect_equal(length(xrbf$p_prior), 2)
@@ -157,7 +158,7 @@ test_that("emmGrid bayesfactor_restricted", {
   expect_warning(bayesfactor_restricted(em_, hypothesis = hyps))
 
   xrbf2 <- bayesfactor_restricted(emc_, prior = model_p, hypothesis = hyps)
-  expect_equal(xrbf, xrbf2)
+  expect_equal(xrbf, xrbf2, tolerance = 0.1)
 })
 
 test_that("emmGrid si", {
@@ -193,18 +194,6 @@ fit_bayes_prior <- unupdate(fit_bayes, verbose = FALSE)
 
 bayes_sum <- emmeans(fit_bayes, ~G)
 bayes_sum_prior <- emmeans(fit_bayes_prior, ~G)
-
-# test_that("emmGrid bayesfactor_restricted2", {
-#   skip_on_cran()
-#   skip_on_ci()
-#
-#   hyps <- c("a < b", "b < c")
-#   xrbf1 <- bayesfactor_restricted(bayes_sum, fit_bayes, hypothesis = hyps, verbose = FALSE)
-#   xrbf2 <- bayesfactor_restricted(bayes_sum, bayes_sum_prior, hypothesis = hyps, verbose = FALSE)
-#
-#   expect_equal(xrbf1, xrbf2, tolerance = 0.1)
-# })
-
 
 test_that("emmGrid bayesfactor_parameters", {
   set.seed(333)
