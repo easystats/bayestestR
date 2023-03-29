@@ -80,6 +80,7 @@ Suggests:
     blavaan,
     bridgesampling,
     brms,
+    curl,
     effectsize,
     emmeans,
     gamm4,

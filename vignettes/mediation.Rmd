@@ -16,7 +16,7 @@ bibliography: bibliography.bib
 csl: apa.csl
 ---
 
-```{r, SETTINGS-knitr, echo = FALSE, warning = FALSE, message = FALSE}
+```{r setup, echo = FALSE, warning = FALSE, message = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -26,14 +26,19 @@ knitr::opts_chunk$set(
   message = FALSE,
   warning = FALSE
 )
-options(width = 800)
+
+options(width = 80)
+
 if (!requireNamespace("mediation", quietly = TRUE) ||
+  !requireNamespace("curl", quietly = TRUE) ||
   !requireNamespace("httr", quietly = TRUE) ||
   !requireNamespace("lavaan", quietly = TRUE) ||
   !requireNamespace("brms", quietly = TRUE) ||
   !requireNamespace("rstanarm", quietly = TRUE) ||
   !requireNamespace("insight", quietly = TRUE)) {
   knitr::opts_chunk$set(eval = FALSE)
+} else {
+  knitr::opts_chunk$set(eval = curl::has_internet())
 }
 ```
 
@@ -70,7 +75,8 @@ m2 <- brm(f1 + f2 + set_rescor(FALSE), data = jobs, cores = 4)
 ```{r echo=FALSE}
 m2 <- insight::download_model("brms_mv_6")
 ```
-```{r eval=FALSE}
+
+```{r, eval=FALSE}
 # Fit Bayesian mediation model in rstanarm
 m3 <- stan_mvmer(
   list(
@@ -82,6 +88,7 @@ m3 <- stan_mvmer(
   refresh = 0
 )
 ```
+
 ```{r echo=FALSE}
 m3 <- insight::download_model("stanmvreg_2")
 ```

@@ -145,7 +145,8 @@ describe_posterior(
   centrality = "all"
 )
 ```
-```{r message=FALSE, warning=FALSE,echo=FALSE}
+
+```{r message=FALSE, warning=FALSE, echo=FALSE, eval=curl::has_internet()}
 model <- insight::download_model("brms_zi_3")
 describe_posterior(
   model,
@@ -158,10 +159,7 @@ describe_posterior(
 ```
 
 
-*bayestestR* also includes [**many other features**](https://easystats.github.io/bayestestR/reference/index.html) useful for your Bayesian analsyes. Here are some more examples:
-
-
-
+*bayestestR* also includes [**many other features**](https://easystats.github.io/bayestestR/reference/index.html) useful for your Bayesian analyses. Here are some more examples:
 
 ## Point-estimates
 
