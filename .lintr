@@ -12,7 +12,7 @@ linters: linters_with_defaults(
     object_usage_linter = NULL,
     todo_comment_linter = NULL,
     undesirable_function_linter(c("mapply" = NA, "sapply" = NA, "setwd" = NA)),
-    unneeded_concatenation_linter(allow_single_expression = FALSE),
+    unnecessary_concatenation_linter(allow_single_expression = FALSE),
     undesirable_operator_linter = NULL,
     defaults = linters_with_tags(tags = NULL)
   )
