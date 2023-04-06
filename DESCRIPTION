@@ -119,6 +119,8 @@ Language: en-US
 RoxygenNote: 7.2.3.9000
 Roxygen: list(markdown = TRUE)
 Config/testthat/edition: 3
+Config/testthat/parallel: true
+Config/rcmdcheck/ignore-inconsequential-notes: true
 Config/Needs/website:
     rstudio/bslib,
     r-lib/pkgdown,
