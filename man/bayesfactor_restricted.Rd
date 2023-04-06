@@ -147,15 +147,15 @@ null-model) (\cite{Wetzels et al. 2011}).
 set.seed(444)
 library(bayestestR)
 prior <- data.frame(
-  A = rnorm(1000),
-  B = rnorm(1000),
-  C = rnorm(1000)
+  A = rnorm(500),
+  B = rnorm(500),
+  C = rnorm(500)
 )
 
 posterior <- data.frame(
-  A = rnorm(1000, .4, 0.7),
-  B = rnorm(1000, -.2, 0.4),
-  C = rnorm(1000, 0, 0.5)
+  A = rnorm(500, .4, 0.7),
+  B = rnorm(500, -.2, 0.4),
+  C = rnorm(500, 0, 0.5)
 )
 
 hyps <- c(
