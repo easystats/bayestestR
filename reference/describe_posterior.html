@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.0.10</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -321,20 +321,20 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-in"><span>    <span class="fu">describe_posterior</span><span class="op">(</span><span class="va">df</span>, keep_iterations <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Parameter     Median   CI     CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        X1  0.1449400 0.95 -1.7443192 1.794736 0.55    0.95     -0.1       0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        X2  0.1375236 0.95 -1.7436750 2.260121 0.50    0.95     -0.1       0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        X3  0.2190133 0.95 -0.8876619 1.072445 0.60    0.95     -0.1       0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        X4 -0.2916675 0.95 -2.0829070 1.325949 0.65    0.95     -0.1       0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        X1  0.1449400 0.95 -1.7443192 1.794736 0.55    0.95     -0.1       0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        X2  0.1375236 0.95 -1.7436750 2.260121 0.50    0.95     -0.1       0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Parameter     Median   CI    CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        X1 -0.2147310 0.95 -1.698070 1.422037 0.60    0.95     -0.1       0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        X2 -0.2111929 0.95 -2.382498 2.407703 0.55    0.95     -0.1       0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        X3  0.2226573 0.95 -1.955394 2.606282 0.55    0.95     -0.1       0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4        X4 -0.2003640 0.95 -1.575063 0.609562 0.65    0.95     -0.1       0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5        X1 -0.2147310 0.95 -1.698070 1.422037 0.60    0.95     -0.1       0.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6        X2 -0.2111929 0.95 -2.382498 2.407703 0.55    0.95     -0.1       0.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ROPE_Percentage iter_index iter_group iter_value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      0.05555556          1          1  0.4728854</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      0.05555556          2          1  1.0240555</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      0.11111111          3          1 -0.2804830</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      0.11111111          4          1  0.3620525</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      0.05555556          1          2  0.1992437</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      0.05555556          2          2  0.6002925</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      0.05555556          1          1  0.5133729</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      0.11111111          2          1 -0.3562522</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      0.05555556          3          1  1.3220376</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      0.16666667          4          1  0.3424455</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      0.05555556          1          2 -0.1388723</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      0.11111111          2          2 -0.4961029</span>
 <span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co"># rstanarm models</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
@@ -348,6 +348,9 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-in"><span>  <span class="co"># -----------------------------------------------</span></span></span>
 <span class="r-in"><span>  <span class="fu">describe_posterior</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emtrends.html" class="external-link">emtrends</a></span><span class="op">(</span><span class="va">model</span>, <span class="op">~</span><span class="fl">1</span>, <span class="st">"wt"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The largest R-hat is 1.05, indicating chains have not mixed.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#r-hat</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Running the chains for more iterations may help. See</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> https://mc-stan.org/misc/warnings.html#bulk-ess</span>
@@ -361,7 +364,7 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |         95% CI |   pd |          ROPE | % in ROPE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> overall   |  -5.52 | [-6.82, -3.96] | 100% | [-0.10, 0.10] |        0%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> overall   |  -5.37 | [-6.57, -4.25] | 100% | [-0.10, 0.10] |        0%</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># BayesFactor objects</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
@@ -375,7 +378,7 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameter  | Median |       80% CI |       90% CI |   pd |          ROPE | % in ROPE |       BF |              Prior</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   1.03 | [0.88, 1.18] | [0.84, 1.22] | 100% | [-0.11, 0.11] |        0% | 7.43e+11 | Cauchy (0 +- 0.71)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Difference |   0.97 | [0.84, 1.09] | [0.81, 1.12] | 100% | [-0.09, 0.09] |        0% | 1.27e+15 | Cauchy (0 +- 0.71)</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
