@@ -37,9 +37,9 @@ test_that("check_prior - brms (linux)", {
   set.seed(333)
   suppressMessages({
     model2 <- brm(rating ~ period + carry + cs(treat),
-                  data = inhaler, family = sratio("logit"),
-                  prior = set_prior("normal(0,5)"),
-                  chains = 2, silent = TRUE, refresh = 0
+      data = inhaler, family = sratio("logit"),
+      prior = set_prior("normal(0,5)"),
+      chains = 2, silent = TRUE, refresh = 0
     )
   })
 

@@ -345,7 +345,7 @@ print.bayestestR_mediation <- function(x, digits = 3, ...) {
   cat(insight::export_table(x, digits = digits))
   cat("\n")
 
-  prop_mediated[] <- lapply(prop_mediated, function(i) insight::format_value(i, as_percent = TRUE))
+  prop_mediated[] <- lapply(prop_mediated, insight::format_value, as_percent = TRUE)
   insight::print_color(
     sprintf(
       "Proportion mediated: %s [%s, %s]\n",

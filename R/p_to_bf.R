@@ -60,11 +60,11 @@ p_to_bf.numeric <- function(x, log = FALSE, n_obs = NULL, ...) {
   p <- x
   # Validate n_obs
   if (is.null(n_obs)) {
-    stop("Argument `n_obs` must be specified.", call. = FALSE)
+    insight::format_error("Argument `n_obs` must be specified.")
   } else if (length(n_obs) == 1L) {
     n_obs <- rep(n_obs, times = length(p))
   } else if (length(n_obs) != length(p)) {
-    stop("`n_obs` must be of length 1 or same length as `p`.", call. = FALSE)
+    insight::format_error("`n_obs` must be of length 1 or same length as `p`.")
   }
 
   # Convert
@@ -112,7 +112,7 @@ p_to_bf.default <- function(x, log = FALSE, ...) {
       n_obs <- list(...)$n_obs
     }
   } else {
-    stop("Argument `x` must be a model object, or a numeric vector of p-values.", call. = FALSE)
+    insight::format_error("Argument `x` must be a model object, or a numeric vector of p-values.")
   }
 
   out <- p_to_bf(p, n_obs = n_obs, log = log)

@@ -159,9 +159,9 @@ describe_posterior(
 )
 ## Summary of Posterior Distribution
 ## 
-## Parameter |    Median |        95% CI |     pd |   ps
-## -----------------------------------------------------
-## Posterior | -8.68e-03 | [-1.96, 1.92] | 50.35% | 0.46
+## Parameter | Median |        95% CI |     pd |   ps
+## --------------------------------------------------
+## Posterior |   0.01 | [-1.97, 1.99] | 50.58% | 0.47
 ```
 
 `describe_posterior()` works for many objects, including more complex
@@ -239,7 +239,7 @@ describe_posterior(
 
 *bayestestR* also includes [**many other
 features**](https://easystats.github.io/bayestestR/reference/index.html)
-useful for your Bayesian analsyes. Here are some more examples:
+useful for your Bayesian analyses. Here are some more examples:
 
 ## Point-estimates
 
