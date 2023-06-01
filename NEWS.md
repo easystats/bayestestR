@@ -1,3 +1,9 @@
+# bayestestR 0.13.2
+
+## Changes
+
+* Retrieving models from the environment was improved.
+
 # bayestestR 0.13.1
 
 ## Changes
