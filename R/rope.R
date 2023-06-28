@@ -139,7 +139,7 @@ rope.numeric <- function(x, range = "default", ci = 0.95, ci_method = "ETI", ver
   if (all(range == "default")) {
     range <- c(-0.1, 0.1)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
+    insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
   rope_values <- lapply(ci, function(i) {
@@ -231,7 +231,14 @@ rope.bamlss <- rope.BFBayesFactor
 #' @export
 rope.MCMCglmm <- function(x, range = "default", ci = 0.95, ci_method = "ETI", verbose = TRUE, ...) {
   nF <- x$Fixed$nfl
-  out <- rope(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), range = range, ci = ci, ci_method = ci_method, verbose = verbose, ...)
+  out <- rope(
+    as.data.frame(x$Sol[, 1:nF, drop = FALSE]),
+    range = range,
+    ci = ci,
+    ci_method = ci_method,
+    verbose = verbose,
+    ...
+  )
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
 }
@@ -361,10 +368,14 @@ rope.brmsfit <- function(x,
         length(range) < length(insight::find_response(x)) ||
         !all(names(range) %in% insight::find_response(x))
     ) {
-      stop("With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2.", call. = FALSE)
+      insight::format_error(
+        "With a multivariate model, `range` should be 'default' or a list of named numeric vectors with length 2."
+      )
     }
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
+    insight::format_error(
+      "`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1))."
+    )
   }
 
   # check for possible collinearity that might bias ROPE and print a warning
@@ -422,13 +433,20 @@ rope.brmsfit <- function(x,
 
 
 #' @export
-rope.sim.merMod <- function(x, range = "default", ci = 0.95, ci_method = "ETI", effects = c("fixed", "random", "all"), parameters = NULL, verbose = TRUE, ...) {
+rope.sim.merMod <- function(x,
+                            range = "default",
+                            ci = 0.95,
+                            ci_method = "ETI",
+                            effects = c("fixed", "random", "all"),
+                            parameters = NULL,
+                            verbose = TRUE,
+                            ...) {
   effects <- match.arg(effects)
 
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
+    insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
   list <- lapply(c("fixed", "random"), function(.x) {
@@ -489,7 +507,7 @@ rope.sim <- function(x, range = "default", ci = 0.95, ci_method = "ETI", paramet
   if (all(range == "default")) {
     range <- rope_range(x, verbose = verbose)
   } else if (!all(is.numeric(range)) || length(range) != 2) {
-    stop("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).", call. = FALSE)
+    insight::format_error("`range` should be 'default' or a vector of 2 numeric values (e.g., c(-0.1, 0.1)).")
   }
 
   parms <- insight::get_parameters(x, parameters = parameters)

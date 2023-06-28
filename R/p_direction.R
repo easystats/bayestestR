@@ -459,7 +459,7 @@ p_direction.get_predicted <- function(x, ...) {
   if ("iterations" %in% names(attributes(x))) {
     out <- p_direction(as.data.frame(t(attributes(x)$iterations)), ...)
   } else {
-    stop("No iterations present in the output.", call. = FALSE)
+    insight::format_error("No iterations present in the output.")
   }
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out

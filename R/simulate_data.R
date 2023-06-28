@@ -68,21 +68,21 @@ simulate_correlation <- function(n = 100,
   if (is.matrix(r)) {
     if (isSymmetric(r)) {
       if (any(r > 1)) {
-        stop("'r' should only contain values between -1 and 1.", call. = FALSE)
+        insight::format_error("`r` should only contain values between -1 and 1.")
       } else {
         sigma <- r
       }
     } else {
-      stop("'r' should be a symetric matrix (relative to the diagonal).", call. = FALSE)
+      insight::format_error("`r` should be a symetric matrix (relative to the diagonal).")
     }
   } else if (length(r) == 1L) {
     if (abs(r) > 1) {
-      stop("'r' should only contain values between -1 and 1.", call. = FALSE)
+      insight::format_error("`r` should only contain values between -1 and 1.")
     } else {
       sigma <- matrix(c(1, r, r, 1), nrow = 2)
     }
   } else {
-    stop("'r' should be a value (e.g., r = 0.5) or a square matrix.", call. = FALSE)
+    insight::format_error("`r` should be a value (e.g., r = 0.5) or a square matrix.")
   }
 
 
@@ -107,10 +107,8 @@ simulate_correlation <- function(n = 100,
   data <- as.data.frame(data)
 
   # Rename
-  if (!is.null(names)) {
-    if (length(names) == ncol(data)) {
-      names(data) <- names
-    }
+  if (!is.null(names) && length(names) == ncol(data)) {
+    names(data) <- names
   }
   data
 }
@@ -128,10 +126,8 @@ simulate_ttest <- function(n = 100, d = 0.5, names = NULL, ...) {
   data <- data.frame(y = as.factor(y), x = x)
   names(data) <- paste0("V", 0:(ncol(data) - 1))
 
-  if (!is.null(names)) {
-    if (length(names) == ncol(data)) {
-      names(data) <- names
-    }
+  if (!is.null(names) && length(names) == ncol(data)) {
+    names(data) <- names
   }
   data
 }
@@ -149,10 +145,8 @@ simulate_difference <- function(n = 100, d = 0.5, names = NULL, ...) {
   )
   names(data) <- paste0("V", 0:(ncol(data) - 1))
 
-  if (!is.null(names)) {
-    if (length(names) == ncol(data)) {
-      names(data) <- names
-    }
+  if (!is.null(names) && length(names) == ncol(data)) {
+    names(data) <- names
   }
   data
 }
