@@ -46,7 +46,7 @@
   direction <- Value[tolower(direction[1])]
 
   if (is.na(direction)) {
-    stop("Unrecognized 'direction' argument.", call. = FALSE)
+    insight::format_error("Unrecognized 'direction' argument.")
   }
   direction
 }

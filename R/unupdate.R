@@ -38,10 +38,8 @@ unupdate.stanreg <- function(model, verbose = TRUE, ...) {
 
   prior_dists <- sapply(rstanarm::prior_summary(model), `[[`, "dist")
   if (anyNA(prior_dists)) {
-    stop(
-      "Cannot sample from flat priors (such as when priors are ",
-      "set to 'NULL' in a 'stanreg' model).",
-      call. = FALSE
+    insight::format_error(
+      "Cannot sample from flat priors (such as when priors are set to 'NULL' in a 'stanreg' model)."
     )
   }
 
@@ -67,21 +65,19 @@ unupdate.brmsfit <- function(model, verbose = TRUE, ...) {
     message("Sampling priors, please wait...")
   }
 
-  utils::capture.output(
+  utils::capture.output({
     model_prior <- try(suppressMessages(suppressWarnings(
       stats::update(model, sample_prior = "only", refresh = 0)
     )), silent = TRUE)
-  )
+  })
 
   if (methods::is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior, fixed = TRUE)) {
-      stop(
-        "Cannot sample from flat priors (such as the default ",
-        "priors for fixed-effects in a 'brmsfit' model).",
-        call. = FALSE
+      insight::format_error(
+        "Cannot sample from flat priors (such as the default priors for fixed-effects in a 'brmsfit' model)."
       )
     } else {
-      stop(model_prior, call. = FALSE)
+      insight::format_error(model_prior)
     }
   }
 
@@ -105,7 +101,7 @@ unupdate.brmsfit_multiple <- function(model,
     message("Sampling priors, please wait...")
   }
 
-  utils::capture.output(model_prior <-
+  utils::capture.output({model_prior <-
     try(suppressMessages(suppressWarnings(
       stats::update(
         model,
@@ -113,7 +109,7 @@ unupdate.brmsfit_multiple <- function(model,
         newdata = newdata,
         refresh = 0
       )
-    )), silent = TRUE))
+    )), silent = TRUE)})
 
   if (methods::is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior, fixed = TRUE)) {
@@ -146,7 +142,7 @@ unupdate.blavaan <- function(model, verbose = TRUE, ...) {
 
   cl$prisamp <- TRUE
   suppressMessages(suppressWarnings(
-    utils::capture.output(model_prior <- eval(cl))
+    utils::capture.output({model_prior <- eval(cl)})
   ))
 
   model_prior
