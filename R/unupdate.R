@@ -34,7 +34,7 @@ unupdate.stanreg <- function(model, verbose = TRUE, ...) {
   }
 
   if (verbose) {
-    message("Sampling priors, please wait...")
+    insight::format_alert("Sampling priors, please wait...")
   }
 
   prior_dists <- sapply(rstanarm::prior_summary(model), `[[`, "dist")
@@ -63,7 +63,7 @@ unupdate.brmsfit <- function(model, verbose = TRUE, ...) {
   }
 
   if (verbose) {
-    message("Sampling priors, please wait...")
+    insight::format_alert("Sampling priors, please wait...")
   }
 
   utils::capture.output({
@@ -99,7 +99,7 @@ unupdate.brmsfit_multiple <- function(model,
   }
 
   if (verbose) {
-    message("Sampling priors, please wait...")
+    insight::format_alert("Sampling priors, please wait...")
   }
 
   utils::capture.output({model_prior <-
@@ -138,7 +138,7 @@ unupdate.blavaan <- function(model, verbose = TRUE, ...) {
   }
 
   if (verbose) {
-    message("Sampling priors, please wait...")
+    insight::format_alert("Sampling priors, please wait...")
   }
 
   cl$prisamp <- TRUE

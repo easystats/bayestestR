@@ -45,14 +45,26 @@
         results <- results[results$corr > threshold & results$corr <= 0.9, ]
         if (nrow(results) > 0) {
           where <- paste0("between ", toString(paste0(results$where, " (r = ", round(results$corr, 2), ")")), "")
-          message("Possible multicollinearity ", where, ". This might lead to inappropriate results. See 'Details' in '?", method, "'.")
+          insight::format_alert(paste0(
+            "Possible multicollinearity ",
+            where,
+            ". This might lead to inappropriate results. See 'Details' in '?",
+            method,
+            "'."
+          ))
         }
 
         # Filter by second threshold
         results <- results[results$corr > 0.9, ]
         if (nrow(results) > 0) {
           where <- paste0("between ", toString(paste0(results$where, " (r = ", round(results$corr, 2), ")")), "")
-          warning("Probable multicollinearity ", where, ". This might lead to inappropriate results. See 'Details' in '?", method, "'.", call. = FALSE)
+          insight::format_warning(paste0(
+            "Probable multicollinearity ",
+            where,
+            ". This might lead to inappropriate results. See 'Details' in '?",
+            method,
+            "'."
+          ))
         }
       }
     }

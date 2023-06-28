@@ -499,8 +499,6 @@ describe_posterior.default <- function(posteriors, ...) {
     row.names(out) <- NULL
   }
 
-
-
   # Prepare output
   attr(out, "ci_method") <- ci_method
   out

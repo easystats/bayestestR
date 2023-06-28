@@ -70,10 +70,7 @@
 
   if (is.null(prior)) {
     prior <- posterior
-    warning(
-      "Prior not specified! ",
-      "Please provide the original model to get meaningful results."
-    )
+    insight::format_warning("Prior not specified! Please provide the original model to get meaningful results.")
   }
 
 
@@ -132,10 +129,7 @@
                                                   verbose = TRUE) {
   if (is.null(prior)) {
     prior <- posterior
-    warning(
-      "Prior not specified! ",
-      "Please provide the original model to get meaningful results."
-    )
+    insight::format_warning("Prior not specified! Please provide the original model to get meaningful results.")
   }
 
   if (!inherits(prior, "emm_list")) {
