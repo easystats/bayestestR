@@ -183,7 +183,10 @@ additional predictor), <code>y</code>, is not transformed. Then we could use
 
 
 <dt>centrality</dt>
-<dd><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></dd>
+<dd><p>The point-estimates (centrality indices) to compute. Character
+(vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code>
+(see <code><a href="map_estimate.html">map_estimate()</a></code>), <code>"trimmed"</code> (which is just <code>mean(x, trim = threshold)</code>),
+<code>"mode"</code> or <code>"all"</code>.</p></dd>
 
 
 <dt>ci</dt>
@@ -329,12 +332,12 @@ the frequentist framework.</p></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Effect                 | Estimate |          95% ETI</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Direct Effect (ADE)    |   -0.040 | [-0.124,  0.045]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Indirect Effect (ACME) |   -0.015 | [-0.041,  0.009]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mediator Effect        |   -0.240 | [-0.296, -0.185]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total Effect           |   -0.055 | [-0.143,  0.032]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Direct Effect (ADE)    |   -0.041 | [-0.123,  0.044]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Indirect Effect (ACME) |   -0.016 | [-0.041,  0.008]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mediator Effect        |   -0.240 | [-0.295, -0.185]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total Effect           |   -0.057 | [-0.142,  0.030]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">Proportion mediated: 27.96% [-197.34%, 253.26%]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">Proportion mediated: 28.11% [-180.60%, 236.81%]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">mediation</span><span class="op">(</span><span class="va">m3</span>, centrality <span class="op">=</span> <span class="st">"mean"</span>, ci <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># Causal Mediation Analysis for Stan Model</span></span>

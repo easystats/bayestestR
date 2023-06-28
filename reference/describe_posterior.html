@@ -188,11 +188,16 @@ for other classes mostly resemble the arguments of the <code>.numeric</code> met
 
 
 <dt>centrality</dt>
-<dd><p>The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code> or <code>"all"</code>.</p></dd>
+<dd><p>The point-estimates (centrality indices) to compute. Character
+(vector) or list with one or more of these options: <code>"median"</code>, <code>"mean"</code>, <code>"MAP"</code>
+(see <code><a href="map_estimate.html">map_estimate()</a></code>), <code>"trimmed"</code> (which is just <code>mean(x, trim = threshold)</code>),
+<code>"mode"</code> or <code>"all"</code>.</p></dd>
 
 
 <dt>dispersion</dt>
-<dd><p>Logical, if <code>TRUE</code>, computes indices of dispersion related to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).</p></dd>
+<dd><p>Logical, if <code>TRUE</code>, computes indices of dispersion related
+to the estimate(s) (<code>SD</code> and <code>MAD</code> for <code>mean</code> and <code>median</code>, respectively).
+Dispersion is not available for <code>"MAP"</code> or <code>"mode"</code> centrality indices.</p></dd>
 
 
 <dt>ci</dt>
@@ -321,20 +326,16 @@ Frontiers in Psychology 2019;10:2767. <a href="https://doi.org/10.3389/fpsyg.201
 <span class="r-in"><span>    <span class="fu">describe_posterior</span><span class="op">(</span><span class="va">df</span>, keep_iterations <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Parameter     Median   CI    CI_low  CI_high   pd ROPE_CI ROPE_low ROPE_high</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1        X1 -0.2147310 0.95 -1.698070 1.422037 0.60    0.95     -0.1       0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        X2 -0.2111929 0.95 -2.382498 2.407703 0.55    0.95     -0.1       0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        X3  0.2226573 0.95 -1.955394 2.606282 0.55    0.95     -0.1       0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4        X4 -0.2003640 0.95 -1.575063 0.609562 0.65    0.95     -0.1       0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5        X1 -0.2147310 0.95 -1.698070 1.422037 0.60    0.95     -0.1       0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        X2 -0.2111929 0.95 -2.382498 2.407703 0.55    0.95     -0.1       0.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ROPE_Percentage iter_index iter_group iter_value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      0.05555556          1          1  0.5133729</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      0.11111111          2          1 -0.3562522</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      0.05555556          3          1  1.3220376</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      0.16666667          4          1  0.3424455</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      0.05555556          1          2 -0.1388723</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      0.11111111          2          2 -0.4961029</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Summary of Posterior Distribution</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter | Median |        95% CI |     pd |          ROPE | % in ROPE | iter_index | iter_group | iter_value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> --------------------------------------------------------------------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.21 | [-1.70, 1.42] | 60.00% | [-0.10, 0.10] |     5.56% |       1.00 |       1.00 |       0.51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.21 | [-2.38, 2.41] | 55.00% | [-0.10, 0.10] |    11.11% |       2.00 |       1.00 |      -0.36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X3        |   0.22 | [-1.96, 2.61] | 55.00% | [-0.10, 0.10] |     5.56% |       3.00 |       1.00 |       1.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X4        |  -0.20 | [-1.58, 0.61] | 65.00% | [-0.10, 0.10] |    16.67% |       4.00 |       1.00 |       0.34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X1        |  -0.21 | [-1.70, 1.42] | 60.00% | [-0.10, 0.10] |     5.56% |       1.00 |       2.00 |      -0.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> X2        |  -0.21 | [-2.38, 2.41] | 55.00% | [-0.10, 0.10] |    11.11% |       2.00 |       2.00 |      -0.50</span>
 <span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="co"># rstanarm models</span></span></span>
 <span class="r-in"><span><span class="co"># -----------------------------------------------</span></span></span>
