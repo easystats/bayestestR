@@ -9,7 +9,8 @@
 #'
 #' @param model A fitted Bayesian model.
 #' @param verbose Toggle warnings.
-#' @param newdata List of `data.frames` to update the model with new data. Required even if the original data should be used.
+#' @param newdata List of `data.frames` to update the model with new data.
+#' Required even if the original data should be used.
 #' @param ... Not used
 #'
 #' @return A model un-fitted to the data, representing the prior model.
