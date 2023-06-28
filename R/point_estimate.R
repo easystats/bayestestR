@@ -2,13 +2,22 @@
 #'
 #' Compute various point-estimates, such as the mean, the median or the MAP, to describe posterior distributions.
 #'
-#' @param centrality The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: `"median"`, `"mean"`, `"MAP"` or `"all"`.
-#' @param dispersion Logical, if `TRUE`, computes indices of dispersion related to the estimate(s) (`SD` and `MAD` for `mean` and `median`, respectively).
-#' @param threshold For `centrality = "trimmed"` (i.e. trimmed mean), indicates the fraction (0 to 0.5) of observations to be trimmed from each end of the vector before the mean is computed.
+#' @param centrality The point-estimates (centrality indices) to compute. Character
+#' (vector) or list with one or more of these options: `"median"`, `"mean"`, `"MAP"`
+#' (see [`map_estimate()`]), `"trimmed"` (which is just `mean(x, trim = threshold)`),
+#' `"mode"` or `"all"`.
+#' @param dispersion Logical, if `TRUE`, computes indices of dispersion related
+#' to the estimate(s) (`SD` and `MAD` for `mean` and `median`, respectively).
+#' Dispersion is not available for `"MAP"` or `"mode"` centrality indices.
+#' @param threshold For `centrality = "trimmed"` (i.e. trimmed mean), indicates
+#' the fraction (0 to 0.5) of observations to be trimmed from each end of the
+#' vector before the mean is computed.
 #' @param ... Additional arguments to be passed to or from methods.
 #' @inheritParams hdi
 #'
-#' @references Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
+#' @references Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D.
+#' (2019). *Indices of Effect Existence and Significance in the Bayesian Framework*.
+#' Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 #'
 #' @note There is also a [`plot()`-method](https://easystats.github.io/see/articles/bayestestR.html) implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.
 #'
@@ -59,13 +68,15 @@ point_estimate <- function(x, ...) {
 
 #' @export
 point_estimate.default <- function(x, ...) {
-  stop(insight::format_message(paste0("'point_estimate()' is not yet implemented for objects of class '", class(x)[1], "'.")), call. = FALSE)
+  insight::format_error(
+    paste0("'point_estimate()' is not yet implemented for objects of class '", class(x)[1], "'.")
+  )
 }
 
 
 #' @rdname point_estimate
 #' @export
-point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, threshold = .1, ...) {
+point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, threshold = 0.1, ...) {
   centrality <- match.arg(tolower(centrality), c("median", "mean", "map", "trimmed", "mode", "all"), several.ok = TRUE)
   if ("all" %in% centrality) {
     estimate_list <- c("median", "mean", "map")
@@ -119,15 +130,8 @@ point_estimate.numeric <- function(x, centrality = "all", dispersion = FALSE, th
 }
 
 
-.mode_estimate <- function(x) {
-  ux <- unique(x)
-  ux[which.max(tabulate(match(x, ux)))]
-}
-
-
-
 #' @export
-point_estimate.data.frame <- function(x, centrality = "all", dispersion = FALSE, threshold = .1, ...) {
+point_estimate.data.frame <- function(x, centrality = "all", dispersion = FALSE, threshold = 0.1, ...) {
   x <- .select_nums(x)
 
   if (ncol(x) == 1) {
@@ -148,8 +152,14 @@ point_estimate.data.frame <- function(x, centrality = "all", dispersion = FALSE,
 
 
 #' @export
-point_estimate.draws <- function(x, centrality = "all", dispersion = FALSE, threshold = .1, ...) {
-  point_estimate(.posterior_draws_to_df(x), centrality = centrality, dispersion = dispersion, threshold = threshold, ...)
+point_estimate.draws <- function(x, centrality = "all", dispersion = FALSE, threshold = 0.1, ...) {
+  point_estimate(
+    .posterior_draws_to_df(x),
+    centrality = centrality,
+    dispersion = dispersion,
+    threshold = threshold,
+    ...
+  )
 }
 
 #' @export
@@ -186,16 +196,25 @@ point_estimate.BGGM <- point_estimate.bcplm
 #' @export
 point_estimate.bamlss <- function(x, centrality = "all", dispersion = FALSE, component = c("conditional", "location", "all"), ...) {
   component <- match.arg(component)
-  out <- point_estimate(insight::get_parameters(x, component = component), centrality = centrality, dispersion = dispersion, ...)
-  out <- .add_clean_parameters_attribute(out, x)
-  out
+  out <- point_estimate(
+    insight::get_parameters(x, component = component),
+    centrality = centrality,
+    dispersion = dispersion,
+    ...
+  )
+  .add_clean_parameters_attribute(out, x)
 }
 
 
 #' @export
 point_estimate.MCMCglmm <- function(x, centrality = "all", dispersion = FALSE, ...) {
   nF <- x$Fixed$nfl
-  point_estimate(as.data.frame(x$Sol[, 1:nF, drop = FALSE]), centrality = centrality, dispersion = dispersion, ...)
+  point_estimate(
+    as.data.frame(x$Sol[, 1:nF, drop = FALSE]),
+    centrality = centrality,
+    dispersion = dispersion,
+    ...
+  )
 }
 
 
@@ -210,17 +229,6 @@ point_estimate.emmGrid <- function(x, centrality = "all", dispersion = FALSE, ..
 
 #' @export
 point_estimate.emm_list <- point_estimate.emmGrid
-
-
-# Helper ------------------------------------------------------------------
-
-
-
-#' @keywords internal
-.point_estimate_models <- function(x, effects, component, parameters, centrality = "all", dispersion = FALSE, ...) {
-  out <- point_estimate(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), centrality = centrality, dispersion = dispersion, ...)
-  out
-}
 
 
 #' @rdname point_estimate
@@ -294,7 +302,6 @@ point_estimate.sim.merMod <- function(x, centrality = "all", dispersion = FALSE,
 }
 
 
-
 #' @export
 point_estimate.sim <- function(x, centrality = "all", dispersion = FALSE, parameters = NULL, ...) {
   out <- .point_estimate_models(
@@ -312,7 +319,6 @@ point_estimate.sim <- function(x, centrality = "all", dispersion = FALSE, parame
 
   out
 }
-
 
 
 #' @rdname point_estimate
@@ -340,4 +346,23 @@ point_estimate.get_predicted <- function(x, ...) {
   } else {
     as.numeric(x)
   }
+}
+
+
+# Helper ------------------------------------------------------------------
+
+#' @keywords internal
+.point_estimate_models <- function(x, effects, component, parameters, centrality = "all", dispersion = FALSE, ...) {
+  point_estimate(
+    insight::get_parameters(x, effects = effects, component = component, parameters = parameters),
+    centrality = centrality,
+    dispersion = dispersion,
+    ...
+  )
+}
+
+#' @keywords internal
+.mode_estimate <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
 }

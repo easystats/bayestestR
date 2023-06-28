@@ -179,7 +179,7 @@ mediation.stanmvreg <- function(model, treatment, mediator, response = NULL, cen
   # check for binary response. In this case, user should rescale variables
   modelinfo <- insight::model_info(model)
   if (any(sapply(modelinfo, function(i) i$is_binomial, simplify = TRUE))) {
-    message("One of moderator or outcome is binary, so direct and indirect effects may be on different scales. Consider rescaling model predictors, e.g. with `effectsize::standardize()`.")
+    insight::format_alert("One of moderator or outcome is binary, so direct and indirect effects may be on different scales. Consider rescaling model predictors, e.g. with `effectsize::standardize()`.")
   }
 
   # model responses
@@ -355,7 +355,7 @@ print.bayestestR_mediation <- function(x, digits = 3, ...) {
   )
 
   if (any(prop_mediated_ori$Estimate < 0)) {
-    message("\nDirect and indirect effects have opposite directions. The proportion mediated is not meaningful.")
+    insight::format_alert("\nDirect and indirect effects have opposite directions. The proportion mediated is not meaningful.")
   }
 }
 

@@ -70,29 +70,25 @@
 
   if (is.null(prior)) {
     prior <- posterior
-    warning(
-      "Prior not specified! ",
-      "Please provide the original model to get meaningful results."
-    )
+    insight::format_warning("Prior not specified! Please provide the original model to get meaningful results.")
   }
 
 
   if (!inherits(prior, "emmGrid")) {
     # then is it a model
     on.exit(
-      stop(
+      insight::format_error(paste0(
         "Unable to reconstruct prior estimates.\n",
         "Perhaps the emmGrid object has been transformed or regrid()-ed?\n",
         "See function details.\n\n",
         "Instead, you can reestimate the emmGrid with a prior model, Try:\n",
         "\tprior_model <- unupdate(mode)\n",
-        "\tprior_emmgrid <- emmeans(prior_model, ...) # pass this as the 'prior' argument.",
-        call. = FALSE
-      )
+        "\tprior_emmgrid <- emmeans(prior_model, ...) # pass this as the 'prior' argument."
+      ))
     )
 
     if (inherits(prior, "brmsfit")) {
-      stop("Cannot rebuild prior emmGrid from a brmsfit model.", call. = FALSE)
+      insight::format_error("Cannot rebuild prior emmGrid from a brmsfit model.")
     }
 
 
@@ -107,16 +103,14 @@
           "See '?bayesfactor_parameters' for more information.\n"
         )
       }
-      stop(prior, call. = FALSE)
+      insight::format_error(prior)
     }
 
     prior <- emmeans::ref_grid(prior)
     prior <- prior@post.beta
 
     if (!isTRUE(all.equal(colnames(prior), colnames(posterior@post.beta)))) {
-      stop("post.beta and prior.beta are non-conformable arguments.",
-        call. = FALSE
-      )
+      insight::format_error("post.beta and prior.beta are non-conformable arguments.")
     }
     prior <- stats::update(posterior, post.beta = prior)
     on.exit() # undo general error message
@@ -135,17 +129,14 @@
                                                   verbose = TRUE) {
   if (is.null(prior)) {
     prior <- posterior
-    warning(
-      "Prior not specified! ",
-      "Please provide the original model to get meaningful results."
-    )
+    insight::format_warning("Prior not specified! Please provide the original model to get meaningful results.")
   }
 
   if (!inherits(prior, "emm_list")) {
     # prior is a model
 
     if (inherits(prior, "brmsfit")) {
-      stop("Cannot rebuild prior emm_list from a brmsfit model.", call. = FALSE)
+      insight::format_error("Cannot rebuild prior emm_list from a brmsfit model.")
     }
 
     prior <- try(unupdate(prior, verbose = verbose), silent = TRUE)
@@ -158,7 +149,7 @@
           "See '?bayesfactor_parameters' for more information.\n"
         )
       }
-      stop(prior, call. = FALSE)
+      insight::format_error(prior)
     }
   }
   # prior is now a model, or emm_list

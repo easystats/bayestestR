@@ -611,7 +611,7 @@ as.matrix.bayesfactor_models <- function(x, ...) {
 
   # Else... Get marginal likelihood
   if (verbose) {
-    message("Computation of Marginal Likelihood: estimating marginal likelihood, please wait...")
+    insight::format_alert("Computation of Marginal Likelihood: estimating marginal likelihood, please wait...")
   }
   # Should probably allow additional arguments such as reps or cores to for bridge_sampler
   bridgesampling::bridge_sampler(mod, silent = TRUE)

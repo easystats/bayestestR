@@ -44,11 +44,18 @@ resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 
 \item{...}{Additional arguments to be passed to or from methods.}
 
-\item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
+\item{centrality}{The point-estimates (centrality indices) to compute. Character
+(vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"}
+(see \code{\link[=map_estimate]{map_estimate()}}), \code{"trimmed"} (which is just \code{mean(x, trim = threshold)}),
+\code{"mode"} or \code{"all"}.}
 
-\item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).}
+\item{dispersion}{Logical, if \code{TRUE}, computes indices of dispersion related
+to the estimate(s) (\code{SD} and \code{MAD} for \code{mean} and \code{median}, respectively).
+Dispersion is not available for \code{"MAP"} or \code{"mode"} centrality indices.}
 
-\item{threshold}{For \code{centrality = "trimmed"} (i.e. trimmed mean), indicates the fraction (0 to 0.5) of observations to be trimmed from each end of the vector before the mean is computed.}
+\item{threshold}{For \code{centrality = "trimmed"} (i.e. trimmed mean), indicates
+the fraction (0 to 0.5) of observations to be trimmed from each end of the
+vector before the mean is computed.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
@@ -110,5 +117,7 @@ point_estimate(bf, centrality = c("median", "MAP"))
 
 }
 \references{
-Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D. (2019). \emph{Indices of Effect Existence and Significance in the Bayesian Framework}. Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
+Makowski, D., Ben-Shachar, M. S., Chen, S. H. A., and Lüdecke, D.
+(2019). \emph{Indices of Effect Existence and Significance in the Bayesian Framework}.
+Frontiers in Psychology 2019;10:2767. \doi{10.3389/fpsyg.2019.02767}
 }

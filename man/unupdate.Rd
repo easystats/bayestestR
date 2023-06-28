@@ -25,7 +25,8 @@ unupdate(model, verbose = TRUE, ...)
 
 \item{...}{Not used}
 
-\item{newdata}{List of \code{data.frames} to update the model with new data. Required even if the original data should be used.}
+\item{newdata}{List of \code{data.frames} to update the model with new data.
+Required even if the original data should be used.}
 }
 \value{
 A model un-fitted to the data, representing the prior model.

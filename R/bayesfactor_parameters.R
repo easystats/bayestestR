@@ -199,7 +199,7 @@ bayesfactor_pointnull <- function(posterior,
                                   verbose = TRUE,
                                   ...) {
   if (length(null) > 1 && verbose) {
-    message("'null' is a range - computing a ROPE based Bayes factor.")
+    insight::format_alert("`null` is a range - computing a ROPE based Bayes factor.")
   }
 
   bayesfactor_parameters(

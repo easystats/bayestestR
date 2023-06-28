@@ -127,7 +127,7 @@ simulate_prior.bcplm <- function(model, n = 1000, verbose = TRUE, ...) {
   }
 
   if (sim_error_msg && verbose) {
-    warning(paste0("Can't simulate priors from a ", prior$Distribution, " distribution."), call. = FALSE)
+    insight::format_warning(paste0("Can't simulate priors from a ", prior$Distribution, " distribution."))
   }
 
   simulated$.bamboozled <- NULL

@@ -18,8 +18,7 @@
 #' than the HDI, because, the _"HDI can be noisy (that is, have a high Monte Carlo error)"_
 #' (Liu et al. 2015). Furthermore, the HDI is sensitive to additional assumptions,
 #' in particular assumptions related to the different estimation methods, which
-#' can make the HDI less accurate or reliable (see also discussion
-#' [here](https://twitter.com/betanalpha/status/1479107186030624771)).
+#' can make the HDI less accurate or reliable.
 #'
 #' @references
 #' Liu, Y., Gelman, A., & Zheng, T. (2015). Simulation-efficient shortest probability intervals. Statistics and Computing, 25(4), 809–819. https://doi.org/10.1007/s11222-015-9563-8
@@ -48,7 +47,7 @@ spi <- function(x, ...) {
 
 #' @export
 spi.default <- function(x, ...) {
-  stop(insight::format_message(paste0("'spi()' is not yet implemented for objects of class '", class(x)[1], "'.")), call. = FALSE)
+  insight::format_error(paste0("'spi()' is not yet implemented for objects of class '", class(x)[1], "'."))
 }
 
 
@@ -227,7 +226,7 @@ spi.get_predicted <- function(x, ...) {
   if ("iterations" %in% names(attributes(x))) {
     out <- spi(as.data.frame(t(attributes(x)$iterations)), ...)
   } else {
-    stop("No iterations present in the output.", call. = FALSE)
+    insight::format_error("No iterations present in the output.")
   }
   attr(out, "object_name") <- insight::safe_deparse_symbol(substitute(x))
   out
@@ -272,7 +271,7 @@ spi.get_predicted <- function(x, ...) {
 
 
   # lower bound
-  if (all(!is.na(k)) && all(k == 1)) {
+  if (!anyNA(k) && all(k == 1)) {
     x.l <- l
   } else {
     x.l <- tryCatch(
@@ -284,7 +283,7 @@ spi.get_predicted <- function(x, ...) {
 
     frac <- 1
     while (is.null(x.l)) {
-      frac <- frac - .1
+      frac <- frac - 0.1
       x.l <- tryCatch(
         {
           .spi_lower(bw = frac * bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x)
@@ -292,17 +291,15 @@ spi.get_predicted <- function(x, ...) {
         error = function(e) NULL
       )
 
-      if (frac <= .1) {
-        message(insight::color_text(insight::format_message(
-          "Could not find a solution for the SPI lower bound."
-        ), color = "red"))
+      if (frac <= 0.1) {
+        insight::format_alert("Could not find a solution for the SPI lower bound.")
         x.l <- NA
       }
     }
   }
 
   # upper bound
-  if (all(!is.na(ui)) && all(ui == n.sims)) {
+  if (!anyNA(ui) && all(ui == n.sims)) {
     x.u <- u
   } else {
     x.u <- tryCatch(
@@ -314,7 +311,7 @@ spi.get_predicted <- function(x, ...) {
 
     frac <- 1
     while (is.null(x.u)) {
-      frac <- frac - .1
+      frac <- frac - 0.1
       x.u <- tryCatch(
         {
           .spi_upper(bw = frac * bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x)
@@ -322,10 +319,8 @@ spi.get_predicted <- function(x, ...) {
         error = function(e) NULL
       )
 
-      if (frac <= .1) {
-        message(insight::color_text(insight::format_message(
-          "Could not find a solution for the SPI upper bound."
-        ), color = "red"))
+      if (frac <= 0.1) {
+        insight::format_alert("Could not find a solution for the SPI upper bound.")
         x.u <- NA
       }
     }
@@ -370,35 +365,33 @@ spi.get_predicted <- function(x, ...) {
   # create constraint matrix
   A.l <- matrix(0, nrow = range_ll_lu + 3, ncol = range_ll_lu + 1)
   A.l[1, ] <- 1
-  if (bw > 1) {
-    if (k > 2) {
-      for (j in 1:(range_ll_k - 1)) {
-        if (x[l.l + j + 1] == x[l.l + j]) {
-          A.l[1 + j, j + 1] <- 1
-          A.l[1 + j, j + 2] <- -1
-        } else {
-          aa <- (x[l.l + j] - x[l.l + j - 1]) / (x[l.l + j + 1] - x[l.l + j])
-          A.l[1 + j, j] <- 1
-          A.l[1 + j, j + 1] <- -(aa + 1)
-          A.l[1 + j, j + 2] <- aa
-        }
+  if (bw > 1 && k > 2) {
+    for (j in 1:(range_ll_k - 1)) {
+      if (x[l.l + j + 1] == x[l.l + j]) {
+        A.l[1 + j, j + 1] <- 1
+        A.l[1 + j, j + 2] <- -1
+      } else {
+        aa <- (x[l.l + j] - x[l.l + j - 1]) / (x[l.l + j + 1] - x[l.l + j])
+        A.l[1 + j, j] <- 1
+        A.l[1 + j, j + 1] <- -(aa + 1)
+        A.l[1 + j, j + 2] <- aa
       }
+    }
 
-      for (j in 0:(l.u - k - 2)) {
-        if (x[k + j + 1] == x[k + j + 2]) {
-          A.l[range_ll_k + 1 + j, range_ll_k + 2 + j] <- 1
-          A.l[range_ll_k + 1 + j, range_ll_k + 3 + j] <- -1
-        } else {
-          aa <- (x[k + j] - x[k + j + 1]) / (x[k + j + 1] - x[k + j + 2])
-          A.l[range_ll_k + 1 + j, range_ll_k + 1 + j] <- -1
-          A.l[range_ll_k + 1 + j, range_ll_k + 2 + j] <- aa + 1
-          A.l[range_ll_k + 1 + j, range_ll_k + 3 + j] <- -aa
-        }
+    for (j in 0:(l.u - k - 2)) {
+      if (x[k + j + 1] == x[k + j + 2]) {
+        A.l[range_ll_k + 1 + j, range_ll_k + 2 + j] <- 1
+        A.l[range_ll_k + 1 + j, range_ll_k + 3 + j] <- -1
+      } else {
+        aa <- (x[k + j] - x[k + j + 1]) / (x[k + j + 1] - x[k + j + 2])
+        A.l[range_ll_k + 1 + j, range_ll_k + 1 + j] <- -1
+        A.l[range_ll_k + 1 + j, range_ll_k + 2 + j] <- aa + 1
+        A.l[range_ll_k + 1 + j, range_ll_k + 3 + j] <- -aa
       }
     }
   }
   if (x[k + 1] == x[k]) {
-    aa <- (x[k] - x[k - 1]) / (x[k + 1] - x[k] + .000001)
+    aa <- (x[k] - x[k - 1]) / (x[k + 1] - x[k] + 0.000001)
   } else {
     aa <- (x[k] - x[k - 1]) / (x[k + 1] - x[k])
   }
@@ -449,33 +442,31 @@ spi.get_predicted <- function(x, ...) {
   # create constraint matrix
   A.u <- matrix(0, nrow = range_ul_uu + 3, ncol = range_ul_uu + 1)
   A.u[1, ] <- 1
-  if (bw > 1) {
-    if (range_ul_ui > 1) {
-      for (j in 1:(range_ul_ui - 1)) {
-        if (x[u.l + j + 1] == x[u.l + j]) {
-          A.u[1 + j, j + 1] <- 1
-          A.u[1 + j, j + 2] <- -1
-        } else {
-          aa <- (x[u.l + j] - x[u.l + j - 1]) / (x[u.l + j + 1] - x[u.l + j])
-          A.u[1 + j, j] <- 1
-          A.u[1 + j, j + 1] <- -(aa + 1)
-          A.u[1 + j, j + 2] <- aa
-        }
+  if (bw > 1 && range_ul_ui > 1) {
+    for (j in 1:(range_ul_ui - 1)) {
+      if (x[u.l + j + 1] == x[u.l + j]) {
+        A.u[1 + j, j + 1] <- 1
+        A.u[1 + j, j + 2] <- -1
+      } else {
+        aa <- (x[u.l + j] - x[u.l + j - 1]) / (x[u.l + j + 1] - x[u.l + j])
+        A.u[1 + j, j] <- 1
+        A.u[1 + j, j + 1] <- -(aa + 1)
+        A.u[1 + j, j + 2] <- aa
       }
+    }
 
-      i <- 0
-      for (j in (range_ul_ui):(range_ul_uu - 2)) {
-        if (x[ui + i + 1] == x[ui + i + 2]) {
-          A.u[1 + j, j + 2] <- 1
-          A.u[1 + j, j + 3] <- -1
-        } else {
-          aa <- (x[ui + i] - x[ui + i + 1]) / (x[ui + i + 1] - x[ui + i + 2])
-          A.u[1 + j, j + 1] <- -1
-          A.u[1 + j, j + 2] <- aa + 1
-          A.u[1 + j, j + 3] <- -aa
-        }
-        i <- i + 1
+    i <- 0
+    for (j in (range_ul_ui):(range_ul_uu - 2)) {
+      if (x[ui + i + 1] == x[ui + i + 2]) {
+        A.u[1 + j, j + 2] <- 1
+        A.u[1 + j, j + 3] <- -1
+      } else {
+        aa <- (x[ui + i] - x[ui + i + 1]) / (x[ui + i + 1] - x[ui + i + 2])
+        A.u[1 + j, j + 1] <- -1
+        A.u[1 + j, j + 2] <- aa + 1
+        A.u[1 + j, j + 3] <- -aa
       }
+      i <- i + 1
     }
   }
   if (x[ui + 1] == x[ui]) {

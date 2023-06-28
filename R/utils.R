@@ -46,7 +46,7 @@
   direction <- Value[tolower(direction[1])]
 
   if (is.na(direction)) {
-    stop("Unrecognized 'direction' argument.", call. = FALSE)
+    insight::format_error("Unrecognized 'direction' argument.")
   }
   direction
 }
@@ -61,24 +61,34 @@
     return(temp)
   }
   if (isTRUE(is_stan_mv)) {
+    # for models with multiple responses, we create a separate response column
     temp$Response <- gsub("(b\\[)*(.*)\\|(.*)", "\\2", temp$Parameter)
+    # from the parameter names, we can now remove the name of the respone variables
     for (i in unique(temp$Response)) {
       temp$Parameter <- gsub(sprintf("%s|", i), "", temp$Parameter, fixed = TRUE)
     }
     merge_by <- c("Parameter", "Effects", "Component", "Response")
     remove_cols <- c("Group", "Cleaned_Parameter", "Function", ".roworder")
   } else if (isTRUE(is_brms_mv)) {
+    # for models with multiple responses, we create a separate response column
     temp$Response <- gsub("(.*)_(.*)_(.*)", "\\2", temp$Parameter)
-    # temp$Parameter <- gsub("(.*)_(.*)_(.*)", "\\1_\\3", temp$Parameter)
     merge_by <- c("Parameter", "Effects", "Component", "Response")
     remove_cols <- c("Group", "Cleaned_Parameter", "Function", ".roworder")
   } else {
+    # By default, we only merge by these three columns
     merge_by <- c("Parameter", "Effects", "Component")
     remove_cols <- c("Group", "Cleaned_Parameter", "Response", "Function", ".roworder")
   }
+
+  # in "temp", we have the data frame from the related functions (like
+  # `point_estimate()`, `ci()`  etc.). "cleaned_parameters" is a data frame
+  # only with original parameter names, model components and "cleaned"
+  # parameter names (retrieved from `insight::clean_parameters()`).
+
   merge_by <- intersect(merge_by, colnames(temp))
   temp$.roworder <- seq_len(nrow(temp))
   out <- merge(x = temp, y = cleaned_parameters, by = merge_by, all.x = TRUE)
+
   # hope this works for stanmvreg...
   if ((isTRUE(is_stan_mv) || isTRUE(is_brms_mv)) && all(is.na(out$Effects)) && all(is.na(out$Component))) {
     out$Effects <- cleaned_parameters$Effects[seq_len(nrow(out))]

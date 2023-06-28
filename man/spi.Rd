@@ -78,8 +78,7 @@ uncertainty of (posterior) distributions. The SPI is said to be more stable
 than the HDI, because, the \emph{"HDI can be noisy (that is, have a high Monte Carlo error)"}
 (Liu et al. 2015). Furthermore, the HDI is sensitive to additional assumptions,
 in particular assumptions related to the different estimation methods, which
-can make the HDI less accurate or reliable (see also discussion
-\href{https://twitter.com/betanalpha/status/1479107186030624771}{here}).
+can make the HDI less accurate or reliable.
 }
 \note{
 The code to compute the SPI was adapted from the \strong{SPIn} package,

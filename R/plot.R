@@ -46,11 +46,13 @@ plot.bayestestR_eti <- function(x, ...) {
   NextMethod()
 }
 
+
 #' @export
 plot.bayestestR_si <- function(x, ...) {
   insight::check_if_installed("see", "to plot support intervals")
   NextMethod()
 }
+
 
 #' @export
 plot.bayesfactor_parameters <- function(x, ...) {
@@ -58,11 +60,13 @@ plot.bayesfactor_parameters <- function(x, ...) {
   NextMethod()
 }
 
+
 #' @export
 plot.bayesfactor_models <- function(x, ...) {
   insight::check_if_installed("see", "to plot models' Bayes factors")
   NextMethod()
 }
+
 
 #' @export
 plot.estimate_density <- function(x, ...) {
@@ -70,17 +74,20 @@ plot.estimate_density <- function(x, ...) {
   NextMethod()
 }
 
+
 #' @export
 plot.estimate_density_df <- function(x, ...) {
   insight::check_if_installed("see", "to plot models' densities")
   NextMethod()
 }
 
+
 #' @export
 plot.p_significance <- function(x, ...) {
   insight::check_if_installed("see", "to plot practical significance")
   NextMethod()
 }
+
 
 #' @export
 plot.describe_posterior <- function(x, stack = FALSE, ...) {
@@ -91,6 +98,6 @@ plot.describe_posterior <- function(x, stack = FALSE, ...) {
     graphics::plot(estimate_density(model), stack = stack, ...) +
       ggplot2::labs(title = "Posterior Samples", x = NULL, y = NULL)
   } else {
-    warning(insight::format_message("Could not find model-object. Try ' plot(estimate_density(model))' instead."), call. = FALSE)
+    insight::format_warning("Could not find model-object. Try `plot(estimate_density(model))` instead.")
   }
 }
