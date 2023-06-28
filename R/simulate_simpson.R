@@ -30,7 +30,7 @@ simulate_simpson <- function(n = 100,
                              difference = 1,
                              group_prefix = "G_") {
   if (n <= 3) {
-    stop("The number of observation `n` should be higher than 3", call. = FALSE)
+    insight::format_error("The number of observations `n` should be larger than 3.")
   }
 
   data <- data.frame()
