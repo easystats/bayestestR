@@ -18,8 +18,7 @@
 #' than the HDI, because, the _"HDI can be noisy (that is, have a high Monte Carlo error)"_
 #' (Liu et al. 2015). Furthermore, the HDI is sensitive to additional assumptions,
 #' in particular assumptions related to the different estimation methods, which
-#' can make the HDI less accurate or reliable (see also discussion
-#' [here](https://twitter.com/betanalpha/status/1479107186030624771)).
+#' can make the HDI less accurate or reliable.
 #'
 #' @references
 #' Liu, Y., Gelman, A., & Zheng, T. (2015). Simulation-efficient shortest probability intervals. Statistics and Computing, 25(4), 809–819. https://doi.org/10.1007/s11222-015-9563-8
