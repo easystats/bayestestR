@@ -7,9 +7,9 @@ test_that("p_direction", {
   pd <- p_direction(x)
   expect_equal(as.numeric(pd), 0.842, tolerance = 0.1)
   expect_equal(as.numeric(p_direction(x, method = "kernel")), 0.842, tolerance = 0.1)
-  expect_equal(nrow(p_direction(data.frame(replicate(4, rnorm(100))))), 4)
+  expect_identical(nrow(p_direction(data.frame(replicate(4, rnorm(100))))), 4L)
   expect_s3_class(pd, "p_direction")
-  expect_equal(tail(capture.output(print(pd)), 1), "Probability of Direction: 0.84")
+  expect_identical(tail(capture.output(print(pd)), 1), "Probability of Direction: 0.84")
 })
 
 
@@ -41,4 +41,16 @@ test_that("p_direction", {
     p_direction(p)$pd,
     tolerance = 1e-3
   )
+})
+
+test_that("p_direction, formatting", {
+  set.seed(1234)
+  x <- rnorm(1000)
+  p <- pd(x)
+
+  out <- format(p)
+  expect_identical(out, "51.70%")
+
+  # out <- data.frame(p)
+  # out <- print(data.frame(p))
 })

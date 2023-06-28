@@ -7,7 +7,8 @@
 sexit(x, significant = "default", large = "default", ci = 0.95, ...)
 }
 \arguments{
-\item{x}{Vector representing a posterior distribution. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit} or \code{BayesFactor}).}
+\item{x}{Vector representing a posterior distribution. Can also be a Bayesian
+model (\code{stanreg}, \code{brmsfit} or \code{BayesFactor}).}
 
 \item{significant, large}{The threshold values to use for significant and
 large probabilities. If left to 'default', will be selected through
@@ -16,7 +17,8 @@ large probabilities. If left to 'default', will be selected through
 \item{ci}{Value or vector of probability of the (credible) interval - CI
 (between 0 and 1) to be estimated. Default to \code{.95} (\verb{95\%}).}
 
-\item{...}{Currently not used.}
+\item{...}{For \code{format()}, further arguments passed down to \code{\link[insight:format_value]{insight::format_value()}},
+to control the formatted output.}
 }
 \value{
 A dataframe and text as attribute.

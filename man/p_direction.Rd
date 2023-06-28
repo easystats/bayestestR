@@ -10,6 +10,7 @@
 \alias{p_direction.stanreg}
 \alias{p_direction.brmsfit}
 \alias{p_direction.BFBayesFactor}
+\alias{format.p_direction}
 \title{Probability of Direction (pd)}
 \usage{
 p_direction(x, ...)
@@ -46,15 +47,24 @@ pd(x, ...)
 )
 
 \method{p_direction}{BFBayesFactor}(x, method = "direct", null = 0, ...)
+
+\method{format}{p_direction}(x, as_percent = TRUE, ...)
 }
 \arguments{
-\item{x}{Vector representing a posterior distribution. Can also be a Bayesian model (\code{stanreg}, \code{brmsfit} or \code{BayesFactor}).}
+\item{x}{Vector representing a posterior distribution. Can also be a Bayesian
+model (\code{stanreg}, \code{brmsfit} or \code{BayesFactor}).}
 
-\item{...}{Currently not used.}
+\item{...}{For \code{format()}, further arguments passed down to \code{\link[insight:format_value]{insight::format_value()}},
+to control the formatted output.}
 
-\item{method}{Can be \code{"direct"} or one of methods of \link[=estimate_density]{density estimation}, such as \code{"kernel"}, \code{"logspline"} or \code{"KernSmooth"}. If \code{"direct"} (default), the computation is based on the raw ratio of samples superior and inferior to 0. Else, the result is based on the \link[=auc]{Area under the Curve (AUC)} of the estimated \link[=estimate_density]{density} function.}
+\item{method}{Can be \code{"direct"} or one of methods of \link[=estimate_density]{density estimation},
+such as \code{"kernel"}, \code{"logspline"} or \code{"KernSmooth"}. If \code{"direct"} (default),
+the computation is based on the raw ratio of samples superior and inferior to 0.
+Else, the result is based on the \link[=auc]{Area under the Curve (AUC)} of the estimated
+\link[=estimate_density]{density} function.}
 
-\item{null}{The value considered as a "null" effect. Traditionally 0, but could also be 1 in the case of ratios.}
+\item{null}{The value considered as a "null" effect. Traditionally 0, but
+could also be 1 in the case of ratios.}
 
 \item{effects}{Should results for fixed effects, random effects or both be
 returned? Only applies to mixed models. May be abbreviated.}
@@ -68,6 +78,9 @@ that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{as_percent}{Logical, if \code{TRUE}, value is formatted as percentage
+value.}
 }
 \value{
 Values between 0.5 and 1 corresponding to the probability of direction (pd).

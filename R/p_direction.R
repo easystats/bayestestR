@@ -15,9 +15,18 @@
 #' `brms::posterior_average`), `pd` can be smaller than `0.5`,
 #' reflecting high credibility of `0`.
 #'
-#' @param x Vector representing a posterior distribution. Can also be a Bayesian model (`stanreg`, `brmsfit` or `BayesFactor`).
-#' @param method Can be `"direct"` or one of methods of [density estimation][estimate_density], such as `"kernel"`, `"logspline"` or `"KernSmooth"`. If `"direct"` (default), the computation is based on the raw ratio of samples superior and inferior to 0. Else, the result is based on the [Area under the Curve (AUC)][auc] of the estimated [density][estimate_density] function.
-#' @param null The value considered as a "null" effect. Traditionally 0, but could also be 1 in the case of ratios.
+#' @param x Vector representing a posterior distribution. Can also be a Bayesian
+#' model (`stanreg`, `brmsfit` or `BayesFactor`).
+#' @param method Can be `"direct"` or one of methods of [density estimation][estimate_density],
+#' such as `"kernel"`, `"logspline"` or `"KernSmooth"`. If `"direct"` (default),
+#' the computation is based on the raw ratio of samples superior and inferior to 0.
+#' Else, the result is based on the [Area under the Curve (AUC)][auc] of the estimated
+#' [density][estimate_density] function.
+#' @param null The value considered as a "null" effect. Traditionally 0, but
+#' could also be 1 in the case of ratios.
+#' @param ... For `format()`, further arguments passed down to [`insight::format_value()`],
+#' to control the formatted output.
+#' @inheritParams insight::format_value
 #' @inheritParams hdi
 #'
 #' @details
@@ -485,3 +494,11 @@ as.numeric.p_direction <- function(x, ...) {
 #' @method as.double p_direction
 #' @export
 as.double.p_direction <- as.numeric.p_direction
+
+
+#' @method format p_direction
+#' @rdname p_direction
+#' @export
+format.p_direction <- function(x, as_percent = TRUE, ...) {
+  insight::format_value(as.numeric(x), as_percent = as_percent, ...)
+}
