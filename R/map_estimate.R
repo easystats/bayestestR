@@ -1,16 +1,22 @@
 #' Maximum A Posteriori probability estimate (MAP)
 #'
-#' Find the **Highest Maximum A Posteriori probability estimate (MAP)** of a posterior, i.e., the value associated with the highest probability density (the "peak" of the posterior distribution). In other words, it is an estimation of the *mode* for continuous parameters. Note that this function relies on [estimate_density], which by default uses a different smoothing bandwidth (`"SJ"`) compared to the legacy default implemented the base R [density] function (`"nrd0"`).
+#' Find the **Highest Maximum A Posteriori probability estimate (MAP)** of a
+#' posterior, i.e., the value associated with the highest probability density
+#' (the "peak" of the posterior distribution). In other words, it is an estimation
+#' of the *mode* for continuous parameters. Note that this function relies on
+#' [`estimate_density()`], which by default uses a different smoothing bandwidth
+#' (`"SJ"`) compared to the legacy default implemented the base R [`density()`]
+#' function (`"nrd0"`).
 #'
 #' @inheritParams hdi
 #' @inheritParams estimate_density
 #'
 #' @return A numeric value if `x` is a vector. If `x` is a model-object,
 #' returns a data frame with following columns:
-#'   \itemize{
-#'     \item `Parameter` The model parameter(s), if `x` is a model-object. If `x` is a vector, this column is missing.
-#'     \item `MAP_Estimate` The MAP estimate for the posterior or each model parameter.
-#'   }
+#'
+#' - `Parameter`: The model parameter(s), if `x` is a model-object. If `x` is a
+#'   vector, this column is missing.
+#' - `MAP_Estimate`: The MAP estimate for the posterior or each model parameter.
 #'
 #' @examples
 #' \dontrun{

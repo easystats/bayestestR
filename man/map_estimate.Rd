@@ -65,12 +65,19 @@ for the output.}
 A numeric value if \code{x} is a vector. If \code{x} is a model-object,
 returns a data frame with following columns:
 \itemize{
-\item \code{Parameter} The model parameter(s), if \code{x} is a model-object. If \code{x} is a vector, this column is missing.
-\item \code{MAP_Estimate} The MAP estimate for the posterior or each model parameter.
+\item \code{Parameter}: The model parameter(s), if \code{x} is a model-object. If \code{x} is a
+vector, this column is missing.
+\item \code{MAP_Estimate}: The MAP estimate for the posterior or each model parameter.
 }
 }
 \description{
-Find the \strong{Highest Maximum A Posteriori probability estimate (MAP)} of a posterior, i.e., the value associated with the highest probability density (the "peak" of the posterior distribution). In other words, it is an estimation of the \emph{mode} for continuous parameters. Note that this function relies on \link{estimate_density}, which by default uses a different smoothing bandwidth (\code{"SJ"}) compared to the legacy default implemented the base R \link{density} function (\code{"nrd0"}).
+Find the \strong{Highest Maximum A Posteriori probability estimate (MAP)} of a
+posterior, i.e., the value associated with the highest probability density
+(the "peak" of the posterior distribution). In other words, it is an estimation
+of the \emph{mode} for continuous parameters. Note that this function relies on
+\code{\link[=estimate_density]{estimate_density()}}, which by default uses a different smoothing bandwidth
+(\code{"SJ"}) compared to the legacy default implemented the base R \code{\link[=density]{density()}}
+function (\code{"nrd0"}).
 }
 \examples{
 \dontrun{

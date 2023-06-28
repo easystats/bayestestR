@@ -57,7 +57,10 @@ second response variable (for the treatment model, with the mediator as
 additional predictor), \code{y}, is not transformed. Then we could use
 \code{response} like this: \code{mediation(model, response = c(m = "m_center", y = "y"))}.}
 
-\item{centrality}{The point-estimates (centrality indices) to compute.  Character (vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"} or \code{"all"}.}
+\item{centrality}{The point-estimates (centrality indices) to compute. Character
+(vector) or list with one or more of these options: \code{"median"}, \code{"mean"}, \code{"MAP"}
+(see \code{\link[=map_estimate]{map_estimate()}}), \code{"trimmed"} (which is just \code{mean(x, trim = threshold)}),
+\code{"mode"} or \code{"all"}.}
 
 \item{ci}{Value or vector of probability of the CI (between 0 and 1)
 to be estimated. Default to \code{.95} (\verb{95\%}).}
