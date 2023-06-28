@@ -52,5 +52,5 @@ test_that("p_direction, formatting", {
   expect_identical(out, "51.70%")
 
   # out <- data.frame(p)
-  # out <- print(data.frame(p))
+  # print(data.frame(p))
 })

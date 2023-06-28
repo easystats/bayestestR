@@ -48,7 +48,7 @@ pd(x, ...)
 
 \method{p_direction}{BFBayesFactor}(x, method = "direct", null = 0, ...)
 
-\method{format}{p_direction}(x, as_percent = TRUE, ...)
+\method{format}{p_direction}(x, digits = 2, as_percent = TRUE, ...)
 }
 \arguments{
 \item{x}{Vector representing a posterior distribution. Can also be a Bayesian
@@ -78,6 +78,13 @@ that should be returned. Meta-parameters (like \code{lp__} or \code{prior_}) are
 filtered by default, so only parameters that typically appear in the
 \code{summary()} are returned. Use \code{parameters} to select specific parameters
 for the output.}
+
+\item{digits}{Number of digits for rounding or significant figures. May also
+be \code{"signif"} to return significant figures or \code{"scientific"}
+to return scientific notation. Control the number of digits by adding the
+value as suffix, e.g. \code{digits = "scientific4"} to have scientific
+notation with 4 decimal places, or \code{digits = "signif5"} for 5
+significant figures (see also \code{\link[=signif]{signif()}}).}
 
 \item{as_percent}{Logical, if \code{TRUE}, value is formatted as percentage
 value.}

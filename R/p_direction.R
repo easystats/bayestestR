@@ -499,6 +499,6 @@ as.double.p_direction <- as.numeric.p_direction
 #' @method format p_direction
 #' @rdname p_direction
 #' @export
-format.p_direction <- function(x, as_percent = TRUE, ...) {
-  insight::format_value(as.numeric(x), as_percent = as_percent, ...)
+format.p_direction <- function(x, digits = 2, as_percent = TRUE, ...) {
+  insight::format_value(as.numeric(x), digits = digits, as_percent = as_percent, ...)
 }
