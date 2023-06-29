@@ -39,7 +39,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bayestestR</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1.1</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.13.1.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -659,10 +659,10 @@ be run directly on the model:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/describe_posterior.html">describe_posterior</a></span><span class="op">(</span><span class="va">model</span>, test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"p_direction"</span>, <span class="st">"rope"</span>, <span class="st">"bayesfactor"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; Summary of Posterior Distribution
 &gt; 
-&gt; Parameter     | Median |           95% CI |     pd |          ROPE | % in ROPE |  Rhat |      ESS |       BF
+&gt; Parameter     | Median |           95% CI |     pd |          ROPE | % in ROPE |       BF |  Rhat |      ESS
 &gt; ------------------------------------------------------------------------------------------------------------
-&gt; (Intercept)   | 276.97 | [241.29, 313.04] |   100% | [-6.17, 6.17] |        0% | 1.000 | 32327.00 | 5.16e+12
-&gt; feedsunflower |  51.69 | [  2.30, 100.47] | 97.96% | [-6.17, 6.17] |     1.03% | 1.000 | 33439.00 |    0.761</code></pre>
+&gt; (Intercept)   | 276.97 | [241.29, 313.04] |   100% | [-6.17, 6.17] |        0% | 5.16e+12 | 1.000 | 32327.00
+&gt; feedsunflower |  51.69 | [  2.30, 100.47] | 97.96% | [-6.17, 6.17] |     1.03% |    0.761 | 1.000 | 33439.00</code></pre>
 <p><strong>Tada!</strong> There we have it! The <strong>median</strong>,
 the <strong>CI</strong>, the <strong>pd</strong> and the <strong>ROPE
 percentage</strong>!</p>
