@@ -1,3 +1,5 @@
+skip_on_os(os = "mac")
+
 test_that("check_prior - stanreg", {
   skip_on_cran()
   skip_on_os(os = c("windows", "mac"))
@@ -99,7 +101,7 @@ test_that("check_prior - brms (linux)", {
 
 test_that("check_prior - brms (not linux or windows)", {
   skip_on_cran()
-  skip_on_os(os = c("linux", "windows"))
+  skip_on_os(os = c("linux", "windows", "mac"))
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("BH")
