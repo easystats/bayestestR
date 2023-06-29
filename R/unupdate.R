@@ -102,15 +102,17 @@ unupdate.brmsfit_multiple <- function(model,
     insight::format_alert("Sampling priors, please wait...")
   }
 
-  utils::capture.output({model_prior <-
-    try(suppressMessages(suppressWarnings(
-      stats::update(
-        model,
-        sample_prior = "only",
-        newdata = newdata,
-        refresh = 0
-      )
-    )), silent = TRUE)})
+  utils::capture.output({
+    model_prior <-
+      try(suppressMessages(suppressWarnings(
+        stats::update(
+          model,
+          sample_prior = "only",
+          newdata = newdata,
+          refresh = 0
+        )
+      )), silent = TRUE)
+  })
 
   if (methods::is(model_prior, "try-error")) {
     if (grepl("proper priors", model_prior, fixed = TRUE)) {
@@ -143,7 +145,9 @@ unupdate.blavaan <- function(model, verbose = TRUE, ...) {
 
   cl$prisamp <- TRUE
   suppressMessages(suppressWarnings(
-    utils::capture.output({model_prior <- eval(cl)})
+    utils::capture.output({
+      model_prior <- eval(cl)
+    })
   ))
 
   model_prior
