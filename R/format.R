@@ -1,6 +1,6 @@
 #' @export
 format.describe_posterior <- function(x,
-                                      cp,
+                                      cp = NULL,
                                       digits = 2,
                                       format = "text",
                                       ci_string = "CI",
