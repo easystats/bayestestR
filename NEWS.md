@@ -4,6 +4,11 @@
 
 * Retrieving models from the environment was improved.
 
+## Bug fixes
+
+* Fixed issues in various `format()` methods, which did not work properly for
+  some few functions (like `p_direction()`).
+
 # bayestestR 0.13.1
 
 ## Changes
