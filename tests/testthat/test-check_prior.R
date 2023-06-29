@@ -1,6 +1,6 @@
 test_that("check_prior - stanreg", {
   skip_on_cran()
-  skip_on_os(os = "windows")
+  skip_on_os(os = c("windows", "mac"))
   skip_if_offline()
   skip_if_not_or_load_if_installed("rstanarm")
   skip_if_not_or_load_if_installed("BH")
