@@ -920,13 +920,21 @@ posterior distribution, and estimate the HDI.
 
 In `bayestestR`, we can do this with the `weighted_posteriors()` function:
 
-```{r}
+```{r eval=FALSE}
 BMA_draws <- weighted_posteriors(mod, mod_carb, verbose = FALSE)
 
 BMA_hdi <- hdi(BMA_draws, ci = 0.95)
 BMA_hdi
 
 plot(BMA_hdi)
+```
+```{r echo=FALSE}
+BMA_draws <- weighted_posteriors(mod, mod_carb, verbose = FALSE)
+
+BMA_hdi <- hdi(BMA_draws, ci = 0.95)
+BMA_hdi
+
+plot(BMA_hdi, data = BMA_draws)
 ```
 
 We can see that across both models under consideration, the posterior of the
