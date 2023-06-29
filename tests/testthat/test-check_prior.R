@@ -10,12 +10,12 @@ test_that("check_prior - stanreg", {
   set.seed(333)
   model1 <- insight::download_model("stanreg_lm_1")
 
-  expect_equal(
+  expect_identical(
     check_prior(model1)$Prior_Quality,
     c("informative", "uninformative")
   )
 
-  expect_equal(
+  expect_identical(
     check_prior(model1, method = "lakeland")$Prior_Quality,
     c("informative", "informative")
   )
@@ -43,7 +43,7 @@ test_that("check_prior - brms (linux)", {
     )
   })
 
-  expect_warning(expect_equal(
+  expect_warning(expect_identical(
     check_prior(model2)$Prior_Quality,
     c(
       "uninformative", "informative", "informative", "uninformative",
@@ -51,7 +51,7 @@ test_that("check_prior - brms (linux)", {
     )
   ))
 
-  expect_warning(expect_equal(
+  expect_warning(expect_identical(
     check_prior(model2, method = "lakeland")$Prior_Quality,
     c(
       "informative", "informative", "informative", "informative",
@@ -88,7 +88,7 @@ test_that("check_prior - brms (linux)", {
   # ))
 
 
-  expect_warning(expect_equal(
+  expect_warning(expect_identical(
     check_prior(model2, method = "lakeland")$Prior_Quality,
     c(
       "informative", "informative", "informative", "informative",
@@ -117,7 +117,7 @@ test_that("check_prior - brms (not linux or windows)", {
     )
   })
 
-  expect_warning(expect_equal(
+  expect_warning(expect_identical(
     check_prior(model2)$Prior_Quality,
     c(
       "uninformative", "uninformative", "informative", "uninformative",
@@ -125,7 +125,7 @@ test_that("check_prior - brms (not linux or windows)", {
     )
   ))
 
-  expect_warning(expect_equal(
+  expect_warning(expect_identical(
     check_prior(model2, method = "lakeland")$Prior_Quality,
     c(
       "informative", "informative", "informative", "informative",
