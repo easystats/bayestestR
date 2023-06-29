@@ -118,13 +118,17 @@ equivalence_test.numeric <- function(x, range = "default", ci = 0.95, verbose = 
   out <- as.data.frame(rope_data)
 
   if (all(ci < 1)) {
-    out$ROPE_Equivalence <- ifelse(out$ROPE_Percentage == 0, "Rejected",
-      ifelse(out$ROPE_Percentage == 1, "Accepted", "Undecided")
+    out$ROPE_Equivalence <- datawizard::recode_into(
+      out$ROPE_Percentage == 0 ~ "Rejected",
+      out$ROPE_Percentage == 1 ~ "Accepted",
+      default = "Undecided"
     )
   } else {
     # Related to guidelines for full rope (https://easystats.github.io/bayestestR/articles/4_Guidelines.html)
-    out$ROPE_Equivalence <- ifelse(out$ROPE_Percentage < 0.025, "Rejected",
-      ifelse(out$ROPE_Percentage > 0.975, "Accepted", "Undecided")
+    out$ROPE_Equivalence <- datawizard::recode_into(
+      out$ROPE_Percentage < 0.025 ~ "Rejected",
+      out$ROPE_Percentage > 0.975 ~ "Accepted",
+      default = "Undecided"
     )
   }
 
