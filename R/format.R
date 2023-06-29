@@ -73,6 +73,11 @@ format.bayestestR_eti <- format.describe_posterior
 #' @export
 format.bayestestR_si <- format.describe_posterior
 
+#' @export
+format.equivalence_test <- format.describe_posterior
+
+#' @export
+format.rope <- format.describe_posterior
 
 
 

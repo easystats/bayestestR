@@ -41,6 +41,18 @@ test_that("p_significance", {
     data.frame(x = "0.46", stringsAsFactors = FALSE),
     ignore_attr = TRUE
   )
-  # format(rope(x))
-  # format(equivalence_test(x))
+  expect_equal(
+    format(rope(x)),
+    data.frame(CI = "0.95", ROPE = "[-0.10, 0.10]", `% in ROPE` = "10.64%", stringsAsFactors = FALSE),
+    ignore_attr = TRUE
+  )
+  expect_equal(
+    format(equivalence_test(x)),
+    data.frame(
+      CI = "0.95", ROPE = "[-0.10, 0.10]", `% in ROPE` = "10.64%",
+      `Equivalence (ROPE)` = "Undecided", HDI_low = "-1.93", HDI_high = "1.77",
+      stringsAsFactors = FALSE
+    ),
+    ignore_attr = TRUE
+  )
 })
