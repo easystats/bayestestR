@@ -14,6 +14,11 @@ format.describe_posterior <- function(x,
     attributes(x) <- utils::modifyList(att, attributes(x))
   }
 
+  # sanity check
+  if (is.null(digits)) {
+    digits <- 2
+  }
+
   # format columns and values of data frame
   out <- insight::format_table(x, digits = digits, format = format, ...)
 
