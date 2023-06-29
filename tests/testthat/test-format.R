@@ -17,11 +17,6 @@ test_that("p_significance", {
     ignore_attr = TRUE
   )
   expect_equal(
-    format(bayesfactor_parameters(x, verbose = FALSE)),
-    data.frame(BF = "1.00", stringsAsFactors = FALSE),
-    ignore_attr = TRUE
-  )
-  expect_equal(
     format(map_estimate(x)),
     data.frame(x = "0.13", stringsAsFactors = FALSE),
     ignore_attr = TRUE
@@ -53,6 +48,12 @@ test_that("p_significance", {
       `Equivalence (ROPE)` = "Undecided", HDI_low = "-1.93", HDI_high = "1.77",
       stringsAsFactors = FALSE
     ),
+    ignore_attr = TRUE
+  )
+  skip_if_not_installed("logspline")
+  expect_equal(
+    format(bayesfactor_parameters(x, verbose = FALSE)),
+    data.frame(BF = "1.00", stringsAsFactors = FALSE),
     ignore_attr = TRUE
   )
 })
