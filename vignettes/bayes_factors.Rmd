@@ -1051,7 +1051,7 @@ fit_sum <- stan_glm(Sepal.Length ~ Species,
 (pairs_sum <- pairs(emmeans(fit_sum, ~Species)))
 
 ggplot(stack(insight::get_parameters(pairs_sum)), aes(x = values, fill = ind)) +
-  geom_density(size = 1) +
+  geom_density(linewidth = 1) +
   facet_grid(ind ~ .) +
   labs(x = "prior difference values") +
   theme(legend.position = "none")
@@ -1060,7 +1060,7 @@ ggplot(stack(insight::get_parameters(pairs_sum)), aes(x = values, fill = ind)) +
 (pairs_sum <- suppressWarnings(pairs(emmeans(fit_sum, ~Species, data = iris))))
 
 ggplot(stack(insight::get_parameters(pairs_sum)), aes(x = values, fill = ind)) +
-  geom_density(size = 1) +
+  geom_density(linewidth = 1) +
   facet_grid(ind ~ .) +
   labs(x = "prior difference values") +
   theme(legend.position = "none")

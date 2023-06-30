@@ -58,7 +58,7 @@
 #' ci(bf, method = "HDI")
 #'
 #' @examplesIf require("emmeans", quietly = TRUE) && require("rstanarm", quietly = TRUE)
-#' model <- emtrends(model, ~1, "wt")
+#' model <- suppressWarnings(emtrends(model, ~1, "wt", data = mtcars))
 #' ci(model, method = "ETI")
 #' ci(model, method = "HDI")
 #' @export
