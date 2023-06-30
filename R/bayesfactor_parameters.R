@@ -132,8 +132,8 @@
 #'
 #'   # emmGrid objects
 #'   # ---------------
-#'   # group_diff <- pairs(emmeans(stan_model, ~group))
-#'   # bayesfactor_parameters(group_diff, prior = stan_model, verbose = FALSE)
+#'   group_diff <- pairs(emmeans(stan_model, ~group, data = sleep))
+#'   bayesfactor_parameters(group_diff, prior = stan_model, verbose = FALSE)
 #'
 #'   # Or
 #'   # group_diff_prior <- pairs(emmeans(unupdate(stan_model), ~group))

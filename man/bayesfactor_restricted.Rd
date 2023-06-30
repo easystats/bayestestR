@@ -208,7 +208,7 @@ data("disgust")
 contrasts(disgust$condition) <- contr.equalprior_pairs # see vignette
 fit_model <- rstanarm::stan_glm(score ~ condition, data = disgust, family = gaussian())
 
-em_condition <- emmeans::emmeans(fit_model, ~condition)
+em_condition <- emmeans::emmeans(fit_model, ~condition, data = disgust)
 hyps <- c("lemon < control & control < sulfur")
 
 bayesfactor_restricted(em_condition, prior = fit_model, hypothesis = hyps)

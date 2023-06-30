@@ -969,13 +969,21 @@ and the difference between them:
 set.seed(1)
 ```
 
-```{r}
+```{r eval=FALSE}
 library(emmeans)
 
 (group_diff <- emmeans(model, pairwise ~ group, data = sleep))
 
 # pass the original model via prior
 bayesfactor_parameters(group_diff, prior = model)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(emmeans)
+
+suppressWarnings((group_diff <- emmeans(model, pairwise ~ group, data = sleep)))
+
+# pass the original model via prior
+suppressWarnings(bayesfactor_parameters(group_diff, prior = model))
 ```
 
 That is strong evidence for the mean of group 1 being 0, and for group 2 for not
