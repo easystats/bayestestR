@@ -289,22 +289,20 @@ would now consider as <strong>significant</strong>.</p>
 <span><span class="va">percentage_in_rope</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rope.html">rope</a></span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Visualise the pd</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span></span></code></pre></div>
-<p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pd</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span></span>
+<span><span class="va">pd</span></span>
+<span></span>
+<span><span class="co"># Visualise the percentage in ROPE</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">percentage_in_rope</span><span class="op">)</span></span>
+<span><span class="va">percentage_in_rope</span></span></code></pre></div>
+<p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <pre><code>&gt; Probability of Direction
 &gt; 
 &gt; Parameter   |     pd
 &gt; --------------------
 &gt; (Intercept) |   100%
 &gt; Sepal.Width | 91.65%</code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Visualise the percentage in ROPE</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">percentage_in_rope</span><span class="op">)</span></span></code></pre></div>
-<p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">percentage_in_rope</span></span></code></pre></div>
+<p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-0.08, 0.08]:
 &gt; 
 &gt; Parameter   | inside ROPE
@@ -317,31 +315,29 @@ linear relationship between <strong>Sepal.Length</strong> and
 <code>92.95%</code> and <code>15.95%</code>, corresponding to an
 <strong>uncertain</strong> and <strong>not significant</strong> effect.
 What happen if we scale our predictor?</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span><span class="op">$</span><span class="va">Sepal.Width_scaled</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">Sepal.Width</span> <span class="op">/</span> <span class="fl">100</span> <span class="co"># Divide predictor by 100</span></span>
 <span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">Sepal.Length</span> <span class="op">~</span> <span class="va">Sepal.Width_scaled</span>, data <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="co"># Fit model</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compute indices</span></span>
 <span><span class="va">pd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/p_direction.html">p_direction</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="va">percentage_in_rope</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rope.html">rope</a></span><span class="op">(</span><span class="va">model</span>, ci <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Visualise the pd</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span></span></code></pre></div>
-<p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pd</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">pd</span><span class="op">)</span></span>
+<span><span class="va">pd</span></span>
+<span></span>
+<span><span class="co"># Visualise the percentage in ROPE</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">percentage_in_rope</span><span class="op">)</span></span>
+<span><span class="va">percentage_in_rope</span></span></code></pre></div>
+<p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 <pre><code>&gt; Probability of Direction
 &gt; 
 &gt; Parameter          |     pd
 &gt; ---------------------------
 &gt; (Intercept)        |   100%
 &gt; Sepal.Width_scaled | 91.65%</code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Visualise the percentage in ROPE</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">percentage_in_rope</span><span class="op">)</span></span></code></pre></div>
-<p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">percentage_in_rope</span></span></code></pre></div>
+<p><img src="region_of_practical_equivalence_files/figure-html/unnamed-chunk-9-2.png" width="700"></p>
 <pre><code>&gt; # Proportion of samples inside the ROPE [-0.08, 0.08]:
 &gt; 
 &gt; Parameter          | inside ROPE
