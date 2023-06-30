@@ -85,7 +85,9 @@ estimation noise is}.
 # rstanarm models
 # -----------------------------------------------
 if (require("rstanarm", quietly = TRUE)) {
-  model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+  model <- suppressWarnings(
+    stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+  )
   diagnostic_posterior(model)
 }
 

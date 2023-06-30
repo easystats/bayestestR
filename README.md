@@ -59,7 +59,7 @@ library("bayestestR")
 
 > **Tip**
 >
-> **Instead of `library(datawizard)`, use `library(easystats)`.** **This
+> **Instead of `library(bayestestR)`, use `library(easystats)`.** **This
 > will make all features of the easystats-ecosystem available.**
 >
 > **To stay updated, use `easystats::install_latest()`.**
@@ -161,7 +161,7 @@ describe_posterior(
 ## 
 ## Parameter | Median |        95% CI |     pd |   ps
 ## --------------------------------------------------
-## Posterior |   0.01 | [-1.97, 1.99] | 50.58% | 0.47
+## Posterior |  -0.01 | [-1.94, 1.97] | 50.57% | 0.47
 ```
 
 `describe_posterior()` works for many objects, including more complex
