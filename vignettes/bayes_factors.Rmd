@@ -1121,7 +1121,7 @@ ggplot(stack(insight::get_parameters(pairs_bayes)), aes(x = values, fill = ind))
   theme(legend.position = "none")
 ```
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
-(pairs_bayes <- pairs(emmeans(fit_bayes, ~Species, data = iris)))
+(pairs_bayes <- suppressWarnings(pairs(emmeans(fit_bayes, ~Species, data = iris))))
 
 ggplot(stack(insight::get_parameters(pairs_bayes)), aes(x = values, fill = ind)) +
   geom_density(linewidth = 1) +
