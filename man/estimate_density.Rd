@@ -30,26 +30,38 @@ resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 
 \item{...}{Currently not used.}
 
-\item{method}{Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.}
+\item{method}{Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"}
+or \code{"KernSmooth"}.}
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \code{density}.}
 
 \item{extend}{Extend the range of the x axis by a factor of \code{extend_scale}.}
 
-\item{extend_scale}{Ratio of range by which to extend the x axis. A value of \code{0.1} means that the x axis will be extended by \code{1/10} of the range of the data.}
+\item{extend_scale}{Ratio of range by which to extend the x axis. A value of \code{0.1}
+means that the x axis will be extended by \code{1/10} of the range of the data.}
 
-\item{bw}{See the eponymous argument in \code{density}. Here, the default has been changed for \code{"SJ"}, which is recommended.}
+\item{bw}{See the eponymous argument in \code{density}. Here, the default has been
+changed for \code{"SJ"}, which is recommended.}
 
-\item{ci}{The confidence interval threshold. Only used when \code{method = "kernel"}. This feature is experimental, use with caution.}
+\item{ci}{The confidence interval threshold. Only used when \code{method = "kernel"}.
+This feature is experimental, use with caution.}
 
-\item{select}{Character vector of column names. If NULL (the default), all numeric variables will be selected. Other arguments from \code{\link[datawizard:find_columns]{datawizard::find_columns()}} (such as \code{exclude}) can also be used.}
+\item{select}{Character vector of column names. If NULL (the default), all
+numeric variables will be selected. Other arguments from \code{\link[datawizard:find_columns]{datawizard::find_columns()}}
+(such as \code{exclude}) can also be used.}
 
-\item{at}{Optional character vector. If not \code{NULL} and input is a data frame, density estimation is performed for each group (subsets) indicated by \code{at}. See examples.}
+\item{at}{Optional character vector. If not \code{NULL} and input is a data frame,
+density estimation is performed for each group (subsets) indicated by \code{at}.
+See examples.}
 
 \item{group_by}{Deprecated in favour of \code{at}.}
 }
 \description{
-This function is a wrapper over different methods of density estimation. By default, it uses the base R \code{density} with by default uses a different smoothing bandwidth (\code{"SJ"}) from the legacy default implemented the base R \code{density} function (\code{"nrd0"}). However, Deng and Wickham suggest that \code{method = "KernSmooth"} is the fastest and the most accurate.
+This function is a wrapper over different methods of density estimation. By
+default, it uses the base R \code{density} with by default uses a different smoothing
+bandwidth (\code{"SJ"}) from the legacy default implemented the base R \code{density}
+function (\code{"nrd0"}). However, Deng and Wickham suggest that \code{method = "KernSmooth"}
+is the fastest and the most accurate.
 }
 \note{
 There is also a \href{https://easystats.github.io/see/articles/bayestestR.html}{\code{plot()}-method} implemented in the \href{https://easystats.github.io/see/}{\pkg{see}-package}.

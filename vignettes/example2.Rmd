@@ -260,10 +260,21 @@ model <- stan_glm(Species ~ Sepal.Width,
 
 Using the [`modelbased`](https://github.com/easystats/modelbased) package.
 
-```{r}
+```{r eval=FALSE}
 library(modelbased)
 
 vizdata <- estimate_relation(model)
+
+ggplot(vizdata, aes(x = Sepal.Width, y = Predicted)) +
+  geom_ribbon(aes(ymin = CI_low, ymax = CI_high), alpha = 0.5) +
+  geom_line() +
+  ylab("Probability of being virginica") +
+  theme_modern()
+```
+```{r echo=FALSE}
+library(modelbased)
+
+vizdata <- suppressWarnings(estimate_relation(model))
 
 ggplot(vizdata, aes(x = Sepal.Width, y = Predicted)) +
   geom_ribbon(aes(ymin = CI_low, ymax = CI_high), alpha = 0.5) +

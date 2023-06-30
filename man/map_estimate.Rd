@@ -44,7 +44,8 @@ resemble the arguments of the \code{.numeric} or \code{.data.frame}methods.}
 
 \item{precision}{Number of points of density data. See the \code{n} parameter in \code{density}.}
 
-\item{method}{Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"} or \code{"KernSmooth"}.}
+\item{method}{Density estimation method. Can be \code{"kernel"} (default), \code{"logspline"}
+or \code{"KernSmooth"}.}
 
 \item{...}{Currently not used.}
 

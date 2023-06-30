@@ -28,7 +28,8 @@ overlap(
 
 \item{extend}{Extend the range of the x axis by a factor of \code{extend_scale}.}
 
-\item{extend_scale}{Ratio of range by which to extend the x axis. A value of \code{0.1} means that the x axis will be extended by \code{1/10} of the range of the data.}
+\item{extend_scale}{Ratio of range by which to extend the x axis. A value of \code{0.1}
+means that the x axis will be extended by \code{1/10} of the range of the data.}
 
 \item{...}{Currently not used.}
 }
