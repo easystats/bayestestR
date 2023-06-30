@@ -178,14 +178,16 @@ if (require("logspline")) {
 # rstanarm models
 # -----------------------------------------------
 if (require("rstanarm") && require("emmeans")) {
-  model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+  model <- suppressWarnings(
+    stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+  )
   describe_posterior(model)
   describe_posterior(model, centrality = "all", dispersion = TRUE, test = "all")
   describe_posterior(model, ci = c(0.80, 0.90))
 
   # emmeans estimates
   # -----------------------------------------------
-  describe_posterior(emtrends(model, ~1, "wt"))
+  describe_posterior(suppressWarnings(emtrends(model, ~1, "wt")))
 }
 
 # BayesFactor objects
