@@ -76,7 +76,7 @@
 #' # rstanarm models
 #' # -----------------------------------------------
 #' library(rstanarm)
-#' model <- suppressWarning(
+#' model <- suppressWarnings(
 #'   stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 #' )
 #' head(estimate_density(model))
