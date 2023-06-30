@@ -972,7 +972,7 @@ set.seed(1)
 ```{r}
 library(emmeans)
 
-(group_diff <- emmeans(model, pairwise ~ group))
+(group_diff <- emmeans(model, pairwise ~ group, data = sleep))
 
 # pass the original model via prior
 bayesfactor_parameters(group_diff, prior = model)
