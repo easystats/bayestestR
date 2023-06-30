@@ -31,5 +31,6 @@ bic4 <- BIC(lm(Sepal.Length ~ Species * Petal.Length, data = iris))
 bic_to_bf(c(bic1, bic2, bic3, bic4), denominator = bic1)
 }
 \references{
-Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin & review, 14(5), 779-804
+Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of
+p values. Psychonomic bulletin & review, 14(5), 779-804
 }

@@ -261,11 +261,11 @@ Let's visualize these values on the posterior distribution:
 ggplot(posteriors, aes(x = Petal.Length)) +
   geom_density(fill = "orange") +
   # The mean in blue
-  geom_vline(xintercept = mean(posteriors$Petal.Length), color = "blue", size = 1) +
+  geom_vline(xintercept = mean(posteriors$Petal.Length), color = "blue", linewidth = 1) +
   # The median in red
-  geom_vline(xintercept = median(posteriors$Petal.Length), color = "red", size = 1) +
+  geom_vline(xintercept = median(posteriors$Petal.Length), color = "red", linewidth = 1) +
   # The MAP in purple
-  geom_vline(xintercept = map_estimate(posteriors$Petal.Length), color = "purple", size = 1)
+  geom_vline(xintercept = map_estimate(posteriors$Petal.Length), color = "purple", linewidth = 1)
 ```
 
 Well, all these values give very similar results. Thus, **we will choose the median**, as this value has a direct meaning from a probabilistic perspective: **there is 50\% chance that the true effect is higher and 50\% chance that the effect is lower** (as it divides the distribution in two equal parts).

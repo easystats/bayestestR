@@ -227,7 +227,17 @@ bci.brmsfit <- function(x, ci = 0.95, effects = c("fixed", "random", "all"),
   component <- match.arg(component)
 
   out <- .prepare_output(
-    bci(insight::get_parameters(x, effects = effects, component = component, parameters = parameters), ci = ci, verbose = verbose, ...),
+    bci(
+      insight::get_parameters(
+        x,
+        effects = effects,
+        component = component,
+        parameters = parameters
+      ),
+      ci = ci,
+      verbose = verbose,
+      ...
+    ),
     insight::clean_parameters(x)
   )
 

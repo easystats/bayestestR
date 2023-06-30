@@ -347,7 +347,7 @@
     samplesX <- do.call("rbind", samplesX)
 
     samplesX$Distribution <- point0$Distribution <- nm
-    rownames(samplesX) <- rownames(point0) <- c()
+    rownames(samplesX) <- rownames(point0) <- NULL
 
     list(samplesX, point0)
   }

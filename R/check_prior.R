@@ -147,16 +147,16 @@ check_prior.blavaan <- check_prior.brmsfit
     priors <- priors[common_columns]
     posteriors <- posteriors[common_columns]
     if (verbose) {
-      insight::format_warning("Parameters and priors could not be fully matched. Only returning results for parameters with matching priors.")
+      insight::format_warning(
+        "Parameters and priors could not be fully matched. Only returning results for parameters with matching priors."
+      )
     }
   }
 
 
   # for priors whose distribution cannot be simulated, prior values are
   # all NA. Catch those, and warn user
-  all_missing <- sapply(priors, function(i) {
-    all(is.na(i))
-  })
+  all_missing <- vapply(priors, function(i) all(is.na(i)), TRUE)
 
   if (any(all_missing) && verbose) {
     insight::format_warning("Some priors could not be simulated.")

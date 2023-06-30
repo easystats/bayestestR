@@ -114,11 +114,11 @@ ggplot(out, aes(x = x, y = y)) +
   geom_area(fill = "orange") +
   theme_classic() +
   # HDI in blue
-  geom_vline(xintercept = ci_hdi$CI_low, color = "royalblue", size = 3) +
-  geom_vline(xintercept = ci_hdi$CI_high, color = "royalblue", size = 3) +
+  geom_vline(xintercept = ci_hdi$CI_low, color = "royalblue", linewidth = 3) +
+  geom_vline(xintercept = ci_hdi$CI_high, color = "royalblue", linewidth = 3) +
   # Quantile in red
-  geom_vline(xintercept = ci_eti$CI_low, color = "red", size = 1) +
-  geom_vline(xintercept = ci_eti$CI_high, color = "red", size = 1)
+  geom_vline(xintercept = ci_eti$CI_low, color = "red", linewidth = 1) +
+  geom_vline(xintercept = ci_eti$CI_high, color = "red", linewidth = 1)
 ```
 
 > **These are exactly the same...**
@@ -139,11 +139,11 @@ ggplot(out, aes(x = x, y = y)) +
   geom_area(fill = "orange") +
   theme_classic() +
   # HDI in blue
-  geom_vline(xintercept = ci_hdi$CI_low, color = "royalblue", size = 3) +
-  geom_vline(xintercept = ci_hdi$CI_high, color = "royalblue", size = 3) +
+  geom_vline(xintercept = ci_hdi$CI_low, color = "royalblue", linewidth = 3) +
+  geom_vline(xintercept = ci_hdi$CI_high, color = "royalblue", linewidth = 3) +
   # ETI in red
-  geom_vline(xintercept = ci_eti$CI_low, color = "red", size = 1) +
-  geom_vline(xintercept = ci_eti$CI_high, color = "red", size = 1)
+  geom_vline(xintercept = ci_eti$CI_low, color = "red", linewidth = 1) +
+  geom_vline(xintercept = ci_eti$CI_high, color = "red", linewidth = 1)
 ```
 
 > **The difference is strong with this one.**
@@ -178,7 +178,7 @@ data by some factor greater or equal to *k* [@wagenmakers2018SI].
 
 ```{r warning=FALSE, message=FALSE}
 prior <- distribution_normal(40000, mean = 0, sd = 1)
-posterior <- distribution_normal(40000, mean = .5, sd = .3)
+posterior <- distribution_normal(40000, mean = 0.5, sd = 0.3)
 
 si_1 <- si(posterior, prior, BF = 1)
 si_3 <- si(posterior, prior, BF = 3)
@@ -192,15 +192,15 @@ ggplot(mapping = aes(x = x, y = y)) +
   ) +
   # The prior
   geom_area(
-    color = "black", fill = NA, size = 1, linetype = "dashed",
+    color = "black", fill = NA, linewidth = 1, linetype = "dashed",
     data = estimate_density(prior, extend = TRUE)
   ) +
   # BF = 1 SI in blue
-  geom_vline(xintercept = si_1$CI_low, color = "royalblue", size = 1) +
-  geom_vline(xintercept = si_1$CI_high, color = "royalblue", size = 1) +
+  geom_vline(xintercept = si_1$CI_low, color = "royalblue", linewidth = 1) +
+  geom_vline(xintercept = si_1$CI_high, color = "royalblue", linewidth = 1) +
   # BF = 3 SI in red
-  geom_vline(xintercept = si_3$CI_low, color = "red", size = 1) +
-  geom_vline(xintercept = si_3$CI_high, color = "red", size = 1)
+  geom_vline(xintercept = si_3$CI_low, color = "red", linewidth = 1) +
+  geom_vline(xintercept = si_3$CI_high, color = "red", linewidth = 1)
 ```
 
 Between the blue lines are values that received *some* support by the data (this

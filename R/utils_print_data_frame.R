@@ -62,7 +62,11 @@
       out[[i]]$Parameter <- gsub("^smooth_sd\\[(.*)\\]", "\\1", out[[i]]$Parameter)
       out[[i]]$Parameter <- gsub("^sds_", "\\1", out[[i]]$Parameter)
       # SD
-      out[[i]]$Parameter <- gsub("(.*)(__Intercept|__zi_Intercept)(.*)", "\\1 (Intercept)\\3", gsub("^sd_(.*)", "SD \\1", out[[i]]$Parameter))
+      out[[i]]$Parameter <- gsub(
+        "(.*)(__Intercept|__zi_Intercept)(.*)",
+        "\\1 (Intercept)\\3",
+        gsub("^sd_(.*)", "SD \\1", out[[i]]$Parameter)
+      )
       # remove ".1" etc. suffix
       out[[i]]$Parameter <- gsub("(.*)(\\.)(\\d)$", "\\1 \\3", out[[i]]$Parameter)
       # remove "__zi"
