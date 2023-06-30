@@ -89,8 +89,9 @@
 #' plot(test)
 #'
 #' library(emmeans)
-#' emm <- suppressWarnings(emtrends(model, ~1, "wt", data = mtcars))
-#' equivalence_test(emm)
+#' equivalence_test(
+#'   suppressWarnings(emtrends(model, ~1, "wt", data = mtcars))
+#' )
 #'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
