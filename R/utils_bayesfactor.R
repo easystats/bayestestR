@@ -106,7 +106,7 @@
       insight::format_error(prior)
     }
 
-    prior <- emmeans::ref_grid(prior)
+    prior <- suppressWarnings(emmeans::ref_grid(prior))
     prior <- prior@post.beta
 
     if (!isTRUE(all.equal(colnames(prior), colnames(posterior@post.beta)))) {
