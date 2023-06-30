@@ -1185,7 +1185,7 @@ fit_sum <- stan_glm(Sepal.Length ~ Species,
   chains = 4, iter = 2000, warmup = 1000 # reduce build time
 )
 
-em_sum <- emmeans(fit_sum, ~Species) # the posterior marginal means
+em_sum <- emmeans(fit_sum, ~Species, data = iris) # the posterior marginal means
 
 bayesfactor_restricted(em_sum, fit_sum, hypothesis = hyp)
 ```
