@@ -1219,7 +1219,7 @@ fit_bayes <- stan_glm(Sepal.Length ~ Species,
   chains = 4, iter = 2000, warmup = 1000, # reduce build time
   refresh = 0
 )
-em_bayes <- emmeans(fit_bayes, ~Species, data = iris) # the posterior marginal means
+em_bayes <- suppressWarnings(emmeans(fit_bayes, ~Species, data = iris))
 bayesfactor_restricted(em_bayes, fit_bayes, hypothesis = hyp)
 ```
 
