@@ -154,7 +154,7 @@ Let's compare the 4 available methods, the **direct** method and 3
 
 Let's start by testing the proximity and similarity of the results obtained by different methods.
 
-```{r message=FALSE, warning=FALSE, fig.align='center'}
+```{r message=FALSE, warning=FALSE, fig.align='center', eval=FALSE}
 library(bayestestR)
 library(logspline)
 library(KernSmooth)
@@ -179,6 +179,33 @@ data <- as.data.frame(sapply(data, as.numeric))
 
 # Visualize the correlations
 bayesplot::mcmc_pairs(data) +
+  theme_classic()
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
+library(bayestestR)
+library(logspline)
+library(KernSmooth)
+
+# Compute the correlations
+data <- data.frame()
+for (the_mean in runif(25, 0, 4)) {
+  for (the_sd in runif(25, 0.5, 4)) {
+    x <- rnorm(100, the_mean, abs(the_sd))
+    data <- rbind(
+      data,
+      data.frame(
+        "direct" = pd(x),
+        "kernel" = pd(x, method = "kernel"),
+        "logspline" = pd(x, method = "logspline"),
+        "KernSmooth" = pd(x, method = "KernSmooth")
+      )
+    )
+  }
+}
+data <- as.data.frame(sapply(data, as.numeric))
+
+# Visualize the correlations
+suppressWarnings(bayesplot::mcmc_pairs(data)) +
   theme_classic()
 ```
 
