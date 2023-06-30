@@ -274,23 +274,11 @@ spi.get_predicted <- function(x, ...) {
   if (!anyNA(k) && all(k == 1)) {
     x.l <- l
   } else {
-    x.l <- tryCatch(
-      {
-        .spi_lower(bw = bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x)
-      },
-      error = function(e) NULL
-    )
-
+    x.l <- .safe(.spi_lower(bw = bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x))
     frac <- 1
     while (is.null(x.l)) {
       frac <- frac - 0.1
-      x.l <- tryCatch(
-        {
-          .spi_lower(bw = frac * bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x)
-        },
-        error = function(e) NULL
-      )
-
+      x.l <- .safe(.spi_lower(bw = frac * bw, n.sims = n.sims, k = k, l = l, dens = dens, x = x))
       if (frac <= 0.1) {
         insight::format_alert("Could not find a solution for the SPI lower bound.")
         x.l <- NA
@@ -302,23 +290,11 @@ spi.get_predicted <- function(x, ...) {
   if (!anyNA(ui) && all(ui == n.sims)) {
     x.u <- u
   } else {
-    x.u <- tryCatch(
-      {
-        .spi_upper(bw = bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x)
-      },
-      error = function(e) NULL
-    )
-
+    x.u <- .safe(.spi_upper(bw = bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x))
     frac <- 1
     while (is.null(x.u)) {
       frac <- frac - 0.1
-      x.u <- tryCatch(
-        {
-          .spi_upper(bw = frac * bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x)
-        },
-        error = function(e) NULL
-      )
-
+      x.u <- .safe(.spi_upper(bw = frac * bw, n.sims = n.sims, ui = ui, u = u, dens = dens, x = x))
       if (frac <= 0.1) {
         insight::format_alert("Could not find a solution for the SPI upper bound.")
         x.u <- NA
