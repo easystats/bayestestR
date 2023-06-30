@@ -150,7 +150,7 @@ library(see)
 set.seed(333)
 
 data <- iris # Use the iris data
-model <- stan_glm(Sepal.Length ~ Sepal.Width, data = data, refresh = 0)
+model <<- stan_glm(Sepal.Length ~ Sepal.Width, data = data, refresh = 0)
 ```
 
 
@@ -195,7 +195,7 @@ model <- stan_glm(Sepal.Length ~ Sepal.Width_scaled, data = data) # Fit model
 ```{r echo=FALSE, message=FALSE, warning=FALSE, comment=">"}
 set.seed(333)
 data$Sepal.Width_scaled <- data$Sepal.Width / 100
-model <- stan_glm(Sepal.Length ~ Sepal.Width_scaled, data = data, refresh = 0)
+model <<- stan_glm(Sepal.Length ~ Sepal.Width_scaled, data = data, refresh = 0)
 ```
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE, warning=FALSE, comment=">"}
