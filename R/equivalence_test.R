@@ -89,7 +89,7 @@
 #' plot(test)
 #'
 #' library(emmeans)
-#' equivalence_test(emtrends(model, ~1, "wt"))
+#' equivalence_test(emtrends(model, ~1, "wt", data = mtcars))
 #'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
