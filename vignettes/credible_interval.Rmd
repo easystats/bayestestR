@@ -192,7 +192,7 @@ ggplot(mapping = aes(x = x, y = y)) +
   ) +
   # The prior
   geom_area(
-    color = "black", fill = NA, size = 1, linetype = "dashed",
+    color = "black", fill = NA, linewidth = 1, linetype = "dashed",
     data = estimate_density(prior, extend = TRUE)
   ) +
   # BF = 1 SI in blue

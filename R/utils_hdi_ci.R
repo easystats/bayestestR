@@ -12,7 +12,7 @@
 .check_ci_argument <- function(x, ci, verbose = TRUE) {
   if (ci > 1) {
     if (verbose) {
-      warning("`ci` should be less than 1, returning NAs.", call. = FALSE)
+      insight::format_warning("`ci` should be less than 1, returning NAs.")
     }
     return(data.frame(
       "CI" = ci,
@@ -32,7 +32,7 @@
 
   if (length(x) < 3) {
     if (verbose) {
-      warning("The posterior is too short, returning NAs.", call. = FALSE)
+      insight::format_warning("The posterior is too short, returning NAs.")
     }
     return(data.frame(
       "CI" = ci,
@@ -48,7 +48,7 @@
 
 #' @keywords internal
 .compute_interval_dataframe <- function(x, ci, verbose, fun) {
-  numeric_variables <- sapply(x, is.numeric, simplify = TRUE)
+  numeric_variables <- vapply(x, is.numeric, TRUE)
 
   out <- insight::compact_list(lapply(
     x[, numeric_variables, drop = FALSE],

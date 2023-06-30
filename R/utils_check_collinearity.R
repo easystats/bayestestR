@@ -2,7 +2,11 @@
 .check_multicollinearity <- function(model,
                                      method = "equivalence_test",
                                      threshold = 0.7, ...) {
-  valid_parameters <- insight::find_parameters(model, parameters = "^(?!(r_|sd_|prior_|cor_|lp__|b\\[))", flatten = TRUE)
+  valid_parameters <- insight::find_parameters(
+    model,
+    parameters = "^(?!(r_|sd_|prior_|cor_|lp__|b\\[))",
+    flatten = TRUE
+  )
 
   if (inherits(model, "stanfit")) {
     dat <- insight::get_parameters(model)[, valid_parameters, drop = FALSE]

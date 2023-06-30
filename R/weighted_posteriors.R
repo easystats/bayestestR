@@ -135,7 +135,7 @@ weighted_posteriors.data.frame <- function(..., prior_odds = NULL, missing = 0, 
   mnames <- sapply(match.call(expand.dots = FALSE)$`...`, insight::safe_deparse)
 
   # find min nrow
-  iterations <- min(sapply(Mods, nrow))
+  iterations <- min(vapply(Mods, nrow, numeric(1)))
 
   # make weights from prior_odds
   if (!is.null(prior_odds)) {

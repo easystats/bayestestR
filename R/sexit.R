@@ -248,8 +248,12 @@ sexit <- function(x, significant = "default", large = "default", ci = 0.95, ...)
 
 
 
-  suppressWarnings(resp <- .safe(insight::get_response(x, type = "mf")))
-  suppressWarnings(info <- .safe(insight::model_info(x, verbose = FALSE)))
+  suppressWarnings({
+    resp <- .safe(insight::get_response(x, type = "mf"))
+  })
+  suppressWarnings({
+    info <- .safe(insight::model_info(x, verbose = FALSE))
+  })
   if (!is.null(resp) && !is.null(info) && info$is_linear) {
     sd1 <- significant / stats::sd(resp, na.rm = TRUE)
     sd2 <- large / stats::sd(resp, na.rm = TRUE)
