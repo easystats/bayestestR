@@ -76,11 +76,13 @@
 #' # rstanarm models
 #' # -----------------------------------------------
 #' library(rstanarm)
-#' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#' model <- suppressWarning(
+#'   stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#' )
 #' head(estimate_density(model))
 #'
 #' library(emmeans)
-#' head(estimate_density(emtrends(model, ~1, "wt")))
+#' head(estimate_density(emtrends(model, ~1, "wt", data = mtcars)))
 #'
 #' # brms models
 #' # -----------------------------------------------
