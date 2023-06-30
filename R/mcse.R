@@ -18,7 +18,9 @@
 #' library(bayestestR)
 #' library(rstanarm)
 #'
-#' model <- stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
+#' model <- suppressWarnings(
+#'   stan_glm(mpg ~ wt + am, data = mtcars, chains = 1, refresh = 0)
+#' )
 #' mcse(model)
 #' }
 #' @export
