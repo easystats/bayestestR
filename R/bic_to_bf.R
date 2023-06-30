@@ -10,7 +10,8 @@
 #' @param log If `TRUE`, return the `log(BF)`.
 #'
 #' @references
-#' Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of p values. Psychonomic bulletin & review, 14(5), 779-804
+#' Wagenmakers, E. J. (2007). A practical solution to the pervasive problems of
+#' p values. Psychonomic bulletin & review, 14(5), 779-804
 #'
 #' @examples
 #' bic1 <- BIC(lm(Sepal.Length ~ 1, data = iris))
