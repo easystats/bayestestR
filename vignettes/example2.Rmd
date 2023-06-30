@@ -303,10 +303,15 @@ model_performance(model)
 
 TO DO.
 
-```{r }
+```{r eval=FALSE}
 library(see)
 
 plot(rope(result))
+```
+```{r echo=FALSE}
+library(see)
+
+suppressWarnings(plot(rope(result), data = result))
 ```
 
 
