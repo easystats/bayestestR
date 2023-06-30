@@ -1122,7 +1122,7 @@ estimate the group means and the difference between them:</p>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans" class="external-link">emmeans</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="op">(</span><span class="va">group_diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">(</span><span class="va">group_diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">sleep</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>&gt; $emmeans
 &gt;  group emmean lower.HPD upper.HPD
 &gt;  1       0.79     -0.48       2.0
@@ -1303,8 +1303,8 @@ restriction):</p>
 <pre><code>&gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 &gt; Chain 1: 
-&gt; Chain 1: Gradient evaluation took 1.9e-05 seconds
-&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
+&gt; Chain 1: Gradient evaluation took 1.7e-05 seconds
+&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
 &gt; Chain 1: Adjust your expectations accordingly!
 &gt; Chain 1: 
 &gt; Chain 1: 
@@ -1353,8 +1353,8 @@ restriction):</p>
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 3).
 &gt; Chain 3: 
-&gt; Chain 3: Gradient evaluation took 1.2e-05 seconds
-&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
+&gt; Chain 3: Gradient evaluation took 1e-05 seconds
+&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
 &gt; Chain 3: Adjust your expectations accordingly!
 &gt; Chain 3: 
 &gt; Chain 3: 
@@ -1378,8 +1378,8 @@ restriction):</p>
 &gt; 
 &gt; SAMPLING FOR MODEL 'continuous' NOW (CHAIN 4).
 &gt; Chain 4: 
-&gt; Chain 4: Gradient evaluation took 1.2e-05 seconds
-&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
+&gt; Chain 4: Gradient evaluation took 1.1e-05 seconds
+&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.11 seconds.
 &gt; Chain 4: Adjust your expectations accordingly!
 &gt; Chain 4: 
 &gt; Chain 4: 

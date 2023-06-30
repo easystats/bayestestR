@@ -479,8 +479,8 @@ Science, 6(3), 291–298. <a href="https://doi.org/10.1177/1745691611406923" cla
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># emmGrid objects</span></span></span>
 <span class="r-in"><span>  <span class="co"># ---------------</span></span></span>
-<span class="r-in"><span>  <span class="va">group_diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">stan_model</span>, <span class="op">~</span><span class="va">group</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">bayesfactor_parameters</span><span class="op">(</span><span class="va">group_diff</span>, prior <span class="op">=</span> <span class="va">stan_model</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># group_diff &lt;- pairs(emmeans(stan_model, ~group))</span></span></span>
+<span class="r-in"><span>  <span class="co"># bayesfactor_parameters(group_diff, prior = stan_model, verbose = FALSE)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="co"># Or</span></span></span>
 <span class="r-in"><span>  <span class="co"># group_diff_prior &lt;- pairs(emmeans(unupdate(stan_model), ~group))</span></span></span>
@@ -488,17 +488,14 @@ Science, 6(3), 291–298. <a href="https://doi.org/10.1177/1745691611406923" cla
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: emmeans</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sampling priors, please wait...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Model has 0 prior weights, but we recovered 20 rows of data.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> So prior weights were ignored.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Model has 0 prior weights, but we recovered 20 rows of data.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> So prior weights were ignored.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Bayes Factor (Savage-Dickey density ratio)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Bayes Factor (Null-Interval)</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter       |   BF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1 - group2 | 2.79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |   BF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 2.97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1      | 3.09</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> * Evidence Against The Null: <span style="color: #00BBBB;">0</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> * Evidence Against The Null: <span style="color: #00BBBB;">[-0.202, 0.202]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># brms models</span></span></span>
@@ -520,10 +517,10 @@ Science, 6(3), 291–298. <a href="https://doi.org/10.1177/1745691611406923" cla
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start sampling</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Bayes Factor (Savage-Dickey density ratio)</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |   BF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) | 5.76</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> group1      | 8.81</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameter   |    BF</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) |  6.45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> group1      | 11.07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> * Evidence Against The Null: <span style="color: #00BBBB;">0</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
