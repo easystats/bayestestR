@@ -382,7 +382,7 @@ hdi.get_predicted <- function(x, ...) {
 
   if (window_size < 2) {
     if (verbose) {
-      insight::format_warning("`ci` is too small or x does not contain enough data points, returning NAs.")
+      insight::format_message("`ci` is too small or x does not contain enough data points, returning NAs.")
     }
     return(data.frame(
       "CI" = ci,
@@ -395,7 +395,7 @@ hdi.get_predicted <- function(x, ...) {
 
   if (nCIs < 1) {
     if (verbose) {
-      insight::format_warning("`ci` is too large or x does not contain enough data points, returning NAs.")
+      insight::format_message("`ci` is too large or x does not contain enough data points, returning NAs.")
     }
     return(data.frame(
       "CI" = ci,
@@ -413,7 +413,7 @@ hdi.get_predicted <- function(x, ...) {
   if (n_candies > 1) {
     if (any(diff(sort(min_i)) != 1)) {
       if (verbose) {
-        insight::format_warning("Identical densities found along different segments of the distribution, choosing rightmost.")
+        insight::format_message("Identical densities found along different segments of the distribution, choosing rightmost.")
       }
       min_i <- max(min_i)
     } else {
