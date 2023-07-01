@@ -130,16 +130,15 @@ library(bayestestR)
 
 posterior <- rnorm(1000)
 hdi(posterior, ci = 0.89)
-hdi(posterior, ci = c(.80, .90, .95))
+hdi(posterior, ci = c(0.80, 0.90, 0.95))
 
-df <- data.frame(replicate(4, rnorm(100)))
-hdi(df)
-hdi(df, ci = c(.80, .90, .95))
+bayestestR::hdi(iris[1:4])
+bayestestR::hdi(iris[1:4], ci = c(0.80, 0.90, 0.95))
 \dontrun{
 library(rstanarm)
 model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
 hdi(model)
-hdi(model, ci = c(.80, .90, .95))
+hdi(model, ci = c(0.80, 0.90, 0.95))
 
 library(emmeans)
 hdi(emtrends(model, ~1, "wt", data = mtcars))
@@ -147,12 +146,12 @@ hdi(emtrends(model, ~1, "wt", data = mtcars))
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
 hdi(model)
-hdi(model, ci = c(.80, .90, .95))
+hdi(model, ci = c(0.80, 0.90, 0.95))
 
 library(BayesFactor)
 bf <- ttestBF(x = rnorm(100, 1, 1))
 hdi(bf)
-hdi(bf, ci = c(.80, .90, .95))
+hdi(bf, ci = c(0.80, 0.90, 0.95))
 }
 }
 \references{
