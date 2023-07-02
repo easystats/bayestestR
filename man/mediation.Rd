@@ -89,18 +89,18 @@ samples from \code{mediator} of the outcome model), \emph{indirect effect}
 value of sums of posterior samples used for the direct and indirect
 effect). The \emph{proportion mediated} is the indirect effect divided
 by the total effect.
-\cr \cr
+
 For all values, the \verb{89\%} credible intervals are calculated by default.
 Use \code{ci} to calculate a different interval.
-\cr \cr
+
 The arguments \code{treatment} and \code{mediator} do not necessarily
 need to be specified. If missing, \code{mediation()} tries to find the
 treatment and mediator variable automatically. If this does not work,
 specify these variables.
-\cr \cr
+
 The direct effect is also called \emph{average direct effect} (ADE),
 the indirect effect is also called \emph{average causal mediation effects}
-(ACME). See also \cite{Tingley et al. 2014} and \cite{Imai et al. 2010}.
+(ACME). See also \emph{Tingley et al. 2014} and \emph{Imai et al. 2010}.
 }
 \note{
 There is an \code{as.data.frame()} method that returns the posterior

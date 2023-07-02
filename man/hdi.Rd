@@ -143,7 +143,9 @@ bayestestR::hdi(model)
 bayestestR::hdi(model, ci = c(0.80, 0.90, 0.95))
 
 library(emmeans)
-bayestestR::hdi(emtrends(model, ~1, "wt", data = mtcars))
+bayestestR::hdi(suppressWarnings(
+  emtrends(model, ~1, "wt", data = mtcars))
+)
 
 library(brms)
 model <- brms::brm(mpg ~ wt + cyl, data = mtcars)
@@ -158,8 +160,10 @@ bayestestR::hdi(bf, ci = c(0.80, 0.90, 0.95))
 }
 \references{
 \itemize{
-\item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS, and Stan. Academic Press.
-\item McElreath, R. (2015). Statistical rethinking: A Bayesian course with examples in R and Stan. Chapman and Hall/CRC.
+\item Kruschke, J. (2014). Doing Bayesian data analysis: A tutorial with R, JAGS,
+and Stan. Academic Press.
+\item McElreath, R. (2015). Statistical rethinking: A Bayesian course with
+examples in R and Stan. Chapman and Hall/CRC.
 }
 }
 \seealso{
