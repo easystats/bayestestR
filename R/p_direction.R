@@ -107,8 +107,8 @@
 #' # -----------------------------------------------
 #' if (require("emmeans")) {
 #'   p_direction(suppressWarnings(
-#'     emtrends(model, ~1, "wt", data = mtcars))
-#'   )
+#'     emtrends(model, ~1, "wt", data = mtcars)
+#'   ))
 #' }
 #'
 #' # brms models

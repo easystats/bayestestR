@@ -30,7 +30,9 @@
 #' p_map(model)
 #'
 #' library(emmeans)
-#' p_map(emtrends(model, ~1, "wt", data = mtcars))
+#' p_map(suppressWarnings(
+#'   emtrends(model, ~1, "wt", data = mtcars)
+#' ))
 #'
 #' library(brms)
 #' model <- brms::brm(mpg ~ wt + cyl, data = mtcars)

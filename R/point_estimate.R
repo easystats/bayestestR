@@ -44,7 +44,7 @@
 #' # -----------------------------------------------
 #' library(emmeans)
 #' point_estimate(
-#'   emtrends(model, ~1, "wt", data = mtcars),
+#'   suppressWarnings(emtrends(model, ~1, "wt", data = mtcars)),
 #'   centrality = c("median", "MAP")
 #' )
 #'

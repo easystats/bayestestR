@@ -25,10 +25,10 @@ print.bayesfactor_models_matrix <- function(x, digits = 2, log = FALSE, exact = 
   out <- insight::export_table(
     df,
     caption = c("# Bayes Factors for Model Comparison", "blue"),
-    subtitle = c(sprintf("\n\n%sNumerator\nDenominator", paste(rep(" ", k), collapse = "")), "cyan"),
+    subtitle = c(sprintf("\n\n%sNumerator\nDenominator", strrep(" ", k)), "cyan"),,
     footer = if (log) c("\nBayes Factors are on the log-scale.\n", "red")
   )
-  out <- sub("placeholder", "\b\b", out)
+  out <- sub("placeholder", "\b\b", out, fixed = TRUE)
   cat(out)
 
   invisible(orig_x)
