@@ -89,7 +89,9 @@
 #' bayestestR::hdi(iris[1:4], ci = c(0.80, 0.90, 0.95))
 #' \dontrun{
 #' library(rstanarm)
-#' model <- stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#' model <- suppressWarnings(
+#'   stan_glm(mpg ~ wt + gear, data = mtcars, chains = 2, iter = 200, refresh = 0)
+#' )
 #' hdi(model)
 #' hdi(model, ci = c(0.80, 0.90, 0.95))
 #'
