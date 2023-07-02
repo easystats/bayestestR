@@ -137,7 +137,7 @@ ci(bf, method = "ETI")
 ci(bf, method = "HDI")
 \dontshow{\}) # examplesIf}
 \dontshow{if (require("emmeans", quietly = TRUE) && require("rstanarm", quietly = TRUE)) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-model <- suppressWarnings(emtrends(model, ~1, "wt", data = mtcars))
+model <- emtrends(model, ~1, "wt", data = mtcars)
 ci(model, method = "ETI")
 ci(model, method = "HDI")
 \dontshow{\}) # examplesIf}
