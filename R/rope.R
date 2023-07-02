@@ -121,8 +121,7 @@
 #' library(brms)
 #' model <- brm(
 #'   bf(mvbind(mpg, disp) ~ wt + cyl) + set_rescor(rescor = TRUE),
-#'   data = mtcars,
-#'   set_rescore
+#'   data = mtcars
 #' )
 #' rope(model)
 #' rope(model, ci = c(0.90, 0.95))
