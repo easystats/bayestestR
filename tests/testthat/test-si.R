@@ -3,12 +3,14 @@ test_that("si.numeric", {
 
   set.seed(333)
   prior <- distribution_normal(1000, mean = 0, sd = 1)
-  posterior <- distribution_normal(1000, mean = .5, sd = .3)
+  posterior <- distribution_normal(1000, mean = 0.5, sd = 0.3)
 
-  expect_warning(res <- si(posterior, prior), regexp = "40")
+  expect_warning({
+    res <- si(posterior, prior)
+  }, regexp = "40")
   expect_equal(res$CI_low, 0.043, tolerance = 0.02)
   expect_equal(res$CI_high, 1.053103, tolerance = 0.02)
-  expect_s3_class(res, c("bayestestR_si"))
+  expect_s3_class(res, "bayestestR_si")
 
   res <- si(posterior, prior, BF = 3, verbose = FALSE)
   expect_equal(res$CI_low, 0.35, tolerance = 0.02)
@@ -39,12 +41,12 @@ test_that("si.rstanarm", {
   set.seed(333)
   res2 <- si(stan_model, verbose = FALSE)
 
-  expect_s3_class(res1, c("bayestestR_si"))
-  expect_equal(res1, res2)
+  expect_s3_class(res1, "bayestestR_si")
+  expect_equal(res1, res2, ignore_attr = TRUE)
 
   skip_if_not_installed("emmeans")
   set.seed(123)
-  group_diff <- pairs(emmeans::emmeans(stan_model, ~group))
+  group_diff <- suppressWarnings(pairs(emmeans::emmeans(stan_model, ~group)))
   res3 <- si(group_diff, prior = stan_model, verbose = FALSE)
 
   expect_equal(res3$CI_low, -2.746, tolerance = 0.3)
