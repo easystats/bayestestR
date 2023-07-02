@@ -266,6 +266,7 @@ print.bayesfactor_parameters <- function(x, digits = 3, log = FALSE, ...) {
       cat(paste0(colnames(formatted_table), ": "))
     }
     cat(formatted_table[1, 1])
+    cat("\n")
   } else {
     # print for data frame
 
