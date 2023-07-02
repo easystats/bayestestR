@@ -1,4 +1,6 @@
 test_that("ci", {
+  skip_on_os(c("mac", "linux"))
+  skip_if_not_or_load_if_installed("quadprog")
   set.seed(123)
   x <- rnorm(1000, 3, 2)
   expect_error(ci(x, method = "FDI"), regex = "`method` should be 'ETI'")
